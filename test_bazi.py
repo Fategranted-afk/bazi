@@ -1867,21 +1867,26 @@ with open('js/app.js', 'r', encoding='utf-8') as f:
 assert 'id="btnExportDossier"' in html_content, "Missing #btnExportDossier in index.html"
 assert 'id="imperialDossierModal"' in html_content, "Missing #imperialDossierModal in index.html"
 assert 'id="imperialDossierContainer"' in html_content, "Missing #imperialDossierContainer in index.html"
+assert 'id="dossierDownloadPdfBtn"' in html_content, "Missing #dossierDownloadPdfBtn in index.html"
 assert 'id="dossierPrintBtn"' in html_content, "Missing #dossierPrintBtn in index.html"
 assert 'id="dossierCloseBtn"' in html_content, "Missing #dossierCloseBtn in index.html"
+assert 'id="dossierExportStatus"' in html_content, "Missing #dossierExportStatus in index.html"
 
 # 2. Print styles and Imperial aesthetics in CSS
 assert '@media print' in css_content, "Missing @media print in style.css"
 assert '@page' in css_content, "Missing @page print directive in style.css"
+assert 'print-color-adjust: exact' in css_content or '-webkit-print-color-adjust: exact' in css_content, "Missing print-color-adjust in style.css"
 assert 'imperial-thread-spine' in css_content, "Missing imperial-thread-spine in style.css"
 assert 'thread-eyelet' in css_content, "Missing thread-eyelet in style.css"
 assert 'imperial-seal-stamp' in css_content, "Missing imperial-seal-stamp in style.css"
 assert 'imperial-watermark' in css_content, "Missing imperial-watermark in style.css"
 assert 'page-break-after: always' in css_content or 'break-after: page' in css_content, "Missing page-break-after in style.css"
 
-# 3. Dossier compiler and print handler in app.js
+# 3. Dossier compiler, direct download and print handler in app.js
 assert 'renderImperialDossierPages' in app_content, "Missing renderImperialDossierPages in app.js"
 assert 'openImperialDossierModal' in app_content, "Missing openImperialDossierModal in app.js"
+assert 'downloadImperialDossierPDF' in app_content, "Missing downloadImperialDossierPDF in app.js"
+assert 'compileA4PdfFromJpegs' in app_content, "Missing compileA4PdfFromJpegs in app.js"
 assert 'window.print()' in app_content, "Missing window.print() in app.js"
 
 # 4. Bilingual compilation & zero residual Chinese in English mode
@@ -2425,7 +2430,7 @@ var console = {
   }
 };
 
-var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierContainer'];
+var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer'];
 var elementStore = {};
 
 function makeEl(id, tag) {
@@ -2629,6 +2634,31 @@ elementStore['ichingInstantBtn'].trigger('click');
 
 // Imperial Dossier in EN
 elementStore['btnExportDossier'].trigger('click');
+elementStore['dossierDownloadPdfBtn'].trigger('click');
+elementStore['dossierPrintBtn'].trigger('click');
+elementStore['dossierExportStatusDismiss'].trigger('click');
+elementStore['dossierCloseBtn'].trigger('click');
+
+// Deep Verification of Client-Side PDF Binary Compiler
+var fnCompile = (typeof compileA4PdfFromJpegs === 'function') ? compileA4PdfFromJpegs : (window.compileA4PdfFromJpegs || null);
+if (!fnCompile) {
+  throw new Error('compileA4PdfFromJpegs must be available in global scope');
+}
+var mockJpg = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x01, 0x00, 0x48, 0x00, 0x48, 0x00, 0x00, 0xff, 0xdb, 0x00, 0x43, 0x00, 0x08, 0x06, 0x06, 0x07, 0x06, 0x05, 0x08, 0x07, 0x07, 0x07, 0x09, 0x09, 0x08, 0x0a, 0x0c, 0x14, 0x0d, 0x0c, 0x0b, 0x0b, 0x0c, 0x19, 0x12, 0x13, 0x0f, 0x14, 0x1d, 0x1a, 0x1f, 0x1e, 0x1d, 0x1a, 0x1c, 0x1c, 0x20, 0x24, 0x2e, 0x27, 0x20, 0x22, 0x2c, 0x23, 0x1c, 0x1c, 0x28, 0x37, 0x29, 0x2c, 0x30, 0x31, 0x34, 0x34, 0x34, 0x1f, 0x27, 0x39, 0x3d, 0x38, 0x32, 0x3c, 0x2e, 0x33, 0x34, 0x32, 0xff, 0xc0, 0x00, 0x0b, 0x08, 0x00, 0x01, 0x00, 0x01, 0x01, 0x01, 0x11, 0x00, 0xff, 0xc4, 0x00, 0x1f, 0x00, 0x00, 0x01, 0x05, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0xff, 0xda, 0x00, 0x08, 0x01, 0x01, 0x00, 0x00, 0x3f, 0x00, 0x7f, 0x00, 0xff, 0xd9]);
+var mockPages = [
+  { bytes: mockJpg, width: 794, height: 1123 },
+  { bytes: mockJpg, width: 794, height: 1123 },
+  { bytes: mockJpg, width: 794, height: 1123 },
+  { bytes: mockJpg, width: 794, height: 1123 }
+];
+var compiledPdf = fnCompile(mockPages);
+if (!compiledPdf || compiledPdf.length < 500) {
+  throw new Error('compileA4PdfFromJpegs produced insufficient bytes: ' + (compiledPdf ? compiledPdf.length : 'null'));
+}
+var pdfHeader = String.fromCharCode(compiledPdf[0], compiledPdf[1], compiledPdf[2], compiledPdf[3], compiledPdf[4]);
+if (pdfHeader !== '%PDF-') {
+  throw new Error('compileA4PdfFromJpegs failed to produce %PDF- header: ' + pdfHeader);
+}
 
 // Test Two-Stage Page Navigation (Portal Landing <-> Dashboard)
 elementStore['btnReturnToPortal'].trigger('click');
@@ -3315,7 +3345,7 @@ jsc_dom_check_cmd = [
       };
     }
 
-    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "calculationProgressModal", "calcProgressTitle", "calcProgressSubtitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5"];
+    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "calculationProgressModal", "calcProgressTitle", "calcProgressSubtitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5", "imperialDossierModal", "dossierLangZh", "dossierLangEn", "dossierDownloadPdfBtn", "dossierPrintBtn", "dossierCloseBtn", "dossierExportStatus", "dossierExportStatusMsg", "dossierExportStatusDismiss", "imperialDossierContainer"];
 
     allIds.forEach(function(id) {
       elements[id] = makeEl(id);
@@ -3476,4 +3506,191 @@ run_dom_check = subprocess.run(jsc_dom_check_cmd, capture_output=True, text=True
 assert run_dom_check.returncode == 0, f"JSC DOM Render check failed: stdout={run_dom_check.stdout} stderr={run_dom_check.stderr}"
 print("✓ 动态计算进度条流转机制与全新罗盘/生态位/原厂手册三重视图DOM全量渲染（双语零中文残留）验证通过！")
 
-print("\n🎉 ALL 55 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 56. Validate True PDF Export Capabilities, Direct Download Handler & A4 Binary Compiler
+print("\n=== 56. Validating Direct PDF Export Engine & Zero-Dependency A4 Binary Compiler ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_src = f.read()
+
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_src = f.read()
+
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_src = f.read()
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_src = f.read()
+
+# 1. UI elements and button bindings
+assert 'id="dossierDownloadPdfBtn"' in html_src, "Missing #dossierDownloadPdfBtn in index.html"
+assert 'id="dossierPrintBtn"' in html_src, "Missing #dossierPrintBtn in index.html"
+assert 'id="dossierExportStatus"' in html_src, "Missing #dossierExportStatus in index.html"
+assert 'data-i18n="dossier_download_btn"' in html_src, "Missing data-i18n binding on download button"
+assert 'data-i18n="dossier_print_btn"' in html_src, "Missing data-i18n binding on print button"
+
+# 2. CSS print styling rules for exact A4 layout and color preservation
+assert 'print-color-adjust: exact' in css_src, "Missing print-color-adjust: exact in style.css"
+assert '-webkit-print-color-adjust: exact' in css_src, "Missing -webkit-print-color-adjust: exact in style.css"
+assert '@page' in css_src and 'size: A4 portrait' in css_src, "Missing A4 portrait page size in style.css"
+assert 'margin: 0' in css_src, "Missing margin: 0 print directive in style.css"
+assert 'break-after: page' in css_src, "Missing break-after: page in style.css"
+
+# 3. Controller functions in app.js
+assert 'downloadImperialDossierPDF' in app_src, "Missing downloadImperialDossierPDF in app.js"
+assert 'compileA4PdfFromJpegs' in app_src, "Missing compileA4PdfFromJpegs in app.js"
+assert 'fallbackExportPDF' in app_src, "Missing fallbackExportPDF in app.js"
+assert 'printImperialDossier' in app_src, "Missing printImperialDossier in app.js"
+assert 'updateDossierModalI18n' in app_src, "Missing updateDossierModalI18n in app.js"
+
+# 4. Service Worker and Offline caching
+with open('sw.js', 'r', encoding='utf-8') as f:
+    sw_src = f.read()
+assert 'html2pdf' in sw_src, "sw.js must pre-cache html2pdf library"
+
+# 5. Deep validation of pure JavaScript PDF compiler in JSC
+jsc_pdf_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    var window = this;
+    window.addEventListener = function() {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    var requestAnimationFrame = window.requestAnimationFrame;
+    var cancelAnimationFrame = window.cancelAnimationFrame;
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+    function makeMockEl(id, tag) {
+      return {
+        id: id || '',
+        tagName: (tag || 'div').toUpperCase(),
+        value: '1990',
+        checked: false,
+        textContent: '',
+        innerHTML: '',
+        className: '',
+        style: {},
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        classList: { add: function() {}, remove: function() {}, contains: function() { return false; } },
+        addEventListener: function() {},
+        appendChild: function() {},
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function() { return null; },
+        setAttribute: function() {},
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {},
+            beginPath: function() {},
+            moveTo: function() {},
+            lineTo: function() {},
+            closePath: function() {},
+            stroke: function() {},
+            fill: function() {},
+            fillText: function() {},
+            arc: function() {},
+            setLineDash: function() {},
+            scale: function() {},
+            createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        }
+      };
+    }
+    var elementStore = {};
+    var document = {
+      _domReady: null,
+      documentElement: {
+        lang: 'zh-CN',
+        getAttribute: function() { return 'dark'; },
+        setAttribute: function() {}
+      },
+      addEventListener: function(event, handler) {
+        if (event === 'DOMContentLoaded') this._domReady = handler;
+      },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeMockEl(id);
+        return elementStore[id];
+      },
+      createElement: function(tag) {
+        return makeMockEl(null, tag);
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; }
+    };
+    var console = { log: function() {}, warn: function() {}, error: function() {} };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/visual-alchemy.js");
+    load("js/chart.js");
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    var fnCompile = (typeof compileA4PdfFromJpegs === 'function') ? compileA4PdfFromJpegs : (window.compileA4PdfFromJpegs || null);
+    if (!fnCompile) {
+      throw new Error("compileA4PdfFromJpegs not found in app.js");
+    }
+
+    var mockBytes = new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x01, 0x00, 0x48, 0x00, 0x48, 0x00, 0x00, 0xff, 0xdb, 0x00, 0x43, 0x00, 0x08, 0x06, 0x06, 0x07, 0x06, 0x05, 0x08, 0x07, 0x07, 0x07, 0x09, 0x09, 0x08, 0x0a, 0x0c, 0x14, 0x0d, 0x0c, 0x0b, 0x0b, 0x0c, 0x19, 0x12, 0x13, 0x0f, 0x14, 0x1d, 0x1a, 0x1f, 0x1e, 0x1d, 0x1a, 0x1c, 0x1c, 0x20, 0x24, 0x2e, 0x27, 0x20, 0x22, 0x2c, 0x23, 0x1c, 0x1c, 0x28, 0x37, 0x29, 0x2c, 0x30, 0x31, 0x34, 0x34, 0x34, 0x1f, 0x27, 0x39, 0x3d, 0x38, 0x32, 0x3c, 0x2e, 0x33, 0x34, 0x32, 0xff, 0xc0, 0x00, 0x0b, 0x08, 0x00, 0x01, 0x00, 0x01, 0x01, 0x01, 0x11, 0x00, 0xff, 0xc4, 0x00, 0x1f, 0x00, 0x00, 0x01, 0x05, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0xff, 0xda, 0x00, 0x08, 0x01, 0x01, 0x00, 0x00, 0x3f, 0x00, 0x7f, 0x00, 0xff, 0xd9]);
+
+    var testPages = [
+      { bytes: mockBytes, width: 794, height: 1123 },
+      { bytes: mockBytes, width: 794, height: 1123 },
+      { bytes: mockBytes, width: 794, height: 1123 },
+      { bytes: mockBytes, width: 794, height: 1123 }
+    ];
+
+    var pdfData = fnCompile(testPages);
+    if (!(pdfData instanceof Uint8Array)) throw new Error("compileA4PdfFromJpegs must return Uint8Array");
+    if (pdfData.length < 500) throw new Error("pdfData too small: " + pdfData.length);
+
+    var rawStr = "";
+    for (var i = 0; i < Math.min(pdfData.length, 100); i++) {
+      rawStr += String.fromCharCode(pdfData[i]);
+    }
+    if (rawStr.indexOf("%PDF-1.4") !== 0) throw new Error("PDF missing %PDF-1.4 header: " + rawStr.substring(0, 20));
+
+    var endStr = "";
+    for (var j = Math.max(0, pdfData.length - 30); j < pdfData.length; j++) {
+      endStr += String.fromCharCode(pdfData[j]);
+    }
+    if (endStr.indexOf("%%EOF") === -1) throw new Error("PDF missing %%EOF trailer: " + endStr);
+
+    // Verify i18n keys and zero residual Chinese
+    var zhDl = I18N.t("dossier_download_btn", "zh");
+    var enDl = I18N.t("dossier_download_btn", "en");
+    if (!zhDl || zhDl.indexOf("PDF") === -1) throw new Error("Invalid zh download button text: " + zhDl);
+    if (!enDl || enDl.indexOf("Download") === -1) throw new Error("Invalid en download button text: " + enDl);
+    if (/[\\u4e00-\\u9fa5]/.test(enDl)) throw new Error("Residual Chinese in English dossier download button: " + enDl);
+
+    var enStatus = I18N.t("dossier_generating", "en");
+    if (/[\\u4e00-\\u9fa5]/.test(enStatus)) throw new Error("Residual Chinese in English dossier generating status: " + enStatus);
+    var enSuccess = I18N.t("dossier_download_success", "en");
+    if (/[\\u4e00-\\u9fa5]/.test(enSuccess)) throw new Error("Residual Chinese in English dossier download success: " + enSuccess);
+    '''
+]
+run_pdf = subprocess.run(jsc_pdf_cmd, capture_output=True, text=True)
+assert run_pdf.returncode == 0, f"JSC PDF Export check failed: stdout={run_pdf.stdout} stderr={run_pdf.stderr}"
+print("✓ 皇家线装绝美排盘战报真正的 PDF 导出能力（直连下载/无依赖A4编译/高保真打印/@media色彩穿透/双语零残留）验证通过！")
+
+print("\n🎉 ALL 56 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")

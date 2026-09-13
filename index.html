@@ -1595,7 +1595,7 @@
 
   <!-- Imperial Thread-Bound PDF Dossier Modal (A4 绝美精装排盘战报模态窗口) -->
   <div id="imperialDossierModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-start">
-    <div class="w-full max-w-4xl flex items-center justify-between py-3 mb-3 border-b border-amber-800/40 text-gray-200">
+    <div class="no-print w-full max-w-4xl flex flex-wrap items-center justify-between gap-3 py-3 mb-3 border-b border-amber-800/40 text-gray-200">
       <div class="flex items-center space-x-2">
         <span class="text-xl">👑</span>
         <h3 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc" data-i18n="dossier_modal_title">
@@ -1608,16 +1608,27 @@
           <button id="dossierLangZh" class="px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium">中文</button>
           <button id="dossierLangEn" class="px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium">English</button>
         </div>
+        <!-- Direct PDF Download Button -->
+        <button id="dossierDownloadPdfBtn" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95" data-i18n="dossier_download_btn">
+          <span>📥</span>
+          <span>直接下载 PDF 文件</span>
+        </button>
         <!-- Print / PDF Button -->
-        <button id="dossierPrintBtn" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5" data-i18n="dossier_print_btn">
+        <button id="dossierPrintBtn" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95" data-i18n="dossier_print_btn">
           <span>🖨️</span>
-          <span>立即打印 / 保存为 PDF</span>
+          <span>系统打印 / 另存为 PDF</span>
         </button>
         <!-- Close Button -->
         <button id="dossierCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="dossier_close_btn">
-          关闭
+          关闭预览
         </button>
       </div>
+    </div>
+
+    <!-- Export Status Banner -->
+    <div id="dossierExportStatus" class="no-print hidden w-full max-w-4xl mb-3 px-4 py-2.5 rounded-lg text-xs font-medium border flex items-center justify-between transition shadow-md bg-amber-950/80 border-amber-600/50 text-amber-200">
+      <span id="dossierExportStatusMsg"></span>
+      <button id="dossierExportStatusDismiss" class="text-xs underline ml-2 opacity-80 hover:opacity-100 cursor-pointer">✕</button>
     </div>
 
     <!-- Printable Dossier Pages Container -->
@@ -1633,6 +1644,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="js/i18n.js"></script>
   <script src="data/ditiansui.js"></script>
   <script src="data/sanming.js"></script>

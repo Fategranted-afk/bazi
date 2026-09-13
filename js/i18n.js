@@ -68,8 +68,12 @@ const I18N = (function() {
 
       // Imperial Dossier
       dossier_modal_title: "皇家线装排盘战报 · 绝美珍藏册 (A4 级导出)",
-      dossier_print_btn: "🖨️ 立即打印 / 保存为 PDF",
+      dossier_download_btn: "📥 直接下载 PDF 文件",
+      dossier_print_btn: "🖨️ 系统打印 / 另存为 PDF",
       dossier_close_btn: "关闭预览",
+      dossier_generating: "⏳ 正在编译 4 页皇家线装 A4 珍藏册 PDF，请稍候...",
+      dossier_download_success: "✅ 皇家线装战报 PDF 已成功生成并开始下载！",
+      dossier_download_fallback: "ℹ️ 已为您启动 A4 级高保真打印视图，请在弹出窗口中选择「另存为 PDF」即可保存文件。",
       dossier_watermark_text: "钦天监御制命盘密卷",
       dossier_imperial_title: "钦天监 御制天机全相精装战报",
       dossier_subtitle: "滴天髓 · 三命通会 · 穷通宝鉴 · 子平真诠 · 渊海子平 八典集成典藏",
@@ -500,8 +504,12 @@ const I18N = (function() {
 
       // Imperial Dossier
       dossier_modal_title: "Imperial Thread-Bound Collector's Dossier (A4 Export)",
+      dossier_download_btn: "📥 Direct Download PDF",
       dossier_print_btn: "🖨️ Print / Save as PDF",
       dossier_close_btn: "Close Preview",
+      dossier_generating: "⏳ Compiling 4-Page Imperial A4 PDF Dossier...",
+      dossier_download_success: "✅ Imperial PDF Dossier generated and download started!",
+      dossier_download_fallback: "ℹ️ High-fidelity A4 print view ready. Select 'Save as PDF' in the print dialog.",
       dossier_watermark_text: "IMPERIAL CELESTIAL ARCHIVE",
       dossier_imperial_title: "Imperial Astronomical Bureau Master Metaphysics Dossier",
       dossier_subtitle: "Synthesized from Di Tian Sui, San Ming, Qiong Tong, Zi Ping & Yuan Hai Canons",

@@ -6669,11 +6669,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // Feature 1: Imperial Thread-Bound PDF Dossier (A4 绝美精装排盘战报)
   // ==========================================================================
+  let currentDossierLang = 'zh';
+
   function initImperialDossier() {
     const btnExport = document.getElementById('btnExportDossier');
     const modal = document.getElementById('imperialDossierModal');
     const btnClose = document.getElementById('dossierCloseBtn');
     const btnPrint = document.getElementById('dossierPrintBtn');
+    const btnDownload = document.getElementById('dossierDownloadPdfBtn');
+    const btnDismiss = document.getElementById('dossierExportStatusDismiss');
     const langZhBtn = document.getElementById('dossierLangZh');
     const langEnBtn = document.getElementById('dossierLangEn');
 
@@ -6691,7 +6695,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnPrint) {
       btnPrint.addEventListener('click', () => {
-        window.print();
+        printImperialDossier();
+      });
+    }
+
+    if (btnDownload) {
+      btnDownload.addEventListener('click', () => {
+        downloadImperialDossierPDF(currentDossierLang);
+      });
+    }
+
+    if (btnDismiss) {
+      btnDismiss.addEventListener('click', () => {
+        const statusEl = document.getElementById('dossierExportStatus');
+        if (statusEl) statusEl.classList.add('hidden');
       });
     }
 
@@ -6699,19 +6716,51 @@ document.addEventListener('DOMContentLoaded', () => {
       langZhBtn.addEventListener('click', () => {
         langZhBtn.className = 'px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium';
         langEnBtn.className = 'px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium';
+        currentDossierLang = 'zh';
+        updateDossierModalI18n('zh');
         renderImperialDossierPages('zh');
       });
       langEnBtn.addEventListener('click', () => {
         langEnBtn.className = 'px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium';
         langZhBtn.className = 'px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium';
+        currentDossierLang = 'en';
+        updateDossierModalI18n('en');
         renderImperialDossierPages('en');
       });
     }
 
     if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
       window.addEventListener('beforeprint', () => {
-        renderImperialDossierPages(currentLang);
+        renderImperialDossierPages(currentDossierLang || currentLang);
       });
+    }
+  }
+
+  function updateDossierModalI18n(lang) {
+    if (typeof I18N === 'undefined') return;
+    const titleEl = document.querySelector('[data-i18n="dossier_modal_title"]');
+    if (titleEl) titleEl.textContent = I18N.t('dossier_modal_title', lang);
+
+    const dlBtn = document.getElementById('dossierDownloadPdfBtn');
+    if (dlBtn) dlBtn.textContent = I18N.t('dossier_download_btn', lang);
+
+    const printBtn = document.getElementById('dossierPrintBtn');
+    if (printBtn) printBtn.textContent = I18N.t('dossier_print_btn', lang);
+
+    const closeBtn = document.getElementById('dossierCloseBtn');
+    if (closeBtn) closeBtn.textContent = I18N.t('dossier_close_btn', lang);
+  }
+
+  function showDossierStatus(msg, type) {
+    const statusEl = document.getElementById('dossierExportStatus');
+    const msgEl = document.getElementById('dossierExportStatusMsg');
+    if (!statusEl || !msgEl) return;
+    msgEl.textContent = msg;
+    statusEl.classList.remove('hidden');
+    if (type === 'success') {
+      statusEl.className = 'no-print w-full max-w-4xl mb-3 px-4 py-2.5 rounded-lg text-xs font-medium border flex items-center justify-between transition shadow-md bg-emerald-950/80 border-emerald-600/50 text-emerald-200';
+    } else {
+      statusEl.className = 'no-print w-full max-w-4xl mb-3 px-4 py-2.5 rounded-lg text-xs font-medium border flex items-center justify-between transition shadow-md bg-amber-950/80 border-amber-600/50 text-amber-200';
     }
   }
 
@@ -6720,10 +6769,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!modal) return;
     modal.classList.remove('hidden');
 
+    const activeLang = lang || currentLang || 'zh';
+    currentDossierLang = activeLang;
+
+    const statusEl = document.getElementById('dossierExportStatus');
+    if (statusEl) statusEl.classList.add('hidden');
+
     const langZhBtn = document.getElementById('dossierLangZh');
     const langEnBtn = document.getElementById('dossierLangEn');
     if (langZhBtn && langEnBtn) {
-      if (lang === 'en') {
+      if (activeLang === 'en') {
         langEnBtn.className = 'px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium';
         langZhBtn.className = 'px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium';
       } else {
@@ -6732,12 +6787,361 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    renderImperialDossierPages(lang);
+    updateDossierModalI18n(activeLang);
+    renderImperialDossierPages(activeLang);
+  }
+
+  function printImperialDossier() {
+    renderImperialDossierPages(currentDossierLang || currentLang);
+    window.print();
+  }
+
+  function downloadImperialDossierPDF(lang) {
+    const activeLang = lang || currentDossierLang || currentLang || 'zh';
+    const isEn = (activeLang === 'en');
+
+    renderImperialDossierPages(activeLang);
+
+    const container = document.getElementById('imperialDossierContainer');
+    if (!container) return;
+
+    const bazi = currentBaziResult;
+    const yrStem = (bazi && bazi.pillars && bazi.pillars.year && bazi.pillars.year.text) ? bazi.pillars.year.text : (isEn ? 'Chart' : '命造');
+    const dateStr = (bazi && bazi.input && bazi.input.year)
+      ? `${bazi.input.year}${String(bazi.input.month).padStart(2,'0')}${String(bazi.input.day).padStart(2,'0')}`
+      : new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
+
+    showDossierStatus(
+      isEn ? '⏳ Compiling 4-Page Imperial A4 PDF Dossier...' : '⏳ 正在编译 4 页皇家线装 A4 珍藏册 PDF，请稍候...',
+      'info'
+    );
+
+    // 1. Primary: Use html2pdf.js if available in the browser runtime
+    if (typeof html2pdf !== 'undefined') {
+      try {
+        const opt = {
+          margin: 0,
+          filename: `${filename}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            letterRendering: true,
+            scrollY: 0,
+            scrollX: 0,
+            backgroundColor: '#fcfbf7',
+            logging: false
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          },
+          pagebreak: {
+            mode: ['css', 'legacy']
+          }
+        };
+
+        html2pdf().set(opt).from(container).save().then(() => {
+          showDossierStatus(
+            isEn ? '✅ Imperial PDF Dossier generated and download started!' : '✅ 皇家线装战报 PDF 已成功生成并开始下载！',
+            'success'
+          );
+        }).catch((err) => {
+          console.warn('html2pdf runtime notice, invoking fallback:', err);
+          fallbackExportPDF(container, filename, isEn);
+        });
+        return;
+      } catch (err) {
+        console.warn('html2pdf invocation error:', err);
+      }
+    }
+
+    // 2. Secondary: Built-in zero-dependency client-side PDF emitter
+    fallbackExportPDF(container, filename, isEn);
+  }
+
+  function fallbackExportPDF(container, filename, isEn) {
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
+
+    const pages = (container.querySelectorAll && typeof container.querySelectorAll === 'function')
+      ? Array.from(container.querySelectorAll('.imperial-page'))
+      : [];
+
+    if (!pages || pages.length === 0) {
+      triggerPrintFallback(isEn);
+      return;
+    }
+
+    renderPagesToJpegs(pages).then((jpegList) => {
+      if (!jpegList || jpegList.length === 0) {
+        triggerPrintFallback(isEn);
+        return;
+      }
+      const pdfBytes = compileA4PdfFromJpegs(jpegList);
+      if (typeof Blob === 'undefined' || typeof URL === 'undefined') {
+        triggerPrintFallback(isEn);
+        return;
+      }
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `${filename}.pdf`;
+      if (document.body && typeof document.body.appendChild === 'function') {
+        document.body.appendChild(link);
+      }
+      if (typeof link.click === 'function') {
+        link.click();
+      }
+      setTimeout(() => {
+        if (link.parentNode && typeof link.parentNode.removeChild === 'function') {
+          link.parentNode.removeChild(link);
+        }
+        if (typeof URL.revokeObjectURL === 'function') {
+          URL.revokeObjectURL(blobUrl);
+        }
+      }, 2000);
+      showDossierStatus(
+        isEn ? '✅ Imperial PDF Dossier generated and download started!' : '✅ 皇家线装战报 PDF 已成功生成并开始下载！',
+        'success'
+      );
+    }).catch((err) => {
+      console.warn('Direct canvas rasterization notice, opening high-fidelity print engine:', err);
+      triggerPrintFallback(isEn);
+    });
+  }
+
+  function triggerPrintFallback(isEn) {
+    showDossierStatus(
+      isEn
+        ? 'ℹ️ High-fidelity A4 print view ready. Select "Save as PDF" in the print dialog to save.'
+        : 'ℹ️ 已为您启动 A4 级高保真打印视图，请在系统窗口选择「另存为 PDF」即可保存文件。',
+      'info'
+    );
+    if (typeof window !== 'undefined' && typeof window.print === 'function') {
+      setTimeout(() => {
+        window.print();
+      }, 400);
+    }
+  }
+
+  function renderPagesToJpegs(pages, scale = 2) {
+    if (typeof Promise === 'undefined') return Promise.resolve([]);
+    return Promise.all(pages.map(page => renderPageToJpeg(page, scale)));
+  }
+
+  function dataUrlToUint8Array(dataUrl) {
+    const parts = (dataUrl || '').split(',');
+    const b64 = parts.length > 1 ? parts[1] : parts[0];
+    const binStr = (typeof atob === 'function') ? atob(b64) : '';
+    const u = new Uint8Array(binStr.length);
+    for (let i = 0; i < binStr.length; i++) {
+      u[i] = binStr.charCodeAt(i);
+    }
+    return u;
+  }
+
+  function renderPageToJpeg(pageEl, scale = 2) {
+    return new Promise((resolve, reject) => {
+      try {
+        if (typeof Image === 'undefined' || typeof document.createElement !== 'function') {
+          reject(new Error('DOM Image or Canvas API unavailable'));
+          return;
+        }
+        const width = 794;
+        const height = 1123;
+
+        let cssRules = '';
+        try {
+          if (document.styleSheets) {
+            for (let i = 0; i < document.styleSheets.length; i++) {
+              try {
+                const sheet = document.styleSheets[i];
+                const rules = sheet.cssRules || sheet.rules;
+                if (rules) {
+                  for (let j = 0; j < rules.length; j++) {
+                    cssRules += rules[j].cssText + '\n';
+                  }
+                }
+              } catch (e) {}
+            }
+          }
+        } catch (e) {}
+
+        const clone = pageEl.cloneNode ? pageEl.cloneNode(true) : pageEl;
+        if (clone.style) {
+          clone.style.margin = '0';
+          clone.style.boxShadow = 'none';
+          clone.style.width = width + 'px';
+          clone.style.height = height + 'px';
+          clone.style.minHeight = height + 'px';
+          clone.style.maxHeight = height + 'px';
+          clone.style.boxSizing = 'border-box';
+          clone.style.overflow = 'hidden';
+        }
+
+        const serialized = (typeof XMLSerializer !== 'undefined')
+          ? new XMLSerializer().serializeToString(clone)
+          : (clone.outerHTML || '');
+
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '">' +
+          '<foreignObject width="100%" height="100%">' +
+          '<div xmlns="http://www.w3.org/1999/xhtml">' +
+          '<style>' + cssRules + '* { box-sizing: border-box; }</style>' +
+          serialized +
+          '</div>' +
+          '</foreignObject>' +
+          '</svg>';
+
+        if (typeof Blob === 'undefined' || typeof URL === 'undefined') {
+          reject(new Error('Blob API unavailable'));
+          return;
+        }
+
+        const svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+        const img = new Image();
+
+        img.onload = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(width * scale);
+            canvas.height = Math.round(height * scale);
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.fillStyle = '#fcfbf7';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            }
+            URL.revokeObjectURL(url);
+            const dataUrl = canvas.toDataURL ? canvas.toDataURL('image/jpeg', 0.95) : '';
+            const bytes = dataUrlToUint8Array(dataUrl);
+            resolve({
+              bytes: bytes,
+              width: canvas.width,
+              height: canvas.height
+            });
+          } catch (err) {
+            URL.revokeObjectURL(url);
+            reject(err);
+          }
+        };
+
+        img.onerror = (e) => {
+          URL.revokeObjectURL(url);
+          reject(e);
+        };
+
+        img.src = url;
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  // Pure Client-Side ISO 32000-1 / PDF-1.4 Multi-Page A4 Binary Compiler
+  function compileA4PdfFromJpegs(jpegDataList) {
+    const parts = [];
+    const offsets = [];
+    let totalLen = 0;
+
+    function writeStr(s) {
+      const arr = [];
+      for (let i = 0; i < s.length; i++) {
+        arr.push(s.charCodeAt(i) & 0xff);
+      }
+      const u = new Uint8Array(arr);
+      parts.push(u);
+      totalLen += u.length;
+    }
+
+    function writeBytes(u) {
+      parts.push(u);
+      totalLen += u.length;
+    }
+
+    function addObj(objNum, contentStr, binaryBytes) {
+      offsets.push(totalLen);
+      writeStr(objNum + ' 0 obj\n' + contentStr + '\n');
+      if (binaryBytes) {
+        writeBytes(binaryBytes);
+        writeStr('\nendstream\n');
+      }
+      writeStr('endobj\n');
+    }
+
+    writeStr('%PDF-1.4\n%\xe2\xe3\xcf\xd3\n');
+
+    const numPages = (jpegDataList && jpegDataList.length) ? jpegDataList.length : 1;
+    addObj(1, '<< /Type /Catalog /Pages 2 0 R >>');
+
+    const kids = [];
+    for (let i = 0; i < numPages; i++) {
+      kids.push((3 + i * 3) + ' 0 R');
+    }
+    addObj(2, '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + numPages + ' >>');
+
+    for (let p = 0; p < numPages; p++) {
+      const pageObjNum = 3 + p * 3;
+      const streamObjNum = 4 + p * 3;
+      const imgObjNum = 5 + p * 3;
+      const imgName = 'Im' + (p + 1);
+      const item = jpegDataList[p] || { bytes: new Uint8Array(0), width: 1, height: 1 };
+
+      addObj(pageObjNum, '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /' + imgName + ' ' + imgObjNum + ' 0 R >> >> /Contents ' + streamObjNum + ' 0 R >>');
+
+      const streamContent = 'q 595.28 0 0 841.89 0 0 cm /' + imgName + ' Do Q';
+      addObj(streamObjNum, '<< /Length ' + streamContent.length + ' >>\nstream\n' + streamContent + '\nendstream');
+
+      const imgHeader = '<< /Type /XObject /Subtype /Image /Width ' + item.width + ' /Height ' + item.height + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + item.bytes.length + ' >>\nstream';
+      addObj(imgObjNum, imgHeader, item.bytes);
+    }
+
+    const xrefOffset = totalLen;
+    const totalObjs = 2 + numPages * 3;
+    writeStr('xref\n0 ' + (totalObjs + 1) + '\n0000000000 65535 f \n');
+    for (let o = 0; o < offsets.length; o++) {
+      const offStr = ('0000000000' + offsets[o]).slice(-10);
+      writeStr(offStr + ' 00000 n \n');
+    }
+    writeStr('trailer\n<< /Size ' + (totalObjs + 1) + ' /Root 1 0 R >>\nstartxref\n' + xrefOffset + '\n%%EOF\n');
+
+    const full = new Uint8Array(totalLen);
+    let ptr = 0;
+    for (let k = 0; k < parts.length; k++) {
+      full.set(parts[k], ptr);
+      ptr += parts[k].length;
+    }
+    return full;
+  }
+
+  // Global exposure for controllers and testing
+  if (typeof window !== 'undefined') {
+    window.downloadImperialDossierPDF = downloadImperialDossierPDF;
+    window.printImperialDossier = printImperialDossier;
+    window.compileA4PdfFromJpegs = compileA4PdfFromJpegs;
+    window.openImperialDossierModal = openImperialDossierModal;
+    window.renderImperialDossierPages = renderImperialDossierPages;
   }
 
   function renderImperialDossierPages(lang) {
     const container = document.getElementById('imperialDossierContainer');
-    if (!container || !currentBaziResult) return;
+    if (!container) return;
+
+    if (!currentBaziResult) {
+      if (typeof triggerCalculate === 'function') {
+        triggerCalculate();
+      }
+      if (!currentBaziResult && typeof BaZiEngine !== 'undefined') {
+        currentBaziResult = BaZiEngine.calculate({
+          year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: '乾造',
+          useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+        });
+      }
+    }
+    if (!currentBaziResult) return;
 
     const isEn = (lang === 'en');
     const bazi = currentBaziResult;
