@@ -99,6 +99,15 @@ const SynastryEngine = (function() {
     { branches: ['巳', '酉', '丑'], elementZh: '金', elementEn: 'Metal', nameZh: '巳酉丑金局', nameEn: 'Metal Triad (Precision & Resolve)' }
   ];
 
+  // Tian Yi Noble Star Roots (天乙贵人：甲戊庚牛羊，乙己鼠猴乡，丙丁猪鸡位，壬癸兔蛇藏，六辛逢马虎)
+  const TIAN_YI_TABLE = {
+    '甲': ['丑', '未'], '戊': ['丑', '未'], '庚': ['丑', '未'],
+    '乙': ['子', '申'], '己': ['子', '申'],
+    '丙': ['亥', '酉'], '丁': ['亥', '酉'],
+    '壬': ['巳', '卯'], '癸': ['巳', '卯'],
+    '辛': ['午', '寅']
+  };
+
   const ELEMENT_MAP = {
     '甲': '木', '乙': '木', '丙': '火', '丁': '火', '戊': '土',
     '己': '土', '庚': '金', '辛': '金', '壬': '水', '癸': '水',
@@ -154,15 +163,37 @@ const SynastryEngine = (function() {
    */
   function evaluateZodiacMatch(branchA, branchB, isRomantic, isEn) {
     const aniA = ZODIAC_ANIMALS[branchA] || { zh: '龙', en: 'Dragon', branchEn: 'Chen' };
-    const aniB = ZODIAC_ANIMALS[branchB] || { zh: '凤', en: 'Phoenix', branchEn: 'You' };
+    const aniB = ZODIAC_ANIMALS[branchB] || { zh: '鸡', en: 'Rooster', branchEn: 'You' };
     const pair = branchA + branchB;
     const revPair = branchB + branchA;
 
-    // 1. Check Six Harmonies (六合)
+    // 1. Same Zodiac (同生肖 / 比肩同气) - Evaluated first so identical branches never trigger punishment!
+    if (branchA === branchB) {
+      const isSelfPunish = ['辰', '午', '酉', '亥'].includes(branchA);
+      const titleZh = `【生肖同气 · ${aniA.zh}${aniB.zh}齐心】`;
+      const titleEn = `[Same Zodiac · Twin ${aniA.en} Alignment]`;
+      const descZh = isSelfPunish
+        ? `两造生肖同为【${aniA.zh}】。同龄同根，对时代浪潮与人生大势感悟高度契合；古法相书提示此支兼带自刑之气，双方皆极有主见与原则，相处宜多包容体谅，遇事各退半步，以柔克刚。`
+        : `两造生肖同为【${aniA.zh}】。同龄同根，对时代浪潮与人生阶段感悟极为契合，话题投机；宜在共同的性格盲点上互相提醒督促，携手共进。`;
+      const descEn = isSelfPunish
+        ? `Both share the identical Zodiac sign (${aniA.en}). Shared generational perspective fosters natural rapport and shared values; classical texts note this branch carries self-punishment tendencies, advising mutual flexibility and conscious yielding over stubborn pride.`
+        : `Both share the identical Zodiac sign (${aniA.en}). Shared generational outlook fosters effortless rapport and mutual empathy; mindful awareness of shared blind spots preserves lifelong harmony.`;
+      return {
+        type: 'same_zodiac',
+        scoreDelta: isSelfPunish ? 4 : 6,
+        badgeZh: '生肖同气',
+        badgeEn: 'Same Zodiac',
+        titleZh, titleEn, descZh, descEn,
+        classicalOriginZh: isSelfPunish ? '《渊海子平》论生肖比肩与自刑解化篇' : '《三命通会》论生肖比肩同气篇',
+        classicalOriginEn: isSelfPunish ? 'Yuan Hai Zi Ping: Treatise on Shared Roots and Self-Restraint' : 'San Ming Tong Hui: Affinity of Shared Zodiac Roots'
+      };
+    }
+
+    // 2. Check Six Harmonies (六合)
     if (BRANCH_SIX_HARMONIES[pair]) {
       const harm = BRANCH_SIX_HARMONIES[pair];
       const titleZh = `【生肖六合 · ${aniA.zh}${aniB.zh}合吉】`;
-      const titleEn = `[Six Harmonies · ${aniA.en} & ${aniB.en} Celestial Match]`;
+      const titleEn = `[Six Harmonies · ${aniA.en} & ${aniB.en} Alliance]`;
       const descZh = `两造生肖逢【${branchA}${branchB}六合】化${harm.elementZh}（${aniA.zh}与${aniB.zh}相合）。古法相书《李虚中命书》云：“合者气聚，生肖相投，家道隆昌。”双方从根基上具有极高天然亲和力与信任度，家庭资产稳固，能共同担待风雨。`;
       const descEn = `Both Zodiac signs form Six Harmonies (${aniA.en} & ${aniB.en} merge into ${harm.elementEn}). Canonical scripture Li Xu Zhong Ming Shu states: "Harmony of year roots anchors lasting prosperity." Natural affinity and baseline trust allow both partners to weather life's storms with unified loyalty.`;
       return {
@@ -172,15 +203,15 @@ const SynastryEngine = (function() {
         badgeEn: 'Six Harmonies',
         titleZh, titleEn, descZh, descEn,
         classicalOriginZh: '《李虚中命书》卷中 · 六合贵人篇',
-        classicalOriginEn: 'Li Xu Zhong Ming Shu, Vol. 2: Six Harmonies and Noble Guidance'
+        classicalOriginEn: 'Li Xu Zhong Ming Shu: Six Harmonies and Noble Guidance'
       };
     }
 
-    // 2. Check Three Harmonies (三合局)
+    // 3. Check Three Harmonies (三合局)
     for (let triad of THREE_HARMONIES) {
       if (triad.branches.includes(branchA) && triad.branches.includes(branchB) && branchA !== branchB) {
         const titleZh = `【生肖三合 · ${aniA.zh}${aniB.zh}同盟】`;
-        const titleEn = `[Three Harmonies · ${aniA.en} & ${aniB.en} Triad Resonance]`;
+        const titleEn = `[Three Harmonies · ${aniA.en} & ${aniB.en} Triad]`;
         const descZh = `两造生肖同入【${triad.nameZh}】（${aniA.zh}与${aniB.zh}）。《渊海子平》誉为“同气连枝，长生共济”。气机相引，目标高度一致，尤其在长期奋斗、事业拓荒与财富积累中能形成强大协同合力。`;
         const descEn = `Both Zodiac signs unite in the ${triad.nameEn}. Yuan Hai Zi Ping honors this as "branches of the same tree, thriving together." High commonality in ambition and shared rhythm compounding wealth and mutual achievements.`;
         return {
@@ -195,11 +226,11 @@ const SynastryEngine = (function() {
       }
     }
 
-    // 3. Check Six Clashes (六冲)
+    // 4. Check Six Clashes (六冲)
     if (BRANCH_SIX_CLASHES[pair]) {
       const clash = BRANCH_SIX_CLASHES[pair];
       const titleZh = `【生肖逢冲 · ${aniA.zh}${aniB.zh}对冲】`;
-      const titleEn = `[Zodiac Clash · ${aniA.en} vs ${aniB.en} Confrontation]`;
+      const titleEn = `[Zodiac Clash · ${aniA.en} vs ${aniB.en} Divergence]`;
       const descZh = `两造生肖逢【${branchA}${branchB}相冲】（${aniA.zh}冲${aniB.zh}，${clash.nameZh}）。《玉照定真经》云：“年冲根动，防秉性相左。”二人原生家庭背景或性格习惯存在显著反差，需建立尊重彼此习惯的防火墙，以包容化解冲克。`;
       const descEn = `Both Zodiac signs form a direct Six Clash (${aniA.en} vs ${aniB.en}, ${clash.nameEn}). Yu Zhao Ding Zhen Jing warns: "When roots clash, baseline temperaments collide." Differences in upbringing or routine habits require conscious patience and dedicated decompression space.`;
       return {
@@ -213,7 +244,7 @@ const SynastryEngine = (function() {
       };
     }
 
-    // 4. Check Six Harms (六害)
+    // 5. Check Six Harms (六害)
     if (BRANCH_HARMS[pair]) {
       const harm = BRANCH_HARMS[pair];
       const titleZh = `【生肖逢害 · ${aniA.zh}${aniB.zh}相害】`;
@@ -231,13 +262,13 @@ const SynastryEngine = (function() {
       };
     }
 
-    // 5. Check Punishments (相刑)
+    // 6. Check Punishments (相刑) - Strictly requires branchA !== branchB
     for (let pRule of BRANCH_PUNISHMENTS) {
-      if (pRule.branches.includes(branchA) && pRule.branches.includes(branchB)) {
+      if (pRule.branches.includes(branchA) && pRule.branches.includes(branchB) && branchA !== branchB) {
         const titleZh = `【生肖相刑 · ${aniA.zh}${aniB.zh}互刑】`;
         const titleEn = `[Zodiac Punishment · ${aniA.en} & ${aniB.en} Friction]`;
-        const descZh = `两造生肖逢【${pRule.nameZh}】。相处时若遇执拗争执，易互不妥协。《神峰通考》提示须以柔克刚，切忌因面子问题升级事端。`;
-        const descEn = `Both Zodiac signs trigger Branch Punishment (${pRule.nameEn}). In heated disputes, pride can prolong deadlocks. Shen Feng Tong Kao recommends flexibility over rigid confrontation.`;
+        const descZh = `两造生肖逢【${pRule.nameZh}】（${aniA.zh}与${aniB.zh}）。相处时若遇执拗争执，易互不妥协。《神峰通考》提示须以柔克刚，切忌因面子问题升级事端。`;
+        const descEn = `Both Zodiac signs trigger Branch Punishment (${pRule.nameEn} between ${aniA.en} and ${aniB.en}). In heated disputes, pride can prolong deadlocks. Shen Feng Tong Kao recommends flexibility over rigid confrontation.`;
         return {
           type: 'punishment',
           scoreDelta: -5,
@@ -250,24 +281,7 @@ const SynastryEngine = (function() {
       }
     }
 
-    // 6. Same Zodiac (同生肖)
-    if (branchA === branchB) {
-      const titleZh = `【生肖同气 · ${aniA.zh}${aniB.zh}齐心】`;
-      const titleEn = `[Same Zodiac · Twin ${aniA.en} Alignment]`;
-      const descZh = `两造生肖同为【${aniA.zh}】。同龄同根，对时代浪潮与人生阶段感悟极为契合，话题投机；宜在共同的性格短板上互相提醒督促。`;
-      const descEn = `Both share the identical Zodiac sign (${aniA.en}). Shared generational perspective fosters effortless rapport and mutual empathy; mindful awareness of shared blind spots preserves harmony.`;
-      return {
-        type: 'same',
-        scoreDelta: 4,
-        badgeZh: '生肖同气',
-        badgeEn: 'Same Zodiac',
-        titleZh, titleEn, descZh, descEn,
-        classicalOriginZh: '《三命通会》同根论',
-        classicalOriginEn: 'San Ming Tong Hui: Treatise on Shared Roots'
-      };
-    }
-
-    // 7. Elemental Generation / Control
+    // 7. Elemental Generation
     const elA = ELEMENT_MAP[branchA];
     const elB = ELEMENT_MAP[branchB];
     const enElA = ELEMENT_NAMES_EN[elA];
@@ -290,14 +304,14 @@ const SynastryEngine = (function() {
         type: 'generating',
         scoreDelta: 6,
         badgeZh: '生肖相生',
-        badgeEn: 'Elemental Generation',
+        badgeEn: 'Elemental Support',
         titleZh, titleEn, descZh, descEn,
         classicalOriginZh: '《滴天髓》地支承载篇',
         classicalOriginEn: 'Di Tian Sui: Foundations of Terrestrial Support'
       };
     }
 
-    // Default neutral
+    // 8. Default neutral
     const titleZh = `【生肖平顺 · ${aniA.zh}${aniB.zh}相敬】`;
     const titleEn = `[Zodiac Harmony · ${aniA.en} & ${aniB.en} Balance]`;
     const descZh = `两造生肖【${aniA.zh}】与【${aniB.zh}】无严苛刑冲克害，气脉平顺中正。相处自足从容，重在后天心性修持与共同生活目标的经营。`;
@@ -316,7 +330,7 @@ const SynastryEngine = (function() {
   /**
    * Comprehensive Eight Canons Synastry Deep Synthesis (八经合盘互参全息战报)
    */
-  function generateEightCanonsSynthesis(chartA, chartB, pA, pB, dmElemA, dmElemB, hasStemCombo, hasSixHarmony, hasSixClash, mutualGifts, isRomantic, isEn) {
+  function generateEightCanonsSynthesis(chartA, chartB, pA, pB, dmElemA, dmElemB, hasStemCombo, hasSixHarmony, hasSixClash, mutualGifts, isRomantic, isEn, crossClashes = [], crossPunishments = [], zMatch = {}) {
     const dmA = chartA.dayMaster;
     const dmB = chartB.dayMaster;
     const mBranchA = pA.month.branch;
@@ -324,18 +338,24 @@ const SynastryEngine = (function() {
     const dayBranchA = pA.day.branch;
     const dayBranchB = pB.day.branch;
 
+    const generates = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+    const controls = { '木': '土', '土': '水', '水': '火', '火': '金', '金': '木' };
+
     // 1. Di Tian Sui (《滴天髓》) - Day Master Vitality & Pure Circulation
     let dtsZh = '';
     let dtsEn = '';
     if (hasStemCombo) {
-      dtsZh = `【天干正化·纯粹流通】两造日主逢天干正合，依《滴天髓》精微发凡：“顺则吉兮逆则悖，纯粹流通者上贵。”双方心性相合，气机水乳交融，极易形成心有灵犀一点通的默契，将杂乱气机转化为纯粹正能。`;
-      dtsEn = `[Di Tian Sui · Pure Circulation] The Day Masters form a genuine Heavenly Stem Combination. Di Tian Sui declares: "Harmony between Stems dissolves conflict, transforming turbulence into lucid synergy." Intuitive empathy and mental resonance operate effortlessly.`;
+      dtsZh = `【天干正化·纯粹流通】两造日主逢天干正合，依《滴天髓》“顺则吉兮逆则悖，纯粹流通者上贵”之旨，双方心性暗合、神识相投，天然具备无声默契，能化驳杂气机为中正清纯之质。`;
+      dtsEn = `[Di Tian Sui · Pure Circulation] The Day Masters form a Heavenly Stem Combination. Di Tian Sui affirms: "When vital currents flow in harmony, noble synergy emerges." Natural mental alignment effortlessly transmutes differing temperaments into shared momentum.`;
     } else if (dmElemA === dmElemB) {
-      dtsZh = `【同气相求·比和共振】两造日元同禀【${dmElemA}】之气，依《滴天髓》“同类相求，其应相投”之旨，双方三观与底层追求高度相近，共谋事业或组建家庭极易达成共识；唯需防双强相抗，各留半步退路。`;
-      dtsEn = `[Di Tian Sui · Peer Alignment] Both embody the ${ELEMENT_NAMES_EN[dmElemA]} Day Master. Di Tian Sui notes that shared elemental roots foster identical core instincts and quick alignment; cultivating deliberate patience prevents stubborn impasses.`;
+      dtsZh = `【同气相求·比和共振】两造日元同禀【${dmElemA}】气，依《滴天髓》“同类相求，其应相投”之论，三观底色高度契合，目标协同一致；日常只需包容各自相似的性格固执，即可长久稳固。`;
+      dtsEn = `[Di Tian Sui · Peer Resonance] Both Day Masters share the ${ELEMENT_NAMES_EN[dmElemA]} element. Di Tian Sui notes: "Peers naturally seek each other." Core outlooks and lifestyle rhythms closely align; practicing mutual yielding during differences maintains steady harmony.`;
+    } else if (generates[dmElemA] === dmElemB || generates[dmElemB] === dmElemA) {
+      dtsZh = `【相生相契·润物生生】甲造【${dmA}】(${dmElemA})与乙造【${dmB}】(${dmElemB})日元相生，依《滴天髓》“相生为本，化生不绝”之训，一方主动滋养，一方欣然包容，形成自洽互惠的情感回环。`;
+      dtsEn = `[Di Tian Sui · Organic Nourishment] The Day Masters (${ELEMENT_NAMES_EN[dmElemA]} and ${ELEMENT_NAMES_EN[dmElemB]}) form an elemental generating flow. Di Tian Sui teaches that mutual feeding creates an enduring, self-renewing loop of affection and steady encouragement.`;
     } else {
-      dtsZh = `【相生相济·生生不息】甲造【${dmA}】与乙造【${dmB}】干气相顾，依《滴天髓》“戴天履地人为贵”之论，彼此存在天然的气机补益关系，一者主动开拓一者沉稳承载，形成生生不息的能量闭环。`;
-      dtsEn = `[Di Tian Sui · Mutual Nourishment] Day Masters interact with organic complementary flow. Di Tian Sui affirms that balanced polarity allows active initiative to interlock with grounded stewardship, creating a compounding growth cycle.`;
+      dtsZh = `【刚柔互济·克以成器】甲造【${dmA}】(${dmElemA})与乙造【${dmB}】(${dmElemB})日元相制，依《滴天髓》“刚柔得中，制化为妙”之意，虽见棱角碰撞，却能化为彼此查漏补缺的明镜，相敬相成。`;
+      dtsEn = `[Di Tian Sui · Refining Polarity] The Day Masters (${ELEMENT_NAMES_EN[dmElemA]} and ${ELEMENT_NAMES_EN[dmElemB]}) exert mutual checks. Di Tian Sui values constructive balance: creative tension serves as a mirror, refining blind spots into seasoned maturity.`;
     }
 
     // 2. Qiong Tong Bao Jian (《穷通宝鉴》) - Seasonal Thermal Equilibrium
@@ -349,57 +369,144 @@ const SynastryEngine = (function() {
     let qtZh = '';
     let qtEn = '';
     if ((isWinterA && isSummerB) || (isSummerA && isWinterB)) {
-      qtZh = `【寒暖调候·绝妙互济】一造生于冬令严寒，一造生于夏令炎热。《穷通宝鉴》奉“寒暖燥湿”为第一要义：夏令之火温润冬水之冰霜，冬令之水解除酷暑之焦渴。双盘合力，犹如大地回春，为彼此命运注入最珍贵的调候生机。`;
-      qtEn = `[Qiong Tong Bao Jian · Thermal Equilibrium] An ideal climate counterbalance: one is born in winter and the other in summer. Qiong Tong Bao Jian treats temperature balance as supreme: summer warmth dissolves winter frost, while winter coolness quenches summer parching, revitalizing both destinies.`;
+      qtZh = `【寒暖互济·雪消春融】一造生于冬寒，一造生于夏暑。《穷通宝鉴》奉“寒暖得中”为至高生机：夏火消解冬寒，冬水润泽炎燥。双盘合璧如冰原逢春，互为最珍贵的调候吉星。`;
+      qtEn = `[Qiong Tong Bao Jian · Climate Counterbalance] One partner was born in winter and the other in summer. Qiong Tong Bao Jian prizes thermal equilibrium: summer warmth thaws winter chill while winter coolness relieves summer heat, restoring balance and vitality to both.`;
+    } else if (isWinterA && isWinterB) {
+      qtZh = `【双冬相聚·自引暖阳】两造同生于冬月，水凝土冻。《穷通宝鉴》云：“冬寒之局，专赖火阳。”双方性格皆深沉内敛，宜在生活与事业中主动注入温情、幽默与开朗心境，共御寒凉。`;
+      qtEn = `[Qiong Tong Bao Jian · Shared Winter Roots] Both are born in winter. Qiong Tong Bao Jian emphasizes the need for warmth and light: cultivate conscious optimism, warm gestures, and shared passions to keep dynamic vitality glowing.`;
+    } else if (isSummerA && isSummerB) {
+      qtZh = `【双夏相遇·喜润清泉】两造同生于夏月，气象炎烈。《穷通宝鉴》云：“夏热之火，喜泽以润。”双方决断迅捷但易急躁，相处需常持虚静包容，以沉静理智化解无名火气。`;
+      qtEn = `[Qiong Tong Bao Jian · Summer Radiance] Both are born in summer with high thermal drive. Qiong Tong Bao Jian counsels soothing moisture: temper fast-paced intensity with deliberate calm, active listening, and unhurried pacing.`;
     } else {
-      qtZh = `【时令调和·水土互培】两造月令节气气象和谐，《穷通宝鉴》强调气机之润泽与温厚。原局所缺之微候，因彼此相合而得到天然润滑，生活步调与精力节律高度同步。`;
-      qtEn = `[Qiong Tong Bao Jian · Synchronized Climate] Both charts share harmonious seasonal dynamics. Qiong Tong Bao Jian highlights that complementary moisture and warmth prevent energy exhaustion, sustaining matched circadian pacing and shared vitality.`;
+      qtZh = `【春秋舒展·气象从容】两造月令节气顺行相生，《穷通宝鉴》称之“燥湿得宜，万物繁祉”。生活起居气场协调，作息与精力节律高度互洽，少有突兀波动。`;
+      qtEn = `[Qiong Tong Bao Jian · Harmonious Seasons] The seasonal temperaments blend smoothly without harsh climate extremes. Qiong Tong Bao Jian praises this balanced moisture: daily habits and natural energy rhythms align with ease.`;
     }
 
     // 3. Zi Ping Zhen Quan (《子平真诠》) - Pattern Synergy & Ten Gods Mutual Defense
-    const zpZh = `【成格救应·十神互助】《子平真诠》定论：“格局用神，专求月令；相生相制，成格救应。”双盘交互中，一造之强项恰为另一造格局所求之喜神（如食伤吐秀生财、财官相辅相成）。二人联手，能有效补齐彼此原局的破格隐患，使事业阶梯稳步上升。`;
-    const zpEn = `[Zi Ping Zhen Quan · Pattern Synergy] Zi Ping Zhen Quan dictates that authentic achievement arises when one chart supplies the key stabilizing star for the other's noble aspirations. Partner A's core assets actively shield Partner B's vulnerabilities, creating an executive and emotional mutual defense fortress.`;
+    const monthGodA = pA.month.stemGod || '';
+    const monthGodB = pB.month.stemGod || '';
+    const isUsefulHelp = mutualGifts && mutualGifts.length > 0;
+
+    let zpZh = '';
+    let zpEn = '';
+    if (isUsefulHelp) {
+      const giftNames = [...new Set(mutualGifts.map(g => g.element))].join('、');
+      const giftNamesEn = [...new Set(mutualGifts.map(g => g.elementEn))].join(', ');
+      zpZh = `【成格救应·喜用互济】《子平真诠》定论：“格局用神，专求月令；相生相制，成格救应。”双盘交互中，一方之丰沛恰为另一方原局所求之喜用（互补【${giftNames}】气）。彼此互为破格之解药，事业合作与家庭经营均能借力化阻、相辅相成。`;
+      zpEn = `[Zi Ping Zhen Quan · Pattern Rescue] Zi Ping Zhen Quan states: "Useful gods rely on generation and restraint to complete noble patterns." Partner strengths supply crucial useful elements (${giftNamesEn}), shielding against natal vulnerabilities and elevating shared career and life achievements.`;
+    } else {
+      zpZh = `【格局相成·各司其职】《子平真诠》论格局之道：“成中有败，败中有成，全赖救应。”甲造月令显【${monthGodA || '正气'}】，乙造显【${monthGodB || '和顺'}】。二人心智各有侧重，一者长于战略决策，一者精于细致落实，彼此尊重专业分工即可稳步成势。`;
+      zpEn = `[Zi Ping Zhen Quan · Role Complementarity] Zi Ping Zhen Quan teaches that balance arises through coordinated roles. Person A's focus (${monthGodA || 'Executive'} drive) pairs naturally with Person B's strengths (${monthGodB || 'Supportive'} care). Clear operational division ensures sustained momentum.`;
+    }
 
     // 4. San Ming Tong Hui (《三命通会》) - Na-Yin Melody & Noble Stars
-    const naYinA = pA.year.naYin;
-    const naYinB = pB.year.naYin;
+    const naYinA = pA.year.naYin || '';
+    const naYinB = pB.year.naYin || '';
     const naYinAEn = NAYIN_NAMES_EN[naYinA] || naYinA;
     const naYinBEn = NAYIN_NAMES_EN[naYinB] || naYinB;
-    const smZh = `【纳音正律·贵人互照】甲造年命纳音【${naYinA}】，乙造年命纳音【${naYinB}】。《三命通会》探究六十甲子纳音音律，两造纳音宫商相协、音律同调；更兼四柱互为天乙贵人、天德福星。在重大关头彼此即是最大的转运吉神与减震器。`;
-    const smEn = `[San Ming Tong Hui · Na-Yin Symphony] Person A's Year Na-Yin [${naYinAEn}] harmonizes melodically with Person B's [${naYinBEn}]. San Ming Tong Hui honors this vibrational coherence as a harbinger of shared aesthetic refinement and mutual Noble Star protection during life crossroads.`;
+    const elNaYinA = naYinA ? naYinA.slice(-1) : '';
+    const elNaYinB = naYinB ? naYinB.slice(-1) : '';
+
+    let nayinRelZh = '律吕相安';
+    let nayinRelEn = 'melodic unison';
+    if (elNaYinA && elNaYinB) {
+      if (elNaYinA === elNaYinB) {
+        nayinRelZh = `五行同归【${elNaYinA}】，律吕同鸣`;
+        nayinRelEn = `both resonate in the ${ELEMENT_NAMES_EN[elNaYinA] || elNaYinA} element in harmonic unison`;
+      } else if (generates[elNaYinA] === elNaYinB || generates[elNaYinB] === elNaYinA) {
+        nayinRelZh = `逢【${elNaYinA}与${elNaYinB}】相生流转，气脉相滋`;
+        nayinRelEn = `form a natural generating flow (${ELEMENT_NAMES_EN[elNaYinA] || elNaYinA} & ${ELEMENT_NAMES_EN[elNaYinB] || elNaYinB})`;
+      } else {
+        nayinRelZh = `五行刚柔并济，互为砥砺`;
+        nayinRelEn = `create complementary dynamic tension (${ELEMENT_NAMES_EN[elNaYinA] || elNaYinA} & ${ELEMENT_NAMES_EN[elNaYinB] || elNaYinB})`;
+      }
+    }
+
+    // Tian Yi Noble check
+    const branchesB = [pB.year.branch, pB.month.branch, pB.day.branch, pB.hour.branch];
+    const branchesA = [pA.year.branch, pA.month.branch, pA.day.branch, pA.hour.branch];
+    const tianYiA = [...new Set([...(TIAN_YI_TABLE[dmA] || []), ...(TIAN_YI_TABLE[pA.year.stem] || [])])];
+    const tianYiB = [...new Set([...(TIAN_YI_TABLE[dmB] || []), ...(TIAN_YI_TABLE[pB.year.stem] || [])])];
+    const bHasNobleForA = tianYiA.some(b => branchesB.includes(b));
+    const aHasNobleForB = tianYiB.some(b => branchesA.includes(b));
+
+    let nobleDescZh = '';
+    let nobleDescEn = '';
+    if (bHasNobleForA && aHasNobleForB) {
+      nobleDescZh = '四柱互坐天乙贵人，双向逢凶化吉';
+      nobleDescEn = 'both partners carry mutual Tian Yi Noble stars for each other';
+    } else if (bHasNobleForA) {
+      nobleDescZh = '乙造四柱带甲造天乙贵人，多有提携托底之功';
+      nobleDescEn = 'Person B provides Tian Yi Noble star support for Person A';
+    } else if (aHasNobleForB) {
+      nobleDescZh = '甲造四柱带乙造天乙贵人，常为破局转运之助';
+      nobleDescEn = 'Person A provides Tian Yi Noble star support for Person B';
+    } else {
+      nobleDescZh = '四柱气象中和，福德相承';
+      nobleDescEn = 'pillars maintain steady, auspicious balance';
+    }
+
+    const smZh = `【纳音正律·贵人互照】甲造年命纳音【${naYinA}】，乙造年命纳音【${naYinB}】（${nayinRelZh}；${nobleDescZh}）。《三命通会》定论：“纳音本乎律吕，贵人照命则灾晦潜消。”二人在重大人生关头能互为转运福星与情绪减震器。`;
+    const smEn = `[San Ming Tong Hui · Na-Yin & Noble Stars] Person A's Year Na-Yin [${naYinAEn}] meets Person B's [${naYinBEn}] (${nayinRelEn}; ${nobleDescEn}). San Ming Tong Hui affirms: "Noble stars dissolve adversity while harmonic overtones ensure sustained prosperity." Partners serve as reliable benefactors and emotional anchors during life's turning points.`;
 
     // 5. Yuan Hai Zi Ping (《渊海子平》) - Spouse Palace Alignment
     let yhZh = '';
     let yhEn = '';
     if (dayBranchA === dayBranchB) {
-      yhZh = `【日支比和·知己同心】两造夫妻宫同为【${dayBranchA}】，《渊海子平》论夫妻宫“坐下同气，知根知底”。日常起居观念相通，在核心价值观上没有不可逾越的鸿沟。`;
-      yhEn = `[Yuan Hai Zi Ping · Partner Palace Harmony] Both share the same Day Branch [${BRANCH_PINYIN[dayBranchA]}]. Yuan Hai Zi Ping notes that identical spouse palaces foster natural rapport, intuitive lifestyle synchrony, and shared domestic expectations.`;
+      yhZh = `【日支比和·知己同心】两造夫妻宫同为【${dayBranchA}】，《渊海子平》论夫妻宫“坐下同气，知根知底”。日常起居观念相通，在核心价值观上没有不可逾越的鸿沟；需注意包容彼此共有的小固执。`;
+      yhEn = `[Yuan Hai Zi Ping · Partner Palace Harmony] Both share the identical Day Branch [${BRANCH_PINYIN[dayBranchA]}]. Yuan Hai Zi Ping observes that matching spouse palaces create shared lifestyle rhythms and intuitive domestic expectations. Mindful awareness of common blind spots preserves harmony.`;
     } else if (BRANCH_SIX_HARMONIES[dayBranchA + dayBranchB]) {
-      yhZh = `【配偶六合·举案齐眉】极贵之相！两造日支夫妻宫逢【${dayBranchA}${dayBranchB}六合】。《渊海子平》奉夫妻宫相合为合婚之首善：日支代表最私密的情感世界与家庭生活底盘，六合象征身心相依、执子之手与子偕老。`;
-      yhEn = `[Yuan Hai Zi Ping · Supreme Spouse Palace Union] Highly auspicious: Day Branches form Six Harmonies directly in the Partner Palaces. Yuan Hai Zi Ping extols this as the golden standard for marriage and deep partnership: private temperaments and lifestyle rituals align effortlessly.`;
+      yhZh = `【日支六合·举案齐眉】极贵之相！两造日支夫妻宫逢【${dayBranchA}${dayBranchB}六合】。《渊海子平》奉夫妻宫相合为合婚之首善：日支代表最私密的情感世界与家庭底盘，六合象征身心相依、休戚与共。`;
+      yhEn = `[Yuan Hai Zi Ping · Supreme Spouse Palace Union] Highly auspicious: Day Branches form Six Harmonies directly in the Partner Palaces. Yuan Hai Zi Ping considers this the ideal bedrock for lasting companionship: private temperaments align smoothly and emotional loyalty remains unshakeable.`;
     } else if (BRANCH_SIX_CLASHES[dayBranchA + dayBranchB]) {
-      yhZh = `【宫位逢冲·分工明晰】两造日支夫妻宫逢【${dayBranchA}${dayBranchB}冲】。《渊海子平》提示“宫位逢冲，宜分工自立”。日常生活中应避免对彼此琐事强行管控，划定各自负责板块，以信任和留白化解冲撞。`;
-      yhEn = `[Yuan Hai Zi Ping · Spouse Palace Polarity] The Day Branches form an active branch confrontation. Yuan Hai Zi Ping counsels clear division of authority: respect individual private boundaries and avoid micromanaging daily habits to maintain mutual peace.`;
+      yhZh = `【日支逢冲·分工明晰】两造日支夫妻宫逢【${dayBranchA}${dayBranchB}冲】。《渊海子平》提示“宫位逢冲，宜分工自立”。日常生活中应避免对彼此琐事强行管控，划定各自负责板块，以信任和留白化解冲撞。`;
+      yhEn = `[Yuan Hai Zi Ping · Spouse Palace Polarity] Day Branches form an active branch confrontation. Yuan Hai Zi Ping advises establishing clear individual domains: respecting personal boundaries and avoiding micro-management turns natural differences into functional strengths.`;
     } else {
-      yhZh = `【宫位相安·基业安澜】两造日支五行相安顺生，《渊海子平》云：“日支安泰，家道隆昌。”双方情感平实厚重，不易受外界流言侵扰，具备长期经营家庭或联盟的稳固底盘。`;
-      yhEn = `[Yuan Hai Zi Ping · Enduring Domestic Anchor] Day Branches interact steadily without destructive clashes. Yuan Hai Zi Ping confirms that tranquil spouse palaces preserve emotional loyalty and shield against external gossip.`;
+      yhZh = `【宫位相安·水到渠成】两造日支五行相安顺生，《渊海子平》云：“日支安泰，家道隆昌。”双方情感平实厚重，不易受外界纷扰侵蚀，具备长期经营家庭或联盟的稳固底盘。`;
+      yhEn = `[Yuan Hai Zi Ping · Enduring Domestic Anchor] Day Branches interact steadily without destructive friction. Yuan Hai Zi Ping confirms that tranquil spouse palaces preserve emotional loyalty, ensuring calm and durable companionship.`;
     }
 
     // 6. Shen Feng Tong Kao (《神峰通考》) - Pathology & Medicinal Remedy
-    const sfZh = `【病药相济·互为解药】《神峰通考》阐发命理至高突破法门：“有病方为贵，无伤不是奇；格中如去病，财禄两相随。”人无全人，单盘原局之匮乏即为“病”，而对方气场之充盛恰为对症下药之“药”。二者交汇，恰如枯木得霖，彼此治愈盲点，成就共同飞跃。`;
-    const sfEn = `[Shen Feng Tong Kao · Pathology & Remedy] Master Zhang Shen-Feng's famous 'Pathology and Remedy' doctrine declares: "Nobility emerges when systemic flaws find their cure." The elemental abundance of one chart serves as the medicinal antidote for the other's blind spot, converting vulnerability into mutual resilience.`;
+    let sfZh = '';
+    let sfEn = '';
+    if (mutualGifts && mutualGifts.length > 0) {
+      sfZh = `【病药相济·互为解药】《神峰通考》定论：“格中如去病，财禄两相随。”单盘原局之匮乏即为“病”，对方气场之充盛恰为对症下药之“药”。双盘交互中，${mutualGifts.map(g => g.descZh).join('；')}。二者交融，恰如枯木得霖，彼此治愈盲点，成就共同跃升。`;
+      sfEn = `[Shen Feng Tong Kao · Pathology & Remedy] Shen Feng Tong Kao declares: "When systemic imbalances meet their cure, fortune and harmony follow." Partner strengths directly supply what the other lacks: ${mutualGifts.map(g => g.descEn).join('; ')}. Converting vulnerabilities into mutual resilience unlocks breakthrough growth.`;
+    } else {
+      sfZh = `【气象纯粹·自足自生】《神峰通考》云：“原局无重病，中和即是福。”两造五行分布均相对均衡平顺，无严苛匮乏与偏枯。双方自立自强，既能独立独行，亦能并肩协作，属于低消耗、高耐力的从容组合。`;
+      sfEn = `[Shen Feng Tong Kao · Balanced Vitality] Shen Feng Tong Kao notes: "Without extreme deficits, harmony yields enduring peace." Both charts maintain balanced elemental distributions without glaring shortages. Each partner stands self-sufficient while enjoying seamless collaboration.`;
+    }
 
     // 7. Yu Zhao Ding Zhen Jing (《玉照定真经》) - Microscopic Boundary Safeguards
-    const yzZh = `【微观避坑·界限护持】《玉照定真经》专察隐微祸福，详推地支刑冲破害之兆。双盘交互提示：相处大忌在疲惫时刻口出恶言或触碰对方原生家庭敏感区。建立“争执不上火、当场不翻旧账、遇事就事论事”的三大铁律，方能久远。`;
-    const yzEn = `[Yu Zhao Ding Zhen Jing · Boundary Protocols] Yu Zhao Ding Zhen Jing monitors delicate micro-clash vectors. Actionable safeguard: banish passive-aggressive retaliation during fatigued moments; establish clear boundaries regarding family discussions and financial transparency.`;
+    let yzZh = '';
+    let yzEn = '';
+    const hasClashes = (crossClashes && crossClashes.length > 0) || hasSixClash || (crossPunishments && crossPunishments.length > 0);
+    if (hasClashes) {
+      yzZh = `【微观防卫·克制冲克】《玉照定真经》专察隐微吉凶：“吉凶悔吝生乎动，刑冲破害见精微。”双盘提示支位存有冲克之机，相处大忌在疲惫冲动时宣泄情绪或触碰敏感情结。践行“争执不过夜、就事论事、不翻旧账”三大铁律，即可化干戈为玉帛。`;
+      yzEn = `[Yu Zhao Ding Zhen Jing · Boundary Protocols] Yu Zhao Ding Zhen Jing tracks subtle friction before it escalates: "Observe early signals to protect harmony." Branch clashes indicate that fatigue can amplify small disputes. Establishing clear ground rules—addressing issues promptly without dredging up past grievances—keeps the bond secure.`;
+    } else {
+      yzZh = `【微观清纯·见微知著】《玉照定真经》专推支位纯粹之象。双盘干支交互无严苛刑冲，气象清正平顺。相处之道重在日常坦诚沟通，防微杜渐，以日积月累的细水长流守护温情。`;
+      yzEn = `[Yu Zhao Ding Zhen Jing · Proactive Clarity] Yu Zhao Ding Zhen Jing highlights the strength of unclouded roots. With minimal structural clashes, maintaining transparent, candid dialogue and clarifying minor doubts early keeps connection effortless.`;
+    }
 
     // 8. Li Xu Zhong Ming Shu (《李虚中命书》) - Ancient Three-Pillars Bedrock
-    const lxzZh = `【三元禄命·因缘夙定】唐代命学始祖李虚中立天元禄、地元命、人元身三才大道。两造年柱祖荫与生肖根基相顾有情，表征二人在命运深处具备坚韧的因缘羁绊，不仅是短暂情投意合，更能在数十年岁月长河中同舟共济。`;
-    const lxzEn = `[Li Xu Zhong Ming Shu · Ancient Three-Pillar Bedrock] Tang Dynasty forefather Li Xu Zhong anchors human destiny in ancestral Year roots. Their foundational branches interlock harmoniously, signifying enduring karmic staying power that outlasts transient external pressures.`;
+    let lxzZh = '';
+    let lxzEn = '';
+    const zType = zMatch.type || '';
+    if (zType === 'six_harmony' || zType === 'three_harmony' || zType === 'same_zodiac') {
+      lxzZh = `【三元同契·因缘深固】唐代命学始祖李虚中立天元、地元、人元三才大道，重在年基相合。两造生肖与年基相引相投，表征二人具备坚实的命运底盘与宿世默契，能在数十年岁月长河中休戚与共、同舟共济。`;
+      lxzEn = `[Li Xu Zhong Ming Shu · Ancestral Affinity] Tang Dynasty forefather Li Xu Zhong anchors human destiny in ancestral Year roots. Their foundational branches interlock harmoniously, signifying deep generational rapport and mutual resilience that weather external life changes.`;
+    } else if (zType === 'six_clash' || zType === 'punishment') {
+      lxzZh = `【三元调摄·自立家门】唐代李虚中以年柱立根基。两造年支逢冲刑，表征各自原生家庭背景或早期习惯存在反差。相处宜注重建立属于两人的独立生活规则与精神空间，以理解化解背景差异。`;
+      lxzEn = `[Li Xu Zhong Ming Shu · Independent Roots] Li Xu Zhong's ancient framework anchors core lineage in the Year Pillar. With year branches in tension, differences in family backgrounds require consciously creating independent household routines and shared new traditions.`;
+    } else {
+      lxzZh = `【三元中正·基业安泰】唐代命学始祖李虚中立三才之基。两造年柱平稳中和，气脉相顾，非一时冲动之聚，具备稳健经营家庭或事业联盟的长远韧性。`;
+      lxzEn = `[Li Xu Zhong Ming Shu · Enduring Foundation] Li Xu Zhong's Three-Pillar doctrine honors the year root as the anchor of destiny. Stable year pillars indicate an enduring bond capable of steady growth through life's evolving seasons.`;
+    }
 
     // Summary
-    const summaryZh = `八大经典通考汇流：双盘在气机纯粹度（滴天髓）、调候平衡（穷通宝鉴）与病药互补（神峰通考）上均显现出深厚的互利价值。只要依玉照经所诫守住微观沟通边界，必能成就兼济天下的长青合相。`;
-    const summaryEn = `Comprehensive Eight Canons Synthesis: Both charts achieve strong synergy across vital circulation (Di Tian Sui), thermal balance (Qiong Tong), and mutual medicinal support (Shen Feng). Honoring communication boundaries ensures lifelong mutual compounding.`;
+    const summaryZh = `八大经典通考汇流：两造在纯粹气机（滴天髓）、节气调候（穷通宝鉴）、格局救应（子平真诠）与病药互补（神峰通考）上均显现出深厚互利价值；只要依玉照经所诫守住微观沟通边界，必能成就兼济天下的长青合相。`;
+    const summaryEn = `Comprehensive Eight Canons Matrix: Both charts achieve strong synergy across vital circulation (Di Tian Sui), thermal balance (Qiong Tong), pattern rescue (Zi Ping), and medicinal remedies (Shen Feng). Honoring communication boundaries ensures lifelong mutual compounding.`;
 
     const canonsZh = [
       { nameZh: '《滴天髓》纯粹气机论', canonZh: '“五阳皆阳丙为最，五阴皆阴癸为至；戴天履地人为贵，顺则吉兮逆则悖。”', analysisZh: dtsZh },
@@ -413,7 +520,7 @@ const SynastryEngine = (function() {
     ];
 
     const canonsEn = [
-      { nameEn: 'Di Tian Sui (Essence of Vitality)', canonEn: '"Harmony between Heavenly Stems dissolves conflict, transforming turbulence into lucid synergy."', analysisEn: dtsEn },
+      { nameEn: 'Di Tian Sui (Essence of Vitality)', canonEn: '"When vital currents flow in harmony, noble synergy emerges."', analysisEn: dtsEn },
       { nameEn: 'Qiong Tong Bao Jian (Climate Mirror)', canonEn: '"Nature balances heat and cold to nourish life; human destinies require moisture and warmth."', analysisEn: qtEn },
       { nameEn: 'Zi Ping Zhen Quan (Authentic Zi Ping)', canonEn: '"Authentic achievement arises when one chart supplies the key stabilizing star for the other."', analysisEn: zpEn },
       { nameEn: 'San Ming Tong Hui (Comprehensive Canons)', canonEn: '"Na-Yin vibrations echo harmonic laws; complementary notes generate mutual nobility."', analysisEn: smEn },
@@ -425,7 +532,7 @@ const SynastryEngine = (function() {
 
     return {
       titleZh: '八大经典合盘互参全息战报',
-      titleEn: 'Eight Classical Canons Synastry Hologram',
+      titleEn: 'Eight Classical Canons Synastry Matrix',
       summaryZh,
       summaryEn,
       canonsZh,
@@ -659,14 +766,14 @@ const SynastryEngine = (function() {
       });
     });
 
-    // Check punishments
-    const allBranches = [
-      pA.year.branch, pA.month.branch, pA.day.branch, pA.hour.branch,
-      pB.year.branch, pB.month.branch, pB.day.branch, pB.hour.branch
-    ];
+    // Check punishments across both charts (requires participation from both charts)
+    const branchesA = [pA.year.branch, pA.month.branch, pA.day.branch, pA.hour.branch];
+    const branchesB = [pB.year.branch, pB.month.branch, pB.day.branch, pB.hour.branch];
     BRANCH_PUNISHMENTS.forEach(pRule => {
-      const matchCount = pRule.branches.filter(b => allBranches.includes(b)).length;
-      if (matchCount >= 2) {
+      const matchA = pRule.branches.filter(b => branchesA.includes(b));
+      const matchB = pRule.branches.filter(b => branchesB.includes(b));
+      const hasCross = matchA.some(bA => matchB.some(bB => bA !== bB));
+      if (hasCross) {
         crossPunishments.push(pRule);
         synergyScore -= 5;
       }
@@ -789,7 +896,7 @@ const SynastryEngine = (function() {
     const financeEn = generateFinancialDiagnosis(chartA, chartB, isRomantic, true);
 
     // 9. Eight Canons Synthesis
-    const canonsData = generateEightCanonsSynthesis(chartA, chartB, pA, pB, dmElemA, dmElemB, hasStemCombo, hasSixHarmony, hasSixClash, mutualGifts, isRomantic, isEn);
+    const canonsData = generateEightCanonsSynthesis(chartA, chartB, pA, pB, dmElemA, dmElemB, hasStemCombo, hasSixHarmony, hasSixClash, mutualGifts, isRomantic, isEn, crossClashes, crossPunishments, zMatch);
 
     // 10. Zen & Dao Trinity Counsel
     const zenData = generateZenDaoCounsel(chartA, chartB, isRomantic, isEn);

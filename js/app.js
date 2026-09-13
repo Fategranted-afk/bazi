@@ -594,9 +594,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const pNaYin = p.naYin || p.nayin || '';
         const nayin = isEn ? (typeof I18N !== 'undefined' ? I18N.getNaYin(pNaYin, 'en') : pNaYin) : pNaYin;
 
+        const isYear = (item.labelZh === '年柱');
+        const zodiacSuffix = (isYear && typeof I18N !== 'undefined') ? ` · ${I18N.getZodiac(p.branch, currentLang)}` : '';
+
         return `
           <div class="mini-pillar-card ${item.isDay ? 'border-amber-500/60 bg-amber-950/30 ring-1 ring-amber-500/30' : ''}">
-            <div class="text-[10px] text-gray-400 font-medium pb-1">${isEn ? item.labelEn : item.labelZh}</div>
+            <div class="text-[10px] text-gray-400 font-medium pb-1">${isEn ? item.labelEn : item.labelZh}${zodiacSuffix}</div>
             <div class="text-base sm:text-lg font-bold font-serif-sc py-0.5 flex justify-center items-center gap-1">
               <span class="${stemClass}">${stemName}</span>
               <span class="${branchClass}">${branchName}</span>
@@ -685,6 +688,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const dmName = isEn ? getStemShortEn(dmStem) : dmStem;
     const dmBadge = `<span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30 font-bold">${isEn ? 'Day Master: ' : '元神: '}${dmName} (${dmElName})</span>`;
 
+    const yBranch = res.pillars.year ? res.pillars.year.branch : '';
+    const zodiacAnimal = yBranch && typeof I18N !== 'undefined' ? I18N.getZodiac(yBranch, currentLang) : '';
+    const zodiacBadge = zodiacAnimal ? `<span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/30 font-bold">${isEn ? `Zodiac: ${zodiacAnimal}` : `生肖: 属${zodiacAnimal}`}</span>` : '';
+
     dashboardSummaryBadges.innerHTML = `
       ${genderBadge}
       <span class="text-gray-300 font-mono text-[11px]">${dateStr}</span>
@@ -698,6 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <span class="hidden md:inline text-gray-500">|</span>
       ${dmBadge}
+      ${zodiacBadge}
     `;
   }
 
@@ -857,9 +865,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ? (isEn ? 'Day Master (Self)' : '日主') 
         : (typeof I18N !== 'undefined' ? I18N.getGod(p.stemGod, currentLang) : p.stemGod);
 
+      const isYearPillar = (pKey === 'year');
+      const zodiacText = isYearPillar && typeof I18N !== 'undefined'
+        ? ` <span class="text-[10px] text-amber-300 font-mono">(${isEn ? `Zodiac: ${I18N.getZodiac(p.branch, 'en')}` : `属${I18N.getZodiac(p.branch, 'zh')}`})</span>`
+        : '';
+
       card.innerHTML = `
         <div class="w-full flex justify-between items-center mb-2 pb-1 border-b border-gray-700/40">
-          <span class="text-xs text-gray-400 font-medium">${titles[idx]}</span>
+          <span class="text-xs text-gray-400 font-medium">${titles[idx]}${zodiacText}</span>
           <span class="pillar-badge ${isDayMaster ? 'bg-amber-500/20 text-amber-300 font-bold' : 'text-gray-300'}">
             ${godDisplay}
           </span>
@@ -5735,8 +5748,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rawValA = document.getElementById('synastryLabelA')?.value;
     const rawValB = document.getElementById('synastryLabelB')?.value;
-    const labelA = (isEn && (!rawValA || rawValA === '甲造')) ? 'Person A' : (rawValA || (isEn ? 'Person A' : '甲造'));
-    const labelB = (isEn && (!rawValB || rawValB === '乙造')) ? 'Person B' : (rawValB || (isEn ? 'Person B' : '乙造'));
+    let labelA = rawValA || (isEn ? 'Person A' : '甲造');
+    if (isEn && labelA === '甲造') labelA = 'Person A';
+    if (!isEn && labelA === 'Person A') labelA = '甲造';
+
+    let labelB = rawValB || (isEn ? 'Person B' : '乙造');
+    if (isEn && labelB === '乙造') labelB = 'Person B';
+    if (!isEn && labelB === 'Person B') labelB = '乙造';
 
     const score = data.overallScore;
     const arc = data.archetype;
@@ -5784,7 +5802,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span>${labelB}: ${isEn ? data.zodiacB.nameEn : data.zodiacB.nameZh}</span>
             </span>
             <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
-              ${data.zodiacMatch.badge} · ${data.zodiacMatch.title}
+              ${data.zodiacMatch.badge} · ${isEn ? `${data.zodiacA.animalEn} & ${data.zodiacB.animalEn}` : `${data.zodiacA.animalZh}${data.zodiacB.animalZh}`}
             </span>
           </div>
         </div>

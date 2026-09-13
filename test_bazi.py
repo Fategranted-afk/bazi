@@ -2778,15 +2778,30 @@ jsc_synastry_depth_cmd = [
       '辰': 'Dragon', '巳': 'Snake', '午': 'Horse', '未': 'Goat',
       '申': 'Monkey', '酉': 'Rooster', '戌': 'Dog', '亥': 'Pig'
     };
+    
+    var typeCounts = {};
     for (var i = 0; i < branches.length; i++) {
       var b = branches[i];
       if (SynastryEngine.ZODIAC_ANIMALS[b].en !== expectedAnimals[b]) {
         throw new Error("Mismatched animal for " + b);
       }
+
+      // Assert that same-branch is always same_zodiac and NEVER punishment
+      var sameMatch = SynastryEngine.evaluateZodiacMatch(b, b, true, false);
+      if (sameMatch.type !== 'same_zodiac' || sameMatch.badgeZh !== '生肖同气') {
+        throw new Error("Same branch " + b + "-" + b + " misdiagnosed as " + sameMatch.type + " (" + sameMatch.badgeZh + ")");
+      }
+      var sameMatchEn = SynastryEngine.evaluateZodiacMatch(b, b, true, true);
+      if (sameMatchEn.type !== 'same_zodiac' || sameMatchEn.badgeEn !== 'Same Zodiac') {
+        throw new Error("Same branch " + b + "-" + b + " EN misdiagnosed as " + sameMatchEn.type + " (" + sameMatchEn.badgeEn + ")");
+      }
+
       for (var j = 0; j < branches.length; j++) {
         var b2 = branches[j];
         var mEn = SynastryEngine.evaluateZodiacMatch(b, b2, true, true);
         var mZh = SynastryEngine.evaluateZodiacMatch(b, b2, true, false);
+        typeCounts[mZh.type] = (typeCounts[mZh.type] || 0) + 1;
+
         if (!mEn.titleEn || !mEn.badgeEn || !mEn.descEn || !mEn.classicalOriginEn) {
           throw new Error("Missing EN field in zodiac match for " + b + "-" + b2);
         }
@@ -2800,7 +2815,34 @@ jsc_synastry_depth_cmd = [
       }
     }
 
-    // 2. Validate Comprehensive Eight Canons Deep Synthesis
+    // Verify exact distribution across 144 pairs
+    if (typeCounts['same_zodiac'] !== 12) throw new Error("Expected 12 same_zodiac, got " + typeCounts['same_zodiac']);
+    if (typeCounts['six_harmony'] !== 12) throw new Error("Expected 12 six_harmony, got " + typeCounts['six_harmony']);
+    if (typeCounts['three_harmony'] !== 24) throw new Error("Expected 24 three_harmony, got " + typeCounts['three_harmony']);
+    if (typeCounts['six_clash'] !== 12) throw new Error("Expected 12 six_clash, got " + typeCounts['six_clash']);
+    if (typeCounts['harm'] !== 12) throw new Error("Expected 12 harm, got " + typeCounts['harm']);
+    if (typeCounts['punishment'] !== 6) throw new Error("Expected 6 punishment, got " + typeCounts['punishment']);
+    if (typeCounts['generating'] !== 26) throw new Error("Expected 26 generating, got " + typeCounts['generating']);
+    if (typeCounts['neutral'] !== 40) throw new Error("Expected 40 neutral, got " + typeCounts['neutral']);
+
+    // Assert the 6 punishment pairs specifically
+    var punishmentPairs = ['子卯', '卯子', '丑戌', '戌丑', '未戌', '戌未'];
+    punishmentPairs.forEach(function(pair) {
+      var pM = SynastryEngine.evaluateZodiacMatch(pair[0], pair[1], true, false);
+      if (pM.type !== 'punishment' || pM.badgeZh !== '生肖相刑') {
+        throw new Error("Pair " + pair + " should be punishment, got " + pM.type);
+      }
+    });
+
+    // 2. Validate Cross-Punishment Isolation (Chart A internal punishment must NOT penalize synastry unless Chart B participates)
+    var cInternalA = BaZiEngine.calculate({ year: 1986, month: 5, day: 15, hour: 12, gender: "乾造" }); // 丙寅年, 癸巳月 (寅, 巳 in A)
+    var cNeutralB = BaZiEngine.calculate({ year: 1993, month: 11, day: 10, hour: 12, gender: "坤造" }); // 酉, 亥, 未, 午 in B (no 申)
+    var synInternal = SynastryEngine.analyze(cInternalA, cNeutralB, 'romantic', 'zh');
+    if (synInternal.clashPoints.punishmentCount !== 0) {
+      throw new Error("False positive cross-punishment: Chart A internal punishment triggered synastry penalty!");
+    }
+
+    // 3. Validate Comprehensive Eight Canons Deep Synthesis
     var c1 = BaZiEngine.calculate({ year: 1988, month: 11, day: 18, hour: 8, gender: "坤造" });
     var c2 = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, gender: "乾造" });
 
@@ -2825,7 +2867,7 @@ jsc_synastry_depth_cmd = [
         }
       });
 
-      // 3. Validate Zen & Dao Trinity Counsel
+      // 4. Validate Zen & Dao Trinity Counsel
       var zdEn = sEn.zenDaoCounsel;
       var zdZh = sZh.zenDaoCounsel;
       if (!zdZh || !zdEn) throw new Error("zenDaoCounsel missing");
@@ -2863,6 +2905,9 @@ assert 'data.zenDaoCounsel.diamondSutra' in app_js_text, "app.js must render dia
 assert 'data.zenDaoCounsel.platformSutra' in app_js_text, "app.js must render platformSutra"
 assert 'data.zenDaoCounsel.zhuangzi' in app_js_text, "app.js must render zhuangzi"
 assert 'data.zodiacA' in app_js_text, "app.js must reference zodiac data"
+assert 'zodiacBadge' in app_js_text, "app.js must render zodiac badge in summary bar"
+assert 'zodiacSuffix' in app_js_text, "app.js must render zodiac in landing preview"
+assert 'isYearPillar' in app_js_text, "app.js must render zodiac in renderChart Year pillar"
 
 print("✓ 八大经典合盘互参全息战报与三经智慧调和化解之道（中英双语、144生肖对校、零中文残留与UI全量渲染）验证通过！")
 
