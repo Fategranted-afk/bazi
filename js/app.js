@@ -217,12 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window !== 'undefined' && typeof window.refreshIChingOnLangChange === 'function') {
       window.refreshIChingOnLangChange();
     }
-    if (typeof refreshSynastryOnLangChange === 'function') {
-      refreshSynastryOnLangChange();
-    }
-    if (typeof updateChronoDisplay === 'function' && typeof chronoTimelineData !== 'undefined' && chronoTimelineData.length) {
-      updateChronoDisplay(activeChronoAge, lang === 'en');
-    }
     const inpA = document.getElementById('synastryLabelA');
     const inpB = document.getElementById('synastryLabelB');
     if (inpA) {
@@ -232,6 +226,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inpB) {
       if (lang === 'en' && inpB.value === '乙造') inpB.value = 'Person B';
       else if (lang === 'zh' && inpB.value === 'Person B') inpB.value = '乙造';
+    }
+    if (typeof refreshSynastryOnLangChange === 'function') {
+      refreshSynastryOnLangChange();
+    }
+    if (typeof updateChronoDisplay === 'function' && typeof chronoTimelineData !== 'undefined' && chronoTimelineData.length) {
+      updateChronoDisplay(activeChronoAge, lang === 'en');
     }
 
     if (btnToggleAdvSolar && advSolarTimeContainer && !advSolarTimeContainer.classList.contains('hidden') && typeof I18N !== 'undefined') {
@@ -5766,13 +5766,27 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <div class="flex-1 space-y-2 text-center md:text-left">
+        <div class="flex-1 space-y-2.5 text-center md:text-left">
           <div class="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
             <h4 class="text-lg sm:text-xl font-bold font-serif-sc text-amber-200">${arc.name}</h4>
             <span class="imperial-seal-stamp">${arc.seal}</span>
             <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">${arc.tier}</span>
           </div>
           <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-serif-sc">${arc.description}</p>
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-1">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/10 text-amber-200 border border-amber-500/30 flex items-center gap-1">
+              <span>🐾</span>
+              <span>${labelA}: ${isEn ? data.zodiacA.nameEn : data.zodiacA.nameZh}</span>
+            </span>
+            <span class="text-xs text-gray-500 font-mono">⚡</span>
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-500/10 text-purple-200 border border-purple-500/30 flex items-center gap-1">
+              <span>🐾</span>
+              <span>${labelB}: ${isEn ? data.zodiacB.nameEn : data.zodiacB.nameZh}</span>
+            </span>
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30">
+              ${data.zodiacMatch.badge} · ${data.zodiacMatch.title}
+            </span>
+          </div>
         </div>
       </div>
 
@@ -5799,8 +5813,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const colA = pA[k];
                 const colB = pB[k];
                 const pLabel = isEn
-                  ? { year: 'Year Pillar', month: 'Month Pillar', day: 'Day Pillar', hour: 'Hour Pillar' }[k]
-                  : { year: '年柱 (根基)', month: '月柱 (事业)', day: '日柱 (自身/配偶)', hour: '时柱 (愿景)' }[k];
+                  ? { year: `Year Pillar (Zodiac: ${data.zodiacA.animalEn} / ${data.zodiacB.animalEn})`, month: 'Month Pillar', day: 'Day Pillar', hour: 'Hour Pillar' }[k]
+                  : { year: `年柱 (生肖: 属${data.zodiacA.animalZh} / 属${data.zodiacB.animalZh})`, month: '月柱 (事业)', day: '日柱 (自身/配偶)', hour: '时柱 (愿景)' }[k];
                 const gzTextA = isEn ? `${I18N.getStem(colA.stem, 'en').split(' ')[0]}-${I18N.getBranch(colA.branch, 'en').split(' ')[0]}` : colA.text;
                 const gzTextB = isEn ? `${I18N.getStem(colB.stem, 'en').split(' ')[0]}-${I18N.getBranch(colB.branch, 'en').split(' ')[0]}` : colB.text;
                 const isDay = (k === 'day');
@@ -5823,9 +5837,21 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="md:col-span-2 p-4 rounded-xl bg-card border border-amber-500/30 shadow-lg space-y-2">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-1.5 font-bold font-serif-sc text-amber-300">
+            <span class="flex items-center gap-1.5"><span>🐉</span><span>${isEn ? '1. Zodiac & Ancestral Root Compatibility' : '1. 生肖合化与根基契合'}</span></span>
+            <span class="chinese-seal text-[9px] py-0">${data.zodiacMatch.badge}</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-xs text-amber-200 font-bold">
+            <span>${data.zodiacMatch.title}</span>
+            <span class="text-gray-400 font-normal">| ${data.zodiacMatch.classicalOrigin}</span>
+          </div>
+          <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.zodiacMatch.description}</p>
+        </div>
+
         <div class="p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-2">
           <div class="flex items-center justify-between border-b border-gray-800 pb-1.5 font-bold font-serif-sc text-amber-300">
-            <span class="flex items-center gap-1.5"><span>🌱</span><span>${isEn ? 'Five Elements Symbiosis Architecture' : '1. 五行气机交融图谱'}</span></span>
+            <span class="flex items-center gap-1.5"><span>🌱</span><span>${isEn ? '2. Five Elements Symbiosis Architecture' : '2. 五行气机交融图谱'}</span></span>
             <span class="chinese-seal text-[9px] py-0">${isEn ? 'ELEMENTS' : '相生相养'}</span>
           </div>
           <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.elementalSynergy.diagnosis}</p>
@@ -5833,7 +5859,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-2">
           <div class="flex items-center justify-between border-b border-gray-800 pb-1.5 font-bold font-serif-sc text-amber-300">
-            <span class="flex items-center gap-1.5"><span>✨</span><span>${isEn ? 'Soul Resonance & Pillar Chemistry' : '2. 柱位交互与情志默契'}</span></span>
+            <span class="flex items-center gap-1.5"><span>✨</span><span>${isEn ? '3. Soul Resonance & Pillar Chemistry' : '3. 柱位交互与情志默契'}</span></span>
             <span class="chinese-seal text-[9px] py-0">${isEn ? 'RESONANCE' : '天作之合'}</span>
           </div>
           <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.pillarResonance.diagnosis}</p>
@@ -5841,7 +5867,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-2">
           <div class="flex items-center justify-between border-b border-gray-800 pb-1.5 font-bold font-serif-sc text-rose-300">
-            <span class="flex items-center gap-1.5"><span>⚡</span><span>${isEn ? 'Clash Points & Stress Vectors' : '3. 潜在雷区与刑冲预警'}</span></span>
+            <span class="flex items-center gap-1.5"><span>⚡</span><span>${isEn ? '4. Clash Points & Stress Vectors' : '4. 潜在雷区与刑冲预警'}</span></span>
             <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? 'CLASHES' : '刑冲克害'}</span>
           </div>
           <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.clashPoints.diagnosis}</p>
@@ -5849,19 +5875,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-2">
           <div class="flex items-center justify-between border-b border-gray-800 pb-1.5 font-bold font-serif-sc text-amber-300">
-            <span class="flex items-center gap-1.5"><span>💰</span><span>${isEn ? 'Financial Trust & Game Theory' : '4. 财富合力与商业资产博弈'}</span></span>
+            <span class="flex items-center gap-1.5"><span>💰</span><span>${isEn ? '5. Financial Trust & Game Theory' : '5. 财富合力与商业资产博弈'}</span></span>
             <span class="chinese-seal text-[9px] py-0">${isEn ? 'WEALTH' : '财星博弈'}</span>
           </div>
           <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.financialTrust.diagnosis}</p>
         </div>
+      </div>
 
-        <div class="md:col-span-2 p-5 rounded-xl bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 border border-amber-600/40 shadow-xl space-y-2">
-          <div class="flex items-center justify-between border-b border-amber-800/40 pb-2 font-bold font-serif-sc text-amber-200 text-sm">
-            <span class="flex items-center gap-2"><span>🛡️</span><span>${isEn ? 'Mutual Remedies & Golden Harmony Prescriptions' : '5. 双人调和化解之道与共生锦囊'}</span></span>
-            <span class="chinese-seal text-[10px] py-0">${isEn ? 'REMEDIES' : '通关胜道'}</span>
+      <!-- Eight Canons Deep Synthesis Card -->
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-950/25 via-black/50 to-amber-950/20 border border-amber-500/40 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-amber-800/40 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-base">📜</span>
+            <h5 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? '6. Eight Classical Canons Deep Synastry Matrix' : '6. 八大经典合盘互参全息战报'}</h5>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30">${isEn ? '8 Classics' : '八经合参'}</span>
           </div>
-          <p class="text-gray-100 text-xs sm:text-sm leading-relaxed font-serif-sc whitespace-pre-line">${data.remedies.diagnosis}</p>
+          <span class="chinese-seal text-[10px] py-0">${isEn ? 'CANONS' : '八经通考'}</span>
         </div>
+        <p class="text-xs text-gray-300 italic font-serif-sc leading-relaxed">${data.eightCanonsSynthesis.summary}</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          ${data.eightCanonsSynthesis.canons.map(c => `
+            <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 hover:border-amber-500/30 transition space-y-2">
+              <div class="flex items-center justify-between border-b border-gray-800/60 pb-1 font-bold text-amber-300 font-serif-sc">
+                <span>${c.name}</span>
+              </div>
+              <p class="text-[11px] text-amber-200/80 italic font-mono leading-relaxed bg-amber-950/20 px-2 py-1 rounded border-l-2 border-amber-500">${c.canon}</p>
+              <p class="text-gray-300 leading-relaxed font-serif-sc">${c.analysis}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Zen & Dao Trinity Relationship Counsel Card -->
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-purple-950/30 via-black/50 to-indigo-950/30 border border-purple-500/40 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-purple-800/40 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🧘</span>
+            <h5 class="text-sm font-bold text-purple-200 font-serif-sc">${isEn ? '7. Zen & Dao Trinity Relationship Counsel (Diamond Sutra · Platform Sutra · Zhuangzi)' : '7. 三经智慧调和化解之道 (金刚经 · 坛经 · 庄子)'}</h5>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-purple-500/20 text-purple-300 border border-purple-500/30">${isEn ? 'Zen Trinity' : '三经绝学'}</span>
+          </div>
+          <span class="chinese-seal text-[10px] py-0 border-purple-500 text-purple-300">${isEn ? 'ZEN-DAO' : '明心见性'}</span>
+        </div>
+        <p class="text-xs text-gray-300 italic font-serif-sc leading-relaxed">${data.zenDaoCounsel.synthesis}</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <!-- Diamond Sutra -->
+          <div class="p-3.5 rounded-xl bg-black/40 border border-purple-800/50 hover:border-purple-500/50 transition space-y-2 flex flex-col justify-between">
+            <div class="space-y-1.5">
+              <h6 class="font-bold text-amber-300 font-serif-sc flex items-center gap-1">
+                <span>💎</span><span>${data.zenDaoCounsel.diamondSutra.title}</span>
+              </h6>
+              <p class="text-[11px] text-amber-200/70 italic font-mono leading-relaxed bg-black/40 p-1.5 rounded border-l border-amber-500">${data.zenDaoCounsel.diamondSutra.canonQuote}</p>
+              <p class="text-gray-300 leading-relaxed font-serif-sc">${data.zenDaoCounsel.diamondSutra.counsel}</p>
+            </div>
+            <div class="pt-2 text-[10px] font-mono text-purple-400/80 uppercase">${isEn ? '• Release Rigid Expectations' : '• 破相无住 · 释放执念'}</div>
+          </div>
+
+          <!-- Platform Sutra -->
+          <div class="p-3.5 rounded-xl bg-black/40 border border-indigo-800/50 hover:border-indigo-500/50 transition space-y-2 flex flex-col justify-between">
+            <div class="space-y-1.5">
+              <h6 class="font-bold text-indigo-300 font-serif-sc flex items-center gap-1">
+                <span>🪞</span><span>${data.zenDaoCounsel.platformSutra.title}</span>
+              </h6>
+              <p class="text-[11px] text-indigo-200/70 italic font-mono leading-relaxed bg-black/40 p-1.5 rounded border-l border-indigo-500">${data.zenDaoCounsel.platformSutra.canonQuote}</p>
+              <p class="text-gray-300 leading-relaxed font-serif-sc">${data.zenDaoCounsel.platformSutra.counsel}</p>
+            </div>
+            <div class="pt-2 text-[10px] font-mono text-indigo-400/80 uppercase">${isEn ? '• Clean Slate & Present Mind' : '• 当下觉醒 · 永绝旧怨'}</div>
+          </div>
+
+          <!-- Zhuangzi -->
+          <div class="p-3.5 rounded-xl bg-black/40 border border-teal-800/50 hover:border-teal-500/50 transition space-y-2 flex flex-col justify-between">
+            <div class="space-y-1.5">
+              <h6 class="font-bold text-teal-300 font-serif-sc flex items-center gap-1">
+                <span>🕊️</span><span>${data.zenDaoCounsel.zhuangzi.title}</span>
+              </h6>
+              <p class="text-[11px] text-teal-200/70 italic font-mono leading-relaxed bg-black/40 p-1.5 rounded border-l border-teal-500">${data.zenDaoCounsel.zhuangzi.canonQuote}</p>
+              <p class="text-gray-300 leading-relaxed font-serif-sc">${data.zenDaoCounsel.zhuangzi.counsel}</p>
+            </div>
+            <div class="pt-2 text-[10px] font-mono text-teal-400/80 uppercase">${isEn ? '• Mutual Autonomy & Freedom' : '• 齐物逍遥 · 尊重差异'}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Remedies Card -->
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 border border-amber-600/40 shadow-xl space-y-2">
+        <div class="flex items-center justify-between border-b border-amber-800/40 pb-2 font-bold font-serif-sc text-amber-200 text-sm">
+          <span class="flex items-center gap-2"><span>🛡️</span><span>${isEn ? '8. Mutual Remedies & Co-existence Bylaws' : '8. 双人调和化解之道与共生锦囊'}</span></span>
+          <span class="chinese-seal text-[10px] py-0">${isEn ? 'REMEDIES' : '通关胜道'}</span>
+        </div>
+        <p class="text-gray-100 text-xs sm:text-sm leading-relaxed font-serif-sc whitespace-pre-line">${data.remedies.diagnosis}</p>
       </div>
     `;
   }

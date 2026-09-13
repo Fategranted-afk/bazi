@@ -925,6 +925,33 @@ const I18N = (function() {
     return nayin;
   }
 
+  const ZODIAC_TABLE = {
+    '子': { zh: '鼠', en: 'Rat', pinyin: 'Zi' },
+    '丑': { zh: '牛', en: 'Ox', pinyin: 'Chou' },
+    '寅': { zh: '虎', en: 'Tiger', pinyin: 'Yin' },
+    '卯': { zh: '兔', en: 'Rabbit', pinyin: 'Mao' },
+    '辰': { zh: '龙', en: 'Dragon', pinyin: 'Chen' },
+    '巳': { zh: '蛇', en: 'Snake', pinyin: 'Si' },
+    '午': { zh: '马', en: 'Horse', pinyin: 'Wu' },
+    '未': { zh: '羊', en: 'Goat', pinyin: 'Wei' },
+    '申': { zh: '猴', en: 'Monkey', pinyin: 'Shen' },
+    '酉': { zh: '鸡', en: 'Rooster', pinyin: 'You' },
+    '戌': { zh: '狗', en: 'Dog', pinyin: 'Xu' },
+    '亥': { zh: '猪', en: 'Pig', pinyin: 'Hai' }
+  };
+
+  function getZodiac(branch, lang = 'zh') {
+    const item = ZODIAC_TABLE[branch];
+    if (!item) return branch;
+    return (lang === 'en') ? item.en : item.zh;
+  }
+
+  function getZodiacWithBranch(branch, lang = 'zh') {
+    const item = ZODIAC_TABLE[branch];
+    if (!item) return branch;
+    return (lang === 'en') ? `${item.en} (${item.pinyin})` : `属${item.zh} (${branch})`;
+  }
+
   function getPillarTitle(idx, lang = 'zh') {
     const l = (lang === 'en') ? 'en' : 'zh';
     return PILLAR_TITLES[l][idx] || PILLAR_TITLES.zh[idx];
@@ -1769,7 +1796,10 @@ const I18N = (function() {
     getPatternName,
     getTierName,
     getVigorStatus,
-    translatePortrait
+    translatePortrait,
+    ZODIAC_TABLE,
+    getZodiac,
+    getZodiacWithBranch
   };
 })();
 

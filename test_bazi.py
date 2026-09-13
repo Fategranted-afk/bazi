@@ -2092,6 +2092,73 @@ jsc_synastry_cmd = [
       throw new Error("Missing archetype in romantic En");
     }
 
+    // 1. Verify 12 Zodiac animals mapping in SynastryEngine
+    var expectedAnimals = {
+      '子': { zh: '鼠', en: 'Rat' },
+      '丑': { zh: '牛', en: 'Ox' },
+      '寅': { zh: '虎', en: 'Tiger' },
+      '卯': { zh: '兔', en: 'Rabbit' },
+      '辰': { zh: '龙', en: 'Dragon' },
+      '巳': { zh: '蛇', en: 'Snake' },
+      '午': { zh: '马', en: 'Horse' },
+      '未': { zh: '羊', en: 'Goat' },
+      '申': { zh: '猴', en: 'Monkey' },
+      '酉': { zh: '鸡', en: 'Rooster' },
+      '戌': { zh: '狗', en: 'Dog' },
+      '亥': { zh: '猪', en: 'Pig' }
+    };
+    for (var b in expectedAnimals) {
+      var zItem = SynastryEngine.ZODIAC_ANIMALS[b];
+      if (!zItem || zItem.zh !== expectedAnimals[b].zh || zItem.en !== expectedAnimals[b].en) {
+        throw new Error("Zodiac animal mapping mismatch for branch " + b);
+      }
+    }
+
+    // 2. Solar Terms (LiChun) boundary test for Zodiac calculation
+    var chartJan1990 = BaZiEngine.calculate({ year: 1990, month: 1, day: 20, hour: 12, gender: "乾造" });
+    var chartFeb1990 = BaZiEngine.calculate({ year: 1990, month: 2, day: 10, hour: 12, gender: "乾造" });
+    if (chartJan1990.pillars.year.branch !== '巳') {
+      throw new Error("Pre-LiChun birth year branch must be 巳 (Snake), got: " + chartJan1990.pillars.year.branch);
+    }
+    if (chartFeb1990.pillars.year.branch !== '午') {
+      throw new Error("Post-LiChun birth year branch must be 午 (Horse), got: " + chartFeb1990.pillars.year.branch);
+    }
+    var synZodiacCheck = SynastryEngine.analyze(chartJan1990, chartFeb1990, "romantic", "zh");
+    if (synZodiacCheck.zodiacA.animalZh !== '蛇' || synZodiacCheck.zodiacB.animalZh !== '马') {
+      throw new Error("Synastry Zodiac assignment failed on LiChun boundary");
+    }
+
+    // 3. Verify Eight Canons Deep Synthesis
+    if (!romZh.eightCanonsSynthesis || !romZh.eightCanonsSynthesis.canons || romZh.eightCanonsSynthesis.canons.length !== 8) {
+      throw new Error("Missing or incomplete Eight Canons in romantic Zh");
+    }
+    if (!romEn.eightCanonsSynthesis || !romEn.eightCanonsSynthesis.canons || romEn.eightCanonsSynthesis.canons.length !== 8) {
+      throw new Error("Missing or incomplete Eight Canons in romantic En");
+    }
+    romZh.eightCanonsSynthesis.canons.forEach(function(c, cIdx) {
+      if (!c.name || !c.canon || !c.analysis || c.analysis.length < 20) {
+        throw new Error("Sparse or missing Eight Canons entry in Zh at " + cIdx);
+      }
+    });
+    romEn.eightCanonsSynthesis.canons.forEach(function(c, cIdx) {
+      if (!c.name || !c.canon || !c.analysis || c.analysis.length < 20) {
+        throw new Error("Sparse or missing Eight Canons entry in En at " + cIdx);
+      }
+    });
+
+    // 4. Verify Zen & Dao Trinity Counsel
+    ['diamondSutra', 'platformSutra', 'zhuangzi'].forEach(function(key) {
+      if (!romZh.zenDaoCounsel[key] || !romZh.zenDaoCounsel[key].counsel || romZh.zenDaoCounsel[key].counsel.length < 20) {
+        throw new Error("Missing or sparse Zen counsel key in romantic Zh: " + key);
+      }
+      if (!romEn.zenDaoCounsel[key] || !romEn.zenDaoCounsel[key].counsel || romEn.zenDaoCounsel[key].counsel.length < 20) {
+        throw new Error("Missing or sparse Zen counsel key in romantic En: " + key);
+      }
+    });
+    if (!romZh.zenDaoCounsel.synthesis || !romEn.zenDaoCounsel.synthesis) {
+      throw new Error("Missing Zen counsel synthesis");
+    }
+
     // Test Business mode
     var bizZh = SynastryEngine.analyze(chartA, chartB, "business", "zh");
     var bizEn = SynastryEngine.analyze(chartA, chartB, "business", "en");
@@ -2102,6 +2169,12 @@ jsc_synastry_cmd = [
     if (!bizEn.financialTrust || !bizEn.financialTrust.diagnosisEn) {
       throw new Error("Missing financialTrust in business En");
     }
+    if (!bizZh.eightCanonsSynthesis || bizZh.eightCanonsSynthesis.canons.length !== 8) {
+      throw new Error("Missing Eight Canons in business Zh");
+    }
+    if (!bizEn.eightCanonsSynthesis || bizEn.eightCanonsSynthesis.canons.length !== 8) {
+      throw new Error("Missing Eight Canons in business En");
+    }
 
     // 100% Zero Residual Chinese across all active English fields
     [romEn, bizEn].forEach(function(res, rIdx) {
@@ -2110,17 +2183,43 @@ jsc_synastry_cmd = [
         res.archetype.seal,
         res.archetype.tier,
         res.archetype.description,
+        res.zodiacA.animal,
+        res.zodiacA.labelEn,
+        res.zodiacB.animal,
+        res.zodiacB.labelEn,
+        res.zodiacMatch.title,
+        res.zodiacMatch.badge,
+        res.zodiacMatch.description,
+        res.zodiacMatch.classicalOrigin,
         res.elementalSynergy.elementA,
         res.elementalSynergy.elementB,
         res.elementalSynergy.diagnosis,
         res.pillarResonance.diagnosis,
         res.clashPoints.diagnosis,
         res.financialTrust.diagnosis,
+        res.eightCanonsSynthesis.title,
+        res.eightCanonsSynthesis.summary,
+        res.zenDaoCounsel.title,
+        res.zenDaoCounsel.synthesis,
+        res.zenDaoCounsel.diamondSutra.title,
+        res.zenDaoCounsel.diamondSutra.canonQuote,
+        res.zenDaoCounsel.diamondSutra.counsel,
+        res.zenDaoCounsel.platformSutra.title,
+        res.zenDaoCounsel.platformSutra.canonQuote,
+        res.zenDaoCounsel.platformSutra.counsel,
+        res.zenDaoCounsel.zhuangzi.title,
+        res.zenDaoCounsel.zhuangzi.canonQuote,
+        res.zenDaoCounsel.zhuangzi.counsel,
         res.remedies.diagnosis
       ];
       res.elementalSynergy.mutualGifts.forEach(function(g) { toCheck.push(g.desc); toCheck.push(g.element); });
       res.pillarResonance.crossHarmonies.forEach(function(h) { toCheck.push(h.desc); });
       res.clashPoints.crossClashes.forEach(function(c) { toCheck.push(c.desc); });
+      res.eightCanonsSynthesis.canons.forEach(function(c) {
+        toCheck.push(c.name);
+        toCheck.push(c.canon);
+        toCheck.push(c.analysis);
+      });
 
       toCheck.forEach(function(str, idx) {
         if (!str || str.length === 0) throw new Error("Empty English field in synastry rIdx " + rIdx + " at " + idx);
@@ -2509,6 +2608,21 @@ elementStore['chronoAgeSlider'].trigger('input', { target: { value: '60' } });
 
 // Synastry in EN
 elementStore['calcSynastryBtn'].trigger('click');
+if (/[\u4e00-\u9fa5]/.test(elementStore['synastryResultContainer'].innerHTML)) {
+  throw new Error('synastryResultContainer contains residual Chinese in English mode: ' + elementStore['synastryResultContainer'].innerHTML);
+}
+
+// Synastry in EN Business mode
+elementStore['synastryModeBusiness'].trigger('click');
+if (/[\u4e00-\u9fa5]/.test(elementStore['synastryResultContainer'].innerHTML)) {
+  throw new Error('synastryResultContainer contains residual Chinese in English Business mode: ' + elementStore['synastryResultContainer'].innerHTML);
+}
+
+// Synastry switch back to Romantic mode
+elementStore['synastryModeRomantic'].trigger('click');
+if (/[\u4e00-\u9fa5]/.test(elementStore['synastryResultContainer'].innerHTML)) {
+  throw new Error('synastryResultContainer contains residual Chinese when switching back to Romantic mode: ' + elementStore['synastryResultContainer'].innerHTML);
+}
 
 // I Ching in EN
 elementStore['ichingInstantBtn'].trigger('click');
@@ -2639,4 +2753,117 @@ assert len(missing_en) == 0, f"HTML data-i18n keys missing in EN dictionary: {mi
 
 print("✓ 两阶段交互架构（初始门庭页面 / 分析全相看板 / 典范速选 / 即时微预览 / 优雅双向过渡）验证通过！")
 
-print("\n🎉 ALL 50 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 51. Validate Eight Canons & Zen Trinity Synastry Integration & Parity
+print("\n=== 51. Validating Eight Canons & Zen Trinity Synastry Integration & Parity ===")
+jsc_synastry_depth_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/synastry-engine.js");
+
+    // 1. Validate All 144 Earthly Branch Pairs for Zodiac Match in ZH & EN
+    var branches = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+    var expectedAnimals = {
+      '子': 'Rat', '丑': 'Ox', '寅': 'Tiger', '卯': 'Rabbit',
+      '辰': 'Dragon', '巳': 'Snake', '午': 'Horse', '未': 'Goat',
+      '申': 'Monkey', '酉': 'Rooster', '戌': 'Dog', '亥': 'Pig'
+    };
+    for (var i = 0; i < branches.length; i++) {
+      var b = branches[i];
+      if (SynastryEngine.ZODIAC_ANIMALS[b].en !== expectedAnimals[b]) {
+        throw new Error("Mismatched animal for " + b);
+      }
+      for (var j = 0; j < branches.length; j++) {
+        var b2 = branches[j];
+        var mEn = SynastryEngine.evaluateZodiacMatch(b, b2, true, true);
+        var mZh = SynastryEngine.evaluateZodiacMatch(b, b2, true, false);
+        if (!mEn.titleEn || !mEn.badgeEn || !mEn.descEn || !mEn.classicalOriginEn) {
+          throw new Error("Missing EN field in zodiac match for " + b + "-" + b2);
+        }
+        if (!mZh.titleZh || !mZh.badgeZh || !mZh.descZh || !mZh.classicalOriginZh) {
+          throw new Error("Missing ZH field in zodiac match for " + b + "-" + b2);
+        }
+        if (/[\u4e00-\u9fa5]/.test(mEn.titleEn) || /[\u4e00-\u9fa5]/.test(mEn.badgeEn) ||
+            /[\u4e00-\u9fa5]/.test(mEn.descEn) || /[\u4e00-\u9fa5]/.test(mEn.classicalOriginEn)) {
+          throw new Error("Residual Chinese in zodiac match EN for " + b + "-" + b2);
+        }
+      }
+    }
+
+    // 2. Validate Comprehensive Eight Canons Deep Synthesis
+    var c1 = BaZiEngine.calculate({ year: 1988, month: 11, day: 18, hour: 8, gender: "坤造" });
+    var c2 = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, gender: "乾造" });
+
+    ['romantic', 'business'].forEach(function(mode) {
+      var sZh = SynastryEngine.analyze(c1, c2, mode, 'zh');
+      var sEn = SynastryEngine.analyze(c1, c2, mode, 'en');
+
+      if (!sZh.eightCanonsSynthesis || sZh.eightCanonsSynthesis.canons.length !== 8) {
+        throw new Error("Eight Canons Synthesis missing or not 8 items in Zh (" + mode + ")");
+      }
+      if (!sEn.eightCanonsSynthesis || sEn.eightCanonsSynthesis.canons.length !== 8) {
+        throw new Error("Eight Canons Synthesis missing or not 8 items in En (" + mode + ")");
+      }
+
+      // Check all 8 canons exist and have both canonical quote and dynamic analysis
+      sEn.eightCanonsSynthesis.canons.forEach(function(canon, idx) {
+        if (!canon.name || canon.name.length === 0) throw new Error("Missing canon name at " + idx);
+        if (!canon.canon || canon.canon.length < 15) throw new Error("Canon quote too short at " + idx);
+        if (!canon.analysis || canon.analysis.length < 25) throw new Error("Canon analysis too short at " + idx);
+        if (/[\u4e00-\u9fa5]/.test(canon.name) || /[\u4e00-\u9fa5]/.test(canon.canon) || /[\u4e00-\u9fa5]/.test(canon.analysis)) {
+          throw new Error("Residual Chinese in Eight Canons EN at " + idx + ": " + canon.name);
+        }
+      });
+
+      // 3. Validate Zen & Dao Trinity Counsel
+      var zdEn = sEn.zenDaoCounsel;
+      var zdZh = sZh.zenDaoCounsel;
+      if (!zdZh || !zdEn) throw new Error("zenDaoCounsel missing");
+      if (!zdEn.synthesis || zdEn.synthesis.length < 30) throw new Error("Zen synthesis too short");
+      if (/[\u4e00-\u9fa5]/.test(zdEn.title) || /[\u4e00-\u9fa5]/.test(zdEn.synthesis)) {
+        throw new Error("Residual Chinese in Zen header EN");
+      }
+
+      var classicKeys = ['diamondSutra', 'platformSutra', 'zhuangzi'];
+      classicKeys.forEach(function(k) {
+        var itemZh = zdZh[k];
+        var itemEn = zdEn[k];
+        if (!itemZh || !itemEn) throw new Error("Missing Zen classic: " + k);
+        if (!itemEn.title || !itemEn.canonQuote || !itemEn.counsel) {
+          throw new Error("Missing field in Zen classic EN: " + k);
+        }
+        if (itemEn.counsel.length < 50) throw new Error("Zen counsel too brief for " + k + " in " + mode);
+        if (/[\u4e00-\u9fa5]/.test(itemEn.title) || /[\u4e00-\u9fa5]/.test(itemEn.canonQuote) || /[\u4e00-\u9fa5]/.test(itemEn.counsel)) {
+          throw new Error("Residual Chinese in Zen classic EN: " + k);
+        }
+      });
+    });
+    '''
+]
+run_syn_depth = subprocess.run(jsc_synastry_depth_cmd, capture_output=True, text=True)
+assert run_syn_depth.returncode == 0, f"JSC Synastry Depth check failed: {run_syn_depth.stderr}"
+
+# Also check app.js rendering logic for Eight Canons and Zen Trinity in Synastry
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_js_text = f.read()
+
+assert 'data.eightCanonsSynthesis' in app_js_text, "app.js must render eightCanonsSynthesis"
+assert 'data.zenDaoCounsel' in app_js_text, "app.js must render zenDaoCounsel"
+assert 'data.zenDaoCounsel.diamondSutra' in app_js_text, "app.js must render diamondSutra"
+assert 'data.zenDaoCounsel.platformSutra' in app_js_text, "app.js must render platformSutra"
+assert 'data.zenDaoCounsel.zhuangzi' in app_js_text, "app.js must render zhuangzi"
+assert 'data.zodiacA' in app_js_text, "app.js must reference zodiac data"
+
+print("✓ 八大经典合盘互参全息战报与三经智慧调和化解之道（中英双语、144生肖对校、零中文残留与UI全量渲染）验证通过！")
+
+print("\n🎉 ALL 51 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
