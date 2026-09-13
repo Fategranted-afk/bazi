@@ -156,8 +156,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setLanguage(lang) {
     currentLang = lang;
+    if (typeof window !== 'undefined') {
+      window.currentLang = lang;
+      window.setLanguage = setLanguage;
+    }
     if (typeof I18N !== 'undefined') {
       I18N.currentLang = lang;
+    }
+    if (typeof globalThis !== 'undefined') {
+      globalThis.currentLang = lang;
     }
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('bazi_lang', lang);
@@ -744,9 +751,11 @@ document.addEventListener('DOMContentLoaded', () => {
     portalFeaturesGrid.querySelectorAll('[data-jump-view]').forEach(card => {
       card.addEventListener('click', () => {
         const targetView = card.getAttribute('data-jump-view');
+        const mode = (targetView === 'view-synastry') ? 'synastry' : (targetView === 'view-luck') ? 'chrono' : 'natal';
         triggerCalculate();
-        switchToDashboardView(targetView);
-        showDynamicCalculationProgress();
+        showDynamicCalculationProgress(mode, () => {
+          switchToDashboardView(targetView);
+        });
       });
     });
   }
@@ -2844,7 +2853,8 @@ document.addEventListener('DOMContentLoaded', () => {
     manualTabs.forEach(t => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      const isActive = (selectedManualTab === t.id);
+      const isZenTab = (selectedManualTab === 'zendao' || selectedManualTab === 'trinity' || selectedManualTab === 'zen');
+      const isActive = (t.id === 'zendao') ? isZenTab : (selectedManualTab === t.id);
       btn.className = `px-3.5 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer ${
         isActive
           ? 'bg-rose-600/30 text-rose-300 border-rose-500/60 shadow-md shadow-rose-950/40'
@@ -3141,7 +3151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Tab 5: Zen-Dao Trinity Sanctuary
-    if (selectedManualTab === 'zendao') {
+    if (selectedManualTab === 'zendao' || selectedManualTab === 'trinity' || selectedManualTab === 'zen') {
       if (mf.zenDaoWisdom) {
         const zd = mf.zenDaoWisdom;
         const zenSection = document.createElement('div');
@@ -4529,7 +4539,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <h5 class="text-sm font-bold font-serif-sc text-amber-300">
                     ${isEn ? s.seasonEn : s.seasonZh}
                   </h5>
-                  <span class="text-[10px] text-gray-400 font-mono">${isEn ? s.solarTermsEn : s.solarTermsZh}</span>
+                  <span class="text-[10px] text-gray-400 font-mono">${isEn ? (s.solarTermsEn || s.monthsEn) : (s.solarTermsZh || s.monthsZh)}</span>
                 </div>
                 <div class="text-right">
                   <span class="text-xs font-bold font-mono text-amber-400">${s.energyScore}%</span>
@@ -4648,7 +4658,8 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs.forEach(t => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      const isActive = (selectedResonanceTab === t.id);
+      const isGeographic = (selectedResonanceTab === 'directions' || selectedResonanceTab === 'geographic');
+      const isActive = (t.id === 'directions' || t.id === 'geographic') ? isGeographic : (selectedResonanceTab === t.id);
       btn.className = `px-3.5 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer ${
         isActive
           ? 'bg-blue-600/30 text-blue-300 border-blue-500/60 shadow-md shadow-blue-950/40'
@@ -4664,7 +4675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(tabsWrapper);
 
     // Tab 1: Geographic Directions
-    if (selectedResonanceTab === 'directions') {
+    if (selectedResonanceTab === 'directions' || selectedResonanceTab === 'geographic') {
       const geoWrapper = document.createElement('div');
       geoWrapper.className = 'space-y-4';
 
@@ -4824,9 +4835,11 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
     }
 
-    // If switching to synastry view, calculate if empty
+    // If switching to synastry view, calculate if empty with progress bar
     if (targetViewId === 'view-synastry' && !currentSynastryResult && typeof triggerCalculateSynastry === 'function') {
-      triggerCalculateSynastry();
+      showDynamicCalculationProgress('synastry', () => {
+        triggerCalculateSynastry();
+      });
     }
   }
 
@@ -6359,7 +6372,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (btnCalc) {
-      btnCalc.addEventListener('click', triggerCalculateSynastry);
+      btnCalc.addEventListener('click', () => {
+        showDynamicCalculationProgress('synastry', () => {
+          triggerCalculateSynastry();
+        });
+      });
     }
   }
 
@@ -7110,13 +7127,28 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Dynamic Web UI Calculation & Transition Progress Bar (动态智能排盘计算进度条)
-  function showDynamicCalculationProgress(onComplete) {
+  function showDynamicCalculationProgress(modeOrCb, onComplete) {
+    let mode = 'natal';
+    let cb = onComplete;
+    if (typeof modeOrCb === 'function') {
+      cb = modeOrCb;
+      mode = 'natal';
+    } else if (typeof modeOrCb === 'string') {
+      mode = modeOrCb;
+    }
+
     const modal = document.getElementById('calculationProgressModal');
     if (!modal) {
-      if (typeof onComplete === 'function') onComplete();
+      if (typeof cb === 'function') cb();
       return;
     }
-    const isEn = (currentLang === 'en');
+    const activeLang = (typeof window !== 'undefined' && window.currentLang) ||
+                       (typeof I18N !== 'undefined' && I18N.currentLang) ||
+                       (typeof globalThis !== 'undefined' && globalThis.currentLang) ||
+                       (typeof currentLang !== 'undefined' ? currentLang : 'zh');
+    const isEn = (activeLang === 'en');
+    const titleEl = document.getElementById('calcProgressTitle');
+    const subtitleEl = document.getElementById('calcProgressSubtitle');
     const stageTextEl = document.getElementById('calcProgressStageText');
     const percentTextEl = document.getElementById('calcProgressPercentText');
     const barInner = document.getElementById('calcProgressBarInner');
@@ -7128,13 +7160,64 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('progressStep5')
     ];
 
-    const stages = [
-      { percent: 20, textZh: '四柱八字乾坤排盘 · 纳音神煞五行量化', textEn: 'Computing Four Pillars, NaYin & Elemental Balance', step: 0 },
-      { percent: 45, textZh: '八大正统典籍互参 · 穷通子平神峰玉照', textEn: 'Cross-Referencing Eight Classical Canons & Pareto Fulcrum', step: 1 },
-      { percent: 70, textZh: '岁运百岁罗盘推演 · 当季现实破局攻坚', textEn: 'Synthesizing Luck Cycles & Operational Chrono-Navigator', step: 2 },
-      { percent: 90, textZh: '原厂心理说明书构筑 · 极端压力触发与降维心法', textEn: 'Assembling Factory Mind Manual & De-escalation Protocols', step: 3 },
-      { percent: 100, textZh: '呈现全相乾坤大局 · 宏观破局战报合流', textEn: 'Destiny Canvas Complete · Launching Dashboard', step: 4 }
-    ];
+    const configMap = {
+      natal: {
+        titleZh: '乾坤气象 · 全相智能排盘推演中',
+        titleEn: 'Synthesizing Cosmic Pillars & Natal Blueprint...',
+        subtitleZh: '正在调用东方全息大模型并通判八大典籍古籍库',
+        subtitleEn: 'Synthesizing Natal Geometry with Eight Classical Canons & Luck Cycles',
+        stepChipsZh: ['① 四柱', '② 八典', '③ 罗盘', '④ 心法', '⑤ 乾坤'],
+        stepChipsEn: ['① Pillars', '② Canons', '③ Chrono', '④ Mind', '⑤ Destiny'],
+        stages: [
+          { percent: 20, textZh: '四柱八字乾坤排盘 · 纳音神煞五行量化', textEn: 'Computing Four Pillars, NaYin & Elemental Balance', step: 0 },
+          { percent: 45, textZh: '八大正统典籍互参 · 穷通子平神峰玉照', textEn: 'Cross-Referencing Eight Classical Canons & Pareto Fulcrum', step: 1 },
+          { percent: 70, textZh: '岁运百岁罗盘推演 · 当季现实破局攻坚', textEn: 'Synthesizing Luck Cycles & Operational Chrono-Navigator', step: 2 },
+          { percent: 90, textZh: '原厂心理说明书构筑 · 极端压力触发与降维心法', textEn: 'Assembling Factory Mind Manual & De-escalation Protocols', step: 3 },
+          { percent: 100, textZh: '呈现全相乾坤大局 · 宏观破局战报合流', textEn: 'Destiny Canvas Complete · Launching Dashboard', step: 4 }
+        ]
+      },
+      synastry: {
+        titleZh: '乾坤互参 · 双人合盘深度推演中',
+        titleEn: 'Cross-Referencing Natal Geometries · Synastry Matrix',
+        subtitleZh: '通判八大经典合盘法则 · 婚恋合伙博弈与禅道智慧调和',
+        subtitleEn: 'Evaluating Dual Natal Charts, Elemental Clashes & Zen Trinity Synergy',
+        stepChipsZh: ['① 双方', '② 八典', '③ 雷区', '④ 调和', '⑤ 契合'],
+        stepChipsEn: ['① Pillars', '② Canons', '③ Clashes', '④ Harmony', '⑤ Report'],
+        stages: [
+          { percent: 20, textZh: '双方原局乾坤排盘 · 命宫日柱喜用提炼', textEn: 'Pairing Natal Pillars, Day Masters & Favorable Elements', step: 0 },
+          { percent: 45, textZh: '八大正统典籍合判 · 渊海子平三命会通', textEn: 'Cross-Referencing Eight Canons for Synastry Dynamics', step: 1 },
+          { percent: 70, textZh: '刑冲化合雷区扫描 · 契约防火墙构建', textEn: 'Scanning Clashes, Harms & Boundary Safeguards', step: 2 },
+          { percent: 90, textZh: '商业合伙/婚恋博弈平衡 · 禅道三经智慧调和', textEn: 'Balancing Partnership Dynamics & Zen Trinity Wisdom', step: 3 },
+          { percent: 100, textZh: '合盘全息战报成型 · 呈现契合大局', textEn: 'Synastry Dossier Complete · Unveiling Results', step: 4 }
+        ]
+      },
+      chrono: {
+        titleZh: '时空罗盘 · 百岁运势与现实破局深度推演中',
+        titleEn: 'Calibrating Chrono-Navigator & Operational Playbook',
+        subtitleZh: '推演百岁精微双曲线 · 当季现实破局攻坚与地理生态位共振',
+        subtitleEn: 'Computing Lifelong Trajectory, Seasonal Tides & Ecological Resonance',
+        stepChipsZh: ['① 罗盘', '② 节律', '③ 熔断', '④ 生态', '⑤ 破局'],
+        stepChipsEn: ['① Chrono', '② Seasons', '③ Breakers', '④ Ecology', '⑤ Horizon'],
+        stages: [
+          { percent: 20, textZh: '时空大运罗盘定位 · 百岁精微曲线校准', textEn: 'Calibrating Lifelong Chrono-Navigator & Decennial Cycles', step: 0 },
+          { percent: 45, textZh: '流年流月四季节律 · 当季现实破局定调', textEn: 'Computing Annual & Seasonal Operational Playbook', step: 1 },
+          { percent: 70, textZh: '岁运并临与天克地冲 · 极端风险熔断诊断', textEn: 'Screening Grand Duke Conjunctions & Risk Safeguards', step: 2 },
+          { percent: 90, textZh: '地理生态位共振 · 城市气场与组织匹配', textEn: 'Aligning Five-Element Geography & Workplace Ecosystem', step: 3 },
+          { percent: 100, textZh: '时空全相罗盘呈现 · 决胜当季主线', textEn: 'Chrono Matrix Ready · Revealing Strategic Timeline', step: 4 }
+        ]
+      }
+    };
+
+    const cfg = configMap[mode] || configMap.natal;
+    const stages = cfg.stages;
+
+    if (titleEl) titleEl.textContent = isEn ? cfg.titleEn : cfg.titleZh;
+    if (subtitleEl) subtitleEl.textContent = isEn ? cfg.subtitleEn : cfg.subtitleZh;
+
+    const chips = isEn ? cfg.stepChipsEn : cfg.stepChipsZh;
+    stepEls.forEach((el, idx) => {
+      if (el && chips[idx]) el.textContent = chips[idx];
+    });
 
     // Headless test environment check
     const isHeadless = (typeof window !== 'undefined' && (window.__headlessTest || !window.document || !window.document.body || typeof setTimeout === 'undefined' || typeof setInterval === 'undefined'));
@@ -7149,7 +7232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
       modal.classList.add('hidden');
-      if (typeof onComplete === 'function') onComplete();
+      if (typeof cb === 'function') cb();
       return;
     }
 
@@ -7184,7 +7267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(progressTimer);
         setTimeout(() => {
           modal.classList.add('hidden');
-          if (typeof onComplete === 'function') onComplete();
+          if (typeof cb === 'function') cb();
         }, 120);
       }
     }, stepInterval);
@@ -7196,8 +7279,9 @@ document.addEventListener('DOMContentLoaded', () => {
       el.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           triggerCalculate();
-          switchToDashboardView();
-          showDynamicCalculationProgress();
+          showDynamicCalculationProgress('natal', () => {
+            switchToDashboardView();
+          });
         }
       });
     }
@@ -7205,11 +7289,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   calcBtn.addEventListener('click', () => {
     triggerCalculate();
-    switchToDashboardView();
-    showDynamicCalculationProgress();
+    showDynamicCalculationProgress('natal', () => {
+      switchToDashboardView();
+    });
   });
 
   // Expose key modular renderers on window for direct headless verification
+  window.setLanguage = setLanguage;
   window.showDynamicCalculationProgress = showDynamicCalculationProgress;
   window.renderOperationalPlaybook = renderOperationalPlaybook;
   window.renderEcologicalResonance = renderEcologicalResonance;

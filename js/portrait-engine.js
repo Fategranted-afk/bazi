@@ -2238,39 +2238,87 @@ class PortraitEngine {
     const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
     const dmEn = (typeof I18N !== 'undefined') ? I18N.getStem(dm, 'en') : (STEM_EN_MAP[dm] || dm);
 
+    const STEM_FACTORY_CONFIGS = {
+      '甲': {
+        dayMasterZh: '甲木 (阳木参天 · 开创栋梁)',
+        dayMasterEn: `${dmEn} (Yang Wood - Giant Cedar / Forest Visionary)`,
+        procLeadZh: '甲木主生发开创',
+        procLeadEn: 'Pioneering Creative Growth Neural Architecture'
+      },
+      '乙': {
+        dayMasterZh: '乙木 (柔韧藤萝 · 协同应变)',
+        dayMasterEn: `${dmEn} (Yin Wood - Winding Ivy / Resilient Networking)`,
+        procLeadZh: '乙木主柔韧通变',
+        procLeadEn: 'Adaptive Resilient & Flexible Growth Neural Architecture'
+      },
+      '丙': {
+        dayMasterZh: '丙火 (太阳普照 · 领袖群伦)',
+        dayMasterEn: `${dmEn} (Yang Fire - Radiant Sun / Visionary Leader)`,
+        procLeadZh: '丙火主宣发光耀',
+        procLeadEn: 'Radiant Illuminating & High-Energy Visionary Architecture'
+      },
+      '丁': {
+        dayMasterZh: '丁火 (万家灯火 · 敏锐玄微)',
+        dayMasterEn: `${dmEn} (Yin Fire - Guiding Lantern / Deep Intuition)`,
+        procLeadZh: '丁火主凝神烛照',
+        procLeadEn: 'Focused Luminous & Deep Perceptive Neural Architecture'
+      },
+      '戊': {
+        dayMasterZh: '戊土 (厚德重山 · 崇高底盘)',
+        dayMasterEn: `${dmEn} (Yang Earth - Majestic Mountain / Heavy Anchor)`,
+        procLeadZh: '戊土主厚载沉稳',
+        procLeadEn: 'Sovereign Grounded & Heavy-Load Stabilization Architecture'
+      },
+      '己': {
+        dayMasterZh: '己土 (田园润沃 · 化育万物)',
+        dayMasterEn: `${dmEn} (Yin Earth - Fertile Soil / Nurturing Integrator)`,
+        procLeadZh: '己土主包容化育',
+        procLeadEn: 'Nurturing Adaptive & Holistic Integration Neural Architecture'
+      },
+      '庚': {
+        dayMasterZh: '庚金 (利刃肃杀 · 破局铁腕)',
+        dayMasterEn: `${dmEn} (Yang Metal - Forged Blade / Decisive Executioner)`,
+        procLeadZh: '庚金主刚断肃革',
+        procLeadEn: 'Decisive Sovereign & Resolute Execution Neural Architecture'
+      },
+      '辛': {
+        dayMasterZh: '辛金 (珠玉流光 · 琢磨绝艺)',
+        dayMasterEn: `${dmEn} (Yin Metal - Polished Gem / Discerning Precision)`,
+        procLeadZh: '辛金主精微琢磨',
+        procLeadEn: 'Precision Discerning & Refined Analytical Neural Architecture'
+      },
+      '壬': {
+        dayMasterZh: '壬水 (江河浩瀚 · 奔涌气魄)',
+        dayMasterEn: `${dmEn} (Yang Water - Boundless Ocean / Strategic Torrent)`,
+        procLeadZh: '壬水主奔涌浩瀚',
+        procLeadEn: 'Expansive Dynamic & High-Velocity Strategic Architecture'
+      },
+      '癸': {
+        dayMasterZh: '癸水 (甘霖润泽 · 玄冥灵性)',
+        dayMasterEn: `${dmEn} (Yin Water - Dew & Spring / Quiet Intuition)`,
+        procLeadZh: '癸水主灵动润下',
+        procLeadEn: 'Fluid Intuitive & Quiet Permeating Neural Architecture'
+      }
+    };
+
+    const curStemCfg = STEM_FACTORY_CONFIGS[dm] || STEM_FACTORY_CONFIGS['甲'];
+    const procArchetypeZh = hasShangGuan ? '高频秀气外溢型' : hasQiSha ? '极度警觉防御型' : hasPianYin ? '深度自省洞察型' : '稳实承载聚合型';
+    const procArchetypeEn = hasShangGuan ? 'Expressive Creative Output' : hasQiSha ? 'Vigilant Threat-Detection' : hasPianYin ? 'Deep Introspective Analysis' : 'Stable Integrative Synthesis';
+
     const factorySpecs = {
-      dayMasterZh: `${dm}木 (阳木参天)`,
-      dayMasterEn: `${dmEn} (Pioneering Stem)`,
-      processorTypeZh: `${dm}木主生发开创，配置【${hasShangGuan ? '高频秀气外溢型' : hasQiSha ? '极度警觉防御型' : hasPianYin ? '深度自省洞察型' : '稳实承载聚合型'}】神经架构`,
-      processorTypeEn: `Pioneering Creative Neural Architecture with ${hasShangGuan ? 'Expressive Output' : hasQiSha ? 'Vigilant Threat-Detection' : 'Deep Introspective'} Bandwidth`,
+      dayMasterZh: curStemCfg.dayMasterZh,
+      dayMasterEn: curStemCfg.dayMasterEn,
+      processorTypeZh: `${curStemCfg.procLeadZh}，配置【${procArchetypeZh}】神经架构`,
+      processorTypeEn: `${curStemCfg.procLeadEn} with ${procArchetypeEn} Bandwidth`,
       osVersionZh: '乾坤原厂纯净版 1.0 (Natal Factory Clean OS v1.0)',
       osVersionEn: 'Natal Factory Clean OS v1.0',
       coreEngineZh: `日元${vigor.status} · ${hasShangGuan ? '伤官才气驱动' : hasQiSha ? '七杀危机驱动' : hasPianYin ? '偏印灵性驱动' : '正印正官纯正驱动'}`,
-      coreEngineEn: `${vigor.status === '身旺' ? 'Robust Vitality Engine' : 'Refined High-Sensitivity Engine'} with ${hasShangGuan ? 'Creative Output Drive' : hasQiSha ? 'Vigilant Crisis Drive' : 'Intuitive Depth Drive'}`,
+      coreEngineEn: `${vigor.status === '身旺' ? 'Robust Vitality Engine' : 'Refined High-Sensitivity Engine'} with ${hasShangGuan ? 'Creative Output Drive' : hasQiSha ? 'Vigilant Crisis Drive' : hasPianYin ? 'Intuitive Spiritual Drive' : 'Noble Strategic Drive'}`,
       ruminationBandwidthZh: `额叶神经回旋超频占比：${score}% (基准待机负载偏高)`,
       ruminationBandwidthEn: `Cognitive Rumination Bandwidth: ${score}% (Elevated baseline standby load)`,
       efficiencyRatioZh: '高感知敏锐度 (高输入算力 / 需防向内自噬)',
       efficiencyRatioEn: 'High Sensitivity Quotient (High input compute / Requires outward channeling)'
     };
-    if (dm === '乙') {
-      factorySpecs.dayMasterZh = '乙木 (柔韧藤萝)';
-    } else if (dm === '丙') {
-      factorySpecs.dayMasterZh = '丙火 (太阳普照)';
-    } else if (dm === '丁') {
-      factorySpecs.dayMasterZh = '丁火 (万家灯火)';
-    } else if (dm === '戊') {
-      factorySpecs.dayMasterZh = '戊土 (厚德重山)';
-    } else if (dm === '己') {
-      factorySpecs.dayMasterZh = '己土 (田园润沃)';
-    } else if (dm === '庚') {
-      factorySpecs.dayMasterZh = '庚金 (利刃肃杀)';
-    } else if (dm === '辛') {
-      factorySpecs.dayMasterZh = '辛金 (珠玉流光)';
-    } else if (dm === '壬') {
-      factorySpecs.dayMasterZh = '壬水 (江河浩瀚)';
-    } else if (dm === '癸') {
-      factorySpecs.dayMasterZh = '癸水 (甘霖润泽)';
-    }
 
     // 📜 2. 八大典籍正统出厂心智细注 (Eight Classical Canons Scripture Manual)
     const classicalCanonsManual = [

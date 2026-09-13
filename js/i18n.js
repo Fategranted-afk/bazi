@@ -140,6 +140,15 @@ const I18N = (function() {
       calc_stage_3: "时空大运罗盘推演 · 当季本年现实破局定位",
       calc_stage_4: "原厂心理说明书构筑 · 出厂参数与自救心法",
       calc_stage_5: "乾坤既定 · 呈现全相看板",
+      calc_step_1: "① 四柱",
+      calc_step_2: "② 八典",
+      calc_step_3: "③ 罗盘",
+      calc_step_4: "④ 心法",
+      calc_step_5: "⑤ 乾坤",
+      calc_synastry_title: "乾坤互参 · 双人合盘深度推演中",
+      calc_synastry_subtitle: "通判八大经典合盘法则 · 婚恋合伙博弈与禅道智慧调和",
+      calc_chrono_title: "时空罗盘 · 百岁运势与现实破局深度推演中",
+      calc_chrono_subtitle: "推演百岁精微双曲线 · 当季现实破局攻坚与地理生态位共振",
 
       portal_talisman_qiankun: "乾坤",
       portal_seal_astronomy: "钦天玄览",
@@ -556,13 +565,22 @@ const I18N = (function() {
       manual_habits_heading: "Daily Five-Element Energy Micro-Habits",
 
       // Dynamic Calculation Progress Bar
-      calc_progress_title: "Synthesizing Cosmic Pillars & Metaphysical Blueprints...",
+      calc_progress_title: "Synthesizing Cosmic Pillars & Natal Blueprint...",
       calc_progress_subtitle: "Synthesizing Natal Geometry with Eight Classical Canons & Luck Cycles",
       calc_stage_1: "Computing Four Pillars, NaYin & Elemental Balance",
       calc_stage_2: "Cross-Referencing Eight Classical Canons & Pareto Fulcrum",
       calc_stage_3: "Synthesizing Luck Cycles & Operational Chrono-Navigator",
       calc_stage_4: "Assembling Factory Mind Manual & De-escalation Protocols",
       calc_stage_5: "Destiny Canvas Complete · Launching Dashboard",
+      calc_step_1: "① Pillars",
+      calc_step_2: "② Canons",
+      calc_step_3: "③ Chrono",
+      calc_step_4: "④ Mind",
+      calc_step_5: "⑤ Destiny",
+      calc_synastry_title: "Cross-Referencing Natal Geometries · Synastry Matrix",
+      calc_synastry_subtitle: "Evaluating Dual Natal Charts, Elemental Clashes & Zen Trinity Synergy",
+      calc_chrono_title: "Calibrating Chrono-Navigator & Operational Playbook",
+      calc_chrono_subtitle: "Computing Lifelong Trajectory, Seasonal Tides & Ecological Resonance",
 
       portal_talisman_qiankun: "Qian-Kun",
       portal_seal_astronomy: "Celestial Ephemeris",
@@ -1448,8 +1466,8 @@ const I18N = (function() {
       });
     }
 
-    // Mental Friction
-    if (p.mentalFriction && p.mentalFriction.detected) {
+    // Mental Friction & Factory Mind Manual
+    if (p.mentalFriction) {
       const mf = p.mentalFriction;
       if (mf.score >= 82) {
         mf.level = 'Severe Rumination (Overthinking Loop)';
@@ -1528,23 +1546,37 @@ const I18N = (function() {
       if (mf.zenDaoWisdom) {
         const zd = mf.zenDaoWisdom;
         zd.title = zd.titleEn || zd.title;
+        zd.titleZh = zd.titleEn || zd.titleZh;
         zd.subtitle = zd.subtitleEn || zd.subtitle;
+        zd.subtitleZh = zd.subtitleEn || zd.subtitleZh;
         ['diamond', 'platform', 'zhuangzi'].forEach(k => {
           if (zd[k]) {
             zd[k].title = zd[k].titleEn || zd[k].title;
+            zd[k].titleZh = zd[k].titleEn || zd[k].titleZh;
             zd[k].mantra = zd[k].mantraEn || zd[k].mantra;
+            zd[k].mantraZh = zd[k].mantraEn || zd[k].mantraZh;
             zd[k].insight = zd[k].insightEn || zd[k].insight;
+            zd[k].insightZh = zd[k].insightEn || zd[k].insightZh;
             zd[k].practical = zd[k].practicalEn || zd[k].practical;
+            zd[k].practicalZh = zd[k].practicalEn || zd[k].practicalZh;
             zd[k].canonVerse = zd[k].canonVerseEn || zd[k].canonVerse;
+            zd[k].canonVerseZh = zd[k].canonVerseEn || zd[k].canonVerseZh;
             zd[k].mindsetAnalysis = zd[k].mindsetAnalysisEn || zd[k].mindsetAnalysis;
+            zd[k].mindsetAnalysisZh = zd[k].mindsetAnalysisEn || zd[k].mindsetAnalysisZh;
             zd[k].practicalPractice = zd[k].practicalPracticeEn || zd[k].practicalPractice;
+            zd[k].practicalPracticeZh = zd[k].practicalPracticeEn || zd[k].practicalPracticeZh;
             zd[k].badge = zd[k].badgeEn || zd[k].badge;
+            zd[k].badgeZh = zd[k].badgeEn || zd[k].badgeZh;
             if (zd[k].quotes && Array.isArray(zd[k].quotes)) {
               zd[k].quotes.forEach(q => {
                 q.verse = q.verseEn || q.verse;
+                q.verseZh = q.verseEn || q.verseZh;
                 q.source = q.sourceEn || q.source;
+                q.sourceZh = q.sourceEn || q.sourceZh;
                 q.insight = q.insightEn || q.insight;
+                q.insightZh = q.insightEn || q.insightZh;
                 q.practical = q.practicalEn || q.practical;
+                q.practicalZh = q.practicalEn || q.practicalZh;
               });
             }
           }

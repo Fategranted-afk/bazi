@@ -3166,15 +3166,39 @@ jsc_manual_cmd = [
       });
     });
 
-    // 6. Validate primaryRoot and triggers zero residual Chinese in English mode
-    if (!mfEn.primaryRoot || /[\\u4e00-\\u9fa5]/.test(mfEn.primaryRoot)) {
-      throw new Error("Residual Chinese in mfEn.primaryRoot: " + mfEn.primaryRoot);
-    }
-    if (!mfEn.triggers || mfEn.triggers.length === 0) {
-      throw new Error("Empty mfEn.triggers");
-    }
-    mfEn.triggers.forEach(function(tr, idx) {
-      if (/[\\u4e00-\\u9fa5]/.test(tr)) throw new Error("Residual Chinese in mfEn.triggers index " + idx + ": " + tr);
+    // 7. Validate all 10 Heavenly Stems in factory specs (Zero residual Chinese and elemental accuracy)
+    var sampleDates = [
+      { y: 1990, m: 5, d: 9, h: 12, dm: "甲", el: "木" },
+      { y: 1990, m: 5, d: 10, h: 12, dm: "乙", el: "木" },
+      { y: 1990, m: 5, d: 1, h: 12, dm: "丙", el: "火" },
+      { y: 1990, m: 5, d: 2, h: 12, dm: "丁", el: "火" },
+      { y: 1990, m: 5, d: 3, h: 12, dm: "戊", el: "土" },
+      { y: 1990, m: 5, d: 4, h: 12, dm: "己", el: "土" },
+      { y: 1990, m: 5, d: 5, h: 12, dm: "庚", el: "金" },
+      { y: 1990, m: 5, d: 6, h: 12, dm: "辛", el: "金" },
+      { y: 1990, m: 5, d: 7, h: 12, dm: "壬", el: "水" },
+      { y: 1990, m: 5, d: 8, h: 12, dm: "癸", el: "水" }
+    ];
+    sampleDates.forEach(function(sd, sIdx) {
+      var sRes = BaZiEngine.calculate({
+        year: sd.y, month: sd.m, day: sd.d, hour: sd.h, minute: 0,
+        gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+        longitude: 116.4, timezone: 8.0
+      });
+      var sZh = PortraitEngine.analyze(sRes, "zh");
+      var sEn = I18N.translatePortrait(sZh, "en");
+      var sFsZh = sZh.mentalFriction.factorySpecs;
+      var sFsEn = sEn.mentalFriction.factorySpecs;
+
+      if (!sFsZh.processorTypeZh.includes(sRes.dayMaster + sRes.dayMasterElement)) {
+        throw new Error("Mismatched stem/element lead in processorTypeZh for " + sRes.dayMaster + ": " + sFsZh.processorTypeZh);
+      }
+      var sFields = [sFsEn.dayMasterZh, sFsEn.processorTypeZh, sFsEn.osVersionZh, sFsEn.coreEngineZh, sFsEn.ruminationBandwidthZh, sFsEn.efficiencyRatioZh];
+      sFields.forEach(function(f, fIdx) {
+        if (/[\\u4e00-\\u9fa5]/.test(f)) {
+          throw new Error("Residual Chinese in stem test (" + sRes.dayMaster + ") at index " + fIdx + ": " + f);
+        }
+      });
     });
     '''
 ]
@@ -3291,7 +3315,7 @@ jsc_dom_check_cmd = [
       };
     }
 
-    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "calculationProgressModal", "calcProgressTitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5"];
+    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "calculationProgressModal", "calcProgressTitle", "calcProgressSubtitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5"];
 
     allIds.forEach(function(id) {
       elements[id] = makeEl(id);
@@ -3341,19 +3365,45 @@ jsc_dom_check_cmd = [
       el._children = [];
     }
 
-    // 1. Progress Bar Flow Verification
+    // 1. Progress Bar Multi-Mode & Bilingual Verification
     if (typeof showDynamicCalculationProgress !== "function") {
       throw new Error("showDynamicCalculationProgress is not a function");
     }
-    var progressFinished = false;
-    showDynamicCalculationProgress(function() {
-      progressFinished = true;
-    });
-    if (!progressFinished) {
-      throw new Error("showDynamicCalculationProgress failed to invoke callback synchronously in headless environment");
-    }
 
-    // 2. Playbook Tabs Rendering Verification in ZH & EN
+    var progressModes = ["natal", "synastry", "chrono"];
+    progressModes.forEach(function(mode) {
+      // Test ZH mode
+      currentLang = "zh";
+      if (typeof window !== "undefined") window.currentLang = "zh";
+      if (typeof I18N !== "undefined") I18N.currentLang = "zh";
+      if (typeof globalThis !== "undefined") globalThis.currentLang = "zh";
+      var zhDone = false;
+      showDynamicCalculationProgress(mode, function() { zhDone = true; });
+      if (!zhDone) throw new Error("Progress bar failed to execute callback in ZH mode: " + mode);
+      if (!elements["calcProgressTitle"].textContent || elements["calcProgressTitle"].textContent.length === 0) {
+        throw new Error("Empty title in ZH mode: " + mode);
+      }
+
+      // Test EN mode
+      currentLang = "en";
+      if (typeof window !== "undefined") window.currentLang = "en";
+      if (typeof I18N !== "undefined") I18N.currentLang = "en";
+      if (typeof globalThis !== "undefined") globalThis.currentLang = "en";
+      var enDone = false;
+      showDynamicCalculationProgress(mode, function() { enDone = true; });
+      if (!enDone) throw new Error("Progress bar failed to execute callback in EN mode: " + mode);
+
+      var modalCheckIds = ["calcProgressTitle", "calcProgressSubtitle", "calcProgressStageText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5"];
+      modalCheckIds.forEach(function(mId) {
+        var txt = elements[mId].textContent || "";
+        if (!txt || txt.length === 0) throw new Error("Empty modal text for " + mId + " in mode " + mode);
+        if (/[\\u4e00-\\u9fa5]/.test(txt)) {
+          throw new Error("Residual Chinese in progress modal element " + mId + " (" + mode + " mode): " + txt);
+        }
+      });
+    });
+
+    // 2. Playbook Tabs Rendering Verification in ZH & EN (and Zero Undefined)
     var pbBox = elements["operationalPlaybookContainer"];
     var pbTabs = ["mainline", "seasons", "safeguards"];
     for (var i = 0; i < pbTabs.length; i++) {
@@ -3363,39 +3413,45 @@ jsc_dom_check_cmd = [
       renderOperationalPlaybook(res, luckRes, false);
       var zhContent = getAllHtml(pbBox);
       if (zhContent.length < 50) throw new Error("renderOperationalPlaybook " + tab + " produced empty HTML in ZH");
+      if (zhContent.indexOf("undefined") !== -1) {
+        throw new Error("Found 'undefined' string in operational playbook (" + tab + ") rendered HTML in ZH mode");
+      }
 
       resetEl(pbBox);
       renderOperationalPlaybook(res, luckRes, true);
       var enContent = getAllHtml(pbBox);
       if (enContent.length < 50) throw new Error("renderOperationalPlaybook " + tab + " produced empty HTML in EN");
+      if (enContent.indexOf("undefined") !== -1) {
+        throw new Error("Found 'undefined' string in operational playbook (" + tab + ") rendered HTML in EN mode");
+      }
       if (/[\\u4e00-\\u9fa5]/.test(enContent)) {
         throw new Error("Residual Chinese in operational playbook (" + tab + ") rendered HTML in EN mode: " + enContent.substring(0, 300));
       }
     }
 
-    // 3. Ecological Resonance Tabs Rendering Verification in ZH & EN
+    // 3. Ecological Resonance Tabs Rendering Verification in ZH & EN (both 'geographic' and 'directions')
     var ecoBox = elements["ecologicalResonanceContainer"];
-    var ecoTabs = ["geographic", "ecosystems"];
+    var ecoTabs = ["geographic", "directions", "ecosystems"];
     for (var j = 0; j < ecoTabs.length; j++) {
       var tab2 = ecoTabs[j];
       selectedResonanceTab = tab2;
       resetEl(ecoBox);
       renderEcologicalResonance(res, luckRes, false);
       var zhContent2 = getAllHtml(ecoBox);
-      if (zhContent2.length < 50) throw new Error("renderEcologicalResonance " + tab2 + " produced empty HTML in ZH");
+      if (zhContent2.length < 200) throw new Error("renderEcologicalResonance " + tab2 + " produced too short HTML in ZH: " + zhContent2.length);
 
       resetEl(ecoBox);
       renderEcologicalResonance(res, luckRes, true);
       var enContent2 = getAllHtml(ecoBox);
-      if (enContent2.length < 50) throw new Error("renderEcologicalResonance " + tab2 + " produced empty HTML in EN");
+      if (enContent2.length < 200) throw new Error("renderEcologicalResonance " + tab2 + " produced too short HTML in EN: " + enContent2.length);
       if (/[\\u4e00-\\u9fa5]/.test(enContent2)) {
         throw new Error("Residual Chinese in ecological resonance (" + tab2 + ") rendered HTML in EN mode: " + enContent2.substring(0, 300));
       }
     }
 
-    // 4. Factory Mind Manual Tabs Rendering Verification in ZH & EN
+    // 4. Factory Mind Manual Tabs Rendering Verification in ZH & EN (both 'zendao' and 'trinity')
     var fBox = elements["frictionContentContainer"];
-    var manTabs = ["canons", "triggers", "protocols", "habits", "trinity"];
+    var manTabs = ["canons", "triggers", "protocols", "habits", "zendao", "trinity"];
     for (var k = 0; k < manTabs.length; k++) {
       var tab3 = manTabs[k];
       selectedManualTab = tab3;
@@ -3403,13 +3459,13 @@ jsc_dom_check_cmd = [
       currentPortraitData = pZh;
       renderFrictionView(pZh, res, false);
       var zhContent3 = getAllHtml(fBox);
-      if (zhContent3.length < 100) throw new Error("renderFrictionView " + tab3 + " produced empty HTML in ZH");
+      if (zhContent3.length < 500) throw new Error("renderFrictionView " + tab3 + " produced too short HTML in ZH: " + zhContent3.length);
 
       resetEl(fBox);
       currentPortraitData = pEn;
       renderFrictionView(pEn, res, true);
       var enContent3 = getAllHtml(fBox);
-      if (enContent3.length < 100) throw new Error("renderFrictionView " + tab3 + " produced empty HTML in EN");
+      if (enContent3.length < 500) throw new Error("renderFrictionView " + tab3 + " produced too short HTML in EN: " + enContent3.length);
       if (/[\\u4e00-\\u9fa5]/.test(enContent3)) {
         throw new Error("Residual Chinese in friction view (" + tab3 + ") rendered HTML in EN mode: " + enContent3.substring(0, 300));
       }
@@ -3417,7 +3473,7 @@ jsc_dom_check_cmd = [
     '''
 ]
 run_dom_check = subprocess.run(jsc_dom_check_cmd, capture_output=True, text=True)
-assert run_dom_check.returncode == 0, f"JSC DOM Render check failed: {run_dom_check.stderr}"
+assert run_dom_check.returncode == 0, f"JSC DOM Render check failed: stdout={run_dom_check.stdout} stderr={run_dom_check.stderr}"
 print("✓ 动态计算进度条流转机制与全新罗盘/生态位/原厂手册三重视图DOM全量渲染（双语零中文残留）验证通过！")
 
 print("\n🎉 ALL 55 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
