@@ -6689,7 +6689,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnClose && modal) {
       btnClose.addEventListener('click', () => {
-        modal.classList.add('hidden');
+        closeImperialDossierModal();
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeImperialDossierModal();
+        }
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeImperialDossierModal();
+        }
       });
     }
 
@@ -6729,6 +6742,24 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // Auto-sync with language switcher if dossier is open
+    const globalLangZhBtn = document.getElementById('langZhBtn');
+    const globalLangEnBtn = document.getElementById('langEnBtn');
+    if (globalLangZhBtn) {
+      globalLangZhBtn.addEventListener('click', () => {
+        if (modal && !modal.classList.contains('hidden')) {
+          renderImperialDossierPages(currentDossierLang || currentLang);
+        }
+      });
+    }
+    if (globalLangEnBtn) {
+      globalLangEnBtn.addEventListener('click', () => {
+        if (modal && !modal.classList.contains('hidden')) {
+          renderImperialDossierPages(currentDossierLang || currentLang);
+        }
+      });
+    }
+
     if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
       window.addEventListener('beforeprint', () => {
         renderImperialDossierPages(currentDossierLang || currentLang);
@@ -6737,24 +6768,33 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateDossierModalI18n(lang) {
-    if (typeof I18N === 'undefined') return;
+    const isEn = (lang === 'en');
     const titleEl = document.querySelector('[data-i18n="dossier_modal_title"]');
-    if (titleEl) titleEl.textContent = I18N.t('dossier_modal_title', lang);
+    const printBtnEl = document.querySelector('#dossierPrintBtn span:last-child');
+    const downloadBtnEl = document.querySelector('#dossierDownloadPdfBtn span:last-child');
+    const closeBtnEl = document.getElementById('dossierCloseBtn');
 
-    const dlBtn = document.getElementById('dossierDownloadPdfBtn');
-    if (dlBtn) dlBtn.textContent = I18N.t('dossier_download_btn', lang);
-
-    const printBtn = document.getElementById('dossierPrintBtn');
-    if (printBtn) printBtn.textContent = I18N.t('dossier_print_btn', lang);
-
-    const closeBtn = document.getElementById('dossierCloseBtn');
-    if (closeBtn) closeBtn.textContent = I18N.t('dossier_close_btn', lang);
+    if (titleEl) {
+      titleEl.textContent = isEn
+        ? 'Imperial Thread-Bound BaZi Dossier · Classified Master Archive (A4 PDF Export)'
+        : '皇家线装排盘战报 · 绝美珍藏册 (A4 级导出)';
+    }
+    if (printBtnEl) {
+      printBtnEl.textContent = isEn ? 'System Print / Save as PDF' : '系统打印 / 另存为 PDF';
+    }
+    if (downloadBtnEl) {
+      downloadBtnEl.textContent = isEn ? 'Direct Download PDF' : '直接下载 PDF 文件';
+    }
+    if (closeBtnEl) {
+      closeBtnEl.textContent = isEn ? 'Close Preview' : '关闭预览';
+    }
   }
 
-  function showDossierStatus(msg, type) {
+  function showDossierStatus(msg, type = 'info') {
     const statusEl = document.getElementById('dossierExportStatus');
     const msgEl = document.getElementById('dossierExportStatusMsg');
     if (!statusEl || !msgEl) return;
+
     msgEl.textContent = msg;
     statusEl.classList.remove('hidden');
     if (type === 'success') {
@@ -6768,6 +6808,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('imperialDossierModal');
     if (!modal) return;
     modal.classList.remove('hidden');
+    if (document.body) {
+      if (document.body.classList) document.body.classList.add('dossier-modal-open');
+      if (document.body.style) document.body.style.overflow = 'hidden';
+    }
 
     const activeLang = lang || currentLang || 'zh';
     currentDossierLang = activeLang;
@@ -6789,6 +6833,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateDossierModalI18n(activeLang);
     renderImperialDossierPages(activeLang);
+  }
+
+  function closeImperialDossierModal() {
+    const modal = document.getElementById('imperialDossierModal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    if (document.body) {
+      if (document.body.classList) document.body.classList.remove('dossier-modal-open');
+      if (document.body.style) document.body.style.overflow = '';
+    }
   }
 
   function printImperialDossier() {
@@ -6817,6 +6871,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'info'
     );
 
+    container.classList.add('exporting-pdf');
+
     // 1. Primary: Use html2pdf.js if available in the browser runtime
     if (typeof html2pdf !== 'undefined') {
       try {
@@ -6839,25 +6895,30 @@ document.addEventListener('DOMContentLoaded', () => {
             orientation: 'portrait'
           },
           pagebreak: {
-            mode: ['css', 'legacy']
+            mode: ['css', 'legacy'],
+            before: '.html2pdf__page-break'
           }
         };
 
         html2pdf().set(opt).from(container).save().then(() => {
+          container.classList.remove('exporting-pdf');
           showDossierStatus(
             isEn ? '✅ Imperial PDF Dossier generated and download started!' : '✅ 皇家线装战报 PDF 已成功生成并开始下载！',
             'success'
           );
         }).catch((err) => {
+          container.classList.remove('exporting-pdf');
           console.warn('html2pdf runtime notice, invoking fallback:', err);
           fallbackExportPDF(container, filename, isEn);
         });
         return;
       } catch (err) {
+        container.classList.remove('exporting-pdf');
         console.warn('html2pdf invocation error:', err);
       }
     }
 
+    container.classList.remove('exporting-pdf');
     // 2. Secondary: Built-in zero-dependency client-side PDF emitter
     fallbackExportPDF(container, filename, isEn);
   }
@@ -7275,6 +7336,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
+      <div class="html2pdf__page-break"></div>
+
       <!-- Page 2: Volume I - 80/20 Grand Picture Pareto Strategy -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
@@ -7324,6 +7387,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
+
+      <div class="html2pdf__page-break"></div>
 
       <!-- Page 3: Volume II - 4D Kinship Profiles -->
       <div class="imperial-page relative">
@@ -7380,6 +7445,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
+
+      <div class="html2pdf__page-break"></div>
 
       <!-- Page 4: Volume III - Zen & Dao Trinity Wisdom -->
       <div class="imperial-page relative">

@@ -251,67 +251,130 @@ body {
   }
   html, body {
     background: #fcfbf7 !important;
+    background-color: #fcfbf7 !important;
+    color: #1a1a1a !important;
     margin: 0 !important;
     padding: 0 !important;
     width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
     height: auto !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
-  body * {
-    visibility: hidden;
+  /* Completely excise non-print views so they take 0mm in layout flow */
+  #landingPortalView,
+  #dashboardView,
+  #calculationProgressModal,
+  body > header,
+  body > nav,
+  body > footer,
+  .no-print {
+    display: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
   }
   #imperialDossierModal {
     display: block !important;
     position: static !important;
-    background: transparent !important;
+    inset: auto !important;
+    background: #fcfbf7 !important;
+    background-color: #fcfbf7 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    box-shadow: none !important;
     padding: 0 !important;
     margin: 0 !important;
     overflow: visible !important;
-    inset: auto !important;
     width: 210mm !important;
     min-height: auto !important;
+    visibility: visible !important;
   }
   #imperialDossierContainer,
   #imperialDossierContainer * {
-    visibility: visible;
+    visibility: visible !important;
   }
   #imperialDossierContainer {
     position: static !important;
     left: auto !important;
     top: auto !important;
     width: 210mm !important;
-    background: transparent !important;
+    background: #fcfbf7 !important;
+    background-color: #fcfbf7 !important;
     padding: 0 !important;
     margin: 0 !important;
     display: block !important;
   }
   .imperial-page {
+    display: block !important;
+    position: relative !important;
     box-shadow: none !important;
     margin: 0 !important;
     width: 210mm !important;
     max-width: 210mm !important;
-    height: 297mm !important;
-    max-height: 297mm !important;
-    min-height: 297mm !important;
+    min-width: 210mm !important;
+    height: 296.5mm !important;
+    max-height: 296.5mm !important;
+    min-height: 296.5mm !important;
     padding: 16mm 14mm 16mm 24mm !important;
     page-break-after: always !important;
     break-after: page !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     overflow: hidden !important;
+    background: #fcfbf7 !important;
     background-color: #fcfbf7 !important;
+    color: #1a1a1a !important;
     box-sizing: border-box !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
   .imperial-page:last-child {
     page-break-after: avoid !important;
     break-after: avoid !important;
   }
-  .no-print {
+  .html2pdf__page-break {
     display: none !important;
   }
+}
+
+/* Screen and Export Support for Clean A4 Page Slicing */
+#imperialDossierContainer.exporting-pdf {
+  width: 210mm !important;
+  background: #fcfbf7 !important;
+  background-color: #fcfbf7 !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+}
+#imperialDossierContainer.exporting-pdf .imperial-page {
+  margin: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  width: 210mm !important;
+  height: 296.5mm !important;
+  min-height: 296.5mm !important;
+  max-height: 296.5mm !important;
+  page-break-after: always !important;
+  break-after: page !important;
+}
+#imperialDossierContainer.exporting-pdf .imperial-page:last-child {
+  page-break-after: avoid !important;
+  break-after: avoid !important;
+}
+.html2pdf__page-break {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  page-break-after: always;
+  break-after: page;
 }
 
 /* ==========================================================================
