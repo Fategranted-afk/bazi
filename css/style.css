@@ -133,3 +133,174 @@ body {
   color: #fcd34d !important;
   border-color: rgba(245, 158, 11, 0.4) !important;
 }
+
+/* ==========================================================================
+   Imperial Thread-Bound PDF Dossier (A4 绝美精装排盘战报) Styles
+   ========================================================================== */
+.imperial-page {
+  background-color: #fcfbf7;
+  color: #1a1a1a;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 18mm 16mm 18mm 26mm; /* Extra left padding for thread binding spine */
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin: 0 auto 24px auto;
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", STSong, Georgia, serif;
+}
+
+/* Simulated 4-Hole Thread Binding Spine (四孔线装古书装订线) */
+.imperial-thread-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20mm;
+  border-right: 1.5px dashed rgba(180, 145, 45, 0.4);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+  pointer-events: none;
+}
+.imperial-thread-spine::before {
+  content: "";
+  position: absolute;
+  left: 9mm;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: repeating-linear-gradient(to bottom, #d4af37, #d4af37 12px, transparent 12px, transparent 18px);
+  opacity: 0.65;
+}
+/* 4 Stitched Eyelets */
+.thread-eyelet {
+  position: absolute;
+  left: 7.5mm;
+  width: 5mm;
+  height: 5mm;
+  border-radius: 50%;
+  border: 1.5px solid #b45309;
+  background: #fbf8f0;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+}
+.eyelet-1 { top: 35mm; }
+.eyelet-2 { top: 95mm; }
+.eyelet-3 { top: 175mm; }
+.eyelet-4 { top: 245mm; }
+
+/* Antique Metaphysics Watermark */
+.imperial-watermark {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%) rotate(-32deg);
+  font-size: 58px;
+  font-weight: 900;
+  letter-spacing: 12px;
+  color: rgba(212, 175, 55, 0.06);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+}
+
+/* Imperial Double-Line Border Frame */
+.imperial-frame {
+  position: relative;
+  z-index: 2;
+  border: 2px solid #8b2500;
+  padding: 12px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+.imperial-frame::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 0.8px solid rgba(139, 37, 0, 0.45);
+  pointer-events: none;
+}
+
+/* Imperial Vermilion Carved Seal */
+.imperial-seal-stamp {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 2.5px solid #c23531;
+  color: #c23531;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 2px;
+  border-radius: 4px;
+  line-height: 1.2;
+  text-align: center;
+  background: rgba(194, 53, 49, 0.04);
+  box-shadow: inset 0 0 4px rgba(194, 53, 49, 0.15);
+}
+
+/* Print Optimization for A4 Dossier */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm 8mm 16mm;
+  }
+  body * {
+    visibility: hidden;
+  }
+  #imperialDossierContainer,
+  #imperialDossierContainer * {
+    visibility: visible;
+  }
+  #imperialDossierContainer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+  .imperial-page {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: 275mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+  .imperial-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Chrono-Navigator & Synastry Custom Styles
+   ========================================================================== */
+.chrono-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #3b82f6, #10b981, #f59e0b, #ef4444);
+  outline: none;
+}
+.chrono-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fef08a;
+  border: 3px solid #b45309;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+  transition: transform 0.1s ease;
+}
+.chrono-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+}

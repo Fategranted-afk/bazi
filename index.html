@@ -6,6 +6,14 @@
   <title>八字排盘与典籍研索系统 · 滴天髓 & 三命通会</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B0F19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="钦天监排盘">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <!-- Custom Metaphysics CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -36,6 +44,21 @@
             English
           </button>
         </div>
+
+        <!-- Imperial Dossier A4 Print Button -->
+        <button id="btnExportDossier" class="px-3 py-1.5 text-xs rounded-lg border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95" data-i18n="btn_export_dossier">
+          👑 皇家线装战报 (A4 PDF)
+        </button>
+
+        <!-- Dynamic Ambient Flux Toggle -->
+        <button id="btnToggleFlux" class="px-2.5 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-amber-300/90 transition flex items-center gap-1" title="切换东方动态气机" data-i18n="alchemy_toggle_label">
+          ✨ 东方气机流光
+        </button>
+
+        <!-- PWA Install Button (Shown when prompt is available) -->
+        <button id="btnInstallPwa" class="hidden px-2.5 py-1.5 text-xs rounded-lg border border-emerald-600/50 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 font-medium transition flex items-center gap-1 shadow-sm" data-i18n="btn_install_pwa">
+          📲 安装离线应用
+        </button>
 
         <button id="nowBtn" class="px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition" data-i18n="btn_now">
           ⏱ 此时此刻
@@ -162,6 +185,11 @@
           <span class="text-base">☯️</span>
           <span data-i18n="nav_view_iching">周易六十四卦 · 蓍草/金钱起卦研解</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_iching">易道神机</span>
+        </button>
+        <button id="navBtnSynastry" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-synastry">
+          <span class="text-base">💞</span>
+          <span data-i18n="nav_view_synastry">双人合盘 (婚恋 / 商业合伙)</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-950/60 text-rose-300 border border-rose-800/30 font-normal" data-i18n="seal_view_synastry">双人博弈</span>
         </button>
       </div>
     </nav>
@@ -506,10 +534,68 @@
             <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
             <span id="luckProgressionText">--</span>
           </div>
-          <div id="luckStartAgeBadge" class="px-2.5 py-1 rounded-md bg-purple-950/40 text-purple-300 border border-purple-800/50 font-mono flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-            <span id="luckStartAgeText">--</span>
+      <!-- Lifelong Chrono-Navigator / Interactive Fortune Timeline (百岁运势时空罗盘) -->
+      <div id="chronoNavigatorSection" class="p-5 rounded-2xl bg-gradient-to-br from-[#181a24] via-[#12141c] to-[#0d0f17] border border-amber-500/30 shadow-2xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800/80 pb-3">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">⏳</span>
+            <div>
+              <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+                <span data-i18n="chrono_title">百岁运势时空罗盘 (Lifelong Chrono-Navigator)</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">1~100 岁全景</span>
+              </h4>
+              <p class="text-xs text-gray-400 mt-0.5" data-i18n="chrono_subtitle">
+                1~100岁连续平滑推演 · 能量活力、财富走势与岁运刑冲全局图谱
+              </p>
+            </div>
           </div>
+          <div class="flex items-center gap-2">
+            <button id="chronoPlayBtn" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1 cursor-pointer" data-i18n="chrono_play">
+              ▶️ 连续推演
+            </button>
+            <div id="chronoAgeValueBadge" class="px-3 py-1.5 rounded-lg bg-black/50 text-amber-300 font-mono text-xs font-bold border border-amber-600/40">
+              -- 岁 (----)
+            </div>
+          </div>
+        </div>
+
+        <!-- 100-Year Master Slider & Quick Jump Row -->
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span class="font-mono">1 岁 (初生)</span>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button id="chronoJumpCurrent" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-amber-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_current">当前年龄</button>
+              <button id="chronoJumpGolden" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-emerald-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_golden">巅峰高光</button>
+              <button id="chronoJumpTransit" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-purple-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_transit">大运交接</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="20">20</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="30">30</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="40">40</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="50">50</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="60">60</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="70">70</button>
+              <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="80">80</button>
+            </div>
+            <span class="font-mono">100 岁 (百岁)</span>
+          </div>
+
+          <input type="range" id="chronoAgeSlider" min="1" max="100" value="30" class="w-full chrono-slider cursor-pointer">
+        </div>
+
+        <!-- 100-Year Canvas Trendline Chart -->
+        <div class="relative bg-black/40 rounded-xl p-2 border border-gray-800/80 overflow-hidden">
+          <div class="flex items-center justify-between text-[11px] text-gray-400 mb-1 px-1">
+            <span class="flex items-center gap-3">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span> <span data-i18n="chrono_energy_label">能量活力</span></span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> <span data-i18n="chrono_wealth_label">财富潮汐</span></span>
+            </span>
+            <span class="text-gray-500 font-mono text-[10px]">滑动上方滑块或点击趋势图自由探索任意年份</span>
+          </div>
+          <canvas id="chronoTimelineCanvas" class="w-full h-32 block cursor-crosshair"></canvas>
+        </div>
+
+        <!-- Active Year Spotlight Card (流年透镜与战略锦囊) -->
+        <div id="chronoYearCard" class="p-4 rounded-xl bg-black/30 border border-amber-600/30 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Dynamically populated via JS -->
         </div>
       </div>
 
@@ -1044,7 +1130,157 @@
     </div>
   </div>
   <!-- End of view-iching -->
+
+  <!-- View 7: Synastry & Partner Compatibility (双人合盘 · 婚恋合婚与合伙人博弈) -->
+  <div id="view-synastry" class="space-y-6 hidden">
+    <section class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-6">
+      <!-- Section Header & Mode Selector -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">💞</span>
+          <div>
+            <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+              <span data-i18n="synastry_title">双人合盘 · 婚恋合婚与商业合伙博弈战报</span>
+              <span class="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 font-normal border border-rose-500/30" data-i18n="seal_view_synastry">双人博弈</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="synastry_subtitle">
+              五行能量互补 · 灵魂共鸣 · 潜在刑冲雷区 · 财富合力与化解之道
+            </p>
+          </div>
+        </div>
+
+        <!-- Relationship Mode Switcher -->
+        <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/90 p-0.5 shadow-sm">
+          <button id="synastryModeRomantic" class="px-3 py-1.5 text-xs rounded-md font-bold transition bg-rose-600 text-white shadow" data-i18n="synastry_mode_romantic">
+            💍 婚恋合婚 (夫妻/情侣)
+          </button>
+          <button id="synastryModeBusiness" class="px-3 py-1.5 text-xs rounded-md font-bold transition text-gray-400 hover:text-gray-200" data-i18n="synastry_mode_business">
+            🤝 商业合伙 (创始人/战略合伙)
+          </button>
+        </div>
+      </div>
+
+      <!-- Dual Input Form Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Person A (Primary Chart) -->
+        <div class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-800/40 pb-2">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+              <span>👤</span>
+              <span data-i18n="synastry_person_a">甲造命主 (主盘对象)</span>
+            </span>
+            <button id="btnSynastryLoadA" class="text-[11px] px-2.5 py-1 rounded bg-amber-950/60 hover:bg-amber-900/60 text-amber-300 border border-amber-700/50 transition cursor-pointer" data-i18n="synastry_load_current">
+              📥 载入当前主盘
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_birth_date">出生日期 (公历)</label>
+              <input type="date" id="synastryDateA" value="1988-10-24" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_birth_time">出生时间</label>
+              <input type="time" id="synastryTimeA" value="14:30" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_gender">造化属性 (性别)</label>
+              <select id="synastryGenderA" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+                <option value="乾造" data-i18n="opt_qian">乾造 (男命)</option>
+                <option value="坤造" data-i18n="opt_kun">坤造 (女命)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">标识 / 姓名 (可选)</label>
+              <input type="text" id="synastryLabelA" value="甲造" placeholder="姓名或角色" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Person B (Counterpart) -->
+        <div class="p-4 rounded-xl bg-black/40 border border-purple-500/30 space-y-3">
+          <div class="flex items-center justify-between border-b border-purple-800/40 pb-2">
+            <span class="text-xs font-bold text-purple-300 flex items-center gap-1.5 font-serif-sc">
+              <span>👥</span>
+              <span data-i18n="synastry_person_b">乙造命主 (对比对象)</span>
+            </span>
+            <span class="text-[10px] text-purple-400/80">配偶 / 联席合伙人</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_birth_date">出生日期 (公历)</label>
+              <input type="date" id="synastryDateB" value="1990-05-15" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_birth_time">出生时间</label>
+              <input type="time" id="synastryTimeB" value="10:00" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-purple-500">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_gender">造化属性 (性别)</label>
+              <select id="synastryGenderB" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-purple-500">
+                <option value="坤造" data-i18n="opt_kun">坤造 (女命)</option>
+                <option value="乾造" data-i18n="opt_qian">乾造 (男命)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">标识 / 姓名 (可选)</label>
+              <input type="text" id="synastryLabelB" value="乙造" placeholder="姓名或角色" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-purple-500">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculate Button -->
+      <div class="flex justify-center pt-2">
+        <button id="calcSynastryBtn" class="px-8 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-amber-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-sm shadow-xl transition active:scale-95 flex items-center gap-2 border border-amber-500/40" data-i18n="synastry_calc_btn">
+          <span>🚀</span>
+          <span>生成双人合盘全息战报</span>
+        </button>
+      </div>
+
+      <!-- Results Container -->
+      <div id="synastryResultContainer" class="space-y-6 pt-2">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+  </div>
+
   </main>
+
+  <!-- Ambient Dynamic Elemental Flux Canvas (Background particle rings) -->
+  <canvas id="elementFluxCanvas" class="fixed inset-0 pointer-events-none z-[-1] opacity-25"></canvas>
+
+  <!-- Imperial Thread-Bound PDF Dossier Modal (A4 绝美精装排盘战报模态窗口) -->
+  <div id="imperialDossierModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-start">
+    <div class="w-full max-w-4xl flex items-center justify-between py-3 mb-3 border-b border-amber-800/40 text-gray-200">
+      <div class="flex items-center space-x-2">
+        <span class="text-xl">👑</span>
+        <h3 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc" data-i18n="dossier_modal_title">
+          皇家线装排盘战报 · 绝美珍藏册 (A4 级导出)
+        </h3>
+      </div>
+      <div class="flex items-center space-x-3">
+        <!-- Language Switch inside Dossier -->
+        <div class="flex items-center rounded-lg border border-gray-700 bg-gray-900/90 p-0.5">
+          <button id="dossierLangZh" class="px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium">中文</button>
+          <button id="dossierLangEn" class="px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium">English</button>
+        </div>
+        <!-- Print / PDF Button -->
+        <button id="dossierPrintBtn" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5" data-i18n="dossier_print_btn">
+          <span>🖨️</span>
+          <span>立即打印 / 保存为 PDF</span>
+        </button>
+        <!-- Close Button -->
+        <button id="dossierCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="dossier_close_btn">
+          关闭
+        </button>
+      </div>
+    </div>
+
+    <!-- Printable Dossier Pages Container -->
+    <div id="imperialDossierContainer" class="w-full flex flex-col items-center">
+      <!-- Injected via JavaScript -->
+    </div>
+  </div>
 
   <!-- Footer -->
   <footer class="mt-12 py-6 border-t border-gray-800 text-center text-xs text-gray-500">
@@ -1067,6 +1303,8 @@
   <script src="js/portrait-engine.js"></script>
   <script src="js/luck-engine.js"></script>
   <script src="js/iching-engine.js"></script>
+  <script src="js/synastry-engine.js"></script>
+  <script src="js/visual-alchemy.js"></script>
   <script src="js/chart.js"></script>
   <script src="js/app.js"></script>
 </body>

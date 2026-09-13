@@ -1,16 +1,68 @@
 /**
  * Visual Canvas Chart Renderer for Five Elements Energy Distribution
+ * Enhanced with Dynamic Morphing Animations, Pulsing Node Halos & Glows
  */
 
 class ElementChart {
+  static _activeAnimations = {};
+  static _lastValues = {};
+
   /**
-   * Render Five Elements Energy Distribution Radar and Progress Bars
+   * Render Five Elements Energy Distribution Radar
    * @param {string} canvasId 
    * @param {Object} percentages e.g. { '木': 25.0, '火': 15.0, '土': 30.0, '金': 10.0, '水': 20.0 }
+   * @param {boolean} animated Whether to smoothly tween between old and new values
    */
-  static renderRadar(canvasId, percentages) {
+  static renderRadar(canvasId, percentages, animated = true) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
+
+    // In non-browser / test environments (e.g. JSC), execute static render immediately
+    if (typeof requestAnimationFrame === 'undefined' || !animated) {
+      this._drawRadarFrame(canvas, percentages);
+      this._lastValues[canvasId] = { ...percentages };
+      return;
+    }
+
+    const prevValues = this._lastValues[canvasId] || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
+    const targetValues = { ...percentages };
+
+    if (this._activeAnimations[canvasId]) {
+      cancelAnimationFrame(this._activeAnimations[canvasId]);
+    }
+
+    const startTime = performance.now();
+    const duration = 400; // ms
+
+    const elements = ['木', '火', '土', '金', '水'];
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1.0);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+
+      const current = {};
+      elements.forEach(el => {
+        const start = parseFloat(prevValues[el] || 0);
+        const end = parseFloat(targetValues[el] || 0);
+        current[el] = (start + (end - start) * ease).toFixed(1);
+      });
+
+      this._drawRadarFrame(canvas, current);
+
+      if (progress < 1.0) {
+        this._activeAnimations[canvasId] = requestAnimationFrame(step);
+      } else {
+        this._lastValues[canvasId] = targetValues;
+        delete this._activeAnimations[canvasId];
+      }
+    };
+
+    this._activeAnimations[canvasId] = requestAnimationFrame(step);
+  }
+
+  static _drawRadarFrame(canvas, percentages) {
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
@@ -28,11 +80,18 @@ class ElementChart {
       '金': '#fbbf24',
       '水': '#3b82f6'
     };
+    const glowColors = {
+      '木': 'rgba(16, 185, 129, 0.35)',
+      '火': 'rgba(239, 68, 68, 0.35)',
+      '土': 'rgba(245, 158, 11, 0.35)',
+      '金': 'rgba(251, 191, 36, 0.35)',
+      '水': 'rgba(59, 130, 246, 0.35)'
+    };
     const totalSides = elements.length;
     const angleStep = (Math.PI * 2) / totalSides;
     const startAngle = -Math.PI / 2; // start from top (Wood)
 
-    // Draw background concentric web
+    // 1. Draw background concentric web
     const levels = 4;
     for (let l = 1; l <= levels; l++) {
       const r = (radius / levels) * l;
@@ -50,7 +109,7 @@ class ElementChart {
       ctx.stroke();
     }
 
-    // Draw axis lines from center to vertices
+    // 2. Draw axis lines from center to vertices
     for (let i = 0; i < totalSides; i++) {
       const angle = startAngle + i * angleStep;
       const x = centerX + radius * Math.cos(angle);
@@ -74,9 +133,8 @@ class ElementChart {
       ctx.fillText(`${elements[i]} ${pctVal}%`, lx, ly);
     }
 
-    // Draw Data Polygon
+    // 3. Draw Data Polygon
     ctx.beginPath();
-    // Normalize percentage (max expected ~ 50%)
     const maxVal = 50;
     const points = [];
 
@@ -87,21 +145,29 @@ class ElementChart {
       const angle = startAngle + i * angleStep;
       const x = centerX + r * Math.cos(angle);
       const y = centerY + r * Math.sin(angle);
-      points.push({ x, y, color: colors[elements[i]] });
+      points.push({ x, y, color: colors[elements[i]], glow: glowColors[elements[i]], val });
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
     ctx.closePath();
 
     // Gradient fill
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.25)';
+    ctx.fillStyle = 'rgba(212, 175, 55, 0.22)';
     ctx.fill();
     ctx.strokeStyle = '#d4af37';
     ctx.lineWidth = 2.5;
     ctx.stroke();
 
-    // Draw point markers
+    // 4. Draw point markers with pulsating aura
     points.forEach(pt => {
+      // Glow halo if element is strong (> 25%)
+      if (pt.val >= 25) {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 9, 0, Math.PI * 2);
+        ctx.fillStyle = pt.glow;
+        ctx.fill();
+      }
+
       ctx.beginPath();
       ctx.arc(pt.x, pt.y, 4.5, 0, Math.PI * 2);
       ctx.fillStyle = pt.color;
@@ -115,4 +181,7 @@ class ElementChart {
 
 if (typeof window !== 'undefined') {
   window.ElementChart = ElementChart;
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ElementChart;
 }

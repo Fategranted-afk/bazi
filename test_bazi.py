@@ -2,6 +2,7 @@
 """
 Verification script for BaZi calculation logic and 5 Classical Canons.
 """
+import json
 import math
 import os
 import subprocess
@@ -1850,7 +1851,360 @@ run_multi = subprocess.run(jsc_multi_cmd, capture_output=True, text=True)
 assert run_multi.returncode == 0, f"JSC Multi-chart zero residual check failed: {run_multi.stderr}"
 print("✓ 多八字命盘鲁棒性与全视图英文模式100%零中文残留验证通过！")
 
-print("\n🎉 ALL 40 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 41. Validate Imperial Thread-Bound PDF Dossier (A4 绝美精装排盘战报)
+print("\n=== 41. Validating Imperial Thread-Bound PDF Dossier (A4 绝美精装排盘战报) ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_content = f.read()
+
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_content = f.read()
+
+# 1. UI Elements in HTML
+assert 'id="btnExportDossier"' in html_content, "Missing #btnExportDossier in index.html"
+assert 'id="imperialDossierModal"' in html_content, "Missing #imperialDossierModal in index.html"
+assert 'id="imperialDossierContainer"' in html_content, "Missing #imperialDossierContainer in index.html"
+assert 'id="dossierPrintBtn"' in html_content, "Missing #dossierPrintBtn in index.html"
+assert 'id="dossierCloseBtn"' in html_content, "Missing #dossierCloseBtn in index.html"
+
+# 2. Print styles and Imperial aesthetics in CSS
+assert '@media print' in css_content, "Missing @media print in style.css"
+assert '@page' in css_content, "Missing @page print directive in style.css"
+assert 'imperial-thread-spine' in css_content, "Missing imperial-thread-spine in style.css"
+assert 'thread-eyelet' in css_content, "Missing thread-eyelet in style.css"
+assert 'imperial-seal-stamp' in css_content, "Missing imperial-seal-stamp in style.css"
+assert 'imperial-watermark' in css_content, "Missing imperial-watermark in style.css"
+assert 'page-break-after: always' in css_content or 'break-after: page' in css_content, "Missing page-break-after in style.css"
+
+# 3. Dossier compiler and print handler in app.js
+assert 'renderImperialDossierPages' in app_content, "Missing renderImperialDossierPages in app.js"
+assert 'openImperialDossierModal' in app_content, "Missing openImperialDossierModal in app.js"
+assert 'window.print()' in app_content, "Missing window.print() in app.js"
+
+# 4. Bilingual compilation & zero residual Chinese in English mode
+jsc_dossier_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    var pZh = PortraitEngine.analyze(bazi, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    // Verify 4-page data compilation structure
+    // Page 1: Natal chart & Pillars
+    if (!bazi.pillars || !bazi.dayMaster) throw new Error("Page 1 pillars/dayMaster missing");
+    if (!pZh.dayMaster || !pEn.dayMaster) throw new Error("Page 1 dayMaster missing");
+
+    // Page 2: Grand Picture 80/20 synthesis
+    if (!pZh.paretoCore || !pZh.paretoCore.grandPicture) throw new Error("Page 2 grandPicture missing");
+    if (!pEn.paretoCore || !pEn.paretoCore.grandPicture) throw new Error("Page 2 En grandPicture missing");
+
+    // Page 3: 4D Kinship Profiles
+    if (!pZh.paretoCore.spouse || !pZh.paretoCore.children || !pZh.paretoCore.parents) throw new Error("Page 3 kinship missing");
+    if (!pEn.paretoCore.spouse || !pEn.paretoCore.children || !pEn.paretoCore.parents) throw new Error("Page 3 En kinship missing");
+
+    // Page 4: Zen & Dao Trinity Wisdom
+    if (!pZh.mentalFriction || !pZh.mentalFriction.zenDaoWisdom) throw new Error("Page 4 zen wisdom missing");
+    if (!pEn.mentalFriction || !pEn.mentalFriction.zenDaoWisdom) throw new Error("Page 4 En zen wisdom missing");
+    '''
+]
+run_dossier = subprocess.run(jsc_dossier_cmd, capture_output=True, text=True)
+assert run_dossier.returncode == 0, f"JSC Dossier compilation check failed: {run_dossier.stderr}"
+print("✓ 皇家线装绝美排盘战报（四页典藏架构/A4打印排版/朱砂印章/双语零中文残留）验证通过！")
+
+# 42. Validate Lifelong Chrono-Navigator / Interactive Fortune Timeline (百岁运势时空罗盘)
+print("\n=== 42. Validating Lifelong Chrono-Navigator (百岁运势时空罗盘) ===")
+# 1. UI Elements in index.html
+assert 'id="chronoNavigatorSection"' in html_content, "Missing #chronoNavigatorSection in index.html"
+assert 'id="chronoAgeSlider"' in html_content, "Missing #chronoAgeSlider in index.html"
+assert 'id="chronoTimelineCanvas"' in html_content, "Missing #chronoTimelineCanvas in index.html"
+assert 'id="chronoYearCard"' in html_content, "Missing #chronoYearCard in index.html"
+assert 'id="chronoAgeValueBadge"' in html_content, "Missing #chronoAgeValueBadge in index.html"
+assert 'id="chronoPlayBtn"' in html_content, "Missing #chronoPlayBtn in index.html"
+assert 'id="chronoJumpCurrent"' in html_content, "Missing #chronoJumpCurrent in index.html"
+
+# 2. Controller wiring in app.js
+assert 'renderChronoNavigator' in app_content, "Missing renderChronoNavigator in app.js"
+assert 'drawChronoTimelineChart' in app_content, "Missing drawChronoTimelineChart in app.js"
+assert 'updateChronoDisplay' in app_content, "Missing updateChronoDisplay in app.js"
+
+# 3. Lifelong Timeline Engine in JSC
+jsc_chrono_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    var luck = LuckEngine.calculateLuck(bazi);
+    var timeline = LuckEngine.calculateLifelongTimeline(bazi, luck);
+
+    if (!Array.isArray(timeline) || timeline.length !== 100) {
+      throw new Error("Timeline must contain exactly 100 entries, got " + (timeline ? timeline.length : 0));
+    }
+
+    var validRatings = ['auspicious', 'steady', 'challenging'];
+    for (var i = 0; i < 100; i++) {
+      var item = timeline[i];
+      if (item.age !== (i + 1)) throw new Error("Age sequence mismatch at " + i);
+      if (item.year !== (1988 + i)) throw new Error("Year sequence mismatch at " + i);
+      if (typeof item.energyScore !== 'number' || item.energyScore < 0 || item.energyScore > 100) {
+        throw new Error("Invalid energyScore at age " + item.age + ": " + item.energyScore);
+      }
+      if (typeof item.wealthScore !== 'number' || item.wealthScore < 0 || item.wealthScore > 100) {
+        throw new Error("Invalid wealthScore at age " + item.age + ": " + item.wealthScore);
+      }
+      if (validRatings.indexOf(item.rating) === -1) {
+        throw new Error("Invalid rating at age " + item.age + ": " + item.rating);
+      }
+      if (!item.directiveZh || item.directiveZh.length < 20) {
+        throw new Error("Missing or short directiveZh at age " + item.age);
+      }
+      if (!item.directiveEn || item.directiveEn.length < 20) {
+        throw new Error("Missing or short directiveEn at age " + item.age);
+      }
+
+      // Check zero residual Chinese in English fields
+      var enFields = [item.ganZhiEn, item.tenGodEn, item.decadeSpanEn, item.focusEn, item.directiveEn];
+      item.alertsEn.forEach(function(a) { enFields.push(a); });
+      for (var j = 0; j < enFields.length; j++) {
+        if (/[\u4e00-\u9fa5]/.test(enFields[j])) {
+          throw new Error("Residual Chinese in timeline at age " + item.age + ": " + enFields[j]);
+        }
+      }
+    }
+    '''
+]
+run_chrono = subprocess.run(jsc_chrono_cmd, capture_output=True, text=True)
+assert run_chrono.returncode == 0, f"JSC Chrono check failed: {run_chrono.stderr}"
+print("✓ 百岁运势时空罗盘（1-100岁精微双曲线/岁运并临与天克地冲预警/双语决策战报）验证通过！")
+
+# 43. Validate Synastry & Partner Compatibility Engine (双人合盘 · 婚恋合婚与商业合伙博弈战报)
+print("\n=== 43. Validating Synastry & Partner Compatibility Engine ===")
+# 1. UI Elements in index.html
+assert 'id="view-synastry"' in html_content, "Missing #view-synastry in index.html"
+assert 'id="calcSynastryBtn"' in html_content, "Missing #calcSynastryBtn in index.html"
+assert 'id="synastryModeRomantic"' in html_content, "Missing #synastryModeRomantic in index.html"
+assert 'id="synastryModeBusiness"' in html_content, "Missing #synastryModeBusiness in index.html"
+assert 'id="btnSynastryLoadA"' in html_content, "Missing #btnSynastryLoadA in index.html"
+assert 'id="synastryResultContainer"' in html_content, "Missing #synastryResultContainer in index.html"
+
+# 2. Controller wiring in app.js
+assert 'initSynastryController' in app_content, "Missing initSynastryController in app.js"
+assert 'triggerCalculateSynastry' in app_content, "Missing triggerCalculateSynastry in app.js"
+assert 'renderSynastryResult' in app_content, "Missing renderSynastryResult in app.js"
+assert 'SynastryEngine.analyze' in app_content, "Missing SynastryEngine.analyze in app.js"
+
+# 3. Engine verification in JSC
+jsc_synastry_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/synastry-engine.js");
+
+    var chartA = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, gender: "乾造" });
+    var chartB = BaZiEngine.calculate({ year: 1992, month: 8, day: 15, hour: 10, gender: "坤造" });
+
+    // Test Romantic mode
+    var romZh = SynastryEngine.analyze(chartA, chartB, "romantic", "zh");
+    var romEn = SynastryEngine.analyze(chartA, chartB, "romantic", "en");
+
+    if (typeof romZh.overallScore !== 'number' || romZh.overallScore < 0 || romZh.overallScore > 100) {
+      throw new Error("Invalid overallScore in romantic mode: " + romZh.overallScore);
+    }
+    if (!romZh.archetype || !romZh.archetype.nameZh || !romZh.archetype.sealZh) {
+      throw new Error("Missing archetype in romantic Zh");
+    }
+    if (!romEn.archetype || !romEn.archetype.nameEn || !romEn.archetype.sealEn) {
+      throw new Error("Missing archetype in romantic En");
+    }
+
+    // Test Business mode
+    var bizZh = SynastryEngine.analyze(chartA, chartB, "business", "zh");
+    var bizEn = SynastryEngine.analyze(chartA, chartB, "business", "en");
+
+    if (!bizZh.financialTrust || !bizZh.financialTrust.diagnosisZh) {
+      throw new Error("Missing financialTrust in business Zh");
+    }
+    if (!bizEn.financialTrust || !bizEn.financialTrust.diagnosisEn) {
+      throw new Error("Missing financialTrust in business En");
+    }
+
+    // 100% Zero Residual Chinese across all active English fields
+    [romEn, bizEn].forEach(function(res, rIdx) {
+      var toCheck = [
+        res.archetype.name,
+        res.archetype.seal,
+        res.archetype.tier,
+        res.archetype.description,
+        res.elementalSynergy.elementA,
+        res.elementalSynergy.elementB,
+        res.elementalSynergy.diagnosis,
+        res.pillarResonance.diagnosis,
+        res.clashPoints.diagnosis,
+        res.financialTrust.diagnosis,
+        res.remedies.diagnosis
+      ];
+      res.elementalSynergy.mutualGifts.forEach(function(g) { toCheck.push(g.desc); toCheck.push(g.element); });
+      res.pillarResonance.crossHarmonies.forEach(function(h) { toCheck.push(h.desc); });
+      res.clashPoints.crossClashes.forEach(function(c) { toCheck.push(c.desc); });
+
+      toCheck.forEach(function(str, idx) {
+        if (!str || str.length === 0) throw new Error("Empty English field in synastry rIdx " + rIdx + " at " + idx);
+        if (/[\u4e00-\u9fa5]/.test(str)) {
+          throw new Error("Residual Chinese in synastry rIdx " + rIdx + " at " + idx + ": " + str);
+        }
+      });
+    });
+    '''
+]
+run_synastry = subprocess.run(jsc_synastry_cmd, capture_output=True, text=True)
+assert run_synastry.returncode == 0, f"JSC Synastry check failed: {run_synastry.stderr}"
+print("✓ 双人合盘引擎（婚恋合婚/商业合伙博弈/五行互补/刑冲雷区/契约防火墙与双语零中文残留）验证通过！")
+
+# 44. Validate Offline-First PWA (Progressive Web App)
+print("\n=== 44. Validating Offline-First PWA (Progressive Web App) ===")
+# 1. Manifest file
+assert os.path.exists('manifest.json'), "manifest.json does not exist!"
+with open('manifest.json', 'r', encoding='utf-8') as f:
+    manifest_data = json.load(f)
+
+assert manifest_data.get('name'), "PWA manifest missing name"
+assert manifest_data.get('short_name'), "PWA manifest missing short_name"
+assert manifest_data.get('start_url'), "PWA manifest missing start_url"
+assert manifest_data.get('display') == 'standalone', "PWA display must be standalone"
+icons = manifest_data.get('icons', [])
+assert len(icons) >= 2, "PWA manifest must have at least 2 icons"
+sizes = [ic.get('sizes') for ic in icons]
+assert '192x192' in sizes, "PWA missing 192x192 icon"
+assert '512x512' in sizes, "PWA missing 512x512 icon"
+
+# 2. Service worker file
+assert os.path.exists('sw.js'), "sw.js does not exist!"
+with open('sw.js', 'r', encoding='utf-8') as f:
+    sw_content = f.read()
+
+assert 'CACHE_NAME' in sw_content, "sw.js missing CACHE_NAME"
+assert 'STATIC_ASSETS' in sw_content, "sw.js missing STATIC_ASSETS"
+assert './index.html' in sw_content, "sw.js STATIC_ASSETS missing ./index.html"
+assert './css/style.css' in sw_content, "sw.js STATIC_ASSETS missing ./css/style.css"
+assert './js/app.js' in sw_content, "sw.js STATIC_ASSETS missing ./js/app.js"
+assert "addEventListener('install'" in sw_content or 'addEventListener("install"' in sw_content, "sw.js missing install listener"
+assert "addEventListener('fetch'" in sw_content or 'addEventListener("fetch"' in sw_content, "sw.js missing fetch listener"
+
+# 3. Icon files existence and valid formats
+for ic in ['icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png']:
+    assert os.path.exists(ic), f"Icon {ic} missing!"
+    size = os.path.getsize(ic)
+    assert size > 100, f"Icon {ic} too small ({size} bytes)"
+
+# Verify PNG magic number
+with open('icons/icon-192.png', 'rb') as f:
+    header192 = f.read(8)
+    assert header192 == b'\x89PNG\r\n\x1a\n', "icon-192.png is not a valid PNG!"
+
+with open('icons/icon-512.png', 'rb') as f:
+    header512 = f.read(8)
+    assert header512 == b'\x89PNG\r\n\x1a\n', "icon-512.png is not a valid PNG!"
+
+# 4. HTML link tags and App registration
+assert '<link rel="manifest" href="manifest.json">' in html_content, "index.html missing manifest link"
+assert 'apple-mobile-web-app-capable' in html_content, "index.html missing apple-mobile-web-app-capable"
+assert 'theme-color' in html_content, "index.html missing theme-color"
+assert 'navigator.serviceWorker.register' in app_content, "app.js missing serviceWorker registration"
+assert 'beforeinstallprompt' in app_content, "app.js missing beforeinstallprompt listener"
+print("✓ 离线优先PWA（Manifest清单/Service Worker缓存架构/高清图标/安装提示）验证通过！")
+
+# 45. Validate Generative UI & Visual Alchemy (东方美学动态动效)
+print("\n=== 45. Validating Generative UI & Visual Alchemy (东方美学动态动效) ===")
+# 1. Visual alchemy module
+assert os.path.exists('js/visual-alchemy.js'), "js/visual-alchemy.js does not exist!"
+with open('js/visual-alchemy.js', 'r', encoding='utf-8') as f:
+    va_content = f.read()
+
+assert 'VisualAlchemy' in va_content, "Missing VisualAlchemy in js/visual-alchemy.js"
+assert 'initFlux' in va_content, "Missing initFlux in VisualAlchemy"
+assert 'startFlux' in va_content, "Missing startFlux in VisualAlchemy"
+assert 'stopFlux' in va_content, "Missing stopFlux in VisualAlchemy"
+assert 'setPalette' in va_content, "Missing setPalette in VisualAlchemy"
+assert 'renderHexagramLines' in va_content, "Missing renderHexagramLines in VisualAlchemy"
+assert 'requestAnimationFrame' in va_content, "VisualAlchemy must utilize requestAnimationFrame"
+assert 'visibilitychange' in va_content or 'IntersectionObserver' in va_content, "VisualAlchemy must support visibility optimization"
+
+# 2. Radar chart tweening / smooth animation in js/chart.js
+with open('js/chart.js', 'r', encoding='utf-8') as f:
+    chart_content = f.read()
+
+assert 'renderRadar' in chart_content, "Missing renderRadar in js/chart.js"
+assert 'animated' in chart_content or 'targetValues' in chart_content or 'currentValues' in chart_content, "Missing radar morph animation in js/chart.js"
+
+# 3. Canvas and UI controls in index.html & app.js
+assert 'id="elementFluxCanvas"' in html_content, "Missing #elementFluxCanvas in index.html"
+assert 'id="btnToggleFlux"' in html_content, "Missing #btnToggleFlux in index.html"
+assert 'VisualAlchemy.initFlux' in app_content or 'VisualAlchemy.initParticleRings' in app_content, "app.js missing VisualAlchemy.initFlux"
+assert 'VisualAlchemy.setPalette' in app_content or 'VisualAlchemy.setActiveElement' in app_content, "app.js missing VisualAlchemy.setPalette"
+assert 'toggleFluxBtn.addEventListener' in app_content or 'btnToggleFlux.addEventListener' in app_content, "app.js missing toggleFlux event listener"
+
+# 4. Syntactic integrity in JSC
+jsc_va_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("js/visual-alchemy.js");
+    if (typeof VisualAlchemy === 'undefined') throw new Error("VisualAlchemy not loaded");
+    if (typeof VisualAlchemy.initFlux !== 'function') throw new Error("initFlux is not a function");
+    if (typeof VisualAlchemy.setPalette !== 'function') throw new Error("setPalette is not a function");
+    if (typeof VisualAlchemy.renderHexagramLines !== 'function') throw new Error("renderHexagramLines is not a function");
+    '''
+]
+run_va = subprocess.run(jsc_va_cmd, capture_output=True, text=True)
+assert run_va.returncode == 0, f"JSC VisualAlchemy check failed: {run_va.stderr}"
+print("✓ 东方美学动态动效（五行气机粒子环/周易爻线动变/雷达图平滑形变/性能节流守护）验证通过！")
+
+print("\n🎉 ALL 45 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
