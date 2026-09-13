@@ -218,12 +218,13 @@ class PortraitEngine {
   /**
    * 3. 格局四维判别 (包含主格、全局复合神煞透视兼格与日时特格，严格包含含义、出处、成格、用法与现代职业人际)
    */
-  static diagnosePatterns(bazi, vigor) {
+  static diagnosePatterns(bazi, vigor, climate) {
     const dm = bazi.dayMaster;
     const monthGod = bazi.pillars.month.stemGod;
     const dayPillar = bazi.pillars.day.text;
     const hourPillar = bazi.pillars.hour.text;
     const monthBranch = bazi.solarInfo.monthBranch;
+    climate = climate || this.evaluateClimate(dm, monthBranch);
 
     const list = [];
 
@@ -290,7 +291,7 @@ class PortraitEngine {
     const finalPatterns = this.crossValidatePatterns(list, bazi, vigor);
 
     // --- E. 格局能量百分比重新计算（确保所列真实格局总占比绝对超出 85%）---
-    this.assignPatternWeights(finalPatterns, bazi, vigor);
+    this.assignPatternWeights(finalPatterns, bazi, vigor, climate);
 
     return finalPatterns;
   }
@@ -300,8 +301,9 @@ class PortraitEngine {
    * @param {Array} patterns - 确立的格局列表
    * @param {Object} bazi - 八字排盘数据
    * @param {Object} vigor - 生旺衰数据
+   * @param {Object} climate - 调候气候数据
    */
-  static assignPatternWeights(patterns, bazi, vigor) {
+  static assignPatternWeights(patterns, bazi, vigor, climate) {
     if (!patterns || patterns.length === 0) return;
 
     // 1. 为每个格局计算原始能量分 (Raw Energy Score)
@@ -410,9 +412,177 @@ class PortraitEngine {
         p.tierColor = 'blue';
         p.tierDesc = '主导流年岁运中的特定机缘爆发与跨界兼通才干';
       }
+
+      // Pattern Grade & 5 Classical Dimensions of Qing-Zhuo (依托《滴天髓阐微》《子平真诠》《兰台妙选》《神峰通考》)
+      p.gradeEvaluation = this.evaluatePatternGradeAndPurity(p, bazi, vigor, climate);
     });
 
     patterns.primary = patterns[0];
+  }
+
+  /**
+   * 格局评级与清浊深度论述 (依托《滴天髓阐微》《子平真诠》《兰台妙选》《神峰通考》)
+   * 严格包含：格局评级（特等格局、上等格局、中上格局、中等格局、下等格局）、好与不好、为什么如此评判、为什么上不去、保底是什么、改善提升路径
+   */
+  static evaluatePatternGradeAndPurity(pat, bazi, vigor, climate) {
+    const dm = bazi.dayMaster;
+    const patName = pat.name || '';
+    const weight = pat.weightPct || 20;
+    const vScore = (vigor && vigor.totalScore) || 50;
+
+    let tier = '中上格局';
+    let tierEn = 'Upper-Middle Pattern';
+    let tierBadge = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+
+    // 1. Determine Tier based on classical canons
+    if (pat.isSynergy && (patName.includes('杀刃') || patName.includes('羊刃驾杀') || patName.includes('三奇') || patName.includes('官印双清'))) {
+      tier = '特等格局';
+      tierEn = 'Exceptional Pattern';
+      tierBadge = 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-amber-900/30';
+    } else if (patName.includes('阳刃') || patName.includes('羊刃')) {
+      const mGod = (bazi.pillars && bazi.pillars.month && bazi.pillars.month.stemGod) || '';
+      if (mGod.includes('杀') || mGod.includes('官')) {
+        tier = '上等格局';
+        tierEn = 'Superior Pattern';
+        tierBadge = 'bg-purple-500/20 text-purple-300 border-purple-500/40';
+      } else {
+        tier = '中上格局';
+        tierEn = 'Upper-Middle Pattern';
+        tierBadge = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+      }
+    } else if (patName.includes('配印') || patName.includes('杀印') || patName.includes('制杀')) {
+      tier = '上等格局';
+      tierEn = 'Superior Pattern';
+      tierBadge = 'bg-purple-500/20 text-purple-300 border-purple-500/40';
+    } else if (patName.includes('生财') || patName.includes('建禄') || patName.includes('食神')) {
+      tier = '中上格局';
+      tierEn = 'Upper-Middle Pattern';
+      tierBadge = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+    } else if (pat.isSpecial) {
+      tier = weight >= 15 ? '上等格局' : '中上格局';
+      tierEn = weight >= 15 ? 'Superior Pattern' : 'Upper-Middle Pattern';
+      tierBadge = weight >= 15 ? 'bg-purple-500/20 text-purple-300 border-purple-500/40' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+    } else if (weight < 10) {
+      tier = '中等格局';
+      tierEn = 'Middle Pattern';
+      tierBadge = 'bg-blue-500/20 text-blue-300 border-blue-500/40';
+    }
+
+    // 2. Classical Five Dimensions of Qing-Zhuo (依托四部经典)
+    let strengthsZh = '';
+    let strengthsEn = '';
+    let flawsZh = '';
+    let flawsEn = '';
+    let whyThisGradeZh = '';
+    let whyThisGradeEn = '';
+    let bottleneckZh = '';
+    let bottleneckEn = '';
+    let floorZh = '';
+    let floorEn = '';
+    let elevationZh = '';
+    let elevationEn = '';
+
+    if (patName.includes('杀刃') || patName.includes('驾杀')) {
+      strengthsZh = '【核心优势与成事锋芒】：杀刃双全兼具谋略吐秀，文武双全！既有七杀的魄力决断与雷霆手腕，又有伤官的奇思妙想与敏锐才智，在复杂危局中撕开生路的战力全盘第一。';
+      strengthsEn = '[Core Strengths]: Supreme fusion of iron authority and visionary innovation; unmatched tactical breakthrough ability in chaotic environments.';
+      flawsZh = '【潜在盲区与性格死穴】：神经高度敏锐，交感神经常年处于战备状态；对自己和团队要求极其严苛，大脑容易超频空转陷入思维反刍内耗。';
+      flawsEn = '[Vulnerabilities]: Hyper-vigilant nervous system; perfectionist demands on self and collaborators cause cognitive fatigue.';
+      whyThisGradeZh = '【四部经文清浊辨析】：《兰台妙选》赞曰“杀刃全而吐秀，名扬四海”；《神峰通考·病药说》论定“以病为奇，以药去病为贵”。煞气虽重而药石神验，格局气象磅礴浑厚，故稳居【' + tier + '】。';
+      whyThisGradeEn = '[Classical Rationale]: Lan Tai Miao Xuan extols the rare synergy of Killings and Blades with brilliant Output. Shen Feng Tong Kao praises the cure of grave systemic diseases into grand authority, cementing [' + tierEn + '].';
+      bottleneckZh = '【卡点与上升天花板】：身负破局重器，不易融入平庸官僚体制，容易被传统陈规掣肘，须自立赛道或担当独立项目一号位方能纵横驰骋。';
+      bottleneckEn = '[Bottleneck & Ceiling]: Maverick energy chafes within bureaucratic dogmas; requires sovereign autonomy or frontier venture territory to unleash full potential.';
+      floorZh = '【下限退守护城河】：无论置身何等恶劣动荡的环境，总能凭敏锐的危机嗅觉与强悍破局铁腕快速掌控核心枢纽，成为团队不可替代的顶梁柱。';
+      floorEn = '[Baseline Floor]: Exceptional survival acuity and strategic command ensure indispensable indispensability in any high-stakes crisis.';
+      elevationZh = '【澄浊求清提升路径】：融入《六祖坛经》“本来无一物”之放下哲学与《庄子》游刃有余之道，学会抓大放小充分授权，以制度和势能代替肉体疲惫死磕。';
+      elevationEn = '[Elevation Strategy]: Integrate Platform Sutra awareness and Daoist effortless flow (Wu Wei). Delegate routine operations, leading through high-level vision rather than brute micromanagement.';
+    } else if (patName.includes('阳刃') || patName.includes('羊刃')) {
+      strengthsZh = '【核心优势与成事锋芒】：月令阳刃，骨相铁骨铮铮，胆魄过人，临危不乱；具备逆境翻盘的决断力与雷霆执行力，是天生的统兵帅才与攻坚克难核心。';
+      strengthsEn = '[Core Strengths]: Resolute character, iron will, indomitable courage under extreme pressure; natural executive vanguard and strategic commander.';
+      flawsZh = '【潜在盲区与性格死穴】：性格刚强易折，容易好胜好争、骨子里清高不服管束；若逢岁运冲刃（如子午相冲），易因急躁直言树敌或起突发波折。';
+      flawsEn = '[Vulnerabilities]: Excessive rigidity and pride; unyielding temperament may provoke peer friction or impulsive friction under transit clashes.';
+      whyThisGradeZh = '【四部经文清浊辨析】：依据《子平真诠》“阳刃以杀为贵，刃无杀不威，杀无刃不显”；《滴天髓阐微》论“一清到底有精神，澄浊求清清得去”。此命阳刃得月干七杀紧邻克制，日支深坐财库收敛，杀刃两旺成既济之美，清多浊少，故权威评定为【' + tier + '】。';
+      whyThisGradeEn = '[Classical Rationale]: Zi Ping Zhen Quan dictates: "Yang Blades achieve nobility through Killings; without Killings they lack majesty, without Blades Killings lack authority." Di Tian Sui emphasizes pure qi. Clear dominance over impurities warrants [' + tierEn + '].';
+      bottleneckZh = '【卡点与上升天花板】：之所以未直接跃升为无暇特品，关键卡点在于“比劫贴身分气”与“财星暗藏未透”。行事往往需经历前期较长时间的孤军奋战与同侪竞争博弈，方能建立不可撼动的威权壁垒。';
+      bottleneckEn = '[Bottleneck & Ceiling]: Subsurface Wealth stars and adjacent peer stars require prolonged solo struggle and intense competitive filtering before establishing absolute authority.';
+      floorZh = '【下限退守护城河】：阳刃身旺之人，骨气自傲，绝不甘居人下或摆烂沉沦。即便外部经济或行业大周期跌入谷底，亦能凭一技之长与百折不挠的抗压身心独当一面，立身不败。';
+      floorEn = '[Baseline Floor]: Indomitable pride prevents fatal surrender. Even during macro economic downturns, technical prowess and mental resilience ensure immediate recovery.';
+      elevationZh = '【澄浊求清提升路径】：实战中必须修习“以柔克刚”与“利益共享”。寻找温和务实之商业、财务或法务合伙人配合，将阳刃之杀伐锐气转化为深耕产品与构筑技术护城河的终极利器。';
+      elevationEn = '[Elevation Strategy]: Balance strength with flexible diplomacy and generous profit-sharing. Partner with grounded financial strategists, converting raw aggression into enduring moat building.';
+    } else if (patName.includes('配印')) {
+      strengthsZh = '【核心优势与成事锋芒】：伤官奇才得印绶之清正深沉，才华横溢而品行端方；既有突破传统的创造力，又有深厚扎实的学术底蕴与战略定力。';
+      strengthsEn = '[Core Strengths]: Brilliant divergent intellect tempered by scholarly erudition; innovative yet profoundly principled.';
+      flawsZh = '【潜在盲区与性格死穴】：骨子里自带知识分子之清高傲骨，对市侩平庸之辈缺乏耐心，不愿低头妥协，早期商业变现易错失短平快机会。';
+      flawsEn = '[Vulnerabilities]: Intellectual aloofness; disdain for coarse commercialism may cause friction with short-term pragmatic realities.';
+      whyThisGradeZh = '【四部经文清浊辨析】：《子平真诠》云“伤官配印，贵不可言，以印制伤而全日主”；《滴天髓》论“清气发越，文明之象”。印绶制伤化为清气，毫无浊气相攻，故评定为【' + tier + '】。';
+      whyThisGradeEn = '[Classical Rationale]: Zi Ping Zhen Quan crowns Output paired with Resource as supremely noble. Di Tian Sui honors radiant intellectual prestige, establishing [' + tierEn + '].';
+      bottleneckZh = '【卡点与上升天花板】：印星与伤官之平衡需大运催化生旺，若财星破印过急则神思受损，必须保持精神世界的宁静独立。';
+      bottleneckEn = '[Bottleneck & Ceiling]: Fragile balance between contemplation and execution; vulnerable to excessive worldly distractions without quiet sanctuary.';
+      floorZh = '【下限退守护城河】：文化、高校、专业研发、战略智库与高端咨询领域的名士与权威专家，声誉清流，受人敬仰。';
+      floorEn = '[Baseline Floor]: Top-tier reputation as an authoritative advisor, researcher, or specialist with enduring social esteem.';
+      elevationZh = '【澄浊求清提升路径】：打通“思想”向“商业产品”转化的任督二脉，放下虚幻文人包袱，以利他之心落地造福大众。';
+      elevationEn = '[Elevation Strategy]: Bridge intellectual purity with actionable commercial execution, translating erudition into products that serve the broader market.';
+    } else if (patName.includes('生财') || patName.includes('财')) {
+      strengthsZh = '【核心优势与成事锋芒】：商业触觉敏锐，对市场供求与价值缝隙具备天然洞察力；擅长整合资源化无形为有形，财富创造动能生生不息。';
+      strengthsEn = '[Core Strengths]: Acute commercial instinct and asset mobilization; innate ability to convert abstract ideas into profitable cash flow.';
+      flawsZh = '【潜在盲区与性格死穴】：思虑常年系于产出与收益，容易因财务指标而产生患得患失焦虑；财多则耗印，需防忽视身心健康与精神修养。';
+      flawsEn = '[Vulnerabilities]: Chronic anxiety over capital yields; excessive commercial preoccupation may exhaust physical vitality.';
+      whyThisGradeZh = '【四部经文清浊辨析】：《滴天髓阐微》论“财气通门户，无人不富”；《神峰通考》断“伤官生财，真神发越”。日元身强能担重财，气脉流通顺畅，故评定为【' + tier + '】。';
+      whyThisGradeEn = '[Classical Rationale]: Di Tian Sui states that when Wealth stars flow smoothly into the Day Master, boundless affluence follows. Robust vitality sustaining Wealth confirms [' + tierEn + '].';
+      bottleneckZh = '【卡点与上升天花板】：财库需要岁运钥匙冲开引化；若盲目追求规模扩张加高杠杆，易遭遇现金流瓶颈。';
+      bottleneckEn = '[Bottleneck & Ceiling]: Subsurface wealth reservoirs require transit triggers; excessive leverage risks liquidity friction.';
+      floorZh = '【下限退守护城河】：生财有道，不论时代如何变迁皆能迅速嗅到新商机，终身衣食丰足、资产底盘深厚。';
+      floorEn = '[Baseline Floor]: Consistent commercial ingenuity ensures robust financial independence across changing economic cycles.';
+      elevationZh = '【澄浊求清提升路径】：建立严密的反脆弱财务防火墙，践行“长期主义资产复利”，以义生财，厚德载物。';
+      elevationEn = '[Elevation Strategy]: Build antifragile financial reserves; practice patient compound investing rooted in ethical value creation.';
+    } else if (patName.includes('吐秀') || patName.includes('桃花流水')) {
+      strengthsZh = '【核心优势与成事锋芒】：伤官灵动秀发，如天河倾泻，灵气逼人；具备极高审美眼光、言语感召力与艺术才华，个人魅力光芒四射。';
+      strengthsEn = '[Core Strengths]: Radiant creative brilliance; profound aesthetic taste, charismatic verbal expression, and magnetic artistic presence.';
+      flawsZh = '【潜在盲区与性格死穴】：情感充沛而略显脆弱，容易对人际细微反馈过度敏感；情绪高低起伏较大，需要稳定的现实锚点。';
+      flawsEn = '[Vulnerabilities]: Heightened emotional sensitivity and mood oscillations; requires grounding domestic anchors.';
+      whyThisGradeZh = '【四部经文清浊辨析】：《三命通会》日时精断“秀气发越，晚景安和”；《滴天髓》论“才思横溢，自成一家”。日干通根而引时支秀气，清奇有骨，故评定为【' + tier + '】。';
+      whyThisGradeEn = '[Classical Rationale]: San Ming Tong Hui extols radiant output bringing serene late-life fruition. Di Tian Sui honors unique creative signature, confirming [' + tierEn + '].';
+      bottleneckZh = '【卡点与上升天花板】：秀气外泄需防过度耗损元神精力，需有深厚印星或制度蓄水池护持，方可避免昙花一现。';
+      bottleneckEn = '[Bottleneck & Ceiling]: Free-flowing output risks neural depletion without structured discipline and stabilizing anchors.';
+      floorZh = '【下限退守护城河】：凭借独特才情与人际吸引力，在文化、创意、设计或个人IP领域总能占有一席之地，晚境天伦福泽绵长。';
+      floorEn = '[Baseline Floor]: Enduring personal IP appeal and artistic distinctiveness guarantee comfortable living and twilight contentment.';
+      elevationZh = '【澄浊求清提升路径】：建立严谨的日常生活作息，将散乱的灵感凝固成高密度、高壁垒的专业经典作品。';
+      elevationEn = '[Elevation Strategy]: Anchor transient creative bursts into disciplined daily routines, producing high-impact flagship works.';
+    } else {
+      strengthsZh = '【核心优势与成事锋芒】：禀赋纯良，行事具备鲜明的专注力与专业深度，善于在特定轨道长期积淀爆发。';
+      strengthsEn = '[Core Strengths]: Genuine integrity and profound dedication, excelling through patient craft and domain depth.';
+      flawsZh = '【潜在盲区与性格死穴】：格局能量分布略显偏重，遇重大外部突发波动时适应调整节奏稍慢。';
+      flawsEn = '[Vulnerabilities]: Asymmetric elemental emphasis requires conscious flexibility when navigating systemic volatility.';
+      whyThisGradeZh = '【四部经文清浊辨析】：综合《子平真诠》《滴天髓阐微》《兰台妙选》《神峰通考》，命盘气象清秀有致，成格有源，虽带微病而大势平稳，评定为【' + tier + '】。';
+      whyThisGradeEn = '[Classical Rationale]: Cross-referencing classical canons demonstrates authentic structural coherence, securing [' + tierEn + '].';
+      bottleneckZh = '【卡点与上升天花板】：需逢喜用生旺之大运与流年合化助势，方能冲破行业既定格局天花板。';
+      bottleneckEn = '[Bottleneck & Ceiling]: Full potential blooms during favorable decennial transits that activate auxiliary support.';
+      floorZh = '【下限退守护城河】：凭借专业技能与稳健行事风格，在行业与社会阶层中稳居中坚骨干，生活安康。';
+      floorEn = '[Baseline Floor]: Deep domain competence ensures rock-solid professional stability and comfortable livelihood.';
+      elevationZh = '【澄浊求清提升路径】：顺应时代风口，强化人际协同网络，借力数字化技术与宏观大势赋能个人天赋。';
+      elevationEn = '[Elevation Strategy]: Align with macro digital tailwinds, expand collaborative alliances, and leverage technology.';
+    }
+
+    return {
+      tier,
+      tierEn,
+      tierBadge,
+      strengthsAndFlawsZh: {
+        good: strengthsZh,
+        bad: flawsZh
+      },
+      strengthsAndFlawsEn: {
+        good: strengthsEn,
+        bad: flawsEn
+      },
+      whyThisGradeZh,
+      whyThisGradeEn,
+      bottleneckZh,
+      bottleneckEn,
+      floorBaselineZh: floorZh,
+      floorBaselineEn: floorEn,
+      elevationPathZh: elevationZh,
+      elevationPathEn: elevationEn
+    };
   }
 
   /**
@@ -1802,6 +1972,68 @@ class PortraitEngine {
       }
     ];
 
+    // 🌟 三经合一 · 禅道心智终极破除专栏 (Gold Masterpiece Box: 《金刚经》+《六祖坛经》+《庄子》)
+    const zenDaoWisdom = {
+      titleZh: '🌟 三经合一 · 禅道心智终极破除专栏',
+      titleEn: '🌟 Zen & Dao Trinity Wisdom · Ultimate Mental Liberation Sanctuary',
+      subtitleZh: '融通《金刚经》之应无所住、《六祖坛经》之本来无一物、《庄子》之乘物游心，直捣大脑反刍空转根源，以无上禅道大智慧彻底消融精神内耗。',
+      subtitleEn: 'Synthesizing Diamond Sutra (Formlessness), Platform Sutra (Immediate Awakening), and Zhuangzi (Free Roaming) to conquer rumination.',
+      diamond: {
+        titleZh: '《金刚经》：破“相”之执 · 应无所住而生其心',
+        titleEn: 'The Diamond Sutra: Dissolving the Attachment to Illusionary Forms',
+        canonVerseZh: '“凡所有相，皆是虚妄。若见诸相非相，则见如来。”“不应住色生心，不应住声香味触法生心，应无所住而生其心。”',
+        canonVerseEn: '"All conditioned phenomena are like a dream, an illusion, a bubble, a shadow. When seeing that all forms are not true forms, one perceives Tathagata. The mind should abide nowhere to give rise to pure awareness."',
+        mantraZh: '“凡所有相，皆是虚妄。若见诸相非相，则见如来。”“不应住色生心，不应住声香味触法生心，应无所住而生其心。”',
+        mantraEn: '"All conditioned phenomena are like a dream, an illusion, a bubble, a shadow. When seeing that all forms are not true forms, one perceives Tathagata. The mind should abide nowhere to give rise to pure awareness."',
+        mindsetAnalysisZh: '【对症破除命主虚妄心相】：内耗的核心病根在于“执相”。命主（尤其命带伤官、七杀、偏印或身弱之人）潜意识里执着于“完美我相”（我必须事事做到完美无瑕）、“被审判人相”（外界每个人都在苛责挑剔我）、“灾难众生相”（万一失败将坠入万劫不复）。这些全是交感神经在大脑剧场自编自导的虚妄电影。',
+        mindsetAnalysisEn: '[Diagnosing Fatal Fixations]: Mental friction stems from obsessive fixation on forms—the ego delusion of perfection, hyper-sensitivity to perceived judgment, and catastrophic future projections. These are transient neural illusions projected on the canvas of awareness.',
+        insightZh: '【对症破除命主虚妄心相】：内耗的核心病根在于“执相”。命主（尤其命带伤官、七杀、偏印或身弱之人）潜意识里执着于“完美我相”（我必须事事做到完美无瑕）、“被审判人相”（外界每个人都在苛责挑剔我）、“灾难众生相”（万一失败将坠入万劫不复）。这些全是交感神经在大脑剧场自编自导的虚妄电影。',
+        insightEn: '[Diagnosing Fatal Fixations]: Mental friction stems from obsessive fixation on forms—the ego delusion of perfection, hyper-sensitivity to perceived judgment, and catastrophic future projections. These are transient neural illusions projected on the canvas of awareness.',
+        practicalPracticeZh: '【无所住心法实操】：当觉察到焦虑风暴升起、大脑开始推演灾难剧本时，立刻在心中当头棒喝：“凡所有相，皆是虚妄！”深吸一口气，抽离那个焦灼紧绷的“角色身份”，回到纯粹清澈的觉照本身。应无所住，人在当下，手做何事心即在何事。',
+        practicalPracticeEn: '[Formless Presence Practice]: Whenever the rumination storm rises, mentally thunder: "All forms are impermanent illusions!" Immediately disidentify from the frantic ego character and return to grounded physical presence.',
+        practicalZh: '【无所住心法实操】：当觉察到焦虑风暴升起、大脑开始推演灾难剧本时，立刻在心中当头棒喝：“凡所有相，皆是虚妄！”深吸一口气，抽离那个焦灼紧绷的“角色身份”，回到纯粹清澈的觉照本身。应无所住，人在当下，手做何事心即在何事。',
+        practicalEn: '[Formless Presence Practice]: Whenever the rumination storm rises, mentally thunder: "All forms are impermanent illusions!" Immediately disidentify from the frantic ego character and return to grounded physical presence.',
+        badgeZh: '应无所住 · 破除我相',
+        badgeEn: 'Abide Nowhere'
+      },
+      platform: {
+        titleZh: '《六祖坛经》：直断妄念 · 本来无一物与顿悟自性',
+        titleEn: 'The Platform Sutra: Direct Severance of Rumination & Pure Self-Nature',
+        canonVerseZh: '“菩提本无树，明镜亦非台。本来无一物，何处惹尘埃！”“前念著境即烦恼，后念离境即菩提。”“不思善，不思恶，正与么时，哪个是明上座本来面目？”',
+        canonVerseEn: '"Bodhi fundamentally has no tree, nor is the bright mirror a stand. Originally there is not a single thing; where can dust alight? Prior thoughts clinging to circumstances breed affliction; subsequent thoughts detached from circumstances become awakening."',
+        mantraZh: '“菩提本无树，明镜亦非台。本来无一物，何处惹尘埃！”“前念著境即烦恼，后念离境即菩提。”“不思善，不思恶，正与么时，哪个是明上座本来面目？”',
+        mantraEn: '"Bodhi fundamentally has no tree, nor is the bright mirror a stand. Originally there is not a single thing; where can dust alight? Prior thoughts clinging to circumstances breed affliction; subsequent thoughts detached from circumstances become awakening."',
+        mindsetAnalysisZh: '【对症直断第二念狂澜】：第一念是外界刺激带来的本能反应，而让你彻夜难眠、痛苦不堪的，是随之而来的千万个“自责、辩解、懊悔与预支焦虑”的第二念、第三念。六祖惠能一语点破：你的自性本来清净明澈，宛若虚空万里无云。任凭念头飞沙走石，何曾沾染虚空分毫？',
+        mindsetAnalysisEn: '[Severing the Rumination Loop]: Friction is not caused by the primary impulse, but by the endless cascade of secondary and tertiary obsessive ruminations. Hui-neng reveals: Your innate awareness is pristine as boundless space; passing storms cannot leave a trace.',
+        insightZh: '【对症直断第二念狂澜】：第一念是外界刺激带来的本能反应，而让你彻夜难眠、痛苦不堪的，是随之而来的千万个“自责、辩解、懊悔与预支焦虑”的第二念、第三念。六祖惠能一语点破：你的自性本来清净明澈，宛若虚空万里无云。任凭念头飞沙走石，何曾沾染虚空分毫？',
+        insightEn: '[Severing the Rumination Loop]: Friction is not caused by the primary impulse, but by the endless cascade of secondary and tertiary obsessive ruminations. Hui-neng reveals: Your innate awareness is pristine as boundless space; passing storms cannot leave a trace.',
+        practicalPracticeZh: '【念起即觉直断功法】：六祖示人“无念为宗”。绝不要在脑海里试图“说服念头”或“压制焦虑”（用脑子解决脑子只会越陷越深）。觉察到念头翻滚时，只需冷眼旁观：“念头如过客，我是虚空主。”不要跟随，不要评判，念起即觉，觉之即无，念头自会如水上泡沫瞬间破灭。',
+        practicalPracticeEn: '[Immediate Awakening Practice]: Do not debate with or suppress intrusive thoughts. Simply witness them as detached space: "Thoughts are transient guests; I am the vast, untouched host." In that pure noticing, the frantic narrative collapses.',
+        practicalZh: '【念起即觉直断功法】：六祖示人“无念为宗”。绝不要在脑海里试图“说服念头”或“压制焦虑”（用脑子解决脑子只会越陷越深）。觉察到念头翻滚时，只需冷眼旁观：“念头如过客，我是虚空主。”不要跟随，不要评判，念起即觉，觉之即无，念头自会如水上泡沫瞬间破灭。',
+        practicalEn: '[Immediate Awakening Practice]: Do not debate with or suppress intrusive thoughts. Simply witness them as detached space: "Thoughts are transient guests; I am the vast, untouched host." In that pure noticing, the frantic narrative collapses.',
+        badgeZh: '顿悟自性 · 见性解脱',
+        badgeEn: 'Instant Awakening'
+      },
+      zhuangzi: {
+        titleZh: '《庄子》：物物而不物于物 · 乘物以游心与庖丁解牛',
+        titleEn: 'Zhuangzi: Mastering Circumstances without Being Subjugated & Free Roaming',
+        canonVerseZh: '“物物而不物于物，则胡可得而累邪！”“乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！”“神遇之而不以目视，官知止而神欲行。以无厚入有间，恢恢乎其于游刃必有余地矣。”',
+        canonVerseEn: '"Master circumstances rather than letting circumstances master you; how then can you be burdened? Roaming freely upon the rhythm of Heaven and Earth. Encountering life through intuitive spirit rather than eye-straining struggle. Moving through the spacious gaps with room to spare."',
+        mantraZh: '“物物而不物于物，则胡可得而累邪！”“乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！”“神遇之而不以目视，官知止而神欲行。以无厚入有间，恢恢乎其于游刃必有余地矣。”',
+        mantraEn: '"Master circumstances rather than letting circumstances master you; how then can you be burdened? Roaming freely upon the rhythm of Heaven and Earth. Encountering life through intuitive spirit rather than eye-straining struggle. Moving through the spacious gaps with room to spare."',
+        mindsetAnalysisZh: '【对症化解紧绷死磕】：命主之所以疲惫不堪，往往因骨气过硬或心智要强而与现实“硬碰硬死磕”，把世俗功名利禄、他人反馈当成了沉重枷锁，沦为外物的奴隶（即“物于物”）。庄子点醒：天地万物本是供你生命历练游玩的道具，何苦将道具顶在头上压垮自己？',
+        mindsetAnalysisEn: '[Dissolving Hyper-Rigidity]: You exhaust yourself by fighting every worldly circumstance with brute force, becoming enslaved by external outcomes. Zhuangzi reminds: All worldly affairs are mere playthings for the spirit’s cosmic journey.',
+        insightZh: '【对症化解紧绷死磕】：命主之所以疲惫不堪，往往因骨气过硬或心智要强而与现实“硬碰硬死磕”，把世俗功名利禄、他人反馈当成了沉重枷锁，沦为外物的奴隶（即“物于物”）。庄子点醒：天地万物本是供你生命历练游玩的道具，何苦将道具顶在头上压垮自己？',
+        insightEn: '[Dissolving Hyper-Rigidity]: You exhaust yourself by fighting every worldly circumstance with brute force, becoming enslaved by external outcomes. Zhuangzi reminds: All worldly affairs are mere playthings for the spirit’s cosmic journey.',
+        practicalPracticeZh: '【游刃有余庖丁解牛功法】：化“用力过度”为“顺其自然游刃有余”。面对复杂棘手的工作与人际，不再用蛮力硬顶，而是如庖丁解牛般“依乎天理，批大郤，导大窾”，顺应事物本身的自然节律轻轻切入，避开硬骨死穴。以游戏旷达之心待世，乘物游心，天下何人何事能累我？',
+        practicalPracticeEn: '[The Free Roaming Craft]: Shift from exhausting friction to effortless action (Wu Wei). Navigate complex projects like the master butcher, gliding effortlessly through the natural spaces between obstacles, maintaining spacious playfulness.',
+        practicalZh: '【游刃有余庖丁解牛功法】：化“用力过度”为“顺其自然游刃有余”。面对复杂棘手的工作与人际，不再用蛮力硬顶，而是如庖丁解牛般“依乎天理，批大郤，导大窾”，顺应事物本身的自然节律轻轻切入，避开硬骨死穴。以游戏旷达之心待世，乘物游心，天下何人何事能累我？',
+        practicalEn: '[The Free Roaming Craft]: Shift from exhausting friction to effortless action (Wu Wei). Navigate complex projects like the master butcher, gliding effortlessly through the natural spaces between obstacles, maintaining spacious playfulness.',
+        badgeZh: '乘物游心 · 逍遥无待',
+        badgeEn: 'Free Roaming'
+      }
+    };
+
     return {
       detected,
       score,
@@ -1809,7 +2041,8 @@ class PortraitEngine {
       levelBadge,
       primaryRoot,
       triggers,
-      solutions
+      solutions,
+      zenDaoWisdom
     };
   }
 
@@ -1873,7 +2106,13 @@ class PortraitEngine {
           : '【乾造理气辨析】：男命贵在刚健笃实、勇于突破；逢杀刃制化则立功名垂青史，成就非凡基业。',
         genderDiffEn: gender === 'female'
           ? '[Female Native Dynamics]: Values gentle, resilient Qi flow without abrasive clashes, radiating intellectual grace and domestic dignity.'
-          : '[Male Native Dynamics]: Values sovereign fortitude and disciplined execution, converting adversity into enduring legacy.'
+          : '[Male Native Dynamics]: Values sovereign fortitude and disciplined execution, converting adversity into enduring legacy.',
+        personaDepictionZh: `命主受【${dayMaster}】天干本气滋养，骨相清奇，内力深敛蓄势，如汪洋深潭不露声色而暗藏千钧之力。`,
+        personaDepictionEn: `Endowed with Day Master [${dayMaster}] elemental depth; serene on the surface while harboring deep regenerative momentum.`,
+        destinyTrajectoryZh: '顺天应时乘除引通；逢燥热蒸腾之大运激化才干为甘霖，逢生旺滋养岁运乘风破浪万里扬帆。',
+        destinyTrajectoryEn: 'Harmonizes seasonal rhythms; transforms challenges into rainclouds and catches oceanic tailwinds in favorable transits.',
+        actionableManeuverZh: '以静制动，涵养元神精神力，严禁在浮躁盲从的红海中消耗有限心智；守正出奇方成极品。',
+        actionableManeuverEn: 'Master stillness over rash movement; conserve internal focus and eliminate distracting superficial rivalries.'
       };
     }
 
@@ -1904,7 +2143,13 @@ class PortraitEngine {
           : '【乾造调候辨析】：调候得宜主把握宏观时代风口，遇水火既济则文武兼备、事业开拓如有神助。',
         genderDiffEn: gender === 'female'
           ? '[Female Native Dynamics]: Climatic harmony anchors somatic wellness and serene emotional intuition, elevating domestic warmth.'
-          : '[Male Native Dynamics]: Seasonal adjustment empowers rapid market positioning and cross-industry breakthrough.'
+          : '[Male Native Dynamics]: Seasonal adjustment empowers rapid market positioning and cross-industry breakthrough.',
+        personaDepictionZh: `得月令【${monthBranch}】气象淬炼，心性耐得住长期苦寒冷板凳，在极端逆境高压中具备超常耐受力与战略定力。`,
+        personaDepictionEn: `Tempered by Month [${monthBranch}] seasonal climate; extraordinary tolerance for solitude and pressure under adversity.`,
+        destinyTrajectoryZh: '早运历经寒暖洗礼淬砺筋骨，逢调候用神大运骤然破土开花，事业迎来火箭式质变爆发。',
+        destinyTrajectoryEn: 'Early seasons temper resilience; entering favorable climatic transits triggers exponential career breakthroughs.',
+        actionableManeuverZh: '日常起居办公多采光纳阳，业务聚焦朝阳温暖之科技创新赛道，以火热信念融化内心冰霜。',
+        actionableManeuverEn: 'Maximize natural sunlight in workspace; pivot ventures toward solar digital technologies to warm the soul.'
       };
     }
 
@@ -1943,7 +2188,13 @@ class PortraitEngine {
           : '【乾造格局辨析】：男命贵在杀刃立威、财官成业；相神有力透干，主执掌权柄、建功立业。',
         genderDiffEn: gender === 'female'
           ? '[Female Native Dynamics]: Thrives in benevolent, stable structures; Guarding Minister balances ambition with emotional peace.'
-          : '[Male Native Dynamics]: Thrives in competitive arenas; a potent Guarding Minister manifests decisive executive command.'
+          : '[Male Native Dynamics]: Thrives in competitive arenas; a potent Guarding Minister manifests decisive executive command.',
+        personaDepictionZh: '格局法度严整，骨子里极注重契约、信誉与长治久安之正道声望；为人处世讲究章法，不屑投机。',
+        personaDepictionEn: 'Structural integrity and profound respect for covenants; disciplined, ethical, and disdainful of opportunism.',
+        destinyTrajectoryZh: '在规范成熟的平台或自建严密体系的组织中步步为营，中晚年权柄、专业威望与财富复利双丰收。',
+        destinyTrajectoryEn: 'Compounds systemic authority step-by-step within structured organizations, flourishing into prominent mature years.',
+        actionableManeuverZh: '严控合规底线，强化团队制度建设；以相神护卫主格，防范流年官杀混杂或枭神夺食等破局暗礁。',
+        actionableManeuverEn: 'Maintain strict compliance safeguards; deploy protective ministers to buffer against sudden transit clashes.'
       };
     }
 
@@ -1974,7 +2225,13 @@ class PortraitEngine {
           : '【乾造日时辨析】：时宿为终身事业与社会声望的最终收官，得贵气聚拢，主立德立功名垂晚晴。',
         genderDiffEn: gender === 'female'
           ? '[Female Native Dynamics]: Hour Pillar anchors late-life emotional serenity and generational pride with lasting dignity.'
-          : '[Male Native Dynamics]: Day-Hour synthesis crowns lifetime contributions and institutional stature.'
+          : '[Male Native Dynamics]: Day-Hour synthesis crowns lifetime contributions and institutional stature.',
+        personaDepictionZh: '日坐财库而时引秀气，外表沉静儒雅，内心才思澎湃，深具战略谋士与实战操盘手兼备的双重魅力。',
+        personaDepictionEn: 'Dual temperament of grounded asset steward and visionary creative strategist; cultured magnetic presence.',
+        destinyTrajectoryZh: '前半生多历练摸索自立门户，后半生归宿安详昌盛，因文化、科技或商业重大建树而名传后世。',
+        destinyTrajectoryEn: 'Pioneers independent domain in youth; reaches enduring prominence and generational fruition in twilight years.',
+        actionableManeuverZh: '晚景宜以提携后学、著书立说或孵化新锐为主，将一生认知沉淀为不可动摇的长期文化与物质福报。',
+        actionableManeuverEn: 'Dedicate mature decades to mentorship, flagship publications, and incubation, compounding lasting legacy.'
       };
     }
 
@@ -2032,7 +2289,13 @@ class PortraitEngine {
           : '【乾造赋文辨析】：男命先看杀刃有无制伏，次审财官衰旺；一身铁骨铮铮，敢开风气之先建功立业。',
         genderDiffEn: gender === 'female'
           ? '[Female Native Dynamics]: Prioritizes cohesive inner elegance and boundary integrity, creating an unshakeable domestic and professional sanctuary.'
-          : '[Male Native Dynamics]: Evaluates how formidable challenges are converted into executive courage and market dominance.'
+          : '[Male Native Dynamics]: Evaluates how formidable challenges are converted into executive courage and market dominance.',
+        personaDepictionZh: '煞刃交辉，一身硬骨傲气，遇强则强；敢在别人不敢涉足的荒原危局中横刀立马单骑闯关。',
+        personaDepictionEn: 'Unyielding martial courage; thrives where others falter, charging fearlessly into frontier crises.',
+        destinyTrajectoryZh: '波澜壮阔之命！凡重大成败皆在大开大合之战役中见分晓；以凶煞化为执掌权柄，大器晚成。',
+        destinyTrajectoryEn: 'Epic trajectory marked by monumental battles; transforming ferocious challenges into towering sovereign triumphs.',
+        actionableManeuverZh: '切忌意气用事，严防言语伤人与冲动树敌；以法律、纪律与制度契约锁死战略战车。',
+        actionableManeuverEn: 'Eliminate emotional vendettas; bind all campaigns in ironclad legal covenants and structured alliances.'
       };
     }
 
@@ -2068,7 +2331,13 @@ class PortraitEngine {
         sculptingAdviceZh: sculpting.adviceZh,
         sculptingAdviceEn: sculpting.adviceEn,
         genderDiffZh: sculpting.genderDiffZh || '【男女命雕琢差异】：乾造重在建功立威与纪律约束；坤造重在专业独立与边界保护。',
-        genderDiffEn: sculpting.genderDiffEn || '[Gender Dynamics]: Male native focuses on institutional leadership and discipline; female native focuses on professional sovereignty and emotional boundaries.'
+        genderDiffEn: sculpting.genderDiffEn || '[Gender Dynamics]: Male native focuses on institutional leadership and discipline; female native focuses on professional sovereignty and emotional boundaries.',
+        personaDepictionZh: '有病方奇，痛定思痛；命主身上具备极罕见的“在自我否定与绝地反击中完成基因重组”之蜕变力。',
+        personaDepictionEn: 'Profound regenerative capacity; continuously reinventing self through decisive surgical breakthroughs.',
+        destinyTrajectoryZh: '每次重大人生低谷，皆是对症大药生效之契机；病去药显之时，便是财富名位指数级飞跃之日。',
+        destinyTrajectoryEn: 'Every trough is the precise catalyst for the golden cure; when resolved, wealth and rank compound exponentially.',
+        actionableManeuverZh: '认准命局核心病灶（过旺或偏枯），毫不手软地实施外科手术式割席，聚焦药神全力单点突破。',
+        actionableManeuverEn: 'Isolate the single systemic bottleneck and excise distractions ruthlessly, channeling 80% effort into the remedy.'
       };
     }
 
@@ -2103,7 +2372,13 @@ class PortraitEngine {
           : '【乾造六亲全息】：乾造以日支正财为内助基石，以时柱官杀为传承担当，刚柔并济撑起门庭。',
         genderDiffEn: gender === 'female'
           ? '[Female Native Dynamics]: Anchors spousal alignment and offspring mentoring to sustain emotional fulfillment.'
-          : '[Male Native Dynamics]: Transforms ancestral blessings into entrepreneurial shelter for loved ones.'
+          : '[Male Native Dynamics]: Transforms ancestral blessings into entrepreneurial shelter for loved ones.',
+        personaDepictionZh: '重情重义，家庭观与宗族意识深厚；在外雷厉风行，对至亲家人则倾注全部深情与护佑。',
+        personaDepictionEn: 'Deeply honorable domestic protector; fierce externally yet intensely devoted to familial sanctuary.',
+        destinyTrajectoryZh: '以日支夫妻为终身中流砥柱，后嗣昌荣，世代家风清正长留，福荫子孙。',
+        destinyTrajectoryEn: 'Marital alignment serves as the lifelong bedrock, culminating in distinguished descendants and enduring family honor.',
+        actionableManeuverZh: '经营好夫妻二人精神沟通与财务透明度，设立家族信托与教育基金，把小家变成坚实堡垒。',
+        actionableManeuverEn: 'Nurture spousal emotional intimacy and financial transparency; establish generational family trusts.'
       };
     }
 
@@ -2137,7 +2412,13 @@ class PortraitEngine {
         modernStrategyZh: `主动融入【${er.targetCitiesZh}】等核心创新高地，在办公物理环境中调配生旺场能，拥抱数字智能技术杠杆。`,
         modernStrategyEn: `Deploy career focus toward leading innovation hubs (${er.targetCitiesEn}), calibrate workspace environmental energy, and leverage digital AI tools.`,
         genderDiffZh: tp.genderDiffZh || '【三元男女命差异】：男命以天元禄立功名、地元固气血；女命以天元立清贵、人元纳音安性灵。',
-        genderDiffEn: tp.genderDiffEn || '[Gender Dynamics]: Male native anchors external reputation and somatic stamina; female native anchors intellectual prestige and spiritual intuition.'
+        genderDiffEn: tp.genderDiffEn || '[Gender Dynamics]: Male native anchors external reputation and somatic stamina; female native anchors intellectual prestige and spiritual intuition.',
+        personaDepictionZh: '三元禄命身一体，气场浩大，能敏锐感知宏观时代水温变迁，天生具备宏观战略家视野。',
+        personaDepictionEn: 'Three Primes unified; intuitive sensitivity to macroeconomic cycles and geopolitical tides.',
+        destinyTrajectoryZh: '深度踏准国家与时代大运周期（如九运AI大潮），将个人微小的努力乘以宏观时代的巨大乘数。',
+        destinyTrajectoryEn: 'Synchronizes personal craft with the 20-year mega-cycle (Period 9 AI/Digital), compounding gains across eras.',
+        actionableManeuverZh: '物理办公环境调配合适方位，拥抱数字智能与前沿生产力工具，借势时代红利实现财富跃迁。',
+        actionableManeuverEn: 'Calibrate physical workspace orientations and deploy frontier AI tooling to ride macro era winds.'
       };
     }
 
@@ -2178,25 +2459,54 @@ class PortraitEngine {
       grandPicture,
       canons,
       fulcrum: shenfeng, // For backwards compatibility
-      spouse: spouse ? {
-        titleZh: '💑 夫妻与婚姻深层全息透视 (Spouse & Marital Dynamics)',
-        titleEn: '💑 Spouse & Marital Dynamics (Palace Hologram)',
-        subtitleZh: '晋·郭璞 / 宋·徐子平《玉照定真经》：“日干为己，日支为妻（夫）。干支相照，夫妻和乐寿考。”',
-        subtitleEn: 'Yu Zhao Ding Zhen Jing: "Day Stem is self, Day Branch is consort. Mutual generation brings harmonious longevity."',
-        palaceBranch: spouse.palaceBranch,
-        spouseStarZh: spouse.spouseStarZh,
-        spouseStarEn: spouse.spouseStarEn,
-        archetypeZh: spouse.archetypeZh,
-        archetypeEn: spouse.archetypeEn,
-        traitsZh: spouse.traitsZh,
-        traitsEn: spouse.traitsEn,
-        clashRiskZh: spouse.clashRiskZh,
-        clashRiskEn: spouse.clashRiskEn,
-        adviceZh: spouse.adviceZh,
-        adviceEn: spouse.adviceEn,
-        genderDiffZh: spouse.genderDiffZh || '【乾坤婚配差异】：男命看财星以知妻德，女命看官星以识夫贵。',
-        genderDiffEn: spouse.genderDiffEn || '[Gender Dynamics]: Male native reads Wealth stars for spousal virtue; female native reads Officer stars for marital honor.'
-      } : null,
+      spouse: spouse ? (() => {
+        const branchAuraMap = {
+          '子': { zh: '眉清目秀，身形修长灵动，气质清冷而睿智，谈吐机敏透彻，自带深邃知性的智囊气场。', en: 'Clear-eyed and agile; cool, intellectual elegance with sharp strategic insight.' },
+          '丑': { zh: '体态端正稳重，目光笃定纯朴，神情内敛沉静，举止质朴大方，自带令人心安的踏实气场。', en: 'Poised and solid; grounded, calm gaze with reliable domestic tranquility.' },
+          '寅': { zh: '英姿勃发，神采奕奕，步伐矫健豪迈，举止自带领袖豪气与开拓者魄力，极具气场张力。', en: 'Vibrant and charismatic; purposeful stride carrying bold entrepreneurial leadership.' },
+          '卯': { zh: '容颜秀美温润，眼神清澈含柔，举手投足温文尔雅，自带书卷清韵与古典艺术灵气。', en: 'Gentle and refined; soft, cultured grace infused with classical artistic sensibility.' },
+          '辰': { zh: '器宇轩昂，气度宽宏沉稳，面容大气质朴，谈吐沉着有度，自带深谋远虑的大家风范。', en: 'Magnanimous and composed; dignified presence with strategic patience and depth.' },
+          '巳': { zh: '目光敏锐明澈，仪态精明干练，神采飞扬，衣着考究得体，处事极具分寸感与时尚品味。', en: 'Sharp and impeccably groomed; sophisticated, articulate, and highly polished demeanor.' },
+          '午': { zh: '面色红润明朗，性格热情开朗，笑颜生动，待人诚挚坦荡，自带温暖人心的阳光光芒。', en: 'Radiant and spirited; warm, engaging smile with vibrant, infectious enthusiasm.' },
+          '未': { zh: '温雅恬淡，神韵内敛平和，举止从容大方，耐看耐品，自带包容涵养与细腻柔情。', en: 'Warm and understated; graceful, patient composure with deep emotional empathy.' },
+          '申': { zh: '骨骼清奇，神情坚毅果决，言谈干脆利落，办事雷厉风行，自带英姿飒爽的侠客气场。', en: 'Crisp and resolute; decisive, brisk demeanor carrying sharp modern efficiency.' },
+          '酉': { zh: '五官精致清丽，肤色白皙典雅，审美卓越高尚，衣品卓然，自带清贵名士/名媛仪态。', en: 'Finely sculpted features; immaculate aesthetic elegance with dignified aristocratic prestige.' },
+          '戌': { zh: '面相敦厚方正，眼神真诚坚定，神情稳健可靠，自带忠义信实、坚韧如磐石之气场。', en: 'Square, loyal countenance; steadfast and grounded, radiating unshakeable fidelity.' },
+          '亥': { zh: '神态深邃从容，天庭饱满，性情豁达温和，自带哲人般的超然清幽与慈悲亲和力。', en: 'Serene and profound; generous, philosophical calm radiating soulful warmth.' }
+        };
+        const aura = branchAuraMap[spouse.palaceBranch] || { zh: '端庄稳重，谈吐从容，自带令人信赖的亲和力与名士气质。', en: 'Dignified, articulate, and poised with warm, trustworthy presence.' };
+        return {
+          titleZh: '💑 夫妻与婚姻深层全息透视 (Spouse & Marital Dynamics)',
+          titleEn: '💑 Spouse & Marital Dynamics (Palace Hologram)',
+          subtitleZh: '晋·郭璞 / 宋·徐子平《玉照定真经》：“日干为己，日支为妻（夫）。干支相照，夫妻和乐寿考。”',
+          subtitleEn: 'Yu Zhao Ding Zhen Jing: "Day Stem is self, Day Branch is consort. Mutual generation brings harmonious longevity."',
+          palaceBranch: spouse.palaceBranch,
+          spouseStarZh: spouse.spouseStarZh,
+          spouseStarEn: spouse.spouseStarEn,
+          archetypeZh: spouse.archetypeZh,
+          archetypeEn: spouse.archetypeEn,
+          traitsZh: spouse.traitsZh,
+          traitsEn: spouse.traitsEn,
+          clashRiskZh: spouse.clashRiskZh,
+          clashRiskEn: spouse.clashRiskEn,
+          adviceZh: spouse.adviceZh,
+          adviceEn: spouse.adviceEn,
+          genderDiffZh: spouse.genderDiffZh || '【乾坤婚配差异】：男命看财星以知妻德，女命看官星以识夫贵。',
+          genderDiffEn: spouse.genderDiffEn || '[Gender Dynamics]: Male native reads Wealth stars for spousal virtue; female native reads Officer stars for marital honor.',
+          energyZh: `【坐支深凝 · 压舱砥柱】日支【${spouse.palaceBranch}】为夫妻正位，能量与日主紧密咬合共振，为命主最核心的生活盟友与精神避风港。`,
+          energyEn: `[Anchored Core Energy]: Day Branch [${this.formatBranchEn(spouse.palaceBranch)}] tightly bonds with Day Master as an irreplaceable marital ballast and sanctuary.`,
+          energy: `【坐支深凝 · 压舱砥柱】日支【${spouse.palaceBranch}】为夫妻正位，能量与日主紧密咬合共振，为命主最核心的生活盟友与精神避风港。`,
+          personalityZh: `【性格特征】：${spouse.archetypeZh}。${spouse.traitsZh}`,
+          personalityEn: `[Personality Profile]: ${spouse.archetypeEn}. ${spouse.traitsEn}`,
+          personality: `【性格特征】：${spouse.archetypeZh}。${spouse.traitsZh}`,
+          demeanourZh: `【有可能的气质仪态】：${aura.zh}`,
+          demeanourEn: `[Potential Demeanour & Aura]: ${aura.en}`,
+          demeanour: `【有可能的气质仪态】：${aura.zh}`,
+          relationshipZh: `【相处关系与互动机制】：${spouse.adviceZh} ${spouse.clashRiskZh}`,
+          relationshipEn: `[Relationship Dynamics]: ${spouse.adviceEn} ${spouse.clashRiskEn}`,
+          relationship: `【相处关系与互动机制】：${spouse.adviceZh} ${spouse.clashRiskZh}`
+        };
+      })() : null,
       children: children ? {
         titleZh: '👶 子女与后嗣才干缘法 (Children & Descendants)',
         titleEn: '👶 Children & Descendants (Hour Palace Legacy)',
@@ -2210,7 +2520,19 @@ class PortraitEngine {
         guideZh: children.guideZh,
         guideEn: children.guideEn,
         genderDiffZh: children.genderDiffZh || '【子息男女命差异】：男命看官杀以定子嗣担当，女命看食伤以知儿女灵秀。',
-        genderDiffEn: children.genderDiffEn || '[Gender Dynamics]: Male native evaluates Officer/Killings for descendant leadership; female native evaluates Output for descendant intellect.'
+        genderDiffEn: children.genderDiffEn || '[Gender Dynamics]: Male native evaluates Officer/Killings for descendant leadership; female native evaluates Output for descendant intellect.',
+        energyZh: `【时宿生发 · 灵秀破土】时柱【${children.hourPillarText}】引通元神秀气，为命主智慧与基因之结晶；后嗣生命力与创新动能充盈。`,
+        energyEn: `[Vibrant Generational Energy]: Hour Pillar [${this.formatPillarEn(children.hourPillarText)}] channels innate wisdom into fertile descendant vitality and innovation.`,
+        energy: `【时宿生发 · 灵秀破土】时柱【${children.hourPillarText}】引通元神秀气，为命主智慧与基因之结晶；后嗣生命力与创新动能充盈。`,
+        personalityZh: `【性格特征】：${children.archetypeZh}。${children.talentZh}`,
+        personalityEn: `[Personality Profile]: ${children.archetypeEn}. ${children.talentEn}`,
+        personality: `【性格特征】：${children.archetypeZh}。${children.talentZh}`,
+        demeanourZh: '【有可能的气质仪态】：目光清朗聪慧，神态敏锐自信，举手投足充满当代新锐探索活力，思维前沿，极具时代风采。',
+        demeanourEn: '[Potential Demeanour & Aura]: Bright-eyed, confident, and sharp, radiating modern creative curiosity and cutting-edge presence.',
+        demeanour: '【有可能的气质仪态】：目光清朗聪慧，神态敏锐自信，举手投足充满当代新锐探索活力，思维前沿，极具时代风采。',
+        relationshipZh: `【相处关系与互动机制】：${children.guideZh} ${children.destinyZh}`,
+        relationshipEn: `[Relationship Dynamics]: ${children.guideEn} ${children.destinyEn}`,
+        relationship: `【相处关系与互动机制】：${children.guideZh} ${children.destinyZh}`
       } : null,
       parents: parents ? {
         titleZh: '🏡 父母与家族祖荫传承 (Parents & Ancestral Heritage)',
@@ -2226,7 +2548,19 @@ class PortraitEngine {
         filialAdviceZh: parents.filialAdviceZh,
         filialAdviceEn: parents.filialAdviceEn,
         genderDiffZh: parents.genderDiffZh || '【宗族男女命差异】：男命重在家族立户独立建树，女命重在情感边界与完全人格自立。',
-        genderDiffEn: parents.genderDiffEn || '[Gender Dynamics]: Male native balances family legacy with financial sovereignty; female native balances filial care with emotional autonomy.'
+        genderDiffEn: parents.genderDiffEn || '[Gender Dynamics]: Male native balances family legacy with financial sovereignty; female native balances filial care with emotional autonomy.',
+        energyZh: '【中和偏旺 · 厚重如山】年月基业有根，祖辈原生家庭具备深厚精神托举、品德风范与基石护持力。',
+        energyEn: '[Balanced & Grounded Energy]: Ancestral roots in Year-Month provide solid psychological, moral, and material anchorage.',
+        energy: '【中和偏旺 · 厚重如山】年月基业有根，祖辈原生家庭具备深厚精神托举、品德风范与基石护持力。',
+        personalityZh: `【性格特征】：${parents.typeZh}。${parents.heritageZh}`,
+        personalityEn: `[Personality Profile]: ${parents.typeEn}. ${parents.heritageEn}`,
+        personality: `【性格特征】：${parents.typeZh}。${parents.heritageZh}`,
+        demeanourZh: '【有可能的气质仪态】：神态庄重持重，言谈举止自带长者尊严与风骨；待人接物讲求规矩章法，在宗族社会具备天然威信。',
+        demeanourEn: '[Potential Demeanour & Aura]: Dignified, principled, and deeply respected, exuding ancestral moral authority and social propriety.',
+        demeanour: '【有可能的气质仪态】：神态庄重持重，言谈举止自带长者尊严与风骨；待人接物讲求规矩章法，在宗族社会具备天然威信。',
+        relationshipZh: `【相处关系与互动机制】：${parents.filialAdviceZh} ${parents.debtOrBlessingZh}`,
+        relationshipEn: `[Relationship Dynamics]: ${parents.filialAdviceEn} ${parents.debtOrBlessingEn}`,
+        relationship: `【相处关系与互动机制】：${parents.filialAdviceZh} ${parents.debtOrBlessingZh}`
       } : null,
       environment: environment ? {
         titleZh: '🌍 人与社会环境/时代周期的综合交互分析 (Native & Environment / Era Dynamics)',

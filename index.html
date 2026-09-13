@@ -132,23 +132,33 @@
 
     <!-- Primary View Switcher Navigation Bar -->
     <nav id="primaryViewNav" class="sticky top-[61px] z-40 py-2 bg-[#12141c]/95 backdrop-blur-md rounded-2xl border border-gray-800 shadow-2xl p-2">
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-        <button id="navBtnHome" class="view-nav-btn active flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg bg-gradient-to-r from-amber-600 to-amber-700 text-white border border-amber-500/50" data-view="view-home">
-          <span class="text-base">🏠</span>
-          <span data-i18n="nav_view_home">核心主盘与 20% 枢纽</span>
+      <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5">
+        <button id="navBtnHome" class="view-nav-btn active flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg bg-gradient-to-r from-amber-600 to-amber-700 text-white border border-amber-500/50" data-view="view-home">
+          <span class="text-base">🏛️</span>
+          <span data-i18n="nav_view_home">核心主盘与全相基底</span>
           <span class="chinese-seal text-[9px] py-0 px-1.5" data-i18n="seal_view_home">主干命基</span>
         </button>
-        <button id="navBtnLuck" class="view-nav-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-luck">
-          <span class="text-base">🌌</span>
+        <button id="navBtnStrategy" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-strategy">
+          <span class="text-base">👑</span>
+          <span data-i18n="nav_view_strategy">战略大局与六亲全息</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_strategy">大局破局</span>
+        </button>
+        <button id="navBtnFriction" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-friction">
+          <span class="text-base">🧘</span>
+          <span data-i18n="nav_view_friction">精神内耗与禅道心智</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-950/60 text-rose-300 border border-rose-800/30 font-normal" data-i18n="seal_view_friction">禅道心智</span>
+        </button>
+        <button id="navBtnLuck" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-luck">
+          <span class="text-base">⏳</span>
           <span data-i18n="nav_view_luck">岁运推演 (大运 / 流年 / 流月 / 流日)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-purple-950/60 text-purple-300 border border-purple-800/30 font-normal" data-i18n="seal_view_luck">动态时空</span>
         </button>
-        <button id="navBtnCanons" class="view-nav-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
+        <button id="navBtnCanons" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
           <span class="text-base">📜</span>
           <span data-i18n="nav_view_canons">八典全库与经文细注</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_canons">八经汇通</span>
         </button>
-        <button id="navBtnIChing" class="view-nav-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-iching">
+        <button id="navBtnIChing" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-iching">
           <span class="text-base">☯️</span>
           <span data-i18n="nav_view_iching">周易六十四卦 · 蓍草/金钱起卦研解</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_iching">易道神机</span>
@@ -209,6 +219,35 @@
               <!-- Injected via JavaScript -->
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Fast Feature Portals: Strategy & Friction Views -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Strategy Portal -->
+        <div id="portalBtnStrategy" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-black/40 to-black/60 border border-amber-500/40 hover:border-amber-500/80 transition-all shadow-lg cursor-pointer group flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">👑</span>
+              <span class="font-bold font-serif-sc text-amber-300 text-sm" data-i18n="portal_strategy_title">战略大局与六亲全息图谱</span>
+              <span class="chinese-seal text-[9px] py-0" data-i18n="seal_view_strategy">大局破局</span>
+            </div>
+            <p class="text-[11px] text-gray-400" data-i18n="portal_strategy_desc">帕累托 20% 关键枢纽 · 生杀破局 · 六亲深度侧写 · 终身不败三则</p>
+          </div>
+          <span class="text-amber-400 group-hover:translate-x-1 transition-transform text-base font-bold">→</span>
+        </div>
+
+        <!-- Friction Portal -->
+        <div id="portalBtnFriction" class="p-4 rounded-2xl bg-gradient-to-r from-rose-950/40 via-black/40 to-black/60 border border-rose-800/40 hover:border-rose-500/80 transition-all shadow-lg cursor-pointer group flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🧘</span>
+              <span class="font-bold font-serif-sc text-rose-300 text-sm" data-i18n="portal_friction_title">精神内耗专项检测与实战改善</span>
+              <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400" data-i18n="seal_view_friction">禅道心智</span>
+            </div>
+            <p class="text-[11px] text-gray-400" data-i18n="portal_friction_desc">3分钟生理重置 · 4部实战法门 · 《金刚经》《坛经》《庄子》心智解脱</p>
+          </div>
+          <span class="text-rose-400 group-hover:translate-x-1 transition-transform text-base font-bold">→</span>
         </div>
       </section>
 
@@ -387,7 +426,67 @@
   </div>
   <!-- End of view-home -->
 
-  <!-- View 2: Luck & Fortune Cycles (大运 / 流年 / 流月 / 流日) -->
+  <!-- View: Grand Strategy & Kinship Hologram (全新独立大相与破局战役战略视图) -->
+  <div id="view-strategy" class="space-y-6 hidden">
+    <section class="bg-card rounded-2xl border border-border-color p-5 sm:p-7 shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">👑</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+              <span data-i18n="sec_strategy_title">全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱</span>
+              <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_view_strategy">大局破局</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="sec_strategy_subtitle">
+              深度融汇生杀破局战略胜负手、六亲深度侧写（父母/配偶/子女四维全息）、宏观时空场能共振与终身不败立身三则
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnJumpToHomeFromStrategy" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
+            <span>←</span> <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Strategy Content Container (Grand Picture + Kinship 4D + Canons Matrix) -->
+      <div id="strategyContentContainer" class="space-y-6">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+    </section>
+  </div>
+
+  <!-- View: Mental Friction & Zen-Dao Transcendence (精神内耗专项检测与禅道心智独立视图) -->
+  <div id="view-friction" class="space-y-6 hidden">
+    <section class="bg-card rounded-2xl border border-border-color p-5 sm:p-7 shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🧘</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-rose-300 flex items-center gap-2">
+              <span data-i18n="sec_friction_view_title">精神内耗专项检测与实战彻底改善方案 · 禅道心智超越</span>
+              <span class="chinese-seal text-[10px] py-0.2 border-rose-500 text-rose-400" data-i18n="seal_view_friction">禅道心智</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="sec_friction_view_subtitle">
+              直击过度思考与认知反刍根源，融合《金刚经》破相、《六祖坛经》自性与《庄子》乘物游心至高解脱法门
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnJumpToHomeFromFriction" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
+            <span>←</span> <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Friction Content Container (Gauge + 3min Somatic + 4 Combat Solutions + Zen/Dao Trinity) -->
+      <div id="frictionContentContainer" class="space-y-6">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+    </section>
+  </div>
+
+  <!-- View 4: Luck & Fortune Cycles (大运 / 流年 / 流月 / 流日) -->
   <div id="view-luck" class="space-y-6 hidden">
     <!-- Luck & Fortune Cycles Section (大运、流年、流月、流日 四阶全息推演) -->
     <section id="luckCyclesSection" class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-6">

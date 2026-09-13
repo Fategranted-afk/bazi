@@ -1566,7 +1566,273 @@ assert 'paretoDetailsContainer' in app_code, "app.js must contain paretoDetailsC
 
 print("✓ 综合全息画像五大维度通融（大纲总相/战略胜负手/六亲压舱石/九运时空/终身三则）与双语零中文残留验证通过！")
 
-print("\n🎉 ALL 35 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 36. Validate Pattern Grade Evaluation & Qing-Zhuo 5-Dimension Exegesis
+print("\n=== 36. Validating Pattern Grade & Qing-Zhuo 5-Dimension Exegesis ===")
+jsc_pattern_grade_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    var res = BaZiEngine.calculate({
+      year: 1970, month: 12, day: 8, hour: 6, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var pZh = PortraitEngine.analyze(res, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    if (!pZh.patterns || pZh.patterns.length === 0) throw new Error("Patterns array is empty");
+
+    var validTiers = ['特等格局', '上等格局', '中上格局', '中等格局', '下等格局'];
+    var validTiersEn = ['Exceptional Pattern', 'Superior Pattern', 'Upper-Middle Pattern', 'Middle Pattern', 'Lower Pattern'];
+
+    pZh.patterns.forEach(function(pat) {
+      if (!pat.gradeEvaluation) throw new Error("Missing gradeEvaluation in pattern: " + pat.name);
+      var ge = pat.gradeEvaluation;
+      if (validTiers.indexOf(ge.tier) === -1) throw new Error("Invalid tier in Zh: " + ge.tier);
+      if (!ge.strengthsAndFlawsZh || ge.strengthsAndFlawsZh.length < 20) throw new Error("strengthsAndFlawsZh missing or too short");
+      if (!ge.whyThisGradeZh || ge.whyThisGradeZh.length < 20) throw new Error("whyThisGradeZh missing or too short");
+      if (!ge.bottleneckZh || ge.bottleneckZh.length < 20) throw new Error("bottleneckZh missing or too short");
+      if (!ge.floorBaselineZh || ge.floorBaselineZh.length < 20) throw new Error("floorBaselineZh missing or too short");
+      if (!ge.elevationPathZh || ge.elevationPathZh.length < 20) throw new Error("elevationPathZh missing or too short");
+    });
+
+    pEn.patterns.forEach(function(pat) {
+      var ge = pat.gradeEvaluation;
+      if (!ge) throw new Error("Missing gradeEvaluation in English pattern");
+      if (validTiersEn.indexOf(ge.tier) === -1) throw new Error("Invalid tier in En: " + ge.tier);
+      var fields = [ge.tier, ge.strengthsAndFlaws, ge.whyThisGrade, ge.bottleneck, ge.floorBaseline, ge.elevationPath];
+      fields.forEach(function(f, idx) {
+        if (!f || f.length === 0) throw new Error("Empty English grade field index " + idx);
+        if (/[\u4e00-\u9fa5]/.test(f)) throw new Error("Residual Chinese in English gradeEvaluation: " + f);
+      });
+    });
+    '''
+]
+run_pg = subprocess.run(jsc_pattern_grade_cmd, capture_output=True, text=True)
+assert run_pg.returncode == 0, f"JSC Pattern Grade check failed: {run_pg.stderr}"
+print("✓ 格局评级（下等/中等/中上/上等/特等）与清浊五维论述（利弊成败/评判因由/瓶颈卡点/保底底线/跃升路径）双语验证通过！")
+
+# 37. Validate Kinship 4D Holographic Depth Profiles
+print("\n=== 37. Validating Kinship 4D Depth Profiles (配偶/子女/父母 四大维度) ===")
+jsc_kinship_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    var res = BaZiEngine.calculate({
+      year: 1970, month: 12, day: 8, hour: 6, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var pZh = PortraitEngine.analyze(res, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    ['spouse', 'children', 'parents'].forEach(function(kin) {
+      var kZh = pZh.paretoCore[kin];
+      if (!kZh) throw new Error("Missing " + kin + " in paretoCore Zh");
+      if (!kZh.energyZh || kZh.energyZh.length < 20) throw new Error(kin + " energyZh missing or too short");
+      if (!kZh.personalityZh || kZh.personalityZh.length < 20) throw new Error(kin + " personalityZh missing or too short");
+      if (!kZh.demeanourZh || kZh.demeanourZh.length < 20) throw new Error(kin + " demeanourZh missing or too short");
+      if (!kZh.relationshipZh || kZh.relationshipZh.length < 20) throw new Error(kin + " relationshipZh missing or too short");
+
+      var kEn = pEn.paretoCore[kin];
+      if (!kEn) throw new Error("Missing " + kin + " in paretoCore En");
+      var fieldsEn = [kEn.energy, kEn.personality, kEn.demeanour, kEn.relationship];
+      fieldsEn.forEach(function(f, idx) {
+        if (!f || f.length === 0) throw new Error("Empty English kinship field " + kin + " index " + idx);
+        if (/[\u4e00-\u9fa5]/.test(f)) throw new Error("Residual Chinese in English kinship " + kin + ": " + f);
+      });
+    });
+    '''
+]
+run_kin = subprocess.run(jsc_kinship_cmd, capture_output=True, text=True)
+assert run_kin.returncode == 0, f"JSC Kinship 4D profiles check failed: {run_kin.stderr}"
+print("✓ 六亲深度侧写全息图（配偶/子女/父母：能量/性格/气质/相处四大维度）双语验证通过！")
+
+# 38. Validate Zen & Dao Trinity Wisdom in Mental Friction
+print("\n=== 38. Validating Zen & Dao Trinity Wisdom (金刚经/坛经/庄子) ===")
+jsc_zen_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    var res = BaZiEngine.calculate({
+      year: 1970, month: 12, day: 8, hour: 6, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var pZh = PortraitEngine.analyze(res, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    var zdZh = pZh.mentalFriction.zenDaoWisdom;
+    if (!zdZh) throw new Error("Missing zenDaoWisdom in pZh");
+    if (!zdZh.diamond || !zdZh.platform || !zdZh.zhuangzi) throw new Error("Missing trinity classic in zdZh");
+
+    ['diamond', 'platform', 'zhuangzi'].forEach(function(k) {
+      var it = zdZh[k];
+      if (!it.titleZh || !it.mantraZh || !it.insightZh || !it.practicalZh) {
+        throw new Error("Incomplete fields for " + k + " in Chinese mode");
+      }
+    });
+
+    var zdEn = pEn.mentalFriction.zenDaoWisdom;
+    if (!zdEn) throw new Error("Missing zenDaoWisdom in pEn");
+    ['diamond', 'platform', 'zhuangzi'].forEach(function(k) {
+      var it = zdEn[k];
+      var checkStrs = [it.title, it.mantra, it.insight, it.practical];
+      checkStrs.forEach(function(s, idx) {
+        if (!s || s.length === 0) throw new Error("Empty English zen field " + k + " index " + idx);
+        if (/[\u4e00-\u9fa5]/.test(s)) throw new Error("Residual Chinese in English zen " + k + ": " + s);
+      });
+    });
+    '''
+]
+run_zen = subprocess.run(jsc_zen_cmd, capture_output=True, text=True)
+assert run_zen.returncode == 0, f"JSC Zen & Dao Trinity Wisdom check failed: {run_zen.stderr}"
+print("✓ 《金刚经》+《六祖坛经》+《庄子》三大至高解脱法门与微言大义/实操心法双语验证通过！")
+
+# 39. Validate 6-View Architecture & Portal Buttons in HTML & JS
+print("\n=== 39. Validating 6-View Architecture & Portal Buttons in HTML & JS ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_text = f.read()
+
+# Verify all 6 view containers exist in index.html
+views = ['view-home', 'view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching']
+for v in views:
+    assert f'id="{v}"' in html_text, f"Missing view container #{v} in index.html"
+
+# Verify 6 persistent navigation buttons exist
+for v in views:
+    assert f'data-view="{v}"' in html_text, f"Missing nav button for {v} in index.html"
+
+# Verify portal buttons and jump back buttons
+assert 'id="portalBtnStrategy"' in html_text, "Missing #portalBtnStrategy in index.html"
+assert 'id="portalBtnFriction"' in html_text, "Missing #portalBtnFriction in index.html"
+assert 'id="btnJumpToHomeFromStrategy"' in html_text, "Missing #btnJumpToHomeFromStrategy in index.html"
+assert 'id="btnJumpToHomeFromFriction"' in html_text, "Missing #btnJumpToHomeFromFriction in index.html"
+assert 'id="strategyContentContainer"' in html_text, "Missing #strategyContentContainer in index.html"
+assert 'id="frictionContentContainer"' in html_text, "Missing #frictionContentContainer in index.html"
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_text = f.read()
+
+assert "'view-strategy': document.getElementById('view-strategy')" in app_text, "Missing view-strategy in app.js primaryViews"
+assert "'view-friction': document.getElementById('view-friction')" in app_text, "Missing view-friction in app.js primaryViews"
+assert "portalBtnStrategy.addEventListener('click'" in app_text, "portalBtnStrategy not wired in app.js"
+assert "portalBtnFriction.addEventListener('click'" in app_text, "portalBtnFriction not wired in app.js"
+assert "btnJumpToHomeFromStrategy.addEventListener('click'" in app_text, "btnJumpToHomeFromStrategy not wired in app.js"
+assert "btnJumpToHomeFromFriction.addEventListener('click'" in app_text, "btnJumpToHomeFromFriction not wired in app.js"
+assert "renderStrategyView" in app_text, "renderStrategyView missing in app.js"
+assert "renderFrictionView" in app_text, "renderFrictionView missing in app.js"
+
+print("✓ 全局六大独立视图架构（主相/大局破局/精神内耗/岁运走势/八经汇通/周易通变）及各级双向传送门连通性验证通过！")
+
+# 40. Validate Multi-Chart Robustness and Bilingual Zero Chinese Residual Across All Views
+print("\n=== 40. Validating Multi-Chart Robustness & Zero Residual Chinese ===")
+jsc_multi_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    var testCharts = [
+      { year: 1970, month: 12, day: 8, hour: 6, minute: 0, gender: "male" },
+      { year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "male" },
+      { year: 1995, month: 5, day: 15, hour: 20, minute: 0, gender: "female" },
+      { year: 2000, month: 1, day: 1, hour: 0, minute: 30, gender: "female" }
+    ];
+
+    testCharts.forEach(function(cfg, idx) {
+      cfg.useTrueSolarTime = false;
+      cfg.isLateRatNextDay = false;
+      cfg.longitude = 116.4;
+      cfg.timezone = 8.0;
+
+      var res = BaZiEngine.calculate(cfg);
+      var pZh = PortraitEngine.analyze(res, "zh");
+      var pEn = I18N.translatePortrait(pZh, "en");
+
+      if (!pEn.paretoCore || !pEn.mentalFriction || !pEn.patterns) {
+        throw new Error("Chart " + idx + " failed core object structure");
+      }
+
+      // Check zero residual Chinese in key English texts
+      var toCheck = [
+        pEn.paretoCore.grandPicture.title,
+        pEn.paretoCore.grandPicture.thesis,
+        pEn.paretoCore.grandPicture.campaign,
+        pEn.paretoCore.grandPicture.kinship,
+        pEn.paretoCore.grandPicture.era,
+        pEn.paretoCore.spouse.energy,
+        pEn.paretoCore.spouse.demeanour,
+        pEn.paretoCore.children.energy,
+        pEn.paretoCore.parents.energy,
+        pEn.mentalFriction.zenDaoWisdom.diamond.title,
+        pEn.mentalFriction.zenDaoWisdom.platform.title,
+        pEn.mentalFriction.zenDaoWisdom.zhuangzi.title
+      ];
+
+      toCheck.forEach(function(txt, tIdx) {
+        if (!txt) throw new Error("Chart " + idx + " empty text index " + tIdx);
+        if (/[\u4e00-\u9fa5]/.test(txt)) {
+          throw new Error("Chart " + idx + " residual Chinese at index " + tIdx + ": " + txt);
+        }
+      });
+    });
+    '''
+]
+run_multi = subprocess.run(jsc_multi_cmd, capture_output=True, text=True)
+assert run_multi.returncode == 0, f"JSC Multi-chart zero residual check failed: {run_multi.stderr}"
+print("✓ 多八字命盘鲁棒性与全视图英文模式100%零中文残留验证通过！")
+
+print("\n🎉 ALL 40 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

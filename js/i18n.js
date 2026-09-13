@@ -15,14 +15,27 @@ const I18N = (function() {
       btn_theme_light: "☀️ 晨曦",
 
       // Primary View Navigation
-      nav_view_home: "核心主盘与 20% 枢纽",
-      nav_view_luck: "岁运推演 (大运 / 流年 / 流月 / 流日)",
-      nav_view_canons: "八典全库与经文细注",
-      nav_view_iching: "周易六十四卦 · 蓍草/金钱起卦研解",
+      nav_view_home: "🏛️ 核心主盘与全相基底",
+      nav_view_strategy: "👑 战略大局与六亲全息",
+      nav_view_friction: "🧘 精神内耗与禅道心智",
+      nav_view_luck: "⏳ 岁运推演 (大运 / 流年 / 流月 / 流日)",
+      nav_view_canons: "📜 八典全库与经文细注",
+      nav_view_iching: "☯️ 周易六十四卦 · 蓍草/金钱起卦研解",
       seal_view_home: "主干命基",
+      seal_view_strategy: "大局破局",
+      seal_view_friction: "禅道心智",
       seal_view_luck: "动态时空",
       seal_view_canons: "八经汇通",
       seal_view_iching: "易道神机",
+      sec_strategy_title: "全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱",
+      sec_strategy_subtitle: "深度融汇生杀破局战略胜负手、六亲深度侧写（父母/配偶/子女四维全息）、宏观时空场能共振与终身不败立身三则",
+      sec_friction_view_title: "精神内耗专项检测与实战彻底改善方案 · 禅道心智超越",
+      sec_friction_view_subtitle: "直击过度思考与认知反刍根源，融合《金刚经》破相、《六祖坛经》自性与《庄子》乘物游心至高解脱法门",
+      lbl_back_home: "返回核心主盘",
+      portal_strategy_title: "战略大局与六亲全息图谱",
+      portal_strategy_desc: "帕累托 20% 关键枢纽 · 生杀破局 · 六亲深度侧写 · 终身不败三则",
+      portal_friction_title: "精神内耗专项检测与实战改善",
+      portal_friction_desc: "3分钟生理重置 · 4部实战法门 · 《金刚经》《坛经》《庄子》心智解脱",
 
       // Form Inputs
       lbl_birth_date: "公历出生日期 (阳历)",
@@ -256,14 +269,27 @@ const I18N = (function() {
       btn_theme_light: "☀️ Light",
 
       // Primary View Navigation
-      nav_view_home: "Natal Chart & 20% Fulcrum",
-      nav_view_luck: "Transit Cycles (Decade / Year / Month / Day)",
-      nav_view_canons: "Eight Classical Canons & Commentaries",
-      nav_view_iching: "I Ching 64 Hexagrams Divination",
+      nav_view_home: "🏛️ Natal Chart & Core Blueprint",
+      nav_view_strategy: "👑 Grand Strategy & Kinship Hologram",
+      nav_view_friction: "🧘 Mental Friction & Zen-Dao Mastery",
+      nav_view_luck: "⏳ Transit Cycles (Decade / Year / Month / Day)",
+      nav_view_canons: "📜 Eight Classical Canons & Commentaries",
+      nav_view_iching: "☯️ I Ching 64 Hexagrams Divination",
       seal_view_home: "Core Base",
+      seal_view_strategy: "Strategy",
+      seal_view_friction: "Zen-Dao",
       seal_view_luck: "Transits",
       seal_view_canons: "8 Canons",
       seal_view_iching: "I Ching Oracle",
+      sec_strategy_title: "Grand Strategy & Breakthrough Campaign · Pareto 20% Sovereign Hologram",
+      sec_strategy_subtitle: "Synthesizing decisive breakthrough campaigns, 4D kinship holographic depth profiles (Parents/Spouse/Children), era resonance & lifetime golden rules",
+      sec_friction_view_title: "Mental Friction Diagnosis & Practical Solutions · Zen-Dao Mastery",
+      sec_friction_view_subtitle: "Directly resolving overthinking and cognitive loops with the Diamond Sutra, Platform Sutra & Zhuangzi transcendence protocols",
+      lbl_back_home: "Back to Natal Chart",
+      portal_strategy_title: "Grand Strategy & Kinship Hologram",
+      portal_strategy_desc: "Pareto 20% Sovereign Fulcrum · Breakthrough Campaign · 4D Kinship · 3 Golden Rules",
+      portal_friction_title: "Mental Friction Diagnostic & Zen-Dao Mastery",
+      portal_friction_desc: "3-Min Somatic Reset · 4 Combat Solutions · Diamond Sutra, Platform & Zhuangzi",
 
       // Form Inputs
       lbl_birth_date: "Solar Birth Date (Gregorian)",
@@ -1003,6 +1029,17 @@ const I18N = (function() {
           pat.formation = `【Natal Formation Verification】① Day Master ${dmEn} requires seasonal mandate or root support in branches to flourish; ② Hour Branch must remain free from severe clashing, punishment, or harm from the day branch or transits; ③ Useful gods must be potent and revealed on stems, while adverse stars are restrained or transformed.`;
           pat.usage = `① Element Strategy: Balance Resource/Companions vs Wealth/Officer/Output according to Day Master vigor (strong Day Master favors output and wealth drainage; weak Day Master favors resource nourishment). ② Career Blueprint: Aligned with the '${pat.name}' archetype, scholarly paths favor education, cultural media, and advisory roles; executive paths favor administration, law, engineering, and corporate management; dual wealth-officer favors entrepreneurship. ③ Luck Cycle Guidance: Prosperous upon encountering harmonious auspicious cycles; maintain prudent and grounded cultivation when encountering challenging clashing stars.`;
         }
+
+        // Translate Pattern Grade & Purity Evaluation (Qing-Zhuo Doctrine)
+        if (pat.gradeEvaluation) {
+          const ge = pat.gradeEvaluation;
+          ge.tier = ge.tierEn || ge.tier;
+          ge.strengthsAndFlaws = ge.strengthsAndFlawsEn || ge.strengthsAndFlaws;
+          ge.whyThisGrade = ge.whyThisGradeEn || ge.whyThisGrade;
+          ge.bottleneck = ge.bottleneckEn || ge.bottleneck;
+          ge.floorBaseline = ge.floorBaselineEn || ge.floorBaseline;
+          ge.elevationPath = ge.elevationPathEn || ge.elevationPath;
+        }
       });
     }
 
@@ -1111,6 +1148,20 @@ const I18N = (function() {
             sol.name = solEnTitles[idx].name;
             sol.theme = solEnTitles[idx].theme;
             sol.steps = solEnTitles[idx].steps;
+          }
+        });
+      }
+
+      // Zen & Dao Trinity Wisdom Translation
+      if (mf.zenDaoWisdom) {
+        const zd = mf.zenDaoWisdom;
+        zd.title = zd.titleEn || zd.title;
+        ['diamond', 'platform', 'zhuangzi'].forEach(k => {
+          if (zd[k]) {
+            zd[k].title = zd[k].titleEn || zd[k].title;
+            zd[k].mantra = zd[k].mantraEn || zd[k].mantra;
+            zd[k].insight = zd[k].insightEn || zd[k].insight;
+            zd[k].practical = zd[k].practicalEn || zd[k].practical;
           }
         });
       }
@@ -1324,8 +1375,11 @@ const I18N = (function() {
       pc.description = pc.descriptionEn;
 
       if (pc.primaryPatternNameZh) {
-        pc.primaryPatternName = pc.primaryPatternNameEn;
-        pc.primaryPatternDesc = pc.primaryPatternDescEn;
+        const transPatName = getPatternName(pc.primaryPatternNameZh, 'en') || pc.primaryPatternNameEn;
+        pc.primaryPatternName = transPatName;
+        pc.primaryPatternDesc = (pc.primaryPatternDescEn || pc.primaryPatternDescZh || '')
+          .replace(new RegExp(pc.primaryPatternNameZh, 'g'), transPatName)
+          .replace(/【.+?】/g, `[${transPatName}]`);
       }
 
       if (pc.grandPicture) {
@@ -1369,6 +1423,9 @@ const I18N = (function() {
             c.targetCities = c.targetCitiesEn;
             c.workspaceEnergy = c.workspaceEnergyEn;
             c.eraMacroTrend = c.eraMacroTrendEn;
+            if (c.personaDepictionEn) c.personaDepiction = c.personaDepictionEn;
+            if (c.destinyTrajectoryEn) c.destinyTrajectory = c.destinyTrajectoryEn;
+            if (c.actionableManeuverEn) c.actionableManeuver = c.actionableManeuverEn;
           }
         });
       }
@@ -1397,6 +1454,10 @@ const I18N = (function() {
         sp.clashRisk = sp.clashRiskEn;
         sp.advice = sp.adviceEn;
         sp.genderDiff = sp.genderDiffEn;
+        if (sp.energyEn) sp.energy = sp.energyEn;
+        if (sp.personalityEn) sp.personality = sp.personalityEn;
+        if (sp.demeanourEn) sp.demeanour = sp.demeanourEn;
+        if (sp.relationshipEn) sp.relationship = sp.relationshipEn;
       }
 
       if (pc.children) {
@@ -1407,6 +1468,10 @@ const I18N = (function() {
         ch.talent = ch.talentEn;
         ch.guide = ch.guideEn;
         ch.genderDiff = ch.genderDiffEn;
+        if (ch.energyEn) ch.energy = ch.energyEn;
+        if (ch.personalityEn) ch.personality = ch.personalityEn;
+        if (ch.demeanourEn) ch.demeanour = ch.demeanourEn;
+        if (ch.relationshipEn) ch.relationship = ch.relationshipEn;
       }
 
       if (pc.parents) {
@@ -1418,6 +1483,10 @@ const I18N = (function() {
         pa.debtOrBlessing = pa.debtOrBlessingEn;
         pa.filialAdvice = pa.filialAdviceEn;
         pa.genderDiff = pa.genderDiffEn;
+        if (pa.energyEn) pa.energy = pa.energyEn;
+        if (pa.personalityEn) pa.personality = pa.personalityEn;
+        if (pa.demeanourEn) pa.demeanour = pa.demeanourEn;
+        if (pa.relationshipEn) pa.relationship = pa.relationshipEn;
       }
 
       if (pc.environment) {

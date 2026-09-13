@@ -758,13 +758,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${pat.name}
               </h4>
             </div>
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-2 flex-wrap gap-1">
               <span class="text-xs px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-600/30 to-amber-500/20 text-amber-300 border border-amber-500/40 font-bold font-mono">
                 ${isEn ? 'Energy Share: ' : '能量占比：'}${pat.weightPct}%
               </span>
               <span class="text-[11px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
                 ${pat.tierName}
               </span>
+              ${pat.gradeEvaluation ? `
+                <span class="text-[11px] px-2.5 py-0.5 rounded-full font-bold font-mono ${
+                  pat.gradeEvaluation.tier.includes('特等') || pat.gradeEvaluation.tier.includes('Exceptional') ? 'bg-gradient-to-r from-amber-500/30 to-rose-500/30 text-amber-300 border border-amber-500/50 shadow-sm' :
+                  pat.gradeEvaluation.tier.includes('上等') || pat.gradeEvaluation.tier.includes('Superior') ? 'bg-purple-500/30 text-purple-300 border border-purple-500/40' :
+                  pat.gradeEvaluation.tier.includes('中上') || pat.gradeEvaluation.tier.includes('High-Mid') ? 'bg-blue-500/30 text-blue-300 border border-blue-500/40' :
+                  'bg-emerald-500/30 text-emerald-300 border border-emerald-500/40'
+                }">
+                  👑 ${pat.gradeEvaluation.tier}
+                </span>
+              ` : ''}
             </div>
           </div>
 
@@ -775,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           ${verseHtml}
 
-          <!-- Strict 4-Part Structure + Dimension 5 Percentage Analysis -->
+          <!-- Strict 4-Part Structure + Dimension 5 Percentage Analysis + Dimension 6 Qing-Zhuo Classical Exegesis -->
           <div class="space-y-2 text-xs leading-relaxed">
             <!-- 1. 格局含义 -->
             <div class="p-2.5 bg-black/30 rounded-lg border border-amber-900/30">
@@ -810,6 +820,59 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="text-gray-300">${pat.tierDesc}</p>
               <p class="text-gray-400 text-[11px] mt-0.5"><b>${isEn ? 'Empowerment Rationale: ' : '成格赋能依据：'}</b>${pat.weightReason}</p>
             </div>
+
+            ${pat.gradeEvaluation ? `
+            <!-- 6. 清浊评级与破局晋阶深度论述 (依托《滴天髓阐微》《子平真诠》《兰台妙选》《神峰通考》) -->
+            <div class="p-3 bg-black/40 rounded-xl border border-amber-500/40 space-y-2 mt-2 shadow-inner">
+              <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
+                <div class="flex items-center space-x-1.5">
+                  <span class="chinese-seal text-[9px] py-0">${isEn ? 'Classical Purity' : '四经辨析'}</span>
+                  <span class="text-amber-300 font-bold text-xs font-serif-sc">
+                    🏛️ 6. ${isEn ? 'Pattern Grade & Qing-Zhuo Classical Exegesis' : '格局评级与四典清浊深度论述 (《滴天髓》《真诠》《兰台》《神峰》)'}
+                  </span>
+                </div>
+                <span class="text-[11px] px-2.5 py-0.5 rounded-full font-bold font-mono ${
+                  pat.gradeEvaluation.tier.includes('特等') || pat.gradeEvaluation.tier.includes('Exceptional') ? 'bg-gradient-to-r from-amber-500/30 to-rose-500/30 text-amber-300 border border-amber-500/50' :
+                  pat.gradeEvaluation.tier.includes('上等') || pat.gradeEvaluation.tier.includes('Superior') ? 'bg-purple-500/30 text-purple-300 border border-purple-500/40' :
+                  pat.gradeEvaluation.tier.includes('中上') || pat.gradeEvaluation.tier.includes('High-Mid') ? 'bg-blue-500/30 text-blue-300 border border-blue-500/40' :
+                  'bg-emerald-500/30 text-emerald-300 border border-emerald-500/40'
+                }">
+                  ${pat.gradeEvaluation.tier}
+                </span>
+              </div>
+
+              <div class="space-y-2 text-[11.5px] leading-relaxed">
+                <!-- 优劣辨析 -->
+                <div class="p-2 rounded bg-black/40 border border-gray-800/80">
+                  <b class="text-amber-300">${isEn ? '⚖️ Strengths & Vulnerabilities (Good vs Bad): ' : '⚖️ 格局优劣辨析 (好与不好)：'}</b>
+                  <span class="text-gray-300">${pat.gradeEvaluation.strengthsAndFlaws}</span>
+                </div>
+
+                <!-- 评判依据 -->
+                <div class="p-2 rounded bg-black/40 border border-gray-800/80">
+                  <b class="text-blue-300">${isEn ? '📖 Classical Criteria (Why this Grade): ' : '📖 典籍评判依据 (为什么如此评判)：'}</b>
+                  <span class="text-gray-300">${pat.gradeEvaluation.whyThisGrade}</span>
+                </div>
+
+                <!-- 卡点与天花板 -->
+                <div class="p-2 rounded bg-rose-950/20 border border-rose-900/40">
+                  <b class="text-rose-400">${isEn ? '🚧 Ceilings & Bottlenecks (Why it cannot ascend): ' : '🚧 晋阶卡点与天花板 (为什么上不去)：'}</b>
+                  <span class="text-rose-200">${pat.gradeEvaluation.bottleneck}</span>
+                </div>
+
+                <!-- 保底是什么 -->
+                <div class="p-2 rounded bg-emerald-950/20 border border-emerald-900/40">
+                  <b class="text-emerald-400">${isEn ? '🛡️ Moat & Defensible Floor (Baseline Protection): ' : '🛡️ 守正护城河与保底 (保底是什么)：'}</b>
+                  <span class="text-emerald-200">${pat.gradeEvaluation.floorBaseline}</span>
+                </div>
+
+                <!-- 如何改善与提升路径 -->
+                <div class="p-2 rounded bg-amber-950/20 border border-amber-900/40">
+                  <b class="text-amber-400">${isEn ? '🚀 Practical Elevation & Ascension Path (How to improve): ' : '🚀 破局晋升与改运路径 (如何改善与提升)：'}</b>
+                  <span class="text-amber-200">${pat.gradeEvaluation.elevationPath}</span>
+                </div>
+              </div>
+            </div>` : ''}
           </div>
         `;
         patternsContainer.appendChild(card);
@@ -1197,6 +1260,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             ${innerGrid}
 
+            ${c.personaDepiction || c.personaDepictionEn ? `
+            <div class="p-3 bg-black/45 rounded-lg border border-gray-800/80 text-xs space-y-2">
+              <div>
+                <span class="text-amber-300 font-bold block mb-0.5">👤 ${isEn ? 'Classical Personality & Persona Depiction:' : '本经深度个性肖像与气象刻画：'}</span>
+                <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.personaDepictionEn || c.personaDepiction) : (c.personaDepictionZh || c.personaDepiction)}</p>
+              </div>
+              <div class="pt-1.5 border-t border-gray-800/60">
+                <span class="text-blue-300 font-bold block mb-0.5">📈 ${isEn ? 'Destiny Trajectory & Lifelong Turning Points:' : '本经所指命运走向与人生关隘：'}</span>
+                <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.destinyTrajectoryEn || c.destinyTrajectory) : (c.destinyTrajectoryZh || c.destinyTrajectory)}</p>
+              </div>
+              <div class="pt-1.5 border-t border-gray-800/60">
+                <span class="text-emerald-300 font-bold block mb-0.5">⚡ ${isEn ? 'Core Actionable Maneuver & Strategy:' : '本经核心实战战术与破局手：'}</span>
+                <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.actionableManeuverEn || c.actionableManeuver) : (c.actionableManeuverZh || c.actionableManeuver)}</p>
+              </div>
+            </div>` : ''}
+
             <div class="p-3 bg-black/40 rounded-lg border border-gray-800/60 text-xs space-y-1.5">
               <span class="text-amber-300 font-bold block">${isEn ? '🎯 20% High-Leverage Strategic Action Plan:' : '🎯 20% 核心抓手现代破局实操法门：'}</span>
               <p class="text-gray-200 leading-relaxed text-[11.5px]">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
@@ -1266,16 +1345,28 @@ document.addEventListener('DOMContentLoaded', () => {
             ${isEn ? (sp.subtitleEn || sp.subtitle) : (sp.subtitleZh || sp.subtitle)}
           </div>
 
+          <!-- 4-Dimension Kinship Layout -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-rose-300 font-bold block">${isEn ? 'Consort Psychological Archetype & Inherent Disposition:' : '配偶真实心性原型与相貌气象：'}</span>
-              <div class="text-amber-200 font-semibold mb-1">【${isEn ? (sp.archetypeEn || sp.archetype) : (sp.archetypeZh || sp.archetype)}】</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.traitsEn || sp.traits) : (sp.traitsZh || sp.traits)}</p>
+              <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Elemental Aura:' : '能量等级与五行气象：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.energyEn || sp.energy) : (sp.energyZh || sp.energy)}</p>
             </div>
 
             <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-amber-400 font-bold block">${isEn ? 'Latent Marital Friction Reefs & Clashing Risks:' : '潜在情感暗礁与岁运刑冲隐患：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.clashRiskEn || sp.clashRisk) : (sp.clashRiskZh || sp.clashRisk)}</p>
+              <span class="text-rose-300 font-bold block">🧠 2. ${isEn ? 'Psychological Archetype & Character Profile:' : '心性原型与性格特征画像：'}</span>
+              <div class="text-amber-200 font-semibold mb-1">【${isEn ? (sp.archetypeEn || sp.archetype) : (sp.archetypeZh || sp.archetype)}】</div>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.personalityEn || sp.personality) : (sp.personalityZh || sp.personality)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Likely Demeanour, Aura & Aesthetic Presence:' : '有可能的气质仪态与风采容貌：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.demeanourEn || sp.demeanour) : (sp.demeanourZh || sp.demeanour)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Relationship Dynamics & Interaction Mechanics:' : '相处关系与互动机制：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.relationshipEn || sp.relationship) : (sp.relationshipZh || sp.relationship)}</p>
+              <p class="text-rose-300 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Friction Reefs: ' : '潜在暗礁：'}</b>${isEn ? (sp.clashRiskEn || sp.clashRisk) : (sp.clashRiskZh || sp.clashRisk)}</p>
             </div>
           </div>
 
@@ -1314,16 +1405,28 @@ document.addEventListener('DOMContentLoaded', () => {
             ${isEn ? (ch.subtitleEn || ch.subtitle) : (ch.subtitleZh || ch.subtitle)}
           </div>
 
+          <!-- 4-Dimension Kinship Layout -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-emerald-300 font-bold block">${isEn ? 'Offspring Disposition Archetype & Frontier Talent Direction:' : '后嗣心性原型与天赋赛道：'}</span>
-              <div class="text-amber-200 font-semibold mb-1">【${isEn ? (ch.archetypeEn || ch.archetype) : (ch.archetypeZh || ch.archetype)}】</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.talentEn || ch.talent) : (ch.talentZh || ch.talent)}</p>
+              <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Innate Vitality:' : '能量等级与五行气象：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.energyEn || ch.energy) : (ch.energyZh || ch.energy)}</p>
             </div>
 
             <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-blue-300 font-bold block">${isEn ? 'Parental Mentorship & Communication Guide:' : '亲子教育沟通密码与避坑指南：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.guideEn || ch.guide) : (ch.guideZh || ch.guide)}</p>
+              <span class="text-emerald-300 font-bold block">🧠 2. ${isEn ? 'Character Archetype & Frontier Talent:' : '心性原型与天赋赛道：'}</span>
+              <div class="text-amber-200 font-semibold mb-1">【${isEn ? (ch.archetypeEn || ch.archetype) : (ch.archetypeZh || ch.archetype)}】</div>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.personalityEn || ch.personality) : (ch.personalityZh || ch.personality)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Likely Demeanour, Intellectual Presence & Aura:' : '有可能的气质仪态与风度神采：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.demeanourEn || ch.demeanour) : (ch.demeanourZh || ch.demeanour)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-blue-300 font-bold block">🤝 4. ${isEn ? 'Parent-Child Dynamics & Mentorship Guide:' : '相处关系与亲子沟通互动密码：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.relationshipEn || ch.relationship) : (ch.relationshipZh || ch.relationship)}</p>
+              <p class="text-emerald-200 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Mentorship Key: ' : '沟通避坑：'}</b>${isEn ? (ch.guideEn || ch.guide) : (ch.guideZh || ch.guide)}</p>
             </div>
           </div>
 
@@ -1358,15 +1461,27 @@ document.addEventListener('DOMContentLoaded', () => {
             ${isEn ? (pa.subtitleEn || pa.subtitle) : (pa.subtitleZh || pa.subtitle)}
           </div>
 
+          <!-- 4-Dimension Kinship Layout -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-indigo-300 font-bold block">${isEn ? 'Ancestral Root Heritage & Family Upbringing:' : '祖业根基传承与家风熏陶：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.heritageEn || pa.heritage) : (pa.heritageZh || pa.heritage)}</p>
+              <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Ancestral Foundation:' : '能量等级与祖业根基底色：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.energyEn || pa.energy) : (pa.energyZh || pa.energy)}</p>
             </div>
 
             <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-amber-300 font-bold block">${isEn ? 'Intangible Asset Blessing vs Emotional Debt Balance:' : '隐形资源赋能 vs 家族约束张力：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.debtOrBlessingEn || pa.debtOrBlessing) : (pa.debtOrBlessingZh || pa.debtOrBlessing)}</p>
+              <span class="text-indigo-300 font-bold block">🧠 2. ${isEn ? 'Parental Character Archetype & Mindset:' : '父母心性原型与思维模式画像：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.personalityEn || pa.personality) : (pa.personalityZh || pa.personality)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Family Demeanour & Upbringing Heritage:' : '家风气质风度与言传身教熏陶：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.demeanourEn || pa.demeanour) : (pa.demeanourZh || pa.demeanour)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Intergenerational Dynamics & Filial Balance:' : '相处互动机制与孝道自主平衡：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.relationshipEn || pa.relationship) : (pa.relationshipZh || pa.relationship)}</p>
+              <p class="text-amber-200 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Resource vs Debt: ' : '隐形资源vs约束：'}</b>${isEn ? (pa.debtOrBlessingEn || pa.debtOrBlessing) : (pa.debtOrBlessingZh || pa.debtOrBlessing)}</p>
             </div>
           </div>
 
@@ -1804,6 +1919,564 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Initial render
       renderRemedyView();
+    }
+
+    // Render Dedicated Grand Strategy View
+    renderStrategyView(pData, res, isEn);
+
+    // Render Dedicated Mental Friction & Zen-Dao Transcendence View
+    renderFrictionView(pData, res, isEn);
+  }
+
+  // 👑 Dedicated Grand Strategy & Kinship Hologram View Renderer (全新独立大相与破局战役战略视图)
+  function renderStrategyView(pData, res, isEn) {
+    const container = document.getElementById('strategyContentContainer');
+    if (!container) return;
+    if (!pData || !pData.paretoCore) {
+      container.innerHTML = `
+        <div class="p-8 text-center text-gray-400">
+          <span class="text-3xl block mb-2">👑</span>
+          <p>${isEn ? 'Please calculate a natal chart to reveal the Grand Strategy & Kinship Hologram.' : '请先在主盘完成排盘，以生成全新独立大相与破局战役战略全息图谱。'}</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = '';
+    const pc = pData.paretoCore;
+
+    // 1. 👑 第一核心主导格局 20% 统帅枢纽横幅 (Dominant Pattern 20/80 Fulcrum Banner)
+    if (pc.primaryPatternNameZh || pc.primaryPatternName) {
+      const patName = isEn ? (pc.primaryPatternName || pc.primaryPatternNameEn) : (pc.primaryPatternNameZh || pc.primaryPatternName);
+      const patDesc = isEn ? (pc.primaryPatternDescEn || pc.primaryPatternDesc) : (pc.primaryPatternDescZh || pc.primaryPatternDesc);
+      const banner = document.createElement('div');
+      banner.className = 'p-5 rounded-2xl bg-gradient-to-r from-amber-950/60 via-amber-900/30 to-black/70 border-2 border-amber-500/70 shadow-2xl space-y-2.5';
+      banner.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center space-x-2.5">
+            <span class="chinese-seal text-xs py-0.5">${isEn ? 'PARETO 20% FULCRUM' : '👑 帕累托 20% 统帅枢纽'}</span>
+            <h3 class="text-base sm:text-xl font-bold font-serif-sc text-amber-300">
+              ${isEn ? `Primary Dominant Pattern: ${patName} (${pc.primaryPatternWeightPct}%)` : `第一核心主导格局：${patName}（能量占比：${pc.primaryPatternWeightPct}%）`}
+            </h3>
+          </div>
+          <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40 font-mono">
+            ${isEn ? 'Governs 80% Destiny' : '八经融通 · 统领全盘80%命途大纲'}
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-serif-sc">
+          ${patDesc}
+        </p>
+      `;
+      container.appendChild(banner);
+    }
+
+    // 2. 👑 综合全息画像 (Grand Picture Holistic Masterpiece Card)
+    if (pc.grandPicture) {
+      const gp = pc.grandPicture;
+      const grandCard = document.createElement('div');
+      grandCard.className = 'p-5 sm:p-7 rounded-2xl bg-gradient-to-b from-amber-950/40 via-black/85 to-stone-950/90 border-2 border-amber-500/70 shadow-2xl space-y-6';
+
+      const highlights = (isEn ? (gp.highlightsEn || gp.highlights) : (gp.highlightsZh || gp.highlights)) || [];
+      const highlightsHtml = highlights.map(h => `
+        <span class="px-3 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40 font-mono">
+          ${h}
+        </span>
+      `).join('');
+
+      const rulesList = (isEn ? (gp.rulesEn || gp.rules) : (gp.rulesZh || gp.rules)) || [];
+      const rulesCardsHtml = rulesList.map(r => `
+        <div class="p-3.5 bg-black/50 rounded-xl border border-amber-500/30 space-y-1.5 flex flex-col justify-between">
+          <span class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc">${r.label}</span>
+          <p class="text-xs text-gray-300 leading-relaxed">${r.desc}</p>
+        </div>
+      `).join('');
+
+      grandCard.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-amber-500/40">
+          <div class="flex items-center space-x-2.5">
+            <span class="chinese-seal text-xs py-0.5">${isEn ? 'GRAND PICTURE' : '👑 综合全息画像'}</span>
+            <h3 class="text-lg sm:text-2xl font-bold font-serif-sc text-amber-300">
+              ${isEn ? (gp.titleEn || gp.title) : (gp.titleZh || gp.title)}
+            </h3>
+          </div>
+          <div class="flex items-center gap-1.5 flex-wrap">
+            ${highlightsHtml}
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-amber-950/20 rounded-xl border-l-4 border-amber-500 text-xs sm:text-sm text-amber-200/90 font-serif-sc leading-relaxed">
+          ${isEn ? (gp.subtitleEn || gp.subtitle) : (gp.subtitleZh || gp.subtitle)}
+        </div>
+
+        <!-- 1. 命盘大局总相与生命大纲 -->
+        <div class="p-4 rounded-xl bg-black/45 border border-amber-500/30 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+              <span>🏛️</span>
+              <span>${isEn ? '1. Grand Archetype & Sovereign Life Blueprint' : '一、命盘大局总相与生命大纲'}</span>
+            </h4>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+              ${isEn ? 'Day Master & Sovereign Mandate' : '元神气象 · 格局司权'}
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
+            ${isEn ? (gp.thesisEn || gp.thesis) : (gp.thesisZh || gp.thesis)}
+          </p>
+        </div>
+
+        <!-- 2. 生杀破局与战略胜负手 -->
+        <div class="p-4 rounded-xl bg-black/45 border border-rose-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
+              <span>⚔️</span>
+              <span>${isEn ? '2. Strategic Breakthrough Campaign & 20% Lever' : '二、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
+            </h4>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
+              ${isEn ? 'Disease & Medicine Alchemy' : '以病取药 · 相神救应'}
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
+            ${isEn ? (gp.campaignEn || gp.campaign) : (gp.campaignZh || gp.campaign)}
+          </p>
+        </div>
+
+        <!-- 3. 六亲后方与家庭压舱石 -->
+        <div class="p-4 rounded-xl bg-black/45 border border-emerald-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
+              <span>🛡️</span>
+              <span>${isEn ? '3. Domestic Sanctuary & Kinship Ballast' : '三、六亲后方与家庭压舱石'}</span>
+            </h4>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
+              ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
+            ${isEn ? (gp.kinshipEn || gp.kinship) : (gp.kinshipZh || gp.kinship)}
+          </p>
+        </div>
+
+        <!-- 4. 时代跃迁与宏观时空场能共振 -->
+        <div class="p-4 rounded-xl bg-black/45 border border-teal-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
+              <span>🚀</span>
+              <span>${isEn ? '4. Macro Era Supercycle & Spatial Trajectory' : '四、时代跃迁与宏观时空场能共振'}</span>
+            </h4>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
+              ${isEn ? 'Period 9 AI Era & Geographic Leverage' : '离九运AI浪潮 · 地理借势'}
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
+            ${isEn ? (gp.eraEn || gp.era) : (gp.eraZh || gp.era)}
+          </p>
+        </div>
+
+        <!-- 5. 终身立身不败之黄金三则 -->
+        <div class="p-4 sm:p-5 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+              <span>🎯</span>
+              <span>${isEn ? '5. Sovereign Grand Directives (Lifetime Golden Rules)' : '五、终身立身不败之黄金三则'}</span>
+            </h4>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30 font-bold">
+              ${isEn ? 'Supreme Life Guidelines' : '守正不败总纲'}
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            ${rulesCardsHtml}
+          </div>
+        </div>
+      `;
+      container.appendChild(grandCard);
+    }
+
+    // 3. 👑 六亲深度侧写全息图 (Kinship 4D Depth Profiles: 配偶、子女、父母)
+    const kinshipSection = document.createElement('div');
+    kinshipSection.className = 'space-y-4';
+    kinshipSection.innerHTML = `
+      <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">👥</span>
+          <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300">
+            ${isEn ? 'Holographic Kinship 4D Depth Profiles (Spouse, Children, Parents)' : '六亲深度侧写全息图谱 · 能量/性格/气质/相处四大维度剖析'}
+          </h3>
+        </div>
+        <span class="chinese-seal text-[10px] py-0">${isEn ? 'Yu Zhao Ding Zhen' : '玉照定真'}</span>
+      </div>
+      <div id="kinshipStrategyCardsGrid" class="grid grid-cols-1 gap-5"></div>
+    `;
+    container.appendChild(kinshipSection);
+    const kg = kinshipSection.querySelector('#kinshipStrategyCardsGrid');
+
+    // Spouse 4D Card
+    if (pc.spouse && kg) {
+      const sp = pc.spouse;
+      const spCard = document.createElement('div');
+      spCard.className = 'p-5 rounded-2xl border border-rose-900/60 bg-gradient-to-br from-rose-950/20 via-black/50 to-black/70 shadow-xl space-y-4';
+      spCard.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-rose-900/40">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">💑</span>
+            <h4 class="text-sm sm:text-base font-bold text-rose-300 font-serif-sc">
+              ${isEn ? (sp.titleEn || sp.title) : (sp.titleZh || sp.title)}
+            </h4>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs font-mono">
+            <span class="px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">${isEn ? 'Palace: ' : '日支夫妻宫：'}${sp.palaceBranch}</span>
+            <span class="px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">${isEn ? (sp.spouseStarEn || sp.spouseStar) : (sp.spouseStarZh || sp.spouseStar)}</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-black/40 rounded-xl text-xs text-rose-200/90 font-serif-sc border-l-3 border-rose-500 leading-relaxed">
+          ${isEn ? (sp.subtitleEn || sp.subtitle) : (sp.subtitleZh || sp.subtitle)}
+        </div>
+
+        <!-- 4-Dimension Profile Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Elemental Aura:' : '能量等级与五行气象：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.energyEn || sp.energy) : (sp.energyZh || sp.energy)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-rose-300 font-bold block">🧠 2. ${isEn ? 'Psychological Archetype & Character Profile:' : '心性原型与性格特征画像：'}</span>
+            <div class="text-amber-200 font-semibold mb-1">【${isEn ? (sp.archetypeEn || sp.archetype) : (sp.archetypeZh || sp.archetype)}】</div>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.personalityEn || sp.personality) : (sp.personalityZh || sp.personality)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Likely Demeanour, Aura & Aesthetic Presence:' : '有可能的气质仪态与风采容貌：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.demeanourEn || sp.demeanour) : (sp.demeanourZh || sp.demeanour)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Relationship Dynamics & Interaction Mechanics:' : '相处关系与互动机制：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.relationshipEn || sp.relationship) : (sp.relationshipZh || sp.relationship)}</p>
+            <p class="text-rose-300 text-[11px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Clashing Reefs: ' : '潜在暗礁：'}</b>${isEn ? (sp.clashRiskEn || sp.clashRisk) : (sp.clashRiskZh || sp.clashRisk)}</p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-rose-950/20 rounded-xl border border-rose-500/30 text-xs space-y-1.5">
+          <span class="text-emerald-300 font-bold block">${isEn ? '💍 Matrimonial Harmony & Daily Cultivation Guide:' : '💍 婚姻护持秘诀与日常相处法则：'}</span>
+          <p class="text-gray-200 leading-relaxed">${isEn ? (sp.adviceEn || sp.advice) : (sp.adviceZh || sp.advice)}</p>
+          ${sp.genderDiffZh || sp.genderDiff ? `
+          <div class="pt-1.5 border-t border-rose-900/40 text-[11px] text-rose-300/90 leading-relaxed">
+            <span class="font-bold text-rose-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
+            ${isEn ? (sp.genderDiffEn || sp.genderDiff) : (sp.genderDiffZh || sp.genderDiff)}
+          </div>` : ''}
+        </div>
+      `;
+      kg.appendChild(spCard);
+    }
+
+    // Children 4D Card
+    if (pc.children && kg) {
+      const ch = pc.children;
+      const chCard = document.createElement('div');
+      chCard.className = 'p-5 rounded-2xl border border-emerald-900/60 bg-gradient-to-br from-emerald-950/20 via-black/50 to-black/70 shadow-xl space-y-4';
+      chCard.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-emerald-900/40">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">👶</span>
+            <h4 class="text-sm sm:text-base font-bold text-emerald-300 font-serif-sc">
+              ${isEn ? (ch.titleEn || ch.title) : (ch.titleZh || ch.title)}
+            </h4>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono">
+            ${isEn ? 'Hour Pillar: ' : '时宿子女宫：'}${ch.hourPillarText}
+          </span>
+        </div>
+
+        <div class="p-3 bg-black/40 rounded-xl text-xs text-emerald-200/90 font-serif-sc border-l-3 border-emerald-500 leading-relaxed">
+          ${isEn ? (ch.subtitleEn || ch.subtitle) : (ch.subtitleZh || ch.subtitle)}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Innate Vitality:' : '能量等级与五行气象：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (ch.energyEn || ch.energy) : (ch.energyZh || ch.energy)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-emerald-300 font-bold block">🧠 2. ${isEn ? 'Character Archetype & Frontier Talent:' : '心性原型与天赋赛道：'}</span>
+            <div class="text-amber-200 font-semibold mb-1">【${isEn ? (ch.archetypeEn || ch.archetype) : (ch.archetypeZh || ch.archetype)}】</div>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (ch.personalityEn || ch.personality) : (ch.personalityZh || ch.personality)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Likely Demeanour & Cutting-edge Presence:' : '有可能的气质仪态与风度神采：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (ch.demeanourEn || ch.demeanour) : (ch.demeanourZh || ch.demeanour)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-blue-300 font-bold block">🤝 4. ${isEn ? 'Parent-Child Dynamics & Mentorship Guide:' : '相处关系与亲子沟通互动密码：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (ch.relationshipEn || ch.relationship) : (ch.relationshipZh || ch.relationship)}</p>
+            <p class="text-emerald-200 text-[11px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Mentorship Key: ' : '沟通避坑：'}</b>${isEn ? (ch.guideEn || ch.guide) : (ch.guideZh || ch.guide)}</p>
+          </div>
+        </div>
+
+        ${ch.genderDiffZh || ch.genderDiff ? `
+        <div class="p-3 bg-emerald-950/20 rounded-xl border border-emerald-500/30 text-xs space-y-1">
+          <span class="font-bold text-emerald-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
+          <p class="text-gray-200 leading-relaxed">${isEn ? (ch.genderDiffEn || ch.genderDiff) : (ch.genderDiffZh || ch.genderDiff)}</p>
+        </div>` : ''}
+      `;
+      kg.appendChild(chCard);
+    }
+
+    // Parents 4D Card
+    if (pc.parents && kg) {
+      const pa = pc.parents;
+      const paCard = document.createElement('div');
+      paCard.className = 'p-5 rounded-2xl border border-indigo-900/60 bg-gradient-to-br from-indigo-950/20 via-black/50 to-black/70 shadow-xl space-y-4';
+      paCard.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-indigo-900/40">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🏡</span>
+            <h4 class="text-sm sm:text-base font-bold text-indigo-300 font-serif-sc">
+              ${isEn ? (pa.titleEn || pa.title) : (pa.titleZh || pa.title)}
+            </h4>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-mono">
+            ${isEn ? (pa.typeEn || pa.type) : (pa.typeZh || pa.type)}
+          </span>
+        </div>
+
+        <div class="p-3 bg-black/40 rounded-xl text-xs text-indigo-200/90 font-serif-sc border-l-3 border-indigo-500 leading-relaxed">
+          ${isEn ? (pa.subtitleEn || pa.subtitle) : (pa.subtitleZh || pa.subtitle)}
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Ancestral Foundation:' : '能量等级与祖业根基底色：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (pa.energyEn || pa.energy) : (pa.energyZh || pa.energy)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-indigo-300 font-bold block">🧠 2. ${isEn ? 'Parental Character Archetype & Mindset:' : '父母心性原型与思维模式画像：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (pa.personalityEn || pa.personality) : (pa.personalityZh || pa.personality)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Family Demeanour & Upbringing Heritage:' : '家风气质风度与言传身教熏陶：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (pa.demeanourEn || pa.demeanour) : (pa.demeanourZh || pa.demeanour)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Intergenerational Dynamics & Filial Balance:' : '相处互动机制与孝道自主平衡：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (pa.relationshipEn || pa.relationship) : (pa.relationshipZh || pa.relationship)}</p>
+            <p class="text-amber-200 text-[11px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Resource vs Debt: ' : '隐形资源vs约束：'}</b>${isEn ? (pa.debtOrBlessingEn || pa.debtOrBlessing) : (pa.debtOrBlessingZh || pa.debtOrBlessing)}</p>
+          </div>
+        </div>
+
+        <div class="p-3 bg-indigo-950/20 rounded-xl border border-indigo-500/30 text-xs space-y-1.5">
+          <span class="text-emerald-300 font-bold block">${isEn ? '🌿 Harmonizing Filial Devotion with Sovereign Autonomy:' : '🌿 孝道奉养与自主人生平衡法则：'}</span>
+          <p class="text-gray-200 leading-relaxed">${isEn ? (pa.filialAdviceEn || pa.filialAdvice) : (pa.filialAdviceZh || pa.filialAdvice)}</p>
+          ${pa.genderDiffZh || pa.genderDiff ? `
+          <div class="pt-1.5 border-t border-indigo-900/40 text-[11px] text-indigo-300/90 leading-relaxed">
+            <span class="font-bold text-indigo-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
+            ${isEn ? (pa.genderDiffEn || pa.genderDiff) : (pa.genderDiffZh || pa.genderDiff)}
+          </div>` : ''}
+        </div>
+      `;
+      kg.appendChild(paCard);
+    }
+  }
+
+  // 🧘 Dedicated Mental Friction & Zen-Dao Transcendence View Renderer (精神内耗专项检测与禅道心智独立视图)
+  function renderFrictionView(pData, res, isEn) {
+    const container = document.getElementById('frictionContentContainer');
+    if (!container) return;
+    if (!pData || !pData.mentalFriction) {
+      container.innerHTML = `
+        <div class="p-8 text-center text-gray-400">
+          <span class="text-3xl block mb-2">🧘</span>
+          <p>${isEn ? 'Please calculate a natal chart to evaluate Mental Friction and Zen-Dao solutions.' : '请先在主盘完成排盘，以生成精神内耗检测与禅道至高化解法门。'}</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = '';
+    const mf = pData.mentalFriction;
+
+    // 1. Internal Friction Gauge & Root Cause Diagnosis
+    const diagCard = document.createElement('div');
+    diagCard.className = 'p-5 sm:p-6 rounded-2xl border-2 border-rose-800/70 bg-gradient-to-br from-rose-950/40 via-black/80 to-stone-950/90 shadow-2xl space-y-4';
+    diagCard.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-rose-900/40">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🌪️</span>
+          <div>
+            <h3 class="text-base sm:text-xl font-bold font-serif-sc text-rose-300 flex items-center gap-2">
+              <span>${isEn ? 'Mental Rumination Diagnostic & Somatic Reset' : '精神内耗专项检测与实战彻底改善方案'}</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5">
+              ${isEn ? 'Quantifying autonomic nervous loop hyperactivity and perfectionist rumination' : '大脑超频空转深度量化 · 探寻内耗底层命理与认知根源'}
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="text-xs sm:text-sm px-3 py-1 rounded-full border ${mf.levelBadge} font-bold font-mono">
+            ${isEn ? 'Rumination Index: ' : '内耗指数：'}${mf.score}% · ${mf.level}
+          </span>
+        </div>
+      </div>
+
+      <!-- Rumination Progress Bar -->
+      <div class="w-full bg-gray-900 rounded-full h-3 overflow-hidden border border-gray-800">
+        <div class="bg-gradient-to-r from-amber-500 via-rose-500 to-red-600 h-full rounded-full transition-all duration-700" style="width: ${mf.score}%;"></div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-rose-950/25 border border-rose-900/50 text-xs sm:text-sm text-rose-200 leading-relaxed font-serif-sc space-y-2">
+        <div>
+          <b class="text-amber-300">${isEn ? '【Core Mental Friction Root Cause】' : '【本命核心内耗根源剖析】'}</b>
+          ${mf.primaryRoot}
+        </div>
+        <div class="text-xs text-gray-300 pt-2 border-t border-rose-900/40">
+          <b class="text-rose-400">${isEn ? 'Natal BaZi Triggers: ' : '八字触发特征：'}</b>${mf.triggers ? mf.triggers.join('；') : ''}
+        </div>
+      </div>
+    `;
+    container.appendChild(diagCard);
+
+    // 2. ⚡ 即刻阻断：3分钟躯体物理打断法 (3-Minute Somatic Interrupt)
+    const somaticCard = document.createElement('div');
+    somaticCard.className = 'p-5 rounded-2xl border border-amber-500/50 bg-gradient-to-r from-amber-950/30 via-black/50 to-black/70 shadow-xl space-y-3';
+    somaticCard.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/30">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">⚡</span>
+          <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
+            ${isEn ? 'Immediate Somatic Interrupt: 3-Minute Physical Reset' : '即刻阻断：3分钟躯体物理打断法 (绝不在脑子里解决脑子里的问题)'}
+          </h4>
+        </div>
+        <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+          ${isEn ? 'Body Resets Mind' : '以身转心 · 物理重置'}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-1">
+        <div class="p-3.5 bg-black/50 rounded-xl border border-blue-900/40 space-y-1.5">
+          <span class="font-bold text-blue-300 text-xs block">🧊 1. ${isEn ? 'Instant Cold Shock' : '冰水激面与冷水冲腕'}</span>
+          <p class="text-gray-300 text-[11.5px] leading-relaxed">
+            ${isEn ? 'Splash ice-cold water onto face and wrists for 15 seconds. Stimulates the diving reflex, instantly lowering heart rate and breaking amygdala loop.' : '用冰水猛击面部并持续冲洗双腕内侧15秒，刺激哺乳动物潜水反射，强行拉低心率，物理打断杏仁核过度亢奋。'}
+          </p>
+        </div>
+        <div class="p-3.5 bg-black/50 rounded-xl border border-emerald-900/40 space-y-1.5">
+          <span class="font-bold text-emerald-300 text-xs block">🫁 2. ${isEn ? 'Tactical 4-7-8 Breathing' : '4-7-8 战术呼吸法'}</span>
+          <p class="text-gray-300 text-[11.5px] leading-relaxed">
+            ${isEn ? 'Inhale 4s, hold 7s, exhale slowly 8s. Repeat 3 cycles to force autonomic nervous system into parasympathetic calming mode.' : '鼻吸气4秒，闭气屏息7秒，呼气持续8秒；重复3个循环，强制自主神经由交感神经紧张切换为副交感神经安稳。'}
+          </p>
+        </div>
+        <div class="p-3.5 bg-black/50 rounded-xl border border-purple-900/40 space-y-1.5">
+          <span class="font-bold text-purple-300 text-xs block">🚶 3. ${isEn ? 'Physical Space Disconnect' : '物理空间强制抽离'}</span>
+          <p class="text-gray-300 text-[11.5px] leading-relaxed">
+            ${isEn ? 'Instantly stand up from chair, walk away from screen for 2 minutes. Physical displacement terminates the subconscious room-anchored rumination state.' : '立即站起身离开当前办公椅与房间，快步走动2分钟。物理场景的位移可强行斩断潜意识中与空间锚定的内耗回路。'}
+          </p>
+        </div>
+      </div>
+    `;
+    container.appendChild(somaticCard);
+
+    // 3. 🎯 4部实战彻底改善方案 (4 Battle-Tested Combat Solutions)
+    if (mf.solutions && Array.isArray(mf.solutions)) {
+      const solutionsSection = document.createElement('div');
+      solutionsSection.className = 'space-y-3';
+      solutionsSection.innerHTML = `
+        <div class="flex items-center space-x-2 pb-1 border-b border-gray-800">
+          <span class="text-lg">🎯</span>
+          <h4 class="text-sm sm:text-base font-bold text-gray-200 font-serif-sc">
+            ${isEn ? 'Four Battle-Tested Antidotes for Lifelong Flow' : '四大实战改善对策 · 构筑无懈可击的心智抗压护城河'}
+          </h4>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ${mf.solutions.map(sol => `
+            <div class="p-4 rounded-xl border border-gray-800/80 bg-black/45 space-y-2.5 hover:border-gray-700 transition">
+              <div class="flex items-center space-x-2 pb-1.5 border-b border-gray-800">
+                <span class="text-xl">${sol.icon}</span>
+                <div>
+                  <span class="font-bold text-gray-200 text-xs sm:text-sm">${sol.name}</span>
+                  <span class="text-[11px] text-amber-300 block">${sol.theme}</span>
+                </div>
+              </div>
+              <div class="space-y-2 pt-1">
+                ${sol.steps.map(st => `
+                  <div class="p-2.5 rounded-lg bg-black/50 border border-gray-800/60 text-xs text-gray-300 leading-relaxed">
+                    ${st}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      container.appendChild(solutionsSection);
+    }
+
+    // 4. ☸️ 《金刚经》+《六祖坛经》+《庄子》三大至高心智解脱法门 (Zen & Dao Trinity Wisdom Cards)
+    if (mf.zenDaoWisdom) {
+      const zd = mf.zenDaoWisdom;
+      const zenSection = document.createElement('div');
+      zenSection.className = 'p-5 sm:p-7 rounded-2xl border-2 border-amber-500/80 bg-gradient-to-b from-amber-950/40 via-black/85 to-stone-950/90 shadow-2xl space-y-5';
+
+      const classics = [
+        { key: 'diamond', item: zd.diamond, icon: '💎', theme: 'border-amber-500/60 bg-amber-950/20 text-amber-300' },
+        { key: 'platform', item: zd.platform, icon: '🪞', theme: 'border-indigo-500/60 bg-indigo-950/20 text-indigo-300' },
+        { key: 'zhuangzi', item: zd.zhuangzi, icon: '🦋', theme: 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300' }
+      ];
+
+      const cardsHtml = classics.map(c => {
+        const it = c.item;
+        if (!it) return '';
+        return `
+          <div class="p-4 sm:p-5 rounded-xl border ${c.theme.split(' ')[0]} bg-black/50 shadow-lg space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
+              <div class="flex items-center space-x-2">
+                <span class="text-xl">${c.icon}</span>
+                <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+                  ${isEn ? (it.titleEn || it.title) : (it.titleZh || it.title)}
+                </h5>
+              </div>
+              <span class="chinese-seal text-[9px] py-0">${isEn ? 'Classic Zen' : '三教至理'}</span>
+            </div>
+
+            <!-- Sacred Mantra Quote -->
+            <div class="p-3 bg-black/60 rounded-lg border-l-3 border-amber-400 font-serif-sc text-xs text-amber-200 font-semibold leading-relaxed">
+              “${isEn ? (it.mantraEn || it.mantra) : (it.mantraZh || it.mantra)}”
+            </div>
+
+            <!-- Deep Insight -->
+            <div class="p-3 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
+              <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight:' : '微言大义与心智洞见：'}</span>
+              <p class="text-xs text-gray-300 leading-relaxed">${isEn ? (it.insightEn || it.insight) : (it.insightZh || it.insight)}</p>
+            </div>
+
+            <!-- Practical Execution -->
+            <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 space-y-1">
+              <span class="text-xs font-bold text-emerald-300 block">🚀 ${isEn ? 'Modern Actionable Mindset:' : '现实处世与实操心法：'}</span>
+              <p class="text-xs text-gray-200 leading-relaxed">${isEn ? (it.practicalEn || it.practical) : (it.practicalZh || it.practical)}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      zenSection.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-amber-500/40">
+          <div class="flex items-center space-x-2.5">
+            <span class="chinese-seal text-xs py-0.5">${isEn ? 'ZEN & DAO TRINITY' : '☸️ 禅道心智'}</span>
+            <h3 class="text-base sm:text-xl font-bold font-serif-sc text-amber-300">
+              ${isEn ? (zd.titleEn || zd.title) : (zd.titleZh || zd.title)}
+            </h3>
+          </div>
+          <span class="text-xs px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">
+            ${isEn ? 'Transcending Ego & Rumination' : '直断妄念 · 乘物游心'}
+          </span>
+        </div>
+
+        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed font-serif-sc">
+          ${isEn 
+            ? 'The ultimate resolution of mental friction does not lie in endlessly wrestling with internal thoughts, but in transcending them through classical Zen and Dao wisdom. The Diamond Sutra shatters attachments to forms; the Platform Sutra returns directly to original self-nature; Zhuangzi transforms worldly friction into effortless roaming with the universal flow.' 
+            : '世间一切精神内耗，皆源于“向内抓住不放”之执念。欲彻底根治，必须从认知维度降维打击：以《金刚经》破除一切得失幻相，以《六祖坛经》直悟本来无一物，以《庄子》物物而不物于物，化精神内耗为空灵洞见，乘物游心，笑看浮沉。'}
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-1">
+          ${cardsHtml}
+        </div>
+      `;
+      container.appendChild(zenSection);
     }
   }
 
@@ -2940,11 +3613,13 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Primary View Navigation Logic (View 1: Home/Pareto | View 2: Luck/Transits | View 3: Canons)
+  // Primary View Navigation Logic (6 Views: Home, Strategy, Friction, Luck, Canons, I Ching)
   let activePrimaryView = 'view-home';
   const viewNavBtns = document.querySelectorAll('.view-nav-btn');
   const primaryViews = {
     'view-home': document.getElementById('view-home'),
+    'view-strategy': document.getElementById('view-strategy'),
+    'view-friction': document.getElementById('view-friction'),
     'view-luck': document.getElementById('view-luck'),
     'view-canons': document.getElementById('view-canons'),
     'view-iching': document.getElementById('view-iching')
@@ -2987,6 +3662,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (target) switchPrimaryView(target);
     });
   });
+
+  // Portal Jump Buttons & Back Buttons
+  const portalBtnStrategy = document.getElementById('portalBtnStrategy');
+  if (portalBtnStrategy) {
+    portalBtnStrategy.addEventListener('click', () => switchPrimaryView('view-strategy'));
+  }
+  const portalBtnFriction = document.getElementById('portalBtnFriction');
+  if (portalBtnFriction) {
+    portalBtnFriction.addEventListener('click', () => switchPrimaryView('view-friction'));
+  }
+  const btnJumpToHomeFromStrategy = document.getElementById('btnJumpToHomeFromStrategy');
+  if (btnJumpToHomeFromStrategy) {
+    btnJumpToHomeFromStrategy.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+  const btnJumpToHomeFromFriction = document.getElementById('btnJumpToHomeFromFriction');
+  if (btnJumpToHomeFromFriction) {
+    btnJumpToHomeFromFriction.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
 
   // Database Tab Switching Logic (6 Tabs)
   const tabBtns = document.querySelectorAll('.tab-btn');
