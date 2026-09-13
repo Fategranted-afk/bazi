@@ -2150,6 +2150,21 @@ class PortraitEngine {
       er: LiXuZhongDB.getEnvironmentalResonance(bazi, climate)
     } : null;
 
+    const canons = {
+      ditiansui,
+      qiongtong,
+      ziping,
+      sanming,
+      yuanhai,
+      shenfeng,
+      yuzhao,
+      lixuzhong
+    };
+
+    const grandPicture = this.generateGrandPicture(
+      bazi, vigor, patterns, climate, canons, spouse, children, parents, environment
+    );
+
     return {
       titleZh: '👑 八经全盘核心画像 · 帕累托 20% 关键枢纽全相分析',
       titleEn: '👑 Eight Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis',
@@ -2160,16 +2175,8 @@ class PortraitEngine {
       primaryPatternWeightPct: primaryPatternPct,
       primaryPatternDescZh: `全盘五大格局中，【${primaryPatternName}】以 ${primaryPatternPct}% 绝对能量占比位居第一核心主导，统摄命主一生之骨相气魄与成败枢纽。《子平真诠》《三命通会》《渊海子平》诸经法度皆以此格为全相定盘针。`,
       primaryPatternDescEn: `Among natal patterns, [${topPattern.nameEn || primaryPatternName}] leads with ${primaryPatternPct}% dominant energy weight, steering character, decisive breakthroughs, and career trajectory across classical canons.`,
-      canons: {
-        ditiansui,
-        qiongtong,
-        ziping,
-        sanming,
-        yuanhai,
-        shenfeng,
-        yuzhao,
-        lixuzhong
-      },
+      grandPicture,
+      canons,
       fulcrum: shenfeng, // For backwards compatibility
       spouse: spouse ? {
         titleZh: '💑 夫妻与婚姻深层全息透视 (Spouse & Marital Dynamics)',
@@ -2239,6 +2246,193 @@ class PortraitEngine {
         genderDiffZh: environment.tp.genderDiffZh || '【三元男女命差异】：男命以天元禄立功名、地元固气血；女命以天元立清贵、人元纳音安性灵。',
         genderDiffEn: environment.tp.genderDiffEn || '[Gender Dynamics]: Male native anchors external reputation and somatic stamina; female native anchors intellectual prestige and spiritual intuition.'
       } : null
+    };
+  }
+
+  static formatPillarEn(pillarText) {
+    if (!pillarText || pillarText.length < 2) return pillarText || '';
+    const s = pillarText[0];
+    const b = pillarText[1];
+    const sName = (typeof I18N !== 'undefined' && I18N.STEMS && I18N.STEMS[s]) ? I18N.STEMS[s].pinyin : s;
+    const bName = (typeof I18N !== 'undefined' && I18N.BRANCHES && I18N.BRANCHES[b]) ? I18N.BRANCHES[b].en.split(' ')[0] : b;
+    return `${sName}-${bName}`;
+  }
+
+  static formatBranchEn(branch) {
+    if (!branch) return '';
+    return (typeof I18N !== 'undefined' && I18N.BRANCHES && I18N.BRANCHES[branch]) ? I18N.BRANCHES[branch].en.split(' ')[0] : branch;
+  }
+
+  static getPatternEn(patName) {
+    if (!patName) return 'Dominant Pattern';
+    if (patName.includes('阳刃') || patName.includes('羊刃') || patName.includes('月刃')) {
+      return 'Yang Blade Pattern (Sovereign General)';
+    }
+    if (typeof I18N !== 'undefined' && I18N.getPatternName) {
+      const res = I18N.getPatternName(patName, 'en');
+      if (!/[\u4e00-\u9fa5]/.test(res)) return res;
+    }
+    return 'Primary Dominant Pattern';
+  }
+
+  /**
+   * 👑 全盘大局通融 · 综合全息画像 (Grand Holistic Synthesis Masterpiece)
+   * 汇通八经八典、六亲宫位与时代场能，生成高度提炼、逻辑连贯、气势宏大的战略大相总图
+   */
+  static generateGrandPicture(bazi, vigor, patterns, climate, canons, spouse, children, parents, environment) {
+    const gender = bazi.gender || (bazi.input && bazi.input.gender) || '乾造';
+    const dm = bazi.dayMaster || (bazi.pillars && bazi.pillars.day && bazi.pillars.day.stem) || '甲';
+    const monthBranch = (bazi.pillars && bazi.pillars.month && bazi.pillars.month.branch) || bazi.monthBranch || '寅';
+    const dayPillar = (bazi.pillars && bazi.pillars.day && bazi.pillars.day.text) || bazi.dayPillar || `${dm}子`;
+    const hourPillar = (bazi.pillars && bazi.pillars.hour && bazi.pillars.hour.text) || bazi.hourPillar || '甲子';
+
+    const dmEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en') : dm;
+    const monthBranchEn = this.formatBranchEn(monthBranch);
+    const dayPillarEn = this.formatPillarEn(dayPillar);
+    const hourPillarEn = this.formatPillarEn(hourPillar);
+
+    // 0. Extract top pattern
+    let patternList = Array.isArray(patterns) ? patterns : [];
+    if (patternList.length > 0) {
+      patternList.sort((a, b) => (b.weightPct || 0) - (a.weightPct || 0));
+    }
+    const topPat = patternList.length > 0 ? patternList[0] : { name: '阳刃格 (月刃格 / 威权大将)', weightPct: 28, nameEn: 'Yang Blade Pattern' };
+    const patNameZh = topPat.name || '阳刃格 (月刃格 / 威权大将)';
+    let patNameEn = this.getPatternEn(patNameZh);
+    const patPct = topPat.weightPct || 28;
+
+    // Day Master Metaphors
+    const dmMetaphors = {
+      '甲': { zh: '参天乔木 · 栋梁先锋', en: 'Towering Timber · Pioneering Pillar', descZh: '苍松翠柏，气干云霄，天生具有领袖担当与向上求索之志', descEn: 'an ancient towering cedar, reaching toward the sky with natural leadership and unyielding growth' },
+      '乙': { zh: '柔顺灵藤 · 坚韧通达', en: 'Resilient Flora · Adaptive Strategist', descZh: '花草藤萝，柔顺温婉却具极强适应力，善于借力借势曲折破局', descEn: 'winding vines and elegant flora, gentle yet remarkably resilient, mastering indirect leverage' },
+      '丙': { zh: '普照太阳 · 宏大领袖', en: 'Radiant Sun · Magnanimous Sovereign', descZh: '当空烈日，普照万物，胸怀博大光明，天生具有感召人心的统驭气场', descEn: 'the blazing sun, illuminating all beneath heaven with infectious passion and sovereign warmth' },
+      '丁': { zh: '文明烛火 · 洞察学者', en: 'Guiding Hearth · Penetrating Scholar', descZh: '炉火烛光，幽微深邃，专注于精微洞察、文明传承与深层钻研', descEn: 'a steady lantern flame, deeply observant, dedicated to specialized mastery and spiritual warmth' },
+      '戊': { zh: '巍峨昆仑 · 厚德山岳', en: 'Lofty Mountain · Immovable Bastion', descZh: '高山重峦，沉稳如渊，能阻遏狂澜、构筑防线，给人不可撼动的安全感', descEn: 'an ancient mountain ridge, steadfast, unshakeable, providing solid refuge against turmoil' },
+      '己': { zh: '广袤原野 · 蓄秀含章', en: 'Fertile Soil · Nurturing Cultivator', descZh: '田园沃土，包容含蓄，善于承载万物、博纳众长，以默默深耕成就伟业', descEn: 'rich fertile loam, quietly nurturing all seeds into harvest with boundless patience' },
+      '庚': { zh: '百炼重剑 · 刚肃先锋', en: 'Tempered Blade · Decisive Arbiter', descZh: '顽钝金石经烈火淬炼成利刃，秉公尚义，敢于向一切沉疴陋习挥剑破局', descEn: 'a master-forged steel blade, strictly honorable, piercing through complacency with decisive edge' },
+      '辛': { zh: '璀璨真玉 · 精密匠心', en: 'Polished Gem · Precision Artificer', descZh: '温润美玉、精密珠宝，气质清雅高贵，追求卓越细节与极致品质壁垒', descEn: 'a pristine diamond, luminous and refined, demanding flawless aesthetic and intellectual precision' },
+      '壬': { zh: '汪洋江海 · 破局战将', en: 'Vast Ocean · Torrential Commander', descZh: '奔腾大江、浩瀚汪洋，气魄吞吐天地，具有席卷一切阻碍的开拓动能与战术穿透力', descEn: 'a raging ocean torrent, vast and unstoppable, possessing panoramic vision and tidal breakthrough force' },
+      '癸': { zh: '润物雨露 · 灵变通智', en: 'Nourishing Rain · Pervasive Intellect', descZh: '甘霖雨露，随方就圆，以柔克刚，富于深邃哲思与直觉灵性', descEn: 'mist and gentle raindrops, effortlessly shapeshifting, penetrating depths through subtle wisdom' }
+    };
+    const dmM = dmMetaphors[dm] || dmMetaphors['壬'];
+
+    // Seasonal Tone
+    const seasonTones = {
+      '子': { zh: '仲冬极寒凝冰之时', en: 'mid-winter frozen culmination', charZh: '水势帝旺，寒气澈骨，生机敛藏', charEn: 'peak water imperial vigor with piercing chill' },
+      '丑': { zh: '季冬湿冷冻土之季', en: 'late-winter damp frozen earth', charZh: '天寒地冻，厚土封水，待阳和解冻', charEn: 'frigid soil waiting for the first sunbeam' },
+      '寅': { zh: '初春少阳初生之时', en: 'early spring rising Yang', charZh: '木气萌发，雷动风行，天地发陈', charEn: 'surging vegetative vitality and new dawn' },
+      '卯': { zh: '仲春木旺乘权之季', en: 'mid-spring flourishing wood', charZh: '枝繁叶茂，生机盎然，舒展畅达', charEn: 'lush thriving growth reaching full expression' },
+      '辰': { zh: '季春水库蓄湿之月', en: 'late-spring moist reservoir', charZh: '湿土培木，草木繁茂，气象温润', charEn: 'fertile reservoir nurturing flourishing life' },
+      '巳': { zh: '初夏阳明舒发之时', en: 'early summer blooming fire', charZh: '火势渐烈，金气受制，万物欣欣向荣', charEn: 'ascending thermal brilliance and active momentum' },
+      '午': { zh: '仲夏炎炎烈火之令', en: 'mid-summer peak solar blaze', charZh: '阳极反生，燥热升腾，神魂激越', charEn: 'supreme solar radiance demanding cooling moderation' },
+      '未': { zh: '季夏燥土木库之节', en: 'late-summer arid kiln', charZh: '火炎土燥，暑气蒸腾，亟需甘霖', charEn: 'sweltering kiln requiring nourishing moisture' },
+      '申': { zh: '初秋金水发源之时', en: 'early autumn source of springs', charZh: '金风渐起，肃杀清澈，流水下滩', charEn: 'crisp autumn breezes and burgeoning springs' },
+      '酉': { zh: '仲秋纯金专旺之序', en: 'mid-autumn pure metal sovereignty', charZh: '金气专精，坚刚锐利，物候收敛', charEn: 'crystalline autumnal clarity and razor harvest focus' },
+      '戌': { zh: '季秋燥土火库之界', en: 'late-autumn arid martial vault', charZh: '草木零落，火库深藏，大局深稳', charEn: 'martial earthen gate guarding subterranean warmth' },
+      '亥': { zh: '初冬水木长生之时', en: 'early winter primordial waters', charZh: '寒风初起，天门洞开，气势潜藏', charEn: 'primordial aquatic currents gathering covert force' }
+    };
+    const sT = seasonTones[monthBranch] || seasonTones['子'];
+
+    // 1. Archetype Synthesis
+    const thesisZh = `命主元神【${dm}】为【${dmM.zh}】，生于提纲【${monthBranch}月】（${sT.zh}，${sT.charZh}）。全盘在《子平真诠》与《渊海子平》诸经衡定下，以【${patNameZh}】（能量占比：${patPct}%）坐镇第一核心主导中枢。命主之性情气象，如${dmM.descZh}。这不是偏安一隅的平庸守成之局，而是一生注定要经受风浪淬炼、在重大危机与复杂格局中建功立业的统帅型命盘。日柱【${dayPillar}】与时柱【${hourPillar}】相为引从，骨子里深藏敢为人先的魄力与坚忍不拔的意志。`;
+    const thesisEn = `Day Master [${dmEn}] embodies [${dmM.en}], born in the [${monthBranchEn} Month] (${sT.en}, ${sT.charEn}). Across canonical doctrines of Zi Ping Zhen Quan and Yuan Hai Zi Ping, the natal architecture is crowned by the primary pattern [${patNameEn}] (${patPct}% dominant weight). The native's core archetype is like ${dmM.descEn}. This is not a passive or fragile chart; it is a high-voltage command architecture destined to conquer turbulent frontiers and forge enduring institutional stature. Day Pillar [${dayPillarEn}] and Hour Pillar [${hourPillarEn}] seal this trajectory with unrelenting stamina and pioneer resolve.`;
+
+    // 2. Campaign & 20% Lever
+    const sf = (canons && canons.shenfeng) || {};
+    const diseaseZh = sf.diseaseNameZh || '寒湿凝滞病';
+    let diseaseEn = sf.diseaseNameEn || 'Freezing Stagnation Affliction';
+    let rawMedicineZh = sf.medicineZh || '丙火暄照与燥土筑堤';
+    let rawMedicineEn = sf.medicineEn || 'Solar warmth and disciplined earth barriers';
+    rawMedicineZh = rawMedicineZh.replace(/[。！.!?]+$/, '');
+    rawMedicineEn = rawMedicineEn.replace(/[。！.!?]+$/, '');
+
+    let zpRescueZh = (canons && canons.ziping && canons.ziping.rescueZh) || '以官杀立规矩，以相神护卫用神';
+    let zpRescueEn = (canons && canons.ziping && canons.ziping.rescueEn) || 'Impose structural law to tame ferocious momentum';
+    zpRescueZh = zpRescueZh.replace(/[。！.!?]+$/, '');
+    zpRescueEn = zpRescueEn.replace(/[。！.!?]+$/, '');
+
+    const campaignZh = `明代张神峰《神峰通考》确立千古铁律：“有病方为贵，无伤不是奇。格中如去病，财禄两相随。”本盘全相之核心受制痛点在于【${diseaseZh}】——极度偏旺之势若无制化，往往演变为自命不凡、冲动冒险、孤傲拒人或与环境相煎的重大暗礁；而全盘决定80%成败高度的20%关键杠杆（相神大药），正在于【${rawMedicineZh}】。《子平真诠》所谓相神救应在此显微发力：必须引入【${zpRescueZh}】。一言以蔽之：命主的胜负手绝非逞勇斗狠，而是“以严苛法度纪律驾驭锋芒，以广阔利他远见融解孤寒”。当锋芒被规则约束、严寒被温暖照耀，凶煞便立转为威权帅印。`;
+    const campaignEn = `In Shen Feng Tong Kao, Zhang Shenfeng states: "Greatness arises only where a grave Disease meets its perfect Medicine; cured of affliction, supreme wealth and stature follow." The core structural bottleneck of this chart is [${diseaseEn}]—unchecked intensity risks degenerating into dogmatic isolation, sudden burnout, and tactical recklessness. The pivotal 20% Pareto lever that unlocks 80% of life triumph lies in [${rawMedicineEn}], harmonized by Zi Ping Zhen Quan's Guarding Minister: [${zpRescueEn}]. The supreme strategic formula: Never confront friction with raw aggression; govern ferocious drive with ironclad discipline, and melt icy aloofness with radiant long-term vision. Once disciplined and warmed, danger converts into sovereign leadership.`;
+
+    // 3. Kinship & Anchor
+    const sp = spouse || {};
+    const spBranch = sp.palaceBranch || dayPillar.substring(1);
+    const spBranchEn = this.formatBranchEn(spBranch);
+    const spArchZh = sp.archetypeZh || '大局深稳内助型';
+    let spArchEn = sp.archetypeEn || 'Steadfast Ballast Consort';
+    if (/[\u4e00-\u9fa5]/.test(spArchEn)) {
+      spArchEn = 'Steadfast Ballast Consort';
+    }
+
+    const ch = children || {};
+    const chArchZh = ch.archetypeZh || '敏锐创新突破型';
+    let chArchEn = ch.archetypeEn || 'Frontier Innovation Progeny';
+    if (/[\u4e00-\u9fa5]/.test(chArchEn)) {
+      chArchEn = 'Frontier Innovation Progeny';
+    }
+    let chTalentZh = ch.talentZh || '富有新锐商业灵性与艺术才情';
+    let chTalentEn = ch.talentEn || 'blessed with commercial acuity and creative intellect';
+    chTalentZh = chTalentZh.replace(/[。！.!?]+$/, '');
+    chTalentEn = chTalentEn.replace(/[。！.!?]+$/, '');
+
+    const kinshipZh = `《玉照定真经》论六亲宫位：“年月为父母祖基，日时为妻儿归宿。”统帅征战于外，后方家庭乃一生立足之根本。命主日支配偶宫坐【${spBranch}】，呈现【${spArchZh}】之气象。配偶具备深厚的大局观与家庭护持力，如同一道天然稳固的压舱石防波堤，不仅在暗中稳住财富底盘，更能在命主锋芒过盛或面临外界风暴时提供最可靠的精神庇护与理智制衡。时柱【${hourPillar}】子息宫呈现【${chArchZh}】，后嗣【${chTalentZh}】。子嗣的繁盛不仅是家族传承，更是命主一身磅礴生机自然流淌引秀的最佳归宿，晚年得享儿孙光耀之福。`;
+    const kinshipEn = `Yu Zhao Ding Zhen Jing asserts: "Year-Month anchors ancestral heritage; Day-Hour seals consort and offspring destiny." A field commander relies fundamentally upon a secure domestic base. Day Branch spouse palace sits on [${spBranchEn}], manifesting the [${spArchEn}] archetype. The partner acts as an unshakeable breakwater and financial ballast—anchoring assets, mitigating emotional volatility, and standing as a loyal guardian through life's storms. Hour Pillar [${hourPillarEn}] governs offspring, manifesting the [${chArchEn}] archetype (${chTalentEn}). Descendants channel the native's intense vital output into cultural or entrepreneurial brilliance, crowning late-life fruition.`;
+
+    // 4. Era & Geography
+    const env = environment || {};
+    const idealGeoZh = env.idealGeographyZh || '沿海经济带与北方高能级核心都会';
+    let idealGeoEn = env.idealGeographyEn || 'Coastal economic arteries and northern metropolises';
+    if (/[\u4e00-\u9fa5]/.test(idealGeoEn)) {
+      idealGeoEn = 'Coastal economic arteries and northern metropolises';
+    }
+    let targetCitiesZh = env.targetCitiesZh || '北京、大连、天津、上海或国际港口城市';
+    let targetCitiesEn = env.targetCitiesEn || 'Beijing, Tianjin, Shanghai, Rotterdam, Sydney or global port hubs';
+    if (/[\u4e00-\u9fa5]/.test(targetCitiesEn)) {
+      targetCitiesEn = 'Beijing, Tianjin, Shanghai, Rotterdam, Sydney or global port hubs';
+    }
+    targetCitiesZh = targetCitiesZh.replace(/[。！.!?]+$/, '');
+    targetCitiesEn = targetCitiesEn.replace(/[。！.!?]+$/, '');
+
+    const eraZh = `唐·李虚中《李虚中命书》开宗明义：“天元为禄，地元为命，人元为身。方隅相生，乘时代之风无往不利。”当前人类文明已全面步入下元九运（2024–2043 九紫离火运），宏观时代场能聚焦于人工智能算力、数字科技、认知跃升与文化复兴。命主以深邃敏锐的天赋心智，与九运数字化大潮形成天然的“水火既济”共振机制。在空间地理上，深度依托【${idealGeoZh}】（重点布局：${targetCitiesZh}）拓展宏图，将实体产业与数字化智能化杠杆深度融合，即可顺时代天道之风，实现十倍个人效能杠杆爆发。`;
+    const eraEn = `In Li Xu Zhong Ming Shu, the Tang master establishes: "Heavenly Prime is Rank, Earthly Prime is Destiny, Human Prime is Body. Moving in unison with epochal tides unlocks triumph without friction." The world has entered Period 9 (2024–2043 Nine Purple Fire Era), governed by AI compute, digital synthesis, knowledge economy, and cultural renaissance. The native's profound intuitive intellect resonates organically with this fire cycle, forging the classical "Water-Fire Harmonious Convergence". Geographically anchoring in [${idealGeoEn}] (key nodes: ${targetCitiesEn}) and compounding digital AI leverage will amplify personal impact tenfold across the next two decades.`;
+
+    // 5. Sovereign Golden Directives
+    const rulesZh = [
+      { label: '一、守正驭锋 · 法度护航', desc: '以森严的契约规则、合规红线与制度流程作为出招前置条件；锋芒越强，越要用铁律入鞘，绝不轻率凭一时意气蛮干。' },
+      { label: '二、融冰化雪 · 远见暖人', desc: '戒除清高冷傲与独断专行；在商业与事业博弈中主动让渡局部小利，以共赢机制和太阳般的利他胸怀凝聚核心盟友。' },
+      { label: '三、固本培基 · 家和万事', desc: '深尊配偶为命运同舟的压舱石，资产稳健归库不搞投机赌博；经营好家庭大后方，方能抵御外界任何风浪侵袭。' }
+    ];
+    const rulesEn = [
+      { label: '1. Discipline Over Impulse', desc: 'Establish ironclad legal compliance, clear contracts, and structural governance before bold moves; sovereign discipline turns raw momentum into enduring authority.' },
+      { label: '2. Solar Warmth Over Chill', desc: 'Eradicate aloof isolation; proactively share marginal gains, cultivate win-win alliances, and lead with magnanimous vision to melt opposition.' },
+      { label: '3. Anchor the Domestic Sanctuary', desc: 'Honor the consort as the vital stabilizing ballast; systematically preserve wealth in secure family vaults, as an unshakeable home guarantees lifelong invincibility.' }
+    ];
+
+    return {
+      titleZh: '👑 全盘大局通融 · 综合全息画像',
+      titleEn: '👑 Grand Holistic Synthesis · Master Destiny Portrait',
+      subtitleZh: '八典融通 · 过滤80%细枝末节噪声，提炼统摄全盘命途的宏观大局与关键破局总相',
+      subtitleEn: 'Eight Canons Unified · Filtering out 80% peripheral noise to distill the grand macro-picture and decisive strategic mandate',
+      thesisZh,
+      thesisEn,
+      campaignZh,
+      campaignEn,
+      kinshipZh,
+      kinshipEn,
+      eraZh,
+      eraEn,
+      rulesZh,
+      rulesEn,
+      highlightsZh: [
+        `${dmM.zh}`,
+        `${patNameZh.split(' ')[0]} 统摄`,
+        `以药化病 · 破局大成`
+      ],
+      highlightsEn: [
+        `${dmM.en}`,
+        `${patNameEn.split(' ')[0]} Governs`,
+        `Alchemy of Medicine & Disease`
+      ]
     };
   }
 }

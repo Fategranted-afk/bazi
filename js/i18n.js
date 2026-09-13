@@ -572,6 +572,9 @@ const I18N = (function() {
     '偏财格': 'Indirect Wealth Pattern',
     '建禄格': 'Established Prosperity (Lu) Pattern',
     '羊刃格': 'Yang Blade Pattern',
+    '阳刃格': 'Yang Blade Pattern',
+    '阳刃格 (月刃格 / 威权大将)': 'Yang Blade Pattern (Sovereign General)',
+    '月刃格': 'Yang Blade Pattern',
     '伤官生财格': 'Hurting Officer Producing Wealth Pattern',
     '伤官配印格': 'Hurting Officer with Resource (Seal) Pattern',
     '杀印相生格': 'Seven Killings Generating Resource Pattern',
@@ -676,6 +679,9 @@ const I18N = (function() {
       if (PATTERN_NAMES[name]) return PATTERN_NAMES[name];
       for (const [k, v] of Object.entries(PATTERN_NAMES)) {
         if (name && name.includes(k.split(' ')[0])) return v;
+      }
+      if (name && (name.includes('阳刃') || name.includes('羊刃') || name.includes('月刃'))) {
+        return 'Yang Blade Pattern (Sovereign General)';
       }
     }
     return name;
@@ -1316,6 +1322,23 @@ const I18N = (function() {
       const pc = p.paretoCore;
       pc.title = pc.titleEn;
       pc.description = pc.descriptionEn;
+
+      if (pc.primaryPatternNameZh) {
+        pc.primaryPatternName = pc.primaryPatternNameEn;
+        pc.primaryPatternDesc = pc.primaryPatternDescEn;
+      }
+
+      if (pc.grandPicture) {
+        const gp = pc.grandPicture;
+        gp.title = gp.titleEn;
+        gp.subtitle = gp.subtitleEn;
+        gp.thesis = gp.thesisEn;
+        gp.campaign = gp.campaignEn;
+        gp.kinship = gp.kinshipEn;
+        gp.era = gp.eraEn;
+        gp.highlights = gp.highlightsEn;
+        gp.rules = gp.rulesEn;
+      }
 
       if (pc.canons) {
         Object.values(pc.canons).forEach(c => {

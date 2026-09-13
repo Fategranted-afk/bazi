@@ -858,6 +858,169 @@ document.addEventListener('DOMContentLoaded', () => {
         paretoContainer.appendChild(topBanner);
       }
 
+      // 0.5 👑 全盘大局通融 · 综合全息画像 (Grand Picture Holistic Masterpiece Card)
+      if (pc.grandPicture) {
+        const gp = pc.grandPicture;
+        const grandCard = document.createElement('div');
+        grandCard.className = 'p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-amber-950/40 via-black/85 to-stone-950/90 border-2 border-amber-500/70 shadow-2xl space-y-5';
+
+        const highlights = (isEn ? (gp.highlightsEn || gp.highlights) : (gp.highlightsZh || gp.highlights)) || [];
+        const highlightsHtml = highlights.map(h => `
+          <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-500/40 font-mono">
+            ${h}
+          </span>
+        `).join('');
+
+        const rulesList = (isEn ? (gp.rulesEn || gp.rules) : (gp.rulesZh || gp.rules)) || [];
+        const rulesCardsHtml = rulesList.map(r => `
+          <div class="p-3 bg-black/40 rounded-xl border border-amber-500/30 space-y-1.5 flex flex-col justify-between">
+            <span class="text-xs font-bold text-amber-300 font-serif-sc">${r.label}</span>
+            <p class="text-[11px] text-gray-300 leading-relaxed">${r.desc}</p>
+          </div>
+        `).join('');
+
+        grandCard.innerHTML = `
+          <!-- Header -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-amber-500/40">
+            <div class="flex items-center space-x-2.5">
+              <span class="chinese-seal text-xs py-0.5">${isEn ? 'GRAND PICTURE' : '👑 综合全息画像'}</span>
+              <h3 class="text-base sm:text-xl font-bold font-serif-sc text-amber-300">
+                ${isEn ? (gp.titleEn || gp.title) : (gp.titleZh || gp.title)}
+              </h3>
+            </div>
+            <div class="flex items-center gap-1.5 flex-wrap">
+              ${highlightsHtml}
+            </div>
+          </div>
+
+          <!-- Subtitle / Methodology -->
+          <div class="p-3 bg-amber-950/20 rounded-xl border-l-4 border-amber-500 text-xs text-amber-200/90 font-serif-sc leading-relaxed">
+            ${isEn ? (gp.subtitleEn || gp.subtitle) : (gp.subtitleZh || gp.subtitle)}
+          </div>
+
+          <!-- 1. 命盘总相与生命大纲 -->
+          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+                <span>🏛️</span>
+                <span>${isEn ? '1. Grand Archetype & Sovereign Life Blueprint' : '一、命盘大局总相与生命大纲'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+                ${isEn ? 'Day Master & Sovereign Mandate' : '元神气象 · 格局司权'}
+              </span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-sans">
+              ${isEn ? (gp.thesisEn || gp.thesis) : (gp.thesisZh || gp.thesis)}
+            </p>
+          </div>
+
+          <!-- 2. 生杀破局与战略胜负手 -->
+          <div class="p-4 rounded-xl bg-black/40 border border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
+                <span>⚔️</span>
+                <span>${isEn ? '2. Strategic Breakthrough Campaign & 20% Lever' : '二、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
+                ${isEn ? 'Disease & Medicine Alchemy' : '以病取药 · 相神救应'}
+              </span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-sans">
+              ${isEn ? (gp.campaignEn || gp.campaign) : (gp.campaignZh || gp.campaign)}
+            </p>
+          </div>
+
+          <!-- 3. 六亲后方与家庭压舱石 -->
+          <div class="p-4 rounded-xl bg-black/40 border border-emerald-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
+                <span>🛡️</span>
+                <span>${isEn ? '3. Domestic Sanctuary & Kinship Ballast' : '三、六亲后方与家庭压舱石'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
+                ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
+              </span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-sans">
+              ${isEn ? (gp.kinshipEn || gp.kinship) : (gp.kinshipZh || gp.kinship)}
+            </p>
+          </div>
+
+          <!-- 4. 时代跃迁与时空场能共振 -->
+          <div class="p-4 rounded-xl bg-black/40 border border-teal-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
+                <span>🚀</span>
+                <span>${isEn ? '4. Macro Era Supercycle & Spatial Trajectory' : '四、时代跃迁与宏观时空场能共振'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
+                ${isEn ? 'Period 9 AI Era & Geographic Leverage' : '离九运AI浪潮 · 地理借势'}
+              </span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-sans">
+              ${isEn ? (gp.eraEn || gp.era) : (gp.eraZh || gp.era)}
+            </p>
+          </div>
+
+          <!-- 5. 终身不败之立身三则 -->
+          <div class="p-4 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+                <span>🎯</span>
+                <span>${isEn ? '5. Sovereign Grand Directives (Lifetime Golden Rules)' : '五、终身立身不败之黄金三则'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">
+                ${isEn ? 'Supreme Life Guidelines' : '守正不败总纲'}
+              </span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              ${rulesCardsHtml}
+            </div>
+          </div>
+        `;
+        paretoContainer.appendChild(grandCard);
+      }
+
+      // Details Drawer & Expand/Collapse Toggle
+      const detailsDivider = document.createElement('div');
+      detailsDivider.className = 'pt-4 pb-1 border-t border-gray-800/80 flex items-center justify-between gap-2';
+      detailsDivider.innerHTML = `
+        <div class="flex items-center space-x-2">
+          <span class="chinese-seal text-[10px] py-0">${isEn ? 'CANONICAL DETAILS' : '八经依据'}</span>
+          <h4 class="text-xs sm:text-sm font-bold text-gray-300 font-serif-sc">
+            ${isEn ? '🔍 Classical Canonical Textual Evidences & Palace Exegeses' : '🔍 深入查验八经细分依据与六亲全息'}
+          </h4>
+        </div>
+        <button id="toggleParetoDetailsBtn" type="button" class="px-3 py-1 text-xs rounded-lg bg-gray-800/90 hover:bg-gray-700 text-amber-300 border border-gray-700 transition flex items-center gap-1.5 shadow cursor-pointer">
+          <span id="toggleParetoDetailsIcon">▼</span>
+          <span id="toggleParetoDetailsText">${isEn ? 'Show Canonical Breakdowns' : '展开八经细分卡片'}</span>
+        </button>
+      `;
+      paretoContainer.appendChild(detailsDivider);
+
+      const paretoDetailsContainer = document.createElement('div');
+      paretoDetailsContainer.id = 'paretoDetailsContainer';
+      paretoDetailsContainer.className = 'space-y-4 hidden';
+      paretoContainer.appendChild(paretoDetailsContainer);
+
+      const toggleBtn = detailsDivider.querySelector('#toggleParetoDetailsBtn');
+      if (toggleBtn) {
+        toggleBtn.onclick = () => {
+          const isHidden = paretoDetailsContainer.classList.contains('hidden');
+          const toggleIcon = detailsDivider.querySelector('#toggleParetoDetailsIcon');
+          const toggleText = detailsDivider.querySelector('#toggleParetoDetailsText');
+          if (isHidden) {
+            paretoDetailsContainer.classList.remove('hidden');
+            if (toggleIcon) toggleIcon.textContent = '▲';
+            if (toggleText) toggleText.textContent = isEn ? 'Collapse Canonical Breakdowns' : '收起八经细分卡片';
+          } else {
+            paretoDetailsContainer.classList.add('hidden');
+            if (toggleIcon) toggleIcon.textContent = '▼';
+            if (toggleText) toggleText.textContent = isEn ? 'Show Canonical Breakdowns' : '展开八经细分卡片';
+          }
+        };
+      }
+
       // 1. 👑 八经 20/80 全相关键枢纽 (The Eight Classical Canons 20/80 Matrix)
       if (pc.canons) {
         const canonList = [
@@ -1049,7 +1212,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>` : ''}
             </div>
           `;
-          paretoContainer.appendChild(card);
+          paretoDetailsContainer.appendChild(card);
         });
       } else if (pc.fulcrum) {
         const fc = pc.fulcrum;
@@ -1077,7 +1240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-gray-200 leading-relaxed text-[11.5px]">${isEn ? (fc.modernStrategyEn || fc.modernStrategy) : (fc.modernStrategyZh || fc.modernStrategy)}</p>
           </div>
         `;
-        paretoContainer.appendChild(fulcrumCard);
+        paretoDetailsContainer.appendChild(fulcrumCard);
       }
 
       // 2. 💑 夫妻与婚姻深层全息透视 (Yu Zhao Ding Zhen Jing)
@@ -1126,7 +1289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>` : ''}
           </div>
         `;
-        paretoContainer.appendChild(spouseCard);
+        paretoDetailsContainer.appendChild(spouseCard);
       }
 
       // 3. 👶 子女与后嗣才干缘法 (Yu Zhao Ding Zhen Jing)
@@ -1170,7 +1333,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-gray-200 text-[11px] leading-relaxed">${isEn ? (ch.genderDiffEn || ch.genderDiff) : (ch.genderDiffZh || ch.genderDiff)}</p>
           </div>` : ''}
         `;
-        paretoContainer.appendChild(childrenCard);
+        paretoDetailsContainer.appendChild(childrenCard);
       }
 
       // 4. 🏡 父母与家族祖荫传承 (Yu Zhao Ding Zhen Jing)
@@ -1217,7 +1380,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>` : ''}
           </div>
         `;
-        paretoContainer.appendChild(parentsCard);
+        paretoDetailsContainer.appendChild(parentsCard);
       }
 
       // 5. 🌍 人与社会环境/时代周期的综合交互分析 (Li Xu Zhong Ming Shu)
@@ -1270,7 +1433,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>` : ''}
           </div>
         `;
-        paretoContainer.appendChild(envCard);
+        paretoDetailsContainer.appendChild(envCard);
       }
     }
 
