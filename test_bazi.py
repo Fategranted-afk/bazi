@@ -2425,7 +2425,7 @@ var console = {
   }
 };
 
-var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierContainer'];
+var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierContainer'];
 var elementStore = {};
 
 function makeEl(id, tag) {
@@ -2911,4 +2911,513 @@ assert 'isYearPillar' in app_js_text, "app.js must render zodiac in renderChart 
 
 print("✓ 八大经典合盘互参全息战报与三经智慧调和化解之道（中英双语、144生肖对校、零中文残留与UI全量渲染）验证通过！")
 
-print("\n🎉 ALL 51 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 52. Validate Current Year & Season Operational Playbook (当季/本年现实破局罗盘)
+print("\n=== 52. Validating Current Year & Season Operational Playbook (当季/本年现实破局罗盘) ===")
+jsc_playbook_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+
+    var res = BaZiEngine.calculate({
+      year: 1985, month: 5, day: 20, hour: 10, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var luckRes = LuckEngine.calculateLuck(res, 2026, "午", "2026-06-15");
+    if (!luckRes || !luckRes.operationalPlaybook) {
+      throw new Error("Missing operationalPlaybook in luckRes");
+    }
+
+    var pb = luckRes.operationalPlaybook;
+    if (!pb.year || !pb.stemBranch || !pb.strategicToneZh || !pb.strategicToneEn) {
+      throw new Error("Missing basic metadata in operationalPlaybook");
+    }
+    if (!pb.mainlineMissionZh || !pb.mainlineMissionEn || pb.mainlineMissionZh.length < 15 || pb.mainlineMissionEn.length < 15) {
+      throw new Error("Invalid mainlineMission in operationalPlaybook");
+    }
+    if (!pb.priorityTasksZh || pb.priorityTasksZh.length < 3 || !pb.priorityTasksEn || pb.priorityTasksEn.length < 3) {
+      throw new Error("Must have at least 3 priority tasks");
+    }
+    if (!pb.deprioritizedZh || pb.deprioritizedZh.length < 2 || !pb.deprioritizedEn || pb.deprioritizedEn.length < 2) {
+      throw new Error("Must have at least 2 deprioritized tasks");
+    }
+    if (!pb.seasonalTides || pb.seasonalTides.length !== 4) {
+      throw new Error("Must have exactly 4 seasons in seasonalTides");
+    }
+    pb.seasonalTides.forEach(function(s, idx) {
+      if (!s.seasonZh || !s.seasonEn || !s.tidePostureZh || !s.tidePostureEn || !s.rhythmZh || !s.rhythmEn || !s.actionDoZh || !s.actionDoEn) {
+        throw new Error("Incomplete season at " + idx);
+      }
+      var enFields = [s.seasonEn, s.monthsEn, s.elementEn, s.tidePostureEn, s.rhythmEn, s.actionDoEn, s.actionAvoidEn];
+      enFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty EN field in season " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in season EN at " + idx + ": " + f);
+      });
+    });
+
+    var enChecks = [pb.stemBranchEn, pb.stemGodEn, pb.strategicToneEn, pb.mainlineMissionEn, pb.safeguards.safeguardTitleEn];
+    enChecks.forEach(function(str, idx) {
+      if (!str || str.length === 0) throw new Error("Empty English field in operational playbook index " + idx);
+      if (/[\\u4e00-\\u9fa5]/.test(str)) throw new Error("Residual Chinese in operational playbook EN index " + idx + ": " + str);
+    });
+
+    pb.safeguards.riskTriggers.forEach(function(rt, idx) {
+      var rtFields = [rt.titleEn, rt.riskEn, rt.circuitBreakerEn];
+      rtFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty risk trigger field at " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in risk trigger EN at " + idx + ": " + f);
+      });
+    });
+
+    pb.safeguards.goldenRulesEn.forEach(function(r, idx) {
+      if (/[\\u4e00-\\u9fa5]/.test(r)) throw new Error("Residual Chinese in safeguard golden rule EN index " + idx);
+    });
+    '''
+]
+run_pb = subprocess.run(jsc_playbook_cmd, capture_output=True, text=True)
+assert run_pb.returncode == 0, f"JSC Operational Playbook check failed: stdout={run_pb.stdout} stderr={run_pb.stderr}"
+print("✓ 当季/本年现实破局罗盘（战略定调/主线攻坚/四季节律/雷区熔断/双语零残留）验证通过！")
+
+# 53. Validate Geographic & Ecological Resonance (地理方位与组织生态匹配仪)
+print("\n=== 53. Validating Geographic & Ecological Resonance (地理方位与组织生态匹配仪) ===")
+jsc_resonance_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+
+    var res = BaZiEngine.calculate({
+      year: 1985, month: 5, day: 20, hour: 10, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var luckRes = LuckEngine.calculateLuck(res, 2026, "午", "2026-06-15");
+    if (!luckRes || !luckRes.ecologicalResonance) {
+      throw new Error("Missing ecologicalResonance in luckRes");
+    }
+
+    var er = luckRes.ecologicalResonance;
+    if (!er.geographicDirections || er.geographicDirections.length !== 5) {
+      throw new Error("Geographic resonance must contain 5 cardinal directions");
+    }
+
+    er.geographicDirections.forEach(function(g, idx) {
+      if (!g.directionZh || !g.directionEn || !g.element || !g.elementEn || !g.resonanceZh || !g.resonanceEn) {
+        throw new Error("Incomplete geographic direction at index " + idx);
+      }
+      if (typeof g.fitScore !== "number" || g.fitScore < 0 || g.fitScore > 100) {
+        throw new Error("Invalid fitScore at geographic index " + idx);
+      }
+      var enFields = [g.directionEn, g.elementEn, g.citiesEn, g.ratingEn, g.resonanceEn, g.careerSynergyEn];
+      enFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty EN field at geographic index " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in geographic EN at " + idx + ": " + f);
+      });
+    });
+
+    if (!er.workplaceEcosystems || er.workplaceEcosystems.length !== 4) {
+      throw new Error("Ecosystem resonance must contain 4 workplace ecosystems");
+    }
+
+    er.workplaceEcosystems.forEach(function(eco, idx) {
+      if (!eco.nameZh || !eco.nameEn || !eco.resonanceZh || !eco.resonanceEn) {
+        throw new Error("Incomplete ecosystem at index " + idx);
+      }
+      if (typeof eco.fitScore !== "number" || eco.fitScore < 0 || eco.fitScore > 100) {
+        throw new Error("Invalid fitScore at ecosystem index " + idx);
+      }
+      var ecoEnFields = [eco.nameEn, eco.gradeEn, eco.resonanceEn, eco.frictionRootCauseEn, eco.survivalTacticsEn];
+      ecoEnFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty EN field at ecosystem index " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in ecosystem EN at " + idx + ": " + f);
+      });
+    });
+    '''
+]
+run_er = subprocess.run(jsc_resonance_cmd, capture_output=True, text=True)
+assert run_er.returncode == 0, f"JSC Geographic & Ecological Resonance check failed: {run_er.stderr}"
+print("✓ 地理方位与组织生态匹配仪（五大方位/四大生态位/内耗根因/突围战法/双语零残留）验证通过！")
+
+# 54. Validate Original Factory-Default User Manual of Your Mind (原厂心理使用说明书)
+print("\n=== 54. Validating Original Factory-Default User Manual of Your Mind (原厂心理使用说明书) ===")
+jsc_manual_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    var res = BaZiEngine.calculate({
+      year: 1985, month: 5, day: 20, hour: 10, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var pZh = PortraitEngine.analyze(res, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    var mfZh = pZh.mentalFriction;
+    var mfEn = pEn.mentalFriction;
+
+    if (!mfZh || !mfZh.factorySpecs || !mfZh.classicalCanonsManual || !mfZh.stressTriggers ||
+        !mfZh.deEscalationProtocols || !mfZh.fiveElementMicroHabits) {
+      throw new Error("Missing core Factory Mind Manual structures in Chinese mode");
+    }
+    if (!mfEn || !mfEn.factorySpecs || !mfEn.classicalCanonsManual || !mfEn.stressTriggers ||
+        !mfEn.deEscalationProtocols || !mfEn.fiveElementMicroHabits) {
+      throw new Error("Missing core Factory Mind Manual structures in English mode");
+    }
+
+    // 1. Validate Factory Specs
+    var fsZh = mfZh.factorySpecs;
+    var fsEn = mfEn.factorySpecs;
+    if (!fsZh.dayMasterZh || !fsZh.processorTypeZh || !fsZh.osVersionZh || !fsZh.coreEngineZh) {
+      throw new Error("Incomplete factory specs Zh");
+    }
+    var fsFieldsEn = [fsEn.dayMasterZh, fsEn.processorTypeZh, fsEn.osVersionZh, fsEn.coreEngineZh, fsEn.ruminationBandwidthZh, fsEn.efficiencyRatioZh];
+    fsFieldsEn.forEach(function(f, idx) {
+      if (!f || f.length === 0) throw new Error("Empty factory specs EN at " + idx);
+      if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in factory specs EN at " + idx + ": " + f);
+    });
+
+    // 2. Validate 8 Classical Canons Manual
+    if (mfZh.classicalCanonsManual.length !== 8 || mfEn.classicalCanonsManual.length !== 8) {
+      throw new Error("Classical canons manual must contain exactly 8 canons");
+    }
+    mfEn.classicalCanonsManual.forEach(function(c, idx) {
+      var cFields = [c.canonNameZh, c.dynastyZh, c.themeZh, c.quoteZh, c.vernacularZh, c.remedyZh];
+      cFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty canon field EN at " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in canon manual EN at " + idx + ": " + f);
+      });
+    });
+
+    // 3. Validate Stress Triggers (4 triggers with red lines)
+    if (mfZh.stressTriggers.length < 4 || mfEn.stressTriggers.length < 4) {
+      throw new Error("Must have at least 4 stress triggers");
+    }
+    mfEn.stressTriggers.forEach(function(st, idx) {
+      var stFields = [st.nameZh, st.classicalSignZh, st.mechanismZh, st.redLineZh];
+      stFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty stress trigger field EN at " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in stress trigger EN at " + idx + ": " + f);
+      });
+    });
+
+    // 4. Validate De-escalation Protocols (3-level emergency reset)
+    if (mfZh.deEscalationProtocols.length !== 3 || mfEn.deEscalationProtocols.length !== 3) {
+      throw new Error("Must have exactly 3 de-escalation protocols");
+    }
+    mfEn.deEscalationProtocols.forEach(function(dp, idx) {
+      if (!dp.levelZh || !dp.principleZh || !dp.stepsZh || dp.stepsZh.length === 0) {
+        throw new Error("Incomplete protocol EN at " + idx);
+      }
+      if (/[\\u4e00-\\u9fa5]/.test(dp.levelZh) || /[\\u4e00-\\u9fa5]/.test(dp.principleZh)) {
+        throw new Error("Residual Chinese in protocol EN at " + idx);
+      }
+      dp.stepsZh.forEach(function(step, sIdx) {
+        if (/[\\u4e00-\\u9fa5]/.test(step)) throw new Error("Residual Chinese in protocol step EN at " + idx + " sIdx " + sIdx);
+      });
+    });
+
+    // 5. Validate Five Element Micro-habits (5 elements)
+    if (mfZh.fiveElementMicroHabits.length !== 5 || mfEn.fiveElementMicroHabits.length !== 5) {
+      throw new Error("Must have 5 elements in micro-habits");
+    }
+    mfEn.fiveElementMicroHabits.forEach(function(mh, idx) {
+      var mhFields = [mh.element, mh.durationZh, mh.habitNameZh, mh.ritualZh, mh.potencyZh];
+      mhFields.forEach(function(f, fIdx) {
+        if (!f || f.length === 0) throw new Error("Empty micro-habit field EN at " + idx + " fIdx " + fIdx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in micro-habit EN at " + idx + ": " + f);
+      });
+    });
+
+    // 6. Validate primaryRoot and triggers zero residual Chinese in English mode
+    if (!mfEn.primaryRoot || /[\\u4e00-\\u9fa5]/.test(mfEn.primaryRoot)) {
+      throw new Error("Residual Chinese in mfEn.primaryRoot: " + mfEn.primaryRoot);
+    }
+    if (!mfEn.triggers || mfEn.triggers.length === 0) {
+      throw new Error("Empty mfEn.triggers");
+    }
+    mfEn.triggers.forEach(function(tr, idx) {
+      if (/[\\u4e00-\\u9fa5]/.test(tr)) throw new Error("Residual Chinese in mfEn.triggers index " + idx + ": " + tr);
+    });
+    '''
+]
+run_manual = subprocess.run(jsc_manual_cmd, capture_output=True, text=True)
+assert run_manual.returncode == 0, f"JSC Factory Mind Manual check failed: {run_manual.stderr}"
+print("✓ 原厂心理使用说明书（硬件规格/八典释义/压力开关/绝对红线/三阶急救/五行微习惯/双语零残留）验证通过！")
+
+# 55. Validate Dynamic Calculation Progress Bar & Zero Residual Chinese in DOM Simulation
+print("\n=== 55. Validating Dynamic Calculation Progress Bar & Zero Residual Chinese in DOM Simulation ===")
+jsc_dom_check_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    var window = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    window.setTimeout = function(cb, ms) { cb(); return 1; };
+    window.clearTimeout = function(id) {};
+    window.setInterval = function(cb, ms) { return 1; };
+    window.clearInterval = function(id) {};
+    window.__headlessTest = true;
+
+    var setTimeout = window.setTimeout;
+    var clearTimeout = window.clearTimeout;
+    var setInterval = window.setInterval;
+    var clearInterval = window.clearInterval;
+
+    var global = this;
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) {
+        throw new Error(m + (e ? " " + (e.stack || e) : ""));
+      }
+    };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/visual-alchemy.js");
+    load("js/chart.js");
+
+    var elements = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: (id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : "")),
+        checked: false,
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        width: 300,
+        height: 200,
+        clientWidth: 300,
+        clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        _children: [],
+        innerHTML: "",
+        textContent: "",
+        innerText: "",
+        className: "",
+        classList: {
+          _cls: [],
+          contains: function(c) { return this._cls.indexOf(c) >= 0; },
+          add: function(c) { if (this._cls.indexOf(c) === -1) this._cls.push(c); },
+          remove: function(c) { var i = this._cls.indexOf(c); if (i >= 0) this._cls.splice(i, 1); },
+          toggle: function(c) { if (this.contains(c)) this.remove(c); else this.add(c); }
+        },
+        style: {},
+        setAttribute: function() {},
+        getAttribute: function() { return null; },
+        appendChild: function(c) { this._children.push(c); },
+        addEventListener: function() {},
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; },
+        getContext: function() {
+          return {
+            clearRect: function() {},
+            beginPath: function() {},
+            moveTo: function() {},
+            lineTo: function() {},
+            closePath: function() {},
+            stroke: function() {},
+            fill: function() {},
+            fillText: function() {},
+            arc: function() {},
+            setLineDash: function() {},
+            scale: function() {},
+            createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        }
+      };
+    }
+
+    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "calculationProgressModal", "calcProgressTitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5"];
+
+    allIds.forEach(function(id) {
+      elements[id] = makeEl(id);
+    });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeEl("body"),
+      getElementById: function(id) {
+        if (!elements[id]) elements[id] = makeEl(id);
+        return elements[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+    window.document = document;
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    var res = BaZiEngine.calculate({
+      year: 1985, month: 5, day: 20, hour: 10, minute: 0,
+      gender: "male", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luckRes = LuckEngine.calculateLuck(res, 2026, "午", "2026-06-15");
+    var pZh = PortraitEngine.analyze(res, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    function getAllHtml(el) {
+      var html = (el.innerHTML || el.textContent || "");
+      if (el._children && el._children.length > 0) {
+        for (var i = 0; i < el._children.length; i++) {
+          html += " " + getAllHtml(el._children[i]);
+        }
+      }
+      return html;
+    }
+
+    function resetEl(el) {
+      el.innerHTML = "";
+      el.textContent = "";
+      el._children = [];
+    }
+
+    // 1. Progress Bar Flow Verification
+    if (typeof showDynamicCalculationProgress !== "function") {
+      throw new Error("showDynamicCalculationProgress is not a function");
+    }
+    var progressFinished = false;
+    showDynamicCalculationProgress(function() {
+      progressFinished = true;
+    });
+    if (!progressFinished) {
+      throw new Error("showDynamicCalculationProgress failed to invoke callback synchronously in headless environment");
+    }
+
+    // 2. Playbook Tabs Rendering Verification in ZH & EN
+    var pbBox = elements["operationalPlaybookContainer"];
+    var pbTabs = ["mainline", "seasons", "safeguards"];
+    for (var i = 0; i < pbTabs.length; i++) {
+      var tab = pbTabs[i];
+      selectedPlaybookTab = tab;
+      resetEl(pbBox);
+      renderOperationalPlaybook(res, luckRes, false);
+      var zhContent = getAllHtml(pbBox);
+      if (zhContent.length < 50) throw new Error("renderOperationalPlaybook " + tab + " produced empty HTML in ZH");
+
+      resetEl(pbBox);
+      renderOperationalPlaybook(res, luckRes, true);
+      var enContent = getAllHtml(pbBox);
+      if (enContent.length < 50) throw new Error("renderOperationalPlaybook " + tab + " produced empty HTML in EN");
+      if (/[\\u4e00-\\u9fa5]/.test(enContent)) {
+        throw new Error("Residual Chinese in operational playbook (" + tab + ") rendered HTML in EN mode: " + enContent.substring(0, 300));
+      }
+    }
+
+    // 3. Ecological Resonance Tabs Rendering Verification in ZH & EN
+    var ecoBox = elements["ecologicalResonanceContainer"];
+    var ecoTabs = ["geographic", "ecosystems"];
+    for (var j = 0; j < ecoTabs.length; j++) {
+      var tab2 = ecoTabs[j];
+      selectedResonanceTab = tab2;
+      resetEl(ecoBox);
+      renderEcologicalResonance(res, luckRes, false);
+      var zhContent2 = getAllHtml(ecoBox);
+      if (zhContent2.length < 50) throw new Error("renderEcologicalResonance " + tab2 + " produced empty HTML in ZH");
+
+      resetEl(ecoBox);
+      renderEcologicalResonance(res, luckRes, true);
+      var enContent2 = getAllHtml(ecoBox);
+      if (enContent2.length < 50) throw new Error("renderEcologicalResonance " + tab2 + " produced empty HTML in EN");
+      if (/[\\u4e00-\\u9fa5]/.test(enContent2)) {
+        throw new Error("Residual Chinese in ecological resonance (" + tab2 + ") rendered HTML in EN mode: " + enContent2.substring(0, 300));
+      }
+    }
+
+    // 4. Factory Mind Manual Tabs Rendering Verification in ZH & EN
+    var fBox = elements["frictionContentContainer"];
+    var manTabs = ["canons", "triggers", "protocols", "habits", "trinity"];
+    for (var k = 0; k < manTabs.length; k++) {
+      var tab3 = manTabs[k];
+      selectedManualTab = tab3;
+      resetEl(fBox);
+      currentPortraitData = pZh;
+      renderFrictionView(pZh, res, false);
+      var zhContent3 = getAllHtml(fBox);
+      if (zhContent3.length < 100) throw new Error("renderFrictionView " + tab3 + " produced empty HTML in ZH");
+
+      resetEl(fBox);
+      currentPortraitData = pEn;
+      renderFrictionView(pEn, res, true);
+      var enContent3 = getAllHtml(fBox);
+      if (enContent3.length < 100) throw new Error("renderFrictionView " + tab3 + " produced empty HTML in EN");
+      if (/[\\u4e00-\\u9fa5]/.test(enContent3)) {
+        throw new Error("Residual Chinese in friction view (" + tab3 + ") rendered HTML in EN mode: " + enContent3.substring(0, 300));
+      }
+    }
+    '''
+]
+run_dom_check = subprocess.run(jsc_dom_check_cmd, capture_output=True, text=True)
+assert run_dom_check.returncode == 0, f"JSC DOM Render check failed: {run_dom_check.stderr}"
+print("✓ 动态计算进度条流转机制与全新罗盘/生态位/原厂手册三重视图DOM全量渲染（双语零中文残留）验证通过！")
+
+print("\n🎉 ALL 55 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")

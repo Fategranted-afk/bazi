@@ -1173,6 +1173,9 @@ const LuckEngine = (function() {
     }
     const timeline = bazi._timelineCache;
 
+    const operationalPlaybook = generateOperationalPlaybook(bazi, { decades, activeDecade, annuals, activeAnnual, months, activeMonth }, activeAnnual, activeMonth);
+    const ecologicalResonance = generateGeographicEcologicalResonance(bazi);
+
     return {
       decadeMeta,
       decades,
@@ -1183,7 +1186,9 @@ const LuckEngine = (function() {
       activeMonth,
       daily,
       interactions,
-      timeline
+      timeline,
+      operationalPlaybook,
+      ecologicalResonance
     };
   }
 
@@ -1369,6 +1374,646 @@ const LuckEngine = (function() {
     return timeline;
   }
 
+  /**
+   * Current Year & Season Operational Playbook (当季/本年现实破局罗盘)
+   * Mainline focus, 4-season energy tides, immediate decision safeguards & red flags
+   */
+  function generateOperationalPlaybook(bazi, luckData, targetAnnual, targetMonth) {
+    if (!bazi || !bazi.pillars) return null;
+    const dm = bazi.dayMaster || '甲';
+    const dmEl = bazi.dayMasterElement || STEM_ELEMENTS[STEMS.indexOf(dm)] || '木';
+    const isStrong = isDayMasterStrong(bazi);
+    const annual = targetAnnual || (luckData && luckData.activeAnnual) || (luckData && luckData.annuals && luckData.annuals[0]) || { year: new Date().getFullYear(), stem: '丙', branch: '午', text: '丙午' };
+    const stem = annual.stem || '丙';
+    const branch = annual.branch || '午';
+    const ganZhi = annual.text || (stem + branch);
+    const year = annual.year || 2026;
+    const sIdx = STEMS.indexOf(stem);
+    const bIdx = BRANCHES.indexOf(branch);
+    const stemEl = STEM_ELEMENTS[sIdx] || '火';
+    const branchEl = BRANCH_ELEMENTS[bIdx] || '火';
+
+    const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
+    const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+    const GOD_EN_MAP = {
+      '比肩': 'Friend (Bi Jian)', '劫财': 'Rob Wealth (Jie Cai)',
+      '食神': 'Eating God (Shi Shen)', '伤官': 'Hurting Officer (Shang Guan)',
+      '偏财': 'Indirect Wealth (Pian Cai)', '正财': 'Direct Wealth (Zheng Cai)',
+      '七杀': 'Seven Killings (Qi Sha)', '正官': 'Direct Officer (Zheng Guan)',
+      '偏印': 'Indirect Resource (Pian Yin)', '正印': 'Direct Resource (Zheng Yin)'
+    };
+
+    const stemGod = annual.stemGod || getTenGod(dm, stem) || '偏财';
+    const stemGodEn = (typeof I18N !== 'undefined' && typeof I18N.getGod === 'function') ? I18N.getGod(stemGod, 'en') : (GOD_EN_MAP[stemGod] || stemGod);
+    const stemEn = (typeof I18N !== 'undefined' && typeof I18N.getStem === 'function') ? I18N.getStem(stem, 'en') : (STEM_EN_MAP[stem] || stem);
+    const branchEn = (typeof I18N !== 'undefined' && typeof I18N.getBranch === 'function') ? I18N.getBranch(branch, 'en') : (BRANCH_EN_MAP[branch] || branch);
+    const ganZhiEn = `${stemEn} ${branchEn}`;
+
+    // Evaluate strategic tone & mainline mission
+    let strategicToneZh = '';
+    let strategicToneEn = '';
+    let mainlineMissionZh = '';
+    let mainlineMissionEn = '';
+    let priorityTasksZh = [];
+    let priorityTasksEn = [];
+    let deprioritizedZh = [];
+    let deprioritizedEn = [];
+
+    if (stemGod.includes('印')) {
+      if (!isStrong) {
+        strategicToneZh = '厚积薄发 · 体系深筑与名望沉淀';
+        strategicToneEn = 'Deep Foundations: Moat Architecture & Credibility Elevation';
+        mainlineMissionZh = `太岁干支【${ganZhi}】临【${stemGod}】，日元得生得助，此年核心主线是“借力大机构、沉淀硬专业、构筑长久壁垒”。运逢甘露，万不可浮躁冒进，应专注将个人声誉与权威资质化为长期复利资产。`;
+        mainlineMissionEn = `The annual transit [${ganZhiEn}] brings [${stemGodEn}], providing supportive resource replenishment. Your mainline mission is deep institutional alignment, credential mastery, and moat consolidation. Avoid hasty speculation; compound core reputational and intellectual assets for enduring leverage.`;
+        priorityTasksZh = [
+          '① 考取高阶行业认证、升级核心专业资质壁垒',
+          '② 绑定主流头部平台或尊长贵人，借船出海',
+          '③ 修复身心元气，建立终身可持续的作息与知识输入库'
+        ];
+        priorityTasksEn = [
+          '1. Acquire elite industry credentials and upgrade specialized moat barriers',
+          '2. Anchor to established institutional platforms and veteran mentors for leveraged distribution',
+          '3. Restore vital somatic reserves and build sustainable intellectual compounding systems'
+        ];
+      } else {
+        strategicToneZh = '收敛防守 · 谨防内耗与舒适陷阱';
+        strategicToneEn = 'Prudent Consolidation: Guarding Against Complacency';
+        mainlineMissionZh = `太岁印星过盛，身强遇印易生惰性与思想空转。此年主线任务是“强行打破舒适圈、拒绝理论空转、将存量知识转化为实体产品”。`;
+        mainlineMissionEn = `Resource energy is overflowing against a strong Day Master, risking mental rumination and passive complacency. Your mainline mission is shattering passive comfort zones, stopping theoretical paralysis, and transmuting archived knowledge into tangible market products.`;
+        priorityTasksZh = [
+          '① 强行以输出倒逼输入，将库存技能产品化',
+          '② 定期清空颅内杂念，以高强度行动阻断反刍',
+          '③ 审视人际边界，规避冗余人情负债与拖延'
+        ];
+        priorityTasksEn = [
+          '1. Force concrete production over passive learning, monetizing latent skillsets',
+          '2. Regularly purge cognitive clutter, using disciplined physical execution to interrupt rumination',
+          '3. Audit relational boundaries and eliminate unreciprocated moral obligations'
+        ];
+      }
+      deprioritizedZh = ['盲目跟风加杠杆下场重资产投资', '沉湎于空头推演而迟迟不肯交付糙版产品'];
+      deprioritizedEn = ['Blind leveraged debt for unproven capital investments', 'Endless mental simulation while delaying imperfect public launches'];
+    } else if (stemGod.includes('官') || stemGod.includes('杀')) {
+      if (isStrong) {
+        strategicToneZh = '铁血掌舵 · 权威立标与层峰跨越';
+        strategicToneEn = 'Decisive Command: Authority Building & Rank Elevation';
+        mainlineMissionZh = `太岁临【${stemGod}】，身强能挑重担，此年迎来职场与事业的层峰突破之年。核心主线任务是“主动挑大梁、制定铁律规范、拿下标志性硬仗胜利”。`;
+        mainlineMissionEn = `The annual transit manifests [${stemGodEn}], perfectly harnessed by your robust Day Master. Your mainline mission is seizing operational leadership, setting organizational standards, and delivering decisive milestone victories under pressure.`;
+        priorityTasksZh = [
+          '① 主动挂帅承接团队最艰难的核心攻坚项目',
+          '② 规范组织流程与权责契约，树立不可替代的领导公信力',
+          '③ 向上管理争取顶层资源，确立战略主导权'
+        ];
+        priorityTasksEn = [
+          '1. Take executive command of high-stakes mission-critical initiatives',
+          '2. Codify governance protocols and contractual clarity to cement authoritative leadership',
+          '3. Manage upward decisively to lock in top-tier executive resource allocations'
+        ];
+      } else {
+        strategicToneZh = '低调蛰伏 · 化解压力与避其锋芒';
+        strategicToneEn = 'Low-Profile Resilience: Stress Diffusion & Conflict Avoidance';
+        mainlineMissionZh = `太岁官杀克身，身弱遇克防压力过载与突发变局。此年主线任务是“严格遵守法务合规、寻求贵人庇护、绝不正面硬刚”。`;
+        mainlineMissionEn = `Authority stars apply heavy pressure on a delicate Day Master, demanding stress insulation. Your mainline mission is ironclad regulatory compliance, seeking institutional cover, and dodging direct high-friction confrontations.`;
+        priorityTasksZh = [
+          '① 严查一切合同法务与财务隐性漏洞，杜绝官非隐患',
+          '② 凡事留有缓冲退路，不强出头、不立军令状',
+          '③ 强化身体底子，规律监测睡眠与心血管健康'
+        ];
+        priorityTasksEn = [
+          '1. Audit all legal contracts and fiscal commitments to eliminate compliance vulnerabilities',
+          '2. Build systemic buffers and avoid premature promises or high-visibility exposure',
+          '3. Reinforce physical stamina, prioritizing restorative sleep and cardiovascular recovery'
+        ];
+      }
+      deprioritizedZh = ['因意气用事与体制红线正面硬撞', '超负荷熬夜透支健康强撑虚名'];
+      deprioritizedEn = ['Combative clashes against institutional red lines driven by ego', 'Chronic sleep deprivation and destructive overdrive to preserve appearances'];
+    } else if (stemGod.includes('财')) {
+      if (isStrong) {
+        strategicToneZh = '商业决战 · 势能变现与资本扩张';
+        strategicToneEn = 'Commercial Triumph: Asset Expansion & Monetization';
+        mainlineMissionZh = `太岁见【${stemGod}】，身强任财，此年是商业变现与资本积累的高光之年。核心主线是“聚焦现金流业务、果断商业转化、锁定实际利润”。`;
+        mainlineMissionEn = `The annual transit unveils [${stemGodEn}], met by strong capacity to hold wealth. Your mainline mission is laser-focusing on cash-flow generative initiatives, bold commercial monetization, and securing tangible net gains.`;
+        priorityTasksZh = [
+          '① 打磨拳头产品商业闭环，提高单客价值与交付毛利',
+          '② 拓展多元收益渠道，将个人影响力转化为可持续资产',
+          '③ 及时落袋为安，留足至少24个月安全现金储备'
+        ];
+        priorityTasksEn = [
+          '1. Polish the core commercial loop, elevating customer lifetime value and delivery margins',
+          '2. Diversify revenue streams, converting professional influence into durable wealth vehicles',
+          '3. Systematically lock in profits, maintaining a minimum 24-month liquid cash reserve'
+        ];
+      } else {
+        strategicToneZh = '现金为王 · 严防破耗与去伪存真';
+        strategicToneEn = 'Cash Is King: Pruning Liabilities & Capital Protection';
+        mainlineMissionZh = `身弱逢财旺之年，容易因贪图眼前利益而陷入财多身弱的虚浮泥潭。此年主线是“严控预算开支、拒绝超出承载力的高杠杆诱惑、保护元神不受利益撕扯”。`;
+        mainlineMissionEn = `A delicate Day Master encountering abundant Wealth risks over-extension and fiscal fatigue. Your mainline mission is conservative capital preservation, resisting high-leverage gambles, and shielding mental sovereignty from commercial anxieties.`;
+        priorityTasksZh = [
+          '① 全面砍掉低效订阅与冗余支出，实施极简财务主义',
+          '② 与信誉良好、资源雄厚的靠谱合伙人协同分成，降低单兵风险',
+          '③ 严禁借贷加杠杆投机炒作，确保底线万无一失'
+        ];
+        priorityTasksEn = [
+          '1. Ruthlessly eliminate superfluous overhead and adopt fiscal minimalism',
+          '2. Partner with well-capitalized alliances to distribute execution risks',
+          '3. Ban speculative leverage and unverified ventures to protect core solvency'
+        ];
+      }
+      deprioritizedZh = ['脱离现实能力的盲目扩充团队与重资产租赁', '为了面子而打肿脸充胖子的非理性高消费'];
+      deprioritizedEn = ['Reckless headcount expansion and heavy fixed asset leases beyond immediate cashflow', 'Conspicuous status spending and unhedged speculative commitments'];
+    } else if (stemGod.includes('食') || stemGod.includes('伤')) {
+      strategicToneZh = '锋芒出鞘 · 创新破局与产品爆发';
+      strategicToneEn = 'Disruptive Breakthrough: Creative Innovation & Product Apex';
+      mainlineMissionZh = `太岁临【${stemGod}】，才华秀气全力奔涌。此年核心主线是“打破常规陈规、打造杀手级产品或代表作、用极致才华击穿行业同质化壁垒”。`;
+      mainlineMissionEn = `The annual transit ignites [${stemGodEn}], activating exceptional generative creativity. Your mainline mission is breaking obsolete dogmas, releasing a flagship signature masterpiece, and slicing through market noise with radical innovation.`;
+      priorityTasksZh = [
+        '① 全力投入核心作品的打磨研发与上线推广',
+        '② 敢于表达独到见解，以独特风格占领行业心智',
+        '③ 建立自动化交付流程，释放双手专注高维灵感'
+      ];
+      priorityTasksEn = [
+        '1. Channel hyper-focus into engineering and launching your flagship product or portfolio',
+        '2. Articulate bold differentiated perspectives to command cognitive real estate in your niche',
+        '3. Automate delivery workflows to protect mental bandwidth for high-leverage creativity'
+      ];
+      deprioritizedZh = ['言语过激得罪核心盟友与无谓的网上口舌之争', '项目做到80%便失去兴趣半途而废'];
+      deprioritizedEn = ['Abrasive communication that alienates key allies or pointless online debates', 'Abandoning projects at 80% completion due to novelty chasing'];
+    } else {
+      // 比肩 / 劫财
+      if (isStrong) {
+        strategicToneZh = '收紧边界 · 谨防背刺与资产泄露';
+        strategicToneEn = 'Tighten Boundaries: Defense Against Betrayal & Leaks';
+        mainlineMissionZh = `太岁临【${stemGod}】，同侪竞争白热化。此年主线是“明晰权责利益契约、防范资产与商业机密外泄、不与同质对手死磕内卷”。`;
+        mainlineMissionEn = `The annual transit activates [${stemGodEn}], intensifying peer competition. Your mainline mission is fortifying legal boundaries, guarding proprietary intelligence, and refusing zero-sum infighting.`;
+        priorityTasksZh = [
+          '① 重新审视股权与利益分配机制，白纸黑字签定刚性协议',
+          '② 开辟非对称差异化新赛道，跳出同业红海内耗',
+          '③ 警惕所谓朋友或熟人的借款、担保与合作画饼'
+        ];
+        priorityTasksEn = [
+          '1. Audit shareholder equity and profit splits with ironclad legal contracts',
+          '2. Pivot to asymmetric differentiated niches to escape zero-sum red ocean friction',
+          '3. Decline uncollateralized loans, financial guarantees, and speculative joint ventures with peers'
+        ];
+      } else {
+        strategicToneZh = '群雄集结 · 合伙借力与版图拓宽';
+        strategicToneEn = 'Alliance Synergy: Strategic Partnership & Network Scaling';
+        mainlineMissionZh = `身弱得比劫相助，兄弟同心其利断金。此年主线是“积极寻求强力合伙人、共担风险共享收益、借助团队力量打破单兵发展瓶颈”。`;
+        mainlineMissionEn = `A delicate Day Master receives vital Companion support. Your mainline mission is forging strategic alliances, pooling resources, and breaking past solo bottlenecks through team synergy.`;
+        priorityTasksZh = [
+          '① 寻找能力互补且三观一致的核心事业合伙人',
+          '② 融入高能量圈子与行业同行建立深度业务协同',
+          '③ 敢于分利让人，以大胸怀聚拢同行者'
+        ];
+        priorityTasksEn = [
+          '1. Recruit complementary co-founders and allies sharing aligned core ethics',
+          '2. Embed within high-vitality networks to orchestrate cross-functional collaborations',
+          '3. Generously distribute equity and gains to rally formidable talent around your vision'
+        ];
+      }
+      deprioritizedZh = ['盲目相信口头承诺而省略正式协议', '过度讲哥们义气而牺牲商业底线'];
+      deprioritizedEn = ['Relying on informal verbal promises without rigorous paper contracts', 'Sacrificing fundamental business viability for sentimental peer loyalty'];
+    }
+
+    // Four Seasonal Energy Tides (春夏秋冬 四季节律)
+    const seasonsData = [
+      {
+        seasonZh: '春季 · 木气升发 (寅卯辰月)',
+        seasonEn: 'Spring · Wood Inception (Feb - Apr)',
+        monthsZh: '正月立春 ~ 三月谷雨 (寅月、卯月、辰月)',
+        monthsEn: 'Solar terms Yin, Mao, Chen (Feb to Apr)',
+        element: '木',
+        elementEn: 'Wood',
+        energyScore: (dmEl === '木' || dmEl === '火') ? (isStrong ? 82 : 92) : (dmEl === '金' ? 62 : 75),
+        tidePostureZh: (dmEl === '木' || dmEl === '火') ? '生发布局 · 抢先试水' : '沉着破土 · 稳步扎根',
+        tidePostureEn: (dmEl === '木' || dmEl === '火') ? 'Rapid Deployment & Probing' : 'Grounded Seeding & Rooting',
+        rhythmZh: '天地气机由潜藏转为生发，阳气初起。此时万物破土，宜做全盘年度规划、启动最小可行性产品（MVP）试水、拜访行业领路人；忌犹豫观望延误春耕良机。',
+        rhythmEn: 'Cosmic energy shifts from hibernation to vigorous sprouting. Optimal for master annual planning, piloting Minimum Viable Products, and engaging mentors. Avoid hesitations that miss spring seeding windows.',
+        actionDoZh: '明确年度战略大纲、快速启动原型验证、主动结交先锋伙伴',
+        actionDoEn: 'Finalize annual roadmaps, pilot rapid prototypes, initiate pioneering partnerships',
+        actionAvoidZh: '过度沉溺细节迟迟不动、在寒气未退时盲目豪赌大笔资金',
+        actionAvoidEn: 'Paralysis by analysis, premature heavy capital bets before spring frost recedes'
+      },
+      {
+        seasonZh: '夏季 · 火土繁盛 (巳午未月)',
+        seasonEn: 'Summer · Fire & Earth Apex (May - Jul)',
+        monthsZh: '四月立夏 ~ 六月大暑 (巳月、午月、未月)',
+        monthsEn: 'Solar terms Si, Wu, Wei (May to Jul)',
+        element: '火',
+        elementEn: 'Fire',
+        energyScore: (dmEl === '火' || dmEl === '土') ? (isStrong ? 78 : 95) : (dmEl === '水' ? 58 : 72),
+        tidePostureZh: (dmEl === '火' || dmEl === '土') ? '势能顶峰 · 决战攻坚' : '保持冷静 · 避暑均称',
+        tidePostureEn: (dmEl === '火' || dmEl === '土') ? 'Apex Momentum & Decisive Campaign' : 'Thermal Balance & Cadence Preservation',
+        rhythmZh: '阳气盛极，万物繁茂。此时市场情绪与活力达到全年波峰，是推出产品、做大规模公开展演、加速商业转化、决战攻坚的黄金决战期。注意补水与规律睡眠防心火亢盛。',
+        rhythmEn: 'Yang energy reaches its radiant climax. Market momentum and vitality crest; optimal for launching flagship products, public showcases, aggressive conversions, and conquering pivotal battles.',
+        actionDoZh: '重拳出击上线主打产品、密集进行市场推广与公关曝光、拿下大单',
+        actionDoEn: 'Launch flagship offerings with full force, execute high-intensity PR, close landmark deals',
+        actionAvoidZh: '情绪失控与人正面冲突、心浮气躁签订草率条约、忽视身体降温',
+        actionAvoidEn: 'Hot-tempered emotional confrontations, signing hasty contracts, ignoring heat burnout'
+      },
+      {
+        seasonZh: '秋季 · 金气肃降 (申酉戌月)',
+        seasonEn: 'Autumn · Metal Harvest (Aug - Oct)',
+        monthsZh: '七月立秋 ~ 九月霜降 (申月、酉月、戌月)',
+        monthsEn: 'Solar terms Shen, You, Xu (Aug to Oct)',
+        element: '金',
+        elementEn: 'Metal',
+        energyScore: (dmEl === '金' || dmEl === '水') ? (isStrong ? 80 : 90) : (dmEl === '木' ? 60 : 76),
+        tidePostureZh: (dmEl === '金' || dmEl === '水') ? '利刃收割 · 梳理落袋' : '清退断舍 · 防范纠纷',
+        tidePostureEn: (dmEl === '金' || dmEl === '水') ? 'Harvesting Gains & Moat Consolidation' : 'Ruthless Pruning & Dispute Shielding',
+        rhythmZh: '金风肃杀，由发散转为收敛。此时重心在于核验上半年战果、及时落袋为安、裁撤低效冗余项目、严格法务与回款催收；以冷峻客观的眼光剔除无效资产。',
+        rhythmEn: 'Metal qi brings pruning clarity, transmuting outward expansion into harvest. Focus on cash collections, profit taking, pruning redundant operations, and tightening legal compliance.',
+        actionDoZh: '督促项目回款、关闭边缘赔钱业务、盘点资产并制定风控预案',
+        actionDoEn: 'Accelerate receivable collections, terminate loss-making pet projects, audit reserves',
+        actionAvoidZh: '盲目跨界开辟新战线、对拖欠款项姑息放任、与官方法律规则对抗',
+        actionAvoidEn: 'Opening sprawling new fronts, tolerating chronic bad debts, cutting regulatory corners'
+      },
+      {
+        seasonZh: '冬季 · 水气归藏 (亥子丑月)',
+        seasonEn: 'Winter · Water Hibernation (Nov - Jan)',
+        monthsZh: '十月立冬 ~ 十二月大寒 (亥月、子月、丑月)',
+        monthsEn: 'Solar terms Hai, Zi, Chou (Nov to Jan)',
+        element: '水',
+        elementEn: 'Water',
+        energyScore: (dmEl === '水' || dmEl === '木') ? (isStrong ? 85 : 88) : (dmEl === '火' ? 55 : 68),
+        tidePostureZh: '闭关深潜 · 能量休养',
+        tidePostureEn: 'Deep Strategic Priming & Restorative Hibernation',
+        rhythmZh: '水主润下与静止，阳气内收闭藏。此阶段严禁冒进扩张，宜闭关静修、系统化复盘整年得失、重塑底层知识架构、养精蓄锐；为来年开春蓄积不可撼动的爆发势能。',
+        rhythmEn: 'Water commands deep stillness and inward restoration. Avoid hasty expansion; dedicate this quiet phase to rigorous annual retrospectives, theoretical deepening, and vitality replenishment.',
+        actionDoZh: '做深度复盘与资产年终审计、静心研读经典著作、温补元气早睡晚起',
+        actionDoEn: 'Conduct forensic annual post-mortems, deep-dive classical studies, nourish vitality',
+        actionAvoidZh: '在年底现金流紧缩时盲目启动重资本项目、透支体力熬夜',
+        actionAvoidEn: 'Launching capital-heavy projects amid year-end cash contractions, chronic fatigue'
+      }
+    ];
+
+    // Immediate Decision Safeguards & Red Flags (即时决策防火墙与雷区预警)
+    const riskTriggers = [];
+    const natalBranches = [
+      bazi.pillars.year.branch,
+      bazi.pillars.month.branch,
+      bazi.pillars.day.branch,
+      bazi.pillars.hour.branch
+    ];
+    const SIX_CLASH_MAP = { '子': '午', '午': '子', '丑': '未', '未': '丑', '寅': '申', '申': '寅', '卯': '酉', '酉': '卯', '辰': '戌', '戌': '辰', '巳': '亥', '亥': '巳' };
+    const clashBranch = SIX_CLASH_MAP[branch];
+    const hasClash = natalBranches.includes(clashBranch);
+
+    if (hasClash) {
+      const clashBranchEn = (typeof I18N !== 'undefined') ? I18N.getBranch(clashBranch, 'en') : (BRANCH_EN_MAP[clashBranch] || clashBranch);
+      riskTriggers.push({
+        icon: '⚡',
+        titleZh: `太岁地支冲克红线 (${branch}与命中${clashBranch}相冲)`,
+        titleEn: `Annual Clash Alarm (${branchEn} Clashing with Natal ${clashBranchEn})`,
+        riskZh: `流年地支【${branch}】与本命地支【${clashBranch}】形成六冲，气机剧烈震荡。容易面临居所变动、职场动荡、人际撕裂或合伙破裂之突发风险。`,
+        riskEn: `The annual branch [${branchEn}] forms a direct six-clash with your natal [${clashBranchEn}], causing systemic tectonic shifts. Elevates risks of sudden location moves, leadership volatility, and partner fallouts.`,
+        circuitBreakerZh: '【即时熔断机制】：凡涉及重大解约、辞职跳槽或大宗置业决策，必须设立72小时冷静缓冲期，并邀请第三方客观法务审计，严禁在情绪顶峰当场摊牌。',
+        circuitBreakerEn: '[Circuit Breaker Protocol]: Enforce a strict 72-hour cooling-off delay for any contract termination, job resignation, or major real estate purchase; require third-party legal review.'
+      });
+    } else {
+      riskTriggers.push({
+        icon: '⚖️',
+        titleZh: '合规与契约边界红线',
+        titleEn: 'Contractual Integrity & Compliance Red Line',
+        riskZh: '市场环境与利益流动加快，容易遭遇隐蔽性口头承诺陷阱、知识产权边界模糊或权责不清的被动背锅风险。',
+        riskEn: 'Accelerating commercial interactions heighten exposures to unverified verbal commitments, ambiguous intellectual property boundaries, and collateral blame.',
+        circuitBreakerZh: '【即时熔断机制】：杜绝任何“先干活后补合同”的侥幸心态；凡无白纸黑字盖章对公协议的业务，一律停止垫资与资源注入。',
+        circuitBreakerEn: '[Circuit Breaker Protocol]: Zero tolerance for starting work without signed contracts. Cease capital or labor allocation immediately if bilateral documentation is missing.'
+      });
+    }
+
+    if (stemGod.includes('财') || stemGod.includes('劫')) {
+      riskTriggers.push({
+        icon: '💰',
+        titleZh: '大额资金与流动性雷区',
+        titleEn: 'Capital Liquidity & Leverage Trap',
+        riskZh: '资金链易受市场非理性波动或所谓“暴利风口”诱惑，警惕因短贷长投或盲目跟投熟人项目导致的现金流瞬间断裂。',
+        riskEn: 'Vulnerable to market volatility and seductive high-yield mirages. Guard against maturity mismatches (borrowing short to invest long) or speculative peer ventures that wipe out liquidity.',
+        circuitBreakerZh: '【即时熔断机制】：坚持“单笔不可承受损失清零”原则。严禁向任何人提供非必要借款或连带担保；账户必须保留覆盖18个月基础生存底线的独立防火墙基金。',
+        circuitBreakerEn: '[Circuit Breaker Protocol]: Apply the zero-ruin principle. Ban personal loan guarantees; safeguard an unencumbered 18-month baseline liquidity reserve.'
+      });
+    } else {
+      riskTriggers.push({
+        icon: '🛡️',
+        titleZh: '身心过载与精力透支红线',
+        titleEn: 'Burnout & Over-Commitment Red Line',
+        riskZh: '面对过多并发机会时难以拒绝，容易将注意力撕扯在过多低价值枝节上，导致核心业务推进迟滞并引发神经衰弱。',
+        riskEn: 'Over-committing to distracting opportunities fragments attention across low-leverage tasks, slowing down core delivery while triggering chronic autonomic nervous fatigue.',
+        circuitBreakerZh: '【即时熔断机制】：严格执行“一票否决单核法则”——同一季度内只允许设立1个核心胜负手任务；非主线事务统一回复：“暂不参与，来年再看”。',
+        circuitBreakerEn: '[Circuit Breaker Protocol]: Single-core rule: allow only ONE decisive strategic priority per quarter. For non-core solicitations, issue a polite standard rejection.'
+      });
+    }
+
+    riskTriggers.push({
+      icon: '🕊️',
+      titleZh: '人际声誉与情绪防护栏',
+      titleEn: 'Reputation Shield & Emotional Firewall',
+      riskZh: '容易受外界负面评判、小人暗箭或同行酸言酸语激怒，若卷入无休止的争辩自证，将迅速落入消耗算力的内耗圈套。',
+      riskEn: 'Susceptibility to malicious rumors, petty provocations, or competitive envy. Entering public debates or defensive self-justifications drains high-value cognitive bandwidth.',
+      circuitBreakerZh: '【即时熔断机制】：恪守“不自证、不纠缠、不反击低维小人”。面对非难微笑退避，把所有反击精力转化为高质量公开作品与业绩降维打击。',
+      circuitBreakerEn: '[Circuit Breaker Protocol]: Never litigate against bad-faith actors. Smile and disengage instantly; channel all reactive energy into shipping superior work that renders critics irrelevant.'
+    });
+
+    const goldenRulesZh = [
+      '① 主线第一：今年只攻克一件能产生10倍杠杆的核心成果，其余皆为支线噪音。',
+      '② 底线封死：任何决策先算最坏下场；只要最坏情况能安然承受，便果断执行。',
+      '③ 绝不自耗：不在脑中反复演练他人的可能态度；以客观物理事实为唯一决策依据。'
+    ];
+    const goldenRulesEn = [
+      '1. Mainline Supremacy: Win the single 10x leverage milestone this year; treat everything else as secondary noise.',
+      '2. Absolute Floor: Stress-test the catastrophic downside first; if survivable, pull the trigger decisively.',
+      '3. Zero Rumination: Never second-guess others\' hidden motives; anchor solely on empirical physical facts.'
+    ];
+
+    return {
+      year,
+      stemBranch: ganZhi,
+      stemBranchEn: ganZhiEn,
+      stemGod,
+      stemGodEn,
+      strategicToneZh,
+      strategicToneEn,
+      mainlineMissionZh,
+      mainlineMissionEn,
+      priorityTasksZh,
+      priorityTasksEn,
+      deprioritizedZh,
+      deprioritizedEn,
+      seasonalTides: seasonsData,
+      safeguards: {
+        safeguardTitleZh: '当季与本年现实决策防火墙 · 即时熔断机制',
+        safeguardTitleEn: 'Operational Decision Safeguard & Real-Time Circuit Breakers',
+        riskTriggers,
+        goldenRulesZh,
+        goldenRulesEn
+      }
+    };
+  }
+
+  /**
+   * Geographic & Workplace Ecological Resonance (地理方位与组织生态匹配仪)
+   */
+  function generateGeographicEcologicalResonance(bazi) {
+    if (!bazi || !bazi.pillars) return null;
+    const dm = bazi.dayMaster || '甲';
+    const dmEl = bazi.dayMasterElement || STEM_ELEMENTS[STEMS.indexOf(dm)] || '木';
+    const isStrong = isDayMasterStrong(bazi);
+
+    // Evaluate 5 Geographic Directions (East 木, South 火, Central 土, West 金, North 水)
+    const directionConfigs = [
+      {
+        directionZh: '东方 (木气场)',
+        directionEn: 'East (Wood Field)',
+        element: '木',
+        elementEn: 'Wood',
+        citiesZh: '上海、杭州、苏州、南京、青岛、江浙沿海、东京等',
+        citiesEn: 'Shanghai, Hangzhou, Suzhou, Nanjing, East Coast, Tokyo',
+        evalRule: (dmEl === '水') ? { score: 88, ratingZh: '生发吐秀 · 创意沃土', ratingEn: 'Creative Flowering Zone' }
+                : (dmEl === '木') ? (isStrong ? { score: 72, ratingZh: '同侪汇聚 · 竞争激烈', ratingEn: 'Peer Hub - Intense Rivalry' } : { score: 94, ratingZh: '本命强根 · 稳固基石', ratingEn: 'Supreme Natal Anchoring' })
+                : (dmEl === '火') ? { score: 92, ratingZh: '木火通明 · 贵人滋养', ratingEn: 'Nourishing Mentor Springboard' }
+                : (dmEl === '土') ? { score: 65, ratingZh: '官煞克伐 · 磨砺压制', ratingEn: 'High Pressure Crucible' }
+                : { score: 85, ratingZh: '金木生财 · 商业开拓', ratingEn: 'Commercial Exploitation Field' }
+      },
+      {
+        directionZh: '南方 (火气场)',
+        directionEn: 'South (Fire Field)',
+        element: '火',
+        elementEn: 'Fire',
+        citiesZh: '深圳、广州、香港、珠三角、海口、新加坡、东南亚等',
+        citiesEn: 'Shenzhen, Guangzhou, Hong Kong, Pearl River Delta, Singapore, Southeast Asia',
+        evalRule: (dmEl === '木') ? { score: 92, ratingZh: '木火通明 · 锋芒绽放', ratingEn: 'Radiant Talent Apex' }
+                : (dmEl === '火') ? (isStrong ? { score: 70, ratingZh: '烈火烹油 · 防范浮躁', ratingEn: 'Hyper-Dynamic - Guard Overdrive' } : { score: 95, ratingZh: '暖阳融融 · 威权倍增', ratingEn: 'Vitality & Authority Surge' })
+                : (dmEl === '土') ? { score: 90, ratingZh: '印星生身 · 平台得力', ratingEn: 'Generative Platform Moat' }
+                : (dmEl === '金') ? { score: 68, ratingZh: '真金火炼 · 强压挑战', ratingEn: 'Refining Smelter - High Stress' }
+                : { score: 86, ratingZh: '水火既济 · 财富变现', ratingEn: 'Water-Fire Harmonious Wealth' }
+      },
+      {
+        directionZh: '中原 / 枢纽 (土气场)',
+        directionEn: 'Central / Continental Hub (Earth Field)',
+        element: '土',
+        elementEn: 'Earth',
+        citiesZh: '北京、西安、郑州、武汉、成都、重庆等中西部枢纽',
+        citiesEn: 'Beijing, Xi\'an, Zhengzhou, Wuhan, Chengdu, Chongqing',
+        evalRule: (dmEl === '火') ? { score: 86, ratingZh: '火土相生 · 稳实落地', ratingEn: 'Grounded Execution Zone' }
+                : (dmEl === '土') ? (isStrong ? { score: 74, ratingZh: '厚重沉稳 · 节奏趋缓', ratingEn: 'Stately Steady Pace' } : { score: 92, ratingZh: '厚德载物 · 滋养培补', ratingEn: 'Generous Nourishing Sanctuary' })
+                : (dmEl === '金') ? { score: 90, ratingZh: '土金相生 · 财库充盈', ratingEn: 'Generative Capital Vault' }
+                : (dmEl === '水') ? { score: 66, ratingZh: '堤岸围困 · 循规蹈矩', ratingEn: 'Rigid Boundaries & Rules' }
+                : { score: 84, ratingZh: '扎根深厚 · 稳步取财', ratingEn: 'Deep Rooting & Steady Wealth' }
+      },
+      {
+        directionZh: '西方 (金气场)',
+        directionEn: 'West (Metal Field)',
+        element: '金',
+        elementEn: 'Metal',
+        citiesZh: '成渝高新、西安科技圈、西欧(伦敦/巴黎)、北美西海岸等',
+        citiesEn: 'Chengdu-Chongqing tech hubs, Western Europe, North American West',
+        evalRule: (dmEl === '土') ? { score: 88, ratingZh: '土金吐秀 · 精英研创', ratingEn: 'Elite Analytical R&D Haven' }
+                : (dmEl === '金') ? (isStrong ? { score: 70, ratingZh: '铁骑并进 · 需求差异', ratingEn: 'Fierce Analytical Competition' } : { score: 93, ratingZh: '金水相生 · 肃穆成器', ratingEn: 'Formidable Crafting Mastery' })
+                : (dmEl === '水') ? { score: 91, ratingZh: '源远流长 · 学术智库', ratingEn: 'Enduring Source Intellect' }
+                : (dmEl === '木') ? { score: 68, ratingZh: '修剪雕琢 · 规训打磨', ratingEn: 'Rigorous Pruning Crucible' }
+                : { score: 85, ratingZh: '火炼真金 · 掌控大权', ratingEn: 'Smelting Gold - Executive Authority' }
+      },
+      {
+        directionZh: '北方 (水气场)',
+        directionEn: 'North (Water Field)',
+        element: '水',
+        elementEn: 'Water',
+        citiesZh: '北京、天津、沈阳、大连、北欧、加拿大等北方重镇',
+        citiesEn: 'Beijing, Tianjin, Northern coastal cities, Northern Europe, Canada',
+        evalRule: (dmEl === '金') ? { score: 90, ratingZh: '金白水清 · 灵性远见', ratingEn: 'Pure Intellect & Vision' }
+                : (dmEl === '水') ? (isStrong ? { score: 72, ratingZh: '汪洋大海 · 需堤防洪', ratingEn: 'Vast Ocean - Guard Flooding' } : { score: 94, ratingZh: '深流得助 · 潜龙出渊', ratingEn: 'Deep Fluid Powerhouse' })
+                : (dmEl === '木') ? { score: 91, ratingZh: '水木相涵 · 智慧长青', ratingEn: 'Spiritual Wisdom & Long-term Growth' }
+                : (dmEl === '火') ? { score: 65, ratingZh: '水火相激 · 寒凝冰封', ratingEn: 'Challenging Cold Damp Tension' }
+                : { score: 86, ratingZh: '润泽丰沃 · 积聚资粮', ratingEn: 'Nourishing Resource Abundance' }
+      }
+    ];
+
+    const geographicDirections = directionConfigs.map(cfg => {
+      const res = cfg.evalRule;
+      let resonanceZh = '';
+      let resonanceEn = '';
+      let careerSynergyZh = '';
+      let careerSynergyEn = '';
+
+      if (res.score >= 90) {
+        resonanceZh = `本地方位【${cfg.element}】气场与命元日主形成天作之合，气机顺畅无阻。在此能激发深层潜能、得贵人相助、减少莫名的人际与现实阻力。`;
+        resonanceEn = `This direction\'s [${cfg.elementEn}] energy harmonizes perfectly with your natal core. Fluid elemental circulation unlocks deep potential, attracts mentors, and dissolves friction.`;
+        careerSynergyZh = '适合作为核心事业根据地、长期定居立足点或重大项目落地主场。';
+        careerSynergyEn = 'Prime destination for core career headquarters, permanent residency, or pivotal business deployments.';
+      } else if (res.score >= 80) {
+        resonanceZh = `本地方位气场偏向务实稳健，五行相生相化，能为你提供坚实的基础设施支撑与稳步积累的物质环境。`;
+        resonanceEn = `This direction provides steady pragmatic grounding and balanced circulation, offering reliable infrastructure and systematic capital accumulation.`;
+        careerSynergyZh = '适合开展常规商业运营、设立区域分支中心或技术研发基地。';
+        careerSynergyEn = 'Ideal for robust operational scaling, regional subsidiary hubs, or technical R&D centers.';
+      } else {
+        resonanceZh = `本地方位五行气场与命元存在明显的相克或过重耗泄，容易在人际文化、心理适应或生活习惯上感受到隐形阻力。`;
+        resonanceEn = `This direction exhibits significant elemental friction or exhausting tension with your Day Master, presenting subtle cultural and interpersonal headwinds.`;
+        careerSynergyZh = '适合短期攻坚或磨炼意志，不建议作为耗竭元神时期的长期避风港。';
+        careerSynergyEn = 'Valuable for short-term discipline or high-stakes sprints, but unadvisable as a long-term sanctuary during low vitality periods.';
+      }
+
+      return {
+        directionZh: cfg.directionZh,
+        directionEn: cfg.directionEn,
+        element: cfg.element,
+        elementEn: cfg.elementEn,
+        citiesZh: cfg.citiesZh,
+        citiesEn: cfg.citiesEn,
+        fitScore: res.score,
+        ratingZh: res.ratingZh,
+        ratingEn: res.ratingEn,
+        resonanceZh,
+        resonanceEn,
+        careerSynergyZh,
+        careerSynergyEn
+      };
+    });
+
+    geographicDirections.sort((a, b) => b.fitScore - a.fitScore);
+    const bestDir = geographicDirections[0];
+    const bestDirectionZh = `首选主场方位：${bestDir.directionZh}（契合度 ${bestDir.fitScore}% · ${bestDir.ratingZh}），代表枢纽：${bestDir.citiesZh}`;
+    const bestDirectionEn = `Prime Resonant Direction: ${bestDir.directionEn} (Resonance: ${bestDir.fitScore}% · ${bestDir.ratingEn}), Hubs: ${bestDir.citiesEn}`;
+
+    // Workplace Organizational Ecosystem Fit (4 Dimensions)
+    const pillars = bazi.pillars;
+    const godSet = new Set();
+    ['year', 'month', 'day', 'hour'].forEach(k => {
+      const p = pillars[k];
+      if (p.stemGod && p.stemGod !== '日主') godSet.add(p.stemGod);
+      if (p.hidden) p.hidden.forEach(h => godSet.add(h.god));
+    });
+
+    const hasOfficer = godSet.has('正官') || godSet.has('正印');
+    const hasKillings = godSet.has('七杀') || godSet.has('偏官');
+    const hasHurting = godSet.has('伤官');
+    const hasEating = godSet.has('食神');
+    const hasWealth = godSet.has('正财') || godSet.has('偏财');
+    const hasRobWealth = godSet.has('劫财') || godSet.has('比肩');
+    const hasIndirectResource = godSet.has('偏印');
+
+    // 1. System, SOE & Large Bureaucracy
+    let sysScore = 65;
+    if (hasOfficer) sysScore += 20;
+    if (hasHurting) sysScore -= 22;
+    if (hasKillings && !hasOfficer) sysScore -= 10;
+    if (!isStrong) sysScore += 10;
+    sysScore = Math.max(40, Math.min(95, sysScore));
+
+    // 2. Flat Startups & Agile Venture
+    let ventureScore = 60;
+    if (hasHurting) ventureScore += 22;
+    if (hasKillings) ventureScore += 18;
+    if (hasWealth) ventureScore += 12;
+    if (isStrong) ventureScore += 10;
+    if (hasOfficer && !hasHurting) ventureScore -= 15;
+    ventureScore = Math.max(40, Math.min(96, ventureScore));
+
+    // 3. Professional Partnership & Guild
+    let partnerScore = 62;
+    if (hasRobWealth) partnerScore += 18;
+    if (hasWealth) partnerScore += 12;
+    if (hasEating) partnerScore += 10;
+    if (hasKillings && !hasOfficer) partnerScore -= 8;
+    partnerScore = Math.max(40, Math.min(94, partnerScore));
+
+    // 4. Solo Expert & Boutique Creator IP
+    let soloScore = 60;
+    if (hasIndirectResource) soloScore += 22;
+    if (hasEating) soloScore += 18;
+    if (hasHurting) soloScore += 15;
+    if (!isStrong) soloScore += 12;
+    if (hasOfficer && !hasIndirectResource) soloScore -= 12;
+    soloScore = Math.max(40, Math.min(95, soloScore));
+
+    const workplaceEcosystems = [
+      {
+        key: 'systemSOE',
+        nameZh: '体制内 / 国企 / 央企科层制系统',
+        nameEn: 'System, SOEs & Hierarchical Bureaucracy',
+        icon: '🏛️',
+        fitScore: sysScore,
+        gradeZh: sysScore >= 80 ? '天然适任主场' : sysScore >= 65 ? '需高维心智防耗' : '极度耗能避让',
+        gradeEn: sysScore >= 80 ? 'Prime Natural Fit' : sysScore >= 65 ? 'Requires Conscious Adaptation' : 'High Friction - Unfavorable',
+        resonanceZh: sysScore >= 80
+          ? '正官正印纯粹，高度契合体制内程序规范与层级秩序。重契约有担当，能以稳健资历赢得组织信任与逐步晋升。'
+          : '命带叛逆锐气（伤官七杀），在繁琐教条与形式主义汇报中易感窒息；若无高情商中和，容易因直言不讳遭致无形边缘化。',
+        resonanceEn: sysScore >= 80
+          ? 'Clear Officer and Resource alignment thrives within institutional order and regulatory compliance, steadily winning trust and seniority.'
+          : 'Disruptive edge (Hurting Officer / Seven Killings) feels constrained by dogmatic red tape, risking friction if outspoken.',
+        frictionRootCauseZh: '【内耗核心因由】：讨厌虚耗时间的流程汇报与复杂办公室政治，感到个人专业才华无法即时得到物理世界的正反馈。',
+        frictionRootCauseEn: '[Core Friction Trigger]: Exhaustion from ceremonial reporting and subtle political posturing where individual competence yields delayed feedback.',
+        survivalTacticsZh: '【破局自处指南】：若身在其中，收起锋芒不作道德裁判官；把组织当作不可替代的资源护城河，利用充裕时间深耕硬核学术资质。',
+        survivalTacticsEn: '[Operational Survival Guide]: If operating within, lower your combat posture. Treat the institution as a stable protective moat while quietly compounding independent credentials.'
+      },
+      {
+        key: 'flatVenture',
+        nameZh: '扁平创新创业 / 互联网科技 / 敏捷初创',
+        nameEn: 'Flat Startups, Agile Tech & Venture Growth',
+        icon: '🚀',
+        fitScore: ventureScore,
+        gradeZh: ventureScore >= 80 ? '天然适任主场' : ventureScore >= 65 ? '需高维心智防耗' : '极度耗能避让',
+        gradeEn: ventureScore >= 80 ? 'Prime Natural Fit' : ventureScore >= 65 ? 'Requires Conscious Adaptation' : 'High Friction - Unfavorable',
+        resonanceZh: ventureScore >= 80
+          ? '伤官生财、七杀当权，天生具备颠覆性创新敏锐度与绝境破局魄力。在去中心化、唯业绩说话的战壕中能够释放十倍战斗力。'
+          : '注重确定感与安全边际，面对初创企业的高频战略转向、现金流不确定性与多工种一人身兼容易产生焦虑。',
+        resonanceEn: ventureScore >= 80
+          ? 'Hurting Officer generating Wealth paired with Seven Killings excels in agile, meritocratic environments, delivering tenfold creative breakthroughs.'
+          : 'High need for structural certainty finds chronic startup pivots and volatile runway metrics emotionally destabilizing.',
+        frictionRootCauseZh: '【内耗核心因由】：因追求过高极致完美而频繁否定当前版本，或因团队执行力跟不上自己超前的大脑算力而倍感焦躁。',
+        frictionRootCauseEn: '[Core Friction Trigger]: Perfectionist paralysis delaying shipment, or extreme irritation when team execution lags behind your swift mental architecture.',
+        survivalTacticsZh: '【破局自处指南】：坚持“完成远胜于完美”，允许交付粗糙MVP；克制亲力亲为的冲动，将注意力锁定在战略胜负手与商业回款。',
+        survivalTacticsEn: '[Operational Survival Guide]: Adhere to "Done is better than perfect"; resist micromanagement and focus exclusively on core revenue engines.'
+      },
+      {
+        key: 'partnership',
+        nameZh: '专业合伙制 / 事务所 / 专家联盟',
+        nameEn: 'Professional Partnership, Guild & Alliance',
+        icon: '🤝',
+        fitScore: partnerScore,
+        gradeZh: partnerScore >= 80 ? '天然适任主场' : partnerScore >= 65 ? '需高维心智防耗' : '极度耗能避让',
+        gradeEn: partnerScore >= 80 ? 'Prime Natural Fit' : partnerScore >= 65 ? 'Requires Conscious Adaptation' : 'High Friction - Unfavorable',
+        resonanceZh: partnerScore >= 80
+          ? '比劫有制、财星流通，善于通过利益捆绑聚拢各路高手。在合伙人共治模式下既能保持相对独立，又能借助集体品牌打大仗。'
+          : '对伙伴忠诚度与付出公平度极度敏感，一旦出现责任不均或收益分配瑕疵，容易在心中积压怨怼引发剧烈动荡。',
+        resonanceEn: partnerScore >= 80
+          ? 'Companion stars balanced by Wealth enable effective profit-sharing and guild governance, combining autonomy with pooled collective leverage.'
+          : 'Extreme sensitivity to fairness and contribution equity can lead to silent resentment if accountability or profit dividends drift.',
+        frictionRootCauseZh: '【内耗核心因由】：遇到搭便车的合伙人不敢当面撕破脸，表面隐忍迁就，内心反复盘算投入产出比而自我内耗。',
+        frictionRootCauseEn: '[Core Friction Trigger]: Internalizing anger toward free-riding peers; agonizing over unreciprocated energy investment instead of enforcing boundaries.',
+        survivalTacticsZh: '【破局自处指南】：先小人后君子，入局前确立冷酷刚性的股权退出与考核机制；把情分与契约严格隔离，亲兄弟明算账。',
+        survivalTacticsEn: '[Operational Survival Guide]: Ironclad buy-sell agreements upfront. Strictly decouple emotional fraternity from cold corporate contractual obligations.'
+      },
+      {
+        key: 'autonomousIP',
+        nameZh: '独立专家工作室 / 超级个体 / 知识IP',
+        nameEn: 'Solo Specialist Studio, Creator & Knowledge IP',
+        icon: '💡',
+        fitScore: soloScore,
+        gradeZh: soloScore >= 80 ? '天然适任主场' : soloScore >= 65 ? '需高维心智防耗' : '极度耗能避让',
+        gradeEn: soloScore >= 80 ? 'Prime Natural Fit' : soloScore >= 65 ? 'Requires Conscious Adaptation' : 'High Friction - Unfavorable',
+        resonanceZh: soloScore >= 80
+          ? '偏印灵性与食伤才华交织，享受深度沉浸式心流。一个人就是一家公司，依靠无可替代的专业护城河活得从容体面。'
+          : '缺乏单兵作战的抗压韧性或缺乏商业闭环意识，容易陷入空想清高、难以将高深技能顺利变现的财务窘境。',
+        resonanceEn: soloScore >= 80
+          ? 'Indirect Resource spirituality combined with expressive talent thrives in autonomous deep work, operating as a resilient one-person enterprise.'
+          : 'Potential commercial blind spots or loneliness: intellectual aloofness without a crisp customer acquisition funnel leads to cash anxiety.',
+        frictionRootCauseZh: '【内耗核心因由】：既渴望绝对自由又惧怕完全暴露在市场风浪中；思想巨人行动矮子，深陷无休止的打磨拖延。',
+        frictionRootCauseEn: '[Core Friction Trigger]: Craving total autonomy while dreading market exposure; endless refinement without publishing.',
+        survivalTacticsZh: '【破局自处指南】：建立极简自动化运营管道，把专业知识封装为标准化数字资产；保持高密度的公开输出，以作品吸引高质量同频伙伴。',
+        survivalTacticsEn: '[Operational Survival Guide]: Productize specialized insight into scalable digital assets; publish continuously to let your work attract aligned clientele.'
+      }
+    ];
+
+    workplaceEcosystems.sort((a, b) => b.fitScore - a.fitScore);
+
+    return {
+      geographicDirections,
+      bestDirectionZh,
+      bestDirectionEn,
+      workplaceEcosystems
+    };
+  }
+
   return {
     calculateLuck,
     calculateDecadeMetadata,
@@ -1379,6 +2024,8 @@ const LuckEngine = (function() {
     evaluateInteractions,
     evaluateTransitFortune,
     calculateLifelongTimeline,
+    generateOperationalPlaybook,
+    generateGeographicEcologicalResonance,
     isDayMasterStrong,
     getTenGod,
     getNaYin

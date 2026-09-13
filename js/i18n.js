@@ -79,13 +79,67 @@ const I18N = (function() {
 
       sec_strategy_title: "全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱",
       sec_strategy_subtitle: "深度融汇生杀破局战略胜负手、六亲深度侧写（父母/配偶/子女四维全息）、宏观时空场能共振与终身不败立身三则",
-      sec_friction_view_title: "精神内耗专项检测与实战彻底改善方案 · 禅道心智超越",
-      sec_friction_view_subtitle: "直击过度思考与认知反刍根源，融合《金刚经》破相、《六祖坛经》自性与《庄子》乘物游心至高解脱法门",
+      sec_friction_view_title: "原厂心理使用说明书 · 精神内耗深度解构与禅道至高心法",
+      sec_friction_view_subtitle: "八大典籍正统经文细注 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯",
+      seal_view_friction: "原厂说明",
+      nav_btn_friction: "原厂说明",
       lbl_back_home: "返回核心主盘",
       portal_strategy_title: "战略大局与六亲全息图谱",
       portal_strategy_desc: "帕累托 20% 关键枢纽 · 生杀破局 · 六亲深度侧写 · 终身不败三则",
-      portal_friction_title: "精神内耗专项检测与实战改善",
-      portal_friction_desc: "3分钟生理重置 · 4部实战法门 · 《金刚经》《坛经》《庄子》心智解脱",
+      portal_friction_title: "原厂心理使用说明书",
+      portal_friction_desc: "八大典籍出厂心法 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯",
+
+      // Operational Playbook
+      playbook_title: "当季与本年现实破局罗盘",
+      playbook_subtitle: "年度核心主线攻坚 · 四季节律能量潮汐 · 即时决策防火墙与雷区熔断",
+      playbook_badge: "现实破局",
+      playbook_tab_mainline: "年度主线战略",
+      playbook_tab_seasons: "四季节律能量表",
+      playbook_tab_safeguards: "即时决策防火墙",
+      playbook_strategic_tone_lbl: "年度战略定调",
+      playbook_mission_lbl: "核心主线使命",
+      playbook_priorities_lbl: "三大核心必胜战役",
+      playbook_deprioritize_lbl: "坚决断舍离之雷区",
+      playbook_tide_action_do: "宜：最佳进取",
+      playbook_tide_action_avoid: "忌：绝对避让",
+
+      // Ecological Resonance
+      eco_resonance_title: "地理方位与组织生态匹配仪",
+      eco_resonance_subtitle: "五行城市方位能量场共振 · 体制/初创/合伙/独立组织生态位诊断与反内耗归因",
+      eco_resonance_badge: "生态定位",
+      eco_tab_geographic: "城市与方位能量场",
+      eco_tab_workplace: "组织生态位与反内耗归因",
+      eco_geo_best_lbl: "最优主场方位",
+      eco_geo_cities_lbl: "代表都市群",
+      eco_geo_resonance_lbl: "气场共振机制",
+      eco_geo_synergy_lbl: "发展协同指引",
+      eco_org_resonance_lbl: "生态契合机理",
+      eco_org_friction_lbl: "反内耗卡点归因",
+      eco_org_survival_lbl: "破局自处指南",
+
+      // Factory Mind Manual
+      manual_nav_btn: "原厂说明",
+      manual_seal: "原厂说明",
+      manual_tab_specs: "出厂核心参数",
+      manual_tab_canons: "八大经典经文细注",
+      manual_tab_triggers: "极端压力触发开关",
+      manual_tab_protocols: "出厂自救降维心法",
+      manual_tab_habits: "五行能量微习惯",
+      manual_tab_zendao: "禅道至高解脱专栏",
+      manual_specs_heading: "出厂核心心智规格说明 (Factory Mindset Specifications)",
+      manual_canons_heading: "八大典籍正统心智出厂细注 (Eight Classical Canons Scripture Manual)",
+      manual_triggers_heading: "极端压力触发开关与认知红线 (Stress Trigger Signatures & Red Lines)",
+      manual_protocols_heading: "出厂自救三阶降维心法 (Three-Level Factory Emergency De-escalation Protocols)",
+      manual_habits_heading: "每日五行能量微习惯 (Daily Five-Element Energy Micro-Habits)",
+
+      // Dynamic Calculation Progress Bar
+      calc_progress_title: "乾坤气象 · 全相智能排盘推演中",
+      calc_progress_subtitle: "正在调用东方全息大模型并通判八大典籍古籍库",
+      calc_stage_1: "四柱八字乾坤排盘 · 纳音神煞五行量化",
+      calc_stage_2: "八大经典通判互参 · 帕累托2:8核心枢纽剖析",
+      calc_stage_3: "时空大运罗盘推演 · 当季本年现实破局定位",
+      calc_stage_4: "原厂心理说明书构筑 · 出厂参数与自救心法",
+      calc_stage_5: "乾坤既定 · 呈现全相看板",
 
       portal_talisman_qiankun: "乾坤",
       portal_seal_astronomy: "钦天玄览",
@@ -122,8 +176,8 @@ const I18N = (function() {
       portal_card1_desc: "精确干支神煞、纳音五行、日主旺衰量化与动态形变雷达图。",
       portal_card2_title: "战略大局与帕累托20%",
       portal_card2_desc: "锁定决定80%运势走向的20%主导枢纽，解构破局战役与六亲全息侧写。",
-      portal_card3_title: "精神内耗与禅道解脱",
-      portal_card3_desc: "直击过度反刍心性盲区，融合金刚经、坛经与庄子至高心智心法。",
+      portal_card3_title: "原厂心理使用说明书",
+      portal_card3_desc: "八大典籍出厂心法 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯",
       portal_card4_title: "百岁运势时空罗盘",
       portal_card4_desc: "1~100岁连续平滑推演，精力潮汐、财富高光与天克地冲提前防御。",
       portal_card5_title: "八典全库经文细注",
@@ -448,13 +502,67 @@ const I18N = (function() {
 
       sec_strategy_title: "Grand Strategy & Breakthrough Campaign · Pareto 20% Sovereign Hologram",
       sec_strategy_subtitle: "Synthesizing decisive breakthrough campaigns, 4D kinship holographic depth profiles (Parents/Spouse/Children), era resonance & lifetime golden rules",
-      sec_friction_view_title: "Mental Friction Diagnosis & Practical Solutions · Zen-Dao Mastery",
-      sec_friction_view_subtitle: "Directly resolving overthinking and cognitive loops with the Diamond Sutra, Platform Sutra & Zhuangzi transcendence protocols",
+      sec_friction_view_title: "Original Factory-Default Mind Manual · Rumination Deconstruction & Zen-Dao Transcendence",
+      sec_friction_view_subtitle: "Grounded in Eight Classical Canons & Zen Wisdom · Stress Triggers · Factory Emergency Reset · 5-Element Micro-Habits",
+      seal_view_friction: "MIND MANUAL",
+      nav_btn_friction: "Mind Manual",
       lbl_back_home: "Back to Natal Chart",
       portal_strategy_title: "Grand Strategy & Kinship Hologram",
       portal_strategy_desc: "Pareto 20% Sovereign Fulcrum · Breakthrough Campaign · 4D Kinship · 3 Golden Rules",
-      portal_friction_title: "Mental Friction Diagnostic & Zen-Dao Mastery",
-      portal_friction_desc: "3-Min Somatic Reset · 4 Combat Solutions · Diamond Sutra, Platform & Zhuangzi",
+      portal_friction_title: "Original Factory-Default Mind Manual",
+      portal_friction_desc: "Eight Classical Canons · Stress Triggers · 3-Level Emergency Reset · 5-Element Micro-Habits",
+
+      // Operational Playbook
+      playbook_title: "Current Year & Season Operational Playbook",
+      playbook_subtitle: "Annual Strategic Mainline · 4-Season Energy Tides · Real-Time Decision Safeguards",
+      playbook_badge: "Operational Flow",
+      playbook_tab_mainline: "Annual Mainline",
+      playbook_tab_seasons: "Seasonal Energy Tides",
+      playbook_tab_safeguards: "Decision Safeguards",
+      playbook_strategic_tone_lbl: "Strategic Stance",
+      playbook_mission_lbl: "Mainline Strategic Mission",
+      playbook_priorities_lbl: "Top 3 Pivotal Campaigns",
+      playbook_deprioritize_lbl: "Strict Non-Priorities to Discard",
+      playbook_tide_action_do: "Optimal Action",
+      playbook_tide_action_avoid: "Strict Avoidance",
+
+      // Ecological Resonance
+      eco_resonance_title: "Geographic & Ecological Resonance Meter",
+      eco_resonance_subtitle: "Five-Element City Energy Resonance · Workplace Ecosystem Diagnostic & Anti-Friction Strategy",
+      eco_resonance_badge: "Ecosystem Fit",
+      eco_tab_geographic: "City & Cardinal Field",
+      eco_tab_workplace: "Workplace Ecosystem Diagnostic",
+      eco_geo_best_lbl: "Top Resonant Geolocation",
+      eco_geo_cities_lbl: "Key Metropolitan Clusters",
+      eco_geo_resonance_lbl: "Field Resonance Assessment",
+      eco_geo_synergy_lbl: "Strategic Geolocation Advice",
+      eco_org_resonance_lbl: "Ecosystem Resonance Mechanics",
+      eco_org_friction_lbl: "Internal Friction Root Cause",
+      eco_org_survival_lbl: "Operational Survival Playbook",
+
+      // Factory Mind Manual
+      manual_nav_btn: "Mind Manual",
+      manual_seal: "MIND MANUAL",
+      manual_tab_specs: "Factory Specs",
+      manual_tab_canons: "Eight Canons Exegesis",
+      manual_tab_triggers: "Stress Triggers",
+      manual_tab_protocols: "Factory Emergency Reset",
+      manual_tab_habits: "5-Element Micro-Habits",
+      manual_tab_zendao: "Zen-Dao Transcendence",
+      manual_specs_heading: "Original Factory Mindset Specifications",
+      manual_canons_heading: "Eight Classical Canons Scripture Manual",
+      manual_triggers_heading: "Stress Trigger Signatures & Red Lines",
+      manual_protocols_heading: "Three-Level Factory Emergency De-escalation Protocols",
+      manual_habits_heading: "Daily Five-Element Energy Micro-Habits",
+
+      // Dynamic Calculation Progress Bar
+      calc_progress_title: "Synthesizing Cosmic Pillars & Metaphysical Blueprints...",
+      calc_progress_subtitle: "Synthesizing Natal Geometry with Eight Classical Canons & Luck Cycles",
+      calc_stage_1: "Computing Four Pillars, NaYin & Elemental Balance",
+      calc_stage_2: "Cross-Referencing Eight Classical Canons & Pareto Fulcrum",
+      calc_stage_3: "Synthesizing Luck Cycles & Operational Chrono-Navigator",
+      calc_stage_4: "Assembling Factory Mind Manual & De-escalation Protocols",
+      calc_stage_5: "Destiny Canvas Complete · Launching Dashboard",
 
       portal_talisman_qiankun: "Qian-Kun",
       portal_seal_astronomy: "Celestial Ephemeris",
@@ -491,8 +599,8 @@ const I18N = (function() {
       portal_card1_desc: "Accurate pillars, Na Yin melodies, Day Master vigor and morphing elemental radar.",
       portal_card2_title: "Pareto 80/20 & Grand Strategy",
       portal_card2_desc: "Identify the 20% fulcrum governing 80% destiny, decisive campaigns and kinship depth.",
-      portal_card3_title: "Mental Friction & Zen Liberation",
-      portal_card3_desc: "Break rumination loops with Diamond Sutra, Platform Sutra & Zhuangzi wisdom.",
+      portal_card3_title: "Original Factory Mind Manual",
+      portal_card3_desc: "Eight Classical Canons · Stress Triggers · 3-Level Emergency Reset · 5-Element Micro-Habits",
       portal_card4_title: "Lifelong Chrono-Navigator",
       portal_card4_desc: "Continuous age 1-100 trajectory, vitality tides, wealth peaks & transit alerts.",
       portal_card5_title: "Eight Classical Canons",
@@ -1351,14 +1459,21 @@ const I18N = (function() {
         mf.level = 'Mild Introspection (Reflective Mode)';
       }
 
-      mf.primaryRoot = mf.primaryRoot
-        .replace(/伤官/g, 'Hurting Officer (Shang Guan) ')
-        .replace(/七杀/g, 'Seven Killings (Qi Sha) ')
-        .replace(/羊刃/g, 'Yang Blade ')
-        .replace(/偏印/g, 'Indirect Resource (Pian Yin) ')
-        .replace(/身弱/g, 'Weak Day Master ')
-        .replace(/完美主义/g, 'perfectionism ')
-        .replace(/内耗/g, 'mental rumination ');
+      if (mf.primaryRootEn) {
+        mf.primaryRoot = mf.primaryRootEn;
+      } else {
+        mf.primaryRoot = mf.primaryRoot
+          .replace(/伤官/g, 'Hurting Officer (Shang Guan) ')
+          .replace(/七杀/g, 'Seven Killings (Qi Sha) ')
+          .replace(/羊刃/g, 'Yang Blade ')
+          .replace(/偏印/g, 'Indirect Resource (Pian Yin) ')
+          .replace(/身弱/g, 'Weak Day Master ')
+          .replace(/完美主义/g, 'perfectionism ')
+          .replace(/内耗/g, 'mental rumination ');
+      }
+      if (mf.triggersEn && Array.isArray(mf.triggersEn) && mf.triggersEn.length > 0) {
+        mf.triggers = mf.triggersEn;
+      }
       
       const solEnTitles = [
         { 
@@ -1433,6 +1548,59 @@ const I18N = (function() {
               });
             }
           }
+        });
+      }
+
+      // Factory Specs Translation
+      if (mf.factorySpecs) {
+        const fs = mf.factorySpecs;
+        fs.dayMasterZh = fs.dayMasterEn || fs.dayMasterZh;
+        fs.processorTypeZh = fs.processorTypeEn || fs.processorTypeZh;
+        fs.osVersionZh = fs.osVersionEn || fs.osVersionZh;
+        fs.coreEngineZh = fs.coreEngineEn || fs.coreEngineZh;
+        fs.ruminationBandwidthZh = fs.ruminationBandwidthEn || fs.ruminationBandwidthZh;
+        fs.efficiencyRatioZh = fs.efficiencyRatioEn || fs.efficiencyRatioZh;
+      }
+
+      // Classical Canons Manual Translation
+      if (mf.classicalCanonsManual && Array.isArray(mf.classicalCanonsManual)) {
+        mf.classicalCanonsManual.forEach(c => {
+          c.canonNameZh = c.canonNameEn || c.canonNameZh;
+          c.dynastyZh = c.dynastyEn || c.dynastyZh;
+          c.themeZh = c.themeEn || c.themeZh;
+          c.quoteZh = c.quoteEn || c.quoteZh;
+          c.vernacularZh = c.vernacularEn || c.vernacularZh;
+          c.remedyZh = c.remedyEn || c.remedyZh;
+        });
+      }
+
+      // Stress Triggers Translation
+      if (mf.stressTriggers && Array.isArray(mf.stressTriggers)) {
+        mf.stressTriggers.forEach(st => {
+          st.nameZh = st.nameEn || st.nameZh;
+          st.classicalSignZh = st.classicalSignEn || st.classicalSignZh;
+          st.mechanismZh = st.mechanismEn || st.mechanismZh;
+          st.redLineZh = st.redLineEn || st.redLineZh;
+        });
+      }
+
+      // De-escalation Protocols Translation
+      if (mf.deEscalationProtocols && Array.isArray(mf.deEscalationProtocols)) {
+        mf.deEscalationProtocols.forEach(dp => {
+          dp.levelZh = dp.levelEn || dp.levelZh;
+          dp.principleZh = dp.principleEn || dp.principleZh;
+          dp.stepsZh = dp.stepsEn || dp.stepsZh;
+        });
+      }
+
+      // Five Element Micro Habits Translation
+      if (mf.fiveElementMicroHabits && Array.isArray(mf.fiveElementMicroHabits)) {
+        mf.fiveElementMicroHabits.forEach(mh => {
+          mh.element = mh.elementEn || mh.element;
+          mh.durationZh = mh.durationEn || mh.durationZh;
+          mh.habitNameZh = mh.habitNameEn || mh.habitNameZh;
+          mh.ritualZh = mh.ritualEn || mh.ritualZh;
+          mh.potencyZh = mh.potencyEn || mh.potencyZh;
         });
       }
     }

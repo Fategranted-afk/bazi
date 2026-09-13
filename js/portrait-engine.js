@@ -1886,39 +1886,67 @@ class PortraitEngine {
     let detected = false;
     let score = 50; // 基准
     let triggers = [];
+    let triggersEn = [];
     let primaryRoot = '';
+    let primaryRootEn = '';
 
     if (hasShangGuan) {
       detected = true;
       score += 15;
       triggers.push(`伤官秀气外泄（${getGodDesc('伤官')}），容易追求极致完美主义，事情未做脑中已推演多遍，陷入自我苛责与言语反思`);
-      if (!primaryRoot) primaryRoot = '【伤官挑剔与完美主义反噬】才思敏捷追求极致，容不得半点瑕疵；一旦未达预期便向内苛责自己，陷入“想得太多而迟迟不敢动手”的内耗死循环。';
+      triggersEn.push(`Hurting Officer Output: Pursuit of extreme perfectionism, over-simulating scenarios before execution, trapped in self-reproach.`);
+      if (!primaryRoot) {
+        primaryRoot = '【伤官挑剔与完美主义反噬】才思敏捷追求极致，容不得半点瑕疵；一旦未达预期便向内苛责自己，陷入“想得太多而迟迟不敢动手”的内耗死循环。';
+        primaryRootEn = '[Hurting Officer Perfectionism]: Hyper-acute intellect seeking absolute perfection; turns inward with severe self-blame upon the slightest imperfection, falling into analysis paralysis.';
+      }
     }
 
     if (hasQiSha) {
       detected = true;
       score += 15;
       triggers.push(`七杀攻身（${getGodDesc('七杀')}），交感神经常期处于危机战逃状态，过度警觉，容易对外界评价与风吹草动过度解读`);
-      if (!primaryRoot) primaryRoot = '【七杀危机感与过度防御内耗】时刻将外界预设为潜在考场与战场，防备心极重，草木皆兵；容易把别人的无心之语当成针对，神经长期紧绷内耗。';
+      triggersEn.push(`Seven Killings Pressure: Sympathetic nervous system locked in chronic fight-or-flight, hyper-vigilance, and over-interpreting external cues.`);
+      if (!primaryRoot) {
+        primaryRoot = '【七杀危机感与过度防御内耗】时刻将外界预设为潜在考场与战场，防备心极重，草木皆兵；容易把别人的无心之语当成针对，神经长期紧绷内耗。';
+        primaryRootEn = '[Seven Killings Hyper-Vigilance]: Habitually frames external reality as a battlefield or tribunal; hyper-defensive, interpreting casual remarks as covert hostility, maintaining chronic neuro-somatic tension.';
+      }
     }
 
     if (hasPianYin) {
       detected = true;
       score += 12;
       triggers.push(`偏印枭神主事（${getGodDesc('偏印')}），心性清高多疑，沉溺于自我庞大的精神逻辑推演，容易脱离现实、思想巨人行动矮子`);
-      if (!primaryRoot) primaryRoot = '【偏印空想孤傲与行动拖延】沉浸在自我的庞大思想世界中，想得极深极远，但行动力严重滞后，陷入理论自我空转与虚无感中。';
+      triggersEn.push(`Indirect Resource Aloofness: Intellectual isolation and hyper-suspicion, lost in labyrinthine mental models, disconnected from concrete execution.`);
+      if (!primaryRoot) {
+        primaryRoot = '【偏印空想孤傲与行动拖延】沉浸在自我的庞大思想世界中，想得极深极远，但行动力严重滞后，陷入理论自我空转与虚无感中。';
+        primaryRootEn = '[Indirect Resource Over-intellectualization]: Absorbed in deep, solitary mental constructs with severely lagging execution, drifting into theoretical paralysis and existential void.';
+      }
     }
 
     if (isWeak) {
       detected = true;
       score += 12;
       triggers.push(`日元虚浮（${vigor.status}），心理能量防御网脆弱，容易成为情绪海绵吸收负能量，有讨好型人格倾向不敢拒绝`);
-      if (!primaryRoot) primaryRoot = '【身弱边界不清与讨好型内耗】天生共情力过高、边界感薄弱；极度害怕冲突与被讨厌，往往表面妥协迎合，内心委屈纠结，长期处于自我攻击状态。';
+      triggersEn.push(`Delicate Day Master: Fragile psychological boundaries, absorbing environmental negativity like an emotional sponge, prone to conflict-avoidant compliance.`);
+      if (!primaryRoot) {
+        primaryRoot = '【身弱边界不清与讨好型内耗】天生共情力过高、边界感薄弱；极度害怕冲突与被讨厌，往往表面妥协迎合，内心委屈纠结，长期处于自我攻击状态。';
+        primaryRootEn = '[Weak Day Master Boundary Fatigue]: Excessive empathy paired with permeable psychological boundaries; fears conflict and disapproval, acquiescing outwardly while harboring chronic internal distress.';
+      }
     }
 
     if (isWeak && hasCai) {
       score += 8;
       triggers.push('身弱财旺，欲望与承载力失衡，容易产生即期利益焦虑与患得患失');
+      triggersEn.push('Delicate Master with Heavy Wealth: Imbalance between ambition and physical capacity, triggering acute anxiety over immediate gains and losses.');
+    }
+
+    if (!primaryRoot) {
+      primaryRoot = '【气象中和自省自律】命局五行气象较为中和，内耗主要表现为偶尔的深度复盘与阶段性思虑，能够通过适度行动自我调节。';
+      primaryRootEn = '[Harmonious Self-Correction]: Elemental energies are relatively balanced; friction manifests primarily as constructive self-reflection, easily alleviated through deliberate physical action.';
+    }
+    if (triggers.length === 0) {
+      triggers.push('阶段性反思与自我精进要求');
+      triggersEn.push('Periodic self-reflection and personal growth standards');
     }
 
     // 封顶 95
@@ -2206,15 +2234,362 @@ class PortraitEngine {
       }
     };
 
+    // 👑 1. 出厂核心心智出厂参数 (Original Factory Mindset Specifications)
+    const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
+    const dmEn = (typeof I18N !== 'undefined') ? I18N.getStem(dm, 'en') : (STEM_EN_MAP[dm] || dm);
+
+    const factorySpecs = {
+      dayMasterZh: `${dm}木 (阳木参天)`,
+      dayMasterEn: `${dmEn} (Pioneering Stem)`,
+      processorTypeZh: `${dm}木主生发开创，配置【${hasShangGuan ? '高频秀气外溢型' : hasQiSha ? '极度警觉防御型' : hasPianYin ? '深度自省洞察型' : '稳实承载聚合型'}】神经架构`,
+      processorTypeEn: `Pioneering Creative Neural Architecture with ${hasShangGuan ? 'Expressive Output' : hasQiSha ? 'Vigilant Threat-Detection' : 'Deep Introspective'} Bandwidth`,
+      osVersionZh: '乾坤原厂纯净版 1.0 (Natal Factory Clean OS v1.0)',
+      osVersionEn: 'Natal Factory Clean OS v1.0',
+      coreEngineZh: `日元${vigor.status} · ${hasShangGuan ? '伤官才气驱动' : hasQiSha ? '七杀危机驱动' : hasPianYin ? '偏印灵性驱动' : '正印正官纯正驱动'}`,
+      coreEngineEn: `${vigor.status === '身旺' ? 'Robust Vitality Engine' : 'Refined High-Sensitivity Engine'} with ${hasShangGuan ? 'Creative Output Drive' : hasQiSha ? 'Vigilant Crisis Drive' : 'Intuitive Depth Drive'}`,
+      ruminationBandwidthZh: `额叶神经回旋超频占比：${score}% (基准待机负载偏高)`,
+      ruminationBandwidthEn: `Cognitive Rumination Bandwidth: ${score}% (Elevated baseline standby load)`,
+      efficiencyRatioZh: '高感知敏锐度 (高输入算力 / 需防向内自噬)',
+      efficiencyRatioEn: 'High Sensitivity Quotient (High input compute / Requires outward channeling)'
+    };
+    if (dm === '乙') {
+      factorySpecs.dayMasterZh = '乙木 (柔韧藤萝)';
+    } else if (dm === '丙') {
+      factorySpecs.dayMasterZh = '丙火 (太阳普照)';
+    } else if (dm === '丁') {
+      factorySpecs.dayMasterZh = '丁火 (万家灯火)';
+    } else if (dm === '戊') {
+      factorySpecs.dayMasterZh = '戊土 (厚德重山)';
+    } else if (dm === '己') {
+      factorySpecs.dayMasterZh = '己土 (田园润沃)';
+    } else if (dm === '庚') {
+      factorySpecs.dayMasterZh = '庚金 (利刃肃杀)';
+    } else if (dm === '辛') {
+      factorySpecs.dayMasterZh = '辛金 (珠玉流光)';
+    } else if (dm === '壬') {
+      factorySpecs.dayMasterZh = '壬水 (江河浩瀚)';
+    } else if (dm === '癸') {
+      factorySpecs.dayMasterZh = '癸水 (甘霖润泽)';
+    }
+
+    // 📜 2. 八大典籍正统出厂心智细注 (Eight Classical Canons Scripture Manual)
+    const classicalCanonsManual = [
+      {
+        canonId: 'ditiansui',
+        canonNameZh: '《滴天髓》',
+        canonNameEn: 'Di Tian Sui',
+        dynastyZh: '宋·京图 / 明·刘基',
+        dynastyEn: 'Song: Jing Tu / Ming: Liu Ji',
+        themeZh: '理气心机与神魂归位',
+        themeEn: 'Qi Circulation & Somatic Grounding',
+        quoteZh: '“天道有寒暖，地道有燥湿。理气乘除，衰旺真假不可不察。”',
+        quoteEn: '"The Way of Heaven possesses cold and warmth; the Way of Earth possesses dryness and dampness. The multiplication and division of qi, and the true vs false vigor, must be rigorously discerned."',
+        vernacularZh: '【通俗白话精解】：人的心理内耗本质上是体内五行气机（气血与神经递质）的升降失衡。天冷则心境凝滞，火燥则情绪暴烈。不要在脑子里跟念头打架，先把呼吸调匀、体温调和、气血流通，心神自然安歇。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Mental friction is fundamentally an imbalance in the somatic circulation of vital qi and autonomic nervous currents. Excessive cold freezes the spirit; excessive dryness provokes impulsive flares. Cease wrestling with thoughts in the cerebral cortex; ground your physical breath and thermal balance, and the mind naturally settles into equilibrium.',
+        remedyZh: '【出厂调律】：身冷时晒太阳喝温姜茶；心焦火炽时用冷水洗脸深长吐气，先调生理气机，再理心理念头。',
+        remedyEn: '[Factory Tuning Habit]: When cold and lethargic, absorb sunlight and drink warm tea; when mentally overheated, splash cold water on your face. Regulate somatic physiology first; mental clarity follows.'
+      },
+      {
+        canonId: 'qiongtong',
+        canonNameZh: '《穷通宝鉴》',
+        canonNameEn: 'Qiong Tong Bao Jian',
+        dynastyZh: '清·余春台',
+        dynastyEn: 'Qing: Yu Chuntai',
+        themeZh: '寒暖燥湿与调候心境',
+        themeEn: 'Seasonal Equilibrium & Climate Harmony',
+        quoteZh: '“天时有燥湿之宜，五行兼生克之妙。得其调和，神清气爽；失其调候，郁结自生。”',
+        quoteEn: '"The seasons dictate dryness and moisture; the Five Elements weave generation and restraint. When harmonized, spirit is luminous and vital qi is pristine; when seasonal regulation is lost, internal gloom inevitably coagulates."',
+        vernacularZh: '【通俗白话精解】：你的心境是由出生的“季节温湿度”奠定基调的。冬生者天生自带防备与克制，夏生者天生急于求成与易焦躁。内耗不是你性格不好，而是身体在极端天候下发出的生理调候信号。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Your baseline psychological weather is anchored in the seasonal climate of your birth. Winter charts possess instinctual wariness and self-restraint; summer charts struggle with urgency and irritation. Anxiety is not a moral defect, but an autonomic signal crying out for environmental and seasonal regulation.',
+        remedyZh: '【出厂调律】：冬生喜暖，多做户外阳光有氧；夏生喜润，居室保持清凉湿润，远离嘈杂人声。',
+        remedyEn: '[Factory Tuning Habit]: Winter natives require solar radiance and cardiovascular warmth; summer natives require cool, humid workspaces and acoustic sanctuary.'
+      },
+      {
+        canonId: 'ziping',
+        canonNameZh: '《子平真诠》',
+        canonNameEn: 'Zi Ping Zhen Quan',
+        dynastyZh: '清·沈孝瞻',
+        dynastyEn: 'Qing: Shen Xiaozhan',
+        themeZh: '格局成败与相神护持',
+        themeEn: 'Pattern Archetype & The Guardian Minister',
+        quoteZh: '“八字用神，专求月令。何谓相神？协规中矩，救应扶持。有病有药，神清气聚。”',
+        quoteEn: '"The governing pattern seeks the monthly mandate. What is the Guardian Minister? It preserves discipline, offers rescue, and repairs affliction. Where affliction meets medicine, the spirit unifies and vital focus crystallizes."',
+        vernacularZh: '【通俗白话精解】：格局就像你被赋予的天命剧本（主角人设），而“相神”就是你最该紧握的保命法宝。只要找到了你的相神（如伤官配印之印、食神制杀之食神），一切内耗都成了为你淬炼真金的养分。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Your BaZi pattern is your factory-assigned life script, while the "Guarding Minister" is your indispensable cognitive shield. Once you identify your primary remedy (e.g. Seal discipline for creative overthinking, or structured action for crisis anxiety), friction instantly converts into structural mastery.',
+        remedyZh: '【出厂调律】：明确你命中最核心的相神，用铁律保护它。若以印为护，每天雷打不动留出2小时独处学习不被打扰。',
+        remedyEn: '[Factory Tuning Habit]: Identify your core Guarding Minister and protect it ruthlessly. If Resource (Seal) is your anchor, block 2 hours daily for uninterrupted deep sanctuary.'
+      },
+      {
+        canonId: 'sanming',
+        canonNameZh: '《三命通会》',
+        canonNameEn: 'San Ming Tong Hui',
+        dynastyZh: '明·万民英',
+        dynastyEn: 'Ming: Wan Minying',
+        themeZh: '十神情性本相与心智画像',
+        themeEn: 'Ten Gods Behavioral Typology',
+        quoteZh: '“官清印正，纯粹笃实；伤官偏印，才奇性僻。善恶相参，皆出乎五行气质之偏。”',
+        quoteEn: '"Pure Officer and upright Resource produce steadfast honor; Hurting Officer and Indirect Resource yield singular genius and aloof eccentricity. Virtues and vices alike arise from elemental predispositions."',
+        vernacularZh: '【通俗白话精解】：万民英告诉你：你的多思、敏锐、挑剔或孤傲，根本不是缺点，而是天才特质的另一面硬币。平庸钝化的人根本没有内耗的神经带宽。接纳你偏颇的气质，无需强行逼自己八面玲珑。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Master Wan Minying reveals: Your acute sensitivity, perfectionism, and aloofness are simply the reverse side of exceptional genius. Dull minds do not possess the computational bandwidth to ruminate. Embrace your elemental idiosyncrasies rather than forcing false superficial conformity.',
+        remedyZh: '【出厂调律】：停止为自己的“格格不入”自责，把清高转化为专业极致，用传世硬作品让世界向你走来。',
+        remedyEn: '[Factory Tuning Habit]: Cease apologizing for feeling misaligned with generic crowds; convert intellectual aloofness into world-class craftsmanship.'
+      },
+      {
+        canonId: 'yuanhai',
+        canonNameZh: '《渊海子平》',
+        canonNameEn: 'Yuan Hai Zi Ping',
+        dynastyZh: '宋·徐升',
+        dynastyEn: 'Song: Xu Sheng',
+        themeZh: '根基清浊之辨与宿命脱胎',
+        themeEn: 'Foundational Purity & Transcending Karma',
+        quoteZh: '“凡推命者，先看干支纯杂，次看格局清浊。清者高明脱俗，浊者牵缠滞涩。”',
+        quoteEn: '"In evaluating destiny, examine first purity versus complexity, then assess clear nobility versus turbid entanglement. The clear mind is detached and luminous; the turbid mind is trapped in cyclic friction."',
+        vernacularZh: '【通俗白话精解】：“清”就是目标专注纯粹，不为琐碎杂务分神；“浊”就是既想要名又想要利，既怕别人说又想特立独行。彻底清退脑中互相冲突的双重标准，你的心智立刻由浊转清，内耗烟消云散。',
+        vernacularEn: '[Vernacular Modern Exegesis]: "Purity" denotes laser-like single-minded purpose; "Turbidity" is harboring contradictory ambitions—craving radical independence while agonizing over public approval. Purging conflicting dual standards instantly purifies your mental engine, dissipating rumination.',
+        remedyZh: '【出厂调律】：一刀切断矛盾诉求：选择要自由，就坦然接受暂时的冷清；选择要财富，就彻底放下虚妄的面子。',
+        remedyEn: '[Factory Tuning Habit]: Sever contradictory desires: if you choose freedom, embrace solitary focus; if you choose commercial triumph, discard vanity.'
+      },
+      {
+        canonId: 'shenfeng',
+        canonNameZh: '《神峰通考》',
+        canonNameEn: 'Shen Feng Tong Kao',
+        dynastyZh: '明·张神峰',
+        dynastyEn: 'Ming: Zhang Shenfeng',
+        themeZh: '病药枢机与逆境转化',
+        themeEn: 'Disease & Medicine Fulcrum Transformation',
+        quoteZh: '“天下之命，有病方为贵，无伤不是奇。格中如去病，财禄两相随。”',
+        quoteEn: '"Among human destinies, supreme greatness arises only where a grave Disease exists; without affliction, there is no extraordinary wonder. If the chart cures its disease, boundless wealth and dignity follow."',
+        vernacularZh: '【通俗白话精解】：张神峰石破天惊地指出：平庸八字无病无药，一生平淡如水；而真正成大事业者，命中必有巨大病灶（严重内耗与卡点）！你所承受的痛苦反刍，就是你破茧成蝶的唯一核燃料。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Zhang Shenfeng thunders with radical insight: Mediocre charts suffer no affliction, coasting in bland oblivion; sovereign leaders possess monumental existential wounds! The intense friction you suffer is the exact nuclear propellant required for your metamorphosis.',
+        remedyZh: '【出厂调律】：每一次内耗爆发，都是在提示你：“此处有病，良药何在？”立刻顺藤摸瓜，用最坚决的实战行动治好它。',
+        remedyEn: '[Factory Tuning Habit]: Whenever rumination strikes, treat it as a clinical diagnostic: "Here lies the disease; where is the medicine?" Take immediate structural action to solve it.'
+      },
+      {
+        canonId: 'yuzhao',
+        canonNameZh: '《玉照定真经》',
+        canonNameEn: 'Yu Zhao Ding Zhen Jing',
+        dynastyZh: '晋·郭璞',
+        dynastyEn: 'Jin: Guo Pu',
+        themeZh: '六亲情结与外境投射',
+        themeEn: 'Relational Boundaries & Environmental Projection',
+        quoteZh: '“吉凶交会，系于动静之间；祸福倚伏，生乎情意之内。察外境之相激，明心性之自守。”',
+        quoteEn: '"Auspiciousness and misfortune intersect between movement and stillness; blessing and calamity germinate within emotional attachments. Witness external frictions calmly, anchoring pristine inner sovereignty."',
+        vernacularZh: '【通俗白话精解】：80%的人格痛苦源自把别人当成了自己内心的投影仪。别人皱个眉头，你在脑里演了一出大戏。郭璞告诉你：外境万物自生自灭，守住本心如如不动，何来伤害？',
+        vernacularEn: '[Vernacular Modern Exegesis]: Eighty percent of mental suffering stems from projecting internal anxieties onto interpersonal relationships. Another person frowns, and your mind rehearses a tragedy. Guo Pu teaches: External circumstances rise and fall naturally; anchor inner sovereignty, and nothing can harm you.',
+        remedyZh: '【出厂调律】：面对他人的情绪风暴，默念：“这是他的因果，不是我的考场”，立刻在心理上退后三步冷眼旁观。',
+        remedyEn: '[Factory Tuning Habit]: In the face of another\'s emotional storm, mentally whisper: "This is their karma, not my examination." Take three steps back psychologically and observe neutrally.'
+      },
+      {
+        canonId: 'lixuzhong',
+        canonNameZh: '《李虚中命书》',
+        canonNameEn: 'Li Xu Zhong Ming Shu',
+        dynastyZh: '唐·李虚中',
+        dynastyEn: 'Tang: Li Xuzhong',
+        themeZh: '三命元神与时代共振',
+        themeEn: 'Three Primes & Epochal Synchronization',
+        quoteZh: '“天元主禄，地元主命，人元主身。顺天应时，物我两忘，则无夭折之患。”',
+        quoteEn: '"Heavenly Prime rules rank, Earthly Prime rules destiny, Human Prime rules body. Flowing in unison with epochal cycles, dissolving the dichotomy of self and world, one is freed from exhaustion."',
+        vernacularZh: '【通俗白话精解】：唐代宗师李虚中主张天、地、人三元合一。不要把自己孤立成无助的单兵。顺应时代大势（如九运AI火运、数字智能潮），站在风口借力借势，个体的渺小焦虑瞬间化解于宇宙洪流中。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Tang Dynasty Master Li Xu Zhong unites Heaven, Earth, and Man. Cease viewing yourself as an isolated, helpless soldier. Align with secular megatrends (Period 9 Fire era, AI compute, digital synthesis); ride the cosmic tide, and personal anxiety evaporates into universal flow.',
+        remedyZh: '【出厂调律】：抬头看路，把眼光放到未来20年的九紫离火大运中；顺势而为，不与客观规律与时代车轮较劲。',
+        remedyEn: '[Factory Tuning Habit]: Elevate your horizon to the 20-year Period 9 Fire cycle; flow with systemic waves rather than resisting macro tides.'
+      }
+    ];
+
+    // ⚡ 3. 极端压力触发开关与认知红线 (Stress Trigger Signatures & Red Lines)
+    const stressTriggers = [
+      {
+        nameZh: '完美主义反噬与上线拖延',
+        nameEn: 'Perfectionist Paralysis & Launch Dread',
+        icon: '🌪️',
+        classicalSignZh: '伤官秀气外溢 · 追求无瑕反自缚',
+        classicalSignEn: 'Hurting Officer Output: Flawless Ideals Breeding Self-Paralysis',
+        mechanismZh: '颅内大脑已推演出100分甚至120分的极致版本，面对现实中只有70分的初代粗糙原型产生剧烈自我否定，导致一拖再拖不敢交付。',
+        mechanismEn: 'Mental simulation imagines an immaculate 120-point masterpiece; encountering a rough 70-point physical prototype triggers acute self-reproach, delaying launch.',
+        redLineZh: '【出厂绝对红线】：严禁在草稿阶段追求完美！凡打磨超过计划时间50%者，强制立刻公开交付第一版。',
+        redLineEn: '[Factory Absolute Red Line]: Zero perfectionism in drafting! If polishing exceeds 50% of the timeline, mandate an immediate public launch.'
+      },
+      {
+        nameZh: '权威压制与教条官僚对抗',
+        nameEn: 'Bureaucratic Subjugation & Micro-Management',
+        icon: '⚔️',
+        classicalSignZh: '伤官见官 · 七杀侵凌日元',
+        classicalSignEn: 'Officer Clashing & Killings Encroachment',
+        mechanismZh: '当面对体制教条、无逻辑的规章或官僚领导的权威压制时，神经系统瞬间进入战逃狂暴状态，极易因正面硬刚而自损八百。',
+        mechanismEn: 'Facing dogmatic bureaucracy or authoritarian micro-management instantly triggers aggressive sympathetic fight-or-flight, risking self-destructive confrontations.',
+        redLineZh: '【出厂绝对红线】：永远不在情绪顶点与体制直接摊牌；以游刃有余之巧劲寻找结构缝隙，保护自身元气。',
+        redLineEn: '[Factory Absolute Red Line]: Never confront institutional power at emotional peaks; navigate structural crevices with tactical flexibility.'
+      },
+      {
+        nameZh: '边界坍塌与讨好型被迫应承',
+        nameEn: 'Boundary Erosion & People-Pleasing Fatigue',
+        icon: '🛡️',
+        classicalSignZh: '身弱杀旺财重 · 承载过载',
+        classicalSignEn: 'Delicate Day Master Carrying Excessive Wealth & Pressure',
+        mechanismZh: '极度害怕冲突和让别人失望，表面迁就应承，事后内心极度委屈纠结，陷入长期的自我攻击与精力透支。',
+        mechanismEn: 'Terror of interpersonal friction leads to involuntary acquiescence, followed by internal resentment, self-blame, and energy exhaustion.',
+        redLineZh: '【出厂绝对红线】：严禁当面当场答应任何非分内的求助！统一执行24小时延迟回复冷面原则。',
+        redLineEn: '[Factory Absolute Red Line]: Ban instant on-the-spot agreements! Enforce a non-negotiable 24-hour delayed response protocol.'
+      },
+      {
+        nameZh: '多线并发与失控混乱内耗',
+        nameEn: 'Multitasking Overdrive & Chaos Friction',
+        icon: '🧩',
+        classicalSignZh: '偏印化煞未成 · 念头丛生',
+        classicalSignEn: 'Indirect Resource Hyper-Proliferation',
+        mechanismZh: '同时开启过多并行任务，桌面杂乱无序，导致认知缓存被打爆，在频繁的任务上下文切换中精神涣散、焦虑空转。',
+        mechanismEn: 'Opening too many concurrent tasks saturates cognitive RAM; continuous context switching shatters focus and triggers anxious paralysis.',
+        redLineZh: '【出厂绝对红线】：桌面与视线内永远只留一件任务！未划掉当前事项前，绝不打开下一个浏览器标签页。',
+        redLineEn: '[Factory Absolute Red Line]: Allow only ONE task in your field of vision! Never open a new tab until the active task is completed.'
+      }
+    ];
+
+    // 🛡️ 4. 出厂自救三阶降维心法 (Three-Level Factory Emergency De-escalation Protocols)
+    const deEscalationProtocols = [
+      {
+        levelZh: '第一阶：3分钟躯体硬重启 (生理神经阻断)',
+        levelEn: 'Level 1: 3-Minute Somatic Emergency Reset (Physiological Vagal Circuit Breaker)',
+        icon: '🧊',
+        principleZh: '绝不在脑子里解决脑子里的问题，用身体感觉强行拉回当下',
+        principleEn: 'Never solve cerebral loops with the mind; force consciousness into somatic grounding',
+        stepsZh: [
+          '【冰水潜水反射】用冷水用力洗脸冲腕15秒，刺激哺乳动物潜水反射，强行降低心率断开杏仁核警报。',
+          '【4-7-8战术呼吸】鼻吸4秒、闭息7秒、慢呼8秒，连做3轮，强行激活副交感神经安稳回路。',
+          '【空间肌肉位移】立即站起身离开工位走动2分钟，用擦桌、洗手、大步快走抢占大脑算力。'
+        ],
+        stepsEn: [
+          'Ice-cold facial immersion for 15s stimulates mammalian diving reflex, instantly lowering pulse and aborting amygdala panic.',
+          'Tactical 4-7-8 breathing: Inhale 4s, hold 7s, exhale 8s for 3 cycles to force parasympathetic relaxation.',
+          'Physical displacement: Stand up immediately, leave your desk for 2 minutes, and engage somatic tactile touch.'
+        ]
+      },
+      {
+        levelZh: '第二阶：经典经文降维破相 (认知解耦升维)',
+        levelEn: 'Level 2: Classical Scripture & Zen Cognitive De-framing (Transmuting Mental Projections)',
+        icon: '🪞',
+        principleZh: '事来则应、事去则静，掐断千百个自责推演的第二念',
+        principleEn: 'Respond fully as events arrive, settle pristine as they depart; sever secondary rumination loops',
+        stepsZh: [
+          '【凡所有相皆是虚妄】觉察到焦虑风暴时当头棒喝：“凡所有相皆是虚妄！”抽离角色，静观念头生灭。',
+          '【后念离境即菩提】外界刺激产生第一念是生理常态，严禁在脑中推演第二念第三念，让念头如水上泡影自灭。',
+          '【用心若镜不将不迎】像镜子一样映照现实，不预迎未来的灾难，不挽留过去的过失，照过即空，元神不伤。'
+        ],
+        stepsEn: [
+          'Declare mentally: "All conditioned forms are illusory!" Step back as an unblemished cosmic witness.',
+          'Primary impulses are biological; sever secondary and tertiary ruminations immediately, allowing thoughts to dissolve like foam.',
+          'Mirror Mind: Anticipate no future catastrophe, harbor no past regrets; reflect clearly and release instantly without damage.'
+        ]
+      },
+      {
+        levelZh: '第三阶：课题分离与利刃出鞘 (外向实体交付)',
+        levelEn: 'Level 3: Sovereign Boundary Reset & Creative Transmutation (Outward Masterpiece Shipping)',
+        icon: '🗡️',
+        principleZh: '把向内自残的刀，变成向外斩击现实困境的利剑',
+        principleEn: 'Transmute the blade of self-attack outward into laser-focused product creation',
+        stepsZh: [
+          '【阿德勒课题分离】划分我的课题与别人的课题；别人的评价是他自己的业力，坚决收回向外索求认可的触角。',
+          '【先交出一个烂版本】打破完美主义魔咒，允许做个糙活，以“完成击败空想”启动正向反馈飞轮。',
+          '【以硬核作品立世】把颅内多余的心智算力全部倾注于写代码、造产品、做商业变现，作品落地内耗自解！'
+        ],
+        stepsEn: [
+          'Adlerian separation of tasks: Other people\'s judgments belong to their karma; sever all external validation seeking.',
+          'Done beats perfect: Ship an imperfect baseline prototype to ignite real-world momentum over internal fantasy.',
+          'Anchor your dignity in concrete works: Channel excess compute into shipping code, articles, and products.'
+        ]
+      }
+    ];
+
+    // 🌿 5. 五行能量微习惯 (Daily Five-Element Micro-Habits)
+    const favorableEl = (climate && climate.primary) ? climate.primary : (isStrong ? '金' : '水');
+    const fiveElementMicroHabits = [
+      {
+        element: '木',
+        elementEn: 'Wood',
+        icon: '🌱',
+        isPrimaryFavorable: (favorableEl.includes('木') || dm === '甲' || dm === '乙'),
+        durationZh: '3分钟',
+        durationEn: '3 min',
+        habitNameZh: '晨间生发生长与筋骨拉伸',
+        habitNameEn: 'Morning Wood Sprouting Stretch',
+        ritualZh: '晨起面向东方，做3组双手托天理三焦大拉伸；在案头摆放一盆鲜活绿植，观察嫩芽舒展，汲取生发之气。',
+        ritualEn: 'Face East upon waking, perform 3 full-body upward stretches; place a vibrant plant on your desk to align with living growth.',
+        potencyZh: '疏泄肝胆郁结气机，化解压抑与拖延，激发全新行动力。',
+        potencyEn: 'Unblocks hepatic qi stagnation, dispels hesitation, and sparks organic forward momentum.'
+      },
+      {
+        element: '火',
+        elementEn: 'Fire',
+        icon: '☀️',
+        isPrimaryFavorable: (favorableEl.includes('火') || dm === '丙' || dm === '丁'),
+        durationZh: '5分钟',
+        durationEn: '5 min',
+        habitNameZh: '正午采光沐浴与高能冲刺',
+        habitNameEn: 'Solar Radiance Absorption & Sprint',
+        ritualZh: '正午走到阳光下闭目仰头沐浴日光3分钟；工作前泡一杯温热红茶，设定一个25分钟全神贯注番茄钟单点突破。',
+        ritualEn: 'Step into midday sunlight for 3 minutes with eyes closed; sip warm red tea and execute a single-minded 25-minute Pomodoro sprint.',
+        potencyZh: '驱散胸中寒湿阴郁，点燃心神活力，重振开创激情。',
+        potencyEn: 'Dispels cold internal gloom, activates cardiac vitality, and reignites creative enthusiasm.'
+      },
+      {
+        element: '土',
+        elementEn: 'Earth',
+        icon: '🏔️',
+        isPrimaryFavorable: (favorableEl.includes('土') || dm === '戊' || dm === '己'),
+        durationZh: '5分钟',
+        durationEn: '5 min',
+        habitNameZh: '赤足接地气与温热规律餐饮',
+        habitNameEn: 'Barefoot Earth Grounding & Warm Meal',
+        ritualZh: '脱去鞋袜在草地或木地板赤足静立3分钟感知大地承托；正午享用一份热气腾腾的谷物汤饭，专注咀嚼不看手机。',
+        ritualEn: 'Stand barefoot on grass or solid wood for 3 minutes feeling gravitational stability; eat a warm, nourishing meal with zero phone distractions.',
+        potencyZh: '健旺脾胃运化，封堵焦虑浮躁，建立无可撼动的心理安全底盘。',
+        potencyEn: 'Nourishes digestion, anchors anxious flightiness, and establishes an unshakable psychological foundation.'
+      },
+      {
+        element: '金',
+        elementEn: 'Metal',
+        icon: '⚔️',
+        isPrimaryFavorable: (favorableEl.includes('金') || dm === '庚' || dm === '辛'),
+        durationZh: '3分钟',
+        durationEn: '3 min',
+        habitNameZh: '数字桌面断舍离与冷峻呼吸',
+        habitNameEn: 'Digital Decluttering & Crisp Boundary',
+        ritualZh: '工作前关闭所有无关浏览器标签，清理桌面冗杂纸屑；做3组深长鼻吸鼻呼，练习在心中冷峻地说出一次“不”。',
+        ritualEn: 'Close all irrelevant browser tabs and clean physical clutter; take 3 crisp nasal breaths and practice uttering a clean, polite "no".',
+        potencyZh: '收敛散乱注意力，肃清杂念冗余，建立清晰冰冷的人际与任务护城河。',
+        potencyEn: 'Consolidates scattered attention, prunes cognitive overhead, and fortifies crisp interpersonal moats.'
+      },
+      {
+        element: '水',
+        elementEn: 'Water',
+        icon: '🌊',
+        isPrimaryFavorable: (favorableEl.includes('水') || dm === '壬' || dm === '癸'),
+        durationZh: '5分钟',
+        durationEn: '5 min',
+        habitNameZh: '晚间静水疗愈与虚空放空',
+        habitNameEn: 'Evening Hydrotherapy & Void Meditation',
+        ritualZh: '睡前用温水浸泡双足或沐浴冲洗颈后大椎穴；关灯静坐，观想意识如无边幽深水面，任凭微波荡漾自归澄澈。',
+        ritualEn: 'Take a warm footbath or shower before rest; sit in stillness contemplating consciousness as an unruffled nocturnal ocean.',
+        potencyZh: '滋养肾水元精，熄灭心火躁动，恢复深层觉照与灵性直觉。',
+        potencyEn: 'Nourishes kidney yin essence, cools cerebral agitation, and restores pristine intuitive depth.'
+      }
+    ];
+
     return {
       detected,
       score,
       level,
       levelBadge,
       primaryRoot,
+      primaryRootEn,
       triggers,
+      triggersEn,
       solutions,
-      zenDaoWisdom
+      zenDaoWisdom,
+      factorySpecs,
+      classicalCanonsManual,
+      stressTriggers,
+      deEscalationProtocols,
+      fiveElementMicroHabits
     };
   }
 

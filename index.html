@@ -748,11 +748,11 @@
           <span class="text-2xl">🧘</span>
           <div>
             <h3 class="text-base sm:text-lg font-bold font-serif-sc text-rose-300 flex items-center gap-2">
-              <span data-i18n="sec_friction_view_title">精神内耗专项检测与实战彻底改善方案 · 禅道心智超越</span>
-              <span class="chinese-seal text-[10px] py-0.2 border-rose-500 text-rose-400" data-i18n="seal_view_friction">禅道心智</span>
+              <span data-i18n="sec_friction_view_title">原厂心理使用说明书 · 精神内耗深度解构与禅道至高心法</span>
+              <span class="chinese-seal text-[10px] py-0.2 border-rose-500 text-rose-400" data-i18n="seal_view_friction">原厂说明</span>
             </h3>
             <p class="text-xs text-gray-400 mt-0.5" data-i18n="sec_friction_view_subtitle">
-              直击过度思考与认知反刍根源，融合《金刚经》破相、《六祖坛经》自性与《庄子》乘物游心至高解脱法门
+              八大典籍正统经文细注 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯
             </p>
           </div>
         </div>
@@ -964,6 +964,48 @@
         <div id="luckInteractionsContainer" class="p-3.5 rounded-xl border border-purple-800/50 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/50 space-y-2">
           <!-- Injected dynamically via JavaScript -->
         </div>
+      </div>
+    </section>
+
+    <!-- Current Year & Season Operational Playbook (当季/本年现实破局罗盘) -->
+    <section id="operationalPlaybookSection" class="bg-card rounded-2xl border border-amber-500/40 p-5 shadow-2xl space-y-4 bg-gradient-to-br from-[#191512] via-[#121114] to-black">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🧭</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+              <span data-i18n="playbook_title">当季与本年现实破局罗盘</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30" data-i18n="playbook_badge">现实破局</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="playbook_subtitle">
+              年度核心主线攻坚 · 四季节律能量潮汐 · 即时决策防火墙与雷区熔断
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="operationalPlaybookContainer" class="space-y-4">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Geographic & Workplace Ecological Resonance (地理方位与组织生态匹配仪) -->
+    <section id="ecologicalResonanceSection" class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-4 bg-gradient-to-br from-[#12151d] via-[#0f1118] to-black">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🗺️</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-blue-300 flex items-center gap-2">
+              <span data-i18n="eco_resonance_title">地理方位与组织生态匹配仪</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono border border-blue-500/30" data-i18n="eco_resonance_badge">生态定位</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="eco_resonance_subtitle">
+              五行城市方位能量场共振 · 体制/初创/合伙/独立组织生态位诊断与反内耗归因
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="ecologicalResonanceContainer" class="space-y-4">
+        <!-- Injected dynamically via JavaScript -->
       </div>
     </section>
   </div>
@@ -1507,6 +1549,49 @@
 
   <!-- Ambient Dynamic Elemental Flux Canvas (Background particle rings) -->
   <canvas id="elementFluxCanvas" class="fixed inset-0 pointer-events-none z-[-1] opacity-25"></canvas>
+
+  <!-- Dynamic Calculation Progress Bar Modal (动态智能排盘计算进度条) -->
+  <div id="calculationProgressModal" class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden transition-opacity duration-300">
+    <div class="w-full max-w-lg p-6 sm:p-8 rounded-3xl border-2 border-amber-500/60 bg-gradient-to-b from-[#1c1815] via-[#121114] to-black shadow-[0_0_50px_rgba(245,158,11,0.25)] space-y-6 text-center">
+      <!-- Animated Spinning Yin-Yang Seal -->
+      <div class="relative w-20 h-20 mx-auto flex items-center justify-center">
+        <div class="absolute inset-0 rounded-full border-2 border-amber-500/30 animate-ping opacity-25"></div>
+        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-600 via-amber-400 to-amber-700 flex items-center justify-center text-3xl shadow-xl animate-spin-slow">
+          ☯️
+        </div>
+      </div>
+
+      <!-- Title & Subtitle -->
+      <div class="space-y-1.5">
+        <h3 id="calcProgressTitle" class="text-base sm:text-xl font-black font-serif-sc text-amber-200 tracking-wide" data-i18n="calc_progress_title">
+          乾坤气象 · 全相智能排盘推演中
+        </h3>
+        <p class="text-xs text-gray-400 font-serif-sc" data-i18n="calc_progress_subtitle">
+          正在调用东方全息大模型并通判八大典籍古籍库
+        </p>
+      </div>
+
+      <!-- Progress Bar Track -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-mono font-bold">
+          <span id="calcProgressStageText" class="text-amber-300" data-i18n="calc_stage_1">四柱八字乾坤排盘 · 纳音神煞五行量化</span>
+          <span id="calcProgressPercentText" class="text-amber-400">0%</span>
+        </div>
+        <div id="calcProgressBarTrack" class="w-full bg-gray-900 rounded-full h-3.5 p-0.5 border border-amber-500/30 overflow-hidden">
+          <div id="calcProgressBarInner" class="h-full rounded-full bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200 transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.6)]" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Milestones Indicators -->
+      <div class="grid grid-cols-5 gap-1 pt-1 text-[10px] text-gray-400 font-mono">
+        <div id="progressStep1" class="p-1 rounded bg-black/40 border border-gray-800 transition">① 四柱</div>
+        <div id="progressStep2" class="p-1 rounded bg-black/40 border border-gray-800 transition">② 八典</div>
+        <div id="progressStep3" class="p-1 rounded bg-black/40 border border-gray-800 transition">③ 罗盘</div>
+        <div id="progressStep4" class="p-1 rounded bg-black/40 border border-gray-800 transition">④ 心法</div>
+        <div id="progressStep5" class="p-1 rounded bg-black/40 border border-gray-800 transition">⑤ 乾坤</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Imperial Thread-Bound PDF Dossier Modal (A4 绝美精装排盘战报模态窗口) -->
   <div id="imperialDossierModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-start">
