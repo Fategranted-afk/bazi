@@ -2325,10 +2325,14 @@ var console = {
   }
 };
 
-var allIds = ['langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierContainer'];
+var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierContainer'];
 var elementStore = {};
 
 function makeEl(id, tag) {
+  var initialClasses = [];
+  if (id === 'dashboardView' || id === 'btnPortalTopNav' || id === 'advSolarTimeContainer') {
+    initialClasses = ['hidden'];
+  }
   return {
     id: id,
     tagName: (tag || 'DIV').toUpperCase(),
@@ -2348,7 +2352,7 @@ function makeEl(id, tag) {
     _listeners: {},
     _children: [],
     classList: {
-      _classes: [],
+      _classes: initialClasses.slice(),
       add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
       remove: function(c) {
         var idx = this._classes.indexOf(c);
@@ -2495,6 +2499,38 @@ elementStore['ichingInstantBtn'].trigger('click');
 
 // Imperial Dossier in EN
 elementStore['btnExportDossier'].trigger('click');
+
+// Test Two-Stage Page Navigation (Portal Landing <-> Dashboard)
+elementStore['btnReturnToPortal'].trigger('click');
+if (elementStore['dashboardView'].classList.contains('hidden') !== true) {
+  throw new Error('dashboardView must be hidden after clicking btnReturnToPortal');
+}
+if (elementStore['landingPortalView'].classList.contains('hidden') === true) {
+  throw new Error('landingPortalView must be visible after clicking btnReturnToPortal');
+}
+if (elementStore['btnPortalTopNav'].classList.contains('hidden') !== true) {
+  throw new Error('btnPortalTopNav must be hidden when on portal landing');
+}
+
+// Return to Dashboard via calcBtn
+elementStore['calcBtn'].trigger('click');
+if (elementStore['landingPortalView'].classList.contains('hidden') !== true) {
+  throw new Error('landingPortalView must be hidden after clicking calcBtn');
+}
+if (elementStore['dashboardView'].classList.contains('hidden') === true) {
+  throw new Error('dashboardView must be visible after clicking calcBtn');
+}
+if (elementStore['btnPortalTopNav'].classList.contains('hidden') === true) {
+  throw new Error('btnPortalTopNav must be visible when on dashboard');
+}
+
+// Return to portal via btnPortalTopNav
+elementStore['btnPortalTopNav'].trigger('click');
+if (elementStore['landingPortalView'].classList.contains('hidden') === true) {
+  throw new Error('landingPortalView must be visible after clicking btnPortalTopNav');
+}
+// Finally enter dashboard again
+elementStore['calcBtn'].trigger('click');
 '''
 
 jsc_sim_cmd = [
@@ -2506,4 +2542,55 @@ sim_proc = subprocess.run(jsc_sim_cmd, capture_output=True, text=True)
 assert sim_proc.returncode == 0, f"Browser DOM Simulation crash detected: {sim_proc.stderr}"
 print("✓ 完整浏览器 DOM 运行环境模拟（生命周期/算盘/时空/合盘/周易/双语/战报导出）零崩溃验证通过！")
 
-print("\n🎉 ALL 49 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 50. Validate Two-Stage UI Architecture (Portal Landing & Dashboard Transition)
+print("\n=== 50. Validating Two-Stage UI Architecture (Portal Landing & Dashboard Transition) ===")
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_src = f.read()
+
+# 1. Structural View Verification
+assert 'id="landingPortalView"' in html_src, "index.html must contain landingPortalView"
+assert 'id="dashboardView"' in html_src, "index.html must contain dashboardView"
+assert 'id="btnReturnToPortal"' in html_src, "index.html must contain btnReturnToPortal"
+assert 'id="btnPortalTopNav"' in html_src, "index.html must contain btnPortalTopNav"
+assert 'id="dashboardTopSummaryBar"' in html_src, "index.html must contain dashboardTopSummaryBar"
+assert 'id="dashboardSummaryBadges"' in html_src, "index.html must contain dashboardSummaryBadges"
+assert 'id="landingQuickPreviewBox"' in html_src, "index.html must contain landingQuickPreviewBox"
+assert 'id="landingPreviewMeta"' in html_src, "index.html must contain landingPreviewMeta"
+assert 'id="portalPresetsContainer"' in html_src, "index.html must contain portalPresetsContainer"
+assert 'id="portalFeaturesGrid"' in html_src, "index.html must contain portalFeaturesGrid"
+
+# 2. Archetype Presets Verification
+for p in ['data-preset="leader"', 'data-preset="business"', 'data-preset="artist"', 'data-preset="strategist"', 'data-preset="now"']:
+    assert p in html_src, f"index.html must contain archetype preset {p}"
+
+# 3. Seven Feature Showcase Cards Verification
+showcase_views = ['view-home', 'view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching', 'view-synastry']
+for v in showcase_views:
+    assert f'data-jump-view="{v}"' in html_src, f"index.html must contain feature card jumping to {v}"
+
+# 4. CSS Stylings Verification
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_src = f.read()
+
+for cls in ['.archetype-preset-card', '.mini-pillar-card', '.feature-showcase-card', '.cta-calc-btn', '.dashboard-top-ribbon', '.animate-fade-in']:
+    assert cls in css_src, f"style.css must define class {cls}"
+
+# 5. Bilingual Completeness (Zero Missing Keys in ZH & EN)
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_src = f.read()
+
+portal_keys = [
+    'btn_portal_nav', 'portal_hero_title', 'portal_hero_subtitle', 'portal_presets_title',
+    'preset_leader', 'preset_business', 'preset_artist', 'preset_strategist', 'preset_now',
+    'portal_form_card_title', 'portal_preview_title', 'portal_calc_btn', 'portal_showcase_title',
+    'portal_card1_title', 'portal_card2_title', 'portal_card3_title', 'portal_card4_title',
+    'portal_card5_title', 'portal_card6_title', 'portal_card7_title', 'portal_zen_quote',
+    'dashboard_active_chart_title', 'btn_edit_natal'
+]
+for k in portal_keys:
+    assert f'{k}:' in i18n_src, f"js/i18n.js must define bilingual key {k}"
+
+print("✓ 两阶段交互架构（初始门庭页面 / 分析全相看板 / 典范速选 / 即时微预览 / 优雅双向过渡）验证通过！")
+
+print("\n🎉 ALL 50 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")

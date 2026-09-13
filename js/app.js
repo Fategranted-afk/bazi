@@ -134,6 +134,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const langZhBtn = document.getElementById('langZhBtn');
   const langEnBtn = document.getElementById('langEnBtn');
 
+  // Two-Stage Page Architecture Elements
+  const landingPortalView = document.getElementById('landingPortalView');
+  const dashboardView = document.getElementById('dashboardView');
+  const dashboardTopSummaryBar = document.getElementById('dashboardTopSummaryBar');
+  const dashboardSummaryBadges = document.getElementById('dashboardSummaryBadges');
+  const btnReturnToPortal = document.getElementById('btnReturnToPortal');
+  const btnPortalTopNav = document.getElementById('btnPortalTopNav');
+  const landingQuickPreviewBox = document.getElementById('landingQuickPreviewBox');
+  const landingPreviewMeta = document.getElementById('landingPreviewMeta');
+  const landingPreviewStatusBadge = document.getElementById('landingPreviewStatusBadge');
+  const btnToggleAdvSolar = document.getElementById('btnToggleAdvSolar');
+  const advSolarTimeContainer = document.getElementById('advSolarTimeContainer');
+  const portalPresetsContainer = document.getElementById('portalPresetsContainer');
+  const portalFeaturesGrid = document.getElementById('portalFeaturesGrid');
+  let activeMainPage = 'landing'; // 'landing' | 'dashboard'
+
   function setLanguage(lang) {
     currentLang = lang;
     if (typeof I18N !== 'undefined') {
@@ -213,6 +229,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (inpB) {
       if (lang === 'en' && inpB.value === '乙造') inpB.value = 'Person B';
       else if (lang === 'zh' && inpB.value === 'Person B') inpB.value = '乙造';
+    }
+
+    if (typeof updateLandingPreview === 'function') {
+      updateLandingPreview();
+    }
+    if (typeof updateDashboardSummaryBar === 'function') {
+      updateDashboardSummaryBar();
     }
   }
 
@@ -300,7 +323,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   nowBtn.addEventListener('click', () => {
     setCurrentTime();
-    triggerCalculate();
+    if (activeMainPage === 'landing') {
+      updateLandingPreview();
+    } else {
+      triggerCalculate();
+      updateDashboardSummaryBar();
+    }
   });
 
   // Element Color Class Helper
@@ -324,6 +352,308 @@ document.addEventListener('DOMContentLoaded', () => {
       case '水': return 'bg-el-water';
       default: return '';
     }
+  }
+
+  // Archetype Presets Database
+  const ARCHETYPE_PRESETS = {
+    leader: {
+      date: '1990-06-20',
+      time: '14:30',
+      gender: '乾造',
+      lon: 116.40,
+      tz: 8
+    },
+    business: {
+      date: '1988-11-18',
+      time: '09:40',
+      gender: '坤造',
+      lon: 121.50,
+      tz: 8
+    },
+    artist: {
+      date: '1995-10-24',
+      time: '16:15',
+      gender: '乾造',
+      lon: 120.20,
+      tz: 8
+    },
+    strategist: {
+      date: '1984-03-15',
+      time: '08:20',
+      gender: '坤造',
+      lon: 116.40,
+      tz: 8
+    }
+  };
+
+  function getStemElement(stem) {
+    const map = { '甲':'木','乙':'木','丙':'火','丁':'火','戊':'土','己':'土','庚':'金','辛':'金','壬':'水','癸':'水' };
+    return map[stem] || '木';
+  }
+
+  function getBranchElement(branch) {
+    const map = { '子':'水','丑':'土','寅':'木','卯':'木','辰':'土','巳':'火','午':'火','未':'土','申':'金','酉':'金','戌':'土','亥':'水' };
+    return map[branch] || '木';
+  }
+
+  function getStemShortEn(stem) {
+    if (typeof I18N !== 'undefined' && I18N.STEMS && I18N.STEMS[stem]) {
+      return I18N.STEMS[stem].pinyin;
+    }
+    const map = { '甲':'Jia','乙':'Yi','丙':'Bing','丁':'Ding','戊':'Wu','己':'Ji','庚':'Geng','辛':'Xin','壬':'Ren','癸':'Gui' };
+    return map[stem] || stem;
+  }
+
+  function getBranchShortEn(branch) {
+    if (typeof I18N !== 'undefined' && I18N.BRANCHES && I18N.BRANCHES[branch]) {
+      return I18N.BRANCHES[branch].animal;
+    }
+    const map = { '子':'Zi','丑':'Chou','寅':'Yin','卯':'Mao','辰':'Chen','巳':'Si','午':'Wu','未':'Wei','申':'Shen','酉':'You','戌':'Xu','亥':'Hai' };
+    return map[branch] || branch;
+  }
+
+  // ==========================================================================
+  // Two-Stage Page Navigation (Page 1: Landing Portal / Page 2: Dashboard)
+  // ==========================================================================
+  function switchToDashboardView() {
+    activeMainPage = 'dashboard';
+    if (landingPortalView) {
+      landingPortalView.classList.add('hidden');
+    }
+    if (dashboardView) {
+      dashboardView.classList.remove('hidden');
+    }
+    if (btnPortalTopNav) {
+      btnPortalTopNav.classList.remove('hidden');
+    }
+    updateDashboardSummaryBar();
+    if (currentBaziResult && typeof ElementChart !== 'undefined') {
+      ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
+    }
+    if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function switchToLandingView() {
+    activeMainPage = 'landing';
+    if (dashboardView) {
+      dashboardView.classList.add('hidden');
+    }
+    if (landingPortalView) {
+      landingPortalView.classList.remove('hidden');
+    }
+    if (btnPortalTopNav) {
+      btnPortalTopNav.classList.add('hidden');
+    }
+    updateLandingPreview();
+    if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // Live Natal Preview on Landing Page
+  function updateLandingPreview() {
+    if (!landingQuickPreviewBox) return;
+    try {
+      const dateVal = birthDatePicker ? birthDatePicker.value : '';
+      const timeVal = birthTimePicker ? birthTimePicker.value : '';
+      if (!dateVal || !timeVal) return;
+
+      const [year, month, day] = dateVal.split('-').map(Number);
+      const [hour, minute] = timeVal.split(':').map(Number);
+      const gender = genderSelect ? genderSelect.value : '乾造';
+      const useTrueSolarTime = useSolarTimeCheck ? useSolarTimeCheck.checked : false;
+      const isLateRatNextDay = lateRatCheck ? lateRatCheck.checked : false;
+      const longitude = customLonInput ? (parseFloat(customLonInput.value) || 116.4) : 116.4;
+      const timezone = (timezoneSelect && parseFloat(timezoneSelect.value) !== undefined) ? parseFloat(timezoneSelect.value) : 8.0;
+
+      if (typeof BaZiEngine === 'undefined' || typeof BaZiEngine.calculate !== 'function') return;
+
+      const res = BaZiEngine.calculate({
+        year, month, day, hour, minute, gender,
+        useTrueSolarTime, isLateRatNextDay, longitude, timezone
+      });
+
+      if (!res || !res.pillars || !res.pillars.year) return;
+
+      const isEn = (currentLang === 'en');
+      const pillars = [
+        { labelZh: '年柱', labelEn: 'Year', p: res.pillars.year },
+        { labelZh: '月柱', labelEn: 'Month', p: res.pillars.month },
+        { labelZh: '日柱 (元神)', labelEn: 'Day (Self)', p: res.pillars.day, isDay: true },
+        { labelZh: '时柱', labelEn: 'Hour', p: res.pillars.hour }
+      ];
+
+      const htmlPillars = pillars.map(item => {
+        const p = item.p;
+        if (!p) return '';
+        const stemEl = getStemElement(p.stem);
+        const branchEl = getBranchElement(p.branch);
+        const stemClass = getElementClass(stemEl);
+        const branchClass = getElementClass(branchEl);
+        const stemName = isEn ? getStemShortEn(p.stem) : p.stem;
+        const branchName = isEn ? getBranchShortEn(p.branch) : p.branch;
+        const pNaYin = p.naYin || p.nayin || '';
+        const nayin = isEn ? (typeof I18N !== 'undefined' ? I18N.getNaYin(pNaYin, 'en') : pNaYin) : pNaYin;
+
+        return `
+          <div class="mini-pillar-card ${item.isDay ? 'border-amber-500/60 bg-amber-950/30 ring-1 ring-amber-500/30' : ''}">
+            <div class="text-[10px] text-gray-400 font-medium pb-1">${isEn ? item.labelEn : item.labelZh}</div>
+            <div class="text-base sm:text-lg font-bold font-serif-sc py-0.5 flex justify-center items-center gap-1">
+              <span class="${stemClass}">${stemName}</span>
+              <span class="${branchClass}">${branchName}</span>
+            </div>
+            <div class="text-[10px] text-gray-400 font-mono scale-90 truncate" title="${nayin}">${nayin}</div>
+          </div>
+        `;
+      }).join('');
+
+      landingQuickPreviewBox.innerHTML = htmlPillars;
+
+      if (landingPreviewMeta && res.pillars.day) {
+        const dmStem = res.pillars.day.stem;
+        const dmEl = getStemElement(dmStem);
+        const dmEn = getStemShortEn(dmStem);
+        const offsetMin = res.input && res.input.totalSolarOffset ? res.input.totalSolarOffset.toFixed(1) : '0.0';
+        const offsetSign = (res.input && res.input.totalSolarOffset >= 0) ? '+' : '';
+
+        const metaTextZh = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="text-amber-400 font-bold font-serif-sc">本命元神：${dmStem} (${dmEl})</span>
+              <span class="text-gray-400 ml-2">【${res.gender}】</span>
+            </div>
+            <div class="text-[10px] text-gray-400">
+              <span>${useTrueSolarTime ? `真太阳时偏差: <b class="text-amber-300 font-mono">${offsetSign}${offsetMin}分</b>` : '采用钟表当地时'}</span>
+            </div>
+          </div>
+        `;
+
+        const metaTextEn = `
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <span class="text-amber-400 font-bold font-serif-sc">Day Master: ${dmEn} (${dmEl})</span>
+              <span class="text-gray-400 ml-2">[${res.gender === '乾造' ? 'Qian (Male)' : 'Kun (Female)'}]</span>
+            </div>
+            <div class="text-[10px] text-gray-400">
+              <span>${useTrueSolarTime ? `Solar Offset: <b class="text-amber-300 font-mono">${offsetSign}${offsetMin}m</b>` : 'Local Standard Time'}</span>
+            </div>
+          </div>
+        `;
+
+        landingPreviewMeta.innerHTML = isEn ? metaTextEn : metaTextZh;
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  // Dashboard Top Summary Bar
+  function updateDashboardSummaryBar() {
+    if (!dashboardSummaryBadges || !currentBaziResult || !currentBaziResult.pillars || !currentBaziResult.pillars.day) return;
+    const res = currentBaziResult;
+    const isEn = (currentLang === 'en');
+
+    const genderBadge = res.gender === '乾造'
+      ? `<span class="px-2 py-0.5 rounded-md bg-blue-950/80 text-blue-300 border border-blue-800/40 font-bold">${isEn ? 'Qian (Male)' : '乾造 (男命)'}</span>`
+      : `<span class="px-2 py-0.5 rounded-md bg-rose-950/80 text-rose-300 border border-rose-800/40 font-bold">${isEn ? 'Kun (Female)' : '坤造 (女命)'}</span>`;
+
+    const dateStr = `${res.input.year}-${String(res.input.month).padStart(2, '0')}-${String(res.input.day).padStart(2, '0')} ${String(res.input.hour).padStart(2, '0')}:${String(res.input.minute).padStart(2, '0')}`;
+    const solarStr = res.input.useTrueSolarTime
+      ? `<span class="text-amber-300/90 font-mono text-[11px]">${isEn ? 'Solar: ' : '太阳时: '}${String(res.input.adjustedHour).padStart(2, '0')}:${String(res.input.adjustedMinute).padStart(2, '0')}</span>`
+      : '';
+
+    const formatPillar = (lblZh, lblEn, p) => {
+      if (!p) return '';
+      const stemEl = getStemElement(p.stem);
+      const branchEl = getBranchElement(p.branch);
+      const sCls = getElementClass(stemEl);
+      const bCls = getElementClass(branchEl);
+      const sName = isEn ? getStemShortEn(p.stem) : p.stem;
+      const bName = isEn ? getBranchShortEn(p.branch) : p.branch;
+      return `<span class="px-2 py-0.5 rounded bg-black/40 border border-gray-700 font-serif-sc font-bold"><span class="text-gray-400 text-[10px] mr-1">${isEn ? lblEn : lblZh}:</span><span class="${sCls}">${sName}</span><span class="${bCls}">${bName}</span></span>`;
+    };
+
+    const yStr = formatPillar('年', 'Y', res.pillars.year);
+    const mStr = formatPillar('月', 'M', res.pillars.month);
+    const dStr = formatPillar('日', 'D', res.pillars.day);
+    const hStr = formatPillar('时', 'H', res.pillars.hour);
+
+    const dmStem = res.pillars.day.stem;
+    const dmEl = getStemElement(dmStem);
+    const dmName = isEn ? getStemShortEn(dmStem) : dmStem;
+    const dmBadge = `<span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30 font-bold">${isEn ? 'Day Master: ' : '元神: '}${dmName} (${dmEl})</span>`;
+
+    dashboardSummaryBadges.innerHTML = `
+      ${genderBadge}
+      <span class="text-gray-300 font-mono text-[11px]">${dateStr}</span>
+      ${solarStr ? `<span class="text-gray-500">·</span>${solarStr}` : ''}
+      <span class="hidden sm:inline text-gray-500">|</span>
+      <div class="flex items-center gap-1.5 flex-wrap">
+        ${yStr}
+        ${mStr}
+        ${dStr}
+        ${hStr}
+      </div>
+      <span class="hidden md:inline text-gray-500">|</span>
+      ${dmBadge}
+    `;
+  }
+
+  // Presets Controller
+  function initPortalPresets() {
+    if (!portalPresetsContainer) return;
+    const presetBtns = portalPresetsContainer.querySelectorAll('.archetype-preset-card');
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        presetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const presetKey = btn.getAttribute('data-preset');
+        if (presetKey === 'now') {
+          setCurrentTime();
+        } else if (ARCHETYPE_PRESETS[presetKey]) {
+          const cfg = ARCHETYPE_PRESETS[presetKey];
+          if (birthDatePicker) birthDatePicker.value = cfg.date;
+          if (birthTimePicker) birthTimePicker.value = cfg.time;
+          if (genderSelect) genderSelect.value = cfg.gender;
+          if (customLonInput) customLonInput.value = cfg.lon.toFixed(2);
+          if (timezoneSelect) timezoneSelect.value = String(cfg.tz);
+        }
+        updateLandingPreview();
+      });
+    });
+  }
+
+  // Features Showcase Click on Landing Page
+  function initPortalFeaturesShowcase() {
+    if (!portalFeaturesGrid) return;
+    portalFeaturesGrid.querySelectorAll('[data-jump-view]').forEach(card => {
+      card.addEventListener('click', () => {
+        const targetView = card.getAttribute('data-jump-view');
+        triggerCalculate();
+        switchToDashboardView();
+        if (targetView && typeof switchPrimaryView === 'function') {
+          switchPrimaryView(targetView);
+        }
+      });
+    });
+  }
+
+  // Advanced Solar Time Options Toggle
+  function initAdvSolarToggle() {
+    if (!btnToggleAdvSolar || !advSolarTimeContainer) return;
+    btnToggleAdvSolar.addEventListener('click', () => {
+      const isHidden = advSolarTimeContainer.classList.contains('hidden');
+      if (isHidden) {
+        advSolarTimeContainer.classList.remove('hidden');
+        btnToggleAdvSolar.textContent = (currentLang === 'en') ? '⚙️ Hide Solar Options' : '⚙️ 收起天文高级选项';
+      } else {
+        advSolarTimeContainer.classList.add('hidden');
+        btnToggleAdvSolar.textContent = (currentLang === 'en') ? '⚙️ Show Solar Options' : '⚙️ 展开天文高级选项';
+      }
+    });
   }
 
   // Debounce helper for high-frequency input changes
@@ -413,13 +743,15 @@ document.addEventListener('DOMContentLoaded', () => {
       renderPortrait(result);
       renderLiterature(result);
       renderLuckCycles(result);
+      updateDashboardSummaryBar();
+      updateLandingPreview();
 
       // Measure calculation duration
       const tEnd = (typeof performance !== 'undefined') ? performance.now() : Date.now();
       const duration = (tEnd - tStart).toFixed(2);
       const perfBadge = document.getElementById('calcPerfBadge');
       if (perfBadge) {
-        perfBadge.textContent = `⚡ 瞬时计算完成 (${duration}ms)`;
+        perfBadge.textContent = (currentLang === 'en') ? `⚡ Instant Calculation (${duration}ms)` : `⚡ 瞬时计算完成 (${duration}ms)`;
       }
     } catch (err) {
       console.error('排盘计算发生异常:', err);
@@ -5891,13 +6223,44 @@ document.addEventListener('DOMContentLoaded', () => {
   initImperialDossier();
   initPWA();
   initVisualAlchemy();
+  initPortalPresets();
+  initPortalFeaturesShowcase();
+  initAdvSolarToggle();
 
-  // Event Listeners for Immediate Calculation
+  // Return to Portal & Edit Natal Buttons
+  if (btnReturnToPortal) {
+    btnReturnToPortal.addEventListener('click', switchToLandingView);
+  }
+  if (btnPortalTopNav) {
+    btnPortalTopNav.addEventListener('click', switchToLandingView);
+  }
+
+  // Event Listeners for Calculation and Preview Updates
   [birthDatePicker, birthTimePicker, genderSelect, useSolarTimeCheck, lateRatCheck, timezoneSelect].forEach(el => {
-    el.addEventListener('change', triggerCalculate);
+    if (el) {
+      el.addEventListener('change', () => {
+        if (activeMainPage === 'landing') {
+          updateLandingPreview();
+        } else {
+          triggerCalculate();
+        }
+      });
+      el.addEventListener('input', () => {
+        if (activeMainPage === 'landing') {
+          updateLandingPreview();
+        } else {
+          debouncedCalculate(60);
+        }
+      });
+    }
   });
-  calcBtn.addEventListener('click', triggerCalculate);
 
-  // Initial Calculation Run
+  calcBtn.addEventListener('click', () => {
+    triggerCalculate();
+    switchToDashboardView();
+  });
+
+  // Initial Calculation Run & Prepare Landing Preview
   triggerCalculate();
+  updateLandingPreview();
 });

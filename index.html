@@ -60,6 +60,11 @@
           📲 安装离线应用
         </button>
 
+        <!-- Portal Navigation Button (Reopen Landing Portal from Dashboard) -->
+        <button id="btnPortalTopNav" class="hidden px-3 py-1.5 text-xs rounded-lg border border-amber-600/50 bg-amber-950/50 hover:bg-amber-900/70 text-amber-300 font-medium transition flex items-center gap-1.5 active:scale-95 cursor-pointer shadow-sm" data-i18n="btn_portal_nav">
+          ⛩️ 命理门庭
+        </button>
+
         <button id="nowBtn" class="px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition" data-i18n="btn_now">
           ⏱ 此时此刻
         </button>
@@ -71,87 +76,338 @@
   </header>
 
   <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
-    <!-- Input Form Section -->
-    <section class="bg-card p-5 rounded-2xl border border-border-color shadow-xl">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
-        <!-- Date Picker -->
-        <div class="lg:col-span-2">
-          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_date">公历出生日期 (阳历)</label>
-          <input type="date" id="birthDate" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+    <!-- ==================================================================== -->
+    <!-- Page 1: Initial Portal Landing View (初始页面 · 命元启承门庭) -->
+    <!-- ==================================================================== -->
+    <div id="landingPortalView" class="space-y-8 animate-fade-in">
+      <!-- Hero Zen Greeting & Talisman -->
+      <div class="text-center space-y-4 pt-4 pb-2">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-rose-600 to-indigo-900 p-0.5 shadow-2xl shadow-amber-900/40 mb-1">
+          <div class="w-full h-full bg-[#161822] rounded-2xl flex items-center justify-center border border-amber-500/30">
+            <span class="text-2xl font-bold text-amber-300 font-serif-sc">乾坤</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-center gap-2 flex-wrap">
+          <span class="chinese-seal text-xs py-0.5" data-i18n="portal_seal_astronomy">钦天玄览</span>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/40 font-mono" data-i18n="portal_badge_version">v3.0 宏道全典</span>
+          <span class="chinese-seal text-xs py-0.5 border-amber-600 text-amber-400" data-i18n="portal_seal_canons">八典汇通</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-serif-sc tracking-wide bg-gradient-to-r from-amber-100 via-amber-300 to-rose-200 bg-clip-text text-transparent" data-i18n="portal_hero_title">
+          八字命盘与古典玄览系统
+        </h1>
+        <p class="max-w-2xl mx-auto text-xs sm:text-sm text-gray-300 font-serif-sc leading-relaxed px-4" data-i18n="portal_hero_subtitle">
+          探微天地三才，观照阴阳大化 · 汇通《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》八大经典原著库与周易六十四卦
+        </p>
+      </div>
+
+      <!-- Quick Archetype Presets Bar -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+            <span data-i18n="portal_presets_title">🌟 命盘速选典范 (Archetype Presets)</span>
+          </h2>
+          <span class="text-[11px] text-gray-400" data-i18n="portal_presets_sub">点击一键载入经典格局命盘，即时动态演算并预览</span>
+        </div>
+        <div id="portalPresetsContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <!-- Preset 1: Leader -->
+          <button type="button" class="archetype-preset-card p-3 rounded-xl text-left cursor-pointer active" data-preset="leader">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-sm">🌟</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30 font-serif-sc">乾造 · 阳木</span>
+            </div>
+            <div class="text-xs font-bold text-amber-200 font-serif-sc mb-0.5" data-i18n="preset_leader">盛世统帅 · 阳刃七杀</div>
+            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2" data-i18n="preset_leader_desc">1990-06-20 · 乾造 · 阳木生于午月，身旺抗杀，权威赫奕</div>
+          </button>
+
+          <!-- Preset 2: Business -->
+          <button type="button" class="archetype-preset-card p-3 rounded-xl text-left cursor-pointer" data-preset="business">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-sm">💎</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/10 text-rose-300 border border-rose-500/30 font-serif-sc">坤造 · 阳土</span>
+            </div>
+            <div class="text-xs font-bold text-amber-200 font-serif-sc mb-0.5" data-i18n="preset_business">商业奇才 · 食神生财</div>
+            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2" data-i18n="preset_business_desc">1988-11-18 · 坤造 · 戊土生于亥月，食伤生财，商略纵横</div>
+          </button>
+
+          <!-- Preset 3: Artist & Scholar -->
+          <button type="button" class="archetype-preset-card p-3 rounded-xl text-left cursor-pointer" data-preset="artist">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-sm">🎨</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 font-serif-sc">乾造 · 阴金</span>
+            </div>
+            <div class="text-xs font-bold text-amber-200 font-serif-sc mb-0.5" data-i18n="preset_artist">绝世文华 · 金水伤官</div>
+            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2" data-i18n="preset_artist_desc">1995-10-24 · 乾造 · 辛金生于戌月，金清水白，文采斐然</div>
+          </button>
+
+          <!-- Preset 4: Strategist -->
+          <button type="button" class="archetype-preset-card p-3 rounded-xl text-left cursor-pointer" data-preset="strategist">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-sm">🛡️</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-serif-sc">坤造 · 杀印</span>
+            </div>
+            <div class="text-xs font-bold text-amber-200 font-serif-sc mb-0.5" data-i18n="preset_strategist">稳若磐石 · 杀印相生</div>
+            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2" data-i18n="preset_strategist_desc">1984-03-15 · 坤造 · 甲木得令逢印，沉稳谋局，基业常青</div>
+          </button>
+
+          <!-- Preset 5: Right Now -->
+          <button type="button" class="archetype-preset-card p-3 rounded-xl text-left cursor-pointer col-span-2 sm:col-span-1" data-preset="now">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-sm">⏱️</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/10 text-purple-300 border border-purple-500/30 font-serif-sc">当下 · 此时</span>
+            </div>
+            <div class="text-xs font-bold text-amber-200 font-serif-sc mb-0.5" data-i18n="preset_now">此时此刻 · 当下气运</div>
+            <div class="text-[10px] text-gray-400 leading-snug line-clamp-2" data-i18n="preset_now_desc">动态截取当下天文时空与节气，测算即刻行运</div>
+          </button>
+        </div>
+      </section>
+
+      <!-- Sacred Input Altar & Live Natal Preview Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Input Form Section (7 Columns) -->
+        <section class="lg:col-span-7 bg-card p-5 sm:p-6 rounded-2xl border border-border-color shadow-xl space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-gray-800">
+            <h3 class="text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+              <span data-i18n="portal_form_card_title">📜 八字命造输入 (Natal Configuration)</span>
+            </h3>
+            <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_canons">双典集成</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Date Picker -->
+            <div>
+              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_date">公历出生日期 (阳历)</label>
+              <input type="date" id="birthDate" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Time Picker -->
+            <div>
+              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_time">出生时间 (当地钟表时)</label>
+              <input type="time" id="birthTime" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+            </div>
+
+            <!-- Gender -->
+            <div>
+              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_gender">造化属性 (性别)</label>
+              <select id="gender" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                <option value="乾造" data-i18n="opt_qian">乾造 (男命)</option>
+                <option value="坤造" data-i18n="opt_kun">坤造 (女命)</option>
+              </select>
+            </div>
+
+            <!-- City & Region Selector (Worldwide) -->
+            <div>
+              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_city">全球出生地区/城市</label>
+              <select id="citySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+              </select>
+            </div>
+          </div>
+
+          <!-- Advanced Astronomical Options & True Solar Time Settings -->
+          <div class="pt-3 border-t border-gray-800 space-y-3 text-xs text-gray-400">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <label class="flex items-center space-x-2 cursor-pointer font-medium text-gray-300">
+                <input type="checkbox" id="useTrueSolarTime" class="rounded bg-gray-800 border-gray-700 text-amber-500 focus:ring-0">
+                <span data-i18n="chk_true_solar">开启真太阳时校正 (天文均时差 + 经度偏差)</span>
+              </label>
+              <button type="button" id="btnToggleAdvSolar" class="text-[11px] text-amber-400 hover:text-amber-300 transition flex items-center gap-1 cursor-pointer" data-i18n="portal_adv_toggle_show">
+                ⚙️ 高级天文选项
+              </button>
+            </div>
+
+            <div id="advSolarTimeContainer" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-3 p-3 bg-black/30 rounded-xl border border-gray-800">
+              <div class="space-y-1">
+                <span data-i18n="lbl_timezone">标准时区:</span>
+                <select id="timezoneSelect" class="w-full bg-black/40 border border-gray-700 rounded px-2 py-1 text-xs text-gray-200">
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <span data-i18n="lbl_longitude">经度 (°E / 西经为负):</span>
+                <input type="number" id="customLongitude" value="116.4" step="0.01" class="w-full bg-black/40 border border-gray-700 rounded px-2 py-1 text-xs text-gray-200 font-mono">
+              </div>
+
+              <div class="flex items-end">
+                <label class="flex items-center space-x-1.5 cursor-pointer pb-1">
+                  <input type="checkbox" id="lateRatNextDay" class="rounded bg-gray-800 border-gray-700 text-amber-500 focus:ring-0">
+                  <span data-i18n="chk_late_rat" class="text-[11px]">夜子时算次日</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Real-time Solar Correction Display & Performance Badge -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <div id="solarCalcDetail" class="text-[11px] text-amber-400/90 bg-amber-950/20 px-3 py-1.5 rounded-lg border border-amber-800/30 font-mono flex flex-wrap gap-3 items-center flex-1">
+                <span data-i18n="solar_ready">真太阳时与经度校正已就绪</span>
+              </div>
+              <span id="calcPerfBadge" class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-950/30 text-emerald-400 border border-emerald-800/40 font-mono font-bold whitespace-nowrap" data-i18n="calc_perf">
+                ⚡ 毫秒级极速排盘
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Live Natal Preview Box (5 Columns) -->
+        <div class="lg:col-span-5 bg-card p-5 sm:p-6 rounded-2xl border border-amber-600/30 shadow-xl flex flex-col justify-between space-y-4">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+              <span class="text-xs font-bold text-amber-300 font-serif-sc flex items-center gap-1.5" data-i18n="portal_preview_title">
+                ⚡ 命盘即时微预览 (Live Natal Preview)
+              </span>
+              <span id="landingPreviewStatusBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950/60 text-amber-400 border border-amber-800/40 font-mono" data-i18n="portal_preview_ready">
+                干支演算就绪 · 点击下方按钮开启分析全盘
+              </span>
+            </div>
+            <p class="text-[11px] text-gray-400" data-i18n="portal_preview_hint">
+              修改参数或选择典范，命盘干支与元神即刻动态演化
+            </p>
+
+            <!-- 4 Mini Pillar Cards -->
+            <div id="landingQuickPreviewBox" class="grid grid-cols-4 gap-2 py-1">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- Preview Meta Essence -->
+            <div id="landingPreviewMeta" class="p-2.5 rounded-xl bg-black/30 border border-gray-800 text-[11px] text-gray-300 space-y-1">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- Submit CTA Button -->
+          <div class="pt-2">
+            <button id="calcBtn" class="cta-calc-btn w-full py-3.5 px-6 rounded-xl text-white font-black text-sm sm:text-base shadow-2xl flex items-center justify-center gap-2.5 cursor-pointer group active:scale-[0.99] border border-amber-400/40">
+              <span class="text-xl group-hover:rotate-45 transition-transform duration-300">☯️</span>
+              <span data-i18n="portal_calc_btn">起盘排盘 · 洞悉命元天机 ➔</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seven Canonical Vistas Feature Showcase -->
+      <section class="space-y-4 pt-4">
+        <div class="text-center space-y-1">
+          <h2 class="text-base sm:text-lg font-bold text-amber-200 font-serif-sc" data-i18n="portal_showcase_title">
+            🏛️ 乾坤大观 · 七大核心研索维度
+          </h2>
+          <p class="text-xs text-gray-400" data-i18n="portal_showcase_subtitle">
+            起盘后即刻开启全景推演看板
+          </p>
         </div>
 
-        <!-- Time Picker -->
-        <div class="lg:col-span-1">
-          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_time">出生时间 (当地钟表时)</label>
-          <input type="time" id="birthTime" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+        <div id="portalFeaturesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
+          <!-- Card 1: Core Base -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-home">
+            <div class="flex items-center space-x-2 text-amber-400 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">🏛️</span>
+              <span data-i18n="portal_card1_title">核心四柱与五行雷达</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card1_desc">
+              精确干支神煞、纳音五行、日主旺衰量化与动态形变雷达图。
+            </p>
+          </div>
+
+          <!-- Card 2: Strategy -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-strategy">
+            <div class="flex items-center space-x-2 text-amber-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">👑</span>
+              <span data-i18n="portal_card2_title">战略大局与帕累托20%</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card2_desc">
+              锁定决定80%运势走向的20%主导枢纽，解构破局战役与六亲全息侧写。
+            </p>
+          </div>
+
+          <!-- Card 3: Friction -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-friction">
+            <div class="flex items-center space-x-2 text-rose-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">🧘</span>
+              <span data-i18n="portal_card3_title">精神内耗与禅道解脱</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card3_desc">
+              直击过度反刍心性盲区，融合金刚经、坛经与庄子至高心智心法。
+            </p>
+          </div>
+
+          <!-- Card 4: Chrono -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-luck">
+            <div class="flex items-center space-x-2 text-purple-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">⏳</span>
+              <span data-i18n="portal_card4_title">百岁运势时空罗盘</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card4_desc">
+              1~100岁连续平滑推演，精力潮汐、财富高光与天克地冲提前防御。
+            </p>
+          </div>
+
+          <!-- Card 5: Canons -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-canons">
+            <div class="flex items-center space-x-2 text-blue-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">📜</span>
+              <span data-i18n="portal_card5_title">八典全库经文细注</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card5_desc">
+              滴天髓、三命通会、穷通宝鉴、子平真诠等传世古籍联机研索。
+            </p>
+          </div>
+
+          <!-- Card 6: I Ching -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-iching">
+            <div class="flex items-center space-x-2 text-amber-400 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">☯️</span>
+              <span data-i18n="portal_card6_title">周易六十四卦筮法</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card6_desc">
+              大衍筮法、三铜钱六掷与梅花易数，朱熹正统断卦七法通幽洞微。
+            </p>
+          </div>
+
+          <!-- Card 7: Synastry -->
+          <div class="feature-showcase-card cursor-pointer group col-span-1 sm:col-span-2 lg:col-span-2" data-jump-view="view-synastry">
+            <div class="flex items-center space-x-2 text-rose-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">💞</span>
+              <span data-i18n="portal_card7_title">双人合盘契合度博弈</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card7_desc">
+              婚恋合婚与商业合伙，五行互补、刑冲雷区与契约防火墙全维评估。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Classical Metaphysics Zen Quote -->
+      <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-800/30 text-center text-xs text-amber-300/80 font-serif-sc">
+        <span data-i18n="portal_zen_quote">“欲识三元万法宗，先观帝载与神功。坤元合德机缄通，五气顺行天地同。” —— 《滴天髓》</span>
+      </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- Page 2: Analysis & Feature Dashboard View (第二页面 · 分析与全功能看板) -->
+    <!-- ==================================================================== -->
+    <div id="dashboardView" class="space-y-6 hidden animate-fade-in">
+      <!-- Top Persistent Active Chart Summary & Edit Ribbon -->
+      <div id="dashboardTopSummaryBar" class="dashboard-top-ribbon p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-xs font-bold text-amber-300 font-serif-sc" data-i18n="dashboard_active_chart_title">当前受测命盘</span>
+          </div>
+          <!-- Summary Badges Container -->
+          <div id="dashboardSummaryBadges" class="flex flex-wrap items-center gap-2 text-xs">
+            <!-- Injected dynamically via JS: Gender pill, Solar Date/Time, 4-Pillar Stems/Branches with element colors, Day Master pill -->
+          </div>
         </div>
 
-        <!-- Gender -->
-        <div class="lg:col-span-1">
-          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_gender">造化属性 (性别)</label>
-          <select id="gender" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
-            <option value="乾造" data-i18n="opt_qian">乾造 (男命)</option>
-            <option value="坤造" data-i18n="opt_kun">坤造 (女命)</option>
-          </select>
-        </div>
-
-        <!-- City & Region Selector (Worldwide) -->
-        <div class="lg:col-span-1">
-          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_city">全球出生地区/城市</label>
-          <select id="citySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
-          </select>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="lg:col-span-1 flex items-end">
-          <button id="calcBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg shadow-amber-900/40 transition" data-i18n="btn_calc">
-            起盘排盘
+        <!-- Edit / Re-enter Action Button -->
+        <div class="flex items-center space-x-2">
+          <button id="btnReturnToPortal" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold text-xs shadow-md transition flex items-center gap-1.5 border border-amber-500/40 active:scale-95 cursor-pointer" data-i18n="btn_edit_natal">
+            ✏️ 重新排盘 / 修改八字
           </button>
         </div>
       </div>
 
-      <!-- Advanced Astrological Options & True Solar Time Settings -->
-      <div class="mt-4 pt-3 border-t border-gray-800 space-y-2.5 text-xs text-gray-400">
-        <div class="flex flex-wrap items-center gap-5">
-          <label class="flex items-center space-x-2 cursor-pointer font-medium text-gray-300">
-            <input type="checkbox" id="useTrueSolarTime" class="rounded bg-gray-800 border-gray-700 text-amber-500 focus:ring-0">
-            <span data-i18n="chk_true_solar">开启真太阳时校正 (天文均时差 + 经度偏差)</span>
-          </label>
-          
-          <div class="flex items-center space-x-2">
-            <span data-i18n="lbl_timezone">标准时区:</span>
-            <select id="timezoneSelect" class="bg-black/30 border border-gray-700 rounded px-2 py-0.5 text-xs text-gray-200">
-              <!-- Dynamically populated or updated by city -->
-            </select>
-          </div>
-
-          <div class="flex items-center space-x-2">
-            <span data-i18n="lbl_longitude">经度 (°E / 西经为负):</span>
-            <input type="number" id="customLongitude" value="116.4" step="0.01" class="w-24 bg-black/30 border border-gray-700 rounded px-2 py-0.5 text-xs text-gray-200 font-mono">
-          </div>
-
-          <label class="flex items-center space-x-2 cursor-pointer">
-            <input type="checkbox" id="lateRatNextDay" class="rounded bg-gray-800 border-gray-700 text-amber-500 focus:ring-0">
-            <span data-i18n="chk_late_rat">夜子时直接换次日柱 (23点后算次日)</span>
-          </label>
-        </div>
-
-        <!-- Real-time Solar Correction Display & Performance Badge -->
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div id="solarCalcDetail" class="text-[11px] text-amber-400/90 bg-amber-950/20 px-3 py-1.5 rounded-lg border border-amber-800/30 font-mono flex flex-wrap gap-4 items-center flex-1">
-            <span data-i18n="solar_ready">真太阳时与经度校正已就绪</span>
-          </div>
-          <span id="calcPerfBadge" class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-950/30 text-emerald-400 border border-emerald-800/40 font-mono font-bold whitespace-nowrap" data-i18n="calc_perf">
-            ⚡ 毫秒级极速排盘
-          </span>
-        </div>
+      <!-- Solar Term Banner -->
+      <div id="solarTermTag" class="px-4 py-2 bg-amber-950/20 border border-amber-600/30 rounded-xl text-xs text-amber-300 font-medium flex items-center justify-center space-x-2" data-i18n="solar_term_pending">
+        节气与节令星排盘中
       </div>
-    </section>
-
-    <!-- Solar Term Banner -->
-    <div id="solarTermTag" class="px-4 py-2 bg-amber-950/20 border border-amber-600/30 rounded-xl text-xs text-amber-300 font-medium flex items-center justify-center space-x-2" data-i18n="solar_term_pending">
-      节气与节令星排盘中
-    </div>
 
     <!-- Primary View Switcher Navigation Bar -->
     <nav id="primaryViewNav" class="sticky top-[61px] z-40 py-2 bg-[#12141c]/95 backdrop-blur-md rounded-2xl border border-gray-800 shadow-2xl p-2">
@@ -1243,6 +1499,9 @@
       </div>
     </section>
   </div>
+
+  </div>
+  <!-- End of dashboardView (Page 2) -->
 
   </main>
 
