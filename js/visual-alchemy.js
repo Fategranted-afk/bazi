@@ -243,7 +243,7 @@ const VisualAlchemy = (function() {
       fluxCtx.stroke();
 
       // Label
-      const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en');
+      const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en') || (typeof document !== 'undefined' && document.documentElement.lang === 'en');
       fluxCtx.fillStyle = isDayMasterHub ? '#fef08a' : '#e5e7eb';
       fluxCtx.font = isDayMasterHub ? 'bold 12px "Songti SC", serif' : '10px -apple-system, sans-serif';
       fluxCtx.textAlign = 'center';
@@ -265,7 +265,7 @@ const VisualAlchemy = (function() {
     fluxCtx.fill();
     fluxCtx.stroke();
 
-    const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en');
+    const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en') || (typeof document !== 'undefined' && document.documentElement.lang === 'en');
     fluxCtx.fillStyle = '#d4af37';
     fluxCtx.font = 'bold 9px "Songti SC", serif';
     fluxCtx.textAlign = 'center';

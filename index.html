@@ -542,7 +542,7 @@
             <div>
               <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
                 <span data-i18n="chrono_title">百岁运势时空罗盘 (Lifelong Chrono-Navigator)</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">1~100 岁全景</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30" data-i18n="chrono_panorama_badge">1~100 岁全景</span>
               </h4>
               <p class="text-xs text-gray-400 mt-0.5" data-i18n="chrono_subtitle">
                 1~100岁连续平滑推演 · 能量活力、财富走势与岁运刑冲全局图谱
@@ -562,7 +562,7 @@
         <!-- 100-Year Master Slider & Quick Jump Row -->
         <div class="space-y-2">
           <div class="flex items-center justify-between text-xs text-gray-400">
-            <span class="font-mono">1 岁 (初生)</span>
+            <span class="font-mono" data-i18n="chrono_age_min">1 岁 (初生)</span>
             <div class="flex flex-wrap items-center gap-1.5">
               <button id="chronoJumpCurrent" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-amber-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_current">当前年龄</button>
               <button id="chronoJumpGolden" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-emerald-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_golden">巅峰高光</button>
@@ -575,7 +575,7 @@
               <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="70">70</button>
               <button class="chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800" data-age="80">80</button>
             </div>
-            <span class="font-mono">100 岁 (百岁)</span>
+            <span class="font-mono" data-i18n="chrono_age_max">100 岁 (百岁)</span>
           </div>
 
           <input type="range" id="chronoAgeSlider" min="1" max="100" value="30" class="w-full chrono-slider cursor-pointer">
@@ -588,7 +588,7 @@
               <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span> <span data-i18n="chrono_energy_label">能量活力</span></span>
               <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> <span data-i18n="chrono_wealth_label">财富潮汐</span></span>
             </span>
-            <span class="text-gray-500 font-mono text-[10px]">滑动上方滑块或点击趋势图自由探索任意年份</span>
+            <span class="text-gray-500 font-mono text-[10px]" data-i18n="chrono_slider_hint">滑动上方滑块或点击趋势图自由探索任意年份</span>
           </div>
           <canvas id="chronoTimelineCanvas" class="w-full h-32 block cursor-crosshair"></canvas>
         </div>
@@ -1190,8 +1190,8 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] text-gray-400 mb-1">标识 / 姓名 (可选)</label>
-              <input type="text" id="synastryLabelA" value="甲造" placeholder="姓名或角色" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="synastry_label_tag">标识 / 姓名 (可选)</label>
+              <input type="text" id="synastryLabelA" value="甲造" placeholder="姓名或角色" data-i18n-placeholder="synastry_label_ph" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
             </div>
           </div>
         </div>
@@ -1203,7 +1203,7 @@
               <span>👥</span>
               <span data-i18n="synastry_person_b">乙造命主 (对比对象)</span>
             </span>
-            <span class="text-[10px] text-purple-400/80">配偶 / 联席合伙人</span>
+            <span class="text-[10px] text-purple-400/80" data-i18n="synastry_person_b_tag">配偶 / 联席合伙人</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
@@ -1222,8 +1222,8 @@
               </select>
             </div>
             <div>
-              <label class="block text-[11px] text-gray-400 mb-1">标识 / 姓名 (可选)</label>
-              <input type="text" id="synastryLabelB" value="乙造" placeholder="姓名或角色" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-purple-500">
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="synastry_label_tag">标识 / 姓名 (可选)</label>
+              <input type="text" id="synastryLabelB" value="乙造" placeholder="姓名或角色" data-i18n-placeholder="synastry_label_ph" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-purple-500">
             </div>
           </div>
         </div>

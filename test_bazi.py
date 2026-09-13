@@ -2237,12 +2237,67 @@ run_va = subprocess.run(jsc_va_cmd, capture_output=True, text=True)
 assert run_va.returncode == 0, f"JSC VisualAlchemy check failed: {run_va.stderr}"
 print("✓ 东方美学动态动效（五行气机粒子环/周易爻线动变/雷达图平滑形变/性能节流守护）验证通过！")
 
-print("\n🎉 ALL 45 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 46. Validate Complete HTML I18N Bindings for Chrono-Navigator & Synastry
+print("\n=== 46. Validating HTML I18N Bindings & Translations for Chrono & Synastry ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_src = f.read()
 
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_src = f.read()
 
+required_keys = [
+    'chrono_age_min', 'chrono_age_max', 'chrono_panorama_badge', 'chrono_slider_hint',
+    'synastry_label_tag', 'synastry_person_b_tag', 'synastry_label_ph'
+]
+for k in required_keys:
+    assert f'data-i18n="{k}"' in html_src or f'data-i18n-placeholder="{k}"' in html_src, f"Missing {k} binding in index.html"
+    assert f'{k}:' in i18n_src, f"Missing key {k} in js/i18n.js"
 
+print("✓ 时空罗盘与双人合盘全量 HTML 标签双语绑定与字典完整性验证通过！")
 
+# 47. Validate I18N.currentLang Runtime Sync & Visual Alchemy / Radar Parity
+print("\n=== 47. Validating I18N.currentLang Runtime Sync & Visual Alchemy / Radar Parity ===")
+jsc_i18n_sync_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("js/i18n.js");
+    load("js/chart.js");
+    load("js/visual-alchemy.js");
 
+    if (typeof I18N.currentLang === 'undefined') {
+      throw new Error("I18N must expose currentLang property");
+    }
 
+    I18N.currentLang = 'en';
+    if (I18N.currentLang !== 'en') {
+      throw new Error("I18N.currentLang must be mutable");
+    }
+    '''
+]
+run_sync = subprocess.run(jsc_i18n_sync_cmd, capture_output=True, text=True)
+assert run_sync.returncode == 0, f"JSC I18N sync check failed: {run_sync.stderr}"
 
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_src = f.read()
 
+assert 'I18N.currentLang = lang' in app_src, "app.js must synchronize I18N.currentLang in setLanguage"
+assert "ElementChart.renderRadar('elementRadarCanvas'" in app_src, "app.js must re-render radar chart via ElementChart.renderRadar"
+assert '_hasMorphListener' in app_src, "app.js must prevent duplicate listener bindings on hexagram line rows"
+print("✓ I18N.currentLang 实时同步、雷达重绘与爻线事件去重验证通过！")
+
+# 48. Validate Print CSS Visibility & Resilient PWA Pre-Caching
+print("\n=== 48. Validating Print CSS Visibility & Resilient PWA Pre-Caching ===")
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_src = f.read()
+
+assert '#imperialDossierModal' in css_src and 'display: block !important' in css_src, "style.css @media print must override modal display to prevent blank page prints"
+
+with open('sw.js', 'r', encoding='utf-8') as f:
+    sw_src = f.read()
+
+assert 'Promise.all' in sw_src and 'STATIC_ASSETS.map' in sw_src, "sw.js must use resilient individual caching instead of atomic addAll"
+
+print("✓ 打印样式穿透防御（防止模态关闭时打印白页）与 PWA 离线高可用缓存验证通过！")
+
+print("\n🎉 ALL 48 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")

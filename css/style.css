@@ -247,6 +247,13 @@ body {
   body * {
     visibility: hidden;
   }
+  #imperialDossierModal {
+    display: block !important;
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
   #imperialDossierContainer,
   #imperialDossierContainer * {
     visibility: visible;

@@ -123,6 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setLanguage(lang) {
     currentLang = lang;
+    if (typeof I18N !== 'undefined') {
+      I18N.currentLang = lang;
+    }
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('bazi_lang', lang);
     }
@@ -187,6 +190,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (typeof updateChronoDisplay === 'function' && typeof chronoTimelineData !== 'undefined' && chronoTimelineData.length) {
       updateChronoDisplay(activeChronoAge, lang === 'en');
+    }
+    const inpA = document.getElementById('synastryLabelA');
+    const inpB = document.getElementById('synastryLabelB');
+    if (inpA) {
+      if (lang === 'en' && inpA.value === '甲造') inpA.value = 'Person A';
+      else if (lang === 'zh' && inpA.value === 'Person A') inpA.value = '甲造';
+    }
+    if (inpB) {
+      if (lang === 'en' && inpB.value === '乙造') inpB.value = 'Person B';
+      else if (lang === 'zh' && inpB.value === 'Person B') inpB.value = '乙造';
     }
   }
 
@@ -517,6 +530,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ElementChart.renderRadar('elementRadarCanvas', res.elements.percentages);
     if (typeof VisualAlchemy !== 'undefined') {
       VisualAlchemy.setActiveElement(res.dayMasterElement || '木');
+    }
+    if (typeof renderImperialDossierPages === 'function') {
+      renderImperialDossierPages(currentLang);
     }
   }
 
@@ -3709,8 +3725,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // If switching to home view, refresh radar canvas
-    if (targetViewId === 'view-home' && currentBaziResult && typeof renderElementRadar === 'function') {
-      renderElementRadar(currentBaziResult.elements);
+    if (targetViewId === 'view-home' && currentBaziResult && typeof ElementChart !== 'undefined') {
+      ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
     }
 
     // If switching to luck view, refresh Chrono-Navigator canvas
@@ -4856,11 +4872,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Attach interactive hexagram line transformation morphing animations
     document.querySelectorAll('.hexagram-line-row').forEach(row => {
-      row.addEventListener('click', () => {
-        if (typeof VisualAlchemy !== 'undefined' && typeof VisualAlchemy.animateLineTransformation === 'function') {
-          VisualAlchemy.animateLineTransformation(row);
-        }
-      });
+      if (!row._hasMorphListener) {
+        row._hasMorphListener = true;
+        row.addEventListener('click', () => {
+          if (typeof VisualAlchemy !== 'undefined' && typeof VisualAlchemy.animateLineTransformation === 'function') {
+            VisualAlchemy.animateLineTransformation(row);
+          }
+        });
+      }
     });
   }
 
@@ -5307,8 +5326,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('synastryResultContainer');
     if (!container || !data) return;
 
-    const labelA = document.getElementById('synastryLabelA')?.value || (isEn ? 'Person A' : '甲造');
-    const labelB = document.getElementById('synastryLabelB')?.value || (isEn ? 'Person B' : '乙造');
+    const rawValA = document.getElementById('synastryLabelA')?.value;
+    const rawValB = document.getElementById('synastryLabelB')?.value;
+    const labelA = (isEn && (!rawValA || rawValA === '甲造')) ? 'Person A' : (rawValA || (isEn ? 'Person A' : '甲造'));
+    const labelB = (isEn && (!rawValB || rawValB === '乙造')) ? 'Person B' : (rawValB || (isEn ? 'Person B' : '乙造'));
 
     const score = data.overallScore;
     const arc = data.archetype;
@@ -5479,6 +5500,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderImperialDossierPages('en');
       });
     }
+
+    window.addEventListener('beforeprint', () => {
+      renderImperialDossierPages(currentLang);
+    });
   }
 
   function openImperialDossierModal(lang) {
@@ -5524,10 +5549,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const isMale = (rawGender === '乾造' || rawGender === 'male' || rawGender === 'Yang Male');
     const genderStr = isEn ? (isMale ? 'Yang Male (Qian)' : 'Yin Female (Kun)') : (isMale ? '乾造' : '坤造');
     const domPat = isEn ? (portrait.patterns[0].nameEn || portrait.patterns[0].name) : portrait.patterns[0].name;
-    const domTier = (portrait.patterns[0].gradeEvaluation && portrait.patterns[0].gradeEvaluation.tier) ? portrait.patterns[0].gradeEvaluation.tier : '';
+    const ge = portrait.patterns[0].gradeEvaluation;
+    const domTier = ge ? (isEn ? (ge.tierEn || ge.tier) : (ge.tierZh || ge.tier)) : '';
     const elPercentages = (bazi.elements && bazi.elements.percentages) || bazi.elements || {};
     const elMap = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
     const elSummaryStr = Object.entries(elPercentages).map(([k, v]) => `${isEn ? (elMap[k] || k) : k} ${v}%`).join(' · ');
+
+    const inpYr = (bazi.input && bazi.input.year) || 1990;
+    const inpMo = (bazi.input && bazi.input.month) || 1;
+    const inpDa = (bazi.input && bazi.input.day) || 1;
+    const inpHr = (bazi.input && bazi.input.hour) || 0;
+    const inpMi = (bazi.input && bazi.input.minute) || 0;
+    const dateStr = `${inpYr}-${String(inpMo).padStart(2,'0')}-${String(inpDa).padStart(2,'0')} ${String(inpHr).padStart(2,'0')}:${String(inpMi).padStart(2,'0')}`;
 
     container.innerHTML = `
       <!-- Page 1: Cover & Four Pillars Grand Altar -->
@@ -5557,7 +5590,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div>
               <span class="text-gray-500">${isEn ? 'Solar Date:' : '阳历生辰:'}</span>
-              <span class="font-bold text-gray-900 ml-1 font-mono">${bazi.input.year}-${String(bazi.input.month).padStart(2,'0')}-${String(bazi.input.day).padStart(2,'0')} ${String(bazi.input.hour).padStart(2,'0')}:${String(bazi.input.minute).padStart(2,'0')}</span>
+              <span class="font-bold text-gray-900 ml-1 font-mono">${dateStr}</span>
             </div>
             <div>
               <span class="text-gray-500">${isEn ? 'Day Master & Vigor:' : '日元本命与旺衰:'}</span>

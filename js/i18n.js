@@ -46,6 +46,10 @@ const I18N = (function() {
       chrono_btn_current: "当前年龄",
       chrono_btn_golden: "巅峰高光",
       chrono_btn_transit: "大运交接",
+      chrono_age_min: "1 岁 (初生)",
+      chrono_age_max: "100 岁 (百岁)",
+      chrono_panorama_badge: "1~100 岁全景",
+      chrono_slider_hint: "滑动上方滑块或点击趋势图自由探索任意年份",
       chrono_directive_title: "流年战略锦囊与行持准则",
 
       // Synastry
@@ -55,6 +59,9 @@ const I18N = (function() {
       synastry_mode_business: "🤝 商业合伙 (创始人/战略合伙)",
       synastry_person_a: "甲造命主 (主盘对象)",
       synastry_person_b: "乙造命主 (对比对象)",
+      synastry_label_tag: "标识 / 姓名 (可选)",
+      synastry_person_b_tag: "配偶 / 联席合伙人",
+      synastry_label_ph: "姓名或角色",
       synastry_load_current: "📥 载入当前主盘",
       synastry_calc_btn: "🚀 生成双人合盘全息战报",
       synastry_score_label: "双人综合契合度",
@@ -342,7 +349,10 @@ const I18N = (function() {
       chrono_pause: "⏸ Pause",
       chrono_btn_current: "Current Age",
       chrono_btn_golden: "Peak Season",
-      chrono_btn_transit: "Decade Shift",
+      chrono_age_min: "Age 1 (Infancy)",
+      chrono_age_max: "Age 100 (Centenarian)",
+      chrono_panorama_badge: "Age 1-100 Panorama",
+      chrono_slider_hint: "Drag the slider above or click the trendline to explore any year",
       chrono_directive_title: "Actionable Yearly Directive & Strategic Guidance",
 
       // Synastry
@@ -352,6 +362,9 @@ const I18N = (function() {
       synastry_mode_business: "🤝 Business Co-Founders & Strategic Partnership",
       synastry_person_a: "Subject A (Primary Chart)",
       synastry_person_b: "Subject B (Counterpart)",
+      synastry_label_tag: "Label / Name (Optional)",
+      synastry_person_b_tag: "Spouse / Co-founder",
+      synastry_label_ph: "Name or role",
       synastry_load_current: "📥 Load From Primary Chart",
       synastry_calc_btn: "🚀 Generate Synastry Compatibility Dossier",
       synastry_score_label: "Overall Compatibility Synergy",
@@ -1605,6 +1618,7 @@ const I18N = (function() {
   }
 
   return {
+    currentLang: 'zh',
     dict,
     STEMS,
     BRANCHES,

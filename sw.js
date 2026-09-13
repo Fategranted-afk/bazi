@@ -37,9 +37,13 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS).catch((err) => {
-        console.warn('PWA Precache partial warning:', err);
-      });
+      return Promise.all(
+        STATIC_ASSETS.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn('PWA Precache asset warning for ' + url + ':', err);
+          })
+        )
+      );
     }).then(() => self.skipWaiting())
   );
 });

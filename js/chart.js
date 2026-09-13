@@ -130,7 +130,7 @@ class ElementChart {
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       const pctVal = percentages[elements[i]] || 0;
-      const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en');
+      const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en') || (typeof document !== 'undefined' && document.documentElement.lang === 'en');
       const elLabelsEn = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
       const elLabel = isEn ? (elLabelsEn[elements[i]] || elements[i]) : elements[i];
       ctx.fillText(`${elLabel} ${pctVal}%`, lx, ly);
