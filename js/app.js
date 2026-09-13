@@ -105,6 +105,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedDailyDate = new Date().toISOString().split('T')[0];
   let selectedFortuneCycle = 'decade';
   let currentLang = (typeof localStorage !== 'undefined' && localStorage.getItem('bazi_lang')) ? localStorage.getItem('bazi_lang') : 'zh';
+  let activePrimaryView = 'view-home';
+  let lastDivinationResult = null;
+  let currentCoinStep = 1;
+  let currentCoinLines = [];
+  let activeChronoAge = 30;
+  let isChronoPlaying = false;
+  let chronoPlayTimer = null;
+  let chronoTimelineData = [];
+  let currentSynastryMode = 'romantic';
+  let currentSynastryResult = null;
+  let cachedChartA = null;
+  let cachedChartB = null;
+  let deferredPwaPrompt = null;
 
   // DOM Elements
   const birthDatePicker = document.getElementById('birthDate');
@@ -3686,8 +3699,8 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // Primary View Navigation Logic (6 Views: Home, Strategy, Friction, Luck, Canons, I Ching)
-  let activePrimaryView = 'view-home';
+  // Primary View Navigation Logic
+  // activePrimaryView already declared at top
   const viewNavBtns = document.querySelectorAll('.view-nav-btn');
   const primaryViews = {
     'view-home': document.getElementById('view-home'),
@@ -4178,9 +4191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 周易六十四卦算卦控制器 (I Ching Controller)
   // ==========================================
-  let lastDivinationResult = null;
-  let currentCoinStep = 1;
-  let currentCoinLines = [];
+  // I Ching state already declared at top
 
   function initIChingController() {
     const ichingQueryInput = document.getElementById('ichingQueryInput');
@@ -4886,10 +4897,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // Feature 2: Lifelong Chrono-Navigator / Interactive Fortune Timeline
   // ==========================================================================
-  let activeChronoAge = 30;
-  let isChronoPlaying = false;
-  let chronoPlayTimer = null;
-  let chronoTimelineData = [];
+  // Chrono-Navigator state already declared at top
 
   function renderChronoNavigator(timeline, bazi) {
     chronoTimelineData = timeline;
@@ -5239,10 +5247,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // Feature 3: Synastry & Partner Compatibility Controller
   // ==========================================================================
-  let currentSynastryMode = 'romantic';
-  let currentSynastryResult = null;
-  let cachedChartA = null;
-  let cachedChartB = null;
+  // Synastry state already declared at top
 
   function initSynastryController() {
     const modeRom = document.getElementById('synastryModeRomantic');
@@ -5501,9 +5506,11 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    window.addEventListener('beforeprint', () => {
-      renderImperialDossierPages(currentLang);
-    });
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      window.addEventListener('beforeprint', () => {
+        renderImperialDossierPages(currentLang);
+      });
+    }
   }
 
   function openImperialDossierModal(lang) {
@@ -5631,10 +5638,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>
                 <tr>
                   <td class="p-1 font-bold bg-amber-50/50">${isEn ? 'Hidden Stems' : '地支藏干'}</td>
-                  <td class="p-1">${isEn ? p.year.hiddenStems.map(s => I18N.getStem(s, 'en').split(' ')[0]).join(', ') : p.year.hiddenStems.join(' ')}</td>
-                  <td class="p-1">${isEn ? p.month.hiddenStems.map(s => I18N.getStem(s, 'en').split(' ')[0]).join(', ') : p.month.hiddenStems.join(' ')}</td>
-                  <td class="p-1">${isEn ? p.day.hiddenStems.map(s => I18N.getStem(s, 'en').split(' ')[0]).join(', ') : p.day.hiddenStems.join(' ')}</td>
-                  <td class="p-1">${isEn ? p.hour.hiddenStems.map(s => I18N.getStem(s, 'en').split(' ')[0]).join(', ') : p.hour.hiddenStems.join(' ')}</td>
+                  <td class="p-1">${(p.year.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td class="p-1">${(p.month.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td class="p-1">${(p.day.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td class="p-1">${(p.hour.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
                 </tr>
                 <tr>
                   <td class="p-1 font-bold bg-amber-50/50">${isEn ? 'Na-Yin Element' : '纳音五行'}</td>
@@ -5832,7 +5839,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // Feature 4: Offline-First PWA Controller & Service Worker
   // ==========================================================================
-  let deferredPwaPrompt = null;
+  // deferredPwaPrompt already declared at top
 
   function initPWA() {
     if ('serviceWorker' in navigator) {

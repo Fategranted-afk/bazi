@@ -2300,4 +2300,210 @@ assert 'Promise.all' in sw_src and 'STATIC_ASSETS.map' in sw_src, "sw.js must us
 
 print("✓ 打印样式穿透防御（防止模态关闭时打印白页）与 PWA 离线高可用缓存验证通过！")
 
-print("\n🎉 ALL 48 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 49. Validate Full Browser DOM Simulation & Zero Runtime Crash (JSC)
+print("\n=== 49. Validating Browser DOM Simulation & Zero Runtime Crash (JSC) ===")
+jsc_dom_sim_script = '''
+var window = this;
+window.addEventListener = function(evt, fn) {};
+window.devicePixelRatio = 2;
+window.cancelAnimationFrame = function() {};
+window.requestAnimationFrame = function(cb) { return 1; };
+var global = this;
+var localStorage = {
+  _data: {},
+  getItem: function(k) { return this._data[k] || null; },
+  setItem: function(k, v) { this._data[k] = String(v); }
+};
+var performance = { now: function() { return Date.now(); } };
+var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+
+var console = {
+  log: function() {},
+  warn: function() {},
+  error: function(m, e) {
+    throw new Error(m + (e ? ' ' + (e.stack || e) : ''));
+  }
+};
+
+var allIds = ['langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierContainer'];
+var elementStore = {};
+
+function makeEl(id, tag) {
+  return {
+    id: id,
+    tagName: (tag || 'DIV').toUpperCase(),
+    value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : (id === 'synastryDateA' ? '1990-06-20' : (id === 'synastryTimeA' ? '14:30' : (id === 'synastryDateB' ? '1992-08-15' : (id === 'synastryTimeB' ? '10:00' : '')))))),
+    checked: false,
+    textContent: '',
+    innerHTML: '',
+    className: '',
+    style: {},
+    options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+    selectedIndex: 0,
+    width: 300,
+    height: 200,
+    clientWidth: 300,
+    clientHeight: 200,
+    getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+    _listeners: {},
+    _children: [],
+    classList: {
+      _classes: [],
+      add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+      remove: function(c) {
+        var idx = this._classes.indexOf(c);
+        if (idx >= 0) this._classes.splice(idx, 1);
+      },
+      contains: function(c) { return this._classes.indexOf(c) >= 0; }
+    },
+    addEventListener: function(event, handler) {
+      if (!this._listeners[event]) this._listeners[event] = [];
+      this._listeners[event].push(handler);
+    },
+    trigger: function(event, data) {
+      var handlers = this._listeners[event] || [];
+      for (var i = 0; i < handlers.length; i++) {
+        handlers[i].call(this, data || {});
+      }
+    },
+    appendChild: function(child) { this._children.push(child); },
+    querySelectorAll: function() { return []; },
+    querySelector: function() { return null; },
+    getAttribute: function(attr) { return this[attr] || null; },
+    setAttribute: function(attr, val) { this[attr] = val; },
+    getContext: function() {
+      return {
+        clearRect: function() {},
+        beginPath: function() {},
+        moveTo: function() {},
+        lineTo: function() {},
+        closePath: function() {},
+        stroke: function() {},
+        fill: function() {},
+        fillText: function() {},
+        arc: function() {},
+        setLineDash: function() {},
+        scale: function() {},
+        createLinearGradient: function() { return { addColorStop: function() {} }; }
+      };
+    }
+  };
+}
+
+allIds.forEach(function(id) {
+  elementStore[id] = makeEl(id);
+});
+
+var document = {
+  documentElement: {
+    lang: 'zh-CN',
+    getAttribute: function() { return 'dark'; },
+    setAttribute: function() {}
+  },
+  getElementById: function(id) {
+    if (!elementStore[id]) {
+      elementStore[id] = makeEl(id);
+    }
+    return elementStore[id];
+  },
+  createElement: function(tag) {
+    return makeEl(null, tag);
+  },
+  querySelectorAll: function(sel) {
+    if (sel === '.view-nav-btn') {
+      return [
+        elementStore['navBtnHome'],
+        elementStore['navBtnStrategy'],
+        elementStore['navBtnFriction'],
+        elementStore['navBtnLuck'],
+        elementStore['navBtnCanons'],
+        elementStore['navBtnIChing'],
+        elementStore['navBtnSynastry']
+      ];
+    }
+    return [];
+  },
+  querySelector: function() { return null; },
+  addEventListener: function(event, handler) {
+    if (event === 'DOMContentLoaded') this._domReady = handler;
+  }
+};
+
+load('js/i18n.js');
+load('data/ditiansui.js');
+load('data/sanming.js');
+load('data/qiongtong.js');
+load('data/zipingzhenquan.js');
+load('data/yuanhai.js');
+load('data/shenfeng.js');
+load('data/yuzhao.js');
+load('data/lixuzhong.js');
+load('data/iching.js');
+load('js/bazi-engine.js');
+load('js/portrait-engine.js');
+load('js/luck-engine.js');
+load('js/iching-engine.js');
+load('js/synastry-engine.js');
+load('js/visual-alchemy.js');
+load('js/chart.js');
+load('js/app.js');
+
+if (!document._domReady) {
+  throw new Error("DOMContentLoaded handler not registered");
+}
+document._domReady();
+
+// Trigger calculation in ZH
+elementStore['calcBtn'].trigger('click');
+
+// Switch all views in ZH
+var views = ['view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching', 'view-synastry', 'view-home'];
+views.forEach(function(vId) {
+  var btn = document.querySelectorAll('.view-nav-btn').find(function(b) { return b.getAttribute('data-view') === vId; });
+  if (btn) btn.trigger('click');
+});
+
+// Chrono slider in ZH
+elementStore['chronoAgeSlider'].trigger('input', { target: { value: '45' } });
+
+// Synastry in ZH
+elementStore['calcSynastryBtn'].trigger('click');
+
+// I Ching in ZH
+elementStore['ichingInstantBtn'].trigger('click');
+
+// Switch language to EN
+elementStore['langEnBtn'].trigger('click');
+
+// Trigger calculation in EN
+elementStore['calcBtn'].trigger('click');
+
+// Switch all views in EN
+views.forEach(function(vId) {
+  var btn = document.querySelectorAll('.view-nav-btn').find(function(b) { return b.getAttribute('data-view') === vId; });
+  if (btn) btn.trigger('click');
+});
+
+// Chrono slider in EN
+elementStore['chronoAgeSlider'].trigger('input', { target: { value: '60' } });
+
+// Synastry in EN
+elementStore['calcSynastryBtn'].trigger('click');
+
+// I Ching in EN
+elementStore['ichingInstantBtn'].trigger('click');
+
+// Imperial Dossier in EN
+elementStore['btnExportDossier'].trigger('click');
+'''
+
+jsc_sim_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    jsc_dom_sim_script
+]
+sim_proc = subprocess.run(jsc_sim_cmd, capture_output=True, text=True)
+assert sim_proc.returncode == 0, f"Browser DOM Simulation crash detected: {sim_proc.stderr}"
+print("✓ 完整浏览器 DOM 运行环境模拟（生命周期/算盘/时空/合盘/周易/双语/战报导出）零崩溃验证通过！")
+
+print("\n🎉 ALL 49 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
