@@ -562,24 +562,30 @@ class PortraitEngine {
       elevationEn = '[Elevation Strategy]: Align with macro digital tailwinds, expand collaborative alliances, and leverage technology.';
     }
 
+    const strengthsAndFlawsCombinedZh = `${strengthsZh} ； ${flawsZh}`;
+    const strengthsAndFlawsCombinedEn = `${strengthsEn} ; ${flawsEn}`;
+
     return {
       tier,
       tierEn,
       tierBadge,
-      strengthsAndFlawsZh: {
-        good: strengthsZh,
-        bad: flawsZh
-      },
-      strengthsAndFlawsEn: {
-        good: strengthsEn,
-        bad: flawsEn
-      },
+      strengthsAndFlaws: strengthsAndFlawsCombinedZh,
+      strengthsAndFlawsZh: strengthsAndFlawsCombinedZh,
+      strengthsAndFlawsEn: strengthsAndFlawsCombinedEn,
+      goodZh: strengthsZh,
+      goodEn: strengthsEn,
+      badZh: flawsZh,
+      badEn: flawsEn,
+      whyThisGrade: whyThisGradeZh,
       whyThisGradeZh,
       whyThisGradeEn,
+      bottleneck: bottleneckZh,
       bottleneckZh,
       bottleneckEn,
+      floorBaseline: floorZh,
       floorBaselineZh: floorZh,
       floorBaselineEn: floorEn,
+      elevationPath: elevationZh,
       elevationPathZh: elevationZh,
       elevationPathEn: elevationEn
     };
@@ -1994,7 +2000,59 @@ class PortraitEngine {
         practicalZh: '【无所住心法实操】：当觉察到焦虑风暴升起、大脑开始推演灾难剧本时，立刻在心中当头棒喝：“凡所有相，皆是虚妄！”深吸一口气，抽离那个焦灼紧绷的“角色身份”，回到纯粹清澈的觉照本身。应无所住，人在当下，手做何事心即在何事。',
         practicalEn: '[Formless Presence Practice]: Whenever the rumination storm rises, mentally thunder: "All forms are impermanent illusions!" Immediately disidentify from the frantic ego character and return to grounded physical presence.',
         badgeZh: '应无所住 · 破除我相',
-        badgeEn: 'Abide Nowhere'
+        badgeEn: 'Abide Nowhere',
+        quotes: [
+          {
+            verseZh: '“凡所有相，皆是虚妄。若见诸相非相，则见如来。”',
+            verseEn: '"All conditioned forms and appearances are illusory. When one perceives that all forms are not true forms, one perceives Tathagata."',
+            sourceZh: '《金刚经·如理实见分第五》',
+            sourceEn: 'The Diamond Sutra, Ch. 5',
+            insightZh: '【破除四相幻翳】：一切令你彻夜难眠的恐惧、他人审判、灾难预想，皆是大脑交感神经投射的虚妄幻影，非真实自性。',
+            insightEn: '[Dissolving Ego Forms]: All catastrophic projections and perceived criticisms are transient cognitive illusions, not ultimate reality.',
+            practicalZh: '【虚妄觉照】：焦虑风暴升起时，立刻在心中当头棒喝：“凡所有相，皆是虚妄！”抽离角色身份，做纯粹的觉照观察者。',
+            practicalEn: '[Witnessing Awareness]: When anxiety strikes, thunder mentally: "All forms are illusory!" Disidentify from the frantic ego character.'
+          },
+          {
+            verseZh: '“一切有为法，如梦幻泡影，如露亦如电，应作如是观。”',
+            verseEn: '"All conditioned phenomena are like dreams, illusions, bubbles, and shadows; like dew or a lightning flash; thus should one contemplate them."',
+            sourceZh: '《金刚经·应化非真分第三十二》',
+            sourceEn: 'The Diamond Sutra, Ch. 32',
+            insightZh: '【梦幻泡影观】：世间一切功名成败、得失毁誉，如晨露闪电瞬息即逝。抓得越紧，内耗越深；视如泡影，心自释怀。',
+            insightEn: '[Contemplating Ephemerality]: Worldly successes, losses, and opinions vanish like dew or lightning. Loosening your grip instantly restores inner peace.',
+            practicalZh: '【降维破执】：遭遇挫折反刍时，观想事件如电光一闪，百千万劫弹指一挥间，放平心态笑看浮沉。',
+            practicalEn: '[Cosmic Perspective]: In times of setback, view the event as a momentary spark across vast cosmic time; internal pressure dissolves.'
+          },
+          {
+            verseZh: '“不应住色生心，不应住声香味触法生心，应无所住而生其心。”',
+            verseEn: '"The mind should not abide in forms, sounds, scents, tastes, touch, or mental objects; it should give rise to pure awareness by abiding nowhere."',
+            sourceZh: '《金刚经·庄严净土分第十》',
+            sourceEn: 'The Diamond Sutra, Ch. 10',
+            insightZh: '【应无所住】：心一旦执着停留在任何结果或外在评价上，便成牢笼；不住一法，清净觉照之创造力方能自然流淌。',
+            insightEn: '[Abiding Nowhere]: Fixating on rigid outcomes traps the mind; relinquishing all attachment frees innate intelligence to flow spontaneously.',
+            practicalZh: '【人在当下】：手做何事，心即在此。走路只管走路，敲代码只管敲代码，不迎不送，身心彻底合一。',
+            practicalEn: '[Presence in Action]: Whatever the hands do, let the mind dwell solely therein. Fully inhabit the present action without mental wandering.'
+          },
+          {
+            verseZh: '“过去心不可得，现在心不可得，未来心不可得。”',
+            verseEn: '"The past mind cannot be grasped, the present mind cannot be grasped, the future mind cannot be grasped."',
+            sourceZh: '《金刚经·一体同观分第十八》',
+            sourceEn: 'The Diamond Sutra, Ch. 18',
+            insightZh: '【三心不可得】：过去已逝无可追悔，未来未至何必预支恐惧，现在瞬息不住；执着于时间线上的得失是最大的内耗。',
+            insightEn: '[Ungraspable Time]: The past has vanished, the future is unformed, and the present never freezes; clinging across time is the root of rumination.',
+            practicalZh: '【立断时间纠缠】：当大脑回溯悔恨或前瞻恐慌时，猛断一喝：“三心不可得！”一把拉回眼前这一秒钟呼吸。',
+            practicalEn: '[Time Disconnect]: Whenever regret or anticipatory terror grips you, mentally shout: "Time cannot be held!" Return to the current breath.'
+          },
+          {
+            verseZh: '“知我说法，如筏喻者，法尚应舍，何况非法。”',
+            verseEn: '"My teachings are like a raft for crossing a river; once crossed, even the teachings must be let go, how much more so what is not truth!"',
+            sourceZh: '《金刚经·正信希有分第六》',
+            sourceEn: 'The Diamond Sutra, Ch. 6',
+            insightZh: '【筏喻舍执】：一切规训、计划与完美主义教条皆如渡河竹筏，到达彼岸即当放下；死死执着于规矩反被规矩勒死。',
+            insightEn: '[The Raft Analogy]: Plans, dogmas, and perfectionist ideals are mere transport across obstacles; holding onto the raft on dry land paralyzes you.',
+            practicalZh: '【破完美主义】：允许过程有瑕疵，完成胜于无休止的空想完美；过河弃筏，灵活变通，不再自我苛责。',
+            practicalEn: '[Embracing Imperfection]: Completion triumphs over sterile rumination. Discard the mental raft and move freely without self-reproach.'
+          }
+        ]
       },
       platform: {
         titleZh: '《六祖坛经》：直断妄念 · 本来无一物与顿悟自性',
@@ -2012,7 +2070,59 @@ class PortraitEngine {
         practicalZh: '【念起即觉直断功法】：六祖示人“无念为宗”。绝不要在脑海里试图“说服念头”或“压制焦虑”（用脑子解决脑子只会越陷越深）。觉察到念头翻滚时，只需冷眼旁观：“念头如过客，我是虚空主。”不要跟随，不要评判，念起即觉，觉之即无，念头自会如水上泡沫瞬间破灭。',
         practicalEn: '[Immediate Awakening Practice]: Do not debate with or suppress intrusive thoughts. Simply witness them as detached space: "Thoughts are transient guests; I am the vast, untouched host." In that pure noticing, the frantic narrative collapses.',
         badgeZh: '顿悟自性 · 见性解脱',
-        badgeEn: 'Instant Awakening'
+        badgeEn: 'Instant Awakening',
+        quotes: [
+          {
+            verseZh: '“菩提本无树，明镜亦非台。本来无一物，何处惹尘埃！”',
+            verseEn: '"Bodhi fundamentally has no tree, nor is the bright mirror a stand. Originally there is not a single thing; where can dust alight?"',
+            sourceZh: '《六祖坛经·行由品第一》',
+            sourceEn: 'The Platform Sutra, Ch. 1',
+            insightZh: '【自性本空】：自性如万里虚空本无一物，那些焦虑、自卑、惶恐皆是虚空过隙的风沙，根本无法染污自性分毫。',
+            insightEn: '[Void Self-Nature]: Consciousness is pristine as boundless space; emotional storms of fear and inadequacy leave no stain upon the sky.',
+            practicalZh: '【观心如虚空】：觉察到念头翻滚时，静观自心如无垠虚空：“任凭念头飞沙走石，何曾动我虚空分毫？”',
+            practicalEn: '[Spacious Witnessing]: Observe turbulent thoughts calmly: "Storms rage across the sky, yet the vast space itself is untouched."'
+          },
+          {
+            verseZh: '“何期自性，本自清净；何期自性，本不生灭；何期自性，本自具足；何期自性，本无动摇；何期自性，能生万法！”',
+            verseEn: '"How wondrous that self-nature is fundamentally pure, birthless and deathless, inherently self-sufficient, completely unshakeable, and capable of generating all phenomena!"',
+            sourceZh: '《六祖坛经·行由品第一》',
+            sourceEn: 'The Platform Sutra, Ch. 1',
+            insightZh: '【本自具足】：你内在早已拥有一切破局力量与大智慧，何须向外乞求认同与赞许？本无动摇，何来患得患失？',
+            insightEn: '[Innate Wholeness]: You possess complete clarity and sovereignty within; seeking validation from external judgment is seeking water from a mirage.',
+            practicalZh: '【终结冒名顶替】：产生自我怀疑时，深吸一口气默念：“本自具足，本无动摇！”彻底斩断向外乞求认同的软弱触角。',
+            practicalEn: '[Ending Imposter Syndrome]: In moments of self-doubt, breathe deeply: "Inherently sufficient, unshakably sovereign!" Sever external validation-seeking.'
+          },
+          {
+            verseZh: '“前念著境即烦恼，后念离境即菩提。念念不住，于一切法不取不舍。”',
+            verseEn: '"Clinging to circumstances in the prior thought breeds affliction; detaching from circumstances in the subsequent thought awakens wisdom. Flowing without stopping, neither grasping nor rejecting."',
+            sourceZh: '《六祖坛经·般若品第二》',
+            sourceEn: 'The Platform Sutra, Ch. 2',
+            insightZh: '【前念后念】：外界刺激激起第一念是生理常态，折磨你的是千万个自责反刍的第二念；后念离境，当下即得觉悟解脱。',
+            insightEn: '[Severing Secondary Loops]: Initial impulses are instinctual; the endless chain of self-blaming secondary ruminations is what tortures the spirit.',
+            practicalZh: '【掐断第二念】：觉察到第一念的懊悔或恐惧后，严禁在脑海中继续展开辩解或推演，任其如水上浮沫瞬间破灭。',
+            practicalEn: '[Snapping the Second Thought]: The moment a critical impulse appears, refuse to elaborate or argue with it; let it dissolve like foam.'
+          },
+          {
+            verseZh: '“不思善，不思恶，正与么时，哪个是明上座本来面目？”',
+            verseEn: '"Do not think of good, do not think of evil; in this exact moment, what is your original face?"',
+            sourceZh: '《六祖坛经·行由品第一》',
+            sourceEn: 'The Platform Sutra, Ch. 1',
+            insightZh: '【息灭二元评判】：大脑之累全在无休止的“我对不对、我行不行、好与不好”二元审判中；抛开对错标签，灵明自性立现。',
+            insightEn: '[Beyond Dualistic Judgment]: Cognitive fatigue is fueled by constant self-indictment. Stepping beyond praise vs blame reveals your original unblemished face.',
+            practicalZh: '【停止自我审判】：不作事后诸葛亮苛责自己，既不对过去的失误咬牙切齿，也不对未来的表现过度担忧，安住本来面目。',
+            practicalEn: '[Suspending Trial]: Cease internal litigation against yourself; neither berate past mistakes nor over-rehearse future evaluations.'
+          },
+          {
+            verseZh: '“无念者，于念而无念；无相者，于相而离相；无住者，人之本性。”',
+            verseEn: '"Non-thought is to not abide in thought; non-form is to be detached amidst forms; non-dwelling is human original nature."',
+            sourceZh: '《六祖坛经·定慧品第四》',
+            sourceEn: 'The Platform Sutra, Ch. 4',
+            insightZh: '【无念无住】：无念不是绝念变成木石，而是事来则应、事去则静；身在纷扰红尘之中，心游超然物外，从不粘滞。',
+            insightEn: '[Clear Flow]: Non-dwelling does not mean numbness, but responding impeccably to circumstances and remaining pristine the moment they pass.',
+            practicalZh: '【零滞留心法】：面对繁冗工作，以最高专注处理眼前事务；一旦完工立刻清空大脑缓存，绝不把白天的战场带回夜晚的枕头。',
+            practicalEn: '[Zero-Buffer Mindset]: Focus intensely on the task at hand; once complete, purge mental cache immediately, bringing zero residue to rest.'
+          }
+        ]
       },
       zhuangzi: {
         titleZh: '《庄子》：物物而不物于物 · 乘物以游心与庖丁解牛',
@@ -2030,7 +2140,69 @@ class PortraitEngine {
         practicalZh: '【游刃有余庖丁解牛功法】：化“用力过度”为“顺其自然游刃有余”。面对复杂棘手的工作与人际，不再用蛮力硬顶，而是如庖丁解牛般“依乎天理，批大郤，导大窾”，顺应事物本身的自然节律轻轻切入，避开硬骨死穴。以游戏旷达之心待世，乘物游心，天下何人何事能累我？',
         practicalEn: '[The Free Roaming Craft]: Shift from exhausting friction to effortless action (Wu Wei). Navigate complex projects like the master butcher, gliding effortlessly through the natural spaces between obstacles, maintaining spacious playfulness.',
         badgeZh: '乘物游心 · 逍遥无待',
-        badgeEn: 'Free Roaming'
+        badgeEn: 'Free Roaming',
+        quotes: [
+          {
+            verseZh: '“物物而不物于物，则胡可得而累邪！”',
+            verseEn: '"Master circumstances rather than letting circumstances master you; how then can you ever be burdened?"',
+            sourceZh: '《庄子·山木第二十》',
+            sourceEn: 'Zhuangzi, Ch. 20',
+            insightZh: '【役物而不役于物】：世间名利、KPI与他人眼光皆是供你生命历练游玩的道具，万不可将道具顶在头上反做外物的奴隶。',
+            insightEn: '[Sovereign Agency]: Worldly accolades and metrics are mere instruments for experiential play; never crown the tools as masters of your soul.',
+            practicalZh: '【角色抽离法】：时刻提醒自己是“役物之人”；工作只是戏台上的角色扮演，下班即出戏，不可让打工工具异化生命本真。',
+            practicalEn: '[Role Disidentification]: Recognize professional roles as theatrical games; disengage immediately after hours, preserving spiritual autonomy.'
+          },
+          {
+            verseZh: '“乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！”',
+            verseEn: '"To roam infinitely by mounting the genuine rhythm of Heaven and Earth and harnessing the transformations of all elemental forces—upon what then does one depend?"',
+            sourceZh: '《庄子·内篇·逍遥游第一》',
+            sourceEn: 'Zhuangzi, Ch. 1',
+            insightZh: '【无待之逍遥】：凡有所依赖（依赖赞誉、依赖万事如意），心必有所掣肘；唯有顺应天地大化，无所拘绊，方得真正大自由。',
+            insightEn: '[Absolute Autonomy]: Relying on praise or fixed outcomes binds the spirit; aligning with cosmic fluidity unlocks unconditioned liberation.',
+            practicalZh: '【乘势游心】：放下对“事情必须按我意志发展”的执念，顺风扬帆，逆风稳舵，悠游于人生无尽的可能性中。',
+            practicalEn: '[Surfing the Flow]: Relinquish dogmatic control; trim your sails with favorable winds, anchor calmly in storms, wandering freely.'
+          },
+          {
+            verseZh: '“神遇之而不以目视，官知止而神欲行。以无厚入有间，恢恢乎其于游刃必有余地矣。”',
+            verseEn: '"I encounter it through spirit rather than sensory eye; senses cease while intuition moves. Inserting that which has no thickness into spacious crevices, there is boundless room for the blade to wander."',
+            sourceZh: '《庄子·内篇·养生主第三·庖丁解牛》',
+            sourceEn: 'Zhuangzi, Ch. 3',
+            insightZh: '【庖丁解牛·游刃有余】：面对千头万绪的复杂危局，切忌用蛮力死磕硬撞，而要循着天理脉络，在结构缝隙中四两拨千斤。',
+            insightEn: '[Effortless Precision]: Never attack systemic knots with blunt force; trace natural fault lines and glide smoothly through spacious gaps.',
+            practicalZh: '【避实就虚】：遇到难啃的骨头，寻找其体制和人性上的天然缝隙（大郤大窾），以巧劲破局，保全元气丝毫无损。',
+            practicalEn: '[Strategic Gaps]: Identify natural structural openings in complex deadlocks; leverage leverage over exertion to preserve vitality.'
+          },
+          {
+            verseZh: '“知其不可奈何而安之若命，德之至也。哀乐不易施乎前，知其不可奈何而安之若命。”',
+            verseEn: '"To recognize what cannot be avoided and rest in it as destiny is the pinnacle of virtue. Neither sorrow nor joy can disturb the inner sanctuary."',
+            sourceZh: '《庄子·内篇·人间世第四》',
+            sourceEn: 'Zhuangzi, Ch. 4',
+            insightZh: '【安之若命】：天地之间人力有时而穷，面对无法抗拒的客观规律与既成事实，坦然接纳臣服，方是最高明的情绪护甲。',
+            insightEn: '[Equanimous Acceptance]: Certain realities surpass human contrivance. Accepting what cannot be altered anchors tranquility beyond sorrow and joy.',
+            practicalZh: '【划分控制二分法】：将万事划分为“我能掌控的”与“我无法掌控的”；不可掌控者坦然安之若命，可掌控者全力深耕。',
+            practicalEn: '[Radical Dichotomy of Control]: Separate what you can control from what you cannot; embrace the uncontrollable serenely while focusing on right action.'
+          },
+          {
+            verseZh: '“至人之用心若镜，不将不迎，应而不藏，故能胜物而不伤。”',
+            verseEn: '"The supreme sage employs the mind like a mirror: it welcomes nothing, it pursues nothing; it reflects everything without retaining anything. Thus one overcomes all without injury."',
+            sourceZh: '《庄子·内篇·应帝王第七》',
+            sourceEn: 'Zhuangzi, Ch. 7',
+            insightZh: '【用心若镜】：不预支焦虑迎接未来（不迎），不沉溺执念挽留过去（不将）；事物来了清晰照见，事物去了不留痕迹，故神明不伤。',
+            insightEn: '[The Mirror Mind]: Reaching for nothing ahead, clinging to nothing behind, reflecting present reality without retention; thus one remains indestructible.',
+            practicalZh: '【镜子心智修炼】：将外界的非难、赞赏、催促全当做镜前走过的过客；如实应对处理，事毕立刻复归光洁明镜，元神不耗。',
+            practicalEn: '[Cultivating the Mirror Mind]: View external demands as transient visitors before a mirror; reflect accurately, release instantly, keeping energy intact.'
+          },
+          {
+            verseZh: '“举世誉之而不加劝，举世非之而不加沮，定乎内外之分，辩乎荣辱之境，斯已矣。”',
+            verseEn: '"Though the whole world praises him, he is not thereby encouraged; though the whole world condemns him, he is not thereby dismayed. He fixed the boundary between inner self and outer world, discriminating true honor from disgrace."',
+            sourceZh: '《庄子·内篇·逍遥游第一·宋荣子》',
+            sourceEn: 'Zhuangzi, Ch. 1',
+            insightZh: '【内外之分】：天下人赞誉我，我不会因此迷失自满；天下人诋毁我，我绝不因此怀疑自轻。边界清晰，彻底免于外界审判内耗。',
+            insightEn: '[Sovereign Boundary]: Total immunity to public acclaim or derision; distinguishing inner dignity from worldly status extinguishes rumination.',
+            practicalZh: '【解耦他人评价】：将“自我价值”与“外界评价”彻底解耦；外界评价不过是他人主观投射，我之价值由内自定，岿然不动。',
+            practicalEn: '[Decoupling Self-Worth]: Completely divorce intrinsic worth from external feedback; others\' opinions are mere reflections of their states.'
+          }
+        ]
       }
     };
 

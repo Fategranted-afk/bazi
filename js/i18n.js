@@ -1156,12 +1156,25 @@ const I18N = (function() {
       if (mf.zenDaoWisdom) {
         const zd = mf.zenDaoWisdom;
         zd.title = zd.titleEn || zd.title;
+        zd.subtitle = zd.subtitleEn || zd.subtitle;
         ['diamond', 'platform', 'zhuangzi'].forEach(k => {
           if (zd[k]) {
             zd[k].title = zd[k].titleEn || zd[k].title;
             zd[k].mantra = zd[k].mantraEn || zd[k].mantra;
             zd[k].insight = zd[k].insightEn || zd[k].insight;
             zd[k].practical = zd[k].practicalEn || zd[k].practical;
+            zd[k].canonVerse = zd[k].canonVerseEn || zd[k].canonVerse;
+            zd[k].mindsetAnalysis = zd[k].mindsetAnalysisEn || zd[k].mindsetAnalysis;
+            zd[k].practicalPractice = zd[k].practicalPracticeEn || zd[k].practicalPractice;
+            zd[k].badge = zd[k].badgeEn || zd[k].badge;
+            if (zd[k].quotes && Array.isArray(zd[k].quotes)) {
+              zd[k].quotes.forEach(q => {
+                q.verse = q.verseEn || q.verse;
+                q.source = q.sourceEn || q.source;
+                q.insight = q.insightEn || q.insight;
+                q.practical = q.practicalEn || q.practical;
+              });
+            }
           }
         });
       }

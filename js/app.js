@@ -845,31 +845,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 <!-- 优劣辨析 -->
                 <div class="p-2 rounded bg-black/40 border border-gray-800/80">
                   <b class="text-amber-300">${isEn ? '⚖️ Strengths & Vulnerabilities (Good vs Bad): ' : '⚖️ 格局优劣辨析 (好与不好)：'}</b>
-                  <span class="text-gray-300">${pat.gradeEvaluation.strengthsAndFlaws}</span>
+                  <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.strengthsAndFlawsEn || pat.gradeEvaluation.strengthsAndFlaws || '') : (pat.gradeEvaluation.strengthsAndFlawsZh || pat.gradeEvaluation.strengthsAndFlaws || '')}</span>
                 </div>
 
                 <!-- 评判依据 -->
                 <div class="p-2 rounded bg-black/40 border border-gray-800/80">
                   <b class="text-blue-300">${isEn ? '📖 Classical Criteria (Why this Grade): ' : '📖 典籍评判依据 (为什么如此评判)：'}</b>
-                  <span class="text-gray-300">${pat.gradeEvaluation.whyThisGrade}</span>
+                  <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.whyThisGradeEn || pat.gradeEvaluation.whyThisGrade || '') : (pat.gradeEvaluation.whyThisGradeZh || pat.gradeEvaluation.whyThisGrade || '')}</span>
                 </div>
 
                 <!-- 卡点与天花板 -->
                 <div class="p-2 rounded bg-rose-950/20 border border-rose-900/40">
                   <b class="text-rose-400">${isEn ? '🚧 Ceilings & Bottlenecks (Why it cannot ascend): ' : '🚧 晋阶卡点与天花板 (为什么上不去)：'}</b>
-                  <span class="text-rose-200">${pat.gradeEvaluation.bottleneck}</span>
+                  <span class="text-rose-200">${isEn ? (pat.gradeEvaluation.bottleneckEn || pat.gradeEvaluation.bottleneck || '') : (pat.gradeEvaluation.bottleneckZh || pat.gradeEvaluation.bottleneck || '')}</span>
                 </div>
 
                 <!-- 保底是什么 -->
                 <div class="p-2 rounded bg-emerald-950/20 border border-emerald-900/40">
                   <b class="text-emerald-400">${isEn ? '🛡️ Moat & Defensible Floor (Baseline Protection): ' : '🛡️ 守正护城河与保底 (保底是什么)：'}</b>
-                  <span class="text-emerald-200">${pat.gradeEvaluation.floorBaseline}</span>
+                  <span class="text-emerald-200">${isEn ? (pat.gradeEvaluation.floorBaselineEn || pat.gradeEvaluation.floorBaseline || '') : (pat.gradeEvaluation.floorBaselineZh || pat.gradeEvaluation.floorBaseline || '')}</span>
                 </div>
 
                 <!-- 如何改善与提升路径 -->
                 <div class="p-2 rounded bg-amber-950/20 border border-amber-900/40">
                   <b class="text-amber-400">${isEn ? '🚀 Practical Elevation & Ascension Path (How to improve): ' : '🚀 破局晋升与改运路径 (如何改善与提升)：'}</b>
-                  <span class="text-amber-200">${pat.gradeEvaluation.elevationPath}</span>
+                  <span class="text-amber-200">${isEn ? (pat.gradeEvaluation.elevationPathEn || pat.gradeEvaluation.elevationPath || '') : (pat.gradeEvaluation.elevationPathZh || pat.gradeEvaluation.elevationPath || '')}</span>
                 </div>
               </div>
             </div>` : ''}
@@ -2421,34 +2421,75 @@ document.addEventListener('DOMContentLoaded', () => {
       const cardsHtml = classics.map(c => {
         const it = c.item;
         if (!it) return '';
+
+        const quotesList = it.quotes || [];
+        const quotesHtml = quotesList.map(q => `
+          <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 hover:border-amber-500/40 transition space-y-1.5 text-xs">
+            <div class="text-amber-200 font-serif-sc font-bold leading-relaxed">
+              ${isEn ? (q.verseEn || q.verse) : (q.verseZh || q.verse)}
+            </div>
+            <div class="text-[10.5px] text-gray-400 text-right font-mono">
+              —— ${isEn ? (q.sourceEn || q.source) : (q.sourceZh || q.source)}
+            </div>
+            <div class="pt-1 border-t border-gray-800/60 text-gray-300 text-[11px] leading-relaxed">
+              <span class="text-amber-300/90 font-semibold">${isEn ? '💡 Mindset:' : '💡 洞见：'}</span>
+              ${isEn ? (q.insightEn || q.insight) : (q.insightZh || q.insight)}
+            </div>
+            <div class="text-emerald-300/90 text-[11px] leading-relaxed">
+              <span class="font-semibold">${isEn ? '🚀 Practice:' : '🚀 实操：'}</span>
+              ${isEn ? (q.practicalEn || q.practical) : (q.practicalZh || q.practical)}
+            </div>
+          </div>
+        `).join('');
+
         return `
-          <div class="p-4 sm:p-5 rounded-xl border ${c.theme.split(' ')[0]} bg-black/50 shadow-lg space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
-              <div class="flex items-center space-x-2">
-                <span class="text-xl">${c.icon}</span>
-                <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
-                  ${isEn ? (it.titleEn || it.title) : (it.titleZh || it.title)}
-                </h5>
+          <div class="p-4 sm:p-5 rounded-xl border ${c.theme.split(' ')[0]} bg-black/50 shadow-lg space-y-3.5 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xl">${c.icon}</span>
+                  <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+                    ${isEn ? (it.titleEn || it.title) : (it.titleZh || it.title)}
+                  </h5>
+                </div>
+                <span class="chinese-seal text-[9px] py-0">${isEn ? (it.badgeEn || 'Classic Zen') : (it.badgeZh || '三教至理')}</span>
               </div>
-              <span class="chinese-seal text-[9px] py-0">${isEn ? 'Classic Zen' : '三教至理'}</span>
+
+              <!-- Sacred Mantra Core Quote -->
+              <div class="p-3 bg-black/60 rounded-lg border-l-3 border-amber-400 font-serif-sc text-xs text-amber-200 font-semibold leading-relaxed">
+                “${isEn ? (it.mantraEn || it.mantra) : (it.mantraZh || it.mantra)}”
+              </div>
+
+              <!-- Deep Insight -->
+              <div class="p-3 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
+                <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight:' : '微言大义与心智洞见：'}</span>
+                <p class="text-xs text-gray-300 leading-relaxed">${isEn ? (it.insightEn || it.insight) : (it.insightZh || it.insight)}</p>
+              </div>
+
+              <!-- Practical Execution -->
+              <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 space-y-1">
+                <span class="text-xs font-bold text-emerald-300 block">🚀 ${isEn ? 'Modern Actionable Mindset:' : '现实处世与实操心法：'}</span>
+                <p class="text-xs text-gray-200 leading-relaxed">${isEn ? (it.practicalEn || it.practical) : (it.practicalZh || it.practical)}</p>
+              </div>
             </div>
 
-            <!-- Sacred Mantra Quote -->
-            <div class="p-3 bg-black/60 rounded-lg border-l-3 border-amber-400 font-serif-sc text-xs text-amber-200 font-semibold leading-relaxed">
-              “${isEn ? (it.mantraEn || it.mantra) : (it.mantraZh || it.mantra)}”
-            </div>
-
-            <!-- Deep Insight -->
-            <div class="p-3 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
-              <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight:' : '微言大义与心智洞见：'}</span>
-              <p class="text-xs text-gray-300 leading-relaxed">${isEn ? (it.insightEn || it.insight) : (it.insightZh || it.insight)}</p>
-            </div>
-
-            <!-- Practical Execution -->
-            <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 space-y-1">
-              <span class="text-xs font-bold text-emerald-300 block">🚀 ${isEn ? 'Modern Actionable Mindset:' : '现实处世与实操心法：'}</span>
-              <p class="text-xs text-gray-200 leading-relaxed">${isEn ? (it.practicalEn || it.practical) : (it.practicalZh || it.practical)}</p>
-            </div>
+            <!-- Additional Canonical Quotes Anthology -->
+            ${quotesList.length > 0 ? `
+              <div class="mt-2 pt-3 border-t border-gray-800/80 space-y-2.5">
+                <div class="flex items-center justify-between text-xs font-bold text-amber-300">
+                  <span class="flex items-center gap-1">
+                    <span>📜</span>
+                    <span>${isEn ? 'Canonical Wisdom Anthology:' : '经典传世真言与心法集萃：'}</span>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
+                    ${quotesList.length} ${isEn ? 'Verses' : '则经文精髓'}
+                  </span>
+                </div>
+                <div class="space-y-2 max-h-[480px] overflow-y-auto pr-1">
+                  ${quotesHtml}
+                </div>
+              </div>
+            ` : ''}
           </div>
         `;
       }).join('');

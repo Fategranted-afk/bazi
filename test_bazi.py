@@ -1602,11 +1602,11 @@ jsc_pattern_grade_cmd = [
       if (!pat.gradeEvaluation) throw new Error("Missing gradeEvaluation in pattern: " + pat.name);
       var ge = pat.gradeEvaluation;
       if (validTiers.indexOf(ge.tier) === -1) throw new Error("Invalid tier in Zh: " + ge.tier);
-      if (!ge.strengthsAndFlawsZh || ge.strengthsAndFlawsZh.length < 20) throw new Error("strengthsAndFlawsZh missing or too short");
-      if (!ge.whyThisGradeZh || ge.whyThisGradeZh.length < 20) throw new Error("whyThisGradeZh missing or too short");
-      if (!ge.bottleneckZh || ge.bottleneckZh.length < 20) throw new Error("bottleneckZh missing or too short");
-      if (!ge.floorBaselineZh || ge.floorBaselineZh.length < 20) throw new Error("floorBaselineZh missing or too short");
-      if (!ge.elevationPathZh || ge.elevationPathZh.length < 20) throw new Error("elevationPathZh missing or too short");
+      if (!ge.strengthsAndFlaws || ge.strengthsAndFlaws.length < 20 || ge.strengthsAndFlaws.includes("undefined")) throw new Error("strengthsAndFlaws invalid: " + ge.strengthsAndFlaws);
+      if (!ge.whyThisGrade || ge.whyThisGrade.length < 20 || ge.whyThisGrade.includes("undefined")) throw new Error("whyThisGrade invalid: " + ge.whyThisGrade);
+      if (!ge.bottleneck || ge.bottleneck.length < 20 || ge.bottleneck.includes("undefined")) throw new Error("bottleneck invalid: " + ge.bottleneck);
+      if (!ge.floorBaseline || ge.floorBaseline.length < 20 || ge.floorBaseline.includes("undefined")) throw new Error("floorBaseline invalid: " + ge.floorBaseline);
+      if (!ge.elevationPath || ge.elevationPath.length < 20 || ge.elevationPath.includes("undefined")) throw new Error("elevationPath invalid: " + ge.elevationPath);
     });
 
     pEn.patterns.forEach(function(pat) {
@@ -1615,7 +1615,7 @@ jsc_pattern_grade_cmd = [
       if (validTiersEn.indexOf(ge.tier) === -1) throw new Error("Invalid tier in En: " + ge.tier);
       var fields = [ge.tier, ge.strengthsAndFlaws, ge.whyThisGrade, ge.bottleneck, ge.floorBaseline, ge.elevationPath];
       fields.forEach(function(f, idx) {
-        if (!f || f.length === 0) throw new Error("Empty English grade field index " + idx);
+        if (!f || f.length === 0 || f.includes("undefined")) throw new Error("Empty or undefined English grade field index " + idx);
         if (/[\u4e00-\u9fa5]/.test(f)) throw new Error("Residual Chinese in English gradeEvaluation: " + f);
       });
     });
@@ -1623,7 +1623,7 @@ jsc_pattern_grade_cmd = [
 ]
 run_pg = subprocess.run(jsc_pattern_grade_cmd, capture_output=True, text=True)
 assert run_pg.returncode == 0, f"JSC Pattern Grade check failed: {run_pg.stderr}"
-print("✓ 格局评级（下等/中等/中上/上等/特等）与清浊五维论述（利弊成败/评判因由/瓶颈卡点/保底底线/跃升路径）双语验证通过！")
+print("✓ 格局评级（下等/中等/中上/上等/特等）与清浊五维论述（利弊成败/评判因由/瓶颈卡点/保底底线/跃升路径）零undefined验证通过！")
 
 # 37. Validate Kinship 4D Holographic Depth Profiles
 print("\n=== 37. Validating Kinship 4D Depth Profiles (配偶/子女/父母 四大维度) ===")
@@ -1675,7 +1675,7 @@ assert run_kin.returncode == 0, f"JSC Kinship 4D profiles check failed: {run_kin
 print("✓ 六亲深度侧写全息图（配偶/子女/父母：能量/性格/气质/相处四大维度）双语验证通过！")
 
 # 38. Validate Zen & Dao Trinity Wisdom in Mental Friction
-print("\n=== 38. Validating Zen & Dao Trinity Wisdom (金刚经/坛经/庄子) ===")
+print("\n=== 38. Validating Zen & Dao Trinity Wisdom & Canonical Quotes (金刚经/坛经/庄子) ===")
 jsc_zen_cmd = [
     "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
     "-e",
@@ -1710,6 +1710,14 @@ jsc_zen_cmd = [
       if (!it.titleZh || !it.mantraZh || !it.insightZh || !it.practicalZh) {
         throw new Error("Incomplete fields for " + k + " in Chinese mode");
       }
+      if (!it.quotes || it.quotes.length < 5) {
+        throw new Error(k + " must have at least 5 canonical quotes, got " + (it.quotes ? it.quotes.length : 0));
+      }
+      it.quotes.forEach(function(q, qIdx) {
+        if (!q.verseZh || !q.sourceZh || !q.insightZh || !q.practicalZh) {
+          throw new Error("Incomplete quote fields for " + k + " index " + qIdx);
+        }
+      });
     });
 
     var zdEn = pEn.mentalFriction.zenDaoWisdom;
@@ -1721,12 +1729,22 @@ jsc_zen_cmd = [
         if (!s || s.length === 0) throw new Error("Empty English zen field " + k + " index " + idx);
         if (/[\u4e00-\u9fa5]/.test(s)) throw new Error("Residual Chinese in English zen " + k + ": " + s);
       });
+      if (!it.quotes || it.quotes.length < 5) {
+        throw new Error(k + " English quotes missing or less than 5");
+      }
+      it.quotes.forEach(function(q, qIdx) {
+        var qFields = [q.verse, q.source, q.insight, q.practical];
+        qFields.forEach(function(qf, fIdx) {
+          if (!qf || qf.length === 0) throw new Error("Empty English quote field " + k + " index " + qIdx + " fIdx " + fIdx);
+          if (/[\u4e00-\u9fa5]/.test(qf)) throw new Error("Residual Chinese in English quote " + k + " index " + qIdx + ": " + qf);
+        });
+      });
     });
     '''
 ]
 run_zen = subprocess.run(jsc_zen_cmd, capture_output=True, text=True)
 assert run_zen.returncode == 0, f"JSC Zen & Dao Trinity Wisdom check failed: {run_zen.stderr}"
-print("✓ 《金刚经》+《六祖坛经》+《庄子》三大至高解脱法门与微言大义/实操心法双语验证通过！")
+print("✓ 《金刚经》+《六祖坛经》+《庄子》三大至高解脱法门与传世经典语录集萃双语验证通过！")
 
 # 39. Validate 6-View Architecture & Portal Buttons in HTML & JS
 print("\n=== 39. Validating 6-View Architecture & Portal Buttons in HTML & JS ===")
