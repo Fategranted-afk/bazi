@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>八字排盘与典籍研索系统 · 滴天髓 & 三命通会</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Metaphysics CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen">
+  <!-- Header -->
+  <header class="border-b border-gray-800 bg-[#16181f]/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-rose-700 flex items-center justify-center shadow-lg shadow-rose-900/30">
+          <span class="text-white font-bold text-xl font-serif-sc">八</span>
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold font-serif-sc text-amber-100 flex items-center gap-2">
+            <span data-i18n="app_title">八字排盘与典籍研索系统</span>
+            <span class="chinese-seal text-[11px] py-0.5" data-i18n="seal_canons">双典集成</span>
+          </h1>
+          <p class="text-xs text-gray-400" data-i18n="app_subtitle">精确天文节气 · 内置《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》五大经典原著库</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Language Switcher Toggle Group -->
+        <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/80 p-0.5 shadow-sm" role="group">
+          <button id="langZhBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow">
+            中文
+          </button>
+          <button id="langEnBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200">
+            English
+          </button>
+        </div>
+
+        <button id="nowBtn" class="px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition" data-i18n="btn_now">
+          ⏱ 此时此刻
+        </button>
+        <button id="themeToggle" class="px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition" data-i18n="btn_theme_dark">
+          🌙 暗夜
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+    <!-- Input Form Section -->
+    <section class="bg-card p-5 rounded-2xl border border-border-color shadow-xl">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        <!-- Date Picker -->
+        <div class="lg:col-span-2">
+          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_date">公历出生日期 (阳历)</label>
+          <input type="date" id="birthDate" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <!-- Time Picker -->
+        <div class="lg:col-span-1">
+          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_time">出生时间 (当地钟表时)</label>
+          <input type="time" id="birthTime" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <!-- Gender -->
+        <div class="lg:col-span-1">
+          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_gender">造化属性 (性别)</label>
+          <select id="gender" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+            <option value="乾造" data-i18n="opt_qian">乾造 (男命)</option>
+            <option value="坤造" data-i18n="opt_kun">坤造 (女命)</option>
+          </select>
+        </div>
+
+        <!-- City & Region Selector (Worldwide) -->
+        <div class="lg:col-span-1">
+          <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_city">全球出生地区/城市</label>
+          <select id="citySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+          </select>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="lg:col-span-1 flex items-end">
+          <button id="calcBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold py-2 px-4 rounded-lg shadow-lg shadow-amber-900/40 transition" data-i18n="btn_calc">
+            起盘排盘
+          </button>
+        </div>
+      </div>
+
+      <!-- Advanced Astrological Options & True Solar Time Settings -->
+      <div class="mt-4 pt-3 border-t border-gray-800 space-y-2.5 text-xs text-gray-400">
+        <div class="flex flex-wrap items-center gap-5">
+          <label class="flex items-center space-x-2 cursor-pointer font-medium text-gray-300">
+            <input type="checkbox" id="useTrueSolarTime" class="rounded bg-gray-800 border-gray-700 text-amber-500 focus:ring-0">
+            <span data-i18n="chk_true_solar">开启真太阳时校正 (天文均时差 + 经度偏差)</span>
+          </label>
+          
+          <div class="flex items-center space-x-2">
+            <span data-i18n="lbl_timezone">标准时区:</span>
+            <select id="timezoneSelect" class="bg-black/30 border border-gray-700 rounded px-2 py-0.5 text-xs text-gray-200">
+              <!-- Dynamically populated or updated by city -->
+            </select>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <span data-i18n="lbl_longitude">经度 (°E / 西经为负):</span>
+            <input type="number" id="customLongitude" value="116.4" step="0.01" class="w-24 bg-black/30 border border-gray-700 rounded px-2 py-0.5 text-xs text-gray-200 font-mono">
+          </div>
+
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input type="checkbox" id="lateRatNextDay" class="rounded bg-gray-800 border-gray-700 text-amber-500 focus:ring-0">
+            <span data-i18n="chk_late_rat">夜子时直接换次日柱 (23点后算次日)</span>
+          </label>
+        </div>
+
+        <!-- Real-time Solar Correction Display & Performance Badge -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div id="solarCalcDetail" class="text-[11px] text-amber-400/90 bg-amber-950/20 px-3 py-1.5 rounded-lg border border-amber-800/30 font-mono flex flex-wrap gap-4 items-center flex-1">
+            <span data-i18n="solar_ready">真太阳时与经度校正已就绪</span>
+          </div>
+          <span id="calcPerfBadge" class="text-[11px] px-2.5 py-1 rounded-md bg-emerald-950/30 text-emerald-400 border border-emerald-800/40 font-mono font-bold whitespace-nowrap" data-i18n="calc_perf">
+            ⚡ 毫秒级极速排盘
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solar Term Banner -->
+    <div id="solarTermTag" class="px-4 py-2 bg-amber-950/20 border border-amber-600/30 rounded-xl text-xs text-amber-300 font-medium flex items-center justify-center space-x-2" data-i18n="solar_term_pending">
+      节气与节令星排盘中
+    </div>
+
+    <!-- Primary View Switcher Navigation Bar -->
+    <nav id="primaryViewNav" class="sticky top-[61px] z-40 py-2 bg-[#12141c]/95 backdrop-blur-md rounded-2xl border border-gray-800 shadow-2xl p-2">
+      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <button id="navBtnHome" class="view-nav-btn active flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg bg-gradient-to-r from-amber-600 to-amber-700 text-white border border-amber-500/50" data-view="view-home">
+          <span class="text-base">🏠</span>
+          <span data-i18n="nav_view_home">核心主盘与 20% 枢纽</span>
+          <span class="chinese-seal text-[9px] py-0 px-1.5" data-i18n="seal_view_home">主干命基</span>
+        </button>
+        <button id="navBtnLuck" class="view-nav-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-luck">
+          <span class="text-base">🌌</span>
+          <span data-i18n="nav_view_luck">岁运推演 (大运 / 流年 / 流月 / 流日)</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-purple-950/60 text-purple-300 border border-purple-800/30 font-normal" data-i18n="seal_view_luck">动态时空</span>
+        </button>
+        <button id="navBtnCanons" class="view-nav-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
+          <span class="text-base">📜</span>
+          <span data-i18n="nav_view_canons">八典全库与经文细注</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_canons">八经汇通</span>
+        </button>
+        <button id="navBtnIChing" class="view-nav-btn flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-iching">
+          <span class="text-base">☯️</span>
+          <span data-i18n="nav_view_iching">周易六十四卦 · 蓍草/金钱起卦研解</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_iching">易道神机</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- View 1: Main Core & 20% Pareto (核心主盘与 20% 枢纽) -->
+    <div id="view-home" class="space-y-6">
+      <!-- Four Pillars Grid -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-bold text-gray-200 flex items-center gap-2">
+            <span data-i18n="sec_four_pillars">四柱命盘 (Four Pillars)</span>
+          </h2>
+          <span class="text-xs text-gray-500" data-i18n="sub_four_pillars">以立春与12节气严格交节为准</span>
+        </div>
+        <div id="pillarsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- Day Master & Five Elements Analysis -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Day Master Overview Card -->
+        <div class="bg-card p-5 rounded-2xl border border-border-color shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-800">
+              <span class="text-xs font-semibold text-gray-400" data-i18n="sec_dm_core">本命元神 / 日主</span>
+              <span class="chinese-seal text-[10px] py-0" data-i18n="dm_seal">四柱核心</span>
+            </div>
+            <div class="text-center py-4">
+              <div id="dmTitle" class="text-3xl font-bold font-serif-sc text-amber-400 mb-1">
+                甲 (阳木)
+              </div>
+              <p class="text-xs text-gray-400" data-i18n="dm_spirit_desc">日干代表命主自身的精神内核与本源禀赋</p>
+            </div>
+            <div class="bg-black/20 p-3 rounded-xl border border-gray-800 text-xs space-y-2 text-gray-300">
+              <p><span class="text-gray-400" data-i18n="dm_essence_label">五行主气：</span><span id="dmElementDesc" class="text-amber-300 font-semibold" data-i18n="dm_essence_val">木主仁，火主体，土主信，金主义，水主智</span></p>
+              <p data-i18n="dm_core_principle"><span class="text-gray-400">论命纲领：</span>“先观提纲月令，次看日元衰旺，分清用神格局，方决一世吉凶。”</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Five Elements Balance & Radar -->
+        <div class="lg:col-span-2 bg-card p-5 rounded-2xl border border-border-color shadow-lg">
+          <div class="flex items-center justify-between mb-3 pb-2 border-b border-gray-800">
+            <span class="text-xs font-semibold text-gray-400" data-i18n="sec_elements_dist">五行能量分布 (Five Elements Distribution)</span>
+            <span class="text-xs text-gray-500" data-i18n="elements_weighted_note">天干透干与地支藏干综合加权</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+            <!-- Canvas Radar -->
+            <div class="flex justify-center items-center">
+              <canvas id="elementRadarCanvas" width="280" height="240" class="max-w-full"></canvas>
+            </div>
+            <!-- Progress Bars -->
+            <div id="elementsBarContainer" class="space-y-2.5">
+              <!-- Injected via JavaScript -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grand Five Canons Holistic Persona Portrait & Pattern Blueprint -->
+      <section class="bg-card rounded-2xl border border-border-color shadow-2xl p-5 md:p-7 space-y-6 relative overflow-hidden">
+      <!-- Header with Badges -->
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-gray-700/60">
+        <div>
+          <div class="flex items-center space-x-2.5">
+            <span class="chinese-seal text-xs py-0.5" data-i18n="seal_five_canons">五经总决</span>
+            <h2 class="text-xl md:text-2xl font-bold font-serif-sc text-amber-300" data-i18n="sec_portrait_title">
+              五经融贯 · 命理人物全息画像与格局总决
+            </h2>
+          </div>
+          <p class="text-xs text-gray-400 mt-1" data-i18n="portrait_desc">
+            融汇《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》五经精髓 · 智能断格、定旺衰、判调候与全息人生画像
+          </p>
+        </div>
+
+        <div id="portraitHeaderBadges" class="flex flex-wrap gap-2 text-xs">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Vigor & Climate Dashboard Row -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Vigor (旺衰强弱) -->
+        <div class="p-4 bg-black/25 rounded-xl border border-gray-800 space-y-2.5">
+          <div class="flex justify-between items-center pb-1.5 border-b border-gray-800">
+            <h4 class="text-sm font-bold text-gray-200 flex items-center gap-1.5">
+              <span data-i18n="vigor_score_title">⚖️ 日元生旺衰三维量化</span>
+            </h4>
+            <span id="vigorStatusBadge" class="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30" data-i18n="vigor_ready_badge">
+              量化就绪
+            </span>
+          </div>
+          <p id="vigorSummaryText" class="text-xs text-gray-300 leading-relaxed"></p>
+          <div id="vigorMetricsBars" class="space-y-2 pt-1 text-xs">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Climate (调候气候与用神) -->
+        <div class="p-4 bg-black/25 rounded-xl border border-gray-800 space-y-2.5">
+          <div class="flex justify-between items-center pb-1.5 border-b border-gray-800">
+            <h4 class="text-sm font-bold text-gray-200 flex items-center gap-1.5">
+              <span data-i18n="climate_regulator_title">❄️ 气候提纲与调候用神</span>
+            </h4>
+            <span class="chinese-seal text-[10px] py-0">穷通宝鉴 / 滴天髓</span>
+          </div>
+          <div id="climateSummaryBox" class="space-y-2 text-xs text-gray-300">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Pareto 80/20 Core Synthesis Section (👑 八经全盘画像 · 帕累托 20% 关键枢纽全相分析) -->
+      <div id="paretoCoreSection" class="space-y-3 pt-3 border-t border-gray-800">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+              <span data-i18n="sec_pareto_title">👑 八经全盘核心画像 · 帕累托 20% 关键枢纽全相分析</span>
+              <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_pareto">80/20八经全相</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="pareto_subnote">
+              八典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互
+            </p>
+          </div>
+          <div class="flex items-center gap-1.5 text-[10px] font-mono text-amber-400/90 bg-amber-950/30 px-2.5 py-1 rounded-lg border border-amber-800/40">
+            <span>《滴天髓》·《穷通》·《真诠》·《三命》·《渊海》·《神峰》·《玉照》·《李虚中》</span>
+          </div>
+        </div>
+
+        <div id="paretoCoreContainer" class="space-y-3.5">
+          <!-- Injected dynamically via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Patterns with 4-Dimension Cards (格局成格与用法全解) -->
+      <div class="space-y-3 pt-3 border-t border-gray-800">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+            <span data-i18n="sec_patterns_title">🏷️ 命盘确立格局 · 四维实战精解与能量占比透视</span>
+            <span class="text-xs text-gray-400 font-sans font-normal" data-i18n="patterns_weight_note">(含各格能量占比权重，所列格局总占比 > 85%)</span>
+          </h3>
+        </div>
+
+        <!-- Pattern Energy Percentage & Coverage Panorama Bar -->
+        <div id="patternWeightSummaryBar" class="p-4 bg-black/35 rounded-xl border border-amber-800/40 space-y-2.5">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <div id="portraitPatternsContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Holistic Persona Portrait Cards (全息人物画像) -->
+      <div class="space-y-3 pt-2 border-t border-gray-800">
+        <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+          <span data-i18n="sec_persona_title">👤 五经全息“命理人物画像”</span>
+          <span class="text-xs text-gray-400 font-sans font-normal" data-i18n="persona_subnote">基于本命格局与气象的现代人生与发展蓝图</span>
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- 1. 性格心性 -->
+          <div class="p-4 bg-black/30 rounded-xl border border-indigo-900/40 hover:border-indigo-500/50 transition space-y-2">
+            <div class="flex items-center space-x-2 text-sm font-bold text-indigo-300 font-serif-sc">
+              <span data-i18n="persona_psy_title">🧠 性格特质与心性模型 (Psychological Blueprint)</span>
+            </div>
+            <p id="personaPersonality" class="text-xs text-gray-300 leading-relaxed"></p>
+          </div>
+
+          <!-- 2. 事业才华 -->
+          <div class="p-4 bg-black/30 rounded-xl border border-emerald-900/40 hover:border-emerald-500/50 transition space-y-2">
+            <div class="flex items-center space-x-2 text-sm font-bold text-emerald-300 font-serif-sc">
+              <span data-i18n="persona_career_title">💼 才华天赋与事业方向 (Career & Talent Blueprint)</span>
+            </div>
+            <p id="personaCareer" class="text-xs text-gray-300 leading-relaxed"></p>
+          </div>
+
+          <!-- 3. 财富机运 -->
+          <div class="p-4 bg-black/30 rounded-xl border border-amber-900/40 hover:border-amber-500/50 transition space-y-2">
+            <div class="flex items-center space-x-2 text-sm font-bold text-amber-300 font-serif-sc">
+              <span data-i18n="persona_wealth_title">💰 财富格局与进财动力 (Wealth Dynamics)</span>
+            </div>
+            <p id="personaWealth" class="text-xs text-gray-300 leading-relaxed"></p>
+          </div>
+
+          <!-- 4. 修持锦囊 -->
+          <div class="p-4 bg-black/30 rounded-xl border border-rose-900/40 hover:border-rose-500/50 transition space-y-2">
+            <div class="flex items-center space-x-2 text-sm font-bold text-rose-300 font-serif-sc">
+              <span data-i18n="persona_advice_title">🧘 人生修身与行运锦囊 (Strategic Life Coaching)</span>
+            </div>
+            <p id="personaAdvice" class="text-xs text-gray-300 leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day Master Defect & Vulnerability Analysis (命主缺陷、心性盲区与败局暗礁深度透视) -->
+      <div class="space-y-3 pt-4 border-t border-gray-800">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base font-bold text-rose-400 font-serif-sc flex items-center gap-2">
+            <span data-i18n="sec_defects_title">⚠️ 命主缺陷、心性盲区与败局暗礁深度透视</span>
+            <span class="text-xs text-rose-300/80 font-sans font-normal" data-i18n="defects_subnote">(直面性格死穴、职场雷区、商业败局与五行偏枯，附破局绝密解药)</span>
+          </h3>
+        </div>
+        
+        <div id="defectsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+          <!-- Injected dynamically via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Mental Internal Friction Detection & Practical Antidotes (精神内耗专项检测与实战彻底改善方案) -->
+      <div id="mentalFrictionSection" class="space-y-3 pt-4 border-t border-gray-800">
+        <!-- Injected dynamically via JavaScript if mental friction is detected -->
+      </div>
+
+      <!-- Day Master Remedy & Balancing Guide (身弱培补 vs 身强疏导 · 现代改运与开运实操方案) -->
+      <div class="space-y-3 pt-4 border-t border-gray-800">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="text-base font-bold text-emerald-400 font-serif-sc flex items-center gap-2">
+            <span data-i18n="sec_remedy_title">🌿 命理调补与改运总决 · 身弱培补与身强疏导实战指南</span>
+            <span class="text-xs text-emerald-300/80 font-sans font-normal" data-i18n="remedy_subnote">(涵盖五行理气、心智模型、起居习惯、职场商业全维改善攻略)</span>
+          </h3>
+          <div class="flex rounded-lg bg-black/40 p-0.5 border border-gray-800 text-xs">
+            <button id="remedyTabTailored" class="px-3 py-1 rounded font-medium transition active bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" data-i18n="tab_tailored">🎯 本命定向调补方案</button>
+            <button id="remedyTabComparison" class="px-3 py-1 rounded font-medium transition text-gray-400 hover:text-gray-200" data-i18n="tab_comparison">⚖️ 身弱 vs 身强 完整对照总决</button>
+          </div>
+        </div>
+        
+        <div id="remedyContainer" class="space-y-4 text-xs">
+          <!-- Injected dynamically via JavaScript -->
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- End of view-home -->
+
+  <!-- View 2: Luck & Fortune Cycles (大运 / 流年 / 流月 / 流日) -->
+  <div id="view-luck" class="space-y-6 hidden">
+    <!-- Luck & Fortune Cycles Section (大运、流年、流月、流日 四阶全息推演) -->
+    <section id="luckCyclesSection" class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-xl">🌌</span>
+          <div>
+            <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+              <span data-i18n="sec_luck_title">岁运流转 · 大运流年流月流日全阶推演系统</span>
+              <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-normal border border-amber-500/30">五柱同参</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="sec_luck_subtitle">五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 text-xs">
+          <div id="luckProgressionBadge" class="px-2.5 py-1 rounded-md bg-blue-950/40 text-blue-300 border border-blue-800/50 font-mono flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+            <span id="luckProgressionText">--</span>
+          </div>
+          <div id="luckStartAgeBadge" class="px-2.5 py-1 rounded-md bg-purple-950/40 text-purple-300 border border-purple-800/50 font-mono flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+            <span id="luckStartAgeText">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level 1: 10-Year Major Decades (大运) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-amber-400 font-bold text-xs" data-i18n="tab_decade_title">1. 十年大运排盘 (10-Year Major Decades)</span>
+            <span class="text-[10px] text-gray-500" data-i18n="tab_decade_hint">(点击任意大运卡片，下联动展现该步大运10年流年)</span>
+          </div>
+          <span class="text-[11px] text-amber-300/80 font-mono" id="currentSelectedDecadeLabel"></span>
+        </div>
+        <div id="decadesContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-9 gap-2">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Level 2: Annual Transit Years (流年十载) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-indigo-300 font-bold text-xs" data-i18n="tab_annual_title">2. 流年十载透视 (Annual Transit Years)</span>
+            <span class="text-[10px] text-gray-500" data-i18n="tab_annual_hint">(点击流年卡片，联动查看该年12节令流月)</span>
+          </div>
+          <span class="text-[11px] text-indigo-300/80 font-mono" id="currentSelectedAnnualLabel"></span>
+        </div>
+        <div id="annualContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Level 3: 12 Solar Months (十二节令流月) -->
+      <div class="space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <span class="text-emerald-300 font-bold text-xs" data-i18n="tab_monthly_title">3. 十二节令流月 (12 Solar Months)</span>
+            <span class="text-[10px] text-gray-500" data-i18n="tab_monthly_hint">(点击流月卡片，与流日联动)</span>
+          </div>
+          <span class="text-[11px] text-emerald-300/80 font-mono" id="currentSelectedMonthLabel"></span>
+        </div>
+        <div id="monthlyContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Transit Fortune In-Depth Evaluation (岁运吉凶深解与趋避指南) -->
+      <div id="transitFortuneDetailCard" class="p-4 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-950/10 via-black/40 to-black/60 space-y-3.5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-base">⚖️</span>
+            <div>
+              <h4 class="text-xs font-bold text-amber-300 flex items-center gap-2">
+                <span data-i18n="lbl_fortune_evaluation">岁运吉凶深层解构与趋避指南</span>
+                <span id="fortuneActiveBadge" class="text-[10px] px-2 py-0.5 rounded-full font-mono font-normal">--</span>
+              </h4>
+              <p class="text-[10px] text-gray-400 mt-0.5" data-i18n="lbl_fortune_detail_hint">（点击上方任意大运、流年、流月卡片，即可深度查看气象本义、吉中防患与避坑戒律）</p>
+            </div>
+          </div>
+          <!-- Sub tabs: Decade / Annual / Monthly / Daily -->
+          <div class="flex items-center gap-1.5 bg-[#12141c] p-1 rounded-lg border border-gray-800 text-[11px]" id="fortuneCycleTabs">
+            <button type="button" class="fortune-tab-btn active px-2.5 py-1 rounded font-medium transition" data-target="decade" data-i18n="fortune_tab_decade">十年大运吉凶</button>
+            <button type="button" class="fortune-tab-btn px-2.5 py-1 rounded font-medium text-gray-400 hover:text-gray-200 transition" data-target="annual" data-i18n="fortune_tab_annual">流年太岁吉凶</button>
+            <button type="button" class="fortune-tab-btn px-2.5 py-1 rounded font-medium text-gray-400 hover:text-gray-200 transition" data-target="monthly" data-i18n="fortune_tab_monthly">节令流月吉凶</button>
+            <button type="button" class="fortune-tab-btn px-2.5 py-1 rounded font-medium text-gray-400 hover:text-gray-200 transition" data-target="daily" data-i18n="fortune_tab_daily">流日精微吉凶</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Content Injected via JavaScript -->
+        <div id="fortuneDetailBody" class="space-y-3">
+          <!-- Populated by renderTransitFortuneDetail -->
+        </div>
+      </div>
+
+      <!-- Level 4: Daily Luck & 5-Pillar Synergy Matrix -->
+      <div class="space-y-3 pt-2 border-t border-gray-800/80">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center space-x-2">
+            <span class="text-rose-300 font-bold text-xs" data-i18n="tab_daily_title">4. 流日测算与五柱同参 (Daily Alignment & 5-Pillar Synergy)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-gray-400" data-i18n="lbl_select_date">选择测算流日:</span>
+            <input type="date" id="luckDailyDatePicker" class="bg-[#1a1d26] border border-gray-700 text-gray-200 text-xs rounded px-2.5 py-1 focus:outline-none focus:border-amber-500">
+            <button id="luckTodayBtn" class="px-2.5 py-1 rounded bg-amber-600/80 hover:bg-amber-600 text-white text-xs font-semibold transition" data-i18n="btn_today">⏱ 此时今日</button>
+          </div>
+        </div>
+
+        <!-- 5-Pillar Holistic Alignment Table -->
+        <div class="overflow-x-auto rounded-xl border border-gray-800 bg-black/30">
+          <table class="w-full text-center text-xs">
+            <thead>
+              <tr class="border-b border-gray-800 bg-[#171922] text-gray-400 font-medium">
+                <th class="py-2 px-3 text-left" data-i18n="th_dimension">维度 / 柱别</th>
+                <th class="py-2 px-3 text-amber-300/90" data-i18n="th_natal_year">本命年柱</th>
+                <th class="py-2 px-3 text-amber-300/90" data-i18n="th_natal_month">本命月柱</th>
+                <th class="py-2 px-3 text-amber-300" data-i18n="th_natal_day">本命日柱 (元神)</th>
+                <th class="py-2 px-3 text-amber-300/90" data-i18n="th_natal_hour">本命时柱</th>
+                <th class="py-2 px-3 text-purple-300 bg-purple-950/20 border-l border-r border-purple-800/30" data-i18n="pillar_decade">大运柱</th>
+                <th class="py-2 px-3 text-indigo-300 bg-indigo-950/20 border-r border-indigo-800/30" data-i18n="pillar_annual">流年柱</th>
+                <th class="py-2 px-3 text-emerald-300 bg-emerald-950/20 border-r border-emerald-800/30" data-i18n="pillar_monthly">流月柱</th>
+                <th class="py-2 px-3 text-rose-300 bg-rose-950/20" data-i18n="pillar_daily">流日柱</th>
+              </tr>
+            </thead>
+            <tbody id="fivePillarsMatrixBody" class="divide-y divide-gray-800/60 font-mono">
+              <!-- Injected dynamically via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Interactions & Tactical Clashes / Combinations Guidance -->
+        <div id="luckInteractionsContainer" class="p-3.5 rounded-xl border border-purple-800/50 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/50 space-y-2">
+          <!-- Injected dynamically via JavaScript -->
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- End of view-luck -->
+
+  <!-- View 3: Eight Classical Canons & Commentaries (八典全库与经文细注) -->
+  <div id="view-canons" class="space-y-6 hidden">
+    <!-- Classical Canon Section (Five Canons of Chinese Metaphysics) -->
+    <section class="bg-card rounded-2xl border border-border-color shadow-2xl overflow-hidden">
+      <!-- Tabs Navigation -->
+      <div class="flex flex-wrap border-b border-gray-800 bg-[#171922]">
+        <button class="tab-btn active text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-sanming">
+          <span data-i18n="tab_sanming">📜 《三命通会》</span>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_sanming_badge">日时四维精断</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-qiongtong">
+          <span data-i18n="tab_qiongtong">❄️ 《穷通宝鉴》</span>
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded" data-i18n="tab_qiongtong_badge">月令调候用神</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-ziping">
+          <span data-i18n="tab_ziping">⚖️ 《子平真诠》</span>
+          <span class="text-[10px] bg-purple-500/20 text-purple-300 px-1 py-0.2 rounded" data-i18n="tab_ziping_badge">格局成败救应</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-ditiansui">
+          <span data-i18n="tab_ditiansui">🌌 《滴天髓》</span>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1 py-0.2 rounded" data-i18n="tab_ditiansui_badge">天干地支理气</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-yuanhai">
+          <span data-i18n="tab_yuanhai">🏛️ 《渊海子平》</span>
+          <span class="text-[10px] bg-rose-500/20 text-rose-300 px-1 py-0.2 rounded" data-i18n="tab_yuanhai_badge">继善喜忌赋文</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-shenfeng">
+          <span data-i18n="tab_shenfeng">🏔️ 《神峰通考》</span>
+          <span class="text-[10px] bg-orange-500/20 text-orange-300 px-1 py-0.2 rounded" data-i18n="tab_shenfeng_badge">病药雕枯绝学</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-yuzhao">
+          <span data-i18n="tab_yuzhao">🪞 《玉照定真经》</span>
+          <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-1 py-0.2 rounded" data-i18n="tab_yuzhao_badge">宫位六亲直断</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-lixuzhong">
+          <span data-i18n="tab_lixuzhong">🎵 《李虚中命书》</span>
+          <span class="text-[10px] bg-teal-500/20 text-teal-300 px-1 py-0.2 rounded" data-i18n="tab_lixuzhong_badge">三元纳音音律</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-search">
+          <span data-i18n="tab_search">🔍 八典全库搜索</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: 《三命通会》 -->
+      <div id="tab-sanming" class="tab-pane p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_sanming_auto">当前命盘直配断语 (日柱与时柱组合 · 包含含义、出处、成格、用法四维详解)：</div>
+          <div id="sanmingAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- 60 JiaZi Explorer -->
+        <div class="bg-[#1a1c24] p-4 rounded-xl border border-gray-800">
+          <h4 class="text-sm font-bold text-amber-300 mb-2 flex items-center gap-2">
+            <span data-i18n="canon_sanming_exp_title">📖 查阅《三命通会》六十甲子日时全断 (720种组合)</span>
+          </h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_sanming_exp_desc">选择任意日柱与时辰，即刻调阅万民英在卷八、卷九中的原著断法与四维详解。</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <select id="smDaySelect" class="bg-black/40 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-gray-200">
+            </select>
+            <select id="smHourSelect" class="bg-black/40 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-gray-200">
+            </select>
+            <button id="smCustomQueryBtn" class="px-4 py-1.5 bg-amber-700 hover:bg-amber-600 text-white rounded-lg text-xs font-semibold transition" data-i18n="btn_query_canon">
+              调阅经典
+            </button>
+          </div>
+          <div id="smCustomResult"></div>
+        </div>
+
+        <!-- Classic Patterns -->
+        <div>
+          <h4 class="text-sm font-bold text-gray-200 mb-2" data-i18n="canon_sm_patterns">《三命通会》经典格局定要</h4>
+          <div id="smPatternsList" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: 《穷通宝鉴》 (Qiong Tong Bao Jian) -->
+      <div id="tab-qiongtong" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_qiongtong_auto">当前命盘月令调候直配 (日元生于月令之气候平衡法门)：</div>
+          <div id="qiongtongAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- 120 Seasonal Explorer -->
+        <div class="bg-[#1a1c24] p-4 rounded-xl border border-gray-800">
+          <h4 class="text-sm font-bold text-blue-300 mb-2" data-i18n="canon_qiongtong_exp_title">
+            ❄️ 《穷通宝鉴 / 栏江网》十二月令调候用神全库检索
+          </h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_qiongtong_exp_desc">自由选择任意天干日元与月令地支，查看大自然气候寒暖燥湿对人生命运的调候秘诀：</p>
+          <div class="flex flex-wrap items-center gap-3">
+            <select id="qtStemSelect" class="bg-black/40 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-gray-200">
+            </select>
+            <select id="qtBranchSelect" class="bg-black/40 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-gray-200">
+            </select>
+            <button id="qtCustomQueryBtn" class="px-4 py-1.5 bg-blue-700 hover:bg-blue-600 text-white rounded-lg text-xs font-semibold transition" data-i18n="btn_query_qt">
+              调阅调候
+            </button>
+          </div>
+          <div id="qtCustomResult"></div>
+        </div>
+      </div>
+
+      <!-- Tab 3: 《子平真诠》 (Zi Ping Zhen Quan) -->
+      <div id="tab-ziping" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_ziping_auto">当前格局定性与沈孝瞻成败救应分析：</div>
+          <div id="zipingAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Patterns Explorer -->
+        <div>
+          <h4 class="text-sm font-bold text-purple-300 mb-2" data-i18n="canon_ziping_exp_title">⚖️ 《子平真诠》八大正格成格、破格与救应法则</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_ziping_exp_desc">清·沈孝瞻所著，详析何谓“成中有败”、何谓“败中有救”的命理法则：</p>
+          <div id="zipingPatternsList" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: 《滴天髓》 -->
+      <div id="tab-ditiansui" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_dts_auto">当前命盘日主真诠 (《滴天髓》天干论)：</div>
+          <div id="ditiansuiAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- 10 Stems Quick Navigation -->
+        <div class="bg-[#1a1c24] p-4 rounded-xl border border-gray-800">
+          <h4 class="text-sm font-bold text-emerald-300 mb-2" data-i18n="canon_dts_stems_title">
+            🌿 十天干专论快速研习
+          </h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_dts_stems_desc">点击任意天干，查阅京图原诗、刘伯温注解与任铁樵实践心得：</p>
+          <div id="dtsStemButtons" class="flex flex-wrap gap-2"></div>
+          <div id="dtsCustomResult"></div>
+        </div>
+
+        <!-- General Chapters -->
+        <div>
+          <h4 class="text-sm font-bold text-gray-200 mb-2" data-i18n="canon_dts_chapters_title">《滴天髓》通微与形象精要篇章</h4>
+          <div id="dtsChaptersList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: 《渊海子平》 (Yuan Hai Zi Ping) -->
+      <div id="tab-yuanhai" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <h4 class="text-sm font-bold text-rose-300 mb-2" data-i18n="canon_yuanhai_title">🏛️ 宋·徐大升《渊海子平》祖传开山赋文</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_yuanhai_desc">《渊海子平》为子平命理祖宗经典，囊括《继善篇》、《喜忌篇》等千古真言：</p>
+          <div id="yuanhaiChaptersList" class="space-y-4">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Ten Gods Origin -->
+        <div class="bg-[#1a1c24] p-4 rounded-xl border border-gray-800">
+          <h4 class="text-sm font-bold text-rose-300 mb-2" data-i18n="canon_yuanhai_gods_title">十神原始性情与玄机</h4>
+          <div id="yuanhaiTenGodsList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 6: 《神峰通考》 (Shen Feng Tong Kao) -->
+      <div id="tab-shenfeng" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_shenfeng_auto">当前命盘病药绝学匹配 (明·张神峰《神峰通考》)：</div>
+          <div id="shenfengAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-orange-300 mb-2" data-i18n="canon_shenfeng_treatises_title">🏔️ 《神峰通考》核心绝学专论 (病药说 · 雕枯旺弱论 · 动静说)</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_shenfeng_treatises_desc">明·张神峰著，以“有病方为贵，无伤不是奇”打破俗见，阐发命理至高突破法门：</p>
+          <div id="shenfengTreatisesList" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 7: 《玉照定真经》 (Yu Zhao Ding Zhen Jing) -->
+      <div id="tab-yuzhao" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_yuzhao_auto">当前四柱宫位六亲直断 (晋·郭璞著 / 宋·徐子平注)：</div>
+          <div id="yuzhaoAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-cyan-300 mb-2" data-i18n="canon_yuzhao_aphorisms_title">🪞 《玉照定真经》宫位六亲休咎与伤灾形貌经文</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_yuzhao_aphorisms_desc">中国现存最早四柱宫位直断法经典，详论夫妻相合、子嗣贤愚与祖荫福泽：</p>
+          <div id="yuzhaoAphorismsList" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 8: 《李虚中命书》 (Li Xu Zhong Ming Shu) -->
+      <div id="tab-lixuzhong" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_lixuzhong_auto">当前命盘三元禄命身与环境场能共振 (唐·李虚中著)：</div>
+          <div id="lixuzhongAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-teal-300 mb-2" data-i18n="canon_lixuzhong_chapters_title">🎵 《李虚中命书》三元禄命与纳音音律气象</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_lixuzhong_chapters_desc">唐代命学开山宗师李虚中著，详析天元禄、地元命、人元身与现代地理时空交互：</p>
+          <div id="lixuzhongChaptersList" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 9: Universal Search Engine -->
+      <div id="tab-search" class="tab-pane hidden p-5 space-y-4">
+        <div class="max-w-2xl mx-auto space-y-3">
+          <h3 class="text-base font-bold text-center text-amber-200 font-serif-sc" data-i18n="search_title">
+            八大典籍万象全库联合检索系统
+          </h3>
+          <p class="text-xs text-gray-400 text-center" data-i18n="search_desc">
+            一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》八大名著，输入术语、格局或断语即刻全文检索。
+          </p>
+          <div class="flex gap-2">
+            <input type="text" id="dbSearchInput" placeholder="输入搜索词，如：病药说、玉照、三元禄、伤官吐秀、丙火、调候、救应..." class="flex-1 bg-black/40 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500" data-i18n-placeholder="search_placeholder">
+            <button id="dbSearchBtn" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-bold transition" data-i18n="btn_search">
+              联合检索
+            </button>
+          </div>
+          <div id="dbSearchResults" class="mt-4">
+            <p class="text-xs text-gray-500 text-center" data-i18n="search_init_prompt">请输入关键词进行联合检索。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- End of view-canons -->
+
+  <!-- View 4: Zhou Yi (I Ching) 64 Hexagrams Divination (周易六十四卦起卦研解) -->
+  <div id="view-iching" class="space-y-6 hidden">
+    <!-- Header Banner -->
+    <div class="p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-black/60 to-purple-950/40 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5" data-i18n="seal_view_iching">易道天机</span>
+            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-amber-300" data-i18n="iching_banner_title">
+              周易文王六十四卦 · 蓍草金钱起卦研解
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed" data-i18n="iching_banner_desc">
+            融汇大衍筮法（老阴/少阳/少阴/老阳正统概率）、三铜钱六掷法、梅花易数时空起卦与六十四卦全典。本卦变卦动爻齐参，解构大义、事业、财智、姻缘与趋避锦囊。
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono">
+            ☯️ 大衍筮法 · CSPRNG
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divination Interactive Control Console -->
+    <div class="bg-card p-5 rounded-2xl border border-border-color shadow-xl space-y-4">
+      <!-- Query / Intent Input & Select -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="relative flex-1">
+          <input type="text" id="ichingQueryInput" placeholder="心念所感，所测何事？（如：近期创业合伙前景、重大职业转型决策、家庭情感走势...）" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500 transition" data-i18n-placeholder="iching_query_placeholder">
+        </div>
+        <!-- 64 Hexagrams Direct Dropdown -->
+        <div class="w-full sm:w-64">
+          <select id="ichingSelect" class="w-full bg-black/50 border border-gray-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-amber-500 font-serif-sc">
+            <option value="">📖 六十四卦速查全览...</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Action Buttons Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <!-- Button 1: Instant Sacred Yarrow -->
+        <button id="ichingInstantBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-amber-500/40">
+          <span class="text-lg">⚡</span>
+          <span data-i18n="iching_btn_instant">一键神机起卦 (大衍筮法)</span>
+        </button>
+
+        <!-- Button 2: Interactive 3 Coins -->
+        <button id="ichingCoinBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-800 to-indigo-800 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-purple-600/40">
+          <span class="text-lg">🪙</span>
+          <span data-i18n="iching_btn_coin">三铜钱摇卦 (六掷成卦)</span>
+        </button>
+
+        <!-- Button 3: Plum Blossom Time Divination -->
+        <button id="ichingTimeBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-teal-800 to-emerald-800 hover:from-teal-700 hover:to-emerald-700 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-teal-600/40">
+          <span class="text-lg">⏱️</span>
+          <span data-i18n="iching_btn_time">梅花易数时间卦 (当下气运)</span>
+        </button>
+      </div>
+
+      <!-- Coin Toss Interactive Arena (Hidden by default unless Coin Toss is active) -->
+      <div id="coinTossArena" class="hidden p-4 rounded-xl bg-black/40 border border-purple-500/40 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-800/40 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-bold text-purple-300 font-serif-sc" data-i18n="coin_arena_title">🪙 乾隆通宝 · 三铜钱六掷摇卦实录</span>
+            <span id="coinStepBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-purple-900/40 text-purple-200 border border-purple-700/40 font-mono">第 1 / 6 掷</span>
+          </div>
+          <button id="coinResetBtn" class="text-xs text-gray-400 hover:text-rose-400 transition" data-i18n="btn_reset_coin">重新开始</button>
+        </div>
+
+        <!-- 3 Coins Graphic Representation -->
+        <div class="flex items-center justify-center gap-4 sm:gap-8 py-3">
+          <div id="coinGraphic1" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
+            字 (3)
+          </div>
+          <div id="coinGraphic2" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
+            字 (3)
+          </div>
+          <div id="coinGraphic3" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
+            背 (2)
+          </div>
+        </div>
+
+        <!-- Coin Toss Interactive Button -->
+        <div class="flex justify-center">
+          <button id="throwCoinBtn" class="px-8 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm shadow-xl transition active:scale-95">
+            掷出第 1 爻 (初爻)
+          </button>
+        </div>
+
+        <!-- Incremental Lines Built -->
+        <div id="coinLinesProgress" class="flex flex-col-reverse gap-1.5 max-w-sm mx-auto pt-2">
+          <!-- Step lines appear here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Divination Result Container -->
+    <div id="ichingResultContainer" class="space-y-6">
+      <!-- Default Prompt before casting -->
+      <div id="ichingInitPrompt" class="p-12 text-center bg-card rounded-2xl border border-border-color shadow-lg space-y-3">
+        <div class="text-4xl">☯️</div>
+        <h3 class="text-base font-bold text-gray-300 font-serif-sc" data-i18n="iching_init_title">
+          易者，变也。穷则变，变则通，通则久。
+        </h3>
+        <p class="text-xs text-gray-500 max-w-md mx-auto" data-i18n="iching_init_desc">
+          请诚心默想心中所求，点击上方【一键神机起卦】、【三铜钱摇卦】或【梅花易数时间卦】，感通天地阴阳造化。
+        </p>
+      </div>
+
+      <!-- Result Card (Hidden until cast) -->
+      <div id="ichingResultCard" class="hidden space-y-6">
+        <!-- Overview Banner & Deciding Rule Badge -->
+        <div id="ichingMetaBanner" class="p-4 rounded-xl bg-black/40 border border-gray-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <!-- Metadata injected via JS -->
+        </div>
+
+        <!-- Dual Hexagram Visual Display (Original Hexagram vs. Resulting Hexagram) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Original Hexagram (本卦) -->
+          <div id="originalHexagramCard" class="p-5 rounded-2xl border border-amber-600/40 bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 shadow-xl space-y-4">
+            <!-- Injected via JS -->
+          </div>
+
+          <!-- Resulting Hexagram (变卦 / 之卦) -->
+          <div id="resultingHexagramCard" class="p-5 rounded-2xl border border-purple-600/40 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 shadow-xl space-y-4">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Complementary Hexagram Perspective Badges (互卦 / 错卦 / 综卦) -->
+        <div id="complementaryHexagramsBar" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Canonical Scriptures (卦辞、彖传、大象传、六爻爻辞) -->
+        <div class="p-5 rounded-2xl border border-border-color bg-card shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+            <h3 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+              <span data-i18n="iching_canonical_sec_title">📜 文王卦辞与先秦经文全典 (Canonical Scriptures)</span>
+            </h3>
+            <span id="oracleFocusTag" class="text-[11px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">
+              动爻定断
+            </span>
+          </div>
+
+          <div id="canonicalScripturesContent" class="space-y-4 text-xs sm:text-sm">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Modern Multi-Dimensional In-Depth Interpretations -->
+        <div class="space-y-4">
+          <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+            <span data-i18n="iching_modern_sec_title">💡 周易现代实战全相研解 (Modern Multi-Dimensional Analysis)</span>
+            <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_modern_iching">极深研几</span>
+          </h3>
+
+          <div id="modernInterpretationCards" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <!-- Injected via JS: 核心大义、事业决策、求财投资、情感人际、趋避锦囊 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of view-iching -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-12 py-6 border-t border-gray-800 text-center text-xs text-gray-500">
+    <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理八大经典名著集成</p>
+    <p data-i18n="footer_citations">引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/i18n.js"></script>
+  <script src="data/ditiansui.js"></script>
+  <script src="data/sanming.js"></script>
+  <script src="data/qiongtong.js"></script>
+  <script src="data/zipingzhenquan.js"></script>
+  <script src="data/yuanhai.js"></script>
+  <script src="data/shenfeng.js"></script>
+  <script src="data/yuzhao.js"></script>
+  <script src="data/lixuzhong.js"></script>
+  <script src="data/iching.js"></script>
+  <script src="js/bazi-engine.js"></script>
+  <script src="js/portrait-engine.js"></script>
+  <script src="js/luck-engine.js"></script>
+  <script src="js/iching-engine.js"></script>
+  <script src="js/chart.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

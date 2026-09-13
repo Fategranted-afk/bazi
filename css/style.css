@@ -1,0 +1,135 @@
+/* Oriental Metaphysics Aesthetic Stylesheet */
+:root {
+  --bg-primary: #121316;
+  --bg-secondary: #1a1c22;
+  --bg-card: #22252e;
+  --bg-card-hover: #2a2e3a;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --border-color: #374151;
+  --accent-red: #e11d48;
+  --accent-gold: #d4af37;
+  --accent-jade: #10b981;
+  --seal-red: #c23531;
+
+  /* Five Elements colors */
+  --color-wood: #10b981;
+  --color-fire: #ef4444;
+  --color-earth: #f59e0b;
+  --color-metal: #fbbf24;
+  --color-water: #3b82f6;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f8f6f0;
+  --bg-secondary: #eee9dc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf7f2;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-serif-sc {
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", STSong, "SimSun", Georgia, serif;
+}
+
+/* Pillar Card Styles */
+.pillar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pillar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+.pillar-badge {
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Element color tags */
+.el-wood { color: var(--color-wood); border-color: rgba(16, 185, 129, 0.3); }
+.el-fire { color: var(--color-fire); border-color: rgba(239, 68, 68, 0.3); }
+.el-earth { color: var(--color-earth); border-color: rgba(245, 158, 11, 0.3); }
+.el-metal { color: var(--color-metal); border-color: rgba(251, 191, 36, 0.3); }
+.el-water { color: var(--color-water); border-color: rgba(59, 130, 246, 0.3); }
+
+.bg-el-wood { background-color: rgba(16, 185, 129, 0.15); }
+.bg-el-fire { background-color: rgba(239, 68, 68, 0.15); }
+.bg-el-earth { background-color: rgba(245, 158, 11, 0.15); }
+.bg-el-metal { background-color: rgba(251, 191, 36, 0.15); }
+.bg-el-water { background-color: rgba(59, 130, 246, 0.15); }
+
+/* Stamp / Seal decoration */
+.chinese-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border: 1.5px solid var(--seal-red);
+  color: var(--seal-red);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Tab Active Styles */
+.tab-btn {
+  padding: 10px 18px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  color: var(--accent-gold);
+  border-bottom-color: var(--accent-gold);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Fortune Tab Active Styles */
+.fortune-tab-btn {
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.fortune-tab-btn.active {
+  background-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fcd34d !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+}

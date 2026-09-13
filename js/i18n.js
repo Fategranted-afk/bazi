@@ -1,0 +1,1442 @@
+/**
+ * BaZi Metaphysics Internationalization & Localization Engine (I18N)
+ * Dual-language support: Chinese (zh) & English (en)
+ */
+
+const I18N = (function() {
+  const dict = {
+    zh: {
+      // Header & Navigation
+      app_title: "八字排盘与典籍研索系统",
+      app_subtitle: "精确天文节气 · 内置《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》五大经典原著库",
+      seal_canons: "双典集成",
+      btn_now: "⏱ 此时此刻",
+      btn_theme_dark: "🌙 暗夜",
+      btn_theme_light: "☀️ 晨曦",
+
+      // Primary View Navigation
+      nav_view_home: "核心主盘与 20% 枢纽",
+      nav_view_luck: "岁运推演 (大运 / 流年 / 流月 / 流日)",
+      nav_view_canons: "八典全库与经文细注",
+      nav_view_iching: "周易六十四卦 · 蓍草/金钱起卦研解",
+      seal_view_home: "主干命基",
+      seal_view_luck: "动态时空",
+      seal_view_canons: "八经汇通",
+      seal_view_iching: "易道神机",
+
+      // Form Inputs
+      lbl_birth_date: "公历出生日期 (阳历)",
+      lbl_birth_time: "出生时间 (当地钟表时)",
+      lbl_gender: "造化属性 (性别)",
+      opt_qian: "乾造 (男命)",
+      opt_kun: "坤造 (女命)",
+      lbl_city: "全球出生地区/城市",
+      btn_calc: "起盘排盘",
+
+      // Advanced Settings
+      chk_true_solar: "开启真太阳时校正 (天文均时差 + 经度偏差)",
+      lbl_timezone: "标准时区:",
+      lbl_longitude: "经度 (°E / 西经为负):",
+      chk_late_rat: "夜子时直接换次日柱 (23点后算次日)",
+      solar_ready: "真太阳时与经度校正已就绪",
+      calc_perf: "⚡ 毫秒级极速排盘",
+      solar_term_pending: "节气与节令星排盘中",
+
+      // Four Pillars
+      sec_four_pillars: "四柱命盘 (Four Pillars)",
+      sub_four_pillars: "以立春与12节气严格交节为准",
+      hidden_stems_title: "地支藏干",
+      hidden_stems_god: "十神分气",
+      nayin_prefix: "纳音：",
+
+      // Day Master & Five Elements
+      sec_dm_core: "本命元神 / 日主",
+      dm_seal: "四柱核心",
+      dm_spirit_desc: "日干代表命主自身的精神内核与本源禀赋",
+      dm_essence_label: "五行主气：",
+      dm_essence_val: "木主仁，火主体，土主信，金主义，水主智",
+      dm_core_principle: "论命纲领：“先观提纲月令，次看日元衰旺，分清用神格局，方决一世吉凶。”",
+      sec_elements_dist: "五行能量分布 (Five Elements Distribution)",
+      elements_weighted_note: "天干透干与地支藏干综合加权",
+
+      // Grand Portrait Header
+      seal_five_canons: "五经总决",
+      sec_portrait_title: "五经融贯 · 命理人物全息画像与格局总决",
+      portrait_desc: "融汇《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》五经精髓 · 智能断格、定旺衰、判调候与全息人生画像",
+
+      // Vigor & Climate Dashboard
+      vigor_score_title: "⚖️ 日元生旺衰三维量化",
+      vigor_ready_badge: "量化就绪",
+      climate_regulator_title: "❄️ 气候提纲与调候用神",
+      climate_primary_label: "首要调候用神",
+      climate_secondary_label: "次要调候用神",
+      climate_desc_label: "【气候提纲】",
+      climate_fav_label: "相助喜神：",
+      climate_taboo_label: "忌见偏枯：",
+
+      // Patterns & Weights
+      sec_patterns_title: "🏷️ 命盘确立格局 · 四维实战精解与能量占比透视",
+      patterns_weight_note: "(含各格能量占比权重，所列格局总占比 > 85%)",
+      patterns_bar_title: "📊 命盘格局能量权重透视分布",
+      patterns_core_line: "已超85%核心主导线",
+      patterns_subnote: "涵盖本命主要人格、才华天赋与事业气象，余量为潜隐微气象",
+      latent_energy_label: "潜隐杂气余量: ",
+      pat_verse_head: "【古赋断诀】",
+      pat_meaning_head: "💡 1. 格局含义 (是什么意思)",
+      pat_source_head: "📖 2. 典籍出处 (出自书里哪里)",
+      pat_formation_head: "⚖️ 3. 成格条件与本命验证 (怎样成的格局)",
+      pat_usage_head: "🎯 4. 实战用法与喜忌 (怎样使用)",
+      pat_weight_head: "📊 5. 本命能量占比与影响力评估",
+      pat_basis_head: "成格赋能依据：",
+
+      // Persona
+      sec_persona_title: "👤 五经全息“命理人物画像”",
+      persona_subnote: "基于本命格局与气象的现代人生与发展蓝图",
+      persona_psy_title: "🧠 性格特质与心性模型 (Psychological Blueprint)",
+      persona_career_title: "💼 才华天赋与事业方向 (Career & Talent Blueprint)",
+      persona_wealth_title: "💰 财富格局与进财动力 (Wealth Dynamics)",
+      persona_advice_title: "🧘 人生修身与行运锦囊 (Strategic Life Coaching)",
+
+      // Pareto 80/20 Core Synthesis
+      sec_pareto_title: "👑 八经全盘核心画像 · 帕累托 20% 关键枢纽全相分析",
+      seal_pareto: "80/20八经全相",
+      pareto_subnote: "八典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互",
+
+      // Zhou Yi (I Ching) 64 Hexagrams
+      iching_banner_title: "周易文王六十四卦 · 蓍草金钱起卦研解",
+      iching_banner_desc: "融汇大衍筮法（老阴/少阳/少阴/老阳正统概率）、三铜钱六掷法、梅花易数时空起卦与六十四卦全典。本卦变卦动爻齐参，解构大义、事业、财智、姻缘与趋避锦囊。",
+      iching_query_placeholder: "心念所感，所测何事？（如：近期创业合伙前景、重大职业转型决策、家庭情感走势...）",
+      iching_btn_instant: "一键神机起卦 (大衍筮法)",
+      iching_btn_coin: "三铜钱摇卦 (六掷成卦)",
+      iching_btn_time: "梅花易数时间卦 (当下气运)",
+      coin_arena_title: "🪙 乾隆通宝 · 三铜钱六掷摇卦实录",
+      btn_reset_coin: "重新开始",
+      iching_init_title: "易者，变也。穷则变，变则通，通则久。",
+      iching_init_desc: "请诚心默想心中所求，点击上方【一键神机起卦】、【三铜钱摇卦】或【梅花易数时间卦】，感通天地阴阳造化。",
+      iching_canonical_sec_title: "📜 文王卦辞与先秦经文全典 (Canonical Scriptures)",
+      iching_modern_sec_title: "💡 周易现代实战全相研解 (Modern Multi-Dimensional Analysis)",
+      seal_modern_iching: "极深研几",
+
+      // Defects
+      sec_defects_title: "⚠️ 命主缺陷、心性盲区与败局暗礁深度透视",
+      defects_subnote: "(直面性格死穴、职场雷区、商业败局与五行偏枯，附破局绝密解药)",
+
+      // Mental Friction
+      sec_friction_title: "精神内耗专项检测与实战彻底改善方案",
+      friction_index_label: "内耗指数：",
+      friction_root_head: "【本命核心内耗根源剖析】",
+      friction_trigger_head: "八字触发特征：",
+
+      // Remedy Guide
+      sec_remedy_title: "🌿 命理调补与改运总决 · 身弱培补与身强疏导实战指南",
+      remedy_subnote: "(涵盖五行理气、心智模型、起居习惯、职场商业全维改善攻略)",
+      tab_tailored: "🎯 本命定向调补方案",
+      tab_comparison: "⚖️ 身弱 vs 身强 完整对照总决",
+
+
+      // Luck & Fortune Cycles (大运/流年/流月/流日)
+      sec_luck_title: "岁运流转 · 大运流年流月流日全阶推演系统",
+      sec_luck_subtitle: "五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶",
+      lbl_luck_direction: "大运流转方向:",
+      lbl_luck_start_age: "交运起始时刻:",
+      tab_decade_title: "1. 十年大运排盘 (10-Year Major Decades)",
+      tab_annual_title: "2. 流年十载透视 (Annual Transit Years)",
+      tab_monthly_title: "3. 十二节令流月 (12 Solar Months)",
+      tab_daily_title: "4. 流日测算与五柱同参 (Daily Alignment & 5-Pillar Synergy)",
+      tab_decade_hint: "(点击任意大运卡片，下联动展现该步大运10年流年)",
+      tab_annual_hint: "(点击流年卡片，联动查看该年12节令流月)",
+      tab_monthly_hint: "(点击流月卡片，与流日联动)",
+      lbl_select_date: "选择测算流日:",
+      btn_today: "⏱ 此时今日",
+      btn_current_year: "🎯 当前太岁",
+      pillar_decade: "大运柱",
+      pillar_annual: "流年柱",
+      pillar_monthly: "流月柱",
+      pillar_daily: "流日柱",
+      th_dimension: "维度 / 柱别",
+      th_natal_year: "本命年柱",
+      th_natal_month: "本命月柱",
+      th_natal_day: "本命日柱 (元神)",
+      th_natal_hour: "本命时柱",
+      interactions_title: "🌌 岁运同参 · 刑冲合害交感综评与行运指南",
+      five_pillar_matrix_title: "五柱同参全息干支盘 (原局四柱 + 大运 + 流年 + 流月 + 流日)",
+      lbl_fortune_evaluation: "岁运吉凶深层解构与趋避指南",
+      lbl_fortune_detail_hint: "（点击任意大运、流年、流月卡片，即可深度查看气象本义、吉中防患与避坑戒律）",
+      fortune_tab_decade: "十年大运吉凶",
+      fortune_tab_annual: "流年太岁吉凶",
+      fortune_tab_monthly: "节令流月吉凶",
+      fortune_tab_daily: "流日精微吉凶",
+      lbl_transit_meaning: "气象本义与深层课题",
+      lbl_good_pitfalls: "吉中防患 · 居安思危",
+      lbl_bad_taboos: "避坑戒律 · 切勿作为",
+      lbl_action_guidance: "实操攻略与行运法门",
+      age_col: "年龄",
+      year_col: "年份",
+      god_col: "十神",
+      nayin_col: "纳音",
+      // Canons Tabs
+      tab_sanming: "📜 《三命通会》",
+      tab_sanming_badge: "日时四维精断",
+      tab_qiongtong: "❄️ 《穷通宝鉴》",
+      tab_qiongtong_badge: "月令调候用神",
+      tab_ziping: "⚖️ 《子平真诠》",
+      tab_ziping_badge: "格局成败救应",
+      tab_ditiansui: "🌌 《滴天髓》",
+      tab_ditiansui_badge: "天干地支理气",
+      tab_yuanhai: "🏛️ 《渊海子平》",
+      tab_yuanhai_badge: "继善喜忌赋文",
+      tab_shenfeng: "🏔️ 《神峰通考》",
+      tab_shenfeng_badge: "病药雕枯绝学",
+      tab_yuzhao: "🪞 《玉照定真经》",
+      tab_yuzhao_badge: "宫位六亲直断",
+      tab_lixuzhong: "🎵 《李虚中命书》",
+      tab_lixuzhong_badge: "三元纳音音律",
+      tab_search: "🔍 八典全库搜索",
+
+      // Canons Contents
+      canon_sanming_auto: "当前命盘直配断语 (日柱与时柱组合 · 包含含义、出处、成格、用法四维详解)：",
+      canon_sanming_exp_title: "📖 查阅《三命通会》六十甲子日时全断 (720种组合)",
+      canon_sanming_exp_desc: "选择任意日柱与时辰，即刻调阅万民英在卷八、卷九中的原著断法与四维详解。",
+      btn_query_canon: "调阅经典",
+      canon_sm_patterns: "《三命通会》经典格局定要",
+
+      canon_qiongtong_auto: "当前命盘月令调候直配 (日元生于月令之气候平衡法门)：",
+      canon_qiongtong_exp_title: "❄️ 《穷通宝鉴 / 栏江网》十二月令调候用神全库检索",
+      canon_qiongtong_exp_desc: "自由选择任意天干日元与月令地支，查看大自然气候寒暖燥湿对人生命运的调候秘诀：",
+      btn_query_qt: "调阅调候",
+
+      canon_ziping_auto: "当前格局定性与沈孝瞻成败救应分析：",
+      canon_ziping_exp_title: "⚖️ 《子平真诠》八大正格成格、破格与救应法则",
+      canon_ziping_exp_desc: "清·沈孝瞻所著，详析何谓“成中有败”、何谓“败中有救”的命理法则：",
+
+      canon_dts_auto: "当前命盘日主真诠 (《滴天髓》天干论)：",
+      canon_dts_stems_title: "🌿 十天干专论快速研习",
+      canon_dts_stems_desc: "点击任意天干，查阅京图原诗、刘伯温注解与任铁樵实践心得：",
+      canon_dts_chapters_title: "《滴天髓》通微与形象精要篇章",
+
+      canon_yuanhai_title: "🏛️ 宋·徐大升《渊海子平》祖传开山赋文",
+      canon_yuanhai_desc: "《渊海子平》为子平命理祖宗经典，囊括《继善篇》、《喜忌篇》等千古真言：",
+      canon_yuanhai_gods_title: "十神原始性情与玄机",
+
+      canon_shenfeng_auto: "当前命盘病药绝学匹配 (明·张神峰《神峰通考》)：",
+      canon_shenfeng_treatises_title: "🏔️ 《神峰通考》核心绝学专论 (病药说 · 雕枯旺弱论 · 动静说)",
+      canon_shenfeng_treatises_desc: "明·张神峰著，以“有病方为贵，无伤不是奇”打破俗见，阐发命理至高突破法门：",
+
+      canon_yuzhao_auto: "当前四柱宫位六亲直断 (晋·郭璞著 / 宋·徐子平注)：",
+      canon_yuzhao_aphorisms_title: "🪞 《玉照定真经》宫位六亲休咎与伤灾形貌经文",
+      canon_yuzhao_aphorisms_desc: "中国现存最早四柱宫位直断法经典，详论夫妻相合、子嗣贤愚与祖荫福泽：",
+
+      canon_lixuzhong_auto: "当前命盘三元禄命身与环境场能共振 (唐·李虚中著)：",
+      canon_lixuzhong_chapters_title: "🎵 《李虚中命书》三元禄命与纳音音律气象",
+      canon_lixuzhong_chapters_desc: "唐代命学开山宗师李虚中著，详析天元禄、地元命、人元身与现代地理时空交互：",
+
+      search_title: "八大典籍万象全库联合检索系统",
+      search_desc: "一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》八大名著，输入术语、格局或断语即刻全文检索。",
+      search_placeholder: "输入搜索词，如：病药说、玉照、三元禄、伤官吐秀、丙火、调候、救应...",
+      btn_search: "联合检索",
+      search_init_prompt: "请输入关键词进行联合检索。",
+
+      // Gender Dynamics
+      gender_dynamics_title: "男女命差异 · 乾坤造化辨析",
+      gender_dynamics_male: "乾造 (男命)",
+      gender_dynamics_female: "坤造 (女命)",
+
+      // Footer
+      footer_title: "八字排盘与典籍研索系统 · 命理八大经典名著集成",
+      footer_citations: "引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》"
+    },
+
+    en: {
+      // Header & Navigation
+      app_title: "BaZi Charting & Classical Canons System",
+      app_subtitle: "Precise Astronomical Solar Terms · Built-in Di Tian Sui, San Ming Tong Hui, Qiong Tong, Zi Ping & Yuan Hai",
+      seal_canons: "5 Classics",
+      btn_now: "⏱ Current Time",
+      btn_theme_dark: "🌙 Dark",
+      btn_theme_light: "☀️ Light",
+
+      // Primary View Navigation
+      nav_view_home: "Natal Chart & 20% Fulcrum",
+      nav_view_luck: "Transit Cycles (Decade / Year / Month / Day)",
+      nav_view_canons: "Eight Classical Canons & Commentaries",
+      nav_view_iching: "I Ching 64 Hexagrams Divination",
+      seal_view_home: "Core Base",
+      seal_view_luck: "Transits",
+      seal_view_canons: "8 Canons",
+      seal_view_iching: "I Ching Oracle",
+
+      // Form Inputs
+      lbl_birth_date: "Solar Birth Date (Gregorian)",
+      lbl_birth_time: "Birth Time (Local Standard)",
+      lbl_gender: "Destiny / Gender",
+      opt_qian: "Qian / Male (乾造)",
+      opt_kun: "Kun / Female (坤造)",
+      lbl_city: "Global Birth City / Region",
+      btn_calc: "Calculate Chart",
+
+      // Advanced Settings
+      chk_true_solar: "Enable True Solar Time Correction (EoT + Longitude)",
+      lbl_timezone: "Standard Timezone:",
+      lbl_longitude: "Longitude (°E / - for West):",
+      chk_late_rat: "Late Zi counts as Next Day (after 23:00)",
+      solar_ready: "True Solar Time & Longitude Ready",
+      calc_perf: "⚡ Millisecond Calculation",
+      solar_term_pending: "Calculating Solar Terms & Meridian...",
+
+      // Four Pillars
+      sec_four_pillars: "Four Pillars Destiny Chart (BaZi)",
+      sub_four_pillars: "Strictly aligned with Lichun & 12 Solar Meridian Terms",
+      hidden_stems_title: "Hidden Stems",
+      hidden_stems_god: "Ten Gods Qi",
+      nayin_prefix: "Melodic (Na Yin): ",
+
+      // Day Master & Five Elements
+      sec_dm_core: "Day Master (Self Spirit)",
+      dm_seal: "Chart Core",
+      dm_spirit_desc: "The Day Stem represents the native's core spirit and intrinsic essence",
+      dm_essence_label: "Five Elements Essence: ",
+      dm_essence_val: "Wood rules Benevolence, Fire Propriety, Earth Trust, Metal Integrity, Water Wisdom",
+      dm_core_principle: "Core Principle: 'First observe the monthly season, next examine day master vigor, identify useful god and pattern, thus destiny is determined.'",
+      sec_elements_dist: "Five Elements Distribution",
+      elements_weighted_note: "Comprehensive weighted calculation of stems and hidden branches",
+
+      // Grand Portrait Header
+      seal_five_canons: "Five Canons",
+      sec_portrait_title: "Five Canons Holistic Persona Portrait & Pattern Blueprint",
+      portrait_desc: "Synthesizing Di Tian Sui, San Ming Tong Hui, Qiong Tong Bao Jian, Zi Ping Zhen Quan & Yuan Hai Zi Ping · Intelligent pattern diagnostics, vigor scoring, seasonal regulation & holistic life blueprint",
+
+      // Vigor & Climate Dashboard
+      vigor_score_title: "⚖️ Day Master Vigor 3D Scoring",
+      vigor_ready_badge: "Scoring Ready",
+      climate_regulator_title: "❄️ Seasonal Climate & Regulating Useful God",
+      climate_primary_label: "Primary Seasonal Regulator",
+      climate_secondary_label: "Secondary Seasonal Regulator",
+      climate_desc_label: "[Climate Essence]",
+      climate_fav_label: "Favorable Gods: ",
+      climate_taboo_label: "Taboo / Adverse: ",
+
+      // Patterns & Weights
+      sec_patterns_title: "🏷️ Established Patterns · 4D Practical Analysis & Energy Share",
+      patterns_weight_note: "(Includes energy weights; listed patterns exceed > 85% total share)",
+      patterns_bar_title: "📊 Pattern Energy Weight Distribution",
+      patterns_core_line: "Exceeds 85% Core Dominance Line",
+      patterns_subnote: "Encompasses core personality, talents, and career dynamics; residue represents subtle latent energies",
+      latent_energy_label: "Latent Energy Residue: ",
+      pat_verse_head: "【Canonical Classical Verse】",
+      pat_meaning_head: "💡 1. Pattern Meaning (Essence & Archetype)",
+      pat_source_head: "📖 2. Canonical Source (Classical Literature)",
+      pat_formation_head: "⚖️ 3. Formation Rules & Natal Verification",
+      pat_usage_head: "🎯 4. Practical Application, Taboos & Mastery",
+      pat_weight_head: "📊 5. Natal Energy Share & Impact Assessment",
+      pat_basis_head: "Empowerment Rationale: ",
+
+      // Persona
+      sec_persona_title: "👤 Holistic Persona Portrait (Five Canons)",
+      persona_subnote: "Modern life & career blueprint based on natal pattern and climate",
+      persona_psy_title: "🧠 Psychological Blueprint & Mindset Archetype",
+      persona_career_title: "💼 Career & Talent Blueprint",
+      persona_wealth_title: "💰 Wealth Dynamics & Financial Drivers",
+      persona_advice_title: "🧘 Strategic Life Coaching & Self-Cultivation",
+
+      // Pareto 80/20 Core Synthesis
+      sec_pareto_title: "👑 Eight Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis",
+      seal_pareto: "80/20 Eight Canons",
+      pareto_subnote: "Synthesizing all 8 classical treatises to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.",
+
+      // Zhou Yi (I Ching) 64 Hexagrams
+      iching_banner_title: "Zhou Yi King Wen 64 Hexagrams Divination System",
+      iching_banner_desc: "Authentic Yarrow Stalk probability (Old Yin/Young Yang/Young Yin/Old Yang), 3-Coin simulation, Plum Blossom time numerology, and 64 Hexagrams canon. Original and Resulting hexagrams synthesize Philosophy, Career, Wealth, Love, and Action Guidance.",
+      iching_query_placeholder: "What inquiry or matter is on your mind? (e.g. venture partnership, career transition, relationship dynamics...)",
+      iching_btn_instant: "Instant Sacred Yarrow Divination",
+      iching_btn_coin: "3-Coin Toss Simulation (6 Tosses)",
+      iching_btn_time: "Plum Blossom Time Divination",
+      coin_arena_title: "🪙 Qianlong Tongbao · 3-Coin Interactive Divination Arena",
+      btn_reset_coin: "Reset",
+      iching_init_title: "Changes are the law of the cosmos: adapting unlocks infinite paths.",
+      iching_init_desc: "Contemplate your core inquiry, then choose Instant Yarrow, 3-Coin Toss, or Time Divination to attune with cosmic rhythms.",
+      iching_canonical_sec_title: "📜 King Wen Judgments & Ancient Canonical Scriptures",
+      iching_modern_sec_title: "💡 Zhou Yi Modern Strategic Multi-Dimensional Interpretations",
+      seal_modern_iching: "Deep Insight",
+
+      // Defects
+      sec_defects_title: "⚠️ Day Master Defects, Blindspots & Crisis Reefs",
+      defects_subnote: "(Candid analysis of psychological traps, career pitfalls, business crises & elemental imbalance with antidotes)",
+
+      // Mental Friction
+      sec_friction_title: "Mental Rumination Diagnostic & Battle-Tested Practical Antidotes",
+      friction_index_label: "Rumination Index: ",
+      friction_root_head: "【Core Mental Friction Root Cause】",
+      friction_trigger_head: "Natal BaZi Triggers: ",
+
+      // Remedy Guide
+      sec_remedy_title: "🌿 Destiny Balancing Guide · Nourishing Weak vs Channeling Strong",
+      remedy_subnote: "(Comprehensive guide covering elements, mindset, habits, career & business)",
+      tab_tailored: "🎯 Tailored Natal Balancing Plan",
+      tab_comparison: "⚖️ Weak vs Strong Complete Parallel Guide",
+
+
+
+      // Luck & Fortune Cycles (大运/流年/流月/流日)
+      sec_luck_title: "Fortune & Luck Cycles · Major Decades, Annual, Monthly & Daily Alignments",
+      sec_luck_subtitle: "5-Pillar Synergy · Revealing 10-year major luck decades, annual transits, 12 solar months, and daily energetic alignments",
+      lbl_luck_direction: "Progression Direction:",
+      lbl_luck_start_age: "Start Age & Calendar Year:",
+      tab_decade_title: "1. 10-Year Major Luck Decades (大运)",
+      tab_annual_title: "2. Annual Transit Years (流年)",
+      tab_monthly_title: "3. 12 Solar Months (流月)",
+      tab_daily_title: "4. Daily Alignment & 5-Pillar Synergy (流日)",
+      tab_decade_hint: "(Click any decade card to reveal its 10 annual transit years)",
+      tab_annual_hint: "(Click any transit year to reveal its 12 solar months)",
+      tab_monthly_hint: "(Click any solar month to inspect daily alignment)",
+      lbl_select_date: "Select Transit Date:",
+      btn_today: "⏱ Today",
+      btn_current_year: "🎯 Current Year",
+      pillar_decade: "Decade Pillar",
+      pillar_annual: "Annual Pillar",
+      pillar_monthly: "Monthly Pillar",
+      pillar_daily: "Daily Pillar",
+      th_dimension: "Dimension / Pillar",
+      th_natal_year: "Natal Year",
+      th_natal_month: "Natal Month",
+      th_natal_day: "Natal Day (Master)",
+      th_natal_hour: "Natal Hour",
+      interactions_title: "🌌 5-Pillar Synergy · Clashes, Combos & Tactical Guidance",
+      five_pillar_matrix_title: "5-Pillar Holistic Matrix (Natal 4 Pillars + Decade + Annual + Monthly + Daily)",
+      lbl_fortune_evaluation: "Transit Fortune In-Depth Evaluation & Tactical Strategy",
+      lbl_fortune_detail_hint: "(Click any Decade, Annual, or Monthly card to inspect deep meaning, pitfalls, and taboos)",
+      fortune_tab_decade: "Decade Fortune",
+      fortune_tab_annual: "Annual Fortune",
+      fortune_tab_monthly: "Monthly Fortune",
+      fortune_tab_daily: "Daily Fortune",
+      lbl_transit_meaning: "Essence Meaning & Core Lessons",
+      lbl_good_pitfalls: "Aspects That Could Go Wrong (Pitfalls in Good Fortune)",
+      lbl_bad_taboos: "Strict Taboos (What NOT to Do in Challenging Transits)",
+      lbl_action_guidance: "Action Strategy & Practical Alignment",
+      age_col: "Age",
+      year_col: "Year",
+      god_col: "Ten God",
+      nayin_col: "Na Yin",
+      // Canons Tabs
+      tab_sanming: "📜 San Ming Tong Hui",
+      tab_sanming_badge: "Day-Hour 4D",
+      tab_qiongtong: "❄️ Qiong Tong Bao Jian",
+      tab_qiongtong_badge: "Seasonal Regulators",
+      tab_ziping: "⚖️ Zi Ping Zhen Quan",
+      tab_ziping_badge: "Pattern & Rescue",
+      tab_ditiansui: "🌌 Di Tian Sui",
+      tab_ditiansui_badge: "Essence & Qi",
+      tab_yuanhai: "🏛️ Yuan Hai Zi Ping",
+      tab_yuanhai_badge: "Foundational Verses",
+      tab_shenfeng: "🏔️ Shen Feng Tong Kao",
+      tab_shenfeng_badge: "Disease & Medicine",
+      tab_yuzhao: "🪞 Yu Zhao Ding Zhen Jing",
+      tab_yuzhao_badge: "Palace Astrology",
+      tab_lixuzhong: "🎵 Li Xu Zhong Ming Shu",
+      tab_lixuzhong_badge: "Three Primes & NaYin",
+      tab_search: "🔍 Universal Search",
+
+      // Canons Contents
+      canon_sanming_auto: "Natal Day-Hour Combination Reading (4D Analysis: Meaning, Source, Formation, Usage):",
+      canon_sanming_exp_title: "📖 Explore 60 JiaZi Day-Hour Combinations (720 Pairs)",
+      canon_sanming_exp_desc: "Select any Day and Hour pillar to view Wan Minying's classic treatise and 4D practical analysis.",
+      btn_query_canon: "Query Canon",
+      canon_sm_patterns: "San Ming Tong Hui Classic Patterns",
+
+      canon_qiongtong_auto: "Natal Month Seasonal Regulator (Climatic Balance):",
+      canon_qiongtong_exp_title: "❄️ Qiong Tong Bao Jian 12 Months Seasonal Regulator Search",
+      canon_qiongtong_exp_desc: "Select any Day Stem and Month Branch to consult the seasonal thermal and moisture balance treatise:",
+      btn_query_qt: "Query Regulator",
+
+      canon_ziping_auto: "Natal Pattern Diagnosis & Shen Xiaozhan's Success/Rescue Analysis:",
+      canon_ziping_exp_title: "⚖️ Eight Regular Patterns: Formation, Breach & Rescue Rules",
+      canon_ziping_exp_desc: "By Qing Dynasty master Shen Xiaozhan, explaining when patterns fail and how they are rescued:",
+
+      canon_dts_auto: "Day Master Essence Treatise (Di Tian Sui 10 Heavenly Stems):",
+      canon_dts_stems_title: "🌿 Quick Study: Ten Heavenly Stems",
+      canon_dts_stems_desc: "Click any Heavenly Stem to explore Jing Tu's original poem, Liu Bowen's notes & Ren Tieqiao's insights:",
+      canon_dts_chapters_title: "Di Tian Sui Core Philosophical Treatises",
+
+      canon_yuanhai_title: "🏛️ Song Dynasty Xu Dasheng: Yuan Hai Zi Ping Foundational Verses",
+      canon_yuanhai_desc: "Yuan Hai Zi Ping is the ancestral classic of Zi Ping astrology, featuring Ji Shan Pian, Xi Ji Pian, and timeless truths:",
+      canon_yuanhai_gods_title: "Original Nature & Mysteries of the Ten Gods",
+
+      canon_shenfeng_auto: "Current Chart Disease & Medicine Synthesis (Shen Feng Tong Kao):",
+      canon_shenfeng_treatises_title: "🏔️ Core Treatises of Shen Feng Tong Kao (Disease & Medicine · Sculpting · Movement & Stillness)",
+      canon_shenfeng_treatises_desc: "Authored by Ming Dynasty master Zhang Shenfeng: 'Without vulnerability, destiny lacks distinction; when cured, supreme wealth and honor follow.'",
+
+      canon_yuzhao_auto: "Current Four Pillars Palace & Relational Dynamics (Yu Zhao Ding Zhen Jing):",
+      canon_yuzhao_aphorisms_title: "🪞 Canonical Palace & Relational Aphorisms of Yu Zhao Ding Zhen Jing",
+      canon_yuzhao_aphorisms_desc: "The earliest surviving classic of four-pillar palace astrology, detailing marital harmony, progeny gifts, and ancestral roots:",
+
+      canon_lixuzhong_auto: "Current Three Primes & Spatial Acoustic Resonance (Li Xu Zhong Ming Shu):",
+      canon_lixuzhong_chapters_title: "🎵 Three Primes & NaYin Acoustic Field Chapters of Li Xu Zhong Ming Shu",
+      canon_lixuzhong_chapters_desc: "Authored by Tang Dynasty founder Li Xuzhong, detailing Heavenly Rank, Earthly Destiny, Human Body, and macro environmental adaptation:",
+
+      search_title: "Eight Classical Canons Universal Search Engine",
+      search_desc: "Unified search across San Ming Tong Hui, Di Tian Sui, Qiong Tong Bao Jian, Zi Ping Zhen Quan, Yuan Hai Zi Ping, Shen Feng Tong Kao, Yu Zhao Ding Zhen Jing, and Li Xu Zhong Ming Shu. Enter terms, patterns, or quotes for instant full-text search.",
+      search_placeholder: "Enter keywords, e.g., Disease & Medicine, Yu Zhao, Three Primes, Hurting Officer, Ding Fire...",
+      btn_search: "Search Canons",
+      search_init_prompt: "Please enter keywords to search across all eight canons.",
+
+      // Gender Dynamics
+      gender_dynamics_title: "Gender Dynamics: Male vs. Female",
+      gender_dynamics_male: "Male Native (Qian Zao)",
+      gender_dynamics_female: "Female Native (Kun Zao)",
+
+      // Footer
+      footer_title: "BaZi Charting & Classical Canons System · Integrated Eight Classics of Chinese Metaphysics",
+      footer_citations: "Citations: San Ming Tong Hui · Di Tian Sui · Qiong Tong Bao Jian · Zi Ping Zhen Quan · Yuan Hai Zi Ping · Shen Feng Tong Kao · Yu Zhao Ding Zhen Jing · Li Xu Zhong Ming Shu"
+    }
+  };
+
+  // Metaphysical Terminology Mappings
+  const STEMS = {
+    '甲': { en: 'Jia (Yang Wood)', pinyin: 'Jia', el: 'Wood', pol: 'Yang' },
+    '乙': { en: 'Yi (Yin Wood)', pinyin: 'Yi', el: 'Wood', pol: 'Yin' },
+    '丙': { en: 'Bing (Yang Fire)', pinyin: 'Bing', el: 'Fire', pol: 'Yang' },
+    '丁': { en: 'Ding (Yin Fire)', pinyin: 'Ding', el: 'Fire', pol: 'Yin' },
+    '戊': { en: 'Wu (Yang Earth)', pinyin: 'Wu', el: 'Earth', pol: 'Yang' },
+    '己': { en: 'Ji (Yin Earth)', pinyin: 'Ji', el: 'Earth', pol: 'Yin' },
+    '庚': { en: 'Geng (Yang Metal)', pinyin: 'Geng', el: 'Metal', pol: 'Yang' },
+    '辛': { en: 'Xin (Yin Metal)', pinyin: 'Xin', el: 'Metal', pol: 'Yin' },
+    '壬': { en: 'Ren (Yang Water)', pinyin: 'Ren', el: 'Water', pol: 'Yang' },
+    '癸': { en: 'Gui (Yin Water)', pinyin: 'Gui', el: 'Water', pol: 'Yin' }
+  };
+
+  const BRANCHES = {
+    '子': { en: 'Zi (Rat)', animal: 'Rat', el: 'Water' },
+    '丑': { en: 'Chou (Ox)', animal: 'Ox', el: 'Earth' },
+    '寅': { en: 'Yin (Tiger)', animal: 'Tiger', el: 'Wood' },
+    '卯': { en: 'Mao (Rabbit)', animal: 'Rabbit', el: 'Wood' },
+    '辰': { en: 'Chen (Dragon)', animal: 'Dragon', el: 'Earth' },
+    '巳': { en: 'Si (Snake)', animal: 'Snake', el: 'Fire' },
+    '午': { en: 'Wu (Horse)', animal: 'Horse', el: 'Fire' },
+    '未': { en: 'Wei (Goat)', animal: 'Goat', el: 'Earth' },
+    '申': { en: 'Shen (Monkey)', animal: 'Monkey', el: 'Metal' },
+    '酉': { en: 'You (Rooster)', animal: 'Rooster', el: 'Metal' },
+    '戌': { en: 'Xu (Dog)', animal: 'Dog', el: 'Earth' },
+    '亥': { en: 'Hai (Pig)', animal: 'Pig', el: 'Water' }
+  };
+
+  const TEN_GODS = {
+    '比肩': 'Friend (Bi Jian)',
+    '劫财': 'Rob Wealth (Jie Cai)',
+    '食神': 'Eating God (Shi Shen)',
+    '伤官': 'Hurting Officer (Shang Guan)',
+    '偏财': 'Indirect Wealth (Pian Cai)',
+    '正财': 'Direct Wealth (Zheng Cai)',
+    '七杀': 'Seven Killings (Qi Sha)',
+    '正官': 'Direct Officer (Zheng Guan)',
+    '偏印': 'Indirect Resource (Pian Yin)',
+    '正印': 'Direct Resource (Zheng Yin)',
+    '日主': 'Day Master (Self)',
+    '比劫': 'Companion / Peer (Bi Jie)',
+    '印绶': 'Resource / Seal (Yin Shou)',
+    '官杀': 'Power / Officer (Guan Sha)',
+    '财星': 'Wealth Star (Cai Xing)',
+    '食伤': 'Output / Talent (Shi Shang)'
+  };
+
+  const FIVE_ELEMENTS = {
+    '木': 'Wood',
+    '火': 'Fire',
+    '土': 'Earth',
+    '金': 'Metal',
+    '水': 'Water'
+  };
+
+  const NAYIN_TABLE = {
+    '海中金': 'Sea Metal', '炉中火': 'Furnace Fire', '大林木': 'Great Forest Wood', '路旁土': 'Roadside Earth',
+    '剑锋金': 'Sword Edge Metal', '山头火': 'Mountaintop Fire', '涧下水': 'Stream Water', '城头土': 'City Wall Earth',
+    '白蜡金': 'White Wax Metal', '杨柳木': 'Willow Wood', '泉中水': 'Spring Water', '屋上土': 'Rooftop Earth',
+    '霹雳火': 'Thunderbolt Fire', '松柏木': 'Pine & Cypress Wood', '长流水': 'Everflowing Water', '沙中金': 'Sand Metal',
+    '山下火': 'Foothill Fire', '平地木': 'Plains Wood', '壁上土': 'Wall Earth', '金箔金': 'Gold Foil Metal',
+    '覆灯火': 'Lamp Flame Fire', '天河水': 'Celestial River Water', '大驿土': 'Post Station Earth', '钗钏金': 'Hairpin Metal',
+    '桑柘木': 'Mulberry Wood', '大溪水': 'Great Stream Water', '沙中土': 'Sand Earth', '天上火': 'Heavenly Fire',
+    '石榴木': 'Pomegranate Wood', '大海水': 'Ocean Water'
+  };
+
+  const PILLAR_TITLES = {
+    zh: ['年柱 (根基/祖业)', '月柱 (提纲/事业)', '日柱 (日元/自身)', '时柱 (归宿/子女)'],
+    en: ['Year Pillar (Roots/Ancestry)', 'Month Pillar (Season/Career)', 'Day Pillar (Day Master/Self)', 'Hour Pillar (Fruition/Future)']
+  };
+
+  const PATTERN_NAMES = {
+    '正官格': 'Direct Officer Pattern',
+    '七杀格': 'Seven Killings Pattern',
+    '正印格': 'Direct Resource Pattern',
+    '偏印格': 'Indirect Resource Pattern',
+    '食神格': 'Eating God Pattern',
+    '伤官格': 'Hurting Officer Pattern',
+    '正财格': 'Direct Wealth Pattern',
+    '偏财格': 'Indirect Wealth Pattern',
+    '建禄格': 'Established Prosperity (Lu) Pattern',
+    '羊刃格': 'Yang Blade Pattern',
+    '伤官生财格': 'Hurting Officer Producing Wealth Pattern',
+    '伤官配印格': 'Hurting Officer with Resource (Seal) Pattern',
+    '杀印相生格': 'Seven Killings Generating Resource Pattern',
+    '财旺生官格': 'Prosperous Wealth Producing Officer Pattern',
+    '食神制杀格': 'Eating God Controlling Seven Killings Pattern',
+    '官印双全格': 'Officer & Resource Dual Integrity Pattern',
+    '食神生财格': 'Eating God Producing Wealth Pattern',
+    '伤官见官格': 'Hurting Officer Clashing Officer Pattern',
+    '杀刃带伤格 (七杀+羊刃+伤官复合)': 'Seven Killings + Blade + Hurting Officer Multi-Star Synergy',
+    '伤官生财带杀格 (商战谋略复合)': 'Hurting Officer Producing Wealth with Killings Synergy',
+    '伤官配印掌威格 (文武兼备复合)': 'Hurting Officer with Seal Authority Synergy',
+    '杀印相生兼食神格 (军政儒将复合)': 'Killings-Seal with Eating God Strategic Synergy',
+    '财资七杀制刃格 (资本操盘复合)': 'Wealth Supporting Killings Controlling Blade Synergy',
+    '伤官吐秀 / 桃花流水': 'Hurting Officer Exuding Elegance / Peach Blossom Flowing Stream',
+    '金白水清': 'Pristine Metal & Clear Water',
+    '木火通明': 'Wood & Fire Radiant Brilliance',
+    '水火既济': 'Water & Fire Perfect Equilibrium',
+    '火土相生': 'Fire & Earth Mutual Generation',
+    '从财格': 'Follow Wealth Pattern',
+    '从杀格': 'Follow Seven Killings Pattern',
+    '从儿格': 'Follow Child (Output) Pattern',
+    '专旺格': 'Special Dominant Monopolistic Pattern'
+  };
+
+  const TIERS = {
+    '第一核心主导格': 'Primary Dominant Pattern',
+    '强力驱动进阶格': 'High Synergy Pattern',
+    '辅佐发越机运格': 'Auxiliary Reinforcing Pattern',
+    '潜能催化兼人格': 'Latent Background Pattern',
+    '主导核心格': 'Dominant Core Pattern',
+    '高阶协同格': 'High Synergy Pattern',
+    '副辅增益格': 'Auxiliary Reinforcing Pattern',
+    '潜在暗藏格': 'Latent Background Pattern'
+  };
+
+  const VIGOR_STATUSES = {
+    '身极旺 (强健专旺)': 'Extremely Strong (Dominant Peak)',
+    '身旺 (精干有力)': 'Strong / Robust',
+    '中和偏旺 (气象平衡)': 'Balanced (Slightly Robust)',
+    '中和偏弱 (清秀待辅)': 'Balanced (Slightly Delicate)',
+    '身弱 (宜生宜扶)': 'Weak / Nourishing Needed',
+    '极弱 (从弱或虚浮)': 'Extremely Weak / Delicate',
+    '中和': 'Balanced / Neutral Equilibrium',
+    '极旺 (极为强旺)': 'Extremely Strong (Excessive Vigor)',
+    '偏旺 (强旺)': 'Strong / Robust',
+    '中和 (平衡中正)': 'Balanced / Neutral Equilibrium',
+    '偏弱 (身弱受耗)': 'Weak / Deliberate Cultivation Needed',
+    '极弱 (极度衰微)': 'Extremely Weak / Frail (Requires Urgent Support)'
+  };
+
+  // Helper Translation Functions
+  function t(key, lang = 'zh') {
+    const l = (lang === 'en') ? 'en' : 'zh';
+    return (dict[l] && dict[l][key]) ? dict[l][key] : key;
+  }
+
+  function getStem(stem, lang = 'zh') {
+    if (lang === 'en' && STEMS[stem]) {
+      return STEMS[stem].en;
+    }
+    return stem;
+  }
+
+  function getBranch(branch, lang = 'zh') {
+    if (lang === 'en' && BRANCHES[branch]) {
+      return BRANCHES[branch].en;
+    }
+    return branch;
+  }
+
+  function getGod(god, lang = 'zh') {
+    if (lang === 'en') {
+      if (TEN_GODS[god]) return TEN_GODS[god];
+      for (const [k, v] of Object.entries(TEN_GODS)) {
+        if (god && god.includes(k)) return v;
+      }
+    }
+    return god;
+  }
+
+  function getElement(el, lang = 'zh') {
+    if (lang === 'en' && FIVE_ELEMENTS[el]) {
+      return FIVE_ELEMENTS[el];
+    }
+    return el;
+  }
+
+  function getNaYin(nayin, lang = 'zh') {
+    if (lang === 'en' && NAYIN_TABLE[nayin]) {
+      return NAYIN_TABLE[nayin];
+    }
+    return nayin;
+  }
+
+  function getPillarTitle(idx, lang = 'zh') {
+    const l = (lang === 'en') ? 'en' : 'zh';
+    return PILLAR_TITLES[l][idx] || PILLAR_TITLES.zh[idx];
+  }
+
+  function getPatternName(name, lang = 'zh') {
+    if (lang === 'en') {
+      if (PATTERN_NAMES[name]) return PATTERN_NAMES[name];
+      for (const [k, v] of Object.entries(PATTERN_NAMES)) {
+        if (name && name.includes(k.split(' ')[0])) return v;
+      }
+    }
+    return name;
+  }
+
+  function getTierName(tier, lang = 'zh') {
+    if (lang === 'en' && TIERS[tier]) return TIERS[tier];
+    return tier;
+  }
+
+  function getVigorStatus(status, lang = 'zh') {
+    if (lang === 'en') {
+      if (VIGOR_STATUSES[status]) return VIGOR_STATUSES[status];
+      for (const [k, v] of Object.entries(VIGOR_STATUSES)) {
+        if (status && (status.includes(k) || k.includes(status))) return v;
+      }
+      if (status && status.includes('身旺')) return 'Strong / Robust';
+      if (status && status.includes('身弱')) return 'Weak / Nourishing Needed';
+      if (status && status.includes('极旺')) return 'Extremely Strong';
+      if (status && status.includes('极弱')) return 'Extremely Weak';
+    }
+    return status;
+  }
+
+  /**
+   * Deep translation of PortraitEngine analysis output to English
+   */
+  function translatePortrait(pData, lang = 'zh') {
+    if (lang !== 'en') return pData;
+
+    // Deep clone to avoid mutating original
+    const p = JSON.parse(JSON.stringify(pData));
+
+    // Day Master Desc
+    const dmInfo = STEMS[p.dayMaster] || { en: p.dayMaster, el: 'Wood', pol: 'Yang' };
+    p.dayMasterDesc = dmInfo.en;
+
+    // Vigor
+    if (p.vigor) {
+      p.vigor.status = getVigorStatus(p.vigor.status, 'en');
+      if (p.vigor.summary) {
+        p.vigor.summary = p.vigor.summary
+          .replace(/日主元神得分/g, 'Day Master vigor score: ')
+          .replace(/定性为：/g, 'Evaluated as: ')
+          .replace(/月令/g, 'Seasonal Mandate ')
+          .replace(/地支/g, 'Terrestrial Rooting ')
+          .replace(/通根/g, 'rooted ')
+          .replace(/天干/g, 'Heavenly Stems ')
+          .replace(/得令/g, 'in-season mandate')
+          .replace(/失时/g, 'out-of-season')
+          .replace(/得地/g, 'earthly support')
+          .replace(/得势/g, 'stem assistance')
+          .replace(/身旺/g, 'Strong Day Master')
+          .replace(/身弱/g, 'Weak Day Master');
+      }
+      if (p.vigor.metrics) {
+        if (p.vigor.metrics.ling) {
+          p.vigor.metrics.ling.name = '① Seasonal Mandate (Month)';
+          p.vigor.metrics.ling.status = p.vigor.metrics.ling.status
+            .replace(/当令秉权/g, 'Commanding Seasonal Power')
+            .replace(/得生逢令/g, 'Nourished by Season')
+            .replace(/受令盗泄/g, 'Drained by Season')
+            .replace(/受令克耗/g, 'Restrained by Season')
+            .replace(/不得令/g, 'Out of Season');
+        }
+        if (p.vigor.metrics.di) {
+          p.vigor.metrics.di.name = '② Terrestrial Rooting (Branches)';
+          p.vigor.metrics.di.roots = p.vigor.metrics.di.roots.map(r => 
+            r.replace(/通根于/g, 'Rooted in ')
+             .replace(/为阳刃极旺之根/g, ' (Yang Blade solid root)')
+             .replace(/为禄位专气强根/g, ' (Lu prosperity pure root)')
+             .replace(/为长生中气生扶根/g, ' (Growth qi nourishing root)')
+             .replace(/为余气微根/g, ' (Residual subtle root)')
+          );
+        }
+        if (p.vigor.metrics.shi) {
+          p.vigor.metrics.shi.name = '③ Alignment Momentum (Stems)';
+          p.vigor.metrics.shi.assists = p.vigor.metrics.shi.assists.map(a => 
+            a.replace(/年干透/g, 'Year Stem ')
+             .replace(/月干透/g, 'Month Stem ')
+             .replace(/时干透/g, 'Hour Stem ')
+             .replace(/帮身/g, ' assists self')
+             .replace(/生身/g, ' generates self')
+          );
+        }
+      }
+    }
+
+    // Climate
+    if (p.climate) {
+      p.climate.primary = getGod(p.climate.primary, 'en');
+      p.climate.secondary = getGod(p.climate.secondary, 'en');
+      p.climate.climate = p.climate.climate
+        .replace(/日主生于/g, 'Day Master born in ')
+        .replace(/月，/g, ' Month: ')
+        .replace(/调候/g, 'seasonal balance ')
+        .replace(/寒暖/g, 'cold and warm ')
+        .replace(/燥湿/g, 'dry and humid ');
+      p.climate.favorable = p.climate.favorable.map(f => getGod(f, 'en'));
+      p.climate.taboos = p.climate.taboos.map(t => getGod(t, 'en'));
+    }
+
+    // Patterns
+    if (p.patterns && Array.isArray(p.patterns)) {
+      const dm = p.dayMaster;
+      const dmInfo = STEMS[dm] || { en: dm };
+      const dmEn = dmInfo.en;
+
+      p.patterns.forEach(pat => {
+        const origName = pat.name;
+        pat.name = getPatternName(pat.name, 'en');
+        pat.tierName = getTierName(pat.tierName, 'en');
+
+        // Translate Tag
+        const tagMap = {
+          '月令本命正格 / 终身大纲': 'Monthly Dominant Pattern / Foundational Life Blueprint',
+          '🔥 顶级威权破局三元贵格': '🔥 Supreme Authority & Breakthrough Commander Pattern',
+          '⚔️ 铁血开拓威权格': '⚔️ Iron-Willed Pioneering Authority Pattern',
+          '💡 智谋破局大贵格': '💡 Strategic Ingenuity Breakthrough Noble Pattern',
+          '📜 名扬天下文贵格': '📜 Renowned Scholarship & High Intellect Pattern',
+          '🏛️ 威信声望名流格': '🏛️ High Prestige & Institutional Authority Pattern',
+          '🌟 英雄压众大将格': '🌟 Formidable Leadership & Master Strategist Pattern',
+          '💰 财源滚滚商贾格': '💰 Abundant Wealth & Commercial Innovation Pattern',
+          '⚡ 掌权司衡威猛奇格': '⚡ Commanding Sovereign & Executive Power Pattern',
+          '日时特用格 / 宿命气象': 'Day-Hour Special Configuration / Destination Archetype'
+        };
+        if (pat.tag && tagMap[pat.tag]) {
+          pat.tag = tagMap[pat.tag];
+        }
+
+        // Translate Tier Description
+        const tierDescMap = {
+          '主导命主55%以上的人生大纲、性格底色与核心天赋跑道': 'Dominates over 55% of the native\'s life blueprint, foundational mindset, and primary talent lane.',
+          '主导命主的重大决断力、危机攻坚战与核心专业技能': 'Drives major decision-making capabilities, crisis breakthrough power, and core professional expertise.',
+          '主导命主的社交风采、人际吸引力与后半生晚景归宿': 'Empowers social charisma, interpersonal magnetism, and late-life fulfillment and legacy.',
+          '主导流年岁运中的特定机缘爆发与跨界兼通才干': 'Triggers specific milestone breakthroughs and multidisciplinary mastery during annual luck cycles.'
+        };
+        if (pat.tierDesc && tierDescMap[pat.tierDesc]) {
+          pat.tierDesc = tierDescMap[pat.tierDesc];
+        }
+
+        // Translate Weight Rationale
+        if (pat.weightReason) {
+          pat.weightReason = pat.weightReason
+            .replace(/月令提纲秉令司权基础分48%/g, 'Month seasonal mandate baseline score 48%')
+            .replace(/月干透出令星主神\(\+8%\)/g, 'Month stem reveals commanding god (+8%)')
+            .replace(/三元煞刃伤跨柱汇聚\(\+36%\)/g, 'Cross-pillar confluence of Killings, Blade & Hurting Officer (+36%)')
+            .replace(/杀刃\/伤杀双煞交辉\(\+30%\)/g, 'Convergence of Killings-Blade / Hurting-Killings double power (+30%)')
+            .replace(/官杀食伤与印星生化\(\+28%\)/g, 'Transformation of Power/Output with Resource stars (+28%)')
+            .replace(/天干地支相生互化\(\+25%\)/g, 'Heavenly Stems & Earthly Branches mutual generation (+25%)')
+            .replace(/日主自坐与时支宿命发越\(\+20%\)/g, 'Day Master root & Hour Branch destination empowerment (+20%)')
+            .replace(/时干秀气引通\(\+4%\)/g, 'Hour stem output channeling (+4%)')
+            .replace(/柱中五行气象助化\(\+20%\)/g, 'Elemental circulation empowerment in chart (+20%)')
+            .replace(/，/g, ', ');
+        }
+
+        // Deep Translation for 4-Part Structure (Meaning, Source, Formation, Usage)
+        if (origName.includes('杀刃带伤')) {
+          pat.name = 'Killings & Blade with Hurting Officer (Commanding Commander Pattern)';
+          pat.meaning = 'The natal chart unites the formidable courage of Seven Killings, the iron will of the Yang Blade, and the strategic agility of the Hurting Officer. Seven Killings drives pioneering authority and decisive resolve; Yang Blade endows fearlessness and steel discipline; Hurting Officer unleashes brilliant strategy and disruptive innovation. Together, they form one of Chinese metaphysics\' most powerful commander archetypes, capable of turning catastrophic crises into monumental triumphs.';
+          pat.source = 'Yuan Hai Zi Ping Vol. 3: \'Treatise on Yang Blade\'; Zi Ping Zhen Quan Ch. 10: \'Treatise on Hurting Officer\'; San Ming Tong Hui Vol. 5: \'Ming Tong Verse\': "Killings without Blade lack prominence; Blade without Killings lacks authority. When met with Hurting Officer unleashing elegance, Killings and Blade transform into supreme sovereign power."';
+          pat.formation = '【Natal Formation Verification】① Yang Blade anchored in terrestrial branch, giving the Day Master an unyielding constitutional frame capable of wielding fierce power; ② Seven Killings revealed on stems, generating sharp authority; ③ Hurting Officer channeling radiant intellect. The three violent stars check and balance each other, transforming raw ferocity into supreme executive competence.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: Crisis turnaround CEO, top criminal defense attorney, military/counter-terrorism high commander, leading neurosurgeon/trauma surgeon, deep-tech founder, cross-border M&A strategist.\n' +
+            '👥【Interpersonal Dynamics】: Emanates commanding authority and decisive drive. Highly protective of loyal teammates and commands deep respect; disdains flattery and passive excuses. In intimate relationships, highly protective but can be fiercely demanding; benefits from deliberate gentleness and active listening.\n' +
+            '🌟【Archetype Persona】: The battle-tested commander who takes charge amidst chaotic firestorms, carving an unyielding path to victory where ordinary leaders surrender.';
+        } else if (origName.includes('羊刃驾杀')) {
+          pat.name = 'Yang Blade Controlling Seven Killings Pattern (Dual Power of Blade & Spear)';
+          pat.meaning = 'Seven Killings represents fierce external pressure and conquering power, while Yang Blade provides the sharpest physical and psychological armor. When both converge in balance, martial courage subdues fierce adversity while structured discipline restrains reckless impulse, creating an authoritative, pioneering leader.';
+          pat.source = 'Yuan Hai Zi Ping: "When Yang Blade is met without Killings, injury follows; when Killings and Blade are both complete, authority governs frontiers." Zi Ping Zhen Quan: \'Treatise on Indirect Officer\'.';
+          pat.formation = '【Natal Formation Verification】Day Master commands Yang Blade support in branches, paired with Seven Killings revealed in the pillars. Energy between the blade and the general is harmoniously matched.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: Judicial inspection, defense technology, mega-infrastructure director, high-stakes proprietary trading, emergency incident command.\n' +
+            '👥【Interpersonal Dynamics】: A person of unwavering integrity whose word is steel. Commands natural respect from subordinates; must guard against blunt speech and cultivate warmth in personal life.\n' +
+            '🌟【Archetype Persona】: The disciplined, iron-willed project director who fearlessly undertakes the most perilous missions and delivers unwavering results.';
+        } else if (origName.includes('伤官合杀')) {
+          pat.name = 'Hurting Officer Combining with Seven Killings (Strategic Noble Pattern)';
+          pat.meaning = 'Hurting Officer embodies supreme intellect and tactical ingenuity, while Seven Killings represents raw authority. Combining the two channels intellectual brilliance into disarming existential threats, achieving bloodless victories through strategic mastery.';
+          pat.source = 'Zi Ping Zhen Quan Ch. 10: "When Hurting Officer unites with Killings, civil and martial honors are both achieved." San Ming Tong Hui: \'Ming Tong Verse\'.';
+          pat.formation = '【Natal Formation Verification】Natal chart features both Hurting Officer and Seven Killings, with tactical agility successfully transforming external pressure into strategic power.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: Senior think tank advisor, chief negotiation officer, principal technical architect, complex litigation lawyer, chief brand strategist.\n' +
+            '👥【Interpersonal Dynamics】: Possesses piercing psychological discernment; views relationships through strategic collaboration and mutual value creation. Yearns for intellectual parity in love.\n' +
+            '🌟【Archetype Persona】: The elite strategist who navigates intricate labyrinthine stakeholder battles, converting chaos into triumphant consensus.';
+        } else if (origName.includes('伤官配印')) {
+          pat.name = 'Hurting Officer Supported by Resource Seal (Scholarly Noble Pattern)';
+          pat.meaning = 'Hurting Officer represents radiant creativity and intellectual audacity, which unchecked can trigger conflict; the Resource Seal embodies wisdom, ethics, and grounded restraint. Together, the seal tempers impulsive pride while Hurting Officer brings dynamic vitality to deep academic scholarship, creating transformative, timeless masterworks.';
+          pat.source = 'Zi Ping Zhen Quan Ch. 10: "When Hurting Officer is paired with the Resource Seal, honor and nobility are boundless." Yuan Hai Zi Ping: \'Xi Ji Pian\'.';
+          pat.formation = '【Natal Formation Verification】Hurting Officer is prominently revealed to showcase talent, while supported and buffered by Direct or Indirect Resource stars, creating perfect harmony between brilliance and virtue.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: University professor, distinguished think-tank fellow, acclaimed author/screenwriter, patent scientist, chief enterprise architect, senior justice.\n' +
+            '👥【Interpersonal Dynamics】: Cultured, elegant, and intellectually engaging. Highly respected by mentors and peers. Harmonious and dependable in domestic life.\n' +
+            '🌟【Archetype Persona】: The esteemed scholar-polymath who can produce seminal theoretical treatises while captivating vast audiences from the podium.';
+        } else if (origName.includes('杀印相生') || origName.includes('官印相生')) {
+          pat.name = 'Official & Resource Mutually Generating Pattern (Institutional Authority)';
+          pat.meaning = 'Official/Killings represents authority and rigorous challenges, while the Resource Seal embodies institutional credibility, scholarship, and moral character. Power generates resource, and resource nourishes the self, flawlessly converting external pressure into enduring public prestige.';
+          pat.source = 'Yuan Hai Zi Ping: "When Killings and Resource generate each other, military and administrative emblems are wielded; when Resource meets Officer, scholarship reaches the summit."';
+          pat.formation = '【Natal Formation Verification】Both Officer/Killings and Resource Seal are present and unmarred; authority does not injure the Day Master but rather distills into pure institutional credibility.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: Senior public sector administration, state enterprise director, president of authoritative trade associations, university president, medical institution dean.\n' +
+            '👥【Interpersonal Dynamics】: Dignified, highly ethical, and deeply trusted by leadership and subordinates alike. Acts as an unshakable anchor in any organization.\n' +
+            '🌟【Archetype Persona】: The revered statesman-executive who governs with equal parts decisive authority and benevolent wisdom.';
+        } else if (origName.includes('食神制杀')) {
+          pat.name = 'Eating God Restraining Seven Killings Pattern (Strategic General Pattern)';
+          pat.meaning = 'Seven Killings is intense and conquering, while Eating God is magnanimous and profoundly wise. Eating God uses graceful composure and superior strategy to neutralize aggression, creating the archetype of "gentle on the surface, master of the battlefield within."';
+          pat.source = 'Yuan Hai Zi Ping: "When Eating God restrains Seven Killings, a solitary hero overawes tens of thousands." Zi Ping Zhen Quan: \'Treatise on Eating God\'.';
+          pat.formation = '【Natal Formation Verification】Eating God and Seven Killings are cleanly assembled without Indirect Resource (Owl) clashing or disrupting the flow.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: Senior medical specialist, engineering fellow, chief engineer, high-tech division president, composite strategic leader.\n' +
+            '👥【Interpersonal Dynamics】: Gentle exterior with an unyielding interior core. Highly empathetic, expertly diffusing major conflicts through subtle, quiet diplomacy.\n' +
+            '🌟【Archetype Persona】: The chief cardiovascular surgeon who faces life-and-death crises with calm precision and restorative mastery.';
+        } else if (origName.includes('食伤生财')) {
+          pat.name = 'Output Generating Wealth Pattern (Prodigious Commercial Fortune)';
+          pat.meaning = 'Eating God and Hurting Officer represent creative intelligence and visionary talent, while Wealth stars represent material realization and commercial execution. Intellectual creativity continually converts into capital flow, endowing the native with natural business monetization prowess.';
+          pat.source = 'Yuan Hai Zi Ping: "When Output generates Wealth, it surpasses ordinary official rank." San Ming Tong Hui: \'Treatise on Wealth Stars\'.';
+          pat.formation = '【Natal Formation Verification】Vigorous Output stars seamlessly feed into Direct or Indirect Wealth stars, creating an inexhaustible fountain of commercial value.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: Venture capitalist, tech startup founder, premier media IP monetization, cross-border commerce pioneer, creative commercial director.\n' +
+            '👥【Interpersonal Dynamics】: High emotional intelligence, compelling communicator, and expansive networker. Masters the art of "enlarging the pie" and sharing spoils with allies.\n' +
+            '🌟【Archetype Persona】: The visionary serial entrepreneur who builds breakthrough consumer products, scaling them rapidly into generational wealth.';
+        } else if (origName.includes('魁罡')) {
+          pat.name = 'Kui Gang Sovereign Pattern (Unyielding Executive Authority)';
+          pat.meaning = 'Kui Gang occupies the cardinal positions of celestial power. It endows the native with unflinching courage, brilliant intellect, fearlessness under acute danger, and extraordinary command authority.';
+          pat.source = 'Yuan Hai Zi Ping: "When Kui Gang sits in its true cardinal position, it wields sovereign justice and balance." San Ming Tong Hui: \'Treatise on Kui Gang\'.';
+          pat.formation = '【Natal Formation Verification】Day Pillar occupies a true Kui Gang position, drawing upon primordial celestial authority.';
+          pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+            '💼【Suitable Modern Careers】: High judicial inspector, military general, iron-fisted corporate restructuring CEO, head of critical crisis investigations.\n' +
+            '👥【Interpersonal Dynamics】: Imposing and intolerant of deceit. Standalone problem solver; advised to leave boardroom authority outside the front door of home.\n' +
+            '🌟【Archetype Persona】: The fearless reformer who dismantles systemic corruption and commands organizational turnaround against all odds.';
+        } else if (pat.isMain) {
+          if (origName.includes('伤官')) {
+            pat.name = 'Hurting Officer Pattern (Radiant Brilliance & Innovation)';
+            pat.meaning = 'The monthly mandate reveals the Hurting Officer star, symbolizing unbounded creative genius, rebellious originality, and relentless drive to challenge stale conventions. The native thrives when expressing unique viewpoints and producing breakthrough intellectual work.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 10: \'Treatise on Hurting Officer\'; San Ming Tong Hui Vol. 5; Yuan Hai Zi Ping: \'Xi Ji Pian\'.';
+            pat.formation = '【Natal Formation Verification】Month branch contains the Hurting Officer star, with the Day Master commanding sufficient vitality to withstand the rapid drainage of creative fire.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Creative director, media visionary, disruptive technology architect, investigative analyst, intellectual property founder.\n' +
+              '👥【Interpersonal Dynamics】: Highly charismatic, witty, and magnetic, yet prone to sharp honesty. Cultivating patience and humility deepens enduring alliances.';
+          } else if (origName.includes('七杀') || origName.includes('偏官')) {
+            pat.name = 'Seven Killings Pattern (Pioneering Combat & Sovereign Will)';
+            pat.meaning = 'The monthly mandate commands Seven Killings, representing crisis resilience, executive boldness, and the appetite to conquer formidable frontiers. The native excels in high-pressure environments that overwhelm lesser spirits.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 11: \'Treatise on Indirect Officer\'; Yuan Hai Zi Ping: \'Ji Shan Pian\'.';
+            pat.formation = '【Natal Formation Verification】Seven Killings rules the seasonal mandate, tempered by proper Output restraint or converted by Resource support.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Crisis management, strategic defense, corporate turnaround, high-risk capital markets, emergency operations command.\n' +
+              '👥【Interpersonal Dynamics】: Direct, protective, and commanding. Prefers deeds over pleasantries; thrives with teams that honor mutual commitments.';
+          } else if (origName.includes('正官')) {
+            pat.name = 'Direct Officer Pattern (Upright Governance & Noble Prestige)';
+            pat.meaning = 'The monthly mandate commands the Direct Officer star, representing integrity, institutional stewardship, orderly systems, and esteemed social standing. The native is naturally suited to hold high office and govern complex organizations with fairness.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 9: \'Treatise on Direct Officer\'; Yuan Hai Zi Ping: \'Ji Shan Pian\'.';
+            pat.formation = '【Natal Formation Verification】Direct Officer star is pure and unblemished by Hurting Officer clashes or chaotic punishment in the pillars.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Corporate executive leadership, judiciary, state administration, compliance supervision, institutional governance.\n' +
+              '👥【Interpersonal Dynamics】: Principled, courteous, and trustworthy. A pillar of reliability in both career networks and family life.';
+          } else if (origName.includes('财')) {
+            pat.name = 'Direct & Indirect Wealth Pattern (Pragmatic Enterprise & Abundance)';
+            pat.meaning = 'The monthly mandate commands Wealth stars, embodying acute commercial instinct, resource mobilization skills, and pragmatic execution. The native possesses an organic ability to recognize market inefficiencies and structure profitable enterprises.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 12: \'Treatise on Wealth\'; San Ming Tong Hui: \'Treatise on Direct & Indirect Wealth\'.';
+            pat.formation = '【Natal Formation Verification】Wealth stars thrive in the seasonal mandate, supported by an energetic frame capable of bearing substantial commercial assets.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Financial asset management, commercial trade, corporate development, investment banking, entrepreneurial ventures.\n' +
+              '👥【Interpersonal Dynamics】: Pragmatic, socially adept, and generous. Highly skilled at creating win-win commercial frameworks.';
+          } else if (origName.includes('印')) {
+            pat.name = 'Resource & Seal Pattern (Scholarly Depth & Generous Wisdom)';
+            pat.meaning = 'The monthly mandate commands the Resource Seal, representing academic wisdom, benevolence, spiritual grounding, and institutional heritage. The native thrives in advisory, teaching, and cultural stewardship roles.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 13: \'Treatise on Resource Seal\'; Yuan Hai Zi Ping: \'Ji Shan Pian\'.';
+            pat.formation = '【Natal Formation Verification】Resource star is pure and unobstructed by excessive Wealth stars, preserving clear academic and spiritual clarity.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Academic research, publishing, healthcare, educational leadership, policy think tanks, cultural preservation.\n' +
+              '👥【Interpersonal Dynamics】: Gentle, nurturing, and compassionate. Cherished by mentors and younger generations as a steady guiding light.';
+          } else if (origName.includes('食神')) {
+            pat.name = 'Eating God Pattern (Elegance, Longevity & Natural Abundance)';
+            pat.meaning = 'The monthly mandate commands the Eating God star, the prime star of tranquility, artistic refinement, generous hospitality, and graceful prosperity. The native possesses natural creative taste and lives with poised composure.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 10: \'Treatise on Eating God\'; Yuan Hai Zi Ping: \'Cun Jin Fu\'.';
+            pat.formation = '【Natal Formation Verification】Eating God is revealed cleanly without Indirect Resource (Owl) disruption, producing a continuous stream of creative output.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Culinary entrepreneurship, fine arts, wellness, boutique architecture, luxury brand consulting, creative lifestyle writing.\n' +
+              '👥【Interpersonal Dynamics】: Warm, peaceable, and deeply loved by friends. Disdains trivial conflict and brings harmony to all social circles.';
+          } else if (origName.includes('建禄') || origName.includes('月劫')) {
+            pat.name = 'Established Lu / Pure Companion Pattern (Self-Reliant Enterprise)';
+            pat.meaning = 'The monthly mandate houses the Day Master\'s pure prospering branch (Lu). Endows the native with robust vitality, independent spirit, resilience under severe hardship, and the capacity to build an empire from scratch.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 14: \'Treatise on Established Lu\'; San Ming Tong Hui Vol. 7; Yuan Hai Zi Ping.';
+            pat.formation = '【Natal Formation Verification】Month branch corresponds to the Day Master\'s pure Lu essence, establishing an unshakable constitutional foundation.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Independent venture founding, pioneering new operational territories, major engineering management, strategic execution.\n' +
+              '👥【Interpersonal Dynamics】: Proud, self-sufficient, and loyal. Benefits from learning to share profits generously and avoid lone-wolf isolation.';
+          } else if (origName.includes('阳刃') || origName.includes('羊刃')) {
+            pat.name = 'Yang Blade Pattern (Iron-Willed Commander & Supreme Valour)';
+            pat.meaning = 'The monthly mandate commands the Yang Blade, the zenith of Yang vitality, representing extreme resilience, razor-sharp decisiveness, fearlessness in adversity, and commanding executive authority. Thrives when balanced by Seven Killings.';
+            pat.source = 'Zi Ping Zhen Quan Ch. 4: \'Treatise on Yang Blade\'; Yuan Hai Zi Ping Vol. 3; San Ming Tong Hui Vol. 5.';
+            pat.formation = '【Natal Formation Verification】The native was born in the Yang Blade month with commanding prime vigor, demonstrating monumental perseverance and breakthrough power under stress.';
+            pat.usage = '🎯【Practical Application & Modern Execution】\n' +
+              '💼【Suitable Modern Careers】: Crisis turnaround CEO, top criminal defense litigation, emergency special operations, advanced surgical medicine, high-stakes combat sports.\n' +
+              '👥【Interpersonal Dynamics】: Fiercely loyal, protective of allies, and intolerant of weakness or duplicity. Benefits from emotional self-regulation and gentle communication with loved ones.';
+          }
+        } else if (pat.isSpecial) {
+          // Special Day-Hour Pattern (San Ming Tong Hui)
+          pat.name = pat.name
+            .replace(/田园禾稼/g, 'Field Crops & Harvest')
+            .replace(/燥土生香/g, 'Fragrant Earth')
+            .replace(/伤官吐秀/g, 'Hurting Officer Unleashing Elegance')
+            .replace(/桃花流水/g, 'Peach Blossom Spring Flow')
+            .replace(/金白水清/g, 'Pure Metal & Clear Water')
+            .replace(/日禄归时/g, 'Prosperity Lu Returning to Hour')
+            .replace(/官印双全/g, 'Dual Officer & Resource Complete')
+            .replace(/食神得禄/g, 'Eating God Anchored in Lu')
+            .replace(/归禄逢财/g, 'Prosperity Lu Meeting Wealth')
+            .replace(/长生学堂/g, 'Growth Stage Academy')
+            .replace(/源远流长/g, 'Deep Source Long Flow')
+            .replace(/正印司权/g, 'Direct Resource Commanding Authority')
+            .replace(/七杀逢制/g, 'Seven Killings Restrained')
+            .replace(/时逢偏官/g, 'Hour Pillar Meeting Indirect Officer')
+            .replace(/正财得位/g, 'Direct Wealth in Proper Station')
+            .replace(/偏财得禄/g, 'Indirect Wealth Anchored in Lu')
+            .replace(/财官双美/g, 'Dual Prosperity in Wealth & Honor');
+
+          pat.meaning = `Day Master [${dmEn}] meets the Hour Branch, establishing the destination archetype '${pat.name}'. This pattern reveals the elemental interaction between the core self and the late-life hour pillar, reflecting late-career fulfillment, creative expression, and enduring prosperity.`;
+          pat.source = `San Ming Tong Hui Vol. 8/9: '60 JiaZi Day-Hour Treatises'; cross-referenced with Zi Ping Zhen Quan ('Success & Failure of Useful Gods') and Yuan Hai Zi Ping ('Ten Gods Methodology').`;
+          pat.formation = `【Natal Formation Verification】① Day Master ${dmEn} requires seasonal mandate or root support in branches to flourish; ② Hour Branch must remain free from severe clashing, punishment, or harm from the day branch or transits; ③ Useful gods must be potent and revealed on stems, while adverse stars are restrained or transformed.`;
+          pat.usage = `① Element Strategy: Balance Resource/Companions vs Wealth/Officer/Output according to Day Master vigor (strong Day Master favors output and wealth drainage; weak Day Master favors resource nourishment). ② Career Blueprint: Aligned with the '${pat.name}' archetype, scholarly paths favor education, cultural media, and advisory roles; executive paths favor administration, law, engineering, and corporate management; dual wealth-officer favors entrepreneurship. ③ Luck Cycle Guidance: Prosperous upon encountering harmonious auspicious cycles; maintain prudent and grounded cultivation when encountering challenging clashing stars.`;
+        }
+      });
+    }
+
+    // Broken Patterns Translation
+    if (p.brokenPatterns && Array.isArray(p.brokenPatterns)) {
+      p.brokenPatterns.forEach(bp => {
+        bp.name = getPatternName(bp.name, 'en');
+        bp.brokenType = 'Broken & Excised (Overriding Stars Clash)';
+        bp.brokenReason = 'Canonical Rule from 《Zi Ping Zhen Quan》 and 《Yuan Hai Zi Ping》: Direct Officer demands pristine purity and cannot tolerate clashing or corruption from Yang Blade, Seven Killings, or Hurting Officer. Because the natal chart contains potent Yang Blade and Seven Killings (or Hurting Officer), the pristine noble authority of Direct Officer has been shattered and rendered null. According to orthodox Ziping de-confliction doctrine, this corrupted pattern is decisively excised! The life trajectory is fully commanded by the genuine authoritative (Killings-Blade) and expressive configurations.';
+      });
+    }
+
+    // Defects
+    if (p.defects && p.defects.cards) {
+      const defectTitles = {
+        'psychological': { title: '🧠 Fatal Psychological Blindspots & Ego Traps', sub: 'Ego Vulnerabilities' },
+        'workplace': { title: '💼 Career Reefs & Workplace Minefields', sub: 'Career Hazards' },
+        'wealth': { title: '💰 Wealth Leaks & Business Traps', sub: 'Financial Vulnerabilities' },
+        'health': { title: '🩺 Elemental Imbalance & Physical Vulnerabilities', sub: 'Health Blindspots' },
+        'remedies': { title: '🛡️ Strategic Antidotes & Fortress Building', sub: 'Practical Countermeasures' }
+      };
+
+      p.defects.cards.forEach(card => {
+        if (defectTitles[card.id]) {
+          card.title = defectTitles[card.id].title;
+          card.subtitle = defectTitles[card.id].sub;
+        }
+        if (card.points && Array.isArray(card.points)) {
+          card.points.forEach(pt => {
+            pt.label = pt.label
+              .replace(/死穴/g, 'Fatal Trap: ')
+              .replace(/盲区/g, 'Blind Spot: ')
+              .replace(/暗礁/g, 'Hidden Reef: ')
+              .replace(/雷区/g, 'Minefield: ')
+              .replace(/漏斗/g, 'Financial Leak: ')
+              .replace(/偏枯/g, 'Organ Weakness: ')
+              .replace(/解药/g, 'Antidote: ')
+              .replace(/防线/g, 'Defense Line: ');
+          });
+        }
+      });
+    }
+
+    // Mental Friction
+    if (p.mentalFriction && p.mentalFriction.detected) {
+      const mf = p.mentalFriction;
+      if (mf.score >= 82) {
+        mf.level = 'Severe Rumination (Overthinking Loop)';
+      } else if (mf.score >= 68) {
+        mf.level = 'Moderate Friction (Hypervigilant Fatigue)';
+      } else {
+        mf.level = 'Mild Introspection (Reflective Mode)';
+      }
+
+      mf.primaryRoot = mf.primaryRoot
+        .replace(/伤官/g, 'Hurting Officer (Shang Guan) ')
+        .replace(/七杀/g, 'Seven Killings (Qi Sha) ')
+        .replace(/羊刃/g, 'Yang Blade ')
+        .replace(/偏印/g, 'Indirect Resource (Pian Yin) ')
+        .replace(/身弱/g, 'Weak Day Master ')
+        .replace(/完美主义/g, 'perfectionism ')
+        .replace(/内耗/g, 'mental rumination ');
+      
+      const solEnTitles = [
+        { 
+          name: '⚡ 1. 3-Minute Somatic Interrupt', 
+          theme: 'Physical Nervous Reset (Body Resets Mind)',
+          steps: [
+            '【Instant Water Shock】Splash ice-cold water onto your face and wrists for 15 seconds to stimulate the diving reflex and break amygdala hyperactivity.',
+            '【Tactical 4-7-8 Breathing】Inhale through nose for 4s, hold breath for 7s, exhale slowly through mouth for 8s; repeat 3 times to switch autonomic nerve to parasympathetic calm.',
+            '【Environment Disconnect】Immediately stand up, leave your current chair/desk, walk briskly for 2 minutes to physically disrupt the mental looping state.'
+          ]
+        },
+        { 
+          name: '🧠 2. Circle of Influence & Boundaries', 
+          theme: 'Psychological Boundary & Delayed Response',
+          steps: [
+            '【Circle of Control Audit】Draw two columns: "Can I influence this in the next 24 hours?" vs "Is this entirely external?" Completely discard external noise.',
+            '【24-Hour Delayed Agreement】Never say yes immediately when asked. Standard reply: "Let me check my schedule and get back to you by tomorrow noon."',
+            "【Separation of Tasks】Realize other people's emotions and expectations are their tasks, not your responsibility to appease."
+          ]
+        },
+        { 
+          name: '🚀 3. Done > Perfect Action Protocol', 
+          theme: 'Anti-Procrastination & Downscaling',
+          steps: [
+            '【Downscale to Minimum Atomic Step】Break the intimidating project down to an absurdly trivial 2-minute starter action (e.g. open a blank document, write one sentence).',
+            '【Embrace the "Garbage First Draft"】Give yourself permission to produce imperfect initial work: "Any finished draft beats an immaculate hallucination in your head."',
+            '【Strict 25-Minute Sprint】Set a 25-minute Pomodoro timer with all notifications silenced. Focus solely on producing volume, completely pausing quality judgment.'
+          ]
+        },
+        { 
+          name: '🌌 4. Metaphysical Channeling', 
+          theme: 'Converting Vulnerability into High Productivity',
+          steps: [
+            '【Channel Hurting Officer & Seven Killings】Redirect hyper-critical perfectionism outward into specialized code architecture, product design, or investigative auditing.',
+            '【Channel Indirect Resource (Pian Yin)】Channel over-deep thinking into deep-dive research, systematic synthesis, and creating strategic IP rather than aimless worrying.',
+            '【Weak Day Master Defense】Embrace deliberate low-profile positioning: avoid direct conflicts, leverage team alliances, and preserve core vital energy.'
+          ]
+        }
+      ];
+
+      if (mf.solutions && Array.isArray(mf.solutions)) {
+        mf.solutions.forEach((sol, idx) => {
+          if (solEnTitles[idx]) {
+            sol.name = solEnTitles[idx].name;
+            sol.theme = solEnTitles[idx].theme;
+            sol.steps = solEnTitles[idx].steps;
+          }
+        });
+      }
+    }
+
+    // Remedy Guide
+    if (p.remedyGuide) {
+      if (p.remedyGuide.tailored) {
+        const t = p.remedyGuide.tailored;
+        const isWeak = (t.type === 'weak');
+        t.title = isWeak
+          ? '🎯 Tailored Natal Balancing: Nourish Weak Day Master (培补扶元)'
+          : '🎯 Tailored Natal Balancing: Channel & Restrain Strong Day Master (制化疏秀)';
+        t.subtitle = isWeak
+          ? 'Six Core Principles for Weak Day Master: Energy Conservation, Alliance Building & Deep Compounding'
+          : 'Six Core Principles for Strong Day Master: Output Monetization, Humility, Rule Adherence & Surplus Drainage';
+        t.badge = isWeak ? 'Nourish & Consolidate' : 'Channel & Restrain';
+        t.philosophy = isWeak
+          ? '"When vital energy is delicate, avoid direct friction and exhaustion; rely on the mother seal for replenishment, overcoming hardness with gentle persistence."'
+          : '"When energy is at its zenith, it must be channeled; a bow pulled to full tension must not be strung tighter. Share profits, express talent, and respect rules for enduring peace."';
+
+        if (isWeak) {
+          t.elementRemedy = {
+            mainAction: 'Nourish Day Master via Resource (Seal) and Companion (Peer) elements. Strengthen vital essence and avoid excessive output or wealth depletion.',
+            details: [
+              { name: 'Element Generation & Color Resonance', content: 'Surround yourself with favorable element colors and environments that generate your Day Master.' },
+              { name: 'Direction & Geolocation Strategy', content: 'Pursue career opportunities and living spaces aligned with your supportive cardinal directions.' }
+            ]
+          };
+          t.mentalRemedy = [
+            { tag: 'Cognitive Moat', text: 'Practice energetic frugality: treat your mental bandwidth like precious gold, refusing meaningless social consumption.' },
+            { tag: 'Embrace Softness Over Force', text: 'Realize that deliberate flexibility and endurance outlast aggressive rigidity in long-term compounding.' }
+          ];
+          t.habitRemedy = [
+            { tag: 'Restorative Sleep', text: 'Sleep before 23:00 to nourish liver and kidney yin. Never engage in late-night revenge exhaustion.' },
+            { tag: 'Low-Intensity Movement', text: 'Choose steady aerobic activities like walking, tai chi, swimming or yoga rather than violent high-intensity depletion.' }
+          ];
+          t.careerRemedy = [
+            { tag: 'Platform Leverage', text: 'Thrive within stable systems, established platforms, or strong partnerships rather than lonely solopreneur crusades.' },
+            { tag: 'Specialized Depth', text: 'Cultivate rare technical, analytical, or artistic expertise that allows high leverage with contained physical exertion.' }
+          ];
+          t.energyRecharge = {
+            mental: {
+              title: 'Brain & Spirit Energy Restoration (Mental Recharge)',
+              causes: 'Caused by over-empathy, relentless mental simulation, perfectionist rumination, and boundary collapse.',
+              steps: [
+                { name: 'Complete Sensory Fasting', detail: 'Disconnect from all screens and notifications for 60 minutes. Allow the default mode network to recalibrate.' },
+                { name: 'Nature Earthing Walk', detail: 'Take a 30-minute walk in a park or forest, focusing only on sensory sounds and breathing.' },
+                { name: 'Radical Decluttering', detail: 'Clear your physical desktop and digital browser tabs to alleviate cognitive overload.' }
+              ]
+            },
+            physical: {
+              title: 'Physical Vital Qi Replenishment (Somatic Recovery)',
+              causes: 'Caused by overwork, skipping meals, erratic circadian rhythm, and running on adrenaline.',
+              steps: [
+                { name: 'Warm Nourishing Broth', detail: 'Consume warm, easily digestible soups and herbal teas to protect spleen and stomach digestive fire.' },
+                { name: 'Foot Soaking Before Bed', detail: 'Soak feet in warm water for 15-20 minutes before sleep to guide upper qi downward for deep restorative rest.' },
+                { name: 'Enforced Midday Power Nap', detail: 'Take a 15-20 minute power nap between 11:00 and 13:00 (Wu Hour) to recharge heart qi.' }
+              ]
+            }
+          };
+        } else {
+          t.elementRemedy = {
+            mainAction: 'Channel excessive vigor through Output (Eating God / Hurting Officer) and regulate via Officer (Guan Sha) and Wealth stars.',
+            details: [
+              { name: 'Dissipation & Flow', content: 'Express surplus energy into creative building, intellectual publication, or vigorous commercial endeavors.' },
+              { name: 'Restraint & Balance', content: 'Respect legal boundaries, industry standards, and partner interests to avoid monopolistic backlash.' }
+            ]
+          };
+          t.mentalRemedy = [
+            { tag: 'Practice Humility', text: 'Beware of arrogance and impulsive dominance. Remind yourself that fortune comes from timing, not just brute force.' },
+            { tag: 'Share the Spoils', text: 'Always leave 30% margin on the table for partners and subordinates to build unbreakable alliances.' }
+          ];
+          t.habitRemedy = [
+            { tag: 'High-Energy Exercise', text: 'Engage in rigorous workouts, strength training, or martial arts to discharge surplus physiological fire.' },
+            { tag: 'Meditation & Solitude', text: 'Practice daily 15-minute mindfulness to cool hot-headed impulses before making pivotal financial or career moves.' }
+          ];
+          t.careerRemedy = [
+            { tag: 'Entrepreneurial Frontier', text: 'Lead innovative projects, take calculated market risks, and build new business verticals.' },
+            { tag: 'System Governance', text: 'Implement rigorous checks and balances to prevent personal blind spots from creating executive catastrophe.' }
+          ];
+          t.energyRecharge = {
+            mental: {
+              title: 'Executive Mind Clarity Reset (Mental Reset)',
+              causes: 'Caused by tunnel-vision impatience, micromanagement tension, and chronic competitive adrenaline.',
+              steps: [
+                { name: 'Perspective Decoupling', detail: 'Step back and view the problem from a 5-year perspective to defuse acute urgency panic.' },
+                { name: 'Active Delegation', detail: 'Hand off at least two operational tasks entirely to trusted team members without interfering.' },
+                { name: 'Breathwork Centering', detail: 'Perform 10 minutes of deep belly breathing to calm overexcited autonomic sympathetic drive.' }
+              ]
+            },
+            physical: {
+              title: 'Musculoskeletal & Tension Release (Physical Decompression)',
+              causes: 'Caused by physical clenching, high cortisol tension, and prolonged intensive pacing.',
+              steps: [
+                { name: 'Deep Tissue Release', detail: 'Undergo sports massage, foam rolling, or stretching to release chronic shoulder and neck tension.' },
+                { name: 'Hydration & Electrolytes', detail: 'Replenish clean water and electrolytes to flush metabolic stress byproducts.' },
+                { name: 'Digital Curfew', detail: 'Turn off all work communications by 21:30 to avoid evening adrenal surges.' }
+              ]
+            }
+          };
+        }
+      }
+      if (p.remedyGuide.comparisonGuide) {
+        const c = p.remedyGuide.comparisonGuide;
+        const enWeakRules = [
+          { num: 1, name: 'Seek Seal as Mother: Nourish & Consolidate Roots', theme: 'Cultivate Resources & Intellectual Backing', detail: 'When Day Master is weak, prioritize learning, mentorship, and building solid foundations before aggressive expansion.' },
+          { num: 2, name: 'Leverage Peers: Form Alliances & Share Burdens', theme: 'Collective Synergy & Teamwork', detail: 'Do not fight alone. Partner with reliable peers and co-founders who complement your operational vulnerabilities.' },
+          { num: 3, name: 'Evade Direct Killings: Softness Overcomes Rigidity', theme: 'Avoid Frontal Battles', detail: 'When confronted by domineering pressure or fierce rivals, use tactful flexibility and patience rather than head-on clashes.' },
+          { num: 4, name: 'Restrain Greed: Guard Against Excessive Wealth Drain', theme: 'Capital Preservation & Risk Control', detail: 'A weak frame cannot carry heavy treasure. Say no to leveraged speculation and high-debt business ventures.' },
+          { num: 5, name: 'Moderate Output: Precision Talent Over Diffusion', theme: 'Focused Creative Energy', detail: 'Do not overextend your output across too many projects. Concentrate your sharpest insights on one signature masterpiece.' },
+          { num: 6, name: 'Endurance & Consistency: Steady Longevity Strategy', theme: 'Long-term Compounding', detail: 'Treat life as an ultra-marathon. Steady pacing and energetic conservation ultimately outperform burst sprinters.' }
+        ];
+
+        const enStrongRules = [
+          { num: 1, name: 'Channel Output: Monetize Talent & Knowledge', theme: 'Creative Flow & Commercial Value', detail: 'Abundant vitality demands productive outlets. Transform surplus vigor into products, writing, code, and tangible assets.' },
+          { num: 2, name: 'Respect Authority: Embrace Rules & Self-Discipline', theme: 'Institutional Alignment', detail: 'Strong Day Masters easily defy rules. Embracing compliance, contracts, and self-restraint protects you from ruinous downfall.' },
+          { num: 3, name: 'Wealth Application: Share Profits & Cooperate', theme: 'Generosity & Profit Sharing', detail: 'Greed in strong individuals triggers peer hostility. Voluntarily sharing gains cements unbreakable coalitions.' },
+          { num: 4, name: 'Renounce Clashes: Avoid Speculation & Gambling', theme: 'Discipline over Impulse', detail: 'Steer clear of impulsive bets and winner-takes-all brawls. Channel competitiveness into constructive market innovation.' },
+          { num: 5, name: 'Tame Arrogance: Guard Against Autocracy', theme: 'Democratic Listening', detail: 'Avoid believing your own infallibility. Establish advisory boards and listen to contrary evidence before executive decisions.' },
+          { num: 6, name: 'Practice Humility: Unstring the Bow Periodically', theme: 'Strategic Relaxation', detail: 'Even the strongest bow will snap if perpetually strung. Integrate structured rest, sabbatical, and quiet contemplation.' }
+        ];
+
+        c.weakRules = enWeakRules;
+        c.strongRules = enStrongRules;
+      }
+    }
+
+    // Persona Blueprint Deep Translation
+    if (p.portrait) {
+      const dmInfo = STEMS[p.dayMaster] || { en: p.dayMaster };
+      const dmEn = dmInfo.en;
+      const isStrong = (p.vigor && p.vigor.totalScore >= 50);
+      const dayPillar = pData.dayPillar || '';
+      const pProfile = (typeof YU_ZHAO_DATA !== 'undefined' && YU_ZHAO_DATA.dayPillarProfiles) ? YU_ZHAO_DATA.dayPillarProfiles[dayPillar] : null;
+      const inter = pData.interactions || null;
+      const mainPat = (p.patterns && p.patterns[0]) ? p.patterns[0].name : 'Dominant Pattern';
+
+      // 1. Personality
+      let engPsy = `[Day Master Essence & 60 JiaZi Archetype]: The native is born on 【${dayPillar || dmEn}】 Day, spiritual essence anchored by 【${dmEn}】. `;
+      if (pProfile) {
+        engPsy += `Day Pillar archetype represents "${pProfile.archetypeEn}": ${pProfile.traitsEn} `;
+      } else {
+        engPsy += `Governed by the primordial virtue of ${p.dayMasterElement === '木' ? 'Benevolence (Wood)' : p.dayMasterElement === '火' ? 'Courtesy & Passion (Fire)' : p.dayMasterElement === '土' ? 'Trust & Solidity (Earth)' : p.dayMasterElement === '金' ? 'Righteousness & Precision (Metal)' : 'Wisdom & Flexibility (Water)'}. `;
+      }
+      engPsy += isStrong
+        ? `With robust vitality (${p.vigor ? p.vigor.status : 'Strong'}), the native exhibits unyielding self-confidence, decisive initiative, and remarkable stamina to carry heavy executive burdens through adversity. `
+        : `With a refined and delicate constitution (${p.vigor ? p.vigor.status : 'Delicate'}), the native possesses subtle emotional intelligence, high empathy, and acute intuitive discernment. `;
+      if (inter) {
+        if (inter.stemCombos && inter.stemCombos.length > 0) {
+          engPsy += `Heavenly Stems manifest combinations (${inter.stemCombos.map(c => c.nameEn).join('; ')}), ${inter.isJealousCombo ? 'exhibiting romantic sensitivity while navigating competing priorities; ' : 'fostering diplomatic tact and magnetic grace; '}`;
+        }
+        if (inter.stemClashes && inter.stemClashes.length > 0) {
+          engPsy += `Stems encounter clashes (${inter.stemClashes.map(c => c.nameEn).join('; ')}), driving swift decisiveness, transparent candor, and intolerance for ambiguity. `;
+        }
+        if (inter.branchClashes && inter.branchClashes.length > 0) {
+          engPsy += `Branches reveal underlying turbulence (${inter.branchClashes.map(c => c.nameEn).join('; ')}), fueling relentless inner urgency to break through plateaus. `;
+        }
+        if (inter.branchHarms && inter.branchHarms.length > 0) {
+          engPsy += `Subtle piercing harms (${inter.branchHarms.map(h => h.nameEn).join('; ')}) prompt cautious vigilance in delicate social boundaries. `;
+        }
+      }
+      engPsy += `Tempered by 【${mainPat}】, the native upholds high personal dignity and strategic foresight.`;
+      p.portrait.personality = engPsy;
+
+      // 2. Career
+      let engCar = `The professional trajectory is anchored by 【${mainPat}】, colored by the behavioral archetype of ${dayPillar} (${pProfile ? pProfile.archetypeEn : dmEn}), and energized by the seasonal regulator ${p.climate ? p.climate.primary : 'elemental balance'}. `;
+      if (mainPat.includes('Hurting') || mainPat.includes('Eating') || mainPat.includes('伤官') || mainPat.includes('食神')) {
+        engCar += `Talent flourishes in breakthrough innovation, creative expression, and high-impact advisory. Ideally suited for frontier tech architecture, cultural media, elite consulting, and intellectual property creation. `;
+      } else if (mainPat.includes('Officer') || mainPat.includes('Killing') || mainPat.includes('官') || mainPat.includes('杀')) {
+        engCar += `Endowed with natural institutional authority and crisis management grit. Excels in public governance, corporate leadership, strategic restructuring, and high-stakes operations. `;
+      } else if (mainPat.includes('Wealth') || mainPat.includes('财')) {
+        engCar += `Instinctively perceptive toward commercial arbitrage, capital velocity, and resource distribution. Thrives in venture scaling, asset allocation, and market expansion. `;
+      } else {
+        engCar += `Talent centers on scholarly depth, knowledge preservation, and institutional mentorship. Highly suited for research think tanks, cultural institutions, and educational stewardship. `;
+      }
+      if (inter && inter.branchClashes && inter.branchClashes.some(c => c.nameZh.includes('寅申') || c.nameZh.includes('巳亥'))) {
+        engCar += `Natal Traveling Horse clashes favor cross-regional expansion, multinational ventures, and dynamic mobile leadership.`;
+      }
+      p.portrait.career = engCar;
+
+      // 3. Wealth
+      let engWea = `In classical five-canons metaphysics, wealth demands that the Day Master have the somatic capacity to hold capital. Born on ${dayPillar}, evaluated as ${p.vigor ? p.vigor.status : 'Balanced'}. `;
+      if (isStrong) {
+        engWea += `Possessing robust constitutional stamina, the native can comfortably wield substantial capital scale. Wealth expands in exponential compound steps, particularly when riding the seasonal momentum of ${p.climate ? p.climate.primary : 'the prime regulator'}. `;
+      } else {
+        engWea += `With a delicate frame, the wealth path lies in intellectual leverage and strategic institutional alliances. Transforming specialized knowledge into steady, compound prosperity ensures serene late-life affluence. `;
+      }
+      if (inter && inter.branchHarms && inter.branchHarms.length > 0) {
+        engWea += `[Compliance Note]: Terrestrial harms caution strict contractual clarity; never compromise fiduciary boundaries for casual personal relations.`;
+      }
+      p.portrait.wealth = engWea;
+
+      // 4. Advice
+      let engAdv = `In accordance with Di Tian Sui and Zi Ping Zhen Quan principles:\n`;
+      if (pProfile && pProfile.adviceEn) {
+        engAdv += `① [Day Pillar Cultivation]: ${pProfile.adviceEn}\n`;
+      }
+      engAdv += `② [Seasonal Optimization]: Align living and working environments with the supportive spatial orientation and elemental frequencies of ${p.climate ? p.climate.primary : 'the primary regulator'};\n`;
+      if (inter && (inter.branchClashes.length > 0 || inter.branchHarms.length > 0)) {
+        engAdv += `③ [Harmonizing Transits]: Practice inner stillness during clashing transits, relying on legal precision and clear boundaries during piercing cycles;\n`;
+      }
+      engAdv += `④ [Mastery Maxim]: Where radiant output shines, practice humble restraint; where fierce authority commands, practice magnanimous compassion. Walking this path unlocks lifelong resilience and harmony.`;
+      p.portrait.advice = engAdv;
+    }
+
+    // 👑 Pareto 80/20 Core Synthesis Deep Translation
+    if (p.paretoCore) {
+      const pc = p.paretoCore;
+      pc.title = pc.titleEn;
+      pc.description = pc.descriptionEn;
+
+      if (pc.canons) {
+        Object.values(pc.canons).forEach(c => {
+          if (c) {
+            c.title = c.titleEn;
+            c.subtitle = c.subtitleEn;
+            c.pivotName = c.pivotNameEn;
+            c.summary = c.summaryEn;
+            c.favorable = c.favorableEn;
+            c.taboos = c.taboosEn;
+            c.modernStrategy = c.modernStrategyEn;
+            c.genderDiff = c.genderDiffEn;
+            c.formation = c.formationEn;
+            c.rescue = c.rescueEn;
+            c.verse = c.verseEn;
+            c.verseQuote = c.verseQuoteEn;
+            c.diseaseName = c.diseaseNameEn;
+            c.symptom = c.symptomEn;
+            c.medicine = c.medicineEn;
+            c.rationale = c.rationaleEn;
+            c.sculptingType = c.sculptingTypeEn;
+            c.sculptingAdvice = c.sculptingAdviceEn;
+            c.spouseSummary = c.spouseSummaryEn;
+            c.childrenSummary = c.childrenSummaryEn;
+            c.parentsSummary = c.parentsSummaryEn;
+            c.threePrimes = c.threePrimesEn;
+            c.idealGeography = c.idealGeographyEn;
+            c.targetCities = c.targetCitiesEn;
+            c.workspaceEnergy = c.workspaceEnergyEn;
+            c.eraMacroTrend = c.eraMacroTrendEn;
+          }
+        });
+      }
+
+      if (pc.fulcrum) {
+        const fc = pc.fulcrum;
+        fc.title = fc.titleEn;
+        fc.subtitle = fc.subtitleEn;
+        fc.diseaseName = fc.diseaseNameEn;
+        fc.symptom = fc.symptomEn;
+        fc.medicine = fc.medicineEn;
+        fc.rationale = fc.rationaleEn;
+        fc.modernStrategy = fc.modernStrategyEn;
+        fc.sculptingType = fc.sculptingTypeEn;
+        fc.sculptingAdvice = fc.sculptingAdviceEn;
+        fc.genderDiff = fc.genderDiffEn;
+      }
+
+      if (pc.spouse) {
+        const sp = pc.spouse;
+        sp.title = sp.titleEn;
+        sp.subtitle = sp.subtitleEn;
+        sp.spouseStar = sp.spouseStarEn;
+        sp.archetype = sp.archetypeEn;
+        sp.traits = sp.traitsEn;
+        sp.clashRisk = sp.clashRiskEn;
+        sp.advice = sp.adviceEn;
+        sp.genderDiff = sp.genderDiffEn;
+      }
+
+      if (pc.children) {
+        const ch = pc.children;
+        ch.title = ch.titleEn;
+        ch.subtitle = ch.subtitleEn;
+        ch.archetype = ch.archetypeEn;
+        ch.talent = ch.talentEn;
+        ch.guide = ch.guideEn;
+        ch.genderDiff = ch.genderDiffEn;
+      }
+
+      if (pc.parents) {
+        const pa = pc.parents;
+        pa.title = pa.titleEn;
+        pa.subtitle = pa.subtitleEn;
+        pa.type = pa.typeEn;
+        pa.heritage = pa.heritageEn;
+        pa.debtOrBlessing = pa.debtOrBlessingEn;
+        pa.filialAdvice = pa.filialAdviceEn;
+        pa.genderDiff = pa.genderDiffEn;
+      }
+
+      if (pc.environment) {
+        const env = pc.environment;
+        env.title = env.titleEn;
+        env.subtitle = env.subtitleEn;
+        env.threePrimes = env.threePrimesEn;
+        env.idealGeography = env.idealGeographyEn;
+        env.targetCities = env.targetCitiesEn;
+        env.workspaceEnergy = env.workspaceEnergyEn;
+        env.eraMacroTrend = env.eraMacroTrendEn;
+        env.genderDiff = env.genderDiffEn;
+      }
+    }
+
+    return p;
+  }
+
+  return {
+    dict,
+    STEMS,
+    BRANCHES,
+    TEN_GODS,
+    FIVE_ELEMENTS,
+    NAYIN_TABLE,
+    PATTERN_NAMES,
+    TIERS,
+    VIGOR_STATUSES,
+    t,
+    getStem,
+    getBranch,
+    getGod,
+    getElement,
+    getNaYin,
+    getPillarTitle,
+    getPatternName,
+    getTierName,
+    getVigorStatus,
+    translatePortrait
+  };
+})();
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = I18N;
+}
