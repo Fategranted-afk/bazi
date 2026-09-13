@@ -1168,7 +1168,10 @@ const LuckEngine = (function() {
     const daily = getDailyLuck(bazi, dYear, dMonth, dDay);
 
     const interactions = evaluateInteractions(bazi, activeDecade, activeAnnual, activeMonth, daily);
-    const timeline = calculateLifelongTimeline(bazi, { decades, activeDecade });
+    if (!bazi._timelineCache) {
+      bazi._timelineCache = calculateLifelongTimeline(bazi, { decades, activeDecade });
+    }
+    const timeline = bazi._timelineCache;
 
     return {
       decadeMeta,
@@ -1347,6 +1350,7 @@ const LuckEngine = (function() {
         tenGod,
         tenGodEn,
         naYin,
+        naYinEn: (typeof I18N !== 'undefined') ? I18N.getNaYin(naYin, 'en') : naYin,
         decade: decadeText,
         decadeSpanZh,
         decadeSpanEn,

@@ -29,7 +29,8 @@ const STATIC_ASSETS = [
   './data/iching.js',
   './icons/icon.svg',
   './icons/icon-192.png',
-  './icons/icon-512.png'
+  './icons/icon-512.png',
+  'https://cdn.tailwindcss.com'
 ];
 
 // Install Event: Pre-cache static assets
@@ -54,7 +55,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event: Cache-First with Network Fallback
+// Fetch Event: Cache-First with Network Fallback & Stale-While-Revalidate
 self.addEventListener('fetch', (event) => {
   // Only handle GET requests
   if (event.request.method !== 'GET') return;
@@ -64,7 +65,7 @@ self.addEventListener('fetch', (event) => {
       if (cachedResponse) {
         // Fetch update in background (stale-while-revalidate)
         fetch(event.request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          if (networkResponse && (networkResponse.status === 200 || networkResponse.type === 'opaque')) {
             caches.open(CACHE_NAME).then((cache) => {
               cache.put(event.request, networkResponse.clone());
             });
@@ -75,7 +76,7 @@ self.addEventListener('fetch', (event) => {
 
       // Network fallback
       return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+        if (!networkResponse || (networkResponse.status !== 200 && networkResponse.type !== 'opaque')) {
           return networkResponse;
         }
         const responseToCache = networkResponse.clone();
@@ -86,7 +87,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Offline fallback for navigation
         if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
+          return caches.match('./index.html').then(res => res || caches.match('./'));
         }
       });
     })

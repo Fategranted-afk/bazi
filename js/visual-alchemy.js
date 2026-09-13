@@ -91,14 +91,15 @@ const VisualAlchemy = (function() {
     window.addEventListener('resize', debounce(resize, 150));
     resize();
 
-    // Mouse interactivity
-    fluxCanvas.addEventListener('mousemove', (e) => {
+    // Mouse interactivity (support pointer-events-none overlay)
+    window.addEventListener('mousemove', (e) => {
+      if (!fluxCanvas) return;
       const rect = fluxCanvas.getBoundingClientRect();
       mousePos.x = e.clientX - rect.left;
       mousePos.y = e.clientY - rect.top;
-      mousePos.isHover = true;
+      mousePos.isHover = (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom);
     });
-    fluxCanvas.addEventListener('mouseleave', () => {
+    document.addEventListener('mouseleave', () => {
       mousePos.isHover = false;
     });
 
@@ -128,10 +129,14 @@ const VisualAlchemy = (function() {
     startLoop();
   }
 
+  let lastFrameTime = 0;
+  const FRAME_INTERVAL = 1000 / 30; // ~30 fps cap for ambient particle flux, saving 60-75% GPU/CPU power
+
   function startLoop() {
     if (isRunning) return;
     isRunning = true;
-    loop();
+    lastFrameTime = performance.now();
+    loop(lastFrameTime);
   }
 
   function stopLoop() {
@@ -142,10 +147,12 @@ const VisualAlchemy = (function() {
     }
   }
 
-  function loop() {
+  function loop(now) {
     if (!isRunning || !fluxCanvas || !fluxCtx) return;
-    renderFlux();
     animationId = requestAnimationFrame(loop);
+    if (now - lastFrameTime < FRAME_INTERVAL) return;
+    lastFrameTime = now;
+    renderFlux();
   }
 
   function renderFlux() {
@@ -236,6 +243,7 @@ const VisualAlchemy = (function() {
       fluxCtx.stroke();
 
       // Label
+      const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en');
       fluxCtx.fillStyle = isDayMasterHub ? '#fef08a' : '#e5e7eb';
       fluxCtx.font = isDayMasterHub ? 'bold 12px "Songti SC", serif' : '10px -apple-system, sans-serif';
       fluxCtx.textAlign = 'center';
@@ -244,7 +252,8 @@ const VisualAlchemy = (function() {
       const labelDist = radius * 0.24;
       const lx = hub.x + labelDist * Math.cos(hub.angle);
       const ly = hub.y + labelDist * Math.sin(hub.angle);
-      fluxCtx.fillText(hub.name, lx, ly);
+      const hubLabel = isEn ? (hub.en || hub.name) : hub.name;
+      fluxCtx.fillText(hubLabel, lx, ly);
     });
 
     // 5. Central Taiji Monad
@@ -256,11 +265,12 @@ const VisualAlchemy = (function() {
     fluxCtx.fill();
     fluxCtx.stroke();
 
+    const isEn = (typeof I18N !== 'undefined' && I18N.currentLang === 'en');
     fluxCtx.fillStyle = '#d4af37';
     fluxCtx.font = 'bold 9px "Songti SC", serif';
     fluxCtx.textAlign = 'center';
     fluxCtx.textBaseline = 'middle';
-    fluxCtx.fillText('气', cx, cy);
+    fluxCtx.fillText(isEn ? 'Qi' : '气', cx, cy);
   }
 
   function setActiveElement(element) {

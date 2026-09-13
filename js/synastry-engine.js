@@ -133,8 +133,8 @@ const SynastryEngine = (function() {
     const dayBranchB = pB.day.branch;
 
     // 2. Elemental Synergy & Complementarity
-    const elA = chartA.elements || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
-    const elB = chartB.elements || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
+    const elA = (chartA.elements && (chartA.elements.percentages || chartA.elements)) || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
+    const elB = (chartB.elements && (chartB.elements.percentages || chartB.elements)) || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
 
     let synergyScore = 65;
     const elementGapsA = [];
@@ -398,6 +398,8 @@ const SynastryEngine = (function() {
           descZh: g.descZh,
           descEn: g.descEn
         })),
+        elementGapsA,
+        elementGapsB,
         diagnosis: isEn ? elDiagEn : elDiagZh,
         diagnosisZh: elDiagZh,
         diagnosisEn: elDiagEn
@@ -492,11 +494,11 @@ const SynastryEngine = (function() {
   function generateClashDiagnosis(clashes, punishments, isRomantic, isEn) {
     if (isEn) {
       if (clashes.length === 0 && punishments.length === 0) {
-        return `【Clash & Friction Vectors】\n✓ Zero major branch clashes or severe punishments detected across the Four Pillars.\nBoth charts interact smoothly with low underlying structural friction. Everyday debates remain functional without triggering deep emotional hostility or institutional breakdown.`;
+        return `[Clash & Friction Vectors]\n✓ Zero major branch clashes or severe punishments detected across the Four Pillars.\nBoth charts interact smoothly with low underlying structural friction. Everyday debates remain functional without triggering deep emotional hostility or institutional breakdown.`;
       }
       const clashList = clashes.map(c => `• ${c.descEn}`).join('\n');
       const punList = punishments.map(p => `• Punishment Alert: ${p.nameEn} (${p.descEn})`).join('\n');
-      return `【Clash & Friction Vectors】\n${clashList}\n${punList}\nStrategic Advice: Clashes are natural catalysts for systemic evolution. In stressful seasons, refrain from reactive accusations; enforce strict communication protocols and avoid mutual territory infringement.`;
+      return `[Clash & Friction Vectors]\n${clashList}\n${punList}\nStrategic Advice: Clashes are natural catalysts for systemic evolution. In stressful seasons, refrain from reactive accusations; enforce strict communication protocols and avoid mutual territory infringement.`;
     }
 
     if (clashes.length === 0 && punishments.length === 0) {
@@ -514,12 +516,12 @@ const SynastryEngine = (function() {
 
     if (isEn) {
       if (isRomantic) {
-        return `【Financial Synergy & Family Wealth Preservation】\n` +
+        return `[Financial Synergy & Family Wealth Preservation]\n` +
           `1. Wealth Stewardship: Wealth stars in both charts indicate that joint assets thrive best when clear allocations are made for family investments, liquidity reserves, and discretionary accounts.\n` +
           `2. Risk Appetite: Maintain transparency in major real estate, equity, or startup allocations. Avoid emotional co-signing or uncontrolled leverage without mutual signed consent.\n` +
           `3. Co-Prosperity Rule: Focus on compounding combined resources rather than micromanaging daily household expenditures.`;
       } else {
-        return `【Co-founder Game Theory & Commercial Equity Protocol】\n` +
+        return `[Co-founder Game Theory & Commercial Equity Protocol]\n` +
           `1. Equity & Governance: Absolute equity parity (50/50) is strictly discouraged. Anchor a decisive 67% or 51% final operational decision-maker while protecting the minority founder with veto rights on dilution and sale.\n` +
           `2. Financial Firewall: All business disbursements above agreed thresholds require dual authorization and quarterly certified third-party bookkeeping.\n` +
           `3. Vesting & Exit Mechanism: Institute a standard 4-year dynamic vesting schedule with a 1-year cliff to protect corporate continuity against sudden partnership divergence.`;
@@ -568,12 +570,12 @@ const SynastryEngine = (function() {
 
     if (isEn) {
       if (isRomantic) {
-        return `【Mutual Remedies & Golden Harmony Prescriptions】\n` +
+        return `[Mutual Remedies & Golden Harmony Prescriptions]\n` +
           `1. Elemental Bridge: Harness ${bridgeElemEn} as your energetic mediator. Decorate shared spaces with its corresponding colors and natural materials to smooth residual tension.\n` +
           `2. Sacred Boundaries: Designate individual decompression sanctuaries at home. When heated debates arise, enforce a mandatory 20-minute emotional cooldown protocol.\n` +
           `3. Golden Directives: Speak appreciation directly, celebrate small daily milestones together, and always align long-term priorities before addressing trivial logistical disagreements.`;
       } else {
-        return `【Commercial Remedial Protocols & Co-existence Bylaws】\n` +
+        return `[Commercial Remedial Protocols & Co-existence Bylaws]\n` +
           `1. Energetic Pivot: Introduce ${bridgeElemEn} elements in boardrooms and executive workspaces to foster calm contemplation and reduce confrontation.\n` +
           `2. Procedural Boundary: Institutionalize disagreements into structured memorandum formats rather than subjective verbal crossfire. All major strategy pivots require a written business case.\n` +
           `3. Three Golden Rules: Uncompromising loyalty to client outcomes, total transparency on balance sheet transactions, and unified public alignment once executive decisions are settled.`;

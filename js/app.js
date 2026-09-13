@@ -3071,7 +3071,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const dirText = m.direction === 1
         ? (isEn ? 'Forward (+10y)' : '顺行 (+10年/步)')
         : (isEn ? 'Backward (-10y)' : '逆行 (-10年/步)');
-      const genderText = res.gender === '乾造'
+      const rawG = (res.input && res.input.gender) || res.gender || '乾造';
+      const isM = (rawG === '乾造' || rawG === 'male' || rawG === 'Yang Male');
+      const genderText = isM
         ? (isEn ? 'Yang Male' : '阳男')
         : (isEn ? 'Yin Female' : '阴女');
       progEl.textContent = `${genderText} · ${dirText}`;
@@ -4492,8 +4494,8 @@ document.addEventListener('DOMContentLoaded', () => {
               : '');
 
         html += `
-          <div class="flex items-center gap-3 p-1 rounded transition hover:bg-white/5">
-            <span class="w-16 sm:w-20 text-xs font-serif-sc font-semibold ${isTarget ? 'text-amber-300' : 'text-gray-300'}">
+          <div class="hexagram-line-row flex items-center gap-3 p-1.5 rounded-lg transition hover:bg-white/10 cursor-pointer group" data-pos="${pos}" data-bit="${bit}" title="${isEn ? 'Click to animate line transformation' : '点击触发爻变动效流转'}">
+            <span class="w-16 sm:w-20 text-xs font-serif-sc font-semibold ${isTarget ? 'text-amber-300' : 'text-gray-300'} group-hover:text-amber-300 transition">
               ${isEn ? (lineData.nameEn || `Line ${pos}`) : (lineData.nameZh || `第${pos}爻`)}
             </span>
             ${lineGraphic}
@@ -4851,6 +4853,15 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     }
+
+    // Attach interactive hexagram line transformation morphing animations
+    document.querySelectorAll('.hexagram-line-row').forEach(row => {
+      row.addEventListener('click', () => {
+        if (typeof VisualAlchemy !== 'undefined' && typeof VisualAlchemy.animateLineTransformation === 'function') {
+          VisualAlchemy.animateLineTransformation(row);
+        }
+      });
+    });
   }
 
   // ==========================================================================
@@ -5035,7 +5046,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="flex items-center justify-between">
               <span>${isEn ? 'Sound Element:' : '年柱纳音律动:'}</span>
-              <span class="text-gray-300 font-mono">${item.naYin}</span>
+              <span class="text-gray-300 font-mono">${isEn ? (item.naYinEn || (typeof I18N !== 'undefined' ? I18N.getNaYin(item.naYin, 'en') : item.naYin)) : item.naYin}</span>
             </div>
           </div>
           <div class="flex flex-wrap gap-1.5 pt-1">
@@ -5362,15 +5373,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pLabel = isEn
                   ? { year: 'Year Pillar', month: 'Month Pillar', day: 'Day Pillar', hour: 'Hour Pillar' }[k]
                   : { year: '年柱 (根基)', month: '月柱 (事业)', day: '日柱 (自身/配偶)', hour: '时柱 (愿景)' }[k];
+                const gzTextA = isEn ? `${I18N.getStem(colA.stem, 'en').split(' ')[0]}-${I18N.getBranch(colA.branch, 'en').split(' ')[0]}` : colA.text;
+                const gzTextB = isEn ? `${I18N.getStem(colB.stem, 'en').split(' ')[0]}-${I18N.getBranch(colB.branch, 'en').split(' ')[0]}` : colB.text;
                 const isDay = (k === 'day');
                 const rowHighlight = isDay ? 'bg-amber-950/20' : '';
                 return `
                   <tr class="${rowHighlight}">
                     <td class="py-2.5 text-left font-sans font-bold text-amber-300/90">${pLabel}</td>
-                    <td class="py-2.5 font-serif-sc text-sm font-bold text-amber-200">${colA.text}</td>
+                    <td class="py-2.5 font-serif-sc text-sm font-bold text-amber-200">${gzTextA}</td>
                     <td class="py-2.5 text-indigo-300 font-sans">${isEn ? I18N.getGod(colA.stemGod, 'en') : colA.stemGod}</td>
                     <td class="py-2.5 text-gray-400">${isEn ? I18N.getNaYin(colA.naYin, 'en') : colA.naYin}</td>
-                    <td class="py-2.5 border-l border-gray-800 font-serif-sc text-sm font-bold text-purple-200">${colB.text}</td>
+                    <td class="py-2.5 border-l border-gray-800 font-serif-sc text-sm font-bold text-purple-200">${gzTextB}</td>
                     <td class="py-2.5 text-indigo-300 font-sans">${isEn ? I18N.getGod(colB.stemGod, 'en') : colB.stemGod}</td>
                     <td class="py-2.5 text-gray-400">${isEn ? I18N.getNaYin(colB.naYin, 'en') : colB.naYin}</td>
                   </tr>
@@ -5507,6 +5520,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const p = bazi.pillars;
 
+    const rawGender = (bazi.input && bazi.input.gender) || bazi.gender || '乾造';
+    const isMale = (rawGender === '乾造' || rawGender === 'male' || rawGender === 'Yang Male');
+    const genderStr = isEn ? (isMale ? 'Yang Male (Qian)' : 'Yin Female (Kun)') : (isMale ? '乾造' : '坤造');
+    const domPat = isEn ? (portrait.patterns[0].nameEn || portrait.patterns[0].name) : portrait.patterns[0].name;
+    const domTier = (portrait.patterns[0].gradeEvaluation && portrait.patterns[0].gradeEvaluation.tier) ? portrait.patterns[0].gradeEvaluation.tier : '';
+    const elPercentages = (bazi.elements && bazi.elements.percentages) || bazi.elements || {};
+    const elMap = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
+    const elSummaryStr = Object.entries(elPercentages).map(([k, v]) => `${isEn ? (elMap[k] || k) : k} ${v}%`).join(' · ');
+
     container.innerHTML = `
       <!-- Page 1: Cover & Four Pillars Grand Altar -->
       <div class="imperial-page relative">
@@ -5531,7 +5553,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="grid grid-cols-2 gap-4 text-xs bg-amber-50/60 p-3 rounded border border-amber-900/30 my-3">
             <div>
               <span class="text-gray-500">${isEn ? 'Subject:' : '本命造化:'}</span>
-              <span class="font-bold text-gray-900 ml-1 font-mono">${isEn ? (bazi.gender === '乾造' ? 'Yang Male (Qian)' : 'Yin Female (Kun)') : `${bazi.gender}`}</span>
+              <span class="font-bold text-gray-900 ml-1 font-mono">${genderStr}</span>
             </div>
             <div>
               <span class="text-gray-500">${isEn ? 'Solar Date:' : '阳历生辰:'}</span>
@@ -5543,7 +5565,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div>
               <span class="text-gray-500">${isEn ? 'Dominant Pattern:' : '核心统帅格局:'}</span>
-              <span class="font-bold text-amber-900 ml-1">${isEn ? portrait.patterns[0].nameEn : portrait.patterns[0].name} (${isEn ? portrait.patterns[0].gradeEvaluation.tier : portrait.patterns[0].gradeEvaluation.tier})</span>
+              <span class="font-bold text-amber-900 ml-1">${domPat} (${domTier})</span>
             </div>
           </div>
 
@@ -5595,9 +5617,9 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="p-3 bg-amber-50/80 rounded border border-amber-900/30 text-xs space-y-1.5">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span>${isEn ? 'Five Elements Dynamic Balance:' : '五行能量分布与气机平衡:'}</span>
-              <span class="font-mono">${Object.entries(bazi.elements).map(([k, v]) => `${isEn ? I18N.dict.en['el_' + (k==='木'?'wood':k==='火'?'fire':k==='土'?'earth':k==='金'?'metal':'water')] || k : k} ${v}%`).join(' · ')}</span>
+              <span class="font-mono">${elSummaryStr}</span>
             </div>
-            <p class="text-gray-800 leading-relaxed font-serif-sc">${isEn ? portrait.patterns[0].gradeEvaluation.strengthsAndFlaws : portrait.patterns[0].gradeEvaluation.strengthsAndFlaws}</p>
+            <p class="text-gray-800 leading-relaxed font-serif-sc">${portrait.patterns[0].gradeEvaluation ? (isEn ? (portrait.patterns[0].gradeEvaluation.strengthsAndFlawsEn || portrait.patterns[0].gradeEvaluation.strengthsAndFlaws) : portrait.patterns[0].gradeEvaluation.strengthsAndFlaws) : ''}</p>
           </div>
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
@@ -5641,10 +5663,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <div class="space-y-1.5 p-3 bg-amber-50/60 rounded border-l-4 border-emerald-800">
               <h3 class="font-bold text-emerald-950 mb-1">${isEn ? 'Three Lifelong Invariant Directives (终身三则立命锦囊):' : '终身不败 · 处世与立命立身三则:'}</h3>
-              ${(isEn ? gp.rules : gp.rulesZh).map((r, idx) => `
+              ${(isEn ? (gp.rules || gp.rulesZh) : (gp.rulesZh || gp.rules)).map((r, idx) => `
                 <div class="flex gap-1.5">
                   <span class="font-bold text-amber-900">${idx + 1}.</span>
-                  <span><b>${isEn ? r.label : r.labelZh}</b>: ${isEn ? r.desc : r.descZh}</span>
+                  <span><b>${r.label || r.labelZh}</b>: ${r.desc || r.descZh}</span>
                 </div>
               `).join('')}
             </div>
@@ -5699,7 +5721,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1.5 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span>${isEn ? 'Ancestral Heritage & Parents Depth Hologram' : '三、祖荫福泽与父母渊源侧写 (Parents Profile)'}</span>
-              <span class="text-indigo-800 font-mono">${isEn ? pc.parents.archetype : pc.parents.archetypeZh}</span>
+              <span class="text-indigo-800 font-mono">${isEn ? (pc.parents.archetype || pc.parents.type || pc.parents.typeEn || 'Ancestral Heritage') : (pc.parents.archetypeZh || pc.parents.typeZh || pc.parents.type || '祖德延绵')}</span>
             </div>
             <p><b>${isEn ? 'Energy Baseline:' : '能量基石:'}</b> ${isEn ? pc.parents.energy : pc.parents.energyZh}</p>
             <p><b>${isEn ? 'Temperament & Demeanour:' : '家风气质:'}</b> ${isEn ? pc.parents.demeanour : pc.parents.demeanourZh}</p>

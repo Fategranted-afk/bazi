@@ -362,6 +362,7 @@ class BaZiEngine {
     const interactions = BaZiEngine.calculatePillarInteractions(pillars);
 
     return {
+      gender,
       input: {
         year, month, day, hour, minute, gender,
         adjustedYear, adjustedMonth, adjustedDay, adjustedHour, adjustedMinute,

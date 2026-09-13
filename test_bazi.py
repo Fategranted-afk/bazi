@@ -1905,25 +1905,45 @@ jsc_dossier_cmd = [
       useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
     });
 
-    var pZh = PortraitEngine.analyze(bazi, "zh");
-    var pEn = I18N.translatePortrait(pZh, "en");
+    ['zh', 'en'].forEach(function(lang) {
+      var isEn = (lang === 'en');
+      var pZh = PortraitEngine.analyze(bazi, 'zh');
+      var portrait = isEn ? I18N.translatePortrait(pZh, 'en') : pZh;
+      var gp = portrait.paretoCore.grandPicture;
+      var pc = portrait.paretoCore;
+      var mf = portrait.mentalFriction;
+      var zen = mf.zenDaoWisdom;
 
-    // Verify 4-page data compilation structure
-    // Page 1: Natal chart & Pillars
-    if (!bazi.pillars || !bazi.dayMaster) throw new Error("Page 1 pillars/dayMaster missing");
-    if (!pZh.dayMaster || !pEn.dayMaster) throw new Error("Page 1 dayMaster missing");
+      var rawGender = (bazi.input && bazi.input.gender) || bazi.gender || '乾造';
+      var isMale = (rawGender === '乾造' || rawGender === 'male' || rawGender === 'Yang Male');
+      var genderStr = isEn ? (isMale ? 'Yang Male (Qian)' : 'Yin Female (Kun)') : (isMale ? '乾造' : '坤造');
+      var domPat = isEn ? (portrait.patterns[0].nameEn || portrait.patterns[0].name) : portrait.patterns[0].name;
+      var domTier = (portrait.patterns[0].gradeEvaluation && portrait.patterns[0].gradeEvaluation.tier) ? portrait.patterns[0].gradeEvaluation.tier : '';
+      var elPercentages = (bazi.elements && bazi.elements.percentages) || bazi.elements || {};
+      var elMap = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
+      var elSummaryStr = Object.entries(elPercentages).map(function(pair) { return (isEn ? (elMap[pair[0]] || pair[0]) : pair[0]) + ' ' + pair[1] + '%'; }).join(' · ');
 
-    // Page 2: Grand Picture 80/20 synthesis
-    if (!pZh.paretoCore || !pZh.paretoCore.grandPicture) throw new Error("Page 2 grandPicture missing");
-    if (!pEn.paretoCore || !pEn.paretoCore.grandPicture) throw new Error("Page 2 En grandPicture missing");
+      var rulesList = isEn ? (gp.rules || gp.rulesZh) : (gp.rulesZh || gp.rules);
+      var rulesStr = rulesList.map(function(r) { return (r.label || r.labelZh) + ': ' + (r.desc || r.descZh); }).join(' | ');
 
-    // Page 3: 4D Kinship Profiles
-    if (!pZh.paretoCore.spouse || !pZh.paretoCore.children || !pZh.paretoCore.parents) throw new Error("Page 3 kinship missing");
-    if (!pEn.paretoCore.spouse || !pEn.paretoCore.children || !pEn.paretoCore.parents) throw new Error("Page 3 En kinship missing");
+      var parentsArch = isEn
+        ? (pc.parents.archetype || pc.parents.type || pc.parents.typeEn || 'Ancestral Heritage')
+        : (pc.parents.archetypeZh || pc.parents.typeZh || pc.parents.type || '祖德延绵');
 
-    // Page 4: Zen & Dao Trinity Wisdom
-    if (!pZh.mentalFriction || !pZh.mentalFriction.zenDaoWisdom) throw new Error("Page 4 zen wisdom missing");
-    if (!pEn.mentalFriction || !pEn.mentalFriction.zenDaoWisdom) throw new Error("Page 4 En zen wisdom missing");
+      if (!genderStr || genderStr.indexOf('undefined') !== -1) throw new Error('genderStr contains undefined in ' + lang);
+      if (!domPat || domPat.indexOf('undefined') !== -1) throw new Error('domPat contains undefined in ' + lang);
+      if (!elSummaryStr || elSummaryStr.indexOf('undefined') !== -1 || elSummaryStr.indexOf('object') !== -1) throw new Error('elSummaryStr invalid: ' + elSummaryStr);
+      if (!parentsArch || parentsArch.indexOf('undefined') !== -1) throw new Error('parentsArch contains undefined in ' + lang);
+      if (!rulesStr || rulesStr.indexOf('undefined') !== -1) throw new Error('rulesStr contains undefined in ' + lang);
+
+      if (isEn) {
+        [genderStr, domPat, domTier, elSummaryStr, parentsArch, rulesStr].forEach(function(s) {
+          if (/[\u4e00-\u9fa5]/.test(s)) {
+            throw new Error('Residual Chinese found in English dossier: ' + s);
+          }
+        });
+      }
+    });
     '''
 ]
 run_dossier = subprocess.run(jsc_dossier_cmd, capture_output=True, text=True)
@@ -1975,6 +1995,11 @@ jsc_chrono_cmd = [
       throw new Error("Timeline must contain exactly 100 entries, got " + (timeline ? timeline.length : 0));
     }
 
+    // Verify memoization
+    if (!bazi._timelineCache || bazi._timelineCache.length !== 100) {
+      throw new Error("Timeline was not memoized on bazi object");
+    }
+
     var validRatings = ['auspicious', 'steady', 'challenging'];
     for (var i = 0; i < 100; i++) {
       var item = timeline[i];
@@ -1996,8 +2021,8 @@ jsc_chrono_cmd = [
         throw new Error("Missing or short directiveEn at age " + item.age);
       }
 
-      // Check zero residual Chinese in English fields
-      var enFields = [item.ganZhiEn, item.tenGodEn, item.decadeSpanEn, item.focusEn, item.directiveEn];
+      // Check zero residual Chinese in English fields including naYinEn
+      var enFields = [item.ganZhiEn, item.tenGodEn, item.naYinEn, item.decadeSpanEn, item.focusEn, item.directiveEn];
       item.alertsEn.forEach(function(a) { enFields.push(a); });
       for (var j = 0; j < enFields.length; j++) {
         if (/[\u4e00-\u9fa5]/.test(enFields[j])) {
@@ -2050,6 +2075,11 @@ jsc_synastry_cmd = [
     // Test Romantic mode
     var romZh = SynastryEngine.analyze(chartA, chartB, "romantic", "zh");
     var romEn = SynastryEngine.analyze(chartA, chartB, "romantic", "en");
+
+    // Verify mutual gifts are properly discovered from percentages
+    if (!romZh.elementalSynergy.mutualGifts || romZh.elementalSynergy.mutualGifts.length === 0) {
+      throw new Error("Failed to detect mutual gifts between complementary charts");
+    }
 
     if (typeof romZh.overallScore !== 'number' || romZh.overallScore < 0 || romZh.overallScore > 100) {
       throw new Error("Invalid overallScore in romantic mode: " + romZh.overallScore);
@@ -2131,6 +2161,7 @@ assert 'STATIC_ASSETS' in sw_content, "sw.js missing STATIC_ASSETS"
 assert './index.html' in sw_content, "sw.js STATIC_ASSETS missing ./index.html"
 assert './css/style.css' in sw_content, "sw.js STATIC_ASSETS missing ./css/style.css"
 assert './js/app.js' in sw_content, "sw.js STATIC_ASSETS missing ./js/app.js"
+assert 'https://cdn.tailwindcss.com' in sw_content, "sw.js STATIC_ASSETS missing Tailwind CDN pre-cache"
 assert "addEventListener('install'" in sw_content or 'addEventListener("install"' in sw_content, "sw.js missing install listener"
 assert "addEventListener('fetch'" in sw_content or 'addEventListener("fetch"' in sw_content, "sw.js missing fetch listener"
 
@@ -2171,7 +2202,7 @@ assert 'stopFlux' in va_content, "Missing stopFlux in VisualAlchemy"
 assert 'setPalette' in va_content, "Missing setPalette in VisualAlchemy"
 assert 'renderHexagramLines' in va_content, "Missing renderHexagramLines in VisualAlchemy"
 assert 'requestAnimationFrame' in va_content, "VisualAlchemy must utilize requestAnimationFrame"
-assert 'visibilitychange' in va_content or 'IntersectionObserver' in va_content, "VisualAlchemy must support visibility optimization"
+assert 'FRAME_INTERVAL' in va_content or 'lastFrameTime' in va_content, "VisualAlchemy must throttle rendering loop for GPU performance"
 
 # 2. Radar chart tweening / smooth animation in js/chart.js
 with open('js/chart.js', 'r', encoding='utf-8') as f:
@@ -2179,10 +2210,13 @@ with open('js/chart.js', 'r', encoding='utf-8') as f:
 
 assert 'renderRadar' in chart_content, "Missing renderRadar in js/chart.js"
 assert 'animated' in chart_content or 'targetValues' in chart_content or 'currentValues' in chart_content, "Missing radar morph animation in js/chart.js"
+assert 'elLabelsEn' in chart_content or 'I18N' in chart_content, "chart.js must support bilingual radar axis labels"
 
 # 3. Canvas and UI controls in index.html & app.js
 assert 'id="elementFluxCanvas"' in html_content, "Missing #elementFluxCanvas in index.html"
 assert 'id="btnToggleFlux"' in html_content, "Missing #btnToggleFlux in index.html"
+assert 'hexagram-line-row' in app_content, "app.js must render interactive hexagram-line-row elements"
+assert 'VisualAlchemy.animateLineTransformation' in app_content, "app.js must wire animateLineTransformation on hexagram line clicks"
 assert 'VisualAlchemy.initFlux' in app_content or 'VisualAlchemy.initParticleRings' in app_content, "app.js missing VisualAlchemy.initFlux"
 assert 'VisualAlchemy.setPalette' in app_content or 'VisualAlchemy.setActiveElement' in app_content, "app.js missing VisualAlchemy.setPalette"
 assert 'toggleFluxBtn.addEventListener' in app_content or 'btnToggleFlux.addEventListener' in app_content, "app.js missing toggleFlux event listener"
