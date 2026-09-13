@@ -5,6 +5,7 @@ Verification script for BaZi calculation logic and 5 Classical Canons.
 import json
 import math
 import os
+import re
 import subprocess
 
 STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸']
@@ -2482,6 +2483,21 @@ elementStore['langEnBtn'].trigger('click');
 // Trigger calculation in EN
 elementStore['calcBtn'].trigger('click');
 
+// Check zero residual Chinese in English mode for solarCalcDetail and dashboardSummaryBadges
+if (/[\u4e00-\u9fa5]/.test(elementStore['solarCalcDetail'].innerHTML)) {
+  throw new Error('solarCalcDetail contains residual Chinese in English mode: ' + elementStore['solarCalcDetail'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['dashboardSummaryBadges'].innerHTML)) {
+  throw new Error('dashboardSummaryBadges contains residual Chinese in English mode: ' + elementStore['dashboardSummaryBadges'].innerHTML);
+}
+
+// Test with true solar time enabled in EN
+elementStore['useTrueSolarTime'].checked = true;
+elementStore['calcBtn'].trigger('click');
+if (/[\u4e00-\u9fa5]/.test(elementStore['solarCalcDetail'].innerHTML)) {
+  throw new Error('solarCalcDetail contains residual Chinese with true solar enabled: ' + elementStore['solarCalcDetail'].innerHTML);
+}
+
 // Switch all views in EN
 views.forEach(function(vId) {
   var btn = document.querySelectorAll('.view-nav-btn').find(function(b) { return b.getAttribute('data-view') === vId; });
@@ -2510,6 +2526,21 @@ if (elementStore['landingPortalView'].classList.contains('hidden') === true) {
 }
 if (elementStore['btnPortalTopNav'].classList.contains('hidden') !== true) {
   throw new Error('btnPortalTopNav must be hidden when on portal landing');
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['landingPreviewMeta'].innerHTML)) {
+  throw new Error('landingPreviewMeta contains residual Chinese in English mode: ' + elementStore['landingPreviewMeta'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['landingQuickPreviewBox'].innerHTML)) {
+  throw new Error('landingQuickPreviewBox contains residual Chinese in English mode: ' + elementStore['landingQuickPreviewBox'].innerHTML);
+}
+// Test advanced solar toggle bilingual switching
+elementStore['btnToggleAdvSolar'].trigger('click');
+if (/[\u4e00-\u9fa5]/.test(elementStore['btnToggleAdvSolar'].textContent)) {
+  throw new Error('btnToggleAdvSolar contains residual Chinese when opened in English mode: ' + elementStore['btnToggleAdvSolar'].textContent);
+}
+elementStore['btnToggleAdvSolar'].trigger('click');
+if (/[\u4e00-\u9fa5]/.test(elementStore['btnToggleAdvSolar'].textContent)) {
+  throw new Error('btnToggleAdvSolar contains residual Chinese when closed in English mode: ' + elementStore['btnToggleAdvSolar'].textContent);
 }
 
 // Return to Dashboard via calcBtn
@@ -2582,14 +2613,29 @@ with open('js/i18n.js', 'r', encoding='utf-8') as f:
 
 portal_keys = [
     'btn_portal_nav', 'portal_hero_title', 'portal_hero_subtitle', 'portal_presets_title',
-    'preset_leader', 'preset_business', 'preset_artist', 'preset_strategist', 'preset_now',
-    'portal_form_card_title', 'portal_preview_title', 'portal_calc_btn', 'portal_showcase_title',
-    'portal_card1_title', 'portal_card2_title', 'portal_card3_title', 'portal_card4_title',
-    'portal_card5_title', 'portal_card6_title', 'portal_card7_title', 'portal_zen_quote',
-    'dashboard_active_chart_title', 'btn_edit_natal'
+    'preset_leader', 'preset_leader_badge', 'preset_business', 'preset_business_badge',
+    'preset_artist', 'preset_artist_badge', 'preset_strategist', 'preset_strategist_badge',
+    'preset_now', 'preset_now_badge', 'portal_talisman_qiankun', 'portal_adv_toggle_show',
+    'portal_adv_toggle_hide', 'portal_form_card_title', 'portal_preview_title', 'portal_calc_btn',
+    'portal_showcase_title', 'portal_card1_title', 'portal_card2_title', 'portal_card3_title',
+    'portal_card4_title', 'portal_card5_title', 'portal_card6_title', 'portal_card7_title',
+    'portal_zen_quote', 'dashboard_active_chart_title', 'btn_edit_natal', 'pareto_eight_canons_tag'
 ]
 for k in portal_keys:
     assert f'{k}:' in i18n_src, f"js/i18n.js must define bilingual key {k}"
+
+# 6. Global HTML I18N Parity Check (All 249 data-i18n tags defined in ZH and EN)
+data_keys = set(re.findall(r'data-i18n=[\"\']([^\"\']+)[\"\']', html_src))
+data_ph_keys = set(re.findall(r'data-i18n-placeholder=[\"\']([^\"\']+)[\"\']', html_src))
+all_html_keys = data_keys.union(data_ph_keys)
+zh_part = i18n_src.split('zh: {')[1].split('en: {')[0]
+en_part = i18n_src.split('en: {')[1].split('};\n\n  // Metaphysical')[0]
+zh_dict_keys = set(re.findall(r'(\w+):\s*[\"\'`]', zh_part))
+en_dict_keys = set(re.findall(r'(\w+):\s*[\"\'`]', en_part))
+missing_zh = all_html_keys - zh_dict_keys
+missing_en = all_html_keys - en_dict_keys
+assert len(missing_zh) == 0, f"HTML data-i18n keys missing in ZH dictionary: {missing_zh}"
+assert len(missing_en) == 0, f"HTML data-i18n keys missing in EN dictionary: {missing_en}"
 
 print("✓ 两阶段交互架构（初始门庭页面 / 分析全相看板 / 典范速选 / 即时微预览 / 优雅双向过渡）验证通过！")
 
