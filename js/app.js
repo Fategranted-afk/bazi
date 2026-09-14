@@ -8625,7 +8625,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const alerts = isEn ? item.alertsEn : item.alerts;
       const alertBadges = alerts.map(a => {
         let cls = 'bg-rose-950/60 text-rose-300 border border-rose-800/40 font-bold';
-        if (a.includes('吉') || a.includes('合') || a.includes('Favorable') || a.includes('Harmony') || a.includes('Surge')) {
+        if (a.includes('吉') || a.includes('合') || a.includes('祥和') || a.includes('Favorable') || a.includes('Harmony') || a.includes('Surge') || a.includes('Harmonious')) {
           cls = 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/40 font-bold';
         } else if (a.includes('从容') || a.includes('稳健') || a.includes('深耕') || a.includes('Steady') || a.includes('Focus') || a.includes('Prudent')) {
           cls = 'bg-blue-950/60 text-blue-300 border border-blue-800/40 font-bold';
@@ -8657,7 +8657,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="flex flex-wrap gap-1.5 pt-1">
-            ${alertBadges || `<span class="px-2 py-0.5 rounded text-[10px] bg-blue-950/40 text-blue-300 border border-blue-800/30 font-bold">${isEn ? 'Steady Orbit · Deep Focus' : '岁运从容 · 稳健深耕'}</span>`}
+            ${alertBadges || `<span class="px-2 py-0.5 rounded text-[10px] bg-emerald-950/40 text-emerald-300 border border-emerald-800/30 font-bold">${isEn ? 'Harmonious Transit' : '岁运祥和'}</span>`}
           </div>
         </div>
 
@@ -9389,8 +9389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             orientation: 'portrait'
           },
           pagebreak: {
-            mode: ['css', 'legacy'],
-            before: '.html2pdf__page-break'
+            mode: [] // Pure 5-page continuous A4 rendering without spurious spacer injections
           }
         };
 
@@ -9913,8 +9912,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div class="html2pdf__page-break"></div>
-
       <!-- Page 2: Volume I - 80/20 Grand Picture Pareto Strategy -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
@@ -9964,8 +9961,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
-
-      <div class="html2pdf__page-break"></div>
 
       <!-- Page 3: Volume II - 4D Kinship Profiles -->
       <div class="imperial-page relative">
@@ -10022,8 +10017,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
-
-      <div class="html2pdf__page-break"></div>
 
       <!-- Page 4: Volume III - Zen & Dao Trinity Wisdom -->
       <div class="imperial-page relative">
@@ -10088,8 +10081,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
-
-      <div class="html2pdf__page-break"></div>
 
       <!-- Page 5: Volume IV - Macro Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
       <div class="imperial-page relative">

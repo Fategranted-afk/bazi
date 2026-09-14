@@ -343,6 +343,9 @@ body {
   }
   .html2pdf__page-break {
     display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 
@@ -359,22 +362,25 @@ body {
   box-shadow: none !important;
   border-radius: 0 !important;
   width: 210mm !important;
-  height: 296.5mm !important;
-  min-height: 296.5mm !important;
-  max-height: 296.5mm !important;
+  height: 297mm !important;
+  min-height: 297mm !important;
+  max-height: 297mm !important;
   page-break-after: always !important;
   break-after: page !important;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 #imperialDossierContainer.exporting-pdf .imperial-page:last-child {
   page-break-after: avoid !important;
   break-after: avoid !important;
 }
 .html2pdf__page-break {
-  height: 0;
-  margin: 0;
-  padding: 0;
-  page-break-after: always;
-  break-after: page;
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* ==========================================================================

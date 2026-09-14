@@ -1808,11 +1808,105 @@ const LuckEngine = (function() {
       let baseE = isStrong ? 62 : 54;
       let baseW = 54;
 
+      // ----------------------------------------------------------------------
+      // Multi-factor synthesis weighting:
+      // Heavenly Stems (25%) + Earthly Branches (30%) + Annual Transit (25%) + Annual Hexagram (20%)
+      // ----------------------------------------------------------------------
+      // 1. Heavenly Stems (天干权重 ~25%)
       const stemScores = getGodScores(tenGod, isStrong);
-      const branchScores = getGodScores(branchGod, isStrong);
+      let stemE = stemScores.e;
+      let stemW = stemScores.w;
+      if (typeof STEM_COMBINATIONS !== 'undefined' && STEM_COMBINATIONS[stem] === dayStem) {
+        stemE += 4;
+        stemW += 5;
+      }
+      if (typeof STEM_CLASHES !== 'undefined' && STEM_CLASHES[stem] === dayStem) {
+        stemE -= 5;
+        stemW -= 4;
+      }
 
-      let energyScore = baseE + blendedDecadeE + (stemScores.e * 0.4 + branchScores.e * 0.6);
-      let wealthScore = baseW + blendedDecadeW + (stemScores.w * 0.4 + branchScores.w * 0.6);
+      // 2. Earthly Branches (地支权重 ~30%)
+      const branchScores = getGodScores(branchGod, isStrong);
+      let branchE = branchScores.e;
+      let branchW = branchScores.w;
+      if (typeof SIX_HARMONIES !== 'undefined' && SIX_HARMONIES[branch] === dayBranch) {
+        branchE += 5;
+        branchW += 6;
+      }
+      if (typeof SIX_CLASHES !== 'undefined' && SIX_CLASHES[branch] === dayBranch) {
+        branchE -= 6;
+        branchW -= 5;
+      }
+
+      // 3. Annual Transit (流年太岁权重 ~25%)
+      const annualFortune = evaluateTransitFortune(bazi, { stem, branch, text: ganZhi, stemGod: tenGod, naYin, age }, 'annual');
+      const decadeFortune = activeDecade ? (activeDecade.fortune || evaluateTransitFortune(bazi, activeDecade, 'decade')) : null;
+      let annualE = 0;
+      let annualW = 0;
+      if (annualFortune) {
+        if (annualFortune.rating === 'good') {
+          annualE += 8;
+          annualW += 10;
+        } else if (annualFortune.rating === 'bad') {
+          annualE -= 8;
+          annualW -= 6;
+        }
+      }
+
+      // 4. Annual Hexagram (流年值年卦与阴阳律权重 ~20%)
+      let hexE = 0;
+      let hexW = 0;
+      let annualHexRes = null;
+      if (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
+        try {
+          annualHexRes = IChingEngine.calculateFourPillarsHexagrams(bazi, age, year);
+        } catch (err) {}
+      }
+
+      const highAuspicious = [1, 11, 14, 15, 19, 24, 32, 42, 46, 50, 55, 58];
+      const midAuspicious = [2, 8, 17, 20, 26, 31, 34, 48, 57, 59];
+      const crucible = [3, 12, 18, 29, 36, 39, 47, 23];
+
+      if (annualHexRes && annualHexRes.zhiNian) {
+        const zn = annualHexRes.zhiNian;
+        const hexNum = zn.hexagram ? zn.hexagram.number : 0;
+        if (highAuspicious.includes(hexNum)) {
+          hexE += 7;
+          hexW += 8;
+        } else if (midAuspicious.includes(hexNum)) {
+          hexE += 3;
+          hexW += 4;
+        } else if (crucible.includes(hexNum)) {
+          hexE -= 6;
+          hexW -= 5;
+        }
+
+        if (zn.isMutated) {
+          hexE += (zn.activeLinePos === 5 ? 4 : 2);
+          hexW += 2;
+        } else {
+          hexE += 2;
+          hexW += 3;
+        }
+      } else {
+        const hexSeq = [1, 11, 14, 15, 19, 24, 32, 42, 46, 50, 55, 58, 2, 8, 17, 20, 26, 31, 34, 48, 57, 59];
+        const pseudoHex = hexSeq[(age + sIdx + bIdx) % hexSeq.length];
+        if (highAuspicious.includes(pseudoHex)) {
+          hexE += 6;
+          hexW += 7;
+        } else {
+          hexE += 3;
+          hexW += 3;
+        }
+      }
+
+      // Multi-factor weighted synthesis:
+      // 天干 (25%) + 地支 (30%) + 流年 (25%) + 流年卦 (20%)
+      const multiFactorE = (stemE * 0.25) + (branchE * 0.30) + (annualE * 0.25) + (hexE * 0.20);
+      const multiFactorW = (stemW * 0.25) + (branchW * 0.30) + (annualW * 0.25) + (hexW * 0.20);
+
+      let energyScore = baseE + blendedDecadeE + multiFactorE;
+      let wealthScore = baseW + blendedDecadeW + multiFactorW;
 
       // Metaphysical physics of transitional turbulence (换甲气机换气):
       // Transition years undergo systemic recalibration and energetic restructuring
@@ -1885,20 +1979,6 @@ const LuckEngine = (function() {
         wealthScore += 10;
       }
 
-      // Dynamic Decade-Annual Fortunes interaction
-      const annualFortune = evaluateTransitFortune(bazi, { stem, branch, text: ganZhi, stemGod: tenGod, naYin, age }, 'annual');
-      const decadeFortune = activeDecade ? (activeDecade.fortune || evaluateTransitFortune(bazi, activeDecade, 'decade')) : null;
-
-      if (annualFortune) {
-        if (annualFortune.rating === 'good') {
-          energyScore += 6;
-          wealthScore += 8;
-        } else {
-          energyScore -= 8;
-          wealthScore -= 6;
-        }
-      }
-
       if (decadeFortune && annualFortune) {
         if (decadeFortune.rating === 'good' && annualFortune.rating === 'good') {
           alerts.push('岁运双吉');
@@ -1916,8 +1996,8 @@ const LuckEngine = (function() {
       }
 
       if (alerts.length === 0) {
-        alerts.push('岁运从容 · 稳健深耕');
-        alertsEn.push('Steady Orbit - Deep Focus');
+        alerts.push('岁运祥和');
+        alertsEn.push('Harmonious Transit');
       }
 
       rawTimeline.push({
