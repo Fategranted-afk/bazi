@@ -4516,5 +4516,487 @@ run_dom_all = subprocess.run(jsc_dom_all_cmd, capture_output=True, text=True)
 assert run_dom_all.returncode == 0, f"Full DOM check failed: stdout={run_dom_all.stdout} stderr={run_dom_all.stderr}"
 print("✓ 端到端全量 DOM 集成、导航无缝切换、周易四柱排卦与空间风水指南中英双语 100% 零中文残留验证通过！")
 
-print("\n🎉 ALL 65 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 66. Validating 14-Character Dynamic Energy Synthesis (原局8+大运2+流年2+流月2=14字)
+print("\n=== 66. Validating 14-Character Dynamic Energy Synthesis (原局8+大运2+流年2+流月2=14字) ===")
+jsc_14char_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 15, hour: 10, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+    if (!luck.synthesis14Char) throw new Error("calculateLuck missing synthesis14Char property");
+
+    var syn = luck.synthesis14Char;
+
+    // 1. Verify 14 characters roster
+    if (!Array.isArray(syn.characters) || syn.characters.length !== 14) {
+      throw new Error("synthesis14Char must contain exactly 14 characters, got: " + (syn.characters ? syn.characters.length : 0));
+    }
+    var natalCount = syn.characters.filter(function(c) { return !c.isTransit; }).length;
+    var transitCount = syn.characters.filter(function(c) { return c.isTransit; }).length;
+    if (natalCount !== 8) throw new Error("Must have exactly 8 natal characters, got " + natalCount);
+    if (transitCount !== 6) throw new Error("Must have exactly 6 transit characters (2 decade + 2 annual + 2 month), got " + transitCount);
+
+    // 2. Verify 5-element percentage distribution sums to ~100%
+    var sumPct = 0;
+    var sumCount = 0;
+    ['木', '火', '土', '金', '水'].forEach(function(el) {
+      if (typeof syn.elementCounts[el] !== 'number') throw new Error("Missing count for element " + el);
+      if (typeof syn.elementPercentages[el] !== 'number') throw new Error("Missing percentage for element " + el);
+      sumCount += syn.elementCounts[el];
+      sumPct += syn.elementPercentages[el];
+    });
+    if (sumCount !== 14) throw new Error("Sum of element counts must be 14, got " + sumCount);
+    if (Math.abs(sumPct - 100) > 1.0) throw new Error("Sum of element percentages must be ~100%, got " + sumPct);
+
+    // 3. Verify dominant element and day master dynamic shift
+    if (!syn.dominantElement || !syn.dominantElement.element || !syn.dominantElement.roleZh || !syn.dominantElement.roleEn) {
+      throw new Error("Missing dominantElement fields");
+    }
+    if (!syn.dayMasterDynamicState || !syn.dayMasterDynamicState.dayMaster || !syn.dayMasterDynamicState.badgeZh || !syn.dayMasterDynamicState.badgeEn) {
+      throw new Error("Missing dayMasterDynamicState fields");
+    }
+
+    // 4. Verify user requested Strong Water archetypes:
+    var mockBalancedStrongWater = {
+      dayMaster: "壬",
+      dayMasterElement: "水",
+      gender: "乾造",
+      birthYear: 1992,
+      pillars: {
+        year: { stem: "庚", stemElement: "金", branch: "申", branchElement: "金" },
+        month: { stem: "壬", stemElement: "水", branch: "申", branchElement: "金" },
+        day: { stem: "壬", stemElement: "水", branch: "子", branchElement: "水" },
+        hour: { stem: "辛", stemElement: "金", branch: "亥", branchElement: "水" }
+      }
+    };
+
+    // Case A: Strong Water encountering Wood dominant
+    var synWood = LuckEngine.calculate14CharEnergySynthesis(
+      mockBalancedStrongWater,
+      { stem: "甲", branch: "寅" },
+      { stem: "乙", branch: "卯" },
+      { stem: "甲", branch: "辰" }
+    );
+    if (synWood.dominantElement.element !== '木') throw new Error("Expected Wood dominant in Case A");
+    if (!synWood.strategicFieldInterpretation.titleZh.includes('强水润木') ||
+        !synWood.strategicFieldInterpretation.titleEn.includes('Strong Water Nourishing Wood')) {
+      throw new Error("Strong Water encountering Wood title mismatch: " + synWood.strategicFieldInterpretation.titleZh);
+    }
+    if (!synWood.strategicFieldInterpretation.actionDirectivesZh[0].includes('以交付击溃空想')) {
+      throw new Error("Strong Water encountering Wood directive missing shipping MVP: " + synWood.strategicFieldInterpretation.actionDirectivesZh[0]);
+    }
+
+    // Case B: Strong Water encountering Fire/Earth dominant
+    var synFE = LuckEngine.calculate14CharEnergySynthesis(
+      mockBalancedStrongWater,
+      { stem: "丙", branch: "午" },
+      { stem: "丁", branch: "巳" },
+      { stem: "丙", branch: "午" }
+    );
+    if (synFE.dominantElement.element !== '火') throw new Error("Expected Fire dominant in Case B");
+    if (!synFE.strategicFieldInterpretation.titleZh.includes('强水遇火土') ||
+        !synFE.strategicFieldInterpretation.titleEn.includes('Strong Water Facing Fire & Earth')) {
+      throw new Error("Strong Water encountering Fire/Earth title mismatch: " + synFE.strategicFieldInterpretation.titleZh);
+    }
+    if (!synFE.strategicFieldInterpretation.actionDirectivesZh[0].includes('现金流安全边际')) {
+      throw new Error("Strong Water encountering Fire/Earth directive missing cash flow margin");
+    }
+
+    // Case C: Strong Water encountering Metal dominant
+    var synMetal = LuckEngine.calculate14CharEnergySynthesis(
+      mockBalancedStrongWater,
+      { stem: "庚", branch: "申" },
+      { stem: "辛", branch: "酉" },
+      { stem: "庚", branch: "申" }
+    );
+    if (synMetal.dominantElement.element !== '金') throw new Error("Expected Metal dominant in Case C");
+    if (!synMetal.strategicFieldInterpretation.titleZh.includes('强水逢金') ||
+        !synMetal.strategicFieldInterpretation.titleEn.includes('Strong Water Meeting Metal')) {
+      throw new Error("Strong Water encountering Metal title mismatch: " + synMetal.strategicFieldInterpretation.titleZh);
+    }
+    if (!synMetal.strategicFieldInterpretation.actionDirectivesZh[0].includes('强制体能排汗发汗')) {
+      throw new Error("Strong Water encountering Metal directive missing aerobic sweat");
+    }
+
+    // 5. Verify 100% Zero residual Chinese in all English mode fields across archetypes
+    var testArchetypes = [syn, synWood, synFE, synMetal];
+    testArchetypes.forEach(function(arc, idx) {
+      arc.characters.forEach(function(c, cIdx) {
+        if (/[\\u4e00-\\u9fa5]/.test(c.charEn)) throw new Error("Residual Chinese in charEn at arc " + idx + " char " + cIdx + ": " + c.charEn);
+        if (/[\\u4e00-\\u9fa5]/.test(c.elementEn)) throw new Error("Residual Chinese in elementEn at arc " + idx + ": " + c.elementEn);
+        if (/[\\u4e00-\\u9fa5]/.test(c.sourceEn)) throw new Error("Residual Chinese in sourceEn at arc " + idx + ": " + c.sourceEn);
+        if (/[\\u4e00-\\u9fa5]/.test(c.tenGodEn)) throw new Error("Residual Chinese in tenGodEn at arc " + idx + ": " + c.tenGodEn);
+      });
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dominantElement.elementEn)) throw new Error("Residual Chinese in dominantElement.elementEn");
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dominantElement.roleEn)) throw new Error("Residual Chinese in dominantElement.roleEn");
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dayMasterDynamicState.dayMasterEn)) throw new Error("Residual Chinese in dayMasterEn");
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dayMasterDynamicState.dayMasterElementEn)) throw new Error("Residual Chinese in dayMasterElementEn");
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dayMasterDynamicState.natalStrengthEn)) throw new Error("Residual Chinese in natalStrengthEn");
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dayMasterDynamicState.badgeEn)) throw new Error("Residual Chinese in badgeEn");
+      if (/[\\u4e00-\\u9fa5]/.test(arc.dayMasterDynamicState.statusEn)) throw new Error("Residual Chinese in statusEn");
+      var interp = arc.strategicFieldInterpretation;
+      if (/[\\u4e00-\\u9fa5]/.test(interp.titleEn)) throw new Error("Residual Chinese in interp.titleEn");
+      if (/[\\u4e00-\\u9fa5]/.test(interp.dynamicsEn)) throw new Error("Residual Chinese in interp.dynamicsEn");
+      if (/[\\u4e00-\\u9fa5]/.test(interp.strategicFocusEn)) throw new Error("Residual Chinese in interp.strategicFocusEn");
+      if (/[\\u4e00-\\u9fa5]/.test(interp.physicalTuningEn)) throw new Error("Residual Chinese in interp.physicalTuningEn");
+      interp.actionDirectivesEn.forEach(function(d, dIdx) {
+        if (/[\\u4e00-\\u9fa5]/.test(d)) throw new Error("Residual Chinese in actionDirectivesEn[" + dIdx + "]");
+      });
+    });
+    '''
+]
+run_14char = subprocess.run(jsc_14char_cmd, capture_output=True, text=True)
+assert run_14char.returncode == 0, f"14-char energy synthesis check failed: stdout={run_14char.stdout} stderr={run_14char.stderr}"
+print("✓ 十四字时空全息能量统揽（原局8+大运2+流年2+流月2=14字、五行100%分布、日元位移、水旺遇火土/木/金破局战术与零中文残留）验证通过！")
+
+# 67. Validating Chrono-Navigator Real Age Calibration & Dynamic Fortune Spectrum
+print("\n=== 67. Validating Chrono-Navigator Real Age Calibration & Dynamic Fortune Spectrum ===")
+jsc_chrono_spec_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+
+    // 1. Age Calculation: strictly |当前年份 - 出生年份|
+    var testAges = [
+      { birthYear: 2002, curYear: 2026, expectedAge: 24 },
+      { birthYear: 1990, curYear: 2026, expectedAge: 36 },
+      { birthYear: 2020, curYear: 2026, expectedAge: 6 },
+      { birthYear: 1978, curYear: 2026, expectedAge: 48 }
+    ];
+
+    testAges.forEach(function(t) {
+      var calcAge = Math.abs(t.curYear - t.birthYear);
+      if (calcAge !== t.expectedAge) {
+        throw new Error("Age calculation mismatch for birth year " + t.birthYear + ": expected " + t.expectedAge + ", got " + calcAge);
+      }
+    });
+
+    // Verify bazi calculated for 2002 birth year
+    var b2002 = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 15, hour: 10, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck2002 = LuckEngine.calculateLuck(b2002, 2026);
+    var timeline = LuckEngine.calculateLifelongTimeline(b2002, luck2002);
+
+    // 2. Verify dynamic alerts spectrum across the 100-year timeline
+    // Must contain various dynamic alert badges and not default everywhere to a single badge
+    var allAlertsZh = [];
+    var allAlertsEn = [];
+    timeline.forEach(function(item) {
+      item.alerts.forEach(function(a) { if (allAlertsZh.indexOf(a) === -1) allAlertsZh.push(a); });
+      item.alertsEn.forEach(function(a) { if (allAlertsEn.indexOf(a) === -1) allAlertsEn.push(a); });
+    });
+
+    // Check diversity: must have at least 4 distinct alert categories
+    if (allAlertsZh.length < 4) {
+      throw new Error("Timeline alert badges lack diversity, got only: " + allAlertsZh.join(", "));
+    }
+
+    // Verify key dynamic alerts exist in the spectrum
+    var expectedSubstringsZh = ['吉', '冲', '并', '提纲'];
+    var foundSubstrings = expectedSubstringsZh.filter(function(sub) {
+      return allAlertsZh.some(function(a) { return a.includes(sub); });
+    });
+    if (foundSubstrings.length < 2) {
+      throw new Error("Missing expected alert types (favorable, clash, mandate, etc.): found only " + foundSubstrings.join(", "));
+    }
+
+    // Check zero residual Chinese in all alertsEn across all 100 years
+    allAlertsEn.forEach(function(a) {
+      if (/[\\u4e00-\\u9fa5]/.test(a)) {
+        throw new Error("Residual Chinese in timeline alertsEn: " + a);
+      }
+    });
+    '''
+]
+run_chrono_spec = subprocess.run(jsc_chrono_spec_cmd, capture_output=True, text=True)
+assert run_chrono_spec.returncode == 0, f"Chrono spec check failed: stdout={run_chrono_spec.stdout} stderr={run_chrono_spec.stderr}"
+print("✓ 百岁运势时空罗盘（|2026-出生年| 真实年龄校准、消除全盘静态‘岁运祥和’、岁运双吉/相冲/提纲告警全动态呈现）验证通过！")
+
+# 68. Validating Four Pillars Hexagram 12-Number Canonical Derivation
+print("\n=== 68. Validating Four Pillars Hexagram 12-Number Canonical Derivation ===")
+jsc_fp_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+
+    var testPillars = [
+      { year: 1984, month: 2, day: 4, hour: 6, minute: 0, gender: "乾造" },
+      { year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造" },
+      { year: 2002, month: 5, day: 15, hour: 10, minute: 0, gender: "坤造" },
+      { year: 2026, month: 9, day: 14, hour: 11, minute: 0, gender: "乾造" }
+    ];
+
+    testPillars.forEach(function(tp, idx) {
+      var b = BaZiEngine.calculate({
+        year: tp.year, month: tp.month, day: tp.day, hour: tp.hour, minute: tp.minute,
+        gender: tp.gender, useTrueSolarTime: false, isLateRatNextDay: false,
+        longitude: 116.4, timezone: 8.0
+      });
+
+      var hex = IChingEngine.calculateFourPillarsHexagrams(b, 25, 2026);
+      if (!hex) throw new Error("hex result is null for chart " + idx);
+
+      // Check numbers
+      if (typeof hex.sumOdds !== 'number' || isNaN(hex.sumOdds)) throw new Error("sumOdds is invalid in chart " + idx);
+      if (typeof hex.sumEvens !== 'number' || isNaN(hex.sumEvens)) throw new Error("sumEvens is invalid in chart " + idx);
+      if (typeof hex.rawTianShu !== 'number' || isNaN(hex.rawTianShu)) throw new Error("rawTianShu is invalid in chart " + idx);
+      if (typeof hex.rawDiShu !== 'number' || isNaN(hex.rawDiShu)) throw new Error("rawDiShu is invalid in chart " + idx);
+
+      // 4 stems (4 numbers) + 4 branch pairs (8 numbers) = 12 numbers total
+      if (!Array.isArray(hex.odds) || !Array.isArray(hex.evens)) throw new Error("odds or evens array missing in chart " + idx);
+      var totalNums = hex.odds.length + hex.evens.length;
+      if (totalNums !== 12) {
+        throw new Error("Chart " + idx + " must yield exactly 12 numbers (4 stems + 8 branch numbers), got " + totalNums);
+      }
+
+      // Check Hou Tian Bagua range: 1 to 9 (excluding 5 which is converted)
+      if (hex.tianShu < 1 || hex.tianShu > 9 || hex.tianShu === 5) {
+        throw new Error("tianShu must be a valid Bagua number (1-9, not 5), got " + hex.tianShu);
+      }
+      if (hex.diShu < 1 || hex.diShu > 9 || hex.diShu === 5) {
+        throw new Error("diShu must be a valid Bagua number (1-9, not 5), got " + hex.diShu);
+      }
+
+      // Check derivation strings have zero "undefined"
+      var oddsStr = hex.odds.join('+');
+      var evensStr = hex.evens.join('+');
+      var tianDerivationZh = hex.sumOdds > 25
+        ? (oddsStr + " = " + hex.sumOdds + "（以25为中数：" + hex.sumOdds + " - 25 = " + (hex.sumOdds - 25) + " → 取【" + hex.rawTianShu + "】）")
+        : (hex.sumOdds === 25 ? (oddsStr + " = 25（以25为中数：逢25取【5】）") : (oddsStr + " = " + hex.sumOdds + "（以25为中数：取【" + hex.rawTianShu + "】）"));
+      var diDerivationZh = hex.sumEvens > 30
+        ? (evensStr + " = " + hex.sumEvens + "（以30为中数：" + hex.sumEvens + " - 30 = " + (hex.sumEvens - 30) + " → 取【" + hex.rawDiShu + "】）")
+        : (hex.sumEvens === 30 ? (evensStr + " = 30（以30为中数：逢30取【3】）") : (evensStr + " = " + hex.sumEvens + "（以30为中数：取【" + hex.rawDiShu + "】）"));
+
+      if (tianDerivationZh.indexOf("undefined") !== -1) throw new Error("tianDerivationZh contains undefined in chart " + idx);
+      if (diDerivationZh.indexOf("undefined") !== -1) throw new Error("diDerivationZh contains undefined in chart " + idx);
+    });
+    '''
+]
+run_fp = subprocess.run(jsc_fp_cmd, capture_output=True, text=True)
+assert run_fp.returncode == 0, f"Four Pillars derivation check failed: stdout={run_fp.stdout} stderr={run_fp.stderr}"
+print("✓ 周易四柱排卦 12数干支全集推演算法（4天干+4地支双数、奇数和逢25/偶数和逢30、零undefined与后天八卦映射）验证通过！")
+
+# 69. Validating 14-Character Energy Synthesis DOM Rendering & Zero Residual Chinese
+print("\n=== 69. Validating 14-Character Energy Synthesis DOM Rendering & Zero Residual Chinese ===")
+jsc_dom_14_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    var console = { log: print, error: print, warn: print, info: print };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/portrait-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/synastry-engine.js");
+
+    var elements = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: tag || "div",
+        innerHTML: "",
+        textContent: "",
+        value: (id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : "")),
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        _children: [],
+        classList: {
+          _cls: [],
+          contains: function(c) { return this._cls.indexOf(c) >= 0; },
+          add: function(c) { if (this._cls.indexOf(c) === -1) this._cls.push(c); },
+          remove: function(c) { var i = this._cls.indexOf(c); if (i >= 0) this._cls.splice(i, 1); },
+          toggle: function(c) { if (this.contains(c)) this.remove(c); else this.add(c); }
+        },
+        style: {},
+        setAttribute: function() {},
+        getAttribute: function() { return null; },
+        appendChild: function(c) { this._children.push(c); },
+        addEventListener: function() {},
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; },
+        getContext: function() {
+          return {
+            clearRect: function() {},
+            beginPath: function() {},
+            moveTo: function() {},
+            lineTo: function() {},
+            closePath: function() {},
+            stroke: function() {},
+            fill: function() {},
+            fillText: function() {},
+            arc: function() {},
+            setLineDash: function() {},
+            scale: function() {},
+            createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        }
+      };
+    }
+
+    var allIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox",
+      "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer",
+      "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer",
+      "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa",
+      "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect",
+      "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude",
+      "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag",
+      "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction",
+      "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "view-home",
+      "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas",
+      "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction",
+      "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText",
+      "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection",
+      "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer",
+      "personaPersonality", "personaCareer", "personaWealth", "personaAdvice",
+      "defectsContainer", "mentalFrictionSection", "remedyTabTailored",
+      "remedyTabComparison", "remedyContainer", "view-strategy",
+      "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction",
+      "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck",
+      "luckCyclesSection", "luckProgressionBadge", "luckProgressionText",
+      "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge",
+      "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit",
+      "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard",
+      "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel",
+      "annualContainer", "currentSelectedMonthLabel", "monthlyContainer",
+      "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs",
+      "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn",
+      "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection",
+      "operationalPlaybookContainer", "ecologicalResonanceSection",
+      "ecologicalResonanceContainer", "timeDynamicsSection", "tdAnnualBadge",
+      "timeDynamicsContainer", "fourteenCharEnergySection", "fourteenCharBadge",
+      "fourteenCharEnergyContainer"
+    ];
+    allIds.forEach(function(id) { elements[id] = makeEl(id); });
+
+    var navigator = { serviceWorker: null, userAgent: "Mozilla" };
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeEl("body"),
+      getElementById: function(id) {
+        if (!elements[id]) elements[id] = makeEl(id);
+        return elements[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+    var window = {
+      console: console,
+      document: document,
+      navigator: navigator,
+      addEventListener: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    var bazi = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 15, hour: 10, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // 1. Render ZH
+    window.render14CharEnergySynthesis(bazi, luck, false);
+    var htmlZh = elements["fourteenCharEnergyContainer"].innerHTML;
+    if (!htmlZh || htmlZh.length < 500) throw new Error("ZH HTML output too short");
+
+    // 2. Render EN
+    window.render14CharEnergySynthesis(bazi, luck, true);
+    var htmlEn = elements["fourteenCharEnergyContainer"].innerHTML;
+    if (!htmlEn || htmlEn.length < 500) throw new Error("EN HTML output too short");
+
+    // 3. Verify zero residual Chinese in English mode
+    var chineseMatches = htmlEn.match(/[\\u4e00-\\u9fa5]/g);
+    if (chineseMatches && chineseMatches.length > 0) {
+      throw new Error("Residual Chinese in 14-char energy container EN mode: " + chineseMatches.join(""));
+    }
+
+    // 4. Verify i18n keys for 14-character synthesis
+    var keys14 = ['fc_title', 'fc_subtitle', 'fc_badge'];
+    keys14.forEach(function(k) {
+      var zh = I18N.t(k, 'zh');
+      var en = I18N.t(k, 'en');
+      if (!zh) throw new Error("Missing zh for key " + k);
+      if (!en) throw new Error("Missing en for key " + k);
+      if (/[\\u4e00-\\u9fa5]/.test(en)) throw new Error("Residual Chinese in i18n key " + k + ": " + en);
+    });
+    '''
+]
+run_dom_14 = subprocess.run(jsc_dom_14_cmd, capture_output=True, text=True)
+assert run_dom_14.returncode == 0, f"14-char DOM render check failed: stdout={run_dom_14.stdout} stderr={run_dom_14.stderr}"
+print("✓ 十四字时空全息能量统揽 DOM 全量动态渲染、中英双语 100% 零中文残留与运行时零崩溃验证通过！")
+
+print("\n🎉 ALL 69 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 

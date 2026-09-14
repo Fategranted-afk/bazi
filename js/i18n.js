@@ -93,6 +93,11 @@ const I18N = (function() {
       portal_friction_title: "原厂心理使用说明书",
       portal_friction_desc: "八大典籍出厂心法 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯",
 
+      // 14-Character Dynamic Energy Synthesis
+      fc_title: "十四字时空全息能量统揽",
+      fc_subtitle: "原局8字 + 大运2字 + 流年2字 + 流月2字 · 五行气机重置 · 日元强弱动态位移 · 现实破局战术全息",
+      fc_badge: "14字能量场",
+
       // Operational Playbook
       playbook_title: "当季与本年现实破局罗盘",
       playbook_subtitle: "年度核心主线攻坚 · 四季节律能量潮汐 · 即时决策防火墙与雷区熔断",
@@ -600,6 +605,11 @@ const I18N = (function() {
       portal_strategy_desc: "Pareto 20% Sovereign Fulcrum · Breakthrough Campaign · 4D Kinship · 3 Golden Rules",
       portal_friction_title: "Original Factory-Default Mind Manual",
       portal_friction_desc: "Eight Classical Canons · Stress Triggers · 3-Level Emergency Reset · 5-Element Micro-Habits",
+
+      // 14-Character Dynamic Energy Synthesis
+      fc_title: "14-Character Dynamic Energy Synthesis",
+      fc_subtitle: "Natal 8 + Decade 2 + Annual 2 + Month 2 · 5-Element Shift · Day Master Rebalance · Tactical Directives",
+      fc_badge: "14-Char Energy Field",
 
       // Operational Playbook
       playbook_title: "Current Year & Season Operational Playbook",

@@ -3,7 +3,7 @@
  * Offline-First Caching Strategy for Instant App Load
  */
 
-const CACHE_NAME = 'celestial-bazi-v4';
+const CACHE_NAME = 'celestial-bazi-v5';
 const STATIC_ASSETS = [
   './',
   './index.html',

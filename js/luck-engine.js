@@ -1218,6 +1218,417 @@ const LuckEngine = (function() {
   }
 
   /**
+   * 14-Character Dynamic Energy Synthesis (十四字时空全息能量统揽)
+   * 原局8字 + 大运2字 + 流年2字 + 流月2字 = 14字
+   * Computes the holistic energetic shift across all 14 celestial characters,
+   * evaluates dynamic Day Master rebalancing, dominant elements, life phase state,
+   * and provides actionable environmental guidance with 100% bilingual parity.
+   */
+  function calculate14CharEnergySynthesis(bazi, activeDecade, activeAnnual, activeMonth) {
+    if (!bazi || !bazi.pillars) return null;
+
+    const dm = bazi.dayMaster;
+    const dmEl = bazi.dayMasterElement || '木';
+    const isStrong = isDayMasterStrong(bazi);
+    const p = bazi.pillars;
+
+    const now = new Date();
+    const curYear = now.getFullYear();
+
+    const dPillar = activeDecade || { stem: '甲', branch: '子', text: '甲子', stemGod: getTenGod(dm, '甲') };
+    const aPillar = activeAnnual || { stem: '丙', branch: '午', text: '丙午', year: curYear, stemGod: getTenGod(dm, '丙') };
+    const mPillar = activeMonth || { stem: '丁', branch: '酉', text: '丁酉', stemGod: getTenGod(dm, '丁') };
+
+    const STEM_TO_EL = {
+      '甲': '木', '乙': '木', '丙': '火', '丁': '火', '戊': '土',
+      '己': '土', '庚': '金', '辛': '金', '壬': '水', '癸': '水'
+    };
+    const BRANCH_TO_EL = {
+      '子': '水', '亥': '水', '寅': '木', '卯': '木', '巳': '火',
+      '午': '火', '申': '金', '酉': '金', '辰': '土', '戌': '土',
+      '丑': '土', '未': '土'
+    };
+    const BRANCH_MAIN_STEM = {
+      '子': '癸', '丑': '己', '寅': '甲', '卯': '乙',
+      '辰': '戊', '巳': '丙', '午': '丁', '未': '己',
+      '申': '庚', '酉': '辛', '戌': '戊', '亥': '壬'
+    };
+    const EL_EN_MAP = {
+      '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water'
+    };
+    const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
+    const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+
+    const characters = [
+      { id: 'ny_s', sourceZh: '原局年干', sourceEn: 'Natal Year Stem', char: p.year.stem, charEn: STEM_EN_MAP[p.year.stem] || p.year.stem, el: STEM_TO_EL[p.year.stem] || '木', tenGod: getTenGod(dm, p.year.stem), isTransit: false },
+      { id: 'ny_b', sourceZh: '原局年支', sourceEn: 'Natal Year Branch', char: p.year.branch, charEn: BRANCH_EN_MAP[p.year.branch] || p.year.branch, el: BRANCH_TO_EL[p.year.branch] || '水', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[p.year.branch] || '癸'), isTransit: false },
+      { id: 'nm_s', sourceZh: '原局月干', sourceEn: 'Natal Month Stem', char: p.month.stem, charEn: STEM_EN_MAP[p.month.stem] || p.month.stem, el: STEM_TO_EL[p.month.stem] || '木', tenGod: getTenGod(dm, p.month.stem), isTransit: false },
+      { id: 'nm_b', sourceZh: '原局月令', sourceEn: 'Natal Month Branch', char: p.month.branch, charEn: BRANCH_EN_MAP[p.month.branch] || p.month.branch, el: BRANCH_TO_EL[p.month.branch] || '火', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[p.month.branch] || '丙'), isTransit: false },
+      { id: 'nd_s', sourceZh: '原局日元', sourceEn: 'Natal Day Master', char: p.day.stem, charEn: STEM_EN_MAP[p.day.stem] || p.day.stem, el: STEM_TO_EL[p.day.stem] || '水', tenGod: '日主', isTransit: false },
+      { id: 'nd_b', sourceZh: '原局日支', sourceEn: 'Natal Day Branch', char: p.day.branch, charEn: BRANCH_EN_MAP[p.day.branch] || p.day.branch, el: BRANCH_TO_EL[p.day.branch] || '水', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[p.day.branch] || '癸'), isTransit: false },
+      { id: 'nh_s', sourceZh: '原局时干', sourceEn: 'Natal Hour Stem', char: p.hour.stem, charEn: STEM_EN_MAP[p.hour.stem] || p.hour.stem, el: STEM_TO_EL[p.hour.stem] || '金', tenGod: getTenGod(dm, p.hour.stem), isTransit: false },
+      { id: 'nh_b', sourceZh: '原局时支', sourceEn: 'Natal Hour Branch', char: p.hour.branch, charEn: BRANCH_EN_MAP[p.hour.branch] || p.hour.branch, el: BRANCH_TO_EL[p.hour.branch] || '金', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[p.hour.branch] || '庚'), isTransit: false },
+
+      { id: 'td_s', sourceZh: '大运天干', sourceEn: 'Decade Stem', char: dPillar.stem, charEn: STEM_EN_MAP[dPillar.stem] || dPillar.stem, el: STEM_TO_EL[dPillar.stem] || '木', tenGod: getTenGod(dm, dPillar.stem), isTransit: true },
+      { id: 'td_b', sourceZh: '大运地支', sourceEn: 'Decade Branch', char: dPillar.branch, charEn: BRANCH_EN_MAP[dPillar.branch] || dPillar.branch, el: BRANCH_TO_EL[dPillar.branch] || '水', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[dPillar.branch] || '癸'), isTransit: true },
+
+      { id: 'ta_s', sourceZh: '流年天干', sourceEn: 'Annual Stem', char: aPillar.stem, charEn: STEM_EN_MAP[aPillar.stem] || aPillar.stem, el: STEM_TO_EL[aPillar.stem] || '火', tenGod: getTenGod(dm, aPillar.stem), isTransit: true },
+      { id: 'ta_b', sourceZh: '流年太岁', sourceEn: 'Annual Branch', char: aPillar.branch, charEn: BRANCH_EN_MAP[aPillar.branch] || aPillar.branch, el: BRANCH_TO_EL[aPillar.branch] || '火', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[aPillar.branch] || '丁'), isTransit: true },
+
+      { id: 'tm_s', sourceZh: '流月天干', sourceEn: 'Month Stem', char: mPillar.stem, charEn: STEM_EN_MAP[mPillar.stem] || mPillar.stem, el: STEM_TO_EL[mPillar.stem] || '金', tenGod: getTenGod(dm, mPillar.stem), isTransit: true },
+      { id: 'tm_b', sourceZh: '流月建星', sourceEn: 'Month Branch', char: mPillar.branch, charEn: BRANCH_EN_MAP[mPillar.branch] || mPillar.branch, el: BRANCH_TO_EL[mPillar.branch] || '金', tenGod: getTenGod(dm, BRANCH_MAIN_STEM[mPillar.branch] || '辛'), isTransit: true }
+    ];
+
+    characters.forEach(c => {
+      c.elementEn = EL_EN_MAP[c.el] || 'Wood';
+      c.tenGodEn = (c.tenGod === '日主' || c.tenGod === '元神') ? 'Day Master' : (typeof I18N !== 'undefined' ? I18N.getGod(c.tenGod, 'en') : c.tenGod);
+    });
+
+    // Element Distribution
+    const elementCounts = { '木': 0, '火': 0, '土': 0, '金': 0, '水': 0 };
+    characters.forEach(c => {
+      if (elementCounts[c.el] !== undefined) elementCounts[c.el]++;
+      else elementCounts['木']++;
+    });
+
+    const elementPercentages = {};
+    const elementDistributionList = [];
+    ['木', '火', '土', '金', '水'].forEach(el => {
+      const cnt = elementCounts[el];
+      const pct = Math.round((cnt / 14) * 1000) / 10;
+      elementPercentages[el] = pct;
+      elementDistributionList.push({
+        element: el,
+        elementEn: EL_EN_MAP[el],
+        count: cnt,
+        percentage: pct
+      });
+    });
+
+    elementDistributionList.sort((a, b) => b.count - a.count);
+    const dominantEl = elementDistributionList[0].element;
+    const dominantElEn = elementDistributionList[0].elementEn;
+    const dominantPct = elementDistributionList[0].percentage;
+    const dominantCount = elementDistributionList[0].count;
+
+    const GENERATES = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+    const CONTROLLED_BY = { '木': '金', '火': '水', '土': '木', '金': '火', '水': '土' };
+    const CONTROLS = { '木': '土', '火': '金', '土': '水', '金': '木', '水': '火' };
+
+    let resourceEl = Object.keys(GENERATES).find(k => GENERATES[k] === dmEl) || '金';
+    let outputEl = GENERATES[dmEl] || '木';
+    let wealthEl = CONTROLS[dmEl] || '火';
+    let officerEl = CONTROLLED_BY[dmEl] || '土';
+
+    const supportCount = elementCounts[dmEl] + (elementCounts[resourceEl] || 0);
+    const drainCount = (elementCounts[outputEl] || 0) + (elementCounts[wealthEl] || 0) + (elementCounts[officerEl] || 0);
+    const dynamicRatio = Math.round((supportCount / 14) * 100) / 100;
+
+    let dominantRelation = 'companion';
+    let dominantRoleZh = '比劫同行 · 阵营博弈';
+    let dominantRoleEn = 'Companion Peers · Competitive Dynamics';
+
+    if (dominantEl === dmEl) {
+      dominantRelation = 'companion';
+      dominantRoleZh = '比劫齐聚 · 实力充盈与同伴共生';
+      dominantRoleEn = 'Companion Convergence · Capacity & Peer Alliances';
+    } else if (dominantEl === resourceEl) {
+      dominantRelation = 'resource';
+      dominantRoleZh = '印星涵养 · 深度求索与心智积淀';
+      dominantRoleEn = 'Resource Sanctuary · Deep Learning & Cognitive Foundation';
+    } else if (dominantEl === outputEl) {
+      dominantRelation = 'output';
+      dominantRoleZh = '食伤秀气 · 创意绽放与作品上线';
+      dominantRoleEn = 'Output Radiance · Creative Flow & Asset Deployment';
+    } else if (dominantEl === wealthEl) {
+      dominantRelation = 'wealth';
+      dominantRoleZh = '财气丰隆 · 商业变现与价值扩张';
+      dominantRoleEn = 'Wealth Momentum · Commercial Harvest & Valuation Expansion';
+    } else if (dominantEl === officerEl) {
+      dominantRelation = 'officer';
+      dominantRoleZh = '官杀克身 · 职责重担与纪律重塑';
+      dominantRoleEn = 'Officer Mandate · Accountability & Disciplinary Rigor';
+    }
+
+    let dynamicStatusZh = '';
+    let dynamicStatusEn = '';
+    let badgeZh = '';
+    let badgeEn = '';
+
+    if (isStrong) {
+      if (supportCount >= 7) {
+        badgeZh = '旺上加旺 · 亟需宣泄';
+        badgeEn = 'Surplus Saturation · Urgent Outward Drainage';
+        dynamicStatusZh = '原局本强，岁运又逢生扶印比重叠，能量场极度充盈。犹如蓄水已满之水库，切忌继续闭门推演，必须大开泄洪闸门，以输出、变现和现实行动宣泄过多精力。';
+        dynamicStatusEn = 'Strong natal frame receives further supportive Resource and Companion tides. Like a reservoir at full capacity, avoid cloistered rumination; open spillways immediately via commercial shipping, physical execution, and outward output.';
+      } else if (drainCount >= 8) {
+        badgeZh = '身旺任责 · 挥戈开拓';
+        badgeEn = 'Robust Frame Carrying Mandate · Expansion Phase';
+        dynamicStatusZh = '原局身强底子扎实，岁运月令食伤财官群聚。此乃“身旺任财官、真金历烈火”之黄金成事期，足以承担高强度任务、驾驭复杂外部博弈并兑现商业成果。';
+        dynamicStatusEn = 'Solid strong foundation meets surging Output, Wealth, and Officer currents. The Day Master comfortably commands responsibility and external friction, turning pressure into high-leverage commercial breakthroughs.';
+      } else {
+        badgeZh = '旺相中和 · 运化自如';
+        badgeEn = 'Resilient Equilibrium · Effortless Flow';
+        dynamicStatusZh = '14字气机生克均衡，进退有度，自我定力与外部开拓形成良性循环，适宜按照既定战略长线深耕。';
+        dynamicStatusEn = 'The 14 characters balance self-strength and outward engagement; steady sovereignty meets responsive execution, optimal for long-term compound growth.';
+      }
+    } else {
+      if (supportCount >= 7) {
+        badgeZh = '久旱逢甘霖 · 借势跃升';
+        badgeEn = 'Replenished Vitality · Systemic Lift';
+        dynamicStatusZh = '原局偏柔，今得大运、流年、流月印比厚重生扶，气血与精力显著回暖。摆脱以往孤军奋战之疲累，容易获得平台赋能、长辈引荐与强力同盟。';
+        dynamicStatusEn = 'Delicate natal vitality receives profound reinforcement from supportive transit currents. Energy and resilience surge; solitary exhaustion gives way to institutional backing and formidable alliances.';
+      } else if (drainCount >= 8) {
+        badgeZh = '克泄交加 · 守正固本';
+        badgeEn = 'Intense Drainage · Fortress Defense';
+        dynamicStatusZh = '原局偏柔，岁运月令财官食伤重叠围攻，外界需求与压力远超生理承受上限。此期必须坚决守住精力红线，实行课题分离与防御性战略，严禁硬撑。';
+        dynamicStatusEn = 'Delicate vitality encounters overwhelming Wealth, Officer, and Output demands exceeding somatic bandwidth. Ruthlessly enforce boundaries, practice radical detachment, and prioritize sleep and physiological recovery.';
+      } else {
+        badgeZh = '柔顺守常 · 借力打力';
+        badgeEn = 'Yielding Adaptability · Leverage Mastery';
+        dynamicStatusZh = '弱元得气中和，以柔克刚。不与刚强事物正面碰撞，善用系统与合作杠杆成事，稳扎稳打。';
+        dynamicStatusEn = 'Delicate Day Master moves in fluid equilibrium, overcoming hardness through flexibility. Leverage structural networks and avoid direct confrontations.';
+      }
+    }
+
+    let titleZh = '';
+    let titleEn = '';
+    let dynamicsZh = '';
+    let dynamicsEn = '';
+    let strategicFocusZh = '';
+    let strategicFocusEn = '';
+    let actionDirectivesZh = [];
+    let actionDirectivesEn = [];
+    let physicalTuningZh = '';
+    let physicalTuningEn = '';
+
+    if (dmEl === '水') {
+      if (dominantEl === '火' || dominantEl === '土') {
+        titleZh = isStrong ? '强水遇火土 · 能量激荡与风险对冲 (身旺任财官之高阶博弈)' : '柔水逢烈火厚土 · 堤高火燥之边界保卫 (克泄交加防透支)';
+        titleEn = isStrong ? 'Strong Water Facing Fire & Earth · High-Stakes Friction & Capital Hedging' : 'Delicate Water Meeting Blazing Heat & Heavy Earth · Sovereign Boundary Defense';
+        dynamicsZh = isStrong
+          ? '原局水势沛然，逢大运、流年、流月火土气机大盛。火为财星，土为官杀，犹如浩荡江河遭遇烈日炙烤与重重大坝筑起。整个14字能量场处于高压强、强博弈态势。外部商业机会与名利诱惑急剧增多，但伴随极高的市场波动与规则制约。'
+          : '柔水本自清澄，岁运忽临炽热火土，如小溪置于烈日沙漠与重岩逼迫之中。外部绩效指标、财务责任与他人诉求如山倒来，身心极易处于紧绷干涸状态。';
+        dynamicsEn = isStrong
+          ? 'Natal Water is abundant, meeting soaring Fire (Wealth) and Earth (Officer) across transits—a surging river meeting intense heat and fortified dams. The 14-character energetic field enters high friction and volatility. Commercial stakes and rewards surge alongside regulatory and market risks.'
+          : 'Delicate Water enters arid Fire and heavy Earth territory. Like a mountain spring navigating blazing sand dunes and boulder jams, external obligations and interpersonal friction threaten somatic exhaustion.';
+        strategicFocusZh = isStrong
+          ? '顺势取财但严控杠杆，在合同、税务与现金流底线上修筑防火墙，防范因盲目冒进导致的资金链紧绷。'
+          : '坚决执行“减法断舍离”与“课题分离”，把外界压力与他人期待挡在护城河外，切忌代人受过。';
+        strategicFocusEn = isStrong
+          ? 'Harness commercial winds while strictly bounding leverage; construct unassailable legal, tax, and liquidity firewalls.'
+          : 'Deploy radical subtraction and task separation; erect moats against external expectations and refuse to absorb others\' karmic baggage.';
+        actionDirectivesZh = [
+          '【现金流安全边际】：面对任何看似暴利的诱惑，绝不进行全额重仓或杠杆融资，常备12个月纯防御性流动资金。',
+          '【法务与签约双重把关】：所有商业协议与利益合作，必须经第三方独立法务过目，将权责利与退出机制写死在纸面上。',
+          '【24小时决策冷启动】：遇重大博弈或情绪激动时，强制执行24小时沉淀期，不当场做出冲动承诺。'
+        ];
+        actionDirectivesEn = [
+          '[Cash Flow Safety Margin]: Resist high-upside leverage; preserve 12 months of liquid operational reserves unconditionally.',
+          '[Dual Legal Contract Review]: Ensure all commercial agreements undergo independent third-party legal scrutiny with ironclad exit clauses.',
+          '[24-Hour Emotional Pausing]: Enforce a mandatory 24-hour cooling window before finalizing high-stakes commercial or interpersonal deals.'
+        ];
+        physicalTuningZh = '补充温水与电解质，保持规律作息以滋阴降火，晚餐宜清淡，睡前远离财务与业务刺激。';
+        physicalTuningEn = 'Replenish electrolytes and warm water; nourish yin to soothe internal heat, eating light dinners and severing screen stimulation before bed.';
+      } else if (dominantEl === '木') {
+        titleZh = '强水润木 · 食伤吐秀与作品交付 (学思著述与高阶研发黄金期)';
+        titleEn = 'Strong Water Nourishing Wood · Output Unleashed & Intellectual Shipping';
+        dynamicsZh = '原局水势浩大，得大运、流年、流月木气顺畅引流。“水生木，木生秀气”，滔滔江水化为扶疏花木与参天林海。心智算力处于峰值，以往的焦虑反刍瞬间转化为敏锐的洞察力与澎湃的创作欲望，是学术深造、著书立说、产品架构设计与开源交付的最优窗口。';
+        dynamicsEn = 'Abundant Water finds pristine outlet through Wood currents. The ancient maxim holds: "Water generates Wood, channeling radiant output." Mental compute easily transmutes into branching creative mastery. Rumination dissolves into prolific output—prime timing for deep research, writing masterpieces, building technical architectures, and launching commercial products.';
+        strategicFocusZh = '全面转向外向实体交付，拒绝颅内空转，将澎湃心力倾注于硬核作品上线与知识产权沉淀。';
+        strategicFocusEn = 'Pivot decisively to real-world shipping; banish cerebral overthinking and channel mental compute into shipping world-class code, frameworks, and publications.';
+        actionDirectivesZh = [
+          '【以交付击溃空想（Done > Perfect）】：打破完美主义魔咒，以极速推出初代MVP产品原型，在真实世界反馈中淬炼迭代。',
+          '【沉淀系统化知识资产】：将脑中独创的方法论、代码框架或业务洞察系统化沉淀为专利、专著或付费产品。',
+          '【单核心流时间护城河】：每日清晨固定留出3小时不被任何人打扰的深度创作心流时间，关闭全部通讯即时提醒。'
+        ];
+        actionDirectivesEn = [
+          '[Ship v0.1 Prototype]: Shatter perfectionism by deploying minimum viable products; iterate rapidly based on live market traction.',
+          '[Codify Proprietary IP]: Formalize core expertise into patents, technical books, open-source repositories, or commercial platforms.',
+          '[Single-Core Deep Sanctuary]: Reserve 3 uninterrupted morning hours daily with notifications disabled for pure deep-work creation.'
+        ];
+        physicalTuningZh = '晨起多接触自然绿植，适度扩胸与伸展脊柱，调畅肝胆经气机，防范用眼过度与肝阳上亢。';
+        physicalTuningEn = 'Immerse in morning greenery, stretch spine and shoulders to soothe liver meridian qi, guarding against eye strain and hyper-focus fatigue.';
+      } else if (dominantEl === '金') {
+        titleZh = '强水逢金 · 印重水浊与动能消解 (警惕颅内空转 · 强制身体力行)';
+        titleEn = 'Strong Water Meeting Metal · Resource Over-Saturation & Physical Grounding';
+        dynamicsZh = '原本充沛之水再遇重重金气生扶，“金多水浊，冰冻深潭”。大脑逻辑分析与哲学思辨能力登峰造极，但极易陷入“多思寡行、理论自洽、与现实脱节”的内耗泥潭。对方案吹毛求疵，脑中演练千百回却迟迟无法落地迈出第一步。';
+        dynamicsEn = 'Strong natal Water receives heavy Metal generation, triggering mental saturation—a vast ocean fed by frozen glaciers. The cerebral cortex over-indexes on intricate theoretical models while physical action stalls. Mental bandwidth is over-allocated to perfectionist rumination; physical kinetic movement is urgently required to discharge excess neurological current.';
+        strategicFocusZh = '切断纯理论推演，通过高强度体能消耗、动手实操与商业琐碎落地，强行将精神注意力拉回物理现实。';
+        strategicFocusEn = 'Halt abstract theorizing; deploy high-intensity physical workouts, hands-on mechanical execution, and concrete commercial chores to ground consciousness in physical reality.';
+        actionDirectivesZh = [
+          '【强制体能排汗发汗】：每日雷打不动进行45分钟中高强度有氧运动（游泳、跑步、器械），用肉体疲劳倒逼大脑关机。',
+          '【物理触觉降维操作】：多参与烹饪、整理书桌、打扫庭院等具体手部劳动，用手掌皮肤触觉强行剥夺颅内多余算力。',
+          '【五分钟起跑微习惯】：面临困难任务时绝不推演全盘方案，只要求自己做5分钟或写3行代码，借助行动惯性冲破拖延。'
+        ];
+        actionDirectivesEn = [
+          '[Mandatory Aerobic Sweat]: Block 45 minutes daily for high-intensity cardio (swimming, sprinting, lifting) to physically discharge cerebral tension.',
+          '[Somatic Tactile Grounding]: Engage in manual tactile chores (cooking, cleaning, hand-sketching) to reroute attention away from cognitive loops.',
+          '[5-Minute Kinetic Starter]: When analysis paralysis strikes, write just 3 lines of code or work for 5 minutes; let physical momentum dissolve inertia.'
+        ];
+        physicalTuningZh = '多晒太阳、多吃温性食材促进发汗，调理肺脾气机，杜绝久坐不起与思虑伤脾。';
+        physicalTuningEn = 'Absorb direct sunlight, consume warm nourishing soups, support lung-spleen fluid circulation, and prevent prolonged sedentary overthinking.';
+      } else {
+        titleZh = '十四字水气滔天 · 浩荡江河与利益共生 (比劫林立须防争竞)';
+        titleEn = 'Surging Water Tides Across 14 Characters · Expansive River & Peer Harmony';
+        dynamicsZh = '14字场态中水气独占鳌头，同道中人、同行竞争者与合作伙伴汇聚一堂。人脉资源极其丰厚，但也伴随着分润不均、意见相左与暗中博弈的隐患。';
+        dynamicsEn = 'Water dominates the 14-character energetic field. Peers, competitors, and allies gather in massive numbers. Social and professional networks expand exponentially, bringing both collaboration and contested boundaries.';
+        strategicFocusZh = '主动让利分润，构建利益共同体；契约前置，不搞口头义气，用清晰的游戏规则统合众人力量。';
+        strategicFocusEn = 'Proactively share upsides; establish binding upfront covenants rather than informal promises, aligning all players through transparent governance.';
+        actionDirectivesZh = [
+          '【财散人聚黄金法则】：在团队与合伙中主动出让超额利润分配权，换取核心成员的绝对忠诚与执行力。',
+          '【君子之交淡如水】：亲兄弟明算账，所有合作不谈虚妄情怀，一律落实为清晰可量化的股权协议与退出机制。',
+          '【避免同质化内卷】：不与同行在存量红海肉搏，主动寻找差异化细分生态位开拓新蓝海。'
+        ];
+        actionDirectivesEn = [
+          '[Profit Sharing Anchor]: Proactively distribute surplus profits to bind key contributors into an unbreakable coalition.',
+          '[Transparent Covenants]: Formalize all partnerships with explicit, enforceable equity terms and departure protocols.',
+          '[Differentiated Niche]: Avoid head-to-head red-ocean brawls; identify uncontested sub-verticals to create blue-ocean dominance.'
+        ];
+        physicalTuningZh = '多参与团体运动，保持心态豁达，避免因琐事生闷气，调理肾水与泌尿系统代谢。';
+        physicalTuningEn = 'Engage in team athletics, maintain magnanimous posture, and support healthy kidney and urinary fluid metabolism.';
+      }
+    } else if (dmEl === '木') {
+      if (dominantEl === '火' || dominantEl === '土') {
+        titleZh = isStrong ? '栋梁成林得火土 · 木火通明与财业大成 (食伤生财高光期)' : '柔木遭烈火耗土 · 根系焦枯之能量守恒 (防精力耗竭)';
+        titleEn = isStrong ? 'Flourishing Wood Meeting Fire & Earth · Brilliant Luminescence & Commercial Triumph' : 'Delicate Wood Facing Scorching Heat · Root Preservation & Energy Conservation';
+        dynamicsZh = isStrong
+          ? '原局木气强劲，见岁运月令火土并旺。木生火、火生土，“木火通明，食伤生财”。才华横溢，商业嗅觉极度敏锐，能够以独特的创意与产品打动市场，实现收入的指数级跃升。'
+          : '弱木遇熊熊烈火与厚重焦土，秀气被过度榨取，根系虚浮。虽然名声在外或事务缠身，但身心处于严重的透支状态，容易失眠脱发与心力交瘁。';
+        dynamicsEn = isStrong
+          ? 'Strong natal Wood meets roaring Fire and productive Earth. Ancient texts herald "Wood and Fire shining together, Output generating limitless Wealth." Creative insight merges with commercial timing to unlock exponential growth.'
+          : 'Delicate Wood encounters excessive Fire and arid Earth; vitality is severely drained by external demands, risking somatic exhaustion and adrenal fatigue.';
+        strategicFocusZh = isStrong
+          ? '抓住时代商业风口，以明星产品和规模化交付为抓手，完成资产跨越式积累。'
+          : '紧急关闭非核心支线任务，拒绝无效社交与过度承诺，给身心留出充足休耕期。';
+        strategicFocusEn = isStrong
+          ? 'Seize commercial momentum with flagship products and scalable distributions to cement generational wealth.'
+          : 'Halt secondary projects, decline superficial networking, and schedule non-negotiable restorative sabbaticals.';
+        actionDirectivesZh = [
+          '【爆款产品重点攻坚】：集中全盘优势兵力打磨一款具有垄断优势的杀手级产品，不搞分散平庸。',
+          '【商业闭环与现金结算】：所有创意与技术必须绑定清晰的付费转化路径，坚决杜绝免费陪跑。',
+          '【身心休耕防火墙】：哪怕业务再火爆，每周必须强制断网独处一天，切断所有商务消息干扰。'
+        ];
+        actionDirectivesEn = [
+          '[Flagship Product Focus]: Concentrate resources on launching ONE undisputed flagship solution with clear unfair advantages.',
+          '[Commercial Closure]: Tie creative output strictly to monetizable conversion funnels, refusing unpaid vanity labor.',
+          '[Weekly Digital Sabbath]: Force one full disconnected day weekly to restore cognitive and emotional reserves.'
+        ];
+        physicalTuningZh = '多喝清肝明目茶饮，常做眼部保健，规律睡眠，保障肝血充足与视力健康。';
+        physicalTuningEn = 'Consume soothing green teas, practice eye relaxation routines, and maintain regular sleep to nourish liver blood.';
+      } else if (dominantEl === '金') {
+        titleZh = '青龙受裁 · 斧斤雕琢成大器 (七杀修剪与铁律铸魂)';
+        titleEn = 'Wood Sculpted by Metal · Chiseled Discipline & Executive Command';
+        dynamicsZh = '木逢庚辛申酉金气修剪。古云“玉不琢不成器，木不雕不成材”。面临体制严格的规章、长官的严苛要求或高标准的专业门槛，虽有切削之痛，却是洗去浮华、蜕变为领袖的蜕变契机。';
+        dynamicsEn = 'Wood meets cutting Metal. The classical adage affirms: "Without the blade, timber cannot become an imperial beam." High institutional standards, demanding superiors, and rigorous professional criteria forge unassailable mastery.';
+        strategicFocusZh = '顺应规矩与制度，将外部压力内化为极度的专业自律，打造不可替代的硬核门槛。';
+        strategicFocusEn = 'Embrace institutional discipline; convert pressure into technical mastery and unshakeable operational rigor.';
+        actionDirectivesZh = [
+          '【视批评为免费代码审查】：面对领导与客户的苛刻刁难，抽离情绪，只提取其中可优化的技术事实。',
+          '【建立流程SOP规范】：用工业级标准重构日常工作流，用确定性的体系打败不确定的混乱。',
+          '【不碰灰色违规边缘】：法务合规做到极致，绝不抱侥幸心理触碰任何红线。'
+        ];
+        actionDirectivesEn = [
+          '[Treat Critique as Code Review]: Detach emotionally from harsh feedback, extracting only actionable structural truths.',
+          '[Formalize Industrial SOPs]: Institutionalize standardized operating procedures to eliminate operational chaos.',
+          '[Zero Regulatory Compromise]: Adhere strictly to compliance red lines without entertaining risky shortcuts.'
+        ];
+        physicalTuningZh = '舒展筋骨关节，温敷颈椎腰椎，适度拉伸肌腱，避免肌肉僵硬酸痛。';
+        physicalTuningEn = 'Stretch tendons and joints, apply warm compresses to cervical and lumbar spine, and prevent muscular tension.';
+      } else {
+        titleZh = '水木相涵 · 生机勃发与积淀深厚 (厚积薄发生命力稳固)';
+        titleEn = 'Water & Wood Harmonized · Organic Growth & Deep Foundation';
+        dynamicsZh = '水木交融，枝繁叶茂。生命能量稳步积累，精神世界从容自洽，人际关系温润和睦。';
+        dynamicsEn = 'Water and Wood nourish one another effortlessly. Energy builds steadily; inner peace aligns with warm, generative interpersonal relationships.';
+        strategicFocusZh = '潜心打磨核心技能，稳扎稳打构建复利护城河，静候最佳商业绽放时机。';
+        strategicFocusEn = 'Compound technical and human capital calmly, patiently constructing an impregnable long-term moat.';
+        actionDirectivesZh = [
+          '【长期主义深耕】：不为短期喧嚣所动，专注攻关需要数年才能见分晓的壁垒型技术。',
+          '【广结善缘与利他】：以开放谦和姿态帮扶后辈、协同同道，聚拢深厚声誉资本。',
+          '【身心调和与作息平衡】：维持高度规律的生活作息，让生命能量自然流淌。'
+        ];
+        actionDirectivesEn = [
+          '[Long-Horizon Compounding]: Stay anchored in multi-year foundational projects indifferent to ephemeral fads.',
+          '[Altruistic Reputation]: Mentor peers and allies generously, compounding authentic social and professional capital.',
+          '[Natural Rhythmic Harmony]: Preserve consistent daily rhythms to allow vital energy to compound effortlessly.'
+        ];
+        physicalTuningZh = '多在林间漫步，呼吸新鲜负氧离子，保持心情舒畅开朗。';
+        physicalTuningEn = 'Take frequent strolls in forests and parks, absorbing negative ions to keep mental spirits uplifted.';
+      }
+    } else {
+      titleZh = isStrong
+        ? `十四字气机通览 · ${dmEl}元当令 · 统摄四海引流变现`
+        : `十四字气机通览 · ${dmEl}元温润 · 顺天应时借势筑基`;
+      titleEn = isStrong
+        ? `14-Character Energy Synthesis · ${EL_EN_MAP[dmEl]} Day Master in Sovereign Stance`
+        : `14-Character Energy Synthesis · ${EL_EN_MAP[dmEl]} Day Master Navigating Macro Currents`;
+      dynamicsZh = `当前14字时空能量场中，【${dominantEl}】（${dominantElEn}）气机最为磅礴，占全场能量之 ${dominantPct}%。此五行在命局中扮演【${dominantRoleZh}】之核心职能。五行生克相互激荡，重塑了日元气机升降与时空平衡。`;
+      dynamicsEn = `Across the 14-character energetic matrix, [${dominantElEn}] reigns supreme, commanding ${dominantPct}% of the systemic energy field as [${dominantRoleEn}]. This elemental wave actively rebalances your Day Master strength and temporal trajectory.`;
+      strategicFocusZh = isStrong
+        ? `借助${dominantRoleZh}之大势，将充沛心力倾注于外部现实成果的交付与商业变现，以实战战绩定乾坤。`
+        : `顺应${dominantRoleZh}之节律，借力使力，在稳健防守中寻找结构性红利，不打消耗战。`;
+      strategicFocusEn = isStrong
+        ? `Harness ${dominantRoleEn} to channel abundant compute into shipping tangible market results and commercial assets.`
+        : `Flow with ${dominantRoleEn} rhythms; leverage institutional and collaborative allies while protecting inner vitality.`;
+      actionDirectivesZh = [
+        '【锚定主线攻坚】：任何周期内只锁定一个最高优先级战略主干，避免被杂务稀释算力。',
+        '【知进退明得失】：顺境时乘胜追击不拖泥带水，逆境时退守底线不盲目逞能。',
+        '【以作品与事实立世】：停止一切无谓的情绪内耗，用扎实的数据与可检验的结果回应质疑。'
+      ];
+      actionDirectivesEn = [
+        '[Anchor Primary Horizon]: Lock onto ONE non-negotiable strategic mission per cycle, preventing compute dilution.',
+        '[Strategic Cadence]: Advance decisively during favorable winds; defend conservative baselines when encountering friction.',
+        '[Ground in Tangible Deliveries]: Dissolve mental rumination through concrete metrics and verifiable achievements.'
+      ];
+      physicalTuningZh = '根据五行节律起居，顺四时而适寒暑，保证充足深睡眠与清淡饮食。';
+      physicalTuningEn = 'Align daily sleep and nutrition with seasonal cycles, prioritizing restorative deep sleep and hydration.';
+    }
+
+    return {
+      characters,
+      elementCounts,
+      elementPercentages,
+      elementDistributionList,
+      dominantElement: {
+        element: dominantEl,
+        elementEn: dominantElEn,
+        count: dominantCount,
+        percentage: dominantPct,
+        relation: dominantRelation,
+        roleZh: dominantRoleZh,
+        roleEn: dominantRoleEn
+      },
+      dayMasterDynamicState: {
+        dayMaster: dm,
+        dayMasterEn: (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en').split(' ')[0] : (STEM_EN_MAP[dm] || dm),
+        dayMasterElement: dmEl,
+        dayMasterElementEn: EL_EN_MAP[dmEl] || 'Wood',
+        natalStrength: isStrong ? '身旺' : '身弱',
+        natalStrengthEn: isStrong ? 'Strong' : 'Delicate',
+        supportCount,
+        drainCount,
+        dynamicRatio,
+        badgeZh,
+        badgeEn,
+        statusZh: dynamicStatusZh,
+        statusEn: dynamicStatusEn
+      },
+      strategicFieldInterpretation: {
+        titleZh,
+        titleEn,
+        dynamicsZh,
+        dynamicsEn,
+        strategicFocusZh,
+        strategicFocusEn,
+        actionDirectivesZh,
+        actionDirectivesEn,
+        physicalTuningZh,
+        physicalTuningEn
+      }
+    };
+  }
+
+  /**
    * Main Luck Calculation Entrypoint
    */
   function calculateLuck(bazi, targetYear, targetMonthBranch, targetDay) {
@@ -1259,6 +1670,7 @@ const LuckEngine = (function() {
 
     const operationalPlaybook = generateOperationalPlaybook(bazi, { decades, activeDecade, annuals, activeAnnual, months, activeMonth }, activeAnnual, activeMonth);
     const ecologicalResonance = generateGeographicEcologicalResonance(bazi);
+    const synthesis14Char = calculate14CharEnergySynthesis(bazi, activeDecade, activeAnnual, activeMonth);
 
     return {
       decadeMeta,
@@ -1272,7 +1684,8 @@ const LuckEngine = (function() {
       interactions,
       timeline,
       operationalPlaybook,
-      ecologicalResonance
+      ecologicalResonance,
+      synthesis14Char
     };
   }
 
@@ -1387,12 +1800,72 @@ const LuckEngine = (function() {
         wealthScore -= 8;
       }
 
+      const monthBranch = bazi.pillars.month ? bazi.pillars.month.branch : '';
+      const isMonthBranchClash = (monthBranch && SIX_CLASHES[branch] === monthBranch);
+      if (isMonthBranchClash) {
+        alerts.push('冲犯提纲');
+        alertsEn.push('Clash with Month Mandate');
+        energyScore -= 12;
+        wealthScore -= 10;
+      }
+
+      const isDecadeBranchClash = activeDecade && activeDecade.branch && (SIX_CLASHES[branch] === activeDecade.branch);
+      if (isDecadeBranchClash) {
+        alerts.push('岁运相冲');
+        alertsEn.push('Decade-Annual Branch Clash');
+        energyScore -= 8;
+        wealthScore -= 8;
+      }
+
+      const isDecadeBranchHarmony = activeDecade && activeDecade.branch && (SIX_HARMONIES[branch] === activeDecade.branch);
+      if (isDecadeBranchHarmony) {
+        alerts.push('岁运相合');
+        alertsEn.push('Decade-Annual Harmony');
+        energyScore += 6;
+        wealthScore += 6;
+      }
+
       const isLiuHe = (SIX_HARMONIES[branch] === dayBranch);
       if (isLiuHe) {
         alerts.push('岁君六合');
         alertsEn.push('Auspicious Harmony');
         energyScore += 10;
         wealthScore += 10;
+      }
+
+      // Dynamic Decade-Annual Fortunes interaction
+      const annualFortune = evaluateTransitFortune(bazi, { stem, branch, text: ganZhi, stemGod: tenGod, naYin, age }, 'annual');
+      const decadeFortune = activeDecade ? (activeDecade.fortune || evaluateTransitFortune(bazi, activeDecade, 'decade')) : null;
+
+      if (annualFortune) {
+        if (annualFortune.rating === 'good') {
+          energyScore += 8;
+          wealthScore += 10;
+        } else {
+          energyScore -= 10;
+          wealthScore -= 8;
+        }
+      }
+
+      if (decadeFortune && annualFortune) {
+        if (decadeFortune.rating === 'good' && annualFortune.rating === 'good') {
+          alerts.push('岁运双吉');
+          alertsEn.push('Dual Favorable Transit');
+        } else if (decadeFortune.rating === 'good' && annualFortune.rating !== 'good') {
+          alerts.push('大运顺吉·流年暂慎');
+          alertsEn.push('Decade Favorable - Annual Prudent');
+        } else if (decadeFortune.rating !== 'good' && annualFortune.rating === 'good') {
+          alerts.push('流年逢吉·逆势突破');
+          alertsEn.push('Annual Favorable - Counter-Trend Surge');
+        } else if (decadeFortune.rating !== 'good' && annualFortune.rating !== 'good') {
+          alerts.push('岁运并慎·坚守底线');
+          alertsEn.push('Dual Caution - Defensive Fortress');
+        }
+      }
+
+      if (alerts.length === 0) {
+        alerts.push('岁运从容 · 稳健深耕');
+        alertsEn.push('Steady Orbit - Deep Focus');
       }
 
       energyScore = Math.max(22, Math.min(98, Math.round(energyScore)));
@@ -2731,6 +3204,7 @@ const LuckEngine = (function() {
     generateOperationalPlaybook,
     generateGeographicEcologicalResonance,
     generateImpedanceReport,
+    calculate14CharEnergySynthesis,
     isDayMasterStrong,
     getTenGod,
     getNaYin

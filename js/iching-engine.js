@@ -483,9 +483,11 @@ class IChingEngine {
 
     let birthYear = 1990;
     if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
+    else if (bazi.birthYear) birthYear = bazi.birthYear;
     else if (bazi.year) birthYear = bazi.year;
 
-    const isMale = (bazi.gender === '乾造' || bazi.gender === '男' || (bazi.input && (bazi.input.gender === '乾造' || bazi.input.gender === '男')) || true);
+    const rawG = (bazi.input && bazi.input.gender) || bazi.gender || '乾造';
+    const isMale = (rawG === '乾造' || rawG === '男' || rawG === 'male' || rawG === 'Yang Male');
     const yearStem = p.year.stem;
     const isYangYear = ['甲', '丙', '戊', '庚', '壬'].includes(yearStem);
     const isYangMaleOrYinFemale = (isMale && isYangYear) || (!isMale && !isYangYear);

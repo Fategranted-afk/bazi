@@ -815,8 +815,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // Calculate Fortune & Luck Cycles (大运、流年、流月、流日)
       if (typeof LuckEngine !== 'undefined') {
         const now = new Date();
-        if (!selectedAnnualYear) selectedAnnualYear = now.getFullYear();
+        const currentCalYear = now.getFullYear();
+        selectedAnnualYear = currentCalYear;
         if (!selectedDailyDate) selectedDailyDate = now.toISOString().split('T')[0];
+
+        const userBYear = (result.input && result.input.year) || result.birthYear || result.year || 1990;
+        const realCurrentAge = Math.max(1, Math.abs(currentCalYear - userBYear));
+        activeChronoAge = realCurrentAge;
+        fourPillarsActiveAge = realCurrentAge;
 
         currentLuckResult = LuckEngine.calculateLuck(result, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
         if (currentLuckResult && currentLuckResult.decades && currentLuckResult.decades.length > 0) {
@@ -3072,17 +3078,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const protocolsWrapper = document.createElement('div');
       protocolsWrapper.className = 'space-y-5';
 
-      // 3-Level Protocols
+      // 4-Tier Master Protocols
       protocolsWrapper.innerHTML = `
         <div class="flex items-center justify-between pb-1 border-b border-gray-800">
           <div class="flex items-center space-x-2">
             <span class="text-lg">🛡️</span>
             <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
-              ${isEn ? 'Three-Level Factory Emergency De-escalation Protocols' : '出厂自救三阶降维心法'}
+              ${isEn ? 'Four-Tier Factory Emergency De-escalation Master Protocols' : '出厂自救四阶战训降维心法 (终结内耗闭环)'}
             </h4>
           </div>
           <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-            ${isEn ? '3 Emergency Tiers' : '三阶硬核自救'}
+            ${isEn ? '4 Emergency Tiers' : '四阶硬核自救'}
           </span>
         </div>
 
@@ -3100,10 +3106,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   ${isEn ? dp.principleEn : dp.principleZh}
                 </span>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
                 ${((isEn ? dp.stepsEn : dp.stepsZh) || []).map(step => `
-                  <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc">
-                    ${step}
+                  <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc flex flex-col justify-between">
+                    <div>${step}</div>
                   </div>
                 `).join('')}
               </div>
@@ -3111,80 +3117,6 @@ document.addEventListener('DOMContentLoaded', () => {
           `).join('')}
         </div>
       `;
-
-      // 3-Minute Somatic Interrupt Card
-      const somaticCard = document.createElement('div');
-      somaticCard.className = 'p-5 rounded-2xl border border-amber-500/50 bg-gradient-to-r from-amber-950/30 via-black/50 to-black/70 shadow-xl space-y-3';
-      somaticCard.innerHTML = `
-        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/30">
-          <div class="flex items-center space-x-2">
-            <span class="text-xl">⚡</span>
-            <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
-              ${isEn ? 'Immediate Somatic Interrupt: 3-Minute Physical Reset' : '即刻阻断：3分钟躯体物理打断法 (绝不在脑子里解决脑子里的问题)'}
-            </h4>
-          </div>
-          <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
-            ${isEn ? 'Body Resets Mind' : '以身转心 · 物理重置'}
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-1">
-          <div class="p-3.5 bg-black/50 rounded-xl border border-blue-900/40 space-y-1.5">
-            <span class="font-bold text-blue-300 text-xs block">🧊 1. ${isEn ? 'Instant Cold Shock' : '冰水激面与冷水冲腕'}</span>
-            <p class="text-gray-300 text-[11.5px] leading-relaxed font-serif-sc">
-              ${isEn ? 'Splash ice-cold water onto face and wrists for 15 seconds. Stimulates the diving reflex, instantly lowering heart rate and breaking amygdala loop.' : '用冰水猛击面部并持续冲洗双腕内侧15秒，刺激哺乳动物潜水反射，强行拉低心率，物理打断杏仁核过度亢奋。'}
-            </p>
-          </div>
-          <div class="p-3.5 bg-black/50 rounded-xl border border-emerald-900/40 space-y-1.5">
-            <span class="font-bold text-emerald-300 text-xs block">🫁 2. ${isEn ? 'Tactical 4-7-8 Breathing' : '4-7-8 战术呼吸法'}</span>
-            <p class="text-gray-300 text-[11.5px] leading-relaxed font-serif-sc">
-              ${isEn ? 'Inhale 4s, hold 7s, exhale slowly 8s. Repeat 3 cycles to force autonomic nervous system into parasympathetic calming mode.' : '鼻吸气4秒，闭气屏息7秒，呼气持续8秒；重复3个循环，强制自主神经由交感神经紧张切换为副交感神经安稳。'}
-            </p>
-          </div>
-          <div class="p-3.5 bg-black/50 rounded-xl border border-purple-900/40 space-y-1.5">
-            <span class="font-bold text-purple-300 text-xs block">🚶 3. ${isEn ? 'Physical Space Disconnect' : '物理空间强制抽离'}</span>
-            <p class="text-gray-300 text-[11.5px] leading-relaxed font-serif-sc">
-              ${isEn ? 'Instantly stand up from chair, walk away from screen for 2 minutes. Physical displacement terminates the subconscious room-anchored rumination state.' : '立即站起身离开当前办公椅与房间，快步走动2分钟。物理场景的位移可强行斩断潜意识中与空间锚定的内耗回路。'}
-            </p>
-          </div>
-        </div>
-      `;
-      protocolsWrapper.appendChild(somaticCard);
-
-      // Plus Four Combat Solutions
-      if (mf.solutions && Array.isArray(mf.solutions)) {
-        const solDiv = document.createElement('div');
-        solDiv.className = 'space-y-3 pt-2';
-        solDiv.innerHTML = `
-          <div class="flex items-center space-x-2 pb-1 border-b border-gray-800">
-            <span class="text-lg">🎯</span>
-            <h4 class="text-sm sm:text-base font-bold text-gray-200 font-serif-sc">
-              ${isEn ? 'Four Battle-Tested Antidotes for Lifelong Flow' : '四大实战改善对策 · 构筑无懈可击的心智抗压护城河'}
-            </h4>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            ${mf.solutions.map(sol => `
-              <div class="p-4 rounded-xl border border-gray-800/80 bg-black/45 space-y-2.5 hover:border-gray-700 transition">
-                <div class="flex items-center space-x-2 pb-1.5 border-b border-gray-800">
-                  <span class="text-xl">${sol.icon}</span>
-                  <div>
-                    <span class="font-bold text-gray-200 text-xs sm:text-sm">${sol.name}</span>
-                    <span class="text-[11px] text-amber-300 block">${sol.theme}</span>
-                  </div>
-                </div>
-                <div class="space-y-2 pt-1">
-                  ${sol.steps.map(st => `
-                    <div class="p-2.5 rounded-lg bg-black/50 border border-gray-800/60 text-xs text-gray-300 leading-relaxed font-serif-sc">
-                      ${st}
-                    </div>
-                  `).join('')}
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-        protocolsWrapper.appendChild(solDiv);
-      }
       container.appendChild(protocolsWrapper);
     }
 
@@ -4351,6 +4283,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 11. Render Time Dynamics & Macro-Energy 5-Tier Master Report (时间动力学与宏观能量五阶递进战报)
     renderTimeDynamicsReport(res, currentLuckResult, isEn);
+
+    // 12. Render 14-Character Dynamic Energy Synthesis (十四字时空全息能量统揽)
+    render14CharEnergySynthesis(res, currentLuckResult, isEn);
   }
 
   // Render In-Depth Fortune Evaluation, Meaning, Pitfalls (if Good), Taboos (if Bad), and Strategy
@@ -5311,6 +5246,200 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // 🌌 14-Character Dynamic Energy Synthesis (十四字时空全息能量统揽)
+  function render14CharEnergySynthesis(res, luckRes, isEn) {
+    const container = document.getElementById('fourteenCharEnergyContainer');
+    const badgeEl = document.getElementById('fourteenCharBadge');
+    if (!container || !res) return;
+
+    const synthesis = (luckRes && luckRes.synthesis14Char) ||
+      (typeof LuckEngine !== 'undefined' && LuckEngine.calculate14CharEnergySynthesis
+        ? LuckEngine.calculate14CharEnergySynthesis(res, luckRes ? luckRes.activeDecade : null, luckRes ? luckRes.activeAnnual : null, luckRes ? luckRes.activeMonth : null)
+        : null);
+    if (!synthesis) return;
+
+    if (badgeEl) {
+      badgeEl.textContent = isEn ? synthesis.dayMasterDynamicState.badgeEn : synthesis.dayMasterDynamicState.badgeZh;
+    }
+
+    const dmState = synthesis.dayMasterDynamicState;
+    const domEl = synthesis.dominantElement;
+    const interp = synthesis.strategicFieldInterpretation;
+
+    const elStyles = {
+      '木': { bg: 'bg-emerald-950/40', border: 'border-emerald-500/50', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', bar: 'from-emerald-600 to-emerald-400' },
+      '火': { bg: 'bg-rose-950/40', border: 'border-rose-500/50', text: 'text-rose-300', badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30', bar: 'from-rose-600 to-rose-400' },
+      '土': { bg: 'bg-amber-950/40', border: 'border-amber-500/50', text: 'text-amber-300', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30', bar: 'from-amber-600 to-amber-400' },
+      '金': { bg: 'bg-slate-900/50', border: 'border-slate-400/50', text: 'text-slate-200', badge: 'bg-slate-500/20 text-slate-200 border-slate-400/30', bar: 'from-slate-500 to-slate-300' },
+      '水': { bg: 'bg-blue-950/40', border: 'border-blue-500/50', text: 'text-blue-300', badge: 'bg-blue-500/20 text-blue-300 border-blue-500/30', bar: 'from-blue-600 to-blue-400' }
+    };
+
+    container.innerHTML = `
+      <!-- Card 1: 14 Characters Holographic Roster -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-black/40 border border-gray-800 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🪐</span>
+            <h4 class="text-sm font-bold text-amber-300 font-serif-sc">
+              ${isEn ? '14-Character Multi-Dimensional Matrix (Natal 8 + Decade 2 + Annual 2 + Month 2)' : '十四字全景矩阵（原局八字 + 大运两字 + 流年两字 + 流月两字）'}
+            </h4>
+          </div>
+          <span class="text-xs font-mono text-gray-400">
+            ${isEn ? `Day Master: ${dmState.dayMasterEn || dmState.dayMaster} (${dmState.dayMasterElementEn} · Natal ${dmState.natalStrengthEn})` : `核心日元：${dmState.dayMaster} (${dmState.dayMasterElement} · 原局${dmState.natalStrength})`}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 pt-1">
+          ${synthesis.characters.map(c => {
+            const st = elStyles[c.el] || elStyles['木'];
+            return `
+              <div class="p-2.5 rounded-xl border ${st.border} ${st.bg} flex flex-col justify-between space-y-1 text-center">
+                <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/60 pb-1">
+                  <span class="truncate font-mono">${isEn ? c.sourceEn : c.sourceZh}</span>
+                  <span class="px-1 py-0.2 rounded text-[9px] font-mono border ${c.isTransit ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'bg-gray-800 text-gray-300 border-gray-700'}">
+                    ${c.isTransit ? (isEn ? 'Transit' : '岁运') : (isEn ? 'Natal' : '原局')}
+                  </span>
+                </div>
+                <div class="py-1">
+                  <div class="text-lg font-bold font-serif-sc ${st.text}">
+                    ${isEn ? c.charEn : c.char}
+                  </div>
+                  <div class="text-[10px] font-mono ${st.text}">
+                    ${isEn ? c.elementEn : c.el}
+                  </div>
+                </div>
+                <div class="pt-1 border-t border-gray-800/60 text-[10px] font-semibold text-purple-300 truncate">
+                  ${isEn ? c.tenGodEn : c.tenGod}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- Card 2: 5-Element Distribution & Dominant Force -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <!-- 5-Element Proportions -->
+        <div class="lg:col-span-2 p-4 sm:p-5 rounded-2xl bg-black/40 border border-gray-800 space-y-3 flex flex-col justify-between">
+          <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+            <span class="text-xs font-bold text-amber-300 font-serif-sc">
+              ${isEn ? 'Dynamic 5-Element Energy Share Across 14 Characters' : '十四字全场五行气机权重分布'}
+            </span>
+            <span class="text-[10.5px] text-gray-400 font-mono">
+              ${isEn ? 'Total 14 Characters' : '全场共十四字'}
+            </span>
+          </div>
+          <div class="space-y-2.5">
+            ${synthesis.elementDistributionList.map(item => {
+              const st = elStyles[item.element] || elStyles['木'];
+              return `
+                <div class="space-y-1">
+                  <div class="flex items-center justify-between text-xs font-mono">
+                    <span class="${st.text} font-bold flex items-center gap-1.5">
+                      <span class="w-2 h-2 rounded-full ${st.bg} border ${st.border}"></span>
+                      <span>${isEn ? item.elementEn : item.element}</span>
+                    </span>
+                    <span class="text-gray-300">${item.count} / 14 (${item.percentage}%)</span>
+                  </div>
+                  <div class="w-full bg-gray-800/80 rounded-full h-2 overflow-hidden">
+                    <div class="bg-gradient-to-r ${st.bar} h-full rounded-full transition-all duration-300" style="width: ${item.percentage}%"></div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- Dominant Vector Card -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 border border-amber-500/40 space-y-3 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between pb-2 border-b border-amber-500/30">
+              <span class="text-xs font-bold text-amber-300 font-serif-sc flex items-center gap-1">
+                <span>👑</span>
+                <span>${isEn ? 'Dominant Macro Force' : '气机统帅主导五行'}</span>
+              </span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                ${domEl.percentage}%
+              </span>
+            </div>
+            <div class="text-center py-2">
+              <div class="text-2xl font-bold font-serif-sc text-amber-200">
+                ${isEn ? domEl.elementEn : domEl.element}
+              </div>
+              <div class="text-xs font-semibold text-purple-300 mt-0.5">
+                ${isEn ? domEl.roleEn : domEl.roleZh}
+              </div>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed font-serif-sc bg-black/40 p-2.5 rounded-lg border border-gray-800/80">
+              ${isEn ? dmState.statusEn : dmState.statusZh}
+            </p>
+          </div>
+          <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between text-[11px] font-mono text-gray-400">
+            <span>${isEn ? 'Support vs Drain Ratio' : '同党扶助 vs 异党消耗'}</span>
+            <span class="text-amber-300 font-bold">${dmState.supportCount} : ${dmState.drainCount} (${Math.round(dmState.dynamicRatio * 100)}%)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Deep Actionable Environmental Interpretation -->
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-[#1b1926] via-[#12131d] to-black border border-amber-500/40 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-gray-800">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">⚔️</span>
+            <h4 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc">
+              ${isEn ? interp.titleEn : interp.titleZh}
+            </h4>
+          </div>
+          <span class="px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30 text-xs font-serif-sc font-bold">
+            ${isEn ? dmState.badgeEn : dmState.badgeZh}
+          </span>
+        </div>
+
+        <!-- Field Dynamics -->
+        <div class="p-3.5 rounded-xl bg-black/50 border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc space-y-1">
+          <div class="text-amber-300 font-semibold flex items-center gap-1.5">
+            <span>⚡</span>
+            <span>${isEn ? 'Holographic Field Dynamics:' : '时空场态深度推演：'}</span>
+          </div>
+          <p class="text-gray-300">${isEn ? interp.dynamicsEn : interp.dynamicsZh}</p>
+        </div>
+
+        <!-- Strategic Focus -->
+        <div class="p-3.5 rounded-xl bg-amber-950/20 border border-amber-500/30 text-xs text-amber-200/90 leading-relaxed font-serif-sc space-y-1">
+          <div class="text-amber-300 font-semibold flex items-center gap-1.5">
+            <span>🎯</span>
+            <span>${isEn ? 'Core Strategic Focus:' : '核心战略攻守定调：'}</span>
+          </div>
+          <p>${isEn ? interp.strategicFocusEn : interp.strategicFocusZh}</p>
+        </div>
+
+        <!-- Action Directives -->
+        <div class="space-y-2 pt-1">
+          <h5 class="text-xs font-bold text-gray-200 font-serif-sc flex items-center gap-1.5">
+            <span>🛡️</span>
+            <span>${isEn ? 'Tactical Action Directives & Operating Rules:' : '现实破局战术指令与实操戒律：'}</span>
+          </h5>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+            ${(isEn ? interp.actionDirectivesEn : interp.actionDirectivesZh).map(dir => `
+              <div class="p-3 rounded-xl bg-black/60 border border-gray-800 text-xs text-gray-300 leading-relaxed font-serif-sc flex flex-col justify-between">
+                <div>${dir}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Somatic Tuning -->
+        <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs text-emerald-200 leading-relaxed font-serif-sc flex items-center gap-2">
+          <span class="text-base">🌿</span>
+          <div>
+            <span class="font-bold text-emerald-300">${isEn ? 'Somatic Grounding & Physical Regulation: ' : '身心调律与生理接地实践：'}</span>
+            <span>${isEn ? interp.physicalTuningEn : interp.physicalTuningZh}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   // 子平 100 分制生克量化评分与格局高低
   function renderZiping100Score(res) {
     const isEn = (currentLang === 'en');
@@ -5464,9 +5593,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    let birthYear = (res.input && res.input.year) || 1990;
-    const currentYear = selectedAnnualYear || new Date().getFullYear();
-    const calculatedAge = Math.max(1, currentYear - birthYear);
+    let birthYear = (res.input && res.input.year) || res.birthYear || 1990;
+    const currentCalYear = new Date().getFullYear();
+    const calculatedAge = Math.max(1, Math.abs(currentCalYear - birthYear));
+    if (window._lastRenderedHexRes !== res) {
+      window._lastRenderedHexRes = res;
+      fourPillarsActiveAge = calculatedAge;
+      if (slider) slider.value = fourPillarsActiveAge;
+    }
+
     const isInitialized = slider && (slider.hasAttribute ? slider.hasAttribute('data-initialized') : slider._initialized);
     if (slider && !isInitialized) {
       fourPillarsActiveAge = calculatedAge;
@@ -5544,23 +5679,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const stemEnMap = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
     const branchEnMap = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
 
-    const stemStr = hexData.stemDetails ? hexData.stemDetails.map(s => `${isEn ? (stemEnMap[s.stem] || 'Stem') : s.stem}${isEn ? '->' : '→'}${s.num}`).join(' · ') : '';
-    const branchStr = hexData.branchDetails ? hexData.branchDetails.map(b => `${isEn ? (branchEnMap[b.branch] || 'Branch') : b.branch}${isEn ? '->' : '→'}[${b.nums.join(',')}]`).join(' · ') : '';
-    const oddsStr = hexData.odds ? hexData.odds.join('+') : '';
-    const evensStr = hexData.evens ? hexData.evens.join('+') : '';
-    const tianDerivationZh = hexData.sumOdds > 25
-      ? `${oddsStr} = ${hexData.sumOdds}（以25为中数：${hexData.sumOdds} - 25 = ${hexData.sumOdds - 25} → 取【${hexData.rawTianShu}】）`
-      : (hexData.sumOdds === 25 ? `${oddsStr} = 25（以25为中数：逢25取【5】）` : `${oddsStr} = ${hexData.sumOdds}（以25为中数：取【${hexData.rawTianShu}】）`);
-    const diDerivationZh = hexData.sumEvens > 30
-      ? `${evensStr} = ${hexData.sumEvens}（以30为中数：${hexData.sumEvens} - 30 = ${hexData.sumEvens - 30} → 取【${hexData.rawDiShu}】）`
-      : (hexData.sumEvens === 30 ? `${evensStr} = 30（以30为中数：逢30取【3】）` : `${evensStr} = ${hexData.sumEvens}（以30为中数：取【${hexData.rawDiShu}】）`);
+    const sumOdds = (typeof hexData.sumOdds === 'number') ? hexData.sumOdds : (hexData.odds && hexData.odds.length ? hexData.odds.reduce((a, b) => a + b, 0) : (typeof hexData.tianShu === 'number' ? hexData.tianShu : 25));
+    const sumEvens = (typeof hexData.sumEvens === 'number') ? hexData.sumEvens : (hexData.evens && hexData.evens.length ? hexData.evens.reduce((a, b) => a + b, 0) : (typeof hexData.diShu === 'number' ? hexData.diShu : 30));
+    const rawTianShu = (typeof hexData.rawTianShu === 'number') ? hexData.rawTianShu : (typeof hexData.tianShu === 'number' ? hexData.tianShu : 6);
+    const rawDiShu = (typeof hexData.rawDiShu === 'number') ? hexData.rawDiShu : (typeof hexData.diShu === 'number' ? hexData.diShu : 4);
+    const tianShu = (typeof hexData.tianShu === 'number') ? hexData.tianShu : rawTianShu;
+    const diShu = (typeof hexData.diShu === 'number') ? hexData.diShu : rawDiShu;
 
-    const tianDerivationEn = hexData.sumOdds > 25
-      ? `${oddsStr} = ${hexData.sumOdds} (Base 25: ${hexData.sumOdds} - 25 = ${hexData.sumOdds - 25} -> takes ${hexData.rawTianShu})`
-      : (hexData.sumOdds === 25 ? `${oddsStr} = 25 (Base 25: exactly 25 takes 5)` : `${oddsStr} = ${hexData.sumOdds} (Base 25: takes ${hexData.rawTianShu})`);
-    const diDerivationEn = hexData.sumEvens > 30
-      ? `${evensStr} = ${hexData.sumEvens} (Base 30: ${hexData.sumEvens} - 30 = ${hexData.sumEvens - 30} -> takes ${hexData.rawDiShu})`
-      : (hexData.sumEvens === 30 ? `${evensStr} = 30 (Base 30: exactly 30 takes 3)` : `${evensStr} = ${hexData.sumEvens} (Base 30: takes ${hexData.rawDiShu})`);
+    const stemStr = (hexData.stemDetails && hexData.stemDetails.length)
+      ? hexData.stemDetails.map(s => `${isEn ? (stemEnMap[s.stem] || 'Stem') : s.stem}${isEn ? '->' : '→'}${s.num}`).join(' · ')
+      : (res && res.pillars ? [res.pillars.year.stem, res.pillars.month.stem, res.pillars.day.stem, res.pillars.hour.stem].map(s => `${s}→6`).join(' · ') : '--');
+    const branchStr = (hexData.branchDetails && hexData.branchDetails.length)
+      ? hexData.branchDetails.map(b => `${isEn ? (branchEnMap[b.branch] || 'Branch') : b.branch}${isEn ? '->' : '→'}[${b.nums.join(',')}]`).join(' · ')
+      : (res && res.pillars ? [res.pillars.year.branch, res.pillars.month.branch, res.pillars.day.branch, res.pillars.hour.branch].map(b => `${b}→[1,6]`).join(' · ') : '--');
+
+    const oddsStr = (hexData.odds && hexData.odds.length) ? hexData.odds.join('+') : `${sumOdds}`;
+    const evensStr = (hexData.evens && hexData.evens.length) ? hexData.evens.join('+') : `${sumEvens}`;
+
+    const tianDerivationZh = sumOdds > 25
+      ? `${oddsStr} = ${sumOdds}（以25为中数：${sumOdds} - 25 = ${sumOdds - 25} → 取【${rawTianShu}】）`
+      : (sumOdds === 25 ? `${oddsStr} = 25（以25为中数：逢25取【5】）` : `${oddsStr} = ${sumOdds}（以25为中数：取【${rawTianShu}】）`);
+    const diDerivationZh = sumEvens > 30
+      ? `${evensStr} = ${sumEvens}（以30为中数：${sumEvens} - 30 = ${sumEvens - 30} → 取【${rawDiShu}】）`
+      : (sumEvens === 30 ? `${evensStr} = 30（以30为中数：逢30取【3】）` : `${evensStr} = ${sumEvens}（以30为中数：取【${rawDiShu}】）`);
+
+    const tianDerivationEn = sumOdds > 25
+      ? `${oddsStr} = ${sumOdds} (Base 25: ${sumOdds} - 25 = ${sumOdds - 25} -> takes ${rawTianShu})`
+      : (sumOdds === 25 ? `${oddsStr} = 25 (Base 25: exactly 25 takes 5)` : `${oddsStr} = ${sumOdds} (Base 25: takes ${rawTianShu})`);
+    const diDerivationEn = sumEvens > 30
+      ? `${evensStr} = ${sumEvens} (Base 30: ${sumEvens} - 30 = ${sumEvens - 30} -> takes ${rawDiShu})`
+      : (sumEvens === 30 ? `${evensStr} = 30 (Base 30: exactly 30 takes 3)` : `${evensStr} = ${sumEvens} (Base 30: takes ${rawDiShu})`);
 
     const xtUpperName = isEn ? (hexData.xtUpperTri ? hexData.xtUpperTri.nameEn : 'Heaven') : (hexData.xtUpperTri ? hexData.xtUpperTri.nameZh : '乾');
     const xtLowerName = isEn ? (hexData.xtLowerTri ? hexData.xtLowerTri.nameEn : 'Wind') : (hexData.xtLowerTri ? hexData.xtLowerTri.nameZh : '巽');
@@ -5590,7 +5738,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
             <div class="text-gray-400 font-semibold flex items-center justify-between">
               <span>${isEn ? 'Heaven Number (Odd Sum / Base 25):' : '天数归纳（单数和 / 逢25折算）：'}</span>
-              <span class="text-amber-400 font-bold font-mono">${hexData.sumOdds} → ${hexData.tianShu} (${xtUpperName})</span>
+              <span class="text-amber-400 font-bold font-mono">${sumOdds} → ${tianShu} (${xtUpperName})</span>
             </div>
             <p class="text-gray-300 font-mono text-[10px]">${isEn ? tianDerivationEn : tianDerivationZh}</p>
             <p class="text-gray-400 text-[10px]">${isEn ? 'Heavenly Stems Mapping:' : '干分配数：'} <span class="text-gray-200 font-mono">${stemStr}</span></p>
@@ -5598,7 +5746,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
             <div class="text-gray-400 font-semibold flex items-center justify-between">
               <span>${isEn ? 'Earth Number (Even Sum / Base 30):' : '地数归纳（双数和 / 逢30折算）：'}</span>
-              <span class="text-purple-400 font-bold font-mono">${hexData.sumEvens} → ${hexData.diShu} (${xtLowerName})</span>
+              <span class="text-purple-400 font-bold font-mono">${sumEvens} → ${diShu} (${xtLowerName})</span>
             </div>
             <p class="text-gray-300 font-mono text-[10px]">${isEn ? diDerivationEn : diDerivationZh}</p>
             <p class="text-gray-400 text-[10px]">${isEn ? 'Earthly Branches Mapping:' : '支分配数：'} <span class="text-gray-200 font-mono">${branchStr}</span></p>
@@ -7321,13 +7469,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderChronoNavigator(timeline, bazi) {
     chronoTimelineData = timeline;
     const isEn = (currentLang === 'en');
-    const birthYear = (bazi.input && bazi.input.year) || bazi.birthYear || 1990;
+    const birthYear = (bazi.input && bazi.input.year) || bazi.birthYear || bazi.year || 1990;
     const currentYear = new Date().getFullYear();
-    const currentAge = Math.max(1, Math.min(100, currentYear - birthYear + 1));
-
-    if (!activeChronoAge || activeChronoAge < 1 || activeChronoAge > 100) {
-      activeChronoAge = currentAge;
-    }
+    const currentAge = Math.max(1, Math.min(100, Math.abs(currentYear - birthYear)));
+    activeChronoAge = currentAge;
 
     const slider = document.getElementById('chronoAgeSlider');
     if (slider) {
@@ -7355,6 +7500,22 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           startChronoPlay();
         }
+      });
+    }
+
+    const prevBtn = document.getElementById('chronoPrevAge');
+    if (prevBtn && !prevBtn._hasListener) {
+      prevBtn._hasListener = true;
+      prevBtn.addEventListener('click', () => {
+        jumpToAge(activeChronoAge - 1);
+      });
+    }
+
+    const nextBtn = document.getElementById('chronoNextAge');
+    if (nextBtn && !nextBtn._hasListener) {
+      nextBtn._hasListener = true;
+      nextBtn.addEventListener('click', () => {
+        jumpToAge(activeChronoAge + 1);
       });
     }
 
@@ -7430,11 +7591,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function startChronoPlay() {
+    if (isChronoPlaying) return;
     isChronoPlaying = true;
     const playBtn = document.getElementById('chronoPlayBtn');
-    if (playBtn) playBtn.textContent = (currentLang === 'en') ? '⏸ Pause' : '⏸ 暂停推演';
+    if (playBtn) playBtn.textContent = (currentLang === 'en') ? '⏸️ Pause' : '⏸️ 暂停推演';
 
-    if (chronoPlayTimer) clearInterval(chronoPlayTimer);
     chronoPlayTimer = setInterval(() => {
       activeChronoAge++;
       if (activeChronoAge > 100) activeChronoAge = 1;
@@ -7470,7 +7631,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.getElementById('chronoYearCard');
     if (card) {
       const alerts = isEn ? item.alertsEn : item.alerts;
-      const alertBadges = alerts.map(a => `<span class="px-2 py-0.5 rounded text-[10px] bg-rose-950/60 text-rose-300 border border-rose-800/40 font-bold">${a}</span>`).join(' ');
+      const alertBadges = alerts.map(a => {
+        let cls = 'bg-rose-950/60 text-rose-300 border border-rose-800/40 font-bold';
+        if (a.includes('吉') || a.includes('合') || a.includes('Favorable') || a.includes('Harmony') || a.includes('Surge')) {
+          cls = 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/40 font-bold';
+        } else if (a.includes('从容') || a.includes('稳健') || a.includes('深耕') || a.includes('Steady') || a.includes('Focus') || a.includes('Prudent')) {
+          cls = 'bg-blue-950/60 text-blue-300 border border-blue-800/40 font-bold';
+        }
+        return `<span class="px-2 py-0.5 rounded text-[10px] ${cls}">${a}</span>`;
+      }).join(' ');
       const godText = isEn ? item.tenGodEn : item.tenGod;
       const gzText = isEn ? item.ganZhiEn : item.ganZhi;
       const decText = isEn ? item.decadeSpanEn : `${item.decade}大运 (${item.decadeSpanZh})`;
@@ -7496,7 +7665,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <div class="flex flex-wrap gap-1.5 pt-1">
-            ${alertBadges || `<span class="px-2 py-0.5 rounded text-[10px] bg-emerald-950/40 text-emerald-300 border border-emerald-800/30">${isEn ? 'Peaceful Orbit' : '岁运祥和'}</span>`}
+            ${alertBadges || `<span class="px-2 py-0.5 rounded text-[10px] bg-blue-950/40 text-blue-300 border border-blue-800/30 font-bold">${isEn ? 'Steady Orbit · Deep Focus' : '岁运从容 · 稳健深耕'}</span>`}
           </div>
         </div>
 
@@ -9101,6 +9270,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderEcologicalResonance = renderEcologicalResonance;
   window.renderTimeDynamicsReport = renderTimeDynamicsReport;
   window.renderFrictionView = renderFrictionView;
+  window.render14CharEnergySynthesis = render14CharEnergySynthesis;
 
   // Initial Calculation Run & Prepare Landing Preview
   triggerCalculate();

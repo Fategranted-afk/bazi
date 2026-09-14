@@ -2492,57 +2492,63 @@ class PortraitEngine {
       }
     ];
 
-    // 🛡️ 4. 出厂自救三阶降维心法 (Three-Level Factory Emergency De-escalation Protocols)
+    // 🛡️ 4. 出厂自救三阶战训降维心法 (Three-Tier Factory Emergency De-escalation Master Protocols)
     const deEscalationProtocols = [
       {
         levelZh: '第一阶：3分钟躯体硬重启 (生理神经阻断)',
-        levelEn: 'Level 1: 3-Minute Somatic Emergency Reset (Physiological Vagal Circuit Breaker)',
+        levelEn: 'Tier 1: 3-Minute Somatic Emergency Reset (Physiological Vagal Circuit Breaker)',
         icon: '🧊',
-        principleZh: '绝不在脑子里解决脑子里的问题，用身体感觉强行拉回当下',
-        principleEn: 'Never solve cerebral loops with the mind; force consciousness into somatic grounding',
+        principleZh: '绝不在脑子里解决脑子里的问题，用身体触觉强行拉回当下，断开杏仁核警报',
+        principleEn: 'Never solve mental loops with the mind; ground awareness in somatic touch to abort amygdala panic',
         stepsZh: [
-          '【冰水潜水反射】用冷水用力洗脸冲腕15秒，刺激哺乳动物潜水反射，强行降低心率断开杏仁核警报。',
-          '【4-7-8战术呼吸】鼻吸4秒、闭息7秒、慢呼8秒，连做3轮，强行激活副交感神经安稳回路。',
-          '【空间肌肉位移】立即站起身离开工位走动2分钟，用擦桌、洗手、大步快走抢占大脑算力。'
+          '【冷水潜水反射刺激】内耗念头翻滚时，立刻去洗手间用冰凉冷水用力洗脸冲腕15秒，刺激哺乳动物潜水反射，强行激活迷走神经，物理阻断交感神经的焦虑风暴。',
+          '【4-7-8战术呼吸法】鼻吸气4秒、闭气屏息7秒、慢呼持续8秒，连做3轮，强制自主神经由交感神经紧张切换为副交感神经安稳。',
+          '【空间肌肉位移与手脑置换】立即离开座椅走动2分钟，去干洗手、擦桌、大步快走等具体体力动作，用手掌肌肉触觉抢占大脑注意力带宽。',
+          '【笔尖降维外部化】拿出一张白纸，把脑中纠结的所有焦虑烂账毫无逻辑地全写下来。写在纸上那一刻，大脑瞬间从“情绪受害者”切换为“客观审视者”。'
         ],
         stepsEn: [
-          'Ice-cold facial immersion for 15s stimulates mammalian diving reflex, instantly lowering pulse and aborting amygdala panic.',
-          'Tactical 4-7-8 breathing: Inhale 4s, hold 7s, exhale 8s for 3 cycles to force parasympathetic relaxation.',
-          'Physical displacement: Stand up immediately, leave your desk for 2 minutes, and engage somatic tactile touch.'
+          '[Cold Shock Immersion]: Splash ice-cold water onto face and wrists for 15s to stimulate the mammalian diving reflex, instantly lowering heart rate and aborting panic.',
+          '[Tactical 4-7-8 Breathing]: Inhale 4s, hold 7s, exhale slowly 8s for 3 cycles to force autonomic nervous system into parasympathetic calming mode.',
+          '[Physical Displacement]: Stand up immediately, walk away for 2 minutes, and engage somatic tactile touch (cleaning desk, washing hands) to recapture mental bandwidth.',
+          '[Pen-to-Paper Externalization]: Write out every unedited anxiety loop onto blank paper; shifting thoughts into physical ink turns the mind from victim to objective observer.'
         ]
       },
       {
         levelZh: '第二阶：经典经文降维破相 (认知解耦升维)',
-        levelEn: 'Level 2: Classical Scripture & Zen Cognitive De-framing (Transmuting Mental Projections)',
+        levelEn: 'Tier 2: Classical Scripture & Zen Cognitive De-framing (Transmuting Mental Projections)',
         icon: '🪞',
-        principleZh: '事来则应、事去则静，掐断千百个自责推演的第二念',
-        principleEn: 'Respond fully as events arrive, settle pristine as they depart; sever secondary rumination loops',
+        principleZh: '事来则应、事去则静，掐断千百个自责推演的第二念；预先封死最坏底线',
+        principleEn: 'Respond fully as events arrive, settle pristine as they depart; sever secondary rumination and cap bottom lines',
         stepsZh: [
-          '【凡所有相皆是虚妄】觉察到焦虑风暴时当头棒喝：“凡所有相皆是虚妄！”抽离角色，静观念头生灭。',
-          '【后念离境即菩提】外界刺激产生第一念是生理常态，严禁在脑中推演第二念第三念，让念头如水上泡影自灭。',
-          '【用心若镜不将不迎】像镜子一样映照现实，不预迎未来的灾难，不挽留过去的过失，照过即空，元神不伤。'
+          '【凡所有相皆是虚妄】觉察到焦虑风暴时当头棒喝：“凡所有相皆是虚妄！”抽离角色，静观念头如浮云生灭，我是天空不是云。',
+          '【后念离境即菩提】外界刺激产生第一念是生理常态，严禁在脑中推演第二念第三念，让念头如水上泡影自然泯灭。',
+          '【用心若镜不将不迎】像镜子一样映照现实，不预迎未来的灾难，不挽留过去的过失，照过即空，元神丝毫无伤。',
+          '【斯多葛预先封顶】每当焦虑“万一搞砸了”，直接在纸上把最烂底线写出并制定生存预案。底线一旦封死，绝不再为未发生的概率消耗一秒脑力。'
         ],
         stepsEn: [
-          'Declare mentally: "All conditioned forms are illusory!" Step back as an unblemished cosmic witness.',
-          'Primary impulses are biological; sever secondary and tertiary ruminations immediately, allowing thoughts to dissolve like foam.',
-          'Mirror Mind: Anticipate no future catastrophe, harbor no past regrets; reflect clearly and release instantly without damage.'
+          '[All Forms Are Illusory]: When anxiety storms strike, declare: "All forms are illusory!" Step back as a pristine witness: I am the spacious sky, not the passing clouds.',
+          '[Sever Secondary Rumination]: First impulses are biological responses; strictly prohibit rehearsing secondary and tertiary stories, allowing thoughts to dissolve like foam.',
+          '[The Mirror Mind]: Reaching for no future catastrophe, clinging to no past regret; reflect incoming events crisply and release instantly without spiritual injury.',
+          '[Stoic Bottom-Line Capping]: Formulate the absolute worst-case survival fallback on paper; once the bottom line is sealed, consume zero CPU on phantom probabilities.'
         ]
       },
       {
-        levelZh: '第三阶：课题分离与利刃出鞘 (外向实体交付)',
-        levelEn: 'Level 3: Sovereign Boundary Reset & Creative Transmutation (Outward Masterpiece Shipping)',
+        levelZh: '第三阶：课题分离与利刃出鞘 (心理护城河与外向实体交付)',
+        levelEn: 'Tier 3: Sovereign Boundary Reset & Outward Masterpiece Shipping (Psychological Moat & Real Deliveries)',
         icon: '🗡️',
-        principleZh: '把向内自残的刀，变成向外斩击现实困境的利剑',
-        principleEn: 'Transmute the blade of self-attack outward into laser-focused product creation',
+        principleZh: '划分我的课题与别人的课题，把向内自残的刀变成向外斩击现实的利剑；行动是消融内耗的唯一物理溶剂',
+        principleEn: 'Partition tasks ruthlessly: others\' judgments belong to their karma; transmute the blade of self-attack outward into decisive commercial delivery',
         stepsZh: [
-          '【阿德勒课题分离】划分我的课题与别人的课题；别人的评价是他自己的业力，坚决收回向外索求认可的触角。',
-          '【先交出一个烂版本】打破完美主义魔咒，允许做个糙活，以“完成击败空想”启动正向反馈飞轮。',
-          '【以硬核作品立世】把颅内多余的心智算力全部倾注于写代码、造产品、做商业变现，作品落地内耗自解！'
+          '【阿德勒课题分离与延迟拒绝】划分“我的课题”与“别人的课题”。他人的情绪评价是他自己的业力；非职责内求助统一使用“我查日程明天答复”，只要勉强坚决冷面拒绝。',
+          '【内外之分定乎荣辱】《庄子》宋荣子心法：举世誉之而不加劝，举世非之而不加沮。将自我价值与外界风评彻底解耦，边界清晰，免于被动内耗。',
+          '【先交出烂透的第一版 (Done > Perfect)】打破完美主义魔咒，允许做个糙活，以“完成击败空想”启动正向反馈飞轮。5分钟无痛起跑，惯性带你冲出泥潭。',
+          '【掉转利刃以硬核作品立世】停止向内自我攻击！把多余的心智算力全部倾注于写代码、造产品、精研专业绝技。作品落地交付，内耗自然冰消瓦解！'
         ],
         stepsEn: [
-          'Adlerian separation of tasks: Other people\'s judgments belong to their karma; sever all external validation seeking.',
-          'Done beats perfect: Ship an imperfect baseline prototype to ignite real-world momentum over internal fantasy.',
-          'Anchor your dignity in concrete works: Channel excess compute into shipping code, articles, and products.'
+          '[Adlerian Separation & Delayed Refusal]: Strictly partition your responsibility from others\' emotions. For non-essential requests, enforce 24-hour delayed responses and refuse if reluctant.',
+          '[Decoupling Praise and Blame]: Follow Zhuangzi\'s Master Song: unmoved by universal praise, undaunted by universal blame. Anchor unassailable inner sovereignty.',
+          '[Done Beats Perfect & 5-Min Start]: Shatter perfectionism by shipping a rough baseline v0.1; 5 minutes of painless start triggers positive momentum that defeats 90% of friction.',
+          '[Weaponize Excess Compute into Masterpieces]: Convert rumination bandwidth outward into code, articles, products, and commercial assets. Concrete shipping dissolves rumination instantly.'
         ]
       }
     ];
