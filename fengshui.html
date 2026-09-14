@@ -103,15 +103,26 @@
   <script>
     (function() {
       let currentLang = "zh";
+      let currentCountry = "China";
+      let currentCity = "beijing";
+      let customCity = "";
 
       function getChartData() {
         try {
           const stored = localStorage.getItem("lastBaziParams");
           if (stored) {
             const p = JSON.parse(stored);
+            if (p.country) currentCountry = p.country;
+            if (p.city) currentCity = p.city;
+            if (p.customCity) customCity = p.customCity;
             return BaZiEngine.calculate(p);
           }
         } catch (e) {}
+        if (typeof localStorage !== "undefined") {
+          if (localStorage.getItem("current_residence_country")) currentCountry = localStorage.getItem("current_residence_country");
+          if (localStorage.getItem("current_residence_city")) currentCity = localStorage.getItem("current_residence_city");
+          if (localStorage.getItem("current_residence_custom")) customCity = localStorage.getItem("current_residence_custom");
+        }
         return BaZiEngine.calculate({
           year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造"
         });
@@ -146,7 +157,8 @@
           enBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200";
         }
 
-        const guide = SpatialFengShuiEngine.generateFengShuiGuide(bazi, luck);
+        const residenceData = { country: currentCountry, city: currentCity, customCity: customCity };
+        const guide = SpatialFengShuiEngine.generateFengShuiGuide(bazi, luck, residenceData);
         if (!guide) return;
 
         const badgesContainer = document.getElementById("fsQuickBadges");
@@ -176,8 +188,12 @@
         const me = guide.meritItem;
         const hr = guide.holisticRatingItem;
 
+        const cityCardHtml = (guide.currentCityEvaluation && typeof SpatialFengShuiEngine.renderCityEvaluationCard === "function")
+          ? SpatialFengShuiEngine.renderCityEvaluationCard(guide.currentCityEvaluation, isEn)
+          : "";
+
         const container = document.getElementById("fsContentContainer");
-        container.innerHTML = `
+        container.innerHTML = cityCardHtml + `
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
               <div class="space-y-2.5">
@@ -395,6 +411,30 @@
             </div>
           </div>
         `;
+
+        const inCardCountry = document.getElementById("fsCardCountrySelect");
+        const inCardCity = document.getElementById("fsCardCitySelect");
+        if (inCardCountry && inCardCity) {
+          inCardCountry.addEventListener("change", (e) => {
+            currentCountry = e.target.value;
+            const db = (typeof SpatialFengShuiEngine !== "undefined") ? SpatialFengShuiEngine.GEO_CITIES_DATABASE : null;
+            const countryData = db ? db[currentCountry] : null;
+            const firstReg = countryData ? Object.values(countryData.regions)[0] : null;
+            currentCity = (firstReg && firstReg.cities[0]) ? firstReg.cities[0].id : "custom";
+            if (typeof localStorage !== "undefined") {
+              localStorage.setItem("current_residence_country", currentCountry);
+              localStorage.setItem("current_residence_city", currentCity);
+            }
+            render();
+          });
+          inCardCity.addEventListener("change", (e) => {
+            currentCity = e.target.value;
+            if (typeof localStorage !== "undefined") {
+              localStorage.setItem("current_residence_city", currentCity);
+            }
+            render();
+          });
+        }
       }
 
       document.getElementById("fsLangZhBtn").addEventListener("click", () => {

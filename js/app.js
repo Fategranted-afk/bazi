@@ -127,12 +127,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let isIChingCyclePlaying = false;
   let ichingCyclePlayTimer = null;
   let cachedIChingCycleData = null;
+  let currentResidenceCountry = (typeof localStorage !== 'undefined' && localStorage.getItem('current_residence_country')) ? localStorage.getItem('current_residence_country') : 'China';
+  let currentResidenceCity = (typeof localStorage !== 'undefined' && localStorage.getItem('current_residence_city')) ? localStorage.getItem('current_residence_city') : 'beijing';
+  let currentResidenceCustomName = (typeof localStorage !== 'undefined' && localStorage.getItem('current_residence_custom')) ? localStorage.getItem('current_residence_custom') : '';
 
   // DOM Elements
   const birthDatePicker = document.getElementById('birthDate');
   const birthTimePicker = document.getElementById('birthTime');
   const genderSelect = document.getElementById('gender');
   const citySelect = document.getElementById('citySelect');
+  const currentCountrySelect = document.getElementById('currentCountrySelect');
+  const currentCitySelect = document.getElementById('currentCitySelect');
+  const currentCustomCityInput = document.getElementById('currentCustomCityInput');
   const timezoneSelect = document.getElementById('timezoneSelect');
   const customLonInput = document.getElementById('customLongitude');
   const useSolarTimeCheck = document.getElementById('useTrueSolarTime');
@@ -218,6 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (genderSelect && typeof I18N !== 'undefined') {
         if (genderSelect.options[0]) genderSelect.options[0].textContent = I18N.t('opt_qian', lang);
         if (genderSelect.options[1]) genderSelect.options[1].textContent = I18N.t('opt_kun', lang);
+      }
+
+      // Update current residence city options
+      if (typeof populateCurrentCityOptions === 'function') {
+        populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
       }
     }
 
@@ -343,6 +354,103 @@ document.addEventListener('DOMContentLoaded', () => {
       triggerCalculate();
     }
   });
+
+  // Current Residence City Controls
+  function populateCurrentCityOptions(countryKey, selectedCityId) {
+    if (!currentCitySelect) return;
+    currentCitySelect.innerHTML = '';
+    const isEn = (currentLang === 'en');
+    const db = (typeof SpatialFengShuiEngine !== 'undefined') ? SpatialFengShuiEngine.GEO_CITIES_DATABASE : null;
+    const countryData = (db && db[countryKey]) ? db[countryKey] : (db ? db.China : null);
+    if (!countryData) return;
+
+    Object.keys(countryData.regions).forEach(regKey => {
+      const reg = countryData.regions[regKey];
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = isEn ? `${reg.directionEn} (${reg.elementHeavenlyEn})` : `${reg.directionZh} (${reg.elementHeavenlyZh})`;
+      reg.cities.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = isEn ? `${c.nameEn} · ${reg.directionEn} (${reg.elementEn})` : `${c.nameZh} · ${reg.elementHeavenlyZh}`;
+        if (c.id === selectedCityId) {
+          opt.selected = true;
+        }
+        optgroup.appendChild(opt);
+      });
+      currentCitySelect.appendChild(optgroup);
+    });
+
+    const customOpt = document.createElement('option');
+    customOpt.value = 'custom';
+    customOpt.textContent = isEn ? 'Other / Custom City...' : '其他 / 自定义城市...';
+    if (selectedCityId === 'custom') customOpt.selected = true;
+    currentCitySelect.appendChild(customOpt);
+
+    if (currentCustomCityInput) {
+      if (currentCitySelect.value === 'custom') {
+        currentCustomCityInput.classList.remove('hidden');
+      } else {
+        currentCustomCityInput.classList.add('hidden');
+      }
+    }
+  }
+
+  if (currentCountrySelect) {
+    currentCountrySelect.value = currentResidenceCountry;
+    currentCountrySelect.addEventListener('change', () => {
+      currentResidenceCountry = currentCountrySelect.value;
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('current_residence_country', currentResidenceCountry);
+      }
+      const db = (typeof SpatialFengShuiEngine !== 'undefined') ? SpatialFengShuiEngine.GEO_CITIES_DATABASE : null;
+      const countryData = db ? db[currentResidenceCountry] : null;
+      const firstReg = countryData ? Object.values(countryData.regions)[0] : null;
+      currentResidenceCity = (firstReg && firstReg.cities[0]) ? firstReg.cities[0].id : 'custom';
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('current_residence_city', currentResidenceCity);
+      }
+      populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
+      if (currentBaziResult && typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+    });
+  }
+
+  if (currentCitySelect) {
+    currentCitySelect.addEventListener('change', () => {
+      currentResidenceCity = currentCitySelect.value;
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('current_residence_city', currentResidenceCity);
+      }
+      if (currentCustomCityInput) {
+        if (currentCitySelect.value === 'custom') {
+          currentCustomCityInput.classList.remove('hidden');
+          currentCustomCityInput.focus();
+        } else {
+          currentCustomCityInput.classList.add('hidden');
+        }
+      }
+      if (currentBaziResult && typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+    });
+  }
+
+  if (currentCustomCityInput) {
+    currentCustomCityInput.value = currentResidenceCustomName;
+    currentCustomCityInput.addEventListener('input', () => {
+      currentResidenceCustomName = currentCustomCityInput.value.trim();
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('current_residence_custom', currentResidenceCustomName);
+      }
+      if (currentBaziResult && typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+    });
+  }
+
+  // Initialize City Dropdown Options
+  populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
 
   customLonInput.addEventListener('input', () => {
     if (activeMainPage === 'landing') {
@@ -834,6 +942,16 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSolarDetailDisplay(result);
 
       currentBaziResult = result;
+
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('lastBaziParams', JSON.stringify({
+          year, month, day, hour, minute, gender,
+          useTrueSolarTime, isLateRatNextDay, longitude, timezone,
+          country: currentResidenceCountry,
+          city: currentResidenceCity,
+          customCity: currentResidenceCustomName
+        }));
+      }
 
       // Calculate Fortune & Luck Cycles (大运、流年、流月、流日)
       if (typeof LuckEngine !== 'undefined') {
@@ -6852,8 +6970,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const residenceData = {
+      country: currentResidenceCountry,
+      city: currentResidenceCity,
+      customCity: currentResidenceCustomName
+    };
+
     const guide = (typeof SpatialFengShuiEngine !== 'undefined')
-      ? SpatialFengShuiEngine.generateFengShuiGuide(bazi, luck)
+      ? SpatialFengShuiEngine.generateFengShuiGuide(bazi, luck, residenceData)
       : null;
 
     if (!guide) {
@@ -6889,7 +7013,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const me = guide.meritItem;
     const hr = guide.holisticRatingItem;
 
-    container.innerHTML = `
+    const cityCardHtml = (guide.currentCityEvaluation && typeof SpatialFengShuiEngine.renderCityEvaluationCard === 'function')
+      ? SpatialFengShuiEngine.renderCityEvaluationCard(guide.currentCityEvaluation, isEn)
+      : '';
+
+    container.innerHTML = cityCardHtml + `
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-card p-5 sm:p-6 rounded-2xl border border-border-color shadow-xl space-y-3.5 flex flex-col justify-between">
           <div class="space-y-2.5">
@@ -7159,6 +7287,33 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
+
+    const inCardCountry = document.getElementById('fsCardCountrySelect');
+    const inCardCity = document.getElementById('fsCardCitySelect');
+    if (inCardCountry && inCardCity) {
+      inCardCountry.addEventListener('change', (e) => {
+        currentResidenceCountry = e.target.value;
+        if (currentCountrySelect) currentCountrySelect.value = currentResidenceCountry;
+        const db = (typeof SpatialFengShuiEngine !== 'undefined') ? SpatialFengShuiEngine.GEO_CITIES_DATABASE : null;
+        const countryData = db ? db[currentResidenceCountry] : null;
+        const firstReg = countryData ? Object.values(countryData.regions)[0] : null;
+        currentResidenceCity = (firstReg && firstReg.cities[0]) ? firstReg.cities[0].id : 'custom';
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('current_residence_country', currentResidenceCountry);
+          localStorage.setItem('current_residence_city', currentResidenceCity);
+        }
+        populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
+        renderSpatialFengShui(bazi, luck);
+      });
+      inCardCity.addEventListener('change', (e) => {
+        currentResidenceCity = e.target.value;
+        if (currentCitySelect) currentCitySelect.value = currentResidenceCity;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('current_residence_city', currentResidenceCity);
+        }
+        renderSpatialFengShui(bazi, luck);
+      });
+    }
   }
 
   // Primary View Navigation Logic
@@ -10451,7 +10606,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Enter key trigger to submit calculation and transition to dashboard
-  [birthDatePicker, birthTimePicker, customLonInput].forEach(el => {
+  [birthDatePicker, birthTimePicker, customLonInput, currentCustomCityInput].forEach(el => {
     if (el) {
       el.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {

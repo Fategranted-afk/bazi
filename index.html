@@ -200,6 +200,27 @@
               <select id="citySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
               </select>
             </div>
+
+            <!-- Current Residence Country -->
+            <div>
+              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_current_country">现在所在国家/地区</label>
+              <select id="currentCountrySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                <option value="China" data-i18n="opt_country_china">中国 (China)</option>
+                <option value="UK" data-i18n="opt_country_uk">英国 (UK)</option>
+                <option value="USA" data-i18n="opt_country_usa">美国 (USA)</option>
+                <option value="Canada" data-i18n="opt_country_canada">加拿大 (Canada)</option>
+              </select>
+            </div>
+
+            <!-- Current Residence City -->
+            <div>
+              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_current_city">现在居住/所在城市</label>
+              <div class="space-y-1.5">
+                <select id="currentCitySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
+                </select>
+                <input type="text" id="currentCustomCityInput" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500 hidden" placeholder="输入自定义城市名称 / Enter custom city name" data-i18n-placeholder="ph_custom_city">
+              </div>
+            </div>
           </div>
 
           <!-- Advanced Astronomical Options & True Solar Time Settings -->

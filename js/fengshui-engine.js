@@ -8,8 +8,19 @@ class SpatialFengShuiEngine {
   /**
    * Main entrypoint to compute all 10 spatial feng shui recommendations
    */
-  static generateFengShuiGuide(bazi, luckData) {
+  static generateFengShuiGuide(bazi, luckData, residenceData) {
     if (!bazi || !bazi.pillars) return null;
+
+    // 0. Current Residence City Five-Element Geographic Evaluation
+    let currentCityEvaluation = null;
+    try {
+      const resCountry = (residenceData && residenceData.country) || 'China';
+      const resCity = (residenceData && residenceData.city) || 'beijing';
+      const customCity = (residenceData && residenceData.customCity) || '';
+      currentCityEvaluation = this.evaluateResidenceCity(resCountry, resCity, bazi, customCity);
+    } catch (e) {
+      console.warn('City evaluation error:', e);
+    }
 
     const dm = bazi.dayMaster;
     const dmEl = bazi.dayMasterElement || '木';
@@ -86,6 +97,7 @@ class SpatialFengShuiEngine {
       primaryFavElZh: primaryFavElObj.zh,
       primaryFavElEn: primaryFavElObj.en,
       favorableElements,
+      currentCityEvaluation,
       yanNianItem,
       dragonTurtleItem,
       tanHeItem,
@@ -590,7 +602,757 @@ class SpatialFengShuiEngine {
       masterMottoEn: 'Right intent commands cosmic support; sacred spatial alignment unlocks limitless fortune.'
     };
   }
+
+  /**
+   * Comprehensive Four-Country Geographic Five-Element Database
+   * Mappings: Central Wu-Ji Earth (中央戊己土), South Bing-Ding Fire (南方丙丁火),
+   * North Ren-Gui Water (北方壬癸水), East Jia-Yi Wood (东方甲乙木), West Geng-Xin Metal (西方庚辛金)
+   */
+  static GEO_CITIES_DATABASE = {
+    China: {
+      countryNameZh: '中国',
+      countryNameEn: 'China',
+      regions: {
+        central: {
+          directionZh: '中央',
+          directionEn: 'Central',
+          element: '土',
+          elementZh: '土',
+          elementEn: 'Earth',
+          elementHeavenlyZh: '中央戊己土',
+          elementHeavenlyEn: 'Central Wu-Ji Earth',
+          cities: [
+            { id: 'zhengzhou', nameZh: '郑州 (Zhengzhou)', nameEn: 'Zhengzhou' },
+            { id: 'wuhan', nameZh: '武汉 (Wuhan)', nameEn: 'Wuhan' },
+            { id: 'xian', nameZh: '西安 (Xi\'an)', nameEn: 'Xi\'an' },
+            { id: 'luoyang', nameZh: '洛阳 (Luoyang)', nameEn: 'Luoyang' }
+          ]
+        },
+        south: {
+          directionZh: '南方',
+          directionEn: 'South',
+          element: '火',
+          elementZh: '火',
+          elementEn: 'Fire',
+          elementHeavenlyZh: '南方丙丁火',
+          elementHeavenlyEn: 'South Bing-Ding Fire',
+          cities: [
+            { id: 'guangzhou', nameZh: '广州 (Guangzhou)', nameEn: 'Guangzhou' },
+            { id: 'shenzhen', nameZh: '深圳 (Shenzhen)', nameEn: 'Shenzhen' },
+            { id: 'hongkong', nameZh: '香港 (Hong Kong)', nameEn: 'Hong Kong' },
+            { id: 'haikou', nameZh: '海口 (Haikou)', nameEn: 'Haikou' },
+            { id: 'sanya', nameZh: '三亚 (Sanya)', nameEn: 'Sanya' }
+          ]
+        },
+        north: {
+          directionZh: '北方',
+          directionEn: 'North',
+          element: '水',
+          elementZh: '水',
+          elementEn: 'Water',
+          elementHeavenlyZh: '北方壬癸水',
+          elementHeavenlyEn: 'North Ren-Gui Water',
+          cities: [
+            { id: 'beijing', nameZh: '北京 (Beijing)', nameEn: 'Beijing' },
+            { id: 'tianjin', nameZh: '天津 (Tianjin)', nameEn: 'Tianjin' },
+            { id: 'harbin', nameZh: '哈尔滨 (Harbin)', nameEn: 'Harbin' },
+            { id: 'shenyang', nameZh: '沈阳 (Shenyang)', nameEn: 'Shenyang' }
+          ]
+        },
+        east: {
+          directionZh: '东方',
+          directionEn: 'East',
+          element: '木',
+          elementZh: '木',
+          elementEn: 'Wood',
+          elementHeavenlyZh: '东方甲乙木',
+          elementHeavenlyEn: 'East Jia-Yi Wood',
+          cities: [
+            { id: 'shanghai', nameZh: '上海 (Shanghai)', nameEn: 'Shanghai' },
+            { id: 'hangzhou', nameZh: '杭州 (Hangzhou)', nameEn: 'Hangzhou' },
+            { id: 'nanjing', nameZh: '南京 (Nanjing)', nameEn: 'Nanjing' },
+            { id: 'suzhou', nameZh: '苏州 (Suzhou)', nameEn: 'Suzhou' }
+          ]
+        },
+        west: {
+          directionZh: '西方',
+          directionEn: 'West',
+          element: '金',
+          elementZh: '金',
+          elementEn: 'Metal',
+          elementHeavenlyZh: '西方庚辛金',
+          elementHeavenlyEn: 'West Geng-Xin Metal',
+          cities: [
+            { id: 'chengdu', nameZh: '成都 (Chengdu)', nameEn: 'Chengdu' },
+            { id: 'chongqing', nameZh: '重庆 (Chongqing)', nameEn: 'Chongqing' },
+            { id: 'lanzhou', nameZh: '兰州 (Lanzhou)', nameEn: 'Lanzhou' },
+            { id: 'urumqi', nameZh: '乌鲁木齐 (Urumqi)', nameEn: 'Urumqi' }
+          ]
+        }
+      }
+    },
+    UK: {
+      countryNameZh: '英国',
+      countryNameEn: 'United Kingdom',
+      regions: {
+        central: {
+          directionZh: '中央',
+          directionEn: 'Central',
+          element: '土',
+          elementZh: '土',
+          elementEn: 'Earth',
+          elementHeavenlyZh: '中央戊己土',
+          elementHeavenlyEn: 'Central Wu-Ji Earth',
+          cities: [
+            { id: 'birmingham', nameZh: '伯明翰 (Birmingham)', nameEn: 'Birmingham' },
+            { id: 'coventry', nameZh: '考文垂 (Coventry)', nameEn: 'Coventry' },
+            { id: 'leicester', nameZh: '莱斯特 (Leicester)', nameEn: 'Leicester' },
+            { id: 'nottingham', nameZh: '诺丁汉 (Nottingham)', nameEn: 'Nottingham' }
+          ]
+        },
+        south: {
+          directionZh: '南方',
+          directionEn: 'South',
+          element: '火',
+          elementZh: '火',
+          elementEn: 'Fire',
+          elementHeavenlyZh: '南方丙丁火',
+          elementHeavenlyEn: 'South Bing-Ding Fire',
+          cities: [
+            { id: 'london', nameZh: '伦敦 (London)', nameEn: 'London' },
+            { id: 'southampton', nameZh: '南安普敦 (Southampton)', nameEn: 'Southampton' },
+            { id: 'brighton', nameZh: '布莱顿 (Brighton)', nameEn: 'Brighton' },
+            { id: 'bristol', nameZh: '布里斯托 (Bristol)', nameEn: 'Bristol' },
+            { id: 'oxford', nameZh: '牛津 (Oxford)', nameEn: 'Oxford' }
+          ]
+        },
+        north: {
+          directionZh: '北方',
+          directionEn: 'North',
+          element: '水',
+          elementZh: '水',
+          elementEn: 'Water',
+          elementHeavenlyZh: '北方壬癸水',
+          elementHeavenlyEn: 'North Ren-Gui Water',
+          cities: [
+            { id: 'manchester', nameZh: '曼彻斯特 (Manchester)', nameEn: 'Manchester' },
+            { id: 'leeds', nameZh: '利兹 (Leeds)', nameEn: 'Leeds' },
+            { id: 'edinburgh', nameZh: '爱丁堡 (Edinburgh)', nameEn: 'Edinburgh' },
+            { id: 'glasgow', nameZh: '格拉斯哥 (Glasgow)', nameEn: 'Glasgow' },
+            { id: 'newcastle', nameZh: '纽卡斯尔 (Newcastle)', nameEn: 'Newcastle' }
+          ]
+        },
+        east: {
+          directionZh: '东方',
+          directionEn: 'East',
+          element: '木',
+          elementZh: '木',
+          elementEn: 'Wood',
+          elementHeavenlyZh: '东方甲乙木',
+          elementHeavenlyEn: 'East Jia-Yi Wood',
+          cities: [
+            { id: 'cambridge', nameZh: '剑桥 (Cambridge)', nameEn: 'Cambridge' },
+            { id: 'norwich', nameZh: '诺里奇 (Norwich)', nameEn: 'Norwich' },
+            { id: 'ipswich', nameZh: '伊普斯威奇 (Ipswich)', nameEn: 'Ipswich' }
+          ]
+        },
+        west: {
+          directionZh: '西方',
+          directionEn: 'West',
+          element: '金',
+          elementZh: '金',
+          elementEn: 'Metal',
+          elementHeavenlyZh: '西方庚辛金',
+          elementHeavenlyEn: 'West Geng-Xin Metal',
+          cities: [
+            { id: 'liverpool', nameZh: '利物浦 (Liverpool)', nameEn: 'Liverpool' },
+            { id: 'cardiff', nameZh: '加的夫 (Cardiff)', nameEn: 'Cardiff' },
+            { id: 'swansea', nameZh: '斯旺西 (Swansea)', nameEn: 'Swansea' },
+            { id: 'belfast', nameZh: '贝尔法斯特 (Belfast)', nameEn: 'Belfast' }
+          ]
+        }
+      }
+    },
+    USA: {
+      countryNameZh: '美国',
+      countryNameEn: 'United States',
+      regions: {
+        central: {
+          directionZh: '中央',
+          directionEn: 'Central',
+          element: '土',
+          elementZh: '土',
+          elementEn: 'Earth',
+          elementHeavenlyZh: '中央戊己土',
+          elementHeavenlyEn: 'Central Wu-Ji Earth',
+          cities: [
+            { id: 'chicago', nameZh: '芝加哥 (Chicago)', nameEn: 'Chicago' },
+            { id: 'kansas_city', nameZh: '堪萨斯城 (Kansas City)', nameEn: 'Kansas City' },
+            { id: 'st_louis', nameZh: '圣路易斯 (St. Louis)', nameEn: 'St. Louis' },
+            { id: 'indianapolis', nameZh: '印第安纳波利斯 (Indianapolis)', nameEn: 'Indianapolis' },
+            { id: 'denver', nameZh: '丹佛 (Denver)', nameEn: 'Denver' }
+          ]
+        },
+        south: {
+          directionZh: '南方',
+          directionEn: 'South',
+          element: '火',
+          elementZh: '火',
+          elementEn: 'Fire',
+          elementHeavenlyZh: '南方丙丁火',
+          elementHeavenlyEn: 'South Bing-Ding Fire',
+          cities: [
+            { id: 'houston', nameZh: '休斯敦 (Houston)', nameEn: 'Houston' },
+            { id: 'dallas', nameZh: '达拉斯 (Dallas)', nameEn: 'Dallas' },
+            { id: 'austin', nameZh: '奥斯汀 (Austin)', nameEn: 'Austin' },
+            { id: 'miami', nameZh: '迈阿密 (Miami)', nameEn: 'Miami' },
+            { id: 'atlanta', nameZh: '亚特兰大 (Atlanta)', nameEn: 'Atlanta' }
+          ]
+        },
+        north: {
+          directionZh: '北方',
+          directionEn: 'North',
+          element: '水',
+          elementZh: '水',
+          elementEn: 'Water',
+          elementHeavenlyZh: '北方壬癸水',
+          elementHeavenlyEn: 'North Ren-Gui Water',
+          cities: [
+            { id: 'minneapolis', nameZh: '明尼阿波利斯 (Minneapolis)', nameEn: 'Minneapolis' },
+            { id: 'seattle', nameZh: '西雅图 (Seattle)', nameEn: 'Seattle' },
+            { id: 'detroit', nameZh: '底特律 (Detroit)', nameEn: 'Detroit' },
+            { id: 'milwaukee', nameZh: '密尔沃基 (Milwaukee)', nameEn: 'Milwaukee' }
+          ]
+        },
+        east: {
+          directionZh: '东方',
+          directionEn: 'East',
+          element: '木',
+          elementZh: '木',
+          elementEn: 'Wood',
+          elementHeavenlyZh: '东方甲乙木',
+          elementHeavenlyEn: 'East Jia-Yi Wood',
+          cities: [
+            { id: 'new_york', nameZh: '纽约 (New York)', nameEn: 'New York' },
+            { id: 'boston', nameZh: '波士顿 (Boston)', nameEn: 'Boston' },
+            { id: 'philadelphia', nameZh: '费城 (Philadelphia)', nameEn: 'Philadelphia' },
+            { id: 'washington', nameZh: '华盛顿特区 (Washington D.C.)', nameEn: 'Washington D.C.' }
+          ]
+        },
+        west: {
+          directionZh: '西方',
+          directionEn: 'West',
+          element: '金',
+          elementZh: '金',
+          elementEn: 'Metal',
+          elementHeavenlyZh: '西方庚辛金',
+          elementHeavenlyEn: 'West Geng-Xin Metal',
+          cities: [
+            { id: 'los_angeles', nameZh: '洛杉矶 (Los Angeles)', nameEn: 'Los Angeles' },
+            { id: 'san_francisco', nameZh: '旧金山 (San Francisco)', nameEn: 'San Francisco' },
+            { id: 'san_diego', nameZh: '圣迭戈 (San Diego)', nameEn: 'San Diego' },
+            { id: 'las_vegas', nameZh: '拉斯维加斯 (Las Vegas)', nameEn: 'Las Vegas' },
+            { id: 'portland', nameZh: '波特兰 (Portland)', nameEn: 'Portland' }
+          ]
+        }
+      }
+    },
+    Canada: {
+      countryNameZh: '加拿大',
+      countryNameEn: 'Canada',
+      regions: {
+        central: {
+          directionZh: '中央',
+          directionEn: 'Central',
+          element: '土',
+          elementZh: '土',
+          elementEn: 'Earth',
+          elementHeavenlyZh: '中央戊己土',
+          elementHeavenlyEn: 'Central Wu-Ji Earth',
+          cities: [
+            { id: 'winnipeg', nameZh: '温尼伯 (Winnipeg)', nameEn: 'Winnipeg' },
+            { id: 'regina', nameZh: '里贾纳 (Regina)', nameEn: 'Regina' },
+            { id: 'saskatoon', nameZh: '萨斯卡通 (Saskatoon)', nameEn: 'Saskatoon' }
+          ]
+        },
+        south: {
+          directionZh: '南方',
+          directionEn: 'South',
+          element: '火',
+          elementZh: '火',
+          elementEn: 'Fire',
+          elementHeavenlyZh: '南方丙丁火',
+          elementHeavenlyEn: 'South Bing-Ding Fire',
+          cities: [
+            { id: 'toronto', nameZh: '多伦多 (Toronto)', nameEn: 'Toronto' },
+            { id: 'windsor', nameZh: '温莎 (Windsor)', nameEn: 'Windsor' },
+            { id: 'hamilton', nameZh: '汉密尔顿 (Hamilton)', nameEn: 'Hamilton' },
+            { id: 'niagara_falls', nameZh: '尼亚加拉瀑布 (Niagara Falls)', nameEn: 'Niagara Falls' }
+          ]
+        },
+        north: {
+          directionZh: '北方',
+          directionEn: 'North',
+          element: '水',
+          elementZh: '水',
+          elementEn: 'Water',
+          elementHeavenlyZh: '北方壬癸水',
+          elementHeavenlyEn: 'North Ren-Gui Water',
+          cities: [
+            { id: 'edmonton', nameZh: '埃德蒙顿 (Edmonton)', nameEn: 'Edmonton' },
+            { id: 'yellowknife', nameZh: '耶洛奈夫 (Yellowknife)', nameEn: 'Yellowknife' },
+            { id: 'whitehorse', nameZh: '怀特霍斯 (Whitehorse)', nameEn: 'Whitehorse' }
+          ]
+        },
+        east: {
+          directionZh: '东方',
+          directionEn: 'East',
+          element: '木',
+          elementZh: '木',
+          elementEn: 'Wood',
+          elementHeavenlyZh: '东方甲乙木',
+          elementHeavenlyEn: 'East Jia-Yi Wood',
+          cities: [
+            { id: 'montreal', nameZh: '蒙特利尔 (Montreal)', nameEn: 'Montreal' },
+            { id: 'ottawa', nameZh: '渥太华 (Ottawa)', nameEn: 'Ottawa' },
+            { id: 'quebec_city', nameZh: '魁北克城 (Quebec City)', nameEn: 'Quebec City' },
+            { id: 'halifax', nameZh: '哈利法克斯 (Halifax)', nameEn: 'Halifax' }
+          ]
+        },
+        west: {
+          directionZh: '西方',
+          directionEn: 'West',
+          element: '金',
+          elementZh: '金',
+          elementEn: 'Metal',
+          elementHeavenlyZh: '西方庚辛金',
+          elementHeavenlyEn: 'West Geng-Xin Metal',
+          cities: [
+            { id: 'vancouver', nameZh: '温哥华 (Vancouver)', nameEn: 'Vancouver' },
+            { id: 'victoria', nameZh: '维多利亚 (Victoria)', nameEn: 'Victoria' },
+            { id: 'calgary', nameZh: '卡尔加里 (Calgary)', nameEn: 'Calgary' }
+          ]
+        }
+      }
+    }
+  };
+
+  /**
+   * Evaluates user's current city based on national geographic coordinates,
+   * five-element generation/overcoming dynamics, and personal natal Day Master / Yong Shen.
+   */
+  static evaluateResidenceCity(countryKey, cityKey, bazi, customCityName) {
+    const db = this.GEO_CITIES_DATABASE;
+    const country = (db && db[countryKey]) ? db[countryKey] : (db ? db.China : null);
+    if (!country) return null;
+
+    let targetRegion = null;
+    let targetCity = null;
+
+    if (cityKey === 'custom') {
+      targetRegion = country.regions.central;
+      const isZh = /[\u4e00-\u9fa5]/.test(customCityName || '');
+      targetCity = {
+        id: 'custom',
+        nameZh: customCityName || '自定义城市',
+        nameEn: isZh ? 'Custom City' : (customCityName || 'Custom City')
+      };
+    } else {
+      const regionKeys = ['central', 'south', 'north', 'east', 'west'];
+      for (let i = 0; i < regionKeys.length; i++) {
+        const reg = country.regions[regionKeys[i]];
+        if (reg && reg.cities) {
+          const found = reg.cities.find(c => c.id === cityKey);
+          if (found) {
+            targetRegion = reg;
+            targetCity = found;
+            break;
+          }
+        }
+      }
+    }
+
+    if (!targetRegion || !targetCity) {
+      targetRegion = country.regions.central || Object.values(country.regions)[0];
+      targetCity = (targetRegion && targetRegion.cities && targetRegion.cities[0]) || {
+        id: 'default',
+        nameZh: '默认城市',
+        nameEn: 'Default City'
+      };
+    }
+
+    const dm = (bazi && bazi.dayMaster) || '甲';
+    const dmEl = (bazi && bazi.dayMasterElement) || '木';
+
+    const stemShortEnMap = {
+      '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu',
+      '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui'
+    };
+    const elEnMap = {
+      '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water'
+    };
+
+    const dmShortEn = stemShortEnMap[dm] || 'Jia';
+    const dmElEn = elEnMap[dmEl] || 'Wood';
+    const dmEn = `${dmShortEn} (${dmElEn})`;
+    const dmZh = `${dm} (${dmEl})`;
+
+    const cEl = targetRegion.element;
+    const cElEn = targetRegion.elementEn;
+
+    const generates = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+    const generatedBy = { '木': '水', '火': '木', '土': '火', '金': '土', '水': '金' };
+    const wealthMap = { '木': '土', '火': '金', '土': '水', '金': '木', '水': '火' };
+    const officerMap = { '木': '金', '火': '水', '土': '木', '金': '火', '水': '土' };
+
+    const ziping = (bazi && bazi.zipingScore) || (typeof BaZiEngine !== 'undefined' && bazi ? BaZiEngine.calculateZipingScore(bazi) : null);
+    let favorableElements = [];
+    if (ziping && ziping.categoryKey === 'extreme_strong') {
+      favorableElements = [dmEl, generatedBy[dmEl], generates[dmEl]];
+    } else if (ziping && (ziping.categoryKey === 'moderate_weak' || ziping.categoryKey === 'extreme_weak')) {
+      favorableElements = [dmEl, generatedBy[dmEl]];
+    } else {
+      favorableElements = [generates[dmEl], wealthMap[dmEl], officerMap[dmEl]];
+    }
+    const isWeak = (ziping && (ziping.categoryKey === 'moderate_weak' || ziping.categoryKey === 'extreme_weak')) || (ziping ? ziping.percentage < 48 : false);
+
+    let relType = '';
+    let relationZh = '';
+    let relationEn = '';
+    let gradeZh = '';
+    let gradeEn = '';
+    let score = 80;
+    let badgeType = 'emerald';
+
+    if (cEl === generatedBy[dmEl]) {
+      relType = 'resource';
+      relationZh = `生我者为正印偏印（${cEl}生${dmEl}） · 地缘生身庇护`;
+      relationEn = `Generates Day Master (${cElEn} generates ${dmElEn} - Resource Star) · Nurturing Qi`;
+      if (isWeak) {
+        gradeZh = '大吉 · 顺遂生旺';
+        gradeEn = 'Auspicious · Prime Vitality';
+        score = 96;
+        badgeType = 'emerald';
+      } else {
+        const isFav = favorableElements.includes(cEl);
+        gradeZh = isFav ? '吉 · 滋养安稳' : '平 · 滋养守成';
+        gradeEn = isFav ? 'Auspicious · Nourishing Stability' : 'Neutral · Nourishing Steadiness';
+        score = isFav ? 88 : 80;
+        badgeType = isFav ? 'emerald' : 'sky';
+      }
+    } else if (cEl === dmEl) {
+      relType = 'peer';
+      relationZh = `同我者为比肩劫财（${cEl}同${dmEl}） · 同气相求帮身`;
+      relationEn = `Matches Day Master (${cElEn} matches ${dmElEn} - Peer Star) · Reinforcing Foundation`;
+      if (isWeak) {
+        gradeZh = '吉 · 得道多助';
+        gradeEn = 'Auspicious · Mutual Support';
+        score = 92;
+        badgeType = 'emerald';
+      } else {
+        gradeZh = '平 · 竞争磨砺';
+        gradeEn = 'Neutral · Competitive Vigor';
+        score = 76;
+        badgeType = 'sky';
+      }
+    } else if (cEl === generates[dmEl]) {
+      relType = 'output';
+      relationZh = `我生者为食伤（${dmEl}生${cEl}） · 才华秀气发越`;
+      relationEn = `Generated by Day Master (${dmElEn} generates ${cElEn} - Output Star) · Creative Flourishing`;
+      if (!isWeak) {
+        gradeZh = '大吉 · 秀气生发';
+        gradeEn = 'Auspicious · Creative Flourishing';
+        score = 94;
+        badgeType = 'emerald';
+      } else {
+        gradeZh = '慎 · 耗气需防';
+        gradeEn = 'Caution · Energy Depletion';
+        score = 64;
+        badgeType = 'rose';
+      }
+    } else if (cEl === wealthMap[dmEl]) {
+      relType = 'wealth';
+      relationZh = `我克者为正偏财（${dmEl}克${cEl}） · 商业财富机遇`;
+      relationEn = `Conquered by Day Master (${dmElEn} conquers ${cElEn} - Wealth Star) · Financial Enterprise`;
+      if (!isWeak) {
+        gradeZh = '吉 · 财禄通达';
+        gradeEn = 'Auspicious · Wealth Flourishing';
+        score = 91;
+        badgeType = 'emerald';
+      } else {
+        gradeZh = '平 · 劳碌求财';
+        gradeEn = 'Neutral · Labored Acquisition';
+        score = 72;
+        badgeType = 'amber';
+      }
+    } else {
+      relType = 'officer';
+      relationZh = `克我者为正官七杀（${cEl}克${dmEl}） · 规约磨砺气场`;
+      relationEn = `Overcomes Day Master (${cElEn} overcomes ${dmElEn} - Officer Star) · Disciplined Pressure`;
+      if (isWeak) {
+        gradeZh = '慎 · 气机对冲';
+        gradeEn = 'Caution · Energetic Friction';
+        score = 58;
+        badgeType = 'rose';
+      } else {
+        const isFav = favorableElements.includes(cEl);
+        gradeZh = isFav ? '吉 · 官贵亨通' : '平 · 规约进取';
+        gradeEn = isFav ? 'Auspicious · Executive Authority' : 'Neutral · Disciplined Progress';
+        score = isFav ? 89 : 78;
+        badgeType = isFav ? 'emerald' : 'sky';
+      }
+    }
+
+    if (favorableElements.includes(cEl) && score < 86) {
+      score = 88;
+      gradeZh = '吉 · 喜用生旺';
+      gradeEn = 'Auspicious · Yong Shen Resonance';
+      badgeType = 'emerald';
+    }
+
+    const summaryZh = `城市【${targetCity.nameZh}】位列【${country.countryNameZh}·${targetRegion.directionZh}】，承载【${targetRegion.elementHeavenlyZh}】。日主五行生克属【${relationZh}】，综合定调为【${gradeZh}】（契合度：${score}分）。`;
+    const summaryEn = `The city of ${targetCity.nameEn} is in the ${targetRegion.directionEn} region of ${country.countryNameEn}, vibrating with [${targetRegion.elementHeavenlyEn}]. Terrestrial dynamic is [${relationEn}], evaluated as [${gradeEn}] (Resonance Score: ${score}/100).`;
+
+    const analysisZh = `您当前身处【${country.countryNameZh}·${targetCity.nameZh}】，该城市坐落于国家【${targetRegion.directionZh}】，承载【${targetRegion.elementHeavenlyZh}】之气运。本命日主为【${dmZh}】，地缘五行与日主呈【${relationZh}】格局。定调为【${gradeZh}】（综合地缘契合度：${score}分）。${isWeak ? '鉴于日主气机偏于内敛，此地气场与本命互动鲜明，建议通过空间风水调理化克为生、强化生扶。' : '日主气度充沛，此地气数顺应天时，利于顺势借力、建立深厚根基。'}`;
+    const analysisEn = `You are currently residing in ${targetCity.nameEn}, located in the ${targetRegion.directionEn} sector of ${country.countryNameEn}, which carries the natural energy of [${targetRegion.elementHeavenlyEn}]. With your natal Day Master anchored in [${dmEn}], the terrestrial interaction reflects [${relationEn}]. Resonance is rated as [${gradeEn}] (Compatibility Score: ${score}/100). ${isWeak ? 'Given your reflective Day Master balance, spatial remedies effectively transmute environmental friction into nourishing support.' : 'Given your robust Day Master vitality, terrestrial Qi empowers bold initiatives and sustainable institutional compound growth.'}`;
+
+    const remedies = [];
+    if (cEl === generatedBy[dmEl]) {
+      remedies.push({
+        titleZh: '空间色彩：引动相生共振',
+        titleEn: 'Spatial Palette: Nurturing Resonance',
+        descZh: `室内主色调宜采用与地缘及印星呼应的温润色系（辅以${dmEl}系本命色彩），如暖米色、原木色或柔和灯光，形成‘天生我、地养我’的深层安宁场域。`,
+        descEn: `Incorporate warm, nourishing hues (complementing ${dmElEn} tones) such as warm beige, natural timber, and diffuse lighting to establish a deeply regenerative sanctuary.`
+      });
+    } else if (cEl === dmEl) {
+      remedies.push({
+        titleZh: '空间色彩：比和聚气固本',
+        titleEn: 'Spatial Palette: Grounding Solidarity',
+        descZh: `空间多采用稳重典雅的自然材质与纯正色泽，办公及会客区多用对称格局，巩固同气连枝的合作气场与团队聚合力。`,
+        descEn: `Deploy symmetrical architectural lines and balanced organic textures in reception and study zones to anchor cooperative networks and cohesive partnerships.`
+      });
+    } else if (cEl === generates[dmEl]) {
+      remedies.push({
+        titleZh: '空间色彩：秀气通明疏导',
+        titleEn: 'Spatial Palette: Creative Illumination',
+        descZh: `玄关与书房明堂宜明亮通透，配以透光纱帘与清雅色调，使食伤秀气畅通发越，催化商业创意与高阶洞察力。`,
+        descEn: `Ensure bright, unobstructed entryways and study areas with airy curtains and clear tones to let creative intuition and commercial clarity radiate effortlessly.`
+      });
+    } else if (cEl === wealthMap[dmEl]) {
+      remedies.push({
+        titleZh: '空间色彩：金水相涵纳财',
+        titleEn: 'Spatial Palette: Wealth Accumulation Flow',
+        descZh: `客厅财位（进门对角线）布置聚宝盆或暖光琉璃台，色调取深沉醇厚之质感，助益日主牢牢锁住地缘商机与资产沉淀。`,
+        descEn: `Position a wealth bowl or amber crystal pedestal at your living room diagonal prosperity node to anchor terrestrial wealth opportunities and compounding assets.`
+      });
+    } else {
+      remedies.push({
+        titleZh: '空间色彩：通关化煞为权',
+        titleEn: 'Spatial Palette: Conflict Transformation',
+        descZh: `在空间中加入通关五行（以印星为桥梁，如金克木用水通关、木克土用火通关），将官杀压力化解为晋升权柄与定力。`,
+        descEn: `Introduce bridging elements via Resource tones to convert regulatory friction into authoritative leadership poise and impenetrable resilience.`
+      });
+    }
+
+    const talismanMap = {
+      '木': { zh: '常青阔叶绿植（发财树、琴叶榕）或沉香木雕', en: 'Lush broadleaf flora (Money Tree, Fiddle-leaf Fig) or natural agarwood carving' },
+      '火': { zh: '喜马拉雅天然红盐灯、紫水晶洞或朱砂镇宅印', en: 'Himalayan red salt lamp, vibrant amethyst geode, or cinnabar talisman seal' },
+      '土': { zh: '天然黄水晶球、泰山石敢当或陶制四方鼎', en: 'Natural citrine sphere, Taishan stone anchor, or ceramic quadrilateral vessel' },
+      '金': { zh: '纯铜六帝铜钱、六字真言铜铃或纯铜聚宝盆', en: 'Handcrafted bronze coins, harmonic metal chimes, or solid brass wealth chalice' },
+      '水': { zh: '室内循环活水流水景、黑曜石七星阵或墨晶球', en: 'Indoor circulating water fountain, black obsidian sphere, or deep navy ceramic vessel' }
+    };
+    const tInfo = talismanMap[cEl] || talismanMap['土'];
+    remedies.push({
+      titleZh: '器物生机：地缘太极定鼎',
+      titleEn: 'Metaphysical Anchors: Terrestrial Taiji Alignment',
+      descZh: `在住宅核心太极区或书桌左手青龙位安置【${tInfo.zh}】，化合地缘气脉，形成坚不可摧的风水护持结界。`,
+      descEn: `Position [${tInfo.en}] at your central home Taiji sector or left Azure Dragon desk corner to harmonize terrestrial energy and secure cosmic shielding.`
+    });
+
+    const favDirZh = (favorableElements && favorableElements[0] === '木') ? '正东方或东南方' :
+                     (favorableElements && favorableElements[0] === '火') ? '正南方' :
+                     (favorableElements && favorableElements[0] === '土') ? '东北方或西南方' :
+                     (favorableElements && favorableElements[0] === '金') ? '正西方或西北方' : '正北方';
+    const favDirEn = (favorableElements && favorableElements[0] === '木') ? 'East or Southeast' :
+                     (favorableElements && favorableElements[0] === '火') ? 'South' :
+                     (favorableElements && favorableElements[0] === '土') ? 'Northeast or Southwest' :
+                     (favorableElements && favorableElements[0] === '金') ? 'West or Northwest' : 'North';
+
+    remedies.push({
+      titleZh: '坐向定向：顺承地气纳祥',
+      titleEn: 'Directional Orientation: Harnessing Terrestrial Qi',
+      descZh: `办公椅背宜坚实靠墙，坐向或卧房床头优先朝向【${favDirZh}】，汲取天地用神生发之气，工作心流深沉，睡眠安稳甘美。`,
+      descEn: `Anchor your executive chair against a solid wall, facing or orienting your headboard toward [${favDirEn}] to capture peak favorable Qi, maximizing strategic focus and restorative sleep.`
+    });
+
+    return {
+      countryKey,
+      countryNameZh: country.countryNameZh,
+      countryNameEn: country.countryNameEn,
+      cityKey: targetCity.id,
+      cityNameZh: targetCity.nameZh,
+      cityNameEn: targetCity.nameEn,
+      directionZh: targetRegion.directionZh,
+      directionEn: targetRegion.directionEn,
+      elementZh: targetRegion.elementZh,
+      elementEn: targetRegion.elementEn,
+      elementHeavenlyZh: targetRegion.elementHeavenlyZh,
+      elementHeavenlyEn: targetRegion.elementHeavenlyEn,
+      dayMaster: dm,
+      dayMasterEn: dmShortEn,
+      dayMasterElement: dmEl,
+      dayMasterElementEn: dmElEn,
+      cEl,
+      cElEn,
+      relationZh,
+      relationEn,
+      relType,
+      gradeZh,
+      gradeEn,
+      score,
+      badgeType,
+      summaryZh,
+      summaryEn,
+      analysisZh,
+      analysisEn,
+      remedies
+    };
+  }
+
+  /**
+   * Renders the current residence city evaluation card in responsive oriental Tailwind UI.
+   * Completely bilingual with 100% zero residual Chinese in English mode.
+   */
+  static renderCityEvaluationCard(ev, isEn) {
+    if (!ev) return '';
+
+    const db = this.GEO_CITIES_DATABASE;
+    const country = (db && db[ev.countryKey]) ? db[ev.countryKey] : (db ? db.China : null);
+
+    const countryDisplay = isEn ? ev.countryNameEn : ev.countryNameZh;
+    const cityDisplay = isEn ? ev.cityNameEn : ev.cityNameZh;
+    const directionDisplay = isEn ? ev.directionEn : ev.directionZh;
+    const elementDisplay = isEn ? ev.elementHeavenlyEn : ev.elementHeavenlyZh;
+    const relationDisplay = isEn ? ev.relationEn : ev.relationZh;
+    const gradeDisplay = isEn ? ev.gradeEn : ev.gradeZh;
+    const dmDisplay = isEn ? (ev.dayMasterEn || 'Day Master') : ev.dayMaster;
+
+    let badgeColorClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+    if (ev.badgeType === 'rose') {
+      badgeColorClass = 'bg-rose-500/20 text-rose-300 border-rose-500/40';
+    } else if (ev.badgeType === 'amber') {
+      badgeColorClass = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+    } else if (ev.badgeType === 'sky') {
+      badgeColorClass = 'bg-sky-500/20 text-sky-300 border-sky-500/40';
+    }
+
+    const countries = [
+      { key: 'China', labelZh: '中国 (China)', labelEn: 'China (CN)' },
+      { key: 'UK', labelZh: '英国 (UK)', labelEn: 'United Kingdom (UK)' },
+      { key: 'USA', labelZh: '美国 (USA)', labelEn: 'United States (USA)' },
+      { key: 'Canada', labelZh: '加拿大 (Canada)', labelEn: 'Canada' }
+    ];
+    const countryOptionsHtml = countries.map(c => `
+      <option value="${c.key}" ${ev.countryKey === c.key ? 'selected' : ''}>${isEn ? c.labelEn : c.labelZh}</option>
+    `).join('');
+
+    let cityOptionsHtml = '';
+    if (country && country.regions) {
+      Object.keys(country.regions).forEach(regKey => {
+        const reg = country.regions[regKey];
+        const groupLabel = isEn ? `${reg.directionEn} (${reg.elementHeavenlyEn})` : `${reg.directionZh} (${reg.elementHeavenlyZh})`;
+        const opts = (reg.cities || []).map(c => `
+          <option value="${c.id}" ${ev.cityKey === c.id ? 'selected' : ''}>${isEn ? `${c.nameEn} · ${reg.directionEn} (${reg.elementEn})` : `${c.nameZh} · ${reg.elementHeavenlyZh}`}</option>
+        `).join('');
+        cityOptionsHtml += `<optgroup label="${groupLabel}">${opts}</optgroup>`;
+      });
+    }
+    cityOptionsHtml += `<option value="custom" ${ev.cityKey === 'custom' ? 'selected' : ''}>${isEn ? 'Other / Custom City...' : '其他 / 自定义城市...'}</option>`;
+
+    const remediesHtml = (ev.remedies || []).map((r, idx) => `
+      <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 flex flex-col justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-amber-400 text-sm">${['🏺', '🌿', '🧭'][idx] || '✨'}</span>
+          <h4 class="text-xs font-bold font-serif-sc text-amber-200">${isEn ? r.titleEn : r.titleZh}</h4>
+        </div>
+        <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? r.descEn : r.descZh}</p>
+      </div>
+    `).join('');
+
+    return `
+      <div id="fengshuiCityEvaluationCard" class="bg-card p-5 sm:p-6 rounded-2xl border border-border-color shadow-xl mb-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-800 pb-3">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? "Geographic Qi" : "地缘气数"}</span>
+              <h2 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                <span>🗺️</span>
+                <span>${isEn ? "Current Residence City Geographic Five-Element Feng Shui Evaluation" : "当前居住城市地缘五行气数评估"}</span>
+              </h2>
+            </div>
+            <p class="text-xs text-gray-400 leading-relaxed">${isEn ? "Terrestrial Five-Element evaluation based on national geographic coordinates and personal natal Yong Shen dynamics" : "基于国家地理五方气机（中央戊己土、南方丙丁火、北方壬癸水、东方甲乙木、西方庚辛金）与本命日主喜用神生克制化推演"}</p>
+          </div>
+          <div class="flex items-center gap-2 self-start sm:self-center">
+            <span class="text-xs text-gray-400 font-mono">${isEn ? "Switch City:" : "切换测试城市："}</span>
+            <select id="fsCardCountrySelect" class="bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+              ${countryOptionsHtml}
+            </select>
+            <select id="fsCardCitySelect" class="bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+              ${cityOptionsHtml}
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 text-center">
+            <div class="text-[10px] text-gray-400 mb-0.5">${isEn ? "Country" : "所在国度"}</div>
+            <div class="text-xs font-bold text-gray-200 font-mono">${countryDisplay}</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 text-center">
+            <div class="text-[10px] text-gray-400 mb-0.5">${isEn ? "Current City" : "当前城市"}</div>
+            <div class="text-xs font-bold text-amber-300 font-mono truncate" title="${cityDisplay}">${cityDisplay}</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 text-center">
+            <div class="text-[10px] text-gray-400 mb-0.5">${isEn ? "Geographic Sector" : "地缘方位"}</div>
+            <div class="text-xs font-bold text-gray-200 font-mono">${directionDisplay}</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 text-center">
+            <div class="text-[10px] text-gray-400 mb-0.5">${isEn ? "Terrestrial Element" : "五行气机"}</div>
+            <div class="text-xs font-bold text-amber-300 font-mono">${elementDisplay}</div>
+          </div>
+          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 text-center">
+            <div class="text-[10px] text-gray-400 mb-0.5">${isEn ? "Day Master Dynamic" : "本命日主生克"}</div>
+            <div class="text-xs font-bold text-gray-200 font-mono">${dmDisplay} · ${isEn ? ev.cElEn : ev.cEl}</div>
+          </div>
+          <div class="p-2.5 rounded-xl border text-center ${badgeColorClass}">
+            <div class="text-[10px] opacity-80 mb-0.5">${isEn ? "Resonance Grade" : "地缘吉凶定调"}</div>
+            <div class="text-xs font-black font-mono">${gradeDisplay} (${ev.score})</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-xl bg-black/30 border border-gray-800/80 text-xs text-gray-300 space-y-2 leading-relaxed">
+          <div class="flex items-center gap-2">
+            <span class="text-amber-400">⚖️</span>
+            <span class="font-bold text-amber-200">${relationDisplay}</span>
+          </div>
+          <p>${isEn ? ev.analysisEn : ev.analysisZh}</p>
+        </div>
+
+        <div class="space-y-2 pt-1">
+          <h3 class="text-xs font-bold font-serif-sc text-amber-300 flex items-center gap-1.5">
+            <span>🛡️</span>
+            <span>${isEn ? "Bespoke Spatial Remediation Remedies" : "专属空间风水调理策 (化克为生 · 调和气场)"}</span>
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            ${remediesHtml}
+          </div>
+        </div>
+      </div>
+    `;
+  }
 }
+
+SpatialFengShuiEngine.GEO_CITIES_DATABASE = SpatialFengShuiEngine.GEO_CITIES_DATABASE;
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { SpatialFengShuiEngine };
