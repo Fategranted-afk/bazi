@@ -402,6 +402,17 @@
               延年聚财貔貅鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数
             </p>
           </div>
+
+          <!-- Card 9: Career & Wealth Trajectory -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-career">
+            <div class="flex items-center space-x-2 text-indigo-400 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">💼</span>
+              <span data-i18n="portal_card9_title">职场打工人与财运事业推演</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card9_desc">
+              向上管理不得罪领导 · 同僚防抢功防火墙 · 文武技术高管四大生态位 · 岁运财运时序
+            </p>
+          </div>
         </div>
       </section>
 
@@ -484,6 +495,11 @@
           <span data-i18n="nav_view_fengshui">空间风水指南 (实操十策)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800/30 font-normal" data-i18n="seal_view_fengshui">空间开运</span>
         </button>
+        <button id="navBtnCareer" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-career">
+          <span class="text-base">💼</span>
+          <span data-i18n="nav_view_career">职场打工人与财运事业推演</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/30 font-normal" data-i18n="seal_view_career">职场破局</span>
+        </button>
       </div>
     </nav>
 
@@ -543,8 +559,8 @@
         </div>
       </section>
 
-      <!-- Fast Feature Portals: Strategy, Friction & Feng Shui Views -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Fast Feature Portals: Strategy, Friction, Feng Shui & Career Views -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Strategy Portal -->
         <div id="portalBtnStrategy" class="p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-black/40 to-black/60 border border-amber-500/40 hover:border-amber-500/80 transition-all shadow-lg cursor-pointer group flex items-center justify-between">
           <div class="space-y-1">
@@ -582,6 +598,19 @@
             <p class="text-[11px] text-gray-400" data-i18n="portal_fengshui_desc">延年聚财鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数</p>
           </div>
           <span class="text-emerald-400 group-hover:translate-x-1 transition-transform text-base font-bold">→</span>
+        </div>
+
+        <!-- Career Portal -->
+        <div id="portalBtnCareer" class="p-4 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-black/40 to-black/60 border border-indigo-800/40 hover:border-indigo-500/80 transition-all shadow-lg cursor-pointer group flex items-center justify-between">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">💼</span>
+              <span class="font-bold font-serif-sc text-indigo-300 text-sm" data-i18n="portal_career_title">职场打工人与财运事业推演</span>
+              <span class="chinese-seal text-[9px] py-0 border-indigo-500 text-indigo-400" data-i18n="seal_view_career">职场破局</span>
+            </div>
+            <p class="text-[11px] text-gray-400" data-i18n="portal_career_desc">向上管理不得罪领导 · 同僚防抢功防火墙 · 四大生态位精准定向 · 岁运财运时序</p>
+          </div>
+          <span class="text-indigo-400 group-hover:translate-x-1 transition-transform text-base font-bold">→</span>
         </div>
       </section>
 
@@ -1178,6 +1207,10 @@
           <span data-i18n="tab_lixuzhong">🎵 《李虚中命书》</span>
           <span class="text-[10px] bg-teal-500/20 text-teal-300 px-1 py-0.2 rounded" data-i18n="tab_lixuzhong_badge">三元纳音音律</span>
         </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-definitions">
+          <span data-i18n="tab_definitions">📚 常见定义</span>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_definitions_badge">十神真诠</span>
+        </button>
         <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-search">
           <span data-i18n="tab_search">🔍 八典全库搜索</span>
         </button>
@@ -1363,6 +1396,29 @@
           <p class="text-xs text-gray-400 mb-3" data-i18n="canon_lixuzhong_chapters_desc">唐代命学开山宗师李虚中著，详析天元禄、地元命、人元身与现代地理时空交互：</p>
           <div id="lixuzhongChaptersList" class="space-y-3">
             <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Common Definitions & Ten Gods Glossary (常见定义 · 十神真诠) -->
+      <div id="tab-definitions" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div>
+              <h4 class="text-sm font-bold text-amber-300 flex items-center gap-2">
+                <span>📚</span>
+                <span data-i18n="tab_definitions_title">子平命学核心术语与十神全相定义库</span>
+              </h4>
+              <p class="text-xs text-gray-400 mt-0.5" data-i18n="tab_definitions_desc">
+                古文出处（《三命通会》《子平真诠》《渊海子平》）融汇现代通俗白话阐释，提炼职场心智原型、核心优势与实操避坑法则。
+              </p>
+            </div>
+            <div id="tenGodsFilterGroup" class="flex flex-wrap gap-1.5 text-xs">
+              <!-- Filter buttons populated via JS -->
+            </div>
+          </div>
+          <div id="tenGodsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Dynamically injected via JavaScript -->
           </div>
         </div>
       </div>
@@ -1807,6 +1863,44 @@
     </div>
   </div>
 
+  <!-- View 9: Career & Wealth Trajectory (职场打工人破局与财运事业推演) -->
+  <div id="view-career" class="space-y-6 hidden">
+    <!-- Header Banner -->
+    <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-black/60 to-purple-950/40 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-500 text-indigo-300" data-i18n="seal_view_career">职场破局</span>
+            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-indigo-300" data-i18n="career_banner_title">
+              职场打工人破局与财运事业全相推演
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="career_banner_desc">
+            以八大经籍为体，周易值年卦与大运流年流月节律为用。深度推演向上管理、同僚防火墙、四大生态位（文职/武职/技术/高管）精准匹配，以及正财薪酬与偏财副业时空推演。
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="careerQuickBadgesDashboard" class="flex flex-wrap gap-2 text-xs">
+            <!-- Injected via JS -->
+          </div>
+          <a href="career.html" class="px-3.5 py-1.5 rounded-xl bg-indigo-700/80 hover:bg-indigo-600 text-indigo-100 text-xs font-bold transition border border-indigo-500/40 shadow flex items-center gap-1.5 cursor-pointer">
+            <span>🚀</span>
+            <span data-i18n="btn_open_standalone_career">独立全屏推演</span>
+          </a>
+          <button id="btnJumpToHomeFromCareer" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
+            <span>←</span>
+            <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Container for Career & Wealth Trajectory -->
+    <div id="careerContentContainer" class="space-y-6">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
   </div>
   <!-- End of dashboardView (Page 2) -->
 
@@ -1922,8 +2016,10 @@
   <script src="data/lixuzhong.js"></script>
   <script src="data/iching.js"></script>
   <script src="data/tianji.js"></script>
+  <script src="data/tengods.js"></script>
   <script src="js/bazi-engine.js"></script>
   <script src="js/fengshui-engine.js"></script>
+  <script src="js/career-engine.js"></script>
   <script src="js/portrait-engine.js?v=2026091404"></script>
   <script src="js/luck-engine.js?v=2026091404"></script>
   <script src="js/iching-engine.js?v=2026091404"></script>

@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentResidenceCountry = (typeof localStorage !== 'undefined' && localStorage.getItem('current_residence_country')) ? localStorage.getItem('current_residence_country') : 'China';
   let currentResidenceCity = (typeof localStorage !== 'undefined' && localStorage.getItem('current_residence_city')) ? localStorage.getItem('current_residence_city') : 'beijing';
   let currentResidenceCustomName = (typeof localStorage !== 'undefined' && localStorage.getItem('current_residence_custom')) ? localStorage.getItem('current_residence_custom') : '';
+  let activeTenGodsCategory = 'all';
 
   // DOM Elements
   const birthDatePicker = document.getElementById('birthDate');
@@ -285,6 +286,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderHexagramCycle === 'function' && currentBaziResult) {
       renderHexagramCycle(currentBaziResult, fourPillarsActiveAge);
     }
+    if (typeof renderZipingPatterns === 'function') {
+      renderZipingPatterns(lang === 'en');
+    }
+    if (typeof renderTenGodsDefinitions === 'function') {
+      renderTenGodsDefinitions(lang === 'en');
+    }
+    if (typeof renderCareerWealth === 'function' && currentBaziResult) {
+      renderCareerWealth(currentBaziResult, currentLuckResult);
+    }
 
     const playText = document.getElementById('ichingCyclePlayText');
     if (playText) {
@@ -386,6 +396,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selectedCityId === 'custom') customOpt.selected = true;
     currentCitySelect.appendChild(customOpt);
 
+    currentCitySelect.value = selectedCityId;
+
     if (currentCustomCityInput) {
       if (currentCitySelect.value === 'custom') {
         currentCustomCityInput.classList.remove('hidden');
@@ -425,7 +437,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentCustomCityInput) {
         if (currentCitySelect.value === 'custom') {
           currentCustomCityInput.classList.remove('hidden');
-          currentCustomCityInput.focus();
+          if (typeof currentCustomCityInput.focus === 'function') {
+            currentCustomCityInput.focus();
+          }
         } else {
           currentCustomCityInput.classList.add('hidden');
         }
@@ -987,6 +1001,9 @@ document.addEventListener('DOMContentLoaded', () => {
       renderZiping100Score(result);
       renderSpatialFengShui(result, currentLuckResult);
       renderFourPillarsHexagrams(result);
+      if (typeof renderCareerWealth === 'function') {
+        renderCareerWealth(result, currentLuckResult);
+      }
       updateDashboardSummaryBar();
       updateLandingPreview();
 
@@ -7290,6 +7307,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const inCardCountry = document.getElementById('fsCardCountrySelect');
     const inCardCity = document.getElementById('fsCardCitySelect');
+    const inCardCustom = document.getElementById('fsCardCustomCityInput');
     if (inCardCountry && inCardCity) {
       inCardCountry.addEventListener('change', (e) => {
         currentResidenceCountry = e.target.value;
@@ -7311,9 +7329,309 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('current_residence_city', currentResidenceCity);
         }
+        populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
         renderSpatialFengShui(bazi, luck);
+        if (currentResidenceCity === 'custom') {
+          const freshCustomInput = document.getElementById('fsCardCustomCityInput');
+          if (freshCustomInput && typeof freshCustomInput.focus === 'function') {
+            freshCustomInput.focus();
+          }
+        }
       });
     }
+    if (inCardCustom) {
+      inCardCustom.addEventListener('change', (e) => {
+        currentResidenceCustomName = e.target.value.trim();
+        if (currentCustomCityInput) currentCustomCityInput.value = currentResidenceCustomName;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('current_residence_custom', currentResidenceCustomName);
+        }
+        renderSpatialFengShui(bazi, luck);
+      });
+      inCardCustom.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          currentResidenceCustomName = e.target.value.trim();
+          if (currentCustomCityInput) currentCustomCityInput.value = currentResidenceCustomName;
+          if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('current_residence_custom', currentResidenceCustomName);
+          }
+          renderSpatialFengShui(bazi, luck);
+        }
+      });
+    }
+  }
+
+  // ==========================================
+  // 职场打工人破局与财运事业推演 (Career & Wealth Trajectory)
+  // ==========================================
+  function renderCareerWealth(bazi, luck) {
+    const isEn = (currentLang === 'en');
+    const container = document.getElementById('careerContentContainer');
+    const badgesContainer = document.getElementById('careerQuickBadgesDashboard');
+    if (!container) return;
+
+    if (!bazi || !bazi.pillars) {
+      container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">${isEn ? 'Awaiting natal chart calculation to generate career and wealth trajectory...' : '八字排盘数据就绪后自动生成职场与财运推演...'}</p>`;
+      return;
+    }
+
+    if (typeof CareerEngine === 'undefined' || typeof CareerEngine.generateCareerReport !== 'function') {
+      container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">${isEn ? 'Career Engine initializing...' : '职场推演引擎初始化中...'}</p>`;
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    const report = CareerEngine.generateCareerReport(bazi, luck, currentYear);
+    if (!report) return;
+
+    // Badges Dashboard
+    if (badgesContainer) {
+      const topArch = (report.workplaceArchetypes && report.workplaceArchetypes[0]) || {};
+      const hex = (report.timingTrajectory && report.timingTrajectory.annualHex) || {};
+      badgesContainer.innerHTML = `
+        <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
+          ${isEn ? `Day Master: ${report.summary.dmEn}` : `元神日主: ${report.summary.dm}（${report.summary.dmEl}）`}
+        </span>
+        <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
+          ${isEn ? report.summary.primaryPatternEn : report.summary.primaryPattern}
+        </span>
+        <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
+          ${isEn ? `Primary Calling: ${(topArch.nameEn || '').split('(')[0]}` : `首要天命: ${(topArch.nameZh || '').split('(')[0]}`}
+        </span>
+        <span class="px-2.5 py-1 rounded-full border border-blue-500/40 bg-blue-950/60 text-blue-300 font-bold">
+          ${isEn ? `Transit Hexagram: #${hex.number || ''} ${hex.nameEn || ''}` : `值年卦: 第${hex.number || ''}卦 · ${hex.nameZh || ''}`}
+        </span>
+      `;
+    }
+
+    const mu = report.managingUp;
+    const pd = report.peerDynamics;
+    const archs = report.workplaceArchetypes;
+    const tt = report.timingTrajectory;
+
+    container.innerHTML = `
+      <!-- Pillar 1: Managing Up & Superiors Interaction (向上管理与职场沟通) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">👑</span>
+            <h3 class="text-base font-bold font-serif-sc text-purple-300">
+              ${isEn ? 'I. Managing Up & Workplace Communication (Navigating Superiors Without Friction)' : '一、向上管理与职场沟通（如何不得罪领导）'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-purple-500 text-purple-300">
+            ${isEn ? 'Executive Alignment' : '领导博弈'}
+          </span>
+        </div>
+
+        <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-4">
+          <div class="space-y-2">
+            <h4 class="text-sm font-bold text-purple-300 flex items-center gap-2">
+              <span>🧐</span><span>${isEn ? 'Executive Archetype & Upward Disposition Diagnosis' : '上级心智透视与自身向上互动原型'}</span>
+            </h4>
+            <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? mu.styleEn : mu.styleZh}</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-purple-950/20 border border-purple-800/40 text-xs text-purple-200 leading-relaxed">
+            ${isEn ? mu.avoidOffendingEn : mu.avoidOffendingZh}
+          </div>
+          <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 text-xs text-gray-300 leading-relaxed">
+            <strong class="text-amber-400">${isEn ? 'Resource Requisition Protocol: ' : '向领导争取资源战法：'}</strong>
+            ${isEn ? mu.askingResourcesEn : mu.askingResourcesZh}
+          </div>
+        </div>
+
+        <!-- 4 Realistic Workplace Scripts -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ${mu.scripts.map(s => `
+            <div class="bg-card p-4 rounded-xl border border-gray-800/80 shadow-lg space-y-2.5 flex flex-col justify-between hover:border-purple-500/40 transition">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-1.5">
+                  <span class="text-xs font-bold font-serif-sc text-amber-300">${isEn ? s.titleEn : s.titleZh}</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/40">${isEn ? s.badgeEn : s.badgeZh}</span>
+                </div>
+                <div class="p-3 rounded-lg bg-black/50 border border-gray-800 text-xs font-mono text-gray-200 leading-relaxed">
+                  ${isEn ? s.dialogueEn : s.dialogueZh}
+                </div>
+              </div>
+              <p class="text-[11px] text-gray-400 italic">${isEn ? s.tipsEn : s.tipsZh}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Pillar 2: Peer & Colleague Dynamics (横向协作与人际防火墙) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">🛡️</span>
+            <h3 class="text-base font-bold font-serif-sc text-rose-300">
+              ${isEn ? 'II. Lateral Peer Collaboration & Boundary Firewalls (Credit Defense & Healthy Communication)' : '二、横向协作与人际防火墙（防抢功背刺与健康交流）'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-rose-500 text-rose-300">
+            ${isEn ? 'Lateral Defense' : '同僚防御'}
+          </span>
+        </div>
+
+        <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-4">
+          <div class="space-y-2">
+            <h4 class="text-sm font-bold text-rose-300 flex items-center gap-2">
+              <span>🤝</span><span>${isEn ? 'Peer Dynamics & Horizontal Competition Analysis' : '同僚横向竞争与比劫争财深度透视'}</span>
+            </h4>
+            <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? pd.peerAnalysisEn : pd.peerAnalysisZh}</p>
+          </div>
+          <div class="p-3.5 rounded-xl bg-rose-950/20 border border-rose-800/40 text-xs text-rose-200 leading-relaxed">
+            ${isEn ? pd.betrayalWarningEn : pd.betrayalWarningZh}
+          </div>
+        </div>
+
+        <!-- 3 Hard Firewalls -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          ${pd.threeFirewalls.map(fw => `
+            <div class="bg-card p-4 rounded-xl border border-gray-800 shadow-lg space-y-2 flex flex-col justify-between hover:border-rose-500/40 transition">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-1.5">
+                  <h5 class="text-xs font-bold text-amber-300 font-serif-sc">${isEn ? fw.titleEn : fw.titleZh}</h5>
+                  <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? fw.sealEn : fw.sealZh}</span>
+                </div>
+                <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? fw.descEn : fw.descZh}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Pillar 3: Workplace Archetype Matching (天命职能与四大生态位精准定向) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">🎯</span>
+            <h3 class="text-base font-bold font-serif-sc text-amber-300">
+              ${isEn ? 'III. Destiny Calling & Precision Workplace Archetypes (Civil · Martial · Specialist · Executive)' : '三、天命职能与四大生态位精准定向（文职 · 武职 · 技术人员 · 高管）'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-amber-500 text-amber-300">
+            ${isEn ? 'Archetype Fit' : '生态定位'}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          ${archs.map(a => `
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-4 flex flex-col justify-between hover:border-amber-500/40 transition">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-2xl">${a.icon}</span>
+                    <h4 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc">${isEn ? a.nameEn : a.nameZh}</h4>
+                  </div>
+                  <span class="text-xs px-2.5 py-0.5 rounded-full border font-bold ${a.grade.badgeClass}">
+                    ${isEn ? a.grade.en : a.grade.zh} (${a.fitScore}${isEn ? '/100' : '分'})
+                  </span>
+                </div>
+                <div class="text-xs space-y-2 text-gray-300">
+                  <p><strong class="text-emerald-400">${isEn ? 'Core Strengths: ' : '天赋优势：'}</strong>${isEn ? a.coreStrengthsEn : a.coreStrengthsZh}</p>
+                  <p><strong class="text-sky-400">${isEn ? 'Typical Roles: ' : '代表岗位：'}</strong>${isEn ? a.typicalRolesEn : a.typicalRolesZh}</p>
+                  <p><strong class="text-rose-400">${isEn ? 'Deadly Blindspot: ' : '致命盲点：'}</strong>${isEn ? a.pitfallAlertEn : a.pitfallAlertZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-800/40 text-[11px] text-amber-200/90 leading-relaxed">
+                <strong>${isEn ? 'Breakthrough Tactic: ' : '破局战法：'}</strong>${isEn ? a.breakthroughTacticEn : a.breakthroughTacticZh}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Pillar 4: Timing Trajectory (时空财运与事业窗口推演) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">⏳</span>
+            <h3 class="text-base font-bold font-serif-sc text-emerald-300">
+              ${isEn ? 'IV. Spatiotemporal Career & Wealth Trajectory (Zhou Yi Annual Hexagram · Direct & Indirect Wealth · 12 Months)' : '四、时空财运与事业窗口推演（周易值年卦 · 正财主业 · 偏财副业 · 12月节律）'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-emerald-500 text-emerald-300">
+            ${isEn ? 'Transit Timing' : '岁运时序'}
+          </span>
+        </div>
+
+        <!-- Transit & Zhou Yi Banner -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-card p-5 rounded-2xl border border-gray-800 space-y-2.5 shadow-xl">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+              <span class="text-xs font-bold text-purple-300">${isEn ? 'Decade & Annual Stance' : '当前大运与流年定调'}</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/40">
+                ${tt.decadeGanzhi} (${isEn ? tt.decadeGodEn : tt.decadeGod}) · ${tt.annualGanzhi} (${isEn ? tt.annualGodEn : tt.annualGod})
+              </span>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              ${isEn
+                ? `Decade [${tt.decadeGanzhi}] sets a ${tt.decadeGodEn} command tone, whilst Year [${tt.annualGanzhi}] activates the ${tt.annualGodEn} gateway. Calibrate high-risk strategic moves against steady capital retention.`
+                : `大运【${tt.decadeGanzhi}】（${tt.decadeGod}执权）奠定宏观中枢，流年【${tt.annualGanzhi}】（${tt.annualGod}当值）激活当下现实战役。注意区分攻守节奏，稳中求进。`}
+            </p>
+          </div>
+
+          <div class="bg-card p-5 rounded-2xl border border-gray-800 space-y-2.5 shadow-xl">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+              <span class="text-xs font-bold text-amber-300">${isEn ? 'Zhou Yi Value Year Hexagram' : '周易流年值年卦神机'}</span>
+              <span class="text-xs font-mono font-bold text-amber-400">
+                ${tt.annualHex.character || ''} ${isEn ? tt.annualHex.nameEn : tt.annualHex.nameZh}
+              </span>
+            </div>
+            <p class="text-xs text-amber-100/90 font-serif-sc leading-relaxed">
+              “${isEn ? tt.annualHex.decisionEn : tt.annualHex.decisionZh}”
+            </p>
+          </div>
+        </div>
+
+        <!-- Direct vs Indirect Wealth Dynamics -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-card p-5 rounded-2xl border border-emerald-900/40 space-y-2 shadow-xl">
+            <div class="flex items-center justify-between">
+              <h5 class="text-sm font-bold text-emerald-400 flex items-center gap-1.5">
+                <span>💰</span><span>${isEn ? 'Direct Wealth (Base Salary & Promotion)' : '正财运势（主业薪酬与职级晋升）'}</span>
+              </h5>
+              <span class="text-xs font-mono text-emerald-400 font-bold">${tt.directWealthScore}/100</span>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed">${isEn ? tt.directWealthAnalysisEn : tt.directWealthAnalysisZh}</p>
+          </div>
+
+          <div class="bg-card p-5 rounded-2xl border border-sky-900/40 space-y-2 shadow-xl">
+            <div class="flex items-center justify-between">
+              <h5 class="text-sm font-bold text-sky-400 flex items-center gap-1.5">
+                <span>📈</span><span>${isEn ? 'Indirect Wealth (Side-Hustle & Investments)' : '偏财运势（副业孵化与投资博弈）'}</span>
+              </h5>
+              <span class="text-xs font-mono text-sky-400 font-bold">${tt.indirectWealthScore}/100</span>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed">${isEn ? tt.indirectWealthAnalysisEn : tt.indirectWealthAnalysisZh}</p>
+          </div>
+        </div>
+
+        <!-- 12-Month Tactical Roadmap -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-gray-200 font-serif-sc flex items-center gap-2">
+            <span>📅</span><span>${isEn ? '12-Month Tactical Career Calendar for Working Professionals' : '流月十二节律 · 打工人月度攻守行动指南'}</span>
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            ${tt.monthlyRoadmap.map(m => `
+              <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800/80 hover:border-amber-500/40 transition space-y-2 flex flex-col justify-between">
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between border-b border-gray-800 pb-1">
+                    <span class="font-bold text-xs text-amber-300 font-serif-sc">${m.ganzhi}${isEn ? ' Month' : '月'} (${isEn ? m.godEn : m.god})</span>
+                    <span class="text-[10px] text-gray-400 font-mono">${isEn ? m.solarSpanEn : m.solarSpanZh}</span>
+                  </div>
+                  <span class="inline-block text-[10px] px-2 py-0.5 rounded font-semibold bg-gray-800 text-gray-200 border border-gray-700">
+                    ${isEn ? m.actionTagEn : m.actionTagZh}
+                  </span>
+                  <p class="text-[11px] text-gray-300 leading-relaxed font-sans">${isEn ? m.adviceEn : m.adviceZh}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   // Primary View Navigation Logic
@@ -7327,7 +7645,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'view-canons': document.getElementById('view-canons'),
     'view-iching': document.getElementById('view-iching'),
     'view-synastry': document.getElementById('view-synastry'),
-    'view-fengshui': document.getElementById('view-fengshui')
+    'view-fengshui': document.getElementById('view-fengshui'),
+    'view-career': document.getElementById('view-career')
   };
 
   function switchPrimaryView(targetViewId) {
@@ -7386,6 +7705,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // If switching to fengshui view, render if chart exists
     if (targetViewId === 'view-fengshui' && currentBaziResult && typeof renderSpatialFengShui === 'function') {
       renderSpatialFengShui(currentBaziResult, currentLuckResult);
+    }
+
+    // If switching to career view, render if chart exists
+    if (targetViewId === 'view-career' && currentBaziResult && typeof renderCareerWealth === 'function') {
+      renderCareerWealth(currentBaziResult, currentLuckResult);
     }
 
     // If switching to iching view, render Four Pillars Hexagrams & Cycle Progression if chart exists
@@ -7451,6 +7775,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnJumpToHomeFromFengShui = document.getElementById('btnJumpToHomeFromFengShui');
   if (btnJumpToHomeFromFengShui) {
     btnJumpToHomeFromFengShui.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+  const portalBtnCareer = document.getElementById('portalBtnCareer');
+  if (portalBtnCareer) {
+    portalBtnCareer.addEventListener('click', () => switchPrimaryView('view-career'));
+  }
+  const btnJumpToHomeFromCareer = document.getElementById('btnJumpToHomeFromCareer');
+  if (btnJumpToHomeFromCareer) {
+    btnJumpToHomeFromCareer.addEventListener('click', () => switchPrimaryView('view-home'));
   }
 
   // Database Tab Switching Logic (6 Tabs)
@@ -7569,25 +7901,173 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 《子平真诠》 Patterns List
-  const zpPatternsContainer = document.getElementById('zipingPatternsList');
-  if (zpPatternsContainer) {
+  // ==========================================
+  // 《子平真诠》 格局成败救应与现代白话解读 (Zi Ping Zhen Quan Patterns)
+  // ==========================================
+  function renderZipingPatterns(isEn) {
+    const zpPatternsContainer = document.getElementById('zipingPatternsList');
+    if (!zpPatternsContainer) return;
+    if (typeof ZiPingZhenQuanDB === 'undefined' || typeof ZiPingZhenQuanDB.getAllPatterns !== 'function') return;
+
+    zpPatternsContainer.innerHTML = '';
     const allPats = ZiPingZhenQuanDB.getAllPatterns();
     for (const [pName, p] of Object.entries(allPats)) {
       const div = document.createElement('div');
-      div.className = 'p-3 bg-black/20 rounded-lg border border-gray-800 text-xs space-y-1';
+      div.className = 'p-4 bg-black/20 rounded-xl border border-gray-800 text-xs space-y-2.5 hover:border-purple-500/40 transition';
+      
+      const pTitle = isEn ? (p.nameEn || p.name) : p.name;
+      const authorText = isEn ? 'Shen Xiaozhan Canonical Pattern Exegesis' : '沈孝瞻格局真谛';
+      const condLabel = isEn ? 'Pattern Formation Conditions' : '成格条件';
+      const condText = isEn ? (p.conditionsEn || p.conditions) : p.conditions;
+      const defectLabel = isEn ? 'Fatal Defects' : '破格之患';
+      const defectText = isEn ? (p.defectsEn || p.defects) : p.defects;
+      const remedyLabel = isEn ? 'Remedies & Supporting Gods' : '救应法门';
+      const remedyText = isEn ? (p.remediesEn || p.remedies) : p.remedies;
+
+      let vernacularHtml = '';
+      if (p.vernacular) {
+        const vTrans = isEn ? p.vernacular.translationEn : p.vernacular.translation;
+        const vPara = isEn ? p.vernacular.paradigmEn : p.vernacular.paradigm;
+        const vWarn = isEn ? p.vernacular.defectWarningEn : p.vernacular.defectWarning;
+        vernacularHtml = `
+          <div class="mt-2 pt-2 border-t border-gray-800/80 space-y-1.5 text-[11px]">
+            <div class="text-purple-300">
+              <b>${isEn ? '💡 Modern Vernacular Exegesis: ' : '💡 现代通俗白话解读：'}</b>${vTrans}
+            </div>
+            <div class="text-emerald-300">
+              <b>${isEn ? '💼 Career Paradigm: ' : '💼 职场立身范式：'}</b>${vPara}
+            </div>
+            <div class="text-rose-300">
+              <b>${isEn ? '⚠️ Defect Alert: ' : '⚠️ 破格警示：'}</b>${vWarn}
+            </div>
+          </div>
+        `;
+      }
+
       div.innerHTML = `
-        <div class="flex justify-between items-center">
-          <h5 class="font-bold text-purple-300 text-sm font-serif-sc">${p.name}</h5>
-          <span class="text-[11px] text-gray-400">沈孝瞻格局真谛</span>
+        <div class="flex justify-between items-center border-b border-gray-800/60 pb-1.5">
+          <h5 class="font-bold text-purple-300 text-sm font-serif-sc">${pTitle}</h5>
+          <span class="text-[11px] text-gray-400 font-mono">${authorText}</span>
         </div>
-        <p class="text-gray-300"><b>【成格条件】</b>${p.conditions}</p>
-        <p class="text-rose-400"><b>【破格之患】</b>${p.defects}</p>
-        <p class="text-emerald-400"><b>【救应法门】</b>${p.remedies}</p>
+        <p class="text-gray-300"><b class="text-amber-400">【${condLabel}】</b>${condText}</p>
+        <p class="text-rose-400"><b class="text-rose-300">【${defectLabel}】</b>${defectText}</p>
+        <p class="text-emerald-400"><b class="text-emerald-300">【${remedyLabel}】</b>${remedyText}</p>
+        ${vernacularHtml}
       `;
       zpPatternsContainer.appendChild(div);
     }
   }
+
+  // ==========================================
+  // 十神全典与常见定义渲染 (Ten Gods Glossary & Common Definitions)
+  // ==========================================
+  function renderTenGodsDefinitions(isEn, category = null) {
+    if (category) activeTenGodsCategory = category;
+    const filterContainer = document.getElementById('tenGodsFilterGroup');
+    const listContainer = document.getElementById('tenGodsContainer');
+    if (!listContainer) return;
+    if (typeof TenGodsDB === 'undefined' || typeof TenGodsDB.getAll !== 'function') return;
+
+    const categories = [
+      { key: 'all', zh: '全部十神', en: 'All Ten Gods' },
+      { key: 'guan_sha', zh: '官杀星', en: 'Officer & Killings' },
+      { key: 'cai', zh: '财星', en: 'Wealth Stars' },
+      { key: 'yin', zh: '印星', en: 'Resource Stars' },
+      { key: 'shi_shang', zh: '食伤星', en: 'Output Stars' },
+      { key: 'bi_jie', zh: '比劫星', en: 'Companion Stars' }
+    ];
+
+    if (filterContainer) {
+      filterContainer.innerHTML = '';
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        const isActive = (activeTenGodsCategory === cat.key);
+        btn.className = `px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-xs ${
+          isActive
+            ? 'bg-amber-600 text-white shadow'
+            : 'bg-black/30 text-gray-400 hover:text-gray-200 border border-gray-800'
+        }`;
+        btn.textContent = isEn ? cat.en : cat.zh;
+        btn.addEventListener('click', () => {
+          activeTenGodsCategory = cat.key;
+          renderTenGodsDefinitions(isEn, cat.key);
+        });
+        filterContainer.appendChild(btn);
+      });
+    }
+
+    const allGods = TenGodsDB.getAll();
+    const filtered = allGods.filter(g => {
+      if (activeTenGodsCategory === 'all') return true;
+      if (activeTenGodsCategory === 'guan_sha') return g.key === 'zheng_guan' || g.key === 'qi_sha';
+      if (activeTenGodsCategory === 'cai') return g.key === 'zheng_cai' || g.key === 'pian_cai';
+      if (activeTenGodsCategory === 'yin') return g.key === 'zheng_yin' || g.key === 'pian_yin';
+      if (activeTenGodsCategory === 'shi_shang') return g.key === 'shi_shen' || g.key === 'shang_guan';
+      if (activeTenGodsCategory === 'bi_jie') return g.key === 'bi_jian' || g.key === 'jie_cai';
+      return true;
+    });
+
+    listContainer.innerHTML = '';
+    filtered.forEach(g => {
+      const card = document.createElement('div');
+      card.className = 'p-4 sm:p-5 rounded-2xl bg-card border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between hover:border-amber-500/40 transition';
+
+      card.innerHTML = `
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-base font-bold font-serif-sc text-amber-300">
+                ${isEn ? g.nameEn : g.nameZh}
+              </span>
+              <span class="chinese-seal text-[10px] py-0 border-amber-500 text-amber-300">
+                ${isEn ? g.chineseSealEn : g.chineseSealZh}
+              </span>
+            </div>
+            <span class="text-[11px] font-mono text-gray-400 bg-black/40 px-2 py-0.5 rounded border border-gray-800">
+              ${isEn ? g.elementRelationEn : g.elementRelationZh}
+            </span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-black/50 border border-gray-800 text-xs font-serif-sc text-amber-100/90 leading-relaxed space-y-1">
+            <div class="text-[10px] text-amber-400/80 font-mono font-bold">
+              ${isEn ? '📜 Ancient Canon Authority' : '📜 古籍原典引证'}
+            </div>
+            <p class="whitespace-pre-line">${isEn ? g.ancientCanonEn : g.ancientCanonZh}</p>
+          </div>
+
+          <div class="text-xs text-gray-300 leading-relaxed">
+            <strong class="text-purple-300">${isEn ? '💡 Plain Exegesis: ' : '💡 白话通俗要义：'}</strong>
+            ${isEn ? g.plainTextEn : g.plainTextZh}
+          </div>
+
+          <div class="space-y-1 text-xs">
+            <p>
+              <strong class="text-blue-300">${isEn ? '💼 Workplace Archetype: ' : '💼 职场心智原型：'}</strong>
+              <span class="font-bold text-gray-200">${isEn ? g.workplaceArchetypeEn : g.workplaceArchetypeZh}</span>
+            </p>
+            <p class="text-gray-300">
+              <strong class="text-emerald-400">${isEn ? '⚡ Core Strengths: ' : '⚡ 核心优势：'}</strong>
+              ${isEn ? g.strengthsEn : g.strengthsZh}
+            </p>
+            <p class="text-gray-300">
+              <strong class="text-rose-400">${isEn ? '⚠️ Deadly Traps: ' : '⚠️ 致命雷区：'}</strong>
+              ${isEn ? g.trapsEn : g.trapsZh}
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-800/40 text-[11px] text-amber-200 leading-relaxed">
+          <strong class="text-amber-300">${isEn ? '🎯 Practical Action Directive: ' : '🎯 职场实操指令：'}</strong>
+          ${isEn ? g.actionRulesEn : g.actionRulesZh}
+        </div>
+      `;
+      listContainer.appendChild(card);
+    });
+  }
+
+  // Initial render of Patterns and Definitions
+  renderZipingPatterns(currentLang === 'en');
+  renderTenGodsDefinitions(currentLang === 'en');
 
   // 《滴天髓》 10 Stems Quick Selector
   const dtsStemsContainer = document.getElementById('dtsStemButtons');
@@ -7832,7 +8312,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const sfResults = (typeof ShenFengDB !== 'undefined') ? ShenFengDB.search(query) : [];
     const yzResults = (typeof YuZhaoDB !== 'undefined') ? YuZhaoDB.search(query) : [];
     const lxzResults = (typeof LiXuZhongDB !== 'undefined') ? LiXuZhongDB.search(query) : [];
-    const all = [...dtsResults, ...smResults, ...qtResults, ...zpResults, ...yhResults, ...sfResults, ...yzResults, ...lxzResults];
+    const tgResults = (typeof TenGodsDB !== 'undefined') ? TenGodsDB.search(query) : [];
+    const all = [...dtsResults, ...smResults, ...qtResults, ...zpResults, ...yhResults, ...sfResults, ...yzResults, ...lxzResults, ...tgResults];
 
     if (all.length === 0) {
       searchResultsContainer.innerHTML = isEn

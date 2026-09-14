@@ -108,6 +108,7 @@
       let customCity = "";
 
       function getChartData() {
+        let chart = null;
         try {
           const stored = localStorage.getItem("lastBaziParams");
           if (stored) {
@@ -115,7 +116,7 @@
             if (p.country) currentCountry = p.country;
             if (p.city) currentCity = p.city;
             if (p.customCity) customCity = p.customCity;
-            return BaZiEngine.calculate(p);
+            chart = BaZiEngine.calculate(p);
           }
         } catch (e) {}
         if (typeof localStorage !== "undefined") {
@@ -123,7 +124,7 @@
           if (localStorage.getItem("current_residence_city")) currentCity = localStorage.getItem("current_residence_city");
           if (localStorage.getItem("current_residence_custom")) customCity = localStorage.getItem("current_residence_custom");
         }
-        return BaZiEngine.calculate({
+        return chart || BaZiEngine.calculate({
           year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造"
         });
       }
@@ -414,6 +415,7 @@
 
         const inCardCountry = document.getElementById("fsCardCountrySelect");
         const inCardCity = document.getElementById("fsCardCitySelect");
+        const inCardCustom = document.getElementById("fsCardCustomCityInput");
         if (inCardCountry && inCardCity) {
           inCardCountry.addEventListener("change", (e) => {
             currentCountry = e.target.value;
@@ -433,6 +435,30 @@
               localStorage.setItem("current_residence_city", currentCity);
             }
             render();
+            if (currentCity === "custom") {
+              const freshInput = document.getElementById("fsCardCustomCityInput");
+              if (freshInput && typeof freshInput.focus === "function") {
+                freshInput.focus();
+              }
+            }
+          });
+        }
+        if (inCardCustom) {
+          inCardCustom.addEventListener("change", (e) => {
+            customCity = e.target.value.trim();
+            if (typeof localStorage !== "undefined") {
+              localStorage.setItem("current_residence_custom", customCity);
+            }
+            render();
+          });
+          inCardCustom.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              customCity = e.target.value.trim();
+              if (typeof localStorage !== "undefined") {
+                localStorage.setItem("current_residence_custom", customCity);
+              }
+              render();
+            }
           });
         }
       }
