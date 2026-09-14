@@ -439,7 +439,7 @@ class IChingEngine {
    * 阳爻管9年，阴爻管6年，依年龄流转高亮当值之爻。
    * 整合倪海厦《天纪》64卦批注全集 (先天卦断、后天卦断、流年卦断、玉上有光字谜与天机解密)。
    */
-  static calculateFourPillarsHexagrams(bazi, currentAge = 35, selectedYear = new Date().getFullYear()) {
+  static calculateFourPillarsHexagrams(bazi, currentAge = null, selectedYear = null) {
     if (!bazi || !bazi.pillars) return null;
 
     // 天干配数 (洛书八卦)
@@ -596,20 +596,37 @@ class IChingEngine {
     const activeStageZh = isXianTianActive ? '前半生 · 先天命卦当值' : '后半生 · 后天命卦执权';
     const activeStageEn = isXianTianActive ? 'First Half of Life · Early Heaven Natal Mandate' : 'Second Half of Life · Later Heaven Mandate';
 
-    const targetAge = (currentAge !== undefined && currentAge !== null)
-      ? Math.max(1, currentAge)
-      : Math.max(1, selectedYear - birthYear);
-    const effSelectedYear = (selectedYear !== undefined && selectedYear !== null)
-      ? selectedYear
-      : (birthYear + targetAge);
+    let targetAge;
+    let effSelectedYear;
+
+    if (currentAge !== undefined && currentAge !== null && selectedYear !== undefined && selectedYear !== null) {
+      targetAge = Math.max(1, currentAge);
+      effSelectedYear = selectedYear;
+    } else if (currentAge !== undefined && currentAge !== null) {
+      targetAge = Math.max(1, currentAge);
+      effSelectedYear = birthYear + targetAge;
+    } else if (selectedYear !== undefined && selectedYear !== null) {
+      effSelectedYear = selectedYear;
+      targetAge = Math.max(1, Math.abs(effSelectedYear - birthYear));
+    } else {
+      effSelectedYear = new Date().getFullYear();
+      targetAge = Math.max(1, Math.abs(effSelectedYear - birthYear));
+    }
 
     const STEM_LIST = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
     const BRANCH_LIST = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
+    const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+
     const annualSIdx = (effSelectedYear - 4 + 60000) % 10;
     const annualBIdx = (effSelectedYear - 4 + 60000) % 12;
     const annualStem = STEM_LIST[annualSIdx];
     const annualBranch = BRANCH_LIST[annualBIdx];
-    const annualGanzhi = annualStem + annualBranch;
+    const annualStemEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(annualStem, 'en').split(' ')[0] : (STEM_EN_MAP[annualStem] || annualStem);
+    const annualBranchEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(annualBranch, 'en').split(' ')[0] : (BRANCH_EN_MAP[annualBranch] || annualBranch);
+    const annualGanzhiZh = annualStem + annualBranch;
+    const annualGanzhiEn = `${annualStemEn}-${annualBranchEn}`;
+    const annualGanzhi = annualGanzhiZh;
 
     // 阳年: 子、寅、辰、午、申、戌 (annualBIdx is even)
     // 阴年: 丑、卯、巳、未、酉、亥 (annualBIdx is odd)
@@ -741,7 +758,12 @@ class IChingEngine {
         activeLinePos: zhiNianActiveLinePos,
         activeLine: zhiNianActiveLine,
         annualStem,
+        annualStemEn,
         annualBranch,
+        annualBranchEn,
+        annualGanzhi,
+        annualGanzhiZh,
+        annualGanzhiEn,
         isYangYear: isAnnualYangYear,
         isAnnualYangYear,
         yearPolarity,

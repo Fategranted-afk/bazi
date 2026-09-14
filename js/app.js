@@ -1406,7 +1406,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- 8. Master Ni Haisha Tian Ji Four Pillars Hexagram Exegesis -->
             ${(() => {
               if (typeof IChingEngine === 'undefined' || !currentBaziResult) return '';
-              const hexData = IChingEngine.calculateFourPillarsHexagrams(currentBaziResult, fourPillarsActiveAge);
+              const birthYear = (currentBaziResult.input && currentBaziResult.input.year) || currentBaziResult.birthYear || 1990;
+              const hexData = IChingEngine.calculateFourPillarsHexagrams(currentBaziResult, fourPillarsActiveAge, birthYear + fourPillarsActiveAge);
               if (!hexData) return '';
               const xt = hexData.xianTian || {};
               const ht = hexData.houTian || {};
@@ -1436,7 +1437,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       <p class="text-gray-300 mt-1">${isEn ? (htTj.houTianEn || '') : (htTj.houTianZh || '')}</p>
                     </div>
                     <div class="p-2 rounded bg-black/50 border ${zn.isMutated ? 'border-amber-500/50' : 'border-emerald-500/50'}">
-                      <b class="${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'}">${isEn ? `Annual (${zn.year}): ${znHex.nameEn}` : `值年卦 (${zn.year}年)：${znHex.nameZh}`}</b>
+                      <b class="${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'}">${isEn ? `Annual (${zn.year} ${zn.annualGanzhiEn || ''}): ${znHex.nameEn}` : `值年卦 (${zn.year}年 ${zn.annualGanzhiZh || zn.annualGanzhi || ''})：${znHex.nameZh}`}</b>
                       <p class="text-[10px] text-gray-400 font-mono mt-0.5">${isEn ? (zn.ruleInteractionEn || '') : (zn.ruleInteractionZh || '')}</p>
                       <p class="text-gray-300 mt-1">${isEn ? (znTj.liuNianEn || '') : (znTj.liuNianZh || '')}</p>
                     </div>
@@ -5805,7 +5806,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </span>
             </div>
             <div class="font-bold text-amber-300 font-mono text-sm">
-              ${zn.year} ${zn.annualGanzhi || ''}${isEn ? ' Year' : '年'}
+              ${zn.year} ${isEn ? (zn.annualGanzhiEn ? `${zn.annualGanzhiEn} · ${zn.yearPolarityEn}` : zn.yearPolarityEn) : (zn.annualGanzhiZh ? `${zn.annualGanzhiZh}年 · ${zn.yearPolarityZh}` : zn.yearPolarityZh)}
             </div>
             <div class="text-[10px] text-gray-400 leading-tight">
               ${isEn
@@ -5823,7 +5824,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </span>
             </div>
             <div class="font-bold text-purple-300 font-mono text-sm truncate">
-              ${isEn ? `${zn.baseHexagram ? zn.baseHexagram.nameEn : ''} Line ${zn.activeLinePos}` : `【${zn.baseHexagram ? zn.baseHexagram.nameZh : ''}】第${zn.activeLinePos}爻`}
+              ${isEn ? `${zn.baseHexagram ? zn.baseHexagram.nameEn : ''} Line ${zn.activeLinePos} · ${zn.linePolarityEn}` : `【${zn.baseHexagram ? zn.baseHexagram.nameZh : ''}】第${zn.activeLinePos}爻 · ${zn.linePolarityZh}`}
             </div>
             <div class="text-[10px] text-gray-400 leading-tight">
               ${isEn
@@ -5949,7 +5950,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   ${isEn ? (zn.isMutated ? 'TRANSFORMED GUA' : 'BASE GUA') : (zn.isMutated ? '变卦执年' : '守本卦执年')}
                 </span>
                 <h3 class="text-base font-bold font-serif-sc ${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'} mt-1">
-                  ${isEn ? `${zn.year} ${zn.annualGanzhi || ''} (Age ${zn.age}): ${znHex.nameEn}` : `${zn.year}年 ${zn.annualGanzhi || ''} (${zn.age}岁) · ${znHex.nameZh}`}
+                  ${isEn ? `${zn.year} ${zn.annualGanzhiEn || ''} (Age ${zn.age}): ${znHex.nameEn}` : `${zn.year}年 ${zn.annualGanzhiZh || zn.annualGanzhi || ''} (${zn.age}岁) · ${znHex.nameZh}`}
                 </h3>
               </div>
               <span class="px-2 py-0.5 rounded text-[10px] font-bold ${zn.isMutated ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'}">

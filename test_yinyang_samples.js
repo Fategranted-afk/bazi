@@ -112,7 +112,7 @@ testSamples.forEach(sample => {
     lawOutcome: zn.isRepulsion ? "同性相斥 → 变卦 (Repulsion/Mutate)" : "异性相吸 → 守本卦 (Attraction/Preserve)",
     resultingHex: zn.hexagram ? zn.hexagram.nameZh : '--',
     resultingHexEn: zn.hexagram ? zn.hexagram.nameEn : '--',
-    tianJiOracle: zn.tianJi ? (zn.tianJi.oracle || zn.tianJi.summary || '--') : '--',
+    tianJiOracle: zn.tianJi ? (zn.tianJi.liuNianZh ? zn.tianJi.liuNianZh.slice(0, 16) + '...' : '--') : '--',
     chartDecades,
     chartSpikes
   });

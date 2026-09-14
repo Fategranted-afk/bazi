@@ -5016,12 +5016,16 @@ jsc_yinyang_cmd = [
 
     var repulsionCount = 0;
     var attractionCount = 0;
+    var yangYearsCount = 0;
+    var yinYearsCount = 0;
+    var quadrantsHit = { yangYang: false, yangYin: false, yinYin: false, yinYang: false };
 
     for (var age = 1; age <= 60; age++) {
       var res = IChingEngine.calculateFourPillarsHexagrams(bazi, age);
       var zn = res.zhiNian;
 
       if (!zn.annualBranch) throw new Error("Missing annualBranch at age " + age);
+      if (!zn.annualGanzhiZh || !zn.annualGanzhiEn) throw new Error("Missing annualGanzhiZh/En at age " + age);
       if (typeof zn.isYangYear !== "boolean") throw new Error("Missing isYangYear boolean at age " + age);
       if (typeof zn.isYangLine !== "boolean") throw new Error("Missing isYangLine boolean at age " + age);
       if (typeof zn.isRepulsion !== "boolean") throw new Error("Missing isRepulsion boolean at age " + age);
@@ -5031,6 +5035,14 @@ jsc_yinyang_cmd = [
       if (!zn.hexagram || !zn.hexagram.nameZh || !zn.hexagram.nameEn) {
         throw new Error("Missing hexagram metadata at age " + age);
       }
+
+      if (zn.isYangYear) yangYearsCount++;
+      else yinYearsCount++;
+
+      if (zn.isYangYear && zn.isYangLine) quadrantsHit.yangYang = true;
+      if (zn.isYangYear && !zn.isYangLine) quadrantsHit.yangYin = true;
+      if (!zn.isYangYear && !zn.isYangLine) quadrantsHit.yinYin = true;
+      if (!zn.isYangYear && zn.isYangLine) quadrantsHit.yinYang = true;
 
       // Assert Yin-Yang Law logic
       var expectedRepulsion = (zn.isYangYear === zn.isYangLine);
@@ -5057,6 +5069,35 @@ jsc_yinyang_cmd = [
 
     if (repulsionCount === 0 || attractionCount === 0) {
       throw new Error("Must encounter both repulsion and attraction across ages 1-60");
+    }
+    if (yangYearsCount === 0 || yinYearsCount === 0) {
+      throw new Error("Must encounter both Yang years and Yin years across ages 1-60");
+    }
+    if (!quadrantsHit.yangYang || !quadrantsHit.yangYin || !quadrantsHit.yinYin || !quadrantsHit.yinYang) {
+      throw new Error("All 4 Yin-Yang Law quadrants must be exercised across 60 ages");
+    }
+
+    // Canonical Prompt Scenario Verification:
+    // Natal Early Heaven Hexagram is Qian (乾为天). At age 22, active line is Line 3 (Yang Line).
+    // In Yang Year (e.g. 2024 甲辰): Repulsion -> Line 3 flips 1->0 -> derives Hexagram 10 《天泽履》.
+    // In Yin Year (e.g. 2025 乙巳): Attraction -> Line 3 unchanged -> retains Hexagram 1 《乾为天》.
+    var qianBazi = BaZiEngine.calculate({
+      year: 1980, month: 1, day: 15, hour: 12, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var qianHex = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 22, 2024);
+    if (qianHex.xianTian.hexagram.number !== 1) {
+      throw new Error("Expected natal Qian hexagram (1), got " + qianHex.xianTian.hexagram.number);
+    }
+    if (qianHex.zhiNian.activeLinePos !== 3 || !qianHex.zhiNian.isYangLine) {
+      throw new Error("Expected Line 3 Yang line at age 22, got line " + qianHex.zhiNian.activeLinePos + " yang: " + qianHex.zhiNian.isYangLine);
+    }
+    if (!qianHex.zhiNian.isYangYear || !qianHex.zhiNian.isRepulsion || qianHex.zhiNian.hexagram.number !== 10) {
+      throw new Error("In Yang year 2024, expected repulsion to Tian Ze Lv (10), got hex " + qianHex.zhiNian.hexagram.number + " (" + qianHex.zhiNian.hexagram.nameZh + ")");
+    }
+    var qianHexYin = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 22, 2025);
+    if (qianHexYin.zhiNian.isYangYear || qianHexYin.zhiNian.isRepulsion || qianHexYin.zhiNian.hexagram.number !== 1) {
+      throw new Error("In Yin year 2025, expected attraction to retain Qian (1), got hex " + qianHexYin.zhiNian.hexagram.number + " (" + qianHexYin.zhiNian.hexagram.nameZh + ")");
     }
     '''
 ]
@@ -5254,6 +5295,16 @@ jsc_chrono_cmd = [
 
     if (peakSpikes > 0) {
       throw new Error("Found " + peakSpikes + " artificial transition boundary peak spikes out of " + totalBoundaries);
+    }
+
+    var boundaryAlertsZh = 0;
+    var boundaryAlertsEn = 0;
+    timeline.forEach(function(t) {
+      if (t.alerts && t.alerts.indexOf('换甲接气 · 气机重构') !== -1) boundaryAlertsZh++;
+      if (t.alertsEn && t.alertsEn.indexOf('Decennial Recalibration') !== -1) boundaryAlertsEn++;
+    });
+    if (boundaryAlertsZh === 0 || boundaryAlertsEn === 0) {
+      throw new Error("Missing decennial recalibration boundary alerts in timeline");
     }
     '''
 ]

@@ -14,8 +14,8 @@ const TIANJI_DATA = [
     "xianTianEn": "Born with innate prosperity and high wisdom; an independent nature forged by early trials leads to early accomplishment and expansive vision.",
     "houTianZh": "官带加身，连动三跳三级，威震四方。位高权重，动见瞻观，利见大人，终成一代首领。",
     "houTianEn": "Gains official dignity with rapid successive elevations; commands monumental influence and rises to sovereign leadership through integrity.",
-    "liuNianZh": "六甲得子，吉庆临门。加官进禄，文书有喜；防刚愎自用，亢龙有悔宜知止。",
-    "liuNianEn": "Auspicious tidings with childbirth and official advancements; maintain humility and avoid hubris to sustain peak fortunes.",
+    "liuNianZh": "大人造命，举重若轻；六甲得子，吉庆临门。加官进禄，文书有喜；防刚愎自用，亢龙有悔宜知止。",
+    "liuNianEn": "A sovereign crafts destiny with effortless mastery; childbirth and official advancement grace the threshold; avoid hubris to preserve peak fortunes.",
     "riddleZh": "玉上有光，乃‘珀’或‘润’字；天机图示明珠出土，金甲将军护卫，大器晚成、光华内敛后一鸣惊人。",
     "riddleEn": "Luminous jade glyph indicates precious amber or moisture; treasures emerge from seclusion under celestial protection to shine brilliantly."
   },
@@ -131,8 +131,8 @@ const TIANJI_DATA = [
     "xianTianEn": "Noble comportment and acute protocol awareness; navigates high-stakes corridors of power with tactical grace.",
     "houTianZh": "履虎尾不咥人，亨。在大型机构、政商名流间周旋自如，位极人臣，安享尊荣。",
     "houTianEn": "Treading the tiger's tail without being bitten; masters enterprise governance and diplomatic diplomacy, earning high honor.",
-    "liuNianZh": "步步为营，谨言慎行；注意上下级关系与合规红线，险中求胜，有惊无险。",
-    "liuNianEn": "Meticulous adherence to protocols; honor operational boundaries to transform treacherous challenges into breakthrough milestones.",
+    "liuNianZh": "凤衔书至，科甲考试得中，红鸾星动有喜；步步为营，履虎尾不咥人，险中求胜，大吉。",
+    "liuNianEn": "The Phoenix arrives bearing imperial tidings; supreme fortunes for academic examinations and romance / marriage stars; tread with disciplined precision to triumph over peril.",
     "riddleZh": "危崖独行，步履轻捷；明烛高照，指以至诚中正行险道，终得神明护佑安泰。",
     "riddleEn": "Walking agilely along the edge of a cliff under clear lantern light; absolute integrity shields the practitioner through danger."
   },

@@ -1773,6 +1773,7 @@ const LuckEngine = (function() {
       let dIdx = decades.findIndex(d => age >= d.ageStart && age <= d.ageEnd);
       let activeDecade = (dIdx !== -1) ? decades[dIdx] : null;
       let prevDecade = (dIdx > 0) ? decades[dIdx - 1] : null;
+      let nextDecade = (dIdx !== -1 && dIdx < decades.length - 1) ? decades[dIdx + 1] : null;
 
       let decadeText = activeDecade ? activeDecade.text : (age < (decades[0] ? decades[0].ageStart : 10) ? '童限' : '晚境');
       let decadeSpanZh = activeDecade ? activeDecade.ageSpanZh : (age < (decades[0] ? decades[0].ageStart : 10) ? `1 ~ ${(decades[0] ? decades[0].ageStart - 1 : 9)} 岁` : `${(decades[decades.length - 1] ? decades[decades.length - 1].ageEnd + 1 : 90)} 岁之后`);
@@ -1781,21 +1782,27 @@ const LuckEngine = (function() {
       // Decade systemic baseline with smooth boundary blending
       let activeBaselineE = (activeDecade && activeDecade.fortune && activeDecade.fortune.rating === 'good') ? 8 : -8;
       let activeBaselineW = (activeDecade && activeDecade.fortune && activeDecade.fortune.rating === 'good') ? 8 : -6;
-      let prevBaselineE = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === 'good') ? 8 : -8;
-      let prevBaselineW = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === 'good') ? 8 : -6;
+      let prevBaselineE = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === 'good') ? 8 : (prevDecade ? -8 : 0);
+      let prevBaselineW = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === 'good') ? 8 : (prevDecade ? -6 : 0);
+      let nextBaselineE = (nextDecade && nextDecade.fortune && nextDecade.fortune.rating === 'good') ? 8 : -8;
+      let nextBaselineW = (nextDecade && nextDecade.fortune && nextDecade.fortune.rating === 'good') ? 8 : -6;
 
       let blendedDecadeE = activeBaselineE;
       let blendedDecadeW = activeBaselineW;
-      const isAtDecadeBoundary = activeDecade && (age === activeDecade.ageStart || age === activeDecade.ageStart - 1);
 
-      if (isAtDecadeBoundary) {
-        if (age === activeDecade.ageStart - 1) {
-          blendedDecadeE = prevBaselineE * 0.65 + activeBaselineE * 0.35;
-          blendedDecadeW = prevBaselineW * 0.65 + activeBaselineW * 0.35;
-        } else {
-          blendedDecadeE = prevBaselineE * 0.35 + activeBaselineE * 0.65;
-          blendedDecadeW = prevBaselineW * 0.35 + activeBaselineW * 0.65;
-        }
+      // Metaphysical physics of transitional turbulence (换甲气机换气 · 脱运逢交运):
+      // Entry year (交运): age === activeDecade.ageStart
+      // Exit year (脱运): age === activeDecade.ageEnd && nextDecade
+      const isDecadeEntry = activeDecade && (age === activeDecade.ageStart);
+      const isDecadeExit = activeDecade && nextDecade && (age === activeDecade.ageEnd);
+      const isAtDecadeBoundary = isDecadeEntry || isDecadeExit;
+
+      if (isDecadeEntry) {
+        blendedDecadeE = prevBaselineE * 0.35 + activeBaselineE * 0.65;
+        blendedDecadeW = prevBaselineW * 0.35 + activeBaselineW * 0.65;
+      } else if (isDecadeExit) {
+        blendedDecadeE = activeBaselineE * 0.65 + nextBaselineE * 0.35;
+        blendedDecadeW = activeBaselineW * 0.65 + nextBaselineW * 0.35;
       }
 
       let baseE = isStrong ? 62 : 54;
