@@ -1257,31 +1257,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Strict 4-Part Structure + Dimension 5 Percentage Analysis + Dimension 6 Qing-Zhuo Classical Exegesis -->
           <div class="space-y-2 text-xs leading-relaxed">
-            <!-- 1. 格局含义 -->
+            <!-- 1. Pattern Meaning -->
             <div class="p-2.5 bg-black/30 rounded-lg border border-amber-900/30">
               <span class="text-amber-300 font-bold block mb-1">💡 1. ${isEn ? 'Pattern Meaning (Essence & Archetype)' : '格局含义 (是什么意思)'}</span>
               <p class="text-gray-300">${pat.meaning}</p>
             </div>
 
-            <!-- 2. 典籍出处 -->
+            <!-- 2. Canonical Source -->
             <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800">
               <span class="text-gray-400 font-bold block mb-1">📖 2. ${isEn ? 'Canonical Source (Classical Literature)' : '典籍出处 (出自书里哪里)'}</span>
               <p class="text-gray-400 font-medium">${pat.source}</p>
             </div>
 
-            <!-- 3. 成格条件与本命验证 -->
+            <!-- 3. Formation Rules & Natal Verification -->
             <div class="p-2.5 bg-black/30 rounded-lg border border-emerald-900/30">
               <span class="text-emerald-400 font-bold block mb-1">⚖️ 3. ${isEn ? 'Formation Rules & Natal Verification' : '成格条件与本命验证 (怎样成的格局)'}</span>
               <p class="text-gray-300">${pat.formation}</p>
             </div>
 
-            <!-- 4. 实战用法与喜忌 (含现代适合职业、人际关系与真实案例) -->
+            <!-- 4. Practical Application, Taboos & Mastery -->
             <div class="p-2.5 bg-black/30 rounded-lg border border-rose-900/30">
               <span class="text-rose-400 font-bold block mb-1">🎯 4. ${isEn ? 'Practical Application, Taboos & Mastery' : '实战用法与喜忌 (怎样使用)'}</span>
               <div class="text-gray-300 whitespace-pre-line leading-relaxed">${pat.usage}</div>
             </div>
 
-            <!-- 5. 能量权重与影响力评估 -->
+            <!-- 5. Natal Energy Share & Impact Assessment -->
             <div class="p-2.5 bg-black/30 rounded-lg border border-indigo-900/30">
               <div class="flex justify-between items-center mb-1">
                 <span class="text-indigo-300 font-bold">📊 5. ${isEn ? 'Natal Energy Share & Impact Assessment' : '本命能量占比与影响力评估'}</span>
@@ -1292,7 +1292,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             ${pat.gradeEvaluation ? `
-            <!-- 6. 清浊评级与破局晋阶深度论述 (依托《滴天髓阐微》《子平真诠》《兰台妙选》《神峰通考》) -->
+            <!-- 6. Pattern Grade & Qing-Zhuo Classical Exegesis -->
             <div class="p-3 bg-black/40 rounded-xl border border-amber-500/40 space-y-2 mt-2 shadow-inner">
               <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
                 <div class="flex items-center space-x-1.5">
@@ -1312,37 +1312,128 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
 
               <div class="space-y-2 text-[11.5px] leading-relaxed">
-                <!-- 优劣辨析 -->
+                <!-- Strengths & Vulnerabilities -->
                 <div class="p-2 rounded bg-black/40 border border-gray-800/80">
                   <b class="text-amber-300">${isEn ? '⚖️ Strengths & Vulnerabilities (Good vs Bad): ' : '⚖️ 格局优劣辨析 (好与不好)：'}</b>
                   <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.strengthsAndFlawsEn || pat.gradeEvaluation.strengthsAndFlaws || '') : (pat.gradeEvaluation.strengthsAndFlawsZh || pat.gradeEvaluation.strengthsAndFlaws || '')}</span>
                 </div>
 
-                <!-- 评判依据 -->
+                <!-- Classical Criteria -->
                 <div class="p-2 rounded bg-black/40 border border-gray-800/80">
                   <b class="text-blue-300">${isEn ? '📖 Classical Criteria (Why this Grade): ' : '📖 典籍评判依据 (为什么如此评判)：'}</b>
                   <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.whyThisGradeEn || pat.gradeEvaluation.whyThisGrade || '') : (pat.gradeEvaluation.whyThisGradeZh || pat.gradeEvaluation.whyThisGrade || '')}</span>
                 </div>
 
-                <!-- 卡点与天花板 -->
+                <!-- Ceilings & Bottlenecks -->
                 <div class="p-2 rounded bg-rose-950/20 border border-rose-900/40">
                   <b class="text-rose-400">${isEn ? '🚧 Ceilings & Bottlenecks (Why it cannot ascend): ' : '🚧 晋阶卡点与天花板 (为什么上不去)：'}</b>
                   <span class="text-rose-200">${isEn ? (pat.gradeEvaluation.bottleneckEn || pat.gradeEvaluation.bottleneck || '') : (pat.gradeEvaluation.bottleneckZh || pat.gradeEvaluation.bottleneck || '')}</span>
                 </div>
 
-                <!-- 保底是什么 -->
+                <!-- Moat & Defensible Floor -->
                 <div class="p-2 rounded bg-emerald-950/20 border border-emerald-900/40">
                   <b class="text-emerald-400">${isEn ? '🛡️ Moat & Defensible Floor (Baseline Protection): ' : '🛡️ 守正护城河与保底 (保底是什么)：'}</b>
                   <span class="text-emerald-200">${isEn ? (pat.gradeEvaluation.floorBaselineEn || pat.gradeEvaluation.floorBaseline || '') : (pat.gradeEvaluation.floorBaselineZh || pat.gradeEvaluation.floorBaseline || '')}</span>
                 </div>
 
-                <!-- 如何改善与提升路径 -->
+                <!-- Ascension Path -->
                 <div class="p-2 rounded bg-amber-950/20 border border-amber-900/40">
                   <b class="text-amber-400">${isEn ? '🚀 Practical Elevation & Ascension Path (How to improve): ' : '🚀 破局晋升与改运路径 (如何改善与提升)：'}</b>
                   <span class="text-amber-200">${isEn ? (pat.gradeEvaluation.elevationPathEn || pat.gradeEvaluation.elevationPath || '') : (pat.gradeEvaluation.elevationPathZh || pat.gradeEvaluation.elevationPath || '')}</span>
                 </div>
               </div>
             </div>` : ''}
+
+            <!-- 7. Combination Bureaus & Energy Precedence Exegesis -->
+            ${(() => {
+              const interactions = (currentBaziResult && currentBaziResult.interactions) || {};
+              const sanHui = interactions.sanHuiCombos || [];
+              const sanHe = interactions.sanHeCombos || [];
+              const banHe = interactions.banHeCombos || [];
+              const clashes = interactions.branchClashes || [];
+              const resolvedClashes = clashes.filter(c => c.resolvedByCombo);
+
+              let comboSummaryZh = '';
+              let comboSummaryEn = '';
+
+              if (sanHui.length > 0 || sanHe.length > 0 || banHe.length > 0) {
+                const partsZh = [];
+                const partsEn = [];
+                if (sanHui.length > 0) {
+                  partsZh.push(`三会方局【${sanHui.map(c => c.nameZh).join('、')}】`);
+                  partsEn.push(`Directional Meeting [${sanHui.map(c => c.nameEn).join('; ')}]`);
+                }
+                if (sanHe.length > 0) {
+                  partsZh.push(`三合局【${sanHe.map(c => c.nameZh).join('、')}】`);
+                  partsEn.push(`Three Harmonies [${sanHe.map(c => c.nameEn).join('; ')}]`);
+                }
+                if (banHe.length > 0) {
+                  partsZh.push(`半合/拱合【${banHe.map(c => c.nameZh).join('、')}】`);
+                  partsEn.push(`Half Harmonies [${banHe.map(c => c.nameEn).join('; ')}]`);
+                }
+                comboSummaryZh = `原局聚合${partsZh.join('，')}。古法宗义：‘方局合局，气专势隆，以合化能量为第一优先；若与地支刑冲并见，贪合忘冲、贪合忘刑，合局优先涵摄化解’。此合局能量直接赋能并主导本命格局之清纯厚重度。`;
+                comboSummaryEn = `Natal chart forms ${partsEn.join('; ')}. Metaphysical principle: 'Directional meetings and harmony bureaus consolidate dominant elemental momentum, taking absolute precedence over standard clashes and punishments (Greedy for Harmony, Oblivious to Clash)'. This combination energy directly governs pattern purity.`;
+              } else {
+                comboSummaryZh = '原局干支各守本位，无大势三合三会方局，以各柱正统干支生克承应为主，五行平和流转，综合分析全局流通气象。';
+                comboSummaryEn = 'Natal pillars preserve individual spatial positions without major bureaus; standard ten gods circulation and pillar proximity govern pattern dynamics.';
+              }
+
+              return `
+                <div class="p-3 bg-black/40 rounded-xl border border-sky-600/40 space-y-2 mt-2 shadow-inner">
+                  <div class="flex items-center space-x-1.5 pb-1 border-b border-gray-800">
+                    <span class="chinese-seal text-[9px] py-0 border-sky-500 text-sky-300">${isEn ? 'Combination Synthesis' : '合局通融'}</span>
+                    <span class="text-sky-300 font-bold text-xs font-serif-sc">
+                      🌀 7. ${isEn ? 'Combination Bureaus & Energy Precedence Exegesis (San He / San Hui)' : '合局全套解析与能量优先论 (三合生旺库 / 三会方局 / 贪合忘冲)'}
+                    </span>
+                  </div>
+                  <p class="text-gray-300 text-[11.5px] leading-relaxed">${isEn ? comboSummaryEn : comboSummaryZh}</p>
+                  ${resolvedClashes.length > 0 ? `
+                    <div class="p-2 rounded bg-amber-950/30 border border-amber-600/30 text-[11px] text-amber-200">
+                      <b>${isEn ? '⚡ Clashes Resolved by Combination Bureau: ' : '⚡ 合局化解刑冲实况：'}</b>
+                      ${resolvedClashes.map(c => isEn ? `[${(c.branchesEn || c.branches.map(b => (typeof I18N !== 'undefined' ? I18N.getBranch(b, 'en') : b))).join('-')}: ${c.resolutionNoteEn}]` : `【地支${c.branches.join('与')}冲：${c.resolutionNoteZh}】`).join('；')}
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            })()}
+
+            <!-- 8. Master Ni Haisha Tian Ji Four Pillars Hexagram Exegesis -->
+            ${(() => {
+              if (typeof IChingEngine === 'undefined' || !currentBaziResult) return '';
+              const hexData = IChingEngine.calculateFourPillarsHexagrams(currentBaziResult, fourPillarsActiveAge);
+              if (!hexData) return '';
+              const xt = hexData.xianTian || {};
+              const ht = hexData.houTian || {};
+              const xtHex = xt.hexagram || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
+              const htHex = ht.hexagram || { number: 2, nameZh: '坤为地', nameEn: 'The Receptive' };
+              const xtTj = xt.tianJi || {};
+              const htTj = ht.tianJi || {};
+
+              return `
+                <div class="p-3 bg-black/40 rounded-xl border border-amber-500/40 space-y-2 mt-2 shadow-inner">
+                  <div class="flex items-center space-x-1.5 pb-1 border-b border-gray-800">
+                    <span class="chinese-seal text-[9px] py-0 border-amber-500 text-amber-300">${isEn ? 'Tian Ji Divination' : '天纪易卦'}</span>
+                    <span class="text-amber-300 font-bold text-xs font-serif-sc">
+                      🔮 8. ${isEn ? 'Ni Haisha 《Tian Ji》 Four Pillars Hexagram Exegesis & Pattern Synthesis' : '倪海厦《天纪》四柱命卦印证与格局天机互参 (先天卦 / 后天卦 / 字谜)'}
+                    </span>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
+                    <div class="p-2 rounded bg-black/50 border border-gray-800">
+                      <b class="text-amber-300">${isEn ? `Early Heaven: Hexagram ${xtHex.number} (${xtHex.nameEn})` : `先天命卦：第${xtHex.number}卦 · ${xtHex.nameZh}`}</b>
+                      <p class="text-gray-300 mt-1">${isEn ? (xtTj.xianTianEn || '') : (xtTj.xianTianZh || '')}</p>
+                    </div>
+                    <div class="p-2 rounded bg-black/50 border border-gray-800">
+                      <b class="text-emerald-300">${isEn ? `Later Heaven: Hexagram ${htHex.number} (${htHex.nameEn})` : `后天命卦：第${htHex.number}卦 · ${htHex.nameZh}`}</b>
+                      <p class="text-gray-300 mt-1">${isEn ? (htTj.houTianEn || '') : (htTj.houTianZh || '')}</p>
+                    </div>
+                  </div>
+                  <div class="p-2 rounded bg-amber-950/20 border border-amber-800/30 text-[11px] text-amber-200">
+                    <b>✨ ${isEn ? 'Heavenly Secrets & Clues: ' : '玉上有光字谜与天机微言：'}</b>
+                    <span>${isEn ? (xtTj.riddleEn || '') : (xtTj.riddleZh || '')}</span>
+                  </div>
+                </div>
+              `;
+            })()}
           </div>
         `;
         patternsContainer.appendChild(card);
@@ -5376,12 +5467,29 @@ document.addEventListener('DOMContentLoaded', () => {
     let birthYear = (res.input && res.input.year) || 1990;
     const currentYear = selectedAnnualYear || new Date().getFullYear();
     const calculatedAge = Math.max(1, currentYear - birthYear);
-    const isInitialized = slider.hasAttribute ? slider.hasAttribute('data-initialized') : slider._initialized;
+    const isInitialized = slider && (slider.hasAttribute ? slider.hasAttribute('data-initialized') : slider._initialized);
     if (slider && !isInitialized) {
       fourPillarsActiveAge = calculatedAge;
       slider.value = fourPillarsActiveAge;
       if (slider.setAttribute) slider.setAttribute('data-initialized', 'true');
       slider._initialized = true;
+
+      const handleSliderChange = (e) => {
+        const val = parseInt((e && e.target) ? e.target.value : slider.value, 10);
+        if (!isNaN(val)) {
+          fourPillarsActiveAge = Math.max(1, Math.min(100, val));
+          slider.value = fourPillarsActiveAge;
+          if (ageDisplay) {
+            ageDisplay.textContent = (currentLang === 'en') ? `${fourPillarsActiveAge} yrs` : `${fourPillarsActiveAge} 岁`;
+          }
+          if (currentBaziResult) {
+            renderFourPillarsHexagrams(currentBaziResult);
+          }
+        }
+      };
+
+      slider.addEventListener('input', handleSliderChange);
+      slider.addEventListener('change', handleSliderChange);
     } else if (slider) {
       fourPillarsActiveAge = parseInt(slider.value, 10) || calculatedAge;
     }
@@ -5391,7 +5499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const hexData = (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function')
-      ? IChingEngine.calculateFourPillarsHexagrams(res, fourPillarsActiveAge, currentYear)
+      ? IChingEngine.calculateFourPillarsHexagrams(res, fourPillarsActiveAge, birthYear + fourPillarsActiveAge)
       : null;
 
     if (!hexData) {
@@ -5956,6 +6064,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const portalBtnFriction = document.getElementById('portalBtnFriction');
   if (portalBtnFriction) {
     portalBtnFriction.addEventListener('click', () => switchPrimaryView('view-friction'));
+  }
+  const portalBtnFengShui = document.getElementById('portalBtnFengShui');
+  if (portalBtnFengShui) {
+    portalBtnFengShui.addEventListener('click', () => switchPrimaryView('view-fengshui'));
   }
   const btnJumpToHomeFromStrategy = document.getElementById('btnJumpToHomeFromStrategy');
   if (btnJumpToHomeFromStrategy) {
@@ -6946,6 +7058,45 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-xs text-gray-300 font-serif-sc leading-relaxed">${isEn ? orig.greatXiangEn : orig.greatXiangZh}</p>
           </div>
         </div>
+
+        <!-- Master Ni Haisha Tian Ji Exegesis Card (倪海厦《天纪》64卦批注全集) -->
+        ${(() => {
+          const tj = (typeof TianJiDB !== 'undefined' && orig.number) ? TianJiDB.getByNumber(orig.number) : null;
+          if (!tj) return '';
+          return `
+            <div class="p-4 rounded-xl bg-amber-950/25 border border-amber-600/50 shadow-xl space-y-3">
+              <div class="flex items-center justify-between border-b border-amber-500/30 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? 'Tian Ji Divination' : '天纪秘解'}</span>
+                  <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300">
+                    ${isEn ? 'Master Ni Haisha 《Tian Ji》 Canonical Exegesis' : '倪海厦《天纪》六十四卦秘传全解'}
+                  </h4>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">
+                  ${isEn ? `Hexagram ${orig.number}` : `第${orig.number}卦`}
+                </span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs leading-relaxed">
+                <div class="p-2.5 rounded bg-black/40 border border-gray-800 space-y-1">
+                  <b class="text-amber-300 block">🔮 ${isEn ? 'Early Heaven Destiny Reading' : '先天卦断 (前半生根基)'}</b>
+                  <p class="text-gray-300">${isEn ? tj.xianTianEn : tj.xianTianZh}</p>
+                </div>
+                <div class="p-2.5 rounded bg-black/40 border border-gray-800 space-y-1">
+                  <b class="text-emerald-300 block">🌿 ${isEn ? 'Later Heaven Destiny Reading' : '后天卦断 (后半生归宿)'}</b>
+                  <p class="text-gray-300">${isEn ? tj.houTianEn : tj.houTianZh}</p>
+                </div>
+                <div class="p-2.5 rounded bg-black/40 border border-gray-800 space-y-1">
+                  <b class="text-sky-300 block">⏳ ${isEn ? 'Annual Luck Guidance' : '流年流月断 (当值时岁指引)'}</b>
+                  <p class="text-gray-300">${isEn ? tj.liuNianEn : tj.liuNianZh}</p>
+                </div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-black/60 border border-amber-500/30 text-xs">
+                <span class="text-amber-400 font-bold">✨ ${isEn ? 'Jade Luminance Riddle & Cosmic Key:' : '玉上有光字谜与天机解密：'}</span>
+                <span class="text-amber-200 ml-1 font-serif-sc">${isEn ? tj.riddleEn : tj.riddleZh}</span>
+              </div>
+            </div>
+          `;
+        })()}
 
         <!-- Six Lines Exegesis (六爻爻辞详析) -->
         <div class="space-y-2 pt-2">

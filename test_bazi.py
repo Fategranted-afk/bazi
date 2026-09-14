@@ -2430,7 +2430,7 @@ var console = {
   }
 };
 
-var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'timeDynamicsSection', 'tdAnnualBadge', 'timeDynamicsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer', 'view-fengshui', 'btnJumpToHomeFromFengShui', 'fengshuiContentContainer', 'fengshuiQuickBadges', 'ziping100Section', 'ziping100Container', 'zipingScoreBadges', 'fourPillarsHexSection', 'fourPillarsHexContainer', 'fourPillarsAgeSlider', 'fourPillarsAgeDisplay'];
+var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portalBtnFengShui', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'timeDynamicsSection', 'tdAnnualBadge', 'timeDynamicsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer', 'view-fengshui', 'btnJumpToHomeFromFengShui', 'fengshuiContentContainer', 'fengshuiQuickBadges', 'ziping100Section', 'ziping100Container', 'zipingScoreBadges', 'fourPillarsHexSection', 'fourPillarsHexContainer', 'fourPillarsAgeSlider', 'fourPillarsAgeDisplay'];
 var elementStore = {};
 
 function makeEl(id, tag) {
@@ -2454,8 +2454,15 @@ function makeEl(id, tag) {
     tagName: (tag || 'DIV').toUpperCase(),
     value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : (id === 'synastryDateA' ? '1990-06-20' : (id === 'synastryTimeA' ? '14:30' : (id === 'synastryDateB' ? '1992-08-15' : (id === 'synastryTimeB' ? '10:00' : '')))))),
     checked: false,
-    textContent: '',
-    innerHTML: '',
+    _rawInnerHTML: '',
+    get innerHTML() {
+      var ch = (this._children || []).map(function(c) { return c.innerHTML || ''; }).join('');
+      return (this._rawInnerHTML || '') + ch;
+    },
+    set innerHTML(val) {
+      this._rawInnerHTML = val;
+      this._children = [];
+    },
     className: '',
     style: {},
     options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
@@ -2581,7 +2588,7 @@ document._domReady();
 elementStore['calcBtn'].trigger('click');
 
 // Switch all views in ZH
-var views = ['view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching', 'view-synastry', 'view-home'];
+var views = ['view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching', 'view-synastry', 'view-fengshui', 'view-home'];
 views.forEach(function(vId) {
   var btn = document.querySelectorAll('.view-nav-btn').find(function(b) { return b.getAttribute('data-view') === vId; });
   if (btn) btn.trigger('click');
@@ -2625,6 +2632,48 @@ views.forEach(function(vId) {
 
 // Chrono slider in EN
 elementStore['chronoAgeSlider'].trigger('input', { target: { value: '60' } });
+
+// Test fourPillarsAgeSlider input and change events in EN
+elementStore['fourPillarsAgeSlider'].trigger('input', { target: { value: '42' } });
+if (elementStore['fourPillarsAgeDisplay'].textContent !== '42 yrs') {
+  throw new Error('fourPillarsAgeDisplay must update to 42 yrs on slider input, got: ' + elementStore['fourPillarsAgeDisplay'].textContent);
+}
+
+// Test portalBtnFengShui and btnJumpToHomeFromFengShui
+elementStore['portalBtnFengShui'].trigger('click');
+if (elementStore['view-fengshui'].classList.contains('hidden')) {
+  throw new Error('view-fengshui must be visible after portalBtnFengShui click');
+}
+elementStore['btnJumpToHomeFromFengShui'].trigger('click');
+if (elementStore['view-home'].classList.contains('hidden')) {
+  throw new Error('view-home must be visible after btnJumpToHomeFromFengShui click');
+}
+
+// Check zero residual Chinese in English mode for new features
+if (/[\u4e00-\u9fa5]/.test(elementStore['ziping100Container'].innerHTML)) {
+  throw new Error('ziping100Container contains residual Chinese in EN: ' + elementStore['ziping100Container'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['zipingScoreBadges'].innerHTML)) {
+  throw new Error('zipingScoreBadges contains residual Chinese in EN: ' + elementStore['zipingScoreBadges'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['fourPillarsHexContainer'].innerHTML)) {
+  throw new Error('fourPillarsHexContainer contains residual Chinese in EN: ' + elementStore['fourPillarsHexContainer'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['fengshuiContentContainer'].innerHTML)) {
+  throw new Error('fengshuiContentContainer contains residual Chinese in EN: ' + elementStore['fengshuiContentContainer'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['fengshuiQuickBadges'].innerHTML)) {
+  throw new Error('fengshuiQuickBadges contains residual Chinese in EN: ' + elementStore['fengshuiQuickBadges'].innerHTML);
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['portraitPatternsContainer'].innerHTML)) {
+  throw new Error('portraitPatternsContainer contains residual Chinese in EN: ' + elementStore['portraitPatternsContainer'].innerHTML);
+}
+if (!elementStore['portraitPatternsContainer'].innerHTML.includes('Combination Synthesis')) {
+  throw new Error('portraitPatternsContainer must include Combination Synthesis dimension in EN');
+}
+if (!elementStore['portraitPatternsContainer'].innerHTML.includes('Tian Ji Divination')) {
+  throw new Error('portraitPatternsContainer must include Tian Ji Divination dimension in EN');
+}
 
 // Synastry in EN
 elementStore['calcSynastryBtn'].trigger('click');
@@ -2754,7 +2803,7 @@ jsc_sim_cmd = [
     jsc_dom_sim_script
 ]
 sim_proc = subprocess.run(jsc_sim_cmd, capture_output=True, text=True)
-assert sim_proc.returncode == 0, f"Browser DOM Simulation crash detected: {sim_proc.stderr}"
+assert sim_proc.returncode == 0, f"Browser DOM Simulation crash detected: stdout={sim_proc.stdout} stderr={sim_proc.stderr}"
 print("✓ 完整浏览器 DOM 运行环境模拟（生命周期/算盘/时空/合盘/周易/双语/战报导出）零崩溃验证通过！")
 
 # 50. Validate Two-Stage UI Architecture (Portal Landing & Dashboard Transition)
@@ -4379,7 +4428,8 @@ jsc_dom_all_cmd = [
       'card_fengshui_title', 'card_fengshui_desc',
       'ziping_title', 'ziping_subtitle',
       'four_pillars_hex_title', 'four_pillars_hex_subtitle',
-      'four_pillars_hex_age_label'
+      'four_pillars_hex_age_label',
+      'portal_fengshui_title', 'portal_fengshui_desc'
     ];
     for (var k = 0; k < fengshuiKeys.length; k++) {
       var key = fengshuiKeys[k];
@@ -4390,6 +4440,32 @@ jsc_dom_all_cmd = [
       if (/[\\u4e00-\\u9fa5]/.test(enVal)) {
         throw new Error("Residual Chinese in en translation for key: " + key + " -> " + enVal);
       }
+    }
+
+    // Verify Dominant Pattern (Qu Zhi Wood) has favorable elements aligned in SpatialFengShuiEngine
+    var mockAllWood = {
+      dayMaster: '甲',
+      dayMasterElement: '木',
+      pillars: {
+        year: { stem: '甲', stemElement: '木', branch: '寅' },
+        month: { stem: '乙', stemElement: '木', branch: '卯' },
+        day: { stem: '甲', stemElement: '木', branch: '寅' },
+        hour: { stem: '乙', stemElement: '木', branch: '卯' }
+      }
+    };
+    var zipingWood = BaZiEngine.calculateZipingScore(mockAllWood);
+    var fsWood = SpatialFengShuiEngine.generateFengShuiGuide({
+      dayMaster: '甲',
+      dayMasterElement: '木',
+      gender: '乾造',
+      pillars: mockAllWood.pillars,
+      zipingScore: zipingWood
+    }, luck);
+    if (!fsWood.favorableElements.includes('木')) {
+      throw new Error("Dominant Wood pattern must favor Wood");
+    }
+    if (fsWood.favorableElements.includes('金')) {
+      throw new Error("Dominant Wood pattern must NOT favor Metal (Officer/Killing)");
     }
     '''
 ]

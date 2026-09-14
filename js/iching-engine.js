@@ -492,7 +492,12 @@ class IChingEngine {
     if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
     else if (bazi.year) birthYear = bazi.year;
 
-    const targetAge = Math.max(1, selectedYear - birthYear);
+    const targetAge = (currentAge !== undefined && currentAge !== null)
+      ? Math.max(1, currentAge)
+      : Math.max(1, selectedYear - birthYear);
+    const effSelectedYear = (currentAge !== undefined && currentAge !== null)
+      ? (birthYear + targetAge)
+      : selectedYear;
     let zhiNianBaseBinary;
     let zhiNianActiveLinePos;
 
@@ -514,7 +519,7 @@ class IChingEngine {
 
     return {
       currentAge,
-      selectedYear,
+      selectedYear: effSelectedYear,
       targetAge,
       tianShu,
       diShu,

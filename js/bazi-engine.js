@@ -502,7 +502,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             stems: sPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}干【${sPair}】${item.name}`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Stems [${sPair}] Combination (${item.element})`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Stems Combination (${item.element})`,
             element: item.element,
             isAdjacent,
             descZh: item.descZh,
@@ -515,7 +515,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             stems: sPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}干【${sPair}】相冲`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Stems [${sPair}] Clash (${item.type})`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Stems Clash (${item.type})`,
             type: item.type,
             isAdjacent,
             descZh: item.descZh,
@@ -531,7 +531,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             branches: bPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】六合`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] Six Combination (${item.element})`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches Six Combination (${item.element})`,
             element: item.element,
             isAdjacent,
             descZh: item.descZh,
@@ -544,7 +544,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             branches: bPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】六冲`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] Six Clash`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches Six Clash`,
             isAdjacent,
             descZh: item.palaceZh,
             descEn: item.palaceEn
@@ -556,7 +556,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             branches: bPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】穿害`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] Mutual Harm`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches Mutual Harm`,
             isAdjacent,
             descZh: item.descZh,
             descEn: item.descEn
@@ -569,7 +569,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             branches: bPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】子卯无礼之刑`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] Zi-Mao Punishment`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches Zi-Mao Punishment`,
             descZh: '水木失调，防言语冲突与人情冷暖是非',
             descEn: 'Zi-Mao Punishment: tactful communication required'
           });
@@ -578,7 +578,7 @@ class BaZiEngine {
             p1: k1, p2: k2,
             branches: bPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】自刑`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] Self-Punishment`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches Self-Punishment`,
             descZh: '相同五行气机过亢，易自寻烦恼或多思自困，需豁达解脱',
             descEn: 'Self-Punishment: overcome cognitive rumination and self-criticism'
           });
@@ -701,7 +701,7 @@ class BaZiEngine {
               element: bh.element,
               type: bh.type,
               nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】${bh.nameZh}`,
-              nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] ${bh.nameEn}`
+              nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches (${bh.nameEn})`
             });
           }
         }

@@ -17,12 +17,22 @@ class SpatialFengShuiEngine {
     const interactions = bazi.interactions || (typeof BaZiEngine !== 'undefined' ? BaZiEngine.calculatePillarInteractions(bazi.pillars) : null);
 
     // 1. Determine Favorable Elements (喜用五行)
-    const favorableElements = (ziping && ziping.categoryKey === 'moderate_weak')
-      ? [dmEl, { '木': '水', '火': '木', '土': '火', '金': '土', '水': '金' }[dmEl]]
-      : [
-          { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' }[dmEl],
-          { '木': '金', '火': '水', '土': '木', '金': '火', '水': '土' }[dmEl]
-        ];
+    const generates = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+    const generatedBy = { '木': '水', '火': '木', '土': '火', '金': '土', '水': '金' };
+    const wealthMap = { '木': '土', '火': '金', '土': '水', '金': '木', '水': '火' };
+    const officerMap = { '木': '金', '火': '水', '土': '木', '金': '火', '水': '土' };
+
+    let favorableElements;
+    if (ziping && ziping.categoryKey === 'extreme_strong') {
+      // 专旺格 (曲直/炎上/稼穑/从革/润下)：顺其专旺之势，喜同气比劫、生身印枭与泄秀食伤，最忌官杀克破
+      favorableElements = [dmEl, generatedBy[dmEl], generates[dmEl]];
+    } else if (ziping && (ziping.categoryKey === 'moderate_weak' || ziping.categoryKey === 'extreme_weak')) {
+      // 较弱或极弱：喜印比同源生扶护身
+      favorableElements = [dmEl, generatedBy[dmEl]];
+    } else {
+      // 较旺格：喜克泄耗 (食伤泄秀、财星生发、官杀匡扶)
+      favorableElements = [generates[dmEl], wealthMap[dmEl], officerMap[dmEl]];
+    }
     const primaryFavEl = favorableElements[0] || '木';
 
     const elNames = {
@@ -370,8 +380,8 @@ class SpatialFengShuiEngine {
       '己': { zh: '正北子鼠位 / 西南申猴位', en: 'North (Rat) / Southwest (Monkey)' },
       '丙': { zh: '正西酉鸡位 / 西北亥猪位', en: 'West (Rooster) / Northwest (Pig)' },
       '丁': { zh: '正西酉鸡位 / 西北亥猪位', en: 'West (Rooster) / Northwest (Pig)' },
-      '壬': { zh: '东北卯兔位 / 正东巳蛇位', en: 'East (Rabbit) / Southeast (Snake)' },
-      '癸': { zh: '东北卯兔位 / 正东巳蛇位', en: 'East (Rabbit) / Southeast (Snake)' },
+      '壬': { zh: '正东卯兔位 / 东南巳蛇位', en: 'East (Rabbit) / Southeast (Snake)' },
+      '癸': { zh: '正东卯兔位 / 东南巳蛇位', en: 'East (Rabbit) / Southeast (Snake)' },
       '辛': { zh: '正南午马位 / 东北寅虎位', en: 'South (Horse) / Northeast (Tiger)' }
     };
     const nobleLoc = tianYiMap[dm] || { zh: '东北丑位 / 西南未位', en: 'Northeast (Ox) / Southwest (Goat)' };

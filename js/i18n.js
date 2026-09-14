@@ -148,6 +148,18 @@ const I18N = (function() {
       seal_view_fengshui: "空间开运",
       portal_card8_title: "空间风水指南",
       portal_card8_desc: "延年聚财貔貅鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数",
+      portal_fengshui_title: "空间风水指南实操十策",
+      portal_fengshui_desc: "延年聚财鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数",
+      nav_fengshui: "空间风水",
+      fengshui_title: "八字开运与空间风水指南",
+      fengshui_subtitle: "基于原局五行用神与生克刑冲，量身定制十大实操空间调候与风水器物布局",
+      card_fengshui_title: "空间风水改运专属建议",
+      card_fengshui_desc: "依本命喜用神精确定位财位、文昌位、天乙贵人位与化煞法门",
+      ziping_title: "子平百分制生克量化评分",
+      ziping_subtitle: "天干各10分（40分），月支35分，日支15分，年时支各5分；辰戌丑未杂气折算；判定命格强弱与清浊高低",
+      four_pillars_hex_title: "子平四柱命卦印证",
+      four_pillars_hex_subtitle: "天地数起先天卦与后天卦 · 倪海厦《天纪》64卦秘传全解与岁运飞爻",
+      four_pillars_hex_age_label: "当前推演岁数",
       fengshui_banner_title: "八字开运与空间风水指南 · 实操调理十策",
       fengshui_banner_desc: "依本命八字喜用五行、三元九运个人命卦与原局刑冲格局，定制十项实操改运器物与空间气场调理锦囊：从延年聚财大阵、龙龟双铃化煞、贪合忘冲生肖佩戴，到泰山石补缺、洛书吉数与积德行善实修。",
       seal_ziping_score: "子平量化",
@@ -644,6 +656,18 @@ const I18N = (function() {
       seal_view_fengshui: "Spatial Remediation",
       portal_card8_title: "Spatial Feng Shui & Remediation",
       portal_card8_desc: "Yan Nian Wealth Array · Dragon Turtle & Bells · 6-Harmony Zodiac · Mount Tai Stone · Hetu Numbers",
+      portal_fengshui_title: "Spatial Feng Shui 10 Practical Remedies",
+      portal_fengshui_desc: "Yan Nian Wealth Pixiu · Dragon Turtle & Bells · Harmony Over Clash Talisman · Mt. Tai Stone · Luoshu Numbers",
+      nav_fengshui: "Spatial Feng Shui",
+      fengshui_title: "Spatial Feng Shui & Metaphysical Remediation Guide",
+      fengshui_subtitle: "Tailored 10 Practical Spatial Remedies & Classical Artifact Formations Based on Useful Gods & Elemental Dynamics",
+      card_fengshui_title: "Bespoke Spatial Feng Shui & Remediation Advice",
+      card_fengshui_desc: "Precise calibration of Wealth, Academic, Nobleman, and Clashing positions based on natal Useful Gods",
+      ziping_title: "Ziping 100-Point Quantitative Balance Score",
+      ziping_subtitle: "Stems 10 pts each (40 pts), Month Branch 35, Day Branch 15, Year/Hour 5 each; Za Qi exact conversion; determines pattern strength and purity",
+      four_pillars_hex_title: "Four Pillars Hexagram Divination",
+      four_pillars_hex_subtitle: "Heaven-Earth Numbers derive Early & Later Heaven Hexagrams · Master Ni Haisha's 《Tian Ji》 64 Hexagrams & Annual Active Lines",
+      four_pillars_hex_age_label: "Current Projected Age",
       fengshui_banner_title: "Spatial Feng Shui & Metaphysical Remediation Guide · Ten Practical Cures",
       fengshui_banner_desc: "Customized 10 spatial and talismanic remedies based on natal favorable elements, personal Eight Mansions Kua, and natal clashes: from the Yan Nian Wealth Array to the Mount Tai Stone and ethical merit cultivation.",
       seal_ziping_score: "Ziping Score",
@@ -1211,14 +1235,210 @@ const I18N = (function() {
     return PILLAR_TITLES[l][idx] || PILLAR_TITLES.zh[idx];
   }
 
+  const SANMING_DAY_HOUR_PHRASES = {
+    // Part 1 / Standalone
+    '七杀坐库': 'Seven Killings in Tomb Vault',
+    '七杀当权': 'Seven Killings in Commanding Power',
+    '伤官偏官': 'Hurting Officer & Indirect Officer',
+    '伤官吐秀': 'Hurting Officer Unleashing Elegance',
+    '伤官坐库': 'Hurting Officer in Tomb Vault',
+    '伤官生财': 'Hurting Officer Producing Wealth',
+    '伤官生财格': 'Hurting Officer Producing Wealth Pattern',
+    '伤官长生': 'Hurting Officer in Growth Stage',
+    '伤官食禄': 'Hurting Officer Eating Lu Prosperity',
+    '偏印专位': 'Indirect Resource Cardinal Station',
+    '偏印逢枭': 'Indirect Resource Meeting Owl Star',
+    '偏印逢生': 'Indirect Resource Nourished in Growth',
+    '偏官七杀': 'Indirect Officer & Seven Killings',
+    '偏官专位': 'Indirect Officer Cardinal Station',
+    '偏官长生': 'Indirect Officer in Growth Stage',
+    '偏财专位': 'Indirect Wealth Cardinal Station',
+    '偏财坐库': 'Indirect Wealth in Tomb Vault',
+    '偏财天乙': 'Indirect Wealth with Heavenly Nobleman',
+    '偏财得禄': 'Indirect Wealth Anchored in Lu',
+    '冠带偏官': 'Indirect Officer in Crowning Station',
+    '劫财分禄': 'Rob Wealth Dividing Lu Prosperity',
+    '印绶逢生': 'Resource Seal Nourished in Growth',
+    '天乙贵人': 'Heavenly Nobleman Station',
+    '子遥巳格': 'Zi Remotely Attracting Si Pattern',
+    '官印双全': 'Dual Officer & Resource Complete',
+    '官星坐贵': 'Officer Star Meeting Nobleman',
+    '帝旺逢生': 'Peak Vigor Meeting Nourishment',
+    '帝旺逢羊刃': 'Peak Vigor Meeting Yang Blade',
+    '日坐正财': 'Day Sits on Direct Wealth',
+    '日照江河': 'Sun Illuminating Rivers',
+    '日照长生': 'Sun Illuminating Growth Stage',
+    '日禄归时': 'Prosperity Lu Returning to Hour',
+    '日禄归时格': 'Prosperity Lu Returning to Hour Pattern',
+    '时上一位贵': 'Single Nobleman Prominent in Hour',
+    '时带偏官': 'Hour Pillar Carrying Indirect Officer',
+    '时带木库': 'Hour Pillar Carrying Wood Vault',
+    '时带贵人': 'Hour Pillar Carrying Nobleman',
+    '时带阳刃格': 'Hour Pillar Carrying Yang Blade Pattern',
+    '木火伤官': 'Wood & Fire Hurting Officer',
+    '杂气偏财': 'Mixed Qi Indirect Wealth',
+    '正印天乙': 'Direct Resource with Heavenly Nobleman',
+    '正印逢生': 'Direct Resource Nourished in Growth',
+    '正印长生': 'Direct Resource in Growth Stage',
+    '正官入库': 'Direct Officer Entering Vault',
+    '正官坐库': 'Direct Officer in Tomb Vault',
+    '正官坐贵': 'Direct Officer Meeting Nobleman',
+    '正官长生': 'Direct Officer in Growth Stage',
+    '正财坐禄': 'Direct Wealth Anchored in Lu',
+    '正财天乙': 'Direct Wealth with Heavenly Nobleman',
+    '正财得位': 'Direct Wealth in Proper Station',
+    '正财长生': 'Direct Wealth in Growth Stage',
+    '死处逢生': 'Rebirth from Extinction Stage',
+    '水库归宗': 'Water Reservoir Returning to Ancestry',
+    '水库滋润': 'Water Reservoir Nourishing Growth',
+    '湿土生金': 'Moist Earth Producing Metal',
+    '火土通明': 'Fire & Earth Radiant Splendor',
+    '火库余光': 'Fire Vault Residual Radiance',
+    '火库余气': 'Fire Vault Residual Qi',
+    '火库余温': 'Fire Vault Residual Warmth',
+    '火库归宿': 'Fire Vault Ultimate Destination',
+    '煞财入库': 'Killings & Wealth Entering Vault',
+    '燥土生金': 'Dry Earth Forging Metal',
+    '田园禾稼': 'Field Crops & Harvest',
+    '绝处逢生': 'Rebirth from Desolation Stage',
+    '藤萝系甲': 'Wisteria Clinging to Pine',
+    '财库相生': 'Wealth Vault Mutually Generating',
+    '财库通明': 'Wealth Vault Radiant & Clear',
+    '财库通根': 'Wealth Vault Deeply Rooted',
+    '金水伤官': 'Metal & Water Hurting Officer',
+    '长生偏官': 'Growth Stage Indirect Officer',
+    '长生学堂': 'Growth Stage Scholarly Academy',
+    '长生逢食': 'Growth Stage Meeting Eating God',
+    '长生食神': 'Growth Stage Eating God',
+    '阳刃帝旺': 'Yang Blade at Peak Vigor',
+    '食神吐秀': 'Eating God Unleashing Elegance',
+    '食神得禄': 'Eating God Anchored in Lu',
+    '食神生财': 'Eating God Producing Wealth',
+    '食神长生': 'Eating God in Growth Stage',
+    '魁罡得位': 'Kui Gang in Proper Station',
+
+    // Part 2
+    '专旺长青': 'Evergreen Dominant Monopoly',
+    '专旺高冈': 'Towering Mountain Peak Monopoly',
+    '专禄专秀': 'Pure Lu Elegance',
+    '专禄专美': 'Pure Lu Splendor',
+    '专禄坚刚': 'Pure Lu Resilient Steel',
+    '专禄浩荡': 'Pure Lu Vast Momentum',
+    '专禄清润': 'Pure Lu Pure Moisture',
+    '专禄荣昌': 'Pure Lu Prosperous Flourishing',
+    '丙辛化水': 'Bing-Xin Transforming into Water',
+    '乙庚化金': 'Yi-Geng Transforming into Metal',
+    '乙庚暗合': 'Yi-Geng Secret Union',
+    '伤官得所': 'Hurting Officer Well-Stationed',
+    '伤官暗藏': 'Hurting Officer Concealed',
+    '偏印暗藏': 'Indirect Resource Concealed',
+    '偏官克制': 'Indirect Officer Restrained',
+    '偏财得位': 'Indirect Wealth Stationed',
+    '偏财得禄': 'Indirect Wealth Anchored in Lu',
+    '剑锋发芒': 'Sword Blade Gleaming Sharp',
+    '印绶生身': 'Resource Seal Nourishing Self',
+    '印绶相涵': 'Resource Seal Imbued with Vitality',
+    '坐印透财': 'Rooted in Resource Revealing Wealth',
+    '培植秀木': 'Cultivating Flourishing Wood',
+    '培植秀草': 'Nurturing Flourishing Flora',
+    '天乙相照': 'Illuminated by Nobleman',
+    '威权独掌': 'Monopolizing Supreme Authority',
+    '威权震动': 'Resounding Command Authority',
+    '学堂逢生': 'Scholarly Academy Reborn',
+    '官印并旺': 'Dual Flourishing Officer-Seal',
+    '官印得所': 'Officer & Seal Well-Stationed',
+    '官印相生': 'Officer & Seal Mutually Generating',
+    '官星得润': 'Officer Star Moistened',
+    '官星得禄': 'Officer Star Anchored in Lu',
+    '官星暗伏': 'Officer Star Concealed Below',
+    '官星独透': 'Solo Prominent Officer Star',
+    '宝玉生辉': 'Precious Jade Luminescence',
+    '寒水凝冰': 'Frigid Water Solidifying to Ice',
+    '帝旺之乡': 'Domain of Zenith Vitality',
+    '幽光外发': 'Subtle Radiance Emanating',
+    '截足悬崖': 'Perilous Precipice Warning',
+    '木气余清': 'Residual Wood Clarity',
+    '木火通明': 'Wood & Fire Radiant Brilliance',
+    '杀印相生': 'Killings Generating Resource',
+    '桃花流水': 'Peach Blossom Spring Flow',
+    '水土包容': 'Water & Earth Harmonious Embrace',
+    '水库润泽': 'Water Reservoir Blessing',
+    '水火既济': 'Water & Fire Perfect Equilibrium',
+    '汪洋甘露': 'Vast Ocean of Sweet Dew',
+    '泄秀生财': 'Channeling Elegance to Produce Wealth',
+    '润下纯清': 'Pure Pristine Downward Flow',
+    '润土生金': 'Moist Earth Producing Gold',
+    '润土解燥': 'Moist Earth Quenching Aridity',
+    '源远流长': 'Deep Source Long Flow',
+    '激火自明': 'Stirring Flame Self-Illuminating',
+    '火候温融': 'Warm Fire Tempering',
+    '火土烘炉': 'Fire-Earth Smelting Hearth',
+    '火土烘照': 'Fire-Earth Radiant Illumination',
+    '火归本根': 'Fire Returning to True Root',
+    '火炼真金': 'Fire Refining Pure Gold',
+    '炎上生财': 'Blazing Fire Generating Wealth',
+    '烘炉炼金': 'Smelting Gold in Furnace',
+    '燥土余温': 'Dry Earth Residual Warmth',
+    '燥土生香': 'Fragrant Warm Earth',
+    '玉露生辉': 'Jade Dew Radiance',
+    '珠玉暗蓄': 'Concealed Pearls & Gems',
+    '珠玉江河': 'Pearls Washed in River',
+    '珠玉淘水': 'Pearls Washed in Stream',
+    '珠落火炉': 'Pearls in Smelting Hearth',
+    '珠落草丛': 'Pearls in Meadow',
+    '秀发文华': 'Radiant Literary Elegance',
+    '纯净清泉': 'Pure Crystal Spring',
+    '聪明绝顶': 'Supreme Transcendental Intellect',
+    '蓄水成池': 'Accumulating Water into Basin',
+    '藏金纳宝': 'Storing Gold & Precious Treasures',
+    '财官双美': 'Dual Prosperity in Wealth & Honor',
+    '财官双集': 'Wealth & Authority Gathering',
+    '财官生旺': 'Flourishing Wealth & Authority',
+    '财帛入库': 'Treasury Entering Vault',
+    '财帛逢春': 'Treasury Welcoming Spring',
+    '财库暗藏': 'Concealed Wealth Vault',
+    '财杀暗藏': 'Concealed Wealth & Killings',
+    '辛金暗藏': 'Xin Metal Concealed Below',
+    '金库含珍': 'Metal Vault Containing Rarities',
+    '金水汪洋': 'Vast Metal & Water Expanse',
+    '金清水秀': 'Pristine Metal & Clear Water',
+    '金玉满堂': 'Halls Filled with Gold & Jade',
+    '金白土润': 'Pristine Metal & Moist Earth',
+    '金白水清': 'Pure Metal & Clear Water',
+    '长生吐秀': 'Growth Stage Elegance',
+    '阳回大地': 'Yang Warmth Returning to Earth',
+    '雨露生花': 'Dew Nourishing Blossoms',
+    '露珠沾草': 'Dew Moisture on Grass',
+    '飞天禄马': 'Flying Heavenly Lu-Horse',
+    '食神得地': 'Eating God Grounded Firmly',
+    '魁罡同位': 'Kui Gang Unified Station',
+    '魁罡得令': 'Kui Gang in Season',
+    '魁罡得地': 'Kui Gang Grounded Firmly',
+    '龙潜深渊': 'Dragon Submerged in Deep Waters'
+  };
+
   function getPatternName(name, lang = 'zh') {
     if (lang === 'en') {
       if (PATTERN_NAMES[name]) return PATTERN_NAMES[name];
+      if (SANMING_DAY_HOUR_PHRASES[name]) return SANMING_DAY_HOUR_PHRASES[name];
+      if (name && name.includes(' / ')) {
+        const parts = name.split(' / ').map(p => SANMING_DAY_HOUR_PHRASES[p] || PATTERN_NAMES[p] || p);
+        const translated = parts.join(' / ');
+        if (!/[\u4e00-\u9fa5]/.test(translated)) return translated;
+      }
       for (const [k, v] of Object.entries(PATTERN_NAMES)) {
         if (name && name.includes(k.split(' ')[0])) return v;
       }
       if (name && (name.includes('阳刃') || name.includes('羊刃') || name.includes('月刃'))) {
         return 'Yang Blade Pattern (Sovereign General)';
+      }
+      if (name && /[\u4e00-\u9fa5]/.test(name)) {
+        let res = name;
+        for (const [k, v] of Object.entries(SANMING_DAY_HOUR_PHRASES)) {
+          if (res.includes(k)) res = res.split(k).join(v);
+        }
+        if (!/[\u4e00-\u9fa5]/.test(res)) return res;
+        return 'Special Day-Hour Destination Pattern';
       }
     }
     return name;
@@ -1516,29 +1736,25 @@ const I18N = (function() {
           }
         } else if (pat.isSpecial) {
           // Special Day-Hour Pattern (San Ming Tong Hui)
-          pat.name = pat.name
-            .replace(/田园禾稼/g, 'Field Crops & Harvest')
-            .replace(/燥土生香/g, 'Fragrant Earth')
-            .replace(/伤官吐秀/g, 'Hurting Officer Unleashing Elegance')
-            .replace(/桃花流水/g, 'Peach Blossom Spring Flow')
-            .replace(/金白水清/g, 'Pure Metal & Clear Water')
-            .replace(/日禄归时/g, 'Prosperity Lu Returning to Hour')
-            .replace(/官印双全/g, 'Dual Officer & Resource Complete')
-            .replace(/食神得禄/g, 'Eating God Anchored in Lu')
-            .replace(/归禄逢财/g, 'Prosperity Lu Meeting Wealth')
-            .replace(/长生学堂/g, 'Growth Stage Academy')
-            .replace(/源远流长/g, 'Deep Source Long Flow')
-            .replace(/正印司权/g, 'Direct Resource Commanding Authority')
-            .replace(/七杀逢制/g, 'Seven Killings Restrained')
-            .replace(/时逢偏官/g, 'Hour Pillar Meeting Indirect Officer')
-            .replace(/正财得位/g, 'Direct Wealth in Proper Station')
-            .replace(/偏财得禄/g, 'Indirect Wealth Anchored in Lu')
-            .replace(/财官双美/g, 'Dual Prosperity in Wealth & Honor');
-
+          pat.name = getPatternName(origName, 'en');
+          if (/[\u4e00-\u9fa5]/.test(pat.name)) {
+            pat.name = 'Special Day-Hour Destination Pattern';
+          }
           pat.meaning = `Day Master [${dmEn}] meets the Hour Branch, establishing the destination archetype '${pat.name}'. This pattern reveals the elemental interaction between the core self and the late-life hour pillar, reflecting late-career fulfillment, creative expression, and enduring prosperity.`;
           pat.source = `San Ming Tong Hui Vol. 8/9: '60 JiaZi Day-Hour Treatises'; cross-referenced with Zi Ping Zhen Quan ('Success & Failure of Useful Gods') and Yuan Hai Zi Ping ('Ten Gods Methodology').`;
           pat.formation = `【Natal Formation Verification】① Day Master ${dmEn} requires seasonal mandate or root support in branches to flourish; ② Hour Branch must remain free from severe clashing, punishment, or harm from the day branch or transits; ③ Useful gods must be potent and revealed on stems, while adverse stars are restrained or transformed.`;
           pat.usage = `① Element Strategy: Balance Resource/Companions vs Wealth/Officer/Output according to Day Master vigor (strong Day Master favors output and wealth drainage; weak Day Master favors resource nourishment). ② Career Blueprint: Aligned with the '${pat.name}' archetype, scholarly paths favor education, cultural media, and advisory roles; executive paths favor administration, law, engineering, and corporate management; dual wealth-officer favors entrepreneurship. ③ Luck Cycle Guidance: Prosperous upon encountering harmonious auspicious cycles; maintain prudent and grounded cultivation when encountering challenging clashing stars.`;
+        }
+
+        // Ensure zero residual Chinese on pat.verse and any pattern field in EN mode
+        if (pat.verse && /[\u4e00-\u9fa5]/.test(pat.verse)) {
+          pat.verse = '';
+        }
+        if (pat.name && /[\u4e00-\u9fa5]/.test(pat.name)) {
+          pat.name = getPatternName(pat.name, 'en');
+          if (/[\u4e00-\u9fa5]/.test(pat.name)) {
+            pat.name = 'Special Auspicious Pattern';
+          }
         }
 
         // Translate Pattern Grade & Purity Evaluation (Qing-Zhuo Doctrine)

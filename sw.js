@@ -3,14 +3,16 @@
  * Offline-First Caching Strategy for Instant App Load
  */
 
-const CACHE_NAME = 'celestial-bazi-v3';
+const CACHE_NAME = 'celestial-bazi-v4';
 const STATIC_ASSETS = [
   './',
   './index.html',
+  './fengshui.html',
   './manifest.json',
   './css/style.css',
   './js/app.js',
   './js/bazi-engine.js',
+  './js/fengshui-engine.js',
   './js/portrait-engine.js',
   './js/luck-engine.js',
   './js/iching-engine.js',
@@ -27,6 +29,7 @@ const STATIC_ASSETS = [
   './data/yuzhao.js',
   './data/lixuzhong.js',
   './data/iching.js',
+  './data/tianji.js',
   './icons/icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>八字开运与空间风水指南 · Spatial Feng Shui & Remediation Guide</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B0F19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <!-- Custom Metaphysics CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen bg-[#0B0F19] text-gray-200">
+  <!-- Header -->
+  <header class="border-b border-gray-800 bg-[#16181f]/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-600 to-amber-700 flex items-center justify-center shadow-lg shadow-emerald-900/30 text-white font-bold text-xl font-serif-sc hover:opacity-90 transition">
+          🏡
+        </a>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold font-serif-sc text-amber-100 flex items-center gap-2">
+            <span id="fsPageTitle">八字开运与空间风水指南</span>
+            <span class="chinese-seal text-[11px] py-0.5 border-emerald-500 text-emerald-400" id="fsPageSeal">实操十策</span>
+          </h1>
+          <p class="text-xs text-gray-400" id="fsPageSubtitle">
+            依据日主喜用、三元九运命卦延年、三合天心十道与贪合忘冲秘法专属定制空间开运
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Return to Main Portal Button -->
+        <a href="index.html" class="px-3.5 py-1.5 text-xs rounded-xl border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
+          <span>🏛️</span>
+          <span id="fsBtnReturn">返回全相总盘</span>
+        </a>
+
+        <!-- Language Switcher Toggle Group -->
+        <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/80 p-0.5 shadow-sm" role="group">
+          <button id="fsLangZhBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow">
+            中文
+          </button>
+          <button id="fsLangEnBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200">
+            English
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 py-8 space-y-6">
+    <!-- Top Summary Banner -->
+    <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-black/50 to-amber-950/40 border border-emerald-500/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2 mb-1.5">
+          <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300" id="fsBannerSeal">空间气象</span>
+          <h2 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300" id="fsBannerTitle">
+            实操空间风水调理与八字化煞大典
+          </h2>
+        </div>
+        <p class="text-xs text-gray-300 max-w-3xl leading-relaxed" id="fsBannerDesc">
+          以本命干支五行为体，空间方位与风水器物为用。通过调和延年吉位、安置对门龙龟、双铃破煞、佩戴六合生肖化冲以及天心十道生肖大阵，化煞为权，广聚万全资粮。
+        </p>
+      </div>
+      <div id="fsQuickBadges" class="flex flex-wrap gap-2 text-xs">
+        <!-- Dynamically injected badges -->
+      </div>
+    </div>
+
+    <!-- 10 Spatial Remedies Cards Grid -->
+    <div id="fsContentContainer" class="space-y-6">
+      <!-- Dynamically injected via JavaScript -->
+    </div>
+  </main>
+
+  <footer class="border-t border-gray-800 py-6 text-center text-xs text-gray-500">
+    <p>© 2026 八字开运与空间风水指南 · 易道通变 · 器以载道</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data/sanming.js"></script>
+  <script src="data/qiongtong.js"></script>
+  <script src="data/zipingzhenquan.js"></script>
+  <script src="data/ditiansui.js"></script>
+  <script src="data/yuanhai.js"></script>
+  <script src="data/shenfeng.js"></script>
+  <script src="data/yuzhao.js"></script>
+  <script src="data/lixuzhong.js"></script>
+  <script src="data/iching.js"></script>
+  <script src="data/tianji.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/bazi-engine.js"></script>
+  <script src="js/fengshui-engine.js"></script>
+  <script src="js/luck-engine.js"></script>
+  <script>
+    (function() {
+      let currentLang = "zh";
+
+      function getChartData() {
+        try {
+          const stored = localStorage.getItem("lastBaziParams");
+          if (stored) {
+            const p = JSON.parse(stored);
+            return BaZiEngine.calculate(p);
+          }
+        } catch (e) {}
+        return BaZiEngine.calculate({
+          year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造"
+        });
+      }
+
+      const bazi = getChartData();
+      const luck = (typeof LuckEngine !== "undefined") ? LuckEngine.calculateLuck(bazi, new Date().getFullYear()) : null;
+
+      function render() {
+        const isEn = (currentLang === "en");
+        document.documentElement.lang = isEn ? "en" : "zh-CN";
+
+        document.getElementById("fsPageTitle").textContent = isEn ? "Spatial Feng Shui & Metaphysics Guide" : "八字开运与空间风水指南";
+        document.getElementById("fsPageSeal").textContent = isEn ? "10 Practical Remedies" : "实操十策";
+        document.getElementById("fsPageSubtitle").textContent = isEn
+          ? "Spatial harmonizations tailored to your natal Yong Shen, Eight Mansions Yan Nian, and combination bureaus"
+          : "依据日主喜用、三元九运命卦延年、三合天心十道与贪合忘冲秘法专属定制空间开运";
+        document.getElementById("fsBtnReturn").textContent = isEn ? "Return to Master Dashboard" : "返回全相总盘";
+        document.getElementById("fsBannerSeal").textContent = isEn ? "Spatial Qi" : "空间气象";
+        document.getElementById("fsBannerTitle").textContent = isEn ? "Practical Spatial Remediation & Sha Transmutation" : "实操空间风水调理与八字化煞大典";
+        document.getElementById("fsBannerDesc").textContent = isEn
+          ? "Anchor natal energetic equilibrium via bespoke physical placements: Yan Nian wealth tripod, doorway dragon turtles, dual automotive bells, Six-Harmony talismans, and Ten-Direction cosmic zodiac arrays."
+          : "以本命干支五行为体，空间方位与风水器物为用。通过调和延年吉位、安置对门龙龟、双铃破煞、佩戴六合生肖化冲以及天心十道生肖大阵，化煞为权，广聚万全资粮。";
+
+        const zhBtn = document.getElementById("fsLangZhBtn");
+        const enBtn = document.getElementById("fsLangEnBtn");
+        if (isEn) {
+          enBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow";
+          zhBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200";
+        } else {
+          zhBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow";
+          enBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200";
+        }
+
+        const guide = SpatialFengShuiEngine.generateFengShuiGuide(bazi, luck);
+        if (!guide) return;
+
+        const badgesContainer = document.getElementById("fsQuickBadges");
+        badgesContainer.innerHTML = `
+          <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
+            ${isEn ? guide.kuaInfo.nameEn : guide.kuaInfo.nameZh} (${isEn ? guide.kuaInfo.sectorEn : guide.kuaInfo.sectorZh})
+          </span>
+          <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
+            ${isEn ? `Prime Yan Nian: ${guide.kuaInfo.yanNianEn}` : `延年吉位: ${guide.kuaInfo.yanNianZh}`}
+          </span>
+          <span class="px-2.5 py-1 rounded-full border border-sky-500/40 bg-sky-950/60 text-sky-300 font-bold">
+            ${isEn ? `Favorable Element: ${guide.primaryFavElEn || guide.primaryFavEl}` : `第一喜用神: ${guide.primaryFavElZh || guide.primaryFavEl}`}
+          </span>
+          <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
+            ${isEn ? guide.holisticRatingItem.badgeEn : guide.holisticRatingItem.badgeZh}
+          </span>
+        `;
+
+        const y = guide.yanNianItem;
+        const dt = guide.dragonTurtleItem;
+        const th = guide.tanHeItem;
+        const cb = guide.carBellsItem;
+        const mc = guide.missingCornerItem;
+        const sa = guide.sanHeArrayItem;
+        const tb = guide.trioBoostItem;
+        const hl = guide.hetuLuoshuItem;
+        const me = guide.meritItem;
+        const hr = guide.holisticRatingItem;
+
+        const container = document.getElementById("fsContentContainer");
+        container.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? "ITEM 1" : "法门壹"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold font-mono">${isEn ? y.locationEn : y.locationZh}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                  <span>🏺</span><span>${isEn ? y.titleEn : y.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p><strong class="text-amber-400">${isEn ? "Core Structure: " : "器物规格："}</strong>${isEn ? y.coreItemEn : y.coreItemZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Sacred Layout: " : "布局法要："}</strong>${isEn ? y.layoutEn : y.layoutZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-800/40 text-[11px] text-amber-200/90 leading-relaxed">
+                <strong>${isEn ? "Energetic Impact: " : "聚气玄机："}</strong>${isEn ? y.benefitsEn : y.benefitsZh}
+              </div>
+            </div>
+
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300">${isEn ? "ITEM 2" : "法门贰"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold font-mono">${isEn ? "Barrier & Companion" : "内外双卫"}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-emerald-300 flex items-center gap-2">
+                  <span>🐢</span><span>${isEn ? dt.titleEn : dt.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p><strong class="text-emerald-400">${isEn ? "Entryway Barrier: " : "玄关外卫："}</strong>${isEn ? dt.facingDoorEn : dt.facingDoorZh}</p>
+                  <p><strong class="text-emerald-400">${isEn ? "Personal Talisman: " : "随身内卫："}</strong>${isEn ? dt.portableEn : dt.portableZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-800/40 text-[11px] text-emerald-200/90 leading-relaxed">
+                <strong>${isEn ? "Metaphysical Shield: " : "降煞威能："}</strong>${isEn ? dt.benefitsEn : dt.benefitsZh}
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-purple-500 text-purple-300">${isEn ? "ITEM 3" : "法门叁"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-semibold font-mono">${isEn ? th.remedyZodiacEn : th.remedyZodiacZh}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-purple-300 flex items-center gap-2">
+                  <span>☯️</span><span>${isEn ? th.titleEn : th.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p><strong class="text-purple-400">${isEn ? "Natal Tension: " : "原局气机："}</strong>${isEn ? th.natalStateEn : th.natalStateZh}</p>
+                  <p><strong class="text-purple-400">${isEn ? "Attuned Material: " : "开运材质："}</strong>${isEn ? th.materialEn : th.materialZh}</p>
+                  <p><strong class="text-purple-400">${isEn ? "Protocol: " : "安镇法则："}</strong>${isEn ? th.protocolEn : th.protocolZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-purple-950/20 border border-purple-800/40 text-[11px] text-purple-200/90 leading-relaxed">
+                <strong>${isEn ? "Harmonization Result: " : "融通转机："}</strong>${isEn ? th.benefitsEn : th.benefitsZh}
+              </div>
+            </div>
+
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? "ITEM 4" : "法门肆"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold font-mono">${isEn ? "Automotive Shield" : "行车护驾"}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                  <span>🔔</span><span>${isEn ? cb.titleEn : cb.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p><strong class="text-amber-400">${isEn ? "Sacred Implement: " : "法器材质："}</strong>${isEn ? cb.itemEn : cb.itemZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Hanging Protocol: " : "系挂方位："}</strong>${isEn ? cb.protocolEn : cb.protocolZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Acoustic Principle: " : "金声玉振："}</strong>${isEn ? cb.principleEn : cb.principleZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-800/40 text-[11px] text-amber-200/90 leading-relaxed">
+                <strong>${isEn ? "Road Protection: " : "行车护佑："}</strong>${isEn ? "Dispels sleepiness, fatigue, and crossroads sha energy instantaneously." : "金石清音破除行路昏沉与阴气滞障，保车行万里平安。"}
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-rose-500 text-rose-300">${isEn ? "ITEM 5" : "法门伍"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-semibold font-mono">${isEn ? mc.priorityPalaceEn : mc.priorityPalaceZh}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-rose-300 flex items-center gap-2">
+                  <span>🪨</span><span>${isEn ? mc.titleEn : mc.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p><strong class="text-rose-400">${isEn ? "Priority Sector: " : "关键审视方位："}</strong>${isEn ? mc.priorityPalaceEn : mc.priorityPalaceZh}</p>
+                  <p><strong class="text-rose-400">${isEn ? "Missing Impact: " : "缺角潜在损耗："}</strong>${isEn ? mc.impactEn : mc.impactZh}</p>
+                  <p><strong class="text-rose-400">${isEn ? "Placement Protocol: " : "安镇法度："}</strong>${isEn ? mc.protocolEn : mc.protocolZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-rose-950/20 border border-rose-800/40 text-[11px] text-rose-200/90 leading-relaxed">
+                <strong>${isEn ? "Taiji Completion: " : "太极圆融："}</strong>${isEn ? mc.benefitsEn : mc.benefitsZh}
+              </div>
+            </div>
+
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-sky-500 text-sky-300">${isEn ? "ITEM 6" : "法门陆"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-semibold font-mono">${isEn ? sa.targetBureauEn : sa.targetBureauZh}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-sky-300 flex items-center gap-2">
+                  <span>🌟</span><span>${isEn ? sa.titleEn : sa.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p><strong class="text-sky-400">${isEn ? "Guardian Triad: " : "三合三圣："}</strong>${isEn ? sa.zodiacTrioEn : sa.zodiacTrioZh}</p>
+                  <p><strong class="text-sky-400">${isEn ? "Strategic Theme: " : "气象格局："}</strong>${isEn ? sa.themeEn : sa.themeZh}</p>
+                  <p><strong class="text-sky-400">${isEn ? "Cross Coordinate Layout: " : "天心十道排列："}</strong>${isEn ? sa.protocolEn : sa.protocolZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-sky-950/20 border border-sky-800/40 text-[11px] text-sky-200/90 leading-relaxed">
+                <strong>${isEn ? "Exponential Surge: " : "阵法神功："}</strong>${isEn ? sa.benefitsEn : sa.benefitsZh}
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-teal-500 text-teal-300">${isEn ? "ITEM 7" : "法门柒"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 font-semibold font-mono">${isEn ? "Mentors, Wisdom, Romance" : "贵人·文昌·桃花"}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-teal-300 flex items-center gap-2">
+                  <span>🌸</span><span>${isEn ? tb.titleEn : tb.titleZh}</span>
+                </h3>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p>${isEn ? tb.noblemanEn : tb.noblemanZh}</p>
+                  <p>${isEn ? tb.wenChangEn : tb.wenChangZh}</p>
+                  <p>${isEn ? tb.peachBlossomEn : tb.peachBlossomZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-teal-950/20 border border-teal-800/40 text-[11px] text-teal-200/90 leading-relaxed">
+                <strong>${isEn ? "Strategic Advantage: " : "综合效能："}</strong>${isEn ? "Synchronizes intellectual acuity with indispensable patron sponsors and genuine charisma." : "三大维度同频共振，外得贵人鼎力扶持，内具从容文慧与高雅魅力。"}
+              </div>
+            </div>
+
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? "ITEM 8" : "法门捌"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold font-mono">${isEn ? "Hetu Luoshu" : "河洛玄数"}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                  <span>🔢</span><span>${isEn ? hl.titleEn : hl.titleZh}</span>
+                </h3>
+                <div class="grid grid-cols-2 gap-2 text-xs text-gray-300">
+                  <p><strong class="text-amber-400">${isEn ? "Auspicious Numbers: " : "河图吉数："}</strong>${isEn ? hl.numbersEn : hl.numbersZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Floors: " : "吉利楼层："}</strong>${isEn ? hl.floorsEn : hl.floorsZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Phone Tail: " : "手机尾号："}</strong>${isEn ? hl.phoneTailEn : hl.phoneTailZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Plate Tail: " : "车牌尾数："}</strong>${isEn ? hl.plateTailEn : hl.plateTailZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Wardrobe Colors: " : "服饰主色："}</strong>${isEn ? hl.colorsEn : hl.colorsZh}</p>
+                  <p><strong class="text-amber-400">${isEn ? "Vehicle Colors: " : "车身色彩："}</strong>${isEn ? hl.carColorEn : hl.carColorZh}</p>
+                </div>
+                <div class="text-xs text-gray-300 pt-1">
+                  <p><strong class="text-amber-400">${isEn ? "Expansion Direction: " : "商战拓客："}</strong>${isEn ? hl.clientOutreachEn : hl.clientOutreachZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-950/20 border border-amber-800/40 text-[11px] text-amber-200/90 leading-relaxed">
+                <strong>${isEn ? "Macro Harmony: " : "宏观引力："}</strong>${isEn ? "Aligns real property, mobile frequency, and vehicular travel with natal elemental gravity." : "全方位将数字、空间高差与车辆磁场调至最高同频共振态。"}
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-rose-500 text-rose-300">${isEn ? "ITEM 9" : "法门玖"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-semibold font-mono">${isEn ? "Karmic Foundations" : "积德改命"}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-rose-300 flex items-center gap-2">
+                  <span>❤️</span><span>${isEn ? me.titleEn : me.titleZh}</span>
+                </h3>
+                <p class="text-xs text-amber-300/90 italic">${isEn ? me.corePhilosophyEn : me.corePhilosophyZh}</p>
+                <div class="text-xs text-gray-300 space-y-2">
+                  <p>${isEn ? me.bloodDonationEn : me.bloodDonationZh}</p>
+                  <p>${isEn ? me.almsgivingEn : me.almsgivingZh}</p>
+                  <p>${isEn ? me.selfCultivationEn : me.selfCultivationZh}</p>
+                </div>
+              </div>
+              <div class="p-3 rounded-xl bg-rose-950/20 border border-rose-800/40 text-[11px] text-rose-200/90 leading-relaxed">
+                <strong>${isEn ? "Karmic Shield: " : "改运真谛："}</strong>${isEn ? "Conscious moral virtue transcends and overwrites any terrestrial spatial flaw." : "心正行端，虽逢大煞亦化为甘露；德厚流光，万神自护。"}
+              </div>
+            </div>
+
+            <div class="bg-card p-5 sm:p-6 rounded-2xl border border-gray-800 shadow-xl space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300">${isEn ? "ITEM 10" : "法门拾"}</span>
+                  <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold font-mono">${isEn ? hr.badgeEn : hr.badgeZh}</span>
+                </div>
+                <h3 class="text-base font-bold font-serif-sc text-emerald-300 flex items-center gap-2">
+                  <span>🏡</span><span>${isEn ? (hr.titleEn || "Spatial Atmosphere Holistic Rating & Master Principles") : (hr.titleZh || "空间气场总评与总诀")}</span>
+                </h3>
+                <div class="flex items-center space-x-3 p-3 bg-black/40 rounded-xl border border-gray-800">
+                  <span class="text-3xl font-black font-mono text-emerald-400">${hr.score}</span>
+                  <div class="text-xs text-gray-300">
+                    <p class="font-bold text-gray-200">${isEn ? "Spatial Atmospheric Harmony Score" : "空间环境调理综合评分"}</p>
+                    <p class="text-[11px] text-gray-400">${isEn ? hr.verdictEn : hr.verdictZh}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 rounded-xl bg-emerald-950/30 border border-emerald-700/50 text-center text-xs sm:text-sm font-serif-sc text-amber-200 tracking-wide">
+                ${isEn ? hr.masterMottoEn : hr.masterMottoZh}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById("fsLangZhBtn").addEventListener("click", () => {
+        currentLang = "zh";
+        render();
+      });
+      document.getElementById("fsLangEnBtn").addEventListener("click", () => {
+        currentLang = "en";
+        render();
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
