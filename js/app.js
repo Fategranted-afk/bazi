@@ -3078,17 +3078,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const protocolsWrapper = document.createElement('div');
       protocolsWrapper.className = 'space-y-5';
 
-      // 4-Tier Master Protocols
+      // 3-Tier Master Protocols
       protocolsWrapper.innerHTML = `
         <div class="flex items-center justify-between pb-1 border-b border-gray-800">
           <div class="flex items-center space-x-2">
             <span class="text-lg">🛡️</span>
             <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
-              ${isEn ? 'Four-Tier Factory Emergency De-escalation Master Protocols' : '出厂自救四阶战训降维心法 (终结内耗闭环)'}
+              ${isEn ? 'Three-Tier Factory Emergency De-escalation Master Protocols' : '出厂自救三阶战训降维心法 (终结内耗闭环)'}
             </h4>
           </div>
           <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-            ${isEn ? '4 Emergency Tiers' : '四阶硬核自救'}
+            ${isEn ? '3 Emergency Tiers' : '三阶硬核自救'}
           </span>
         </div>
 
@@ -5715,6 +5715,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const htUpperName = isEn ? (hexData.htUpperTri ? hexData.htUpperTri.nameEn : 'Wind') : (hexData.htUpperTri ? hexData.htUpperTri.nameZh : '巽');
     const htLowerName = isEn ? (hexData.htLowerTri ? hexData.htLowerTri.nameEn : 'Heaven') : (hexData.htLowerTri ? hexData.htLowerTri.nameZh : '乾');
 
+    const tianTriName = isEn
+      ? (hexData.tianTri ? hexData.tianTri.nameEn : (hexData.isYangMaleOrYinFemale ? xtUpperName : xtLowerName))
+      : (hexData.tianTri ? hexData.tianTri.nameZh : (hexData.isYangMaleOrYinFemale ? xtUpperName : xtLowerName));
+    const diTriName = isEn
+      ? (hexData.diTri ? hexData.diTri.nameEn : (hexData.isYangMaleOrYinFemale ? xtLowerName : xtUpperName))
+      : (hexData.diTri ? hexData.diTri.nameZh : (hexData.isYangMaleOrYinFemale ? xtLowerName : xtUpperName));
+
     const oscillationRuleZh = hexData.isYangMaleOrYinFemale
       ? '阳男阴女：天数在上卦，地数在下卦荡成【先天卦】；地数在上卦，天数在下卦荡成【后天卦】。'
       : '阴男阳女：地数在上卦，天数在下卦荡成【先天卦】；天数在上卦，地数在下卦荡成【后天卦】。';
@@ -5738,7 +5745,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
             <div class="text-gray-400 font-semibold flex items-center justify-between">
               <span>${isEn ? 'Heaven Number (Odd Sum / Base 25):' : '天数归纳（单数和 / 逢25折算）：'}</span>
-              <span class="text-amber-400 font-bold font-mono">${sumOdds} → ${tianShu} (${xtUpperName})</span>
+              <span class="text-amber-400 font-bold font-mono">${sumOdds} → ${tianShu} (${tianTriName})</span>
             </div>
             <p class="text-gray-300 font-mono text-[10px]">${isEn ? tianDerivationEn : tianDerivationZh}</p>
             <p class="text-gray-400 text-[10px]">${isEn ? 'Heavenly Stems Mapping:' : '干分配数：'} <span class="text-gray-200 font-mono">${stemStr}</span></p>
@@ -5746,7 +5753,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
             <div class="text-gray-400 font-semibold flex items-center justify-between">
               <span>${isEn ? 'Earth Number (Even Sum / Base 30):' : '地数归纳（双数和 / 逢30折算）：'}</span>
-              <span class="text-purple-400 font-bold font-mono">${sumEvens} → ${diShu} (${xtLowerName})</span>
+              <span class="text-purple-400 font-bold font-mono">${sumEvens} → ${diShu} (${diTriName})</span>
             </div>
             <p class="text-gray-300 font-mono text-[10px]">${isEn ? diDerivationEn : diDerivationZh}</p>
             <p class="text-gray-400 text-[10px]">${isEn ? 'Earthly Branches Mapping:' : '支分配数：'} <span class="text-gray-200 font-mono">${branchStr}</span></p>
@@ -7784,12 +7791,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Mark Alerts
     timeline.forEach((it, i) => {
       if (it.alerts && it.alerts.length > 0) {
-        const x = getX(i);
-        const y = Math.min(getY(it.energyScore), getY(it.wealthScore)) - 4;
-        ctx.beginPath();
-        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#ef4444';
-        ctx.fill();
+        const hasWarning = it.alerts.some(a => a.includes('冲') || a.includes('并') || a.includes('提纲') || a.includes('慎'));
+        const hasAuspicious = it.alerts.some(a => a.includes('吉') || a.includes('合'));
+        if (hasWarning || hasAuspicious) {
+          const x = getX(i);
+          const y = Math.min(getY(it.energyScore), getY(it.wealthScore)) - 4;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = hasWarning ? '#ef4444' : '#10b981';
+          ctx.fill();
+        }
       }
     });
 
@@ -9271,6 +9282,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderTimeDynamicsReport = renderTimeDynamicsReport;
   window.renderFrictionView = renderFrictionView;
   window.render14CharEnergySynthesis = render14CharEnergySynthesis;
+  window.renderFourPillarsHexagrams = renderFourPillarsHexagrams;
 
   // Initial Calculation Run & Prepare Landing Preview
   triggerCalculate();

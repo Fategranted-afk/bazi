@@ -2079,6 +2079,26 @@ class PortraitEngine {
             insightEn: '[The Raft Analogy]: Plans, dogmas, and perfectionist ideals are mere transport across obstacles; holding onto the raft on dry land paralyzes you.',
             practicalZh: '【破完美主义】：允许过程有瑕疵，完成胜于无休止的空想完美；过河弃筏，灵活变通，不再自我苛责。',
             practicalEn: '[Embracing Imperfection]: Completion triumphs over sterile rumination. Discard the mental raft and move freely without self-reproach.'
+          },
+          {
+            verseZh: '“如来说第一波罗蜜，非第一波罗蜜，是名第一波罗蜜。”',
+            verseEn: '"The Tathagata explains that the foremost paramita is not the foremost paramita; thus it is named the foremost paramita."',
+            sourceZh: '《金刚经·离相寂灭分第十四》',
+            sourceEn: 'The Diamond Sutra, Ch. 14',
+            insightZh: '【破除标签执相】：一旦给某件事贴上“至关重要不可搞砸”的沉重标签，心力瞬间被锁死；视其为游戏与过程，名相褪去，极致发挥自然呈现。',
+            insightEn: '[Dissolving Conceptual Labels]: Labeling an event as an all-or-nothing trial paralyzes performance. Stripping away heavy dogma allows innate brilliance to shine effortlessly.',
+            practicalZh: '【降维脱敏法】：面对重大述职、投资谈判或产品发布，心中默念“所谓大事，非大事，是名大事”，以平常游戏心游刃破局。',
+            practicalEn: '[Cognitive Desensitization]: Facing pivotal presentations or high-stakes pitches, remember: "It is not absolute reality, but an experiential arena." Play with relaxed mastery.'
+          },
+          {
+            verseZh: '“尔时，世尊食时，著衣持钵，入舍卫大城乞食。于其城中，次第乞已，还至本处。饭食讫，收衣钵，洗足已，敷座而坐。”',
+            verseEn: '"At mealtime, the World-Honored One donned his robe, took his bowl, and entered the city of Sravasti to beg for food. Having begged in sequential order, he returned, ate, put away his robe and bowl, washed his feet, and sat down."',
+            sourceZh: '《金刚经·法会因由分第一》',
+            sourceEn: 'The Diamond Sutra, Ch. 1',
+            insightZh: '【穿衣吃饭皆是道】：至高佛法全在最平凡的当下日用之中：着衣、吃饭、洗足、静坐。内耗源于灵魂与身体的分离，身在当下即得无上安稳。',
+            insightEn: '[The Dao in Daily Chores]: Supreme wisdom abides in grounded ordinary actions: dressing, eating, washing feet, sitting quietly. Rumination is the soul drifting away from the flesh; full presence restores peace.',
+            practicalZh: '【日用即道】：焦虑翻滚时，立刻去喝一杯温水、洗一把脸、擦干净桌面；人在哪里，心就在哪里，以微小实体动作截断精神风暴。',
+            practicalEn: '[Presence in Action]: When anxiety surges, sip warm water, wash your face, or wipe your desk. Dwell fully in physical action to abort mental storms.'
           }
         ]
       },
@@ -2149,6 +2169,26 @@ class PortraitEngine {
             insightEn: '[Clear Flow]: Non-dwelling does not mean numbness, but responding impeccably to circumstances and remaining pristine the moment they pass.',
             practicalZh: '【零滞留心法】：面对繁冗工作，以最高专注处理眼前事务；一旦完工立刻清空大脑缓存，绝不把白天的战场带回夜晚的枕头。',
             practicalEn: '[Zero-Buffer Mindset]: Focus intensely on the task at hand; once complete, purge mental cache immediately, bringing zero residue to rest.'
+          },
+          {
+            verseZh: '“卧轮有伎俩，能断百思想；对境心不起，菩提日日长。惠能没伎俩，不断百思想；对境心数起，菩提作么长！”',
+            verseEn: '"Wo Lun has a craft: he can sever a hundred thoughts; facing circumstances no thought arises, so wisdom grows daily. Hui-neng has no craft: he does not sever a hundred thoughts; facing circumstances thoughts arise continually, how then can wisdom grow?"',
+            sourceZh: '《六祖坛经·机缘品第七》',
+            sourceEn: 'The Platform Sutra, Ch. 7',
+            insightZh: '【不断思想方是大自在】：试图强行“压制念头、清空杂念”本身就是最大的执念与内耗。六祖告诉你：任凭念头自然生灭，不加压制亦不跟随，水流自清。',
+            insightEn: '[Effortless Flow without Suppression]: Forcing the mind into artificial blankness is itself obsessive friction. Let thoughts arise and dissolve naturally without grasping or resistance; agitated waters clarify when left alone.',
+            practicalZh: '【允许念头涌现】：不再苛求自己“必须脑子清静”；允许焦虑念头像水面泡影般自由起伏，你不去抓它，它自生自灭，元气丝毫不损。',
+            practicalEn: '[Permitting Thoughts]: Cease demanding artificial inner silence. Allow thoughts to flutter like passing ripples; without fixation, they evaporate harmlessly.'
+          },
+          {
+            verseZh: '“迷人口说，智者心行。口诵心不行，如幻如化，如露如电；口诵心行，则心口相应。”',
+            verseEn: '"The confused preach with the mouth; the wise practice with the heart. Chanting without practicing is like a phantom illusion, like dew or lightning; chanting and practicing simultaneously brings thought and deed into harmony."',
+            sourceZh: '《六祖坛经·般若品第二》',
+            sourceEn: 'The Platform Sutra, Ch. 2',
+            insightZh: '【心行合一破空想】：成天在脑海中演练哲理、自怨自艾是假修行；唯有迈开双腿下场实操，心行合一，虚妄心魔瞬间被物理行动击碎。',
+            insightEn: '[Embodied Practice over Cerebral Loops]: Theorizing philosophies in cerebral comfort while stagnating in action is sterile fantasy. Concrete physical shipping instantly shatters phantom mental demons.',
+            practicalZh: '【即刻下场行动】：不再做空头理论家，把任何一个微小的想法在10分钟内转化为实际行动（发一封邮件、写一段代码），行动出真知。',
+            practicalEn: '[Immediate Kinetic Shipping]: Stop lingering as an abstract critic; convert any idea into physical execution within 10 minutes (write code, send an email); action generates truth.'
           }
         ]
       },
@@ -2229,6 +2269,16 @@ class PortraitEngine {
             insightEn: '[Sovereign Boundary]: Total immunity to public acclaim or derision; distinguishing inner dignity from worldly status extinguishes rumination.',
             practicalZh: '【解耦他人评价】：将“自我价值”与“外界评价”彻底解耦；外界评价不过是他人主观投射，我之价值由内自定，岿然不动。',
             practicalEn: '[Decoupling Self-Worth]: Completely divorce intrinsic worth from external feedback; others\' opinions are mere reflections of their states.'
+          },
+          {
+            verseZh: '“井蛙不可以语于海者，拘于虚也；夏虫不可以语于冰者，笃于时也；曲士不可以语于道者，束于教也。”',
+            verseEn: '"You cannot speak of the ocean to a frog in a well, bound by spatial limits; you cannot speak of ice to a summer insect, confined by seasonal span; you cannot speak of the Dao to a dogmatic pedant, shackled by conditioning."',
+            sourceZh: '《庄子·外篇·秋水第十七》',
+            sourceEn: 'Zhuangzi, Ch. 17',
+            insightZh: '【跳出时空局限】：多数人际内耗源于妄图说服认知维度完全不同的人。明白每个人的眼界受制于其身处时空与教化，便能彻底放下争辩与改造欲。',
+            insightEn: '[Transcending Dimensional Limits]: Chronic interpersonal friction arises from attempting to enlighten minds bound by different cognitive planes. Recognizing that each person is conditioned by their temporal and spatial cage extinguishes the urge to argue.',
+            practicalZh: '【终结无谓争辩】：遇到认知不在一个频道的人，微笑着说“你说得对”，立刻抽身离去，绝不浪费一秒宝贵脑力在低维纠缠中。',
+            practicalEn: '[Ending Low-Dimensional Debates]: When encountering minds trapped in narrow frames, smile and say "You are right," departing immediately without wasting cognitive compute.'
           }
         ]
       }
@@ -2330,12 +2380,12 @@ class PortraitEngine {
         dynastyEn: 'Song: Jing Tu / Ming: Liu Ji',
         themeZh: '理气心机与神魂归位',
         themeEn: 'Qi Circulation & Somatic Grounding',
-        quoteZh: '“天道有寒暖，地道有燥湿。理气乘除，衰旺真假不可不察。”',
-        quoteEn: '"The Way of Heaven possesses cold and warmth; the Way of Earth possesses dryness and dampness. The multiplication and division of qi, and the true vs false vigor, must be rigorously discerned."',
-        vernacularZh: '【通俗白话精解】：人的心理内耗本质上是体内五行气机（气血与神经递质）的升降失衡。天冷则心境凝滞，火燥则情绪暴烈。不要在脑子里跟念头打架，先把呼吸调匀、体温调和、气血流通，心神自然安歇。',
-        vernacularEn: '[Vernacular Modern Exegesis]: Mental friction is fundamentally an imbalance in the somatic circulation of vital qi and autonomic nervous currents. Excessive cold freezes the spirit; excessive dryness provokes impulsive flares. Cease wrestling with thoughts in the cerebral cortex; ground your physical breath and thermal balance, and the mind naturally settles into equilibrium.',
-        remedyZh: '【出厂调律】：身冷时晒太阳喝温姜茶；心焦火炽时用冷水洗脸深长吐气，先调生理气机，再理心理念头。',
-        remedyEn: '[Factory Tuning Habit]: When cold and lethargic, absorb sunlight and drink warm tea; when mentally overheated, splash cold water on your face. Regulate somatic physiology first; mental clarity follows.'
+        quoteZh: '“天道有寒暖，地道有燥湿。理气乘除，衰旺真假不可不察。阳乘阳位阳气昌，最要阴气相济；阴乘阴位阴气盛，最要阳气相配。”',
+        quoteEn: '"The Way of Heaven possesses cold and warmth; the Way of Earth possesses dryness and dampness. The multiplication and division of qi, and the true vs false vigor, must be rigorously discerned. Yang mounting yang positions flourishes; it requires yin balance. Yin mounting yin positions thrives; it demands yang pairing."',
+        vernacularZh: '【通俗白话精解】：人的心理内耗本质上是体内五行气机（气血与神经递质）的升降失衡。天冷则心境凝滞，火燥则情绪暴烈。不要在脑子里跟念头打架，先把呼吸调匀、体温调和、气血流通，心神自然安歇。理气乘除之间，顺势而导，阴阳互根，元神立定。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Mental friction is fundamentally an imbalance in the somatic circulation of vital qi and autonomic nervous currents. Excessive cold freezes the spirit; excessive dryness provokes impulsive flares. Cease wrestling with thoughts in the cerebral cortex; ground your physical breath and thermal balance, and the mind naturally settles into equilibrium. Harmonizing vital flow anchors somatic composure.',
+        remedyZh: '【出厂调律】：身冷时晒太阳喝温姜茶；心焦火炽时用冷水洗脸深长吐气，先调生理气机，再理心理念头。每日进行15分钟自然腹式深呼吸，导引全身经络归元。',
+        remedyEn: '[Factory Tuning Habit]: When cold and lethargic, absorb sunlight and drink warm tea; when mentally overheated, splash cold water on your face. Regulate somatic physiology first; mental clarity follows. Practice 15 minutes of deep diaphragmatic breathing daily to align meridian currents.'
       },
       {
         canonId: 'qiongtong',
@@ -2345,12 +2395,12 @@ class PortraitEngine {
         dynastyEn: 'Qing: Yu Chuntai',
         themeZh: '寒暖燥湿与调候心境',
         themeEn: 'Seasonal Equilibrium & Climate Harmony',
-        quoteZh: '“天时有燥湿之宜，五行兼生克之妙。得其调和，神清气爽；失其调候，郁结自生。”',
-        quoteEn: '"The seasons dictate dryness and moisture; the Five Elements weave generation and restraint. When harmonized, spirit is luminous and vital qi is pristine; when seasonal regulation is lost, internal gloom inevitably coagulates."',
-        vernacularZh: '【通俗白话精解】：你的心境是由出生的“季节温湿度”奠定基调的。冬生者天生自带防备与克制，夏生者天生急于求成与易焦躁。内耗不是你性格不好，而是身体在极端天候下发出的生理调候信号。',
-        vernacularEn: '[Vernacular Modern Exegesis]: Your baseline psychological weather is anchored in the seasonal climate of your birth. Winter charts possess instinctual wariness and self-restraint; summer charts struggle with urgency and irritation. Anxiety is not a moral defect, but an autonomic signal crying out for environmental and seasonal regulation.',
-        remedyZh: '【出厂调律】：冬生喜暖，多做户外阳光有氧；夏生喜润，居室保持清凉湿润，远离嘈杂人声。',
-        remedyEn: '[Factory Tuning Habit]: Winter natives require solar radiance and cardiovascular warmth; summer natives require cool, humid workspaces and acoustic sanctuary.'
+        quoteZh: '“天时有燥湿之宜，五行兼生克之妙。得其调和，神清气爽；失其调候，郁结自生。金水湿寒宜丙火以温之，木火枯燥赖壬癸以润之。”',
+        quoteEn: '"The seasons dictate dryness and moisture; the Five Elements weave generation and restraint. When harmonized, spirit is luminous and vital qi is pristine; when seasonal regulation is lost, internal gloom inevitably coagulates. Damp cold water demands radiant fire; scorched wood and fire rely on refreshing water."',
+        vernacularZh: '【通俗白话精解】：你的心境是由出生的“季节温湿度”奠定基调的。冬生者天生自带防备与克制，夏生者天生急于求成与易焦躁。内耗不是你性格不好，而是身体在极端天候下发出的生理调候信号。掌握调候玄机，寒以温调，燥以润济，心神方能通达澄澈。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Your baseline psychological weather is anchored in the seasonal climate of your birth. Winter charts possess instinctual wariness and self-restraint; summer charts struggle with urgency and irritation. Anxiety is not a moral defect, but an autonomic signal crying out for environmental and seasonal regulation. Mastering climate balance unblocks pristine mental serenity.',
+        remedyZh: '【出厂调律】：冬生喜暖，多做户外阳光有氧；夏生喜润，居室保持清凉湿润，远离嘈杂人声。根据季节温湿规律布置案头物理环境，顺应气候节律修养心性。',
+        remedyEn: '[Factory Tuning Habit]: Winter natives require solar radiance and cardiovascular warmth; summer natives require cool, humid workspaces and acoustic sanctuary. Align your physical workstation with seasonal humidity and lighting to harmonize biological rhythms.'
       },
       {
         canonId: 'ziping',
@@ -2360,12 +2410,12 @@ class PortraitEngine {
         dynastyEn: 'Qing: Shen Xiaozhan',
         themeZh: '格局成败与相神护持',
         themeEn: 'Pattern Archetype & The Guardian Minister',
-        quoteZh: '“八字用神，专求月令。何谓相神？协规中矩，救应扶持。有病有药，神清气聚。”',
-        quoteEn: '"The governing pattern seeks the monthly mandate. What is the Guardian Minister? It preserves discipline, offers rescue, and repairs affliction. Where affliction meets medicine, the spirit unifies and vital focus crystallizes."',
-        vernacularZh: '【通俗白话精解】：格局就像你被赋予的天命剧本（主角人设），而“相神”就是你最该紧握的保命法宝。只要找到了你的相神（如伤官配印之印、食神制杀之食神），一切内耗都成了为你淬炼真金的养分。',
-        vernacularEn: '[Vernacular Modern Exegesis]: Your BaZi pattern is your factory-assigned life script, while the "Guarding Minister" is your indispensable cognitive shield. Once you identify your primary remedy (e.g. Seal discipline for creative overthinking, or structured action for crisis anxiety), friction instantly converts into structural mastery.',
-        remedyZh: '【出厂调律】：明确你命中最核心的相神，用铁律保护它。若以印为护，每天雷打不动留出2小时独处学习不被打扰。',
-        remedyEn: '[Factory Tuning Habit]: Identify your core Guarding Minister and protect it ruthlessly. If Resource (Seal) is your anchor, block 2 hours daily for uninterrupted deep sanctuary.'
+        quoteZh: '“八字用神，专求月令。何谓相神？协规中矩，救应扶持。有病有药，神清气聚。善用者顺其性而成其材，不善用者反为其所害。”',
+        quoteEn: '"The governing pattern seeks the monthly mandate. What is the Guardian Minister? It preserves discipline, offers rescue, and repairs affliction. Where affliction meets medicine, the spirit unifies and vital focus crystallizes. Those who utilize it properly flourish; those who misuse it suffer harm."',
+        vernacularZh: '【通俗白话精解】：格局就像你被赋予的天命剧本（主角人设），而“相神”就是你最该紧握的保命法宝。只要找到了你的相神（如伤官配印之印、食神制杀之食神），一切内耗都成了为你淬炼真金的养分。认清自己的主干格局，不随波逐流模仿他人，专注发挥天赋长板。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Your BaZi pattern is your factory-assigned life script, while the "Guarding Minister" is your indispensable cognitive shield. Once you identify your primary remedy (e.g. Seal discipline for creative overthinking, or structured action for crisis anxiety), friction instantly converts into structural mastery. Stay anchored in your natal strengths instead of imitating foreign paths.',
+        remedyZh: '【出厂调律】：明确你命中最核心的相神，用铁律保护它。若以印为护，每天雷打不动留出2小时独处学习不被打扰；若以食伤为用，坚持每日稳定向外输出作品，绝不憋闷。',
+        remedyEn: '[Factory Tuning Habit]: Identify your core Guarding Minister and protect it ruthlessly. If Resource (Seal) is your anchor, block 2 hours daily for uninterrupted deep sanctuary; if Output is your strength, ship concrete creative work daily without hesitation.'
       },
       {
         canonId: 'sanming',
@@ -2375,12 +2425,12 @@ class PortraitEngine {
         dynastyEn: 'Ming: Wan Minying',
         themeZh: '十神情性本相与心智画像',
         themeEn: 'Ten Gods Behavioral Typology',
-        quoteZh: '“官清印正，纯粹笃实；伤官偏印，才奇性僻。善恶相参，皆出乎五行气质之偏。”',
-        quoteEn: '"Pure Officer and upright Resource produce steadfast honor; Hurting Officer and Indirect Resource yield singular genius and aloof eccentricity. Virtues and vices alike arise from elemental predispositions."',
-        vernacularZh: '【通俗白话精解】：万民英告诉你：你的多思、敏锐、挑剔或孤傲，根本不是缺点，而是天才特质的另一面硬币。平庸钝化的人根本没有内耗的神经带宽。接纳你偏颇的气质，无需强行逼自己八面玲珑。',
-        vernacularEn: '[Vernacular Modern Exegesis]: Master Wan Minying reveals: Your acute sensitivity, perfectionism, and aloofness are simply the reverse side of exceptional genius. Dull minds do not possess the computational bandwidth to ruminate. Embrace your elemental idiosyncrasies rather than forcing false superficial conformity.',
-        remedyZh: '【出厂调律】：停止为自己的“格格不入”自责，把清高转化为专业极致，用传世硬作品让世界向你走来。',
-        remedyEn: '[Factory Tuning Habit]: Cease apologizing for feeling misaligned with generic crowds; convert intellectual aloofness into world-class craftsmanship.'
+        quoteZh: '“官清印正，纯粹笃实；伤官偏印，才奇性僻。善恶相参，皆出乎五行气质之偏。中和者纯粹温厚，偏胜者孤傲峥嵘，各全其天真而已。”',
+        quoteEn: '"Pure Officer and upright Resource produce steadfast honor; Hurting Officer and Indirect Resource yield singular genius and aloof eccentricity. Virtues and vices alike arise from elemental predispositions. The harmonious are wholesome and gentle; the polarized are towering and singular, each fulfilling their innate nature."',
+        vernacularZh: '【通俗白话精解】：万民英告诉你：你的多思、敏锐、挑剔或孤傲，根本不是缺点，而是天才特质的另一面硬币。平庸钝化的人根本没有内耗的神经带宽。接纳你偏颇的气质，无需强行逼自己八面玲珑。偏胜之才，正是击穿专业壁垒、独树一帜的独门绝技。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Master Wan Minying reveals: Your acute sensitivity, perfectionism, and aloofness are simply the reverse side of exceptional genius. Dull minds do not possess the computational bandwidth to ruminate. Embrace your elemental idiosyncrasies rather than forcing false superficial conformity. Polarized talent is the exact edge that breaches monopolistic frontiers.',
+        remedyZh: '【出厂调律】：停止为自己的“格格不入”自责，把清高转化为专业极致，用传世硬作品让世界向你走来。凡遇社交消耗，立即启动“静默充电”模式，拒绝对低维圈子的讨好。',
+        remedyEn: '[Factory Tuning Habit]: Cease apologizing for feeling misaligned with generic crowds; convert intellectual aloofness into world-class craftsmanship. Activate silent recharging whenever social environments drain you, refusing to pander to low-resonance circles.'
       },
       {
         canonId: 'yuanhai',
@@ -2390,12 +2440,12 @@ class PortraitEngine {
         dynastyEn: 'Song: Xu Sheng',
         themeZh: '根基清浊之辨与宿命脱胎',
         themeEn: 'Foundational Purity & Transcending Karma',
-        quoteZh: '“凡推命者，先看干支纯杂，次看格局清浊。清者高明脱俗，浊者牵缠滞涩。”',
-        quoteEn: '"In evaluating destiny, examine first purity versus complexity, then assess clear nobility versus turbid entanglement. The clear mind is detached and luminous; the turbid mind is trapped in cyclic friction."',
-        vernacularZh: '【通俗白话精解】：“清”就是目标专注纯粹，不为琐碎杂务分神；“浊”就是既想要名又想要利，既怕别人说又想特立独行。彻底清退脑中互相冲突的双重标准，你的心智立刻由浊转清，内耗烟消云散。',
-        vernacularEn: '[Vernacular Modern Exegesis]: "Purity" denotes laser-like single-minded purpose; "Turbidity" is harboring contradictory ambitions—craving radical independence while agonizing over public approval. Purging conflicting dual standards instantly purifies your mental engine, dissipating rumination.',
-        remedyZh: '【出厂调律】：一刀切断矛盾诉求：选择要自由，就坦然接受暂时的冷清；选择要财富，就彻底放下虚妄的面子。',
-        remedyEn: '[Factory Tuning Habit]: Sever contradictory desires: if you choose freedom, embrace solitary focus; if you choose commercial triumph, discard vanity.'
+        quoteZh: '“凡推命者，先看干支纯杂，次看格局清浊。清者高明脱俗，浊者牵缠滞涩。一清到底者富贵悠游，杂气重重者奔波碌碌。”',
+        quoteEn: '"In evaluating destiny, examine first purity versus complexity, then assess clear nobility versus turbid entanglement. The clear mind is detached and luminous; the turbid mind is trapped in cyclic friction. A pristine trajectory brings effortless fortune; cluttered entanglements bring futile toil."',
+        vernacularZh: '【通俗白话精解】：“清”就是目标专注纯粹，不为琐碎杂务分神；“浊”就是既想要名又想要利，既怕别人说又想特立独行。彻底清退脑中互相冲突的双重标准，你的心智立刻由浊转清，内耗烟消云散。去浊留清，只留核心愿景，生命能量便不再分流内耗。',
+        vernacularEn: '[Vernacular Modern Exegesis]: "Purity" denotes laser-like single-minded purpose; "Turbidity" is harboring contradictory ambitions—craving radical independence while agonizing over public approval. Purging conflicting dual standards instantly purifies your mental engine, dissipating rumination. Severing ambivalence channels all systemic energy toward singular goals.',
+        remedyZh: '【出厂调律】：一刀切断矛盾诉求：选择要自由，就坦然接受暂时的冷清；选择要财富，就彻底放下虚妄的面子。每周进行一次“心智断舍离”，砍掉脑中一切骑墙观望的内耗选项。',
+        remedyEn: '[Factory Tuning Habit]: Sever contradictory desires: if you choose freedom, embrace solitary focus; if you choose commercial triumph, discard vanity. Conduct a weekly mental purge, discarding ambiguous options that paralyze decisive execution.'
       },
       {
         canonId: 'shenfeng',
@@ -2405,12 +2455,12 @@ class PortraitEngine {
         dynastyEn: 'Ming: Zhang Shenfeng',
         themeZh: '病药枢机与逆境转化',
         themeEn: 'Disease & Medicine Fulcrum Transformation',
-        quoteZh: '“天下之命，有病方为贵，无伤不是奇。格中如去病，财禄两相随。”',
-        quoteEn: '"Among human destinies, supreme greatness arises only where a grave Disease exists; without affliction, there is no extraordinary wonder. If the chart cures its disease, boundless wealth and dignity follow."',
-        vernacularZh: '【通俗白话精解】：张神峰石破天惊地指出：平庸八字无病无药，一生平淡如水；而真正成大事业者，命中必有巨大病灶（严重内耗与卡点）！你所承受的痛苦反刍，就是你破茧成蝶的唯一核燃料。',
-        vernacularEn: '[Vernacular Modern Exegesis]: Zhang Shenfeng thunders with radical insight: Mediocre charts suffer no affliction, coasting in bland oblivion; sovereign leaders possess monumental existential wounds! The intense friction you suffer is the exact nuclear propellant required for your metamorphosis.',
-        remedyZh: '【出厂调律】：每一次内耗爆发，都是在提示你：“此处有病，良药何在？”立刻顺藤摸瓜，用最坚决的实战行动治好它。',
-        remedyEn: '[Factory Tuning Habit]: Whenever rumination strikes, treat it as a clinical diagnostic: "Here lies the disease; where is the medicine?" Take immediate structural action to solve it.'
+        quoteZh: '“天下之命，有病方为贵，无伤不是奇。格中如去病，财禄两相随。大凡命理玄微，全在权变，病重得药，旋乾转坤。”',
+        quoteEn: '"Among human destinies, supreme greatness arises only where a grave Disease exists; without affliction, there is no extraordinary wonder. If the chart cures its disease, boundless wealth and dignity follow. Destiny hinges upon dynamic transformation: when severe affliction meets decisive medicine, the world turns."',
+        vernacularZh: '【通俗白话精解】：张神峰石破天惊地指出：平庸八字无病无药，一生平淡如水；而真正成大事业者，命中必有巨大病灶（严重内耗与卡点）！你所承受的痛苦反刍，就是你破茧成蝶的唯一核燃料。痛苦即是进化的敲门砖，病灶所在，正是你超常胜负手的隐秘发源地。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Zhang Shenfeng thunders with radical insight: Mediocre charts suffer no affliction, coasting in bland oblivion; sovereign leaders possess monumental existential wounds! The intense friction you suffer is the exact nuclear propellant required for your metamorphosis. Existential wounds are the hidden source of your decisive competitive edge.',
+        remedyZh: '【出厂调律】：每一次内耗爆发，都是在提示你：“此处有病，良药何在？”立刻顺藤摸瓜，用最坚决的实战行动治好它。面对最大卡点不再逃避，将其作为年度头号攻坚战役彻底击穿。',
+        remedyEn: '[Factory Tuning Habit]: Whenever rumination strikes, treat it as a clinical diagnostic: "Here lies the disease; where is the medicine?" Take immediate structural action to solve it. Cease evading bottlenecks; tackle your primary obstacle as your defining strategic campaign.'
       },
       {
         canonId: 'yuzhao',
@@ -2420,12 +2470,12 @@ class PortraitEngine {
         dynastyEn: 'Jin: Guo Pu',
         themeZh: '六亲情结与外境投射',
         themeEn: 'Relational Boundaries & Environmental Projection',
-        quoteZh: '“吉凶交会，系于动静之间；祸福倚伏，生乎情意之内。察外境之相激，明心性之自守。”',
-        quoteEn: '"Auspiciousness and misfortune intersect between movement and stillness; blessing and calamity germinate within emotional attachments. Witness external frictions calmly, anchoring pristine inner sovereignty."',
-        vernacularZh: '【通俗白话精解】：80%的人格痛苦源自把别人当成了自己内心的投影仪。别人皱个眉头，你在脑里演了一出大戏。郭璞告诉你：外境万物自生自灭，守住本心如如不动，何来伤害？',
-        vernacularEn: '[Vernacular Modern Exegesis]: Eighty percent of mental suffering stems from projecting internal anxieties onto interpersonal relationships. Another person frowns, and your mind rehearses a tragedy. Guo Pu teaches: External circumstances rise and fall naturally; anchor inner sovereignty, and nothing can harm you.',
-        remedyZh: '【出厂调律】：面对他人的情绪风暴，默念：“这是他的因果，不是我的考场”，立刻在心理上退后三步冷眼旁观。',
-        remedyEn: '[Factory Tuning Habit]: In the face of another\'s emotional storm, mentally whisper: "This is their karma, not my examination." Take three steps back psychologically and observe neutrally.'
+        quoteZh: '“吉凶交会，系于动静之间；祸福倚伏，生乎情意之内。察外境之相激，明心性之自守。动而有制，静而有常，虽逢刑冲破害，何损元真？”',
+        quoteEn: '"Auspiciousness and misfortune intersect between movement and stillness; blessing and calamity germinate within emotional attachments. Witness external frictions calmly, anchoring pristine inner sovereignty. When movement possesses discipline and stillness has constancy, even severe clashes cannot impair true vitality."',
+        vernacularZh: '【通俗白话精解】：80%的人格痛苦源自把别人当成了自己内心的投影仪。别人皱个眉头，你在脑里演了一出大戏。郭璞告诉你：外境万物自生自灭，守住本心如如不动，何来伤害？一切人际风暴皆是他人的因果业力，你只需安住本分，不起妄应，自然风平浪静。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Eighty percent of mental suffering stems from projecting internal anxieties onto interpersonal relationships. Another person frowns, and your mind rehearses a tragedy. Guo Pu teaches: External circumstances rise and fall naturally; anchor inner sovereignty, and nothing can harm you. External storms belong to others; remain centered and calm.',
+        remedyZh: '【出厂调律】：面对他人的情绪风暴，默念：“这是他的因果，不是我的考场”，立刻在心理上退后三步冷眼旁观。建立非暴力沟通与冰冷事实边界，严禁在无事实依据的情境下自演苦肉计。',
+        remedyEn: '[Factory Tuning Habit]: In the face of another\'s emotional storm, mentally whisper: "This is their karma, not my examination." Take three steps back psychologically and observe neutrally. Establish factual communication baselines and ban catastrophic emotional role-playing.'
       },
       {
         canonId: 'lixuzhong',
@@ -2435,12 +2485,12 @@ class PortraitEngine {
         dynastyEn: 'Tang: Li Xuzhong',
         themeZh: '三命元神与时代共振',
         themeEn: 'Three Primes & Epochal Synchronization',
-        quoteZh: '“天元主禄，地元主命，人元主身。顺天应时，物我两忘，则无夭折之患。”',
-        quoteEn: '"Heavenly Prime rules rank, Earthly Prime rules destiny, Human Prime rules body. Flowing in unison with epochal cycles, dissolving the dichotomy of self and world, one is freed from exhaustion."',
-        vernacularZh: '【通俗白话精解】：唐代宗师李虚中主张天、地、人三元合一。不要把自己孤立成无助的单兵。顺应时代大势（如九运AI火运、数字智能潮），站在风口借力借势，个体的渺小焦虑瞬间化解于宇宙洪流中。',
-        vernacularEn: '[Vernacular Modern Exegesis]: Tang Dynasty Master Li Xu Zhong unites Heaven, Earth, and Man. Cease viewing yourself as an isolated, helpless soldier. Align with secular megatrends (Period 9 Fire era, AI compute, digital synthesis); ride the cosmic tide, and personal anxiety evaporates into universal flow.',
-        remedyZh: '【出厂调律】：抬头看路，把眼光放到未来20年的九紫离火大运中；顺势而为，不与客观规律与时代车轮较劲。',
-        remedyEn: '[Factory Tuning Habit]: Elevate your horizon to the 20-year Period 9 Fire cycle; flow with systemic waves rather than resisting macro tides.'
+        quoteZh: '“天元主禄，地元主命，人元主身。顺天应时，物我两忘，则无夭折之患。因天地之纪纲，制万物之生成，与运推移，安步以游太虚。”',
+        quoteEn: '"Heavenly Prime rules rank, Earthly Prime rules destiny, Human Prime rules body. Flowing in unison with epochal cycles, dissolving the dichotomy of self and world, one is freed from exhaustion. Aligning with cosmic architecture, navigating secular tides, one walks serenely across the great void."',
+        vernacularZh: '【通俗白话精解】：唐代宗师李虚中主张天、地、人三元合一。不要把自己孤立成无助的单兵。顺应时代大势（如九运AI火运、数字智能潮），站在风口借力借势，个体的渺小焦虑瞬间化解于宇宙洪流中。乘时而动，与宏观运势同频共振，顺水推舟胜过逆风撑船万倍。',
+        vernacularEn: '[Vernacular Modern Exegesis]: Tang Dynasty Master Li Xu Zhong unites Heaven, Earth, and Man. Cease viewing yourself as an isolated, helpless soldier. Align with secular megatrends (Period 9 Fire era, AI compute, digital synthesis); ride the cosmic tide, and personal anxiety evaporates into universal flow. Riding macro momentum multiplies effort ten-thousand-fold.',
+        remedyZh: '【出厂调律】：抬头看路，把眼光放到未来20年的九紫离火大运中；顺势而为，不与客观规律与时代车轮较劲。每月梳理一次时代宏观技术浪潮，确保个人努力永远站在上升电梯的势能之上。',
+        remedyEn: '[Factory Tuning Habit]: Elevate your horizon to the 20-year Period 9 Fire cycle; flow with systemic waves rather than resisting macro tides. Conduct a monthly macro trend review to ensure your energy rides structural tailwinds.'
       }
     ];
 
