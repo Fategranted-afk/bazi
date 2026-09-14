@@ -206,6 +206,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
+      // Update titles
+      document.querySelectorAll('[data-i18n-title]').forEach(el => {
+        const key = el.getAttribute('data-i18n-title');
+        if (key && typeof I18N !== 'undefined') {
+          el.title = I18N.t(key, lang);
+        }
+      });
+
       // Update gender select options
       if (genderSelect && typeof I18N !== 'undefined') {
         if (genderSelect.options[0]) genderSelect.options[0].textContent = I18N.t('opt_qian', lang);
@@ -265,6 +273,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (typeof renderHexagramCycle === 'function' && currentBaziResult) {
       renderHexagramCycle(currentBaziResult, fourPillarsActiveAge);
+    }
+
+    const playText = document.getElementById('ichingCyclePlayText');
+    if (playText) {
+      playText.textContent = isIChingCyclePlaying
+        ? (lang === 'en' ? 'Pause' : '暂停推演')
+        : (lang === 'en' ? 'Auto Play' : '连续推演');
     }
   }
 
@@ -830,7 +845,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const userBYear = (result.input && result.input.year) || result.birthYear || result.year || 1990;
         const realCurrentAge = Math.max(1, Math.abs(currentCalYear - userBYear));
         activeChronoAge = realCurrentAge;
-        fourPillarsActiveAge = realCurrentAge;
+        if (!fourPillarsActiveAge || fourPillarsActiveAge < 1 || fourPillarsActiveAge > 100) {
+          fourPillarsActiveAge = realCurrentAge;
+        }
 
         currentLuckResult = LuckEngine.calculateLuck(result, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
         if (currentLuckResult && currentLuckResult.decades && currentLuckResult.decades.length > 0) {
@@ -5609,18 +5626,25 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (res) currentBaziResult = currentBaziResult || res;
+
     let birthYear = (res.input && res.input.year) || res.birthYear || 1990;
     const currentCalYear = new Date().getFullYear();
     const calculatedAge = Math.max(1, Math.abs(currentCalYear - birthYear));
     if (window._lastRenderedHexRes !== res) {
       window._lastRenderedHexRes = res;
-      fourPillarsActiveAge = calculatedAge;
-      if (slider) slider.value = fourPillarsActiveAge;
+      const lastBYear = window._lastHexBirthYear;
+      window._lastHexBirthYear = birthYear;
+      if (lastBYear !== birthYear || !fourPillarsActiveAge) {
+        fourPillarsActiveAge = calculatedAge;
+      }
     }
 
     const isInitialized = slider && (slider.hasAttribute ? slider.hasAttribute('data-initialized') : slider._initialized);
     if (slider && !isInitialized) {
-      fourPillarsActiveAge = calculatedAge;
+      if (!fourPillarsActiveAge) {
+        fourPillarsActiveAge = calculatedAge;
+      }
       slider.value = fourPillarsActiveAge;
       if (slider.setAttribute) slider.setAttribute('data-initialized', 'true');
       slider._initialized = true;
@@ -5645,7 +5669,7 @@ document.addEventListener('DOMContentLoaded', () => {
       slider.addEventListener('input', handleSliderChange);
       slider.addEventListener('change', handleSliderChange);
     } else if (slider) {
-      fourPillarsActiveAge = parseInt(slider.value, 10) || calculatedAge;
+      slider.value = fourPillarsActiveAge;
     }
 
     if (ageDisplay) {
@@ -6029,9 +6053,17 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (res) currentBaziResult = currentBaziResult || res;
+
     let birthYear = (res.input && res.input.year) || res.birthYear || 1990;
     if (activeAge !== undefined && activeAge !== null) {
       fourPillarsActiveAge = Math.max(1, Math.min(100, activeAge));
+    }
+    const slider = document.getElementById('fourPillarsAgeSlider');
+    if (slider) slider.value = fourPillarsActiveAge;
+    const ageDisplay = document.getElementById('fourPillarsAgeDisplay');
+    if (ageDisplay) {
+      ageDisplay.textContent = isEn ? `${fourPillarsActiveAge} yrs` : `${fourPillarsActiveAge} 岁`;
     }
 
     // Sync age badge and controls
@@ -6080,7 +6112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tabTimeline.addEventListener('click', () => {
         activeIChingCycleTab = 'timeline';
         updateTabStyles();
-        renderHexagramCycle(res, fourPillarsActiveAge);
+        renderHexagramCycle(currentBaziResult || res, fourPillarsActiveAge);
       });
     }
     if (tabYao && !tabYao._hooked) {
@@ -6088,7 +6120,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tabYao.addEventListener('click', () => {
         activeIChingCycleTab = 'yaoStages';
         updateTabStyles();
-        renderHexagramCycle(res, fourPillarsActiveAge);
+        renderHexagramCycle(currentBaziResult || res, fourPillarsActiveAge);
       });
     }
     if (tabCosmic && !tabCosmic._hooked) {
@@ -6096,7 +6128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tabCosmic.addEventListener('click', () => {
         activeIChingCycleTab = 'cosmic';
         updateTabStyles();
-        renderHexagramCycle(res, fourPillarsActiveAge);
+        renderHexagramCycle(currentBaziResult || res, fourPillarsActiveAge);
       });
     }
 
@@ -6136,15 +6168,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!btn._hooked) {
         btn._hooked = true;
         btn.addEventListener('click', () => {
+          const activeRes = currentBaziResult || res;
+          const activeBYear = (activeRes && activeRes.input && activeRes.input.year) || (activeRes && activeRes.birthYear) || 1990;
           const ageAttr = btn.getAttribute('data-age');
           if (ageAttr) {
             setIChingActiveAge(parseInt(ageAttr, 10));
           } else if (btn.id === 'ichingBtnEpochHandover') {
-            const xtYears = (points[0] && points[0].governingHex) ? (points.find(p => !p.isXianTian) ? points.find(p => !p.isXianTian).age : 48) : 48;
+            const activePts = (cachedIChingCycleData && cachedIChingCycleData.length > 0) ? cachedIChingCycleData : points;
+            const xtYears = (activePts[0] && activePts[0].governingHex) ? (activePts.find(p => !p.isXianTian) ? activePts.find(p => !p.isXianTian).age : 48) : 48;
             setIChingActiveAge(xtYears);
           } else if (btn.id === 'ichingBtnRealAge') {
             const currentYear = new Date().getFullYear();
-            const realAge = Math.max(1, Math.min(100, Math.abs(currentYear - birthYear)));
+            const realAge = Math.max(1, Math.min(100, Math.abs(currentYear - activeBYear)));
             setIChingActiveAge(realAge);
           }
         });
@@ -6211,6 +6246,63 @@ document.addEventListener('DOMContentLoaded', () => {
     const hex = item.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
     const tj = item.annualTJ || {};
     const gHex = item.governingHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
+    const currentLangCode = isEn ? 'en' : 'zh';
+
+    if (container.getAttribute('data-active-tab') === 'timeline' &&
+        container.getAttribute('data-lang') === currentLangCode &&
+        document.getElementById('ichingCycleCanvas') &&
+        document.getElementById('ichingTelemetryEpochTitle')) {
+
+      const elEpochBadge = document.getElementById('ichingTelemetryEpochBadge');
+      const elEpochTitle = document.getElementById('ichingTelemetryEpochTitle');
+      const elEpochDesc = document.getElementById('ichingTelemetryEpochDesc');
+
+      const elRulerBadge = document.getElementById('ichingTelemetryRulerBadge');
+      const elRulerTitle = document.getElementById('ichingTelemetryRulerTitle');
+      const elRulerDesc = document.getElementById('ichingTelemetryRulerDesc');
+
+      const elTransitBadge = document.getElementById('ichingTelemetryTransitBadge');
+      const elTransitTitle = document.getElementById('ichingTelemetryTransitTitle');
+      const elTransitDesc = document.getElementById('ichingTelemetryTransitDesc');
+
+      const elTJScore = document.getElementById('ichingTelemetryTJScore');
+      const elTJDirective = document.getElementById('ichingTelemetryTJDirective');
+      const elTJRiddle = document.getElementById('ichingTelemetryTJRiddle');
+
+      if (elEpochTitle && elRulerTitle && elTransitTitle && elTJDirective) {
+        if (elEpochBadge) {
+          elEpochBadge.textContent = isEn ? (item.isXianTian ? 'Early Heaven' : 'Later Heaven') : (item.isXianTian ? '前半生' : '后半生');
+          elEpochBadge.className = `px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isXianTian ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}`;
+        }
+        elEpochTitle.textContent = isEn ? item.epochEn : item.epochZh;
+        if (elEpochDesc) elEpochDesc.textContent = isEn ? `Governed by Hexagram ${gHex.number}: ${gHex.nameEn}` : `统摄本基：第${gHex.number}卦 · 【${gHex.nameZh}】`;
+
+        if (elRulerBadge) {
+          elRulerBadge.textContent = isEn ? (item.isYangLine ? 'Yang (9y)' : 'Yin (6y)') : (item.isYangLine ? '阳九管9年' : '阴六管6年');
+          elRulerBadge.className = `px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}`;
+        }
+        elRulerTitle.textContent = isEn ? `Line ${item.activeLinePos} Active` : `第${item.activeLinePos}爻当值执权`;
+        if (elRulerDesc) elRulerDesc.textContent = `${item.activeLine ? (isEn ? item.activeLine.ageSpanEn : item.activeLine.ageSpanZh) : ''} · ${isEn ? (item.isYangLine ? 'Solid Line (⚊)' : 'Broken Line (⚋)') : (item.isYangLine ? '天数纯阳' : '地数纯阴')}`;
+
+        if (elTransitBadge) {
+          elTransitBadge.textContent = item.isMutated ? (isEn ? 'Mutated' : '变卦') : (isEn ? 'Preserved' : '守本');
+          elTransitBadge.className = `px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${item.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}`;
+        }
+        elTransitTitle.textContent = `${item.year} ${isEn ? item.annualGanzhiEn : item.annualGanzhiZh} · ${isEn ? hex.nameEn : hex.nameZh}`;
+        elTransitTitle.className = `text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'} truncate`;
+        if (elTransitDesc) elTransitDesc.textContent = isEn ? item.ruleInteractionEn : item.ruleInteractionZh;
+
+        if (elTJScore) elTJScore.textContent = `${item.score}% ${isEn ? 'Score' : '能级'}`;
+        elTJDirective.textContent = isEn ? (tj.liuNianEn || 'Auspicious achievements with disciplined execution.') : (tj.liuNianZh || '吉庆临门，加官进禄，稳健守正求通。');
+        if (elTJRiddle) elTJRiddle.textContent = isEn ? (tj.riddleEn || 'Treasures emerge through inner clarity.') : (tj.riddleZh || '图示明珠出土，大器晚成。');
+        return;
+      }
+    }
+
+    if (container.setAttribute) {
+      container.setAttribute('data-active-tab', 'timeline');
+      container.setAttribute('data-lang', currentLangCode);
+    }
 
     container.innerHTML = `
       <!-- Interactive Lifelong Hexagram Progression Canvas -->
@@ -6227,8 +6319,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <!-- Canvas Element -->
-        <canvas id="ichingCycleCanvas" class="w-full h-48 sm:h-56 rounded-xl bg-black/60 border border-gray-800/80 cursor-crosshair shadow-md"></canvas>
+        <!-- Canvas Element with touch-none to prevent page vertical scrolling while dragging horizontally -->
+        <canvas id="ichingCycleCanvas" class="w-full h-48 sm:h-56 rounded-xl bg-black/60 border border-gray-800/80 cursor-crosshair shadow-md touch-none" style="touch-action: none;"></canvas>
 
         <div class="flex justify-between items-center text-[10px] text-gray-500 font-mono px-1">
           <span>${isEn ? 'Age 1 (Early Inception)' : '1岁 (初爻潜龙发端)'}</span>
@@ -6238,19 +6330,19 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Real-Time Cycle Telemetry Detail Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+      <div id="ichingTelemetryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
         <!-- 1. Life Epoch & Governing Natal Mandate -->
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
             <span>🏛️ ${isEn ? 'Life Epoch & Natal Base' : '生命纪元与主导命基'}</span>
-            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isXianTian ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
+            <span id="ichingTelemetryEpochBadge" class="px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isXianTian ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
               ${isEn ? (item.isXianTian ? 'Early Heaven' : 'Later Heaven') : (item.isXianTian ? '前半生' : '后半生')}
             </span>
           </div>
-          <div class="text-sm font-bold font-serif-sc text-amber-300">
+          <div id="ichingTelemetryEpochTitle" class="text-sm font-bold font-serif-sc text-amber-300">
             ${isEn ? item.epochEn : item.epochZh}
           </div>
-          <p class="text-[11px] text-gray-300 leading-tight">
+          <p id="ichingTelemetryEpochDesc" class="text-[11px] text-gray-300 leading-tight">
             ${isEn ? `Governed by Hexagram ${gHex.number}: ${gHex.nameEn}` : `统摄本基：第${gHex.number}卦 · 【${gHex.nameZh}】`}
           </p>
         </div>
@@ -6259,14 +6351,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
             <span>⚡ ${isEn ? 'Governing Yao Ruler' : '当期当值执权爻位'}</span>
-            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
+            <span id="ichingTelemetryRulerBadge" class="px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
               ${isEn ? (item.isYangLine ? 'Yang (9y)' : 'Yin (6y)') : (item.isYangLine ? '阳九管9年' : '阴六管6年')}
             </span>
           </div>
-          <div class="text-sm font-bold font-mono text-purple-300">
+          <div id="ichingTelemetryRulerTitle" class="text-sm font-bold font-mono text-purple-300">
             ${isEn ? `Line ${item.activeLinePos} Active` : `第${item.activeLinePos}爻当值执权`}
           </div>
-          <p class="text-[11px] text-gray-300 leading-tight">
+          <p id="ichingTelemetryRulerDesc" class="text-[11px] text-gray-300 leading-tight">
             ${item.activeLine ? (isEn ? item.activeLine.ageSpanEn : item.activeLine.ageSpanZh) : ''} · ${isEn ? (item.isYangLine ? 'Solid Line (⚊)' : 'Broken Line (⚋)') : (item.isYangLine ? '天数纯阳' : '地数纯阴')}
           </p>
         </div>
@@ -6275,14 +6367,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
             <span>☯️ ${isEn ? 'Annual Transit & Law' : '流年值年卦与阴阳律'}</span>
-            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${item.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">
+            <span id="ichingTelemetryTransitBadge" class="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${item.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">
               ${item.isMutated ? (isEn ? 'Mutated' : '变卦') : (isEn ? 'Preserved' : '守本')}
             </span>
           </div>
-          <div class="text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'} truncate">
+          <div id="ichingTelemetryTransitTitle" class="text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'} truncate">
             ${item.year} ${isEn ? item.annualGanzhiEn : item.annualGanzhiZh} · ${isEn ? hex.nameEn : hex.nameZh}
           </div>
-          <p class="text-[10.5px] font-mono text-gray-300 leading-tight truncate">
+          <p id="ichingTelemetryTransitDesc" class="text-[10.5px] font-mono text-gray-300 leading-tight truncate">
             ${isEn ? item.ruleInteractionEn : item.ruleInteractionZh}
           </p>
         </div>
@@ -6291,28 +6383,28 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
             <span>📜 ${isEn ? 'Tian Ji Master Directive' : '天纪秘解与玉上有光'}</span>
-            <span class="text-[9px] font-mono text-amber-400/90">${item.score}% ${isEn ? 'Score' : '能级'}</span>
+            <span id="ichingTelemetryTJScore" class="text-[9px] font-mono text-amber-400/90">${item.score}% ${isEn ? 'Score' : '能级'}</span>
           </div>
-          <p class="text-[11px] text-gray-200 line-clamp-2 leading-relaxed font-sans">
+          <p id="ichingTelemetryTJDirective" class="text-[11px] text-gray-200 line-clamp-2 leading-relaxed font-sans">
             ${isEn ? (tj.liuNianEn || 'Auspicious achievements with disciplined execution.') : (tj.liuNianZh || '吉庆临门，加官进禄，稳健守正求通。')}
           </p>
-          <p class="text-[10px] text-gray-400 italic line-clamp-1">
+          <p id="ichingTelemetryTJRiddle" class="text-[10px] text-gray-400 italic line-clamp-1">
             ${isEn ? (tj.riddleEn || 'Treasures emerge through inner clarity.') : (tj.riddleZh || '图示明珠出土，大器晚成。')}
           </p>
         </div>
       </div>
     `;
 
-    // Hook canvas click and drag
+    // Hook canvas click and drag safely (no multiple listeners on window)
     const canvas = document.getElementById('ichingCycleCanvas');
     if (canvas && !canvas._hooked) {
       canvas._hooked = true;
-      const handleCanvasAction = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
+      const handleCanvasAction = (clientX) => {
+        const rect = canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : { left: 0, width: 600 };
+        const clickX = clientX - (rect.left || 0);
         const padL = 36;
         const padR = 24;
-        const chartW = rect.width - padL - padR;
+        const chartW = (rect.width || 600) - padL - padR;
         if (chartW > 0) {
           const ratio = Math.max(0, Math.min(1, (clickX - padL) / chartW));
           const clickedAge = Math.round(1 + ratio * 99);
@@ -6323,27 +6415,36 @@ document.addEventListener('DOMContentLoaded', () => {
       let isDragging = false;
       canvas.addEventListener('mousedown', (e) => {
         isDragging = true;
-        handleCanvasAction(e);
+        handleCanvasAction(e.clientX || 0);
       });
-      window.addEventListener('mousemove', (e) => {
-        if (isDragging) handleCanvasAction(e);
-      });
-      window.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-      canvas.addEventListener('click', handleCanvasAction);
 
-      // Touch events for mobile
+      if (!window._ichingCanvasWindowHooked && typeof window !== 'undefined' && window.addEventListener) {
+        window._ichingCanvasWindowHooked = true;
+        window.addEventListener('mousemove', (e) => {
+          if (isDragging) handleCanvasAction(e.clientX || 0);
+        });
+        window.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+      }
+
+      // Touch events with passive: false to prevent scrolling during horizontal timeline scrub
       canvas.addEventListener('touchstart', (e) => {
         if (e.touches && e.touches[0]) {
-          handleCanvasAction(e.touches[0]);
+          if (e.cancelable && e.preventDefault) e.preventDefault();
+          handleCanvasAction(e.touches[0].clientX || 0);
         }
-      }, { passive: true });
+      }, { passive: false });
       canvas.addEventListener('touchmove', (e) => {
         if (e.touches && e.touches[0]) {
-          handleCanvasAction(e.touches[0]);
+          if (e.cancelable && e.preventDefault) e.preventDefault();
+          handleCanvasAction(e.touches[0].clientX || 0);
         }
-      }, { passive: true });
+      }, { passive: false });
+
+      canvas.addEventListener('click', (e) => {
+        handleCanvasAction(e.clientX || 0);
+      });
     }
   }
 
@@ -6355,12 +6456,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isEn = (currentLang === 'en');
     const rect = canvas.getBoundingClientRect ? canvas.getBoundingClientRect() : { width: canvas.width || 600, height: canvas.height || 220 };
-    const w = rect.width || canvas.clientWidth || 600;
-    const h = rect.height || canvas.clientHeight || 220;
+    const parentW = (canvas.parentElement && canvas.parentElement.clientWidth) ? canvas.parentElement.clientWidth : 0;
+    const w = (rect.width > 0 ? rect.width : (parentW > 0 ? parentW : (canvas.clientWidth || 600)));
+    const h = (rect.height > 0 ? rect.height : (canvas.clientHeight || 220));
     const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
 
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
     if (ctx.scale) ctx.scale(dpr, dpr);
 
     if (ctx.clearRect) ctx.clearRect(0, 0, w, h);
@@ -6575,6 +6677,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    if (container.setAttribute) {
+      container.setAttribute('data-active-tab', 'yaoStages');
+      container.setAttribute('data-lang', isEn ? 'en' : 'zh');
+    }
+
     const isXian = (fourPillarsActiveAge <= hexData.xianTian.totalYears);
     const stageObj = isXian ? hexData.xianTian : hexData.houTian;
     const stageTitleZh = isXian ? '前半生 · 先天命卦六爻时序递进' : '后半生 · 后天跃升六爻时序递进';
@@ -6656,6 +6763,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderCosmicTabHtml(container, currentPoint, isEn) {
+    if (container.setAttribute) {
+      container.setAttribute('data-active-tab', 'cosmic');
+      container.setAttribute('data-lang', isEn ? 'en' : 'zh');
+    }
+
     const SOVEREIGN_HEXAGRAMS = [
       { num: 24, nameZh: '地雷复', nameEn: 'Return (Fu)', symbol: '䷗', monthZh: '十一月 · 子月', monthEn: 'Month 11 (Zi)', yang: 1, yin: 5, quoteZh: '冬至一阳生，万物苏萌，闭关静养。', quoteEn: 'Winter Solstice first light of Yang; stillness preserves inner seeds.' },
       { num: 19, nameZh: '地泽临', nameEn: 'Approach (Lin)', symbol: '䷒', monthZh: '十二月 · 丑月', monthEn: 'Month 12 (Chou)', yang: 2, yin: 4, quoteZh: '二阳渐长，督导奋发，至于八月有凶。', quoteEn: 'Two Yang lines advance; maintain diligence before autumn decline.' },
@@ -7067,6 +7179,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!primaryViews[targetViewId]) return;
     activePrimaryView = targetViewId;
 
+    if (targetViewId !== 'view-iching') {
+      if (typeof stopIChingCyclePlay === 'function' && isIChingCyclePlaying) {
+        stopIChingCyclePlay();
+      }
+    }
+
     viewNavBtns.forEach(btn => {
       const v = btn.getAttribute('data-view');
       if (v === targetViewId) {
@@ -7119,6 +7237,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetViewId === 'view-iching' && currentBaziResult) {
       if (typeof renderFourPillarsHexagrams === 'function') renderFourPillarsHexagrams(currentBaziResult);
       if (typeof renderHexagramCycle === 'function') renderHexagramCycle(currentBaziResult, fourPillarsActiveAge);
+      setTimeout(() => {
+        if (activeIChingCycleTab === 'timeline' && cachedIChingCycleData && typeof drawHexagramCycleChart === 'function') {
+          drawHexagramCycleChart(cachedIChingCycleData, fourPillarsActiveAge);
+        }
+      }, 50);
     }
   }
 
@@ -7128,6 +7251,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (target) switchPrimaryView(target);
     });
   });
+
+  // Window resize handler for active canvases
+  if (typeof window !== 'undefined' && window.addEventListener) {
+    window.addEventListener('resize', () => {
+      if (activePrimaryView === 'view-iching' && activeIChingCycleTab === 'timeline') {
+        if (cachedIChingCycleData && cachedIChingCycleData.length > 0 && typeof drawHexagramCycleChart === 'function') {
+          drawHexagramCycleChart(cachedIChingCycleData, fourPillarsActiveAge);
+        }
+      }
+    });
+  }
+
+  // Page visibility change handler to pause autoplay when hidden
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && typeof stopIChingCyclePlay === 'function' && isIChingCyclePlaying) {
+        stopIChingCyclePlay();
+      }
+    });
+  }
 
   // Portal Jump Buttons & Back Buttons
   const portalBtnStrategy = document.getElementById('portalBtnStrategy');
@@ -10087,7 +10230,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // deferredPwaPrompt already declared at top
 
   function initPWA() {
-    if ('serviceWorker' in navigator) {
+    if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(err => {
           console.warn('Service Worker registration note:', err);

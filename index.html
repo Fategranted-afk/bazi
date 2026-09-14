@@ -1396,28 +1396,30 @@
 
     <!-- Four Pillars Natal Hexagrams & Master Ni Haisha Tian Ji Exegesis (四柱命卦与倪海厦《天纪》全相推命) -->
     <section id="fourPillarsHexSection" class="bg-card rounded-2xl border border-border-color shadow-2xl p-5 md:p-6 space-y-5">
-      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-700/60">
-        <div>
-          <div class="flex items-center space-x-2.5">
-            <span class="chinese-seal text-xs py-0.5" data-i18n="seal_four_pillars_hex">天纪易数</span>
-            <h2 class="text-lg md:text-xl font-bold font-serif-sc text-amber-300" data-i18n="sec_four_pillars_hex_title">
-              四柱命卦推演 · 倪海厦《天纪》六十四卦全相秘解
-            </h2>
+      <div id="fourPillarsHexCard" class="space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-700/60">
+          <div>
+            <div class="flex items-center space-x-2.5">
+              <span class="chinese-seal text-xs py-0.5" data-i18n="seal_four_pillars_hex">天纪易数</span>
+              <h2 class="text-lg md:text-xl font-bold font-serif-sc text-amber-300" data-i18n="sec_four_pillars_hex_title">
+                四柱命卦推演 · 倪海厦《天纪》六十四卦全相秘解
+              </h2>
+            </div>
+            <p class="text-xs text-gray-400 mt-1" data-i18n="four_pillars_hex_desc">
+              天数地数合化先天卦（前半生）与后天卦（后半生）· 阳爻管9年/阴爻管6年岁运流转 · 值年流年卦与玉上有光天机解密
+            </p>
           </div>
-          <p class="text-xs text-gray-400 mt-1" data-i18n="four_pillars_hex_desc">
-            天数地数合化先天卦（前半生）与后天卦（后半生）· 阳爻管9年/阴爻管6年岁运流转 · 值年流年卦与玉上有光天机解密
-          </p>
+          <!-- Age Controller -->
+          <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-xl border border-gray-700">
+            <label for="fourPillarsAgeSlider" class="text-xs text-gray-400 font-mono" data-i18n="label_current_age">推演虚岁:</label>
+            <span id="fourPillarsAgeDisplay" class="text-amber-400 font-mono font-bold text-sm min-w-[3rem]">35岁</span>
+            <input type="range" id="fourPillarsAgeSlider" min="1" max="100" value="35" class="w-24 sm:w-32 accent-amber-500 cursor-pointer">
+          </div>
         </div>
-        <!-- Age Controller -->
-        <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-xl border border-gray-700">
-          <label for="fourPillarsAgeSlider" class="text-xs text-gray-400 font-mono" data-i18n="label_current_age">推演虚岁:</label>
-          <span id="fourPillarsAgeDisplay" class="text-amber-400 font-mono font-bold text-sm min-w-[3rem]">35岁</span>
-          <input type="range" id="fourPillarsAgeSlider" min="1" max="100" value="35" class="w-24 sm:w-32 accent-amber-500 cursor-pointer">
-        </div>
-      </div>
 
-      <div id="fourPillarsHexContainer" class="space-y-4">
-        <!-- Injected via JS -->
+        <div id="fourPillarsHexContainer" class="space-y-4">
+          <!-- Injected via JS -->
+        </div>
       </div>
     </section>
 
@@ -1446,9 +1448,9 @@
 
           <!-- Step Buttons -->
           <div class="flex items-center rounded-xl bg-black/40 border border-gray-700 p-0.5">
-            <button id="ichingCyclePrevBtn" type="button" class="px-2.5 py-1 text-xs text-gray-300 hover:text-white transition rounded-lg hover:bg-gray-800 cursor-pointer" title="前一岁">◀</button>
+            <button id="ichingCyclePrevBtn" type="button" class="px-2.5 py-1 text-xs text-gray-300 hover:text-white transition rounded-lg hover:bg-gray-800 cursor-pointer" title="前一岁" data-i18n-title="btn_prev_age">◀</button>
             <span id="ichingCycleAgeBadge" class="px-2.5 py-0.5 text-xs font-mono font-bold text-amber-400 min-w-[3.5rem] text-center">35岁</span>
-            <button id="ichingCycleNextBtn" type="button" class="px-2.5 py-1 text-xs text-gray-300 hover:text-white transition rounded-lg hover:bg-gray-800 cursor-pointer" title="后一岁">▶</button>
+            <button id="ichingCycleNextBtn" type="button" class="px-2.5 py-1 text-xs text-gray-300 hover:text-white transition rounded-lg hover:bg-gray-800 cursor-pointer" title="后一岁" data-i18n-title="btn_next_age">▶</button>
           </div>
 
           <!-- Mode / Perspective Switcher Tabs -->
