@@ -367,45 +367,161 @@ class IChingEngine {
    * 阳爻管9年，阴爻管6年，依年龄流转高亮当值之爻。
    * 整合倪海厦《天纪》64卦批注全集 (先天卦断、后天卦断、流年卦断、玉上有光字谜与天机解密)。
    */
+  // 洛书后天八卦配数 (1:坎, 2:坤, 3:震, 4:巽, 6:乾, 7:兑, 8:艮, 9:离)
+  static LUO_SHU_TRIGRAMS = {
+    1: { nameZh: '坎', natureZh: '水', nameEn: 'Water (Kan)', binary: [0, 1, 0] },
+    2: { nameZh: '坤', natureZh: '地', nameEn: 'Earth (Kun)', binary: [0, 0, 0] },
+    3: { nameZh: '震', natureZh: '雷', nameEn: 'Thunder (Zhen)', binary: [1, 0, 0] },
+    4: { nameZh: '巽', natureZh: '风', nameEn: 'Wind (Xun)', binary: [0, 1, 1] },
+    6: { nameZh: '乾', natureZh: '天', nameEn: 'Heaven (Qian)', binary: [1, 1, 1] },
+    7: { nameZh: '兑', natureZh: '泽', nameEn: 'Lake (Dui)', binary: [1, 1, 0] },
+    8: { nameZh: '艮', natureZh: '山', nameEn: 'Mountain (Gen)', binary: [0, 0, 1] },
+    9: { nameZh: '离', natureZh: '火', nameEn: 'Fire (Li)', binary: [1, 0, 1] }
+  };
+
+  /**
+   * 天数之取数法则（分别以25为中数）
+   */
+  static computeTianShu(sumOdds) {
+    if (sumOdds === 25) return 5;
+    if (sumOdds < 25) {
+      if (sumOdds === 10) return 1;
+      if (sumOdds === 20) return 2;
+      return sumOdds % 10;
+    }
+    const rem = sumOdds - 25;
+    if (rem < 10) return rem;
+    if (rem % 10 === 0) return Math.floor(rem / 10);
+    return rem % 10;
+  }
+
+  /**
+   * 地数之取数法则（分别以30为中数）
+   */
+  static computeDiShu(sumEvens) {
+    if (sumEvens === 30) return 3;
+    if (sumEvens < 30) {
+      if (sumEvens === 10) return 1;
+      if (sumEvens === 20) return 2;
+      return sumEvens % 10;
+    }
+    const rem = sumEvens - 30;
+    if (rem < 10) return rem;
+    if (rem % 10 === 0) return Math.floor(rem / 10);
+    return rem % 10;
+  }
+
+  /**
+   * 5数的处理：表4中5数无卦，遇5数时按三元生人换卦：
+   * 上元生人（1864 - 1923年）：男取艮(8)，女取坤(2)
+   * 中元生人（1924 - 1983年）：阳男阴女取艮(8)，阴男阳女取坤(2)
+   * 下元生人（1984 - 2043年）：男取离(9)，女取兑(7)
+   */
+  static resolveFiveNum(num, birthYear, isMale, isYangMaleOrYinFemale) {
+    if (num !== 5) return num;
+    const normYear = ((birthYear - 1864) % 180 + 180) % 180 + 1864;
+    if (normYear >= 1864 && normYear <= 1923) {
+      return isMale ? 8 : 2;
+    } else if (normYear >= 1924 && normYear <= 1983) {
+      return isYangMaleOrYinFemale ? 8 : 2;
+    } else {
+      return isMale ? 9 : 7;
+    }
+  }
+
+  /**
+   * 四柱命卦（子平命卦 / 倪海厦《天纪》易数推命正统推导）
+   * 天干配数：壬甲乾6、乙癸坤2、丙艮8、丁兑7、戊坎1、己离9、庚震3、辛巽4
+   * 地支配数：亥子1/6水、寅卯3/8木、巳午2/7火、申酉4/9金、辰戌5/10土、丑未5/10土
+   * 1. 先天卦 (前半生)
+   * 2. 后天卦 (后半生)
+   * 3. 值年流年卦 (当年/已选流年)
+   * 阳爻管9年，阴爻管6年，依年龄流转高亮当值之爻。
+   * 整合倪海厦《天纪》64卦批注全集 (先天卦断、后天卦断、流年卦断、玉上有光字谜与天机解密)。
+   */
   static calculateFourPillarsHexagrams(bazi, currentAge = 35, selectedYear = new Date().getFullYear()) {
     if (!bazi || !bazi.pillars) return null;
 
-    const stemsNum = { '甲': 1, '乙': 2, '丙': 3, '丁': 4, '戊': 5, '己': 6, '庚': 7, '辛': 8, '壬': 9, '癸': 10 };
-    const branchesNum = { '子': 1, '丑': 2, '寅': 3, '卯': 4, '辰': 5, '巳': 6, '午': 7, '未': 8, '申': 9, '酉': 10, '戌': 11, '亥': 12 };
+    // 天干配数 (洛书八卦)
+    const stemsNum = {
+      '甲': 6, '乙': 2, '丙': 8, '丁': 7, '戊': 1,
+      '己': 9, '庚': 3, '辛': 4, '壬': 6, '癸': 2
+    };
+
+    // 地支配数 (河图五行数: 每支对应一单一双)
+    const branchesNum = {
+      '子': [1, 6], '丑': [5, 10], '寅': [3, 8], '卯': [3, 8],
+      '辰': [5, 10], '巳': [7, 2], '午': [7, 2], '未': [5, 10],
+      '申': [9, 4], '酉': [9, 4], '戌': [5, 10], '亥': [1, 6]
+    };
 
     const p = bazi.pillars;
-    const nums = [
-      stemsNum[p.year.stem] || 1, branchesNum[p.year.branch] || 1,
-      stemsNum[p.month.stem] || 1, branchesNum[p.month.branch] || 1,
-      stemsNum[p.day.stem] || 1, branchesNum[p.day.branch] || 1,
-      stemsNum[p.hour.stem] || 1, branchesNum[p.hour.branch] || 1
-    ];
+    const odds = [];
+    const evens = [];
+    const stemDetails = [];
+    const branchDetails = [];
 
-    let tianShu = 0; // Sum of odd numbers
-    let diShu = 0;   // Sum of even numbers
-    nums.forEach(n => {
-      if (n % 2 !== 0) tianShu += n;
-      else diShu += n;
+    [p.year, p.month, p.day, p.hour].forEach(pillar => {
+      const sVal = stemsNum[pillar.stem] || 6;
+      stemDetails.push({ stem: pillar.stem, num: sVal });
+      if (sVal % 2 !== 0) odds.push(sVal);
+      else evens.push(sVal);
+
+      const bVals = branchesNum[pillar.branch] || [1, 6];
+      branchDetails.push({ branch: pillar.branch, nums: bVals });
+      bVals.forEach(bn => {
+        if (bn % 2 !== 0) odds.push(bn);
+        else evens.push(bn);
+      });
     });
 
-    // Upper Trigram (天数卦)
-    let u = tianShu;
-    while (u > 25) u -= 25;
-    let uNum = u % 8;
-    if (uNum === 0) uNum = 8;
+    const sumOdds = odds.reduce((a, b) => a + b, 0);
+    const sumEvens = evens.reduce((a, b) => a + b, 0);
 
-    // Lower Trigram (地数卦)
-    let l = diShu;
-    while (l > 30) l -= 30;
-    let lNum = l % 8;
-    if (lNum === 0) lNum = 8;
+    const rawTianShu = this.computeTianShu(sumOdds);
+    const rawDiShu = this.computeDiShu(sumEvens);
 
-    const upperTri = this.XIAN_TIAN_TRIGRAMS[uNum];
-    const lowerTri = this.XIAN_TIAN_TRIGRAMS[lNum];
-    const xianTianBinary = lowerTri.binary.concat(upperTri.binary);
+    let birthYear = 1990;
+    if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
+    else if (bazi.year) birthYear = bazi.year;
+
+    const isMale = (bazi.gender === '乾造' || bazi.gender === '男' || (bazi.input && (bazi.input.gender === '乾造' || bazi.input.gender === '男')) || true);
+    const yearStem = p.year.stem;
+    const isYangYear = ['甲', '丙', '戊', '庚', '壬'].includes(yearStem);
+    const isYangMaleOrYinFemale = (isMale && isYangYear) || (!isMale && !isYangYear);
+
+    const genderPolarityZh = isMale
+      ? (isYangYear ? '阳男 (阳年男命)' : '阴男 (阴年男命)')
+      : (isYangYear ? '阳女 (阳年女命)' : '阴女 (阴年女命)');
+    const genderPolarityEn = isMale
+      ? (isYangYear ? 'Yang Male' : 'Yin Male')
+      : (isYangYear ? 'Yang Female' : 'Yin Female');
+
+    const tianShu = this.resolveFiveNum(rawTianShu, birthYear, isMale, isYangMaleOrYinFemale);
+    const diShu = this.resolveFiveNum(rawDiShu, birthYear, isMale, isYangMaleOrYinFemale);
+
+    const tianTri = this.LUO_SHU_TRIGRAMS[tianShu] || this.LUO_SHU_TRIGRAMS[6];
+    const diTri = this.LUO_SHU_TRIGRAMS[diShu] || this.LUO_SHU_TRIGRAMS[4];
+
+    // 八卦相荡成先天卦：
+    // 阳男阴女：天数在上卦，地数在下卦
+    // 阴男阳女：天数在下卦，地数在上卦
+    const xtUpperTri = isYangMaleOrYinFemale ? tianTri : diTri;
+    const xtLowerTri = isYangMaleOrYinFemale ? diTri : tianTri;
+    const xianTianBinary = xtLowerTri.binary.concat(xtUpperTri.binary);
+
+    // 八卦相荡成后天卦（先天卦和后天卦是反的）：
+    // 阳男阴女：地数在上卦，天数在下卦
+    // 阴男阳女：天数在上卦，地数在下卦
+    const htUpperTri = isYangMaleOrYinFemale ? diTri : tianTri;
+    const htLowerTri = isYangMaleOrYinFemale ? tianTri : diTri;
+    const houTianBinary = htLowerTri.binary.concat(htUpperTri.binary);
 
     const xianTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(xianTianBinary) : null;
     const xianTianTJ = (xianTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(xianTianHex.number) : null;
+
+    const houTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(houTianBinary) : null;
+    const houTianTJ = (houTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(houTianHex.number) : null;
 
     // 阳爻管9年，阴爻管6年
     let runningAgeXT = 0;
@@ -443,16 +559,6 @@ class IChingEngine {
 
     const xianTianTotalYears = runningAgeXT;
 
-    // Derive 后天卦 (Later Heaven Hexagram)
-    let moveLine = (tianShu + diShu) % 6;
-    if (moveLine === 0) moveLine = 6;
-
-    const houTianBinary = [...xianTianBinary];
-    houTianBinary[moveLine - 1] = 1 - houTianBinary[moveLine - 1];
-
-    const houTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(houTianBinary) : null;
-    const houTianTJ = (houTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(houTianHex.number) : null;
-
     let runningAgeHT = xianTianTotalYears;
     const houTianLines = houTianBinary.map((nature, idx) => {
       const pos = idx + 1;
@@ -488,10 +594,6 @@ class IChingEngine {
     const activeStageZh = isXianTianActive ? '前半生 · 先天命卦当值' : '后半生 · 后天命卦执权';
     const activeStageEn = isXianTianActive ? 'First Half of Life · Early Heaven Natal Mandate' : 'Second Half of Life · Later Heaven Mandate';
 
-    let birthYear = 1990;
-    if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
-    else if (bazi.year) birthYear = bazi.year;
-
     const targetAge = (currentAge !== undefined && currentAge !== null)
       ? Math.max(1, currentAge)
       : Math.max(1, selectedYear - birthYear);
@@ -521,9 +623,23 @@ class IChingEngine {
       currentAge,
       selectedYear: effSelectedYear,
       targetAge,
+      sumOdds,
+      sumEvens,
+      rawTianShu,
+      rawDiShu,
       tianShu,
       diShu,
-      moveLine,
+      odds,
+      evens,
+      stemDetails,
+      branchDetails,
+      isYangMaleOrYinFemale,
+      genderPolarityZh,
+      genderPolarityEn,
+      xtUpperTri,
+      xtLowerTri,
+      htUpperTri,
+      htLowerTri,
       activeStage,
       activeStageZh,
       activeStageEn,
@@ -534,7 +650,9 @@ class IChingEngine {
         lines: xianTianLines,
         totalYears: xianTianTotalYears,
         ageSpanZh: `1~${xianTianTotalYears}岁`,
-        ageSpanEn: `Ages 1-${xianTianTotalYears}`
+        ageSpanEn: `Ages 1-${xianTianTotalYears}`,
+        upperTrigram: xtUpperTri,
+        lowerTrigram: xtLowerTri
       },
       houTian: {
         hexagram: houTianHex,
@@ -542,7 +660,9 @@ class IChingEngine {
         binary: houTianBinary,
         lines: houTianLines,
         ageSpanZh: `${xianTianTotalYears + 1}~${runningAgeHT}岁`,
-        ageSpanEn: `Ages ${xianTianTotalYears + 1}-${runningAgeHT}`
+        ageSpanEn: `Ages ${xianTianTotalYears + 1}-${runningAgeHT}`,
+        upperTrigram: htUpperTri,
+        lowerTrigram: htLowerTri
       },
       zhiNian: {
         year: selectedYear,

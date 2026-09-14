@@ -5541,7 +5541,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const htTj = ht.tianJi || {};
     const znTj = zn.tianJi || {};
 
+    const stemEnMap = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
+    const branchEnMap = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+
+    const stemStr = hexData.stemDetails ? hexData.stemDetails.map(s => `${isEn ? (stemEnMap[s.stem] || 'Stem') : s.stem}${isEn ? '->' : '→'}${s.num}`).join(' · ') : '';
+    const branchStr = hexData.branchDetails ? hexData.branchDetails.map(b => `${isEn ? (branchEnMap[b.branch] || 'Branch') : b.branch}${isEn ? '->' : '→'}[${b.nums.join(',')}]`).join(' · ') : '';
+    const oddsStr = hexData.odds ? hexData.odds.join('+') : '';
+    const evensStr = hexData.evens ? hexData.evens.join('+') : '';
+    const tianDerivationZh = hexData.sumOdds > 25
+      ? `${oddsStr} = ${hexData.sumOdds}（以25为中数：${hexData.sumOdds} - 25 = ${hexData.sumOdds - 25} → 取【${hexData.rawTianShu}】）`
+      : (hexData.sumOdds === 25 ? `${oddsStr} = 25（以25为中数：逢25取【5】）` : `${oddsStr} = ${hexData.sumOdds}（以25为中数：取【${hexData.rawTianShu}】）`);
+    const diDerivationZh = hexData.sumEvens > 30
+      ? `${evensStr} = ${hexData.sumEvens}（以30为中数：${hexData.sumEvens} - 30 = ${hexData.sumEvens - 30} → 取【${hexData.rawDiShu}】）`
+      : (hexData.sumEvens === 30 ? `${evensStr} = 30（以30为中数：逢30取【3】）` : `${evensStr} = ${hexData.sumEvens}（以30为中数：取【${hexData.rawDiShu}】）`);
+
+    const tianDerivationEn = hexData.sumOdds > 25
+      ? `${oddsStr} = ${hexData.sumOdds} (Base 25: ${hexData.sumOdds} - 25 = ${hexData.sumOdds - 25} -> takes ${hexData.rawTianShu})`
+      : (hexData.sumOdds === 25 ? `${oddsStr} = 25 (Base 25: exactly 25 takes 5)` : `${oddsStr} = ${hexData.sumOdds} (Base 25: takes ${hexData.rawTianShu})`);
+    const diDerivationEn = hexData.sumEvens > 30
+      ? `${evensStr} = ${hexData.sumEvens} (Base 30: ${hexData.sumEvens} - 30 = ${hexData.sumEvens - 30} -> takes ${hexData.rawDiShu})`
+      : (hexData.sumEvens === 30 ? `${evensStr} = 30 (Base 30: exactly 30 takes 3)` : `${evensStr} = ${hexData.sumEvens} (Base 30: takes ${hexData.rawDiShu})`);
+
+    const xtUpperName = isEn ? (hexData.xtUpperTri ? hexData.xtUpperTri.nameEn : 'Heaven') : (hexData.xtUpperTri ? hexData.xtUpperTri.nameZh : '乾');
+    const xtLowerName = isEn ? (hexData.xtLowerTri ? hexData.xtLowerTri.nameEn : 'Wind') : (hexData.xtLowerTri ? hexData.xtLowerTri.nameZh : '巽');
+    const htUpperName = isEn ? (hexData.htUpperTri ? hexData.htUpperTri.nameEn : 'Wind') : (hexData.htUpperTri ? hexData.htUpperTri.nameZh : '巽');
+    const htLowerName = isEn ? (hexData.htLowerTri ? hexData.htLowerTri.nameEn : 'Heaven') : (hexData.htLowerTri ? hexData.htLowerTri.nameZh : '乾');
+
+    const oscillationRuleZh = hexData.isYangMaleOrYinFemale
+      ? '阳男阴女：天数在上卦，地数在下卦荡成【先天卦】；地数在上卦，天数在下卦荡成【后天卦】。'
+      : '阴男阳女：地数在上卦，天数在下卦荡成【先天卦】；天数在上卦，地数在下卦荡成【后天卦】。';
+    const oscillationRuleEn = hexData.isYangMaleOrYinFemale
+      ? 'Yang Male / Yin Female: Heaven Trigram on top, Earth Trigram below for Early Heaven; Earth Trigram on top, Heaven Trigram below for Later Heaven.'
+      : 'Yin Male / Yang Female: Earth Trigram on top, Heaven Trigram below for Early Heaven; Heaven Trigram on top, Earth Trigram below for Later Heaven.';
+
     container.innerHTML = `
+      <!-- Canonical Derivation Box -->
+      <div class="p-3.5 rounded-xl bg-black/40 border border-amber-500/30 text-xs space-y-2">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-amber-400 font-bold">🧮</span>
+            <span class="text-amber-300 font-bold font-serif-sc">${isEn ? 'Four Pillars Luo Shu & He Tu Mathematical Derivation' : '四柱天纪数理推演 · 洛书与河图正统算法'}</span>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+            ${isEn ? hexData.genderPolarityEn : hexData.genderPolarityZh}
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
+          <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
+            <div class="text-gray-400 font-semibold flex items-center justify-between">
+              <span>${isEn ? 'Heaven Number (Odd Sum / Base 25):' : '天数归纳（单数和 / 逢25折算）：'}</span>
+              <span class="text-amber-400 font-bold font-mono">${hexData.sumOdds} → ${hexData.tianShu} (${xtUpperName})</span>
+            </div>
+            <p class="text-gray-300 font-mono text-[10px]">${isEn ? tianDerivationEn : tianDerivationZh}</p>
+            <p class="text-gray-400 text-[10px]">${isEn ? 'Heavenly Stems Mapping:' : '干分配数：'} <span class="text-gray-200 font-mono">${stemStr}</span></p>
+          </div>
+          <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
+            <div class="text-gray-400 font-semibold flex items-center justify-between">
+              <span>${isEn ? 'Earth Number (Even Sum / Base 30):' : '地数归纳（双数和 / 逢30折算）：'}</span>
+              <span class="text-purple-400 font-bold font-mono">${hexData.sumEvens} → ${hexData.diShu} (${xtLowerName})</span>
+            </div>
+            <p class="text-gray-300 font-mono text-[10px]">${isEn ? diDerivationEn : diDerivationZh}</p>
+            <p class="text-gray-400 text-[10px]">${isEn ? 'Earthly Branches Mapping:' : '支分配数：'} <span class="text-gray-200 font-mono">${branchStr}</span></p>
+          </div>
+        </div>
+        <div class="text-[10px] text-gray-400 bg-black/50 p-2 rounded border border-gray-800/60 flex items-start gap-2">
+          <span class="text-amber-400 font-bold">☯️</span>
+          <div>
+            <span class="text-gray-300 font-semibold">${isEn ? 'Bagua Oscillation Law: ' : '八卦相荡法则：'}</span>
+            <span>${isEn ? oscillationRuleEn : oscillationRuleZh}</span>
+            <div class="text-amber-300/90 font-mono mt-0.5">
+              ${isEn
+                ? `Early Heaven Natal: Upper [${xtUpperName}] + Lower [${xtLowerName}] -> Hexagram ${xtHex.number} · ${xtHex.nameEn} | Later Heaven Mandate: Upper [${htUpperName}] + Lower [${htLowerName}] -> Hexagram ${htHex.number} · ${htHex.nameEn}`
+                : `先天命基：上【${xtUpperName}】+ 下【${xtLowerName}】→ 第${xtHex.number}卦 · 【${xtHex.nameZh}】 ｜ 后天跃升：上【${htUpperName}】+ 下【${htLowerName}】→ 第${htHex.number}卦 · 【${htHex.nameZh}】`}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div class="p-4 sm:p-5 rounded-2xl bg-black/30 border ${hexData.activeStage === 'xianTian' ? 'border-amber-500/60 shadow-amber-950/20' : 'border-gray-800'} space-y-3.5 flex flex-col justify-between shadow-xl">
           <div class="space-y-2">

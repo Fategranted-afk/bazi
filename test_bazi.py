@@ -4313,6 +4313,49 @@ jsc_tianji_cmd = [
     if (activeCount !== 1) {
       throw new Error("Exactly 1 active line must be selected for age 35, got " + activeCount);
     }
+
+    // 3. Check Canonical Textbook Derivation Table Cases (from Master Ni Haisha Tian Ji photo)
+    var tianCases = [[8, 8], [10, 1], [20, 2], [23, 3], [25, 5], [26, 1], [35, 1], [40, 5]];
+    tianCases.forEach(function(c) {
+      var act = IChingEngine.computeTianShu(c[0]);
+      if (act !== c[1]) throw new Error("computeTianShu(" + c[0] + ") expected " + c[1] + ", got " + act);
+    });
+
+    var diCases = [[7, 7], [10, 1], [18, 8], [20, 2], [30, 3], [32, 2], [40, 1], [48, 8]];
+    diCases.forEach(function(c) {
+      var act = IChingEngine.computeDiShu(c[0]);
+      if (act !== c[1]) throw new Error("computeDiShu(" + c[0] + ") expected " + c[1] + ", got " + act);
+    });
+
+    // 4. Exact User Canonical Chart: 甲子 丁卯 庚申 庚辰 男命
+    var userChart = {
+      gender: "乾造",
+      input: { year: 1984, gender: "乾造" },
+      pillars: {
+        year: { stem: "甲", branch: "子" },
+        month: { stem: "丁", branch: "卯" },
+        day: { stem: "庚", branch: "申" },
+        hour: { stem: "庚", branch: "辰" }
+      }
+    };
+    var userRes = IChingEngine.calculateFourPillarsHexagrams(userChart, 35, 2024);
+    if (userRes.sumOdds !== 31) throw new Error("userChart sumOdds expected 31, got " + userRes.sumOdds);
+    if (userRes.rawTianShu !== 6) throw new Error("userChart rawTianShu expected 6, got " + userRes.rawTianShu);
+    if (userRes.tianShu !== 6) throw new Error("userChart tianShu expected 6, got " + userRes.tianShu);
+
+    if (userRes.sumEvens !== 34) throw new Error("userChart sumEvens expected 34, got " + userRes.sumEvens);
+    if (userRes.rawDiShu !== 4) throw new Error("userChart rawDiShu expected 4, got " + userRes.rawDiShu);
+    if (userRes.diShu !== 4) throw new Error("userChart diShu expected 4, got " + userRes.diShu);
+
+    if (!userRes.isYangMaleOrYinFemale) throw new Error("userChart must be recognized as Yang Male");
+    // XianTian must be Hexagram 44 (天风姤, upper Qian 6, lower Xun 4)
+    if (userRes.xianTian.hexagram.number !== 44) {
+      throw new Error("userChart xianTian expected Hexagram 44 (天风姤), got " + userRes.xianTian.hexagram.number);
+    }
+    // HouTian must be Hexagram 9 (风天小畜, upper Xun 4, lower Qian 6)
+    if (userRes.houTian.hexagram.number !== 9) {
+      throw new Error("userChart houTian expected Hexagram 9 (风天小畜), got " + userRes.houTian.hexagram.number);
+    }
     '''
 ]
 run_tianji = subprocess.run(jsc_tianji_cmd, capture_output=True, text=True)
