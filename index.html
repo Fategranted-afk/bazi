@@ -1421,6 +1421,79 @@
       </div>
     </section>
 
+    <!-- Hexagram Cycle & Lifelong Progression Diagram (周易六十四卦时空周期推演图 · 易数罗盘与时序演变) -->
+    <section id="ichingCycleSection" class="bg-card rounded-2xl border border-border-color shadow-2xl p-5 md:p-6 space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-700/60">
+        <div>
+          <div class="flex items-center space-x-2.5">
+            <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300" data-i18n="seal_iching_cycle">时空推演</span>
+            <h2 class="text-lg md:text-xl font-bold font-serif-sc text-amber-300" data-i18n="sec_iching_cycle_title">
+              周易六十四卦周期推演图 · 百岁岁运演化与六爻时序全景
+            </h2>
+          </div>
+          <p class="text-xs text-gray-400 mt-1" data-i18n="iching_cycle_desc">
+            先天六爻奠定前程 · 后天六爻统摄升维 · 百年值年卦阴阳律起伏动变 · 六爻时序递进哲学与吉凶能量波澜
+          </p>
+        </div>
+
+        <!-- Controls: Play/Pause, Step, Navigation -->
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Play / Pause Button -->
+          <button id="ichingCyclePlayBtn" type="button" class="px-3 py-1.5 rounded-xl bg-amber-600/30 hover:bg-amber-600/50 text-amber-300 text-xs font-bold border border-amber-500/40 transition flex items-center gap-1.5 cursor-pointer">
+            <span id="ichingCyclePlayIcon">▶️</span>
+            <span id="ichingCyclePlayText" data-i18n="btn_iching_cycle_play">连续推演</span>
+          </button>
+
+          <!-- Step Buttons -->
+          <div class="flex items-center rounded-xl bg-black/40 border border-gray-700 p-0.5">
+            <button id="ichingCyclePrevBtn" type="button" class="px-2.5 py-1 text-xs text-gray-300 hover:text-white transition rounded-lg hover:bg-gray-800 cursor-pointer" title="前一岁">◀</button>
+            <span id="ichingCycleAgeBadge" class="px-2.5 py-0.5 text-xs font-mono font-bold text-amber-400 min-w-[3.5rem] text-center">35岁</span>
+            <button id="ichingCycleNextBtn" type="button" class="px-2.5 py-1 text-xs text-gray-300 hover:text-white transition rounded-lg hover:bg-gray-800 cursor-pointer" title="后一岁">▶</button>
+          </div>
+
+          <!-- Mode / Perspective Switcher Tabs -->
+          <div class="flex items-center rounded-xl bg-black/40 border border-gray-700 p-0.5 text-xs">
+            <button id="ichingTabTimeline" type="button" class="px-3 py-1 rounded-lg font-bold transition bg-amber-500/20 text-amber-300 border border-amber-500/30 cursor-pointer" data-i18n="tab_cycle_timeline">📈 百岁岁运周期图</button>
+            <button id="ichingTabYaoStages" type="button" class="px-3 py-1 rounded-lg font-bold transition text-gray-400 hover:text-gray-200 border border-transparent cursor-pointer" data-i18n="tab_cycle_yao_stages">☯️ 六爻时序阶梯</button>
+            <button id="ichingTabCosmic" type="button" class="px-3 py-1 rounded-lg font-bold transition text-gray-400 hover:text-gray-200 border border-transparent cursor-pointer" data-i18n="tab_cycle_cosmic">🌀 辟卦阴阳消长律</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Milestone Jump Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 text-xs bg-black/30 p-2.5 rounded-xl border border-gray-800/80">
+        <span class="text-gray-400 font-mono text-[11px] flex items-center gap-1">
+          <span>🚩</span>
+          <span data-i18n="lbl_cycle_milestones">人生转折关键节点:</span>
+        </span>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" class="iching-milestone-btn px-2.5 py-1 rounded-lg bg-gray-800/70 hover:bg-amber-600/30 hover:text-amber-200 text-gray-300 text-[11px] border border-gray-700/60 transition cursor-pointer" data-age="1">
+            🌱 <span data-i18n="ms_inception">初爻发端 (1岁)</span>
+          </button>
+          <button type="button" class="iching-milestone-btn px-2.5 py-1 rounded-lg bg-gray-800/70 hover:bg-amber-600/30 hover:text-amber-200 text-gray-300 text-[11px] border border-gray-700/60 transition cursor-pointer" data-age="18">
+            🎓 <span data-i18n="ms_youth">志学及冠 (18岁)</span>
+          </button>
+          <button type="button" class="iching-milestone-btn px-2.5 py-1 rounded-lg bg-gray-800/70 hover:bg-amber-600/30 hover:text-amber-200 text-gray-300 text-[11px] border border-gray-700/60 transition cursor-pointer" data-age="30">
+            ⚔️ <span data-i18n="ms_thirties">立业破浪 (30岁)</span>
+          </button>
+          <button id="ichingBtnEpochHandover" type="button" class="iching-milestone-btn px-2.5 py-1 rounded-lg bg-purple-900/40 hover:bg-purple-800/50 text-purple-300 text-[11px] border border-purple-700/50 transition cursor-pointer">
+            🔄 <span data-i18n="ms_epoch">先后天交接</span>
+          </button>
+          <button id="ichingBtnRealAge" type="button" class="iching-milestone-btn px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-[11px] border border-amber-500/50 transition cursor-pointer">
+            📍 <span data-i18n="ms_current_age">当下虚岁</span>
+          </button>
+          <button type="button" class="iching-milestone-btn px-2.5 py-1 rounded-lg bg-gray-800/70 hover:bg-amber-600/30 hover:text-amber-200 text-gray-300 text-[11px] border border-gray-700/60 transition cursor-pointer" data-age="60">
+            👑 <span data-i18n="ms_sixty">耳顺花甲 (60岁)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Cycle Container -->
+      <div id="ichingCycleContainer" class="space-y-4">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
     <!-- Divination Interactive Control Console -->
     <div class="bg-card p-5 rounded-2xl border border-border-color shadow-xl space-y-4">
       <!-- Query / Intent Input & Select -->

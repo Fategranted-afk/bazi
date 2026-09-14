@@ -5312,6 +5312,272 @@ run_chrono = subprocess.run(jsc_chrono_cmd, capture_output=True, text=True)
 assert run_chrono.returncode == 0, f"Chrono-Navigator curvature check failed: {run_chrono.stderr}"
 print("✓ 百岁运势时空罗盘大运交界处曲率平滑重构（消除静态十神干支峰值伪影、0% 人工峰值）验证通过！")
 
-print("\n🎉 ALL 72 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 73. Validate Zhou Yi 64 Hexagrams Cycle Progression Engine & Lifelong Timeline (周易六十四卦周期推演图)
+print("\n=== 73. Validating Zhou Yi 64 Hexagrams Cycle Progression Engine & Lifelong Timeline (周易六十四卦周期推演图) ===")
+jsc_cycle_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    r'''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/chart.js");
+
+    // 1. Verify IChingEngine.calculateLifelongCycle algorithm
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var cyclePoints = IChingEngine.calculateLifelongCycle(bazi);
+    if (!Array.isArray(cyclePoints) || cyclePoints.length !== 100) {
+      throw new Error("calculateLifelongCycle must return exactly 100 points, got " + (cyclePoints ? cyclePoints.length : 'null'));
+    }
+
+    var xtCount = 0;
+    var htCount = 0;
+    var mutatedCount = 0;
+    var preservedCount = 0;
+
+    cyclePoints.forEach(function(pt, idx) {
+      if (pt.age !== idx + 1) throw new Error("Mismatched age at index " + idx + ": expected " + (idx + 1) + ", got " + pt.age);
+      if (pt.year !== 1990 + pt.age) throw new Error("Mismatched year at age " + pt.age);
+      if (typeof pt.score !== 'number' || pt.score < 30 || pt.score > 98) {
+        throw new Error("Point score out of bounds at age " + pt.age + ": " + pt.score);
+      }
+      if (!pt.annualHex || !pt.annualHex.nameZh || !pt.annualHex.nameEn) {
+        throw new Error("Missing annualHex at age " + pt.age);
+      }
+      if (!pt.annualTJ || !pt.annualTJ.liuNianZh || !pt.annualTJ.liuNianEn) {
+        throw new Error("Missing annualTJ at age " + pt.age);
+      }
+
+      if (pt.isXianTian) xtCount++;
+      else htCount++;
+
+      if (pt.isMutated) mutatedCount++;
+      else preservedCount++;
+
+      // Verify Yin-Yang law logic:
+      // like polarities repel -> isMutated = true
+      // opposite polarities attract -> isMutated = false
+      var expectedMutated = (pt.isYangYear === pt.isYangLine);
+      if (pt.isMutated !== expectedMutated) {
+        throw new Error("Yin-Yang law mismatch at age " + pt.age + ": isYangYear=" + pt.isYangYear + ", isYangLine=" + pt.isYangLine + ", isMutated=" + pt.isMutated);
+      }
+
+      // Assert zero residual Chinese in English fields
+      var enFields = [pt.epochEn, pt.annualGanzhiEn, pt.ruleInteractionEn, pt.annualHex.nameEn, pt.annualTJ.liuNianEn, pt.annualTJ.riddleEn];
+      enFields.forEach(function(str, fIdx) {
+        if (!str || str.length === 0) throw new Error("Empty English field at age " + pt.age + " field " + fIdx);
+        if (/[\u4e00-\u9fa5]/.test(str)) {
+          throw new Error("Residual Chinese in English field at age " + pt.age + " field " + fIdx + ": " + str);
+        }
+      });
+    });
+
+    if (xtCount === 0 || htCount === 0) {
+      throw new Error("Must have both Early Heaven (xtCount=" + xtCount + ") and Later Heaven (htCount=" + htCount + ") stages");
+    }
+    if (mutatedCount === 0 || preservedCount === 0) {
+      throw new Error("Must have dynamic balance of Mutated (" + mutatedCount + ") and Preserved (" + preservedCount + ") years");
+    }
+
+    // 2. Verify i18n dictionary completeness for hexagram cycle
+    var cycleKeys = [
+      'seal_iching_cycle', 'sec_iching_cycle_title', 'iching_cycle_desc',
+      'btn_iching_cycle_play', 'btn_iching_cycle_pause',
+      'tab_cycle_timeline', 'tab_cycle_yao_stages', 'tab_cycle_cosmic',
+      'lbl_cycle_milestones', 'ms_inception', 'ms_youth', 'ms_thirties',
+      'ms_epoch', 'ms_current_age', 'ms_sixty'
+    ];
+
+    cycleKeys.forEach(function(k) {
+      var zh = I18N.t(k, 'zh');
+      var en = I18N.t(k, 'en');
+      if (!zh) throw new Error("Missing zh translation for key: " + k);
+      if (!en) throw new Error("Missing en translation for key: " + k);
+      if (/[\u4e00-\u9fa5]/.test(en)) {
+        throw new Error("Residual Chinese in en translation for key: " + k + " -> " + en);
+      }
+    });
+
+    // 3. Verify simulated DOM rendering of Hexagram Cycle Progression
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) { throw new Error(m + (e ? " " + (e.stack || e) : "")); }
+    };
+
+    var elements = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: "35",
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        _children: [],
+        _listeners: {},
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        appendChild: function(c) { this._children.push(c); },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined && this[a] !== null; },
+        getBoundingClientRect: function() { return { width: 600, height: 220, left: 0, top: 0, right: 600, bottom: 220 }; },
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            fillRect: function(){}, strokeRect: function(){}, arc: function(){}, setLineDash: function(){},
+            scale: function(){}, save: function(){}, restore: function(){},
+            bezierCurveTo: function(){},
+            createLinearGradient: function() { return { addColorStop: function(){} }; }
+          };
+        }
+      };
+    }
+
+    var cycleDomIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "fourPillarsHexSection", "fourPillarsHexContainer", "fourPillarsAgeSlider", "fourPillarsAgeDisplay",
+      "ichingCycleSection", "ichingCycleContainer", "ichingCycleCanvas",
+      "ichingCyclePlayBtn", "ichingCyclePlayIcon", "ichingCyclePlayText",
+      "ichingCyclePrevBtn", "ichingCycleAgeBadge", "ichingCycleNextBtn",
+      "ichingTabTimeline", "ichingTabYaoStages", "ichingTabCosmic",
+      "ichingBtnEpochHandover", "ichingBtnRealAge"
+    ];
+    cycleDomIds.forEach(function(id) { elements[id] = makeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeEl("body"),
+      getElementById: function(id) {
+        if (!elements[id]) elements[id] = makeEl(id);
+        return elements[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+    var window = {
+      document: document,
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      IChingEngine: IChingEngine,
+      TianJiDB: TianJiDB,
+      IChingDB: IChingDB
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    if (typeof window.renderHexagramCycle !== 'function') {
+      throw new Error("window.renderHexagramCycle is not exposed");
+    }
+    if (typeof window.drawHexagramCycleChart !== 'function') {
+      throw new Error("window.drawHexagramCycleChart is not exposed");
+    }
+
+    // Test timeline tab rendering
+    window.renderHexagramCycle(bazi, 35);
+    var containerHtmlZh = elements["ichingCycleContainer"].innerHTML;
+    if (!containerHtmlZh || containerHtmlZh.length < 50) {
+      throw new Error("ichingCycleContainer rendered empty content in timeline mode");
+    }
+    if (containerHtmlZh.indexOf("ichingCycleCanvas") === -1) {
+      throw new Error("ichingCycleContainer missing ichingCycleCanvas in timeline mode");
+    }
+
+    // Test English mode rendering and assert zero residual Chinese
+    if (typeof window.setLanguage === 'function') {
+      window.setLanguage('en');
+    }
+
+    var tabs = ['ichingTabTimeline', 'ichingTabYaoStages', 'ichingTabCosmic'];
+    tabs.forEach(function(tId) {
+      if (elements[tId] && elements[tId]._listeners && elements[tId]._listeners['click']) {
+        elements[tId]._listeners['click'][0]();
+      }
+      var tabHtmlEn = elements["ichingCycleContainer"].innerHTML;
+      if (!tabHtmlEn || tabHtmlEn.length < 50) {
+        throw new Error("Tab " + tId + " rendered empty content in English mode");
+      }
+      var matches = tabHtmlEn.match(/[\u4e00-\u9fa5]+/g);
+      if (matches && matches.length > 0) {
+        throw new Error("Residual Chinese found in Tab " + tId + " (English mode): " + matches.join(', '));
+      }
+    });
+
+    // Test step buttons
+    if (elements['ichingCycleNextBtn'] && elements['ichingCycleNextBtn']._listeners['click']) {
+      elements['ichingCycleNextBtn']._listeners['click'][0]();
+    }
+    if (elements['ichingCyclePrevBtn'] && elements['ichingCyclePrevBtn']._listeners['click']) {
+      elements['ichingCyclePrevBtn']._listeners['click'][0]();
+    }
+
+    // Test play/pause toggle
+    if (elements['ichingCyclePlayBtn'] && elements['ichingCyclePlayBtn']._listeners['click']) {
+      elements['ichingCyclePlayBtn']._listeners['click'][0](); // play
+      elements['ichingCyclePlayBtn']._listeners['click'][0](); // pause
+    }
+
+    // Verify canvas draw function works without crash
+    window.drawHexagramCycleChart(cyclePoints, 35);
+    '''
+]
+run_cycle = subprocess.run(jsc_cycle_cmd, capture_output=True, text=True)
+assert run_cycle.returncode == 0, f"Hexagram cycle progression check failed: {run_cycle.stderr}"
+print("✓ 周易六十四卦周期推演图（百岁岁运轨迹/先天后天双纪元/阴阳律激荡变卦vs守本稳健/六爻时序阶梯/十二辟卦宇宙大钟与双语零残留）验证通过！")
+
+print("\n🎉 ALL 73 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 

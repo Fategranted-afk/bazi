@@ -783,6 +783,76 @@ class IChingEngine {
       }
     };
   }
+
+  /**
+   * Calculates complete 100-year hexagram cycle progression
+   * Returns array of 100 annual transit points with epoch, governing line,
+   * annual hexagram, Yin-Yang law interaction, and energy score.
+   */
+  static calculateLifelongCycle(bazi) {
+    if (!bazi || !bazi.pillars) return [];
+    let birthYear = 1990;
+    if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
+    else if (bazi.birthYear) birthYear = bazi.birthYear;
+    else if (bazi.year) birthYear = bazi.year;
+
+    const baseFourHex = this.calculateFourPillarsHexagrams(bazi, 1, birthYear + 1);
+    if (!baseFourHex) return [];
+
+    const xtTotalYears = baseFourHex.xianTian.totalYears;
+    const xtHex = baseFourHex.xianTian.hexagram;
+    const htHex = baseFourHex.houTian.hexagram;
+
+    const highAuspicious = [1, 11, 14, 15, 19, 24, 32, 42, 46, 50, 55, 58];
+    const midAuspicious = [2, 8, 17, 20, 26, 31, 34, 48, 57, 59];
+    const crucible = [3, 12, 18, 29, 36, 39, 47, 23];
+
+    const points = [];
+    for (let age = 1; age <= 100; age++) {
+      const yr = birthYear + age;
+      const itemHex = this.calculateFourPillarsHexagrams(bazi, age, yr);
+      const zn = itemHex.zhiNian;
+      const isXianTian = (age <= xtTotalYears);
+
+      let baseScore = 65;
+      const hexNum = zn.hexagram ? zn.hexagram.number : 1;
+      if (highAuspicious.includes(hexNum)) baseScore = 88;
+      else if (midAuspicious.includes(hexNum)) baseScore = 75;
+      else if (crucible.includes(hexNum)) baseScore = 48;
+      else baseScore = 62;
+
+      const posBonus = (zn.activeLinePos === 5) ? 6 : (zn.activeLinePos === 2 ? 4 : 0);
+      const mutationModifier = zn.isMutated ? 3 : 0;
+      const score = Math.max(30, Math.min(98, baseScore + posBonus + mutationModifier));
+
+      points.push({
+        age,
+        year: yr,
+        isXianTian,
+        epochZh: isXianTian ? '前半生 · 先天命基' : '后半生 · 后天跃升',
+        epochEn: isXianTian ? 'Early Heaven Foundation' : 'Later Heaven Ascension',
+        governingHex: isXianTian ? xtHex : htHex,
+        activeLinePos: zn.activeLinePos,
+        activeLine: zn.activeLine,
+        annualStem: zn.annualStem,
+        annualStemEn: zn.annualStemEn,
+        annualBranch: zn.annualBranch,
+        annualBranchEn: zn.annualBranchEn,
+        annualGanzhi: zn.annualGanzhi,
+        annualGanzhiZh: zn.annualGanzhiZh,
+        annualGanzhiEn: zn.annualGanzhiEn,
+        annualHex: zn.hexagram,
+        annualTJ: zn.tianJi,
+        isMutated: zn.isMutated,
+        isYangYear: zn.isYangYear,
+        isYangLine: zn.isYangLine,
+        ruleInteractionZh: zn.ruleInteractionZh,
+        ruleInteractionEn: zn.ruleInteractionEn,
+        score
+      });
+    }
+    return points;
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {
