@@ -6414,6 +6414,7 @@ for cid in required_career_ids:
     assert f'id="{cid}"' in career_html, f"Missing id #{cid} in career.html"
 
 assert "data/tengods.js" in career_html, "Missing data/tengods.js in career.html"
+assert "js/portrait-engine.js" in career_html, "Missing js/portrait-engine.js in career.html"
 assert "js/career-engine.js" in career_html, "Missing js/career-engine.js in career.html"
 
 # Part B: Core Engines & Database Integrity in JSC
@@ -6438,6 +6439,7 @@ jsc_career_core_cmd = [
     load("js/bazi-engine.js");
     load("js/luck-engine.js");
     load("js/iching-engine.js");
+    load("js/portrait-engine.js");
     load("js/career-engine.js");
 
     // 1. Validate TenGodsDB
@@ -6543,6 +6545,47 @@ jsc_career_core_cmd = [
           if (!v || /[\u4e00-\u9fa5]/.test(v)) throw new Error("Residual Chinese in monthlyRoadmap: " + v);
         });
       });
+    });
+
+    // Deep assertions on Chart 1 (1990-06-20)
+    var bazi1 = testCharts[0];
+    var luck1 = LuckEngine.calculateLuck(bazi1, 2026);
+    var res1 = CareerEngine.generateCareerReport(bazi1, luck1, 2026);
+    if (res1.timingTrajectory.annualHex.number !== 7) {
+      throw new Error("Expected Annual Hexagram 7 (地水师) for 1990 chart, got " + res1.timingTrajectory.annualHex.number);
+    }
+    if (res1.timingTrajectory.annualHex.character !== '䷆') {
+      throw new Error("Expected Hexagram character ䷆, got " + res1.timingTrajectory.annualHex.character);
+    }
+    if (res1.timingTrajectory.decadeGanzhi !== '丙戌' || res1.timingTrajectory.decadeGod !== '比肩') {
+      throw new Error("Unexpected decade transit: " + res1.timingTrajectory.decadeGanzhi + " " + res1.timingTrajectory.decadeGod);
+    }
+    if (res1.timingTrajectory.annualGanzhi !== '丙午' || res1.timingTrajectory.annualGod !== '比肩') {
+      throw new Error("Unexpected annual transit: " + res1.timingTrajectory.annualGanzhi + " " + res1.timingTrajectory.annualGod);
+    }
+
+    // Verify 12 months have distinct Ten Gods
+    var distinctGods = {};
+    res1.timingTrajectory.monthlyRoadmap.forEach(function(m) { distinctGods[m.god] = true; });
+    if (Object.keys(distinctGods).length <= 1) {
+      throw new Error("Expected multiple distinct gods in monthly roadmap, got: " + Object.keys(distinctGods).join(","));
+    }
+
+    // Verify weak chart is evaluated with isStrong: false
+    var baziWeak = BaZiEngine.calculate({ year: 1991, month: 7, day: 25, hour: 12, minute: 0, gender: "坤造" });
+    var luckWeak = LuckEngine.calculateLuck(baziWeak, 2026);
+    var resWeak = CareerEngine.generateCareerReport(baziWeak, luckWeak, 2026);
+    if (resWeak.summary.isStrong !== false) {
+      throw new Error("Expected weak chart isStrong to be false, got: " + resWeak.summary.isStrong);
+    }
+
+    // Verify ZiPing search English parity
+    var zpSearch = ZiPingZhenQuanDB.search("Direct Officer");
+    if (zpSearch.length === 0) throw new Error("Search Direct Officer in ZiPing failed");
+    zpSearch.forEach(function(r) {
+      if (!r.titleEn || /[\u4e00-\u9fa5]/.test(r.titleEn)) throw new Error("Residual Chinese in ZiPing search titleEn: " + r.titleEn);
+      if (!r.sourceEn || /[\u4e00-\u9fa5]/.test(r.sourceEn)) throw new Error("Residual Chinese in ZiPing search sourceEn: " + r.sourceEn);
+      if (!r.detailEn || /[\u4e00-\u9fa5]/.test(r.detailEn)) throw new Error("Residual Chinese in ZiPing search detailEn: " + r.detailEn);
     });
 
     if (CareerEngine.getGanzhiEn("庚寅") !== "Geng-Yin") throw new Error("Ganzhi conversion failed");

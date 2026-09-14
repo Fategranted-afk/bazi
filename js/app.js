@@ -3642,36 +3642,36 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-700/40">
             <div class="flex items-center space-x-2">
               <span class="chinese-seal">${isEn ? 'Zi Ping Zhen Quan' : '子平真诠'}</span>
-              <h3 class="text-lg font-bold text-purple-400 font-serif-sc">${zpPattern.name} · ${isEn ? 'Success & Remedies' : '成败救应'}</h3>
+              <h3 class="text-lg font-bold text-purple-400 font-serif-sc">${isEn ? (zpPattern.nameEn || zpPattern.name) : zpPattern.name} · ${isEn ? 'Success & Remedies' : '成败救应'}</h3>
             </div>
             <span class="text-xs text-gray-400">${isEn ? 'Qing Dynasty · Shen Xiaozhan' : '清·沈孝瞻著'}</span>
           </div>
 
           <div class="p-3 bg-purple-950/20 border-l-4 border-purple-500 rounded-r">
             <p class="text-xs text-purple-300 font-medium mb-1">${isEn ? 'Shen Xiaozhan Original Principle:' : '沈孝瞻原著定论：'}</p>
-            <p class="text-sm font-serif-sc text-purple-100 font-medium leading-relaxed">“${zpPattern.quote}”</p>
+            <p class="text-sm font-serif-sc text-purple-100 font-medium leading-relaxed">“${isEn ? (zpPattern.quoteEn || zpPattern.quote) : zpPattern.quote}”</p>
           </div>
 
           <div class="space-y-2.5 text-xs text-gray-300 leading-relaxed">
             <div class="p-3 bg-black/30 rounded-lg border border-gray-800">
               <span class="text-amber-400 font-bold block mb-1">${isEn ? '💡 Pattern Essence:' : '💡 格局本义：'}</span>
-              <p>${zpPattern.meaning}</p>
+              <p>${isEn ? ((zpPattern.vernacular && zpPattern.vernacular.translationEn) || zpPattern.meaning) : zpPattern.meaning}</p>
             </div>
             <div class="p-3 bg-black/30 rounded-lg border border-emerald-900/30">
               <span class="text-emerald-400 font-bold block mb-1">${isEn ? '✓ Formation Conditions (Factors for Great Success):' : '✓ 成格条件（何为大贵）：'}</span>
-              <p>${zpPattern.conditions}</p>
+              <p>${isEn ? (zpPattern.conditionsEn || zpPattern.conditions) : zpPattern.conditions}</p>
             </div>
             <div class="p-3 bg-black/30 rounded-lg border border-rose-900/30">
               <span class="text-rose-400 font-bold block mb-1">${isEn ? '✗ Breaking Defects (Factors for Failure):' : '✗ 破格之患（何为大凶）：'}</span>
-              <p>${zpPattern.defects}</p>
+              <p>${isEn ? (zpPattern.defectsEn || zpPattern.defects) : zpPattern.defects}</p>
             </div>
             <div class="p-3 bg-black/30 rounded-lg border border-indigo-900/30">
               <span class="text-indigo-400 font-bold block mb-1">${isEn ? '🛡️ Remedies (Turning Failure into Success):' : '🛡️ 救应法门（化败为成）：'}</span>
-              <p>${zpPattern.remedies}</p>
+              <p>${isEn ? (zpPattern.remediesEn || zpPattern.remedies) : zpPattern.remedies}</p>
             </div>
             <div class="p-3 bg-black/30 rounded-lg border border-gray-800">
               <span class="text-gray-400 font-bold block mb-1">${isEn ? '🎯 Practical Luck Cycle Rules:' : '🎯 实战行运法则：'}</span>
-              <p>${zpPattern.usage}</p>
+              <p>${isEn ? (zpPattern.usageEn || zpPattern.usage) : zpPattern.usage}</p>
             </div>
             ${zpPattern.vernacular ? `
               <div class="p-3.5 bg-purple-950/20 rounded-xl border border-purple-500/30 space-y-2.5 mt-2">
@@ -7776,9 +7776,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnJumpToHomeFromFengShui) {
     btnJumpToHomeFromFengShui.addEventListener('click', () => switchPrimaryView('view-home'));
   }
-  const portalBtnCareer = document.getElementById('portalBtnCareer');
+  const portalBtnCareer = document.getElementById('portalBtnCareer') || document.getElementById('btnPortalCareer');
   if (portalBtnCareer) {
     portalBtnCareer.addEventListener('click', () => switchPrimaryView('view-career'));
+  }
+  const btnPortalCareer = document.getElementById('btnPortalCareer');
+  if (btnPortalCareer && btnPortalCareer !== portalBtnCareer) {
+    btnPortalCareer.addEventListener('click', () => switchPrimaryView('view-career'));
   }
   const btnJumpToHomeFromCareer = document.getElementById('btnJumpToHomeFromCareer');
   if (btnJumpToHomeFromCareer) {

@@ -160,11 +160,12 @@
   <script src="js/bazi-engine.js"></script>
   <script src="js/luck-engine.js"></script>
   <script src="js/iching-engine.js"></script>
+  <script src="js/portrait-engine.js"></script>
   <script src="js/career-engine.js"></script>
 
   <script>
     (function() {
-      let currentLang = "zh";
+      let currentLang = (typeof localStorage !== "undefined" && localStorage.getItem("bazi_lang")) ? localStorage.getItem("bazi_lang") : "zh";
 
       function getChartData() {
         try {
@@ -244,7 +245,8 @@
         if (!report) return;
 
         // Top Badges
-        const topArch = report.workplaceArchetypes[0];
+        const topArch = (report.workplaceArchetypes && report.workplaceArchetypes[0]) || {};
+        const hex = (report.timingTrajectory && report.timingTrajectory.annualHex) || {};
         document.getElementById("careerQuickBadges").innerHTML = `
           <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
             ${isEn ? `Day Master: ${report.summary.dmEn}` : `元神日主: ${report.summary.dm}（${report.summary.dmEl}）`}
@@ -253,10 +255,10 @@
             ${isEn ? report.summary.primaryPatternEn : report.summary.primaryPattern}
           </span>
           <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
-            ${isEn ? `Primary Calling: ${topArch.nameEn.split('(')[0]}` : `首要天命: ${topArch.nameZh.split('(')[0]}`}
+            ${isEn ? `Primary Calling: ${(topArch.nameEn || '').split('(')[0]}` : `首要天命: ${(topArch.nameZh || '').split('(')[0]}`}
           </span>
           <span class="px-2.5 py-1 rounded-full border border-blue-500/40 bg-blue-950/60 text-blue-300 font-bold">
-            ${isEn ? `Transit Hexagram: #${report.timingTrajectory.annualHex.number} ${report.timingTrajectory.annualHex.nameEn}` : `值年卦: 第${report.timingTrajectory.annualHex.number}卦 · ${report.timingTrajectory.annualHex.nameZh}`}
+            ${isEn ? `Transit Hexagram: #${hex.number || ''} ${hex.nameEn || ''}` : `值年卦: 第${hex.number || ''}卦 · ${hex.nameZh || ''}`}
           </span>
         `;
 
@@ -434,10 +436,12 @@
 
       document.getElementById("careerLangZhBtn").addEventListener("click", () => {
         currentLang = "zh";
+        try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "zh"); } catch(e){}
         render();
       });
       document.getElementById("careerLangEnBtn").addEventListener("click", () => {
         currentLang = "en";
+        try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "en"); } catch(e){}
         render();
       });
 

@@ -236,16 +236,24 @@ class ZiPingZhenQuanDB {
         (p.nameEn && p.nameEn.toLowerCase().includes(keyword)) ||
         p.meaning.includes(keyword) ||
         p.conditions.includes(keyword) ||
+        (p.conditionsEn && p.conditionsEn.toLowerCase().includes(keyword)) ||
         p.defects.includes(keyword) ||
+        (p.defectsEn && p.defectsEn.toLowerCase().includes(keyword)) ||
         p.remedies.includes(keyword) ||
+        (p.remediesEn && p.remediesEn.toLowerCase().includes(keyword)) ||
         p.usage.includes(keyword) ||
-        vernStr.includes(keyword)
+        (p.usageEn && p.usageEn.toLowerCase().includes(keyword)) ||
+        vernStr.toLowerCase().includes(keyword)
       ) {
         results.push({
           source: '《子平真诠》· 格局论',
+          sourceEn: 'Zi Ping Zhen Quan (Pattern Doctrine)',
           title: `${p.name}（成败与救应）`,
+          titleEn: `${p.nameEn || p.name} (Formation & Remedies)`,
           content: p.quote,
-          detail: `【成格】${p.conditions} 【救应】${p.remedies} | ${vernStr.substring(0, 80)}...`
+          contentEn: p.quoteEn || p.quote,
+          detail: `【成格】${p.conditions} 【救应】${p.remedies} | ${vernStr.substring(0, 80)}...`,
+          detailEn: `[Formation] ${p.conditionsEn || p.conditions} [Remedies] ${p.remediesEn || p.remedies} | ${(p.vernacular && p.vernacular.translationEn) || ''}`
         });
       }
     }

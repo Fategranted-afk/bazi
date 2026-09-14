@@ -10,6 +10,32 @@
  */
 
 class CareerEngine {
+  static getTenGod(dm, target) {
+    if (!dm || !target) return '正官';
+    const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const STEM_ELEMENTS = {
+      '甲': '木', '乙': '木', '丙': '火', '丁': '火', '戊': '土',
+      '己': '土', '庚': '金', '辛': '金', '壬': '水', '癸': '水'
+    };
+    const STEM_YIN_YANG = {
+      '甲': true, '乙': false, '丙': true, '丁': false, '戊': true,
+      '己': false, '庚': true, '辛': false, '壬': true, '癸': false
+    };
+    const GENERATES = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+    const CONTROLS = { '木': '土', '土': '水', '水': '火', '火': '金', '金': '木' };
+
+    const dmEl = STEM_ELEMENTS[dm];
+    const tEl = STEM_ELEMENTS[target];
+    if (!dmEl || !tEl) return '正官';
+    const sameYY = (STEM_YIN_YANG[dm] === STEM_YIN_YANG[target]);
+    if (dmEl === tEl) return sameYY ? '比肩' : '劫财';
+    if (GENERATES[dmEl] === tEl) return sameYY ? '食神' : '伤官';
+    if (CONTROLS[dmEl] === tEl) return sameYY ? '偏财' : '正财';
+    if (CONTROLS[tEl] === dmEl) return sameYY ? '七杀' : '正官';
+    if (GENERATES[tEl] === dmEl) return sameYY ? '偏印' : '正印';
+    return '正官';
+  }
+
   static getGanzhiEn(gz) {
     if (!gz || typeof gz !== 'string' || gz.length < 2) return gz || '';
     const STEM_NAMES = {
@@ -42,14 +68,27 @@ class CareerEngine {
     // Compute or extract Luck
     let effLuck = luck;
     if (!effLuck && typeof LuckEngine !== 'undefined' && typeof LuckEngine.calculateLuck === 'function') {
-      effLuck = LuckEngine.calculateLuck(bazi, effYear, targetMonthBranch);
+      try {
+        effLuck = LuckEngine.calculateLuck(bazi, effYear, targetMonthBranch);
+      } catch (e) {
+        effLuck = null;
+      }
     }
 
     // Extract Day Master & basic traits
-    const dm = bazi.dayMaster || bazi.pillars.day.stem;
-    const dmEn = (typeof I18N !== 'undefined' && typeof I18N.getStem === 'function') ? I18N.getStem(dm, 'en').split(' ')[0] : dm;
-    const dayPillar = (bazi.pillars.day.text) || `${dm}子`;
-    const monthBranch = bazi.pillars.month.branch;
+    const dm = bazi.dayMaster || (bazi.pillars.day && bazi.pillars.day.stem) || '甲';
+    const STEM_EN_MAP = {
+      '甲': 'Jia (Yang Wood)', '乙': 'Yi (Yin Wood)',
+      '丙': 'Bing (Yang Fire)', '丁': 'Ding (Yin Fire)',
+      '戊': 'Wu (Yang Earth)', '己': 'Ji (Yin Earth)',
+      '庚': 'Geng (Yang Metal)', '辛': 'Xin (Yin Metal)',
+      '壬': 'Ren (Yang Water)', '癸': 'Gui (Yin Water)'
+    };
+    const dmEn = (typeof I18N !== 'undefined' && typeof I18N.getStem === 'function')
+      ? I18N.getStem(dm, 'en').split(' ')[0]
+      : (STEM_EN_MAP[dm] ? STEM_EN_MAP[dm].split(' ')[0] : dm);
+    const dayPillar = (bazi.pillars.day && bazi.pillars.day.text) || `${dm}子`;
+    const monthBranch = (bazi.pillars.month && bazi.pillars.month.branch) || '寅';
 
     // Day Master Element
     const STEM_ELEMENTS = {
@@ -58,18 +97,40 @@ class CareerEngine {
     };
     const dmEl = STEM_ELEMENTS[dm] || '木';
 
-    // Day Master Vigor
-    const isStrong = (typeof isDayMasterStrong === 'function')
-      ? isDayMasterStrong(bazi)
-      : (bazi.vigor && bazi.vigor.isStrong) || true;
+    // Day Master Vigor (deep calibration)
+    let isStrong = true;
+    if (typeof LuckEngine !== 'undefined' && typeof LuckEngine.isDayMasterStrong === 'function') {
+      isStrong = LuckEngine.isDayMasterStrong(bazi);
+    } else if (typeof isDayMasterStrong === 'function') {
+      isStrong = isDayMasterStrong(bazi);
+    } else if (bazi.zipingScore && typeof bazi.zipingScore.totalScore === 'number') {
+      isStrong = bazi.zipingScore.totalScore >= 50;
+    }
 
     // Pattern & Ten Gods Evaluation
+    const PATTERN_EN_MAP = {
+      '正官格': 'Direct Officer Pattern',
+      '七杀格': 'Seven Killings Pattern',
+      '偏官格': 'Seven Killings Pattern',
+      '正财格': 'Direct Wealth Pattern',
+      '偏财格': 'Indirect Wealth Pattern',
+      '正印格': 'Direct Resource Pattern',
+      '偏印格': 'Indirect Resource Pattern',
+      '枭神格': 'Indirect Resource (Owl) Pattern',
+      '食神格': 'Eating God Pattern',
+      '伤官格': 'Hurting Officer Pattern',
+      '建禄格': 'Established Lu Pattern',
+      '建禄月劫格': 'Established Lu & Month Rob Wealth Pattern',
+      '月劫格': 'Month Rob Wealth Pattern',
+      '阳刃格': 'Yang Blade Pattern',
+      '羊刃格': 'Yang Blade Pattern'
+    };
     const primaryPattern = (bazi.pattern && bazi.pattern.name) || (bazi.dominantPattern && bazi.dominantPattern.name) || '正官格';
     const primaryPatternEn = (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.getPatternEn === 'function')
       ? PortraitEngine.getPatternEn(primaryPattern)
-      : 'Direct Officer Pattern';
+      : (PATTERN_EN_MAP[primaryPattern] || 'Direct Officer Pattern');
 
-    // Count ten gods in chart
+    // Count ten gods in chart (both stems and earthly branch hidden stems)
     const godCounts = {
       officer: 0,
       killings: 0,
@@ -83,22 +144,31 @@ class CareerEngine {
       robWealth: 0
     };
 
+    const countGod = (g) => {
+      if (!g || typeof g !== 'string') return;
+      if (g.includes('正官')) godCounts.officer++;
+      else if (g.includes('七杀') || g.includes('偏官')) godCounts.killings++;
+      else if (g.includes('正财')) godCounts.directWealth++;
+      else if (g.includes('偏财')) godCounts.indirectWealth++;
+      else if (g.includes('正印')) godCounts.directResource++;
+      else if (g.includes('偏印') || g.includes('枭')) godCounts.indirectResource++;
+      else if (g.includes('食神')) godCounts.eatingGod++;
+      else if (g.includes('伤官')) godCounts.hurtingOfficer++;
+      else if (g.includes('比肩')) godCounts.friend++;
+      else if (g.includes('劫财')) godCounts.robWealth++;
+    };
+
     ['year', 'month', 'day', 'hour'].forEach(pKey => {
       const p = bazi.pillars[pKey];
       if (!p) return;
-      [p.tenGod, p.branchGod].forEach(g => {
-        if (!g) return;
-        if (g.includes('正官')) godCounts.officer++;
-        if (g.includes('七杀') || g.includes('偏官')) godCounts.killings++;
-        if (g.includes('正财')) godCounts.directWealth++;
-        if (g.includes('偏财')) godCounts.indirectWealth++;
-        if (g.includes('正印')) godCounts.directResource++;
-        if (g.includes('偏印') || g.includes('枭')) godCounts.indirectResource++;
-        if (g.includes('食神')) godCounts.eatingGod++;
-        if (g.includes('伤官')) godCounts.hurtingOfficer++;
-        if (g.includes('比肩')) godCounts.friend++;
-        if (g.includes('劫财')) godCounts.robWealth++;
-      });
+      if (pKey !== 'day' && p.stemGod) {
+        countGod(p.stemGod);
+      }
+      if (Array.isArray(p.hidden)) {
+        p.hidden.forEach(h => {
+          if (h && h.god) countGod(h.god);
+        });
+      }
     });
 
     // 1. Module: Managing Up & Superiors Interaction (向上管理与职场沟通)
@@ -308,6 +378,7 @@ class CareerEngine {
    * 衡量四大生态位：文职、武职、技术人员、高管
    */
   static computeWorkplaceArchetypes(dm, dmEn, isStrong, godCounts, pattern, patternEn, bazi) {
+    pattern = String(pattern || '');
     // Scores for 4 archetypes: 0 to 100
     // 1. Civil (文职: 行政运营、法规政策、合规风控、教研智库)
     let civilScore = 55;
@@ -437,47 +508,47 @@ class CareerEngine {
    * 4. 时空财运与事业窗口推演 (Dynamic Timing of Career & Wealth)
    */
   static computeTimingTrajectory(bazi, luck, effYear, realAge, dm, isStrong, godCounts) {
-    // Current Decade
-    const activeDecade = (luck && luck.activeDecade) || {
-      ganzhi: '庚寅',
-      gan: '庚',
-      zhi: '寅',
-      tenGod: '偏官',
-      tenGodEn: 'Seven Killings',
-      yearStart: 2020,
-      yearEnd: 2029
+    const GOD_EN_MAP = {
+      '比肩': 'Friend', '劫财': 'Rob Wealth', '食神': 'Eating God', '伤官': 'Hurting Officer',
+      '偏财': 'Indirect Wealth', '正财': 'Direct Wealth', '七杀': 'Seven Killings', '偏官': 'Seven Killings',
+      '正官': 'Direct Officer', '偏印': 'Indirect Resource', '枭神': 'Indirect Resource', '正印': 'Direct Resource'
     };
-    const decadeGanzhi = activeDecade.ganzhi || '庚寅';
-    const decadeGod = activeDecade.tenGod || '偏官';
-    const decadeGodEn = activeDecade.tenGodEn || 'Seven Killings';
 
-    // Current Annual
-    const activeAnnual = (luck && luck.activeAnnual) || {
-      year: effYear,
-      ganzhi: '丙午',
-      gan: '丙',
-      zhi: '午',
-      tenGod: '食神',
-      tenGodEn: 'Eating God'
-    };
-    const annualGanzhi = activeAnnual.ganzhi || '丙午';
-    const annualGod = activeAnnual.tenGod || '食神';
-    const annualGodEn = activeAnnual.tenGodEn || 'Eating God';
+    // Current Decade (read actual text and stemGod from LuckEngine)
+    const activeDecade = (luck && luck.activeDecade) || null;
+    const decadeGanzhi = (activeDecade && (activeDecade.text || activeDecade.ganzhi)) || '庚寅';
+    const decadeGod = (activeDecade && (activeDecade.stemGod || activeDecade.tenGod)) || CareerEngine.getTenGod(dm, decadeGanzhi[0]);
+    const decadeGodEn = (typeof I18N !== 'undefined' && typeof I18N.getGod === 'function')
+      ? I18N.getGod(decadeGod, 'en')
+      : (activeDecade && (activeDecade.stemGodEn || activeDecade.tenGodEn)) || GOD_EN_MAP[decadeGod] || 'Seven Killings';
 
-    // Zhou Yi Hexagram Calculation
+    // Current Annual (read actual text and stemGod from LuckEngine)
+    const activeAnnual = (luck && luck.activeAnnual) || null;
+    const annualGanzhi = (activeAnnual && (activeAnnual.text || activeAnnual.ganzhi)) || '丙午';
+    const annualGod = (activeAnnual && (activeAnnual.stemGod || activeAnnual.tenGod)) || CareerEngine.getTenGod(dm, annualGanzhi[0]);
+    const annualGodEn = (typeof I18N !== 'undefined' && typeof I18N.getGod === 'function')
+      ? I18N.getGod(annualGod, 'en')
+      : (activeAnnual && (activeAnnual.stemGodEn || activeAnnual.tenGodEn)) || GOD_EN_MAP[annualGod] || 'Eating God';
+
+    // Zhou Yi Hexagram Calculation (read real annual hexagram and tianJi)
     let annualHex = null;
     if (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
       try {
         const hexRes = IChingEngine.calculateFourPillarsHexagrams(bazi, realAge, effYear);
-        if (hexRes && hexRes.zhiNianHex) {
+        const zn = hexRes && (hexRes.zhiNian || hexRes.zhiNianHex);
+        const h = zn && (zn.hexagram || zn);
+        const tj = zn && (zn.tianJi || hexRes.zhiNianTJ);
+        if (h && h.nameZh) {
+          const hexNum = h.number || 1;
+          const charSym = (hexNum >= 1 && hexNum <= 64) ? String.fromCodePoint(0x4DC0 + hexNum - 1) : '䷀';
           annualHex = {
-            number: hexRes.zhiNianHex.number,
-            nameZh: hexRes.zhiNianHex.nameZh,
-            nameEn: hexRes.zhiNianHex.nameEn,
-            pinyin: hexRes.zhiNianHex.pinyin,
-            character: hexRes.zhiNianHex.character,
-            decisionZh: hexRes.zhiNianHex.decisionZh || (hexRes.zhiNianTJ && hexRes.zhiNianTJ.oracleFocusZh) || '当以中正之德守常蓄力，顺应天道节律，进退有据。',
-            decisionEn: hexRes.zhiNianHex.decisionEn || (hexRes.zhiNianTJ && hexRes.zhiNianTJ.oracleFocusEn) || 'Anchor to moral equilibrium and strategic patience, attuning bold action to cosmic timing.'
+            number: hexNum,
+            nameZh: h.nameZh,
+            nameEn: h.nameEn || 'The Creative',
+            pinyin: h.pinyin || '',
+            character: charSym,
+            decisionZh: (tj && tj.liuNianZh) || h.judgmentZh || '当以中正之德守常蓄力，顺应天道节律，进退有据。',
+            decisionEn: (tj && tj.liuNianEn) || h.judgmentEn || 'Anchor to moral equilibrium and strategic patience, attuning bold action to cosmic timing.'
           };
         }
       } catch (e) {}
@@ -505,17 +576,37 @@ class CareerEngine {
       directWealthScore += 5;
       indirectWealthScore -= 10;
     }
-    if (annualGod.includes('财')) {
+
+    const dGod = String(decadeGod || '');
+    const aGod = String(annualGod || '');
+
+    if (dGod.includes('财')) {
+      directWealthScore += 8;
+      indirectWealthScore += 10;
+    } else if (dGod.includes('劫')) {
+      directWealthScore -= 4;
+      indirectWealthScore -= 10;
+    }
+
+    if (aGod.includes('财')) {
       directWealthScore += 10;
       indirectWealthScore += 12;
+    } else if (aGod.includes('劫')) {
+      directWealthScore -= 5;
+      indirectWealthScore -= 12;
     }
-    if (annualGod.includes('官') || annualGod.includes('印')) {
-      directWealthScore += 14;
+    if (aGod.includes('官') || aGod.includes('印')) {
+      directWealthScore += 12;
     }
-    if (annualGod.includes('食') || annualGod.includes('伤')) {
-      directWealthScore += 8;
-      indirectWealthScore += 14;
+    if (aGod.includes('食') || aGod.includes('伤')) {
+      directWealthScore += 6;
+      indirectWealthScore += 12;
     }
+
+    if (godCounts && godCounts.directWealth > 0) directWealthScore += Math.min(8, godCounts.directWealth * 3);
+    if (godCounts && godCounts.indirectWealth > 0) indirectWealthScore += Math.min(8, godCounts.indirectWealth * 3);
+    if (godCounts && godCounts.robWealth >= 2) indirectWealthScore -= 8;
+
     directWealthScore = Math.max(45, Math.min(96, directWealthScore));
     indirectWealthScore = Math.max(35, Math.min(95, indirectWealthScore));
 
@@ -523,12 +614,12 @@ class CareerEngine {
     const annualGanzhiEn = CareerEngine.getGanzhiEn(annualGanzhi);
 
     const directWealthAnalysisZh = directWealthScore >= 75
-      ? `【正财（主业薪酬与升职运势：${directWealthScore}分 · 稳健高光】大运【${decadeGanzhi}】与流年【${annualGanzhi}】形成主业护持，主业岗位稳定性高，是向领导层申请绩效晋级、加薪谈判的黄金窗口期。踏实交付即能换来确定性的现金流增长。`
-      : `【正财（主业薪酬与升职运势：${directWealthScore}分 · 守成固本】当前岁运主业面临结构性考核调整或组织重组阵痛。建议收起锋芒，不争一时职位虚名，扎实守住岗位基本盘，避免盲目裸辞。`;
+      ? `【正财（主业薪酬与升职运势：${directWealthScore}分 · 稳健高光】大运【${decadeGanzhi}】（${decadeGod}）与流年【${annualGanzhi}】（${annualGod}）形成主业护持，主业岗位稳定性高，是向领导层申请绩效晋级、加薪谈判的黄金窗口期。踏实交付即能换来确定性的现金流增长。`
+      : `【正财（主业薪酬与升职运势：${directWealthScore}分 · 守成固本】当前大运【${decadeGanzhi}】与流年【${annualGanzhi}】主业面临结构性考核调整或组织重组阵痛。建议收起锋芒，不争一时职位虚名，扎实守住岗位基本盘，避免盲目裸辞。`;
 
     const directWealthAnalysisEn = directWealthScore >= 75
-      ? `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Strong High-Growth Window]: Decade [${decadeGanzhiEn}] and Annual Transit [${annualGanzhiEn}] consolidate career stability. A prime strategic window to negotiate grade advancement and merit compensation increases based on measurable deliveries.`
-      : `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Defensive Consolidation]: The current transit faces institutional restructuring or revised KPI scrutiny. Maintain steady discipline, preserve your core post, and resist impulsive job switches.`;
+      ? `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Strong High-Growth Window]: Decade [${decadeGanzhiEn}] (${decadeGodEn}) and Annual Transit [${annualGanzhiEn}] (${annualGodEn}) consolidate career stability. A prime strategic window to negotiate grade advancement and merit compensation increases based on measurable deliveries.`
+      : `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Defensive Consolidation]: Decade [${decadeGanzhiEn}] and Annual Transit [${annualGanzhiEn}] face institutional restructuring or revised KPI scrutiny. Maintain steady discipline, preserve your core post, and resist impulsive job switches.`;
 
     const indirectWealthAnalysisZh = indirectWealthScore >= 75
       ? `【偏财（副业孵化与投资红利：${indirectWealthScore}分 · 适度进取】偏财气机生旺，具备开展副业咨询、知识IP变现、技术出海或稳健股权投资的契机。可投入不超过闲置资金30%的轻资产试水，善用个人专业信息差获利。`
@@ -601,10 +692,8 @@ class CareerEngine {
       const s = STEMS[(firstStemIdx + i) % 10];
       const ganzhi = s + b;
 
-      // Ten god of month stem relative to Day Master
-      const god = (typeof BaZiEngine !== 'undefined' && typeof BaZiEngine.getTenGod === 'function')
-        ? BaZiEngine.getTenGod(dm, s)
-        : '正官';
+      // Ten god of month stem relative to Day Master (robust self-contained derivation)
+      const god = CareerEngine.getTenGod(dm, s);
       const GOD_EN_MAP = {
         '比肩': 'Friend', '劫财': 'Rob Wealth', '食神': 'Eating God', '伤官': 'Hurting Officer',
         '偏财': 'Indirect Wealth', '正财': 'Direct Wealth', '七杀': 'Seven Killings', '偏官': 'Seven Killings',
