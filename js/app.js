@@ -1410,20 +1410,23 @@ document.addEventListener('DOMContentLoaded', () => {
               if (!hexData) return '';
               const xt = hexData.xianTian || {};
               const ht = hexData.houTian || {};
+              const zn = hexData.zhiNian || {};
               const xtHex = xt.hexagram || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
               const htHex = ht.hexagram || { number: 2, nameZh: '坤为地', nameEn: 'The Receptive' };
+              const znHex = zn.hexagram || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
               const xtTj = xt.tianJi || {};
               const htTj = ht.tianJi || {};
+              const znTj = zn.tianJi || {};
 
               return `
                 <div class="p-3 bg-black/40 rounded-xl border border-amber-500/40 space-y-2 mt-2 shadow-inner">
                   <div class="flex items-center space-x-1.5 pb-1 border-b border-gray-800">
                     <span class="chinese-seal text-[9px] py-0 border-amber-500 text-amber-300">${isEn ? 'Tian Ji Divination' : '天纪易卦'}</span>
                     <span class="text-amber-300 font-bold text-xs font-serif-sc">
-                      🔮 8. ${isEn ? 'Ni Haisha 《Tian Ji》 Four Pillars Hexagram Exegesis & Pattern Synthesis' : '倪海厦《天纪》四柱命卦印证与格局天机互参 (先天卦 / 后天卦 / 字谜)'}
+                      🔮 8. ${isEn ? 'Ni Haisha 《Tian Ji》 Four Pillars Hexagram Exegesis & Yin-Yang Law' : '倪海厦《天纪》四柱命卦印证与流年卦阴阳律互参 (先天卦 / 后天卦 / 流年卦)'}
                     </span>
                   </div>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-[11px]">
                     <div class="p-2 rounded bg-black/50 border border-gray-800">
                       <b class="text-amber-300">${isEn ? `Early Heaven: Hexagram ${xtHex.number} (${xtHex.nameEn})` : `先天命卦：第${xtHex.number}卦 · ${xtHex.nameZh}`}</b>
                       <p class="text-gray-300 mt-1">${isEn ? (xtTj.xianTianEn || '') : (xtTj.xianTianZh || '')}</p>
@@ -1431,6 +1434,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="p-2 rounded bg-black/50 border border-gray-800">
                       <b class="text-emerald-300">${isEn ? `Later Heaven: Hexagram ${htHex.number} (${htHex.nameEn})` : `后天命卦：第${htHex.number}卦 · ${htHex.nameZh}`}</b>
                       <p class="text-gray-300 mt-1">${isEn ? (htTj.houTianEn || '') : (htTj.houTianZh || '')}</p>
+                    </div>
+                    <div class="p-2 rounded bg-black/50 border ${zn.isMutated ? 'border-amber-500/50' : 'border-emerald-500/50'}">
+                      <b class="${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'}">${isEn ? `Annual (${zn.year}): ${znHex.nameEn}` : `值年卦 (${zn.year}年)：${znHex.nameZh}`}</b>
+                      <p class="text-[10px] text-gray-400 font-mono mt-0.5">${isEn ? (zn.ruleInteractionEn || '') : (zn.ruleInteractionZh || '')}</p>
+                      <p class="text-gray-300 mt-1">${isEn ? (znTj.liuNianEn || '') : (znTj.liuNianZh || '')}</p>
                     </div>
                   </div>
                   <div class="p-2 rounded bg-amber-950/20 border border-amber-800/30 text-[11px] text-amber-200">
@@ -5773,6 +5781,103 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
+      <!-- Master Ni Haisha Yin-Yang Law Liu Nian Hexagram Audit Box -->
+      <div class="p-4 rounded-xl bg-gradient-to-r from-amber-950/40 via-black/60 to-emerald-950/40 border border-amber-500/40 space-y-3 text-xs shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="chinese-seal text-[9px] py-0 border-amber-500 text-amber-300">${isEn ? 'YIN-YANG LAW' : '阴阳律'}</span>
+            <span class="text-amber-300 font-bold font-serif-sc text-sm">
+              ☯️ ${isEn ? 'Master Ni Haisha 《Tian Ji》 Annual Hexagram "Yin-Yang Law" Calibration' : '倪海厦《天纪》流年卦推演 · 阴阳律与岁运变卦秘解'}
+            </span>
+          </div>
+          <span class="px-2.5 py-1 rounded text-[10.5px] font-mono font-bold ${zn.isMutated ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'}">
+            ${isEn ? (zn.isMutated ? 'Like Polarities Repel -> Transformed Hexagram' : 'Opposite Polarities Attract -> Retain Base Hexagram') : (zn.isMutated ? '同性相斥 · 变卦执年' : '异性相吸 · 守本卦执年')}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
+          <!-- 1. Annual Transit Branch & Polarity -->
+          <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1.5">
+            <div class="text-gray-400 text-[10px] font-semibold flex items-center justify-between">
+              <span>${isEn ? '1. Annual Transit & Polarity:' : '1. 流年岁次与地支阴阳：'}</span>
+              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono ${zn.isYangYear ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
+                ${isEn ? zn.yearPolarityEn : zn.yearPolarityZh}
+              </span>
+            </div>
+            <div class="font-bold text-amber-300 font-mono text-sm">
+              ${zn.year} ${zn.annualGanzhi || ''}${isEn ? ' Year' : '年'}
+            </div>
+            <div class="text-[10px] text-gray-400 leading-tight">
+              ${isEn
+                ? (zn.isYangYear ? 'Branch (Zi, Yin, Chen, Wu, Shen, Xu) -> Yang Year' : 'Branch (Chou, Mao, Si, Wei, You, Hai) -> Yin Year')
+                : (zn.isYangYear ? '地支逢【子、寅、辰、午、申、戌】为阳年' : '地支逢【丑、卯、巳、未、酉、亥】为阴年')}
+            </div>
+          </div>
+
+          <!-- 2. Natal Active Line at Target Age -->
+          <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1.5">
+            <div class="text-gray-400 text-[10px] font-semibold flex items-center justify-between">
+              <span>${isEn ? `2. Governing Line (Age ${zn.age}):` : `2. 当值爻位（${zn.age}岁）：`}</span>
+              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono ${zn.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
+                ${isEn ? zn.linePolarityEn : zn.linePolarityZh}
+              </span>
+            </div>
+            <div class="font-bold text-purple-300 font-mono text-sm truncate">
+              ${isEn ? `${zn.baseHexagram ? zn.baseHexagram.nameEn : ''} Line ${zn.activeLinePos}` : `【${zn.baseHexagram ? zn.baseHexagram.nameZh : ''}】第${zn.activeLinePos}爻`}
+            </div>
+            <div class="text-[10px] text-gray-400 leading-tight">
+              ${isEn
+                ? (zn.isYangLine ? 'Solid Line (1 / ⚊) -> Yang Line (Governs 9y)' : 'Broken Line (0 / ⚋) -> Yin Line (Governs 6y)')
+                : (zn.isYangLine ? '阳爻（—）天纪阳九管9年' : '阴爻（--）天纪阴六管6年')}
+            </div>
+          </div>
+
+          <!-- 3. Yin-Yang Law Interaction Rule -->
+          <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1.5">
+            <div class="text-gray-400 text-[10px] font-semibold flex items-center justify-between">
+              <span>${isEn ? '3. Interaction Law & Decision:' : '3. 阴阳律交互决断：'}</span>
+              <span class="px-1.5 py-0.2 rounded text-[9px] font-mono ${zn.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">
+                ${zn.isMutated ? (isEn ? 'Mutates' : '变爻') : (isEn ? 'Preserved' : '不变')}
+              </span>
+            </div>
+            <div class="font-bold font-mono text-xs ${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'} leading-snug">
+              ${isEn ? zn.ruleInteractionEn : zn.ruleInteractionZh}
+            </div>
+            <div class="text-[10px] text-gray-400 leading-tight">
+              ${isEn
+                ? (zn.isMutated ? 'Like polarities repel -> line mutates to derive Bian Gua' : 'Opposite polarities attract -> harmony, line unchanged, retain Ben Gua')
+                : (zn.isMutated ? '同性相斥气极必变，当值爻位翻转得变卦' : '异性相吸阴阳调和，气机守正不妄动，遵本卦')}
+            </div>
+          </div>
+        </div>
+
+        <!-- Master Ni Tian Ji Canonical Liu Nian Directive Comparison -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1 text-[11px]">
+          <div class="p-2.5 rounded-lg bg-black/50 border border-gray-800/80 space-y-1">
+            <div class="text-gray-400 text-[10px] flex items-center justify-between border-b border-gray-800/60 pb-1">
+              <span class="font-semibold text-gray-300">${isEn ? 'Base Hexagram Decennial Premise:' : '本命卦（当期大运基调）：'}</span>
+              <span class="text-amber-400 font-mono font-bold">${isEn ? (zn.baseHexagram ? zn.baseHexagram.nameEn : '') : (zn.baseHexagram ? zn.baseHexagram.nameZh : '')}</span>
+            </div>
+            <p class="text-gray-300 leading-relaxed text-[11px] pt-0.5">
+              ${isEn ? (zn.baseTianJi ? zn.baseTianJi.liuNianEn : 'Consolidate foundational assets with disciplined prudence.') : (zn.baseTianJi ? zn.baseTianJi.liuNianZh : '基业稳健，审慎行止，蓄势待发。')}
+            </p>
+          </div>
+          <div class="p-2.5 rounded-lg bg-black/50 border ${zn.isMutated ? 'border-amber-500/50' : 'border-emerald-500/50'} space-y-1">
+            <div class="text-gray-400 text-[10px] flex items-center justify-between border-b border-gray-800/60 pb-1">
+              <span class="font-semibold ${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'}">
+                ${isEn ? (zn.isMutated ? 'Annual Transformed Hexagram Directive:' : 'Annual Preserved Base Hexagram Mandate:') : (zn.isMutated ? '值年变卦断辞（当岁战术突破）：' : '值年本卦断辞（当岁执权守正）：')}
+              </span>
+              <span class="font-mono font-bold ${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'}">
+                ${isEn ? (znHex ? znHex.nameEn : '') : (znHex ? znHex.nameZh : '')}
+              </span>
+            </div>
+            <p class="text-gray-200 leading-relaxed text-[11px] pt-0.5">
+              ${isEn ? (znTj.liuNianEn || 'Auspicious achievements with disciplined execution; avoid impulsive risks.') : (znTj.liuNianZh || '吉庆临门，加官进禄，文书有喜；防刚愎自用，宜守正求稳。')}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div class="p-4 sm:p-5 rounded-2xl bg-black/30 border ${hexData.activeStage === 'xianTian' ? 'border-amber-500/60 shadow-amber-950/20' : 'border-gray-800'} space-y-3.5 flex flex-col justify-between shadow-xl">
           <div class="space-y-2">
@@ -5836,21 +5941,26 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <div class="p-4 sm:p-5 rounded-2xl bg-black/30 border border-emerald-500/40 space-y-3.5 flex flex-col justify-between shadow-xl">
+        <div class="p-4 sm:p-5 rounded-2xl bg-black/30 border ${zn.isMutated ? 'border-amber-500/50 shadow-amber-950/20' : 'border-emerald-500/50 shadow-emerald-950/20'} space-y-3.5 flex flex-col justify-between shadow-xl">
           <div class="space-y-2">
             <div class="flex justify-between items-start border-b border-gray-800 pb-2">
               <div>
-                <span class="chinese-seal text-[10px] py-0 border-emerald-500/50 text-emerald-300">${isEn ? 'ANNUAL MANDATE' : '值年太岁'}</span>
-                <h3 class="text-base font-bold font-serif-sc text-emerald-300 mt-1">
-                  ${isEn ? `${zn.year} (Age ${zn.age}): ${znHex.nameEn}` : `${zn.year}年 (${zn.age}岁) · ${znHex.nameZh}`}
+                <span class="chinese-seal text-[10px] py-0 ${zn.isMutated ? 'border-amber-500/50 text-amber-300' : 'border-emerald-500/50 text-emerald-300'}">
+                  ${isEn ? (zn.isMutated ? 'TRANSFORMED GUA' : 'BASE GUA') : (zn.isMutated ? '变卦执年' : '守本卦执年')}
+                </span>
+                <h3 class="text-base font-bold font-serif-sc ${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'} mt-1">
+                  ${isEn ? `${zn.year} ${zn.annualGanzhi || ''} (Age ${zn.age}): ${znHex.nameEn}` : `${zn.year}年 ${zn.annualGanzhi || ''} (${zn.age}岁) · ${znHex.nameZh}`}
                 </h3>
               </div>
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                ${isEn ? `Line ${zn.activeLinePos} Mutating` : `第${zn.activeLinePos}爻动变`}
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${zn.isMutated ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'}">
+                ${zn.isMutated ? (isEn ? `Line ${zn.activeLinePos} Mutated` : `第${zn.activeLinePos}爻变`) : (isEn ? `Line ${zn.activeLinePos} Preserved` : `第${zn.activeLinePos}爻守本`)}
               </span>
             </div>
+            <div class="p-2.5 rounded-lg bg-black/50 border border-gray-800 text-[10.5px] font-mono ${zn.isMutated ? 'text-amber-300' : 'text-emerald-300'}">
+              ${isEn ? zn.ruleInteractionEn : zn.ruleInteractionZh}
+            </div>
             <div class="p-3 rounded-xl bg-black/50 border border-gray-800 text-xs space-y-1.5">
-              <div class="flex items-center space-x-1.5 text-emerald-400 font-bold font-serif-sc">
+              <div class="flex items-center space-x-1.5 ${zn.isMutated ? 'text-amber-400' : 'text-emerald-400'} font-bold font-serif-sc">
                 <span>⚡</span>
                 <span>${isEn ? 'Ni Haisha 《Tian Ji》 Annual Transit Oracle' : '倪海厦《天纪》流年卦断'}</span>
               </div>
@@ -5868,8 +5978,8 @@ document.addEventListener('DOMContentLoaded', () => {
               </p>
             </div>
           </div>
-          <div class="text-[10px] text-emerald-400/80 text-right font-mono">
-            ${isEn ? `Annual resonance with current active line ${zn.activeLinePos}` : `由当前当值第${zn.activeLinePos}爻气机引动变卦`}
+          <div class="text-[10px] ${zn.isMutated ? 'text-amber-400/80' : 'text-emerald-400/80'} text-right font-mono">
+            ${isEn ? (zn.isMutated ? `Like polarities repel: Line ${zn.activeLinePos} flipped to produce ${znHex.nameEn}` : `Opposite polarities attract: Line ${zn.activeLinePos} held steady in base ${znHex.nameEn}`) : (zn.isMutated ? `同性相斥：第${zn.activeLinePos}爻气机激荡变爻，定卦【${znHex.nameZh}】` : `异性相吸：第${zn.activeLinePos}爻阴阳和合不变，安守本卦【${znHex.nameZh}】`)}
           </div>
         </div>
       </div>
@@ -8376,7 +8486,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
 
     showDossierStatus(
-      isEn ? '⏳ Compiling 4-Page Imperial A4 PDF Dossier...' : '⏳ 正在编译 4 页皇家线装 A4 珍藏册 PDF，请稍候...',
+      isEn ? '⏳ Compiling 5-Page Imperial A4 PDF Dossier...' : '⏳ 正在编译 5 页皇家线装 A4 珍藏册 PDF，请稍候...',
       'info'
     );
 
@@ -8745,6 +8855,89 @@ document.addEventListener('DOMContentLoaded', () => {
     const inpMi = (bazi.input && bazi.input.minute) || 0;
     const dateStr = `${inpYr}-${String(inpMo).padStart(2,'0')}-${String(inpDa).padStart(2,'0')} ${String(inpHr).padStart(2,'0')}:${String(inpMi).padStart(2,'0')}`;
 
+    let luck = (typeof currentLuckResult !== 'undefined' && currentLuckResult) ? currentLuckResult : null;
+    if (!luck && typeof LuckEngine !== 'undefined') {
+      luck = LuckEngine.calculateLuck(bazi);
+    }
+    const dPillar = (luck && luck.activeDecade) || { stem: '甲', branch: '子', text: '甲子', stemGod: '比肩', naYin: '海中金', ageStart: 20, ageEnd: 29 };
+    const aPillar = (luck && luck.activeAnnual) || { stem: '丙', branch: '午', text: '丙午', year: new Date().getFullYear(), stemGod: '偏官', naYin: '天河水' };
+    const mPillar = (luck && luck.activeMonth) || { stem: '丁', branch: '酉', text: '丁酉', stemGod: '正印', naYin: '山下火' };
+
+    const synthesis = (luck && luck.synthesis14Char) ||
+      (typeof LuckEngine !== 'undefined' && LuckEngine.calculate14CharEnergySynthesis
+        ? LuckEngine.calculate14CharEnergySynthesis(bazi, dPillar, aPillar, mPillar)
+        : null);
+
+    const dmState = (synthesis && synthesis.dayMasterDynamicState) || {
+      dayMaster: bazi.dayMaster,
+      dayMasterEn: (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(bazi.dayMaster, 'en').split(' ')[0] : bazi.dayMaster,
+      dayMasterElement: bazi.dayMasterElement || '木',
+      dayMasterElementEn: isEn ? (elMap[bazi.dayMasterElement] || 'Wood') : (bazi.dayMasterElement || '木'),
+      natalStrength: (portrait && portrait.vigor) ? portrait.vigor.status : '身旺',
+      natalStrengthEn: (portrait && portrait.vigor) ? portrait.vigor.status : 'Strong',
+      supportCount: 7,
+      drainCount: 7,
+      dynamicRatio: 0.5,
+      badgeZh: '气机流转 · 中和守常',
+      badgeEn: 'Resilient Equilibrium',
+      statusZh: '14字气机生克均衡，进退有度，自我定力与外部开拓形成良性循环。',
+      statusEn: 'The 14 characters balance self-strength and outward engagement; steady sovereignty meets responsive execution.'
+    };
+    const domEl = (synthesis && synthesis.dominantElement) || {
+      element: bazi.dayMasterElement || '木',
+      elementEn: isEn ? (elMap[bazi.dayMasterElement] || 'Wood') : (bazi.dayMasterElement || '木'),
+      percentage: 28.5,
+      count: 4,
+      roleZh: '五行主导 · 运化中枢',
+      roleEn: 'Dominant Elemental Pivot'
+    };
+    const interp = (synthesis && synthesis.strategicFieldInterpretation) || {
+      titleZh: '大运岁序与原局交感 · 统筹全局战略',
+      titleEn: 'Decennial & Annual Resonance · Unified Grand Strategy',
+      dynamicsZh: '原局底蕴深厚，岁运流转相生相化，形成生生不息之动态场域。',
+      dynamicsEn: 'Natal foundation integrates harmoniously with decennial and annual currents, generating dynamic momentum.',
+      strategicFocusZh: '把握岁运主线节奏，立足核心优势，顺势而为。',
+      strategicFocusEn: 'Anchor to your decisive core advantage; ride the temporal momentum with clear focus.',
+      actionDirectivesZh: ['守正出奇，在关键运势窗口果断出手。', '平衡精力分配，规避消耗性竞争。'],
+      actionDirectivesEn: ['Act decisively during major strategic windows.', 'Preserve somatic energy and eliminate wasteful friction.'],
+      physicalTuningZh: '调适作息与身心节奏，保持气血通畅。',
+      physicalTuningEn: 'Harmonize somatic rhythms and maintain adequate rest and recovery.'
+    };
+    const charsList = (synthesis && synthesis.characters && synthesis.characters.length === 14) ? synthesis.characters : [
+      { char: p.year.stem, charEn: I18N.getStem(p.year.stem, 'en').split(' ')[0], el: '木', elementEn: 'Wood', tenGod: p.year.stemGod, tenGodEn: I18N.getGod(p.year.stemGod, 'en') },
+      { char: p.year.branch, charEn: I18N.getBranch(p.year.branch, 'en').split(' ')[0], el: '水', elementEn: 'Water', tenGod: '偏印', tenGodEn: 'Indirect Resource' },
+      { char: p.month.stem, charEn: I18N.getStem(p.month.stem, 'en').split(' ')[0], el: '木', elementEn: 'Wood', tenGod: p.month.stemGod, tenGodEn: I18N.getGod(p.month.stemGod, 'en') },
+      { char: p.month.branch, charEn: I18N.getBranch(p.month.branch, 'en').split(' ')[0], el: '火', elementEn: 'Fire', tenGod: '偏财', tenGodEn: 'Indirect Wealth' },
+      { char: p.day.stem, charEn: I18N.getStem(p.day.stem, 'en').split(' ')[0], el: '水', elementEn: 'Water', tenGod: '日主', tenGodEn: 'Day Master' },
+      { char: p.day.branch, charEn: I18N.getBranch(p.day.branch, 'en').split(' ')[0], el: '水', elementEn: 'Water', tenGod: '比肩', tenGodEn: 'Companion' },
+      { char: p.hour.stem, charEn: I18N.getStem(p.hour.stem, 'en').split(' ')[0], el: '金', elementEn: 'Metal', tenGod: p.hour.stemGod, tenGodEn: I18N.getGod(p.hour.stemGod, 'en') },
+      { char: p.hour.branch, charEn: I18N.getBranch(p.hour.branch, 'en').split(' ')[0], el: '金', elementEn: 'Metal', tenGod: '正印', tenGodEn: 'Direct Resource' },
+      { char: dPillar.stem, charEn: I18N.getStem(dPillar.stem, 'en').split(' ')[0], el: '木', elementEn: 'Wood', tenGod: dPillar.stemGod, tenGodEn: I18N.getGod(dPillar.stemGod, 'en') },
+      { char: dPillar.branch, charEn: I18N.getBranch(dPillar.branch, 'en').split(' ')[0], el: '水', elementEn: 'Water', tenGod: '偏印', tenGodEn: 'Indirect Resource' },
+      { char: aPillar.stem, charEn: I18N.getStem(aPillar.stem, 'en').split(' ')[0], el: '火', elementEn: 'Fire', tenGod: aPillar.stemGod, tenGodEn: I18N.getGod(aPillar.stemGod, 'en') },
+      { char: aPillar.branch, charEn: I18N.getBranch(aPillar.branch, 'en').split(' ')[0], el: '火', elementEn: 'Fire', tenGod: '正财', tenGodEn: 'Direct Wealth' },
+      { char: mPillar.stem, charEn: I18N.getStem(mPillar.stem, 'en').split(' ')[0], el: '金', elementEn: 'Metal', tenGod: mPillar.stemGod, tenGodEn: I18N.getGod(mPillar.stemGod, 'en') },
+      { char: mPillar.branch, charEn: I18N.getBranch(mPillar.branch, 'en').split(' ')[0], el: '金', elementEn: 'Metal', tenGod: '偏财', tenGodEn: 'Indirect Wealth' }
+    ];
+    const elDistList = (synthesis && synthesis.elementDistributionList) || [];
+    const elDistSummaryStr = elDistList.length > 0
+      ? elDistList.map(item => `${isEn ? item.elementEn : item.element} ${item.percentage}%`).join(' · ')
+      : elSummaryStr;
+
+    const decadePillarStr = isEn
+      ? `${I18N.getStem(dPillar.stem, 'en').split(' ')[0]}-${I18N.getBranch(dPillar.branch, 'en').split(' ')[0]} (${I18N.getGod(dPillar.stemGod, 'en')}) · Ages ${dPillar.ageStart || '--'}-${dPillar.ageEnd || '--'}`
+      : `${dPillar.text || (dPillar.stem + dPillar.branch)} (${dPillar.stemGod}) · ${dPillar.ageStart || '--'}-${dPillar.ageEnd || '--'}岁`;
+    const decadeNaYinStr = isEn ? I18N.getNaYin(dPillar.naYin, 'en') : dPillar.naYin;
+
+    const annualPillarStr = isEn
+      ? `${aPillar.year || ''} ${I18N.getStem(aPillar.stem, 'en').split(' ')[0]}-${I18N.getBranch(aPillar.branch, 'en').split(' ')[0]} (${I18N.getGod(aPillar.stemGod, 'en')})`
+      : `${aPillar.year || ''}年 ${aPillar.text || (aPillar.stem + aPillar.branch)} (${aPillar.stemGod})`;
+    const annualNaYinStr = isEn ? I18N.getNaYin(aPillar.naYin, 'en') : aPillar.naYin;
+
+    const reflectionPreservationNote = isEn
+      ? 'Note: Preserving the authentic Chinese classical passage alongside vernacular translation is recommended for personal reflection and deeper meditation.'
+      : '注：研读时参验古典原文与白话指引对照，以助个人静心省察与觉悟升维。';
+
     container.innerHTML = `
       <!-- Page 1: Cover & Four Pillars Grand Altar -->
       <div class="imperial-page relative">
@@ -8840,7 +9033,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷首'}</span>
-            <span>Page 1 / 4</span>
+            <span>Page 1 / 5</span>
           </div>
         </div>
       </div>
@@ -8865,22 +9058,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="space-y-3 text-xs leading-relaxed font-serif-sc text-gray-800">
             <div class="p-3 bg-amber-50/60 rounded border-l-4 border-amber-800">
-              <h3 class="font-bold text-amber-950 mb-1">${isEn ? 'Core Thesis & Grand Blueprint (大纲总相):' : '大纲总相 · 命局核心枢纽与底层范式:'}</h3>
+              <h3 class="font-bold text-amber-950 mb-1">${isEn ? 'Core Thesis & Grand Blueprint:' : '大纲总相 · 命局核心枢纽与底层范式:'}</h3>
               <p>${isEn ? gp.thesis : gp.thesisZh}</p>
             </div>
 
             <div class="p-3 bg-amber-50/60 rounded border-l-4 border-red-800">
-              <h3 class="font-bold text-red-950 mb-1">${isEn ? 'Decisive Strategic Breakthrough Campaign (破局胜负手):' : '战略战役 · 破局胜负手与主攻方向:'}</h3>
+              <h3 class="font-bold text-red-950 mb-1">${isEn ? 'Decisive Strategic Breakthrough Campaign:' : '战略战役 · 破局胜负手与主攻方向:'}</h3>
               <p>${isEn ? gp.campaign : gp.campaignZh}</p>
             </div>
 
             <div class="p-3 bg-amber-50/60 rounded border-l-4 border-purple-800">
-              <h3 class="font-bold text-purple-950 mb-1">${isEn ? 'Period 9 Fire Era Macro Resonance (九运时空锚定):' : '时代浪潮 · 九运离火时空场能共振:'}</h3>
+              <h3 class="font-bold text-purple-950 mb-1">${isEn ? 'Period 9 Fire Era Macro Resonance:' : '时代浪潮 · 九运离火时空场能共振:'}</h3>
               <p>${isEn ? gp.era : gp.eraZh}</p>
             </div>
 
             <div class="space-y-1.5 p-3 bg-amber-50/60 rounded border-l-4 border-emerald-800">
-              <h3 class="font-bold text-emerald-950 mb-1">${isEn ? 'Three Lifelong Invariant Directives (终身三则立命锦囊):' : '终身不败 · 处世与立命立身三则:'}</h3>
+              <h3 class="font-bold text-emerald-950 mb-1">${isEn ? 'Three Lifelong Invariant Directives:' : '终身不败 · 处世与立命立身三则:'}</h3>
               ${(isEn ? (gp.rules || gp.rulesZh) : (gp.rulesZh || gp.rules)).map((r, idx) => `
                 <div class="flex gap-1.5">
                   <span class="font-bold text-amber-900">${idx + 1}.</span>
@@ -8892,7 +9085,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷一'}</span>
-            <span>Page 2 / 4</span>
+            <span>Page 2 / 5</span>
           </div>
         </div>
       </div>
@@ -8950,7 +9143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷二'}</span>
-            <span>Page 3 / 4</span>
+            <span>Page 3 / 5</span>
           </div>
         </div>
       </div>
@@ -8999,6 +9192,11 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
+          <!-- Thoughtful side-note on Classical preservation and personal meditation -->
+          <div class="p-2 rounded bg-amber-50/70 border border-amber-900/30 text-[10px] text-gray-700 italic font-serif-sc">
+            <span>${reflectionPreservationNote}</span>
+          </div>
+
           <div class="flex items-center justify-between border-t-2 border-amber-900/60 pt-3">
             <div class="space-y-0.5 text-[11px] text-gray-700 font-serif-sc">
               <p><b>${isEn ? 'Certification Authority:' : '钦定勘验印鉴:'}</b> ${isEn ? 'Imperial Astronomical Bureau Archive (Qin Tian Jian)' : '钦天监正堂掌事 · 钦赐天机密卷'}</p>
@@ -9011,7 +9209,140 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷三'}</span>
-            <span>Page 4 / 4 · Complete Dossier</span>
+            <span>Page 4 / 5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="html2pdf__page-break"></div>
+
+      <!-- Page 5: Volume IV - Macro Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
+      <div class="imperial-page relative">
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
+          <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
+            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume IV: Decennial Trajectory & 14-Character Energy Synthesis' : '卷四 · 大运年景大势与十四字全景气机集成 (时运交感与时空场能)'}</h2>
+            <span class="imperial-seal-stamp">${isEn ? 'DYNAMIC RESONANCE' : '时运合一'}</span>
+          </div>
+
+          <!-- Transit Luck Coordinate -->
+          <div class="grid grid-cols-2 gap-3 text-xs bg-amber-50/60 p-2.5 rounded border border-amber-900/30 font-serif-sc">
+            <div>
+              <span class="text-gray-500">${isEn ? 'Active Decade (10-Yr Pillar):' : '当运大运 (十年提纲):'}</span>
+              <div class="font-bold text-amber-900 font-mono text-[12.5px] mt-0.5">${decadePillarStr}</div>
+              <div class="text-[10px] text-gray-600 font-mono">${isEn ? 'Na-Yin:' : '纳音五行:'} ${decadeNaYinStr}</div>
+            </div>
+            <div>
+              <span class="text-gray-500">${isEn ? 'Annual Mandate (Tai Sui):' : '当值流年 (太岁统辖):'}</span>
+              <div class="font-bold text-amber-900 font-mono text-[12.5px] mt-0.5">${annualPillarStr}</div>
+              <div class="text-[10px] text-gray-600 font-mono">${isEn ? 'Na-Yin:' : '纳音五行:'} ${annualNaYinStr}</div>
+            </div>
+          </div>
+
+          <!-- 14-Character Multi-Dimensional Matrix Table -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-bold text-amber-900 tracking-wider">${isEn ? '14-CHARACTER HOLOGRAPHIC MATRIX (NATAL 8 + TRANSIT 6)' : '十四字全相矩阵 (原局八字 + 岁运六字)'}</h3>
+              <span class="imperial-seal-stamp text-[10px] py-0.5 px-2">${isEn ? dmState.badgeEn : dmState.badgeZh}</span>
+            </div>
+            <table class="w-full text-xs text-center border-collapse border border-amber-900/40">
+              <thead class="bg-amber-100/70 text-amber-950 font-bold">
+                <tr>
+                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Yr' : '原局年柱'}</th>
+                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Mo' : '原局月令'}</th>
+                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Day' : '本命日元'}</th>
+                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Hr' : '原局时柱'}</th>
+                  <th class="p-1 border border-amber-900/30 bg-amber-200/50 text-amber-900">${isEn ? 'Transit Dec' : '当行大运'}</th>
+                  <th class="p-1 border border-amber-900/30 bg-amber-200/50 text-amber-900">${isEn ? 'Transit Ann' : '流年太岁'}</th>
+                  <th class="p-1 border border-amber-900/30 bg-amber-200/50 text-amber-900">${isEn ? 'Transit Mo' : '流月建星'}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-amber-900/30 font-serif-sc">
+                <!-- Stems -->
+                <tr class="bg-amber-50/40">
+                  ${[0, 2, 4, 6, 8, 10, 12].map(idx => {
+                    const c = charsList[idx] || {};
+                    const cChar = isEn ? (c.charEn || c.char || '--') : (c.char || '--');
+                    const cGod = isEn ? (c.tenGodEn || c.tenGod || '--') : (c.tenGod || '--');
+                    const cEl = isEn ? (c.elementEn || c.el || '--') : (c.el || '--');
+                    const isDM = (idx === 4);
+                    return `
+                      <td class="p-1.5 ${isDM ? 'bg-amber-100/80 font-bold' : ''}">
+                        <div class="text-[10px] text-gray-500 font-mono">${cGod}</div>
+                        <div class="text-base font-bold ${isDM ? 'text-red-900' : 'text-amber-900'}">${cChar}</div>
+                        <div class="text-[9.5px] text-gray-600 font-mono">${cEl}</div>
+                      </td>
+                    `;
+                  }).join('')}
+                </tr>
+                <!-- Branches -->
+                <tr class="bg-amber-50/80">
+                  ${[1, 3, 5, 7, 9, 11, 13].map(idx => {
+                    const c = charsList[idx] || {};
+                    const cChar = isEn ? (c.charEn || c.char || '--') : (c.char || '--');
+                    const cGod = isEn ? (c.tenGodEn || c.tenGod || '--') : (c.tenGod || '--');
+                    const cEl = isEn ? (c.elementEn || c.el || '--') : (c.el || '--');
+                    return `
+                      <td class="p-1.5">
+                        <div class="text-[10px] text-gray-500 font-mono">${cGod}</div>
+                        <div class="text-base font-bold text-amber-900">${cChar}</div>
+                        <div class="text-[9.5px] text-gray-600 font-mono">${cEl}</div>
+                      </td>
+                    `;
+                  }).join('')}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Dynamic 5-Element Share & Dominant Force -->
+          <div class="p-2.5 bg-amber-50/80 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950">
+              <span>${isEn ? 'Dynamic 5-Element Distribution (14 Characters):' : '十四字全场五行能量权重与气机统帅:'}</span>
+              <span class="font-mono text-[11px]">${elDistSummaryStr}</span>
+            </div>
+            <div class="flex items-center justify-between text-[11px] text-gray-800">
+              <span><b>${isEn ? 'Dominant Force:' : '统帅五行:'}</b> ${isEn ? domEl.elementEn : domEl.element} (${domEl.percentage}%) · ${isEn ? domEl.roleEn : domEl.roleZh}</span>
+              <span class="font-mono"><b>${isEn ? 'Support vs Drain:' : '扶抑比率:'}</b> ${dmState.supportCount} : ${dmState.drainCount} (${Math.round(dmState.dynamicRatio * 100)}%)</span>
+            </div>
+            <p class="text-[11.5px] text-gray-700 leading-relaxed">${isEn ? dmState.statusEn : dmState.statusZh}</p>
+          </div>
+
+          <!-- Tactical Strategic Focus & Action Directives -->
+          <div class="p-3 bg-amber-50/60 rounded border-l-4 border-amber-800 space-y-1.5 text-xs text-gray-800 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950">
+              <span class="text-xs font-bold">${isEn ? interp.titleEn : interp.titleZh}</span>
+              <span class="text-[11px] text-amber-900 font-mono">${isEn ? dmState.natalStrengthEn : dmState.natalStrength}</span>
+            </div>
+            <p><b>${isEn ? 'Core Strategic Focus:' : '核心战略攻守定调:'}</b> ${isEn ? interp.strategicFocusEn : interp.strategicFocusZh}</p>
+            <div class="space-y-1">
+              <b>${isEn ? 'Tactical Action Directives:' : '立命行事三策:'}</b>
+              ${(isEn ? interp.actionDirectivesEn : interp.actionDirectivesZh).slice(0, 3).map((act, idx) => `
+                <div class="flex gap-1.5 ml-1">
+                  <span class="font-bold text-amber-900">${idx + 1}.</span>
+                  <span>${act}</span>
+                </div>
+              `).join('')}
+            </div>
+            <p><b>${isEn ? 'Somatic Tuning & Rhythm:' : '身心调和与气血调摄:'}</b> ${isEn ? interp.physicalTuningEn : interp.physicalTuningZh}</p>
+          </div>
+
+          <!-- Canonical Preservation Reflection Note -->
+          <div class="p-2 rounded bg-amber-50/50 border border-amber-900/30 text-[10px] text-gray-600 italic font-serif-sc">
+            <span>${reflectionPreservationNote}</span>
+          </div>
+
+          <!-- Verification Stamp & Complete Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷四'}</span>
+            <span>Page 5 / 5 · Complete Dossier</span>
           </div>
         </div>
       </div>

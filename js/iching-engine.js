@@ -599,27 +599,88 @@ class IChingEngine {
     const targetAge = (currentAge !== undefined && currentAge !== null)
       ? Math.max(1, currentAge)
       : Math.max(1, selectedYear - birthYear);
-    const effSelectedYear = (currentAge !== undefined && currentAge !== null)
-      ? (birthYear + targetAge)
-      : selectedYear;
+    const effSelectedYear = (selectedYear !== undefined && selectedYear !== null)
+      ? selectedYear
+      : (birthYear + targetAge);
+
+    const STEM_LIST = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const BRANCH_LIST = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const annualSIdx = (effSelectedYear - 4 + 60000) % 10;
+    const annualBIdx = (effSelectedYear - 4 + 60000) % 12;
+    const annualStem = STEM_LIST[annualSIdx];
+    const annualBranch = BRANCH_LIST[annualBIdx];
+    const annualGanzhi = annualStem + annualBranch;
+
+    // 阳年: 子、寅、辰、午、申、戌 (annualBIdx is even)
+    // 阴年: 丑、卯、巳、未、酉、亥 (annualBIdx is odd)
+    const YANG_BRANCHES = ['子', '寅', '辰', '午', '申', '戌'];
+    const isAnnualYangYear = YANG_BRANCHES.includes(annualBranch);
+    const yearPolarity = isAnnualYangYear ? 'yang' : 'yin';
+    const yearPolarityZh = isAnnualYangYear ? '阳年' : '阴年';
+    const yearPolarityEn = isAnnualYangYear ? 'Yang Year' : 'Yin Year';
+
     let zhiNianBaseBinary;
+    let zhiNianActiveLine;
     let zhiNianActiveLinePos;
+    let baseHex;
+    let baseHexTJ;
+    let baseStageZh;
+    let baseStageEn;
 
     if (targetAge <= xianTianTotalYears) {
       zhiNianBaseBinary = [...xianTianBinary];
-      const activeL = xianTianLines.find(l => targetAge >= l.ageStart && targetAge <= l.ageEnd) || xianTianLines[0];
-      zhiNianActiveLinePos = activeL.position;
+      baseHex = xianTianHex;
+      baseHexTJ = xianTianTJ;
+      zhiNianActiveLine = xianTianLines.find(l => targetAge >= l.ageStart && targetAge <= l.ageEnd) || xianTianLines[0];
+      zhiNianActiveLinePos = zhiNianActiveLine.position;
+      baseStageZh = '先天命卦';
+      baseStageEn = 'Early Heaven';
     } else {
       zhiNianBaseBinary = [...houTianBinary];
-      const activeL = houTianLines.find(l => targetAge >= l.ageStart && targetAge <= l.ageEnd) || houTianLines[houTianLines.length - 1];
-      zhiNianActiveLinePos = activeL.position;
+      baseHex = houTianHex;
+      baseHexTJ = houTianTJ;
+      zhiNianActiveLine = houTianLines.find(l => targetAge >= l.ageStart && targetAge <= l.ageEnd) || houTianLines[houTianLines.length - 1];
+      zhiNianActiveLinePos = zhiNianActiveLine.position;
+      baseStageZh = '后天命卦';
+      baseStageEn = 'Later Heaven';
     }
 
+    // 当值爻阴阳: 1 = 阳爻 (⚊), 0 = 阴爻 (⚋)
+    const isYangLine = (zhiNianActiveLine.nature === 1);
+    const linePolarity = isYangLine ? 'yang' : 'yin';
+    const linePolarityZh = isYangLine ? '阳爻' : '阴爻';
+    const linePolarityEn = isYangLine ? 'Yang Line' : 'Yin Line';
+
+    // 倪海厦《天纪》流年卦阴阳律 (Yin-Yang Law):
+    // 1. 同性相斥 (Like polarities repel -> must transform into Bian Gua 变卦):
+    //    阳年 + 阳爻 -> 阳变阴 (1 -> 0)
+    //    阴年 + 阴爻 -> 阴变阳 (0 -> 1)
+    // 2. 异性相吸 (Opposite polarities attract -> harmony, retain Ben Gua 本卦):
+    //    阳年 + 阴爻 -> 阴阳调和不变爻，守本卦
+    //    阴年 + 阳爻 -> 阴阳调和不变爻，守本卦
+    const isRepulsion = (isAnnualYangYear === isYangLine);
+    const isMutated = isRepulsion;
+
     const zhiNianBinary = [...zhiNianBaseBinary];
-    zhiNianBinary[zhiNianActiveLinePos - 1] = 1 - zhiNianBinary[zhiNianActiveLinePos - 1];
+    if (isMutated) {
+      zhiNianBinary[zhiNianActiveLinePos - 1] = 1 - zhiNianBinary[zhiNianActiveLinePos - 1];
+    }
 
     const zhiNianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(zhiNianBinary) : null;
     const zhiNianTJ = (zhiNianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(zhiNianHex.number) : null;
+
+    const baseHexNameZh = baseHex ? baseHex.nameZh : '本卦';
+    const baseHexNameEn = baseHex ? baseHex.nameEn : 'Base Hexagram';
+    const zhiNianHexNameZh = zhiNianHex ? zhiNianHex.nameZh : '值年卦';
+    const zhiNianHexNameEn = zhiNianHex ? zhiNianHex.nameEn : 'Annual Hexagram';
+
+    const ruleInteractionZh = isRepulsion
+      ? `同性相斥（${isAnnualYangYear ? '阳见阳' : '阴见阴'}）→ 变爻（${isYangLine ? '阳变阴' : '阴变阳'}）→ 得变卦【${zhiNianHexNameZh}】`
+      : `异性相吸（${isAnnualYangYear ? '阳见阴' : '阴见阳'}）→ 阴阳调和不变爻 → 守本卦【${baseHexNameZh}】`;
+
+    const ruleInteractionEn = isRepulsion
+      ? `Like Polarities Repel (${isAnnualYangYear ? 'Yang meets Yang' : 'Yin meets Yin'}) -> Mutate Line (${isYangLine ? 'Yang to Yin' : 'Yin to Yang'}) -> Transformed Hexagram [${zhiNianHexNameEn}]`
+      : `Opposite Polarities Attract (${isAnnualYangYear ? 'Yang meets Yin' : 'Yin meets Yang'}) -> Harmony, Line Unchanged -> Base Hexagram [${baseHexNameEn}]`;
 
     return {
       currentAge,
@@ -669,12 +730,34 @@ class IChingEngine {
         lowerTrigram: htLowerTri
       },
       zhiNian: {
-        year: selectedYear,
+        year: effSelectedYear,
         age: targetAge,
+        baseStage: (targetAge <= xianTianTotalYears) ? 'xianTian' : 'houTian',
+        baseStageZh,
+        baseStageEn,
+        baseHexagram: baseHex,
+        baseTianJi: baseHexTJ,
+        baseBinary: zhiNianBaseBinary,
+        activeLinePos: zhiNianActiveLinePos,
+        activeLine: zhiNianActiveLine,
+        annualStem,
+        annualBranch,
+        isYangYear: isAnnualYangYear,
+        isAnnualYangYear,
+        yearPolarity,
+        yearPolarityZh,
+        yearPolarityEn,
+        isYangLine,
+        linePolarity,
+        linePolarityZh,
+        linePolarityEn,
+        isRepulsion,
+        isMutated,
+        ruleInteractionZh,
+        ruleInteractionEn,
         hexagram: zhiNianHex,
         tianJi: zhiNianTJ,
-        binary: zhiNianBinary,
-        activeLinePos: zhiNianActiveLinePos
+        binary: zhiNianBinary
       }
     };
   }

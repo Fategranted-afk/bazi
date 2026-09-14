@@ -4997,6 +4997,270 @@ run_dom_14 = subprocess.run(jsc_dom_14_cmd, capture_output=True, text=True)
 assert run_dom_14.returncode == 0, f"14-char DOM render check failed: stdout={run_dom_14.stdout} stderr={run_dom_14.stderr}"
 print("✓ 十四字时空全息能量统揽 DOM 全量动态渲染、中英双语 100% 零中文残留与运行时零崩溃验证通过！")
 
-print("\n🎉 ALL 69 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 70. Validate Master Ni Haisha Tian Ji Liu Nian Hexagram Yin-Yang Law (同性相斥变卦 / 异性相吸守本卦)
+print("\n=== 70. Validating Ni Haisha Tian Ji Liu Nian Hexagram Yin-Yang Law (同性相斥变卦 / 异性相吸守本卦) ===")
+jsc_yinyang_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/iching-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    var repulsionCount = 0;
+    var attractionCount = 0;
+
+    for (var age = 1; age <= 60; age++) {
+      var res = IChingEngine.calculateFourPillarsHexagrams(bazi, age);
+      var zn = res.zhiNian;
+
+      if (!zn.annualBranch) throw new Error("Missing annualBranch at age " + age);
+      if (typeof zn.isYangYear !== "boolean") throw new Error("Missing isYangYear boolean at age " + age);
+      if (typeof zn.isYangLine !== "boolean") throw new Error("Missing isYangLine boolean at age " + age);
+      if (typeof zn.isRepulsion !== "boolean") throw new Error("Missing isRepulsion boolean at age " + age);
+      if (typeof zn.isMutated !== "boolean") throw new Error("Missing isMutated boolean at age " + age);
+      if (!zn.ruleInteractionZh) throw new Error("Missing ruleInteractionZh at age " + age);
+      if (!zn.ruleInteractionEn) throw new Error("Missing ruleInteractionEn at age " + age);
+      if (!zn.hexagram || !zn.hexagram.nameZh || !zn.hexagram.nameEn) {
+        throw new Error("Missing hexagram metadata at age " + age);
+      }
+
+      // Assert Yin-Yang Law logic
+      var expectedRepulsion = (zn.isYangYear === zn.isYangLine);
+      if (zn.isRepulsion !== expectedRepulsion) {
+        throw new Error("isRepulsion mismatch at age " + age + ": got " + zn.isRepulsion + " expected " + expectedRepulsion);
+      }
+
+      if (zn.isRepulsion) {
+        repulsionCount++;
+        if (!zn.isMutated) throw new Error("Repulsion must mutate line at age " + age);
+        var flippedLine = zn.binary[zn.activeLinePos - 1];
+        var origLine = zn.baseBinary[zn.activeLinePos - 1];
+        if (flippedLine === origLine) {
+          throw new Error("Active line must flip on repulsion at age " + age);
+        }
+      } else {
+        attractionCount++;
+        if (zn.isMutated) throw new Error("Attraction must preserve line at age " + age);
+        if (zn.binary[zn.activeLinePos - 1] !== zn.baseBinary[zn.activeLinePos - 1]) {
+          throw new Error("Active line must NOT flip on attraction at age " + age);
+        }
+      }
+    }
+
+    if (repulsionCount === 0 || attractionCount === 0) {
+      throw new Error("Must encounter both repulsion and attraction across ages 1-60");
+    }
+    '''
+]
+run_yinyang = subprocess.run(jsc_yinyang_cmd, capture_output=True, text=True)
+assert run_yinyang.returncode == 0, f"Ni Haisha Yin-Yang Law check failed: {run_yinyang.stderr}"
+print("✓ 倪海厦《天纪》流年卦阴阳律（同性相斥变卦 / 异性相吸守本卦）双态推演验证通过！")
+
+# 71. Validate Imperial Thread-Bound Dossier 5-Page Expansion, 14-Character Synthesis & Zero Residual Chinese
+print("\n=== 71. Validating Imperial Thread-Bound Dossier 5-Page Expansion & Zero Residual Chinese ===")
+jsc_dossier5_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/chart.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) { throw new Error(m + (e ? " " + (e.stack || e) : "")); }
+    };
+
+    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "navBtnFengShui", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portalBtnFengShui", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "timeDynamicsSection", "tdAnnualBadge", "timeDynamicsContainer", "view-canons", "tab-sanming", "sanmingAutoResult", "smDaySelect", "smHourSelect", "smCustomQueryBtn", "smCustomResult", "smPatternsList", "tab-qiongtong", "qiongtongAutoResult", "qtStemSelect", "qtBranchSelect", "qtCustomQueryBtn", "qtCustomResult", "tab-ziping", "zipingAutoResult", "zipingPatternsList", "tab-ditiansui", "ditiansuiAutoResult", "dtsStemButtons", "dtsCustomResult", "dtsChaptersList", "tab-yuanhai", "yuanhaiChaptersList", "yuanhaiTenGodsList", "tab-shenfeng", "shenfengAutoResult", "shenfengTreatisesList", "tab-yuzhao", "yuzhaoAutoResult", "yuzhaoAphorismsList", "tab-lixuzhong", "lixuzhongAutoResult", "lixuzhongChaptersList", "tab-search", "dbSearchInput", "dbSearchBtn", "dbSearchResults", "view-iching", "ichingQueryInput", "ichingSelect", "ichingInstantBtn", "ichingCoinBtn", "ichingTimeBtn", "coinTossArena", "coinStepBadge", "coinResetBtn", "coinGraphic1", "coinGraphic2", "coinGraphic3", "throwCoinBtn", "coinLinesProgress", "ichingResultContainer", "ichingInitPrompt", "ichingResultCard", "ichingMetaBanner", "originalHexagramCard", "resultingHexagramCard", "complementaryHexagramsBar", "oracleFocusTag", "canonicalScripturesContent", "modernInterpretationCards", "view-synastry", "synastryModeRomantic", "synastryModeBusiness", "btnSynastryLoadA", "synastryDateA", "synastryTimeA", "synastryGenderA", "synastryLabelA", "synastryDateB", "synastryTimeB", "synastryGenderB", "synastryLabelB", "calcSynastryBtn", "synastryResultContainer", "elementFluxCanvas", "calculationProgressModal", "calcProgressTitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5", "imperialDossierModal", "dossierLangZh", "dossierLangEn", "dossierDownloadPdfBtn", "dossierPrintBtn", "dossierCloseBtn", "dossierExportStatus", "dossierExportStatusMsg", "dossierExportStatusDismiss", "imperialDossierContainer", "view-fengshui", "btnJumpToHomeFromFengShui", "fengshuiContentContainer", "fengshuiQuickBadges", "ziping100Section", "ziping100Container", "zipingScoreBadges", "fourPillarsHexSection", "fourPillarsHexContainer", "fourPillarsAgeSlider", "fourPillarsAgeDisplay"];
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        options: [{ textContent: "乾造", value: "乾造" }],
+        selectedIndex: 0,
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        _listeners: {},
+        _children: [],
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = this._listeners[evt] || []; for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); },
+        appendChild: function(child) { this._children.push(child); },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined && this[a] !== null; },
+        getContext: function() { return { clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){}, arc: function(){}, setLineDash: function(){}, scale: function(){}, createLinearGradient: function(){ return { addColorStop: function(){} }; } }; }
+      };
+    }
+
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function(){ return "dark"; }, setAttribute: function(){} },
+      getElementById: function(id) { if (!elementStore[id]) elementStore[id] = makeEl(id); return elementStore[id]; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      addEventListener: function(event, handler) { if (event === "DOMContentLoaded") this._domReady = handler; }
+    };
+
+    var window = {
+      document: document,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      innerWidth: 1200, innerHeight: 800,
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      PortraitEngine: PortraitEngine,
+      LuckEngine: LuckEngine,
+      IChingEngine: IChingEngine,
+      SanMingDB: SanMingDB,
+      QiongTongDB: QiongTongDB,
+      ZiPingZhenQuanDB: ZiPingZhenQuanDB,
+      DiTianSuiDB: DiTianSuiDB,
+      YuanHaiDB: YuanHaiDB,
+      ShenFengDB: ShenFengDB,
+      YuZhaoDB: YuZhaoDB,
+      LiXuZhongDB: LiXuZhongDB
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    elementStore["calcBtn"].trigger("click");
+    elementStore["btnExportDossier"].trigger("click");
+    elementStore["dossierLangEn"].trigger("click");
+
+    var enHtml = elementStore["imperialDossierContainer"].innerHTML;
+    if (!enHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 / 5 in EN");
+    if (!enHtml.includes("Page 5 / 5")) throw new Error("Missing Page 5 / 5 in EN");
+    if (!enHtml.includes("Volume IV: Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Vol IV title in EN");
+    if (!enHtml.includes("14-CHARACTER HOLOGRAPHIC MATRIX")) throw new Error("Missing 14-char matrix in EN");
+    if (!enHtml.includes("Note: Preserving the authentic Chinese classical passage alongside vernacular translation is recommended for personal reflection and deeper meditation.")) {
+      throw new Error("Missing reflection preservation note in EN");
+    }
+
+    var matches = enHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (matches && matches.length > 0) {
+      throw new Error("Residual Chinese in EN Dossier HTML (" + matches.length + "): " + matches.slice(0, 30).join(""));
+    }
+
+    elementStore["dossierLangZh"].trigger("click");
+    var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
+    if (!zhHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 / 5 in ZH");
+    if (!zhHtml.includes("Page 5 / 5")) throw new Error("Missing Page 5 / 5 in ZH");
+    if (!zhHtml.includes("卷四 · 大运年景大势与十四字全景气机集成")) throw new Error("Missing Vol IV title in ZH");
+    if (!zhHtml.includes("十四字全相矩阵")) throw new Error("Missing 14-char matrix in ZH");
+    '''
+]
+run_dossier5 = subprocess.run(jsc_dossier5_cmd, capture_output=True, text=True)
+assert run_dossier5.returncode == 0, f"Imperial Dossier 5-Page check failed: {run_dossier5.stderr}"
+print("✓ 皇家线装绝美排盘战报（五页典藏架构/14字全景气机/禅道注记/中英双语 100% 零中文残留）验证通过！")
+
+# 72. Validate Lifelong Chrono-Navigator Curvature at Decade Transition Boundaries
+print("\n=== 72. Validating Lifelong Chrono-Navigator Curvature at Decade Boundaries ===")
+jsc_chrono_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+    var timeline = luck.timeline;
+
+    var peakSpikes = 0;
+    var totalBoundaries = 0;
+
+    luck.decades.forEach(function(d) {
+      var age = d.ageStart;
+      if (age >= 10 && age <= 85) {
+        totalBoundaries++;
+        var p0 = timeline.find(function(t) { return t.age === age - 1; });
+        var p1 = timeline.find(function(t) { return t.age === age; });
+        var p2 = timeline.find(function(t) { return t.age === age + 1; });
+        if (p0 && p1 && p2) {
+          if (p1.energyScore > p0.energyScore && p1.energyScore > p2.energyScore) {
+            peakSpikes++;
+          }
+        }
+      }
+    });
+
+    if (peakSpikes > 0) {
+      throw new Error("Found " + peakSpikes + " artificial transition boundary peak spikes out of " + totalBoundaries);
+    }
+    '''
+]
+run_chrono = subprocess.run(jsc_chrono_cmd, capture_output=True, text=True)
+assert run_chrono.returncode == 0, f"Chrono-Navigator curvature check failed: {run_chrono.stderr}"
+print("✓ 百岁运势时空罗盘大运交界处曲率平滑重构（消除静态十神干支峰值伪影、0% 人工峰值）验证通过！")
+
+print("\n🎉 ALL 72 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 

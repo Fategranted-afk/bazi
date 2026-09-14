@@ -71,7 +71,7 @@ const I18N = (function() {
       dossier_download_btn: "📥 直接下载 PDF 文件",
       dossier_print_btn: "🖨️ 系统打印 / 另存为 PDF",
       dossier_close_btn: "关闭预览",
-      dossier_generating: "⏳ 正在编译 4 页皇家线装 A4 珍藏册 PDF，请稍候...",
+      dossier_generating: "⏳ 正在编译 5 页皇家线装 A4 珍藏册 PDF，请稍候...",
       dossier_download_success: "✅ 皇家线装战报 PDF 已成功生成并开始下载！",
       dossier_download_fallback: "ℹ️ 已为您启动 A4 级高保真打印视图，请在弹出窗口中选择「另存为 PDF」即可保存文件。",
       dossier_watermark_text: "钦天监御制命盘密卷",
@@ -80,6 +80,7 @@ const I18N = (function() {
       dossier_vol1: "卷一 · 战略大局与破局胜负手",
       dossier_vol2: "卷二 · 六亲全息深度侧写",
       dossier_vol3: "卷三 · 禅道心智与传世解脱方策",
+      dossier_vol4: "卷四 · 大运年景大势与十四字全景气机集成",
 
       sec_strategy_title: "全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱",
       sec_strategy_subtitle: "深度融汇生杀破局战略胜负手、六亲深度侧写（父母/配偶/子女四维全息）、宏观时空场能共振与终身不败立身三则",
@@ -584,7 +585,7 @@ const I18N = (function() {
       dossier_download_btn: "📥 Direct Download PDF",
       dossier_print_btn: "🖨️ Print / Save as PDF",
       dossier_close_btn: "Close Preview",
-      dossier_generating: "⏳ Compiling 4-Page Imperial A4 PDF Dossier...",
+      dossier_generating: "⏳ Compiling 5-Page Imperial A4 PDF Dossier...",
       dossier_download_success: "✅ Imperial PDF Dossier generated and download started!",
       dossier_download_fallback: "ℹ️ High-fidelity A4 print view ready. Select 'Save as PDF' in the print dialog.",
       dossier_watermark_text: "IMPERIAL CELESTIAL ARCHIVE",
@@ -593,6 +594,7 @@ const I18N = (function() {
       dossier_vol1: "Volume I: Grand Strategy & Decisive Campaigns",
       dossier_vol2: "Volume II: 4D Kinship Holographic Profiles",
       dossier_vol3: "Volume III: Zen-Dao Mastery & Ultimate Liberation",
+      dossier_vol4: "Volume IV: Decennial Trajectory & 14-Character Energy Synthesis",
 
       sec_strategy_title: "Grand Strategy & Breakthrough Campaign · Pareto 20% Sovereign Hologram",
       sec_strategy_subtitle: "Synthesizing decisive breakthrough campaigns, 4D kinship holographic depth profiles (Parents/Spouse/Children), era resonance & lifetime golden rules",
