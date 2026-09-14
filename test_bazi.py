@@ -6394,7 +6394,431 @@ run_residence77 = subprocess.run(jsc_residence77_cmd, capture_output=True, text=
 assert run_residence77.returncode == 0, f"Residence City 77 check failed: stdout={run_residence77.stdout} stderr={run_residence77.stderr}"
 print("✓ 居住城市五行地缘风水评估引擎（中国/英国/美国/加拿大五方气数/生克推演/调理实策/双语零残留）验证通过！")
 
-print("\n🎉 ALL 77 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 78. Validate Career & Wealth Trajectory Engine, Ten Gods Glossary & ZiPingZhenQuan Canonical Integrity
+print("\n=== 78. Validating Career & Wealth Trajectory Engine, Ten Gods Glossary & ZiPingZhenQuan Integrity ===")
+
+# Part A: Validate standalone career.html architecture and DOM IDs
+assert os.path.exists("career.html"), "career.html file does not exist!"
+with open("career.html", "r", encoding="utf-8") as f:
+    career_html = f.read()
+
+required_career_ids = [
+    "careerPageTitle", "careerPageSeal", "careerPageSubtitle", "careerBtnReturn",
+    "careerBannerSeal", "careerBannerTitle", "careerBannerDesc", "careerQuickBadges",
+    "secTitleManagingUp", "secSealManagingUp", "secTitlePeerDynamics", "secSealPeerDynamics",
+    "secTitleArchetypes", "secSealArchetypes", "secTitleTiming", "secSealTiming",
+    "careerFooterText", "careerLangZhBtn", "careerLangEnBtn",
+    "managingUpContainer", "peerDynamicsContainer", "archetypesContainer", "timingContainer"
+]
+for cid in required_career_ids:
+    assert f'id="{cid}"' in career_html, f"Missing id #{cid} in career.html"
+
+assert "data/tengods.js" in career_html, "Missing data/tengods.js in career.html"
+assert "js/career-engine.js" in career_html, "Missing js/career-engine.js in career.html"
+
+# Part B: Core Engines & Database Integrity in JSC
+jsc_career_core_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r'''
+    var console = { log: function(){}, warn: function(){}, error: function(){} };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+
+    // 1. Validate TenGodsDB
+    var allGods = TenGodsDB.getAll();
+    if (allGods.length !== 10) throw new Error("Expected 10 Ten Gods, got " + allGods.length);
+    allGods.forEach(function(g) {
+      var requiredFields = [
+        "key", "nameZh", "nameEn", "shortEn", "elementRelationZh", "elementRelationEn",
+        "chineseSealZh", "chineseSealEn", "ancientCanonZh", "ancientCanonEn",
+        "plainTextZh", "plainTextEn", "workplaceArchetypeZh", "workplaceArchetypeEn",
+        "strengthsZh", "strengthsEn", "trapsZh", "trapsEn", "actionRulesZh", "actionRulesEn"
+      ];
+      requiredFields.forEach(function(f) {
+        if (!g[f] || g[f].length === 0) throw new Error("Missing field " + f + " in god " + g.key);
+        if (f.endsWith("En") && /[\u4e00-\u9fa5]/.test(g[f])) {
+          throw new Error("Residual Chinese in TenGod " + g.key + "." + f + ": " + g[f]);
+        }
+      });
+    });
+
+    var s1 = TenGodsDB.search("七杀");
+    if (s1.length === 0) throw new Error("Search 七杀 failed");
+    var s2 = TenGodsDB.search("Direct Officer");
+    if (s2.length === 0) throw new Error("Search Direct Officer failed");
+
+    // 2. Validate ZiPingZhenQuanDB Patterns
+    var zpKeys = Object.keys(ZI_PING_ZHEN_QUAN_PATTERNS);
+    if (zpKeys.length !== 8) throw new Error("Expected 8 canonical patterns, got " + zpKeys.length);
+    zpKeys.forEach(function(k) {
+      var pat = ZI_PING_ZHEN_QUAN_PATTERNS[k];
+      if (!pat.conditions || !pat.defects || !pat.remedies) throw new Error("Missing canonical Chinese in " + k);
+      var enFields = [
+        pat.nameEn, pat.quoteEn, pat.conditionsEn, pat.defectsEn, pat.remediesEn,
+        pat.usageEn, pat.vernacular.textEn, pat.vernacular.translationEn,
+        pat.vernacular.paradigmEn, pat.vernacular.defectWarningEn
+      ];
+      enFields.forEach(function(str) {
+        if (!str || str.length === 0) throw new Error("Empty English field in " + k);
+        if (/[\u4e00-\u9fa5]/.test(str)) throw new Error("Residual Chinese in pattern " + k + ": " + str);
+      });
+    });
+
+    // 3. Validate CareerEngine Multi-Chart Calculations & Zero Residual Chinese
+    var testCharts = [
+      BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造" }),
+      BaZiEngine.calculate({ year: 1970, month: 12, day: 8, hour: 6, minute: 0, gender: "乾造" }),
+      BaZiEngine.calculate({ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "坤造" })
+    ];
+
+    testCharts.forEach(function(bazi) {
+      var luck = LuckEngine.calculateLuck(bazi, 2026);
+      var res = CareerEngine.generateCareerReport(bazi, luck, 2026);
+      if (!res.managingUp || !res.peerDynamics || !res.workplaceArchetypes || !res.timingTrajectory) {
+        throw new Error("Career report missing core section");
+      }
+
+      // Check managingUp
+      var mu = res.managingUp;
+      var muEn = [mu.styleEn, mu.avoidOffendingEn, mu.askingResourcesEn];
+      mu.scripts.forEach(function(s) {
+        muEn.push(s.titleEn); muEn.push(s.badgeEn); muEn.push(s.dialogueEn); muEn.push(s.tipsEn);
+      });
+      muEn.forEach(function(v) {
+        if (!v || /[\u4e00-\u9fa5]/.test(v)) throw new Error("Residual Chinese in managingUp: " + v);
+      });
+
+      // Check peerDynamics
+      var pd = res.peerDynamics;
+      var pdEn = [pd.peerAnalysisEn, pd.betrayalWarningEn];
+      if (!pd.threeFirewalls || pd.threeFirewalls.length !== 3) throw new Error("Must have 3 firewalls");
+      pd.threeFirewalls.forEach(function(fw) {
+        pdEn.push(fw.titleEn); pdEn.push(fw.descEn); pdEn.push(fw.sealEn);
+      });
+      pdEn.forEach(function(v) {
+        if (!v || /[\u4e00-\u9fa5]/.test(v)) throw new Error("Residual Chinese in peerDynamics: " + v);
+      });
+
+      // Check workplaceArchetypes
+      var wa = res.workplaceArchetypes;
+      if (!wa || wa.length !== 4) throw new Error("Must have 4 archetypes");
+      wa.forEach(function(a) {
+        var aEn = [a.nameEn, a.coreStrengthsEn, a.typicalRolesEn, a.pitfallAlertEn, a.breakthroughTacticEn, a.grade.en];
+        aEn.forEach(function(v) {
+          if (!v || /[\u4e00-\u9fa5]/.test(v)) throw new Error("Residual Chinese in archetype: " + v);
+        });
+      });
+
+      // Check timingTrajectory
+      var tt = res.timingTrajectory;
+      var ttEn = [
+        tt.decadeGanzhiEn, tt.decadeGodEn, tt.annualGanzhiEn, tt.annualGodEn,
+        tt.annualHex.nameEn, tt.annualHex.decisionEn,
+        tt.directWealthAnalysisEn, tt.indirectWealthAnalysisEn
+      ];
+      ttEn.forEach(function(v) {
+        if (!v || /[\u4e00-\u9fa5]/.test(v)) throw new Error("Residual Chinese in timingTrajectory: " + v);
+      });
+
+      if (!tt.monthlyRoadmap || tt.monthlyRoadmap.length !== 12) throw new Error("Must have 12 months roadmap");
+      tt.monthlyRoadmap.forEach(function(m) {
+        var mEn = [m.ganzhiEn, m.godEn, m.solarSpanEn, m.actionTagEn, m.adviceEn];
+        mEn.forEach(function(v) {
+          if (!v || /[\u4e00-\u9fa5]/.test(v)) throw new Error("Residual Chinese in monthlyRoadmap: " + v);
+        });
+      });
+    });
+
+    if (CareerEngine.getGanzhiEn("庚寅") !== "Geng-Yin") throw new Error("Ganzhi conversion failed");
+    '''
+]
+run_core78 = subprocess.run(jsc_career_core_cmd, capture_output=True, text=True)
+assert run_core78.returncode == 0, f"Career Core 78 check failed: stdout={run_core78.stdout} stderr={run_core78.stderr}"
+
+# Part C: Full Browser DOM Simulation & View Navigation in JSC
+jsc_career_dom_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r'''
+    var console = { log: function(){}, warn: function(){}, error: function(){} };
+
+    var mockStorage = {};
+    var localStorage = {
+      getItem: function(k) { return mockStorage[k] || null; },
+      setItem: function(k, v) { mockStorage[k] = String(v); },
+      removeItem: function(k) { delete mockStorage[k]; }
+    };
+
+    function makeEl(id, tag) {
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        textContent: "",
+        value: "",
+        _rawInnerHTML: "",
+        get innerHTML() {
+          var ch = (this.children || []).map(function(c) { return c.innerHTML || ""; }).join("");
+          return (this._rawInnerHTML || "") + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this.children = [];
+        },
+        className: "",
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          _list: [],
+          add: function(c) { if (this._list.indexOf(c) === -1) this._list.push(c); },
+          remove: function(c) { var idx = this._list.indexOf(c); if (idx !== -1) this._list.splice(idx, 1); },
+          contains: function(c) { return this._list.indexOf(c) !== -1; },
+          toggle: function(c) { if (this.contains(c)) this.remove(c); else this.add(c); }
+        },
+        style: {},
+        children: [],
+        appendChild: function(child) { this.children.push(child); return child; },
+        removeChild: function(child) {
+          var idx = this.children.indexOf(child);
+          if (idx !== -1) this.children.splice(idx, 1);
+          return child;
+        },
+        setAttribute: function(k, v) { this[k] = v; },
+        getAttribute: function(k) { return this[k] || null; },
+        removeAttribute: function(k) { delete this[k]; },
+        _listeners: {},
+        addEventListener: function(evt, handler) {
+          this._listeners[evt] = this._listeners[evt] || [];
+          this._listeners[evt].push(handler);
+        },
+        click: function() {
+          if (this._listeners["click"]) {
+            var self = this;
+            this._listeners["click"].forEach(function(fn) { fn.call(self); });
+          }
+        },
+        querySelectorAll: function(sel) { return []; },
+        querySelector: function(sel) { return null; },
+        getContext: function() {
+          return {
+            clearRect: function(){}, fillRect: function(){}, beginPath: function(){},
+            moveTo: function(){}, lineTo: function(){}, stroke: function(){},
+            fill: function(){}, arc: function(){}, closePath: function(){},
+            measureText: function(){ return { width: 50 }; }, fillText: function(){}
+          };
+        }
+      };
+    }
+
+    var allIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox",
+      "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer",
+      "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn",
+      "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn",
+      "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn",
+      "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay",
+      "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome",
+      "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing",
+      "navBtnSynastry", "navBtnFengShui", "navBtnCareer", "view-home", "pillarsContainer",
+      "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer",
+      "portalBtnStrategy", "portalBtnFriction", "portalBtnFengShui", "portalBtnCareer",
+      "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars",
+      "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar",
+      "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth",
+      "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored",
+      "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy",
+      "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction",
+      "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge",
+      "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge",
+      "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider",
+      "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer",
+      "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer",
+      "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody",
+      "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer",
+      "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection",
+      "ecologicalResonanceContainer", "timeDynamicsSection", "tdAnnualBadge", "timeDynamicsContainer",
+      "view-canons", "tab-sanming", "sanmingAutoResult", "smDaySelect", "smHourSelect",
+      "smCustomQueryBtn", "smCustomResult", "smPatternsList", "tab-qiongtong", "qiongtongAutoResult",
+      "qtStemSelect", "qtBranchSelect", "qtCustomQueryBtn", "qtCustomResult", "tab-ziping",
+      "zipingAutoResult", "zipingPatternsList", "tab-ditiansui", "ditiansuiAutoResult",
+      "dtsStemButtons", "dtsCustomResult", "dtsChaptersList", "tab-yuanhai", "yuanhaiChaptersList",
+      "yuanhaiTenGodsList", "tab-shenfeng", "shenfengAutoResult", "shenfengTreatisesList",
+      "tab-yuzhao", "yuzhaoAutoResult", "yuzhaoAphorismsList", "tab-lixuzhong", "lixuzhongAutoResult",
+      "lixuzhongChaptersList", "tab-definitions", "tenGodsContainer", "tenGodsFilterGroup",
+      "tab-search", "dbSearchInput", "dbSearchBtn", "dbSearchResults", "view-iching",
+      "ichingQueryInput", "ichingSelect", "ichingInstantBtn", "ichingCoinBtn", "ichingTimeBtn",
+      "coinTossArena", "coinStepBadge", "coinResetBtn", "coinGraphic1", "coinGraphic2",
+      "coinGraphic3", "throwCoinBtn", "coinLinesProgress", "ichingResultContainer",
+      "ichingInitPrompt", "ichingResultCard", "ichingMetaBanner", "originalHexagramCard",
+      "resultingHexagramCard", "complementaryHexagramsBar", "oracleFocusTag",
+      "canonicalScripturesContent", "modernInterpretationCards", "view-synastry",
+      "synastryModeRomantic", "synastryModeBusiness", "btnSynastryLoadA", "synastryDateA",
+      "synastryTimeA", "synastryGenderA", "synastryLabelA", "synastryDateB", "synastryTimeB",
+      "synastryGenderB", "synastryLabelB", "calcSynastryBtn", "synastryResultContainer",
+      "elementFluxCanvas", "calculationProgressModal", "calcProgressTitle", "calcProgressStageText",
+      "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1",
+      "progressStep2", "progressStep3", "progressStep4", "progressStep5", "imperialDossierModal",
+      "dossierLangZh", "dossierLangEn", "dossierDownloadPdfBtn", "dossierPrintBtn", "dossierCloseBtn",
+      "dossierExportStatus", "dossierExportStatusMsg", "dossierExportStatusDismiss", "imperialDossierContainer",
+      "view-fengshui", "btnJumpToHomeFromFengShui", "fengshuiContentContainer", "fengshuiQuickBadges",
+      "ziping100Section", "ziping100Container", "zipingScoreBadges", "fourPillarsHexSection",
+      "fourPillarsHexContainer", "fourPillarsAgeSlider", "fourPillarsAgeDisplay", "currentCountrySelect",
+      "currentCitySelect", "currentCustomCityInput", "fsCardCountrySelect", "fsCardCitySelect",
+      "fsCardCustomCityInput", "fengshuiCityEvaluationCard",
+      "view-career", "btnJumpToHomeFromCareer", "careerContentContainer", "careerQuickBadgesDashboard"
+    ];
+
+    var elements = {};
+    allIds.forEach(function(id) { elements[id] = makeEl(id); });
+
+    var docListeners = {};
+    var document = {
+      documentElement: { lang: "zh-CN", setAttribute: function(){}, getAttribute: function(){ return "zh-CN"; } },
+      getElementById: function(id) { return elements[id] || null; },
+      querySelectorAll: function(sel) {
+        if (sel === ".view-nav-btn") {
+          return [
+            elements["navBtnHome"], elements["navBtnStrategy"], elements["navBtnFriction"],
+            elements["navBtnLuck"], elements["navBtnCanons"], elements["navBtnIChing"],
+            elements["navBtnSynastry"], elements["navBtnFengShui"], elements["navBtnCareer"]
+          ];
+        }
+        if (sel === ".canon-tab-btn") {
+          return [
+            elements["tab-sanming"], elements["tab-qiongtong"], elements["tab-ziping"],
+            elements["tab-ditiansui"], elements["tab-yuanhai"], elements["tab-shenfeng"],
+            elements["tab-yuzhao"], elements["tab-lixuzhong"], elements["tab-definitions"], elements["tab-search"]
+          ];
+        }
+        if (sel === ".feature-showcase-card") {
+          var card = makeEl("card9");
+          card.setAttribute("data-jump-view", "view-career");
+          return [card];
+        }
+        return [];
+      },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        docListeners[event] = docListeners[event] || [];
+        docListeners[event].push(handler);
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+
+    var windowListeners = {};
+    var window = {
+      document: document,
+      localStorage: localStorage,
+      devicePixelRatio: 2,
+      addEventListener: function(evt, handler) {
+        windowListeners[evt] = windowListeners[evt] || [];
+        windowListeners[evt].push(handler);
+      },
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function(cb) { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){} }
+    };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/portrait-engine.js");
+    load("js/synastry-engine.js");
+    load("js/career-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/app.js");
+
+    if (document._domReady) document._domReady();
+
+    // 1. Navigation tests
+    elements["portalBtnCareer"].click();
+    if (elements["view-career"].classList.contains("hidden")) {
+      throw new Error("portalBtnCareer click failed to show view-career");
+    }
+    elements["btnJumpToHomeFromCareer"].click();
+    if (!elements["view-career"].classList.contains("hidden") || elements["view-home"].classList.contains("hidden")) {
+      throw new Error("btnJumpToHomeFromCareer click failed to return to view-home");
+    }
+
+    // 2. Ten Gods Glossary Tab & Filtering
+    elements["tab-definitions"].click();
+    if (elements["tenGodsContainer"].children.length !== 10) {
+      throw new Error("Expected 10 Ten Gods cards, got " + elements["tenGodsContainer"].children.length);
+    }
+    var filterBtns = elements["tenGodsFilterGroup"].children;
+    if (filterBtns.length !== 6) throw new Error("Expected 6 filter buttons");
+    filterBtns[2].click(); // Wealth
+    if (elements["tenGodsContainer"].children.length !== 2) throw new Error("Expected 2 Wealth cards");
+    filterBtns[0].click(); // All
+    if (elements["tenGodsContainer"].children.length !== 10) throw new Error("Expected 10 All cards");
+
+    // 3. Career Wealth Rendering & English Parity
+    var bazi = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造" });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    window.setLanguage("en");
+    if (elements["careerContentContainer"].innerHTML.length < 100) {
+      throw new Error("careerContentContainer is empty in English mode");
+    }
+    if (/[\u4e00-\u9fa5]/.test(elements["careerContentContainer"].innerHTML)) {
+      throw new Error("Residual Chinese in English careerContentContainer");
+    }
+
+    elements["tab-definitions"].click();
+    if (elements["tenGodsContainer"].children.length !== 10) {
+      throw new Error("Expected 10 Ten Gods cards in EN mode");
+    }
+    if (/[\u4e00-\u9fa5]/.test(elements["tenGodsContainer"].innerHTML)) {
+      throw new Error("Residual Chinese in English tenGodsContainer");
+    }
+
+    // 4. Universal Search
+    elements["dbSearchInput"].value = "Seven Killings";
+    elements["dbSearchBtn"].click();
+    if (!elements["dbSearchResults"].innerHTML.includes("Seven Killings")) {
+      throw new Error("Search Seven Killings did not yield expected results");
+    }
+    '''
+]
+run_dom78 = subprocess.run(jsc_career_dom_cmd, capture_output=True, text=True)
+assert run_dom78.returncode == 0, f"Career DOM 78 check failed: stdout={run_dom78.stdout} stderr={run_dom78.stderr}"
+
+print("✓ 职场打工人破局与财运事业全相推演引擎（向上管理4大话术/同僚3重防火墙/四大生态位/正偏财时空推演/十神全典定义/双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 78 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

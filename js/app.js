@@ -7410,7 +7410,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tt = report.timingTrajectory;
 
     container.innerHTML = `
-      <!-- Pillar 1: Managing Up & Superiors Interaction (向上管理与职场沟通) -->
+      <!-- Pillar 1: Managing Up -->
       <div class="space-y-4">
         <div class="flex items-center justify-between border-b border-gray-800 pb-2">
           <div class="flex items-center space-x-2">
@@ -7440,7 +7440,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <!-- 4 Realistic Workplace Scripts -->
+        <!-- 4 Workplace Scripts -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           ${mu.scripts.map(s => `
             <div class="bg-card p-4 rounded-xl border border-gray-800/80 shadow-lg space-y-2.5 flex flex-col justify-between hover:border-purple-500/40 transition">
@@ -7459,7 +7459,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Pillar 2: Peer & Colleague Dynamics (横向协作与人际防火墙) -->
+      <!-- Pillar 2: Peer Dynamics -->
       <div class="space-y-4">
         <div class="flex items-center justify-between border-b border-gray-800 pb-2">
           <div class="flex items-center space-x-2">
@@ -7501,7 +7501,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Pillar 3: Workplace Archetype Matching (天命职能与四大生态位精准定向) -->
+      <!-- Pillar 3: Workplace Archetype Matching -->
       <div class="space-y-4">
         <div class="flex items-center justify-between border-b border-gray-800 pb-2">
           <div class="flex items-center space-x-2">
@@ -7542,7 +7542,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Pillar 4: Timing Trajectory (时空财运与事业窗口推演) -->
+      <!-- Pillar 4: Timing Trajectory -->
       <div class="space-y-4">
         <div class="flex items-center justify-between border-b border-gray-800 pb-2">
           <div class="flex items-center space-x-2">
@@ -7562,12 +7562,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex items-center justify-between border-b border-gray-800 pb-2">
               <span class="text-xs font-bold text-purple-300">${isEn ? 'Decade & Annual Stance' : '当前大运与流年定调'}</span>
               <span class="text-[10px] px-2 py-0.5 rounded bg-purple-950/60 text-purple-300 border border-purple-800/40">
-                ${tt.decadeGanzhi} (${isEn ? tt.decadeGodEn : tt.decadeGod}) · ${tt.annualGanzhi} (${isEn ? tt.annualGodEn : tt.annualGod})
+                ${isEn ? tt.decadeGanzhiEn : tt.decadeGanzhi} (${isEn ? tt.decadeGodEn : tt.decadeGod}) · ${isEn ? tt.annualGanzhiEn : tt.annualGanzhi} (${isEn ? tt.annualGodEn : tt.annualGod})
               </span>
             </div>
             <p class="text-xs text-gray-300 leading-relaxed">
               ${isEn
-                ? `Decade [${tt.decadeGanzhi}] sets a ${tt.decadeGodEn} command tone, whilst Year [${tt.annualGanzhi}] activates the ${tt.annualGodEn} gateway. Calibrate high-risk strategic moves against steady capital retention.`
+                ? `Decade [${tt.decadeGanzhiEn}] sets a ${tt.decadeGodEn} command tone, whilst Year [${tt.annualGanzhiEn}] activates the ${tt.annualGodEn} gateway. Calibrate high-risk strategic moves against steady capital retention.`
                 : `大运【${tt.decadeGanzhi}】（${tt.decadeGod}执权）奠定宏观中枢，流年【${tt.annualGanzhi}】（${tt.annualGod}当值）激活当下现实战役。注意区分攻守节奏，稳中求进。`}
             </p>
           </div>
@@ -7618,7 +7618,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800/80 hover:border-amber-500/40 transition space-y-2 flex flex-col justify-between">
                 <div class="space-y-1.5">
                   <div class="flex items-center justify-between border-b border-gray-800 pb-1">
-                    <span class="font-bold text-xs text-amber-300 font-serif-sc">${m.ganzhi}${isEn ? ' Month' : '月'} (${isEn ? m.godEn : m.god})</span>
+                    <span class="font-bold text-xs text-amber-300 font-serif-sc">${isEn ? m.ganzhiEn : m.ganzhi}${isEn ? ' Month' : '月'} (${isEn ? m.godEn : m.god})</span>
                     <span class="text-[10px] text-gray-400 font-mono">${isEn ? m.solarSpanEn : m.solarSpanZh}</span>
                   </div>
                   <span class="inline-block text-[10px] px-2 py-0.5 rounded font-semibold bg-gray-800 text-gray-200 border border-gray-700">
@@ -8328,11 +8328,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ${all.map(item => `
           <div class="p-3.5 bg-black/30 rounded-lg border border-gray-700/50 hover:border-amber-500/50 transition">
             <div class="flex justify-between items-center mb-1.5">
-              <span class="font-bold text-sm text-amber-300 font-serif-sc">${item.title}</span>
-              <span class="chinese-seal text-[10px] py-0">${item.source}</span>
+              <span class="font-bold text-sm text-amber-300 font-serif-sc">${isEn ? (item.titleEn || item.title) : item.title}</span>
+              <span class="chinese-seal text-[10px] py-0">${isEn ? (item.sourceEn || item.source) : item.source}</span>
             </div>
-            <p class="text-xs font-serif-sc text-gray-200 mb-1">“${item.content}”</p>
-            <p class="text-[11px] text-gray-400 leading-relaxed">${item.detail}</p>
+            <p class="text-xs font-serif-sc text-gray-200 mb-1">“${isEn ? (item.contentEn || item.content) : item.content}”</p>
+            <p class="text-[11px] text-gray-400 leading-relaxed">${isEn ? (item.detailEn || item.detail) : item.detail}</p>
           </div>
         `).join('')}
       </div>

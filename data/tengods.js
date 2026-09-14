@@ -252,19 +252,29 @@ class TenGodsDB {
       if (
         g.nameZh.toLowerCase().includes(keyword) ||
         g.nameEn.toLowerCase().includes(keyword) ||
+        g.shortEn.toLowerCase().includes(keyword) ||
         g.workplaceArchetypeZh.toLowerCase().includes(keyword) ||
         g.workplaceArchetypeEn.toLowerCase().includes(keyword) ||
         g.plainTextZh.toLowerCase().includes(keyword) ||
         g.plainTextEn.toLowerCase().includes(keyword) ||
         g.ancientCanonZh.toLowerCase().includes(keyword) ||
+        g.ancientCanonEn.toLowerCase().includes(keyword) ||
         g.strengthsZh.toLowerCase().includes(keyword) ||
-        g.trapsZh.toLowerCase().includes(keyword)
+        g.strengthsEn.toLowerCase().includes(keyword) ||
+        g.trapsZh.toLowerCase().includes(keyword) ||
+        g.trapsEn.toLowerCase().includes(keyword) ||
+        g.actionRulesZh.toLowerCase().includes(keyword) ||
+        g.actionRulesEn.toLowerCase().includes(keyword)
       ) {
         results.push({
           source: '《八经十神真诠》· 常见定义',
-          title: `${g.nameZh}（${g.workplaceArchetypeZh}）`,
+          sourceEn: 'Ten Gods Canonical Glossary',
+          title: `${g.nameZh} / ${g.nameEn}（${g.workplaceArchetypeZh}）`,
+          titleEn: `${g.nameEn} (${g.workplaceArchetypeEn})`,
           content: g.ancientCanonZh.split('\n')[0],
-          detail: `【通俗要义】${g.plainTextZh} 【职场实操】${g.actionRulesZh}`
+          contentEn: g.ancientCanonEn.split('\n')[0],
+          detail: `【通俗要义】${g.plainTextZh} 【职场实操】${g.actionRulesZh} | [Ten Gods: ${g.nameEn}]`,
+          detailEn: `[Plain Exegesis] ${g.plainTextEn} [Workplace Action] ${g.actionRulesEn}`
         });
       }
     }
