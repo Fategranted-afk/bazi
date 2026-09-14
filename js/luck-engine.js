@@ -1696,66 +1696,37 @@ const LuckEngine = (function() {
     const isStrong = isDayMasterStrong(bazi);
     const dayBranch = bazi.pillars.day.branch;
     const dayStem = bazi.pillars.day.stem;
+    const monthBranch = bazi.pillars.month ? bazi.pillars.month.branch : "";
     const decades = (luckData && luckData.decades && luckData.decades.length > 0) ? luckData.decades : getDecades(bazi);
 
     const timeline = [];
 
     const SIX_CLASHES = {
-      '子': '午', '午': '子', '丑': '未', '未': '丑',
-      '寅': '申', '申': '寅', '卯': '酉', '酉': '卯',
-      '辰': '戌', '戌': '辰', '巳': '亥', '亥': '巳'
+      "子": "午", "午": "子", "丑": "未", "未": "丑",
+      "寅": "申", "申": "寅", "卯": "酉", "酉": "卯",
+      "辰": "戌", "戌": "辰", "巳": "亥", "亥": "巳"
     };
 
     const STEM_CLASHES = {
-      '甲': '庚', '庚': '甲', '乙': '辛', '辛': '乙',
-      '丙': '壬', '壬': '丙', '丁': '癸', '癸': '丁'
+      "甲": "庚", "庚": "甲", "乙": "辛", "辛": "乙",
+      "丙": "壬", "壬": "丙", "丁": "癸", "癸": "丁"
     };
 
     const SIX_HARMONIES = {
-      '子': '丑', '丑': '子', '寅': '亥', '亥': '寅',
-      '卯': '戌', '戌': '卯', '辰': '酉', '酉': '辰',
-      '巳': '申', '申': '巳', '午': '未', '未': '午'
+      "子": "丑", "丑": "子", "寅": "亥", "亥": "寅",
+      "卯": "戌", "戌": "卯", "辰": "酉", "酉": "辰",
+      "巳": "申", "申": "巳", "午": "未", "未": "午"
     };
 
-    const BRANCH_PRIMARY_STEM = {
-      '子': '癸', '丑': '己', '寅': '甲', '卯': '乙',
-      '辰': '戊', '巳': '丙', '午': '丁', '未': '己',
-      '申': '庚', '酉': '辛', '戌': '戊', '亥': '壬'
-    };
-
-    const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
-    const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+    const STEM_EN_MAP = { "甲": "Jia", "乙": "Yi", "丙": "Bing", "丁": "Ding", "戊": "Wu", "己": "Ji", "庚": "Geng", "辛": "Xin", "壬": "Ren", "癸": "Gui" };
+    const BRANCH_EN_MAP = { "子": "Zi", "丑": "Chou", "寅": "Yin", "卯": "Mao", "辰": "Chen", "巳": "Si", "午": "Wu", "未": "Wei", "申": "Shen", "酉": "You", "戌": "Xu", "亥": "Hai" };
     const GOD_EN_MAP = {
-      '比肩': 'Friend (Bi Jian)', '劫财': 'Rob Wealth (Jie Cai)',
-      '食神': 'Eating God (Shi Shen)', '伤官': 'Hurting Officer (Shang Guan)',
-      '偏财': 'Indirect Wealth (Pian Cai)', '正财': 'Direct Wealth (Zheng Cai)',
-      '七杀': 'Seven Killings (Qi Sha)', '正官': 'Direct Officer (Zheng Guan)',
-      '偏印': 'Indirect Resource (Pian Yin)', '正印': 'Direct Resource (Zheng Yin)'
+      "比肩": "Friend (Bi Jian)", "劫财": "Rob Wealth (Jie Cai)",
+      "食神": "Eating God (Shi Shen)", "伤官": "Hurting Officer (Shang Guan)",
+      "偏财": "Indirect Wealth (Pian Cai)", "正财": "Direct Wealth (Zheng Cai)",
+      "七杀": "Seven Killings (Qi Sha)", "正官": "Direct Officer (Zheng Guan)",
+      "偏印": "Indirect Resource (Pian Yin)", "正印": "Direct Resource (Zheng Yin)"
     };
-
-    function getGodScores(g, isStrong) {
-      let e = 0, w = 0;
-      if (!g) return { e, w };
-      if (g.includes('印')) {
-        if (!isStrong) { e += 10; w += 4; }
-        else { e -= 5; w -= 3; }
-      } else if (g.includes('比') || g.includes('劫')) {
-        if (!isStrong) { e += 8; w -= 2; }
-        else { e -= 6; w -= 10; }
-      } else if (g.includes('偏财') || g.includes('正财')) {
-        if (isStrong) { e += 6; w += 14; }
-        else { e -= 8; w += 4; }
-      } else if (g.includes('食神') || g.includes('伤官')) {
-        if (isStrong) { e += 8; w += 10; }
-        else { e -= 4; w += 6; }
-      } else if (g.includes('正官') || g.includes('七杀')) {
-        if (isStrong) { e += 8; w += 8; }
-        else { e -= 10; w -= 6; }
-      }
-      return { e, w };
-    }
-
-    const rawTimeline = [];
 
     for (let age = 1; age <= 100; age++) {
       const year = birthYear + age - 1;
@@ -1767,7 +1738,6 @@ const LuckEngine = (function() {
       const branch = BRANCHES[bIdx];
       const ganZhi = stem + branch;
       const tenGod = getTenGod(dm, stem);
-      const branchGod = getTenGod(dm, BRANCH_PRIMARY_STEM[branch] || '癸');
       const naYin = getNaYin(ganZhi);
 
       let dIdx = decades.findIndex(d => age >= d.ageStart && age <= d.ageEnd);
@@ -1775,24 +1745,21 @@ const LuckEngine = (function() {
       let prevDecade = (dIdx > 0) ? decades[dIdx - 1] : null;
       let nextDecade = (dIdx !== -1 && dIdx < decades.length - 1) ? decades[dIdx + 1] : null;
 
-      let decadeText = activeDecade ? activeDecade.text : (age < (decades[0] ? decades[0].ageStart : 10) ? '童限' : '晚境');
+      let decadeText = activeDecade ? activeDecade.text : (age < (decades[0] ? decades[0].ageStart : 10) ? "童限" : "晚境");
       let decadeSpanZh = activeDecade ? activeDecade.ageSpanZh : (age < (decades[0] ? decades[0].ageStart : 10) ? `1 ~ ${(decades[0] ? decades[0].ageStart - 1 : 9)} 岁` : `${(decades[decades.length - 1] ? decades[decades.length - 1].ageEnd + 1 : 90)} 岁之后`);
       let decadeSpanEn = activeDecade ? activeDecade.ageSpanEn : (age < (decades[0] ? decades[0].ageStart : 10) ? `Age 1-${(decades[0] ? decades[0].ageStart - 1 : 9)}` : `Age ${(decades[decades.length - 1] ? decades[decades.length - 1].ageEnd + 1 : 90)}+`);
 
       // Decade systemic baseline with smooth boundary blending
-      let activeBaselineE = (activeDecade && activeDecade.fortune && activeDecade.fortune.rating === 'good') ? 8 : -8;
-      let activeBaselineW = (activeDecade && activeDecade.fortune && activeDecade.fortune.rating === 'good') ? 8 : -6;
-      let prevBaselineE = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === 'good') ? 8 : (prevDecade ? -8 : 0);
-      let prevBaselineW = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === 'good') ? 8 : (prevDecade ? -6 : 0);
-      let nextBaselineE = (nextDecade && nextDecade.fortune && nextDecade.fortune.rating === 'good') ? 8 : -8;
-      let nextBaselineW = (nextDecade && nextDecade.fortune && nextDecade.fortune.rating === 'good') ? 8 : -6;
+      let activeBaselineE = (activeDecade && activeDecade.fortune && activeDecade.fortune.rating === "good") ? 8 : -8;
+      let activeBaselineW = (activeDecade && activeDecade.fortune && activeDecade.fortune.rating === "good") ? 8 : -6;
+      let prevBaselineE = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === "good") ? 8 : (prevDecade ? -8 : 0);
+      let prevBaselineW = (prevDecade && prevDecade.fortune && prevDecade.fortune.rating === "good") ? 8 : (prevDecade ? -6 : 0);
+      let nextBaselineE = (nextDecade && nextDecade.fortune && nextDecade.fortune.rating === "good") ? 8 : -8;
+      let nextBaselineW = (nextDecade && nextDecade.fortune && nextDecade.fortune.rating === "good") ? 8 : -6;
 
       let blendedDecadeE = activeBaselineE;
       let blendedDecadeW = activeBaselineW;
 
-      // Metaphysical physics of transitional turbulence (换甲气机换气 · 脱运逢交运):
-      // Entry year (交运): age === activeDecade.ageStart
-      // Exit year (脱运): age === activeDecade.ageEnd && nextDecade
       const isDecadeEntry = activeDecade && (age === activeDecade.ageStart);
       const isDecadeExit = activeDecade && nextDecade && (age === activeDecade.ageEnd);
       const isAtDecadeBoundary = isDecadeEntry || isDecadeExit;
@@ -1805,111 +1772,26 @@ const LuckEngine = (function() {
         blendedDecadeW = activeBaselineW * 0.65 + nextBaselineW * 0.35;
       }
 
-      let baseE = isStrong ? 62 : 54;
-      let baseW = 54;
+      let energyScore = (isStrong ? 64 : 54) + blendedDecadeE;
+      let wealthScore = 55 + blendedDecadeW;
 
-      // ----------------------------------------------------------------------
-      // Multi-factor synthesis weighting:
-      // Heavenly Stems (25%) + Earthly Branches (30%) + Annual Transit (25%) + Annual Hexagram (20%)
-      // ----------------------------------------------------------------------
-      // 1. Heavenly Stems (天干权重 ~25%)
-      const stemScores = getGodScores(tenGod, isStrong);
-      let stemE = stemScores.e;
-      let stemW = stemScores.w;
-      if (typeof STEM_COMBINATIONS !== 'undefined' && STEM_COMBINATIONS[stem] === dayStem) {
-        stemE += 4;
-        stemW += 5;
-      }
-      if (typeof STEM_CLASHES !== 'undefined' && STEM_CLASHES[stem] === dayStem) {
-        stemE -= 5;
-        stemW -= 4;
-      }
-
-      // 2. Earthly Branches (地支权重 ~30%)
-      const branchScores = getGodScores(branchGod, isStrong);
-      let branchE = branchScores.e;
-      let branchW = branchScores.w;
-      if (typeof SIX_HARMONIES !== 'undefined' && SIX_HARMONIES[branch] === dayBranch) {
-        branchE += 5;
-        branchW += 6;
-      }
-      if (typeof SIX_CLASHES !== 'undefined' && SIX_CLASHES[branch] === dayBranch) {
-        branchE -= 6;
-        branchW -= 5;
+      if (tenGod.includes("印")) {
+        if (!isStrong) { energyScore += 16; wealthScore += 6; }
+        else { energyScore -= 6; wealthScore -= 4; }
+      } else if (tenGod.includes("比") || tenGod.includes("劫")) {
+        if (!isStrong) { energyScore += 14; wealthScore -= 4; }
+        else { energyScore -= 8; wealthScore -= 16; }
+      } else if (tenGod.includes("财")) {
+        if (isStrong) { energyScore += 10; wealthScore += 24; }
+        else { energyScore -= 12; wealthScore += 8; }
+      } else if (tenGod.includes("食") || tenGod.includes("伤")) {
+        if (isStrong) { energyScore += 12; wealthScore += 18; }
+        else { energyScore -= 6; wealthScore += 10; }
+      } else if (tenGod.includes("官") || tenGod.includes("杀")) {
+        if (isStrong) { energyScore += 14; wealthScore += 12; }
+        else { energyScore -= 16; wealthScore -= 8; }
       }
 
-      // 3. Annual Transit (流年太岁权重 ~25%)
-      const annualFortune = evaluateTransitFortune(bazi, { stem, branch, text: ganZhi, stemGod: tenGod, naYin, age }, 'annual');
-      const decadeFortune = activeDecade ? (activeDecade.fortune || evaluateTransitFortune(bazi, activeDecade, 'decade')) : null;
-      let annualE = 0;
-      let annualW = 0;
-      if (annualFortune) {
-        if (annualFortune.rating === 'good') {
-          annualE += 8;
-          annualW += 10;
-        } else if (annualFortune.rating === 'bad') {
-          annualE -= 8;
-          annualW -= 6;
-        }
-      }
-
-      // 4. Annual Hexagram (流年值年卦与阴阳律权重 ~20%)
-      let hexE = 0;
-      let hexW = 0;
-      let annualHexRes = null;
-      if (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
-        try {
-          annualHexRes = IChingEngine.calculateFourPillarsHexagrams(bazi, age, year);
-        } catch (err) {}
-      }
-
-      const highAuspicious = [1, 11, 14, 15, 19, 24, 32, 42, 46, 50, 55, 58];
-      const midAuspicious = [2, 8, 17, 20, 26, 31, 34, 48, 57, 59];
-      const crucible = [3, 12, 18, 29, 36, 39, 47, 23];
-
-      if (annualHexRes && annualHexRes.zhiNian) {
-        const zn = annualHexRes.zhiNian;
-        const hexNum = zn.hexagram ? zn.hexagram.number : 0;
-        if (highAuspicious.includes(hexNum)) {
-          hexE += 7;
-          hexW += 8;
-        } else if (midAuspicious.includes(hexNum)) {
-          hexE += 3;
-          hexW += 4;
-        } else if (crucible.includes(hexNum)) {
-          hexE -= 6;
-          hexW -= 5;
-        }
-
-        if (zn.isMutated) {
-          hexE += (zn.activeLinePos === 5 ? 4 : 2);
-          hexW += 2;
-        } else {
-          hexE += 2;
-          hexW += 3;
-        }
-      } else {
-        const hexSeq = [1, 11, 14, 15, 19, 24, 32, 42, 46, 50, 55, 58, 2, 8, 17, 20, 26, 31, 34, 48, 57, 59];
-        const pseudoHex = hexSeq[(age + sIdx + bIdx) % hexSeq.length];
-        if (highAuspicious.includes(pseudoHex)) {
-          hexE += 6;
-          hexW += 7;
-        } else {
-          hexE += 3;
-          hexW += 3;
-        }
-      }
-
-      // Multi-factor weighted synthesis:
-      // 天干 (25%) + 地支 (30%) + 流年 (25%) + 流年卦 (20%)
-      const multiFactorE = (stemE * 0.25) + (branchE * 0.30) + (annualE * 0.25) + (hexE * 0.20);
-      const multiFactorW = (stemW * 0.25) + (branchW * 0.30) + (annualW * 0.25) + (hexW * 0.20);
-
-      let energyScore = baseE + blendedDecadeE + multiFactorE;
-      let wealthScore = baseW + blendedDecadeW + multiFactorW;
-
-      // Metaphysical physics of transitional turbulence (换甲气机换气):
-      // Transition years undergo systemic recalibration and energetic restructuring
       if (isAtDecadeBoundary) {
         energyScore -= 3;
         wealthScore -= 3;
@@ -1919,167 +1801,133 @@ const LuckEngine = (function() {
       const alertsEn = [];
 
       if (isAtDecadeBoundary) {
-        alerts.push('换甲接气 · 气机重构');
-        alertsEn.push('Decennial Recalibration');
+        alerts.push("换甲接气 · 气机重构");
+        alertsEn.push("Decennial Recalibration");
       }
 
       const isSuiYunBingLin = activeDecade && (activeDecade.text === ganZhi);
       if (isSuiYunBingLin) {
-        alerts.push('岁运并临');
-        alertsEn.push('Transit Duplication');
+        alerts.push("岁运并临");
+        alertsEn.push("Transit Duplication");
         energyScore -= 12;
       }
 
       const isTianKeDiChong = (STEM_CLASHES[stem] === dayStem && SIX_CLASHES[branch] === dayBranch);
       if (isTianKeDiChong) {
-        alerts.push('天克地冲');
-        alertsEn.push('Heaven & Earth Clash');
+        alerts.push("天克地冲");
+        alertsEn.push("Heaven & Earth Clash");
         energyScore -= 18;
         wealthScore -= 14;
       }
 
       const isDayBranchClash = (SIX_CLASHES[branch] === dayBranch);
       if (isDayBranchClash && !isTianKeDiChong) {
-        alerts.push('日支逢冲');
-        alertsEn.push('Day Branch Clash');
+        alerts.push("日支逢冲");
+        alertsEn.push("Day Branch Clash");
         energyScore -= 10;
         wealthScore -= 8;
       }
 
-      const monthBranch = bazi.pillars.month ? bazi.pillars.month.branch : '';
       const isMonthBranchClash = (monthBranch && SIX_CLASHES[branch] === monthBranch);
       if (isMonthBranchClash) {
-        alerts.push('冲犯提纲');
-        alertsEn.push('Clash with Month Mandate');
+        alerts.push("冲犯提纲");
+        alertsEn.push("Clash with Month Mandate");
         energyScore -= 12;
         wealthScore -= 10;
       }
 
       const isDecadeBranchClash = activeDecade && activeDecade.branch && (SIX_CLASHES[branch] === activeDecade.branch);
       if (isDecadeBranchClash) {
-        alerts.push('岁运相冲');
-        alertsEn.push('Decade-Annual Branch Clash');
+        alerts.push("岁运相冲");
+        alertsEn.push("Decade-Annual Branch Clash");
         energyScore -= 8;
         wealthScore -= 8;
       }
 
       const isDecadeBranchHarmony = activeDecade && activeDecade.branch && (SIX_HARMONIES[branch] === activeDecade.branch);
       if (isDecadeBranchHarmony) {
-        alerts.push('岁运相合');
-        alertsEn.push('Decade-Annual Harmony');
+        alerts.push("岁运相合");
+        alertsEn.push("Decade-Annual Harmony");
         energyScore += 6;
         wealthScore += 6;
       }
 
       const isLiuHe = (SIX_HARMONIES[branch] === dayBranch);
       if (isLiuHe) {
-        alerts.push('岁君六合');
-        alertsEn.push('Auspicious Harmony');
+        alerts.push("岁君六合");
+        alertsEn.push("Auspicious Harmony");
         energyScore += 10;
         wealthScore += 10;
       }
 
+      const annualFortune = evaluateTransitFortune(bazi, { stem, branch, text: ganZhi, stemGod: tenGod, naYin, age }, "annual");
+      const decadeFortune = activeDecade ? (activeDecade.fortune || evaluateTransitFortune(bazi, activeDecade, "decade")) : null;
+
       if (decadeFortune && annualFortune) {
-        if (decadeFortune.rating === 'good' && annualFortune.rating === 'good') {
-          alerts.push('岁运双吉');
-          alertsEn.push('Dual Favorable Transit');
-        } else if (decadeFortune.rating === 'good' && annualFortune.rating !== 'good') {
-          alerts.push('大运顺吉·流年暂慎');
-          alertsEn.push('Decade Favorable - Annual Prudent');
-        } else if (decadeFortune.rating !== 'good' && annualFortune.rating === 'good') {
-          alerts.push('流年逢吉·逆势突破');
-          alertsEn.push('Annual Favorable - Counter-Trend Surge');
-        } else if (decadeFortune.rating !== 'good' && annualFortune.rating !== 'good') {
-          alerts.push('岁运并慎·坚守底线');
-          alertsEn.push('Dual Caution - Defensive Fortress');
+        if (decadeFortune.rating === "good" && annualFortune.rating === "good") {
+          alerts.push("岁运双吉");
+          alertsEn.push("Dual Favorable Transit");
         }
       }
 
       if (alerts.length === 0) {
-        alerts.push('岁运祥和');
-        alertsEn.push('Harmonious Transit');
+        alerts.push("岁运祥和");
+        alertsEn.push("Harmonious Transit");
       }
 
-      rawTimeline.push({
+      energyScore = Math.max(22, Math.min(98, Math.round(energyScore)));
+      wealthScore = Math.max(20, Math.min(98, Math.round(wealthScore)));
+
+      let rating = "steady";
+      if (energyScore >= 75 || wealthScore >= 75) rating = "auspicious";
+      else if (energyScore < 45 || alerts.includes("天克地冲") || alerts.includes("岁运并临")) rating = "challenging";
+
+      let sEn = (typeof I18N !== "undefined") ? I18N.getStem(stem, "en").split(" ")[0] : (STEM_EN_MAP[stem] || stem);
+      let bEn = (typeof I18N !== "undefined") ? I18N.getBranch(branch, "en").split(" ")[0] : (BRANCH_EN_MAP[branch] || branch);
+      let ganZhiEn = sEn + "-" + bEn;
+      let tenGodEn = (typeof I18N !== "undefined") ? I18N.getGod(tenGod, "en") : (GOD_EN_MAP[tenGod] || "Influence Star");
+
+      let directiveZh = "";
+      let directiveEn = "";
+      let focusZh = "";
+      let focusEn = "";
+
+      if (rating === "auspicious") {
+        focusZh = "主动突破 · 乘势扩张";
+        focusEn = "Active Expansion · Strategic Breakthrough";
+        directiveZh = `${age}岁（${year} ${ganZhi}年）临【${tenGod}】，能量与财禄双星高照。此年当顺应大势，果断开拓新增长极、落实重大职业晋升或战略投资，以进为御，奠定未来数年复利壁垒。`;
+        directiveEn = `At age ${age} (${year} ${ganZhiEn}), favored by [${tenGodEn}], vitality and fortune peak. Decisively pursue expansion, promotions, and strategic investments to establish high-leverage compound advantage.`;
+      } else if (rating === "challenging") {
+        focusZh = "守正防守 · 筑牢底线";
+        focusEn = "Prudent Defense · Boundary Preservation";
+        directiveZh = `${age}岁（${year} ${ganZhi}年）见【${alerts.length > 0 ? alerts.join(" / ") : tenGod}】，气机激荡震荡。此年战略核心在“防守反击与固本培元”，切忌盲目扩大杠杆，合同细节务求严密，注意脾胃睡眠调理。`;
+        directiveEn = `At age ${age} (${year} ${ganZhiEn}), navigating [${alertsEn.length > 0 ? alertsEn.join(" / ") : tenGodEn}], energetic currents fluctuate. Focus strictly on capital preservation, risk containment, and vitality restoration; avoid excessive leverage.`;
+      } else {
+        focusZh = "稳健深耕 · 蓄势待发";
+        focusEn = "Steady Cultivation · Poised Readiness";
+        directiveZh = `${age}岁（${year} ${ganZhi}年）气数平稳中和，逢【${tenGod}】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`;
+        directiveEn = `At age ${age} (${year} ${ganZhiEn}), energy flows evenly under [${tenGodEn}]. Ideal for refining technical craft, consolidating operational systems, and compounding core skills in preparation for the next growth surge.`;
+      }
+
+      timeline.push({
         age,
         year,
         stem,
         branch,
         ganZhi,
+        ganZhiEn,
         tenGod,
+        tenGodEn,
         naYin,
-        decadeText,
+        naYinEn: (typeof I18N !== "undefined") ? I18N.getNaYin(naYin, "en") : naYin,
+        decade: decadeText,
         decadeSpanZh,
         decadeSpanEn,
-        alerts,
-        alertsEn,
-        rawE: energyScore,
-        rawW: wealthScore
-      });
-    }
-
-    // Pass 2: Temporal continuity & momentum filtering (reflecting metaphysical physical inertia)
-    for (let i = 0; i < 100; i++) {
-      const prev = (i > 0) ? rawTimeline[i - 1] : rawTimeline[0];
-      const curr = rawTimeline[i];
-      const next = (i < 99) ? rawTimeline[i + 1] : rawTimeline[99];
-
-      let energyScore = Math.round(prev.rawE * 0.15 + curr.rawE * 0.70 + next.rawE * 0.15);
-      let wealthScore = Math.round(prev.rawW * 0.15 + curr.rawW * 0.70 + next.rawW * 0.15);
-
-      energyScore = Math.max(22, Math.min(98, energyScore));
-      wealthScore = Math.max(20, Math.min(98, wealthScore));
-
-      let rating = 'steady';
-      if (energyScore >= 75 || wealthScore >= 75) rating = 'auspicious';
-      else if (energyScore < 45 || curr.alerts.includes('天克地冲') || curr.alerts.includes('岁运并临')) rating = 'challenging';
-
-      let sEn = (typeof I18N !== 'undefined') ? I18N.getStem(curr.stem, 'en').split(' ')[0] : (STEM_EN_MAP[curr.stem] || curr.stem);
-      let bEn = (typeof I18N !== 'undefined') ? I18N.getBranch(curr.branch, 'en').split(' ')[0] : (BRANCH_EN_MAP[curr.branch] || curr.branch);
-      let ganZhiEn = sEn + '-' + bEn;
-      let tenGodEn = (typeof I18N !== 'undefined') ? I18N.getGod(curr.tenGod, 'en') : (GOD_EN_MAP[curr.tenGod] || 'Influence Star');
-
-      let directiveZh = '';
-      let directiveEn = '';
-      let focusZh = '';
-      let focusEn = '';
-
-      if (rating === 'auspicious') {
-        focusZh = '主动突破 · 乘势扩张';
-        focusEn = 'Active Expansion · Strategic Breakthrough';
-        directiveZh = `${curr.age}岁（${curr.year} ${curr.ganZhi}年）临【${curr.tenGod}】，能量与财禄双星高照。此年当顺应大势，果断开拓新增长极、落实重大职业晋升或战略投资，以进为御，奠定未来数年复利壁垒。`;
-        directiveEn = `At age ${curr.age} (${curr.year} ${ganZhiEn}), favored by [${tenGodEn}], vitality and fortune peak. Decisively pursue expansion, promotions, and strategic investments to establish high-leverage compound advantage.`;
-      } else if (rating === 'challenging') {
-        focusZh = '守正防守 · 筑牢底线';
-        focusEn = 'Prudent Defense · Boundary Preservation';
-        directiveZh = `${curr.age}岁（${curr.year} ${curr.ganZhi}年）见【${curr.alerts.length > 0 ? curr.alerts.join(' / ') : curr.tenGod}】，气机激荡震荡。此年战略核心在“防守反击与固本培元”，切忌盲目扩大杠杆，合同细节务求严密，注意脾胃睡眠调理。`;
-        directiveEn = `At age ${curr.age} (${curr.year} ${ganZhiEn}), navigating [${curr.alertsEn.length > 0 ? curr.alertsEn.join(' / ') : tenGodEn}], energetic currents fluctuate. Focus strictly on capital preservation, risk containment, and vitality restoration; avoid excessive leverage.`;
-      } else {
-        focusZh = '稳健深耕 · 蓄势待发';
-        focusEn = 'Steady Cultivation · Poised Readiness';
-        directiveZh = `${curr.age}岁（${curr.year} ${curr.ganZhi}年）气数平稳中和，逢【${curr.tenGod}】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`;
-        directiveEn = `At age ${curr.age} (${curr.year} ${ganZhiEn}), energy flows evenly under [${tenGodEn}]. Ideal for refining technical craft, consolidating operational systems, and compounding core skills in preparation for the next growth surge.`;
-      }
-
-      timeline.push({
-        age: curr.age,
-        year: curr.year,
-        stem: curr.stem,
-        branch: curr.branch,
-        ganZhi: curr.ganZhi,
-        ganZhiEn,
-        tenGod: curr.tenGod,
-        tenGodEn,
-        naYin: curr.naYin,
-        naYinEn: (typeof I18N !== 'undefined') ? I18N.getNaYin(curr.naYin, 'en') : curr.naYin,
-        decade: curr.decadeText,
-        decadeSpanZh: curr.decadeSpanZh,
-        decadeSpanEn: curr.decadeSpanEn,
         energyScore,
         wealthScore,
         rating,
-        alerts: curr.alerts,
-        alertsEn: curr.alertsEn,
+        alerts,
+        alertsEn,
         focusZh,
         focusEn,
         directiveZh,

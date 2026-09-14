@@ -362,9 +362,9 @@ body {
   box-shadow: none !important;
   border-radius: 0 !important;
   width: 210mm !important;
-  height: 297mm !important;
-  min-height: 297mm !important;
-  max-height: 297mm !important;
+  height: 296.5mm !important;
+  min-height: 296.5mm !important;
+  max-height: 296.5mm !important;
   page-break-after: always !important;
   break-after: page !important;
   page-break-inside: avoid !important;

@@ -5926,7 +5926,7 @@ jsc_chrono76_cmd = [
 
     // Test Chart corresponding to user reference: 2026 birth, age 30 in 2055 (乙亥)
     var bazi2026 = BaZiEngine.calculate({
-      year: 2026, month: 10, day: 24, hour: 14, gender: "乾造",
+      year: 2026, month: 9, day: 14, hour: 14, minute: 30, gender: "乾造",
       useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
     });
     var luck2026 = LuckEngine.calculateLuck(bazi2026);
@@ -5936,13 +5936,34 @@ jsc_chrono76_cmd = [
       throw new Error("Timeline must have 100 points, got " + (timeline2026 ? timeline2026.length : 0));
     }
 
-    // Verify multi-factor calculation produces organic variance and smooth scores
+    // Verify exact calibrated scores matching user reference screenshot (66, 73, Harmonious Transit)
     var age30 = timeline2026[29];
     if (age30.age !== 30 || age30.year !== 2055 || age30.ganZhi !== "乙亥") {
       throw new Error("Age 30 mismatch: age=" + age30.age + " year=" + age30.year + " ganzhi=" + age30.ganZhi);
     }
-    if (typeof age30.energyScore !== 'number' || typeof age30.wealthScore !== 'number') {
-      throw new Error("Missing numerical scores at age 30");
+    if (age30.energyScore !== 66 || age30.wealthScore !== 73) {
+      throw new Error("Scores at age 30 mismatch: expected energy=66, wealth=73, got energy=" + age30.energyScore + ", wealth=" + age30.wealthScore);
+    }
+    if (age30.decade !== "庚子" || age30.decadeSpanZh !== "28 ~ 37 岁") {
+      throw new Error("Decade at age 30 mismatch: expected 庚子 (28 ~ 37 岁), got " + age30.decade + " (" + age30.decadeSpanZh + ")");
+    }
+    if (age30.tenGod !== "偏财") {
+      throw new Error("Ten God at age 30 mismatch: expected 偏财, got " + age30.tenGod);
+    }
+    if (age30.naYin !== "山头火") {
+      throw new Error("NaYin at age 30 mismatch: expected 山头火, got " + age30.naYin);
+    }
+    if (age30.alerts.indexOf("岁运祥和") === -1) {
+      throw new Error("Alerts at age 30 must include 岁运祥和, got " + JSON.stringify(age30.alerts));
+    }
+    if (age30.alertsEn.indexOf("Harmonious Transit") === -1) {
+      throw new Error("AlertsEn at age 30 must include Harmonious Transit, got " + JSON.stringify(age30.alertsEn));
+    }
+    if (age30.focusZh !== "稳健深耕 · 蓄势待发") {
+      throw new Error("Focus at age 30 mismatch, got " + age30.focusZh);
+    }
+    if (age30.directiveZh !== "30岁（2055 乙亥年）气数平稳中和，逢【偏财】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。") {
+      throw new Error("DirectiveZh at age 30 mismatch, got " + age30.directiveZh);
     }
 
     // Verify default tranquil alert is '岁运祥和' / 'Harmonious Transit'
