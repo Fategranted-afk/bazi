@@ -753,11 +753,11 @@ const LuckEngine = (function() {
       : (isYearYang ? 'Yang Year Female: Backward Progression' : 'Yin Year Male: Backward Progression');
 
     // Calculate birth date UTC
-    const bYear = bazi.input.adjustedYear;
-    const bMonth = bazi.input.adjustedMonth;
-    const bDay = bazi.input.adjustedDay;
-    const bHour = bazi.input.adjustedHour;
-    const bMin = bazi.input.adjustedMinute;
+    const bYear = (bazi && bazi.input && (bazi.input.adjustedYear || bazi.input.year)) || (bazi && bazi.birthYear) || 1990;
+    const bMonth = (bazi && bazi.input && (bazi.input.adjustedMonth || bazi.input.month)) || 1;
+    const bDay = (bazi && bazi.input && (bazi.input.adjustedDay || bazi.input.day)) || 1;
+    const bHour = (bazi && bazi.input && (bazi.input.adjustedHour !== undefined ? bazi.input.adjustedHour : bazi.input.hour)) || 12;
+    const bMin = (bazi && bazi.input && (bazi.input.adjustedMinute !== undefined ? bazi.input.adjustedMinute : bazi.input.minute)) || 0;
     const birthDate = new Date(Date.UTC(bYear, bMonth - 1, bDay, bHour, bMin));
 
     // Get 12 Jie dates for surrounding years
@@ -889,7 +889,7 @@ const LuckEngine = (function() {
    */
   function getAnnualLuck(bazi, decade, selectedYear) {
     const dm = bazi.dayMaster;
-    const birthYear = bazi.input.adjustedYear;
+    const birthYear = (bazi && bazi.input && (bazi.input.adjustedYear || bazi.input.year)) || (bazi && bazi.birthYear) || (bazi && bazi.solar && bazi.solar.year) || (bazi && bazi.year) || 1990;
     const currentCalYear = selectedYear || new Date().getFullYear();
 
     const years = [];
@@ -899,7 +899,7 @@ const LuckEngine = (function() {
       const stem = STEMS[sIdx];
       const branch = BRANCHES[bIdx];
       const text = stem + branch;
-      const age = y - birthYear + 1; // 虚岁
+      const age = Math.max(1, y - birthYear + 1); // 虚岁
 
       const isSelected = (y === currentCalYear);
       const stemGod = getTenGod(dm, stem);
@@ -915,6 +915,7 @@ const LuckEngine = (function() {
         branchElement: BRANCH_ELEMENTS[bIdx],
         stemGod,
         naYin,
+        age,
         ageZh: `${age} 岁`,
         ageEn: `Age ${age}`,
         isSelected,
@@ -2022,6 +2023,570 @@ const LuckEngine = (function() {
     };
   }
 
+  /**
+   * 子平“时间动力学与宏观能量引擎”五阶递进深度战报
+   * Generates a 5-Tier Master Report based on energy impedance & dynamic action directives.
+   */
+  function generateImpedanceReport(bazi, targetAnnualYear) {
+    if (!bazi || !bazi.pillars) return null;
+
+    const dm = bazi.dayMaster;
+    const dmEl = bazi.dayMasterElement || '木';
+    const birthYear = (bazi.input && (bazi.input.adjustedYear || bazi.input.year)) || bazi.birthYear || (bazi.solar && bazi.solar.year) || bazi.year || 1990;
+    const curCalYear = targetAnnualYear || new Date().getFullYear();
+    const currentAge = Math.max(1, curCalYear - birthYear + 1);
+
+    // 1. Determine Ten God weights across natal chart
+    const gods = {};
+    const pillars = bazi.pillars;
+    ['year', 'month', 'day', 'hour'].forEach(pKey => {
+      const p = pillars[pKey];
+      if (!p) return;
+      if (pKey !== 'day') {
+        const sGod = getTenGod(dm, p.stem);
+        gods[sGod] = (gods[sGod] || 0) + 2;
+      }
+      if (p.hiddenStems && Array.isArray(p.hiddenStems)) {
+        p.hiddenStems.forEach(hs => {
+          const hGod = getTenGod(dm, hs);
+          gods[hGod] = (gods[hGod] || 0) + 1;
+        });
+      }
+    });
+
+    // Chapter 1: Mental Model Archetype (心智模型: 博弈型 / 平台依附型 / 技术深耕型)
+    const gameScore = (gods['七杀'] || 0) * 1.5 + (gods['偏官'] || 0) * 1.5 + (gods['伤官'] || 0) * 1.3 + (gods['偏财'] || 0) * 1.2;
+    const platformScore = (gods['正官'] || 0) * 1.5 + (gods['正印'] || 0) * 1.4 + (gods['比肩'] || 0) * 1.1 + (gods['建禄'] || 0) * 1.2;
+    const craftsmanScore = (gods['食神'] || 0) * 1.5 + (gods['偏印'] || 0) * 1.4 + (gods['枭神'] || 0) * 1.4;
+
+    let mentalArchetypeKey = 'game';
+    if (platformScore > gameScore && platformScore >= craftsmanScore) {
+      mentalArchetypeKey = 'platform';
+    } else if (craftsmanScore > gameScore && craftsmanScore > platformScore) {
+      mentalArchetypeKey = 'craftsman';
+    }
+
+    const mentalArchetypes = {
+      game: {
+        id: 'game',
+        nameZh: '博弈破局型心智 (Game-Theoretic Vanguard)',
+        nameEn: 'Game-Theoretic Vanguard Archetype',
+        badgeZh: '博弈破局型',
+        badgeEn: 'Game-Theoretic',
+        coreMechanismZh: '在高度不确定性与非对称竞争中捕捉战略机遇。危机钝感度高，敢于在乱局中打破常规、以小博大、重构游戏规则。',
+        coreMechanismEn: 'Excels in asymmetric upside and navigating ambiguity. High crisis tolerance; disrupts conventional rules to seize outsized opportunities.',
+        blindSpotZh: '过度依赖逆商与险中求胜，易陷入盲目扩张、高杠杆投机或单打独斗；在长线稳态运营中易产生厌烦感与精神内耗。',
+        blindSpotEn: 'Over-relies on high-stakes gambles and brinkmanship; vulnerable to excessive leverage, lone-wolf burnout, and boredom in steady-state operations.',
+        defenseMechanismZh: '【激进反扑与向外投射】遭遇挫折或阻抗时，倾向于通过更大动作的进攻或盲目更换赛道来掩盖焦虑，不愿展示脆弱。',
+        defenseMechanismEn: '[Aggressive Escalation & External Projection] When facing impedance, tends to attack harder or pivot hastily to mask underlying anxiety rather than showing vulnerability.'
+      },
+      platform: {
+        id: 'platform',
+        nameZh: '平台依附协同型心智 (Institutional Platform Synergist)',
+        nameEn: 'Institutional Platform Synergist Archetype',
+        badgeZh: '平台依附型',
+        badgeEn: 'Institutional Platform',
+        coreMechanismZh: '善于借助成熟系统的组织杠杆、行业权威信用背书与既定制度规则实现稳健复利。重视声誉护城河与集体协同。',
+        coreMechanismEn: 'Masters institutional leverage, regulatory frameworks, and enterprise brand equity to build compounding, steady-state advantage.',
+        blindSpotZh: '风险厌恶度高，决策易受体制层级与外部评价牵制；对突发颠覆性无序竞争适应较慢，易产生制度性温水煮青蛙。',
+        blindSpotEn: 'Risk-averse and overly attuned to bureaucratic hierarchy and public appraisal; slow to adapt to chaotic disruption.',
+        defenseMechanismZh: '【合规退缩与理智化自卫】遭遇变局时退守既有规章流程，以‘按部就班’与道德制高点回避直接冲突与自我突破。',
+        defenseMechanismEn: '[Procedural Retreat & Intellectualization] When facing disruption, retreats into rigid rules and compliance to avoid direct conflict and risky evolution.'
+      },
+      craftsman: {
+        id: 'craftsman',
+        nameZh: '纵深技术深耕型心智 (Deep-Domain Craftsman Specialist)',
+        nameEn: 'Deep-Domain Craftsman Specialist Archetype',
+        badgeZh: '技术深耕型',
+        badgeEn: 'Deep Craftsman',
+        coreMechanismZh: '以专业技能纵深、不可替代的产品壁垒与独立心流作为立身之本。厌恶低效的人际政治，崇尚客观规律与精微打磨。',
+        coreMechanismEn: 'Anchors identity on deep craftsmanship, domain expertise, and pure creative flow. Shuns politics in favor of objective mastery and technical superiority.',
+        blindSpotZh: '容易陷入闭门造车与技术自恋，对商业变现通道、资本杠杆与人脉协同感知滞后，商业转化链条偏长。',
+        blindSpotEn: 'Susceptible to insular perfectionism and technological conceit; lags in capital leverage and commercial distribution channels.',
+        defenseMechanismZh: '【情感隔离与退回工坊】遭遇人际阻力或现实摩擦时，迅速关闭社交天线，退回纯粹技术或概念世界中自我封闭。',
+        defenseMechanismEn: '[Isolation of Affect & Workshop Retreat] When facing relational friction, shuts off social antennas and retreats into solitary technical immersion.'
+      }
+    };
+
+    // Imbalance element analysis
+    const elScores = (bazi.elements && bazi.elements.scores) || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
+    let maxEl = '木';
+    let maxScore = -1;
+    ['木', '火', '土', '金', '水'].forEach(el => {
+      const sc = elScores[el] || 0;
+      if (sc > maxScore) { maxScore = sc; maxEl = el; }
+    });
+
+    const elementTraps = {
+      '木': {
+        nameZh: '木气失衡偏枯',
+        nameEn: 'Wood Imbalance Skew',
+        trapZh: '情绪盲区在于容易躁动多怒、执念过深、非黑即白；在重大抉择时容易一意孤行，反复因刚直易折而撞上现实南墙。',
+        trapEn: 'Emotional trap: irritability, stubborn dogma, black-and-white framing; repeatedly hitting reality walls due to excessive rigidity.',
+        defenseZh: '【理智化防御与道德占位】将个人挫败归咎于规则不公或他人平庸，在道德高地上固步自封。',
+        defenseEn: '[Moral Intellectualization] Attributes failures to systemic injustice or peer mediocrity, entrenching on the moral high ground.'
+      },
+      '火': {
+        nameZh: '火气失衡偏枯',
+        nameEn: 'Fire Imbalance Skew',
+        trapZh: '情绪盲区在于情绪极易瞬间过载、急躁求成、耐力快速衰减；对即时反馈成瘾，在漫长筑底期极易因焦虑而提前退场。',
+        trapEn: 'Emotional trap: impulsive emotional surges, hyper-urgency, rapid stamina burn; addicted to instant validation, quitting during silent accumulation.',
+        defenseZh: '【躁狂式忙碌防御】以密集的高频琐碎忙碌对抗内心的空虚与失控感，用假动作掩盖核心战略推进的停滞。',
+        defenseEn: '[Manic Busyness Defense] Uses hectic, superficial motion to combat inner emptiness, using false progress to disguise strategic stalling.'
+      },
+      '土': {
+        nameZh: '土气失衡偏枯',
+        nameEn: 'Earth Imbalance Skew',
+        trapZh: '情绪盲区在于拖延迟滞、过度反刍思虑、惧怕环境巨变；习惯在旧泥潭中被动承受，难以主动迈出破局的第一步。',
+        trapEn: 'Emotional trap: chronic rumination, analysis paralysis, dread of upheaval; habitually enduring stale situations rather than breaking free.',
+        defenseZh: '【舒适区退缩与自我麻痹】遭遇外部风暴时选择装睡或消极等待，以‘知足常乐’的自我安慰合理化退缩与平庸。',
+        defenseEn: '[Comfort Zone Freeze] Shuts down into passive waiting when storms arrive, rationalizing retreat with illusory contentment.'
+      },
+      '金': {
+        nameZh: '金气失衡偏枯',
+        nameEn: 'Metal Imbalance Skew',
+        trapZh: '情绪盲区在于苛求严苛完美、挑剔批判、悲观防御；对微小瑕疵容忍度极低，容易因防备背叛而主动切断有价值的关系。',
+        trapEn: 'Emotional trap: hyper-critical perfectionism, cynical pessimism, preemptive severance of valuable relationships out of paranoia.',
+        defenseZh: '【情感隔离与冷暴力切割】在感觉失控前率先切断情感投入，以冷酷的理智姿态审判外界，陷入孤岛境地。',
+        defenseEn: '[Emotional Detachment & Cold Severance] Preemptively terminates emotional investment before losing control, retreating into an isolated citadel.'
+      },
+      '水': {
+        nameZh: '水气失衡偏枯',
+        nameEn: 'Water Imbalance Skew',
+        trapZh: '情绪盲区在于漂浮虚无、边界模糊、底层安全感匮乏、惧怕实质性承担；在关键时刻容易随波逐流，缺乏定海神针。',
+        trapEn: 'Emotional trap: boundary diffusion, chronic existential insecurity, fear of commitment; drifting aimlessly at critical moments.',
+        defenseZh: '【逃避退缩与幻想代偿】遇到高压现实挑战时退缩入精神避难所，用宏大虚幻的构想替代扎实枯燥的地面推进。',
+        defenseEn: '[Escapist Fantasy Defense] Retreats into intellectual sanctuaries under real-world pressure, substituting grand illusions for grueling execution.'
+      }
+    };
+    const activeElementTrap = elementTraps[maxEl] || elementTraps['木'];
+
+    // Chapter 2: Pattern Ecology & Life Ceiling (天赋生态位 / 逆境反弹弹性 / 四大变现路径)
+    let nicheKey = 'pioneer';
+    if (mentalArchetypeKey === 'platform') {
+      nicheKey = 'custodian';
+    } else if (mentalArchetypeKey === 'craftsman') {
+      nicheKey = 'advisor';
+    } else {
+      nicheKey = 'pioneer';
+    }
+
+    const niches = {
+      pioneer: {
+        id: 'pioneer',
+        titleZh: '破局先锋 (Pioneering Vanguard)',
+        titleEn: 'Pioneering Vanguard',
+        roleDescZh: '天生攻坚克难的开路者。最适合在从0到1开拓、未知赛道切入、危机项目拯救与破旧立新的动荡前沿作战。在规则森严的稳定体制内易受压抑，在动荡重构的增量战场如鱼得水。',
+        roleDescEn: 'Natural front-line trailblazer. Thrives in 0-to-1 ventures, crisis turnaround, boundary-pushing pivots, and turbulent arenas. Suffocates in rigid bureaucracies; excels in dynamic competition.'
+      },
+      advisor: {
+        id: 'advisor',
+        titleZh: '幕僚军师 (Strategic Brain Trust)',
+        titleEn: 'Strategic Brain Trust',
+        roleDescZh: '以认知杠杆撬动全局的架构师。最适合担任核心智囊、商业合伙人、体系操盘者，借宏观势能与他人平台成就奇谋。擅长以逸待劳、洞察深层隐性规律。',
+        roleDescEn: 'Cognitive architect amplifying systemic outcomes. Thrives as chief strategist, enterprise architect, or equity partner. Excels in asymmetric cognitive leverage.'
+      },
+      custodian: {
+        id: 'custodian',
+        titleZh: '秩序守护者 (System Custodian)',
+        titleEn: 'System Custodian',
+        roleDescZh: '组织稳健基石与规模化定海神针。最适合从1到100的体系落地、合规风控、标准制定与平台长期抗风暴维稳。抗风险能力极强，是系统抵御风暴的不可替代底盘。',
+        roleDescEn: 'Institutional foundation and risk anchor. Thrives in 1-to-100 scaling, operational excellence, compliance, and governance. Unshakable bedrock against external storms.'
+      }
+    };
+
+    // Adversity Resilience Index (病药说)
+    const isStrong = isDayMasterStrong(bazi);
+    let resilienceScore = 78;
+    if (gods['七杀'] || gods['偏官']) resilienceScore += 8;
+    if (gods['食神'] || gods['伤官']) resilienceScore += 5;
+    if (gods['正印'] || gods['偏印']) resilienceScore += 4;
+    if (isStrong) resilienceScore += 3;
+    resilienceScore = Math.min(98, Math.max(65, resilienceScore));
+
+    // 4 Monetization Channels (四大价值变现路径)
+    const monetizationChannels = [
+      {
+        id: 'reputation',
+        nameZh: '个人声誉与权威资质变现 (官印通道)',
+        nameEn: 'Reputation & Authority Monetization (Officer/Seal)',
+        weight: (gods['正官'] || 0) * 1.5 + (gods['正印'] || 0) * 1.4 + (gods['偏印'] || 0) + 1,
+        channelZh: '依靠个人品牌知名度、行业权威职称、机构资质背书与话语权溢价变现。',
+        channelEn: 'Monetization via personal brand equity, professional accreditation, institutional authority, and intellectual status.'
+      },
+      {
+        id: 'technology',
+        nameZh: '技术壁垒与独家产品变现 (食伤通道)',
+        nameEn: 'Technical Barrier & Product Monetization (Food/Officer)',
+        weight: (gods['食神'] || 0) * 1.5 + (gods['伤官'] || 0) * 1.4 + 1,
+        channelZh: '依靠专精手艺、研发成果、独家版权作品与高进入壁垒的硬实力获取高额溢价。',
+        channelEn: 'Monetization via proprietary craftsmanship, intellectual property, product innovations, and hard technical moats.'
+      },
+      {
+        id: 'team',
+        nameZh: '团队人脉与生态规模变现 (比劫通道)',
+        nameEn: 'Team & Social Scale Monetization (Companion/Rob)',
+        weight: (gods['比肩'] || 0) * 1.2 + (gods['劫财'] || 0) * 1.4 + 1,
+        channelZh: '依靠团队协同、合伙人矩阵、社群裂变、渠道网络与同道者资源整合变现。',
+        channelEn: 'Monetization via team synergy, channel distribution, community leverage, and collaborative networks.'
+      },
+      {
+        id: 'capital',
+        nameZh: '资本运作与商业流转变现 (财星通道)',
+        nameEn: 'Capital & Arbitrage Monetization (Wealth)',
+        weight: (gods['正财'] || 0) * 1.3 + (gods['偏财'] || 0) * 1.5 + 1,
+        channelZh: '依靠市场信息差、资金杠杆周转、商业套利与资产流动性配置实现资本裂变。',
+        channelEn: 'Monetization via capital arbitrage, liquidity velocity, commercial leverage, and asset allocation.'
+      }
+    ];
+    monetizationChannels.sort((a, b) => b.weight - a.weight);
+
+    // Chapter 3: 10-Year Decades Panorama (十年大运全景周期走势)
+    const decadeMeta = calculateDecadeMetadata(bazi);
+    const rawDecades = getDecades(bazi, decadeMeta, curCalYear);
+    const decadesPanorama = rawDecades.map(d => {
+      const f = evaluateTransitFortune(bazi, d, 'decade');
+      let imp = 0.50;
+      if (f.rating === 'good') imp = 0.28;
+      else if (f.rating === 'caution') imp = 0.76;
+      else imp = 0.48;
+
+      let stageTypeZh = '稳健调和过渡期';
+      let stageTypeEn = 'Equilibrium Transition Stage';
+      let actionDirectiveZh = '【稳】中庸推进 · 稳扎稳打';
+      let actionDirectiveEn = '[STEADY] Measured Evolution & Balanced Stance';
+      if (imp <= 0.35) {
+        stageTypeZh = '顺风推进扩张期';
+        stageTypeEn = 'Tailwind Expansion Stage';
+        actionDirectiveZh = '【动】借势加杠杆 · 全面扩张';
+        actionDirectiveEn = '[MOVE] Capitalize on Tailwind & Scale Aggressively';
+      } else if (imp >= 0.65) {
+        stageTypeZh = '蓄力筑底防守期';
+        stageTypeEn = 'Fortress Consolidation Stage';
+        actionDirectiveZh = '【静】收缩沉淀 · 深筑内部护城河';
+        actionDirectiveEn = '[STILL] Consolidate Assets & Fortress Defense';
+      }
+
+      return {
+        index: d.index,
+        text: d.text,
+        stemGod: d.stemGod,
+        ageStart: d.ageStart,
+        ageEnd: d.ageEnd,
+        ageSpanZh: `${d.ageStart}~${d.ageEnd}岁`,
+        ageSpanEn: `Ages ${d.ageStart}-${d.ageEnd}`,
+        yearSpanZh: `${d.yearStart}~${d.yearEnd}年`,
+        yearSpanEn: `${d.yearStart}-${d.yearEnd}`,
+        yearStart: d.yearStart,
+        yearEnd: d.yearEnd,
+        impedance: imp,
+        energyMomentum: Math.round((1 - imp) * 100),
+        stageTypeZh,
+        stageTypeEn,
+        actionDirectiveZh,
+        actionDirectiveEn,
+        isActive: d.isActive || (curCalYear >= d.yearStart && curCalYear <= d.yearEnd)
+      };
+    });
+
+    const activeDecadeItem = decadesPanorama.find(d => d.isActive) || decadesPanorama[0];
+    const nextTransitionYear = activeDecadeItem ? activeDecadeItem.yearEnd : (curCalYear + 5);
+    const yearsToTransition = Math.max(0, nextTransitionYear - curCalYear);
+    const isAtTransitionKnot = (yearsToTransition <= 1 || (curCalYear - (activeDecadeItem ? activeDecadeItem.yearStart : curCalYear)) <= 1);
+
+    // Chapter 4: Annual Strategic Posture & Decoupled Action (当下流年转折与动静决策)
+    const annualSIdx = (curCalYear - 4 + 60000) % 10;
+    const annualBIdx = (curCalYear - 4 + 60000) % 12;
+    const annualStem = STEMS[annualSIdx];
+    const annualBranch = BRANCHES[annualBIdx];
+    const annualText = annualStem + annualBranch;
+    const annualGod = getTenGod(dm, annualStem);
+    const annualFortune = evaluateTransitFortune(bazi, { stem: annualStem, branch: annualBranch, text: annualText, stemGod: annualGod }, 'annual');
+
+    let annualImpedance = 0.50;
+    if (annualFortune.rating === 'good') annualImpedance = 0.28;
+    else if (annualFortune.rating === 'caution') annualImpedance = 0.74;
+
+    let postureKey = 'cautious';
+    let postureTitleZh = '【攻守姿态：轻资产试水】';
+    let postureTitleEn = '[Posture: Cautious Probing]';
+    let postureDirectiveZh = '【微动】小步快跑，敏捷试错；不押注全副身家，在验证闭环前坚决控制现金敞口。';
+    let postureDirectiveEn = '[PROBE] Agile sprint, lean iteration; strictly cap downside risk before product-market validation.';
+
+    if (annualImpedance <= 0.35) {
+      postureKey = 'attack';
+      postureTitleZh = '【攻守姿态：全面进攻】';
+      postureTitleEn = '[Posture: Full-Scale Offensive]';
+      postureDirectiveZh = '【动】借势扩张，倾斜资源；突破固有舒适圈，聚焦核心胜负手，果断加大有效投入。';
+      postureDirectiveEn = '[MOVE] Capitalize on systemic tailwinds; concentrate top resources onto core strategic battles.';
+    } else if (annualImpedance >= 0.65) {
+      postureKey = 'defense';
+      postureTitleZh = '【攻守姿态：极度防守】';
+      postureTitleEn = '[Posture: Fortress Deep Defense]';
+      postureDirectiveZh = '【静】深挖护城河，防守沉淀；现金为王，削减冗余战线，拒绝高杠杆冒险，以静制动。';
+      postureDirectiveEn = '[STILL] Reinforce internal moats; preserve liquid cash; resist high-leverage gambles; endure with stillness.';
+    }
+
+    const firewalls = {
+      contractsZh: `【合同与法务防火墙】流年能量与原局气场存在微观生克，在签署股权代持、长期租赁或高额履约担保时，务必引入第三方独立法律风控，规避模糊免责条款。`,
+      contractsEn: `[Contractual Firewall] Scrutinize equity custody, long-term binding leases, and collateral agreements with independent legal counsel.`,
+      careerZh: `【职场与合伙防火墙】人际磁场处于交替重构期，警惕表面协同而底层利益冲突的伪盟友；对关键成果保留完整书面存证，避免卷入无谓的权力损耗。`,
+      careerEn: `[Career & Partnership Firewall] Guard against factional friction and credit misappropriation; maintain strict paper trails for core deliverables.`,
+      cashZh: `【现金流与资产防火墙】严禁参与非标理财、民间借贷或任何加杠杆高风险套利；务必留足至少 12 个月的基本运转备用金，保全流动性底线。`,
+      cashEn: `[Cash Flow & Liquidity Firewall] Strictly ban unhedged leverage and opaque investments; ensure >= 12 months of liquid operational runway.`
+    };
+
+    // Chapter 5: 12-Month Impedance Heatmap & 20~30 High-Risk Sensitive Days
+    const monthlyLuckList = getMonthlyLuck(bazi, curCalYear);
+    const monthlyHeatmap = monthlyLuckList.map((m, idx) => {
+      let mImp = 0.50;
+      if (m.fortune && m.fortune.rating === 'good') mImp = 0.26 + (idx % 3) * 0.04;
+      else if (m.fortune && m.fortune.rating === 'caution') mImp = 0.72 + (idx % 3) * 0.05;
+      else mImp = 0.45 + (idx % 4) * 0.04;
+      mImp = Math.min(0.95, Math.max(0.12, mImp));
+
+      let dirZh = '【微动】稳扎稳打';
+      let dirEn = '[PROBE] Measured Step';
+      if (mImp <= 0.35) {
+        dirZh = '【动】借势推进';
+        dirEn = '[MOVE] Tailwind Advance';
+      } else if (mImp >= 0.65) {
+        dirZh = '【静】防御蛰伏';
+        dirEn = '[STILL] Fortress Defense';
+      }
+
+      return {
+        monthIndex: idx + 1,
+        solarTermZh: m.solarTermZh || `${idx + 1}月`,
+        solarTermEn: m.solarTermEn || `M${idx + 1}`,
+        stem: m.stem,
+        branch: m.branch,
+        ganZhi: m.text,
+        stemGod: m.stemGod,
+        impedance: parseFloat(mImp.toFixed(2)),
+        impedancePercent: `${Math.round(mImp * 100)}%`,
+        actionDirectiveZh: dirZh,
+        actionDirectiveEn: dirEn,
+        rating: m.fortune ? m.fortune.rating : 'neutral'
+      };
+    });
+
+    // 20~30 High-Risk Sensitive Days Calculation
+    const natalDayBranchIdx = BRANCHES.indexOf(bazi.pillars.day.branch);
+    const natalDayStemIdx = STEMS.indexOf(bazi.pillars.day.stem);
+    const natalMonthBranchIdx = BRANCHES.indexOf(bazi.pillars.month.branch);
+    const natalMonthStemIdx = STEMS.indexOf(bazi.pillars.month.stem);
+    const natalYearBranchIdx = BRANCHES.indexOf(bazi.pillars.year.branch);
+
+    const allDaysScored = [];
+    for (let m = 1; m <= 12; m++) {
+      const daysInMonth = new Date(curCalYear, m, 0).getDate();
+      for (let d = 1; d <= daysInMonth; d++) {
+        const jdn = gregorianToJDN(curCalYear, m, d);
+        const dayCycleIdx = (jdn + 49) % 60;
+        const sIdx = dayCycleIdx % 10;
+        const bIdx = dayCycleIdx % 12;
+        const dayStem = STEMS[sIdx];
+        const dayBranch = BRANCHES[bIdx];
+        const dayGod = getTenGod(dm, dayStem);
+
+        let score = 0;
+        let clashCausesZh = [];
+        let clashCausesEn = [];
+
+        // Check Tian Ke Di Chong with Natal Day Pillar
+        const isDayBranchClash = (Math.abs(bIdx - natalDayBranchIdx) === 6);
+        const isDayStemClash = (Math.abs(sIdx - natalDayStemIdx) === 6 || (sIdx + 6) % 10 === natalDayStemIdx);
+        if (isDayBranchClash && isDayStemClash) {
+          score += 120;
+          clashCausesZh.push('日柱天克地冲 (反吟攻身)');
+          clashCausesEn.push('Day Pillar Dual Clash (Tian Ke Di Chong)');
+        } else if (isDayBranchClash) {
+          score += 80;
+          clashCausesZh.push('日支夫妻宫受冲 (身心动荡)');
+          clashCausesEn.push('Day Branch Clash (Spouse/Base Palace)');
+        }
+
+        // Month Command (提纲) Clash
+        const isMonthBranchClash = (Math.abs(bIdx - natalMonthBranchIdx) === 6);
+        const isMonthStemClash = (Math.abs(sIdx - natalMonthStemIdx) === 6 || (sIdx + 6) % 10 === natalMonthStemIdx);
+        if (isMonthBranchClash && isMonthStemClash) {
+          score += 105;
+          clashCausesZh.push('月令提纲天克地冲 (秩序失衡)');
+          clashCausesEn.push('Month Command Dual Clash');
+        } else if (isMonthBranchClash) {
+          score += 75;
+          clashCausesZh.push('月令提纲受冲 (环境变局)');
+          clashCausesEn.push('Month Branch Command Clash');
+        }
+
+        // Annual Pillar Clash (岁破)
+        const isAnnualBranchClash = (Math.abs(bIdx - annualBIdx) === 6);
+        const isAnnualStemClash = (Math.abs(sIdx - annualSIdx) === 6);
+        if (isAnnualBranchClash && isAnnualStemClash) {
+          score += 95;
+          clashCausesZh.push('太岁岁破天克地冲 (天道逆动)');
+          clashCausesEn.push('Annual Pillar Dual Clash (Sui Po)');
+        } else if (isAnnualBranchClash) {
+          score += 65;
+          clashCausesZh.push('流年地支对冲 (岁破冲动)');
+          clashCausesEn.push('Annual Branch Clash');
+        }
+
+        // Natal Year Clash
+        if (Math.abs(bIdx - natalYearBranchIdx) === 6) {
+          score += 60;
+          clashCausesZh.push('本命年支受冲 (根基震荡)');
+          clashCausesEn.push('Natal Year Branch Clash');
+        }
+
+        // Three Punishments (三刑)
+        if ([2, 5, 8].includes(bIdx)) {
+          const hasYin = [natalDayBranchIdx, natalMonthBranchIdx, natalYearBranchIdx, annualBIdx].includes(2);
+          const hasSi = [natalDayBranchIdx, natalMonthBranchIdx, natalYearBranchIdx, annualBIdx].includes(5);
+          const hasShen = [natalDayBranchIdx, natalMonthBranchIdx, natalYearBranchIdx, annualBIdx].includes(8);
+          if ((bIdx === 2 && hasSi && hasShen) || (bIdx === 5 && hasYin && hasShen) || (bIdx === 8 && hasYin && hasSi) || (hasYin && hasSi) || (hasSi && hasShen) || (hasYin && hasShen)) {
+            score += 70;
+            clashCausesZh.push('地支无恩三刑 (人事摩擦/契约受阻)');
+            clashCausesEn.push('Three Punishments Penalty (Yin-Si-Shen)');
+          }
+        }
+        if ([1, 10, 7].includes(bIdx)) {
+          const hasChou = [natalDayBranchIdx, natalMonthBranchIdx, natalYearBranchIdx, annualBIdx].includes(1);
+          const hasXu = [natalDayBranchIdx, natalMonthBranchIdx, natalYearBranchIdx, annualBIdx].includes(10);
+          const hasWei = [natalDayBranchIdx, natalMonthBranchIdx, natalYearBranchIdx, annualBIdx].includes(7);
+          if ((hasChou && hasXu) || (hasXu && hasWei) || (hasChou && hasWei)) {
+            score += 65;
+            clashCausesZh.push('地支恃势三刑 (文书暗耗/田土官非)');
+            clashCausesEn.push('Three Punishments Penalty (Chou-Xu-Wei)');
+          }
+        }
+        if ((bIdx === 0 && [natalDayBranchIdx, natalMonthBranchIdx, annualBIdx].includes(3)) ||
+            (bIdx === 3 && [natalDayBranchIdx, natalMonthBranchIdx, annualBIdx].includes(0))) {
+          score += 55;
+          clashCausesZh.push('地支无礼之刑 (人际失序)');
+          clashCausesEn.push('Zi-Mao Punishment');
+        }
+
+        // Self punishment
+        if ([4, 6, 9, 11].includes(bIdx) && [natalDayBranchIdx, natalMonthBranchIdx, annualBIdx].includes(bIdx)) {
+          score += 50;
+          clashCausesZh.push('地支相叠自刑 (情绪内耗/钻牛角尖)');
+          clashCausesEn.push('Self-Punishment Friction');
+        }
+
+        // Ten God Dynamics
+        if (dayGod === '七杀' || dayGod === '偏官') {
+          score += 50;
+          clashCausesZh.push('七杀乘旺攻身 (外部突发压力)');
+          clashCausesEn.push('Seven Killings High Pressure');
+        } else if (dayGod === '伤官' && (gods['正官'] || 0) > 0) {
+          score += 40;
+          clashCausesZh.push('伤官见官 (规则摩擦/祸从口出)');
+          clashCausesEn.push('Hurting Officer vs Direct Officer');
+        } else if (dayGod === '偏印' && (gods['食神'] || 0) > 0) {
+          score += 35;
+          clashCausesZh.push('枭神夺食 (决策迟疑/气机不畅)');
+          clashCausesEn.push('Indirect Owl Suppressing Food');
+        }
+
+        // Element bias
+        if (bazi.favorableElements && bazi.favorableElements.includes(STEM_ELEMENTS[sIdx])) {
+          score -= 20;
+        }
+
+        if (score >= 60) {
+          allDaysScored.push({
+            date: `${curCalYear}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`,
+            month: m,
+            day: d,
+            ganZhi: dayStem + dayBranch,
+            stem: dayStem,
+            branch: dayBranch,
+            stemGod: dayGod,
+            score,
+            clashTypeZh: clashCausesZh.slice(0, 2).join(' · ') || '时空对冲交感',
+            clashTypeEn: clashCausesEn.slice(0, 2).join(' & ') || 'Transit Resonance Clash',
+            riskLevel: score >= 90 ? '极危' : '高危',
+            riskLevelEn: score >= 90 ? 'Critical' : 'High Risk',
+            riskDomainZh: score >= 90 ? '合同签署 / 商业决断 / 情绪摊牌 / 肢体安全' : '情绪管理 / 口角人际 / 冲动消费',
+            riskDomainEn: score >= 90 ? 'Contract Signing / Major Bets / Emotional Clashes' : 'Interpersonal Friction / Impulsive Outlay',
+            shelterGuidanceZh: score >= 90
+              ? '【闭关避险指令】今日磁场交感极端剧烈，切忌签署不可逆合约、开启正面冲突谈判或进行大额资金操作。宜闭门内省、整理旧务、早睡养神。'
+              : '【审慎防御指令】外部协同阻抗抬升，易因口角或小事放大分歧。保持静穆克制，凡事多等24小时再做决策。',
+            shelterGuidanceEn: score >= 90
+              ? '[Fortress Directive] Extreme volatility today. Postpone irreversible contracts and negotiations. Prioritize stillness and mental restoration.'
+              : '[Cautious Directive] Elevated external friction. Practice deliberate patience; delay reactions by 24 hours.'
+          });
+        }
+      }
+    }
+
+    allDaysScored.sort((a, b) => b.score - a.score);
+    const targetCount = Math.min(allDaysScored.length, Math.max(24, Math.min(28, allDaysScored.length)));
+    const sensitiveDays = allDaysScored.slice(0, targetCount);
+
+    sensitiveDays.sort((a, b) => {
+      if (a.month !== b.month) return a.month - b.month;
+      return a.day - b.day;
+    });
+
+    return {
+      selectedYear: curCalYear,
+      currentAge,
+      philosophy: {
+        zh: '算命的最大原因，本质上是现实掌控感的坍塌，以及在巨大不确定性面前，对“认知确定性”与“心理赦免”的渴求。当因果链条受外部宏观周期冲击时，不必陷入盲目自责；看清自身底层常数与时空阻抗，便能彻底平复精神内耗，在动静进退间夺回内心的绝对掌控权。',
+        en: 'The deepest driver of metaphysical inquiry is the collapse of perceived control in reality, and the acute yearning for "cognitive certainty" and "psychological pardon" in the face of uncertainty. When macro cycles disrupt linear effort, self-condemnation is futile; discerning base constants restores sovereign agency across action and stillness.'
+      },
+      chapter1: {
+        titleZh: '第壹章 · 底层常数与心理认知原型',
+        titleEn: 'Chapter 1 · Base Constants & Psychological Cognitive Archetypes',
+        archetype: mentalArchetypes[mentalArchetypeKey],
+        elementTrap: activeElementTrap
+      },
+      chapter2: {
+        titleZh: '第贰章 · 格局生态与人生上限',
+        titleEn: 'Chapter 2 · Pattern Ecology & Ultimate Capacity Ceiling',
+        niche: niches[nicheKey],
+        resilienceScore,
+        resilienceExegesisZh: `《神峰通考》病药说云：“有病方为贵，无伤不是奇”。命运中的困顿逆境绝非毁灭，而是激活本命隐藏潜能的强力催化剂。本造系统抗逆反弹指数为 ${resilienceScore}/100，低谷所承受的极限淬炼，直接决定了未来触底反弹的巅峰高度。`,
+        resilienceExegesisEn: `As classical Shen Feng Tong Kao states: "Without adversity, the transformative medicine cannot reveal its brilliance." Systemic resilience index is ${resilienceScore}/100; hardships serve as structural catalysts, defining the apex of future rebounds.`,
+        monetizationChannels
+      },
+      chapter3: {
+        titleZh: '第叁章 · 十年大运全景周期走势',
+        titleEn: 'Chapter 3 · 10-Year Decades Macro Trendline & Energy Panorama',
+        decadesPanorama,
+        activeDecadeItem,
+        nextTransitionYear,
+        yearsToTransition,
+        isAtTransitionKnot,
+        transitionAdviceZh: '“交脱之际，气象大变；交运脱运，先退三寸。”在大运交接前后 1.5 年窗口期，外部磁场剧烈动荡。防震法则：严禁冲动裸辞、切忌高杠杆投机，以静制动，沉淀内功以保稳健换轨。',
+        transitionAdviceEn: '"At the cusp of transit shifts, cosmic currents clash; advance by retreating three inches." During the ±1.5-year window around a major decade transition, avoid high-leverage gambles, maintain stillness, and fortify internal capabilities.'
+      },
+      chapter4: {
+        titleZh: `第肆章 · ${curCalYear}当季与当下流年转折动静决策`,
+        titleEn: `Chapter 4 · Year ${curCalYear} Annual Strategic Posture & Decoupled Action`,
+        annualYear: curCalYear,
+        annualGanZhi: annualText,
+        annualStemGod: annualGod,
+        annualImpedance,
+        postureKey,
+        postureTitleZh,
+        postureTitleEn,
+        postureDirectiveZh,
+        postureDirectiveEn,
+        firewalls
+      },
+      chapter5: {
+        titleZh: '第伍章 · 周期风险雷达与敏感窗口',
+        titleEn: 'Chapter 5 · Cyclic Risk Radar & Sensitive Impedance Windows',
+        monthlyHeatmap,
+        sensitiveDays
+      }
+    };
+  }
+
   return {
     calculateLuck,
     calculateDecadeMetadata,
@@ -2034,6 +2599,7 @@ const LuckEngine = (function() {
     calculateLifelongTimeline,
     generateOperationalPlaybook,
     generateGeographicEcologicalResonance,
+    generateImpedanceReport,
     isDayMasterStrong,
     getTenGod,
     getNaYin

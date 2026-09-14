@@ -3885,11 +3885,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Level 2: Annual Transit Years (流年)
     const annualLabelEl = document.getElementById('currentSelectedAnnualLabel');
     const activeAnnual = currentLuckResult.activeAnnual || (currentLuckResult.annuals && currentLuckResult.annuals[0]);
+    const birthYear = (res.input && (res.input.adjustedYear || res.input.year)) || res.birthYear || (res.solar && res.solar.year) || 1990;
     if (annualLabelEl && activeAnnual) {
       const godTranslated = I18N.getGod(activeAnnual.stemGod, currentLang);
+      const annualAge = (typeof activeAnnual.age === 'number' && !isNaN(activeAnnual.age)) ? activeAnnual.age : Math.max(1, activeAnnual.year - birthYear + 1);
       annualLabelEl.textContent = isEn
-        ? `Selected Year: ${activeAnnual.year} [${activeAnnual.text}] (${godTranslated}) · Age ${activeAnnual.age}`
-        : `已选流年：${activeAnnual.year}年 · 【${activeAnnual.text}】(${godTranslated}) · ${activeAnnual.age}岁`;
+        ? `Selected Year: ${activeAnnual.year} [${activeAnnual.text}] (${godTranslated}) · Age ${annualAge}`
+        : `已选流年：${activeAnnual.year}年 · 【${activeAnnual.text}】(${godTranslated}) · ${annualAge}岁`;
     }
 
     const annualContainer = document.getElementById('annualContainer');
@@ -3912,13 +3914,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const isGood = (f.rating === 'good');
         const badgeLabel = isEn ? (isGood ? '🟢 Good' : '🔴 Caution') : (isGood ? '🟢 吉' : '🔴 慎');
         const badgeColor = isGood ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border-rose-500/40';
+        const aAge = (typeof a.age === 'number' && !isNaN(a.age)) ? a.age : Math.max(1, a.year - birthYear + 1);
 
         card.innerHTML = `
           <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/80 pb-0.5">
             <span class="font-mono text-indigo-300 font-bold">${a.year}</span>
             <div class="flex items-center gap-1">
               <span class="px-1 py-0.2 rounded border text-[9px] font-bold ${badgeColor}">${badgeLabel}</span>
-              <span class="text-gray-400">${a.age}${isEn ? 'yo' : '岁'}</span>
+              <span class="text-gray-400">${aAge}${isEn ? 'yo' : '岁'}</span>
             </div>
           </div>
           <div class="py-1">
@@ -4232,6 +4235,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 10. Render Geographic & Ecological Resonance (地理方位与组织生态匹配仪)
     renderEcologicalResonance(res, currentLuckResult, isEn);
+
+    // 11. Render Time Dynamics & Macro-Energy 5-Tier Master Report (时间动力学与宏观能量五阶递进战报)
+    renderTimeDynamicsReport(res, currentLuckResult, isEn);
   }
 
   // Render In-Depth Fortune Evaluation, Meaning, Pitfalls (if Good), Taboos (if Bad), and Strategy
@@ -4785,6 +4791,411 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       container.appendChild(ecoSysWrapper);
     }
+  }
+
+  // ⚡ Time Dynamics & Macro-Energy 5-Tier Master Report Renderer (时间动力学与宏观能量五阶递进战报)
+  function renderTimeDynamicsReport(res, luckRes, isEn) {
+    const container = document.getElementById('timeDynamicsContainer');
+    const badgeEl = document.getElementById('tdAnnualBadge');
+    if (!container || !res || typeof LuckEngine === 'undefined' || typeof LuckEngine.generateImpedanceReport !== 'function') return;
+
+    const activeAnnual = (luckRes && (luckRes.activeAnnual || (luckRes.annuals && luckRes.annuals[0]))) || { year: selectedAnnualYear || new Date().getFullYear() };
+    const targetYear = activeAnnual.year || selectedAnnualYear || new Date().getFullYear();
+
+    const report = LuckEngine.generateImpedanceReport(res, targetYear);
+    if (!report) return;
+
+    if (badgeEl) {
+      const stemGod = I18N.getGod(report.chapter4.annualStemGod, currentLang);
+      badgeEl.textContent = isEn
+        ? `${report.selectedYear} · [${report.chapter4.annualGanZhi}] (${stemGod}) · Age ${report.currentAge}`
+        : `${report.selectedYear}年 · 【${report.chapter4.annualGanZhi}】(${stemGod}) · ${report.currentAge}岁`;
+    }
+
+    // 0. Philosophical Banner (心理赦免与认知确定性)
+    const bannerHtml = `
+      <div class="p-4 sm:p-5 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-950/30 via-[#191624] to-black space-y-2 shadow-lg">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🕯️</span>
+            <span class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc">${isEn ? 'Psychological Pardon & Cognitive Certainty' : '心智解缚 · 认知确定性与心理赦免'}</span>
+          </div>
+          <span class="text-[9.5px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">${isEn ? 'SOVEREIGN AGENT' : '底层心法'}</span>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed italic">
+          “${isEn ? report.philosophy.en : report.philosophy.zh}”
+        </p>
+      </div>
+    `;
+
+    // 1. Chapter 1: 底层常数与心理认知原型
+    const ch1 = report.chapter1;
+    const ch1Html = `
+      <div class="p-5 rounded-xl border border-blue-900/40 bg-gradient-to-br from-[#121520] via-black to-[#0e1017] space-y-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🧬</span>
+            <div>
+              <h4 class="text-sm font-bold text-blue-300 font-serif-sc">${isEn ? ch1.titleEn : ch1.titleZh}</h4>
+              <p class="text-[10.5px] text-gray-400 mt-0.5">${isEn ? 'Cognitive archetypes, blindspots & stress defense mechanics' : '心智决策原型 · 偏枯五行情绪盲区与内在应激防御机制'}</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/20 text-blue-300 border border-blue-500/30">
+            ${isEn ? ch1.archetype.badgeEn : ch1.archetype.badgeZh}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Mental Model Card -->
+          <div class="p-4 rounded-lg bg-black/45 border border-gray-800 space-y-2.5">
+            <div class="flex items-center justify-between border-b border-gray-800/80 pb-1.5">
+              <span class="text-xs font-bold text-amber-200">${isEn ? ch1.archetype.nameEn : ch1.archetype.nameZh}</span>
+              <span class="text-[10px] text-gray-500 font-mono">${isEn ? 'DECISION PROTOTYPE' : '核心心智原型'}</span>
+            </div>
+            <div class="text-xs text-gray-300 leading-relaxed">
+              <span class="text-amber-400/90 font-semibold">${isEn ? 'Mechanism: ' : '核心决策机制：'}</span>
+              ${isEn ? ch1.archetype.coreMechanismEn : ch1.archetype.coreMechanismZh}
+            </div>
+            <div class="text-xs text-rose-300/90 leading-relaxed">
+              <span class="text-rose-400 font-semibold">${isEn ? 'Strategic Blindspot: ' : '认知盲区陷阱：'}</span>
+              ${isEn ? ch1.archetype.blindSpotEn : ch1.archetype.blindSpotZh}
+            </div>
+            <div class="text-xs text-purple-300/90 leading-relaxed">
+              <span class="text-purple-400 font-semibold">${isEn ? 'Defense Mechanism: ' : '应激防御机制：'}</span>
+              ${isEn ? ch1.archetype.defenseMechanismEn : ch1.archetype.defenseMechanismZh}
+            </div>
+          </div>
+
+          <!-- Skewed Element Emotional Trap Card -->
+          <div class="p-4 rounded-lg bg-black/45 border border-gray-800 space-y-2.5">
+            <div class="flex items-center justify-between border-b border-gray-800/80 pb-1.5">
+              <span class="text-xs font-bold text-emerald-300">${isEn ? ch1.elementTrap.nameEn : ch1.elementTrap.nameZh}</span>
+              <span class="text-[10px] text-gray-500 font-mono">${isEn ? 'ELEMENT IMBALANCE' : '偏枯五行盲区'}</span>
+            </div>
+            <div class="text-xs text-gray-300 leading-relaxed">
+              <span class="text-emerald-400 font-semibold">${isEn ? 'Emotional Pattern: ' : '反复受挫情绪回路：'}</span>
+              ${isEn ? ch1.elementTrap.trapEn : ch1.elementTrap.trapZh}
+            </div>
+            <div class="text-xs text-cyan-300/90 leading-relaxed">
+              <span class="text-cyan-400 font-semibold">${isEn ? 'Coping Defense: ' : '潜在防御模式：'}</span>
+              ${isEn ? ch1.elementTrap.defenseEn : ch1.elementTrap.defenseZh}
+            </div>
+            <div class="p-2 rounded bg-[#151821] border border-blue-900/30 text-[11px] text-gray-400">
+              💡 ${isEn ? 'Self-Forgiveness Key: Recognize when this loop triggers to decouple emotional reactivity from rational choices.' : '心理赦免心法：当觉察到上述防御模式触发时，主动暂停推演，接纳情绪反应，用客观规律替代非理性内耗。'}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 2. Chapter 2: 格局生态与人生上限
+    const ch2 = report.chapter2;
+    const ch2Html = `
+      <div class="p-5 rounded-xl border border-purple-900/40 bg-gradient-to-br from-[#16121e] via-black to-[#0e1017] space-y-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">👑</span>
+            <div>
+              <h4 class="text-sm font-bold text-purple-300 font-serif-sc">${isEn ? ch2.titleEn : ch2.titleZh}</h4>
+              <p class="text-[10.5px] text-gray-400 mt-0.5">${isEn ? 'Talent ecological niche, adversity bounce resilience & monetization channels' : '天赋生态位定位 · 逆境反弹弹性上限（病药说）· 四大价值变现通道'}</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30">
+            ${isEn ? 'CAPACITY CEILING' : '生态上限'}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Niche & Resilience -->
+          <div class="p-4 rounded-lg bg-black/45 border border-gray-800 space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-800/80 pb-1.5">
+              <span class="text-xs font-bold text-amber-200">${isEn ? ch2.niche.titleEn : ch2.niche.titleZh}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">${isEn ? 'ECOLOGICAL NICHE' : '天赋生态位'}</span>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              ${isEn ? ch2.niche.roleDescEn : ch2.niche.roleDescZh}
+            </p>
+
+            <!-- Resilience meter -->
+            <div class="pt-2 border-t border-gray-800/80 space-y-1.5">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-semibold text-emerald-400 flex items-center gap-1.5">
+                  <span>🛡️</span>
+                  <span>${isEn ? 'Adversity Bounce Resilience:' : '系统逆境反弹弹性：'}</span>
+                </span>
+                <span class="font-mono font-bold text-emerald-300">${ch2.resilienceScore} / 100</span>
+              </div>
+              <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 via-emerald-400 to-amber-400 h-2 rounded-full" style="width: ${ch2.resilienceScore}%"></div>
+              </div>
+              <p class="text-[11px] text-gray-400 leading-relaxed italic pt-1">
+                ${isEn ? ch2.resilienceExegesisEn : ch2.resilienceExegesisZh}
+              </p>
+            </div>
+          </div>
+
+          <!-- 4 Monetization Channels Ranked -->
+          <div class="p-4 rounded-lg bg-black/45 border border-gray-800 space-y-2.5">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-1.5">
+              <span class="text-xs font-bold text-indigo-300 font-serif-sc">${isEn ? '4 Monetization Channels Ranked' : '四大价值变现路径权重排序'}</span>
+              <span class="text-[10px] text-gray-500 font-mono">${isEn ? 'VALUE PATHWAYS' : '价值通道'}</span>
+            </div>
+            <div class="space-y-2">
+              ${ch2.monetizationChannels.map((c, cIdx) => {
+                const badgeText = isEn
+                  ? (cIdx === 0 ? '🥇 Primary' : cIdx === 1 ? '🥈 Secondary' : cIdx === 2 ? '🥉 Tertiary' : '4th Aux')
+                  : (cIdx === 0 ? '🥇 第一顺位' : cIdx === 1 ? '🥈 第二顺位' : cIdx === 2 ? '🥉 第三顺位' : '第4补充通道');
+                const badgeCls = cIdx === 0 ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 font-bold' : 'bg-gray-800 text-gray-400 border-gray-700';
+                return `
+                  <div class="p-2 rounded bg-[#13151f] border border-gray-800/80 space-y-1">
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="font-semibold text-gray-200">${isEn ? c.nameEn : c.nameZh}</span>
+                      <span class="px-1.5 py-0.2 rounded border text-[9.5px] font-mono ${badgeCls}">${badgeText}</span>
+                    </div>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">${isEn ? c.channelEn : c.channelZh}</p>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 3. Chapter 3: 十年大运全景周期走势
+    const ch3 = report.chapter3;
+    const ch3Html = `
+      <div class="p-5 rounded-xl border border-amber-900/40 bg-gradient-to-br from-[#181512] via-black to-[#0e1017] space-y-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">📈</span>
+            <div>
+              <h4 class="text-sm font-bold text-amber-300 font-serif-sc">${isEn ? ch3.titleEn : ch3.titleZh}</h4>
+              <p class="text-[10.5px] text-gray-400 mt-0.5">${isEn ? 'Macro energy momentum, decade stages & transition shock-absorption' : '十年大运宏观势能折线走势 · 顺风扩张 vs 蓄力筑底 · 关键交脱运防震节点'}</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            ${isEn ? 'DECADE MOMENTUM' : '宏观势能'}
+          </span>
+        </div>
+
+        <!-- Decades Cards Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+          ${ch3.decadesPanorama.map(d => {
+            const isCurrent = d.isActive;
+            const borderCls = isCurrent
+              ? 'border-amber-500 shadow-md shadow-amber-900/30 bg-amber-950/30 ring-1 ring-amber-500/50'
+              : d.impedance <= 0.35
+                ? 'border-emerald-800/60 bg-emerald-950/20'
+                : d.impedance >= 0.65
+                  ? 'border-rose-900/60 bg-rose-950/20'
+                  : 'border-gray-800 bg-black/40';
+            const god = I18N.getGod(d.stemGod, currentLang);
+            const impColor = d.impedance <= 0.35 ? 'text-emerald-400' : d.impedance >= 0.65 ? 'text-rose-400' : 'text-amber-400';
+
+            return `
+              <div class="p-2.5 rounded-xl border ${borderCls} flex flex-col justify-between space-y-1.5 text-xs">
+                <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/80 pb-1">
+                  <span class="font-mono font-bold text-amber-300">${isEn ? d.ageSpanEn : d.ageSpanZh}</span>
+                  <span class="font-mono text-gray-500">${isEn ? d.yearSpanEn : d.yearSpanZh}</span>
+                </div>
+                <div class="text-center py-0.5">
+                  <div class="text-base font-serif-sc font-bold ${isCurrent ? 'text-amber-300' : 'text-gray-200'}">${d.text}</div>
+                  <div class="text-[10px] text-purple-300">${god}</div>
+                </div>
+                <div class="pt-1 border-t border-gray-800/60 space-y-1 text-center">
+                  <div class="flex items-center justify-between text-[10px]">
+                    <span class="text-gray-400">${isEn ? 'Impedance' : '阻抗系数'}</span>
+                    <span class="font-mono font-bold ${impColor}">${d.impedance}</span>
+                  </div>
+                  <div class="text-[9.5px] font-semibold text-gray-300 truncate" title="${isEn ? d.actionDirectiveEn : d.actionDirectiveZh}">
+                    ${isEn ? d.actionDirectiveEn : d.actionDirectiveZh}
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+        <!-- Transition Shock-Absorption Warning Box -->
+        <div class="p-3.5 rounded-lg bg-black/50 border border-amber-600/40 flex items-start space-x-3 text-xs">
+          <span class="text-xl">⚠️</span>
+          <div class="space-y-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="font-bold text-amber-300 font-serif-sc">${isEn ? 'Decade Transition Knot Warning' : '关键交脱运防震法则'}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">
+                ${isEn ? `Next Transition ~${ch3.nextTransitionYear} (${ch3.yearsToTransition}y left)` : `下一次交脱大运约 ${ch3.nextTransitionYear} 年 (距今约 ${ch3.yearsToTransition} 年)`}
+              </span>
+            </div>
+            <p class="text-gray-300 leading-relaxed text-[11px]">
+              ${isEn ? ch3.transitionAdviceEn : ch3.transitionAdviceZh}
+            </p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 4. Chapter 4: 当下流年转折与动静决策
+    const ch4 = report.chapter4;
+    const postureColor = ch4.postureKey === 'attack' ? 'text-emerald-300 border-emerald-500/40 bg-emerald-950/30' : ch4.postureKey === 'defense' ? 'text-rose-300 border-rose-500/40 bg-rose-950/30' : 'text-amber-300 border-amber-500/40 bg-amber-950/30';
+    const ch4Html = `
+      <div class="p-5 rounded-xl border border-indigo-900/40 bg-gradient-to-br from-[#141422] via-black to-[#0e1017] space-y-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🎯</span>
+            <div>
+              <h4 class="text-sm font-bold text-indigo-300 font-serif-sc">${isEn ? ch4.titleEn : ch4.titleZh}</h4>
+              <p class="text-[10.5px] text-gray-400 mt-0.5">${isEn ? 'Annual strategic posture定调, decoupled action directives & 3-point risk firewalls' : '本年攻守姿态三阶定调 · 动静解耦行动指令 · 合同/职场/现金流三大防火墙'}</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+            ${report.selectedYear} ${isEn ? 'ANNUAL STRATEGY' : '流年决策'}
+          </span>
+        </div>
+
+        <!-- Posture Banner -->
+        <div class="p-4 rounded-xl border ${postureColor} flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div class="space-y-1">
+            <div class="text-base font-bold font-serif-sc flex items-center gap-2">
+              <span>${isEn ? ch4.postureTitleEn : ch4.postureTitleZh}</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-black/40 border border-gray-700 font-mono text-gray-300">
+                ${isEn ? `Impedance: ${ch4.annualImpedance}` : `年度阻抗系数: ${ch4.annualImpedance}`}
+              </span>
+            </div>
+            <div class="text-xs font-semibold text-gray-200">
+              ${isEn ? ch4.postureDirectiveEn : ch4.postureDirectiveZh}
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Core Firewalls -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div class="p-3 rounded-lg bg-black/45 border border-gray-800 space-y-1.5 text-xs">
+            <div class="font-bold text-amber-300 flex items-center gap-1.5">
+              <span>📝</span>
+              <span>${isEn ? 'Contractual Firewall' : '合同与法务防火墙'}</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-relaxed">${isEn ? ch4.firewalls.contractsEn : ch4.firewalls.contractsZh}</p>
+          </div>
+          <div class="p-3 rounded-lg bg-black/45 border border-gray-800 space-y-1.5 text-xs">
+            <div class="font-bold text-blue-300 flex items-center gap-1.5">
+              <span>🤝</span>
+              <span>${isEn ? 'Career & Partnership' : '职场与合伙防火墙'}</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-relaxed">${isEn ? ch4.firewalls.careerEn : ch4.firewalls.careerZh}</p>
+          </div>
+          <div class="p-3 rounded-lg bg-black/45 border border-gray-800 space-y-1.5 text-xs">
+            <div class="font-bold text-emerald-300 flex items-center gap-1.5">
+              <span>💰</span>
+              <span>${isEn ? 'Cash Flow & Assets' : '现金流与资产防火墙'}</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-relaxed">${isEn ? ch4.firewalls.cashEn : ch4.firewalls.cashZh}</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 5. Chapter 5: 周期风险雷达与敏感窗口
+    const ch5 = report.chapter5;
+    const ch5Html = `
+      <div class="p-5 rounded-xl border border-rose-900/40 bg-gradient-to-br from-[#1a1215] via-black to-[#0e1017] space-y-5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">📡</span>
+            <div>
+              <h4 class="text-sm font-bold text-rose-300 font-serif-sc">${isEn ? ch5.titleEn : ch5.titleZh}</h4>
+              <p class="text-[10.5px] text-gray-400 mt-0.5">${isEn ? '12-Month Impedance Heatmap & Top 20-30 High-Risk Sensitive Days Roster' : '12 节令月度阻抗热力图（Heatmap）+ 全年 20~30 个高风险敏感日精准避险预警'}</p>
+            </div>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-rose-500/20 text-rose-300 border border-rose-500/30">
+            ${isEn ? 'RISK RADAR' : '风险雷达'}
+          </span>
+        </div>
+
+        <!-- 5A: 12 Solar Months Heatmap -->
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
+              <span>🔥</span>
+              <span>${isEn ? '12 Solar Months Impedance Heatmap (0.1 ~ 1.0)' : '12 节令月度阻抗热力矩阵 (0.1 ~ 1.0 能量阻抗系数)'}</span>
+            </span>
+            <span class="text-[10px] text-gray-500 font-mono">${isEn ? 'GREEN: LOW IMPEDANCE | RED: HIGH IMPEDANCE' : '翠绿：低阻借势 | 红橙：高阻防守'}</span>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            ${ch5.monthlyHeatmap.map(m => {
+              const impColor = m.impedance <= 0.35 ? 'text-emerald-400 bg-emerald-950/20 border-emerald-500/40' : m.impedance >= 0.65 ? 'text-rose-400 bg-rose-950/20 border-rose-500/40' : 'text-amber-400 bg-amber-950/20 border-amber-500/40';
+              const god = I18N.getGod(m.stemGod, currentLang);
+              return `
+                <div class="p-2 rounded-lg border ${impColor} flex flex-col justify-between space-y-1 text-center">
+                  <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/70 pb-0.5">
+                    <span class="font-mono text-gray-300">${isEn ? m.solarTermEn : m.solarTermZh}</span>
+                    <span class="font-mono font-bold">${m.impedancePercent}</span>
+                  </div>
+                  <div class="py-0.5">
+                    <div class="text-sm font-bold font-serif-sc text-gray-100">${m.ganZhi}</div>
+                    <div class="text-[9.5px] text-purple-300">${god}</div>
+                  </div>
+                  <div class="pt-0.5 border-t border-gray-800/60 text-[9.5px] font-semibold truncate">
+                    ${isEn ? m.actionDirectiveEn : m.actionDirectiveZh}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- 5B: 20-30 High-Risk Sensitive Days -->
+        <div class="space-y-2.5 pt-3 border-t border-gray-800/80">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-bold text-rose-300 font-serif-sc flex items-center gap-1.5">
+              <span>🛑</span>
+              <span>${isEn ? 'Top High-Risk Sensitive Days Roster' : '全年高风险敏感日精确标记与闭关避险指南'}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono border border-rose-500/30">${ch5.sensitiveDays.length} ${isEn ? 'Days' : '个高危敏感日'}</span>
+            </span>
+            <span class="text-[10.5px] text-gray-400">${isEn ? 'Strictly postpone irreversible contracts & avoid confrontations' : '（精准扫描日柱/提纲/太岁之天克地冲、地支三刑与七杀暴戾，重大决策务必避让）'}</span>
+          </div>
+
+          <div class="space-y-2 max-h-96 overflow-y-auto pr-1">
+            ${ch5.sensitiveDays.map(sd => {
+              const isCrit = sd.riskLevel === '极危';
+              const badgeCls = isCrit ? 'bg-rose-500/20 text-rose-300 border-rose-500/50' : 'bg-amber-500/20 text-amber-300 border-amber-500/50';
+              const borderCls = isCrit ? 'border-rose-900/60 bg-rose-950/20' : 'border-gray-800 bg-black/40';
+              const stemGod = I18N.getGod(sd.stemGod, currentLang);
+
+              return `
+                <div class="p-3 rounded-lg border ${borderCls} space-y-1.5 text-xs">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center space-x-2 font-mono">
+                      <span class="text-amber-300 font-bold">${sd.date}</span>
+                      <span class="px-1.5 py-0.2 rounded bg-gray-800 text-gray-300 text-[11px]">${sd.ganZhi} (${stemGod})</span>
+                      <span class="px-1.5 py-0.2 rounded border text-[10px] font-bold ${badgeCls}">${isEn ? sd.riskLevelEn : sd.riskLevel}</span>
+                    </div>
+                    <span class="text-[11px] font-semibold text-rose-300">${isEn ? sd.clashTypeEn : sd.clashTypeZh}</span>
+                  </div>
+                  <div class="text-[11px] text-gray-300">
+                    <span class="text-amber-400/90 font-semibold">${isEn ? 'Sensitive Triggers: ' : '触发敏感领域：'}</span>
+                    ${isEn ? sd.riskDomainEn : sd.riskDomainZh}
+                  </div>
+                  <div class="text-[11px] text-gray-400 leading-relaxed italic bg-black/30 p-2 rounded border border-gray-800/60">
+                    ${isEn ? sd.shelterGuidanceEn : sd.shelterGuidanceZh}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.innerHTML = `
+      ${bannerHtml}
+      ${ch1Html}
+      ${ch2Html}
+      ${ch3Html}
+      ${ch4Html}
+      ${ch5Html}
+    `;
   }
 
   // Primary View Navigation Logic
@@ -7770,6 +8181,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.showDynamicCalculationProgress = showDynamicCalculationProgress;
   window.renderOperationalPlaybook = renderOperationalPlaybook;
   window.renderEcologicalResonance = renderEcologicalResonance;
+  window.renderTimeDynamicsReport = renderTimeDynamicsReport;
   window.renderFrictionView = renderFrictionView;
 
   // Initial Calculation Run & Prepare Landing Preview
