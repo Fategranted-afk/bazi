@@ -358,6 +358,197 @@ class IChingEngine {
       targetLines
     };
   }
+
+  /**
+   * 四柱命卦（子平命卦 / 倪海厦《天纪》易数推命）
+   * 1. 先天卦 (前半生)
+   * 2. 后天卦 (后半生)
+   * 3. 值年流年卦 (当年/已选流年)
+   * 阳爻管9年，阴爻管6年，依年龄流转高亮当值之爻。
+   * 整合倪海厦《天纪》64卦批注全集 (先天卦断、后天卦断、流年卦断、玉上有光字谜与天机解密)。
+   */
+  static calculateFourPillarsHexagrams(bazi, currentAge = 35, selectedYear = new Date().getFullYear()) {
+    if (!bazi || !bazi.pillars) return null;
+
+    const stemsNum = { '甲': 1, '乙': 2, '丙': 3, '丁': 4, '戊': 5, '己': 6, '庚': 7, '辛': 8, '壬': 9, '癸': 10 };
+    const branchesNum = { '子': 1, '丑': 2, '寅': 3, '卯': 4, '辰': 5, '巳': 6, '午': 7, '未': 8, '申': 9, '酉': 10, '戌': 11, '亥': 12 };
+
+    const p = bazi.pillars;
+    const nums = [
+      stemsNum[p.year.stem] || 1, branchesNum[p.year.branch] || 1,
+      stemsNum[p.month.stem] || 1, branchesNum[p.month.branch] || 1,
+      stemsNum[p.day.stem] || 1, branchesNum[p.day.branch] || 1,
+      stemsNum[p.hour.stem] || 1, branchesNum[p.hour.branch] || 1
+    ];
+
+    let tianShu = 0; // Sum of odd numbers
+    let diShu = 0;   // Sum of even numbers
+    nums.forEach(n => {
+      if (n % 2 !== 0) tianShu += n;
+      else diShu += n;
+    });
+
+    // Upper Trigram (天数卦)
+    let u = tianShu;
+    while (u > 25) u -= 25;
+    let uNum = u % 8;
+    if (uNum === 0) uNum = 8;
+
+    // Lower Trigram (地数卦)
+    let l = diShu;
+    while (l > 30) l -= 30;
+    let lNum = l % 8;
+    if (lNum === 0) lNum = 8;
+
+    const upperTri = this.XIAN_TIAN_TRIGRAMS[uNum];
+    const lowerTri = this.XIAN_TIAN_TRIGRAMS[lNum];
+    const xianTianBinary = lowerTri.binary.concat(upperTri.binary);
+
+    const xianTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(xianTianBinary) : null;
+    const xianTianTJ = (xianTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(xianTianHex.number) : null;
+
+    // 阳爻管9年，阴爻管6年
+    let runningAgeXT = 0;
+    const posNamesZh = ['初', '二', '三', '四', '五', '上'];
+    const posNamesEn = ['1st (Initial)', '2nd', '3rd', '4th', '5th', '6th (Top)'];
+
+    const xianTianLines = xianTianBinary.map((nature, idx) => {
+      const pos = idx + 1;
+      const duration = (nature === 1) ? 9 : 6;
+      const ageStart = runningAgeXT + 1;
+      const ageEnd = runningAgeXT + duration;
+      runningAgeXT += duration;
+
+      const isCurrentActive = (currentAge >= ageStart && currentAge <= ageEnd);
+      const symbol = (nature === 1) ? '⚊' : '⚋';
+      const typeZh = (nature === 1) ? '阳爻 (管9年)' : '阴爻 (管6年)';
+      const typeEn = (nature === 1) ? 'Yang Line (Governs 9 Years)' : 'Yin Line (Governs 6 Years)';
+
+      return {
+        position: pos,
+        posZh: `${posNamesZh[idx]}爻`,
+        posEn: `Line ${pos}`,
+        nature,
+        symbol,
+        duration,
+        typeZh,
+        typeEn,
+        ageStart,
+        ageEnd,
+        ageSpanZh: `${ageStart}~${ageEnd}岁`,
+        ageSpanEn: `Ages ${ageStart}-${ageEnd}`,
+        isActive: isCurrentActive
+      };
+    });
+
+    const xianTianTotalYears = runningAgeXT;
+
+    // Derive 后天卦 (Later Heaven Hexagram)
+    let moveLine = (tianShu + diShu) % 6;
+    if (moveLine === 0) moveLine = 6;
+
+    const houTianBinary = [...xianTianBinary];
+    houTianBinary[moveLine - 1] = 1 - houTianBinary[moveLine - 1];
+
+    const houTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(houTianBinary) : null;
+    const houTianTJ = (houTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(houTianHex.number) : null;
+
+    let runningAgeHT = xianTianTotalYears;
+    const houTianLines = houTianBinary.map((nature, idx) => {
+      const pos = idx + 1;
+      const duration = (nature === 1) ? 9 : 6;
+      const ageStart = runningAgeHT + 1;
+      const ageEnd = runningAgeHT + duration;
+      runningAgeHT += duration;
+
+      const isCurrentActive = (currentAge >= ageStart && currentAge <= ageEnd);
+      const symbol = (nature === 1) ? '⚊' : '⚋';
+      const typeZh = (nature === 1) ? '阳爻 (管9年)' : '阴爻 (管6年)';
+      const typeEn = (nature === 1) ? 'Yang Line (Governs 9 Years)' : 'Yin Line (Governs 6 Years)';
+
+      return {
+        position: pos,
+        posZh: `${posNamesZh[idx]}爻`,
+        posEn: `Line ${pos}`,
+        nature,
+        symbol,
+        duration,
+        typeZh,
+        typeEn,
+        ageStart,
+        ageEnd,
+        ageSpanZh: `${ageStart}~${ageEnd}岁`,
+        ageSpanEn: `Ages ${ageStart}-${ageEnd}`,
+        isActive: isCurrentActive
+      };
+    });
+
+    const isXianTianActive = (currentAge <= xianTianTotalYears);
+    const activeStage = isXianTianActive ? 'xianTian' : 'houTian';
+    const activeStageZh = isXianTianActive ? '前半生 · 先天命卦当值' : '后半生 · 后天命卦执权';
+    const activeStageEn = isXianTianActive ? 'First Half of Life · Early Heaven Natal Mandate' : 'Second Half of Life · Later Heaven Mandate';
+
+    let birthYear = 1990;
+    if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
+    else if (bazi.year) birthYear = bazi.year;
+
+    const targetAge = Math.max(1, selectedYear - birthYear);
+    let zhiNianBaseBinary;
+    let zhiNianActiveLinePos;
+
+    if (targetAge <= xianTianTotalYears) {
+      zhiNianBaseBinary = [...xianTianBinary];
+      const activeL = xianTianLines.find(l => targetAge >= l.ageStart && targetAge <= l.ageEnd) || xianTianLines[0];
+      zhiNianActiveLinePos = activeL.position;
+    } else {
+      zhiNianBaseBinary = [...houTianBinary];
+      const activeL = houTianLines.find(l => targetAge >= l.ageStart && targetAge <= l.ageEnd) || houTianLines[houTianLines.length - 1];
+      zhiNianActiveLinePos = activeL.position;
+    }
+
+    const zhiNianBinary = [...zhiNianBaseBinary];
+    zhiNianBinary[zhiNianActiveLinePos - 1] = 1 - zhiNianBinary[zhiNianActiveLinePos - 1];
+
+    const zhiNianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(zhiNianBinary) : null;
+    const zhiNianTJ = (zhiNianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(zhiNianHex.number) : null;
+
+    return {
+      currentAge,
+      selectedYear,
+      targetAge,
+      tianShu,
+      diShu,
+      moveLine,
+      activeStage,
+      activeStageZh,
+      activeStageEn,
+      xianTian: {
+        hexagram: xianTianHex,
+        tianJi: xianTianTJ,
+        binary: xianTianBinary,
+        lines: xianTianLines,
+        totalYears: xianTianTotalYears,
+        ageSpanZh: `1~${xianTianTotalYears}岁`,
+        ageSpanEn: `Ages 1-${xianTianTotalYears}`
+      },
+      houTian: {
+        hexagram: houTianHex,
+        tianJi: houTianTJ,
+        binary: houTianBinary,
+        lines: houTianLines,
+        ageSpanZh: `${xianTianTotalYears + 1}~${runningAgeHT}岁`,
+        ageSpanEn: `Ages ${xianTianTotalYears + 1}-${runningAgeHT}`
+      },
+      zhiNian: {
+        year: selectedYear,
+        age: targetAge,
+        hexagram: zhiNianHex,
+        tianJi: zhiNianTJ,
+        binary: zhiNianBinary,
+        activeLinePos: zhiNianActiveLinePos
+      }
+    };
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

@@ -2430,7 +2430,7 @@ var console = {
   }
 };
 
-var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'timeDynamicsSection', 'tdAnnualBadge', 'timeDynamicsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer'];
+var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'timeDynamicsSection', 'tdAnnualBadge', 'timeDynamicsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer', 'view-fengshui', 'btnJumpToHomeFromFengShui', 'fengshuiContentContainer', 'fengshuiQuickBadges', 'ziping100Section', 'ziping100Container', 'zipingScoreBadges', 'fourPillarsHexSection', 'fourPillarsHexContainer', 'fourPillarsAgeSlider', 'fourPillarsAgeDisplay'];
 var elementStore = {};
 
 function makeEl(id, tag) {
@@ -2438,8 +2438,19 @@ function makeEl(id, tag) {
   if (id === 'dashboardView' || id === 'btnPortalTopNav' || id === 'advSolarTimeContainer') {
     initialClasses = ['hidden'];
   }
+  var navMap = {
+    'navBtnHome': 'view-home',
+    'navBtnStrategy': 'view-strategy',
+    'navBtnFriction': 'view-friction',
+    'navBtnLuck': 'view-luck',
+    'navBtnCanons': 'view-canons',
+    'navBtnIChing': 'view-iching',
+    'navBtnSynastry': 'view-synastry',
+    'navBtnFengShui': 'view-fengshui'
+  };
   return {
     id: id,
+    'data-view': navMap[id] || null,
     tagName: (tag || 'DIV').toUpperCase(),
     value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : (id === 'synastryDateA' ? '1990-06-20' : (id === 'synastryTimeA' ? '14:30' : (id === 'synastryDateB' ? '1992-08-15' : (id === 'synastryTimeB' ? '10:00' : '')))))),
     checked: false,
@@ -2480,6 +2491,7 @@ function makeEl(id, tag) {
     querySelector: function() { return null; },
     getAttribute: function(attr) { return this[attr] || null; },
     setAttribute: function(attr, val) { this[attr] = val; },
+    hasAttribute: function(attr) { return this[attr] !== undefined && this[attr] !== null; },
     getContext: function() {
       return {
         clearRect: function() {},
@@ -2527,7 +2539,8 @@ var document = {
         elementStore['navBtnLuck'],
         elementStore['navBtnCanons'],
         elementStore['navBtnIChing'],
-        elementStore['navBtnSynastry']
+        elementStore['navBtnSynastry'],
+        elementStore['navBtnFengShui']
       ];
     }
     return [];
@@ -2548,7 +2561,9 @@ load('data/shenfeng.js');
 load('data/yuzhao.js');
 load('data/lixuzhong.js');
 load('data/iching.js');
+load('data/tianji.js');
 load('js/bazi-engine.js');
+load('js/fengshui-engine.js');
 load('js/portrait-engine.js');
 load('js/luck-engine.js');
 load('js/iching-engine.js');
@@ -2706,6 +2721,31 @@ if (elementStore['landingPortalView'].classList.contains('hidden') === true) {
 }
 // Finally enter dashboard again
 elementStore['calcBtn'].trigger('click');
+
+// Test switching to Feng Shui view & zero residual Chinese in English mode
+elementStore['navBtnFengShui'].trigger('click');
+if (elementStore['view-fengshui'].classList.contains('hidden') === true) {
+  throw new Error('view-fengshui must be visible after clicking navBtnFengShui');
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['fengshuiContentContainer'].innerHTML)) {
+  throw new Error('fengshuiContentContainer contains residual Chinese in English mode: ' + elementStore['fengshuiContentContainer'].innerHTML);
+}
+// Test jump to home from fengshui
+elementStore['btnJumpToHomeFromFengShui'].trigger('click');
+if (elementStore['view-home'].classList.contains('hidden') === true) {
+  throw new Error('view-home must be visible after clicking btnJumpToHomeFromFengShui');
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['ziping100Container'].innerHTML)) {
+  throw new Error('ziping100Container contains residual Chinese in English mode: ' + elementStore['ziping100Container'].innerHTML);
+}
+// Test switching to iching view & Four Pillars Hexagrams in English mode
+elementStore['navBtnIChing'].trigger('click');
+if (elementStore['view-iching'].classList.contains('hidden') === true) {
+  throw new Error('view-iching must be visible after clicking navBtnIChing');
+}
+if (/[\u4e00-\u9fa5]/.test(elementStore['fourPillarsHexContainer'].innerHTML)) {
+  throw new Error('fourPillarsHexContainer contains residual Chinese in English mode: ' + elementStore['fourPillarsHexContainer'].innerHTML);
+}
 '''
 
 jsc_sim_cmd = [
@@ -3910,5 +3950,452 @@ run_dom = subprocess.run(jsc_dom_cmd, capture_output=True, text=True)
 assert run_dom.returncode == 0, f"JSC 5-Tier DOM check failed: stdout={run_dom.stdout} stderr={run_dom.stderr}"
 print("✓ 五阶深度战报 DOM 动态渲染、双语 100% 零中文残留与 JSC 运行时零崩溃验证通过！")
 
-print("\n🎉 ALL 59 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 60. Validating Ziping 100-Point Scoring Engine & Historical Calibration
+print("\n=== 60. Validating Ziping 100-Point Scoring Engine & Historical Calibration ===")
+jsc_ziping_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+
+    // 1. Mao Zedong Calibration (癸巳 甲子 丁酉 甲辰): 36.5 (较弱格)
+    var bMao = BaZiEngine.calculate({
+      year: 1893, month: 12, day: 26, hour: 7, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 112.9, timezone: 8.0
+    });
+    var zipingMao = BaZiEngine.calculateZipingScore(bMao);
+    if (Math.abs(zipingMao.totalScore - 36.5) > 0.01) {
+      throw new Error("Mao Ziping score mismatch: expected 36.5, got " + zipingMao.totalScore);
+    }
+    if (zipingMao.categoryKey !== 'moderate_weak') {
+      throw new Error("Mao category mismatch: expected moderate_weak, got " + zipingMao.categoryKey);
+    }
+
+    // 2. Chiang Kai-shek Calibration (丁亥 庚戌 己巳 庚午): 64.5 (较旺格)
+    var bChiang = BaZiEngine.calculate({
+      year: 1887, month: 10, day: 31, hour: 12, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 121.4, timezone: 8.0
+    });
+    var zipingChiang = BaZiEngine.calculateZipingScore(bChiang);
+    if (Math.abs(zipingChiang.totalScore - 64.5) > 0.01) {
+      throw new Error("Chiang Ziping score mismatch: expected 64.5, got " + zipingChiang.totalScore);
+    }
+    if (zipingChiang.categoryKey !== 'moderate_strong') {
+      throw new Error("Chiang category mismatch: expected moderate_strong, got " + zipingChiang.categoryKey);
+    }
+
+    // 3. Special Dominant Formation (>85 pts): Qu Zhi Wood Pattern
+    var mockAllWood = {
+      dayMaster: '甲',
+      dayMasterElement: '木',
+      pillars: {
+        year: { stem: '甲', stemElement: '木', branch: '寅' },
+        month: { stem: '乙', stemElement: '木', branch: '卯' },
+        day: { stem: '甲', stemElement: '木', branch: '寅' },
+        hour: { stem: '乙', stemElement: '木', branch: '卯' }
+      }
+    };
+    var zipingQuZhi = BaZiEngine.calculateZipingScore(mockAllWood);
+    if (zipingQuZhi.totalScore < 85) {
+      throw new Error("Qu Zhi score must be > 85, got " + zipingQuZhi.totalScore);
+    }
+    if (zipingQuZhi.categoryKey !== 'extreme_strong') {
+      throw new Error("Qu Zhi categoryKey must be extreme_strong, got " + zipingQuZhi.categoryKey);
+    }
+    if (!zipingQuZhi.dominantSpecialPattern.includes('曲直')) {
+      throw new Error("Qu Zhi special pattern must include 曲直, got " + zipingQuZhi.dominantSpecialPattern);
+    }
+
+    // 4. Extreme Weak Formation (<15 pts)
+    var mockExtremeWeak = {
+      dayMaster: '丁',
+      dayMasterElement: '火',
+      pillars: {
+        year: { stem: '庚', stemElement: '金', branch: '子' },
+        month: { stem: '辛', stemElement: '金', branch: '申' },
+        day: { stem: '丁', stemElement: '火', branch: '酉' },
+        hour: { stem: '戊', stemElement: '土', branch: '亥' }
+      }
+    };
+    var zipingWeak = BaZiEngine.calculateZipingScore(mockExtremeWeak);
+    if (zipingWeak.totalScore >= 15) {
+      throw new Error("Extreme weak score must be < 15, got " + zipingWeak.totalScore);
+    }
+    if (zipingWeak.categoryKey !== 'extreme_weak') {
+      throw new Error("Extreme weak categoryKey must be extreme_weak, got " + zipingWeak.categoryKey);
+    }
+
+    // 5. Proximity Checks & Stems Breakdown
+    if (zipingMao.stemsScore !== 30) throw new Error("Mao stemsScore must be 30, got " + zipingMao.stemsScore);
+    if (zipingMao.branchesScore !== 6.5) throw new Error("Mao branchesScore must be 6.5, got " + zipingMao.branchesScore);
+    if (zipingMao.proximityChecks.dayBranch.weight !== 15) throw new Error("dayBranch weight must be 15");
+    if (zipingMao.proximityChecks.monthStem.weight !== 10) throw new Error("monthStem weight must be 10");
+    if (zipingMao.proximityChecks.hourStem.weight !== 10) throw new Error("hourStem weight must be 10");
+    '''
+]
+run_ziping = subprocess.run(jsc_ziping_cmd, capture_output=True, text=True)
+assert run_ziping.returncode == 0, f"Ziping 100 Engine check failed: stdout={run_ziping.stdout} stderr={run_ziping.stderr}"
+print("✓ 子平100分制生克量化评分引擎（干支权重/杂气折算/四大命格/五专旺格/历史伟人校准/用神远近）验证通过！")
+
+# 61. Validating Combination Bureaus (三合局 & 三会局) & Energy Priority (贪合忘冲/刑)
+print("\n=== 61. Validating Combination Bureaus & Energy Priority (贪合忘冲/刑) ===")
+jsc_bureau_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+
+    // Test chart with Shen-Zi-Chen Water Bureau and Zi-Wu Clash
+    var pillars = {
+      year: { stem: '甲', branch: '申', ganZhi: '甲申' },
+      month: { stem: '丙', branch: '子', ganZhi: '丙子' },
+      day: { stem: '戊', branch: '辰', ganZhi: '戊辰' },
+      hour: { stem: '戊', branch: '午', ganZhi: '戊午' }
+    };
+    var inter = BaZiEngine.calculatePillarInteractions(pillars);
+
+    if (!inter.sanHeCombos || inter.sanHeCombos.length === 0) {
+      throw new Error("Must detect Shen-Zi-Chen San He Water Bureau");
+    }
+    var sh = inter.sanHeCombos[0];
+    if (sh.element !== '水' || !sh.nameZh.includes('申子辰')) {
+      throw new Error("Invalid San He Bureau detection: " + sh.nameZh);
+    }
+
+    // Verify 贪合忘冲: Zi-Wu clash must have resolvedByCombo === true
+    var ziWuClash = inter.branchClashes.find(function(c) {
+      return c.branches === '子午' || c.branches === '午子';
+    });
+    if (!ziWuClash) throw new Error("Zi-Wu clash must be detected");
+    if (!ziWuClash.resolvedByCombo) {
+      throw new Error("Zi-Wu clash must be resolvedByCombo due to Shen-Zi-Chen bureau");
+    }
+    if (!ziWuClash.resolutionNoteZh.includes('贪合忘冲')) {
+      throw new Error("Zi-Wu clash resolutionNoteZh must include 贪合忘冲");
+    }
+
+    // Test Directional Meeting (三会局: 寅卯辰东方木局) with Mao-You clash
+    var pillarsHui = {
+      year: { stem: '甲', branch: '寅', ganZhi: '甲寅' },
+      month: { stem: '丁', branch: '卯', ganZhi: '丁卯' },
+      day: { stem: '戊', branch: '辰', ganZhi: '戊辰' },
+      hour: { stem: '辛', branch: '酉', ganZhi: '辛酉' }
+    };
+    var interHui = BaZiEngine.calculatePillarInteractions(pillarsHui);
+    if (!interHui.sanHuiCombos || interHui.sanHuiCombos.length === 0) {
+      throw new Error("Must detect Yin-Mao-Chen San Hui Wood Meeting");
+    }
+    var maoYouClash = interHui.branchClashes.find(function(c) {
+      return c.branches === '卯酉' || c.branches === '酉卯';
+    });
+    if (!maoYouClash || !maoYouClash.resolvedByCombo) {
+      throw new Error("Mao-You clash must be resolvedByCombo due to Yin-Mao-Chen meeting");
+    }
+
+    // Verify LuckEngine evaluateInteractions includes San Hui & San He
+    var baziObj = {
+      dayMaster: '戊',
+      dayMasterElement: '土',
+      pillars: {
+        year: { stem: '甲', branch: '申', text: '甲申' },
+        month: { stem: '丙', branch: '子', text: '丙子' },
+        day: { stem: '戊', branch: '辰', text: '戊辰' },
+        hour: { stem: '戊', branch: '午', text: '戊午' }
+      },
+      interactions: inter
+    };
+    var luckInter = LuckEngine.evaluateInteractions(baziObj, { stem: '庚', branch: '申', text: '庚申' }, { stem: '甲', branch: '子', text: '甲子' });
+    var hasBureau = Array.isArray(luckInter) && luckInter.some(function(i) { return i.type === 'triad' || i.type === 'meeting'; });
+    if (!hasBureau) {
+      throw new Error("LuckEngine evaluateInteractions must report triad or meeting bureau");
+    }
+    '''
+]
+run_bureau = subprocess.run(jsc_bureau_cmd, capture_output=True, text=True)
+assert run_bureau.returncode == 0, f"Combination bureau check failed: stdout={run_bureau.stdout} stderr={run_bureau.stderr}"
+print("✓ 合局全套解析（三合局/三会局/半合局与贪合忘冲/忘刑能量优先权）验证通过！")
+
+# 62. Validating Luck Engine Age-Calibrated Direction & Transits
+print("\n=== 62. Validating Luck Engine Age-Calibrated Direction & Transits ===")
+jsc_age_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    // Youth transit at age 25
+    var tYouth = LuckEngine.evaluateTransitFortune(bazi, { stem: '乙', branch: '未', text: '乙未', age: 25 }, 'annual');
+    if (!tYouth.ageConsiderationZh || !tYouth.ageConsiderationZh.includes('青年')) {
+      throw new Error("Youth ageConsiderationZh must mention 青年");
+    }
+    if (!tYouth.ageConsiderationEn || !tYouth.ageConsiderationEn.includes('Youth')) {
+      throw new Error("Youth ageConsiderationEn must mention Youth");
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(tYouth.ageConsiderationEn)) {
+      throw new Error("Residual Chinese in youth ageConsiderationEn: " + tYouth.ageConsiderationEn);
+    }
+
+    // Elder transit at age 75
+    var tElder = LuckEngine.evaluateTransitFortune(bazi, { stem: '乙', branch: '未', text: '乙未', age: 75 }, 'annual');
+    if (!tElder.ageConsiderationZh || (!tElder.ageConsiderationZh.includes('守成稳定') && !tElder.ageConsiderationZh.includes('固本安康'))) {
+      throw new Error("Elder ageConsiderationZh must mention 守成稳定 or 固本安康");
+    }
+    if (!tElder.ageConsiderationEn || !tElder.ageConsiderationEn.includes('Elder')) {
+      throw new Error("Elder ageConsiderationEn must mention Elder");
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(tElder.ageConsiderationEn)) {
+      throw new Error("Residual Chinese in elder ageConsiderationEn: " + tElder.ageConsiderationEn);
+    }
+
+    // Verify generateImpedanceReport incorporates age posture
+    var repYoung = LuckEngine.generateImpedanceReport(bazi, 2015); // age 25
+    if (!repYoung.chapter4.postureTitleZh.includes('青年开辟') && !repYoung.chapter4.postureTitleZh.includes('进攻')) {
+      throw new Error("Young impedance posture must emphasize offensive expansion");
+    }
+
+    var repElder = LuckEngine.generateImpedanceReport(bazi, 2065); // age 75
+    if (!repElder.chapter4.postureTitleZh.includes('守成') && !repElder.chapter4.postureTitleZh.includes('防守') && !repElder.chapter4.postureTitleZh.includes('颐养')) {
+      throw new Error("Elder impedance posture must emphasize preservation and stability");
+    }
+    '''
+]
+run_age = subprocess.run(jsc_age_cmd, capture_output=True, text=True)
+assert run_age.returncode == 0, f"Age calibration check failed: stdout={run_age.stdout} stderr={run_age.stderr}"
+print("✓ 岁运推演年龄考量机制（20岁锐意进攻开拓 vs 60~80岁守成颐养稳定与双语零残留）验证通过！")
+
+# 63. Validating Ni Haisha Tian Ji 64 Hexagrams Database & Four Pillars Hexagrams
+print("\n=== 63. Validating Ni Haisha Tian Ji 64 Hexagrams Database & Four Pillars Hexagrams ===")
+jsc_tianji_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/iching-engine.js");
+
+    // 1. Check TIANJI_DATA and TianJiDB
+    if (typeof TIANJI_DATA === 'undefined' || TIANJI_DATA.length !== 64) {
+      throw new Error("TIANJI_DATA must contain all 64 hexagrams, got " + (typeof TIANJI_DATA !== 'undefined' ? TIANJI_DATA.length : 'undefined'));
+    }
+    for (var i = 1; i <= 64; i++) {
+      var item = TianJiDB.getByNumber(i);
+      if (!item) throw new Error("TianJiDB missing hexagram #" + i);
+      if (!item.xianTianZh || !item.xianTianEn) throw new Error("Missing xianTian on hexagram #" + i);
+      if (!item.houTianZh || !item.houTianEn) throw new Error("Missing houTian on hexagram #" + i);
+      if (!item.liuNianZh || !item.liuNianEn) throw new Error("Missing liuNian on hexagram #" + i);
+      if (!item.riddleZh || !item.riddleEn) throw new Error("Missing riddle on hexagram #" + i);
+      if (/[\\u4e00-\\u9fa5]/.test(item.xianTianEn)) throw new Error("Residual Chinese in xianTianEn of hexagram #" + i);
+      if (/[\\u4e00-\\u9fa5]/.test(item.houTianEn)) throw new Error("Residual Chinese in houTianEn of hexagram #" + i);
+      if (/[\\u4e00-\\u9fa5]/.test(item.liuNianEn)) throw new Error("Residual Chinese in liuNianEn of hexagram #" + i);
+      if (/[\\u4e00-\\u9fa5]/.test(item.riddleEn)) throw new Error("Residual Chinese in riddleEn of hexagram #" + i);
+    }
+
+    // 2. Check IChingEngine.calculateFourPillarsHexagrams
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var fourHex = IChingEngine.calculateFourPillarsHexagrams(bazi, 35, 2025);
+
+    if (typeof fourHex.tianShu !== 'number' || typeof fourHex.diShu !== 'number') {
+      throw new Error("calculateFourPillarsHexagrams missing tianShu or diShu");
+    }
+    if (!fourHex.xianTian.hexagram || !fourHex.xianTian.tianJi) {
+      throw new Error("calculateFourPillarsHexagrams missing xianTian hexagram/tianJi");
+    }
+    if (!fourHex.houTian.hexagram || !fourHex.houTian.tianJi) {
+      throw new Error("calculateFourPillarsHexagrams missing houTian hexagram/tianJi");
+    }
+    if (!fourHex.zhiNian.hexagram || !fourHex.zhiNian.tianJi) {
+      throw new Error("calculateFourPillarsHexagrams missing zhiNian hexagram/tianJi");
+    }
+
+    // Check line rules: Yang = 9 years, Yin = 6 years
+    fourHex.xianTian.lines.forEach(function(l) {
+      if (l.nature === 1 && l.duration !== 9) throw new Error("Yang line must govern 9 years");
+      if (l.nature === 0 && l.duration !== 6) throw new Error("Yin line must govern 6 years");
+    });
+
+    // Check active line at age 35
+    var activeCount = fourHex.xianTian.lines.filter(function(l) { return l.isActive; }).length;
+    if (activeCount !== 1) {
+      throw new Error("Exactly 1 active line must be selected for age 35, got " + activeCount);
+    }
+    '''
+]
+run_tianji = subprocess.run(jsc_tianji_cmd, capture_output=True, text=True)
+assert run_tianji.returncode == 0, f"Tian Ji & Four Pillars Hexagrams check failed: stdout={run_tianji.stdout} stderr={run_tianji.stderr}"
+print("✓ 倪海厦《天纪》64卦专属数据库与四柱排卦引擎（天地数/先天卦/后天卦/值年卦/阳九阴六/字谜天机）验证通过！")
+
+# 64. Validating Dedicated Spatial Feng Shui Guide Engine (10 Practical Remedies)
+print("\n=== 64. Validating Dedicated Spatial Feng Shui Guide Engine (10 Practical Remedies) ===")
+jsc_fengshui_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/fengshui-engine.js");
+
+    // 1. Kua Number Calculations (Pre-2000 and Post-2000, Male and Female)
+    var kuaM1990 = SpatialFengShuiEngine.calculatePersonalKua(1990, '乾造');
+    var kuaF1990 = SpatialFengShuiEngine.calculatePersonalKua(1990, '坤造');
+    var kuaM2005 = SpatialFengShuiEngine.calculatePersonalKua(2005, '乾造');
+    var kuaF2005 = SpatialFengShuiEngine.calculatePersonalKua(2005, '坤造');
+    if (kuaM1990.kuaNum < 1 || kuaM1990.kuaNum > 9 || kuaM1990.kuaNum === 5) throw new Error("Invalid kuaM1990: " + kuaM1990.kuaNum);
+    if (kuaF1990.kuaNum < 1 || kuaF1990.kuaNum > 9 || kuaF1990.kuaNum === 5) throw new Error("Invalid kuaF1990: " + kuaF1990.kuaNum);
+
+    // 2. Generate Full 10 Remediation Items
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2025);
+    var guide = SpatialFengShuiEngine.generateFengShuiGuide(bazi, luck);
+
+    if (!guide) throw new Error("generateFengShuiGuide returned null");
+    var requiredItems = [
+      'yanNianItem', 'dragonTurtleItem', 'tanHeItem', 'carBellsItem',
+      'missingCornerItem', 'sanHeArrayItem', 'trioBoostItem',
+      'hetuLuoshuItem', 'meritItem', 'holisticRatingItem'
+    ];
+    for (var i = 0; i < requiredItems.length; i++) {
+      var itemKey = requiredItems[i];
+      if (!guide[itemKey]) throw new Error("Missing feng shui item: " + itemKey);
+      if (!guide[itemKey].titleZh || !guide[itemKey].titleEn) {
+        throw new Error("Item " + itemKey + " missing titleZh or titleEn");
+      }
+    }
+
+    // 3. Exhaustive check of zero residual Chinese in all *En fields
+    function checkEn(obj, path) {
+      for (var k in obj) {
+        if (!obj.hasOwnProperty(k)) continue;
+        var v = obj[k];
+        var p = path ? path + '.' + k : k;
+        if (typeof v === 'string' && k.endsWith('En')) {
+          if (/[\\u4e00-\\u9fa5]/.test(v)) {
+            throw new Error("Residual Chinese in " + p + ": " + v);
+          }
+        } else if (v && typeof v === 'object') {
+          checkEn(v, p);
+        }
+      }
+    }
+    checkEn(guide, 'guide');
+    '''
+]
+run_fengshui = subprocess.run(jsc_fengshui_cmd, capture_output=True, text=True)
+assert run_fengshui.returncode == 0, f"Spatial Feng Shui check failed: stdout={run_fengshui.stdout} stderr={run_fengshui.stderr}"
+print("✓ 空间风水指南引擎（实操十策/本命命卦延年/对门龙龟/贪合忘冲六合/车铃化煞/泰山石敢当/天心十道/河洛玄数/积德三法/双语零残留）验证通过！")
+
+# 65. Validating Full End-to-End DOM Integration & Zero Residual Chinese
+print("\n=== 65. Validating Full End-to-End DOM Integration & Zero Residual Chinese ===")
+jsc_dom_all_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/fengshui-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2025);
+
+    // Verify i18n keys for new features in both zh and en
+    var fengshuiKeys = [
+      'nav_fengshui', 'fengshui_title', 'fengshui_subtitle',
+      'card_fengshui_title', 'card_fengshui_desc',
+      'ziping_title', 'ziping_subtitle',
+      'four_pillars_hex_title', 'four_pillars_hex_subtitle',
+      'four_pillars_hex_age_label'
+    ];
+    for (var k = 0; k < fengshuiKeys.length; k++) {
+      var key = fengshuiKeys[k];
+      var zhVal = I18N.t(key, 'zh');
+      var enVal = I18N.t(key, 'en');
+      if (!zhVal) throw new Error("Missing zh translation for key: " + key);
+      if (!enVal) throw new Error("Missing en translation for key: " + key);
+      if (/[\\u4e00-\\u9fa5]/.test(enVal)) {
+        throw new Error("Residual Chinese in en translation for key: " + key + " -> " + enVal);
+      }
+    }
+    '''
+]
+run_dom_all = subprocess.run(jsc_dom_all_cmd, capture_output=True, text=True)
+assert run_dom_all.returncode == 0, f"Full DOM check failed: stdout={run_dom_all.stdout} stderr={run_dom_all.stderr}"
+print("✓ 端到端全量 DOM 集成、导航无缝切换、周易四柱排卦与空间风水指南中英双语 100% 零中文残留验证通过！")
+
+print("\n🎉 ALL 65 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 

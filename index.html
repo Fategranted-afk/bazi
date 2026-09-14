@@ -361,13 +361,24 @@
           </div>
 
           <!-- Card 7: Synastry -->
-          <div class="feature-showcase-card cursor-pointer group col-span-1 sm:col-span-2 lg:col-span-2" data-jump-view="view-synastry">
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-synastry">
             <div class="flex items-center space-x-2 text-rose-300 mb-1.5 font-bold font-serif-sc">
               <span class="text-base">💞</span>
               <span data-i18n="portal_card7_title">双人合盘契合度博弈</span>
             </div>
             <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card7_desc">
               婚恋合婚与商业合伙，五行互补、刑冲雷区与契约防火墙全维评估。
+            </p>
+          </div>
+
+          <!-- Card 8: Spatial Feng Shui -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-fengshui">
+            <div class="flex items-center space-x-2 text-emerald-400 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">🏡</span>
+              <span data-i18n="portal_card8_title">空间风水指南</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card8_desc">
+              延年聚财貔貅鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数
             </p>
           </div>
         </div>
@@ -446,6 +457,11 @@
           <span class="text-base">💞</span>
           <span data-i18n="nav_view_synastry">双人合盘 (婚恋 / 商业合伙)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-950/60 text-rose-300 border border-rose-800/30 font-normal" data-i18n="seal_view_synastry">双人博弈</span>
+        </button>
+        <button id="navBtnFengShui" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-fengshui">
+          <span class="text-base">🏡</span>
+          <span data-i18n="nav_view_fengshui">空间风水指南 (实操十策)</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800/30 font-normal" data-i18n="seal_view_fengshui">空间开运</span>
         </button>
       </div>
     </nav>
@@ -532,6 +548,30 @@
             <p class="text-[11px] text-gray-400" data-i18n="portal_friction_desc">3分钟生理重置 · 4部实战法门 · 《金刚经》《坛经》《庄子》心智解脱</p>
           </div>
           <span class="text-rose-400 group-hover:translate-x-1 transition-transform text-base font-bold">→</span>
+        </div>
+      </section>
+
+      <!-- Ziping 100-Point Quantitative Scoring & Pattern Tier (子平 100 分制生克量化评分) -->
+      <section id="ziping100Section" class="bg-card rounded-2xl border border-border-color shadow-2xl p-5 md:p-6 space-y-4 relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-700/60">
+          <div>
+            <div class="flex items-center space-x-2.5">
+              <span class="chinese-seal text-xs py-0.5" data-i18n="seal_ziping_score">子平量化</span>
+              <h2 class="text-lg md:text-xl font-bold font-serif-sc text-amber-300" data-i18n="sec_ziping_score_title">
+                子平 100 分制生克量化评分与格局高低
+              </h2>
+            </div>
+            <p class="text-xs text-gray-400 mt-1" data-i18n="ziping_score_desc">
+              天干40分（日干+10永恒固本）· 月令35分 · 日支15分 · 年时支各5分 · 辰戌丑未杂气精准折算 · 判定四大命格与五大专旺
+            </p>
+          </div>
+          <div id="zipingScoreBadges" class="flex flex-wrap gap-2 text-xs">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <div id="ziping100Container" class="space-y-4">
+          <!-- Injected via JS -->
         </div>
       </section>
 
@@ -1310,6 +1350,33 @@
       </div>
     </div>
 
+    <!-- Four Pillars Natal Hexagrams & Master Ni Haisha Tian Ji Exegesis (四柱命卦与倪海厦《天纪》全相推命) -->
+    <section id="fourPillarsHexSection" class="bg-card rounded-2xl border border-border-color shadow-2xl p-5 md:p-6 space-y-5">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-700/60">
+        <div>
+          <div class="flex items-center space-x-2.5">
+            <span class="chinese-seal text-xs py-0.5" data-i18n="seal_four_pillars_hex">天纪易数</span>
+            <h2 class="text-lg md:text-xl font-bold font-serif-sc text-amber-300" data-i18n="sec_four_pillars_hex_title">
+              四柱命卦推演 · 倪海厦《天纪》六十四卦全相秘解
+            </h2>
+          </div>
+          <p class="text-xs text-gray-400 mt-1" data-i18n="four_pillars_hex_desc">
+            天数地数合化先天卦（前半生）与后天卦（后半生）· 阳爻管9年/阴爻管6年岁运流转 · 值年流年卦与玉上有光天机解密
+          </p>
+        </div>
+        <!-- Age Controller -->
+        <div class="flex items-center gap-2 bg-black/40 px-3 py-1.5 rounded-xl border border-gray-700">
+          <label for="fourPillarsAgeSlider" class="text-xs text-gray-400 font-mono" data-i18n="label_current_age">推演虚岁:</label>
+          <span id="fourPillarsAgeDisplay" class="text-amber-400 font-mono font-bold text-sm min-w-[3rem]">35岁</span>
+          <input type="range" id="fourPillarsAgeSlider" min="1" max="100" value="35" class="w-24 sm:w-32 accent-amber-500 cursor-pointer">
+        </div>
+      </div>
+
+      <div id="fourPillarsHexContainer" class="space-y-4">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
     <!-- Divination Interactive Control Console -->
     <div class="bg-card p-5 rounded-2xl border border-border-color shadow-xl space-y-4">
       <!-- Query / Intent Input & Select -->
@@ -1566,6 +1633,40 @@
     </section>
   </div>
 
+  <!-- View 8: Spatial Feng Shui & Metaphysical Remediation Guide (空间风水指南 · 实操十策) -->
+  <div id="view-fengshui" class="space-y-6 hidden">
+    <!-- Header Banner -->
+    <div class="p-5 rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-black/60 to-teal-950/40 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300" data-i18n="seal_view_fengshui">空间开运</span>
+            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-emerald-300" data-i18n="fengshui_banner_title">
+              八字开运与空间风水指南 · 实操调理十策
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="fengshui_banner_desc">
+            依本命八字喜用五行、三元九运个人命卦与原局刑冲格局，定制十项实操改运器物与空间气场调理锦囊：从延年聚财大阵、龙龟双铃化煞、贪合忘冲生肖佩戴，到泰山石补缺、洛书吉数与积德行善实修。
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="fengshuiQuickBadges" class="flex flex-wrap gap-2 text-xs">
+            <!-- Injected via JS -->
+          </div>
+          <button id="btnJumpToHomeFromFengShui" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
+            <span>←</span>
+            <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Container for 10 Practical Items -->
+    <div id="fengshuiContentContainer" class="space-y-6">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
   </div>
   <!-- End of dashboardView (Page 2) -->
 
@@ -1680,7 +1781,9 @@
   <script src="data/yuzhao.js"></script>
   <script src="data/lixuzhong.js"></script>
   <script src="data/iching.js"></script>
+  <script src="data/tianji.js"></script>
   <script src="js/bazi-engine.js"></script>
+  <script src="js/fengshui-engine.js"></script>
   <script src="js/portrait-engine.js"></script>
   <script src="js/luck-engine.js?v=2026091402"></script>
   <script src="js/iching-engine.js?v=2026091402"></script>

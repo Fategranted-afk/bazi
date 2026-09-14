@@ -387,6 +387,31 @@ const LuckEngine = (function() {
       }
     }
 
+    // Age-aware Strategy Calibration (岁运推演年龄考量: 20多岁开辟进攻，60-80岁守成稳定)
+    let age = (typeof pillar.age === 'number') ? pillar.age : null;
+    let ageConsiderationZh = '';
+    let ageConsiderationEn = '';
+
+    if (age !== null) {
+      if (age < 35) {
+        if (rating === 'good') {
+          ageConsiderationZh = '🌱【青年当立 · 锐意进攻】：当前正值20~30多岁黄金进取之年，气机勃发，逢良运大可大刀阔斧开辟进攻，大胆拓荒新赛道、破局攻坚，全力试错扩张！';
+          ageConsiderationEn = '🌱 [Youth Offensive]: In your 20s-30s during favorable transit, take the offensive boldly, pioneer new frontiers, and scale aggressively.';
+        } else {
+          ageConsiderationZh = '🌱【青年磨砺 · 蓄力求索】：当前年岁尚轻，逢考验乃天降大任磨练心志之时，宜打磨核心技艺与抗压底盘，为日后飞跃厚植根基。';
+          ageConsiderationEn = '🌱 [Youth Resilience]: In your 20s-30s during challenging cycles, embrace trials to temper fortitude and forge fundamental moats.';
+        }
+      } else if (age >= 60) {
+        if (rating === 'good') {
+          ageConsiderationZh = '🍂【甲子登高 · 守成稳定】：已至60~80岁耳顺颐养之境，天道贵在‘守成+稳定’，岁数越大越偏向于稳定安泰。纵逢吉星，亦以守静固本、传承财富、涵养身心为上策，切忌伤筋动骨的盲目重资折腾！';
+          ageConsiderationEn = '🍂 [Elder Mastery & Stability]: In your 60s-80s, destiny favors preservation, compounding, and stability over high-stakes adventures; preserve vitality and core legacy.';
+        } else {
+          ageConsiderationZh = '🍂【晚运重守 · 固本安康】：60~80岁及更长者运逢考验，首重身体气血调养、家宅祥和与资产防火墙，切忌涉险担保或操劳过度，无欲则刚，安享晚年。';
+          ageConsiderationEn = '🍂 [Elder Preservation]: In your 60s-80s during challenging cycles, prioritize health, tranquility, and fortress asset defense; avoid strenuous burdens.';
+        }
+      }
+    }
+
     const adversityBreakdown = generateAdversityBreakdown(god, isStrong, bazi, pillar, rating);
 
     return {
@@ -403,6 +428,8 @@ const LuckEngine = (function() {
       taboosEn,
       guidanceZh,
       guidanceEn,
+      ageConsiderationZh,
+      ageConsiderationEn,
       adversityBreakdown
     };
   }
@@ -923,7 +950,7 @@ const LuckEngine = (function() {
       const isSelected = (y === currentCalYear);
       const stemGod = getTenGod(dm, stem);
       const naYin = getNaYin(text);
-      const fortune = evaluateTransitFortune(bazi, { stem, branch, text, stemGod, naYin }, 'annual');
+      const fortune = evaluateTransitFortune(bazi, { stem, branch, text, stemGod, naYin, age }, 'annual');
 
       years.push({
         year: y,
@@ -1109,14 +1136,6 @@ const LuckEngine = (function() {
       }
     }
 
-    // 4. 地支三合局 (Three Harmonies Triad)
-    const sanHeMaps = [
-      { branches: ['申', '子', '辰'], element: '水', name: '水局' },
-      { branches: ['亥', '卯', '未'], element: '木', name: '木局' },
-      { branches: ['寅', '午', '戌'], element: '火', name: '火局' },
-      { branches: ['巳', '酉', '丑'], element: '金', name: '金局' }
-    ];
-
     const currentAllBranches = [
       natal.year.branch, natal.month.branch, natal.day.branch, natal.hour.branch,
       decade ? decade.branch : null,
@@ -1125,19 +1144,64 @@ const LuckEngine = (function() {
       day ? day.branch : null
     ].filter(Boolean);
 
-    sanHeMaps.forEach(sh => {
+    // 4. 地支三会局 (Three Seasonal Directional Meetings) - 能量最盛，优先主导
+    const sanHuiMaps = [
+      { branches: ['寅', '卯', '辰'], element: '木', name: '东方木局 (春令全备)' },
+      { branches: ['巳', '午', '未'], element: '火', name: '南方火局 (夏令全备)' },
+      { branches: ['申', '酉', '戌'], element: '金', name: '西方金局 (秋令全备)' },
+      { branches: ['亥', '子', '丑'], element: '水', name: '北方水局 (冬令全备)' }
+    ];
+
+    let hasActiveBureau = false;
+
+    sanHuiMaps.forEach(sh => {
       const matchCount = sh.branches.filter(b => currentAllBranches.includes(b)).length;
       if (matchCount === 3) {
+        hasActiveBureau = true;
         interactions.push({
-          type: 'triad',
+          type: 'meeting',
           severity: 'positive',
-          titleZh: `🌊 岁运会合成【${sh.branches.join('')}三合${sh.name}】`,
-          titleEn: `🌊 Three Harmonies Triad Formed: [${sh.branches.join('-')}] (${sh.element})`,
-          descZh: `命局与岁运合聚【${sh.branches.join('')}】，五行【${sh.element}】气势暴涨汇聚成汪洋之势。若为喜神则事业大发越，若为忌神宜疏导化解。`,
-          descEn: `Pillars assemble [${sh.branches.join('-')}], creating a massive tidal surge of ${sh.element} energy.`
+          titleZh: `🌟 岁运聚合【${sh.branches.join('')}三会${sh.name}】(最高能量优先级)`,
+          titleEn: `🌟 Directional Meeting Assembled: [${sh.branches.join('-')}] (${sh.element}) (Highest Priority)`,
+          descZh: `命局与岁运引聚春/夏/秋/冬全季方气【${sh.branches.join('')}】！五行【${sh.element}】方局能量最宏大，优先主导大局气机，若遇冲刑害破以此合会化解为准。`,
+          descEn: `Seasonal Directional Meeting assembled [${sh.branches.join('-')}]. Dominant ${sh.element} energy commands total priority over standard clashes.`
         });
       }
     });
+
+    // 5. 地支三合局 (Three Harmonies Triad)
+    const sanHeMaps = [
+      { branches: ['申', '子', '辰'], element: '水', name: '水局' },
+      { branches: ['亥', '卯', '未'], element: '木', name: '木局' },
+      { branches: ['寅', '午', '戌'], element: '火', name: '火局' },
+      { branches: ['巳', '酉', '丑'], element: '金', name: '金局' }
+    ];
+
+    sanHeMaps.forEach(sh => {
+      const matchCount = sh.branches.filter(b => currentAllBranches.includes(b)).length;
+      if (matchCount === 3) {
+        hasActiveBureau = true;
+        interactions.push({
+          type: 'triad',
+          severity: 'positive',
+          titleZh: `🌊 岁运会合成【${sh.branches.join('')}三合${sh.name}】(生旺库归元)`,
+          titleEn: `🌊 Three Harmonies Triad Formed: [${sh.branches.join('-')}] (${sh.element})`,
+          descZh: `命局与岁运合聚【${sh.branches.join('')}】，五行【${sh.element}】生旺库全聚，气势暴涨汇聚成汪洋之势。合局能量优先主导，化冲为合。`,
+          descEn: `Pillars assemble [${sh.branches.join('-')}], creating a massive tidal surge of ${sh.element} energy; takes precedence over localized friction.`
+        });
+      }
+    });
+
+    // Energy Priority Resolution: if an active bureau is present, resolve clashes:
+    if (hasActiveBureau) {
+      interactions.forEach(item => {
+        if (item.type === 'clash') {
+          item.overriddenByBureau = true;
+          item.descZh += ' 【贪合忘冲】：岁运聚合三合/三会大局，浩荡五行合化之气优先主导，原局冲克激荡已大部分被合局融化转机。';
+          item.descEn += ' [Bureau Precedence]: Majestic combination energy takes priority, resolving localized clash friction into constructive unified flow.';
+        }
+      });
+    }
 
     if (interactions.length === 0) {
       interactions.push({
@@ -2350,18 +2414,48 @@ const LuckEngine = (function() {
     let postureDirectiveZh = '【微动】小步快跑，敏捷试错；不押注全副身家，在验证闭环前坚决控制现金敞口。';
     let postureDirectiveEn = '[PROBE] Agile sprint, lean iteration; strictly cap downside risk before product-market validation.';
 
+    if (currentAge < 35) {
+      postureTitleZh = '【攻守姿态：轻资产试水 · 青年开辟】';
+      postureTitleEn = '[Posture: Lean Probing · Youth Pioneer Expansion]';
+      postureDirectiveZh = '【微动】正值20~30多岁黄金进取之年，宜以轻资产小步快跑、敏捷试错，开辟前沿赛道，在验证闭环前坚决控制现金敞口。';
+      postureDirectiveEn = '[PROBE] In your 20s-30s prime pioneering years, run lean agile experiments to explore frontier avenues while capping financial downside.';
+    } else if (currentAge >= 60) {
+      postureTitleZh = '【攻守姿态：守成求稳 · 颐养为先】';
+      postureTitleEn = '[Posture: Preservation & Stability · Senior Health First]';
+      postureDirectiveZh = '【稳】60-80岁天道更偏守成稳定，岁数越大越偏向于稳定安泰；保全已有资本存量与身心康宁，切忌盲目大额重投。';
+      postureDirectiveEn = '[STEADY] For ages 60-80, destiny favors preservation and tranquil stability; safeguard accumulated reserves and physical wellness.';
+    }
+
     if (annualImpedance <= 0.35) {
-      postureKey = 'attack';
-      postureTitleZh = '【攻守姿态：全面进攻】';
-      postureTitleEn = '[Posture: Full-Scale Offensive]';
-      postureDirectiveZh = '【动】借势扩张，倾斜资源；突破固有舒适圈，聚焦核心胜负手，果断加大有效投入。';
-      postureDirectiveEn = '[MOVE] Capitalize on systemic tailwinds; concentrate top resources onto core strategic battles.';
+      if (currentAge < 35) {
+        postureKey = 'attack';
+        postureTitleZh = '【攻守姿态：全面进攻 · 青年开辟】';
+        postureTitleEn = '[Posture: Full-Scale Offensive · Youth Frontier Expansion]';
+        postureDirectiveZh = '【动】20多岁青年逢良运正值锐意进取之时，宜借势开辟新赛道、破局攻坚，敢于试错、全面进攻！';
+        postureDirectiveEn = '[MOVE] Capitalize on systemic tailwinds; in your 20s, push forward boldly onto new frontiers with full-scale offensive drive.';
+      } else if (currentAge >= 60) {
+        postureKey = 'steady_offensive';
+        postureTitleZh = '【攻守姿态：守成有为 · 颐养为先】';
+        postureTitleEn = '[Posture: Stable Compounding · Senior Preservation]';
+        postureDirectiveZh = '【稳】60-80岁天道更偏‘守成+稳定’，岁数越大越偏向于稳定安泰。虽逢吉运，亦以守静固本、传承基业为上，切忌伤筋动骨重资盲动。';
+        postureDirectiveEn = '[STEADY] At 60-80 years old, destiny leans toward preservation and stability. Compound existing moats gracefully; avoid volatile ventures.';
+      } else {
+        postureKey = 'attack';
+        postureTitleZh = '【攻守姿态：全面进攻】';
+        postureTitleEn = '[Posture: Full-Scale Offensive]';
+        postureDirectiveZh = '【动】借势扩张，倾斜资源；突破固有舒适圈，聚焦核心胜负手，果断加大有效投入。';
+        postureDirectiveEn = '[MOVE] Capitalize on systemic tailwinds; concentrate top resources onto core strategic battles.';
+      }
     } else if (annualImpedance >= 0.65) {
       postureKey = 'defense';
-      postureTitleZh = '【攻守姿态：极度防守】';
-      postureTitleEn = '[Posture: Fortress Deep Defense]';
-      postureDirectiveZh = '【静】深挖护城河，防守沉淀；现金为王，削减冗余战线，拒绝高杠杆冒险，以静制动。';
-      postureDirectiveEn = '[STILL] Reinforce internal moats; preserve liquid cash; resist high-leverage gambles; endure with stillness.';
+      postureTitleZh = (currentAge >= 60) ? '【攻守姿态：极度防守 · 晚运重守】' : '【攻守姿态：极度防守】';
+      postureTitleEn = (currentAge >= 60) ? '[Posture: Fortress Deep Defense · Senior Preservation]' : '[Posture: Fortress Deep Defense]';
+      postureDirectiveZh = (currentAge >= 60)
+        ? '【静】60-80岁更偏守成稳定，岁数越大越偏向于稳定；深挖护城河，防守沉淀，切忌高负债冒险，以静制动颐养天年。'
+        : '【静】深挖护城河，防守沉淀；现金为王，削减冗余战线，拒绝高杠杆冒险，以静制动。';
+      postureDirectiveEn = (currentAge >= 60)
+        ? '[STILL] For ages 60-80, stability and preservation take absolute precedence; maintain defensive tranquility and protect health.'
+        : '[STILL] Reinforce internal moats; preserve liquid cash; resist high-leverage gambles; endure with stillness.';
     }
 
     const firewalls = {

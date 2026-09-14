@@ -15,20 +15,20 @@ const BRANCH_ELEMENTS = ['水', '土', '木', '木', '土', '火', '火', '土',
 const STEM_YINYANG = ['阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴'];
 const BRANCH_YINYANG = ['阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴'];
 
-// Hidden Stems (地支藏干) with their percentage weight
+// Hidden Stems (地支藏干) with their precise percentage weight
 const HIDDEN_STEMS = {
   '子': [{ stem: '癸', weight: 1.0 }],
   '丑': [{ stem: '己', weight: 0.6 }, { stem: '癸', weight: 0.3 }, { stem: '辛', weight: 0.1 }],
-  '寅': [{ stem: '甲', weight: 0.6 }, { stem: '丙', weight: 0.3 }, { stem: '戊', weight: 0.1 }],
+  '寅': [{ stem: '甲', weight: 0.6 }, { stem: '丙', weight: 0.2 }, { stem: '戊', weight: 0.2 }],
   '卯': [{ stem: '乙', weight: 1.0 }],
   '辰': [{ stem: '戊', weight: 0.6 }, { stem: '乙', weight: 0.3 }, { stem: '癸', weight: 0.1 }],
-  '巳': [{ stem: '丙', weight: 0.6 }, { stem: '戊', weight: 0.3 }, { stem: '庚', weight: 0.1 }],
-  '午': [{ stem: '丁', weight: 0.7 }, { stem: '己', weight: 0.3 }],
+  '巳': [{ stem: '丙', weight: 0.6 }, { stem: '庚', weight: 0.2 }, { stem: '戊', weight: 0.2 }],
+  '午': [{ stem: '丁', weight: 0.6 }, { stem: '己', weight: 0.4 }],
   '未': [{ stem: '己', weight: 0.6 }, { stem: '丁', weight: 0.3 }, { stem: '乙', weight: 0.1 }],
-  '申': [{ stem: '庚', weight: 0.6 }, { stem: '壬', weight: 0.3 }, { stem: '戊', weight: 0.1 }],
+  '申': [{ stem: '庚', weight: 0.6 }, { stem: '壬', weight: 0.2 }, { stem: '戊', weight: 0.2 }],
   '酉': [{ stem: '辛', weight: 1.0 }],
   '戌': [{ stem: '戊', weight: 0.6 }, { stem: '辛', weight: 0.3 }, { stem: '丁', weight: 0.1 }],
-  '亥': [{ stem: '壬', weight: 0.7 }, { stem: '甲', weight: 0.3 }]
+  '亥': [{ stem: '壬', weight: 0.6 }, { stem: '甲', weight: 0.2 }, { stem: '戊', weight: 0.2 }]
 };
 
 // 60 Na Yin (纳音五行)
@@ -360,6 +360,7 @@ class BaZiEngine {
     };
 
     const interactions = BaZiEngine.calculatePillarInteractions(pillars);
+    const zipingScore = BaZiEngine.calculateZipingScore({ dayMaster, pillars });
 
     return {
       gender,
@@ -375,6 +376,7 @@ class BaZiEngine {
       dayMasterYinYang: STEM_YINYANG[dayStemIdx],
       pillars,
       interactions,
+      zipingScore,
       elements: {
         scores: elementScores,
         percentages: elementPercentages
@@ -612,6 +614,134 @@ class BaZiEngine {
       });
     }
 
+    // Three Seasonal Meeting Direction Bureaus (三会局: 方局汇聚，量能最广)
+    const SAN_HUI_DEFS = [
+      { branches: ['寅', '卯', '辰'], key: '寅卯辰', element: '木', seasonZh: '春', nameZh: '寅卯辰三会东方木局', nameEn: 'Yin-Mao-Chen Eastern Wood Meeting', descZh: '春令东方木气全备，生机磅礴，方局汇聚能量最为浩荡，优先于普通生克与刑冲', descEn: 'Eastern Spring Wood Directional Meeting: seasonal peak energy taking absolute precedence over standard clashes' },
+      { branches: ['巳', '午', '未'], key: '巳午未', element: '火', seasonZh: '夏', nameZh: '巳午未三会南方火局', nameEn: 'Si-Wu-Wei Southern Fire Meeting', descZh: '夏令南方烈火全备，火势赫赫，方局汇聚能量最为浩荡，优先于普通生克与刑冲', descEn: 'Southern Summer Fire Directional Meeting: blazing seasonal focus taking precedence over standard clashes' },
+      { branches: ['申', '酉', '戌'], key: '申酉戌', element: '金', seasonZh: '秋', nameZh: '申酉戌三会西方金局', nameEn: 'Shen-You-Xu Western Metal Meeting', descZh: '秋令西方坚金全备，肃杀刚毅，方局汇聚能量最为浩荡，优先于普通生克与刑冲', descEn: 'Western Autumn Metal Directional Meeting: resolute seasonal discipline taking precedence over standard clashes' },
+      { branches: ['亥', '子', '丑'], key: '亥子丑', element: '水', seasonZh: '冬', nameZh: '亥子丑三会北方水局', nameEn: 'Hai-Zi-Chou Northern Water Meeting', descZh: '冬令北方寒水全备，深邃智谋，方局汇聚能量最为浩荡，优先于普通生克与刑冲', descEn: 'Northern Winter Water Directional Meeting: profound seasonal wisdom taking precedence over standard clashes' }
+    ];
+
+    // Three Harmonies Combination Bureaus (三合局: 生旺库化合)
+    const SAN_HE_DEFS = [
+      { branches: ['申', '子', '辰'], key: '申子辰', element: '水', nameZh: '申子辰三合水局', nameEn: 'Shen-Zi-Chen Water Bureau', descZh: '申生长、子帝旺、辰墓库，三合聚气化水，主智谋深远、流动周全，优先于个别刑冲', descEn: 'Water Bureau (Shen-Zi-Chen): birth, peak, and storage unite into fluid wisdom' },
+      { branches: ['亥', '卯', '未'], key: '亥卯未', element: '木', nameZh: '亥卯未三合木局', nameEn: 'Hai-Mao-Wei Wood Bureau', descZh: '亥生长、卯帝旺、未墓库，三合聚气化木，主人文仁德、创新生发，优先于个别刑冲', descEn: 'Wood Bureau (Hai-Mao-Wei): birth, peak, and storage unite into benevolent growth' },
+      { branches: ['寅', '午', '戌'], key: '寅午戌', element: '火', nameZh: '寅午戌三合火局', nameEn: 'Yin-Wu-Xu Fire Bureau', descZh: '寅生长、午帝旺、戌墓库，三合聚气化火，主光明热情、威权礼节，优先于个别刑冲', descEn: 'Fire Bureau (Yin-Wu-Xu): birth, peak, and storage unite into radiant illumination' },
+      { branches: ['巳', '酉', '丑'], key: '巳酉丑', element: '金', nameZh: '巳酉丑三合金局', nameEn: 'Si-You-Chou Metal Bureau', descZh: '巳生长、酉帝旺、丑墓库，三合聚气化金，主刚正决断、义气严整，优先于个别刑冲', descEn: 'Metal Bureau (Si-You-Chou): birth, peak, and storage unite into decisive integrity' }
+    ];
+
+    // Half Combination Bureaus (半合局与拱合)
+    const BAN_HE_DEFS = {
+      '申子': { element: '水', type: '生旺半合', nameZh: '申子半合水局', nameEn: 'Shen-Zi Half Water Bureau' },
+      '子辰': { element: '水', type: '旺库半合', nameZh: '子辰半合水局', nameEn: 'Zi-Chen Half Water Bureau' },
+      '申辰': { element: '水', type: '拱合水局', nameZh: '申辰拱合水局', nameEn: 'Shen-Chen Arch Water Bureau' },
+      '亥卯': { element: '木', type: '生旺半合', nameZh: '亥卯半合木局', nameEn: 'Hai-Mao Half Wood Bureau' },
+      '卯未': { element: '木', type: '旺库半合', nameZh: '卯未半合木局', nameEn: 'Mao-Wei Half Wood Bureau' },
+      '亥未': { element: '木', type: '拱合木局', nameZh: '亥未拱合木局', nameEn: 'Hai-Wei Arch Wood Bureau' },
+      '寅午': { element: '火', type: '生旺半合', nameZh: '寅午半合火局', nameEn: 'Yin-Wu Half Fire Bureau' },
+      '午戌': { element: '火', type: '旺库半合', nameZh: '午戌半合火局', nameEn: 'Wu-Xu Half Fire Bureau' },
+      '寅戌': { element: '火', type: '拱合火局', nameZh: '寅戌拱合火局', nameEn: 'Yin-Xu Arch Fire Bureau' },
+      '巳酉': { element: '金', type: '生旺半合', nameZh: '巳酉半合金局', nameEn: 'Si-You Half Metal Bureau' },
+      '酉丑': { element: '金', type: '旺库半合', nameZh: '酉丑半合金局', nameEn: 'You-Chou Half Metal Bureau' },
+      '巳丑': { element: '金', type: '拱合金局', nameZh: '巳丑拱合金局', nameEn: 'Si-Chou Arch Metal Bureau' }
+    };
+
+    const sanHuiCombos = [];
+    const sanHeCombos = [];
+    const banHeCombos = [];
+
+    // Detect Three Directional Meetings (三会局)
+    SAN_HUI_DEFS.forEach(def => {
+      const allFound = def.branches.every(b => allBranches.includes(b));
+      if (allFound) {
+        sanHuiCombos.push({
+          key: def.key,
+          branches: def.branches,
+          element: def.element,
+          nameZh: def.nameZh,
+          nameEn: def.nameEn,
+          descZh: def.descZh,
+          descEn: def.descEn,
+          priority: 1
+        });
+      }
+    });
+
+    // Detect Three Harmonies (三合局)
+    SAN_HE_DEFS.forEach(def => {
+      const allFound = def.branches.every(b => allBranches.includes(b));
+      if (allFound) {
+        sanHeCombos.push({
+          key: def.key,
+          branches: def.branches,
+          element: def.element,
+          nameZh: def.nameZh,
+          nameEn: def.nameEn,
+          descZh: def.descZh,
+          descEn: def.descEn,
+          priority: 2
+        });
+      }
+    });
+
+    // Detect Half Harmonies (半合局) if full San He not present for that element
+    for (let i = 0; i < pKeys.length; i++) {
+      for (let j = i + 1; j < pKeys.length; j++) {
+        const k1 = pKeys[i];
+        const k2 = pKeys[j];
+        const bPair = pillars[k1].branch + pillars[k2].branch;
+        const bRev = pillars[k2].branch + pillars[k1].branch;
+        const bh = BAN_HE_DEFS[bPair] || BAN_HE_DEFS[bRev];
+        if (bh) {
+          const hasFullHe = sanHeCombos.some(sh => sh.element === bh.element);
+          if (!hasFullHe) {
+            banHeCombos.push({
+              p1: k1, p2: k2,
+              branches: bPair,
+              element: bh.element,
+              type: bh.type,
+              nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}支【${bPair}】${bh.nameZh}`,
+              nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Branches [${bPair}] ${bh.nameEn}`
+            });
+          }
+        }
+      }
+    }
+
+    // Energy Priority Resolution:
+    // If branch is engaged in a San Hui or San He combination, combination energy takes priority over clashes/harms/punishments
+    const dominantComboBranches = new Set();
+    sanHuiCombos.forEach(c => c.branches.forEach(b => dominantComboBranches.add(b)));
+    sanHeCombos.forEach(c => c.branches.forEach(b => dominantComboBranches.add(b)));
+
+    branchClashes.forEach(c => {
+      const b1 = c.branches[0];
+      const b2 = c.branches[1];
+      if (dominantComboBranches.has(b1) || dominantComboBranches.has(b2)) {
+        c.resolvedByCombo = true;
+        c.resolutionNoteZh = '贪合忘冲：三合/三会方局能量优先汇聚，此冲激荡已为合局吸收化解。';
+        c.resolutionNoteEn = 'Combination takes precedence over clash: energetic synthesis neutralizes friction.';
+      }
+    });
+
+    branchPunishments.forEach(p => {
+      if (p.branches && [...p.branches].some(b => dominantComboBranches.has(b))) {
+        p.resolvedByCombo = true;
+        p.resolutionNoteZh = '贪合忘刑：合会浩荡生克能量主导全局，刑伤之气退居其次。';
+        p.resolutionNoteEn = 'Bureau combination energy takes precedence, moderating punishment friction.';
+      }
+    });
+
+    branchHarms.forEach(h => {
+      const b1 = h.branches[0];
+      const b2 = h.branches[1];
+      if (dominantComboBranches.has(b1) || dominantComboBranches.has(b2)) {
+        h.resolvedByCombo = true;
+        h.resolutionNoteZh = '贪合忘害：三合会局势隆，穿害被合气涵摄化解。';
+        h.resolutionNoteEn = 'Harm subsumed and resolved by dominant combination bureau.';
+      }
+    });
+
     // Stem Jealous/Competing Combination (争合/妒合)
     let isJealousCombo = false;
     if (stemCombos.length >= 2) {
@@ -636,6 +766,18 @@ class BaZiEngine {
     // Generate synthesis narrative
     const partsZh = [];
     const partsEn = [];
+    if (sanHuiCombos.length > 0) {
+      partsZh.push(`原局汇成【${sanHuiCombos.map(c => c.nameZh).join('、')}】`);
+      partsEn.push(`Natal chart forms Directional Meeting [${sanHuiCombos.map(c => c.nameEn).join('; ')}]`);
+    }
+    if (sanHeCombos.length > 0) {
+      partsZh.push(`原局聚合【${sanHeCombos.map(c => c.nameZh).join('、')}】`);
+      partsEn.push(`Natal chart forms Three Harmonies [${sanHeCombos.map(c => c.nameEn).join('; ')}]`);
+    }
+    if (banHeCombos.length > 0) {
+      partsZh.push(`带半合【${banHeCombos.map(c => c.nameZh).join('、')}】`);
+      partsEn.push(`Natal chart carries Half Harmonies [${banHeCombos.map(c => c.nameEn).join('; ')}]`);
+    }
     if (stemCombos.length > 0) {
       partsZh.push(`天干显【${stemCombos.map(c => c.nameZh).join('、')}】`);
       partsEn.push(`Heavenly Stems manifest ${stemCombos.map(c => c.nameEn).join('; ')}`);
@@ -669,6 +811,9 @@ class BaZiEngine {
       : 'Harmonious elemental circulation with minimal friction.';
 
     return {
+      sanHuiCombos,
+      sanHeCombos,
+      banHeCombos,
       stemCombos,
       stemClashes,
       branchCombos,
@@ -686,6 +831,260 @@ class BaZiEngine {
       hasDayHourCombo,
       summaryZh,
       summaryEn
+    };
+  }
+
+  /**
+   * 子平 100 分制生克量化评分体系 (Ziping 100-Point Quantitative Scoring Engine)
+   * 权重体系:
+   * - 天干各 10 分 (年干 10, 月干 10, 日干 10, 时干 10，共 40 分)；日干永远+
+   * - 月地支 35 分，日地支 15 分，年时支各 5 分 (共 60 分)
+   * - 辰戌丑未杂气精准折算 (按藏干与分日深浅比例折算: 本气 60%, 余气 30%, 中气 10%)
+   * - 判定四大命格: 极弱格 (<15)、较弱格 (15-50)、较旺格 (50-85)、极旺格 (>85 对应五大专旺格)
+   * - 用神取法 (弱取生扶印比，旺取克泄耗财官食伤)
+   * - 用神距离日干 (日支 15分 > 月干 10分 > 时干 10分)
+   * - 月令有力性 (月支 35分)
+   * - 判定命格高低 (富贵命格 / 较好命格 / 普通命格)
+   */
+  static calculateZipingScore(chart) {
+    if (!chart || !chart.pillars) return null;
+    const dm = chart.dayMaster || chart.pillars.day.stem;
+    const dmIdx = STEMS.indexOf(dm);
+    const dmElement = STEM_ELEMENTS[dmIdx];
+
+    const generatedBy = { '木': '水', '火': '木', '土': '火', '金': '土', '水': '金' };
+    const parentElement = generatedBy[dmElement];
+    const supportingElements = [dmElement, parentElement];
+
+    const pillars = chart.pillars;
+
+    // Stems (40 points total: 10 each)
+    const stemsBreakdown = {
+      year: { stem: pillars.year.stem, element: pillars.year.stemElement, weight: 10, score: 0, isSupport: false },
+      month: { stem: pillars.month.stem, element: pillars.month.stemElement, weight: 10, score: 0, isSupport: false },
+      day: { stem: pillars.day.stem, element: dmElement, weight: 10, score: 10, isSupport: true, note: '日干永远+' },
+      hour: { stem: pillars.hour.stem, element: pillars.hour.stemElement, weight: 10, score: 0, isSupport: false }
+    };
+
+    ['year', 'month', 'hour'].forEach(k => {
+      const el = stemsBreakdown[k].element;
+      if (supportingElements.includes(el)) {
+        stemsBreakdown[k].score = 10;
+        stemsBreakdown[k].isSupport = true;
+      }
+    });
+
+    const stemsScore = stemsBreakdown.year.score + stemsBreakdown.month.score + stemsBreakdown.day.score + stemsBreakdown.hour.score;
+
+    // Branches (60 points total: Month=35, Day=15, Year=5, Hour=5)
+    const branchWeights = { month: 35, day: 15, year: 5, hour: 5 };
+    const zaQiBranches = ['辰', '戌', '丑', '未'];
+    const branchesBreakdown = {};
+    let branchesScore = 0;
+
+    ['month', 'day', 'year', 'hour'].forEach(k => {
+      const p = pillars[k];
+      const br = p.branch;
+      const maxW = branchWeights[k];
+      const isZaQi = zaQiBranches.includes(br);
+
+      if (isZaQi) {
+        const hidden = HIDDEN_STEMS[br] || [];
+        let supportRatio = 0;
+        const supportingHidden = [];
+        hidden.forEach(h => {
+          const hEl = STEM_ELEMENTS[STEMS.indexOf(h.stem)];
+          if (supportingElements.includes(hEl)) {
+            supportRatio += h.weight;
+            supportingHidden.push({ stem: h.stem, element: hEl, weight: h.weight });
+          }
+        });
+        const score = parseFloat((maxW * supportRatio).toFixed(2));
+        branchesScore += score;
+        branchesBreakdown[k] = {
+          branch: br,
+          maxWeight: maxW,
+          score,
+          isZaQi: true,
+          supportRatio,
+          supportingHidden
+        };
+      } else {
+        const brEl = BRANCH_ELEMENTS[BRANCHES.indexOf(br)];
+        const isSupport = supportingElements.includes(brEl);
+        const score = isSupport ? maxW : 0;
+        branchesScore += score;
+        branchesBreakdown[k] = {
+          branch: br,
+          maxWeight: maxW,
+          score,
+          isZaQi: false,
+          element: brEl,
+          isSupport
+        };
+      }
+    });
+
+    const totalScore = parseFloat((stemsScore + branchesScore).toFixed(2));
+
+    // Determine Pattern Category (四大命格 & 五大专旺格)
+    let categoryKey = 'moderate_weak';
+    let categoryZh = '较弱格';
+    let categoryEn = 'Moderately Weak Pattern';
+    let dominantSpecialPattern = null;
+    let dominantSpecialPatternEn = null;
+
+    if (totalScore < 15) {
+      categoryKey = 'extreme_weak';
+      categoryZh = '极弱格 (弃命从格 / 极度衰微)';
+      categoryEn = 'Extremely Weak Pattern (Follow / Ultra-Weak)';
+    } else if (totalScore <= 50) {
+      categoryKey = 'moderate_weak';
+      categoryZh = '较弱格 (喜印比生扶)';
+      categoryEn = 'Moderately Weak Pattern (Resource & Companion Favored)';
+    } else if (totalScore <= 85) {
+      categoryKey = 'moderate_strong';
+      categoryZh = '较旺格 (喜克泄耗财官食伤)';
+      categoryEn = 'Moderately Strong Pattern (Wealth, Officer, Food Favored)';
+    } else {
+      categoryKey = 'extreme_strong';
+      categoryZh = '极旺格 (专旺气象)';
+      categoryEn = 'Extremely Strong Pattern (Dominant Monopolistic)';
+
+      const specialMap = {
+        '木': { zh: '曲直格 (仁寿格)', en: 'Qu Zhi (Curving & Straight Wood)' },
+        '火': { zh: '炎上格 (明德格)', en: 'Yan Shang (Flaming Upward Fire)' },
+        '土': { zh: '稼穑格 (厚德格)', en: 'Jia Se (Sowing & Reaping Earth)' },
+        '金': { zh: '从革格 (刚毅格)', en: 'Cong Ge (Molding & Refining Metal)' },
+        '水': { zh: '润下格 (灵智格)', en: 'Run Xia (Soaking & Descending Water)' }
+      };
+      const sp = specialMap[dmElement] || { zh: '专旺格', en: 'Dominant Monopolistic' };
+      dominantSpecialPattern = sp.zh;
+      dominantSpecialPatternEn = sp.en;
+      categoryZh = `极旺格 · 五大专旺之【${dominantSpecialPattern}】`;
+      categoryEn = `Extremely Strong · Dominant [${dominantSpecialPatternEn}]`;
+    }
+
+    // Favorable & Unfavorable Gods (用神取法)
+    let favorableGodsZh = [];
+    let favorableGodsEn = [];
+    let unfavorableGodsZh = [];
+    let unfavorableGodsEn = [];
+
+    if (totalScore <= 50) {
+      favorableGodsZh = ['正印', '偏印 (枭神)', '比肩', '劫财'];
+      favorableGodsEn = ['Direct Resource', 'Indirect Resource', 'Friend (Peer)', 'Rob Wealth'];
+      unfavorableGodsZh = ['正财', '偏财', '正官', '七杀', '伤官', '食神'];
+      unfavorableGodsEn = ['Direct Wealth', 'Indirect Wealth', 'Direct Officer', 'Seven Killings', 'Hurting Officer', 'Eating God'];
+    } else if (totalScore <= 85) {
+      favorableGodsZh = ['正官', '七杀', '正财', '偏财', '食神', '伤官'];
+      favorableGodsEn = ['Direct Officer', 'Seven Killings', 'Direct Wealth', 'Indirect Wealth', 'Eating God', 'Hurting Officer'];
+      unfavorableGodsZh = ['正印', '偏印', '比肩', '劫财'];
+      unfavorableGodsEn = ['Direct Resource', 'Indirect Resource', 'Friend (Peer)', 'Rob Wealth'];
+    } else {
+      favorableGodsZh = ['比肩', '劫财', '食神', '伤官', '正印'];
+      favorableGodsEn = ['Companion', 'Rob Wealth', 'Eating God', 'Hurting Officer', 'Direct Resource'];
+      unfavorableGodsZh = ['正官', '七杀', '正财', '偏财'];
+      unfavorableGodsEn = ['Direct Officer', 'Seven Killings', 'Direct Wealth', 'Indirect Wealth'];
+    }
+
+    // Proximity to Day Master (用神距离日干: 日支15分 > 月干10分 > 时干10分)
+    const proximityChecks = {
+      dayBranch: {
+        position: '日支',
+        positionEn: 'Day Branch',
+        weight: 15,
+        weightRank: 1,
+        tenGod: (pillars.day.hidden && pillars.day.hidden[0]) ? pillars.day.hidden[0].god : '',
+        isFavorable: false
+      },
+      monthStem: {
+        position: '月干',
+        positionEn: 'Month Stem',
+        weight: 10,
+        weightRank: 2,
+        tenGod: pillars.month.stemGod || '',
+        isFavorable: false
+      },
+      hourStem: {
+        position: '时干',
+        positionEn: 'Hour Stem',
+        weight: 10,
+        weightRank: 3,
+        tenGod: pillars.hour.stemGod || '',
+        isFavorable: false
+      }
+    };
+
+    ['dayBranch', 'monthStem', 'hourStem'].forEach(k => {
+      const item = proximityChecks[k];
+      if (item.tenGod && favorableGodsZh.some(fg => item.tenGod.includes(fg) || fg.includes(item.tenGod))) {
+        item.isFavorable = true;
+      }
+    });
+
+    // Monthly Command Support (月令有力性: 月支35分)
+    const monthBranchElement = BRANCH_ELEMENTS[BRANCHES.indexOf(pillars.month.branch)];
+    const monthBranchSupportsFavorable = (totalScore <= 50)
+      ? supportingElements.includes(monthBranchElement)
+      : !supportingElements.includes(monthBranchElement);
+
+    // Pattern Tier (命格高低: 富贵命格 / 较好命格 / 普通命格)
+    let tierKey = 'ordinary';
+    let tierZh = '普通命格 (平稳持重)';
+    let tierEn = 'Grounded Ordinary Tier';
+    let tierReasonZh = '';
+    let tierReasonEn = '';
+
+    const favorableCountNear = [proximityChecks.dayBranch.isFavorable, proximityChecks.monthStem.isFavorable, proximityChecks.hourStem.isFavorable].filter(Boolean).length;
+
+    if (dominantSpecialPattern || (favorableCountNear >= 2 && monthBranchSupportsFavorable) || (proximityChecks.dayBranch.isFavorable && proximityChecks.monthStem.isFavorable)) {
+      tierKey = 'noble';
+      tierZh = '富贵命格 (上乘贵格)';
+      tierEn = 'Nobility & High Accomplishment Pattern';
+      tierReasonZh = dominantSpecialPattern
+        ? `专旺大格【${dominantSpecialPattern}】真纯成局，气专势盛，主名垂青史、执掌大权。`
+        : '用神在近位（日支坐基/月干门户）强力透出护身，且得月令有力生扶，格局高昂清纯，功名显达。';
+      tierReasonEn = dominantSpecialPattern
+        ? `Pure Special Dominant Pattern [${dominantSpecialPatternEn}] formed with pristine concentrated energy.`
+        : 'Favorable god anchored in close proximity (Day Branch / Month Stem) and strongly backed by Monthly Command.';
+    } else if (favorableCountNear >= 1 || monthBranchSupportsFavorable) {
+      tierKey = 'good';
+      tierZh = '较好命格 (中上成格)';
+      tierEn = 'Promising & Flourishing Pattern';
+      tierReasonZh = '用神在月干、时干或日支得力承托，全局五行流通有救，一生顺遂富足，能成实业名声。';
+      tierReasonEn = 'Favorable god effectively situated adjacent to Day Master; energetic circulation intact; predicts lasting prosperity.';
+    } else {
+      tierKey = 'ordinary';
+      tierZh = '普通命格 (平稳持重)';
+      tierEn = 'Grounded Ordinary Pattern';
+      tierReasonZh = '用神远在年柱或深藏未透，日主受制较重，更需依赖后天大运良机破局，宜守正求稳。';
+      tierReasonEn = 'Favorable god distant or constrained; destiny relies significantly on favorable transit cycles.';
+    }
+
+    return {
+      totalScore,
+      categoryKey,
+      categoryZh,
+      categoryEn,
+      dominantSpecialPattern,
+      dominantSpecialPatternEn,
+      stemsScore,
+      branchesScore,
+      stemsBreakdown,
+      branchesBreakdown,
+      favorableGodsZh,
+      favorableGodsEn,
+      unfavorableGodsZh,
+      unfavorableGodsEn,
+      proximityChecks,
+      favorableCountNear,
+      monthBranchSupportsFavorable,
+      tierKey,
+      tierZh,
+      tierEn,
+      tierReasonZh,
+      tierReasonEn
     };
   }
 }
