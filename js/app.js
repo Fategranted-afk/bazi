@@ -3885,10 +3885,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Level 2: Annual Transit Years (流年)
     const annualLabelEl = document.getElementById('currentSelectedAnnualLabel');
     const activeAnnual = currentLuckResult.activeAnnual || (currentLuckResult.annuals && currentLuckResult.annuals[0]);
-    const birthYear = (res.input && (res.input.adjustedYear || res.input.year)) || res.birthYear || (res.solar && res.solar.year) || 1990;
+    let userBirthYear = 1990;
+    if (res) {
+      if (res.input) {
+        if (typeof res.input.year === 'number' && !isNaN(res.input.year) && res.input.year > 0) userBirthYear = res.input.year;
+        else if (typeof res.input.adjustedYear === 'number' && !isNaN(res.input.adjustedYear) && res.input.adjustedYear > 0) userBirthYear = res.input.adjustedYear;
+      }
+      if (!userBirthYear || userBirthYear === 1990) {
+        if (typeof res.birthYear === 'number' && !isNaN(res.birthYear) && res.birthYear > 0) userBirthYear = res.birthYear;
+        else if (res.solar && typeof res.solar.year === 'number' && !isNaN(res.solar.year) && res.solar.year > 0) userBirthYear = res.solar.year;
+        else if (typeof res.year === 'number' && !isNaN(res.year) && res.year > 0) userBirthYear = res.year;
+      }
+    }
+    if ((!userBirthYear || userBirthYear === 1990) && typeof document !== 'undefined') {
+      const el = document.getElementById('birthDate');
+      if (el && el.value) {
+        const py = parseInt(el.value.split('-')[0], 10);
+        if (!isNaN(py) && py > 1800) userBirthYear = py;
+      }
+    }
+
     if (annualLabelEl && activeAnnual) {
       const godTranslated = I18N.getGod(activeAnnual.stemGod, currentLang);
-      const annualAge = (typeof activeAnnual.age === 'number' && !isNaN(activeAnnual.age)) ? activeAnnual.age : Math.max(1, activeAnnual.year - birthYear + 1);
+      const annualAge = (typeof activeAnnual.age === 'number' && !isNaN(activeAnnual.age)) ? activeAnnual.age : Math.max(0, activeAnnual.year - userBirthYear);
       annualLabelEl.textContent = isEn
         ? `Selected Year: ${activeAnnual.year} [${activeAnnual.text}] (${godTranslated}) · Age ${annualAge}`
         : `已选流年：${activeAnnual.year}年 · 【${activeAnnual.text}】(${godTranslated}) · ${annualAge}岁`;
@@ -3914,14 +3933,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const isGood = (f.rating === 'good');
         const badgeLabel = isEn ? (isGood ? '🟢 Good' : '🔴 Caution') : (isGood ? '🟢 吉' : '🔴 慎');
         const badgeColor = isGood ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border-rose-500/40';
-        const aAge = (typeof a.age === 'number' && !isNaN(a.age)) ? a.age : Math.max(1, a.year - birthYear + 1);
+        const aAge = (typeof a.age === 'number' && !isNaN(a.age)) ? a.age : Math.max(0, a.year - userBirthYear);
 
         card.innerHTML = `
           <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/80 pb-0.5">
             <span class="font-mono text-indigo-300 font-bold">${a.year}</span>
             <div class="flex items-center gap-1">
               <span class="px-1 py-0.2 rounded border text-[9px] font-bold ${badgeColor}">${badgeLabel}</span>
-              <span class="text-gray-400">${aAge}${isEn ? 'yo' : '岁'}</span>
+              <span class="text-gray-400 font-mono">${aAge}${isEn ? 'yo' : '岁'}</span>
             </div>
           </div>
           <div class="py-1">

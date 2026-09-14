@@ -3712,10 +3712,22 @@ jsc_age_cmd = [
     load("js/luck-engine.js");
 
     var testCharts = [
-      { year: 1984, month: 2, day: 4, hour: 6, minute: 0, gender: "乾造", testYear: 2034, expectedAge: 51 },
-      { year: 1990, month: 5, day: 15, hour: 12, minute: 0, gender: "坤造", testYear: 2025, expectedAge: 36 },
-      { year: 2000, month: 8, day: 18, hour: 22, minute: 30, gender: "乾造", testYear: 2024, expectedAge: 25 }
+      { year: 1984, month: 2, day: 4, hour: 6, minute: 0, gender: "乾造", testYear: 2034, expectedAge: 50 },
+      { year: 1990, month: 5, day: 15, hour: 12, minute: 0, gender: "坤造", testYear: 2025, expectedAge: 35 },
+      { year: 2000, month: 8, day: 18, hour: 22, minute: 30, gender: "乾造", testYear: 2024, expectedAge: 24 },
+      { year: 2026, month: 2, day: 4, hour: 10, minute: 0, gender: "乾造", testYear: 2035, expectedAge: 9 }
     ];
+
+    // Explicit test for user formula: 2034 - 2026 = 8岁
+    var b2026 = BaZiEngine.calculate({
+      year: 2026, month: 2, day: 4, hour: 10, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var ann2034 = LuckEngine.getAnnualLuck(b2026, { yearStart: 2034, yearEnd: 2043 }, 2034);
+    if (ann2034[0].age !== 8 || ann2034[0].ageZh !== "8岁") {
+      throw new Error("Expected age 8 (8岁) for 2034 - 2026, got " + ann2034[0].age + " " + ann2034[0].ageZh);
+    }
 
     for (var k = 0; k < testCharts.length; k++) {
       var tc = testCharts[k];
@@ -3732,7 +3744,7 @@ jsc_age_cmd = [
 
       for (var i = 0; i < luck.annuals.length; i++) {
         var a = luck.annuals[i];
-        if (typeof a.age !== 'number' || isNaN(a.age) || a.age <= 0) {
+        if (typeof a.age !== 'number' || isNaN(a.age) || a.age < 0) {
           throw new Error("Invalid age on annual year " + a.year + ": " + a.age);
         }
         if (a.ageZh.indexOf("undefined") !== -1 || a.ageZh.indexOf("NaN") !== -1) {

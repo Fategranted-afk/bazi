@@ -889,7 +889,26 @@ const LuckEngine = (function() {
    */
   function getAnnualLuck(bazi, decade, selectedYear) {
     const dm = bazi.dayMaster;
-    const birthYear = (bazi && bazi.input && (bazi.input.adjustedYear || bazi.input.year)) || (bazi && bazi.birthYear) || (bazi && bazi.solar && bazi.solar.year) || (bazi && bazi.year) || 1990;
+    let birthYear = 1990;
+    if (bazi) {
+      if (bazi.input) {
+        if (typeof bazi.input.year === 'number' && !isNaN(bazi.input.year) && bazi.input.year > 0) birthYear = bazi.input.year;
+        else if (typeof bazi.input.adjustedYear === 'number' && !isNaN(bazi.input.adjustedYear) && bazi.input.adjustedYear > 0) birthYear = bazi.input.adjustedYear;
+      }
+      if (!birthYear || birthYear === 1990) {
+        if (typeof bazi.birthYear === 'number' && !isNaN(bazi.birthYear) && bazi.birthYear > 0) birthYear = bazi.birthYear;
+        else if (bazi.solar && typeof bazi.solar.year === 'number' && !isNaN(bazi.solar.year) && bazi.solar.year > 0) birthYear = bazi.solar.year;
+        else if (typeof bazi.year === 'number' && !isNaN(bazi.year) && bazi.year > 0) birthYear = bazi.year;
+      }
+    }
+    if ((!birthYear || birthYear === 1990) && typeof document !== 'undefined') {
+      const el = document.getElementById('birthDate');
+      if (el && el.value) {
+        const py = parseInt(el.value.split('-')[0], 10);
+        if (!isNaN(py) && py > 1800) birthYear = py;
+      }
+    }
+
     const currentCalYear = selectedYear || new Date().getFullYear();
 
     const years = [];
@@ -899,7 +918,7 @@ const LuckEngine = (function() {
       const stem = STEMS[sIdx];
       const branch = BRANCHES[bIdx];
       const text = stem + branch;
-      const age = Math.max(1, y - birthYear + 1); // 虚岁
+      const age = Math.max(0, y - birthYear);
 
       const isSelected = (y === currentCalYear);
       const stemGod = getTenGod(dm, stem);
@@ -916,7 +935,7 @@ const LuckEngine = (function() {
         stemGod,
         naYin,
         age,
-        ageZh: `${age} 岁`,
+        ageZh: `${age}岁`,
         ageEn: `Age ${age}`,
         isSelected,
         fortune
@@ -2032,9 +2051,27 @@ const LuckEngine = (function() {
 
     const dm = bazi.dayMaster;
     const dmEl = bazi.dayMasterElement || '木';
-    const birthYear = (bazi.input && (bazi.input.adjustedYear || bazi.input.year)) || bazi.birthYear || (bazi.solar && bazi.solar.year) || bazi.year || 1990;
+    let birthYear = 1990;
+    if (bazi) {
+      if (bazi.input) {
+        if (typeof bazi.input.year === 'number' && !isNaN(bazi.input.year) && bazi.input.year > 0) birthYear = bazi.input.year;
+        else if (typeof bazi.input.adjustedYear === 'number' && !isNaN(bazi.input.adjustedYear) && bazi.input.adjustedYear > 0) birthYear = bazi.input.adjustedYear;
+      }
+      if (!birthYear || birthYear === 1990) {
+        if (typeof bazi.birthYear === 'number' && !isNaN(bazi.birthYear) && bazi.birthYear > 0) birthYear = bazi.birthYear;
+        else if (bazi.solar && typeof bazi.solar.year === 'number' && !isNaN(bazi.solar.year) && bazi.solar.year > 0) birthYear = bazi.solar.year;
+        else if (typeof bazi.year === 'number' && !isNaN(bazi.year) && bazi.year > 0) birthYear = bazi.year;
+      }
+    }
+    if ((!birthYear || birthYear === 1990) && typeof document !== 'undefined') {
+      const el = document.getElementById('birthDate');
+      if (el && el.value) {
+        const py = parseInt(el.value.split('-')[0], 10);
+        if (!isNaN(py) && py > 1800) birthYear = py;
+      }
+    }
     const curCalYear = targetAnnualYear || new Date().getFullYear();
-    const currentAge = Math.max(1, curCalYear - birthYear + 1);
+    const currentAge = Math.max(0, curCalYear - birthYear);
 
     // 1. Determine Ten God weights across natal chart
     const gods = {};
