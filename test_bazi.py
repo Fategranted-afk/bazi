@@ -4289,6 +4289,15 @@ jsc_tianji_cmd = [
       if (/[\\u4e00-\\u9fa5]/.test(item.riddleEn)) throw new Error("Residual Chinese in riddleEn of hexagram #" + i);
     }
 
+    // Verify Hexagram 44 (Gou) contains authentic Ni Haisha canon exegesis and no fake buzzwords
+    var gou = TianJiDB.getByNumber(44);
+    if (gou.houTianZh.indexOf("终身忙碌，夫妻同床异梦。侥幸得财，须防官司牵累。切不可与人合伙，合伙必生纠纷。") === -1) {
+      throw new Error("Hexagram 44 Gou houTianZh must match Master Ni Haisha's authentic canon exegesis");
+    }
+    if (gou.houTianZh.indexOf("快消品") !== -1 || gou.houTianZh.indexOf("短线套利") !== -1 || gou.houTianZh.indexOf("流量") !== -1) {
+      throw new Error("Hexagram 44 Gou must not contain modern buzzwords");
+    }
+
     // 2. Check IChingEngine.calculateFourPillarsHexagrams
     var bazi = BaZiEngine.calculate({
       year: 1990, month: 6, day: 20, hour: 14, minute: 30,
