@@ -807,6 +807,18 @@ class IChingEngine {
     const midAuspicious = [2, 8, 17, 20, 26, 31, 34, 48, 57, 59];
     const crucible = [3, 12, 18, 29, 36, 39, 47, 23];
 
+    const dm = bazi.dayMaster || (bazi.pillars && bazi.pillars.day && bazi.pillars.day.stem) || '甲';
+    const STEM_ELEMENTS_LOCAL = {
+      '甲': '木', '乙': '木', '丙': '火', '丁': '火', '戊': '土',
+      '己': '土', '庚': '金', '辛': '金', '壬': '水', '癸': '水'
+    };
+    const dmEl = bazi.dayMasterElement || STEM_ELEMENTS_LOCAL[dm] || '木';
+    const isStrong = (bazi.isStrong !== undefined)
+      ? bazi.isStrong
+      : ((typeof BaZiEngine !== 'undefined' && BaZiEngine.calculateVigor)
+        ? (BaZiEngine.calculateVigor(bazi) >= 50)
+        : true);
+
     const points = [];
     for (let age = 1; age <= 100; age++) {
       const yr = birthYear + age;
@@ -823,7 +835,11 @@ class IChingEngine {
 
       const posBonus = (zn.activeLinePos === 5) ? 6 : (zn.activeLinePos === 2 ? 4 : 0);
       const mutationModifier = zn.isMutated ? 3 : 0;
-      const score = Math.max(30, Math.min(98, baseScore + posBonus + mutationModifier));
+      const rawScore = Math.max(30, Math.min(98, baseScore + posBonus + mutationModifier));
+
+      // Dynamic BaZi Day Master & Hexagram Trigrams Elemental Interaction
+      const dyn = this.evaluateBaZiHexDynamicInteraction(dm, dmEl, isStrong, zn.hexagram, zn.annualStem, zn.annualBranch);
+      const baziAdjustedScore = Math.max(25, Math.min(98, Math.round(rawScore + dyn.scoreModifier)));
 
       points.push({
         age,
@@ -848,10 +864,247 @@ class IChingEngine {
         isYangLine: zn.isYangLine,
         ruleInteractionZh: zn.ruleInteractionZh,
         ruleInteractionEn: zn.ruleInteractionEn,
-        score
+        dmElement: dmEl,
+        isStrong,
+        upperTrigramElement: dyn.upperTrigramElement,
+        lowerTrigramElement: dyn.lowerTrigramElement,
+        elementalResonanceZh: dyn.elementalResonanceZh,
+        elementalResonanceEn: dyn.elementalResonanceEn,
+        dynamicInterpretationZh: dyn.dynamicInterpretationZh,
+        dynamicInterpretationEn: dyn.dynamicInterpretationEn,
+        rawScore,
+        score: baziAdjustedScore
       });
     }
     return points;
+  }
+
+  /**
+   * Evaluates dynamic elemental interaction between the native's BaZi (Day Master element & strength)
+   * and the annual hexagram trigrams + transit stem/branch.
+   */
+  static evaluateBaZiHexDynamicInteraction(dm, dmEl, isStrong, hex, stem, branch) {
+    const triMap = {
+      '乾': '金', '兑': '金', '离': '火', '震': '木', '巽': '木', '坎': '水', '艮': '土', '坤': '土',
+      '天': '金', '泽': '金', '火': '火', '雷': '木', '风': '木', '水': '水', '山': '土', '地': '土'
+    };
+    let upEl = '金';
+    let loEl = '金';
+    if (hex) {
+      const upName = hex.upperTrigram || hex.upperTrigramNature || '';
+      const loName = hex.lowerTrigram || hex.lowerTrigramNature || '';
+      for (const k in triMap) {
+        if (upName.includes(k)) { upEl = triMap[k]; break; }
+      }
+      for (const k in triMap) {
+        if (loName.includes(k)) { loEl = triMap[k]; break; }
+      }
+    }
+
+    const envEl = upEl;
+    let resonanceZh = '';
+    let resonanceEn = '';
+    let interpZh = '';
+    let interpEn = '';
+    let scoreMod = 0;
+
+    if (dmEl === '水') {
+      if (isStrong) {
+        if (envEl === '火' || envEl === '土' || loEl === '火' || loEl === '土') {
+          resonanceZh = '水旺遇火土激荡 (财官乘权 · 需防大起大落)';
+          resonanceEn = 'Vigorous Water Meets Fire-Earth (Wealth & Officer Volatility Alert)';
+          interpZh = '身强水盛逢岁运火土激荡，外在机遇与凶险同频放大，需防大起大落与心绪焦躁波动，身体注意脾胃与心肾不交。行持宜“以柔克刚、见好即收”，切忌强行加杠杆。';
+          interpEn = 'Strong Water native encounters intense Fire-Earth turbulence. High-amplitude shifts in fortune and emotional energy. Guard against aggressive leverage and prioritize physical stability and patience.';
+          scoreMod = -3;
+        } else if (envEl === '木' || loEl === '木') {
+          resonanceZh = '水木相生吐秀 (食伤灵感 · 文思极宜深研)';
+          resonanceEn = 'Water Nourishes Wood Output (Creative Flow · Prime for Deep Study)';
+          interpZh = '水得木通关泄秀，文思大畅、才华横溢。极为适宜进修求学、学术钻研、著作立说或打磨重大技术产品，以专业技能立世，灵气畅通无阻。';
+          interpEn = 'Water harmoniously generates Wood Output. Creative genius and academic intellect flourish; prime timing for scholarly exams, deep research, publishing, and creative innovations.';
+          scoreMod = 6;
+        } else if (envEl === '金' || loEl === '金') {
+          resonanceZh = '金水同源滋养 (印星重逢 · 宜主动运动消耗)';
+          resonanceEn = 'Metal Feeds Heavy Water (Abundant Resource · Demands Physical Exercise)';
+          interpZh = '金来生水，思虑极深但易多思少动、气机凝滞。需要适当消耗自己蓄积的体能与精力，宜坚持高强度体魄锻炼与户外活动，以动破静，化内耗为定力。';
+          interpEn = 'Metal Resource abundantly feeds Water. Channel surplus mental energy into rigorous physical exercise to prevent cognitive inertia and stagnant rumination.';
+          scoreMod = 1;
+        } else {
+          resonanceZh = '汪洋比劫汇聚 (同侪并起 · 严明利益防火墙)';
+          resonanceEn = 'Tidal Waters Merge (Peer Alliance with Contractual Firewalls)';
+          interpZh = '比劫重逢，同侪结盟声势浩大。适宜团队协同拓客，但切记设立契约与财务防火墙，防同行截流与亲近之人利益纠纷。';
+          interpEn = 'Tidal waters merge with peer companions. Favorable for forming alliances, but strictly enforce equity boundaries to prevent friction.';
+          scoreMod = 2;
+        }
+      } else {
+        if (envEl === '金' || envEl === '水' || loEl === '金' || loEl === '水') {
+          resonanceZh = '金水相涵得润 (印比帮身 · 贵人提携借力)';
+          resonanceEn = 'Metal & Water Nourishment (Resource Support & Benevolent Mentors)';
+          interpZh = '弱水得金生水助，如源泉喷涌，元气大振。宜主动联络良师益友与长辈贵人，借平台与组织之势立命，身心泰然。';
+          interpEn = 'Fragile Water replenished by Metal and Water companions. Seek senior mentors and institutional backing to compound personal resilience.';
+          scoreMod = 7;
+        } else {
+          resonanceZh = '弱水遭克逢泄 (财官施压 · 韬光养晦防耗)';
+          resonanceEn = 'Weak Water Under Fire-Earth Strain (Prudent Conservation)';
+          interpZh = '弱水难当烈火厚土之重负，易感身心重负或财务消耗。核心策略在“不求急功、借伞避雨”，把精力收缩于最核心基本盘。';
+          interpEn = 'Weak Water strained by Fire and Earth. Avoid overcommitting resources; prioritize physical recuperation and defensive risk management.';
+          scoreMod = -5;
+        }
+      }
+    } else if (dmEl === '木') {
+      if (isStrong) {
+        if (envEl === '火') {
+          resonanceZh = '木火通明吐秀 (食伤盛会 · 文昌开运)';
+          resonanceEn = 'Wood Illuminates Fire (Radiant Output & Intellectual Fame)';
+          interpZh = '木生明火，文采斐然。利于品牌传播、学术答辩、商业推介与文化创作，名扬四方。';
+          interpEn = 'Wood fuels brilliant Fire. Outstanding timing for public visibility, brand building, scholarly recognition, and creative ventures.';
+          scoreMod = 6;
+        } else if (envEl === '金' || envEl === '土') {
+          resonanceZh = '栋梁受伐裁成 (官杀雕琢 · 担纲重任)';
+          resonanceEn = 'Timber Tempered by Metal & Earth (Executive Crucible)';
+          interpZh = '良木逢金雕琢方成大器，虽有组织制度与领导高压，但能破土而出担负实权帅位。';
+          interpEn = 'Sturdy timber disciplined into architectural pillars. Bureaucratic tension converts into executive authority through patience.';
+          scoreMod = 3;
+        } else {
+          resonanceZh = '林木茂密同声 (比劫并立 · 宜通关拓路)';
+          resonanceEn = 'Dense Forest Assembly (Peer Competition & Co-creation)';
+          interpZh = '林木重叠遮蔽阳光，需防同僚竞争或资源内卷；宜以火通关、以外部广阔市场拓局。';
+          interpEn = 'Dense canopy risks internal resource competition; channel drive externally into new market frontiers.';
+          scoreMod = 1;
+        }
+      } else {
+        if (envEl === '水' || envEl === '木') {
+          resonanceZh = '枯木逢春雨露 (印星滋生 · 根基深扎)';
+          resonanceEn = 'Spring Dew Revitalizes Wood (Resource Nourishment)';
+          interpZh = '甘霖滋润柔木，底盘蓄力复苏。宜充电自省、拜师求学，夯实专业硬功夫。';
+          interpEn = 'Nourishing waters restore vitality to fragile branches. Focus on skill acquisition, mentorship, and health rejuvenation.';
+          scoreMod = 7;
+        } else {
+          resonanceZh = '柔木难御重金 (官煞克伐 · 防守固本)';
+          resonanceEn = 'Fragile Wood Under Metal Edge (Protective Defense)';
+          interpZh = '金重伐木，制度与上级压力显著。切勿以卵击石，以水通关化煞，以柔克刚自保。';
+          interpEn = 'Strong Metal challenges fragile Wood. Refrain from direct confrontations; deploy water diplomacy to deflect friction.';
+          scoreMod = -5;
+        }
+      }
+    } else if (dmEl === '火') {
+      if (isStrong) {
+        if (envEl === '土') {
+          resonanceZh = '烈火生土含章 (食伤秀气 · 沉淀资产)';
+          resonanceEn = 'Blazing Fire Generates Fertile Earth (Output & Asset Grounding)';
+          interpZh = '火炎得土泄火之顽烈，化燥为稳。适宜将爆发性才华转化为持久的商业资产与知识体系。';
+          interpEn = 'Intense heat tempered into fertile Earth. Compound transient passion into permanent assets and structured frameworks.';
+          scoreMod = 5;
+        } else if (envEl === '金' || envEl === '水') {
+          resonanceZh = '水火既济辉映 (财官相制 · 威权鼎盛)';
+          resonanceEn = 'Harmonious Water-Fire Convergence (Wealth & Order Equilibrium)';
+          interpZh = '烈日逢深潭辉映，刚柔并济。既有宏大魄力又有严苛风控，宜成大事、大展经纶。';
+          interpEn = 'Solar brilliance mirrors over deep waters. Exceptional balance of audacious vision and rigorous execution.';
+          scoreMod = 6;
+        } else {
+          resonanceZh = '炎火炽热亢盛 (比劫同气 · 慎防焦躁)';
+          resonanceEn = 'Supreme Solar Heat (Excess Passion · Emotional Restraint)';
+          interpZh = '火旺逢火易急躁冒进、伤害同僚；宜静坐冥想、多饮清凉之水，三思而后动。';
+          interpEn = 'Intense fire risks impulsive overconfidence and relational conflict. Cultivate calm reflection and deliberate pacing.';
+          scoreMod = -1;
+        }
+      } else {
+        if (envEl === '木' || envEl === '火') {
+          resonanceZh = '余烬得薪复燃 (印比鼎力 · 贵人拨云见日)';
+          resonanceEn = 'Hearth Rekindled by Wood (Resource Elevation)';
+          interpZh = '弱火得厚木生扶，炉火通红。关键时刻得长辈与盟友输送核心资源，绝处逢生。';
+          interpEn = 'Steady fuel feeds fragile hearth. Senior patrons and key allies inject decisive capital and strategic clarity.';
+          scoreMod = 7;
+        } else {
+          resonanceZh = '微火遭水浇熄 (官杀重压 · 筑堤防波)';
+          resonanceEn = 'Fragile Fire Under Water Deluge (Crisis Containment)';
+          interpZh = '重水压境，危机感逼仄。当守住现金流与健康红线，绝不轻言出击。';
+          interpEn = 'Deep waters threaten delicate flame. Safeguard cash reserves and avoid exposure to unmanageable risks.';
+          scoreMod = -6;
+        }
+      }
+    } else if (dmEl === '土') {
+      if (isStrong) {
+        if (envEl === '金') {
+          resonanceZh = '土厚埋金得露 (食伤吐秀 · 匠心变现)';
+          resonanceEn = 'Rich Earth Reveals Gold (Refined Output & Craftsmanship)';
+          interpZh = '厚土生金，矿藏出土。长期积累的沉稳实力得以高效变现，技术与产品价值全面爆发。';
+          interpEn = 'Abundant Earth yields precious Metal. Latent capabilities convert into tangible market value and executive acclaim.';
+          scoreMod = 6;
+        } else if (envEl === '水' || envEl === '木') {
+          resonanceZh = '沃土引水成林 (财官双美 · 统摄大局)';
+          resonanceEn = 'Fertile Earth Channels Water & Wood (Wealth & Command Synergy)';
+          interpZh = '厚重山峦阻水筑堤、栽植苍松。能担重任、聚财守业，在复杂政商局势中稳坐钓鱼台。';
+          interpEn = 'Solid earthen mountains channel rivers and anchor forests. Superb aptitude for asset preservation and institutional governance.';
+          scoreMod = 5;
+        } else {
+          resonanceZh = '重山叠嶂滞涩 (比劫争厚 · 宜通关活气)';
+          resonanceEn = 'Layered Mountain Stagnation (Inertia & Obstinate Delays)';
+          interpZh = '土多则滞，过于执拗固执易失良机；宜以金泄之、以木疏之，打破惯性思维。';
+          interpEn = 'Heavy Earth breeds stubborn inertia. Break through cognitive rigidity with crisp Metal logic and dynamic Wood agility.';
+          scoreMod = 0;
+        }
+      } else {
+        if (envEl === '火' || envEl === '土') {
+          resonanceZh = '薄土得日温养 (印比生身 · 气血充盈)';
+          resonanceEn = 'Warm Soil Enriched by Sunlight (Resource Replenishment)';
+          interpZh = '贫瘠薄土逢暖阳生养，生机盎然。团队合作顺利，体力精力稳步回升。';
+          interpEn = 'Sunlight warms cool loam into productive fertility. Strong organic recovery in stamina, self-worth, and collaborative trust.';
+          scoreMod = 7;
+        } else {
+          resonanceZh = '冻土逢木克破 (官鬼崩解 · 守正固堤)';
+          resonanceEn = 'Frail Soil Pierced by Heavy Wood (Structural Vulnerability)';
+          interpZh = '身弱逢强木扎根，深感体制与外界问责碾压。宜寻求温暖庇护，不可孤注一掷。';
+          interpEn = 'Fragile soil strained by aggressive root growth. Defer confrontational obligations and seek stabilizing institutional buffers.';
+          scoreMod = -5;
+        }
+      }
+    } else { // 金
+      if (isStrong) {
+        if (envEl === '水') {
+          resonanceZh = '金水澄清流秀 (食伤吐秀 · 智囊无碍)';
+          resonanceEn = 'Polished Metal Reflects in Clear Water (Output Brilliance)';
+          interpZh = '利刃入水磨砺，锋芒内敛而睿智清明。极利于智力输出、商业谈判与前沿科技创新。';
+          interpEn = 'Polished blade cleansed in mountain springs. Strategic insight and incisive analytical acumen reach supreme clarity.';
+          scoreMod = 6;
+        } else if (envEl === '木' || envEl === '火') {
+          resonanceZh = '真金经火百炼 (财官淬砺 · 终成神器)';
+          resonanceEn = 'Raw Metal Tempered by Hearth Fire (Crucible of Leadership)';
+          interpZh = '百炼重剑经烈火淬炼方成神器。磨砺伴随荣誉，迎难而上可执掌核心权柄。';
+          interpEn = 'Tempered steel forged through intense fire. Painstaking testing precedes significant leadership promotion.';
+          scoreMod = 4;
+        } else {
+          resonanceZh = '剑戟森森过刚 (比劫相争 · 亢龙防折)';
+          resonanceEn = 'Arrayed Blades Clash (Hyper-Rigid Volatility & Pride)';
+          interpZh = '过刚则易折，锋芒毕露易招嫉恨暗算；宜以水柔和之，示弱保身，以退为进。';
+          interpEn = 'Brittle rigidity risks fractures. Soften dogmatic conviction with water-like adaptability to disarm opponents.';
+          scoreMod = -2;
+        }
+      } else {
+        if (envEl === '土' || envEl === '金') {
+          resonanceZh = '泥沙陶冶出金 (土生金旺 · 贵人撑腰)';
+          resonanceEn = 'Gold Refined from Earth (Resource Fortification)';
+          interpZh = '厚土生金，弱金得生。多得稳重长辈背书托举，资金链与资源底盘转危为安。';
+          interpEn = 'Rich earth yields gleaming gold. Substantial patronage from senior figures restores liquidity and protective security.';
+          scoreMod = 7;
+        } else {
+          resonanceZh = '残金遭火销熔 (烈火锻身 · 韬光养晦)';
+          resonanceEn = 'Fragile Metal Scorched by Fire (Extreme Pressure Alert)';
+          interpZh = '弱金逢烈火，官杀压力过载。谨防法律官非与过度操劳伤身，以水土调和之。';
+          interpEn = 'Fragile metal melted by overwhelming fire. Strict compliance and proactive rest are non-negotiable.';
+          scoreMod = -6;
+        }
+      }
+    }
+
+    return {
+      upperTrigramElement: upEl,
+      lowerTrigramElement: loEl,
+      elementalResonanceZh: resonanceZh,
+      elementalResonanceEn: resonanceEn,
+      dynamicInterpretationZh: interpZh,
+      dynamicInterpretationEn: interpEn,
+      scoreModifier: scoreMod
+    };
   }
 }
 

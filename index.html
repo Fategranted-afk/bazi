@@ -1883,7 +1883,11 @@
           <div id="careerQuickBadgesDashboard" class="flex flex-wrap gap-2 text-xs">
             <!-- Injected via JS -->
           </div>
-          <a href="career.html" class="px-3.5 py-1.5 rounded-xl bg-indigo-700/80 hover:bg-indigo-600 text-indigo-100 text-xs font-bold transition border border-indigo-500/40 shadow flex items-center gap-1.5 cursor-pointer">
+          <button id="btnToggleCareerFullscreen" type="button" class="px-3.5 py-1.5 rounded-xl bg-indigo-700/80 hover:bg-indigo-600 text-indigo-100 text-xs font-bold transition border border-indigo-500/40 shadow flex items-center gap-1.5 cursor-pointer">
+            <span id="careerFullscreenIcon">⛶</span>
+            <span id="careerFullscreenText" data-i18n="btn_enter_fullscreen_career">进入全屏推演</span>
+          </button>
+          <a id="btnOpenCareerStandalone" href="career.html" class="px-3 py-1.5 rounded-xl bg-gray-800/80 hover:bg-gray-700 text-gray-300 text-xs font-medium transition border border-gray-700 shadow flex items-center gap-1 cursor-pointer">
             <span>🚀</span>
             <span data-i18n="btn_open_standalone_career">独立全屏推演</span>
           </a>
@@ -1894,6 +1898,12 @@
         </div>
       </div>
     </div>
+
+    <!-- Floating Exit Fullscreen Button (visible only in fullscreen mode) -->
+    <button id="btnExitCareerFullscreenFloating" type="button" class="hidden fixed top-4 right-6 z-[10000] px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-2xl border border-rose-400/60 flex items-center gap-2 cursor-pointer transition active:scale-95">
+      <span>🗗</span>
+      <span data-i18n="btn_exit_fullscreen_career">退出全屏</span>
+    </button>
 
     <!-- Content Container for Career & Wealth Trajectory -->
     <div id="careerContentContainer" class="space-y-6">

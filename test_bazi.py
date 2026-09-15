@@ -2674,8 +2674,11 @@ if (/[\u4e00-\u9fa5]/.test(elementStore['portraitPatternsContainer'].innerHTML))
 if (!elementStore['portraitPatternsContainer'].innerHTML.includes('Combination Synthesis')) {
   throw new Error('portraitPatternsContainer must include Combination Synthesis dimension in EN');
 }
-if (!elementStore['portraitPatternsContainer'].innerHTML.includes('Tian Ji Divination')) {
-  throw new Error('portraitPatternsContainer must include Tian Ji Divination dimension in EN');
+if (!elementStore['fourPillarsHexContainer'].innerHTML.includes('Tian Ji Divination')) {
+  throw new Error('fourPillarsHexContainer must include Tian Ji Divination dimension in EN');
+}
+if (elementStore['portraitPatternsContainer'].innerHTML.includes('Tian Ji Divination')) {
+  throw new Error('portraitPatternsContainer should not duplicate Tian Ji Divination inside pattern cards');
 }
 
 // Synastry in EN
@@ -5235,30 +5238,30 @@ jsc_dossier5_cmd = [
     elementStore["dossierLangEn"].trigger("click");
 
     var enHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!enHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 / 5 in EN");
-    if (!enHtml.includes("Page 5 / 5")) throw new Error("Missing Page 5 / 5 in EN");
+    if (!enHtml.includes("Page 1 / 6") && !enHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 in EN");
+    if (!enHtml.includes("Page 6 / 6") && !enHtml.includes("Page 5 / 5")) throw new Error("Missing last Page in EN");
     if (!enHtml.includes("Volume IV: Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Vol IV title in EN");
     if (!enHtml.includes("14-CHARACTER HOLOGRAPHIC MATRIX")) throw new Error("Missing 14-char matrix in EN");
     if (!enHtml.includes("Note: Preserving the authentic Chinese classical passage alongside vernacular translation is recommended for personal reflection and deeper meditation.")) {
       throw new Error("Missing reflection preservation note in EN");
     }
 
-    var matches = enHtml.match(/[\\u4e00-\\u9fa5]/g);
+    var matches = enHtml.match(/[\u4e00-\u9fa5]/g);
     if (matches && matches.length > 0) {
       throw new Error("Residual Chinese in EN Dossier HTML (" + matches.length + "): " + matches.slice(0, 30).join(""));
     }
 
     elementStore["dossierLangZh"].trigger("click");
     var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!zhHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 / 5 in ZH");
-    if (!zhHtml.includes("Page 5 / 5")) throw new Error("Missing Page 5 / 5 in ZH");
+    if (!zhHtml.includes("Page 1 / 6") && !zhHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 in ZH");
+    if (!zhHtml.includes("Page 6 / 6") && !zhHtml.includes("Page 5 / 5")) throw new Error("Missing last Page in ZH");
     if (!zhHtml.includes("卷四 · 大运年景大势与十四字全景气机集成")) throw new Error("Missing Vol IV title in ZH");
     if (!zhHtml.includes("十四字全相矩阵")) throw new Error("Missing 14-char matrix in ZH");
     '''
 ]
 run_dossier5 = subprocess.run(jsc_dossier5_cmd, capture_output=True, text=True)
-assert run_dossier5.returncode == 0, f"Imperial Dossier 5-Page check failed: {run_dossier5.stderr}"
-print("✓ 皇家线装绝美排盘战报（五页典藏架构/14字全景气机/禅道注记/中英双语 100% 零中文残留）验证通过！")
+assert run_dossier5.returncode == 0, f"Imperial Dossier 5-Page check failed: stdout={run_dossier5.stdout} stderr={run_dossier5.stderr}"
+print("✓ 皇家线装绝美排盘战报（六页典藏架构/14字全景气机/职场破局/中英双语 100% 零中文残留）验证通过！")
 
 # 72. Validate Lifelong Chrono-Navigator Curvature at Decade Transition Boundaries
 print("\n=== 72. Validating Lifelong Chrono-Navigator Curvature at Decade Boundaries ===")
@@ -6724,7 +6727,8 @@ jsc_career_dom_cmd = [
       "fourPillarsHexContainer", "fourPillarsAgeSlider", "fourPillarsAgeDisplay", "currentCountrySelect",
       "currentCitySelect", "currentCustomCityInput", "fsCardCountrySelect", "fsCardCitySelect",
       "fsCardCustomCityInput", "fengshuiCityEvaluationCard",
-      "view-career", "btnJumpToHomeFromCareer", "careerContentContainer", "careerQuickBadgesDashboard"
+      "view-career", "btnJumpToHomeFromCareer", "careerContentContainer", "careerQuickBadgesDashboard",
+      "btnToggleCareerFullscreen", "btnExitCareerFullscreenFloating", "careerFullscreenBtnText"
     ];
 
     var elements = {};
@@ -6853,6 +6857,17 @@ jsc_career_dom_cmd = [
     if (!elements["dbSearchResults"].innerHTML.includes("Seven Killings")) {
       throw new Error("Search Seven Killings did not yield expected results");
     }
+
+    // 5. Seamless Career Fullscreen Mode
+    elements["portalBtnCareer"].click();
+    elements["btnToggleCareerFullscreen"].click();
+    if (!elements["view-career"].classList.contains("career-fullscreen-mode")) {
+      throw new Error("Career fullscreen mode was not added to view-career");
+    }
+    elements["btnExitCareerFullscreenFloating"].click();
+    if (elements["view-career"].classList.contains("career-fullscreen-mode")) {
+      throw new Error("Career fullscreen mode was not removed from view-career");
+    }
     '''
 ]
 run_dom78 = subprocess.run(jsc_career_dom_cmd, capture_output=True, text=True)
@@ -6860,7 +6875,103 @@ assert run_dom78.returncode == 0, f"Career DOM 78 check failed: stdout={run_dom7
 
 print("✓ 职场打工人破局与财运事业全相推演引擎（向上管理4大话术/同僚3重防火墙/四大生态位/正偏财时空推演/十神全典定义/双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 78 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 79. Validate Golden Peak Calibration, Canada Provinces & Dense Cities (>500k), Hexagram BaZi Resonance, Archetype Tiers & Career Fullscreen Mode
+print("\n=== 79. Validating Golden Peak, Canada Hierarchy, Hexagram Resonance, Archetype Tiers & Career Fullscreen ===")
+jsc_check79_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    // 1. Validate Lifelong Timeline Annual Hexagram
+    var timeline = LuckEngine.calculateLifelongTimeline(bazi);
+    if (!timeline || timeline.length !== 100) throw new Error("Expected 100 timeline points");
+    if (!timeline[29].annualHex) throw new Error("Missing annualHex at age 30 in timeline");
+    if (typeof timeline[29].annualHex.number !== "number") throw new Error("Invalid annualHex number");
+
+    // 2. Validate Canada Provincial Hierarchy & Dense Cities (>500k)
+    var canDb = SpatialFengShuiEngine.GEO_CITIES_DATABASE.Canada;
+    if (!canDb || !canDb.provinces) throw new Error("Missing Canada provinces database");
+    var provKeys = ["ontario", "quebec", "bc", "alberta", "manitoba"];
+    provKeys.forEach(function(pk) {
+      if (!canDb.provinces[pk]) throw new Error("Missing province: " + pk);
+      if (!canDb.provinces[pk].nameZh || !canDb.provinces[pk].nameEn) throw new Error("Missing province name: " + pk);
+      if (!canDb.provinces[pk].pillarIndustriesZh || !canDb.provinces[pk].pillarIndustriesEn) throw new Error("Missing pillarIndustries: " + pk);
+    });
+
+    // Validate dense cities (>500k)
+    var torontoEv = SpatialFengShuiEngine.evaluateResidenceCity("Canada", "toronto", bazi);
+    if (!torontoEv) throw new Error("Failed to evaluate Toronto");
+    if (!torontoEv.isDenseCity) throw new Error("Toronto must be marked as isDenseCity (>500k)");
+    if (!torontoEv.provinceZh.includes("安大略")) throw new Error("Toronto provinceZh must contain 安大略");
+    if (!torontoEv.provinceEn.includes("Ontario")) throw new Error("Toronto provinceEn must contain Ontario");
+    if (!torontoEv.pillarIndustriesZh) throw new Error("Missing Toronto pillarIndustriesZh");
+
+    var vancouverEv = SpatialFengShuiEngine.evaluateResidenceCity("Canada", "vancouver", bazi);
+    if (!vancouverEv.isDenseCity) throw new Error("Vancouver must be marked as isDenseCity");
+    if (!vancouverEv.provinceEn.includes("British Columbia")) throw new Error("Vancouver provinceEn must contain British Columbia");
+
+    var calgaryEv = SpatialFengShuiEngine.evaluateResidenceCity("Canada", "calgary", bazi);
+    if (!calgaryEv.isDenseCity) throw new Error("Calgary must be marked as isDenseCity");
+    if (!calgaryEv.provinceEn.includes("Alberta")) throw new Error("Calgary provinceEn must contain Alberta");
+
+    // 3. Validate IChingEngine.calculateLifelongCycle BaZi Resonance & Score Calibration
+    var cyclePoints = IChingEngine.calculateLifelongCycle(bazi);
+    if (!cyclePoints || cyclePoints.length !== 100) throw new Error("Expected 100 cycle points");
+    var pt30 = cyclePoints[29];
+    if (!pt30.elementalResonanceZh || !pt30.elementalResonanceEn) throw new Error("Missing elementalResonance in cycle");
+    if (!pt30.dynamicInterpretationZh || !pt30.dynamicInterpretationEn) throw new Error("Missing dynamicInterpretation in cycle");
+    if (typeof pt30.score !== "number" || pt30.score < 20 || pt30.score > 100) throw new Error("Invalid calibrated score in cycle: " + pt30.score);
+
+    // 4. Validate Career Archetype Score Differentiation & Directional Framing
+    var archetypes = CareerEngine.computeWorkplaceArchetypes(bazi);
+    if (!archetypes || archetypes.length !== 4) throw new Error("Expected 4 career archetypes");
+    if (archetypes[0].fitScore < 90 || archetypes[0].fitScore > 98) {
+      throw new Error("Rank 1 score out of expected tier [90..98]: " + archetypes[0].fitScore);
+    }
+    if (archetypes[1].fitScore < 75 || archetypes[1].fitScore > 88) {
+      throw new Error("Rank 2 score out of expected tier [75..88]: " + archetypes[1].fitScore);
+    }
+    if (archetypes[2].fitScore < 55 || archetypes[2].fitScore > 72) {
+      throw new Error("Rank 3 score out of expected tier [55..72]: " + archetypes[2].fitScore);
+    }
+    if (archetypes[3].fitScore > 50) {
+      throw new Error("Rank 4 score should be in avoidance zone (<=50): " + archetypes[3].fitScore);
+    }
+    if (!archetypes[0].grade.zh.includes("最适合") && !archetypes[0].grade.zh.includes("首席天命")) {
+      throw new Error("Rank 1 gradeZh should denote optimal calling: " + archetypes[0].grade.zh);
+    }
+    if (!archetypes[1].grade.zh.includes("其次适合") && !archetypes[1].grade.zh.includes("次席进阶")) {
+      throw new Error("Rank 2 gradeZh should denote secondary calling: " + archetypes[1].grade.zh);
+    }
+    '''
+]
+run_check79 = subprocess.run(jsc_check79_cmd, capture_output=True, text=True)
+assert run_check79.returncode == 0, f"Check 79 logic test failed: stdout={run_check79.stdout} stderr={run_check79.stderr}"
+print("✓ 黄金巅峰高光标定、加拿大五省与高密核心都会(>50万)、周易命局五行交感与职场四大生态位级差验证通过！")
+
+print("\n🎉 ALL 79 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

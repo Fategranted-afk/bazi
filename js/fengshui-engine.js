@@ -865,6 +865,53 @@ class SpatialFengShuiEngine {
     Canada: {
       countryNameZh: '加拿大',
       countryNameEn: 'Canada',
+      provinces: {
+        ontario: {
+          key: 'ontario',
+          nameZh: '安大略省 (Ontario)',
+          nameEn: 'Ontario',
+          pillarIndustriesZh: '金融商贸、前沿人工智能、高科技制造与先进汽车工程',
+          pillarIndustriesEn: 'Financial Services, Frontier AI, Advanced Manufacturing & Automotive Tech',
+          elementZh: '火土交融 (经济中枢)',
+          elementEn: 'Fire-Earth Synthesis (Economic Nexus)'
+        },
+        quebec: {
+          key: 'quebec',
+          nameZh: '魁北克省 (Quebec)',
+          nameEn: 'Quebec',
+          pillarIndustriesZh: '航空航天、影视多媒体与游戏研发、绿色水电与生命科学',
+          pillarIndustriesEn: 'Aerospace, Digital Multimedia/Gaming, Clean Hydro Energy & Life Sciences',
+          elementZh: '水木涵养 (文化创意)',
+          elementEn: 'Water-Wood Nourishment (Creative Culture)'
+        },
+        bc: {
+          key: 'bc',
+          nameZh: '不列颠哥伦比亚省 (British Columbia)',
+          nameEn: 'British Columbia',
+          pillarIndustriesZh: '太平洋国际贸易口岸、清洁能源、林业资源与数字科技创新',
+          pillarIndustriesEn: 'Pacific International Gateway, Clean Tech, Forestry & Digital Innovation',
+          elementZh: '金水汇聚 (口岸重镇)',
+          elementEn: 'Metal-Water Confluence (Gateway Port)'
+        },
+        alberta: {
+          key: 'alberta',
+          nameZh: '阿尔伯塔省 (Alberta)',
+          nameEn: 'Alberta',
+          pillarIndustriesZh: '能源战略枢纽、石油天然气勘探、现代大宗农业与算力基建',
+          pillarIndustriesEn: 'Energy Strategic Hub, Oil & Natural Gas, Modern Agribusiness & Compute Infrastructure',
+          elementZh: '土金刚健 (能源宝库)',
+          elementEn: 'Earth-Metal Solid Fortress (Energy Basin)'
+        },
+        manitoba: {
+          key: 'manitoba',
+          nameZh: '曼尼托巴省 (Manitoba)',
+          nameEn: 'Manitoba',
+          pillarIndustriesZh: '泛美洲内陆运输枢纽、重型装备制造、现代谷物农牧业',
+          pillarIndustriesEn: 'Continental Logistics Hub, Heavy Equipment Manufacturing & Grain Agribusiness',
+          elementZh: '中央戊己土 (交通枢纽)',
+          elementEn: 'Central Wu-Ji Earth (Logistics Nexus)'
+        }
+      },
       regions: {
         central: {
           directionZh: '中央',
@@ -875,9 +922,9 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '中央戊己土',
           elementHeavenlyEn: 'Central Wu-Ji Earth',
           cities: [
-            { id: 'winnipeg', nameZh: '温尼伯 (Winnipeg)', nameEn: 'Winnipeg' },
-            { id: 'regina', nameZh: '里贾纳 (Regina)', nameEn: 'Regina' },
-            { id: 'saskatoon', nameZh: '萨斯卡通 (Saskatoon)', nameEn: 'Saskatoon' }
+            { id: 'winnipeg', nameZh: '温尼伯 (Winnipeg)', nameEn: 'Winnipeg', provinceKey: 'manitoba', isDenseCity: true, populationStr: '~749k', pillarIndustryZh: '泛美洲内陆物流枢纽与重工制造', pillarIndustryEn: 'Continental Logistics & Heavy Equipment' },
+            { id: 'regina', nameZh: '里贾纳 (Regina)', nameEn: 'Regina', isDenseCity: false, populationStr: '~230k', pillarIndustryZh: '农产品深加工与化肥矿业', pillarIndustryEn: 'Agri-Processing & Potash Mining' },
+            { id: 'saskatoon', nameZh: '萨斯卡通 (Saskatoon)', nameEn: 'Saskatoon', isDenseCity: false, populationStr: '~270k', pillarIndustryZh: '生物科技研发与农业科学', pillarIndustryEn: 'Biotechnology & Agriscience' }
           ]
         },
         south: {
@@ -889,12 +936,14 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '南方丙丁火',
           elementHeavenlyEn: 'South Bing-Ding Fire',
           cities: [
-            { id: 'toronto', nameZh: '多伦多 (Toronto)', nameEn: 'Toronto' },
-            { id: 'ottawa', nameZh: '渥太华 (Ottawa)', nameEn: 'Ottawa' },
-            { id: 'montreal', nameZh: '蒙特利尔 (Montreal)', nameEn: 'Montreal' },
-            { id: 'windsor', nameZh: '温莎 (Windsor)', nameEn: 'Windsor' },
-            { id: 'hamilton', nameZh: '汉密尔顿 (Hamilton)', nameEn: 'Hamilton' },
-            { id: 'niagara_falls', nameZh: '尼亚加拉瀑布 (Niagara Falls)', nameEn: 'Niagara Falls' }
+            { id: 'toronto', nameZh: '多伦多 (Toronto)', nameEn: 'Toronto', provinceKey: 'ontario', isDenseCity: true, populationStr: '~2.8M', pillarIndustryZh: '全球金融商贸中枢与人工智能前沿高地', pillarIndustryEn: 'Global Financial Hub & Frontier AI' },
+            { id: 'ottawa', nameZh: '渥太华 (Ottawa)', nameEn: 'Ottawa', provinceKey: 'ontario', isDenseCity: true, populationStr: '~1.0M', pillarIndustryZh: '联邦政务中枢与国家电信高科技园', pillarIndustryEn: 'Federal Governance & Telecommunications Tech' },
+            { id: 'mississauga', nameZh: '密西沙加 (Mississauga)', nameEn: 'Mississauga', provinceKey: 'ontario', isDenseCity: true, populationStr: '~718k', pillarIndustryZh: '跨国企业总部集群与国际航空物流', pillarIndustryEn: 'Corporate HQs & Global Air Cargo Logistics' },
+            { id: 'brampton', nameZh: '宾顿 (Brampton)', nameEn: 'Brampton', provinceKey: 'ontario', isDenseCity: true, populationStr: '~656k', pillarIndustryZh: '先进智能制造、生命科学与现代物流网', pillarIndustryEn: 'Advanced Manufacturing & Supply Chain Logistics' },
+            { id: 'hamilton', nameZh: '汉密尔顿 (Hamilton)', nameEn: 'Hamilton', provinceKey: 'ontario', isDenseCity: true, populationStr: '~569k', pillarIndustryZh: '特种先进钢铁材料与健康医疗生命科学', pillarIndustryEn: 'Advanced Materials & Health Sciences' },
+            { id: 'montreal', nameZh: '蒙特利尔 (Montreal)', nameEn: 'Montreal', provinceKey: 'quebec', isDenseCity: true, populationStr: '~1.76M', pillarIndustryZh: '全球人工智能科研中心、顶尖航空航天与数字媒体创意', pillarIndustryEn: 'Global AI Research, Aerospace & Digital Media' },
+            { id: 'windsor', nameZh: '温莎 (Windsor)', nameEn: 'Windsor', provinceKey: 'ontario', isDenseCity: false, populationStr: '~230k', pillarIndustryZh: '汽车工程自动化制造与美加跨境贸易', pillarIndustryEn: 'Automotive Engineering & Cross-Border Logistics' },
+            { id: 'niagara_falls', nameZh: '尼亚加拉瀑布 (Niagara Falls)', nameEn: 'Niagara Falls', provinceKey: 'ontario', isDenseCity: false, populationStr: '~88k', pillarIndustryZh: '国际文旅会展与清洁水力发电', pillarIndustryEn: 'International Tourism & Clean Hydroelectric Energy' }
           ]
         },
         north: {
@@ -906,9 +955,9 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '北方壬癸水',
           elementHeavenlyEn: 'North Ren-Gui Water',
           cities: [
-            { id: 'edmonton', nameZh: '埃德蒙顿 (Edmonton)', nameEn: 'Edmonton' },
-            { id: 'yellowknife', nameZh: '黄刀镇 (Yellowknife)', nameEn: 'Yellowknife' },
-            { id: 'whitehorse', nameZh: '怀特霍斯 (Whitehorse)', nameEn: 'Whitehorse' }
+            { id: 'edmonton', nameZh: '埃德蒙顿 (Edmonton)', nameEn: 'Edmonton', provinceKey: 'alberta', isDenseCity: true, populationStr: '~1.0M', pillarIndustryZh: '石油化工装备、算力基建中心与北极物资通道', pillarIndustryEn: 'Petrochemical Engineering, AI Compute & Arctic Logistics' },
+            { id: 'yellowknife', nameZh: '黄刀镇 (Yellowknife)', nameEn: 'Yellowknife', isDenseCity: false, populationStr: '~20k', pillarIndustryZh: '极光生态旅游与北极钻石矿业', pillarIndustryEn: 'Northern Aurora Eco-Tourism & Diamond Mining' },
+            { id: 'whitehorse', nameZh: '怀特霍斯 (Whitehorse)', nameEn: 'Whitehorse', isDenseCity: false, populationStr: '~28k', pillarIndustryZh: '极地自驾探险与关键矿产地质勘探', pillarIndustryEn: 'Polar Expedition & Critical Mineral Exploration' }
           ]
         },
         east: {
@@ -920,9 +969,9 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '东方甲乙木',
           elementHeavenlyEn: 'East Jia-Yi Wood',
           cities: [
-            { id: 'halifax', nameZh: '哈利法克斯 (Halifax)', nameEn: 'Halifax' },
-            { id: 'st_johns', nameZh: '圣约翰斯 (St. John\'s)', nameEn: 'St. John\'s' },
-            { id: 'quebec_city', nameZh: '魁北克城 (Quebec City)', nameEn: 'Quebec City' }
+            { id: 'halifax', nameZh: '哈利法克斯 (Halifax)', nameEn: 'Halifax', isDenseCity: false, populationStr: '~440k', pillarIndustryZh: '深水国际航运、海洋科学研究与国防造船', pillarIndustryEn: 'Deep-Water Shipping, Ocean Science & Naval Shipbuilding' },
+            { id: 'st_johns', nameZh: '圣约翰斯 (St. John\'s)', nameEn: 'St. John\'s', isDenseCity: false, populationStr: '~110k', pillarIndustryZh: '离岸深海油气开采与北大西洋远洋渔业', pillarIndustryEn: 'Offshore Energy & North Atlantic Fisheries' },
+            { id: 'quebec_city', nameZh: '魁北克城 (Quebec City)', nameEn: 'Quebec City', provinceKey: 'quebec', isDenseCity: false, populationStr: '~540k', pillarIndustryZh: '省府政务核心、国际法文文化旅游与生物医药', pillarIndustryEn: 'Provincial Administration, Francophone Culture & Biopharma' }
           ]
         },
         west: {
@@ -934,9 +983,10 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '西方庚辛金',
           elementHeavenlyEn: 'West Geng-Xin Metal',
           cities: [
-            { id: 'vancouver', nameZh: '温哥华 (Vancouver)', nameEn: 'Vancouver' },
-            { id: 'victoria', nameZh: '维多利亚 (Victoria)', nameEn: 'Victoria' },
-            { id: 'calgary', nameZh: '卡尔加里 (Calgary)', nameEn: 'Calgary' }
+            { id: 'vancouver', nameZh: '温哥华 (Vancouver)', nameEn: 'Vancouver', provinceKey: 'bc', isDenseCity: true, populationStr: '~662k', pillarIndustryZh: '亚太国际贸易大港、跨国高科技总部与数字视觉影视', pillarIndustryEn: 'Asia-Pacific Gateway Port, Tech Hub & Visual Effects' },
+            { id: 'surrey', nameZh: '素里 (Surrey)', nameEn: 'Surrey', provinceKey: 'bc', isDenseCity: true, populationStr: '~568k', pillarIndustryZh: '区域现代物流枢纽、智慧农业与绿色科技制造', pillarIndustryEn: 'Regional Logistics Hub, Agri-Tech & Clean Manufacturing' },
+            { id: 'calgary', nameZh: '卡尔加里 (Calgary)', nameEn: 'Calgary', provinceKey: 'alberta', isDenseCity: true, populationStr: '~1.3M', pillarIndustryZh: '国家能源决策总部、大宗商品金融与创新算力中心', pillarIndustryEn: 'National Energy HQs, Commodity Finance & Digital Tech' },
+            { id: 'victoria', nameZh: '维多利亚 (Victoria)', nameEn: 'Victoria', provinceKey: 'bc', isDenseCity: false, populationStr: '~92k', pillarIndustryZh: '卑诗省府行政中枢、海洋技术与生态休闲文旅', pillarIndustryEn: 'Provincial Governance, Marine Tech & Eco-Tourism' }
           ]
         }
       }
@@ -1260,6 +1310,16 @@ class SpatialFengShuiEngine {
       });
     }
 
+    const prov = (country.provinces && targetCity.provinceKey && country.provinces[targetCity.provinceKey])
+      ? country.provinces[targetCity.provinceKey]
+      : null;
+    const provinceZh = prov ? prov.nameZh : (targetCity.provinceZh || '');
+    const provinceEn = prov ? prov.nameEn : (targetCity.provinceEn || '');
+    const isDenseCity = (targetCity.isDenseCity === true);
+    const populationStr = targetCity.populationStr || (isDenseCity ? '>500k' : '');
+    const pillarIndustriesZh = targetCity.pillarIndustryZh || (prov ? prov.pillarIndustriesZh : '');
+    const pillarIndustriesEn = targetCity.pillarIndustryEn || (prov ? prov.pillarIndustriesEn : '');
+
     return {
       countryKey,
       countryNameZh: country.countryNameZh,
@@ -1267,6 +1327,12 @@ class SpatialFengShuiEngine {
       cityKey: targetCity.id,
       cityNameZh: targetCity.nameZh,
       cityNameEn: targetCity.nameEn,
+      provinceZh,
+      provinceEn,
+      isDenseCity,
+      populationStr,
+      pillarIndustriesZh,
+      pillarIndustriesEn,
       directionZh: targetRegion.directionZh,
       directionEn: targetRegion.directionEn,
       elementZh: targetRegion.elementZh,
@@ -1336,9 +1402,13 @@ class SpatialFengShuiEngine {
       Object.keys(country.regions).forEach(regKey => {
         const reg = country.regions[regKey];
         const groupLabel = isEn ? `${reg.directionEn} (${reg.elementHeavenlyEn})` : `${reg.directionZh} (${reg.elementHeavenlyZh})`;
-        const opts = (reg.cities || []).map(c => `
-          <option value="${c.id}" ${ev.cityKey === c.id ? 'selected' : ''}>${isEn ? `${c.nameEn} · ${reg.directionEn} (${reg.elementEn})` : `${c.nameZh} · ${reg.elementHeavenlyZh}`}</option>
-        `).join('');
+        const opts = (reg.cities || []).map(c => {
+          const denseTag = c.isDenseCity ? (isEn ? ' [>500k]' : ' [>50万]') : '';
+          const provTag = (c.provinceKey && country.provinces && country.provinces[c.provinceKey])
+            ? ` · ${isEn ? country.provinces[c.provinceKey].nameEn : country.provinces[c.provinceKey].nameZh.split(' ')[0]}`
+            : '';
+          return `<option value="${c.id}" ${ev.cityKey === c.id ? 'selected' : ''}>${isEn ? `${c.nameEn}${provTag}${denseTag} · ${reg.directionEn} (${reg.elementEn})` : `${c.nameZh}${provTag}${denseTag} · ${reg.elementHeavenlyZh}`}</option>`;
+        }).join('');
         cityOptionsHtml += `<optgroup label="${groupLabel}">${opts}</optgroup>`;
       });
     }
@@ -1381,6 +1451,21 @@ class SpatialFengShuiEngine {
             <input type="text" id="fsCardCustomCityInput" class="bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500 w-32 ${ev.cityKey === 'custom' ? '' : 'hidden'}" placeholder="${customInputPlaceholder}" value="${customVal}">
           </div>
         </div>
+
+        ${ev.provinceZh ? `
+          <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="chinese-seal text-[10px] py-0.5 border-amber-500/60 text-amber-300 font-mono">${isEn ? 'PROVINCE' : '省份枢纽'}</span>
+              <span class="font-bold text-amber-200 font-serif-sc">${isEn ? ev.provinceEn : ev.provinceZh}</span>
+              ${ev.isDenseCity ? `<span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[10px] font-bold font-mono">${isEn ? `Dense Metropolis (${ev.populationStr || '>500k'})` : `高密度核心都会 (${ev.populationStr || '>50万'})`}</span>` : ''}
+            </div>
+            ${ev.pillarIndustriesZh ? `
+              <div class="text-gray-300 text-[11px] leading-relaxed">
+                <b class="text-amber-300/90">${isEn ? 'Pillar Industries: ' : '核心支柱产业：'}</b>${isEn ? ev.pillarIndustriesEn : ev.pillarIndustriesZh}
+              </div>
+            ` : ''}
+          </div>
+        ` : ''}
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
           <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 text-center">

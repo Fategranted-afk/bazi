@@ -35,11 +35,16 @@
         </div>
       </div>
 
-      <div class="flex items-center space-x-3">
+        <!-- Fullscreen Toggle Button in career.html -->
+        <button id="btnCareerPageFullscreen" type="button" class="px-3.5 py-1.5 text-xs rounded-xl border border-indigo-600/50 bg-indigo-800/80 hover:bg-indigo-700 text-indigo-100 font-bold shadow-md transition flex items-center gap-1.5 cursor-pointer">
+          <span id="careerPageFullscreenIcon">⛶</span>
+          <span id="careerPageFullscreenText">进入全屏</span>
+        </button>
+
         <!-- Return to Main Portal Button -->
-        <a href="index.html" class="px-3.5 py-1.5 text-xs rounded-xl border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
+        <a id="careerBtnReturn" href="index.html#dashboard" class="px-3.5 py-1.5 text-xs rounded-xl border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
           <span>🏛️</span>
-          <span id="careerBtnReturn">返回全相总盘</span>
+          <span id="careerBtnReturnText">返回全相总盘</span>
         </a>
 
         <!-- Language Switcher Toggle Group -->
@@ -196,7 +201,11 @@
         document.getElementById("careerPageSubtitle").textContent = isEn
           ? "Harmonizing Eight Canons, Zhou Yi Hexagrams, Decadal and Annual Transits to navigate upward management, peer firewalls, and four archetypes"
           : "融汇八大经籍、周易值年值月卦机、大运流年流月节律与四大生态位精准定向";
-        document.getElementById("careerBtnReturn").textContent = isEn ? "Return to Master Dashboard" : "返回全相总盘";
+        const retEl = document.getElementById("careerBtnReturnText") || document.getElementById("careerBtnReturn");
+        if (retEl) retEl.textContent = isEn ? "Return to Master Dashboard" : "返回全相总盘";
+        const fsTextEl = document.getElementById("careerPageFullscreenText");
+        const isFsActive = !!document.fullscreenElement;
+        if (fsTextEl) fsTextEl.textContent = isFsActive ? (isEn ? "Exit Fullscreen" : "退出全屏") : (isEn ? "Enter Fullscreen" : "进入全屏");
 
         document.getElementById("careerBannerSeal").textContent = isEn ? "Career Dossier" : "打工人战报";
         document.getElementById("careerBannerTitle").textContent = isEn
@@ -444,6 +453,51 @@
         try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "en"); } catch(e){}
         render();
       });
+
+      // Smart Return to Dashboard without forcing user to re-enter BaZi
+      const returnBtn = document.getElementById("careerBtnReturn");
+      if (returnBtn) {
+        returnBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = "index.html?restore=true&view=career#dashboard";
+          }
+        });
+      }
+
+      // Fullscreen Mode Handler for career.html
+      const fsBtn = document.getElementById("btnCareerPageFullscreen");
+      const fsIcon = document.getElementById("careerPageFullscreenIcon");
+      const fsText = document.getElementById("careerPageFullscreenText");
+      if (fsBtn) {
+        fsBtn.addEventListener("click", function() {
+          if (!document.fullscreenElement) {
+            if (document.documentElement.requestFullscreen) {
+              document.documentElement.requestFullscreen().catch(() => {});
+            }
+          } else {
+            if (document.exitFullscreen) {
+              document.exitFullscreen().catch(() => {});
+            }
+          }
+        });
+
+        document.addEventListener("fullscreenchange", function() {
+          const isFs = !!document.fullscreenElement;
+          const isEn = (currentLang === "en");
+          if (fsIcon) fsIcon.textContent = isFs ? "🗗" : "⛶";
+          if (fsText) fsText.textContent = isFs ? (isEn ? "Exit Fullscreen" : "退出全屏") : (isEn ? "Enter Fullscreen" : "进入全屏");
+          if (isFs) {
+            fsBtn.classList.remove("bg-indigo-800/80", "hover:bg-indigo-700");
+            fsBtn.classList.add("bg-rose-800/80", "hover:bg-rose-700");
+          } else {
+            fsBtn.classList.remove("bg-rose-800/80", "hover:bg-rose-700");
+            fsBtn.classList.add("bg-indigo-800/80", "hover:bg-indigo-700");
+          }
+        });
+      }
 
       render();
     })();

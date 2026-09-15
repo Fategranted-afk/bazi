@@ -805,8 +805,8 @@ const LuckEngine = (function() {
 
     jieList.sort((a, b) => a.date - b.date);
 
-    let prevJie = jieList[0];
-    let nextJie = jieList[jieList.length - 1];
+    let prevJie = jieList.length > 0 ? jieList[0] : null;
+    let nextJie = jieList.length > 0 ? jieList[jieList.length - 1] : null;
 
     for (let i = 0; i < jieList.length; i++) {
       if (birthDate >= jieList[i].date) {
@@ -817,9 +817,13 @@ const LuckEngine = (function() {
       }
     }
 
-    const targetJie = isForward ? nextJie : prevJie;
-    const diffMs = isForward ? (nextJie.date - birthDate) : (birthDate - prevJie.date);
-    const diffDays = Math.max(0.1, diffMs / (1000 * 60 * 60 * 24));
+    let targetJie = { nameZh: '节气', nameEn: 'Solar Term' };
+    let diffDays = 9; // 3 years default start age
+    if (nextJie && prevJie) {
+      targetJie = isForward ? nextJie : prevJie;
+      const diffMs = isForward ? (nextJie.date - birthDate) : (birthDate - prevJie.date);
+      diffDays = Math.max(0.1, diffMs / (1000 * 60 * 60 * 24));
+    }
 
     // 传统法门：3天为1岁，1天为4个月，1时辰(2小时)为10天
     const startYears = Math.floor(diffDays / 3);
@@ -859,6 +863,20 @@ const LuckEngine = (function() {
    * Generate 10 Major Luck Decades (大运)
    */
   function getDecades(bazi, decadeMeta, currentYear) {
+    if (!decadeMeta) {
+      try {
+        decadeMeta = calculateDecadeMetadata(bazi);
+      } catch (e) {
+        decadeMeta = null;
+      }
+    }
+    if (!decadeMeta || decadeMeta.isForward === undefined) {
+      decadeMeta = {
+        isForward: true,
+        nominalStartAge: 3,
+        startCalendarYear: ((bazi && bazi.input && bazi.input.year) || (bazi && bazi.birthYear) || 1990) + 3
+      };
+    }
     const dm = bazi.dayMaster;
     const monthStem = bazi.pillars.month.stem;
     const monthBranch = bazi.pillars.month.branch;
@@ -1909,6 +1927,22 @@ const LuckEngine = (function() {
         directiveEn = `At age ${age} (${year} ${ganZhiEn}), energy flows evenly under [${tenGodEn}]. Ideal for refining technical craft, consolidating operational systems, and compounding core skills in preparation for the next growth surge.`;
       }
 
+      let annualHex = null;
+      if (typeof IChingEngine !== "undefined" && typeof IChingEngine.calculateFourPillarsHexagrams === "function") {
+        try {
+          const fpHex = IChingEngine.calculateFourPillarsHexagrams(bazi, age, year);
+          if (fpHex && fpHex.zhiNian && fpHex.zhiNian.hexagram) {
+            annualHex = {
+              number: fpHex.zhiNian.hexagram.number,
+              nameZh: fpHex.zhiNian.hexagram.nameZh,
+              nameEn: fpHex.zhiNian.hexagram.nameEn,
+              tianJi: fpHex.zhiNian.tianJi || null,
+              isMutated: fpHex.zhiNian.isMutated || false
+            };
+          }
+        } catch (e) {}
+      }
+
       timeline.push({
         age,
         year,
@@ -1931,7 +1965,8 @@ const LuckEngine = (function() {
         focusZh,
         focusEn,
         directiveZh,
-        directiveEn
+        directiveEn,
+        annualHex
       });
     }
 

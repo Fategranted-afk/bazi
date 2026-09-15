@@ -131,6 +131,51 @@ class CareerEngine {
       : (PATTERN_EN_MAP[primaryPattern] || 'Direct Officer Pattern');
 
     // Count ten gods in chart (both stems and earthly branch hidden stems)
+    const godCounts = this.extractGodCounts(bazi);
+
+    // 1. Module: Managing Up & Superiors Interaction (向上管理与职场沟通)
+    const managingUp = this.computeManagingUp(dm, dmEn, isStrong, godCounts, primaryPattern, primaryPatternEn);
+
+    // 2. Module: Peer & Colleague Dynamics (横向协作与人际防火墙)
+    const peerDynamics = this.computePeerDynamics(dm, dmEn, isStrong, godCounts);
+
+    // 3. Module: Workplace Archetype Matching (天命职能与四大生态位精准定向)
+    const workplaceArchetypes = this.computeWorkplaceArchetypes(dm, dmEn, isStrong, godCounts, primaryPattern, primaryPatternEn, bazi);
+
+    // 4. Module: Timing Trajectory of Career & Wealth (时空财运与事业窗口推演)
+    const timingTrajectory = this.computeTimingTrajectory(bazi, effLuck, effYear, realAge, dm, isStrong, godCounts);
+
+    return {
+      bazi,
+      dm,
+      dmEn,
+      isStrong,
+      primaryPattern,
+      primaryPatternEn,
+      summary: {
+        dm,
+        dmEn,
+        dmEl,
+        dayPillar,
+        monthBranch,
+        isStrong,
+        primaryPattern,
+        primaryPatternEn,
+        realAge,
+        effYear
+      },
+      managingUp,
+      peerDynamics,
+      workplaceArchetypes,
+      timingTrajectory,
+      glossary: TEN_GODS_GLOSSARY
+    };
+  }
+
+  /**
+   * Helper to extract 10 Gods counts from BaZi chart
+   */
+  static extractGodCounts(bazi) {
     const godCounts = {
       officer: 0,
       killings: 0,
@@ -143,6 +188,7 @@ class CareerEngine {
       friend: 0,
       robWealth: 0
     };
+    if (!bazi || !bazi.pillars) return godCounts;
 
     const countGod = (g) => {
       if (!g || typeof g !== 'string') return;
@@ -171,36 +217,7 @@ class CareerEngine {
       }
     });
 
-    // 1. Module: Managing Up & Superiors Interaction (向上管理与职场沟通)
-    const managingUp = this.computeManagingUp(dm, dmEn, isStrong, godCounts, primaryPattern, primaryPatternEn);
-
-    // 2. Module: Peer & Colleague Dynamics (横向协作与人际防火墙)
-    const peerDynamics = this.computePeerDynamics(dm, dmEn, isStrong, godCounts);
-
-    // 3. Module: Workplace Archetype Matching (天命职能与四大生态位精准定向)
-    const workplaceArchetypes = this.computeWorkplaceArchetypes(dm, dmEn, isStrong, godCounts, primaryPattern, primaryPatternEn, bazi);
-
-    // 4. Module: Timing Trajectory of Career & Wealth (时空财运与事业窗口推演)
-    const timingTrajectory = this.computeTimingTrajectory(bazi, effLuck, effYear, realAge, dm, isStrong, godCounts);
-
-    return {
-      summary: {
-        dm,
-        dmEn,
-        dmEl,
-        dayPillar,
-        monthBranch,
-        isStrong,
-        primaryPattern,
-        primaryPatternEn,
-        realAge,
-        effYear
-      },
-      managingUp,
-      peerDynamics,
-      workplaceArchetypes,
-      timingTrajectory
-    };
+    return godCounts;
   }
 
   /**
@@ -376,69 +393,106 @@ class CareerEngine {
   /**
    * 3. 天命职能与四大生态位精准定向 (Workplace Archetype Matching)
    * 衡量四大生态位：文职、武职、技术人员、高管
+   * 依据占比最高的前三大格局、日主喜忌与十神分布强力区分打分，杜绝无差异扎堆
    */
   static computeWorkplaceArchetypes(dm, dmEn, isStrong, godCounts, pattern, patternEn, bazi) {
+    if (dm && typeof dm === 'object' && dm.pillars) {
+      bazi = dm;
+      dm = bazi.dayMaster;
+      dmEn = bazi.dayMasterEn || '';
+      isStrong = (typeof isDayMasterStrong === 'function') ? isDayMasterStrong(bazi) : (bazi.isDayMasterStrong || false);
+      godCounts = this.extractGodCounts(bazi);
+      pattern = bazi.primaryPattern || (bazi.patterns && bazi.patterns[0] && bazi.patterns[0].name) || '';
+      patternEn = bazi.primaryPatternEn || (bazi.patterns && bazi.patterns[0] && bazi.patterns[0].nameEn) || '';
+    }
+    if (!godCounts) {
+      godCounts = this.extractGodCounts(bazi);
+    }
     pattern = String(pattern || '');
-    // Scores for 4 archetypes: 0 to 100
-    // 1. Civil (文职: 行政运营、法规政策、合规风控、教研智库)
-    let civilScore = 55;
-    civilScore += godCounts.officer * 14;
-    civilScore += godCounts.directResource * 16;
-    civilScore += godCounts.directWealth * 8;
-    civilScore += godCounts.eatingGod * 6;
-    if (pattern.includes('正官') || pattern.includes('印')) civilScore += 12;
-    if (!isStrong && (godCounts.directResource + godCounts.officer) >= 2) civilScore += 8;
-    if (godCounts.hurtingOfficer >= 2) civilScore -= 10;
-    civilScore = Math.max(35, Math.min(96, civilScore));
 
-    // 2. Martial (武职: 商务地推、销售铁军、项目应急、现场工程、高压攻坚)
-    let martialScore = 50;
-    martialScore += godCounts.killings * 18;
-    martialScore += godCounts.robWealth * 15;
-    martialScore += godCounts.friend * 8;
-    martialScore += godCounts.indirectWealth * 8;
-    if (pattern.includes('七杀') || pattern.includes('刃') || pattern.includes('建禄')) martialScore += 14;
-    if (isStrong) martialScore += 10;
-    if (!isStrong && godCounts.killings >= 2) martialScore -= 12;
-    martialScore = Math.max(35, Math.min(97, martialScore));
+    // 1. Obtain top 3 dominant patterns from bazi or PortraitEngine
+    let patternList = [];
+    if (bazi && Array.isArray(bazi.patterns) && bazi.patterns.length > 0) {
+      patternList = bazi.patterns;
+    } else if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.analyze === 'function' && bazi) {
+      try {
+        const pAnalysis = PortraitEngine.analyze(bazi, 'zh');
+        if (pAnalysis && Array.isArray(pAnalysis.patterns)) {
+          patternList = pAnalysis.patterns;
+        }
+      } catch (e) {
+        patternList = [];
+      }
+    }
 
-    // 3. Specialist / Technical (技术人员: 尖端研发、架构师、全栈工程、专精特新、产品极客)
-    let specialistScore = 52;
-    specialistScore += godCounts.eatingGod * 16;
-    specialistScore += godCounts.hurtingOfficer * 16;
-    specialistScore += godCounts.indirectResource * 18;
-    if (pattern.includes('食神') || pattern.includes('伤官') || pattern.includes('偏印')) specialistScore += 12;
-    if (godCounts.indirectResource > 0 && (godCounts.eatingGod + godCounts.hurtingOfficer) > 0) specialistScore += 8;
-    specialistScore = Math.max(40, Math.min(98, specialistScore));
+    if (patternList.length === 0 && pattern) {
+      patternList = [{ name: pattern, weightPct: 60 }];
+    }
 
-    // 4. Executive / General Manager (高管/统帅: 战略操盘、企业统御、损益全局、事业部总掌舵)
-    let execScore = 50;
+    const top3Patterns = patternList.slice(0, 3);
+
+    // 2. Initialize raw scores for each of the 4 archetypes
+    let rawScores = {
+      martial: 50,
+      civil: 50,
+      specialist: 50,
+      executive: 50
+    };
+
+    // 3. Top 3 Patterns strong directional differentiation (+35 base tilt)
+    top3Patterns.forEach((pat, idx) => {
+      const pName = pat.name || pat.patternName || '';
+      // Rank weight: 1st pattern 1.0, 2nd 0.7, 3rd 0.45
+      const rankMultiplier = idx === 0 ? 1.0 : (idx === 1 ? 0.7 : 0.45);
+
+      if (/七杀|偏官|羊刃|阳刃|建禄|武职|突围/.test(pName)) {
+        rawScores.martial += 38 * rankMultiplier;
+        rawScores.executive += 12 * rankMultiplier;
+      }
+      if (/正官|正印|官印|合规|行政|顺德|中正/.test(pName)) {
+        rawScores.civil += 38 * rankMultiplier;
+        rawScores.executive += 15 * rankMultiplier;
+      }
+      if (/食神|伤官|偏印|枭神|技术|极客|匠心|秀气|研发/.test(pName)) {
+        rawScores.specialist += 38 * rankMultiplier;
+        rawScores.civil += 8 * rankMultiplier;
+      }
+      if (/财旺|财官|杀印相生|建极|操盘|专旺|全局|大运/.test(pName)) {
+        rawScores.executive += 38 * rankMultiplier;
+        rawScores.martial += 10 * rankMultiplier;
+      }
+    });
+
+    // 4. Ten Gods allocation
+    rawScores.martial += (godCounts.killings * 12) + (godCounts.robWealth * 10) + (godCounts.friend * 5) + (godCounts.indirectWealth * 4);
+    rawScores.civil += (godCounts.officer * 12) + (godCounts.directResource * 12) + (godCounts.directWealth * 6) + (godCounts.eatingGod * 4);
+    rawScores.specialist += (godCounts.eatingGod * 14) + (godCounts.hurtingOfficer * 14) + (godCounts.indirectResource * 14);
+
     const wealthTotal = godCounts.directWealth + godCounts.indirectWealth;
     const officerTotal = godCounts.officer + godCounts.killings;
     const resourceTotal = godCounts.directResource + godCounts.indirectResource;
-    if (wealthTotal > 0 && officerTotal > 0) execScore += 18;
-    if (officerTotal > 0 && resourceTotal > 0) execScore += 16;
-    if (isStrong) execScore += 12;
-    if (pattern.includes('官') || pattern.includes('杀') || pattern.includes('财')) execScore += 8;
-    execScore += Math.min(20, (wealthTotal + officerTotal + resourceTotal) * 4);
-    if (!isStrong && wealthTotal >= 3) execScore -= 12;
-    execScore = Math.max(38, Math.min(96, execScore));
+    rawScores.executive += (wealthTotal * 6) + (officerTotal * 6) + (resourceTotal * 4);
+    if (wealthTotal > 0 && officerTotal > 0) rawScores.executive += 16;
+    if (officerTotal > 0 && resourceTotal > 0) rawScores.executive += 14;
 
-    const getGrade = (score) => {
-      if (score >= 82) return { zh: '首席天命主场', en: 'Prime Natural Calling', badgeClass: 'bg-emerald-950/60 text-emerald-300 border-emerald-500/50' };
-      if (score >= 70) return { zh: '强力匹配序列', en: 'Strong High-Fit Track', badgeClass: 'bg-amber-950/60 text-amber-300 border-amber-500/50' };
-      if (score >= 55) return { zh: '次级可塑方向', en: 'Viable Secondary Track', badgeClass: 'bg-blue-950/60 text-blue-300 border-blue-500/50' };
-      return { zh: '耗能高摩擦区', en: 'High Friction Zone', badgeClass: 'bg-rose-950/60 text-rose-300 border-rose-500/50' };
-    };
+    // 5. Day Master vigor nuance
+    if (isStrong) {
+      rawScores.martial += 10;
+      rawScores.executive += 10;
+      rawScores.specialist += 4;
+    } else {
+      rawScores.civil += 10;
+      if (godCounts.killings >= 2) rawScores.martial -= 14;
+      if (wealthTotal >= 3) rawScores.executive -= 12;
+    }
 
-    const archetypes = [
+    const baseArchetypes = [
       {
         key: 'civil',
         nameZh: '文职 (制度合规 · 政策教研 · 行政运营)',
         nameEn: 'Civil & Administrative (Governance, Research & Compliance)',
         icon: '📜',
-        fitScore: civilScore,
-        grade: getGrade(civilScore),
+        rawScore: rawScores.civil,
         coreStrengthsZh: '制度敬畏度高、作风严谨合规、条理分明、抗系统风险能力极强；善于在科层制与稳定组织内长跑积累资历与声望。',
         coreStrengthsEn: 'Meticulous procedural rigor, unshakeable regulatory compliance, structural clarity, and the steady patience to compound seniority within institutional hierarchies.',
         typicalRolesZh: '大型企业合规风控总监、政企事务主管、法务专家、集团政策研究员、高校学者智库、人力资源与组织运营专家。',
@@ -451,26 +505,24 @@ class CareerEngine {
       {
         key: 'martial',
         nameZh: '武职 (狼性商务 · 地推铁军 · 现场统筹 · 危机排障)',
-        nameEn: 'Martial & Field Command (Aggressive Sales, Turnaround & PMO)',
+        nameEn: 'Martial & Field Operations (Business Development, Crises & Execution)',
         icon: '⚔️',
-        fitScore: martialScore,
-        grade: getGrade(martialScore),
+        rawScore: rawScores.martial,
         coreStrengthsZh: '狼性进攻力极强、敢打硬仗、抗压耐受度高、能在混乱恶性竞争中带队突围；雷厉风行，不拖泥带水。',
-        coreStrengthsEn: 'Relentless frontier drive, extreme resilience under combat friction, unmatched ability to mobilize teams against fierce market rivals, and decisive operational velocity.',
+        coreStrengthsEn: 'Relentless drive, exceptional psychological resilience under extreme crisis, fearless execution in hyper-competitive markets, and zero tolerance for dithering.',
         typicalRolesZh: '战区大客户商务总监、地推突击铁军统领、特种工程项目PMO总指挥、海外开拓先锋、应急突击处突总管。',
-        typicalRolesEn: 'Enterprise Sales General, Field Campaign Commander, Mission-Critical PMO Director, Overseas Expansion Pioneer, Tactical Crisis Field Leader.',
+        typicalRolesEn: 'Regional Enterprise Sales Director, Field Operations Vanguard Lead, Turnaround PMO Director, Overseas Market Expansion Pioneer, Incident Escalation Head.',
         pitfallAlertZh: '脾气过刚过急，易给周边团队带来高压恐惧感；身弱逢杀旺岁运容易引发身心过劳、与同僚激烈冲突甚至树敌过多。',
-        pitfallAlertEn: 'Excessive aggression creates team burnout and lateral political friction; ungrounded periods risk health collapse or fratricidal disputes.',
+        pitfallAlertEn: 'Excessive rigidity and authoritarian cadence risk terrifying lateral collaborators; in weak DM transits, risks physical exhaustion and factional friction.',
         breakthroughTacticZh: '坚持“以印化煞”：主动拉入法务与长辈军师充当降温阀门；把狂暴精力导入对外部市场的抢滩，在内部则广施恩德。',
-        breakthroughTacticEn: 'Master the Seven Killings transmuted by Resource: recruit experienced advisors as tempering buffers; unleash fury strictly outward toward external rivals while nurturing internal subordinates.'
+        breakthroughTacticEn: 'Harness Resource De-escalation: introduce seasoned legal or advisory elders as thermal regulators; direct raw aggression externally toward revenue conquests while practicing gracious benevolence internally.'
       },
       {
         key: 'specialist',
         nameZh: '技术人员 (深度架构 · 算法工程 · 专精特新 · 研发匠心)',
-        nameEn: 'Deep-Tech Specialist (Engineering, Architecture & R&D)',
+        nameEn: 'Specialist & Engineering (Core Architecture, Deep Tech & Product R&D)',
         icon: '💻',
-        fitScore: specialistScore,
-        grade: getGrade(specialistScore),
+        rawScore: rawScores.specialist,
         coreStrengthsZh: '对底层技术架构具有极高领悟力与深度专注力，不依赖复杂办公室政治，靠无可替代的硬核技术壁垒安身立命。',
         coreStrengthsEn: 'Formidable structural intellect, deep immersion into root technology, indifference to political vanity, and absolute reliance on insurmountable technical moats.',
         typicalRolesZh: '首席系统架构师、AI算法科学家、前沿软硬件研发专家、安全渗透特种工程师、高端精密制造总工、量化开发工程师。',
@@ -485,8 +537,7 @@ class CareerEngine {
         nameZh: '高管 / 统帅 (战略操盘 · 资源统筹 · 组织执旗 · 损益全局)',
         nameEn: 'Executive & General Manager (Strategy, P&L & Enterprise Leadership)',
         icon: '👑',
-        fitScore: execScore,
-        grade: getGrade(execScore),
+        rawScore: rawScores.executive,
         coreStrengthsZh: '兼具商业嗅觉与组织治理手腕，善于在多方利益博弈中寻找平衡点；懂知人善任与分权激励，能独挑大梁掌舵全局损益。',
         coreStrengthsEn: 'Dual mastery of commercial capitalization and organizational governance; adept at political equilibrium, strategic delegation, and sovereign P&L accountability.',
         typicalRolesZh: '事业部总经理、企业联合创始人/CEO/COO、跨国集团大区总裁、产业投资控股合伙人、大型综合业务操盘手。',
@@ -498,10 +549,83 @@ class CareerEngine {
       }
     ];
 
-    // Sort by fit score descending
-    archetypes.sort((a, b) => b.fitScore - a.fitScore);
+    // Sort by rawScore descending
+    baseArchetypes.sort((a, b) => b.rawScore - a.rawScore);
 
-    return archetypes;
+    // 6. Direct framing and strict score differentiation:
+    // Rank 0: 最适合 · 首席天命主场 (93 ~ 97分)
+    // Rank 1: 其次适合 · 次席进阶主场 (78 ~ 85分)
+    // Rank 2: 发展性可塑 · 辅助协同方向 (60 ~ 69分)
+    // Rank 3: 耗能避让区 · 慎入高摩擦场景 (35 ~ 48分)
+    const tierDefs = [
+      {
+        baseScore: 95,
+        scoreRange: [93, 97],
+        zh: '最适合 · 首席天命主场',
+        en: 'Optimal Fit · Prime Natural Calling',
+        tagZh: '最适合',
+        tagEn: 'Optimal Fit',
+        badgeClass: 'bg-emerald-950/60 text-emerald-300 border-emerald-500/50'
+      },
+      {
+        baseScore: 82,
+        scoreRange: [78, 85],
+        zh: '其次适合 · 次席进阶主场',
+        en: 'Secondary Fit · Viable Advancement Track',
+        tagZh: '其次适合',
+        tagEn: 'Secondary Fit',
+        badgeClass: 'bg-amber-950/60 text-amber-300 border-amber-500/50'
+      },
+      {
+        baseScore: 65,
+        scoreRange: [60, 69],
+        zh: '发展性可塑 · 辅助协同方向',
+        en: 'Developmental · Collaborative Support Track',
+        tagZh: '发展性可塑',
+        tagEn: 'Developmental',
+        badgeClass: 'bg-blue-950/60 text-blue-300 border-blue-500/50'
+      },
+      {
+        baseScore: 42,
+        scoreRange: [35, 48],
+        zh: '耗能避让区 · 慎入高摩擦场景',
+        en: 'High Friction · High Energy Drain Zone',
+        tagZh: '耗能避让区',
+        tagEn: 'High Friction',
+        badgeClass: 'bg-rose-950/60 text-rose-300 border-rose-500/50'
+      }
+    ];
+
+    const finalArchetypes = baseArchetypes.map((arch, rank) => {
+      const tier = tierDefs[rank];
+      let fitScore = tier.baseScore;
+      if (rank === 0) {
+        const gap = Math.min(2, Math.max(-2, Math.round((arch.rawScore - baseArchetypes[1].rawScore) / 15)));
+        fitScore = Math.max(tier.scoreRange[0], Math.min(tier.scoreRange[1], 95 + gap));
+      } else if (rank === 1) {
+        const gap = Math.min(3, Math.max(-3, Math.round((arch.rawScore - baseArchetypes[2].rawScore) / 12)));
+        fitScore = Math.max(tier.scoreRange[0], Math.min(tier.scoreRange[1], 82 + gap));
+      } else if (rank === 2) {
+        const gap = Math.min(3, Math.max(-3, Math.round((arch.rawScore - baseArchetypes[3].rawScore) / 10)));
+        fitScore = Math.max(tier.scoreRange[0], Math.min(tier.scoreRange[1], 65 + gap));
+      } else {
+        fitScore = Math.max(tier.scoreRange[0], Math.min(tier.scoreRange[1], Math.round(38 + Math.min(8, arch.rawScore / 15))));
+      }
+
+      return {
+        ...arch,
+        fitScore,
+        grade: {
+          zh: tier.zh,
+          en: tier.en,
+          tagZh: tier.tagZh,
+          tagEn: tier.tagEn,
+          badgeClass: tier.badgeClass
+        }
+      };
+    });
+
+    return finalArchetypes;
   }
 
   /**
