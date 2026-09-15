@@ -1687,55 +1687,47 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
 
-          <!-- 3. 六亲后方与家庭压舱石 -->
-          <div class="p-4 rounded-xl bg-black/40 border border-emerald-900/40 space-y-2">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
-                <span>🛡️</span>
-                <span>${isEn ? '3. Domestic Sanctuary & Kinship Ballast' : '三、六亲后方与家庭压舱石'}</span>
-              </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
-                ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
+          <!-- High-Density Executive Summary of Kinship, Era & Golden Directives -->
+          <div class="p-4 rounded-xl bg-gradient-to-br from-black/50 via-stone-900/30 to-black/60 border border-gray-800/80 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800/70">
+              <div class="flex items-center space-x-2">
+                <span class="text-base">🛡️</span>
+                <h5 class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc">
+                  ${isEn ? 'Executive Overview: Kinship Ballast, Macro Era & Lifetime Directives' : '六亲防线 · 时代借势 · 终身不败立身三则统览'}
+                </h5>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
+                ${isEn ? 'High-Density Strategic Pill' : '高密精要'}
               </span>
             </div>
-            <p class="text-xs text-gray-200 leading-relaxed font-sans">
-              ${isEn ? (gp.kinshipEn || gp.kinship) : (gp.kinshipZh || gp.kinship)}
-            </p>
-          </div>
-
-          <!-- 4. 时代跃迁与时空场能共振 -->
-          <div class="p-4 rounded-xl bg-black/40 border border-teal-900/40 space-y-2">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
-                <span>🚀</span>
-                <span>${isEn ? '4. Macro Era Supercycle & Spatial Trajectory' : '四、时代跃迁与宏观时空场能共振'}</span>
-              </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
-                ${isEn ? 'Period 9 AI Era & Geographic Leverage' : '离九运AI浪潮 · 地理借势'}
-              </span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
+              <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-900/40 text-[11px] text-gray-300 space-y-1">
+                <span class="text-emerald-300 font-bold block font-serif-sc">🛡️ ${isEn ? 'Kinship Sanctuary' : '六亲后方压舱石'}</span>
+                <p class="line-clamp-2 text-gray-400 font-sans">${isEn ? (gp.kinshipEn || gp.kinship) : (gp.kinshipZh || gp.kinship)}</p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-black/40 border border-teal-900/40 text-[11px] text-gray-300 space-y-1">
+                <span class="text-teal-300 font-bold block font-serif-sc">🚀 ${isEn ? 'Period 9 Era Wave' : '离九运时代场能'}</span>
+                <p class="line-clamp-2 text-gray-400 font-sans">${isEn ? (gp.eraEn || gp.era) : (gp.eraZh || gp.era)}</p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-black/40 border border-amber-900/40 text-[11px] text-gray-300 space-y-1">
+                <span class="text-amber-300 font-bold block font-serif-sc">🎯 ${isEn ? 'Lifetime Directives' : '终身黄金三则'}</span>
+                <p class="line-clamp-2 text-gray-400 font-sans">${isEn ? 'Grounded disciplines, non-negotiable moats, and strategic leverage for continuous compounding.' : '严明法度驭锋芒、广阔利他融孤寒、守正出奇终身不败之立身定海神针。'}</p>
+              </div>
             </div>
-            <p class="text-xs text-gray-200 leading-relaxed font-sans">
-              ${isEn ? (gp.eraEn || gp.era) : (gp.eraZh || gp.era)}
-            </p>
-          </div>
-
-          <!-- 5. 终身不败之立身三则 -->
-          <div class="p-4 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
-                <span>🎯</span>
-                <span>${isEn ? '5. Sovereign Grand Directives (Lifetime Golden Rules)' : '五、终身立身不败之黄金三则'}</span>
-              </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">
-                ${isEn ? 'Supreme Life Guidelines' : '守正不败总纲'}
-              </span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-              ${rulesCardsHtml}
+            <div class="pt-2 flex justify-end">
+              <button type="button" class="btn-jump-to-strategy px-3 py-1.5 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/40 text-xs font-serif-sc font-medium flex items-center gap-1.5 transition cursor-pointer">
+                <span>⚔️</span>
+                <span>${isEn ? 'Explore Full Grand Strategy & Kinship Dynamics →' : '查阅完整大局破局与六亲全息画像 →'}</span>
+              </button>
             </div>
           </div>
         `;
         paretoContainer.appendChild(grandCard);
+
+        const jumpStratBtn = grandCard.querySelector ? grandCard.querySelector('.btn-jump-to-strategy') : null;
+        if (jumpStratBtn && jumpStratBtn.addEventListener) {
+          jumpStratBtn.addEventListener('click', () => switchPrimaryView('view-strategy'));
+        }
       }
 
       // Details Drawer & Expand/Collapse Toggle
@@ -2300,20 +2292,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const mf = pData.mentalFriction;
       if (mf.detected) {
         const solutionsHtml = mf.solutions.map(sol => `
-          <div class="p-3.5 rounded-xl border border-gray-800/80 bg-black/40 space-y-2 hover:border-gray-700 transition">
-            <div class="flex items-center space-x-2 pb-1 border-b border-gray-800/80">
+          <div class="p-3 rounded-xl border border-gray-800/80 bg-black/45 space-y-1.5 hover:border-rose-700/50 transition flex flex-col justify-between">
+            <div class="flex items-center space-x-2">
               <span class="text-base">${sol.icon}</span>
-              <div>
-                <span class="font-bold text-gray-200 text-xs">${sol.name}</span>
-                <span class="text-[10.5px] text-amber-300/90 block">${sol.theme}</span>
+              <div class="min-w-0">
+                <span class="font-bold text-gray-200 text-xs truncate block">${sol.name}</span>
+                <span class="text-[10.5px] text-amber-300/90 truncate block">${sol.theme}</span>
               </div>
             </div>
-            <div class="space-y-1.5 pt-1">
-              ${sol.steps.map(st => `
-                <div class="p-2 rounded-lg bg-black/50 border border-gray-800/60 text-[11px] text-gray-300 leading-relaxed">
-                  ${st}
-                </div>
-              `).join('')}
+            <div class="p-2 rounded-lg bg-black/60 border border-gray-800/60 text-[11px] text-gray-300 leading-relaxed font-serif-sc line-clamp-2">
+              ${(sol.steps && sol.steps[0]) ? sol.steps[0] : ''}
             </div>
           </div>
         `).join('');
@@ -2329,25 +2317,40 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="flex items-center space-x-2">
                 <span class="text-xs px-2.5 py-0.5 rounded-full border ${mf.levelBadge} font-bold font-mono">
-                  ${isEn ? 'Rumination Index: ' : '内耗指数：'}${mf.score}% · ${mf.level}
+                  ${isEn ? 'Rumination Index: ' : '内耗指数：'}${mf.score}% · ${isEn ? (mf.levelEn || 'Elevated Standby') : (mf.levelZh || mf.level)}
                 </span>
               </div>
             </div>
 
             <div class="p-3 rounded-lg bg-rose-950/20 border border-rose-900/40 text-xs text-rose-200 leading-relaxed font-serif-sc">
-              <b>${isEn ? '【Core Mental Friction Root Cause】' : '【本命核心内耗根源剖析】'}</b>${mf.primaryRoot}
+              <b>${isEn ? '【Core Mental Friction Root Cause】' : '【本命核心内耗根源剖析】'}</b>${isEn ? (mf.primaryRootEn || mf.primaryRoot) : (mf.primaryRootZh || mf.primaryRoot)}
               <div class="text-[11px] text-gray-400 mt-1">
-                <b>${isEn ? 'Natal BaZi Triggers: ' : '八字触发特征：'}</b>${mf.triggers.join('；')}
+                <b>${isEn ? 'Natal BaZi Triggers: ' : '八字触发特征：'}</b>${mf.triggers.join(isEn ? '; ' : '；')}
               </div>
             </div>
 
-            <!-- 4 Actionable Solutions -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
+            <!-- 4 Actionable Solutions Streamlined Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
               ${solutionsHtml}
+            </div>
+
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-rose-900/40">
+              <span class="text-[11px] text-gray-400 font-serif-sc">
+                ${isEn ? 'Full original factory manual, stress triggers & Zen-Dao canons consolidated in one page' : '原厂硬件规格、极端压力开关、出厂三阶急救与禅道三经八典已汇通于专栏'}
+              </span>
+              <button type="button" class="btn-jump-to-friction px-3 py-1.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-500/40 text-xs font-serif-sc font-medium flex items-center gap-1.5 transition cursor-pointer">
+                <span>⚡</span>
+                <span>${isEn ? 'Open Complete Factory Mind Manual (Unified Page) →' : '进入原厂心理使用说明书 (一页统览) →'}</span>
+              </button>
             </div>
           </div>
         `;
         mfSection.style.display = 'block';
+
+        const jumpFricBtn = mfSection.querySelector ? mfSection.querySelector('.btn-jump-to-friction') : null;
+        if (jumpFricBtn && jumpFricBtn.addEventListener) {
+          jumpFricBtn.addEventListener('click', () => switchPrimaryView('view-friction'));
+        }
       } else {
         mfSection.innerHTML = '';
         mfSection.style.display = 'none';
@@ -3066,329 +3069,137 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     container.appendChild(specsCard);
 
-    // 2. Mind Manual Navigation Sub-tabs
-    const tabsWrapper = document.createElement('div');
-    tabsWrapper.className = 'flex flex-wrap items-center gap-2 border-b border-gray-800/80 pb-2.5';
-    const manualTabs = [
-      { id: 'canons', labelZh: '📜 八大经典经文细注', labelEn: '📜 Eight Canons Exegesis' },
-      { id: 'triggers', labelZh: '⚡ 极端压力触发开关', labelEn: '⚡ Stress Triggers & Red Lines' },
-      { id: 'protocols', labelZh: '🛡️ 出厂自救降维心法', labelEn: '🛡️ Emergency De-escalation' },
-      { id: 'habits', labelZh: '🌿 五行能量微习惯', labelEn: '🌿 5-Element Micro-Habits' },
-      { id: 'zendao', labelZh: '☸️ 禅道至高解脱专栏', labelEn: '☸️ Zen-Dao Sanctuary' }
-    ];
+    // 2. Unified Quick Anchor Navigation Bar (一页统览 · 锚点平滑导航)
+    const navAnchorsWrapper = document.createElement('div');
+    navAnchorsWrapper.className = 'flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-3 sticky top-0 bg-[#0c0e14]/90 backdrop-blur z-10';
+    navAnchorsWrapper.innerHTML = `
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" data-fric-anchor="fsec-canons" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-amber-950/40 text-amber-300 border-amber-500/50 hover:bg-amber-900/50 flex items-center gap-1.5 shadow-sm">
+          <span>☸️</span>
+          <span>${isEn ? 'Zen-Dao Trinity & 8 Canons' : '禅道三经与八典汇通'}</span>
+        </button>
+        <button type="button" data-fric-anchor="fsec-triggers" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-rose-950/30 text-rose-300 border-rose-500/40 hover:bg-rose-900/40 flex items-center gap-1.5">
+          <span>⚡</span>
+          <span>${isEn ? 'Stress Triggers & Red Lines' : '极端压力触发与红线'}</span>
+        </button>
+        <button type="button" data-fric-anchor="fsec-protocols" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-blue-950/30 text-blue-300 border-blue-500/40 hover:bg-blue-900/40 flex items-center gap-1.5">
+          <span>🛡️</span>
+          <span>${isEn ? 'Three-Tier Emergency Reset' : '出厂自救三阶降维心法'}</span>
+        </button>
+        <button type="button" data-fric-anchor="fsec-habits" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-emerald-950/30 text-emerald-300 border-emerald-500/40 hover:bg-emerald-900/40 flex items-center gap-1.5">
+          <span>🌿</span>
+          <span>${isEn ? '5-Element Micro-Habits' : '五行能量微习惯'}</span>
+        </button>
+      </div>
+      <span class="text-[10.5px] px-2.5 py-1 rounded-full bg-black/50 text-gray-400 font-mono border border-gray-800 hidden sm:inline-block">
+        ${isEn ? '📖 Single-Page Unified Manual' : '📖 一页统览 · 顺流阅读'}
+      </span>
+    `;
+    container.appendChild(navAnchorsWrapper);
 
-    manualTabs.forEach(t => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      const isZenTab = (selectedManualTab === 'zendao' || selectedManualTab === 'trinity' || selectedManualTab === 'zen');
-      const isActive = (t.id === 'zendao') ? isZenTab : (selectedManualTab === t.id);
-      btn.className = `px-3.5 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer ${
-        isActive
-          ? 'bg-rose-600/30 text-rose-300 border-rose-500/60 shadow-md shadow-rose-950/40'
-          : 'bg-black/40 text-gray-400 border-gray-800 hover:text-gray-200 hover:border-gray-700'
-      }`;
-      btn.textContent = isEn ? t.labelEn : t.labelZh;
+    navAnchorsWrapper.querySelectorAll('.fric-anchor-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        selectedManualTab = t.id;
-        renderFrictionView(pData, res, isEn);
+        const targetId = btn.getAttribute('data-fric-anchor');
+        const targetEl = document.getElementById(targetId);
+        if (targetEl && typeof targetEl.scrollIntoView === 'function') {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
       });
-      tabsWrapper.appendChild(btn);
     });
-    container.appendChild(tabsWrapper);
 
-    // Tab 1: Eight Canons Exegesis
-    if (selectedManualTab === 'canons') {
-      const canonsWrapper = document.createElement('div');
-      canonsWrapper.className = 'space-y-4';
-      canonsWrapper.innerHTML = `
-        <div class="flex items-center justify-between pb-1 border-b border-gray-800">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">📜</span>
-            <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
-              ${isEn ? 'Eight Classical Canons Scripture Manual & Factory Tuning' : '八大典籍正统经文细注与出厂心智调律'}
-            </h4>
-          </div>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-            ${isEn ? 'All 8 Ancient Canons' : '八典汇通'}
-          </span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          ${(mf.classicalCanonsManual || []).map(c => `
-            <div class="p-4 sm:p-5 rounded-xl border border-gray-800 bg-black/45 space-y-3 hover:border-amber-500/40 transition flex flex-col justify-between">
-              <div class="space-y-2.5">
-                <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
-                  <div>
-                    <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
-                      ${isEn ? c.canonNameEn : c.canonNameZh}
-                    </h5>
-                    <span class="text-[10px] text-gray-400 font-mono">${isEn ? c.dynastyEn : c.dynastyZh}</span>
-                  </div>
-                  <span class="chinese-seal text-[9px] py-0 border-amber-500/60 text-amber-300 font-serif-sc">
-                    ${isEn ? c.themeEn : c.themeZh}
-                  </span>
-                </div>
+    const manualBodyWrapper = document.createElement('div');
+    manualBodyWrapper.className = 'space-y-8 pt-2';
 
-                <!-- Scripture Quote -->
-                <div class="p-3 bg-amber-950/20 rounded-lg border-l-2 border-amber-400 font-serif-sc text-xs text-amber-200/95 italic leading-relaxed">
-                  ${isEn ? c.quoteEn : c.quoteZh}
-                </div>
+    // ==========================================
+    // 1. 🌟 禅道三经与八典经文汇通 · 心智解脱专栏 (Canons & Zen-Dao Sanctuary)
+    // ==========================================
+    const canonsSection = document.createElement('div');
+    canonsSection.id = 'fsec-canons';
+    canonsSection.className = 'space-y-6 scroll-mt-16';
 
-                <!-- Vernacular Modern Exegesis -->
-                <div class="p-2.5 rounded-lg bg-black/50 border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc">
-                  ${isEn ? c.vernacularEn : c.vernacularZh}
-                </div>
-              </div>
+    let zenHtml = '';
+    if (mf.zenDaoWisdom) {
+      const zd = mf.zenDaoWisdom;
+      const classics = [
+        { key: 'diamond', item: zd.diamond, icon: '💎', theme: 'border-amber-500/60 bg-amber-950/20 text-amber-300' },
+        { key: 'platform', item: zd.platform, icon: '🪞', theme: 'border-indigo-500/60 bg-indigo-950/20 text-indigo-300' },
+        { key: 'zhuangzi', item: zd.zhuangzi, icon: '🦋', theme: 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300' }
+      ];
 
-              <!-- Factory Tuning Habit -->
-              <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-800/50 text-xs text-emerald-200 leading-relaxed font-serif-sc mt-2">
-                ${isEn ? c.remedyEn : c.remedyZh}
-              </div>
+      const cardsHtml = classics.map(c => {
+        const it = c.item;
+        if (!it) return '';
+
+        const quotesList = it.quotes || [];
+        const quotesHtml = quotesList.map(q => `
+          <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 hover:border-amber-500/40 transition space-y-1.5 text-xs">
+            <div class="text-amber-200 font-serif-sc font-bold leading-relaxed">
+              ${isEn ? (q.verseEn || q.verse) : (q.verseZh || q.verse)}
             </div>
-          `).join('')}
-        </div>
-      `;
-      container.appendChild(canonsWrapper);
-    }
-
-    // Tab 2: Stress Triggers & Red Lines
-    if (selectedManualTab === 'triggers') {
-      const triggersWrapper = document.createElement('div');
-      triggersWrapper.className = 'space-y-4';
-      triggersWrapper.innerHTML = `
-        <div class="flex items-center justify-between pb-1 border-b border-gray-800">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">⚡</span>
-            <h4 class="text-sm sm:text-base font-bold text-rose-300 font-serif-sc">
-              ${isEn ? 'Extreme Stress Trigger Signatures & Cognitive Red Lines' : '极端压力触发开关与认知红线'}
-            </h4>
-          </div>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 font-mono border border-rose-500/30">
-            ${isEn ? '4 Signature Triggers' : '四大触发特征'}
-          </span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          ${(mf.stressTriggers || []).map(st => `
-            <div class="p-4 sm:p-5 rounded-xl border border-rose-900/50 bg-black/45 space-y-3 hover:border-rose-700/60 transition flex flex-col justify-between">
-              <div class="space-y-2.5">
-                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-xl">${st.icon}</span>
-                    <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-rose-300">
-                      ${isEn ? st.nameEn : st.nameZh}
-                    </h5>
-                  </div>
-                  <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-mono">
-                    ${isEn ? st.classicalSignEn : st.classicalSignZh}
-                  </span>
-                </div>
-
-                <!-- Cognitive Mechanism -->
-                <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">
-                  <span class="text-amber-300 font-semibold">${isEn ? 'Cognitive Loop: ' : '底层认知机制：'}</span>
-                  ${isEn ? st.mechanismEn : st.mechanismZh}
-                </p>
-              </div>
-
-              <!-- Absolute Red Line -->
-              <div class="p-3 rounded-lg bg-rose-950/30 border border-rose-600/60 text-xs text-rose-200 leading-relaxed font-serif-sc mt-2">
-                ${isEn ? st.redLineEn : st.redLineZh}
-              </div>
+            <div class="text-[10.5px] text-gray-400 text-right font-mono">
+              —— ${isEn ? (q.sourceEn || q.source) : (q.sourceZh || q.source)}
             </div>
-          `).join('')}
-        </div>
-      `;
-      container.appendChild(triggersWrapper);
-    }
-
-    // Tab 3: De-escalation Protocols & Somatic Reset
-    if (selectedManualTab === 'protocols') {
-      const protocolsWrapper = document.createElement('div');
-      protocolsWrapper.className = 'space-y-5';
-
-      // 3-Tier Master Protocols
-      protocolsWrapper.innerHTML = `
-        <div class="flex items-center justify-between pb-1 border-b border-gray-800">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">🛡️</span>
-            <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
-              ${isEn ? 'Three-Tier Factory Emergency De-escalation Master Protocols' : '出厂自救三阶战训降维心法 (终结内耗闭环)'}
-            </h4>
+            <div class="pt-1 border-t border-gray-800/60 text-gray-300 text-[11px] leading-relaxed">
+              <span class="text-amber-300/90 font-semibold">${isEn ? '💡 Mindset:' : '💡 洞见：'}</span>
+              ${isEn ? (q.insightEn || q.insight) : (q.insightZh || q.insight)}
+            </div>
+            <div class="text-emerald-300/90 text-[11px] leading-relaxed">
+              <span class="font-semibold">${isEn ? '🚀 Practice:' : '🚀 实操：'}</span>
+              ${isEn ? (q.practicalEn || q.practical) : (q.practicalZh || q.practical)}
+            </div>
           </div>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-            ${isEn ? '3 Emergency Tiers' : '三阶硬核自救'}
-          </span>
-        </div>
+        `).join('');
 
-        <div class="space-y-4">
-          ${(mf.deEscalationProtocols || []).map(dp => `
-            <div class="p-4 sm:p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/20 via-black/50 to-black/60 shadow-lg space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/30">
+        return `
+          <div class="p-4 sm:p-5 rounded-xl border ${c.theme.split(' ')[0]} bg-black/50 shadow-lg space-y-3.5 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
                 <div class="flex items-center space-x-2">
-                  <span class="text-xl">${dp.icon}</span>
+                  <span class="text-xl">${c.icon}</span>
                   <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
-                    ${isEn ? dp.levelEn : dp.levelZh}
+                    ${isEn ? (it.titleEn || it.title) : (it.titleZh || it.title)}
                   </h5>
                 </div>
-                <span class="text-[10.5px] text-amber-400 font-mono">
-                  ${isEn ? dp.principleEn : dp.principleZh}
-                </span>
+                <span class="chinese-seal text-[9px] py-0">${isEn ? (it.badgeEn || 'Classic Zen') : (it.badgeZh || '三教至理')}</span>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
-                ${((isEn ? dp.stepsEn : dp.stepsZh) || []).map(step => `
-                  <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc flex flex-col justify-between">
-                    <div>${step}</div>
-                  </div>
-                `).join('')}
+
+              <div class="p-3 bg-black/60 rounded-lg border-l-3 border-amber-400 font-serif-sc text-xs text-amber-200 font-semibold leading-relaxed">
+                “${isEn ? (it.mantraEn || it.mantra) : (it.mantraZh || it.mantra)}”
+              </div>
+
+              <div class="p-3 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
+                <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight:' : '微言大义与心智洞见：'}</span>
+                <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">${isEn ? (it.insightEn || it.insight) : (it.insightZh || it.insight)}</p>
+              </div>
+
+              <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 space-y-1">
+                <span class="text-xs font-bold text-emerald-300 block">🚀 ${isEn ? 'Modern Actionable Mindset:' : '现实处世与实操心法：'}</span>
+                <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${isEn ? (it.practicalEn || it.practical) : (it.practicalZh || it.practical)}</p>
               </div>
             </div>
-          `).join('')}
-        </div>
-      `;
-      container.appendChild(protocolsWrapper);
-    }
 
-    // Tab 4: Five Element Micro-Habits
-    if (selectedManualTab === 'habits') {
-      const habitsWrapper = document.createElement('div');
-      habitsWrapper.className = 'space-y-4';
-      habitsWrapper.innerHTML = `
-        <div class="flex items-center justify-between pb-1 border-b border-gray-800">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">🌿</span>
-            <h4 class="text-sm sm:text-base font-bold text-emerald-300 font-serif-sc">
-              ${isEn ? 'Daily Five-Element Energy Micro-Habits' : '每日五行能量微习惯与出厂调律'}
-            </h4>
-          </div>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 font-mono border border-emerald-500/30">
-            ${isEn ? '5 Elemental Rituals' : '五行微仪式'}
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          ${(mf.fiveElementMicroHabits || []).map(mh => `
-            <div class="p-4 sm:p-5 rounded-xl border ${mh.isPrimaryFavorable ? 'border-amber-500/70 bg-amber-950/20' : 'border-gray-800 bg-black/45'} space-y-3 hover:border-emerald-500/50 transition flex flex-col justify-between">
-              <div class="space-y-2.5">
-                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-xl">${mh.icon}</span>
-                    <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
-                      ${isEn ? mh.habitNameEn : mh.habitNameZh}
-                    </h5>
-                  </div>
-                  <span class="text-xs font-mono text-gray-400">
-                    ${isEn ? mh.durationEn : mh.durationZh}
+            ${quotesList.length > 0 ? `
+              <div class="mt-2 pt-3 border-t border-gray-800/80 space-y-2.5">
+                <div class="flex items-center justify-between text-xs font-bold text-amber-300">
+                  <span class="flex items-center gap-1">
+                    <span>📜</span>
+                    <span>${isEn ? 'Canonical Wisdom Anthology:' : '经典传世真言与心法集萃：'}</span>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
+                    ${quotesList.length} ${isEn ? 'Verses' : '则经文精髓'}
                   </span>
                 </div>
-
-                ${mh.isPrimaryFavorable ? `
-                  <div class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono inline-block">
-                    ${isEn ? '★ Primary Natal Alignment' : '★ 本命喜用首选微习惯'}
-                  </div>
-                ` : ''}
-
-                <div class="p-2.5 rounded-lg bg-black/60 border border-gray-800/80 text-xs text-gray-200 leading-relaxed font-serif-sc">
-                  <span class="text-emerald-300 font-semibold">${isEn ? 'Daily Ritual: ' : '能量仪式：'}</span>
-                  ${isEn ? mh.ritualEn : mh.ritualZh}
+                <div class="space-y-2 max-h-[480px] overflow-y-auto pr-1">
+                  ${quotesHtml}
                 </div>
               </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
 
-              <div class="p-2 rounded-lg bg-emerald-950/20 border border-emerald-900/40 text-[11px] text-emerald-300 leading-relaxed font-serif-sc mt-2">
-                <span class="font-bold">${isEn ? 'Metaphysical Potency: ' : '气机效力：'}</span>
-                ${isEn ? mh.potencyEn : mh.potencyZh}
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-      container.appendChild(habitsWrapper);
-    }
-
-    // Tab 5: Zen-Dao Trinity Sanctuary
-    if (selectedManualTab === 'zendao' || selectedManualTab === 'trinity' || selectedManualTab === 'zen') {
-      if (mf.zenDaoWisdom) {
-        const zd = mf.zenDaoWisdom;
-        const zenSection = document.createElement('div');
-        zenSection.className = 'p-5 sm:p-7 rounded-2xl border-2 border-amber-500/80 bg-gradient-to-b from-amber-950/40 via-black/85 to-stone-950/90 shadow-2xl space-y-5';
-
-        const classics = [
-          { key: 'diamond', item: zd.diamond, icon: '💎', theme: 'border-amber-500/60 bg-amber-950/20 text-amber-300' },
-          { key: 'platform', item: zd.platform, icon: '🪞', theme: 'border-indigo-500/60 bg-indigo-950/20 text-indigo-300' },
-          { key: 'zhuangzi', item: zd.zhuangzi, icon: '🦋', theme: 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300' }
-        ];
-
-        const cardsHtml = classics.map(c => {
-          const it = c.item;
-          if (!it) return '';
-
-          const quotesList = it.quotes || [];
-          const quotesHtml = quotesList.map(q => `
-            <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 hover:border-amber-500/40 transition space-y-1.5 text-xs">
-              <div class="text-amber-200 font-serif-sc font-bold leading-relaxed">
-                ${isEn ? (q.verseEn || q.verse) : (q.verseZh || q.verse)}
-              </div>
-              <div class="text-[10.5px] text-gray-400 text-right font-mono">
-                —— ${isEn ? (q.sourceEn || q.source) : (q.sourceZh || q.source)}
-              </div>
-              <div class="pt-1 border-t border-gray-800/60 text-gray-300 text-[11px] leading-relaxed">
-                <span class="text-amber-300/90 font-semibold">${isEn ? '💡 Mindset:' : '💡 洞见：'}</span>
-                ${isEn ? (q.insightEn || q.insight) : (q.insightZh || q.insight)}
-              </div>
-              <div class="text-emerald-300/90 text-[11px] leading-relaxed">
-                <span class="font-semibold">${isEn ? '🚀 Practice:' : '🚀 实操：'}</span>
-                ${isEn ? (q.practicalEn || q.practical) : (q.practicalZh || q.practical)}
-              </div>
-            </div>
-          `).join('');
-
-          return `
-            <div class="p-4 sm:p-5 rounded-xl border ${c.theme.split(' ')[0]} bg-black/50 shadow-lg space-y-3.5 flex flex-col justify-between">
-              <div class="space-y-3">
-                <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-xl">${c.icon}</span>
-                    <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
-                      ${isEn ? (it.titleEn || it.title) : (it.titleZh || it.title)}
-                    </h5>
-                  </div>
-                  <span class="chinese-seal text-[9px] py-0">${isEn ? (it.badgeEn || 'Classic Zen') : (it.badgeZh || '三教至理')}</span>
-                </div>
-
-                <div class="p-3 bg-black/60 rounded-lg border-l-3 border-amber-400 font-serif-sc text-xs text-amber-200 font-semibold leading-relaxed">
-                  “${isEn ? (it.mantraEn || it.mantra) : (it.mantraZh || it.mantra)}”
-                </div>
-
-                <div class="p-3 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
-                  <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight:' : '微言大义与心智洞见：'}</span>
-                  <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">${isEn ? (it.insightEn || it.insight) : (it.insightZh || it.insight)}</p>
-                </div>
-
-                <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 space-y-1">
-                  <span class="text-xs font-bold text-emerald-300 block">🚀 ${isEn ? 'Modern Actionable Mindset:' : '现实处世与实操心法：'}</span>
-                  <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${isEn ? (it.practicalEn || it.practical) : (it.practicalZh || it.practical)}</p>
-                </div>
-              </div>
-
-              ${quotesList.length > 0 ? `
-                <div class="mt-2 pt-3 border-t border-gray-800/80 space-y-2.5">
-                  <div class="flex items-center justify-between text-xs font-bold text-amber-300">
-                    <span class="flex items-center gap-1">
-                      <span>📜</span>
-                      <span>${isEn ? 'Canonical Wisdom Anthology:' : '经典传世真言与心法集萃：'}</span>
-                    </span>
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-                      ${quotesList.length} ${isEn ? 'Verses' : '则经文精髓'}
-                    </span>
-                  </div>
-                  <div class="space-y-2 max-h-[480px] overflow-y-auto pr-1">
-                    ${quotesHtml}
-                  </div>
-                </div>
-              ` : ''}
-            </div>
-          `;
-        }).join('');
-
-        zenSection.innerHTML = `
+      zenHtml = `
+        <div class="p-5 sm:p-7 rounded-2xl border-2 border-amber-500/80 bg-gradient-to-b from-amber-950/40 via-black/85 to-stone-950/90 shadow-2xl space-y-5">
           <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-amber-500/40">
             <div class="flex items-center space-x-2.5">
               <span class="chinese-seal text-xs py-0.5">${isEn ? 'ZEN & DAO TRINITY' : '☸️ 禅道心智'}</span>
@@ -3410,10 +3221,251 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-1">
             ${cardsHtml}
           </div>
-        `;
-        container.appendChild(zenSection);
-      }
+        </div>
+      `;
     }
+
+    const canonsCardsHtml = (mf.classicalCanonsManual || []).map(c => `
+      <div class="p-4 sm:p-5 rounded-xl border border-gray-800 bg-black/45 space-y-3 hover:border-amber-500/40 transition flex flex-col justify-between">
+        <div class="space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
+            <div>
+              <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+                ${isEn ? c.canonNameEn : c.canonNameZh}
+              </h5>
+              <span class="text-[10px] text-gray-400 font-mono">${isEn ? c.dynastyEn : c.dynastyZh}</span>
+            </div>
+            <span class="chinese-seal text-[9px] py-0 border-amber-500/60 text-amber-300 font-serif-sc">
+              ${isEn ? c.themeEn : c.themeZh}
+            </span>
+          </div>
+
+          <div class="p-3 bg-amber-950/20 rounded-lg border-l-2 border-amber-400 font-serif-sc text-xs text-amber-200/95 italic leading-relaxed">
+            ${isEn ? c.quoteEn : c.quoteZh}
+          </div>
+
+          <div class="p-2.5 rounded-lg bg-black/50 border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc">
+            ${isEn ? c.vernacularEn : c.vernacularZh}
+          </div>
+        </div>
+
+        <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-800/50 text-xs text-emerald-200 leading-relaxed font-serif-sc mt-2">
+          ${isEn ? c.remedyEn : c.remedyZh}
+        </div>
+      </div>
+    `).join('');
+
+    canonsSection.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/40">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">☸️</span>
+          <div>
+            <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+              <span>${isEn ? 'One: Zen-Dao Trinity & Eight Classical Canons Sanctuary' : '一、禅道三经与八典经文汇通 · 心智解脱专栏'}</span>
+            </h4>
+            <p class="text-xs text-gray-400 mt-0.5">
+              ${isEn ? 'Diamond, Platform & Zhuangzi crowned at top, unified with Eight Classical Canons exegesis' : '金刚经破相、坛经离境、庄子游心置顶尊崇 · 融通八大典籍正统经文出厂调律'}
+            </p>
+          </div>
+        </div>
+        <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">
+          ${isEn ? 'CANONS SANCTUARY' : '经文汇通'}
+        </span>
+      </div>
+
+      <!-- Crowned Pinned Section: Zen-Dao Trinity Wisdom -->
+      ${zenHtml}
+
+      <!-- Eight Classical Canons Scripture Manual -->
+      <div class="space-y-3 pt-2">
+        <div class="flex items-center justify-between pb-1 border-b border-gray-800">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">📜</span>
+            <h5 class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc">
+              ${isEn ? 'Eight Classical Canons Scripture Manual & Factory Tuning' : '八大典籍正统经文细注与出厂心智调律'}
+            </h5>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
+            ${isEn ? 'All 8 Ancient Canons' : '八典全息'}
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          ${canonsCardsHtml}
+        </div>
+      </div>
+    `;
+    manualBodyWrapper.appendChild(canonsSection);
+
+    // ==========================================
+    // 2. ⚡ 极端压力触发开关与认知红线
+    // ==========================================
+    const triggersSection = document.createElement('div');
+    triggersSection.id = 'fsec-triggers';
+    triggersSection.className = 'space-y-4 pt-4 border-t border-gray-800/80 scroll-mt-16';
+    triggersSection.innerHTML = `
+      <div class="flex items-center justify-between pb-2 border-b border-rose-900/40">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">⚡</span>
+          <div>
+            <h4 class="text-sm sm:text-base font-bold text-rose-300 font-serif-sc">
+              ${isEn ? 'Two: Extreme Stress Trigger Signatures & Cognitive Red Lines' : '二、极端压力触发开关与认知绝对红线'}
+            </h4>
+            <p class="text-xs text-gray-400 mt-0.5">
+              ${isEn ? 'Diagnosing subconscious overload traps and enforcing non-negotiable operational boundaries' : '精准把脉四类下意识过载陷阱 · 设立不可动摇的出厂防御底线'}
+            </p>
+          </div>
+        </div>
+        <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 font-mono border border-rose-500/30">
+          ${isEn ? '4 Signature Triggers' : '四大触发特征'}
+        </span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        ${(mf.stressTriggers || []).map(st => `
+          <div class="p-4 sm:p-5 rounded-xl border border-rose-900/50 bg-black/45 space-y-3 hover:border-rose-700/60 transition flex flex-col justify-between">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xl">${st.icon}</span>
+                  <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-rose-300">
+                    ${isEn ? st.nameEn : st.nameZh}
+                  </h5>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 font-mono">
+                  ${isEn ? st.classicalSignEn : st.classicalSignZh}
+                </span>
+              </div>
+
+              <!-- Cognitive Mechanism -->
+              <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">
+                <span class="text-amber-300 font-semibold">${isEn ? 'Cognitive Loop: ' : '底层认知机制：'}</span>
+                ${isEn ? st.mechanismEn : st.mechanismZh}
+              </p>
+            </div>
+
+            <!-- Absolute Red Line -->
+            <div class="p-3 rounded-lg bg-rose-950/30 border border-rose-600/60 text-xs text-rose-200 leading-relaxed font-serif-sc mt-2">
+              ${isEn ? st.redLineEn : st.redLineZh}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    manualBodyWrapper.appendChild(triggersSection);
+
+    // ==========================================
+    // 3. 🛡️ 出厂自救三阶战训降维心法
+    // ==========================================
+    const protocolsSection = document.createElement('div');
+    protocolsSection.id = 'fsec-protocols';
+    protocolsSection.className = 'space-y-5 pt-4 border-t border-gray-800/80 scroll-mt-16';
+    protocolsSection.innerHTML = `
+      <div class="flex items-center justify-between pb-2 border-b border-amber-500/30">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🛡️</span>
+          <div>
+            <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
+              ${isEn ? 'Three: Three-Tier Factory Emergency De-escalation Master Protocols' : '三、出厂自救三阶战训降维心法 (终结内耗闭环)'}
+            </h4>
+            <p class="text-xs text-gray-400 mt-0.5">
+              ${isEn ? 'From immediate somatic vagal reboot to cognitive task separation and decisive outward delivery' : '从3分钟生理硬重启、认知解耦防线到调转利刃向外交付 · 行动是内耗的唯一物理溶剂'}
+            </p>
+          </div>
+        </div>
+        <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
+          ${isEn ? '3 Emergency Tiers' : '三阶硬核自救'}
+        </span>
+      </div>
+
+      <div class="space-y-4">
+        ${(mf.deEscalationProtocols || []).map(dp => `
+          <div class="p-4 sm:p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/20 via-black/50 to-black/60 shadow-lg space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/30">
+              <div class="flex items-center space-x-2">
+                <span class="text-xl">${dp.icon}</span>
+                <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+                  ${isEn ? dp.levelEn : dp.levelZh}
+                </h5>
+              </div>
+              <span class="text-[10.5px] text-amber-400 font-mono">
+                ${isEn ? dp.principleEn : dp.principleZh}
+              </span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
+              ${((isEn ? dp.stepsEn : dp.stepsZh) || []).map(step => `
+                <div class="p-3 bg-black/60 rounded-xl border border-gray-800/80 text-xs text-gray-300 leading-relaxed font-serif-sc flex flex-col justify-between">
+                  <div>${step}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    manualBodyWrapper.appendChild(protocolsSection);
+
+    // ==========================================
+    // 4. 🌿 每日五行能量微习惯与出厂调律
+    // ==========================================
+    const habitsSection = document.createElement('div');
+    habitsSection.id = 'fsec-habits';
+    habitsSection.className = 'space-y-4 pt-4 border-t border-gray-800/80 scroll-mt-16';
+    habitsSection.innerHTML = `
+      <div class="flex items-center justify-between pb-2 border-b border-emerald-900/40">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🌿</span>
+          <div>
+            <h4 class="text-sm sm:text-base font-bold text-emerald-300 font-serif-sc">
+              ${isEn ? 'Four: Daily Five-Element Energy Micro-Habits' : '四、每日五行能量微习惯与出厂调律'}
+            </h4>
+            <p class="text-xs text-gray-400 mt-0.5">
+              ${isEn ? 'Grounding circadian rhythms and balancing elemental qi with 3~5 minute daily micro-rituals' : '每天3~5分钟微仪式 · 借木火土金水五气调和身心 · 稳固日常心智底盘'}
+            </p>
+          </div>
+        </div>
+        <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 font-mono border border-emerald-500/30">
+          ${isEn ? '5 Elemental Rituals' : '五行微仪式'}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        ${(mf.fiveElementMicroHabits || []).map(mh => `
+          <div class="p-4 sm:p-5 rounded-xl border ${mh.isPrimaryFavorable ? 'border-amber-500/70 bg-amber-950/20' : 'border-gray-800 bg-black/45'} space-y-3 hover:border-emerald-500/50 transition flex flex-col justify-between">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xl">${mh.icon}</span>
+                  <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+                    ${isEn ? mh.habitNameEn : mh.habitNameZh}
+                  </h5>
+                </div>
+                <span class="text-xs font-mono text-gray-400">
+                  ${isEn ? mh.durationEn : mh.durationZh}
+                </span>
+              </div>
+
+              ${mh.isPrimaryFavorable ? `
+                <div class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono inline-block">
+                  ${isEn ? '★ Primary Natal Alignment' : '★ 本命喜用首选微习惯'}
+                </div>
+              ` : ''}
+
+              <div class="p-2.5 rounded-lg bg-black/60 border border-gray-800/80 text-xs text-gray-200 leading-relaxed font-serif-sc">
+                <span class="text-emerald-300 font-semibold">${isEn ? 'Daily Ritual: ' : '能量仪式：'}</span>
+                ${isEn ? mh.ritualEn : mh.ritualZh}
+              </div>
+            </div>
+
+            <div class="p-2 rounded-lg bg-emerald-950/20 border border-emerald-900/40 text-[11px] text-emerald-300 leading-relaxed font-serif-sc mt-2">
+              <span class="font-bold">${isEn ? 'Metaphysical Potency: ' : '气机效力：'}</span>
+              ${isEn ? mh.potencyEn : mh.potencyZh}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    manualBodyWrapper.appendChild(habitsSection);
+
+    container.appendChild(manualBodyWrapper);
   }
 
   // Render Classical Literature Modules (Five Canons Integration)
@@ -4836,11 +4888,13 @@ document.addEventListener('DOMContentLoaded', () => {
       { id: 'ecosystems', labelZh: '💼 组织生态位与反内耗归因', labelEn: '💼 Workplace Ecosystem Diagnostic' }
     ];
 
+    const curResTab = (typeof window !== 'undefined' && window.selectedResonanceTab) || selectedResonanceTab;
+
     tabs.forEach(t => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      const isGeographic = (selectedResonanceTab === 'directions' || selectedResonanceTab === 'geographic');
-      const isActive = (t.id === 'directions' || t.id === 'geographic') ? isGeographic : (selectedResonanceTab === t.id);
+      const isGeographic = (curResTab === 'directions' || curResTab === 'geographic');
+      const isActive = (t.id === 'directions' || t.id === 'geographic') ? isGeographic : (curResTab === t.id);
       btn.className = `px-3.5 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer ${
         isActive
           ? 'bg-blue-600/30 text-blue-300 border-blue-500/60 shadow-md shadow-blue-950/40'
@@ -4849,6 +4903,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.textContent = isEn ? t.labelEn : t.labelZh;
       btn.addEventListener('click', () => {
         selectedResonanceTab = t.id;
+        if (typeof window !== 'undefined') window.selectedResonanceTab = t.id;
         renderEcologicalResonance(res, luckRes, isEn);
       });
       tabsWrapper.appendChild(btn);
@@ -4856,7 +4911,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.appendChild(tabsWrapper);
 
     // Tab 1: Geographic Directions
-    if (selectedResonanceTab === 'directions' || selectedResonanceTab === 'geographic') {
+    if (curResTab === 'directions' || curResTab === 'geographic') {
       const geoWrapper = document.createElement('div');
       geoWrapper.className = 'space-y-4';
 
@@ -4909,11 +4964,38 @@ document.addEventListener('DOMContentLoaded', () => {
           `).join('')}
         </div>
       `;
+
+      // Cross-View Portal Bridge to Spatial Feng Shui Guide
+      const fengshuiBridge = document.createElement('div');
+      fengshuiBridge.className = 'mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-950/30 via-black/50 to-stone-900/40 border border-amber-500/40 flex flex-wrap items-center justify-between gap-3 shadow-lg';
+      fengshuiBridge.innerHTML = `
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl">🧭</span>
+          <div>
+            <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+              ${isEn ? 'Spatial Feng Shui & Current Residence City Guidance' : '空间风水指南 · 当前居住城市与室内外气机调理'}
+            </h5>
+            <p class="text-[11px] text-gray-400 mt-0.5">
+              ${isEn ? 'Evaluate geographic five-element affinity of your residence city and deploy classical space remedies' : '评估当前居住城市地缘五行契合度 · 延年位聚财阵、龙龟化煞、太极缺角等实操十策'}
+            </p>
+          </div>
+        </div>
+        <button type="button" class="btn-bridge-to-fengshui px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-xs font-serif-sc font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+          <span>🧭</span>
+          <span>${isEn ? 'Open Spatial Feng Shui Guide →' : '进入空间风水指南 →'}</span>
+        </button>
+      `;
+      geoWrapper.appendChild(fengshuiBridge);
+      const fsBtn = fengshuiBridge.querySelector ? fengshuiBridge.querySelector('.btn-bridge-to-fengshui') : null;
+      if (fsBtn && fsBtn.addEventListener) {
+        fsBtn.addEventListener('click', () => switchPrimaryView('view-fengshui'));
+      }
+
       container.appendChild(geoWrapper);
     }
 
     // Tab 2: Workplace Ecosystems
-    if (selectedResonanceTab === 'ecosystems') {
+    if (curResTab === 'ecosystems') {
       const ecoSysWrapper = document.createElement('div');
       ecoSysWrapper.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
 
@@ -4964,6 +5046,33 @@ document.addEventListener('DOMContentLoaded', () => {
           ecoSysWrapper.appendChild(card);
         });
       }
+
+      // Cross-View Portal Bridge to Career & Wealth Trajectory
+      const careerBridge = document.createElement('div');
+      careerBridge.className = 'mt-4 p-4 rounded-xl bg-gradient-to-r from-blue-950/30 via-black/50 to-indigo-950/40 border border-blue-500/40 flex flex-wrap items-center justify-between gap-3 shadow-lg col-span-1 md:col-span-2';
+      careerBridge.innerHTML = `
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl">💼</span>
+          <div>
+            <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-blue-300">
+              ${isEn ? 'Career & Wealth Trajectory · Workplace Survival & Four Archetypes' : '职场打工人破局与财运事业全相推演 · 四大生态位深度定向'}
+            </h5>
+            <p class="text-[11px] text-gray-400 mt-0.5">
+              ${isEn ? 'Managing up strategies, peer collaboration firewalls, and direct vs indirect wealth cycles' : '文职/武职/技术/高管四大职能匹配 · 向上管理4大话术、同僚防火墙与正偏财周期'}
+            </p>
+          </div>
+        </div>
+        <button type="button" class="btn-bridge-to-career px-3.5 py-1.5 rounded-xl bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/50 text-xs font-serif-sc font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+          <span>💼</span>
+          <span>${isEn ? 'Open Career Trajectory View →' : '进入职场事业推演 →'}</span>
+        </button>
+      `;
+      ecoSysWrapper.appendChild(careerBridge);
+      const crBtn = careerBridge.querySelector ? careerBridge.querySelector('.btn-bridge-to-career') : null;
+      if (crBtn && crBtn.addEventListener) {
+        crBtn.addEventListener('click', () => switchPrimaryView('view-career'));
+      }
+
       container.appendChild(ecoSysWrapper);
     }
   }

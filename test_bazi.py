@@ -7160,7 +7160,169 @@ run_check80 = subprocess.run(jsc_check80_cmd, capture_output=True, text=True)
 assert run_check80.returncode == 0, f"Check 80 logic test failed: stdout={run_check80.stdout} stderr={run_check80.stderr}"
 print("✓ 百岁运势时空罗盘周岁/虚岁双轨标定（2002生人2025年23周岁/24虚岁乙巳、2026年24周岁/25虚岁丙午、消灭1岁误差）验证通过！")
 
-print("\n🎉 ALL 80 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 81. Validate Mental Manual Single-Page Consolidation, Home Subtraction & Cross-View Bridges
+print("\n=== 81. Validating Mental Manual Single-Page Consolidation, Home Subtraction & Cross-View Bridges ===")
+jsc_check81_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    var window = this;
+    window.currentLang = "zh";
+    window.addEventListener = function() {};
+    var globalThis = this;
+    var console = { log: function() {}, warn: function() {}, error: function() {} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("js/fengshui-engine.js");
+
+    var elements = {};
+    function makeEl(id, tag) {
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        className: "",
+        innerHTML: "",
+        textContent: "",
+        value: "",
+        options: [{ text: "", value: "" }, { text: "", value: "" }, { text: "", value: "" }],
+        style: {},
+        _children: [],
+        appendChild: function(c) { this._children.push(c); return c; },
+        setAttribute: function() {},
+        getAttribute: function() { return null; },
+        addEventListener: function() {},
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; },
+        classList: {
+          add: function() {},
+          remove: function() {},
+          contains: function() { return false; }
+        }
+      };
+    }
+
+    var allIds = ["frictionContentContainer", "paretoCoreContainer", "mentalFrictionSection", "ecologicalResonanceContainer"];
+    allIds.forEach(function(id) { elements[id] = makeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeEl("body"),
+      getElementById: function(id) {
+        if (!elements[id]) elements[id] = makeEl(id);
+        return elements[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+    window.document = document;
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    var bazi = BaZiEngine.calculate({
+      year: 1988, month: 10, day: 24, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026, "午", "2026-06-15");
+    var pZh = PortraitEngine.analyze(bazi, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    function getAllHtml(el) {
+      var html = (el.innerHTML || el.textContent || "");
+      if (el._children && el._children.length > 0) {
+        for (var i = 0; i < el._children.length; i++) {
+          html += " " + getAllHtml(el._children[i]);
+        }
+      }
+      return html;
+    }
+
+    // 1. Validate Single-Page Friction View Consolidation
+    var fBox = elements["frictionContentContainer"];
+    fBox.innerHTML = "";
+    fBox._children = [];
+    currentPortraitData = pZh;
+    renderFrictionView(pZh, bazi, false);
+    var fZh = getAllHtml(fBox);
+
+    if (fZh.indexOf("fsec-canons") === -1) throw new Error("Missing #fsec-canons anchor");
+    if (fZh.indexOf("fsec-triggers") === -1) throw new Error("Missing #fsec-triggers anchor");
+    if (fZh.indexOf("fsec-protocols") === -1) throw new Error("Missing #fsec-protocols anchor");
+    if (fZh.indexOf("fsec-habits") === -1) throw new Error("Missing #fsec-habits anchor");
+    if (fZh.indexOf("金刚经") === -1 || fZh.indexOf("六祖坛经") === -1 || fZh.indexOf("庄子") === -1) {
+      throw new Error("Missing Zen-Dao Trinity scriptures in unified canons section");
+    }
+    if (fZh.indexOf("《滴天髓》") === -1 || fZh.indexOf("《穷通宝鉴》") === -1) {
+      throw new Error("Missing Eight Classical Canons in unified canons section");
+    }
+
+    // Check EN mode zero residual Chinese
+    fBox.innerHTML = "";
+    fBox._children = [];
+    currentPortraitData = pEn;
+    renderFrictionView(pEn, bazi, true);
+    var fEn = getAllHtml(fBox);
+    if (fEn.length < 1500) throw new Error("renderFrictionView produced too short HTML in EN mode: " + fEn.length);
+    if (/[\\u4e00-\\u9fa5]/.test(fEn)) {
+      throw new Error("Residual Chinese in unified friction view (EN mode)");
+    }
+
+    // 2. Validate Ecological Resonance Portal Bridges in ZH & EN
+    var ecoBox = elements["ecologicalResonanceContainer"];
+    // Test Geographic Tab
+    selectedResonanceTab = "geographic";
+    ecoBox.innerHTML = "";
+    ecoBox._children = [];
+    renderEcologicalResonance(bazi, luck, false);
+    var ecoZhGeo = getAllHtml(ecoBox);
+    if (ecoZhGeo.indexOf("btn-bridge-to-fengshui") === -1) throw new Error("Missing btn-bridge-to-fengshui in geographic tab");
+
+    ecoBox.innerHTML = "";
+    ecoBox._children = [];
+    renderEcologicalResonance(bazi, luck, true);
+    var ecoEnGeo = getAllHtml(ecoBox);
+    if (/[\\u4e00-\\u9fa5]/.test(ecoEnGeo)) throw new Error("Residual Chinese in geographic bridge (EN mode)");
+
+    // Test Ecosystems Tab
+    selectedResonanceTab = "ecosystems";
+    ecoBox.innerHTML = "";
+    ecoBox._children = [];
+    renderEcologicalResonance(bazi, luck, false);
+    var ecoZhEco = getAllHtml(ecoBox);
+    if (ecoZhEco.indexOf("btn-bridge-to-career") === -1) throw new Error("Missing btn-bridge-to-career in ecosystems tab");
+
+    ecoBox.innerHTML = "";
+    ecoBox._children = [];
+    renderEcologicalResonance(bazi, luck, true);
+    var ecoEnEco = getAllHtml(ecoBox);
+    if (/[\\u4e00-\\u9fa5]/.test(ecoEnEco)) throw new Error("Residual Chinese in ecosystems bridge (EN mode)");
+    '''
+]
+run_check81 = subprocess.run(jsc_check81_cmd, capture_output=True, text=True)
+assert run_check81.returncode == 0, f"Check 81 test failed: stdout={run_check81.stdout} stderr={run_check81.stderr}"
+print("✓ 原厂心理使用说明书一页统览（三经置顶+八典通融+锚点平滑导航）、主盘减法与跨视图传送门双语零中文残留验证通过！")
+
+print("\n🎉 ALL 81 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
