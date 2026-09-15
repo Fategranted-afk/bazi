@@ -6044,6 +6044,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3 class="text-base font-bold font-serif-sc text-purple-300 mt-1">
                   ${isEn ? `Hexagram ${htHex.number}: ${htHex.nameEn}` : `第${htHex.number}卦 · ${htHex.nameZh}`}
                 </h3>
+                <p class="text-[10.5px] font-mono text-purple-300/80 mt-0.5">
+                  ${isEn ? (ht.derivationRuleEn || '') : (ht.derivationRuleZh || '')}
+                </p>
               </div>
               <span class="px-2 py-0.5 rounded text-[10px] font-bold ${hexData.activeStage === 'houTian' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40' : 'bg-gray-800 text-gray-400'}">
                 ${isEn ? ht.ageSpanEn : ht.ageSpanZh}

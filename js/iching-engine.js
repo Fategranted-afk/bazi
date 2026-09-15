@@ -512,23 +512,57 @@ class IChingEngine {
     const xtLowerTri = isYangMaleOrYinFemale ? diTri : tianTri;
     const xianTianBinary = xtLowerTri.binary.concat(xtUpperTri.binary);
 
-    // 八卦相荡成后天卦（先天卦和后天卦是反的）：
-    // 阳男阴女：地数在上卦，天数在下卦
-    // 阴男阳女：天数在上卦，地数在下卦
-    const htUpperTri = isYangMaleOrYinFemale ? diTri : tianTri;
-    const htLowerTri = isYangMaleOrYinFemale ? tianTri : diTri;
-    const houTianBinary = htLowerTri.binary.concat(htUpperTri.binary);
-
     const xianTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(xianTianBinary) : null;
     const xianTianTJ = (xianTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(xianTianHex.number) : null;
-
-    const houTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(houTianBinary) : null;
-    const houTianTJ = (houTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(houTianHex.number) : null;
 
     // 阳爻管9年，阴爻管6年
     let runningAgeXT = 0;
     const posNamesZh = ['初', '二', '三', '四', '五', '上'];
     const posNamesEn = ['1st (Initial)', '2nd', '3rd', '4th', '5th', '6th (Top)'];
+
+    // 关键！从先天卦计算“后天卦” - 《河洛理数》/《天纪》“由体起用，以时剥换”：
+    // 根据出生时辰地支锚定本命基准时爻（元堂基准爻）：
+    // 子时、午时 = 初爻 (1)
+    // 丑时、未时 = 二爻 (2)
+    // 寅时、申时 = 三爻 (3)
+    // 卯时、酉时 = 四爻 (4)
+    // 辰时、戌时 = 五爻 (5)
+    // 巳时、亥时 = 上爻 (6)
+    // 直接变爻法（剥换）：将先天卦对应时爻阴阳反转（阳变阴，阴变阳），从而演化为后天卦。
+    const hourBranch = (p && p.hour && p.hour.branch) || '子';
+    const HOUR_BRANCH_LINE_MAP = {
+      '子': 1, '午': 1,
+      '丑': 2, '未': 2,
+      '寅': 3, '申': 3,
+      '卯': 4, '酉': 4,
+      '辰': 5, '戌': 5,
+      '巳': 6, '亥': 6
+    };
+    const hourLinePos = HOUR_BRANCH_LINE_MAP[hourBranch] || 1;
+    const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+    const hourBranchEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(hourBranch, 'en').split(' ')[0] : (BRANCH_EN_MAP[hourBranch] || 'Zi');
+
+    const houTianBinary = [...xianTianBinary];
+    houTianBinary[hourLinePos - 1] = 1 - houTianBinary[hourLinePos - 1];
+
+    const houTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(houTianBinary) : null;
+    const houTianTJ = (houTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(houTianHex.number) : null;
+
+    // 提取后天卦上卦与下卦
+    const findTriByBinary = (bin) => {
+      const found = Object.values(this.LUO_SHU_TRIGRAMS).find(t =>
+        t.binary[0] === bin[0] && t.binary[1] === bin[1] && t.binary[2] === bin[2]
+      );
+      if (found) return found;
+      return {
+        nameZh: '乾',
+        natureZh: '天',
+        nameEn: 'Heaven',
+        binary: bin
+      };
+    };
+    const htLowerTri = findTriByBinary(houTianBinary.slice(0, 3));
+    const htUpperTri = findTriByBinary(houTianBinary.slice(3, 6));
 
     const xianTianLines = xianTianBinary.map((nature, idx) => {
       const pos = idx + 1;
@@ -616,7 +650,6 @@ class IChingEngine {
     const STEM_LIST = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
     const BRANCH_LIST = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
     const STEM_EN_MAP = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
-    const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
 
     const annualSIdx = (effSelectedYear - 4 + 60000) % 10;
     const annualBIdx = (effSelectedYear - 4 + 60000) % 12;
@@ -837,7 +870,12 @@ class IChingEngine {
         ageSpanZh: `${xianTianTotalYears + 1}~${runningAgeHT}岁`,
         ageSpanEn: `Ages ${xianTianTotalYears + 1}-${runningAgeHT}`,
         upperTrigram: htUpperTri,
-        lowerTrigram: htLowerTri
+        lowerTrigram: htLowerTri,
+        hourBranch,
+        hourBranchEn,
+        hourLinePos,
+        derivationRuleZh: `由体起用 · 以时剥换（${hourBranch}时值第${posNamesZh[hourLinePos - 1]}爻）· 先天第${posNamesZh[hourLinePos - 1]}爻${xianTianBinary[hourLinePos - 1] === 1 ? '阳变阴' : '阴变阳'}成后天【${houTianHex ? houTianHex.nameZh : ''}】`,
+        derivationRuleEn: `Time-Based Line Mutation (${hourBranchEn} Hour at Line ${hourLinePos}): Line ${hourLinePos} Inverted -> Later Heaven [${houTianHex ? houTianHex.nameEn : ''}]`
       },
       zhiNian: {
         year: effSelectedYear,
