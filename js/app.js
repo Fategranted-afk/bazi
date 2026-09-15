@@ -978,7 +978,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const userBYear = (result.input && result.input.year) || result.birthYear || result.year || 1990;
         const realCurrentAge = Math.max(1, Math.abs(currentCalYear - userBYear));
-        activeChronoAge = realCurrentAge;
+        const curChronItem = (result._timelineCache && result._timelineCache.length > 0)
+          ? result._timelineCache.find(d => d.year === currentCalYear)
+          : null;
+        activeChronoAge = curChronItem ? curChronItem.age : Math.max(1, Math.min(100, currentCalYear - userBYear + 1));
         if (!fourPillarsActiveAge || fourPillarsActiveAge < 1 || fourPillarsActiveAge > 100) {
           fourPillarsActiveAge = realCurrentAge;
         }
@@ -9162,8 +9165,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const isEn = (currentLang === 'en');
     const birthYear = (bazi.input && bazi.input.year) || bazi.birthYear || bazi.year || 1990;
     const currentYear = new Date().getFullYear();
-    const currentAge = Math.max(1, Math.min(100, Math.abs(currentYear - birthYear)));
-    activeChronoAge = currentAge;
+    const curTimelineItem = (chronoTimelineData && chronoTimelineData.length > 0)
+      ? (chronoTimelineData.find(d => d.year === currentYear) || chronoTimelineData[0])
+      : null;
+    activeChronoAge = curTimelineItem ? curTimelineItem.age : Math.max(1, Math.min(100, currentYear - birthYear + 1));
 
     const slider = document.getElementById('chronoAgeSlider');
     if (slider) {
@@ -9213,7 +9218,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const jumpCur = document.getElementById('chronoJumpCurrent');
     if (jumpCur && !jumpCur._hasListener) {
       jumpCur._hasListener = true;
-      jumpCur.addEventListener('click', () => jumpToAge(currentAge));
+      jumpCur.addEventListener('click', () => {
+        const cur = (chronoTimelineData && chronoTimelineData.length > 0)
+          ? (chronoTimelineData.find(d => d.year === currentYear) || chronoTimelineData[0])
+          : null;
+        if (cur) jumpToAge(cur.age);
+      });
     }
 
     const jumpGold = document.getElementById('chronoJumpGolden');
@@ -9341,11 +9351,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const item = chronoTimelineData[age - 1];
     if (!item) return;
 
+    const realAge = (item.realAge !== undefined) ? item.realAge : (item.age - 1);
+    const nomAge = item.nominalAge || item.age;
+
     const badge = document.getElementById('chronoAgeValueBadge');
     if (badge) {
       badge.textContent = isEn
-        ? `Age ${item.age} (${item.year} ${item.ganZhiEn})`
-        : `${item.age} 岁 (${item.year} ${item.ganZhi}年)`;
+        ? (realAge === 0
+            ? `Age 0 (Nominal 1) · ${item.year} ${item.ganZhiEn}`
+            : `Age ${realAge} (Nominal ${nomAge}) · ${item.year} ${item.ganZhiEn}`)
+        : (realAge === 0
+            ? `0 岁初生 (虚岁 1) · ${item.year} ${item.ganZhi}年`
+            : `${realAge} 岁 (虚岁 ${nomAge}) · ${item.year} ${item.ganZhi}年`);
     }
 
     const card = document.getElementById('chronoYearCard');
@@ -9363,11 +9380,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const godText = isEn ? item.tenGodEn : item.tenGod;
       const gzText = isEn ? item.ganZhiEn : item.ganZhi;
       const decText = isEn ? item.decadeSpanEn : `${item.decade}大运 (${item.decadeSpanZh})`;
+      const ageHeading = isEn
+        ? (realAge === 0 ? `Age 0 (Nominal 1) · ${item.year}` : `Age ${realAge} (Nominal ${nomAge}) · ${item.year}`)
+        : (realAge === 0 ? `0岁初生 (虚岁1) · ${item.year}年` : `${realAge}岁 (虚岁${nomAge}) · ${item.year}年`);
 
       card.innerHTML = `
         <div class="space-y-2 border-b md:border-b-0 md:border-r border-gray-800 pb-3 md:pb-0 md:pr-3">
           <div class="flex items-center justify-between">
-            <span class="text-lg font-bold font-serif-sc text-amber-200">${isEn ? `Age ${item.age} · ${item.year}` : `${item.age}岁 · ${item.year}年`}</span>
+            <span class="text-lg font-bold font-serif-sc text-amber-200">${ageHeading}</span>
             <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-xs font-mono font-bold">${gzText}</span>
           </div>
           <div class="text-xs text-gray-400 space-y-1">
@@ -9553,7 +9573,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillStyle = '#fef08a';
     ctx.font = 'bold 10px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(`${item.age}y`, ax, padT - 4);
+    const chartRealAge = (item.realAge !== undefined) ? item.realAge : (item.age - 1);
+    ctx.fillText(`${chartRealAge}y (${item.year})`, ax, padT - 4);
   }
 
   // ==========================================================================

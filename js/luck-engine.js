@@ -1748,6 +1748,8 @@ const LuckEngine = (function() {
 
     for (let age = 1; age <= 100; age++) {
       const year = birthYear + age - 1;
+      const nominalAge = age; // Traditional nominal age (虚岁)
+      const realAge = Math.max(0, year - birthYear); // Actual completed age (周岁)
       let sIdx = (year - 4) % 10;
       if (sIdx < 0) sIdx += 10;
       let bIdx = (year - 4) % 12;
@@ -1945,6 +1947,8 @@ const LuckEngine = (function() {
 
       timeline.push({
         age,
+        nominalAge,
+        realAge,
         year,
         stem,
         branch,

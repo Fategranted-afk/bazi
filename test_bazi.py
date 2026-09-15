@@ -7115,7 +7115,52 @@ run_check79 = subprocess.run(jsc_check79_cmd, capture_output=True, text=True)
 assert run_check79.returncode == 0, f"Check 79 logic test failed: stdout={run_check79.stdout} stderr={run_check79.stderr}"
 print("✓ 黄金巅峰高光标定、加拿大五省与高密核心都会(>50万)、周易命局五行交感与职场四大生态位级差验证通过！")
 
-print("\n🎉 ALL 79 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 80. Validate Chrono-Navigator Dual-Age Precision (周岁 / 虚岁) & Zero Off-by-One Mismatch
+print("\n=== 80. Validating Lifelong Chrono-Navigator Dual-Age Precision & Zero Off-by-One Mismatch ===")
+jsc_check80_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+
+    var b2002 = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 15, hour: 10, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck2002 = LuckEngine.calculateLuck(b2002, 2026);
+    var timeline = LuckEngine.calculateLifelongTimeline(b2002, luck2002);
+
+    // 1. Verify 2025 item (Previous Year):
+    var item2025 = timeline.find(function(it) { return it.year === 2025; });
+    if (!item2025) throw new Error("Missing 2025 item");
+    if (item2025.ganZhi !== "乙巳") throw new Error("2025 ganZhi must be 乙巳, got " + item2025.ganZhi);
+    if (item2025.realAge !== 23) throw new Error("2025 realAge (周岁) must be 23, got " + item2025.realAge);
+    if (item2025.nominalAge !== 24) throw new Error("2025 nominalAge (虚岁) must be 24, got " + item2025.nominalAge);
+
+    // 2. Verify 2026 item (Current Year):
+    var item2026 = timeline.find(function(it) { return it.year === 2026; });
+    if (!item2026) throw new Error("Missing 2026 item");
+    if (item2026.ganZhi !== "丙午") throw new Error("2026 ganZhi must be 丙午, got " + item2026.ganZhi);
+    if (item2026.realAge !== 24) throw new Error("2026 realAge (周岁) must be 24, got " + item2026.realAge);
+    if (item2026.nominalAge !== 25) throw new Error("2026 nominalAge (虚岁) must be 25, got " + item2026.nominalAge);
+
+    // 3. Verify 2002 item (Birth Year):
+    var item2002 = timeline.find(function(it) { return it.year === 2002; });
+    if (!item2002) throw new Error("Missing 2002 item");
+    if (item2002.ganZhi !== "壬午") throw new Error("2002 ganZhi must be 壬午, got " + item2002.ganZhi);
+    if (item2002.realAge !== 0) throw new Error("2002 realAge must be 0 (初生), got " + item2002.realAge);
+    if (item2002.nominalAge !== 1) throw new Error("2002 nominalAge must be 1 (初生), got " + item2002.nominalAge);
+    '''
+]
+run_check80 = subprocess.run(jsc_check80_cmd, capture_output=True, text=True)
+assert run_check80.returncode == 0, f"Check 80 logic test failed: stdout={run_check80.stdout} stderr={run_check80.stderr}"
+print("✓ 百岁运势时空罗盘周岁/虚岁双轨标定（2002生人2025年23周岁/24虚岁乙巳、2026年24周岁/25虚岁丙午、消灭1岁误差）验证通过！")
+
+print("\n🎉 ALL 80 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
