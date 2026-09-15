@@ -668,11 +668,12 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '东方甲乙木',
           elementHeavenlyEn: 'East Jia-Yi Wood',
           cities: [
-            { id: 'shanghai', nameZh: '上海 (Shanghai)', nameEn: 'Shanghai' },
-            { id: 'hangzhou', nameZh: '杭州 (Hangzhou)', nameEn: 'Hangzhou' },
-            { id: 'nanjing', nameZh: '南京 (Nanjing)', nameEn: 'Nanjing' },
-            { id: 'suzhou', nameZh: '苏州 (Suzhou)', nameEn: 'Suzhou' },
-            { id: 'taipei', nameZh: '台北 (Taipei)', nameEn: 'Taipei' }
+            { id: 'shanghai', nameZh: '上海 (Shanghai · 极东海运)', nameEn: 'Shanghai (Eastern Maritime Port)', subRegionZh: '长三角极东涉海大门', subRegionEn: 'YRD Eastern Maritime Gateway', directionZh: '极东', directionEn: 'Far East', element: '木', elementHeavenlyZh: '东方甲乙木 (东海之滨 · 涉海大门)', elementHeavenlyEn: 'East Jia-Yi Wood (East Sea Gateway)' },
+            { id: 'suzhou', nameZh: '苏州 (Suzhou · 太湖水乡)', nameEn: 'Suzhou (Taihu Basin)', subRegionZh: '长三角太湖水乡工业重镇', subRegionEn: 'YRD Taihu Basin Industrial Hub', directionZh: '东南', directionEn: 'Southeast', element: '木', elementHeavenlyZh: '东南巽木 (太湖润泽 · 金水相涵)', elementHeavenlyEn: 'Southeast Xun Wood (Taihu Basin & Tech Park)' },
+            { id: 'hangzhou', nameZh: '杭州 (Hangzhou · 钱塘江南翼)', nameEn: 'Hangzhou (Qiantang South)', subRegionZh: '长三角南翼钱塘江创新中心', subRegionEn: 'YRD South Qiantang River Innovation Hub', directionZh: '南方', directionEn: 'South', element: '火', elementHeavenlyZh: '南方丙丁火 (钱塘江潮 · 水火既济)', elementHeavenlyEn: 'South Bing-Ding Fire (Qiantang River Digital Hub)' },
+            { id: 'nanjing', nameZh: '南京 (Nanjing · 江淮西北)', nameEn: 'Nanjing (Jiangsu Northwest)', subRegionZh: '江苏西北江淮科教工商业枢纽', subRegionEn: 'Jiangsu Northwest Educational & Industrial Nexus', directionZh: '西北', directionEn: 'Northwest', element: '金', elementHeavenlyZh: '西北乾金 (钟山风雨 · 金水相涵)', elementHeavenlyEn: 'Northwest Qian Metal (Zhongshan Ancient Bastion)' },
+            { id: 'wuxi', nameZh: '无锡 (Wuxi · 太湖北岸)', nameEn: 'Wuxi (North Taihu)', subRegionZh: '太湖北岸苏锡常产业带', subRegionEn: 'North Taihu High-Tech Industrial Corridor', directionZh: '中央', directionEn: 'Central', element: '土', elementHeavenlyZh: '中央戊己土 (太湖明珠 · 智能制造)', elementHeavenlyEn: 'Central Wu-Ji Earth (Taihu Pearl Advanced Manufacturing)' },
+            { id: 'taipei', nameZh: '台北 (Taipei · 海岛东南)', nameEn: 'Taipei (Island Southeast)', subRegionZh: '东南海岛经济与半导体产业中枢', subRegionEn: 'Southeast Island Economy & Semiconductor Hub', directionZh: '东南', directionEn: 'Southeast', element: '木', elementHeavenlyZh: '东南巽木 (海岛风华 · 木火通明)', elementHeavenlyEn: 'Southeast Xun Wood (Island Vibrant Hub)' }
           ]
         },
         west: {
@@ -922,9 +923,9 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '中央戊己土',
           elementHeavenlyEn: 'Central Wu-Ji Earth',
           cities: [
-            { id: 'winnipeg', nameZh: '温尼伯 (Winnipeg)', nameEn: 'Winnipeg', provinceKey: 'manitoba', isDenseCity: true, populationStr: '~749k', pillarIndustryZh: '泛美洲内陆物流枢纽与重工制造', pillarIndustryEn: 'Continental Logistics & Heavy Equipment' },
-            { id: 'regina', nameZh: '里贾纳 (Regina)', nameEn: 'Regina', isDenseCity: false, populationStr: '~230k', pillarIndustryZh: '农产品深加工与化肥矿业', pillarIndustryEn: 'Agri-Processing & Potash Mining' },
-            { id: 'saskatoon', nameZh: '萨斯卡通 (Saskatoon)', nameEn: 'Saskatoon', isDenseCity: false, populationStr: '~270k', pillarIndustryZh: '生物科技研发与农业科学', pillarIndustryEn: 'Biotechnology & Agriscience' }
+            { id: 'winnipeg', nameZh: '温尼伯 (Winnipeg · 北美大陆中枢)', nameEn: 'Winnipeg (North American Center)', provinceKey: 'manitoba', isDenseCity: true, populationStr: '~749k', subRegionZh: '北美大陆几何中心曼省省会', subRegionEn: 'Continental Geographic Heart', directionZh: '中央', directionEn: 'Central', element: '土', elementHeavenlyZh: '中央戊己土 (泛美洲内陆多式联运枢纽)', elementHeavenlyEn: 'Central Wu-Ji Earth (Continental Logistics Nexus)', pillarIndustryZh: '泛美洲内陆物流枢纽与重工制造', pillarIndustryEn: 'Continental Logistics & Heavy Equipment' },
+            { id: 'regina', nameZh: '里贾纳 (Regina)', nameEn: 'Regina', isDenseCity: false, populationStr: '~230k', subRegionZh: '萨省中南农业能源走廊', subRegionEn: 'Saskatchewan South-Central Hub', directionZh: '中央偏西', directionEn: 'Central-West', element: '土', elementHeavenlyZh: '中央戊己土 (农产品深加工与化肥矿业)', elementHeavenlyEn: 'Central Earth (Agri-Processing & Potash)', pillarIndustryZh: '农产品深加工与化肥矿业', pillarIndustryEn: 'Agri-Processing & Potash Mining' },
+            { id: 'saskatoon', nameZh: '萨斯卡通 (Saskatoon)', nameEn: 'Saskatoon', isDenseCity: false, populationStr: '~270k', subRegionZh: '萨省中北科技农业中心', subRegionEn: 'Saskatchewan North-Central Tech Hub', directionZh: '中央偏北', directionEn: 'Central-North', element: '土', elementHeavenlyZh: '中央戊己土 (生物科技研发与农业科学)', elementHeavenlyEn: 'Central Earth (Biotech & Agriscience)', pillarIndustryZh: '生物科技研发与农业科学', pillarIndustryEn: 'Biotechnology & Agriscience' }
           ]
         },
         south: {
@@ -936,14 +937,10 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '南方丙丁火',
           elementHeavenlyEn: 'South Bing-Ding Fire',
           cities: [
-            { id: 'toronto', nameZh: '多伦多 (Toronto)', nameEn: 'Toronto', provinceKey: 'ontario', isDenseCity: true, populationStr: '~2.8M', pillarIndustryZh: '全球金融商贸中枢与人工智能前沿高地', pillarIndustryEn: 'Global Financial Hub & Frontier AI' },
-            { id: 'ottawa', nameZh: '渥太华 (Ottawa)', nameEn: 'Ottawa', provinceKey: 'ontario', isDenseCity: true, populationStr: '~1.0M', pillarIndustryZh: '联邦政务中枢与国家电信高科技园', pillarIndustryEn: 'Federal Governance & Telecommunications Tech' },
-            { id: 'mississauga', nameZh: '密西沙加 (Mississauga)', nameEn: 'Mississauga', provinceKey: 'ontario', isDenseCity: true, populationStr: '~718k', pillarIndustryZh: '跨国企业总部集群与国际航空物流', pillarIndustryEn: 'Corporate HQs & Global Air Cargo Logistics' },
-            { id: 'brampton', nameZh: '宾顿 (Brampton)', nameEn: 'Brampton', provinceKey: 'ontario', isDenseCity: true, populationStr: '~656k', pillarIndustryZh: '先进智能制造、生命科学与现代物流网', pillarIndustryEn: 'Advanced Manufacturing & Supply Chain Logistics' },
-            { id: 'hamilton', nameZh: '汉密尔顿 (Hamilton)', nameEn: 'Hamilton', provinceKey: 'ontario', isDenseCity: true, populationStr: '~569k', pillarIndustryZh: '特种先进钢铁材料与健康医疗生命科学', pillarIndustryEn: 'Advanced Materials & Health Sciences' },
-            { id: 'montreal', nameZh: '蒙特利尔 (Montreal)', nameEn: 'Montreal', provinceKey: 'quebec', isDenseCity: true, populationStr: '~1.76M', pillarIndustryZh: '全球人工智能科研中心、顶尖航空航天与数字媒体创意', pillarIndustryEn: 'Global AI Research, Aerospace & Digital Media' },
-            { id: 'windsor', nameZh: '温莎 (Windsor)', nameEn: 'Windsor', provinceKey: 'ontario', isDenseCity: false, populationStr: '~230k', pillarIndustryZh: '汽车工程自动化制造与美加跨境贸易', pillarIndustryEn: 'Automotive Engineering & Cross-Border Logistics' },
-            { id: 'niagara_falls', nameZh: '尼亚加拉瀑布 (Niagara Falls)', nameEn: 'Niagara Falls', provinceKey: 'ontario', isDenseCity: false, populationStr: '~88k', pillarIndustryZh: '国际文旅会展与清洁水力发电', pillarIndustryEn: 'International Tourism & Clean Hydroelectric Energy' }
+            { id: 'toronto', nameZh: '多伦多 (Toronto · GTA中枢)', nameEn: 'Toronto (GTA Core)', provinceKey: 'ontario', isDenseCity: true, populationStr: '~2.8M', subRegionZh: '大多伦多中枢湖滨区 (GTA Core & Waterfront)', subRegionEn: 'GTA Core & Waterfront Sector', directionZh: '南方 (GTA中南向)', directionEn: 'South (GTA Waterfront)', element: '火', elementHeavenlyZh: '南方丙丁火 (湖水离火 · 水火既济)', elementHeavenlyEn: 'South Bing-Ding Fire (Waterfront Synergy)', pillarIndustryZh: '全球金融商贸中枢与人工智能前沿高地', pillarIndustryEn: 'Global Financial Hub & Frontier AI' },
+            { id: 'calgary', nameZh: '卡尔加里 (Calgary · 阿省南部能源金融)', nameEn: 'Calgary (Alberta South)', provinceKey: 'alberta', isDenseCity: true, populationStr: '~1.3M', subRegionZh: '阿尔伯塔南部落基山麓能源金融总部', subRegionEn: 'Alberta South Energy Finance Capital', directionZh: '南方 (阿省南部)', directionEn: 'South (Alberta South)', element: '火', elementHeavenlyZh: '南方丙丁火兼坤土 (国家能源决策总部与大宗商品金融)', elementHeavenlyEn: 'South Bing-Ding Fire & Earth (Energy HQs & Financial Capital)', pillarIndustryZh: '国家能源决策总部、大宗商品金融与创新算力中心', pillarIndustryEn: 'National Energy HQs, Commodity Finance & Digital Tech' },
+            { id: 'richmond_bc', nameZh: '列治文 (Richmond · 大温南部空港)', nameEn: 'Richmond (Metro Vancouver South)', provinceKey: 'bc', isDenseCity: false, populationStr: '~210k', subRegionZh: '大温哥华南部菲沙河南岸国际空港枢纽', subRegionEn: 'Metro Vancouver South Airport Hub', directionZh: '南方 (大温南部)', directionEn: 'South (Metro Vancouver South)', element: '火', elementHeavenlyZh: '南方丙丁火 (国际航空枢纽与亚太贸易综合集散)', elementHeavenlyEn: 'South Bing-Ding Fire (International Airport & Trade Nexus)', pillarIndustryZh: '国际航空客货运、跨太平洋进出口与高端物流', pillarIndustryEn: 'Aviation Logistics & Trans-Pacific Trade' },
+            { id: 'niagara_falls', nameZh: '尼亚加拉瀑布 (Niagara Falls · 安省南界)', nameEn: 'Niagara Falls (Ontario South)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~88k', subRegionZh: '大湖区文旅与清洁水能南界走廊', subRegionEn: 'Great Lakes Tourism & Clean Hydro Basin', directionZh: '南方 (安省南界)', directionEn: 'South (Ontario South Border)', element: '火', elementHeavenlyZh: '南方丙丁火 (国际文旅会展与清洁水力发电)', elementHeavenlyEn: 'South Bing-Ding Fire (Tourism & Clean Hydro Energy)', pillarIndustryZh: '国际文旅会展与清洁水力发电', pillarIndustryEn: 'International Tourism & Clean Hydroelectric Energy' }
           ]
         },
         north: {
@@ -955,9 +952,13 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '北方壬癸水',
           elementHeavenlyEn: 'North Ren-Gui Water',
           cities: [
-            { id: 'edmonton', nameZh: '埃德蒙顿 (Edmonton)', nameEn: 'Edmonton', provinceKey: 'alberta', isDenseCity: true, populationStr: '~1.0M', pillarIndustryZh: '石油化工装备、算力基建中心与北极物资通道', pillarIndustryEn: 'Petrochemical Engineering, AI Compute & Arctic Logistics' },
-            { id: 'yellowknife', nameZh: '黄刀镇 (Yellowknife)', nameEn: 'Yellowknife', isDenseCity: false, populationStr: '~20k', pillarIndustryZh: '极光生态旅游与北极钻石矿业', pillarIndustryEn: 'Northern Aurora Eco-Tourism & Diamond Mining' },
-            { id: 'whitehorse', nameZh: '怀特霍斯 (Whitehorse)', nameEn: 'Whitehorse', isDenseCity: false, populationStr: '~28k', pillarIndustryZh: '极地自驾探险与关键矿产地质勘探', pillarIndustryEn: 'Polar Expedition & Critical Mineral Exploration' }
+            { id: 'edmonton', nameZh: '埃德蒙顿 (Edmonton · 阿省北部政务枢纽)', nameEn: 'Edmonton (Alberta North)', provinceKey: 'alberta', isDenseCity: true, populationStr: '~1.0M', subRegionZh: '阿尔伯塔北部省府与北极门户走廊', subRegionEn: 'Alberta North Capital & Arctic Gateway', directionZh: '北方 (阿省北部)', directionEn: 'North (Alberta North)', element: '水', elementHeavenlyZh: '北方壬癸水 (石油化工装备与北极物资通道)', elementHeavenlyEn: 'North Ren-Gui Water (Petrochemical & Arctic Gateway)', pillarIndustryZh: '石油化工装备、算力基建中心与北极物资通道', pillarIndustryEn: 'Petrochemical Engineering, AI Compute & Arctic Logistics' },
+            { id: 'markham', nameZh: '万锦 (Markham · GTA北区)', nameEn: 'Markham (GTA North)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~340k', subRegionZh: '大多伦多北区约克科技走廊 (GTA North)', subRegionEn: 'GTA North Sector (York Region)', directionZh: '北方 (GTA正北)', directionEn: 'North (GTA North)', element: '水', elementHeavenlyZh: '北方壬癸水 (约克区科技重镇与智慧高地)', elementHeavenlyEn: 'North Ren-Gui Water (York Tech Corridor)', pillarIndustryZh: '加拿大高科技之都与半导体芯片研发', pillarIndustryEn: 'High-Tech Capital & Semiconductor R&D' },
+            { id: 'richmond_hill', nameZh: '列治文山 (Richmond Hill · GTA北区)', nameEn: 'Richmond Hill (GTA North)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~202k', subRegionZh: '大多伦多北区高地 (GTA North)', subRegionEn: 'GTA North Sector (York Region)', directionZh: '北方 (GTA正北)', directionEn: 'North (GTA North)', element: '水', elementHeavenlyZh: '北方壬癸水 (高素质专业人才与医疗科技)', elementHeavenlyEn: 'North Ren-Gui Water (Talent & Health Tech)', pillarIndustryZh: '精密医疗健康器械与高技术专业服务', pillarIndustryEn: 'Medical Devices & Professional Tech Services' },
+            { id: 'vaughan', nameZh: '旺市 (Vaughan · GTA北区)', nameEn: 'Vaughan (GTA North)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~323k', subRegionZh: '大多伦多北区现代物流商贸 (GTA North)', subRegionEn: 'GTA North Sector (York Region)', directionZh: '北方 (GTA正北)', directionEn: 'North (GTA North)', element: '水', elementHeavenlyZh: '北方壬癸水 (交通枢纽与新型商贸综合体)', elementHeavenlyEn: 'North Ren-Gui Water (Transit & Commerce Hub)', pillarIndustryZh: '大型现代物流中枢与先进自动化工程', pillarIndustryEn: 'Modern Logistics & Automated Engineering' },
+            { id: 'laval', nameZh: '拉瓦尔 (Laval · 蒙特利尔以北)', nameEn: 'Laval (North of Montreal)', provinceKey: 'quebec', isDenseCity: false, populationStr: '~440k', subRegionZh: '大蒙特利尔北部现代生物医药园区', subRegionEn: 'Greater Montreal North Biopharma Hub', directionZh: '北方 (魁省中北)', directionEn: 'North (Quebec Central-North)', element: '水', elementHeavenlyZh: '北方壬癸水 (现代生物工程与先进医疗科技)', elementHeavenlyEn: 'North Ren-Gui Water (Biopharma & Health Tech)', pillarIndustryZh: '现代生物工程与先进医疗科技研发', pillarIndustryEn: 'Biopharmaceuticals & Health Tech' },
+            { id: 'yellowknife', nameZh: '黄刀镇 (Yellowknife)', nameEn: 'Yellowknife', isDenseCity: false, populationStr: '~20k', subRegionZh: '西北地区极光文旅中心', subRegionEn: 'NWT Aurora Eco-Hub', directionZh: '北方', directionEn: 'North', element: '水', elementHeavenlyZh: '北方壬癸水 (极光生态旅游与北极钻石矿业)', elementHeavenlyEn: 'North Ren-Gui Water (Aurora Tourism & Diamonds)', pillarIndustryZh: '极光生态旅游与北极钻石矿业', pillarIndustryEn: 'Northern Aurora Eco-Tourism & Diamond Mining' },
+            { id: 'whitehorse', nameZh: '怀特霍斯 (Whitehorse)', nameEn: 'Whitehorse', isDenseCity: false, populationStr: '~28k', subRegionZh: '育空地区探险矿业枢纽', subRegionEn: 'Yukon Minerals & Exploration Hub', directionZh: '西北偏北', directionEn: 'North-Northwest', element: '水', elementHeavenlyZh: '北方壬癸水 (极地自驾探险与关键矿产地质勘探)', elementHeavenlyEn: 'North Ren-Gui Water (Polar Expedition & Minerals)', pillarIndustryZh: '极地自驾探险与关键矿产地质勘探', pillarIndustryEn: 'Polar Expedition & Critical Mineral Exploration' }
           ]
         },
         east: {
@@ -969,9 +970,14 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '东方甲乙木',
           elementHeavenlyEn: 'East Jia-Yi Wood',
           cities: [
-            { id: 'halifax', nameZh: '哈利法克斯 (Halifax)', nameEn: 'Halifax', isDenseCity: false, populationStr: '~440k', pillarIndustryZh: '深水国际航运、海洋科学研究与国防造船', pillarIndustryEn: 'Deep-Water Shipping, Ocean Science & Naval Shipbuilding' },
-            { id: 'st_johns', nameZh: '圣约翰斯 (St. John\'s)', nameEn: 'St. John\'s', isDenseCity: false, populationStr: '~110k', pillarIndustryZh: '离岸深海油气开采与北大西洋远洋渔业', pillarIndustryEn: 'Offshore Energy & North Atlantic Fisheries' },
-            { id: 'quebec_city', nameZh: '魁北克城 (Quebec City)', nameEn: 'Quebec City', provinceKey: 'quebec', isDenseCity: false, populationStr: '~540k', pillarIndustryZh: '省府政务核心、国际法文文化旅游与生物医药', pillarIndustryEn: 'Provincial Administration, Francophone Culture & Biopharma' }
+            { id: 'ottawa', nameZh: '渥太华 (Ottawa · 安省东部)', nameEn: 'Ottawa (Eastern Ontario)', provinceKey: 'ontario', isDenseCity: true, populationStr: '~1.0M', subRegionZh: '安大略省东部联邦首都圈 (Eastern Ontario)', subRegionEn: 'Eastern Ontario Federal Capital Region', directionZh: '东方 (安省东端)', directionEn: 'East (Eastern Ontario)', element: '木', elementHeavenlyZh: '东方甲乙木 (联邦政务中枢与国家电信高科技园)', elementHeavenlyEn: 'East Jia-Yi Wood (Federal Capital & Telecom Tech)', pillarIndustryZh: '联邦政务中枢与国家电信高科技园', pillarIndustryEn: 'Federal Governance & Telecommunications Tech' },
+            { id: 'scarborough', nameZh: '世嘉堡 (Scarborough · GTA东区)', nameEn: 'Scarborough (GTA East)', provinceKey: 'ontario', isDenseCity: true, populationStr: '~632k', subRegionZh: '大多伦多东大门 (GTA East Sector)', subRegionEn: 'GTA East Sector', directionZh: '东方 (GTA正东)', directionEn: 'East (GTA East)', element: '木', elementHeavenlyZh: '东方甲乙木 (生态文教与多元商贸)', elementHeavenlyEn: 'East Jia-Yi Wood (Green Corridor & Education)', pillarIndustryZh: '高等教育与生命健康产业基地', pillarIndustryEn: 'Higher Education & Health Sciences' },
+            { id: 'pickering', nameZh: '皮克灵 (Pickering · GTA东区)', nameEn: 'Pickering (GTA East)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~99k', subRegionZh: '大多伦多东部杜兰区 (Durham Region)', subRegionEn: 'GTA East Durham Sector', directionZh: '东方 (GTA正东)', directionEn: 'East (GTA East)', element: '木', elementHeavenlyZh: '东方甲乙木 (清洁核能与东部湖滨生态)', elementHeavenlyEn: 'East Jia-Yi Wood (Clean Nuclear Energy & Lakefront)', pillarIndustryZh: '清洁核电能源与现代先进制造', pillarIndustryEn: 'Clean Nuclear Energy & Advanced Manufacturing' },
+            { id: 'burnaby', nameZh: '本拿比 (Burnaby · 大温东部走廊)', nameEn: 'Burnaby (Metro Vancouver East)', provinceKey: 'bc', isDenseCity: false, populationStr: '~249k', subRegionZh: '大温哥华东部科技文教走廊', subRegionEn: 'Metro Vancouver East Sector', directionZh: '东方 (大温东部)', directionEn: 'East (Metro Vancouver East)', element: '木', elementHeavenlyZh: '东方甲乙木 (高科技企业总部、电影工业与大学城)', elementHeavenlyEn: 'East Jia-Yi Wood (Tech HQs & Film Industry)', pillarIndustryZh: '数字创意、高科技研发与电影后期制作基地', pillarIndustryEn: 'Digital Creative, High-Tech & Film Production' },
+            { id: 'surrey', nameZh: '素里 (Surrey · 大温东南新中心)', nameEn: 'Surrey (Metro Vancouver Southeast)', provinceKey: 'bc', isDenseCity: true, populationStr: '~568k', subRegionZh: '大温哥华东南部菲沙河谷新增长极', subRegionEn: 'Metro Vancouver Southeast / Fraser Valley', directionZh: '东南 (大温东南)', directionEn: 'Southeast (Metro Vancouver Southeast)', element: '木', elementHeavenlyZh: '东南巽木 (区域现代物流枢纽与智慧绿色制造)', elementHeavenlyEn: 'Southeast Xun Wood (Logistics Hub & Clean Manufacturing)', pillarIndustryZh: '区域现代物流枢纽、智慧农业与绿色科技制造', pillarIndustryEn: 'Regional Logistics Hub, Agri-Tech & Clean Manufacturing' },
+            { id: 'quebec_city', nameZh: '魁北克城 (Quebec City · 魁省东北历史首府)', nameEn: 'Quebec City (Quebec Northeast)', provinceKey: 'quebec', isDenseCity: true, populationStr: '~549k', subRegionZh: '魁省东北历史首府与下游深水港区', subRegionEn: 'Quebec Northeast Capital & Maritime Region', directionZh: '东北 (魁省东北)', directionEn: 'Northeast (Quebec Northeast)', element: '木', elementHeavenlyZh: '东北艮土生东方木 (省府政务核心与国际法文文化旅游)', elementHeavenlyEn: 'Northeast Gen Earth & East Wood (Provincial Administration & Francophone Culture)', pillarIndustryZh: '省府政务核心、国际法文文化旅游与生物医药', pillarIndustryEn: 'Provincial Administration, Francophone Culture & Biopharma' },
+            { id: 'halifax', nameZh: '哈利法克斯 (Halifax · 大西洋大门)', nameEn: 'Halifax (Atlantic Gateway)', isDenseCity: false, populationStr: '~440k', subRegionZh: '大西洋沿岸深水贸易与海洋科研', subRegionEn: 'Atlantic Deepwater Shipping Hub', directionZh: '东方 (大西洋区)', directionEn: 'East (Atlantic Canada)', element: '木', elementHeavenlyZh: '东方甲乙木 (深水国际航运、海洋科学研究与国防造船)', elementHeavenlyEn: 'East Jia-Yi Wood (Ocean Science & Shipping)', pillarIndustryZh: '深水国际航运、海洋科学研究与国防造船', pillarIndustryEn: 'Deep-Water Shipping, Ocean Science & Naval Shipbuilding' },
+            { id: 'st_johns', nameZh: '圣约翰斯 (St. John\'s)', nameEn: 'St. John\'s', isDenseCity: false, populationStr: '~110k', subRegionZh: '北大西洋离岸油气与渔业基准', subRegionEn: 'North Atlantic Offshore Energy Hub', directionZh: '极东', directionEn: 'Far East', element: '木', elementHeavenlyZh: '东方甲乙木 (离岸深海油气开采与北大西洋远洋渔业)', elementHeavenlyEn: 'East Wood (Offshore Energy & Fisheries)', pillarIndustryZh: '离岸深海油气开采与北大西洋远洋渔业', pillarIndustryEn: 'Offshore Energy & North Atlantic Fisheries' }
           ]
         },
         west: {
@@ -983,10 +989,14 @@ class SpatialFengShuiEngine {
           elementHeavenlyZh: '西方庚辛金',
           elementHeavenlyEn: 'West Geng-Xin Metal',
           cities: [
-            { id: 'vancouver', nameZh: '温哥华 (Vancouver)', nameEn: 'Vancouver', provinceKey: 'bc', isDenseCity: true, populationStr: '~662k', pillarIndustryZh: '亚太国际贸易大港、跨国高科技总部与数字视觉影视', pillarIndustryEn: 'Asia-Pacific Gateway Port, Tech Hub & Visual Effects' },
-            { id: 'surrey', nameZh: '素里 (Surrey)', nameEn: 'Surrey', provinceKey: 'bc', isDenseCity: true, populationStr: '~568k', pillarIndustryZh: '区域现代物流枢纽、智慧农业与绿色科技制造', pillarIndustryEn: 'Regional Logistics Hub, Agri-Tech & Clean Manufacturing' },
-            { id: 'calgary', nameZh: '卡尔加里 (Calgary)', nameEn: 'Calgary', provinceKey: 'alberta', isDenseCity: true, populationStr: '~1.3M', pillarIndustryZh: '国家能源决策总部、大宗商品金融与创新算力中心', pillarIndustryEn: 'National Energy HQs, Commodity Finance & Digital Tech' },
-            { id: 'victoria', nameZh: '维多利亚 (Victoria)', nameEn: 'Victoria', provinceKey: 'bc', isDenseCity: false, populationStr: '~92k', pillarIndustryZh: '卑诗省府行政中枢、海洋技术与生态休闲文旅', pillarIndustryEn: 'Provincial Governance, Marine Tech & Eco-Tourism' }
+            { id: 'mississauga', nameZh: '密西沙加 (Mississauga · GTA西区)', nameEn: 'Mississauga (GTA West)', provinceKey: 'ontario', isDenseCity: true, populationStr: '~718k', subRegionZh: '大多伦多西区门户 (GTA West / Peel Region)', subRegionEn: 'GTA West Sector (Peel Region)', directionZh: '西方 (GTA正西)', directionEn: 'West (GTA West)', element: '金', elementHeavenlyZh: '西方庚辛金 (总部经济与国际空港物流)', elementHeavenlyEn: 'West Geng-Xin Metal (Corporate HQs & Air Logistics)', pillarIndustryZh: '跨国企业总部集群与国际航空物流', pillarIndustryEn: 'Corporate HQs & Global Air Cargo Logistics' },
+            { id: 'brampton', nameZh: '宾顿 (Brampton · GTA西北区)', nameEn: 'Brampton (GTA Northwest)', provinceKey: 'ontario', isDenseCity: true, populationStr: '~656k', subRegionZh: '大多伦多西北制造走廊 (GTA Northwest / Peel Region)', subRegionEn: 'GTA Northwest Sector (Peel Region)', directionZh: '西北 (GTA西北)', directionEn: 'Northwest (GTA Northwest)', element: '金', elementHeavenlyZh: '西北乾金 (先进智能制造与现代供应链走廊)', elementHeavenlyEn: 'Northwest Qian Metal (Advanced Manufacturing & Supply Chains)', pillarIndustryZh: '先进智能制造、生命科学与现代物流网', pillarIndustryEn: 'Advanced Manufacturing & Supply Chain Logistics' },
+            { id: 'vancouver', nameZh: '温哥华 (Vancouver · 卑诗西南太平洋门户)', nameEn: 'Vancouver (BC Southwest Gateway)', provinceKey: 'bc', isDenseCity: true, populationStr: '~662k', subRegionZh: '大温哥华核心半岛与国际深水港', subRegionEn: 'Metro Vancouver Core Peninsula & Gateway Port', directionZh: '西方 (卑诗西南)', directionEn: 'West (BC Southwest)', element: '金', elementHeavenlyZh: '西方庚辛金 (亚太国际贸易大港与跨国高科技总部)', elementHeavenlyEn: 'West Geng-Xin Metal (Pacific Gateway & Tech Hub)', pillarIndustryZh: '亚太国际贸易大港、跨国高科技总部与数字视觉影视', pillarIndustryEn: 'Asia-Pacific Gateway Port, Tech Hub & Visual Effects' },
+            { id: 'kitchener', nameZh: '滑铁卢/基奇纳 (Kitchener-Waterloo · 安省中西)', nameEn: 'Kitchener-Waterloo (Ontario West-Central)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~256k', subRegionZh: '安大略省中西部高科技三角洲', subRegionEn: 'Ontario West-Central Tech Triangle', directionZh: '西偏中 (安省中西)', directionEn: 'West-Central (Ontario West-Central)', element: '金', elementHeavenlyZh: '西方庚辛金 (世界级量子计算与前沿软件孵化高地)', elementHeavenlyEn: 'West Geng-Xin Metal (Quantum Computing & Tech Hub)', pillarIndustryZh: '世界级前沿量子计算与软件创新孵化高地', pillarIndustryEn: 'Quantum Computing & Software Tech' },
+            { id: 'hamilton', nameZh: '汉密尔顿 (Hamilton · 安省西南)', nameEn: 'Hamilton (Golden Horseshoe West)', provinceKey: 'ontario', isDenseCity: true, populationStr: '~569k', subRegionZh: '金马蹄西南重工深水港区 (Golden Horseshoe West)', subRegionEn: 'Golden Horseshoe West Sector', directionZh: '西南 (安省西南)', directionEn: 'Southwest (Ontario Southwest)', element: '土', elementHeavenlyZh: '西南坤土兼金 (特种先进钢铁材料与大湖深水运力)', elementHeavenlyEn: 'Southwest Kun Earth & Metal (Advanced Steel & Deepwater Port)', pillarIndustryZh: '特种先进钢铁材料与健康医疗生命科学', pillarIndustryEn: 'Advanced Materials & Health Sciences' },
+            { id: 'windsor', nameZh: '温莎 (Windsor · 安省最西南)', nameEn: 'Windsor (Ontario Far Southwest)', provinceKey: 'ontario', isDenseCity: false, populationStr: '~230k', subRegionZh: '安大略省最西南北美跨境要道', subRegionEn: 'Ontario Far Southwest Cross-Border Gateway', directionZh: '西南 (安省最西南)', directionEn: 'Southwest (Ontario Far Southwest)', element: '土', elementHeavenlyZh: '西南坤土 (汽车工程自动化制造与美加跨境贸易)', elementHeavenlyEn: 'Southwest Kun Earth (Automotive Engineering & Cross-Border Logistics)', pillarIndustryZh: '汽车工程自动化制造与美加跨境贸易', pillarIndustryEn: 'Automotive Engineering & Cross-Border Logistics' },
+            { id: 'victoria', nameZh: '维多利亚 (Victoria · 卑诗西南温哥华岛)', nameEn: 'Victoria (Vancouver Island)', provinceKey: 'bc', isDenseCity: false, populationStr: '~92k', subRegionZh: '温哥华岛南端卑诗省府行政中枢', subRegionEn: 'Vancouver Island Provincial Capital Hub', directionZh: '西南 (温哥华岛)', directionEn: 'Southwest (Vancouver Island)', element: '土', elementHeavenlyZh: '西南坤土 (省府行政中枢、海洋高科技与生态文旅)', elementHeavenlyEn: 'Southwest Kun Earth (Provincial Governance & Marine Tech)', pillarIndustryZh: '卑诗省府行政中枢、海洋技术与生态休闲文旅', pillarIndustryEn: 'Provincial Governance, Marine Tech & Eco-Tourism' },
+            { id: 'montreal', nameZh: '蒙特利尔 (Montreal · 魁省西南核心岛)', nameEn: 'Montreal (Quebec Southwest Island)', provinceKey: 'quebec', isDenseCity: true, populationStr: '~1.76M', subRegionZh: '大蒙特利尔大都市圈核心岛 (Greater Montreal)', subRegionEn: 'Greater Montreal Island Hub', directionZh: '西南 (魁省西南)', directionEn: 'Southwest (Quebec Southwest)', element: '水', elementHeavenlyZh: '北方水与西方金交融 (全球人工智能科研与顶尖航空航天)', elementHeavenlyEn: 'Water-Metal Synthesis (Global AI & Aerospace)', pillarIndustryZh: '全球人工智能科研中心、顶尖航空航天与数字媒体创意', pillarIndustryEn: 'Global AI Research, Aerospace & Digital Media' }
           ]
         }
       }
@@ -1094,8 +1104,15 @@ class SpatialFengShuiEngine {
     const dmEn = `${dmShortEn} (${dmElEn})`;
     const dmZh = `${dm} (${dmEl})`;
 
-    const cEl = targetRegion.element;
-    const cElEn = targetRegion.elementEn;
+    const cEl = targetCity.element || targetRegion.element;
+    const cElEn = targetCity.elementEn || elEnMap[cEl] || targetRegion.elementEn;
+    const cElZh = targetCity.elementZh || (elNames[cEl] && elNames[cEl].zh) || targetRegion.elementZh;
+    const cDirZh = targetCity.directionZh || targetRegion.directionZh;
+    const cDirEn = targetCity.directionEn || targetRegion.directionEn;
+    const cElemHeavenlyZh = targetCity.elementHeavenlyZh || targetRegion.elementHeavenlyZh;
+    const cElemHeavenlyEn = targetCity.elementHeavenlyEn || targetRegion.elementHeavenlyEn;
+    const subRegionZh = targetCity.subRegionZh || '';
+    const subRegionEn = targetCity.subRegionEn || '';
 
     const generates = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
     const generatedBy = { '木': '水', '火': '木', '土': '火', '金': '土', '水': '金' };
@@ -1187,11 +1204,11 @@ class SpatialFengShuiEngine {
       score = 78;
     }
 
-    const summaryZh = `城市【${targetCity.nameZh}】位列【${country.countryNameZh}·${targetRegion.directionZh}】，承载【${targetRegion.elementHeavenlyZh}】。日主五行生克属【${relationZh}】，地缘气数定调为【${gradeZh}】（契合度：${score}分）。`;
-    const summaryEn = `The city of ${targetCity.nameEn} is in the ${targetRegion.directionEn} region of ${country.countryNameEn}, vibrating with [${targetRegion.elementHeavenlyEn}]. Terrestrial dynamic is [${relationEn}], evaluated as [${gradeEn}] (Resonance Score: ${score}/100).`;
+    const summaryZh = `城市【${targetCity.nameZh}】位列【${country.countryNameZh}·${cDirZh}】，承载【${cElemHeavenlyZh}】。日主五行生克属【${relationZh}】，地缘气数定调为【${gradeZh}】（契合度：${score}分）。`;
+    const summaryEn = `The city of ${targetCity.nameEn} is in the ${cDirEn} region of ${country.countryNameEn}, vibrating with [${cElemHeavenlyEn}]. Terrestrial dynamic is [${relationEn}], evaluated as [${gradeEn}] (Resonance Score: ${score}/100).`;
 
-    const analysisZh = `您当前身处【${country.countryNameZh}·${targetCity.nameZh}】，该城市坐落于国家【${targetRegion.directionZh}】，承载【${targetRegion.elementHeavenlyZh}】之气运。本命日主为【${dmZh}】，地缘五行与日主呈【${relationZh}】。综合地缘吉凶定调为【${gradeZh}】（契合度：${score}分）。${gradeZh === '吉 / 大利' ? '此地五行气脉与本命喜用神同频共振，大展经纶、生旺赋能，利于事业开拓与能量沉淀。' : gradeZh === '慎 / 气机对冲' ? '此地五行气脉与本命气场存在对冲或泄耗，日常宜注重身心调摄，并配合专属空间风水调理化克为生、调和气场。' : '此地五行气机平和稳健，无剧烈刑冲亦无偏枯滋长，宜深耕主业、稳健蓄势。'}`;
-    const analysisEn = `You are currently residing in ${targetCity.nameEn}, located in the ${targetRegion.directionEn} sector of ${country.countryNameEn}, which carries the natural energy of [${targetRegion.elementHeavenlyEn}]. With your natal Day Master anchored in [${dmEn}], the terrestrial interaction reflects [${relationEn}]. Resonance is rated as [${gradeEn}] (Compatibility Score: ${score}/100). ${gradeZh === '吉 / 大利' ? 'This terrestrial frequency harmonizes seamlessly with your favorable Yong Shen, unlocking expansive vitality and strategic momentum.' : gradeZh === '慎 / 气机对冲' ? 'This terrestrial frequency creates energetic friction or depletion against your natal balance; apply our targeted spatial remedies to convert regulatory tension into authoritative poise.' : 'This terrestrial frequency offers calm, steady equilibrium without destabilizing clashes, favoring sustained cultivation and gradual compound growth.'}`;
+    const analysisZh = `您当前身处【${country.countryNameZh}·${targetCity.nameZh}】，该城市坐落于国家【${cDirZh}】，承载【${cElemHeavenlyZh}】之气运。本命日主为【${dmZh}】，地缘五行与日主呈【${relationZh}】。综合地缘吉凶定调为【${gradeZh}】（契合度：${score}分）。${gradeZh === '吉 / 大利' ? '此地五行气脉与本命喜用神同频共振，大展经纶、生旺赋能，利于事业开拓与能量沉淀。' : gradeZh === '慎 / 气机对冲' ? '此地五行气脉与本命气场存在对冲或泄耗，日常宜注重身心调摄，并配合专属空间风水调理化克为生、调和气场。' : '此地五行气机平和稳健，无剧烈刑冲亦无偏枯滋长，宜深耕主业、稳健蓄势。'}`;
+    const analysisEn = `You are currently residing in ${targetCity.nameEn}, located in the ${cDirEn} sector of ${country.countryNameEn}, which carries the natural energy of [${cElemHeavenlyEn}]. With your natal Day Master anchored in [${dmEn}], the terrestrial interaction reflects [${relationEn}]. Resonance is rated as [${gradeEn}] (Compatibility Score: ${score}/100). ${gradeZh === '吉 / 大利' ? 'This terrestrial frequency harmonizes seamlessly with your favorable Yong Shen, unlocking expansive vitality and strategic momentum.' : gradeZh === '慎 / 气机对冲' ? 'This terrestrial frequency creates energetic friction or depletion against your natal balance; apply our targeted spatial remedies to convert regulatory tension into authoritative poise.' : 'This terrestrial frequency offers calm, steady equilibrium without destabilizing clashes, favoring sustained cultivation and gradual compound growth.'}`;
 
     const talismanMap = {
       '木': { zh: '常青阔叶绿植（发财树、琴叶榕）或沉香木雕', en: 'Lush broadleaf flora (Money Tree, Fiddle-leaf Fig) or natural agarwood carving' },
@@ -1329,16 +1346,18 @@ class SpatialFengShuiEngine {
       cityNameEn: targetCity.nameEn,
       provinceZh,
       provinceEn,
+      subRegionZh,
+      subRegionEn,
       isDenseCity,
       populationStr,
       pillarIndustriesZh,
       pillarIndustriesEn,
-      directionZh: targetRegion.directionZh,
-      directionEn: targetRegion.directionEn,
-      elementZh: targetRegion.elementZh,
-      elementEn: targetRegion.elementEn,
-      elementHeavenlyZh: targetRegion.elementHeavenlyZh,
-      elementHeavenlyEn: targetRegion.elementHeavenlyEn,
+      directionZh: cDirZh,
+      directionEn: cDirEn,
+      elementZh: cElZh,
+      elementEn: cElEn,
+      elementHeavenlyZh: cElemHeavenlyZh,
+      elementHeavenlyEn: cElemHeavenlyEn,
       dayMaster: dm,
       dayMasterEn: dmShortEn,
       dayMasterElement: dmEl,
@@ -1407,7 +1426,9 @@ class SpatialFengShuiEngine {
           const provTag = (c.provinceKey && country.provinces && country.provinces[c.provinceKey])
             ? ` · ${isEn ? country.provinces[c.provinceKey].nameEn : country.provinces[c.provinceKey].nameZh.split(' ')[0]}`
             : '';
-          return `<option value="${c.id}" ${ev.cityKey === c.id ? 'selected' : ''}>${isEn ? `${c.nameEn}${provTag}${denseTag} · ${reg.directionEn} (${reg.elementEn})` : `${c.nameZh}${provTag}${denseTag} · ${reg.elementHeavenlyZh}`}</option>`;
+          const cDir = isEn ? (c.directionEn || reg.directionEn) : (c.directionZh || reg.directionZh);
+          const cElem = isEn ? (c.elementEn || reg.elementEn) : (c.elementHeavenlyZh || reg.elementHeavenlyZh);
+          return `<option value="${c.id}" ${ev.cityKey === c.id ? 'selected' : ''}>${isEn ? `${c.nameEn}${provTag}${denseTag} · ${cDir} (${cElem})` : `${c.nameZh}${provTag}${denseTag} · ${cElem}`}</option>`;
         }).join('');
         cityOptionsHtml += `<optgroup label="${groupLabel}">${opts}</optgroup>`;
       });
@@ -1452,11 +1473,12 @@ class SpatialFengShuiEngine {
           </div>
         </div>
 
-        ${ev.provinceZh ? `
+        ${(ev.provinceZh || ev.subRegionZh) ? `
           <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-wrap items-center justify-between gap-2.5 text-xs">
             <div class="flex items-center gap-2 flex-wrap">
-              <span class="chinese-seal text-[10px] py-0.5 border-amber-500/60 text-amber-300 font-mono">${isEn ? 'PROVINCE' : '省份枢纽'}</span>
-              <span class="font-bold text-amber-200 font-serif-sc">${isEn ? ev.provinceEn : ev.provinceZh}</span>
+              <span class="chinese-seal text-[10px] py-0.5 border-amber-500/60 text-amber-300 font-mono">${isEn ? 'ZONE / SECTOR' : '地缘区位'}</span>
+              <span class="font-bold text-amber-200 font-serif-sc">${isEn ? (ev.subRegionEn || ev.provinceEn) : (ev.subRegionZh || ev.provinceZh)}</span>
+              ${ev.provinceZh && ev.subRegionZh ? `<span class="text-xs text-amber-400/80 font-mono">(${isEn ? ev.provinceEn : ev.provinceZh})</span>` : ''}
               ${ev.isDenseCity ? `<span class="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[10px] font-bold font-mono">${isEn ? `Dense Metropolis (${ev.populationStr || '>500k'})` : `高密度核心都会 (${ev.populationStr || '>50万'})`}</span>` : ''}
             </div>
             ${ev.pillarIndustriesZh ? `

@@ -5238,10 +5238,14 @@ jsc_dossier5_cmd = [
     elementStore["dossierLangEn"].trigger("click");
 
     var enHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!enHtml.includes("Page 1 / 6") && !enHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 in EN");
-    if (!enHtml.includes("Page 6 / 6") && !enHtml.includes("Page 5 / 5")) throw new Error("Missing last Page in EN");
-    if (!enHtml.includes("Volume IV: Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Vol IV title in EN");
+    if (!enHtml.includes("Page 1 / 7")) throw new Error("Missing Page 1 / 7 in EN");
+    if (!enHtml.includes("Page 7 / 7")) throw new Error("Missing Page 7 / 7 in EN");
+    if (!enHtml.includes("Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Decennial Trajectory title in EN");
     if (!enHtml.includes("14-CHARACTER HOLOGRAPHIC MATRIX")) throw new Error("Missing 14-char matrix in EN");
+    if (!enHtml.includes("Career Calling & Optimal Ecosystem")) throw new Error("Missing Career Calling in EN Page 1");
+    if (!enHtml.includes("Domestic Spouse Ballast")) throw new Error("Missing Spouse Ballast in EN Page 1");
+    if (!enHtml.includes("Three Golden Rules for Life")) throw new Error("Missing Three Golden Rules in EN Page 1");
+    if (enHtml.includes("undefined")) throw new Error("Found 'undefined' in EN Dossier HTML!");
     if (!enHtml.includes("Note: Preserving the authentic Chinese classical passage alongside vernacular translation is recommended for personal reflection and deeper meditation.")) {
       throw new Error("Missing reflection preservation note in EN");
     }
@@ -5253,15 +5257,20 @@ jsc_dossier5_cmd = [
 
     elementStore["dossierLangZh"].trigger("click");
     var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!zhHtml.includes("Page 1 / 6") && !zhHtml.includes("Page 1 / 5")) throw new Error("Missing Page 1 in ZH");
-    if (!zhHtml.includes("Page 6 / 6") && !zhHtml.includes("Page 5 / 5")) throw new Error("Missing last Page in ZH");
-    if (!zhHtml.includes("卷四 · 大运年景大势与十四字全景气机集成")) throw new Error("Missing Vol IV title in ZH");
+    if (!zhHtml.includes("Page 1 / 7")) throw new Error("Missing Page 1 / 7 in ZH");
+    if (!zhHtml.includes("Page 7 / 7")) throw new Error("Missing Page 7 / 7 in ZH");
+    if (!zhHtml.includes("大运年景大势与十四字全景气机集成")) throw new Error("Missing 14-char decennial title in ZH");
     if (!zhHtml.includes("十四字全相矩阵")) throw new Error("Missing 14-char matrix in ZH");
+    if (!zhHtml.includes("事业立身与天命职能生态位（事业怎么样）")) throw new Error("Missing Career Summary in ZH Page 1");
+    if (!zhHtml.includes("金玉资财与守财防漏红线（财富怎么样）")) throw new Error("Missing Wealth Summary in ZH Page 1");
+    if (!zhHtml.includes("配偶家庭与后方压舱石（配偶·老婆怎么样）")) throw new Error("Missing Spouse Summary in ZH Page 1");
+    if (!zhHtml.includes("钦天监朱批 · 终身不败立身三铁律")) throw new Error("Missing 3 Golden Rules in ZH Page 1");
+    if (zhHtml.includes("undefined")) throw new Error("Found 'undefined' in ZH Dossier HTML!");
     '''
 ]
 run_dossier5 = subprocess.run(jsc_dossier5_cmd, capture_output=True, text=True)
-assert run_dossier5.returncode == 0, f"Imperial Dossier 5-Page check failed: stdout={run_dossier5.stdout} stderr={run_dossier5.stderr}"
-print("✓ 皇家线装绝美排盘战报（六页典藏架构/14字全景气机/职场破局/中英双语 100% 零中文残留）验证通过！")
+assert run_dossier5.returncode == 0, f"Imperial Dossier 7-Page check failed: stdout={run_dossier5.stdout} stderr={run_dossier5.stderr}"
+print("✓ 钦天监 · 御制天机精装战报（七页典藏架构/卷首三要终身统览/14字全景气机/职场破局/零undefined/中英双语 100% 零中文残留）验证通过！")
 
 # 72. Validate Lifelong Chrono-Navigator Curvature at Decade Transition Boundaries
 print("\n=== 72. Validating Lifelong Chrono-Navigator Curvature at Decade Boundaries ===")
@@ -6156,24 +6165,45 @@ jsc_residence77_cmd = [
 
     var caSouth = db.Canada.regions.south;
     if (!caSouth.cities.some(function(c) { return c.id === 'toronto'; })) throw new Error("Canada South missing Toronto");
-    if (!caSouth.cities.some(function(c) { return c.id === 'ottawa'; })) throw new Error("Canada South MUST contain Ottawa");
-    if (!caSouth.cities.some(function(c) { return c.id === 'montreal'; })) throw new Error("Canada South MUST contain Montreal");
-    if (!caSouth.cities.some(function(c) { return c.id === 'windsor'; })) throw new Error("Canada South missing Windsor");
+    if (!caSouth.cities.some(function(c) { return c.id === 'calgary'; })) throw new Error("Canada South MUST contain Calgary");
 
     var caNorth = db.Canada.regions.north;
     if (!caNorth.cities.some(function(c) { return c.id === 'edmonton'; })) throw new Error("Canada North missing Edmonton");
+    if (!caNorth.cities.some(function(c) { return c.id === 'markham'; })) throw new Error("Canada North MUST contain Markham (GTA North)");
     var ykCity = caNorth.cities.find(function(c) { return c.id === 'yellowknife'; });
     if (!ykCity || ykCity.nameZh.indexOf('黄刀镇') === -1) throw new Error("Canada North Yellowknife nameZh must contain 黄刀镇");
 
     var caEast = db.Canada.regions.east;
+    if (!caEast.cities.some(function(c) { return c.id === 'ottawa'; })) throw new Error("Canada East MUST contain Ottawa (Eastern Ontario)");
+    if (!caEast.cities.some(function(c) { return c.id === 'scarborough'; })) throw new Error("Canada East MUST contain Scarborough (GTA East)");
     if (!caEast.cities.some(function(c) { return c.id === 'halifax'; })) throw new Error("Canada East missing Halifax");
     if (!caEast.cities.some(function(c) { return c.id === 'st_johns'; })) throw new Error("Canada East MUST contain St. John's");
     if (!caEast.cities.some(function(c) { return c.id === 'quebec_city'; })) throw new Error("Canada East missing Quebec City");
 
     var caWest = db.Canada.regions.west;
+    if (!caWest.cities.some(function(c) { return c.id === 'mississauga'; })) throw new Error("Canada West MUST contain Mississauga (GTA West)");
+    if (!caWest.cities.some(function(c) { return c.id === 'brampton'; })) throw new Error("Canada West MUST contain Brampton (GTA Northwest)");
     if (!caWest.cities.some(function(c) { return c.id === 'vancouver'; })) throw new Error("Canada West missing Vancouver");
-    if (!caWest.cities.some(function(c) { return c.id === 'victoria'; })) throw new Error("Canada West missing Victoria");
-    if (!caWest.cities.some(function(c) { return c.id === 'calgary'; })) throw new Error("Canada West missing Calgary");
+    if (!caWest.cities.some(function(c) { return c.id === 'hamilton'; })) throw new Error("Canada West MUST contain Hamilton");
+    if (!caWest.cities.some(function(c) { return c.id === 'windsor'; })) throw new Error("Canada West MUST contain Windsor");
+    if (!caWest.cities.some(function(c) { return c.id === 'montreal'; })) throw new Error("Canada West MUST contain Montreal");
+
+    // Validate GTA Micro-Region & Yangtze Delta Specific Five-Elements
+    var evMississauga = SpatialFengShuiEngine.evaluateResidenceCity('Canada', 'mississauga', { dayMaster: '甲', dayMasterElement: '木' });
+    if (evMississauga.cEl !== '金') throw new Error("Mississauga (GTA West) must be Metal, got: " + evMississauga.cEl);
+    if (!evMississauga.subRegionZh.includes('大多伦多西区')) throw new Error("Mississauga subRegionZh missing GTA West");
+
+    var evMarkham = SpatialFengShuiEngine.evaluateResidenceCity('Canada', 'markham', { dayMaster: '甲', dayMasterElement: '木' });
+    if (evMarkham.cEl !== '水') throw new Error("Markham (GTA North) must be Water, got: " + evMarkham.cEl);
+
+    var evOttawa = SpatialFengShuiEngine.evaluateResidenceCity('Canada', 'ottawa', { dayMaster: '甲', dayMasterElement: '木' });
+    if (evOttawa.cEl !== '木') throw new Error("Ottawa (Eastern Ontario) must be Wood, got: " + evOttawa.cEl);
+
+    var evSuzhou = SpatialFengShuiEngine.evaluateResidenceCity('China', 'suzhou', { dayMaster: '甲', dayMasterElement: '木' });
+    if (!evSuzhou.subRegionZh.includes('太湖')) throw new Error("Suzhou subRegionZh must mention Taihu Lake Basin");
+
+    var evShanghai = SpatialFengShuiEngine.evaluateResidenceCity('China', 'shanghai', { dayMaster: '甲', dayMasterElement: '木' });
+    if (!evShanghai.directionZh.includes('极东')) throw new Error("Shanghai directionZh must be Far East (极东)");
 
     // 2. Verify Day Master Five-Element Generation/Overcoming Dynamics & Canonical Grades
     var baziBing = {

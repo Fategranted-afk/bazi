@@ -381,7 +381,9 @@ document.addEventListener('DOMContentLoaded', () => {
       reg.cities.forEach(c => {
         const opt = document.createElement('option');
         opt.value = c.id;
-        opt.textContent = isEn ? `${c.nameEn} · ${reg.directionEn} (${reg.elementEn})` : `${c.nameZh} · ${reg.elementHeavenlyZh}`;
+        const cDir = isEn ? (c.directionEn || reg.directionEn) : (c.directionZh || reg.directionZh);
+        const cElem = isEn ? (c.elementEn || reg.elementEn) : (c.elementHeavenlyZh || reg.elementHeavenlyZh);
+        opt.textContent = isEn ? `${c.nameEn} · ${cDir} (${cElem})` : `${c.nameZh} · ${cElem}`;
         if (c.id === selectedCityId) {
           opt.selected = true;
         }
@@ -10084,7 +10086,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
 
     showDossierStatus(
-      isEn ? '⏳ Compiling 6-Page Imperial A4 PDF Dossier...' : '⏳ 正在编译 6 页皇家线装 A4 珍藏册 PDF，请稍候...',
+      isEn ? '⏳ Compiling 7-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 7 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
       'info'
     );
 
@@ -10112,14 +10114,14 @@ document.addEventListener('DOMContentLoaded', () => {
             orientation: 'portrait'
           },
           pagebreak: {
-            mode: [] // Pure 5-page continuous A4 rendering without spurious spacer injections
+            mode: [] // Pure 7-page continuous A4 rendering without spurious spacer injections
           }
         };
 
         html2pdf().set(opt).from(container).save().then(() => {
           container.classList.remove('exporting-pdf');
           showDossierStatus(
-            isEn ? '✅ Imperial PDF Dossier generated and download started!' : '✅ 皇家线装战报 PDF 已成功生成并开始下载！',
+            isEn ? '✅ Qin Tian Jian Imperial PDF Dossier generated and download started!' : '✅ 钦天监 · 御制天机战报 PDF 已成功生成并开始下载！',
             'success'
           );
         }).catch((err) => {
@@ -10181,7 +10183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, 2000);
       showDossierStatus(
-        isEn ? '✅ Imperial PDF Dossier generated and download started!' : '✅ 皇家线装战报 PDF 已成功生成并开始下载！',
+        isEn ? '✅ Qin Tian Jian Imperial PDF Dossier generated and download started!' : '✅ 钦天监 · 御制天机战报 PDF 已成功生成并开始下载！',
         'success'
       );
     }).catch((err) => {
@@ -10429,8 +10431,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const mf = portrait.mentalFriction;
     const zen = mf.zenDaoWisdom;
 
-    const watermarkText = isEn ? 'IMPERIAL CELESTIAL ARCHIVE' : '钦天监御制命盘密卷';
-    const mainTitle = isEn ? 'Imperial Astronomical Bureau Master BaZi Dossier' : '钦天监 · 御制天机全相精装战报';
+    const watermarkText = isEn ? 'QIN TIAN JIAN · IMPERIAL CELESTIAL BLUEPRINT' : '钦天监 · 御制天机';
+    const mainTitle = isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机';
     const subTitle = isEn ? 'Canonical Synthesis from Di Tian Sui, San Ming, Qiong Tong, Zi Ping & Yuan Hai' : '《滴天髓》·《三命通会》·《穷通宝鉴》·《子平真诠》·《渊海子平》五典全相集成';
 
     const p = bazi.pillars;
@@ -10544,8 +10546,153 @@ document.addEventListener('DOMContentLoaded', () => {
     const crArchs = (careerReport && careerReport.workplaceArchetypes) ? careerReport.workplaceArchetypes : [];
     const crTt = careerReport ? careerReport.timingTrajectory : null;
 
+    // Executive Summary Blueprint Data Extraction
+    const sf = (portrait.canons && portrait.canons.shenfeng) || (bazi.canons && bazi.canons.shenfeng) || {};
+    const rawMedicineZh = (sf && sf.medicineZh) || (gp && gp.section2 && gp.section2.medicineZh) || '以法度约束锋芒，以相神护卫用神';
+    const rawMedicineEn = (sf && sf.medicineEn) || (gp && gp.section2 && gp.section2.medicineEn) || 'Discipline & Strategic Warmth';
+    const keyMedicineText = isEn ? (rawMedicineEn.split('.')[0] || 'Discipline & Solar Warmth') : (rawMedicineZh.split('与')[0] || '相神救应');
+
+    const arch1 = (crArchs && crArchs.length > 0) ? crArchs[0] : {
+      icon: '🏛️',
+      nameZh: '高管 / 统帅型',
+      nameEn: 'Executive / Commander',
+      fitScore: 95,
+      coreStrengthsZh: '具备宏观全景视野与极强战略定力，擅长制定顶层规则、调配核心资源。',
+      coreStrengthsEn: 'Commanding panoramic strategic vision and systemic discipline in orchestrating high-stakes organizational campaigns.',
+      breakthroughTacticZh: '以制度建威权，以成果赢话语，不争细节琐碎，专攻关键抓手。',
+      breakthroughTacticEn: 'Establish authority through structural discipline and measurable milestones; govern high-leverage outcomes.'
+    };
+
+    const sp = pc.spouse || {};
+    const spBranch = (p && p.day && p.day.branch) || '子';
+    const spBranchEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(spBranch, 'en').split(' ')[0] : spBranch;
+    const spArch = isEn
+      ? (sp.archetype && !/[\u4e00-\u9fa5]/.test(sp.archetype) ? sp.archetype : 'Steadfast Ballast Consort')
+      : (sp.archetypeZh || '大局深稳内助型');
+    const spDemeanour = isEn
+      ? (sp.demeanour && !/[\u4e00-\u9fa5]/.test(sp.demeanour) ? sp.demeanour : 'Composed, discerning, and naturally protective.')
+      : (sp.demeanourZh || '温润沉静，处事极具大局观，暗中稳固底盘。');
+    const spRelationship = isEn
+      ? (sp.relationship && !/[\u4e00-\u9fa5]/.test(sp.relationship) ? sp.relationship : 'Harmonious domestic foundation; mutual strategic counsel.')
+      : (sp.relationshipZh || '相敬如宾，家庭压舱石稳固，遇风浪共商大计。');
+
+    const directWealthText = isEn
+      ? (crTt ? (crTt.directWealthEvaluationEn || crTt.directWealthAnalysisEn || 'Direct wealth indicates stable core salary and promotions.') : 'Direct wealth indicates stable core salary and promotions.')
+      : (crTt ? (crTt.directWealthEvaluationZh || crTt.directWealthAnalysisZh || '正财主业稳定，深耕岗位基本盘换取稳健增长。') : '正财主业稳定，深耕岗位基本盘换取稳健增长。');
+
+    const indirectWealthText = isEn
+      ? (crTt ? (crTt.indirectWealthEvaluationEn || crTt.indirectWealthAnalysisEn || 'Indirect wealth advises prudent equity and venture investments.') : 'Indirect wealth advises prudent equity and venture investments.')
+      : (crTt ? (crTt.indirectWealthEvaluationZh || crTt.indirectWealthAnalysisZh || '偏财副业适度进取，善用信息差获利，严控杠杆。') : '偏财副业适度进取，善用信息差获利，严控杠杆。');
+
+    const rule1 = isEn
+      ? '1. Govern Ferocious Drive with Structural Law: Tame excessive ambition through ironclad rules and self-discipline, converting turbulent friction into supreme authority.'
+      : '一、以法度驾驭锋芒（守正）：极度偏旺之势切忌任性逞强，须以严苛制度与自我纪律约束锋芒，凶煞自转威权帅印。';
+    const rule2 = isEn
+      ? '2. Dissolve Aloofness with Radiant Altruism: Melt defensive isolation through genuine empathy, collaborative generosity, and strategic patience, winning lasting allies.'
+      : '二、以利他远见融解孤寒（化冰）：遇逆境切忌孤芳自赏，善用温润沟通与利他大局广结善缘，得道多助方能成就长久基业。';
+    const rule3 = isEn
+      ? '3. Fortify Domestic Sanctuary & Somatic Reserve: Honor the spouse as your ultimate financial breakwater and emotional ballast; guard vitality against overwork.'
+      : '三、以后方压舱石固本培元（安内）：配偶乃一生财库防波堤与理智护航者，遇风浪当共商大计，修心养气方保终身立于不败之地。';
+
     container.innerHTML = `
-      <!-- Page 1: Cover & Four Pillars Grand Altar -->
+      <!-- Page 1: Executive Summary Blueprint -->
+      <div class="imperial-page relative">
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-6 space-y-2">
+          <!-- Header -->
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2.5">
+            <div class="flex items-center justify-between">
+              <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL BLUEPRINT' : '钦天监正堂之宝'}</span>
+              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首统览'}</span>
+            </div>
+            <h1 class="text-xl font-black font-serif-sc text-amber-900 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首三要终身统览'}</h1>
+            <p class="text-[11px] text-gray-700 font-serif-sc">${isEn ? 'Executive Lifetime Synthesis: Career Calling · Wealth Flow · Domestic Spouse Ballast · Three Sovereign Decrees' : '全相至高纲领：天命职能 · 金玉资财 · 配偶家庭（老婆） · 钦天监朱批终身三铁律'}</p>
+          </div>
+
+          <!-- Subject Quick Metadata Banner -->
+          <div class="grid grid-cols-4 gap-2 text-[10.5px] bg-amber-50/70 p-2 rounded border border-amber-900/30 text-center font-serif-sc">
+            <div><span class="text-gray-500">${isEn ? 'Subject:' : '命主造化:'}</span> <b class="text-amber-950 font-mono ml-0.5">${genderStr}</b></div>
+            <div><span class="text-gray-500">${isEn ? 'Day Master:' : '日元元神:'}</span> <b class="text-amber-900 ml-0.5">${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`}</b></div>
+            <div><span class="text-gray-500">${isEn ? 'Pattern:' : '统帅格局:'}</span> <b class="text-amber-900 ml-0.5 truncate">${domPat}</b></div>
+            <div><span class="text-gray-500">${isEn ? 'Key Medicine:' : '相神大药:'}</span> <b class="text-red-900 ml-0.5">${keyMedicineText}</b></div>
+          </div>
+
+          <!-- Module 1: Career Calling -->
+          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
+              <span class="flex items-center gap-1.5"><span class="text-sm">🎯</span><span>${isEn ? 'I. Career Calling & Optimal Ecosystem (Career Trajectory)' : '一、事业立身与天命职能生态位（事业怎么样）'}</span></span>
+              <span class="text-[10px] px-2 py-0.2 rounded bg-emerald-200/80 text-emerald-950 font-bold border border-emerald-600/40 font-mono">
+                ${arch1.icon} ${isEn ? arch1.nameEn.split('(')[0].trim() : arch1.nameZh.split('（')[0].trim()} (${arch1.fitScore}${isEn ? '/100' : '分'})
+              </span>
+            </div>
+            <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Core Advantage: ' : '核心天赋优势：'}</b>${isEn ? arch1.coreStrengthsEn : arch1.coreStrengthsZh}</p>
+            <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Breakthrough Tactic: ' : '向下突破与战略战法：'}</b>${isEn ? arch1.breakthroughTacticEn : arch1.breakthroughTacticZh}</p>
+            <p class="text-[10.5px] text-gray-700 leading-tight"><b>${isEn ? 'Managing Up & Colleagues: ' : '向上管理与职场沟通：'}</b>${isEn ? (crMu ? crMu.generalRuleEn : 'Preserve institutional alignment and present structured results.') : (crMu ? crMu.generalRuleZh : '以严密数据与结构化成果向上复命，多请示少冒进，克制叛逆锋芒。')}</p>
+          </div>
+
+          <!-- Module 2: Wealth & Capital -->
+          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
+              <span class="flex items-center gap-1.5"><span class="text-sm">💰</span><span>${isEn ? 'II. Wealth Engine & Capital Preservation (Wealth Outlook)' : '二、金玉资财与守财防漏红线（财富怎么样）'}</span></span>
+              <span class="text-[10px] px-2 py-0.2 rounded bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40 font-mono">
+                ${isEn ? `Direct ${crTt ? crTt.directWealthScore : 80} / Indirect ${crTt ? crTt.indirectWealthScore : 75}` : `正财${crTt ? crTt.directWealthScore : 80}分 · 偏财${crTt ? crTt.indirectWealthScore : 75}分`}
+              </span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[10px] text-gray-800 pt-0.5">
+              <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
+                <b>${isEn ? 'Base Salary & Promotion: ' : '正财薪酬与现金流：'}</b>
+                <span class="leading-tight">${directWealthText}</span>
+              </div>
+              <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
+                <b>${isEn ? 'Side Ventures & Investments: ' : '偏财副业与投资红利：'}</b>
+                <span class="leading-tight">${indirectWealthText}</span>
+              </div>
+            </div>
+            <p class="text-[10px] text-rose-900 leading-tight"><b>${isEn ? 'Anti-Leakage Rule: ' : '守财防漏戒律：'}</b>${isEn ? 'Guard liquidity reserves with discipline. Strictly avoid unhedged high-leverage gambles, unvetted angel partnerships, or cosigning personal loans to prevent sudden wealth plunder.' : '严守现金储备安全垫，严禁高杠杆投机与无担保民间借贷，防范“比劫夺财”，将流动资本牢固转化为核心资产。'}</p>
+          </div>
+
+          <!-- Module 3: Spouse & Marriage -->
+          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
+              <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span><span>${isEn ? 'III. Spouse & Marriage Palace (Domestic Breakwater Ballast)' : '三、配偶家庭与后方压舱石（配偶·老婆怎么样）'}</span></span>
+              <span class="text-[10px] px-2 py-0.2 rounded bg-rose-200/80 text-rose-950 font-bold border border-rose-600/40 font-mono">
+                ${isEn ? `Day Branch [${spBranchEn}] · ${spArch}` : `日支坐【${spBranch}】· ${spArch}`}
+              </span>
+            </div>
+            <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Spouse Archetype & Demeanour: ' : '配偶心性与气质风范：'}</b>${spDemeanour}</p>
+            <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Domestic Breakwater Ballast: ' : '防波堤与财富护航功能：'}</b>${isEn ? 'The partner serves as your ultimate financial breakwater and emotional ballast—anchoring family assets, offering sound rational counsel during crises, and mitigating reckless extremes.' : '配偶不仅在暗中稳住财富底盘，更能在命主锋芒过盛或外部突遭狂风暴雨时提供最坚不可摧的理智庇护与精神压舱石。'}</p>
+            <p class="text-[10px] text-gray-700 leading-tight"><b>${isEn ? 'Harmony Mandate: ' : '相处共融之道：'}</b>${spRelationship}</p>
+          </div>
+
+          <!-- Module 4: Imperial Decrees -->
+          <div class="p-2 bg-amber-100/60 rounded border border-amber-900/40 text-xs space-y-0.5 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950">
+              <span class="flex items-center gap-1"><span class="text-sm">👑</span><span>${isEn ? 'IV. Imperial Decrees · Three Golden Rules for Life' : '四、钦天监朱批 · 终身不败立身三铁律'}</span></span>
+              <span class="imperial-seal-stamp text-[9px] py-0.2 px-1.5">${isEn ? 'IMPERIAL DECREE' : '朱批定命'}</span>
+            </div>
+            <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight pt-0.5">
+              <p>${rule1}</p>
+              <p>${rule2}</p>
+              <p>${rule3}</p>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Master Executive Summary' : '大明/大清钦天监 · 卷首 终身统览'}</span>
+            <span>Page 1 / 7</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2: Cover & Four Pillars Grand Altar -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -10559,10 +10706,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="text-center space-y-2 border-b-2 border-amber-900/60 pb-4">
             <div class="flex items-center justify-between">
               <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL SEAL' : '钦天监正堂之宝'}</span>
-              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 绝密典藏'}</span>
+              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷一图谱'}</span>
             </div>
             <h1 class="text-2xl font-black font-serif-sc text-amber-900 tracking-wider">${mainTitle}</h1>
-            <p class="text-xs text-gray-700 font-serif-sc">${subTitle}</p>
+            <p class="text-xs text-gray-700 font-serif-sc">${isEn ? 'Volume I · Sacred Four Pillars & Five-Element Architecture' : '卷一 · 四柱本命神机图谱与五行气象'}</p>
           </div>
 
           <div class="grid grid-cols-2 gap-4 text-xs bg-amber-50/60 p-3 rounded border border-amber-900/30 my-3">
@@ -10638,8 +10785,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷首'}</span>
-            <span>Page 1 / 6</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷一'}</span>
+            <span>Page 2 / 7</span>
           </div>
         </div>
       </div>
@@ -10692,13 +10839,13 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷一'}</span>
-            <span>Page 2 / 6</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷二'}</span>
+            <span>Page 3 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 3: Volume II - 4D Kinship Profiles -->
+      <!-- Page 4: Volume III - 4D Kinship Profiles -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -10710,7 +10857,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume II: 4D Kinship Holographic Depth Profiles' : '卷二 · 六亲全息深度侧写 (配偶 · 子女 · 父母)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume III: 4D Kinship Holographic Depth Profiles' : '卷三 · 六亲全息深度侧写 (配偶 · 子女 · 父母)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'KINSHIP HARMONY' : '和合天伦'}</span>
           </div>
 
@@ -10748,13 +10895,13 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷二'}</span>
-            <span>Page 3 / 6</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷三'}</span>
+            <span>Page 4 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 4: Volume III - Zen & Dao Trinity Wisdom -->
+      <!-- Page 5: Volume IV - Zen & Dao Trinity Wisdom -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -10766,7 +10913,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume III: Zen & Dao Trinity Wisdom & Ultimate Liberation' : '卷三 · 禅道心智与传世解脱方策 (金刚经 · 坛经 · 庄子)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume IV: Zen & Dao Trinity Wisdom & Ultimate Liberation' : '卷四 · 禅道心智与传世解脱方策 (金刚经 · 坛经 · 庄子)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'LIBERATION WISDOM' : '顿悟解脱'}</span>
           </div>
 
@@ -10812,13 +10959,13 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷三'}</span>
-            <span>Page 4 / 6</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
+            <span>Page 5 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 5: Volume IV - Macro Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
+      <!-- Page 6: Volume V - Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -10830,7 +10977,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume IV: Decennial Trajectory & 14-Character Energy Synthesis' : '卷四 · 大运年景大势与十四字全景气机集成 (时运交感与时空场能)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume V: Decennial Trajectory & 14-Character Energy Synthesis' : '卷五 · 大运年景大势与十四字全景气机集成 (时运交感与时空场能)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'DYNAMIC RESONANCE' : '时运合一'}</span>
           </div>
 
@@ -10943,13 +11090,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷四'}</span>
-            <span>Page 5 / 6</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷五'}</span>
+            <span>Page 6 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 6: Volume V - Career & Wealth Trajectory -->
+      <!-- Page 7: Volume VI - Career & Wealth Trajectory -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -10961,7 +11108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         <div class="imperial-frame flex flex-col justify-between p-6 space-y-2.5">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume V: Career Breakthrough & Wealth Trajectory' : '卷五 · 职场打工人破局与财运事业全相推演 (向上管理 · 同僚防波堤 · 天命生态位 · 岁运财帛)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume VI: Career Breakthrough & Wealth Trajectory' : '卷六 · 职场打工人破局与财运事业全相推演 (向上管理 · 同僚防波堤 · 天命生态位 · 岁运财帛)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'CAREER & WEALTH' : '天命经纶'}</span>
           </div>
 
@@ -11029,22 +11176,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-800 pt-0.5">
               <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
                 <b>${isEn ? 'Direct Wealth (Career Salary): ' : '正财主业薪酬：'}</b>
-                <span>${isEn ? (crTt ? crTt.directWealthEvaluationEn : '') : (crTt ? crTt.directWealthEvaluationZh : '')}</span>
+                <span>${isEn ? (crTt ? (crTt.directWealthEvaluationEn || crTt.directWealthAnalysisEn || 'Direct wealth indicates stable core compensation.') : 'Direct wealth indicates stable core compensation.') : (crTt ? (crTt.directWealthEvaluationZh || crTt.directWealthAnalysisZh || '正财主业稳定，深耕岗位基本盘。') : '正财主业稳定，深耕岗位基本盘。')}</span>
               </div>
               <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
                 <b>${isEn ? 'Indirect Wealth (Investments): ' : '偏财副业投资：'}</b>
-                <span>${isEn ? (crTt ? crTt.indirectWealthEvaluationEn : '') : (crTt ? crTt.indirectWealthEvaluationZh : '')}</span>
+                <span>${isEn ? (crTt ? (crTt.indirectWealthEvaluationEn || crTt.indirectWealthAnalysisEn || 'Indirect wealth advises defensive risk management.') : 'Indirect wealth advises defensive risk management.') : (crTt ? (crTt.indirectWealthEvaluationZh || crTt.indirectWealthAnalysisZh || '偏财副业适度进取，严防比劫夺财破耗。') : '偏财副业适度进取，严防比劫夺财破耗。')}</span>
               </div>
             </div>
             <p class="text-[10.5px] text-gray-700 leading-tight pt-0.5">
-              <b>${isEn ? 'Annual Hexagram Guidance: ' : '值年卦指引：'}</b>${isEn ? (crTt ? crTt.annualHexTacticEn : '') : (crTt ? crTt.annualHexTacticZh : '')}
+              <b>${isEn ? 'Annual Hexagram Guidance: ' : '值年卦指引：'}</b>${isEn ? (crTt ? (crTt.annualHexTacticEn || (crTt.annualHex && crTt.annualHex.decisionEn) || 'Align actions with timing and maintain strategic patience.') : 'Align actions with timing and maintain strategic patience.') : (crTt ? (crTt.annualHexTacticZh || (crTt.annualHex && crTt.annualHex.decisionZh) || '顺应天道节律，进退有据。') : '顺应天道节律，进退有据。')}
             </p>
           </div>
 
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 6' : '大明/大清钦天监 · 卷五'}</span>
-            <span>Page 6 / 6 · Complete Dossier</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 6' : '大明/大清钦天监 · 卷六'}</span>
+            <span>Page 7 / 7 · Complete Dossier</span>
           </div>
         </div>
       </div>

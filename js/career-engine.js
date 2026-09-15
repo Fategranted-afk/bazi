@@ -770,8 +770,14 @@ class CareerEngine {
       indirectWealthScore,
       directWealthAnalysisZh,
       directWealthAnalysisEn,
+      directWealthEvaluationZh: directWealthAnalysisZh,
+      directWealthEvaluationEn: directWealthAnalysisEn,
       indirectWealthAnalysisZh,
       indirectWealthAnalysisEn,
+      indirectWealthEvaluationZh: indirectWealthAnalysisZh,
+      indirectWealthEvaluationEn: indirectWealthAnalysisEn,
+      annualHexTacticZh: (annualHex && annualHex.decisionZh) || '顺应天道节律，进退有据。',
+      annualHexTacticEn: (annualHex && annualHex.decisionEn) || 'Align actions with timing and maintain strategic patience.',
       monthlyRoadmap
     };
   }
