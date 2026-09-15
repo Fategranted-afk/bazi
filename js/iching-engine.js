@@ -758,93 +758,94 @@ class IChingEngine {
     let currentEvaluatedLine = activePhase.linePos;
     let currentYingLine = (activePhase.linePos <= 3) ? (activePhase.linePos + 3) : (activePhase.linePos - 3);
 
+    const startLine = activePhase.linePos;
+
     for (let k = 1; k <= yearInPhase; k++) {
       const yrK = effSelectedYear - (yearInPhase - k);
       const bK = BRANCH_LIST[(yrK - 4 + 60000) % 12];
       const isYangYearK = YANG_BRANCHES.includes(bK);
 
-      const currPos = ((activePhase.linePos - 1 + (k - 1)) % 6) + 1;
-      let targetLine = currPos;
-      let isResponsive = false;
+      const currPos = ((startLine - 1 + (k - 1)) % 6) + 1;
 
       if (activePhase.nature === 1) {
         // 元堂为阳爻 (管9年)
         if (k === 1) {
-          targetLine = currPos; // 首年：元堂自身
+          currentEvaluatedLine = startLine;
+          if (isYangYearK) {
+            // 首年逢阳年同气守本不动
+            stepZh = '元堂阳爻首年 · 逢阳年不动（守本卦）';
+            stepEn = 'Yuan Tang Yang Line Year 1: Meets Yang Year -> Unchanged, Retains Base Hexagram';
+            lastMutatedLine = null;
+          } else {
+            // 首年逢阴年相感，阳变阴
+            const prevVal = currBinary[startLine - 1];
+            currBinary[startLine - 1] = 1 - prevVal;
+            stepZh = `元堂阳爻首年 · 逢阴年相感 · 元堂（第${posNamesZh[startLine - 1]}爻）${prevVal === 1 ? '阳变阴' : '阴变阳'}`;
+            stepEn = `Yuan Tang Yang Line Year 1: Meets Yin Year -> Yuan Tang Line ${startLine} ${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'}`;
+            lastMutatedLine = startLine;
+          }
         } else if (k === 2 || k === 3) {
           // 第二、三年取当前行经爻位之应爻 (1应4, 2应5, 3应6, 4应1, 5应2, 6应3)
-          targetLine = (currPos <= 3) ? (currPos + 3) : (currPos - 3);
-          isResponsive = true;
-          currentYingLine = targetLine;
+          const yingLine = (currPos <= 3) ? (currPos + 3) : (currPos - 3);
+          currentEvaluatedLine = yingLine;
+          currentYingLine = yingLine;
+          const prevVal = currBinary[yingLine - 1];
+          currBinary[yingLine - 1] = 1 - prevVal;
+          stepZh = `阳爻运第${k}年 · 行至第${posNamesZh[currPos - 1]}爻取应爻（第${posNamesZh[yingLine - 1]}爻）· 阴阳互变（${prevVal === 1 ? '阳变阴' : '阴变阳'}）`;
+          stepEn = `Yang Line Year ${k}: Line ${currPos} Takes Responsive Line ${yingLine} -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
+          lastMutatedLine = yingLine;
+        } else if (k === 4 || k === 5) {
+          // 第四年、第五年不取应爻，逐爻直接推移变换
+          currentEvaluatedLine = currPos;
+          const prevVal = currBinary[currPos - 1];
+          currBinary[currPos - 1] = 1 - prevVal;
+          stepZh = `阳爻运第${k}年 · 不取应爻 · 向上推至第${posNamesZh[currPos - 1]}爻 · 阴阳互变（${prevVal === 1 ? '阳变阴' : '阴变阳'}）`;
+          stepEn = `Yang Line Year ${k}: Direct Push to Line ${currPos} -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
+          lastMutatedLine = currPos;
+        } else if (k === 6) {
+          // 第六年推至第六爻位（前一爻位第5爻归位，第6爻翻转）
+          const prevPos = ((startLine - 1 + 4) % 6) + 1;
+          currBinary[prevPos - 1] = 1 - currBinary[prevPos - 1];
+          currentEvaluatedLine = currPos;
+          const prevVal = currBinary[currPos - 1];
+          currBinary[currPos - 1] = 1 - prevVal;
+          stepZh = `阳爻运第6年 · 向上推至第${posNamesZh[currPos - 1]}爻（前爻归位）· 阴阳互变（${prevVal === 1 ? '阳变阴' : '阴变阳'}）`;
+          stepEn = `Yang Line Year 6: Push to Line ${currPos} (Previous Line Reverted) -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
+          lastMutatedLine = currPos;
         } else {
-          // 从第四年开始不取应爻，每一年推一爻
-          targetLine = currPos;
+          // 第七至九年：逐爻向上推移变换
+          currentEvaluatedLine = currPos;
+          const prevVal = currBinary[currPos - 1];
+          currBinary[currPos - 1] = 1 - prevVal;
+          stepZh = `阳爻运第${k}年 · 向上推至第${posNamesZh[currPos - 1]}爻 · 阴阳互变（${prevVal === 1 ? '阳变阴' : '阴变阳'}）`;
+          stepEn = `Yang Line Year ${k}: Direct Push to Line ${currPos} -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
+          lastMutatedLine = currPos;
         }
       } else {
-        // 元堂为阴爻 (管6年)：第二至六年不取应爻，逐爻向上推移
-        targetLine = currPos;
-      }
-
-      currentEvaluatedLine = targetLine;
-      const currLineVal = currBinary[targetLine - 1];
-
-      if (k === 1 && activePhase.nature === 0) {
-        // 元堂为阴爻首年：无论阴阳年，元堂爻阴变阳
-        currBinary[targetLine - 1] = 1;
-        stepZh = `元堂阴爻首年 · 无论阴阳年，元堂（第${posNamesZh[targetLine - 1]}爻）阴变阳`;
-        stepEn = `Yin Line Year 1: Yuan Tang Line ${targetLine} Yin to Yang`;
-        lastMutatedLine = targetLine;
-      } else if (currLineVal === 1) {
-        // 当前目标爻为阳爻：逢阴年相感，阳变阴；逢阳年同气，守本不动
-        if (!isYangYearK) {
-          currBinary[targetLine - 1] = 0;
-          if (isResponsive) {
-            stepZh = `阳爻运第${k}年 · 行至第${posNamesZh[currPos - 1]}爻取应爻（第${posNamesZh[targetLine - 1]}爻）· 逢阴年相感（阳变阴）`;
-            stepEn = `Yang Line Year ${k}: Passes Line ${currPos} -> Takes Responsive Line ${targetLine} -> Meets Yin Year (Yang to Yin)`;
+        // 元堂为阴爻 (管6年)
+        if (k === 1) {
+          currentEvaluatedLine = startLine;
+          if (isYangYearK) {
+            // 首年逢阳年不动（守本卦）
+            stepZh = '元堂阴爻首年 · 逢阳年不动（守本卦）';
+            stepEn = 'Yin Line Year 1: Meets Yang Year -> Unchanged, Retains Base Hexagram';
+            lastMutatedLine = null;
           } else {
-            stepZh = (k === 1)
-              ? `元堂阳爻首年 · 逢阴年相感 · 元堂（第${posNamesZh[targetLine - 1]}爻）阳变阴`
-              : `阳爻运第${k}年 · 向上推至第${posNamesZh[targetLine - 1]}爻 · 逢阴年相感（阳变阴）`;
-            stepEn = (k === 1)
-              ? `Yuan Tang Yang Line Year 1: Meets Yin Year -> Yuan Tang Line ${targetLine} Yang to Yin`
-              : `Yang Line Year ${k}: Pushed to Line ${targetLine} -> Meets Yin Year (Yang to Yin)`;
+            // 首年逢阴年相感，阴变阳
+            const prevVal = currBinary[startLine - 1];
+            currBinary[startLine - 1] = 1 - prevVal;
+            stepZh = `元堂阴爻首年 · 逢阴年相感 · 元堂（第${posNamesZh[startLine - 1]}爻）${prevVal === 1 ? '阳变阴' : '阴变阳'}`;
+            stepEn = `Yin Line Year 1: Meets Yin Year -> Yuan Tang Line ${startLine} ${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'}`;
+            lastMutatedLine = startLine;
           }
-          lastMutatedLine = targetLine;
         } else {
-          if (isResponsive) {
-            stepZh = `阳爻运第${k}年 · 行至第${posNamesZh[currPos - 1]}爻取应爻（第${posNamesZh[targetLine - 1]}爻）· 逢阳年同气守本`;
-            stepEn = `Yang Line Year ${k}: Passes Line ${currPos} -> Takes Responsive Line ${targetLine} -> Meets Yang Year -> Unchanged`;
-          } else {
-            stepZh = (k === 1)
-              ? '元堂阳爻首年 · 逢阳年不动（守本卦）'
-              : `阳爻运第${k}年 · 向上推至第${posNamesZh[targetLine - 1]}爻 · 逢阳年同气守本`;
-            stepEn = (k === 1)
-              ? 'Yuan Tang Yang Line Year 1: Meets Yang Year -> Unchanged, Retains Base Hexagram'
-              : `Yang Line Year ${k}: Line ${targetLine} Meets Yang Year -> Unchanged`;
-          }
-          lastMutatedLine = null;
-        }
-      } else {
-        // 当前目标爻为阴爻：逢阳年相感，阴变阳；逢阴年同气，守本不动
-        if (isYangYearK) {
-          currBinary[targetLine - 1] = 1;
-          if (isResponsive) {
-            stepZh = `阳爻运第${k}年 · 行至第${posNamesZh[currPos - 1]}爻取应爻（第${posNamesZh[targetLine - 1]}爻）· 逢阳年相感（阴变阳）`;
-            stepEn = `Yang Line Year ${k}: Passes Line ${currPos} -> Takes Responsive Line ${targetLine} -> Meets Yang Year (Yin to Yang)`;
-          } else {
-            stepZh = `阴爻运第${k}年 · 向上推至第${posNamesZh[targetLine - 1]}爻 · 逢阳年相感（阴变阳）`;
-            stepEn = `Yin Line Year ${k}: Pushed to Line ${targetLine} -> Meets Yang Year (Yin to Yang)`;
-          }
-          lastMutatedLine = targetLine;
-        } else {
-          if (isResponsive) {
-            stepZh = `阳爻运第${k}年 · 行至第${posNamesZh[currPos - 1]}爻取应爻（第${posNamesZh[targetLine - 1]}爻）· 逢阴年同气守本`;
-            stepEn = `Yang Line Year ${k}: Passes Line ${currPos} -> Takes Responsive Line ${targetLine} -> Meets Yin Year -> Unchanged`;
-          } else {
-            stepZh = `阴爻运第${k}年 · 向上推至第${posNamesZh[targetLine - 1]}爻 · 逢阴年同气守本`;
-            stepEn = `Yin Line Year ${k}: Line ${targetLine} Meets Yin Year -> Unchanged`;
-          }
-          lastMutatedLine = null;
+          // 第二至六年：不取应爻，逐爻向上推移变换
+          currentEvaluatedLine = currPos;
+          const prevVal = currBinary[currPos - 1];
+          currBinary[currPos - 1] = 1 - prevVal;
+          stepZh = `阴爻运第${k}年 · 向上推至第${posNamesZh[currPos - 1]}爻 · 阴阳互变（${prevVal === 1 ? '阳变阴' : '阴变阳'}）`;
+          stepEn = `Yin Line Year ${k}: Direct Push to Line ${currPos} -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
+          lastMutatedLine = currPos;
         }
       }
     }
