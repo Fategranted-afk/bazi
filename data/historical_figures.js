@@ -36,7 +36,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "警惕小胜即骄与晚节不保！切忌在取得阶段性胜利后彻底放松警惕、贪图享乐，决不可把核心法度与制度基石建立在侥幸与血缘私情上。",
     "weaknessAdviceEn": "Beware premature complacency and moral laxity! Never lower guard after early triumphs, and never anchor core governance on nepotism or sentimental wishful thinking.",
     "historicalQuoteZh": "《晋书》评：平吴之后，怠于政事，羊车望幸，极度荒耽，社稷自覆之端，发于斯矣。",
-    "historicalQuoteEn": "Book of Jin: After conquering Wu, he abandoned discipline and indulged in court luxuries; the catastrophic demise of his dynasty was seeded therein."
+    "historicalQuoteEn": "Book of Jin: After conquering Wu, he abandoned discipline and indulged in court luxuries; the catastrophic demise of his dynasty was seeded therein.",
+    "auxiliaryStrengthsZh": [
+      "善聚四方人心，善抓时代风口顺势而为",
+      "有海纳百川之气度，能整合存量资源达成大一统宏图"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master at rallying human hearts and seizing macro momentum",
+      "possesses immense breadth to integrate diverse factions into systemic victory"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "警惕小胜即骄与晚节不保",
+      "切忌在取得阶段性胜利后彻底放松警惕、贪图享乐，决不可把核心法度与制度基石建立在侥幸与血缘私情上"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Beware premature complacency and moral laxity",
+      "Never lower guard after early triumphs, and never anchor core governance on nepotism or sentimental wishful thinking"
+    ]
   },
   {
     "id": "sima_zhong",
@@ -68,7 +84,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "千万不可德不配位！在自身能力、心智认知极度欠缺时，万不可被他人推上风口浪尖承担生死重责，否则必沦为嗜血豺狼的提线木偶与牺牲品。",
     "weaknessAdviceEn": "Never accept a seat of authority far exceeding your capacity! When lacking competence and strategic awareness, being thrust into high power guarantees destruction as a pawn.",
     "historicalQuoteZh": "及天下荒乱，百姓饿死，帝曰：何不食肉糜？",
-    "historicalQuoteEn": "When famine starved the common people, the Emperor asked: 'Why do they not eat meat porridge?'"
+    "historicalQuoteEn": "When famine starved the common people, the Emperor asked: 'Why do they not eat meat porridge?'",
+    "auxiliaryStrengthsZh": [
+      "保有难得的纯真天性与无害心境",
+      "在极端凶险险境中因无威胁性而屡次免遭当场诛杀"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Preserves genuine harmlessness and total absence of malice",
+      "which ironically spared his life as a harmless figurehead amid deadly factional purges"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "千万不可德不配位",
+      "在自身能力、心智认知极度欠缺时，万不可被他人推上风口浪尖承担生死重责，否则必沦为嗜血豺狼的提线木偶与牺牲品"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Never accept a seat of authority far exceeding your capacity",
+      "When lacking competence and strategic awareness, being thrust into high power guarantees destruction as a pawn"
+    ]
   },
   {
     "id": "jia_nanfeng",
@@ -101,7 +133,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "毒辣无制与缺乏长远道德防线必致粉身碎骨！凡事做绝者必无退路，滥用权谋、斩草除根之举终将激起天下共愤并遭同等惨烈反噬。",
     "weaknessAdviceEn": "Unrestrained cruelty and utter disregard for moral guardrails lead to absolute doom! Pushing adversaries to extinction burns all bridges and inevitably invites annihilating retribution.",
     "historicalQuoteZh": "《晋书》赞曰：贾后操戈，遂覆神器。弑后杀储，凶残莫比。",
-    "historicalQuoteEn": "Book of Jin: Empress Jia wielded the dagger and overturned the imperial altar; slaying empresses and poisoning the heir, her brutality was unmatched."
+    "historicalQuoteEn": "Book of Jin: Empress Jia wielded the dagger and overturned the imperial altar; slaying empresses and poisoning the heir, her brutality was unmatched.",
+    "auxiliaryStrengthsZh": [
+      "杀伐果断",
+      "善于在危急关头迅速识别并组建政治同盟，执行力极其强悍，敢打敢拼绝不手软"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Demonstrates relentless tactical decisiveness",
+      "quickly forms opportunistic power coalitions, and executes high-stakes operations without hesitation"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "毒辣无制与缺乏长远道德防线必致粉身碎骨",
+      "凡事做绝者必无退路，滥用权谋、斩草除根之举终将激起天下共愤并遭同等惨烈反噬"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unrestrained cruelty and utter disregard for moral guardrails lead to absolute doom",
+      "Pushing adversaries to extinction burns all bridges and inevitably invites annihilating retribution"
+    ]
   },
   {
     "id": "sima_lun",
@@ -134,7 +182,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "切忌被谄媚佞臣蒙蔽双眼！能力与资望不足时贸然黄袍加身篡夺最高位，滥施爵位恩惠只会自掘坟墓，成为众矢之的。",
     "weaknessAdviceEn": "Never allow sycophants to dictate policy! Usurping supreme command without moral standing or talent, and distributing cheap favors will make you the universal target of annihilation.",
     "historicalQuoteZh": "时人谣曰：貂不足，狗尾续。伦之狂悖，自取其戮。",
-    "historicalQuoteEn": "Popular folk ballad: 'When sable fur runs out, dog tails patch the cap.' His reckless vanity sealed his inevitable ruin."
+    "historicalQuoteEn": "Popular folk ballad: 'When sable fur runs out, dog tails patch the cap.' His reckless vanity sealed his inevitable ruin.",
+    "auxiliaryStrengthsZh": [
+      "善于隐忍蛰伏于两强相争之间",
+      "抓住空隙发起致命一击实现权力跃升"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Patiently lurks in the shadows between rival titans",
+      "seizing opportune power vacuums to execute fatal strikes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "切忌被谄媚佞臣蒙蔽双眼",
+      "能力与资望不足时贸然黄袍加身篡夺最高位，滥施爵位恩惠只会自掘坟墓，成为众矢之的"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Never allow sycophants to dictate policy",
+      "Usurping supreme command without moral standing or talent, and distributing cheap favors will make you the universal target of annihilation"
+    ]
   },
   {
     "id": "sima_jiong",
@@ -167,7 +231,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "大功告成之日即是生死存亡之秋！居大功切莫矜傲，一旦沉溺于权力顶峰的骄奢与傲慢，必在权力真空的睡梦中被同袍背刺。",
     "weaknessAdviceEn": "The moment of crowning achievement is the pinnacle of danger! Never wallow in arrogance after triumph; complacency invites immediate betrayals from peers.",
     "historicalQuoteZh": "《晋书》：齐王矜伐大勋，自恣专政，祸不旋踵，悲夫！",
-    "historicalQuoteEn": "Book of Jin: The Prince of Qi flaunted monumental merit and indulged in unchecked tyranny; calamity arrived before his footsteps settled."
+    "historicalQuoteEn": "Book of Jin: The Prince of Qi flaunted monumental merit and indulged in unchecked tyranny; calamity arrived before his footsteps settled.",
+    "auxiliaryStrengthsZh": [
+      "具备在大乱中敢为天下先的魄力与军事号召力",
+      "能迅速凝聚共识打碎旧权威"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Exhibits immense courage to be the first mover in chaos",
+      "possessing battlefield charisma to break tyrannical power"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "大功告成之日即是生死存亡之秋",
+      "居大功切莫矜傲，一旦沉溺于权力顶峰的骄奢与傲慢，必在权力真空的睡梦中被同袍背刺"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The moment of crowning achievement is the pinnacle of danger",
+      "Never wallow in arrogance after triumph"
+    ]
   },
   {
     "id": "sima_yue",
@@ -200,7 +280,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "格局狭隘与本位主义是倾覆的死敌！若只顾保留自身势力而弃大局生态于不顾，皮之不存毛将焉附，最终自身主力亦难逃覆亡。",
     "weaknessAdviceEn": "Self-serving factionalism destroys the whole vessel! Neglecting system stability merely to hoard personal reserves leaves you naked when external cataclysms strike.",
     "historicalQuoteZh": "石勒焚司马越柩曰：乱天下者，此人也，吾为天下报之！",
-    "historicalQuoteEn": "Shi Le incinerated Sima Yue's coffin, proclaiming: 'This is the man who threw the realm into turmoil; I avenge the empire upon him!'"
+    "historicalQuoteEn": "Shi Le incinerated Sima Yue's coffin, proclaiming: 'This is the man who threw the realm into turmoil; I avenge the empire upon him!'",
+    "auxiliaryStrengthsZh": [
+      "具备极强的危机生存能力与长期政治缠斗韧性",
+      "善于熬垮所有竞争对手"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unrivaled resilience in factional endurance warfare",
+      "an expert at outlasting opponents through tactical patience and defensive survival"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "格局狭隘与本位主义是倾覆的死敌",
+      "若只顾保留自身势力而弃大局生态于不顾，皮之不存毛将焉附，最终自身主力亦难逃覆亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Self-serving factionalism destroys the whole vessel",
+      "Neglecting system stability merely to hoard personal reserves leaves you naked when external cataclysms strike"
+    ]
   },
   {
     "id": "yang_xianrong",
@@ -233,7 +329,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "早期深陷弱势依附地位无法掌控自身命盘，必须尽早构筑不可替代的自主智慧与情感防线。",
     "weaknessAdviceEn": "Early dependence on volatile sovereigns left her a captive pawn; build autonomous intellectual defenses early to avoid being buffeted by external storms.",
     "historicalQuoteZh": "刘曜问：我何如司马家儿？献容曰：何可相提并论！陛下开基之圣主，彼亡国之暗夫。",
-    "historicalQuoteEn": "Liu Yao asked: 'How do I compare to Sima's son?' She replied: 'How can you be compared! Your Majesty is a founding monarch; he was a dim sovereign who lost his realm.'"
+    "historicalQuoteEn": "Liu Yao asked: 'How do I compare to Sima's son?' She replied: 'How can you be compared! Your Majesty is a founding monarch; he was a dim sovereign who lost his realm.'",
+    "auxiliaryStrengthsZh": [
+      "在命运极端狂风巨浪面前具备惊人的韧性与降维解套智慧",
+      "不被虚名所累，善于与当下的现实深度和解并赢得新生"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unmatched psychological elasticity in the face of cosmic upheaval",
+      "sheds vanity to make total peace with reality and claim rebirth through genuine competence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早期深陷弱势依附地位无法掌控自身命盘",
+      "必须尽早构筑不可替代的自主智慧与情感防线"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Early dependence on volatile sovereigns left her a captive pawn",
+      "build autonomous intellectual defenses early to avoid being buffeted by external storms"
+    ]
   },
   {
     "id": "wei_jie",
@@ -266,7 +378,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "切忌过度颅内内耗与体力透支！敏感多思型心智必须强制建立生理防火墙，绝不可让外界的审视眼光与社交围观耗干自身元气。",
     "weaknessAdviceEn": "Strictly prevent cognitive overload and physical depletion! Highly sensitive intellectual minds must erect bodily firewalls to prevent social scrutiny from draining life essence.",
     "historicalQuoteZh": "京师相传：卫玠素抱羸疾，见者如堵，莫不叹异，劳顿致卒，时人谓之‘看杀卫玠’。",
-    "historicalQuoteEn": "Capital annals recorded: 'Wei Jie was chronically fragile; crowds blocked roads to see him, exhausting him unto death, named \"Gazed to death Wei Jie\".'"
+    "historicalQuoteEn": "Capital annals recorded: 'Wei Jie was chronically fragile; crowds blocked roads to see him, exhausting him unto death, named \"Gazed to death Wei Jie\".'",
+    "auxiliaryStrengthsZh": [
+      "精神境界极其超脱",
+      "具备穿透浮华直击哲学本质的深度悟性与人格审美魅力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Profound spiritual detachment and razor-sharp intellect capable of piercing superficialities to touch transcendent philosophical truths.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "切忌过度颅内内耗与体力透支",
+      "敏感多思型心智必须强制建立生理防火墙，绝不可让外界的审视眼光与社交围观耗干自身元气"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Strictly prevent cognitive overload and physical depletion",
+      "Highly sensitive intellectual minds must erect bodily firewalls to prevent social scrutiny from draining life essence"
+    ]
   },
   {
     "id": "pan_an",
@@ -299,7 +427,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "文人切忌卷入无底线投机权斗！不要为了短期名利践踏良知去做刀笔吏构陷他人，政治权谋的血腥绞肉机绝非才子投机之所。",
     "weaknessAdviceEn": "Scholars must never become cynical pawns in ruthless political machinations! Fabricating evidence for tyrants to secure status invariably leads to total destruction.",
     "historicalQuoteZh": "岳性轻躁，趋附贾谧，每候其出，与石崇望尘而拜，终至夷灭。",
-    "historicalQuoteEn": "Book of Jin: Pan Yue was frivolous and vain, bowing to dust before Jia Mi's carriage, ultimately bringing extinction upon his lineage."
+    "historicalQuoteEn": "Book of Jin: Pan Yue was frivolous and vain, bowing to dust before Jia Mi's carriage, ultimately bringing extinction upon his lineage.",
+    "auxiliaryStrengthsZh": [
+      "文采斐然、表达沟通与审美天赋极高",
+      "善于在文化与专业领域建立顶尖辨识度"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Brilliant artistic eloquence",
+      "persuasive communication, and supreme aesthetic distinction in craft and culture"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "文人切忌卷入无底线投机权斗",
+      "不要为了短期名利践踏良知去做刀笔吏构陷他人，政治权谋的血腥绞肉机绝非才子投机之所"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Scholars must never become cynical pawns in ruthless political machinations",
+      "Fabricating evidence for tyrants to secure status invariably leads to total destruction"
+    ]
   },
   {
     "id": "lu_ji",
@@ -332,7 +476,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "技术/学术专精人才千万不可在缺乏实战根基时强行接盘超大规模武职操盘！文人带兵遭群狼嫉恨掣肘必败，当警惕被捧杀。",
     "weaknessAdviceEn": "Specialists must never accept massive operational warfare commands without grassroots control! Bookish intellectuals commanding cutthroat warlords will be sabotaged and framed.",
     "historicalQuoteZh": "陆机临刑叹曰：华亭鹤唳，岂可复闻乎！三族皆夷，天下悲之。",
-    "historicalQuoteEn": "Lu Ji lamented at the execution block: 'Shall I ever hear the cry of Huating's cranes again?' His whole clan was executed, mourning echoed through the realm."
+    "historicalQuoteEn": "Lu Ji lamented at the execution block: 'Shall I ever hear the cry of Huating's cranes again?' His whole clan was executed, mourning echoed through the realm.",
+    "auxiliaryStrengthsZh": [
+      "学术洞察力与理论总结能力达登峰造极之境",
+      "善于开创系统性的传世经典体系"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Towering theoretical vision and analytical rigor capable of founding timeless masterpieces and strategic treatises.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "技术/学术专精人才千万不可在缺乏实战根基时强行接盘超大规模武职操盘",
+      "文人带兵遭群狼嫉恨掣肘必败，当警惕被捧杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Specialists must never accept massive operational warfare commands without grassroots control",
+      "Bookish intellectuals commanding cutthroat warlords will be sabotaged and framed"
+    ]
   },
   {
     "id": "lu_yun",
@@ -365,7 +525,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "血缘与家族捆绑过深，明知大势倾覆却未能果断切割熔断，导致全盘受累覆灭。",
     "weaknessAdviceEn": "Overly entangled with familial obligations; failing to execute decisive strategic severance when the patriarch falls drags down all connected branches.",
     "historicalQuoteZh": "云性纯和，才藻敏给，遭逢乱世，连罹兄祸，悲夫冤酷！",
-    "historicalQuoteEn": "Book of Jin: Lu Yun was harmonious and brilliantly endowed, yet born into chaos and entangled in his brother's tragedy—a bitter sorrow indeed!"
+    "historicalQuoteEn": "Book of Jin: Lu Yun was harmonious and brilliantly endowed, yet born into chaos and entangled in his brother's tragedy—a bitter sorrow indeed!",
+    "auxiliaryStrengthsZh": [
+      "为人清正忠直、行事严谨克己",
+      "具备极佳的组织合规把关与文书治理才能"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Incorruptible moral compass and scrupulous diligence",
+      "excelling at governance compliance and institutional justice"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "血缘与家族捆绑过深",
+      "明知大势倾覆却未能果断切割熔断，导致全盘受累覆灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly entangled with familial obligations",
+      "failing to execute decisive strategic severance when the patriarch falls drags down all connected branches"
+    ]
   },
   {
     "id": "ji_shao",
@@ -398,7 +574,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "所护持之对象昏庸无能、大厦将倾已无可救药，个人英雄主义式的殉道难以扭转时代倾颓的洪流。",
     "weaknessAdviceEn": "Sacrificing oneself for a fundamentally bankrupt master or decaying enterprise cannot alter macro destiny; evaluate whether the altar is worthy of the offering.",
     "historicalQuoteZh": "帝坠于草中，侍中嵇绍端冕以身卫帝，兵交射之，血溅帝衣。帝曰：‘此嵇侍中血，勿浣也！’",
-    "historicalQuoteEn": "Arrows fell like rain; Ji Shao shielded the Emperor unto death. The Emperor later ordered: 'This is Attendant Ji's blood, never wash it away!'"
+    "historicalQuoteEn": "Arrows fell like rain; Ji Shao shielded the Emperor unto death. The Emperor later ordered: 'This is Attendant Ji's blood, never wash it away!'",
+    "auxiliaryStrengthsZh": [
+      "具备不可动摇的职业操守与关键时刻挺身而出的极致担当",
+      "在狂风暴雨中能以一人立天下之志"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unshakeable professional ethics and heroic responsibility",
+      "stands tall when everyone else scatters in terror"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "所护持之对象昏庸无能、大厦将倾已无可救药",
+      "个人英雄主义式的殉道难以扭转时代倾颓的洪流"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Sacrificing oneself for a fundamentally bankrupt master or decaying enterprise cannot alter macro destiny",
+      "evaluate whether the altar is worthy of the offering"
+    ]
   },
   {
     "id": "zhang_hua",
@@ -431,7 +623,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "君子不可抱残守缺！当政治绞肉机已经完全失控、野蛮武夫彻底踏碎规则时，继续迷信制度流程而不果断抽身退避，必成祭刀牺牲品。",
     "weaknessAdviceEn": "Do not cling to crumbling structures when ruthless warlords burn the rulebook! Believing bureaucratic legitimacy protects you against violent coup d'états leads to martyrdom.",
     "historicalQuoteZh": "华博洽文史，算无遗策，伐吴之役，谋谟帷幄。及贾后乱政，华力持正道，终不免祸。",
-    "historicalQuoteEn": "Book of Jin: Zhang Hua mastered all history, strategizing the Wu conquest. Facing palace madness, he defended righteousness until tragedy overwhelmed him."
+    "historicalQuoteEn": "Book of Jin: Zhang Hua mastered all history, strategizing the Wu conquest. Facing palace madness, he defended righteousness until tragedy overwhelmed him.",
+    "auxiliaryStrengthsZh": [
+      "知识库极其广博",
+      "具有顶级的系统治理、制度修缮与多方平衡协调能力，能在乱局中撑起行政基本盘"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Vast encyclopedic acumen",
+      "institutional architect capability, and exceptional mediator skills that maintain stability amid chaos"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "君子不可抱残守缺",
+      "当政治绞肉机已经完全失控、野蛮武夫彻底踏碎规则时，继续迷信制度流程而不果断抽身退避，必成祭刀牺牲品"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Do not cling to crumbling structures when ruthless warlords burn the rulebook",
+      "Believing bureaucratic legitimacy protects you against violent coup d'états leads to martyrdom"
+    ]
   },
   {
     "id": "pei_wei",
@@ -464,7 +672,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在群体疯狂的非理性时代，仅凭逻辑与义理难以唤醒自甘沉沦的阶层，缺乏枪杆子武装保障的清醒者往往死于疯狂群氓之手。",
     "weaknessAdviceEn": "In eras of collective hysteria, pure rational philosophy cannot disarm armed madness; clarity without coercive muscle leaves you vulnerable to barbaric slaughter.",
     "historicalQuoteZh": "頠深患清谈废事，乃著《崇有论》以救之，其言深切著明，为世之药石。",
-    "historicalQuoteEn": "Book of Jin: Pei Wei grieved that metaphysical banquets paralyzed governance, penning 'Chong You Lun' as a medicinal tonic for the age."
+    "historicalQuoteEn": "Book of Jin: Pei Wei grieved that metaphysical banquets paralyzed governance, penning 'Chong You Lun' as a medicinal tonic for the age.",
+    "auxiliaryStrengthsZh": [
+      "脚踏实地",
+      "具备刺破一切假大空谎言的实践求真精神，善于在虚火过盛的生态中构筑硬核实干价值"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Grounded pragmatism capable of shattering vacuous hype",
+      "excels at building tangible functional value in decadent environments"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在群体疯狂的非理性时代",
+      "仅凭逻辑与义理难以唤醒自甘沉沦的阶层，缺乏枪杆子武装保障的清醒者往往死于疯狂群氓之手"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "In eras of collective hysteria, pure rational philosophy cannot disarm armed madness",
+      "clarity without coercive muscle leaves you vulnerable to barbaric slaughter"
+    ]
   },
   {
     "id": "gou_xi",
@@ -497,7 +721,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "绝不可陷入严苛过甚的暴力暴躁循环！水至清则无鱼，人至察则无徒，纯靠杀戮与恐怖统治维系的体系，一旦遭遇挫折必被军心彻底抛弃。",
     "weaknessAdviceEn": "Never rely solely on terror and slaughter! When discipline turns into tyrannical cruelty, team allegiance shatters instantly upon the first severe reverse.",
     "historicalQuoteZh": "晞用法严峻，虽姑息无所赦，时人谓之‘屠伯’。始以用法济，终以严暴亡。",
-    "historicalQuoteEn": "Book of Jin: Gou Xi enforced laws with terrifying severity, spared no kin, called 'The Butcher'. Elevated by iron laws, he perished by his own brutality."
+    "historicalQuoteEn": "Book of Jin: Gou Xi enforced laws with terrifying severity, spared no kin, called 'The Butcher'. Elevated by iron laws, he perished by his own brutality.",
+    "auxiliaryStrengthsZh": [
+      "铁血纪律与极致执行力的化身",
+      "善于在人心涣散、军纪败坏的废墟中快速打造所向披靡的铁军"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Embodiment of iron discipline and terrifying execution",
+      "capable of forging an indomitable fighting force out of broken rabble"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "绝不可陷入严苛过甚的暴力暴躁循环",
+      "水至清则无鱼，人至察则无徒，纯靠杀戮与恐怖统治维系的体系，一旦遭遇挫折必被军心彻底抛弃"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Never rely solely on terror and slaughter",
+      "When discipline turns into tyrannical cruelty, team allegiance shatters instantly upon the first severe reverse"
+    ]
   },
   {
     "id": "liu_kun",
@@ -530,7 +770,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "英雄最忌政治天真与盲目轻信！在丛林法则肆虐的乱世，绝不可将身家性命押注在军阀盟友的空头道德契约上，必须手握独立武装退路。",
     "weaknessAdviceEn": "Heroic souls must eliminate political naivety! In cutthroat jungles, never surrender self-defense autonomy to temporary warlord allies based on sentimental faith.",
     "historicalQuoteZh": "琨尝为诗曰：‘何意百炼刚，化为绕指柔。’忠义激荡，天地可鉴！",
-    "historicalQuoteEn": "Liu Kun famously penned: 'How could tempered steel be bent like a pliant thread around fingers?' His loyalty shook heaven and earth."
+    "historicalQuoteEn": "Liu Kun famously penned: 'How could tempered steel be bent like a pliant thread around fingers?' His loyalty shook heaven and earth.",
+    "auxiliaryStrengthsZh": [
+      "拥有穿透黑夜的精神感召力与文艺豪情",
+      "逆境中坚守信仰十数年，能以极高人格魅力凝聚人心绝处逢生"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Electrifying spiritual charisma and indomitable romantic heroism",
+      "holds the line across decades of darkness through sheer personal magnetism"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "英雄最忌政治天真与盲目轻信",
+      "在丛林法则肆虐的乱世，绝不可将身家性命押注在军阀盟友的空头道德契约上，必须手握独立武装退路"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Heroic souls must eliminate political naivety",
+      "In cutthroat jungles, never surrender self-defense autonomy to temporary warlord allies based on sentimental faith"
+    ]
   },
   {
     "id": "zu_ti",
@@ -563,7 +819,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "前线孤军奋战时切莫忽视后方政治冷箭！必须建立与后方权力机构的利益捆绑或反制筹码，防范‘前方吃紧，后方紧吃’的阴谋掣肘。",
     "weaknessAdviceEn": "Never ignore the daggers aimed at your back while waging frontline war! Tie headquarters to your survival, or court jealousy will decapitate your vanguard.",
     "historicalQuoteZh": "中流击楫而誓曰：‘祖逖不能清中原而复济者，有如大江！’辞色壮烈，众皆慨叹。",
-    "historicalQuoteEn": "Striking the oar in mid-river, he swore: 'If Zu Ti fails to liberate the Plains, let the great river carry my corpse!' Tears and fury ignited the ranks."
+    "historicalQuoteEn": "Striking the oar in mid-river, he swore: 'If Zu Ti fails to liberate the Plains, let the great river carry my corpse!' Tears and fury ignited the ranks.",
+    "auxiliaryStrengthsZh": [
+      "以无退路之决心白手起家",
+      "擅长零预算整合资源并建立钢铁团队，行事光明磊落，感召力无与伦比"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Boasts invincible zero-budget boot-strapping grit",
+      "rallies desperate masses into an iron force through sheer integrity and boundless devotion"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "前线孤军奋战时切莫忽视后方政治冷箭",
+      "必须建立与后方权力机构的利益捆绑或反制筹码，防范‘前方吃紧，后方紧吃’的阴谋掣肘"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Never ignore the daggers aimed at your back while waging frontline war",
+      "Tie headquarters to your survival, or court jealousy will decapitate your vanguard"
+    ]
   },
   {
     "id": "liu_yuan",
@@ -596,7 +868,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "以大义名分起家后，若未能建立起稳固的二代接班制度与宗室法度，基业极易在狂暴宗王争夺中迅速陷入内耗流血。",
     "weaknessAdviceEn": "Building an empire on borrowed legitimacy collapses if succession protocols remain primitive; tribal brothers will tear the crown apart upon your death.",
     "historicalQuoteZh": "晋人虐我，我何惜一人之命！汉有天下久，吾又汉氏之甥，立汉以收人望。",
-    "historicalQuoteEn": "Liu Yuan declared: 'Jin has oppressed our people; Han reigned long and I am Han's nephew. I resurrect Han to rally universal allegiance!'"
+    "historicalQuoteEn": "Liu Yuan declared: 'Jin has oppressed our people; Han reigned long and I am Han's nephew. I resurrect Han to rally universal allegiance!'",
+    "auxiliaryStrengthsZh": [
+      "极其擅长利用文化大义与历史名分包装自身诉求",
+      "打破文化界限构建多民族、多阵营大联盟"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Superb mastery of legalistic legitimacy and cultural narrative",
+      "bridges polarized demographics to construct unstoppable multi-tribal coalitions"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "以大义名分起家后",
+      "若未能建立起稳固的二代接班制度与宗室法度，基业极易在狂暴宗王争夺中迅速陷入内耗流血"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Building an empire on borrowed legitimacy collapses if succession protocols remain primitive",
+      "tribal brothers will tear the crown apart upon your death"
+    ]
   },
   {
     "id": "liu_cong",
@@ -629,7 +917,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "胜极而狂、声色犬马是霸主的致命毒药！失去制约的绝对权力必将异化心智，放纵兽性最终将把一手开创的江山付之一炬。",
     "weaknessAdviceEn": "Unchecked hedonism and unrestrained ego are lethal toxins! Absolute power unhinges the mind; indulging primal cruelty burns your conquests to ash.",
     "historicalQuoteZh": "《资治通鉴》：聪初有武艺文学，及得志，荒淫无度，刑赏妄施，宗族残灭。",
-    "historicalQuoteEn": "Zizhi Tongjian: Liu Cong possessed martial courage and letters; once triumphant, he sank into madness, murdering loyalists and destroying his kin."
+    "historicalQuoteEn": "Zizhi Tongjian: Liu Cong possessed martial courage and letters; once triumphant, he sank into madness, murdering loyalists and destroying his kin.",
+    "auxiliaryStrengthsZh": [
+      "青年时期才华横溢",
+      "军事战略眼光毒辣，敢于在关键战役中倾力出击消灭宿敌"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Exhibited dazzling military aggression and tactical brilliance in early campaigns",
+      "swiftly crushing entrenched rival empires"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "胜极而狂、声色犬马是霸主的致命毒药",
+      "失去制约的绝对权力必将异化心智，放纵兽性最终将把一手开创的江山付之一炬"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unchecked hedonism and unrestrained ego are lethal toxins",
+      "Absolute power unhinges the mind"
+    ]
   },
   {
     "id": "shi_le",
@@ -662,7 +966,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "未能彻底解决残暴血亲（石虎）的继承权隐患，临终托孤缺乏制度性军权制衡，导致死后子孙遭石虎斩尽杀绝。",
     "weaknessAdviceEn": "Failed to eliminate the ferocious butcher in his own house (Shi Hu); soft-pedaled succession security, leaving his children to be wiped out by his cousin.",
     "historicalQuoteZh": "勒问徐光：‘朕可比古何等主？’光曰：‘轩辕未可逮，刘邦之俦也。’勒笑曰：‘朕遇高皇，当北面事之；遇光武，当并驱于中原！’",
-    "historicalQuoteEn": "Shi Le asked courtier Xu Guang: 'Whom do I resemble in antiquity?' Guang replied: 'Emperor Gaozu Liu Bang.' Shi Le smiled: 'Meeting Gaozu, I would serve him; meeting Guangwu, we would race horses across the Plains!'"
+    "historicalQuoteEn": "Shi Le asked courtier Xu Guang: 'Whom do I resemble in antiquity?' Guang replied: 'Emperor Gaozu Liu Bang.' Shi Le smiled: 'Meeting Gaozu, I would serve him; meeting Guangwu, we would race horses across the Plains!'",
+    "auxiliaryStrengthsZh": [
+      "终极草根逆袭典范",
+      "不因出身卑微而自弃，懂得将所有战术短板交付顶级专业参谋（张宾），展现出第一流的用人之道与兼听胸襟"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The quintessential grass-roots titan",
+      "Never bowed to humble slavery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "未能彻底解决残暴血亲（石虎）的继承权隐患",
+      "临终托孤缺乏制度性军权制衡，导致死后子孙遭石虎斩尽杀绝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to eliminate the ferocious butcher in his own house (Shi Hu)",
+      "soft-pedaled succession security, leaving his children to be wiped out by his cousin"
+    ]
   },
   {
     "id": "zhang_bin",
@@ -695,7 +1015,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "积劳成疾英年早逝，死后后赵无人能压制石虎之残虐狂暴，未能完成制度的闭环交接便骤然离场。",
     "weaknessAdviceEn": "Overworked himself into an early grave. His premature demise removed the only rational anchor holding back savage warlord Shi Hu, plunging the realm into blood.",
     "historicalQuoteZh": "张宾卒，石勒痛哭流涕曰：‘天欲不成吾事邪？何夺吾右侯之早也！’",
-    "historicalQuoteEn": "Upon Zhang Bin's death, Shi Le wept profusely: 'Does Heaven refuse to grant my empire, taking my Right Marquis so soon?!'"
+    "historicalQuoteEn": "Upon Zhang Bin's death, Shi Le wept profusely: 'Does Heaven refuse to grant my empire, taking my Right Marquis so soon?!'",
+    "auxiliaryStrengthsZh": [
+      "顶级军师的最高境界：精准识人选主，不因对方外在标签而错失潜龙",
+      "具备千载难逢的战略架构能力与战役级推演精度"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peak strategist archetypal genius: identifies true sovereigns through rough disguises",
+      "crafts bulletproof grand geopolitical architectures with surgical tactical precision"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "积劳成疾英年早逝",
+      "死后后赵无人能压制石虎之残虐狂暴，未能完成制度的闭环交接便骤然离场"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overworked himself into an early grave. His premature demise removed the only rational anchor holding back savage warlord Shi Hu",
+      "plunging the realm into blood"
+    ]
   },
   {
     "id": "shi_hu",
@@ -728,7 +1064,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "人类历史上最典型的暴君鉴戒！把暴力当做唯一统治工具、连亲子同袍皆视如刍狗者，必将彻底激发所有人最深层的灭门求生反杀，死后尸骨无存。",
     "weaknessAdviceEn": "The ultimate cautionary monster in historiography! Treating terror as your sole currency and murdering your own heirs guarantees total collective counter-annihilation.",
     "historicalQuoteZh": "《晋书》：石虎残忍自恣，穷凶极暴，古今未有。子弑其父，父戮其子，天道报应，速若影响！",
-    "historicalQuoteEn": "Book of Jin: Shi Hu's ferocity and cruelty were unprecedented in all history. Sons murdered fathers and fathers boiled sons; heaven's retribution struck like lightning!"
+    "historicalQuoteEn": "Book of Jin: Shi Hu's ferocity and cruelty were unprecedented in all history. Sons murdered fathers and fathers boiled sons; heaven's retribution struck like lightning!",
+    "auxiliaryStrengthsZh": [
+      "拥有毁灭性的破阵冲锋与战场威慑力",
+      "在以力破巧的血腥肉搏中具备压倒性的暴力输出"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Devastating raw battlefield combat momentum capable of crushing physical resistance through pure shock-and-awe brutality.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "人类历史上最典型的暴君鉴戒",
+      "把暴力当做唯一统治工具、连亲子同袍皆视如刍狗者，必将彻底激发所有人最深层的灭门求生反杀，死后尸骨无存"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The ultimate cautionary monster in historiography",
+      "Treating terror as your sole currency and murdering your own heirs guarantees total collective counter-annihilation"
+    ]
   },
   {
     "id": "ran_min",
@@ -761,7 +1113,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "切忌四面树敌与战略孤立！纯靠以暴制暴与种族报复难以构建稳固政权，不懂得通过纵横捭阖争取盟友注定沦为悲剧英雄。",
     "weaknessAdviceEn": "Never isolate yourself strategically against all fronts! Retaliatory slaughter alone cannot establish enduring sovereignty; war without diplomacy breeds fatal encirclement.",
     "historicalQuoteZh": "闵跨朱龙，左操双刃矛，右持钩戟，斩燕兵三百余级。及被擒，恪问曰：‘何敢妄自称帝？’闵曰：‘天下大乱，尔曹夷狄禽兽尚称帝，况我中原英雄！’",
-    "historicalQuoteEn": "Astride his steed Red Dragon, spear in left hand and halberd in right, he slew 300 enemy horsemen. Captured, he roared to Murong Jun: 'Barbarian beasts usurp empires, how dare you question a hero of the Central Plains!'"
+    "historicalQuoteEn": "Astride his steed Red Dragon, spear in left hand and halberd in right, he slew 300 enemy horsemen. Captured, he roared to Murong Jun: 'Barbarian beasts usurp empires, how dare you question a hero of the Central Plains!'",
+    "auxiliaryStrengthsZh": [
+      "天下无双的个人战力与极限绝境下的破釜沉舟意志",
+      "能在绝望黑暗中强行撕开一道血路"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unrivaled personal combat lethality and defiance under doom",
+      "capable of hacking an escape corridor through impossible darkness"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "切忌四面树敌与战略孤立",
+      "纯靠以暴制暴与种族报复难以构建稳固政权，不懂得通过纵横捭阖争取盟友注定沦为悲剧英雄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Never isolate yourself strategically against all fronts",
+      "Retaliatory slaughter alone cannot establish enduring sovereignty"
+    ]
   },
   {
     "id": "murong_gui",
@@ -794,7 +1162,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "偏居辽东地利受限，早期缺乏进图中原的战略魄力，发展步伐偏于稳重克制。",
     "weaknessAdviceEn": "Geographically constrained in the northeast; his early caution delayed rapid expansion into the Central Plains.",
     "historicalQuoteZh": "《晋书》：廆雅好经典，开国辽左，远近宗归，慕容之盛，基于是矣。",
-    "historicalQuoteEn": "Book of Jin: Murong Gui cherished classical learning, founding an enduring state in Liaodong where scholars gathered from afar."
+    "historicalQuoteEn": "Book of Jin: Murong Gui cherished classical learning, founding an enduring state in Liaodong where scholars gathered from afar.",
+    "auxiliaryStrengthsZh": [
+      "极具远见的跨文化整合者与基地建设大师",
+      "懂得在天下大乱时筑巢引凤，夯实底层人才与物质粮仓"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Visionary cross-cultural unifier and sanctuary builder",
+      "excels at attracting elite human capital and hoarding real resources during macro turmoil"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "偏居辽东地利受限",
+      "早期缺乏进图中原的战略魄力，发展步伐偏于稳重克制"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Geographically constrained in the northeast",
+      "his early caution delayed rapid expansion into the Central Plains"
+    ]
   },
   {
     "id": "murong_huang",
@@ -827,7 +1211,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "对兄弟宗室防范过严甚至逼反骨肉，家族权力传承中始终潜藏互不信任的基因血债。",
     "weaknessAdviceEn": "Excessive paranoia toward royal brothers sparked family rebellions; left a legacy of fratricidal mistrust in the clan.",
     "historicalQuoteZh": "《晋书》：皝勇略兼备，摧强破敌，克定辽碣，威振遐迩。",
-    "historicalQuoteEn": "Book of Jin: Murong Huang possessed both martial audacity and strategic foresight, shattering mighty foes to dominate Liaodong."
+    "historicalQuoteEn": "Book of Jin: Murong Huang possessed both martial audacity and strategic foresight, shattering mighty foes to dominate Liaodong.",
+    "auxiliaryStrengthsZh": [
+      "内乱平定手腕果决凌厉",
+      "在错综复杂的氏族内斗中能迅速稳固核心领导权，开拓疆土势如破竹"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Incisive mastery in quelling tribal factions",
+      "restores core command authority swiftly and drives relentless outward expansion"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对兄弟宗室防范过严甚至逼反骨肉",
+      "家族权力传承中始终潜藏互不信任的基因血债"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive paranoia toward royal brothers sparked family rebellions",
+      "left a legacy of fratricidal mistrust in the clan"
+    ]
   },
   {
     "id": "murong_jun",
@@ -860,7 +1260,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "晚期野心急剧膨胀，不顾民力枯竭企图强行发动毁灭性的大决战，极易使新生帝国因过度动员而瞬间猝死。",
     "weaknessAdviceEn": "Delusions of grandeur in late years; attempting astronomical military mobilizations without checking fiscal exhaustion risks catastrophic implosion.",
     "historicalQuoteZh": "儁梦石季龙啮其臂，恶之，发其墓取尸，投之于漳水，骂曰：‘死胡，敢逆天子！’",
-    "historicalQuoteEn": "Dreaming Shi Hu bit his arm, he desecrated Shi Hu's tomb, hurling the bones into the Zhang River, yelling: 'Dead nomad, dare you defy the Son of Heaven!'"
+    "historicalQuoteEn": "Dreaming Shi Hu bit his arm, he desecrated Shi Hu's tomb, hurling the bones into the Zhang River, yelling: 'Dead nomad, dare you defy the Son of Heaven!'",
+    "auxiliaryStrengthsZh": [
+      "抓住历史窗口南下逐鹿的果决气魄无可挑剔",
+      "善于在灭国战争后快速建立国家法统制度"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Flawless predatory timing to strike south",
+      "quickly formalizes imperial statutes and institutional governance upon conquered lands"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚期野心急剧膨胀",
+      "不顾民力枯竭企图强行发动毁灭性的大决战，极易使新生帝国因过度动员而瞬间猝死"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Delusions of grandeur in late years",
+      "attempting astronomical military mobilizations without checking fiscal exhaustion risks catastrophic implosion"
+    ]
   },
   {
     "id": "murong_ke",
@@ -893,7 +1309,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "未能彻底清算朝中嫉贤妒能的顽固外戚势力（慕容评），逝世后导致慕容垂被迫出奔、前燕迅速被前秦所灭。",
     "weaknessAdviceEn": "Spared corrupt royal factions (Murong Ping) out of gentle mercy; his death unleashed petty jealousy that exiled Murong Chui and doomed the state.",
     "historicalQuoteZh": "《资治通鉴》：恪为人谦恭退让，每有军功，皆推与诸将。及居宰相，事无大小，虚心纳谏，前燕之盛，恪之力也。",
-    "historicalQuoteEn": "Zizhi Tongjian: Murong Ke was modest and yielding, always crediting officers with victories. As chancellor, he governed with total open-mindedness; Former Yan's glory rested entirely on his shoulders."
+    "historicalQuoteEn": "Zizhi Tongjian: Murong Ke was modest and yielding, always crediting officers with victories. As chancellor, he governed with total open-mindedness; Former Yan's glory rested entirely on his shoulders.",
+    "auxiliaryStrengthsZh": [
+      "真正的战略定海神针与道德完人",
+      "战役推演百战百胜却从不矜功自傲，身居摄政最高位却恪守臣节，用无私与专业化解一切政治猜忌"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate anchor general and moral paragon",
+      "Undefeated in war yet free of arrogance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "未能彻底清算朝中嫉贤妒能的顽固外戚势力（慕容评）",
+      "逝世后导致慕容垂被迫出奔、前燕迅速被前秦所灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Spared corrupt royal factions (Murong Ping) out of gentle mercy",
+      "his death unleashed petty jealousy that exiled Murong Chui and doomed the state"
+    ]
   },
   {
     "id": "murong_chui",
@@ -926,7 +1358,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "英雄最痛在舐犊之情与继承人之殇！在继承人慕容宝孱弱无能时未果断换储，最终一生辉煌基业毁于二代之手。",
     "weaknessAdviceEn": "Fatal blindspot: parental indulgence toward an inept crown prince! Failing to replace his weak heir Murong Bao allowed his hard-won empire to dissolve upon his death.",
     "historicalQuoteZh": "《十六国春秋》：垂少有大度，善断大事。战必胜，攻必克，天下雄杰，罕有其匹。晚遭参合之变，悲愤致卒，烈士暮年，壮心不已！",
-    "historicalQuoteEn": "Spring and Autumn of Sixteen Kingdoms: Murong Chui possessed boundless vision and tactical infallibility. Undefeated in war, his final sorrow at Canhe Slope remains an eternal tragic ballad of aging heroes."
+    "historicalQuoteEn": "Spring and Autumn of Sixteen Kingdoms: Murong Chui possessed boundless vision and tactical infallibility. Undefeated in war, his final sorrow at Canhe Slope remains an eternal tragic ballad of aging heroes.",
+    "auxiliaryStrengthsZh": [
+      "乱世第一战神英雄气概与极限隐忍典范",
+      "身处逆境能俯首称臣卧薪尝胆十余年，风云突变时能一日千里裂土复国，军事造诣冠绝当世"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Superhuman resilience and ultimate military genius",
+      "Endured a decade in exile under rival monarchs, then resurrected his empire overnight when the macro cycle turned"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "英雄最痛在舐犊之情与继承人之殇",
+      "在继承人慕容宝孱弱无能时未果断换储，最终一生辉煌基业毁于二代之手"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal blindspot: parental indulgence toward an inept crown prince",
+      "Failing to replace his weak heir Murong Bao allowed his hard-won empire to dissolve upon his death"
+    ]
   },
   {
     "id": "murong_de",
@@ -959,7 +1407,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "南燕立国于山东孤岛，地狭民寡，未能在有生之年彻底奠定深层战略纵深，身后易为江东强权所灭。",
     "weaknessAdviceEn": "Confined to coastal Shandong without strategic hinterland; small demographic scale left his successor defenseless against southern behemoths.",
     "historicalQuoteZh": "《晋书》：德沉雅仁厚，受命于危难之际，开国海隅，礼乐刑赏，有可观者焉。",
-    "historicalQuoteEn": "Book of Jin: Murong De was refined and benevolent, accepting sovereign destiny in extreme peril to build a flourishing realm on the eastern seaboard."
+    "historicalQuoteEn": "Book of Jin: Murong De was refined and benevolent, accepting sovereign destiny in extreme peril to build a flourishing realm on the eastern seaboard.",
+    "auxiliaryStrengthsZh": [
+      "极佳的危机转向与异地重建能力",
+      "不与不可战胜之强敌硬碰硬，懂得战略转移开辟全新利基市场"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Superb crisis relocation and greenfield restructuring agility",
+      "avoids futile head-on collisions with unstoppable leviathans to carve out fresh thriving niches"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "南燕立国于山东孤岛",
+      "地狭民寡，未能在有生之年彻底奠定深层战略纵深，身后易为江东强权所灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Confined to coastal Shandong without strategic hinterland",
+      "small demographic scale left his successor defenseless against southern behemoths"
+    ]
   },
   {
     "id": "fu_jian",
@@ -992,7 +1456,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "仁慈到了近乎天真的危险境地！对反复无常的野心家（慕容垂、姚苌）毫无提防与人质扣押，听不进防范背刺的警钟；战略盲目盲信兵力优势，忽视后方凝聚力与战略战术破绽，导致一战倾覆万劫不复。",
     "weaknessAdviceEn": "Fatal benevolence bordering on suicidal naivety! Showered treacherous conquered warlords with elite armies without collateral; mistook sheer numbers for true cohesion, suffering total catastrophic collapse at Fei River.",
     "historicalQuoteZh": "坚登寿阳城望晋军，见草木皆以为晋兵，顾谓融曰：‘此亦劲敌，何谓弱也！’怃然始有惧色。",
-    "historicalQuoteEn": "Gazing from the walls of Shouyang, Fu Jian mistook trees and reeds for armored Jin troops, whispering to Fu Rong: 'These are formidable foes indeed; who called them weak?!' His face paled with sudden terror."
+    "historicalQuoteEn": "Gazing from the walls of Shouyang, Fu Jian mistook trees and reeds for armored Jin troops, whispering to Fu Rong: 'These are formidable foes indeed; who called them weak?!' His face paled with sudden terror.",
+    "auxiliaryStrengthsZh": [
+      "格局博大、心怀天下大同之宏图",
+      "敢于打破民族偏见任用贤能，政治魄力与包容力千古少见"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Monumental idealism and pan-human brotherhood vision",
+      "daringly smashed ethnic barriers to employ the most brilliant minds"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "仁慈到了近乎天真的危险境地",
+      "对反复无常的野心家（慕容垂、姚苌）毫无提防与人质扣押，听不进防范背刺的警钟"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal benevolence bordering on suicidal naivety",
+      "Showered treacherous conquered warlords with elite armies without collateral"
+    ]
   },
   {
     "id": "wang_meng",
@@ -1025,7 +1505,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "个人能力过于耀眼以致前秦体系高度依赖其一人运转；未能建立起摆脱其个人权威的制度自动驾驶机制，自己一去前秦迅速崩盘。",
     "weaknessAdviceEn": "Systemic over-reliance on his singular genius; failed to automate governance beyond his personal presence, causing the entire empire to unravel once he departed.",
     "historicalQuoteZh": "王猛临终顾谓坚曰：‘晋虽僻陋，正朔相承，不可伐也。慕容、姚氏，我之仇敌，宜早除之，以宁社稷！’",
-    "historicalQuoteEn": "Wang Meng whispered on his deathbed: 'Though Jin is southern and distant, it holds lawful continuity; never invade it. Murong Chui and Yao Chang are mortal vipers—destroy them now to safeguard the realm!'"
+    "historicalQuoteEn": "Wang Meng whispered on his deathbed: 'Though Jin is southern and distant, it holds lawful continuity; never invade it. Murong Chui and Yao Chang are mortal vipers—destroy them now to safeguard the realm!'",
+    "auxiliaryStrengthsZh": [
+      "系统治理与战略推演的天花板级宗师",
+      "不仅拥有顶级的治国理政实干执行力，更能对未来数十年的地缘战略与人性阴暗面做出百分之百准确的生死预言"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate titan of systemic governance and geopolitical foresight",
+      "Combines iron executive execution with flawless prophetic discernment of human nature's darkest treachery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "个人能力过于耀眼以致前秦体系高度依赖其一人运转",
+      "未能建立起摆脱其个人权威的制度自动驾驶机制，自己一去前秦迅速崩盘"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Systemic over-reliance on his singular genius",
+      "failed to automate governance beyond his personal presence, causing the entire empire to unravel once he departed"
+    ]
   },
   {
     "id": "fu_rong",
@@ -1058,7 +1554,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "明知最高统帅陷入执念与非理性冒险，在谏阻无效后只能无奈随波逐流担任执行者，最终成为错误战略决策的陪葬品。",
     "weaknessAdviceEn": "When the sovereign descends into manic delusion, voicing logical objections without having an independent executive circuit forces you to march into slaughter alongside him.",
     "historicalQuoteZh": "融流涕曰：‘陛下宠育鲜卑、羌、羯，布满畿甸，此皆我之仇敌。今悉国兵以争江东，臣恐变生肘腋，悔之无及！’",
-    "historicalQuoteEn": "Fu Rong wept: 'Your Majesty has loaded the capital with Xianbei and Qiang warlords who are mortal enemies! Throwing our entire army across the river will spark doom at our backs!'"
+    "historicalQuoteEn": "Fu Rong wept: 'Your Majesty has loaded the capital with Xianbei and Qiang warlords who are mortal enemies! Throwing our entire army across the river will spark doom at our backs!'",
+    "auxiliaryStrengthsZh": [
+      "智商情商极高的二把手典范",
+      "察微知著，对战略风险有本能的精准预警，且在危机爆发时敢于亲临一线力挽狂澜"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme second-in-command archetype",
+      "detects structural vulnerabilities instinctively and risks everything on the frontline to prevent systemic failure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "明知最高统帅陷入执念与非理性冒险",
+      "在谏阻无效后只能无奈随波逐流担任执行者，最终成为错误战略决策的陪葬品"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "When the sovereign descends into manic delusion",
+      "voicing logical objections without having an independent executive circuit forces you to march into slaughter alongside him"
+    ]
   },
   {
     "id": "yao_chang",
@@ -1091,7 +1603,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "背信弃义弑杀恩主的道德负债与心理梦魇足以摧毁一个人的心智！靠卑劣背叛聚拢的人心缺乏根本向心力，晚年必在无尽的猜忌惊恐中神魂颠倒。",
     "weaknessAdviceEn": "Moral bankruptcy and patricidal betrayal generate insurmountable psychological karmic rot! Treachery breeds pervasive internal paranoia that rots your sanity from within.",
     "historicalQuoteZh": "苌梦苻坚将天官使者将数百骑入营拔槊刺之，苌惊走，误中槊刃，呼叫而死。",
-    "historicalQuoteEn": "Yao Chang dreamt Fu Jian led a spectral cavalry into his tent, thrusting a spear through his groin. Waking screaming, he suffered abdominal hemorrhage and died in agony."
+    "historicalQuoteEn": "Yao Chang dreamt Fu Jian led a spectral cavalry into his tent, thrusting a spear through his groin. Waking screaming, he suffered abdominal hemorrhage and died in agony.",
+    "auxiliaryStrengthsZh": [
+      "极端冷酷务实的生存主义大师",
+      "在群雄环伺的乱世中嗅觉极其灵敏，善于在巨人倒下的一刹那噬咬其骨髓自立门派"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of predatory survivalism",
+      "sniffs out the exact millisecond a titan trips, ruthlessly consuming his flesh to establish independent sovereignty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "背信弃义弑杀恩主的道德负债与心理梦魇足以摧毁一个人的心智",
+      "靠卑劣背叛聚拢的人心缺乏根本向心力，晚年必在无尽的猜忌惊恐中神魂颠倒"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Moral bankruptcy and patricidal betrayal generate insurmountable psychological karmic rot",
+      "Treachery breeds pervasive internal paranoia that rots your sanity from within"
+    ]
   },
   {
     "id": "lv_guang",
@@ -1124,7 +1652,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在战略大方向上缺乏敏锐度，困守河西一隅坐失逐鹿中原良机；在接班人培养上摇摆不定，导致辛苦开拓的疆土瞬间内爆。",
     "weaknessAdviceEn": "Lacked grand geopolitical vision, staying marooned in the Hexi corridor; erratic succession choices triggered fratricidal bloodbaths upon his death.",
     "historicalQuoteZh": "《晋书》：光勇力绝人，威加西域，开基河右。然宠爱庶幼，祸及宗邦，悲夫！",
-    "historicalQuoteEn": "Book of Jin: Lü Guang possessed titanic valor, subduing the Western Regions. Yet pampering concubines' sons brought utter destruction upon his state."
+    "historicalQuoteEn": "Book of Jin: Lü Guang possessed titanic valor, subduing the Western Regions. Yet pampering concubines' sons brought utter destruction upon his state.",
+    "auxiliaryStrengthsZh": [
+      "独当一面的远征统帅",
+      "具备在极端陌生、复杂的外部地缘环境中开疆拓土、独立决断的超级攻坚能力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Formidable expeditionary commander capable of dominating alien geopolitical landscapes through autonomous decision-making and martial grit.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在战略大方向上缺乏敏锐度，困守河西一隅坐失逐鹿中原良机",
+      "在接班人培养上摇摆不定，导致辛苦开拓的疆土瞬间内爆"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked grand geopolitical vision, staying marooned in the Hexi corridor",
+      "erratic succession choices triggered fratricidal bloodbaths upon his death"
+    ]
   },
   {
     "id": "qifu_guoren",
@@ -1157,7 +1701,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "格局偏于区域偏安，缺乏向中原腹地辐射影响力的长远制度规划，始终处于强邻夹缝之中。",
     "weaknessAdviceEn": "Confined to a regional survival mindset; lacked institutional depth to project power beyond the rugged valleys.",
     "historicalQuoteZh": "国仁性深沈，有大度，见机而作，保境立基，实乱世之雄也。",
-    "historicalQuoteEn": "Book of Jin: Qifu Guoren was profound and magnanimous; seizing turning points to build fortresses, a true pragmatist of chaos."
+    "historicalQuoteEn": "Book of Jin: Qifu Guoren was profound and magnanimous; seizing turning points to build fortresses, a true pragmatist of chaos.",
+    "auxiliaryStrengthsZh": [
+      "拥有极强的危机嗅觉与瞬间跳船保全团队的决断力",
+      "擅长在地方边缘地带构筑小而精的稳固防线"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Possesses exceptional crisis radar to jump sinking ships instantly",
+      "builds tight, resilient regional defensive enclaves"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "格局偏于区域偏安",
+      "缺乏向中原腹地辐射影响力的长远制度规划，始终处于强邻夹缝之中"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Confined to a regional survival mindset",
+      "lacked institutional depth to project power beyond the rugged valleys"
+    ]
   },
   {
     "id": "tufa_wugu",
@@ -1190,7 +1750,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "缺乏生理与情绪层面的自我节制，饮酒纵马导致荒唐横死，个人意外直接葬送了政权处于上升期的巨大势头。",
     "weaknessAdviceEn": "Fatal lack of behavioral self-discipline; drunken horse-racing led to a sudden accidental death that decapitated his rising kingdom.",
     "historicalQuoteZh": "乌孤临终叹曰：‘吾醉酒乘马，自取颠覆，社稷未定，何以为天子！’言讫而卒。",
-    "historicalQuoteEn": "On his deathbed, Wugu wept: 'Intoxicated on horseback, I brought doom upon myself. With the realm unsettled, how dare I be called king!' and died."
+    "historicalQuoteEn": "On his deathbed, Wugu wept: 'Intoxicated on horseback, I brought doom upon myself. With the realm unsettled, how dare I be called king!' and died.",
+    "auxiliaryStrengthsZh": [
+      "具备锐意改革、重视生产与听取直言的优秀统帅特质",
+      "敢于挑战盘踞已久的旧霸权并战而胜之"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Dynamic reformist general who respected agriculture and took harsh criticism gracefully",
+      "daring to challenge and overthrow entrenched regional hegemons"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏生理与情绪层面的自我节制",
+      "饮酒纵马导致荒唐横死，个人意外直接葬送了政权处于上升期的巨大势头"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal lack of behavioral self-discipline",
+      "drunken horse-racing led to a sudden accidental death that decapitated his rising kingdom"
+    ]
   },
   {
     "id": "li_gao",
@@ -1223,7 +1799,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "军事扩张与进攻决断力偏弱，偏安酒泉敦煌一隅，无力与中原残暴军阀进行高烈度战略对抗。",
     "weaknessAdviceEn": "Lacked offensive aggression; contented with cultural isolationism in oasis fortresses, leaving successors vulnerable to predatory conquerors.",
     "historicalQuoteZh": "《晋书》：暠通涉经史，尤善文义。抚纳流民，劝课农桑，河右冠带之风，于斯为盛。",
-    "historicalQuoteEn": "Book of Jin: Li Gao was profoundly versed in classics and prose; sheltering refugees and tending fields, the scholar-gentry culture flourished under him."
+    "historicalQuoteEn": "Book of Jin: Li Gao was profoundly versed in classics and prose; sheltering refugees and tending fields, the scholar-gentry culture flourished under him.",
+    "auxiliaryStrengthsZh": [
+      "乱世中保存文明火种的典范",
+      "以文化认同凝聚人心，在兵荒马乱中坚持办学兴农，为后世积攒深厚的文明基因与政治福报"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The gold standard for preserving cultural flames in dark ages",
+      "Rallied hearts through high civilization, storing cultural and political karma for future dynasties"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "军事扩张与进攻决断力偏弱",
+      "偏安酒泉敦煌一隅，无力与中原残暴军阀进行高烈度战略对抗"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked offensive aggression",
+      "contented with cultural isolationism in oasis fortresses, leaving successors vulnerable to predatory conquerors"
+    ]
   },
   {
     "id": "helian_bobo",
@@ -1256,7 +1848,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "残暴到了变态地步！把屠杀当做心理威慑的唯一工具，视同僚与战俘为草芥，全凭恐怖统治维系的政权在其死后瞬间分崩离析。",
     "weaknessAdviceEn": "Monstrous sadism! Relied purely on massacres and terror to rule; an empire held together only by fear evaporated the second the butcher breathed his last.",
     "historicalQuoteZh": "勃勃性残暴，好杀戮。每视筑城，以铁锥刺之，入一寸则杀工匠而并筑之。又造五兵，器成呈进，工匠亦死，是以兵器尤精。",
-    "historicalQuoteEn": "Book of Jin: Helian Bobo was naturally bloodthirsty. Testing newly forged swords on his armorer: if the blade severed armor, the armorer was executed; if it failed, the bladesmith was beheaded."
+    "historicalQuoteEn": "Book of Jin: Helian Bobo was naturally bloodthirsty. Testing newly forged swords on his armorer: if the blade severed armor, the armorer was executed; if it failed, the bladesmith was beheaded.",
+    "auxiliaryStrengthsZh": [
+      "游击机动作战与不对称战争的绝顶奇才",
+      "善于利用空间换时间，飘忽不定绝不决战，在运动战中将庞大对手逐步放血消磨殆尽"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme master of asymmetric and mobile guerrilla warfare",
+      "Trades space for time, never accepting pitched battles, bleeding lumbering empires dry on the move"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "残暴到了变态地步",
+      "把屠杀当做心理威慑的唯一工具，视同僚与战俘为草芥，全凭恐怖统治维系的政权在其死后瞬间分崩离析"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Monstrous sadism",
+      "Relied purely on massacres and terror to rule"
+    ]
   },
   {
     "id": "feng_ba",
@@ -1289,7 +1897,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "晚年病重期间大权旁落于宠妃与外戚之手，导致其卧病在床被活活气死，引发弟冯弘篡位内乱，加速了北燕灭亡。",
     "weaknessAdviceEn": "Fell ill in late years and lost control to concubines; died of rage while bedridden as palace coups broke out in the outer chambers.",
     "historicalQuoteZh": "《晋书》：跋沉毅少言，自奉甚俭，政尚清简。开国边垂，能抗北魏之强，善保其民者也。",
-    "historicalQuoteEn": "Book of Jin: Feng Ba was quiet and resolute, austere in personal life. Ruling a besieged border realm, he held off Northern Wei's might to shelter his people."
+    "historicalQuoteEn": "Book of Jin: Feng Ba was quiet and resolute, austere in personal life. Ruling a besieged border realm, he held off Northern Wei's might to shelter his people.",
+    "auxiliaryStrengthsZh": [
+      "极端清醒克己的危机管家",
+      "在不可逆转的四面包围绝境中坚守核心价值，行事低调内敛，以制度规范与艰苦朴素延长了组织的生存期"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Clear-eyed crisis steward",
+      "preserved core organizational sanity amid surrounded doom, practicing Spartan frugality and institutional rigor to survive across decades"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年病重期间大权旁落于宠妃与外戚之手",
+      "导致其卧病在床被活活气死，引发弟冯弘篡位内乱，加速了北燕灭亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fell ill in late years and lost control to concubines",
+      "died of rage while bedridden as palace coups broke out in the outer chambers"
+    ]
   },
   {
     "id": "kumarajiva",
@@ -1322,7 +1946,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "生逢乱世作为文化圣贤屡次沦为军阀武力掠夺的‘政治吉祥物’与战利品，面对强权强迫破戒娶妻只能坦然承受其苦。",
     "weaknessAdviceEn": "As a spiritual titan in a savage era, he was frequently treated as a geopolitical trophy by armed warlords, forced to endure personal degradation while preserving dharma.",
     "historicalQuoteZh": "罗什临终誓曰：‘若所译经论不缪，焚身之后，舌根不焦。’及荼毗，薪灭形消，唯舌不烂！",
-    "historicalQuoteEn": "Kumarajiva swore: 'If my translations contain no falsehoods, let my tongue not burn in the funeral pyre.' After cremation, while his body turned to ash, his tongue was entirely intact!"
+    "historicalQuoteEn": "Kumarajiva swore: 'If my translations contain no falsehoods, let my tongue not burn in the funeral pyre.' After cremation, while his body turned to ash, his tongue was entirely intact!",
+    "auxiliaryStrengthsZh": [
+      "终极跨文化翻译与思想降维落地大师",
+      "能够将极端晦涩抽象的高维异域哲学，以最具审美感染力与文学穿透力的人类白话重构传世，经受千年时间的检验"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme master of cross-cultural translation and philosophical synthesis",
+      "Transmuted transcendent metaphysical doctrine into peerless classical Chinese literature that survives millennia"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "生逢乱世作为文化圣贤屡次沦为军阀武力掠夺的‘政治吉祥物’与战利品",
+      "面对强权强迫破戒娶妻只能坦然承受其苦"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "As a spiritual titan in a savage era",
+      "he was frequently treated as a geopolitical trophy by armed warlords, forced to endure personal degradation while preserving dharma"
+    ]
   },
   {
     "id": "fotudeng",
@@ -1355,7 +1995,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "依附于暴虐君主石勒石虎的政权神权结构，虽能竭力劝阻屠杀，却终究无法从制度层面彻底根除极权暴虐的血腥根源。",
     "weaknessAdviceEn": "Tethered to murderous tyrants; while saving individual lives, he was powerless to permanently eradicate the structural savagery of the regime.",
     "historicalQuoteZh": "勒问曰：‘佛道有何灵验？’澄取钵盛水烧香咒之，须臾生青莲花，芬馥溢庭。勒大悦，自是军国大事无不请咨，受戒免死者不可胜数。",
-    "historicalQuoteEn": "Shi Le asked: 'What miracle does your Buddha possess?' Fotudeng chanted over a bowl of water; instantly a blooming azure lotus emerged, filling the hall with fragrance. Overwhelmed with awe, Shi Le spared countless condemned captives thereafter."
+    "historicalQuoteEn": "Shi Le asked: 'What miracle does your Buddha possess?' Fotudeng chanted over a bowl of water; instantly a blooming azure lotus emerged, filling the hall with fragrance. Overwhelmed with awe, Shi Le spared countless condemned captives thereafter.",
+    "auxiliaryStrengthsZh": [
+      "利用神秘威权与超越世俗的智力杠杆",
+      "降伏极端野蛮暴力的顶级心理操盘大师，在修罗屠场中以柔克刚挽救无辜众生"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master psychological tamer who leveraged spiritual aura and transcendent intelligence to restrain monstrous warlords",
+      "rescuing millions from the butchery floor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "依附于暴虐君主石勒石虎的政权神权结构",
+      "虽能竭力劝阻屠杀，却终究无法从制度层面彻底根除极权暴虐的血腥根源"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Tethered to murderous tyrants",
+      "while saving individual lives, he was powerless to permanently eradicate the structural savagery of the regime"
+    ]
   },
   {
     "id": "sima_rui",
@@ -1388,7 +2044,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "皇权极度虚弱，缺乏自身嫡系军事武装，一旦试图收回权力打破既得利益集团平衡，便迅速招致致命反扑。",
     "weaknessAdviceEn": "Lacked dedicated military firepower; attempting to claw back centralized authority without troops sparked armed rebellion by his partners.",
     "historicalQuoteZh": "晋元帝践阼，引王导升御座同坐，导辞曰：‘若太阳下同万物，苍生何以仰照！’帝乃止。",
-    "historicalQuoteEn": "At the coronation, Emperor Yuan pulled Chancellor Wang Dao onto the imperial throne to sit beside him. Dao bowed: 'If the Sun descends to the level of common dust, how shall the people gaze upon light!'"
+    "historicalQuoteEn": "At the coronation, Emperor Yuan pulled Chancellor Wang Dao onto the imperial throne to sit beside him. Dao bowed: 'If the Sun descends to the level of common dust, how shall the people gaze upon light!'",
+    "auxiliaryStrengthsZh": [
+      "地缘大迁移与异地创业的绝佳政客典范",
+      "善于放下架子结交顶级本地豪族与过江门阀，以共赢分权换取政权立足生根"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master at geographic enterprise pivoting",
+      "Graciously shared sovereign equity with powerful gentry clans to secure regime survival"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "皇权极度虚弱",
+      "缺乏自身嫡系军事武装，旦试图收回权力打破既得利益集团平衡，便迅速招致致命反扑"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked dedicated military firepower",
+      "attempting to claw back centralized authority without troops sparked armed rebellion by his partners"
+    ]
   },
   {
     "id": "wang_dao",
@@ -1421,7 +2093,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过度放纵门阀士族兼并土地特权，为了政局稳定屡屡妥协姑息，埋下东晋门阀政治长期尾大不掉的痼疾。",
     "weaknessAdviceEn": "Excessive appeasement toward noble clans entrenched land monopolies, weakening long-term central state capacity.",
     "historicalQuoteZh": "导尝叹曰：‘不审卫展何以不至？’周顗曰：‘今年杀诸贼奴，取卫展何用！’导笑曰：‘卿又醉邪！’从容若此。",
-    "historicalQuoteEn": "Wang Dao was endlessly serene in crisis. When reviled by drunken ministers during rebellions, he simply smiled: 'Are you tipsy again?' His equanimity calmed the empire."
+    "historicalQuoteEn": "Wang Dao was endlessly serene in crisis. When reviled by drunken ministers during rebellions, he simply smiled: 'Are you tipsy again?' His equanimity calmed the empire.",
+    "auxiliaryStrengthsZh": [
+      "天下第一等的宏观调停与情绪减震大师",
+      "不折腾、不激化矛盾，善于在派系纷争中以静制动，用极高的时间换空间智慧抚平一切撕裂"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The supreme master of macro diplomatic mediation and emotional shock absorption",
+      "Resolves violent polarities through effortless calm, trading time for space"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过度放纵门阀士族兼并土地特权",
+      "为了政局稳定屡屡妥协姑息，埋下东晋门阀政治长期尾大不掉的痼疾"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive appeasement toward noble clans entrenched land monopolies",
+      "weakening long-term central state capacity"
+    ]
   },
   {
     "id": "wang_dun",
@@ -1454,7 +2142,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "自绝于天下公序良俗！大义名分有亏、肆意刀兵践踏皇权社稷，在关键时刻生理崩坏病死军中，招致挫骨扬灰之千古耻辱。",
     "weaknessAdviceEn": "Sacrificed legitimacy and moral high ground; armed insurrection against the state left him isolated when fatal illness struck, suffering posthumous desecration.",
     "historicalQuoteZh": "每酒后咏魏武‘老骥伏枥，志在千里。烈士暮年，壮心不已’，以如意打唾壶为节，壶边尽缺。",
-    "historicalQuoteEn": "Drunk, he struck spitting pots to the cadence of Cao Cao's poem 'The aged warhorse rests in the stable yet yearns to gallop ten thousand miles', shattering the porcelain rim to dust."
+    "historicalQuoteEn": "Drunk, he struck spitting pots to the cadence of Cao Cao's poem 'The aged warhorse rests in the stable yet yearns to gallop ten thousand miles', shattering the porcelain rim to dust.",
+    "auxiliaryStrengthsZh": [
+      "气盖山河的军阀号召力与一线实战铁腕",
+      "敢于撕破虚伪的礼教面纱向最高统治机构索取绝对利益"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unchecked martial ferocity and battlefield swagger",
+      "boldly tore down hypocritical court etiquette to extract maximum power"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "自绝于天下公序良俗",
+      "大义名分有亏、肆意刀兵践踏皇权社稷，在关键时刻生理崩坏病死军中，招致挫骨扬灰之千古耻辱"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Sacrificed legitimacy and moral high ground",
+      "armed insurrection against the state left him isolated when fatal illness struck, suffering posthumous desecration"
+    ]
   },
   {
     "id": "wen_qiao",
@@ -1487,7 +2191,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "功成名就后过度劳碌且好奇涉险（燃犀照水），在生理极度疲惫时拔齿引发感染，英年早逝令人痛惜。",
     "weaknessAdviceEn": "Overexerted body and indulged in reckless peril (lighting rhino horn over mystic waters); died abruptly from dental infection shock amidst triumph.",
     "historicalQuoteZh": "峤至牛渚矶，水深不可测，燃犀角而照之，须臾见水族奇形异状，其夕梦人怒曰：‘与卿幽明道殊，何苦相照！’峤齿疾发卒。",
-    "historicalQuoteEn": "At Niuzhu deeps, Wen Qiao lit a magical rhino horn torch to illuminate the black abyss, revealing terrifying spectral sea creatures. That night an abyss spirit cursed him: 'We dwell in separate realms, why disturb our darkness!' He died days later."
+    "historicalQuoteEn": "At Niuzhu deeps, Wen Qiao lit a magical rhino horn torch to illuminate the black abyss, revealing terrifying spectral sea creatures. That night an abyss spirit cursed him: 'We dwell in separate realms, why disturb our darkness!' He died days later.",
+    "auxiliaryStrengthsZh": [
+      "顶级间谍情报与危机联盟整合大师",
+      "深入虎穴而不露声色，在朝廷危亡时能以一人之力捏合各方军阀组成平叛胜利大同盟"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme master of undercover intelligence and coalition warcraft",
+      "Penetrates enemy headquarters unharmed and orchestrates rival warlords into an invincible alliance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "功成名就后过度劳碌且好奇涉险（燃犀照水）",
+      "在生理极度疲惫时拔齿引发感染，英年早逝令人痛惜"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overexerted body and indulged in reckless peril (lighting rhino horn over mystic waters)",
+      "died abruptly from dental infection shock amidst triumph"
+    ]
   },
   {
     "id": "yu_liang",
@@ -1520,7 +2240,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "致命的书生自负与战略盲目！缺乏对草莽武装人性的敬畏，试图用单薄的一纸诏书强行降伏握有重兵的亡命军阀，酿成覆国之祸。",
     "weaknessAdviceEn": "Fatal ideological hubris! Arrogantly believed bureaucratic decrees could disarm heavily armed savage warlords, provoking cataclysms that burned the capital.",
     "historicalQuoteZh": "苏峻既反，亮奔温峤。峤见亮，拜之，亮亦自责拜谢。峤曰：‘君侯昔日何忽于苏峻？’亮抚膺叹曰：‘吾智虑短浅，几覆社稷！’",
-    "historicalQuoteEn": "When Su Jun revolted, Yu Liang fled to Wen Qiao, weeping bitterly: 'My shallow arrogance nearly destroyed the ancestral altars!'"
+    "historicalQuoteEn": "When Su Jun revolted, Yu Liang fled to Wen Qiao, weeping bitterly: 'My shallow arrogance nearly destroyed the ancestral altars!'",
+    "auxiliaryStrengthsZh": [
+      "个人道德与魏晋士族审美无可挑剔",
+      "风姿特秀、谈吐清雅，具备强大的士族号召力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Flawless personal charisma and aristocratic aesthetic",
+      "exceptionally articulate and cultured, embodying the ultimate gentry ideal"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "致命的书生自负与战略盲目",
+      "缺乏对草莽武装人性的敬畏，试图用单薄的一纸诏书强行降伏握有重兵的亡命军阀，酿成覆国之祸"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal ideological hubris",
+      "Arrogantly believed bureaucratic decrees could disarm heavily armed savage warlords, provoking cataclysms that burned the capital"
+    ]
   },
   {
     "id": "tao_kan",
@@ -1553,7 +2289,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "出身寒门始终受江东高门士族歧视排挤，即便立下再造社稷之不世奇功，依然无法真正进入建康核心政权枢纽执政。",
     "weaknessAdviceEn": "Perpetually marginalized by the hereditary oligarchy due to humble birth; denied supreme court leadership despite saving the realm.",
     "historicalQuoteZh": "侃在州无事，辄朝运百甓于斋外，暮运于斋内。人问其故，答曰：‘吾方致力中原，过尔优逸，恐不堪事，故自劳耳。’",
-    "historicalQuoteEn": "When idle, Tao Kan moved 100 heavy bricks from his room at dawn and carried them back at dusk, explaining: 'I must recover the Central Plains; if I grow soft in comfort, I shall fail my country.'"
+    "historicalQuoteEn": "When idle, Tao Kan moved 100 heavy bricks from his room at dawn and carried them back at dusk, explaining: 'I must recover the Central Plains; if I grow soft in comfort, I shall fail my country.'",
+    "auxiliaryStrengthsZh": [
+      "白手起家与微观运营极致大师",
+      "绝不在浮华清谈中虚掷光阴，用日复一日枯燥却严苛的身体训练和底层细节管理构筑不可摧毁的护城河"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate titan of disciplined execution and micro-operational excellence",
+      "Rejects hollow vanity, forging an impenetrable moat through relentless daily habits"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "出身寒门始终受江东高门士族歧视排挤",
+      "即便立下再造社稷之不世奇功，依然无法真正进入建康核心政权枢纽执政"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Perpetually marginalized by the hereditary oligarchy due to humble birth",
+      "denied supreme court leadership despite saving the realm"
+    ]
   },
   {
     "id": "huan_wen",
@@ -1586,7 +2338,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "内心在‘千秋清名’与‘篡位野心’之间剧烈拉扯！关键时刻既想当曹操又顾惜青史骂名，最终被王谢门阀以太极推手拖垮耗尽生命。",
     "weaknessAdviceEn": "Torn apart inwardly between vanity for moral reputation and lust for imperial usurping! Hesitating at the Rubicon allowed clever courtiers to stall his final coup until his grave.",
     "historicalQuoteZh": "桓温抚枕叹曰：‘既不能流芳百世，不足复遗臭万年邪！’其雄鸷狂狷，千载之下，犹令人扼腕。",
-    "historicalQuoteEn": "Huan Wen slammed his pillow, roaring: 'If I cannot leave a glorious fragrance for ten thousand generations, is it not enough to leave a stink for ten thousand years?!'"
+    "historicalQuoteEn": "Huan Wen slammed his pillow, roaring: 'If I cannot leave a glorious fragrance for ten thousand generations, is it not enough to leave a stink for ten thousand years?!'",
+    "auxiliaryStrengthsZh": [
+      "极其宏大的魄力与气象",
+      "敢于主动出击逆转历史颓势，三度北伐直捣中原腹地，展现出超凡脱俗的军事动员与进攻才能"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Monumental ambition and operational drive",
+      "Daringly attacked north to reverse history's downward momentum, commanding awe-inspiring battlefield respect"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "内心在‘千秋清名’与‘篡位野心’之间剧烈拉扯",
+      "关键时刻既想当曹操又顾惜青史骂名，最终被王谢门阀以太极推手拖垮耗尽生命"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Torn apart inwardly between vanity for moral reputation and lust for imperial usurping",
+      "Hesitating at the Rubicon allowed clever courtiers to stall his final coup until his grave"
+    ]
   },
   {
     "id": "xie_an",
@@ -1619,7 +2387,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "淝水大捷后功高震主，遭宗室司马道子猜忌排挤，只能主动避让离开权力中枢，未能在胜利后彻底整合北方收复中原。",
     "weaknessAdviceEn": "His dazzling prestige invited paranoid court jealousy from imperial princes, forcing him to yield supreme power rather than liberating the north.",
     "historicalQuoteZh": "淮上捷书至，安方对客围棋，看书便放床上，了无喜色。客问之，徐答曰：‘小儿辈大破贼。’既罢，还内，过户限，不觉屐齿之折。",
-    "historicalQuoteEn": "The Fei River victory letter arrived while Xie An was playing chess. Setting it aside without expression, he murmured: 'The boys crushed the foes.' Entering his chamber afterward, he stepped so swiftly he snapped the teeth off his wooden sandals without realizing."
+    "historicalQuoteEn": "The Fei River victory letter arrived while Xie An was playing chess. Setting it aside without expression, he murmured: 'The boys crushed the foes.' Entering his chamber afterward, he stepped so swiftly he snapped the teeth off his wooden sandals without realizing.",
+    "auxiliaryStrengthsZh": [
+      "古往今来从容风度与极端抗压心理素质的天花板",
+      "在灭顶之灾面前保持绝对的清醒与松弛感，以无为胜有为，举重若轻化解天崩地裂"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The absolute ceiling of grace under fire and psychological unshakeability in human history",
+      "Disarms cosmic terror through effortless detachment and supreme strategic composure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "淝水大捷后功高震主",
+      "遭宗室司马道子猜忌排挤，只能主动避让离开权力中枢，未能在胜利后彻底整合北方收复中原"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "His dazzling prestige invited paranoid court jealousy from imperial princes",
+      "forcing him to yield supreme power rather than liberating the north"
+    ]
   },
   {
     "id": "xie_xuan",
@@ -1652,7 +2436,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战争烈度过大身体严重透支，未能兼顾长期战略休养，过早离世导致北伐成果迅速被后方政客丢失。",
     "weaknessAdviceEn": "Overworked his physical vessel to the brink in brutal campaigns; his premature demise at 36 allowed court factions to squander his hard-won northern gains.",
     "historicalQuoteZh": "玄募骁勇之士，得刘牢之等，号‘北府兵’，敌人畏之如神明。淝水之捷，玄以八千破百万，功冠古今！",
-    "historicalQuoteEn": "Xie Xuan forged the Beifu Army; foes feared them like gods. At Fei River, leading 8,000 against a million, his martial achievement outshines all history."
+    "historicalQuoteEn": "Xie Xuan forged the Beifu Army; foes feared them like gods. At Fei River, leading 8,000 against a million, his martial achievement outshines all history.",
+    "auxiliaryStrengthsZh": [
+      "特种精锐力量打造与突击战役指挥的天才",
+      "不拼消耗拼战术代差，用极其严苛的筛选打造小而极强的王牌特战部队，在关键转折点一击封喉"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Genius architect of elite special operations forces",
+      "Avoids wasteful attrition, training razor-sharp shock troops to deliver fatal precision decapitation strikes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战争烈度过大身体严重透支",
+      "未能兼顾长期战略休养，过早离世导致北伐成果迅速被后方政客丢失"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overworked his physical vessel to the brink in brutal campaigns",
+      "his premature demise at 36 allowed court factions to squander his hard-won northern gains"
+    ]
   },
   {
     "id": "xie_shi",
@@ -1685,7 +2485,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "个人军事决断魄力相对不足，在战役初始阶段面对巨大心理压力时极易产生悲观动摇心态。",
     "weaknessAdviceEn": "Lacked supreme battlefield audacity; prone to crippling defensive panic when initially confronted by overwhelming enemy scale.",
     "historicalQuoteZh": "石性清整，善处昆季之间。虽总大权，任玄以专，遂成大勋，君子叹其能容。",
-    "historicalQuoteEn": "Book of Jin: Xie Shi was pure and orderly; commanding total power, he entrusted the battlefield entirely to Xuan, achieving immortal glory through leadership humility."
+    "historicalQuoteEn": "Book of Jin: Xie Shi was pure and orderly; commanding total power, he entrusted the battlefield entirely to Xuan, achieving immortal glory through leadership humility.",
+    "auxiliaryStrengthsZh": [
+      "大兵团名义主帅的顶级配角智慧",
+      "懂得在专业领域放手一线少壮派发挥，做好后勤保障与责任兜底，不抢功、不添乱"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Exemplary wise institutional director",
+      "Grants complete tactical freedom to brilliant frontline generals, shielding them from rear interference without stealing glory"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "个人军事决断魄力相对不足",
+      "在战役初始阶段面对巨大心理压力时极易产生悲观动摇心态"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked supreme battlefield audacity",
+      "prone to crippling defensive panic when initially confronted by overwhelming enemy scale"
+    ]
   },
   {
     "id": "huan_chong",
@@ -1718,7 +2534,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "心理包袱沉重，对后方局势过度焦虑（曾因谢安轻敌对弈而忧愤成疾），未能摆脱过重的情感内耗负担。",
     "weaknessAdviceEn": "Borne down by immense emotional burden and chronic worry; excessive anxiety over national survival ate away his physical health.",
     "historicalQuoteZh": "冲性俭素，谦虚爱士。以兄温威权太盛，物情猜阻，遂悉以朝政让谢安，退镇江陵，天下服其公忠。",
-    "historicalQuoteEn": "Book of Jin: Huan Chong lived simply and cherished men of honor. Seeing his brother's overbearing power had frightened the empire, he yielded supreme governance to Xie An, winning universal reverence."
+    "historicalQuoteEn": "Book of Jin: Huan Chong lived simply and cherished men of honor. Seeing his brother's overbearing power had frightened the empire, he yielded supreme governance to Xie An, winning universal reverence.",
+    "auxiliaryStrengthsZh": [
+      "超越家族私利、顾全国家民族大局的崇高典范",
+      "懂得在家族权势登峰造极遭全天下警惕时主动后退一步，化解灭族之灾"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Transcendent archetype of prioritizing systemic survival over selfish clan dynasty",
+      "Defused existential factional civil war by stepping down at the pinnacle of power"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "心理包袱沉重",
+      "对后方局势过度焦虑（曾因谢安轻敌对弈而忧愤成疾），未能摆脱过重的情感内耗负担"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Borne down by immense emotional burden and chronic worry",
+      "excessive anxiety over national survival ate away his physical health"
+    ]
   },
   {
     "id": "wang_xizhi",
@@ -1751,7 +2583,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "性格孤高傲岸，与世俗官场体制极难调和，遇到同僚龃龉时往往以决绝决裂退场，缺乏制度内的持久斡旋耐心。",
     "weaknessAdviceEn": "Aloof and allergic to bureaucratic politics; responds to friction with immediate total severance, lacking patience for institutional wrangling.",
     "historicalQuoteZh": "羲之幼讷于言，及长辩赡，以骨气称。工草隶，为古今之冠，论者称其笔势，以为‘飘若浮云，矫若惊龙’。",
-    "historicalQuoteEn": "Book of Jin: Wang Xizhi's strokes were praised across millennia: 'Drifting like wandering clouds, soaring like a startled dragon!'"
+    "historicalQuoteEn": "Book of Jin: Wang Xizhi's strokes were praised across millennia: 'Drifting like wandering clouds, soaring like a startled dragon!'",
+    "auxiliaryStrengthsZh": [
+      "将专业技艺升华至宇宙哲学高度的千古宗师",
+      "具备绝对不肯同流合污的高贵灵魂，能从大自然的呼吸律动中提炼出穿越千年的绝美艺术生命力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Elevated artistic craft into cosmic metaphysics",
+      "Possesses a fierce, incorruptible soul that distilled nature's eternal heartbeat into timeless aesthetic perfection"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格孤高傲岸",
+      "与世俗官场体制极难调和，遇到同僚龃龉时往往以决绝决裂退场，缺乏制度内的持久斡旋耐心"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Aloof and allergic to bureaucratic politics",
+      "responds to friction with immediate total severance, lacking patience for institutional wrangling"
+    ]
   },
   {
     "id": "wang_xianzhi",
@@ -1784,7 +2632,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "面对皇室强权的政治婚姻强拆无法抗拒，将一生巨大的痛苦内化为刻骨铭心的精神创伤与内耗，耗干了生命元气。",
     "weaknessAdviceEn": "Powerless against imperial dynastic intrusion into his personal love; internalized immense emotional sorrow that burned out his health prematurely.",
     "historicalQuoteZh": "献之疾笃，道家上章，应首过，问其有何罪。献之曰：‘不觉有余事，唯忆与郗家离婚。’言毕涕零。",
-    "historicalQuoteEn": "On his deathbed, when Daoist priests asked what sins he repented of, Wang Xianzhi wept: 'I remember no sins, save my divorce from Lady Chi.'"
+    "historicalQuoteEn": "On his deathbed, when Daoist priests asked what sins he repented of, Wang Xianzhi wept: 'I remember no sins, save my divorce from Lady Chi.'",
+    "auxiliaryStrengthsZh": [
+      "不活在父辈光环下的顶级自主创新者",
+      "敢于在宗师父亲的巍峨大山前另辟蹊径自创法度，展现出惊人的审美破局魄力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Daring innovator who refused to remain in his legendary father's shadow",
+      "boldly invented new brushwork disciplines to claim independent mastery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对皇室强权的政治婚姻强拆无法抗拒",
+      "将一生巨大的痛苦内化为刻骨铭心的精神创伤与内耗，耗干了生命元气"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Powerless against imperial dynastic intrusion into his personal love",
+      "internalized immense emotional sorrow that burned out his health prematurely"
+    ]
   },
   {
     "id": "gu_kaizhi",
@@ -1817,7 +2681,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在残酷现实权力博弈中缺乏起码的防御手腕，多依附于桓温、桓玄等强权麾下，常遭他人窃画欺哄而不知。",
     "weaknessAdviceEn": "Completely defenseless in real-world political power struggles; relied on warlord patrons and was notoriously easy to swindle by unscrupulous friends.",
     "historicalQuoteZh": "恺之每食甘蔗，恒自尾至本。人怪之，答曰：‘渐至佳境！’其才绝、画绝、痴绝，古今一绝。",
-    "historicalQuoteEn": "Eating sugar cane, Gu Kaizhi always started from the leafy tip down to the sweet root. Asked why, he smiled: 'Entering step by step into sweet bliss!'"
+    "historicalQuoteEn": "Eating sugar cane, Gu Kaizhi always started from the leafy tip down to the sweet root. Asked why, he smiled: 'Entering step by step into sweet bliss!'",
+    "auxiliaryStrengthsZh": [
+      "将心智算力百分之百倾注于专业造极的纯粹大师",
+      "以看似‘痴愚’的天真保护内心最圣洁的创造力，屏蔽一切世俗恶斗与消耗"
+    ],
+    "auxiliaryStrengthsEn": [
+      "A pure master who channelled 100% of his cognitive bandwidth into artistic creation",
+      "Uses playful 'divine madness' as armor to deflect corrupt court intrigues"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在残酷现实权力博弈中缺乏起码的防御手腕",
+      "多依附于桓温、桓玄等强权麾下，常遭他人窃画欺哄而不知"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Completely defenseless in real-world political power struggles",
+      "relied on warlord patrons and was notoriously easy to swindle by unscrupulous friends"
+    ]
   },
   {
     "id": "tao_yuanming",
@@ -1850,7 +2730,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "物质生活极度匮乏，晚年屡遭火灾饥寒之苦，子女多不成器，终身未能完全解决生计维艰的现实困窘。",
     "weaknessAdviceEn": "Suffered crushing poverty, famine, and house fires in later years; spiritual transcendence came at the heavy price of daily economic misery.",
     "historicalQuoteZh": "潜叹曰：‘吾不能为五斗米折腰向乡里小人！’即日解印绶去职。赋《归去来兮》，恬然自乐。",
-    "historicalQuoteEn": "Tao Qian sighed: 'I cannot bend my waist for five pecks of rice to a vulgar minion!' Resigned immediately, penning 'Return Home' to dwell in tranquil joy."
+    "historicalQuoteEn": "Tao Qian sighed: 'I cannot bend my waist for five pecks of rice to a vulgar minion!' Resigned immediately, penning 'Return Home' to dwell in tranquil joy.",
+    "auxiliaryStrengthsZh": [
+      "人类精神独立与主动做减法的最高巅峰",
+      "决不在精神消耗的垃圾组织中内耗生命，敢于断舍离回归土地与真我，在极简生活中构筑永恒的精神丰碑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The zenith of spiritual independence and voluntary simplicity",
+      "Refuses to waste life in toxic organizations, radically cutting ties to find eternity in raw nature"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "物质生活极度匮乏",
+      "晚年屡遭火灾饥寒之苦，子女多不成器，终身未能完全解决生计维艰的现实困窘"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Suffered crushing poverty, famine, and house fires in later years",
+      "spiritual transcendence came at the heavy price of daily economic misery"
+    ]
   },
   {
     "id": "sun_en",
@@ -1883,7 +2779,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "除了破坏与屠杀没有任何建设性政纲！以神道邪术愚弄信众，缺乏真正的制度愿景与军事纵深，最终在职业正规军（刘裕）打击下自取灭亡。",
     "weaknessAdviceEn": "Zero constructive governing blueprint; relied solely on slaughter and apocalyptic hallucinations, evaporating the moment professional armies adapted.",
     "historicalQuoteZh": "恩入会稽，杀内史王凝之及其诸子。士民附之者数十万，转斗数年，江东为之荒废，恩计穷赴海死。",
-    "historicalQuoteEn": "Book of Jin: Sun En took Kuaiji, slaughtering the magistrate Wang Ningzhi and his sons. Hundreds of thousands rebelled; coastal provinces lay desolate until En threw himself into the waves."
+    "historicalQuoteEn": "Book of Jin: Sun En took Kuaiji, slaughtering the magistrate Wang Ningzhi and his sons. Hundreds of thousands rebelled; coastal provinces lay desolate until En threw himself into the waves.",
+    "auxiliaryStrengthsZh": [
+      "极其可怕的宗教群众动员与不对称游击作战手腕",
+      "善于在阶级固化极端严重的腐朽社会中点燃底层仇恨狂潮"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Terrifying ability to weaponize sectarian fanaticism and asymmetric sea-land guerrilla warfare to torch entrenched aristocratic hierarchies.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "除了破坏与屠杀没有任何建设性政纲",
+      "以神道邪术愚弄信众，缺乏真正的制度愿景与军事纵深，最终在职业正规军（刘裕）打击下自取灭亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero constructive governing blueprint",
+      "relied solely on slaughter and apocalyptic hallucinations, evaporating the moment professional armies adapted"
+    ]
   },
   {
     "id": "huan_xuan",
@@ -1916,7 +2828,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "彻底的温室巨婴与战术软蛋！能打顺风局却绝不能打逆风硬仗，一遇真正从尸山血海中爬出来的狠人（刘裕）立刻心理崩溃土崩瓦解。",
     "weaknessAdviceEn": "A fragile hothouse child! Soared in easy victories but collapsed into frantic hysteria upon facing hardened frontline warriors (Liu Yu).",
     "historicalQuoteZh": "玄既登基，床忽陷，群臣失色。殷仲文曰：‘将由圣德渊深，大地不能载！’玄大悦。及刘裕起兵，玄走死江陵，天下莫不笑之。",
-    "historicalQuoteEn": "Upon Huan Xuan's throne coronation, the floor collapsed beneath him. A sycophant flattered: 'Your sage virtue is so immense the Earth cannot bear it!' Hearing Liu Yu approached, he wet himself and fled, slain in a reed boat."
+    "historicalQuoteEn": "Upon Huan Xuan's throne coronation, the floor collapsed beneath him. A sycophant flattered: 'Your sage virtue is so immense the Earth cannot bear it!' Hearing Liu Yu approached, he wet himself and fled, slain in a reed boat.",
+    "auxiliaryStrengthsZh": [
+      "深厚的家学渊源与极佳的艺术鉴赏品位",
+      "借父兄余威能迅速整合荆楚军事资源席卷京师"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immense family lineage and refined connoisseurship",
+      "easily mobilized his father's veteran army to sweep into the imperial capital"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "彻底的温室巨婴与战术软蛋",
+      "能打顺风局却绝不能打逆风硬仗，一遇真正从尸山血海中爬出来的狠人（刘裕）立刻心理崩溃土崩瓦解"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "A fragile hothouse child",
+      "Soared in easy victories but collapsed into frantic hysteria upon facing hardened frontline warriors (Liu Yu)"
+    ]
   },
   {
     "id": "liu_laozhi",
@@ -1949,7 +2877,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "缺乏任何长远政治信义与人格底线！‘三姓家奴’式的反复背叛在乱世中是最致命的毒药，一旦失去信任资本，纵有万夫不当之勇也必遭所有人唾弃孤立而死。",
     "weaknessAdviceEn": "Chronic opportunistic treason burns through all social credit! A general who repeatedly betrays his patrons becomes universally radioactive, ensuring friendless suicide.",
     "historicalQuoteZh": "牢之既死，其子刘敬宣亡命后秦。将吏议曰：‘牢之反王恭、背元显、迎桓玄，天下谁能复容之！’自绝于世，悲夫。",
-    "historicalQuoteEn": "Book of Jin: Liu Laozhi betrayed Wang Gong, betrayed Yuanxian, and invited Huan Xuan; who on earth could ever trust him again? His suicide was inevitable."
+    "historicalQuoteEn": "Book of Jin: Liu Laozhi betrayed Wang Gong, betrayed Yuanxian, and invited Huan Xuan; who on earth could ever trust him again? His suicide was inevitable.",
+    "auxiliaryStrengthsZh": [
+      "无畏的战术突击猛将",
+      "在正规军对阵撕裂敌方防线时具备无与伦比的撕扯力与战斗力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Devastating tactical assault battering ram",
+      "tears through enemy lines with ferocious battlefield fury"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏任何长远政治信义与人格底线",
+      "‘三姓家奴’式的反复背叛在乱世中是最致命的毒药，一旦失去信任资本，纵有万夫不当之勇也必遭所有人唾弃孤立而死"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Chronic opportunistic treason burns through all social credit",
+      "A general who repeatedly betrays his patrons becomes universally radioactive, ensuring friendless suicide"
+    ]
   },
   {
     "id": "liu_yu",
@@ -1982,7 +2926,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "为巩固自家寒门子孙皇权，大开杀戒屠灭东晋司马宗室数十人，开启了南朝弑杀前朝废帝宗室的恶劣先例，以致其后代亦深陷血腥互戮魔咒。",
     "weaknessAdviceEn": "Slaughtered the dethroned Sima imperial clan to secure his dynasty, setting a horrific precedent of exterminating predecessor sovereigns that cursed his own descendants.",
     "historicalQuoteZh": "辛弃疾词赞：‘想当年，金戈铁马，气吞万里如虎！’沈约《宋书》叹其：‘威棱慴于殊俗，算略烛于未形。’",
-    "historicalQuoteEn": "Xin Qiji immortalized him: 'Remembering those golden spears and iron armor, swallowing ten thousand miles like a hungry tiger!' Shen Yue hailed his lightning tactical foresight."
+    "historicalQuoteEn": "Xin Qiji immortalized him: 'Remembering those golden spears and iron armor, swallowing ten thousand miles like a hungry tiger!' Shen Yue hailed his lightning tactical foresight.",
+    "auxiliaryStrengthsZh": [
+      "古往今来从底层杀伐崛起的第一铁血军事统帅",
+      "敢于在绝对劣势中以极致的战术创新（却月阵）完成以步克骑的战争奇迹，政治改革大刀阔斧雷厉风行"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate military sovereign rising from absolute poverty",
+      "Invented revolutionary tactics (Queyue formation) to crush massive nomadic cavalry with light infantry"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "为巩固自家寒门子孙皇权",
+      "大开杀戒屠灭东晋司马宗室数十人，开启了南朝弑杀前朝废帝宗室的恶劣先例，以致其后代亦深陷血腥互戮魔咒"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Slaughtered the dethroned Sima imperial clan to secure his dynasty",
+      "setting a horrific precedent of exterminating predecessor sovereigns that cursed his own descendants"
+    ]
   },
   {
     "id": "liu_yilong",
@@ -2015,7 +2975,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "典型的‘后方外行微操前线内行’！缺乏一线实战将略却盲目干预战役部署致全军覆没；自残手足冤杀长城柱石，最终自食其果惨遭逆子弑杀。",
     "weaknessAdviceEn": "The classic amateur sovereign micro-managing frontline masters! Overruling veteran commanders brought catastrophic defeats; executing his own defensive shield invited patricide.",
     "historicalQuoteZh": "辛弃疾词：‘元嘉草草，封狼居胥，赢得仓皇北顾！’四十三年，望中犹记，烽火扬州路。",
-    "historicalQuoteEn": "Xin Qiji's immortal verse: 'Yuanjia's hurried dreams of ancient triumphs, yielded only panicked glances backward over the northern plain!'"
+    "historicalQuoteEn": "Xin Qiji's immortal verse: 'Yuanjia's hurried dreams of ancient triumphs, yielded only panicked glances backward over the northern plain!'",
+    "auxiliaryStrengthsZh": [
+      "极佳的守成文治与经济内政复苏大师",
+      "善于在战乱初定时期调养生息，推动文化艺术与学术制度繁荣达到顶峰"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Exceptional civilian recovery and peacetime domestic governance administrator",
+      "nurtured agricultural wealth and high culture to their zenith"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "典型的‘后方外行微操前线内行’",
+      "缺乏一线实战将略却盲目干预战役部署致全军覆没"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The classic amateur sovereign micro-managing frontline masters",
+      "Overruling veteran commanders brought catastrophic defeats"
+    ]
   },
   {
     "id": "tan_daoji",
@@ -2048,7 +3024,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "功高震主而缺乏政治防卫嗅觉！身处多疑虚弱的宫廷权力边缘，对朝廷借探病诱召入京的致命杀局毫无防范与武装抗衡准备，束手就擒成千古冤魂。",
     "weaknessAdviceEn": "Immense battlefield prestige without palace defense armor; walk blindly into imperial trap convocations without personal security detachments, ensuring tragic judicial murder.",
     "historicalQuoteZh": "道济见收，愤怒气盛，目光如炬，拔帻投地曰：‘乃坏汝万里长城！’魏人闻之皆庆曰：‘道济已死，吴子不足复惮矣！’",
-    "historicalQuoteEn": "Arrested, Daoji's eyes blazed like fire; throwing his cap to the stones, he roared: 'You have destroyed your own Great Wall!' Northern Wei courtiers cheered: 'Daoji is dead, the southern state is toothless!'"
+    "historicalQuoteEn": "Arrested, Daoji's eyes blazed like fire; throwing his cap to the stones, he roared: 'You have destroyed your own Great Wall!' Northern Wei courtiers cheered: 'Daoji is dead, the southern state is toothless!'",
+    "auxiliaryStrengthsZh": [
+      "极其深厚的战场心理战与极端危机脱困智慧（唱筹量沙）",
+      "在断粮绝境中凭极高定力骗过庞大对手，指挥艺术出神入化"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme master of psychological warfare and impossible crisis extraction (measuring sand as grain)",
+      "Outfoxed an overwhelming enemy army through nerves of steel"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "功高震主而缺乏政治防卫嗅觉",
+      "身处多疑虚弱的宫廷权力边缘，对朝廷借探病诱召入京的致命杀局毫无防范与武装抗衡准备，束手就擒成千古冤魂"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Immense battlefield prestige without palace defense armor",
+      "walk blindly into imperial trap convocations without personal security detachments, ensuring tragic judicial murder"
+    ]
   },
   {
     "id": "fan_ye",
@@ -2081,7 +3073,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "狂妄自大且政治智商低下！搞阴谋政变幼稚如儿戏，轻信投机狂徒的拉拢，最终让千古才华陪葬于拙劣的政治野心之中。",
     "weaknessAdviceEn": "Catastrophic political naivety mixed with intellectual arrogance! Entangled in childish palace coup plots that incinerated his lineage.",
     "historicalQuoteZh": "晔临刑，顾谓狱吏曰：‘天下可无我，不可无《后汉书》！’其狂简自负若此。",
-    "historicalQuoteEn": "At the execution grounds, Fan Ye scoffed to the warden: 'The world can live without me, but it cannot live without my Book of Later Han!'"
+    "historicalQuoteEn": "At the execution grounds, Fan Ye scoffed to the warden: 'The world can live without me, but it cannot live without my Book of Later Han!'",
+    "auxiliaryStrengthsZh": [
+      "极其耀眼的史学构架力与文字审美穿透力",
+      "能将几百年的庞杂王朝历史编纂为字字珠玑的万古经典"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Towering historiographical vision and prose elegance",
+      "organized centuries of imperial history into an immortal canonical gem"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "狂妄自大且政治智商低下",
+      "搞阴谋政变幼稚如儿戏，轻信投机狂徒的拉拢，最终让千古才华陪葬于拙劣的政治野心之中"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Catastrophic political naivety mixed with intellectual arrogance",
+      "Entangled in childish palace coup plots that incinerated his lineage"
+    ]
   },
   {
     "id": "xiao_daocheng",
@@ -2114,7 +3122,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "宗室分封与诸王权力结构未能有效锁死，给南齐二代之后残酷暴烈的宗室骨肉自相残杀埋下了祸根。",
     "weaknessAdviceEn": "Failed to institutionalize checks on royal princes; his succession setup devolved into horrific fratricidal butchery in the second generation.",
     "historicalQuoteZh": "道成常言：‘使我治天下十年，当使黄金与土同价！’自奉俭朴，后宫不设雕饰。",
-    "historicalQuoteEn": "Xiao Daocheng declared: 'Give me ten years to govern, and I will make gold as common as dirt!' Kept his palace free of gold and luxuries."
+    "historicalQuoteEn": "Xiao Daocheng declared: 'Give me ten years to govern, and I will make gold as common as dirt!' Kept his palace free of gold and luxuries.",
+    "auxiliaryStrengthsZh": [
+      "极其深沉的自我克制与逆境绝杀智慧",
+      "面对疯癫暴君的生死威胁能隐忍不发一招毙命，登基后以极高的道德自律树立政权公信力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme self-control and predatory reflex under lethal threat",
+      "eliminated a mad tyrant in one strike and established moral credibility via rigorous personal frugality"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "宗室分封与诸王权力结构未能有效锁死",
+      "给南齐二代之后残酷暴烈的宗室骨肉自相残杀埋下了祸根"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to institutionalize checks on royal princes",
+      "his succession setup devolved into horrific fratricidal butchery in the second generation"
+    ]
   },
   {
     "id": "xiao_ze",
@@ -2147,7 +3171,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "‘检籍’政策推行过急过严引发富阳唐寓之暴动；晚年托孤于残暴外戚萧鸾，致使其死后萧鸾大肆屠戮齐高帝齐武帝子孙近百人，南齐皇统断绝。",
     "weaknessAdviceEn": "Overly aggressive tax audits sparked peasant rebellions. Critically misjudged his cousin Xiao Luan, who upon his death butchered over 100 princes of his lineage.",
     "historicalQuoteZh": "武帝性聪断，躬亲庶政。诏曰：‘古者敛手足形，还葬于地，何须多品！棺内但安被褥，勿用珍宝。’",
-    "historicalQuoteEn": "Book of Southern Qi: Emperor Wu was acutely intelligent. Decreed: 'The ancients buried naked flesh; why hoard treasures? Lay only plain quilts in my casket.'"
+    "historicalQuoteEn": "Book of Southern Qi: Emperor Wu was acutely intelligent. Decreed: 'The ancients buried naked flesh; why hoard treasures? Lay only plain quilts in my casket.'",
+    "auxiliaryStrengthsZh": [
+      "务实的战略减速与和平红利兑现者",
+      "不被虚妄的北伐口号绑架，专注国内民生经济恢复与制度修缮"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pragmatic builder of peace dividends",
+      "refused to be hostage to romantic warmongering, channeling resources into domestic commerce and fiscal infrastructure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "‘检籍’政策推行过急过严引发富阳唐寓之暴动",
+      "晚年托孤于残暴外戚萧鸾，致使其死后萧鸾大肆屠戮齐高帝齐武帝子孙近百人，南齐皇统断绝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly aggressive tax audits sparked peasant rebellions. Critically misjudged his cousin Xiao Luan",
+      "who upon his death butchered over 100 princes of his lineage"
+    ]
   },
   {
     "id": "xiao_yan",
@@ -2180,7 +3220,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "中国历史上最惨烈的帝王晚年反面教材！虚伪的仁慈是最大的残忍，以宗教出家逃避现实政务，姑息纵容狼子野心的叛将（侯景），最终一手葬送整个江南三百年积聚的文明繁华，饿死内殿沦为千古笑柄。",
     "weaknessAdviceEn": "The most catastrophic cautionary tragedy in imperial history! Hypocritical piety turned into monstrous negligence; coddling traitor Hou Jing brought apocalyptic ruin to southern China, starving to death on a reed mat.",
     "historicalQuoteZh": "帝饥困，求蜜不得，叹曰：‘自我得之，自我失之，亦复何恨！’遂殂于净居殿，时年八十六。",
-    "historicalQuoteEn": "Starving in the besieged palace, Xiao Yan begged for honey and was refused. Sighing: 'Won by my hand, lost by my hand, what is there to resent!' he breathed his last at age 86."
+    "historicalQuoteEn": "Starving in the besieged palace, Xiao Yan begged for honey and was refused. Sighing: 'Won by my hand, lost by my hand, what is there to resent!' he breathed his last at age 86.",
+    "auxiliaryStrengthsZh": [
+      "极高的个人文化修养、经史哲学造诣与开国创业魄力",
+      "在长达半个世纪的统治前期打造了南朝文化艺术的最高黄金峰峦"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Astounding polymath intelligence and cultural vision",
+      "created the zenith of southern literary and architectural civilization over half a century"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "中国历史上最惨烈的帝王晚年反面教材",
+      "虚伪的仁慈是最大的残忍，以宗教出家逃避现实政务，姑息纵容狼子野心的叛将（侯景），最终一手葬送整个江南三百年积聚的文明繁华，饿死内殿沦为千古笑柄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The most catastrophic cautionary tragedy in imperial history",
+      "Hypocritical piety turned into monstrous negligence"
+    ]
   },
   {
     "id": "wei_rui",
@@ -2213,7 +3269,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "身体机能天然羸弱，晚年在梁武帝佞佛腐化的政权大染缸中只能洁身自好退缩自保，无力扭转中枢决策恶化。",
     "weaknessAdviceEn": "Frail physical constitution; powerless to cure the creeping decay of Xiao Yan's court in his retirement, choosing quiet retreat.",
     "historicalQuoteZh": "睿虽体羸，临阵神采焕发。魏军望见板舆，皆惊呼曰：‘此韦虎也！速避之！’",
-    "historicalQuoteEn": "Book of Liang: Though physically frail, Wei Rui's spirit blazed upon the battlefield. Northern Wei troops saw his wooden sedan and screamed: 'It is Tiger Wei! Run for your lives!'"
+    "historicalQuoteEn": "Book of Liang: Though physically frail, Wei Rui's spirit blazed upon the battlefield. Northern Wei troops saw his wooden sedan and screamed: 'It is Tiger Wei! Run for your lives!'",
+    "auxiliaryStrengthsZh": [
+      "真正的儒将风范与以智破力的水战宗师",
+      "不以肌肉勇力称雄，凭对水文地理的透彻掌控与心理压制，在谈笑风生间樯橹灰飞烟灭"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The quintessential scholar-commander",
+      "Overcomes raw physical muscle through hydrological engineering and psychological warfare, obliterating mighty hosts with serene grace"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "身体机能天然羸弱",
+      "晚年在梁武帝佞佛腐化的政权大染缸中只能洁身自好退缩自保，无力扭转中枢决策恶化"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Frail physical constitution",
+      "powerless to cure the creeping decay of Xiao Yan's court in his retirement, choosing quiet retreat"
+    ]
   },
   {
     "id": "tao_hongjing",
@@ -2246,7 +3318,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "超然世外只能提供形而上的参谋建议，在侯景之乱等血腥暴虐的乱世狂潮面前，山中洞天亦难以抵挡武装蛮族的焚掠与兵燹。",
     "weaknessAdviceEn": "Spiritual transcendence offers philosophical advice but cannot field iron legions; sacred hermit sanctuaries remain vulnerable when savage barbarians burn the forests.",
     "historicalQuoteZh": "梁武帝问其山中何所有，弘景作诗答曰：‘山中何所有？岭上多白云。只可自怡悦，不堪持赠君。’高蹈清风，千古绝唱。",
-    "historicalQuoteEn": "Emperor Wu asked what kept him in the wild mountains. Tao Hongjing replied with immortal verse: 'What dwells within the mountains? White clouds adrift atop the ridge. They serve to bring my spirit joy, but cannot be presented to my Lord.'"
+    "historicalQuoteEn": "Emperor Wu asked what kept him in the wild mountains. Tao Hongjing replied with immortal verse: 'What dwells within the mountains? White clouds adrift atop the ridge. They serve to bring my spirit joy, but cannot be presented to my Lord.'",
+    "auxiliaryStrengthsZh": [
+      "世外高人与专业顾问的最高境界",
+      "身在江湖之远却握有天下算力，以无上的学术专业与超然物外的人格，成为最高权力机构最敬仰的超级智囊"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate spiritual outsider and trusted external strategist",
+      "Holds immense intellectual gravity while remaining pure and untethered to court vanity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "超然世外只能提供形而上的参谋建议",
+      "在侯景之乱等血腥暴虐的乱世狂潮面前，山中洞天亦难以抵挡武装蛮族的焚掠与兵燹"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Spiritual transcendence offers philosophical advice but cannot field iron legions",
+      "sacred hermit sanctuaries remain vulnerable when savage barbarians burn the forests"
+    ]
   },
   {
     "id": "xiao_gang",
@@ -2279,7 +3367,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "极度缺乏在乱世生存的钢铁意志与政治骨气！把心智全消耗在风花雪月上，大难临头只能作凄惨艳诗自怜，沦为残暴屠夫随意踩踏抹杀的玩物。",
     "weaknessAdviceEn": "Complete absence of moral steel and situational grit! Squandered mind on decadent romanticism, weeping pathetic verses while savage killers sealed his coffin with dirt.",
     "historicalQuoteZh": "景使人用土囊压弑之。简文自知不免，引觞自醉，赋诗曰：‘壁高何局促，日短极虚游。聊当对金爵，寂听吹竹钩。’",
-    "historicalQuoteEn": "Knowing executioners came with sacks of earth, he drank wine and recited his final sorrow: 'These prison walls close so tight, the sun sets upon empty wanderings.' They smothered him to death moments later."
+    "historicalQuoteEn": "Knowing executioners came with sacks of earth, he drank wine and recited his final sorrow: 'These prison walls close so tight, the sun sets upon empty wanderings.' They smothered him to death moments later.",
+    "auxiliaryStrengthsZh": [
+      "纯文学与感官审美的天才革新者",
+      "能够以极尽工巧的文字捕捉声色光影的流动，在文学史上占据专属一席"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Brilliant innovator of sensual aesthetics and courtly lyricism",
+      "capturing fleeting moments of physical beauty with crystalline elegance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "极度缺乏在乱世生存的钢铁意志与政治骨气",
+      "把心智全消耗在风花雪月上，大难临头只能作凄惨艳诗自怜，沦为残暴屠夫随意踩踏抹杀的玩物"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Complete absence of moral steel and situational grit",
+      "Squandered mind on decadent romanticism, weeping pathetic verses while savage killers sealed his coffin with dirt"
+    ]
   },
   {
     "id": "hou_jing",
@@ -2312,7 +3416,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "毫无道义底线的恶魔化身！一生把背叛与屠戮当饭吃，激起全天下最刻骨铭心的仇恨，不仅身死族灭，更沦为尸骨被万民分食的千古第一罪魁。",
     "weaknessAdviceEn": "The personification of moral abomination! Lived by betrayal and sadistic bloodletting, earning universal wrath until his dead flesh was literally eaten by citizens in the streets.",
     "historicalQuoteZh": "景篡位，自称‘宇宙大将军、都督六合诸军事’。及死，百姓争取其尸，脔食立尽，连其骨皆烧灰饮之，其妻溧阳公主亦食其肉！",
-    "historicalQuoteEn": "Hou Jing crowned himself 'Cosmic Grand General'. When slain, civilians tore his corpse apart and devoured every shred of flesh, mixing his powdered bones in wine; even his forced wife Lady Liyang ate his heart."
+    "historicalQuoteEn": "Hou Jing crowned himself 'Cosmic Grand General'. When slain, civilians tore his corpse apart and devoured every shred of flesh, mixing his powdered bones in wine; even his forced wife Lady Liyang ate his heart.",
+    "auxiliaryStrengthsZh": [
+      "战场直觉极度敏锐的野兽级军阀",
+      "擅长在多国夹缝中挑动矛盾借鸡生蛋，进攻手段狠辣绝决，攻城心理战炉火纯青"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Beast-like survival intuition in multi-polar battlefields",
+      "manipulates geopolitical paranoia to extract resources, executing merciless shock assaults"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "毫无道义底线的恶魔化身",
+      "生把背叛与屠戮当饭吃，激起全天下最刻骨铭心的仇恨，不仅身死族灭，更沦为尸骨被万民分食的千古第一罪魁"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The personification of moral abomination",
+      "Lived by betrayal and sadistic bloodletting, earning universal wrath until his dead flesh was literally eaten by citizens in the streets"
+    ]
   },
   {
     "id": "chen_baxian",
@@ -2345,7 +3465,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "国力底盘在侯景之乱后已被摧毁殆尽，南陈疆域狭小民力凋敝，终其一生只能苦苦支撑自保，无力恢复大一统荣光。",
     "weaknessAdviceEn": "Inherited an utterly devastated, depopulated southern landscape; spent his whole reign in desperate defensive wars, lacking economic depth for northern reclamation.",
     "historicalQuoteZh": "陈武帝征战数十年，夜不释甲。白下之战，兵无斗志，武帝拔剑誓曰：‘今日之事，有进无退！’亲冒矢石破强齐，江表遂安。",
-    "historicalQuoteEn": "Book of Chen: Emperor Wu spent decades sleeping in armor. At Baixia, soldiers wavered; Chen Baxian drew his broadsword: 'Today we march forward, there is no retreat!' Defeating mighty Qi, southern civilization was preserved."
+    "historicalQuoteEn": "Book of Chen: Emperor Wu spent decades sleeping in armor. At Baixia, soldiers wavered; Chen Baxian drew his broadsword: 'Today we march forward, there is no retreat!' Defeating mighty Qi, southern civilization was preserved.",
+    "auxiliaryStrengthsZh": [
+      "真正挽狂澜于既倒的绝境拯救者",
+      "在山河破碎、十室九空的终极废墟中白手起家，凭神级统帅力以弱胜强击碎强敌，展现出泰山崩于前而面不改色的钢铁意志"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate apocalyptic savior",
+      "Rebuilt an entire civilization from smoldering ashes, shattering colossal foreign invasions through peerless tactical courage and iron discipline"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "国力底盘在侯景之乱后已被摧毁殆尽",
+      "南陈疆域狭小民力凋敝，终其一生只能苦苦支撑自保，无力恢复大一统荣光"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Inherited an utterly devastated, depopulated southern landscape",
+      "spent his whole reign in desperate defensive wars, lacking economic depth for northern reclamation"
+    ]
   },
   {
     "id": "xiao_tong",
@@ -2378,7 +3514,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "心理承受力与面对父权猜忌时的心理免疫力偏弱，因一次无端的误会内耗至深，未能熬过人性的猜忌考验，导致南梁痛失最佳接班人。",
     "weaknessAdviceEn": "Vulnerable to emotional despair and parental mistrust; allowed unjust royal suspicion to break his spirit, dying young and robbing the realm of its finest heir.",
     "historicalQuoteZh": "统性仁孝，爱玩经籍，引纳文学之士，赏拔无遗。所撰《文选》，流行于世，至今遵之。及薨，京师男女号泣于道，如丧亲戚。",
-    "historicalQuoteEn": "Book of Liang: Xiao Tong was gentle, filial, and loved classical learning. His 'Wen Xuan' remains a beacon for centuries. When he passed, common people wept in the streets as if mourning their own parents."
+    "historicalQuoteEn": "Book of Liang: Xiao Tong was gentle, filial, and loved classical learning. His 'Wen Xuan' remains a beacon for centuries. When he passed, common people wept in the streets as if mourning their own parents.",
+    "auxiliaryStrengthsZh": [
+      "中华文明文学经典化第一功臣",
+      "具备博大精深的学术审美眼光与海纳百川的文化整合力，奠定了后世数千年的文化基因坐标"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The foremost architect of classical Chinese literary canonization",
+      "Possessed transcendent taste that forged the aesthetic DNA of the empire for two millennia"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "心理承受力与面对父权猜忌时的心理免疫力偏弱",
+      "因一次无端的误会内耗至深，未能熬过人性的猜忌考验，导致南梁痛失最佳接班人"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Vulnerable to emotional despair and parental mistrust",
+      "allowed unjust royal suspicion to break his spirit, dying young and robbing the realm of its finest heir"
+    ]
   },
   {
     "id": "jiang_yan",
@@ -2411,7 +3563,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在三朝更迭剧变中以明哲保身为第一信条，缺乏誓死坚守某一政治理想或道统阵线的执着与风骨。",
     "weaknessAdviceEn": "Prioritized personal survival over ideological loyalty; flexibly adapted across usurpations, lacking tragic moral backbone.",
     "historicalQuoteZh": "淹少以文章显，晚节才思微退，时人谓之‘江郎才尽’。然其明哲保身，历事三代，金玉满堂，亦乱世之智者也。",
-    "historicalQuoteEn": "Book of Liang: Jiang Yan shone in youth but withdrew his brush in late years, termed 'Master Jiang's talent exhausted'. Yet surviving three dynasties in honor, he was truly a sage of chaos."
+    "historicalQuoteEn": "Book of Liang: Jiang Yan shone in youth but withdrew his brush in late years, termed 'Master Jiang's talent exhausted'. Yet surviving three dynasties in honor, he was truly a sage of chaos.",
+    "auxiliaryStrengthsZh": [
+      "主动降维与大智若愚自保的最高典范",
+      "在文名炽热、树大招风之际，懂得借‘才尽’之由主动卸下光环，从名利的靶心全身而退安享天年"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of strategic self-diminution and graceful exit",
+      "Voluntarily declared his talent 'exhausted' to step off the celebrity target board and retire in prosperity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在三朝更迭剧变中以明哲保身为第一信条",
+      "缺乏誓死坚守某一政治理想或道统阵线的执着与风骨"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Prioritized personal survival over ideological loyalty",
+      "flexibly adapted across usurpations, lacking tragic moral backbone"
+    ]
   },
   {
     "id": "chen_shubao",
@@ -2444,7 +3612,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "统治者沉溺享乐逃避现实的终极耻辱败类！大敌当前依然自欺欺人，城破后投井求生甚至毫无国破家亡的羞耻感，沦为历史的千古笑柄。",
     "weaknessAdviceEn": "The supreme disgrace of sovereign abdication! Deluded himself until the gates fell, cowered in a filthy well, and begged his conquerors for drinking wine.",
     "historicalQuoteZh": "隋兵入宫，求后主不得。有窥枯井者，呼之不应，将下石，后主乃呼。引绳出之，后主与张丽华、孔贵嫔同囊而出，隋军大笑！",
-    "historicalQuoteEn": "Sui troops searched the palace and found the Emperor hiding down a dried well. Threading a rope down, they hauled up a basket holding Chen Shubao and his two concubines tied together, erupting in mocking laughter!"
+    "historicalQuoteEn": "Sui troops searched the palace and found the Emperor hiding down a dried well. Threading a rope down, they hauled up a basket holding Chen Shubao and his two concubines tied together, erupting in mocking laughter!",
+    "auxiliaryStrengthsZh": [
+      "在音乐旋律、辞藻声律与奢靡享乐方面具备敏锐的天赋",
+      "为后世留下了惊艳千古的亡国靡靡之音"
+    ],
+    "auxiliaryStrengthsEn": [
+      "A gifted sensual melody creator and indulgent courtly stylist whose musical decadence haunted Chinese history forever.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "统治者沉溺享乐逃避现实的终极耻辱败类",
+      "大敌当前依然自欺欺人，城破后投井求生甚至毫无国破家亡的羞耻感，沦为历史的千古笑柄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The supreme disgrace of sovereign abdication",
+      "Deluded himself until the gates fell, cowered in a filthy well, and begged his conquerors for drinking wine"
+    ]
   },
   {
     "id": "tuoba_gui",
@@ -2477,7 +3661,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "生理药物中毒与精神狂乱彻底摧毁了心智！晚年肆意滥杀臣下甚至逼反骨肉，完全失去了理智防御机制，死于最亲近之人的枕边利刃。",
     "weaknessAdviceEn": "Chemical drug poisoning broke his sanity! Indiscriminate paranoia towards loyal ministers and concubines invited assassination by his own family.",
     "historicalQuoteZh": "《魏书》：帝聪爽仁智，年甫十五，复积石之业。然晚节沉湎药石，朝野震恐，遂致内乱之祸，伤哉！",
-    "historicalQuoteEn": "Book of Wei: Emperor Daowu was brilliantly perceptive in youth; yet in his late years, drug-induced madness terrified court and countryside, courting patricidal ruin."
+    "historicalQuoteEn": "Book of Wei: Emperor Daowu was brilliantly perceptive in youth; yet in his late years, drug-induced madness terrified court and countryside, courting patricidal ruin.",
+    "auxiliaryStrengthsZh": [
+      "具备惊人的战略定力与运动战伏击战术",
+      "在强敌（后燕）环伺的极端劣势下捕捉稍纵即逝的战机，一战逆天改命奠定北方霸业"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immense strategic patience and ambush mastery",
+      "Capitalized on fleeting enemy errors to overturn a continental power balance in a single strike"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "生理药物中毒与精神狂乱彻底摧毁了心智",
+      "晚年肆意滥杀臣下甚至逼反骨肉，完全失去了理智防御机制，死于最亲近之人的枕边利刃"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Chemical drug poisoning broke his sanity",
+      "Indiscriminate paranoia towards loyal ministers and concubines invited assassination by his own family"
+    ]
   },
   {
     "id": "tuoba_tao",
@@ -2510,7 +3710,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "杀伐过甚缺乏对精神文化信仰的敬畏（灭佛之浩劫）；晚年对身边近侍（宦官）缺乏起码的安全防范意识，最终死于卑贱家奴之手。",
     "weaknessAdviceEn": "Draconian savagery devoid of spiritual empathy (wholesale slaughter of monastics); fatal blindspot toward palace eunuchs left him murdered in his bed by a servant.",
     "historicalQuoteZh": "太武亲跨鞍马，出入矢石之间，前后讨灭诸国，风卷残云。然性严急，多残忍，终及宗爱之手，甚可叹也！",
-    "historicalQuoteEn": "Book of Wei: Emperor Taiwu spent his life in the saddle among flying arrows, sweeping away rival kingdoms like storm winds. Yet his hair-trigger temper and cruelty delivered him into the eunuch's dagger."
+    "historicalQuoteEn": "Book of Wei: Emperor Taiwu spent his life in the saddle among flying arrows, sweeping away rival kingdoms like storm winds. Yet his hair-trigger temper and cruelty delivered him into the eunuch's dagger.",
+    "auxiliaryStrengthsZh": [
+      "古往今来亲临前线战术冲锋的第一帝王",
+      "拥有恐怖的军事直觉与高强度跨区域机动作战能力，以摧枯拉朽之势完成地缘大统一"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peerless battlefield shock general among sovereigns",
+      "Unmatched operational agility and tactical momentum capable of pulverizing fragmented regional warlords"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "杀伐过甚缺乏对精神文化信仰的敬畏（灭佛之浩劫）",
+      "晚年对身边近侍（宦官）缺乏起码的安全防范意识，最终死于卑贱家奴之手"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Draconian savagery devoid of spiritual empathy (wholesale slaughter of monastics)",
+      "fatal blindspot toward palace eunuchs left him murdered in his bed by a servant"
+    ]
   },
   {
     "id": "cui_hao",
@@ -2543,7 +3759,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "技术专精分子的致命政治盲区！缺乏对异族军事集团底层心理创伤的同理心，天真地用所谓‘史官直笔’公开揭露掌握枪杆子实权者的历史伤疤与隐私，自取灭族灭门绝祸。",
     "weaknessAdviceEn": "The ultimate cautionary tragedy of intellectual hubris! Publicly engraving the raw, shameful tribal origins of armed warlords onto highway monoliths is suicidal provocation.",
     "historicalQuoteZh": "崔浩才艺通博，究极天人之际。太武待之，言听计从。然直笔暴扬国恶，勒石通衢，鲜卑贵族愤恚，浩遂族诛，行刑者甚至溺其尸，悲夫！",
-    "historicalQuoteEn": "Cui Hao was omniscient in heavenly and human lore. Yet brutally broadcasting imperial clan scandals on public stone led to his entire lineage being butchered and desecrated."
+    "historicalQuoteEn": "Cui Hao was omniscient in heavenly and human lore. Yet brutally broadcasting imperial clan scandals on public stone led to his entire lineage being butchered and desecrated.",
+    "auxiliaryStrengthsZh": [
+      "顶级的战役级参谋演算大脑",
+      "对地缘政治大势与军事胜负的推演达到神级精度，是太武帝一统北方的核心智力引擎"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The absolute pinnacle of campaign calculation and geopolitical prophecy",
+      "provided the algorithmic brain that powered the reunification of Northern China"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "技术专精分子的致命政治盲区",
+      "缺乏对异族军事集团底层心理创伤的同理心，天真地用所谓‘史官直笔’公开揭露掌握枪杆子实权者的历史伤疤与隐私，自取灭族灭门绝祸"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The ultimate cautionary tragedy of intellectual hubris",
+      "Publicly engraving the raw, shameful tribal origins of armed warlords onto highway monoliths is suicidal provocation"
+    ]
   },
   {
     "id": "empress_feng",
@@ -2576,7 +3808,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "行事冷酷严厉，为保权力数次毒杀政敌及逼死亲子献文帝；对待左右近臣动辄施以鞭刑与诛杀，个人统治极具恐怖压迫感。",
     "weaknessAdviceEn": "Brutally ruthless in palace warfare; poisoned sovereign adversaries and ruled through fear and corporal punishment.",
     "historicalQuoteZh": "《魏书》赞曰：后性严明，假借威权，能行大事。均田立长之制，开隋唐之先声，女中之雄豪也！",
-    "historicalQuoteEn": "Book of Wei: Empress Wenming possessed terrifying clarity and supreme command. Her Equal-Field and Three-Chief institutions laid the bedrock of Sui and Tang glory."
+    "historicalQuoteEn": "Book of Wei: Empress Wenming possessed terrifying clarity and supreme command. Her Equal-Field and Three-Chief institutions laid the bedrock of Sui and Tang glory.",
+    "auxiliaryStrengthsZh": [
+      "古往今来罕见的顶层制度设计师与政治铁腕女皇",
+      "具备看透社会经济本质的深邃眼光，用精密的制度工具（均田三长）从根基上完成了国家现代化改造"
+    ],
+    "auxiliaryStrengthsEn": [
+      "One of history's greatest systemic institutional architects",
+      "Redesigned the socio-economic substructure through visionary agrarian and cadastral reforms"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行事冷酷严厉，为保权力数次毒杀政敌及逼死亲子献文帝",
+      "对待左右近臣动辄施以鞭刑与诛杀，个人统治极具恐怖压迫感"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Brutally ruthless in palace warfare",
+      "poisoned sovereign adversaries and ruled through fear and corporal punishment"
+    ]
   },
   {
     "id": "tuoba_hong",
@@ -2609,7 +3857,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "改革步调过急过激，文化一刀切造成体制严重撕裂！极度偏重洛阳文治而彻底边缘化抛弃了北方六镇的鲜卑军事武力基本盘，引发北魏最终四分五裂。",
     "weaknessAdviceEn": "Reforms were pushed too fast and dogmatically; elevating southern-style elegance entirely alienated the northern military garrisons, sparking the apocalyptic Six Garrisons Rebellion.",
     "historicalQuoteZh": "孝文帝南征至洛阳，霖雨不止。帝策马执鞭曰：‘今日既不进兵，便当迁都于此！诸王以为何如？’群臣莫敢抗，洛邑遂定。",
-    "historicalQuoteEn": "Arriving at Luoyang in torrential rain, Xiaowen raised his whip: 'If we halt our southern march today, then let this be our permanent capital!' None dared object; the move was sealed."
+    "historicalQuoteEn": "Arriving at Luoyang in torrential rain, Xiaowen raised his whip: 'If we halt our southern march today, then let this be our permanent capital!' None dared object; the move was sealed.",
+    "auxiliaryStrengthsZh": [
+      "站在人类文明演化制高点的终极大改革家",
+      "敢于砸碎本民族狭隘的血缘部族优越感，主动融入更高维的文明长河，气魄与胸怀千古一人"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate civilizational revolutionary",
+      "Dared to sacrifice his own tribe's narrow ethnic chauvinism to assimilate into universal humanistic civilization"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "改革步调过急过激，文化一刀切造成体制严重撕裂",
+      "极度偏重洛阳文治而彻底边缘化抛弃了北方六镇的鲜卑军事武力基本盘，引发北魏最终四分五裂"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Reforms were pushed too fast and dogmatically",
+      "elevating southern-style elegance entirely alienated the northern military garrisons, sparking the apocalyptic Six Garrisons Rebellion"
+    ]
   },
   {
     "id": "yuan_ke",
@@ -2642,7 +3906,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "沉迷宗教形而上哲学导致对世俗政治权力暗流丧失警惕，放任外戚专权屠戮手足，动摇了皇权合法性根基。",
     "weaknessAdviceEn": "Excessive retreat into religious mysticism blinded him to court conspiracies; empowering predatory in-laws poisoned dynastic stability.",
     "historicalQuoteZh": "恪性爱佛法，常于禁中亲讲经论。然高肇专权，宗室受戮，朝政日乱，实由斯启。",
-    "historicalQuoteEn": "Book of Wei: Yuan Ke loved Buddhist sutras, lecturing courtiers inside palace halls. Yet empowering corrupt in-law Gao Zhao fractured the state."
+    "historicalQuoteEn": "Book of Wei: Yuan Ke loved Buddhist sutras, lecturing courtiers inside palace halls. Yet empowering corrupt in-law Gao Zhao fractured the state.",
+    "auxiliaryStrengthsZh": [
+      "在文化遗产营造与帝国疆域稳固方面有不俗功绩",
+      "善于在父皇改革红利期维持大兵团对外威慑力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Maintained robust imperial territorial deterrence during the post-reform harvest",
+      "commissioned timeless UNESCO cultural masterpieces (Longmen)"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "沉迷宗教形而上哲学导致对世俗政治权力暗流丧失警惕",
+      "放任外戚专权屠戮手足，动摇了皇权合法性根基"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive retreat into religious mysticism blinded him to court conspiracies",
+      "empowering predatory in-laws poisoned dynastic stability"
+    ]
   },
   {
     "id": "empress_hu",
@@ -2675,7 +3955,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "丧失人伦底线的极度自私与权力毒瘾！把国家神器当做满足个人淫乐的玩物，甚至下毒谋杀亲子，彻底撕碎一切政治合法性底线，换来沉尸黄河万劫不复。",
     "weaknessAdviceEn": "Absolute moral putrefaction and power addiction! Poisoning her own sovereign son obliterated the final thread of legitimacy, courting immediate drowning in the Yellow River.",
     "historicalQuoteZh": "尔朱荣令骑兵沉太后及幼帝于黄河雷公矶，太后叩头哀呼，不能免，遂溺死。天下称快而痛宗庙之倾覆。",
-    "historicalQuoteEn": "Erzhu Rong ordered Empress Dowager Hu and her puppet toddler tossed into the Yellow River at Leigong Rapids. Kowtowing and screaming, she was hurled in to drown; all celebrated her death yet grieved the fallen empire."
+    "historicalQuoteEn": "Erzhu Rong ordered Empress Dowager Hu and her puppet toddler tossed into the Yellow River at Leigong Rapids. Kowtowing and screaming, she was hurled in to drown; all celebrated her death yet grieved the fallen empire.",
+    "auxiliaryStrengthsZh": [
+      "青年时期聪明果决",
+      "敢于直面死亡打破残酷的政治旧习（子贵母死制），展现出极强的生存求胜意志"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Courageous and clear-minded in early life",
+      "dared to challenge and abolish barbaric court traditions (executing mothers of heirs) through sheer nerve"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "丧失人伦底线的极度自私与权力毒瘾",
+      "把国家神器当做满足个人淫乐的玩物，甚至下毒谋杀亲子，彻底撕碎一切政治合法性底线，换来沉尸黄河万劫不复"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Absolute moral putrefaction and power addiction",
+      "Poisoning her own sovereign son obliterated the final thread of legitimacy, courting immediate drowning in the Yellow River"
+    ]
   },
   {
     "id": "erzhu_rong",
@@ -2708,7 +4004,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "政治智商低下的屠夫悲剧！试图用肉体消灭士大夫阶层的‘河阴之变’彻底自绝于华夏文明体系；入宫骄慢毫无防备，被年轻傀儡皇帝当场诱杀反杀。",
     "weaknessAdviceEn": "A political barbarian who believed mass slaughter could replace legitimacy! Terrifying brutality alienated the entire world; strolled arrogantly into the palace to be gutted by his puppet.",
     "historicalQuoteZh": "荣入朝，庄帝伏兵于明光殿。荣见备，跃起扑帝，帝手持长刀直刺荣胸，应手而毙。宗党随诛，洛阳城中欢声雷动！",
-    "historicalQuoteEn": "Entering the throne hall, Emperor Xiaozhuang drew his concealed blade; as Erzhu Rong lunged, the young sovereign drove the blade through his heart, killing him instantly."
+    "historicalQuoteEn": "Entering the throne hall, Emperor Xiaozhuang drew his concealed blade; as Erzhu Rong lunged, the young sovereign drove the blade through his heart, killing him instantly.",
+    "auxiliaryStrengthsZh": [
+      "北朝首屈一指的骑兵大兵团战术统帅",
+      "在平定葛荣数十万流民军战役中以七千精骑穿插斩首敌帅，战术想象力与冲击力神鬼莫测"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unequaled master of heavy shock cavalry maneuver warfare",
+      "Defeated 300,000 rebel troops with 7,000 elite horsemen through surgical leadership decapitation"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治智商低下的屠夫悲剧",
+      "试图用肉体消灭士大夫阶层的‘河阴之变’彻底自绝于华夏文明体系"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "A political barbarian who believed mass slaughter could replace legitimacy",
+      "Terrifying brutality alienated the entire world"
+    ]
   },
   {
     "id": "yuan_ziyou",
@@ -2741,7 +4053,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "只长于孤注一掷的宫廷刺杀战术，缺乏刺杀成功后的全国军事防卫体系与军权布局，导致首恶虽除、残部反扑即刻灭顶身死。",
     "weaknessAdviceEn": "Excelled at palace decapitation assassinations but lacked follow-up military contingency plans; eliminating the warlord without securing the armies invited swift annihilation.",
     "historicalQuoteZh": "庄帝临终礼佛，赋诗曰：‘权去人道尽，身亡理亦齐。感物情虽倦，求生愿未迷。’神色怡然，遂就绞。天下闻而悲壮之！",
-    "historicalQuoteEn": "Emperor Xiaozhuang bowed to Buddha, inscribed a serene farewell poem, and accepted the garrote with tranquil grace. The realm wept at his tragic chivalry."
+    "historicalQuoteEn": "Emperor Xiaozhuang bowed to Buddha, inscribed a serene farewell poem, and accepted the garrote with tranquil grace. The realm wept at his tragic chivalry.",
+    "auxiliaryStrengthsZh": [
+      "中国帝王史上罕见的血性男儿",
+      "宁为玉碎不为瓦全，绝不甘受权臣凌辱，有亲自拔剑斩杀凶魔的无畏暴烈勇气"
+    ],
+    "auxiliaryStrengthsEn": [
+      "A sovereign of incandescent personal courage",
+      "Refused to grovel as a captive dog, boldly drawing the blade himself to decapitate the realm's most terrifying butcher"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "只长于孤注一掷的宫廷刺杀战术",
+      "缺乏刺杀成功后的全国军事防卫体系与军权布局，导致首恶虽除、残部反扑即刻灭顶身死"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excelled at palace decapitation assassinations but lacked follow-up military contingency plans",
+      "eliminating the warlord without securing the armies invited swift annihilation"
+    ]
   },
   {
     "id": "gao_huan",
@@ -2774,7 +4102,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战役指挥在面对同量级甚至更高级的防守大师（宇文泰、韦孝宽）时缺乏攻坚破局手段；对残暴子孙（高洋高湛）的基因恶性缺乏预判与制约。",
     "weaknessAdviceEn": "Tactical limitations when besieging master defensive generals (Yubi siege broke his health); failed to restrain the manic, sadistic traits of his sons.",
     "historicalQuoteZh": "高欢临终病危，命斛律金唱《敕勒歌》，欢亲自和之：‘敕勒川，阴山下。天似穹庐，笼盖四野。天苍苍，野茫茫，风吹草低见牛羊。’欢流涕呜咽，英雄气绝！",
-    "historicalQuoteEn": "Dying in his tent, Gao Huan had Hulü Jin sing 'The Chile Song', weeping as he joined the chorus: 'The sky is boundless, the wilds are vast, winds bend the grasses to reveal our cattle and sheep!' Tears drenched his armor as he expired."
+    "historicalQuoteEn": "Dying in his tent, Gao Huan had Hulü Jin sing 'The Chile Song', weeping as he joined the chorus: 'The sky is boundless, the wilds are vast, winds bend the grasses to reveal our cattle and sheep!' Tears drenched his armor as he expired.",
+    "auxiliaryStrengthsZh": [
+      "草根出身操盘天下的顶级政治魔术师",
+      "善于用极尽谦卑与慷慨的姿态收服桀骜不驯的鲜卑丘八与汉人士族，把矛盾对立的多方势力玩弄于股掌之间"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate grand political illusionist",
+      "Subdued wild nomad warriors and proud Han elites through calculated magnanimity and irresistible charisma"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战役指挥在面对同量级甚至更高级的防守大师（宇文泰、韦孝宽）时缺乏攻坚破局手段",
+      "对残暴子孙（高洋高湛）的基因恶性缺乏预判与制约"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Tactical limitations when besieging master defensive generals (Yubi siege broke his health)",
+      "failed to restrain the manic, sadistic traits of his sons"
+    ]
   },
   {
     "id": "yuwen_tai",
@@ -2807,7 +4151,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "临终诸子年幼，无奈将摄政大权移交心狠手辣的侄子宇文护，导致西魏北周政局陷入长达十几年的弑君内耗血腥阴影。",
     "weaknessAdviceEn": "Died leaving young sons, forced to pass regency to his ruthless nephew Yuwen Hu, plunging Northern Zhou into years of fratricidal palace assassinations.",
     "historicalQuoteZh": "泰雅好儒术，礼遇苏绰，制六条诏书以革旧弊。沙苑之捷，泰以轻骑出芦苇中，短兵接战，破欢二十万大军，神机天纵！",
-    "historicalQuoteEn": "Book of Zhou: Yuwen Tai cherished classical statecraft. At Shayuan, charging from dense reeds with light cavalry, he smashed Gao Huan's 200,000 men in close-quarters combat."
+    "historicalQuoteEn": "Book of Zhou: Yuwen Tai cherished classical statecraft. At Shayuan, charging from dense reeds with light cavalry, he smashed Gao Huan's 200,000 men in close-quarters combat.",
+    "auxiliaryStrengthsZh": [
+      "中国历史上最伟大的制度工程大师之一",
+      "不计较一城一地之得失，懂得用全新的军事激励（府兵制）与政治共同体（八柱国关陇集团）重塑生产关系，以弱胜强实现历史大逆转"
+    ],
+    "auxiliaryStrengthsEn": [
+      "One of the towering institutional engineers in world history",
+      "Reshaped the fundamental social contract via the Fubing military system and Guanzhong elite covenant, turning an impoverished state into an unstoppable juggernaut"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "临终诸子年幼",
+      "无奈将摄政大权移交心狠手辣的侄子宇文护，导致西魏北周政局陷入长达十几年的弑君内耗血腥阴影"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Died leaving young sons",
+      "forced to pass regency to his ruthless nephew Yuwen Hu, plunging Northern Zhou into years of fratricidal palace assassinations"
+    ]
   },
   {
     "id": "su_chuo",
@@ -2840,7 +4200,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "典型的‘蜡炬成灰泪始干’！把所有的生命能量过度倾注在无穷无尽的工作流中，缺乏对自身生理肉体的休息保护，中年早逝成为体制的巨大损失。",
     "weaknessAdviceEn": "Burned his physical vessel to ash in relentless overwork; absolute self-sacrifice without bodily boundary cost the empire its brightest administrative light.",
     "historicalQuoteZh": "绰性俭素，不治家产，深识治理。及死，宇文泰亲临其丧，流涕痛惜曰：‘尚书度量宏达，忠规亮节，天何夺我栋梁之早也！’",
-    "historicalQuoteEn": "Book of Zhou: Su Chuo owned no private riches. When he died, Yuwen Tai wept at his casket: 'Heaven takes my pillar of state so young!'"
+    "historicalQuoteEn": "Book of Zhou: Su Chuo owned no private riches. When he died, Yuwen Tai wept at his casket: 'Heaven takes my pillar of state so young!'",
+    "auxiliaryStrengthsZh": [
+      "天下第一等的财税规划与行政制度标准化大师",
+      "善于用严密的数学逻辑与流程规范，把一盘散沙的落后体制打造成高效精密的国家运转机器"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The ultimate titan of public finance, budgeting, and administrative standardization",
+      "Replaced chaos with algorithmic fiscal discipline"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "典型的‘蜡炬成灰泪始干’",
+      "把所有的生命能量过度倾注在无穷无尽的工作流中，缺乏对自身生理肉体的休息保护，中年早逝成为体制的巨大损失"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Burned his physical vessel to ash in relentless overwork",
+      "absolute self-sacrifice without bodily boundary cost the empire its brightest administrative light"
+    ]
   },
   {
     "id": "haba_yue",
@@ -2873,7 +4249,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在凶险万状的军阀角力中极度缺乏单刀赴会的防谍安保机制！在毫无戒备的情况下轻入他人营盘，葬送了自己的大好前程与生命。",
     "weaknessAdviceEn": "Fatal blindspot in personal VIP security! Strolled into a rival commander's tent without personal bodyguards, falling victim to crude assassination.",
     "historicalQuoteZh": "岳勇武多奇略，士卒乐为之死。及入侯莫陈悦营，悦诱岳入幕，使人刺杀之。三军闻之，号哭动地，宇文泰奔丧誓报其仇！",
-    "historicalQuoteEn": "Book of Zhou: Haba Yue was fearless and deeply beloved by his ranks. When Houmochen Yue assassinated him, soldiers wept so loudly the hills shook; Yuwen Tai swore vengeance."
+    "historicalQuoteEn": "Book of Zhou: Haba Yue was fearless and deeply beloved by his ranks. When Houmochen Yue assassinated him, soldiers wept so loudly the hills shook; Yuwen Tai swore vengeance.",
+    "auxiliaryStrengthsZh": [
+      "卓越的开拓型大区领袖",
+      "具备在陌生地理板块快速平乱、网罗顶级核心人才建立班底的巨大向心力与军事魄力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Exceptional frontier expansion leader",
+      "possessed magnetic gravity to rally top-tier talent and pacify rugged territory"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在凶险万状的军阀角力中极度缺乏单刀赴会的防谍安保机制",
+      "在毫无戒备的情况下轻入他人营盘，葬送了自己的大好前程与生命"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal blindspot in personal VIP security",
+      "Strolled into a rival commander's tent without personal bodyguards, falling victim to crude assassination"
+    ]
   },
   {
     "id": "jia_sixie",
@@ -2906,7 +4298,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在讲究门阀声望与军功厮杀的南北乱世，其伟大学术成果在当时未能获得最高统治阶层足够的政治封赏，属于死后流芳万古的寂寞潜龙。",
     "weaknessAdviceEn": "Unappreciated in an age obsessed with violent butchery and noble pedigrees; a lonely sage whose monumental value emerged posthumously.",
     "historicalQuoteZh": "思勰自序曰：‘采捃经传，爰及歌谣，询之老成，验之行事，起自耕农，终于醯醢，资生之业，靡不毕书。’实万代农耕之宝典！",
-    "historicalQuoteEn": "Jia Sixie wrote in his preface: 'Gathered from ancient canons, tested against folk songs, questioned of elders, verified in fields—recording everything essential to human survival.'"
+    "historicalQuoteEn": "Jia Sixie wrote in his preface: 'Gathered from ancient canons, tested against folk songs, questioned of elders, verified in fields—recording everything essential to human survival.'",
+    "auxiliaryStrengthsZh": [
+      "脚踏实地与经验科学归纳的绝顶宗师",
+      "不务虚名、不慕虚荣，用毕生心血将底层劳动人民的生产实践升华为系统科学，荫庇万代黎民"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The supreme master of empirical science and practical knowledge synthesis",
+      "Sublimated peasant field wisdom into an eternal scientific system that fed civilization for millennia"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在讲究门阀声望与军功厮杀的南北乱世",
+      "其伟大学术成果在当时未能获得最高统治阶层足够的政治封赏，属于死后流芳万古的寂寞潜龙"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unappreciated in an age obsessed with violent butchery and noble pedigrees",
+      "a lonely sage whose monumental value emerged posthumously"
+    ]
   },
   {
     "id": "li_daoyuan",
@@ -2939,7 +4347,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "刚硬过甚而不知迂回保身！在门阀贵胄密织的暗流中过分锋芒毕露，明知被政敌借刀杀人仍固执前往而无防备预案，壮志未酬惨遭暗算。",
     "weaknessAdviceEn": "Tragic inflexibility; flaunted righteousness so aggressively against royal mafias that he walked into their transparent death trap without defensive countermeasures.",
     "historicalQuoteZh": "道元执法严猛，豪戚震惮。临难被围，井泉已竭，道元神色不挠，与二子力战俱死。所著《水经注》，山水文学之冠冕也。",
-    "historicalQuoteEn": "Book of Wei: Li Daoyuan enforced laws without mercy. Encircled by rebels with wells dry, he fought alongside his sons to the last breath; his 'Shui Jing Zhu' remains the eternal crown of Chinese travel literature."
+    "historicalQuoteEn": "Book of Wei: Li Daoyuan enforced laws without mercy. Encircled by rebels with wells dry, he fought alongside his sons to the last breath; his 'Shui Jing Zhu' remains the eternal crown of Chinese travel literature.",
+    "auxiliaryStrengthsZh": [
+      "将严谨的科学地理调查与第一等绝美写景散文完美交融的旷世奇才",
+      "行事刚直不阿，对正义法度有着殉道式的执着坚守"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Miraculous synthesis of rigorous geographical field exploration and breathtaking literary prose",
+      "An incorruptible pillar of uncompromising justice"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "刚硬过甚而不知迂回保身",
+      "在门阀贵胄密织的暗流中过分锋芒毕露，明知被政敌借刀杀人仍固执前往而无防备预案，壮志未酬惨遭暗算"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Tragic inflexibility",
+      "flaunted righteousness so aggressively against royal mafias that he walked into their transparent death trap without defensive countermeasures"
+    ]
   },
   {
     "id": "gao_cheng",
@@ -2972,7 +4396,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "对身边弱小群体的侮辱与安全防卫的惊人松懈！习惯性羞辱家仆下人而不加防范，在密谋绝密政务时撤掉护卫，最终死于一个小厨师的反杀刀下，千古警钟！",
     "weaknessAdviceEn": "The ultimate warning on abusing underlings and catastrophic security negligence! Deriding servants while dismissing palace guards invited an enslaved cook to slit his throat on coronation eve.",
     "historicalQuoteZh": "澄好声色，自负才智，辱其庖人兰京。京与党作乱，进食，藏刀于盘。澄惊跃，投于床下，被刺数十刃而亡，年二十八。",
-    "historicalQuoteEn": "Book of Northern Qi: Gao Cheng loved luxury and prided himself on intellect, yet abused his cook Lan Jing. Bringing in dinner, Lan Jing withdrew a blade from the platter, cornering Gao Cheng under the bed and stabbing him to death at age 28."
+    "historicalQuoteEn": "Book of Northern Qi: Gao Cheng loved luxury and prided himself on intellect, yet abused his cook Lan Jing. Bringing in dinner, Lan Jing withdrew a blade from the platter, cornering Gao Cheng under the bed and stabbing him to death at age 28.",
+    "auxiliaryStrengthsZh": [
+      "极其出色的青年政治家",
+      "业务处置能力与整肃官场风气雷厉风行，具备极高的执政效率与战略决断力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Astonishingly brilliant young statesman",
+      "Overhauled civil administration and crushed rebellions with terrifying executive efficiency"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对身边弱小群体的侮辱与安全防卫的惊人松懈",
+      "习惯性羞辱家仆下人而不加防范，在密谋绝密政务时撤掉护卫，最终死于一个小厨师的反杀刀下，千古警钟"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The ultimate warning on abusing underlings and catastrophic security negligence",
+      "Deriding servants while dismissing palace guards invited an enslaved cook to slit his throat on coronation eve"
+    ]
   },
   {
     "id": "gao_yang",
@@ -3005,7 +4445,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "精神心智失控与酗酒狂暴的终极恶果！成功后失去敬畏与自律，被颅内神经狂躁与酒精彻底吞噬，将英雄盛世异化为人间魔窟。",
     "weaknessAdviceEn": "Absolute self-annihilation through psychosis and unrestrained hedonism! Surrendering self-control to alcohol turned a golden empire into an abattoir.",
     "historicalQuoteZh": "洋后酗酒狂暴，剖薛嫔之尸，出其股骨以为琵琶，自弹而泣曰：‘佳人难再得！’群臣见者无不毛骨悚然。",
-    "historicalQuoteEn": "Book of Northern Qi: Emperor Wenxuan butchered his beloved Consort Xue in a drunken fit, fashioning a lute from her thigh bone, weeping while strumming: 'A peerless beauty never to return!' Courtiers shuddered in cold horror."
+    "historicalQuoteEn": "Book of Northern Qi: Emperor Wenxuan butchered his beloved Consort Xue in a drunken fit, fashioning a lute from her thigh bone, weeping while strumming: 'A peerless beauty never to return!' Courtiers shuddered in cold horror.",
+    "auxiliaryStrengthsZh": [
+      "神级的前期隐忍与军事统帅爆发力",
+      "能在极端残酷的夺嫡环境中完美伪装隐藏獠牙，一旦掌权雷霆出击横扫大漠强敌"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Superhuman patience in hiding his genius behind a facade of idiot buffoonery",
+      "erupted with titanic military ferocity to dominate the Eurasian steppes upon accession"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "精神心智失控与酗酒狂暴的终极恶果",
+      "成功后失去敬畏与自律，被颅内神经狂躁与酒精彻底吞噬，将英雄盛世异化为人间魔窟"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Absolute self-annihilation through psychosis and unrestrained hedonism",
+      "Surrendering self-control to alcohol turned a golden empire into an abattoir"
+    ]
   },
   {
     "id": "gao_changgong",
@@ -3038,7 +4494,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在猜忌成狂的末代昏暴王朝中缺乏深层政治自保防线！在皇帝面前说错话（‘国事即家事’）触碰皇权敏感死穴，在明知被忌恨时未能果断装病交权或起兵自保。",
     "weaknessAdviceEn": "Fatal slip of the tongue in an insecure tyrant's court ('National affairs are my family affairs') triggered his execution; lacked ruthless survival autonomy.",
     "historicalQuoteZh": "后主赐毒酒，长恭谓妻郑氏曰：‘我忠以事上，何辜于天，而遭鸩也！’妻曰：‘何不求见？’长恭曰：‘天颜何由可见！’遂饮药而薨。",
-    "historicalQuoteEn": "When poison arrived from the throne, Gao Changgong wept to his wife: 'I served with absolute loyalty, how have I offended Heaven?!' Drinking the cup, he died at 32."
+    "historicalQuoteEn": "When poison arrived from the throne, Gao Changgong wept to his wife: 'I served with absolute loyalty, how have I offended Heaven?!' Drinking the cup, he died at 32.",
+    "auxiliaryStrengthsZh": [
+      "卓越的人格魅力与战役突击艺术",
+      "身先士卒勇猛盖世，对待部属宽厚仁慈（得一瓜必与将士分食），深受军民崇敬"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Hypnotic battlefield aura and tactical vanguard genius",
+      "shared every fruit with foot soldiers, commanding boundless adoration"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在猜忌成狂的末代昏暴王朝中缺乏深层政治自保防线",
+      "在皇帝面前说错话（‘国事即家事’）触碰皇权敏感死穴，在明知被忌恨时未能果断装病交权或起兵自保"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal slip of the tongue in an insecure tyrant's court ('National affairs are my family affairs') triggered his execution",
+      "lacked ruthless survival autonomy"
+    ]
   },
   {
     "id": "hulu_guang",
@@ -3071,7 +4543,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "极其拙劣的政治宫斗情商！对皇帝身边的贴身佞幸（祖珽）公开羞辱甚至扬言杀之，却未先发制人，反给对方充足时间炮制反间计致死。",
     "weaknessAdviceEn": "Disastrous court political intelligence; openly insulted ruthless palace sycophants without striking first, leaving them ample runway to orchestrate his murder.",
     "historicalQuoteZh": "光被诱入凉风堂，壮士自后引弓弦勒杀之。后主发诏诬其谋反。北周武帝闻光死，大喜下诏大赦，亲提大军平灭北齐！",
-    "historicalQuoteEn": "Lured into a palace pavilion, assassins choked Hulü Guang with a bowstring. Hearing the news, Emperor Wu of Northern Zhou danced with joy, declaring an imperial amnesty and marching to annex Northern Qi!"
+    "historicalQuoteEn": "Lured into a palace pavilion, assassins choked Hulü Guang with a bowstring. Hearing the news, Emperor Wu of Northern Zhou danced with joy, declaring an imperial amnesty and marching to annex Northern Qi!",
+    "auxiliaryStrengthsZh": [
+      "治军严明秋毫无犯：恪守军纪以铁血威望统帅三军，身先士卒铸就无懈可击的阵地防御",
+      "战术敏锐神射克敌：落雕都督箭无虚发，战场战术嗅觉极度敏锐，多次击溃北周重兵侵犯"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Ironclad Command Discipline: Enforces pristine military ethics with zero extortion, forging an unshakeable defensive bastion.",
+      "Supreme Battlefield Tactical Intuition: Renowned for legendary archery and battlefield composure, repeatedly crushing superior invasion forces."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治情商极度拙劣：对皇帝宠信的佞幸（祖珽）公开当面羞辱甚至扬言杀之，树敌过早且全无防备",
+      "缺乏自保反制后手：空放狠话让对手有充裕时间炮制反间童谣，身处猜忌漩涡毫无退路终致长城自毁"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Disastrous Courtroom Naivety: Publicly insulted and threatened ruthless court sycophants without striking first or securing defense networks.",
+      "Zero Self-Preservation Safeguards: Allowed schemers ample runway to forge treacherous nursery rhymes, walking into palace traps unarmed."
+    ]
   },
   {
     "id": "gao_wei",
@@ -3104,7 +4592,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "昏聩亡国的极致标本！猜忌贤良自残臂膀，大敌压境仍将生死决战当成讨好宠妃的马戏表演，最终在极度屈辱中成为刀下亡魂。",
     "weaknessAdviceEn": "The textbook caricature of dynastic suicide! Butchered his own protectors, delayed crucial battles for concubines' vanities, dying in pathetic humiliation.",
     "historicalQuoteZh": "晋州之战，齐军掘地道破城，城陷在即。后主驰召冯小怜观之。小怜方梳妆，使帝少待。妆成至，周兵已填修完固，齐军大败！",
-    "historicalQuoteEn": "At the Siege of Jinzhou, Qi troops breached the walls; Victory was minutes away. Gao Wei ordered troops to wait so Feng Xiaolian could watch. She delayed to finish her hair; by the time she arrived, enemies had repaired the breach, annihilating his army!"
+    "historicalQuoteEn": "At the Siege of Jinzhou, Qi troops breached the walls; Victory was minutes away. Gao Wei ordered troops to wait so Feng Xiaolian could watch. She delayed to finish her hair; by the time she arrived, enemies had repaired the breach, annihilating his army!",
+    "auxiliaryStrengthsZh": [
+      "对音乐、艺术与戏剧有着沉浸式的享乐天赋",
+      "擅长营造荒诞戏谑的宫廷狂欢气氛"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Absurdist artistic flair and theatrical showmanship",
+      "turning courtly ceremonies into satirical spectacles of sensory pleasure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "昏聩亡国的极致标本",
+      "猜忌贤良自残臂膀，大敌压境仍将生死决战当成讨好宠妃的马戏表演，最终在极度屈辱中成为刀下亡魂"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The textbook caricature of dynastic suicide",
+      "Butchered his own protectors, delayed crucial battles for concubines' vanities, dying in pathetic humiliation"
+    ]
   },
   {
     "id": "zu_ting",
@@ -3137,7 +4641,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "人格毫无道义底线！贪婪、偷窃、构陷忠良、谗杀国家柱石，为个人私利将国家推向深渊，被万世士人视为卑劣小人的典型。",
     "weaknessAdviceEn": "Devoid of ethical bottom line; institutionalized corruption, framed the nation's greatest hero, and dragged an empire into the abyss for petty survival.",
     "historicalQuoteZh": "珽少聪敏，有才藻，多浮薄。双目虽盲，而机变百端。谮杀斛律光，尽出其谋。人称‘盲毒蛇’，畏之如蝎。",
-    "historicalQuoteEn": "Book of Northern Qi: Zu Ting was brilliantly eloquent yet morally rotten. Blind in both eyes, he plotted every step of Hulü Guang's judicial murder, dreaded by all as 'The Blind Viper.'"
+    "historicalQuoteEn": "Book of Northern Qi: Zu Ting was brilliantly eloquent yet morally rotten. Blind in both eyes, he plotted every step of Hulü Guang's judicial murder, dreaded by all as 'The Blind Viper.'",
+    "auxiliaryStrengthsZh": [
+      "身体残障却拥有惊人生命意志与权谋算力的毒蛇级政客",
+      "双目虽盲却心眼通透，在极度险恶的深宫泥潭中展现出恐怖的政治生存翻盘才能"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Terrifying survival elasticity",
+      "Overcame complete physical blindness to dominate court politics through supersonic hearing and cunning psychological leverage"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "人格毫无道义底线",
+      "贪婪、偷窃、构陷忠良、谗杀国家柱石，为个人私利将国家推向深渊，被万世士人视为卑劣小人的典型"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Devoid of ethical bottom line",
+      "institutionalized corruption, framed the nation's greatest hero, and dragged an empire into the abyss for petty survival"
+    ]
   },
   {
     "id": "yuwen_hu",
@@ -3170,7 +4690,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "对最高皇权名器缺乏敬畏，连杀三帝埋下不可化解的君臣宿怨；对羽翼丰满的年轻君主（宇文邕）盲目自大缺乏警惕，最终喋血殿阶。",
     "weaknessAdviceEn": "Assassinating three monarchs left him doomed; fatally underestimated his seemingly obedient young nephew Emperor Wu, meeting bloody death upon the palace tiles.",
     "historicalQuoteZh": "武帝引护入含仁殿见太后，护方读《酒诰》，武帝自后以玉珽击之，护倒地，帝命卫士就地引颈斩杀之，阖门尽诛！",
-    "historicalQuoteEn": "Book of Zhou: Emperor Wu invited Yuwen Hu into the palace to read temperance texts to the Empress Dowager. From behind, Emperor Wu smashed a heavy jade scepter into Hu's skull, executing his entire faction."
+    "historicalQuoteEn": "Book of Zhou: Emperor Wu invited Yuwen Hu into the palace to read temperance texts to the Empress Dowager. From behind, Emperor Wu smashed a heavy jade scepter into Hu's skull, executing his entire faction.",
+    "auxiliaryStrengthsZh": [
+      "极其强悍的内政权斗控制力与危机铁腕",
+      "在宇文泰初崩主少国疑的动荡绝境中，以雷霆杀戮强行稳住了关陇集团的基本盘"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Absolute mastery of cutthroat court power mechanics",
+      "stabilized a fracturing regime following the founder's death through ruthless pre-emptive purges"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对最高皇权名器缺乏敬畏，连杀三帝埋下不可化解的君臣宿怨",
+      "对羽翼丰满的年轻君主（宇文邕）盲目自大缺乏警惕，最终喋血殿阶"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Assassinating three monarchs left him doomed",
+      "fatally underestimated his seemingly obedient young nephew Emperor Wu, meeting bloody death upon the palace tiles"
+    ]
   },
   {
     "id": "yuwen_yong",
@@ -3203,7 +4739,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "行事过急过刚，生活作息极度透支肉体极限，加上严酷灭佛触动巨大的社会潜意识反弹，三十六岁壮年暴卒令天下抱憾。",
     "weaknessAdviceEn": "Pushed his physical vessel beyond human limits while provoking deep spiritual animosity through brutal iconoclasm; dying at 36 halted his ultimate reunification.",
     "historicalQuoteZh": "帝克邺城，见北齐奢靡，叹曰：‘如此不亡，理将安在！’下诏尽撤奇巧。及崩，三军将士号恸如丧考妣，隋文帝承其资以混一天下。",
-    "historicalQuoteEn": "Book of Zhou: Entering conquered Ye, Emperor Wu saw decadent palace gold and sighed: 'If such vanity did not fall, where is cosmic justice!' His untimely death at 36 paved the way for Sui's coronation."
+    "historicalQuoteEn": "Book of Zhou: Entering conquered Ye, Emperor Wu saw decadent palace gold and sighed: 'If such vanity did not fall, where is cosmic justice!' His untimely death at 36 paved the way for Sui's coronation.",
+    "auxiliaryStrengthsZh": [
+      "极限隐忍与雷霆出击相结合的千古帝王典范",
+      "能忍天下人所不能忍，一朝出手除恶务尽"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The gold standard of supreme patience combined with lethal surgical execution",
+      "Endured 12 years in the crosshairs to strike once"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行事过急过刚",
+      "生活作息极度透支肉体极限，加上严酷灭佛触动巨大的社会潜意识反弹，三十六岁壮年暴卒令天下抱憾"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pushed his physical vessel beyond human limits while provoking deep spiritual animosity through brutal iconoclasm",
+      "dying at 36 halted his ultimate reunification"
+    ]
   },
   {
     "id": "wei_xiaokuan",
@@ -3236,7 +4788,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "行事极尽诡诈隐秘（谍报间谍网），一生杀人无数多在无形帷幄之中，晚年在杨坚代周之际果断站在新强权一方，缺乏传统儒家愚忠包袱。",
     "weaknessAdviceEn": "Operated in shadows of ruthless tactical cynicism; prioritized clan survival and systemic stability over romantic dynastic martyrdom.",
     "historicalQuoteZh": "高欢攻玉壁五十日，攻城之术皆尽，孝宽临机应变，皆破之。欢苦甚发疾，唱敕勒歌而绝。孝宽威名震于天下！",
-    "historicalQuoteEn": "Book of Zhou: Gao Huan attacked Yubi for 50 days exhausting every siege engine known; Wei Xiaokuan countered each with miraculous foresight until Gao Huan died of despair."
+    "historicalQuoteEn": "Book of Zhou: Gao Huan attacked Yubi for 50 days exhausting every siege engine known; Wei Xiaokuan countered each with miraculous foresight until Gao Huan died of despair.",
+    "auxiliaryStrengthsZh": [
+      "古往今来阵地防御战与情报反间战的天花板宗师",
+      "以极其冷静深邃的工程学思维化解狂暴攻击，擅长用极小的支点撬动敌人最高中枢的自残自毁"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The absolute ceiling of defensive architecture and psychological intelligence warfare in human history",
+      "Disarms titan offensives through analytical engineering and lethal counter-espionage"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行事极尽诡诈隐秘（谍报间谍网）",
+      "生杀人无数多在无形帷幄之中，晚年在杨坚代周之际果断站在新强权一方，缺乏传统儒家愚忠包袱"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Operated in shadows of ruthless tactical cynicism",
+      "prioritized clan survival and systemic stability over romantic dynastic martyrdom"
+    ]
   },
   {
     "id": "dugu_xin",
@@ -3269,7 +4837,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在凶残狡诈的顶级权力绞肉机（宇文护）面前立场犹疑摇摆，既知赵贵谋乱却未果断主导局面或彻底切割，最终被连坐赐死。",
     "weaknessAdviceEn": "Indecision amid lethal high-stakes palace coups; aware of conspirators' plots without taking ruthless control or cleanly detaching, leading to forced suicide.",
     "historicalQuoteZh": "信美容仪，善骑射。在秦州，尝因猎日暮驰马入城，其帽微侧，及旦，吏民莫不侧帽以学信。其后三女皆为天下母，贵震古今！",
-    "historicalQuoteEn": "Book of Zhou: Dugu Xin's beauty was transcendent. Tilted his hat riding back from hunting, the whole populace adopted tilted hats by morning. His three daughters crowned three imperial dynasties."
+    "historicalQuoteEn": "Book of Zhou: Dugu Xin's beauty was transcendent. Tilted his hat riding back from hunting, the whole populace adopted tilted hats by morning. His three daughters crowned three imperial dynasties.",
+    "auxiliaryStrengthsZh": [
+      "顶级的个人形象魅力、门阀血缘战略联姻与区域行政教化典范",
+      "不仅在地方治理上清正廉洁，更用绝世的家族基因与联姻网络深刻重构了三朝皇统"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Incomparable aristocratic aura, civil administration excellence, and strategic marital networking",
+      "His familial bloodline literally birthed the ruling houses of Northern Zhou, Sui, and Tang"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在凶残狡诈的顶级权力绞肉机（宇文护）面前立场犹疑摇摆",
+      "既知赵贵谋乱却未果断主导局面或彻底切割，最终被连坐赐死"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Indecision amid lethal high-stakes palace coups",
+      "aware of conspirators' plots without taking ruthless control or cleanly detaching, leading to forced suicide"
+    ]
   },
   {
     "id": "yang_jian",
@@ -3302,7 +4886,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "晚年病态的多疑与苛察！对开国元勋功臣（高颎、史万岁）大肆清洗猜忌，在继承人问题上被伪善的杨广蒙蔽换储，亲手为大隋盛世骤然短命埋下了掘墓雷管。",
     "weaknessAdviceEn": "Pathological late-life paranoia and micro-tyranny! Purged foundational statesmen and fell for deceptive flattery to crown tyrannical Yang Guang, sabotaging his own imperial dynasty.",
     "historicalQuoteZh": "隋文帝躬履节俭，天下安乐，开皇之治，威震四海。灭陈混一，天下大同，古今帝王功业，罕有其比！",
-    "historicalQuoteEn": "Book of Sui: Emperor Wen practiced rigorous frugality; the empire enjoyed profound peace. Reuniting the realm after centuries of division, his monumental merit stands alongside the greatest sovereigns of antiquity."
+    "historicalQuoteEn": "Book of Sui: Emperor Wen practiced rigorous frugality; the empire enjoyed profound peace. Reuniting the realm after centuries of division, his monumental merit stands alongside the greatest sovereigns of antiquity.",
+    "auxiliaryStrengthsZh": [
+      "古往今来最伟大的系统整合者与文明再造巨匠",
+      "终结数百年血腥乱世，以极其宏伟的制度设计（三省六部、科举雏形、均田开皇律）为后世中华帝国奠定了千秋万代的大一统钢筋铁骨"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The supreme unifier and institutional architect of Chinese civilization",
+      "Rebuilt a unified empire from three centuries of blood and ruins, inventing administrative systems that endured a millennium"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年病态的多疑与苛察",
+      "对开国元勋功臣（高颎、史万岁）大肆清洗猜忌，在继承人问题上被伪善的杨广蒙蔽换储，亲手为大隋盛世骤然短命埋下了掘墓雷管"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pathological late-life paranoia and micro-tyranny",
+      "Purged foundational statesmen and fell for deceptive flattery to crown tyrannical Yang Guang, sabotaging his own imperial dynasty"
+    ]
   },
   {
     "id": "dugu_jialuo",
@@ -3335,7 +4935,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "将个人的极端道德洁癖与妒忌心理凌驾于国家继承人战略大局之上！因反感大儿子纳妾宠幸便盲信二儿子杨广的伪善孝顺，一手主导换储直接导致大隋覆亡。",
     "weaknessAdviceEn": "Allowed personal moral dogmatism and obsession with monogamy to distort imperial succession! Duped by Yang Guang's ascetic play-acting, she orchestrated the catastrophic succession switch.",
     "historicalQuoteZh": "伽罗密谓高祖曰：‘事已至此，政如骑兽，势不得下，勉之！’高祖遂定大计。及开皇之治，后与高祖同辇而行，宫中谓之‘二圣’。",
-    "historicalQuoteEn": "Book of Sui: Dugu Jialuo sent word: 'Affairs have become like riding a tiger; you cannot dismount, push forward!' Sovereign and Empress rode together, revered universally as the 'Two Sages.'"
+    "historicalQuoteEn": "Book of Sui: Dugu Jialuo sent word: 'Affairs have become like riding a tiger; you cannot dismount, push forward!' Sovereign and Empress rode together, revered universally as the 'Two Sages.'",
+    "auxiliaryStrengthsZh": [
+      "古代后妃中顶级政治胆魄与战略推动力的化身",
+      "在历史命运关头能踢出最关键的临门一脚逼丈夫成就帝业，行事果断干练，开皇盛世有其半壁功勋"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The embodiment of audacious strategic statecraft among imperial consorts",
+      "Delivered the decisive push to usurp the throne and co-steered the golden Kaihuang era"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "将个人的极端道德洁癖与妒忌心理凌驾于国家继承人战略大局之上",
+      "因反感大儿子纳妾宠幸便盲信二儿子杨广的伪善孝顺，一手主导换储直接导致大隋覆亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Allowed personal moral dogmatism and obsession with monogamy to distort imperial succession",
+      "Duped by Yang Guang's ascetic play-acting, she orchestrated the catastrophic succession switch"
+    ]
   },
   {
     "id": "gao_jiong",
@@ -3368,7 +4984,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "卷入皇帝皇后的立储家事纠纷时缺乏弹性缓冲机制，在君权独断与皇后雷霆之怒面前硬抗，最终被猜忌罢相甚至招致炀帝屠刀。",
     "weaknessAdviceEn": "Lacked diplomatic insulation when trapped between the Emperor's insecurity and the Empress's wrath over succession, suffering tragic purge.",
     "historicalQuoteZh": "《隋书》赞曰：高颎深识大略，知人善任。凡军国大策，皆颎所定。自开皇创业，二十年间，天下大治，颎之力也！",
-    "historicalQuoteEn": "Book of Sui: Gao Jiong possessed vast geopolitical depth. Every great policy of the empire was forged in his mind; the two decades of golden peace rested on his shoulders."
+    "historicalQuoteEn": "Book of Sui: Gao Jiong possessed vast geopolitical depth. Every great policy of the empire was forged in his mind; the two decades of golden peace rested on his shoulders.",
+    "auxiliaryStrengthsZh": [
+      "开皇盛世与大一统的总工程师与真正操盘手",
+      "统领全局出将入相，既能在宏观上制定千秋法度，又能在微观上精算后勤粮草，知人善任无私奉公"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The supreme master engineer and operational brain of Sui's golden era",
+      "Managed grand strategy, legal architecture, and logistics with total integrity and flawless talent selection"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "卷入皇帝皇后的立储家事纠纷时缺乏弹性缓冲机制",
+      "在君权独断与皇后雷霆之怒面前硬抗，最终被猜忌罢相甚至招致炀帝屠刀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked diplomatic insulation when trapped between the Emperor's insecurity and the Empress's wrath over succession",
+      "suffering tragic purge"
+    ]
   },
   {
     "id": "he_ruobi",
@@ -3401,7 +5033,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "致命的居功自傲与口无遮拦！父亲临终刺舌之诫抛之脑后，在极权君主面前不断抱怨待遇不公、大放厥词，最终难逃杀身之祸。",
     "weaknessAdviceEn": "Fatal arrogance and uncontrollable loose talk! Ignored his dying father's bloody warning, openly griping about honors until tyrants severed his head.",
     "historicalQuoteZh": "若弼自负功大，每进见，辞色不平，常有怨言。炀帝杀之，天下叹其才而轻其为人。",
-    "historicalQuoteEn": "Book of Sui: He Ruobi boasted incessantly of his monumental victories, glowering with resentment over court honors. Yang Guang had him beheaded; all admired his talent yet pitied his tragic vanity."
+    "historicalQuoteEn": "Book of Sui: He Ruobi boasted incessantly of his monumental victories, glowering with resentment over court honors. Yang Guang had him beheaded; all admired his talent yet pitied his tragic vanity.",
+    "auxiliaryStrengthsZh": [
+      "战役战术欺骗与大规模渡江登岛作战的天才",
+      "善于利用心理战让防守方彻底丧失警惕，闪电突击直捣黄龙攻无不克"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Military genius of tactical deception and amphibious shock assault",
+      "Lulled fortified defenders into terminal sleep before striking with lightning fury"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "致命的居功自傲与口无遮拦",
+      "父亲临终刺舌之诫抛之脑后，在极权君主面前不断抱怨待遇不公、大放厥词，最终难逃杀身之祸"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal arrogance and uncontrollable loose talk",
+      "Ignored his dying father's bloody warning, openly griping about honors until tyrants severed his head"
+    ]
   },
   {
     "id": "han_qinhu",
@@ -3434,7 +5082,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在胜利入城时军纪把控出现微小缝隙，被贺若弼抢先进宫搜捕争功，引发战后同僚将领之间长期的功劳龃龉。",
     "weaknessAdviceEn": "Allowed rival commander He Ruobi to breach the palace first and claim the primary capture credit, sparking bitter post-war military disputes.",
     "historicalQuoteZh": "擒虎临终，见鬼神仪卫满门，曰：‘迎大王也！’擒虎曰：‘生为上柱国，死作阎罗王，斯亦足矣！’遂瞑目而逝，神采弈弈。",
-    "historicalQuoteEn": "Book of Sui: On his deathbed, spectral legions filled the courtyard, proclaiming: 'We come to escort our King!' Han Qinhu smiled: 'Alive, a Pillar of the Empire; dead, the Lord of the Underworld—it is enough!' and expired in peace."
+    "historicalQuoteEn": "Book of Sui: On his deathbed, spectral legions filled the courtyard, proclaiming: 'We come to escort our King!' Han Qinhu smiled: 'Alive, a Pillar of the Empire; dead, the Lord of the Underworld—it is enough!' and expired in peace.",
+    "auxiliaryStrengthsZh": [
+      "兵不血刃直捣黄龙的特战统帅典范",
+      "行军神速如幽灵鬼魅，善于以强大的心理威慑瓦解敌军斗志，达成零伤亡灭国战果"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Ghostly vanguard commander who conquered capitals without shedding blood",
+      "Paralzyed enemy morale through shock infiltration and supernatural composure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在胜利入城时军纪把控出现微小缝隙",
+      "被贺若弼抢先进宫搜捕争功，引发战后同僚将领之间长期的功劳龃龉"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Allowed rival commander He Ruobi to breach the palace first and claim the primary capture credit",
+      "sparking bitter post-war military disputes"
+    ]
   },
   {
     "id": "sima_shi",
@@ -3467,7 +5131,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "性格过刚过烈、猜忌嗜杀，对肉体极限过度透支，缺乏温润仁德护体导致英年早卒。",
     "weaknessAdviceEn": "Excessive ruthlessness and physical overexertion; lack of benevolence drained vital reserve leading to premature death.",
     "historicalQuoteZh": "《晋书》评：景皇养威持重，运筹决胜，内弘武略，外廓宏规，高平之事，神武绝伦。",
-    "historicalQuoteEn": "Book of Jin: Emperor Jing possessed terrifying poise and decisive strategic mastery, executing the Gaoping coup with peerless martial genius."
+    "historicalQuoteEn": "Book of Jin: Emperor Jing possessed terrifying poise and decisive strategic mastery, executing the Gaoping coup with peerless martial genius.",
+    "auxiliaryStrengthsZh": [
+      "静如磐石、动如奔雷的战略定力",
+      "善于在暗中积蓄压倒性杠杆，在命运决战窗口一击定乾坤"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unyielding strategic discipline",
+      "Accumulate overwhelming leverage in total silence and strike decisively at historic pivot points"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格过刚过烈、猜忌嗜杀",
+      "对肉体极限过度透支，缺乏温润仁德护体导致英年早卒"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive ruthlessness and physical overexertion",
+      "lack of benevolence drained vital reserve leading to premature death"
+    ]
   },
   {
     "id": "sima_fu",
@@ -3500,7 +5180,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在家族夺权的滔天大势前无力扭转乾坤，独善其身虽全其节，终究只能作悲壮的旁观者。",
     "weaknessAdviceEn": "Powerless to alter his clan's violent usurpation; righteous restraint could only offer tragic moral witness rather than institutional correction.",
     "historicalQuoteZh": "孚临终遗令：‘有魏贞士安平献王司马孚之墓。’晋武帝素服举哀，望轀訞而恸。",
-    "historicalQuoteEn": "Book of Jin: On his deathbed Sima Fu ordered his tomb to read 'Tomb of the Loyal Wei Hermit Sima Fu'; Emperor Wu wept bitterly in mourning attire."
+    "historicalQuoteEn": "Book of Jin: On his deathbed Sima Fu ordered his tomb to read 'Tomb of the Loyal Wei Hermit Sima Fu'; Emperor Wu wept bitterly in mourning attire.",
+    "auxiliaryStrengthsZh": [
+      "以德全躯的大德寿者智慧",
+      "在最凶险的政治漩涡中坚守道德压舱石，不争功、不树敌，赢得朝野无上敬仰"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme longevity and ethical ballast",
+      "Preserved moral boundaries amid brutal political storms, earning universal reverence by avoiding factional pride"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在家族夺权的滔天大势前无力扭转乾坤",
+      "独善其身虽全其节，终究只能作悲壮的旁观者"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Powerless to alter his clan's violent usurpation",
+      "righteous restraint could only offer tragic moral witness rather than institutional correction"
+    ]
   },
   {
     "id": "chen_shou",
@@ -3533,7 +5229,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "不擅官场阿谀逢迎与权贵结网，屡遭小人借父丧不守礼等私德非议中伤贬抑。",
     "weaknessAdviceEn": "Lacked agility in court intrigue, frequently marginalized by jealous rivals over trivial personal protocol accusations.",
     "historicalQuoteZh": "《晋书》本传：寿善叙事，有良史之才。夏侯湛读其书，便毁己之作。",
-    "historicalQuoteEn": "Book of Jin: Chen Shou was brilliant in historical narrative; scholar Xiahou Zhan burned his own unfinished history upon reading Chen's masterpiece."
+    "historicalQuoteEn": "Book of Jin: Chen Shou was brilliant in historical narrative; scholar Xiahou Zhan burned his own unfinished history upon reading Chen's masterpiece.",
+    "auxiliaryStrengthsZh": [
+      "以客观硬核作品立身百代的专家风范",
+      "面对现实打击沉下心打磨不朽传世成果，文字简练而千钧重"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immortal specialist authority through ironclad masterworks",
+      "Converted career frustration into timeless scholarship with concise, piercing eloquence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "不擅官场阿谀逢迎与权贵结网",
+      "屡遭小人借父丧不守礼等私德非议中伤贬抑"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked agility in court intrigue",
+      "frequently marginalized by jealous rivals over trivial personal protocol accusations"
+    ]
   },
   {
     "id": "wang_xiang",
@@ -3566,7 +5278,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "性情过于笃厚循规，面对西晋宗室日益骄奢与奢靡之风难以从制度层面强行力挽狂澜。",
     "weaknessAdviceEn": "Temperament was overly gentle and protocol-bound, unable to structurally curb the rampant luxury and corruption of the Jin nobility.",
     "historicalQuoteZh": "《晋书》评：王祥孝悌之德，感通神明。辅相二代，弼谐朝野，海内归仁。",
-    "historicalQuoteEn": "Book of Jin: Wang Xiang's sublime virtue touched heaven; serving two reigns with harmony, he stood as the empire's moral anchor."
+    "historicalQuoteEn": "Book of Jin: Wang Xiang's sublime virtue touched heaven; serving two reigns with harmony, he stood as the empire's moral anchor.",
+    "auxiliaryStrengthsZh": [
+      "以至纯人格魅力与伦理声望构筑不可动摇的防护盾",
+      "用孝悌仁厚立身，胜过万千权术谋算"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unshakeable moral authority and personal gravitas",
+      "Building reputation on authentic virtue shields against ruthless political turbulence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情过于笃厚循规",
+      "面对西晋宗室日益骄奢与奢靡之风难以从制度层面强行力挽狂澜"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Temperament was overly gentle and protocol-bound",
+      "unable to structurally curb the rampant luxury and corruption of the Jin nobility"
+    ]
   },
   {
     "id": "shan_tao",
@@ -3599,7 +5327,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "处事过于中庸圆融，虽能保全自我与朋友，但面对西晋腐败士族门阀的大势妥协过多。",
     "weaknessAdviceEn": "Pragmatic compromise and excessive moderation left institutional roots of aristocratic decay largely untouched.",
     "historicalQuoteZh": "嵇康临诛，戒子绍曰：‘巨源在，汝不孤矣！’《晋书》：山涛甄拔人物，各极其量。",
-    "historicalQuoteEn": "Before execution, Ji Kang told his son: 'With Shan Juyuan alive, you are never an orphan!' Book of Jin: Shan Tao elevated men to their exact potential."
+    "historicalQuoteEn": "Before execution, Ji Kang told his son: 'With Shan Juyuan alive, you are never an orphan!' Book of Jin: Shan Tao elevated men to their exact potential.",
+    "auxiliaryStrengthsZh": [
+      "在理想与现实间游刃有余的顶级人事统帅",
+      "外表旷达而内心极其严密，善于在复杂权力网中识拔并保护真才"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme talent architect bridging vision and harsh reality",
+      "Balanced worldly adaptability with profound inner integrity to cultivate elite successors"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "处事过于中庸圆融",
+      "虽能保全自我与朋友，但面对西晋腐败士族门阀的大势妥协过多"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pragmatic compromise and excessive moderation left institutional roots of aristocratic decay largely untouched.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "xiang_xiu",
@@ -3632,7 +5376,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "面对强权压制缺乏正面反抗的决断，在现实与妥协间常抱有深沉的内耗与精神创伤。",
     "weaknessAdviceEn": "Helpless against imperial coercion; endured persistent cognitive friction and sorrow in accommodating power.",
     "historicalQuoteZh": "司马昭问：‘卿有箕山之志，何以至此？’秀曰：‘巢、许狷介之士，未足以多慕。’昭甚悦。",
-    "historicalQuoteEn": "When regent Sima Zhao mocked his arrival at court, Xiang Xiu tactfully deflected: 'Ancient hermits were too rigid to blindly imitate,' disarming suspicious power."
+    "historicalQuoteEn": "When regent Sima Zhao mocked his arrival at court, Xiang Xiu tactfully deflected: 'Ancient hermits were too rigid to blindly imitate,' disarming suspicious power.",
+    "auxiliaryStrengthsZh": [
+      "以精神深邃与哲学穿透力完成自我救赎",
+      "即便身处逼仄高压环境，亦能用传世篇章安放灵魂"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Philosophical transcendence and intellectual depth",
+      "Able to safeguard one's core spirit through profound creative output even under severe external pressure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对强权压制缺乏正面反抗的决断",
+      "在现实与妥协间常抱有深沉的内耗与精神创伤"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Helpless against imperial coercion",
+      "endured persistent cognitive friction and sorrow in accommodating power"
+    ]
   },
   {
     "id": "zhou_chu",
@@ -3665,7 +5425,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "刚烈过甚、不谙官场同僚暗算与政治阴谋防范；明知权贵借刀杀人仍无后方防波堤支撑，导致悲壮捐躯。",
     "weaknessAdviceEn": "Excessive blunt rigidity without political defense firewalls; walked knowingly into fatal military sabotage by vengeful corrupt superiors.",
     "historicalQuoteZh": "临战作诗：‘去去世事已，策马感悲思。慷慨身当死，天道安可期！’《晋书》忠烈传第一。",
-    "historicalQuoteEn": "Composed poem before his last charge: 'Worldly ties fade away; courage demands I die for duty today!' Head of Book of Jin's Martyrs Volume."
+    "historicalQuoteEn": "Composed poem before his last charge: 'Worldly ties fade away; courage demands I die for duty today!' Head of Book of Jin's Martyrs Volume.",
+    "auxiliaryStrengthsZh": [
+      "浪子回头金不换的史诗蜕变力",
+      "具备顶级执行力与视死如归的亮剑精神，面对任何强敌从不退缩半步"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary power of self-redemption",
+      "Possesses indomitable willpower and fearless frontline execution against overwhelming adversity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "刚烈过甚、不谙官场同僚暗算与政治阴谋防范",
+      "明知权贵借刀杀人仍无后方防波堤支撑，导致悲壮捐躯"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive blunt rigidity without political defense firewalls",
+      "walked knowingly into fatal military sabotage by vengeful corrupt superiors"
+    ]
   },
   {
     "id": "wei_guan",
@@ -3698,7 +5474,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "规谏储君时过于含蓄（抚床叹曰此坐可惜），未能坚决阻击贾后夺权，在宫廷政变突发时应对迟缓。",
     "weaknessAdviceEn": "Too polite and subtle in warning against the incompetent crown prince; caught unprepared by Empress Jia's sudden bloody coup.",
     "historicalQuoteZh": "《晋书》评：卫瓘筹策清长，风神秀雅，平蜀乱于既崩之势，制危局于顾盼之间。",
-    "historicalQuoteEn": "Book of Jin: Wei Guan possessed far-reaching intellect and refined bearing, subduing the chaotic Shu mutiny with peerless presence of mind."
+    "historicalQuoteEn": "Book of Jin: Wei Guan possessed far-reaching intellect and refined bearing, subduing the chaotic Shu mutiny with peerless presence of mind.",
+    "auxiliaryStrengthsZh": [
+      "在极端混乱中借力打力、化险为夷的高维政务高手",
+      "拥有缜密的法律程序思维与敏锐的风向捕捉力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of crisis leverage and procedural navigation",
+      "Disarm lethal conspiracies through razor-sharp administrative and legal maneuvering"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "规谏储君时过于含蓄（抚床叹曰此坐可惜）",
+      "未能坚决阻击贾后夺权，在宫廷政变突发时应对迟缓"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Too polite and subtle in warning against the incompetent crown prince",
+      "caught unprepared by Empress Jia's sudden bloody coup"
+    ]
   },
   {
     "id": "jia_chong",
@@ -3731,7 +5523,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "家风败坏、私德尽失！为保权位纵容悍女贾南风入主中宫，最终引爆八王之乱毁掉西晋半壁江山，遭万世唾骂。",
     "weaknessAdviceEn": "Moral bankruptcy in family succession; placing dynastic power in the hands of his depraved daughter plunged the empire into total ruin.",
     "historicalQuoteZh": "《晋书》评：充虽赞成大业，然甘露之事，天下痛心，家门不肃，覆国殃民。",
-    "historicalQuoteEn": "Book of Jin: Though Jia Chong helped build the Jin empire, the murder of Cao Mao and the elevation of his daughter cursed the realm forever."
+    "historicalQuoteEn": "Book of Jin: Though Jia Chong helped build the Jin empire, the murder of Cao Mao and the elevation of his daughter cursed the realm forever.",
+    "auxiliaryStrengthsZh": [
+      "顶级政治风向捕捉者与制度起草人",
+      "敢于背负骂名承担最险恶任务，以硬核法典成果稳固自身政治生态"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme court survivalist and codifier",
+      "Ready to absorb public wrath to deliver mission-critical outcomes for apex stakeholders"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "家风败坏、私德尽失",
+      "为保权位纵容悍女贾南风入主中宫，最终引爆八王之乱毁掉西晋半壁江山，遭万世唾骂"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Moral bankruptcy in family succession",
+      "placing dynastic power in the hands of his depraved daughter plunged the empire into total ruin"
+    ]
   },
   {
     "id": "wang_jun_yz",
@@ -3764,7 +5572,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "贪欲过炽、轻信佞言、缺乏对终局博弈的深度推演，引狼入室终反被豺狼吞噬。",
     "weaknessAdviceEn": "Fatal vanity and geopolitical gullibility; inviting ferocious external beasts ultimately led to his own decapitation.",
     "historicalQuoteZh": "《晋书》评：王浚图危托附，引戎启寇，专制一方，终罹俘戮。",
-    "historicalQuoteEn": "Book of Jin: Wang Jun unleashed barbarian hordes to serve private ambition, ruling as a tyrant until Shi Le captured and butchered him."
+    "historicalQuoteEn": "Book of Jin: Wang Jun unleashed barbarian hordes to serve private ambition, ruling as a tyrant until Shi Le captured and butchered him.",
+    "auxiliaryStrengthsZh": [
+      "敏锐洞察并调动跨界外部暴力杠杆（鲜卑突骑）打破内陆博弈僵局的边疆枭雄手腕。",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Audacity in weaponizing alien external coalitions to overturn domestic political deadlocks.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "贪欲过炽、轻信佞言、缺乏对终局博弈的深度推演",
+      "引狼入室终反被豺狼吞噬"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal vanity and geopolitical gullibility",
+      "inviting ferocious external beasts ultimately led to his own decapitation"
+    ]
   },
   {
     "id": "zuo_si",
@@ -3797,7 +5621,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "社交表达与人际公关能力偏弱，在门阀等级森严的西晋官场受尽寒门出身的无形压制。",
     "weaknessAdviceEn": "Lacked court charisma and political networking, remaining permanently excluded from the highest state offices by hereditary oligarchs.",
     "historicalQuoteZh": "《晋书》本传：左思构思十年，门庭籓溷，皆著笔砚，赋成，洛阳纸贵。",
-    "historicalQuoteEn": "Book of Jin: Zuo Si labored a decade, placing inkstones even in doorways and outhouses; when finished, wealthy patrons copied it until paper ran out."
+    "historicalQuoteEn": "Book of Jin: Zuo Si labored a decade, placing inkstones even in doorways and outhouses; when finished, wealthy patrons copied it until paper ran out.",
+    "auxiliaryStrengthsZh": [
+      "十年如一日坐冷板凳的深厚匠心与破圈神力",
+      "不靠出身与颜值，纯凭无可匹敌的硬核产品击穿时代壁垒"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary craftsmanship through ten years of silent, monastic focus",
+      "Obliterated social glass ceilings solely through an undeniable masterpiece"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "社交表达与人际公关能力偏弱",
+      "在门阀等级森严的西晋官场受尽寒门出身的无形压制"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked court charisma and political networking",
+      "remaining permanently excluded from the highest state offices by hereditary oligarchs"
+    ]
   },
   {
     "id": "liu_yao",
@@ -3830,7 +5670,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在决定生死存亡的终局博弈前放纵嗜酒、情绪失控，致命的非理性行为直接毁掉整座帝国。",
     "weaknessAdviceEn": "Catastrophic lack of self-discipline at the ultimate crucible; drunkenness before battle cost him his empire and life.",
     "historicalQuoteZh": "《晋书》载曜临战：‘饮酒数斗，常乘赤马，入阵马踣，为石勒所擒。’",
-    "historicalQuoteEn": "Book of Jin: Liu Yao drank heavily before battle; his steed stumbled into cracked ice, leading to capture by his arch-rival Shi Le."
+    "historicalQuoteEn": "Book of Jin: Liu Yao drank heavily before battle; his steed stumbled into cracked ice, leading to capture by his arch-rival Shi Le.",
+    "auxiliaryStrengthsZh": [
+      "冲锋陷阵无坚不摧的狂暴突击力",
+      "在乱世中敢于以少胜多，以肉身绝对力量摧毁既有统治秩序"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unstoppable shock cavalry momentum",
+      "Shatters entrenched dynastic orders through raw courage and frontline martial brilliance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在决定生死存亡的终局博弈前放纵嗜酒、情绪失控",
+      "致命的非理性行为直接毁掉整座帝国"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Catastrophic lack of self-discipline at the ultimate crucible",
+      "drunkenness before battle cost him his empire and life"
+    ]
   },
   {
     "id": "fu_hong",
@@ -3863,7 +5719,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "对新归降将领的背叛风险防范不足，轻信小人导致身中剧毒含恨而终。",
     "weaknessAdviceEn": "Insufficient internal counter-intelligence against freshly surrendered defectors, dying prematurely of poison.",
     "historicalQuoteZh": "洪临终谓健曰：‘吾所以未入关者，以为燕、赵可兼。今死矣，汝等宜速入关！’《晋书》：洪沉毅多大度。",
-    "historicalQuoteEn": "Dying command to his heir: 'Do not tarry in the east; seize the mountain passes of Chang'an at once!' Book of Jin praises his resolute vision."
+    "historicalQuoteEn": "Dying command to his heir: 'Do not tarry in the east; seize the mountain passes of Chang'an at once!' Book of Jin praises his resolute vision.",
+    "auxiliaryStrengthsZh": [
+      "在超级大国夹缝中求生存壮大的战略隐忍与爆发力",
+      "临终指明唯一正确的战略要地（关中）"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Geopolitical balance and strategic endurance among warring titans",
+      "Pinpointed the decisive geographical lever for his dynasty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对新归降将领的背叛风险防范不足",
+      "轻信小人导致身中剧毒含恨而终"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Insufficient internal counter-intelligence against freshly surrendered defectors",
+      "dying prematurely of poison"
+    ]
   },
   {
     "id": "yao_xing",
@@ -3896,7 +5768,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过度沉溺佛事玄谈，对皇子夺嫡争权心慈手软、姑息纵容，死后即引爆宫廷内讧导致后秦被刘裕横扫。",
     "weaknessAdviceEn": "Excessive leniency towards rebellious sons; fatal hesitation in succession planning left his empire vulnerable to immediate conquest by Liu Yu.",
     "historicalQuoteZh": "《晋书》评：姚兴笃好经史，深崇释教，风化移于胡越，然溺于私爱，祸起萧墙。",
-    "historicalQuoteEn": "Book of Jin: Yao Xing loved scriptures and Buddhist wisdom, civilizing the realm; yet sentimental weakness towards his sons sparked palace ruin."
+    "historicalQuoteEn": "Book of Jin: Yao Xing loved scriptures and Buddhist wisdom, civilizing the realm; yet sentimental weakness towards his sons sparked palace ruin.",
+    "auxiliaryStrengthsZh": [
+      "以国家级最高资源赋能世界级文化IP的大格局",
+      "通过引进顶级思想文化大师（罗什）构筑天下精神信仰中心"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Grand visionary state sponsorship of transformative culture",
+      "Elevated Chang'an into the spiritual capital of East Asia by patronizing Kumarajiva"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过度沉溺佛事玄谈",
+      "对皇子夺嫡争权心慈手软、姑息纵容，死后即引爆宫廷内讧导致后秦被刘裕横扫"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive leniency towards rebellious sons",
+      "fatal hesitation in succession planning left his empire vulnerable to immediate conquest by Liu Yu"
+    ]
   },
   {
     "id": "qifu_chipan",
@@ -3929,7 +5817,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "地缘狭小、经济落后，过度依赖游牧掠夺与军事兼并，缺乏深厚的自持性农耕经济后方支持。",
     "weaknessAdviceEn": "Impoverished logistical baseline; over-reliant on nomadic raids without sustainable agrarian infrastructure.",
     "historicalQuoteZh": "《晋书》载：炽磐英武绝伦，算无遗策，克灭南凉，威行陇右，西秦之盛莫过于斯。",
-    "historicalQuoteEn": "Book of Jin: Qifu Chipan was peerlessly bold and calculating; crushing Southern Liang, he expanded Western Qin to its zenith."
+    "historicalQuoteEn": "Book of Jin: Qifu Chipan was peerlessly bold and calculating; crushing Southern Liang, he expanded Western Qin to its zenith.",
+    "auxiliaryStrengthsZh": [
+      "极擅隐忍伪装与一击必杀的潜行猎手智慧",
+      "善于趁敌不备直捣巢穴，在劣势中吞并同侪实现规模跃迁"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of strategic stealth and lethal opportunism",
+      "Seize the exact window when rivals overextend to swallow their assets whole"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "地缘狭小、经济落后",
+      "过度依赖游牧掠夺与军事兼并，缺乏深厚的自持性农耕经济后方支持"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Impoverished logistical baseline",
+      "over-reliant on nomadic raids without sustainable agrarian infrastructure"
+    ]
   },
   {
     "id": "tufa_rutan",
@@ -3962,7 +5866,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战略后方极度空虚时冒险全军远征，犯了‘后院失火弃根本’的致命战术大忌。",
     "weaknessAdviceEn": "Fatal abandonment of base sanctuary; marching the entire royal army on foreign plunder left his home capital defenseless.",
     "historicalQuoteZh": "《晋书》评：傉檀学涉经史，才器朗拔，然而连年用兵，国内凋敝，终至陨覆。",
-    "historicalQuoteEn": "Book of Jin: Tufa Rutan was erudite and articulate, yet endless campaigns bled his kingdom dry until total annihilation."
+    "historicalQuoteEn": "Book of Jin: Tufa Rutan was erudite and articulate, yet endless campaigns bled his kingdom dry until total annihilation.",
+    "auxiliaryStrengthsZh": [
+      "游牧部族罕见的文化教化与民生仁政胸怀",
+      "能将粗犷部族迅速推向文明轨道与学术繁荣"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Remarkable humanitarian and cultural reform within a nomadic society",
+      "modernized civic life through education and light taxes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战略后方极度空虚时冒险全军远征",
+      "犯了‘后院失火弃根本’的致命战术大忌"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal abandonment of base sanctuary",
+      "marching the entire royal army on foreign plunder left his home capital defenseless"
+    ]
   },
   {
     "id": "zhang_gui",
@@ -3995,7 +5915,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "始终恪守晋朝藩属之名，缺乏逐鹿中原争夺天下大一统的强悍进攻性野心。",
     "weaknessAdviceEn": "Content with defensive preservation; lacked the ruthless predatory drive to expand into the chaotic Central Plains.",
     "historicalQuoteZh": "《晋书》评：张轨德洽河右，威行西陲，辟土全邦，天下仰其仁惠，实五凉之冠。",
-    "historicalQuoteEn": "Book of Jin: Zhang Gui's virtue shone across Hexi; maintaining peace and culture, his sanctuary stood supreme among the Five Liang states."
+    "historicalQuoteEn": "Book of Jin: Zhang Gui's virtue shone across Hexi; maintaining peace and culture, his sanctuary stood supreme among the Five Liang states.",
+    "auxiliaryStrengthsZh": [
+      "在时代大崩塌中提前布局‘文明诺亚方舟’的顶级避险战略",
+      "以清明吏治与安全庇护所吸引海量高端人才加盟"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme crisis foresight building an unassailable sanctuary",
+      "Attracted top-tier human capital by providing safety, rule of law, and economic stability"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "始终恪守晋朝藩属之名",
+      "缺乏逐鹿中原争夺天下大一统的强悍进攻性野心"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Content with defensive preservation",
+      "lacked the ruthless predatory drive to expand into the chaotic Central Plains"
+    ]
   },
   {
     "id": "zhang_chonghua",
@@ -4028,7 +5964,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "大胜之后骄纵怠惰，宠信佞幸赵长等人，临终未能遏制宗室反叛，导致前凉陷入血腥内乱。",
     "weaknessAdviceEn": "Post-victory complacency; relied on flattering sycophants, leaving succession vulnerable to disastrous palace coups.",
     "historicalQuoteZh": "《晋书》载：重华任谢艾，大破石虎大将麻秋，保境全师，时论嘉其识拔之明。",
-    "historicalQuoteEn": "Book of Jin: Zhang Chonghua's promotion of Xie Ai destroyed Zhao's fiercest armies, celebrated by contemporaries for uncanny eye for talent."
+    "historicalQuoteEn": "Book of Jin: Zhang Chonghua's promotion of Xie Ai destroyed Zhao's fiercest armies, celebrated by contemporaries for uncanny eye for talent.",
+    "auxiliaryStrengthsZh": [
+      "打破常规、不拘一格降人才的战略魄力",
+      "在生死悬于一线的危难时刻敢于孤注一掷重用奇才破局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Radical meritocratic courage",
+      "Overruled entrenched court skepticism to empower unconventional geniuses who delivered absolute victory"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "大胜之后骄纵怠惰",
+      "宠信佞幸赵长等人，临终未能遏制宗室反叛，导致前凉陷入血腥内乱"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Post-victory complacency",
+      "relied on flattering sycophants, leaving succession vulnerable to disastrous palace coups"
+    ]
   },
   {
     "id": "zhidun",
@@ -4061,7 +6013,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "身处精神云端超然世外，对底层民间疾苦与乱世战火缺乏直接的救济实践杠杆。",
     "weaknessAdviceEn": "Detached in high metaphysical towers, providing philosophical solace but limited practical relief to peasant misery.",
     "historicalQuoteZh": "《世说新语》：支道林拔新理于微言之外，王羲之初不相重，及听其论《逍遥篇》，乃大加叹服。",
-    "historicalQuoteEn": "A New Account of Tales of the World: Calligrapher Wang Xizhi initially scoffed at monks, but was entirely enchanted upon hearing Zhidun's sublime Zhuangzi lectures."
+    "historicalQuoteEn": "A New Account of Tales of the World: Calligrapher Wang Xizhi initially scoffed at monks, but was entirely enchanted upon hearing Zhidun's sublime Zhuangzi lectures.",
+    "auxiliaryStrengthsZh": [
+      "跨学科跨文明体系底层逻辑融通融合的宗师手腕",
+      "用极具开创性的新诠释降维打击传统桎梏"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sublime cross-paradigmatic synthesis",
+      "Redefined centuries of philosophical debate through fresh conceptual frameworks"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "身处精神云端超然世外",
+      "对底层民间疾苦与乱世战火缺乏直接的救济实践杠杆"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Detached in high metaphysical towers",
+      "providing philosophical solace but limited practical relief to peasant misery"
+    ]
   },
   {
     "id": "sengzhao",
@@ -4094,7 +6062,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "天不假年！过于消耗心智于形而上终极领域，躯体底盘未能承受超负荷的大脑算力，年仅三十一岁早夭。",
     "weaknessAdviceEn": "Premature burnout; immense metaphysical output overwhelmed his physical vessel, passing away at merely 31.",
     "historicalQuoteZh": "罗什叹曰：‘秦人解空者，僧肇一人而已！’临终偈曰：‘四大元无主，五阴本来空。将头临白刃，犹似斩春风！’",
-    "historicalQuoteEn": "Kumarajiva marveled: 'In all China, Sengzhao alone truly comprehends Emptiness!' Deathbed verse: 'Bearing the white blade feels like slashing the spring breeze!'"
+    "historicalQuoteEn": "Kumarajiva marveled: 'In all China, Sengzhao alone truly comprehends Emptiness!' Deathbed verse: 'Bearing the white blade feels like slashing the spring breeze!'",
+    "auxiliaryStrengthsZh": [
+      "以无懈可击的纯逻辑推演与哲学概念建构登顶人类心智巅峰",
+      "文字如飞瀑落九天，洞彻万法本体"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unassailable logical rigor and metaphysical clarity",
+      "Constructed foundational philosophical architecture that enlightened millennia of scholars"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "天不假年",
+      "过于消耗心智于形而上终极领域，躯体底盘未能承受超负荷的大脑算力，年仅三十一岁早夭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Premature burnout",
+      "immense metaphysical output overwhelmed his physical vessel, passing away at merely 31"
+    ]
   },
   {
     "id": "daoan",
@@ -4127,7 +6111,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "受制于北国君王（苻坚）的政治控制与战争裹挟，无法脱离皇权庇护而真正享有全盘独立地位。",
     "weaknessAdviceEn": "Dependent on the precarious patronage of autocratic emperors, his institutions remaining tethered to dynastic fate.",
     "historicalQuoteZh": "时人语曰：‘弥天释道安，天下独步。’苻坚叹曰：‘朕以十万之师破襄阳，唯得一人半，安公一人也。’",
-    "historicalQuoteEn": "Emperor Fu Jian declared after taking Xiangyang: 'My 100,000 soldiers conquered only one and a half men—Dao'an is the whole man!'"
+    "historicalQuoteEn": "Emperor Fu Jian declared after taking Xiangyang: 'My 100,000 soldiers conquered only one and a half men—Dao'an is the whole man!'",
+    "auxiliaryStrengthsZh": [
+      "开创行业通用标准与全国统一规范的制度设计师",
+      "把松散游民组织转化为千年不绝的正规化宗门系统"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Institutional systems architect",
+      "Transformed fragmented spiritual seekers into a standardized, resilient, millennia-enduring civilizational institution"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "受制于北国君王（苻坚）的政治控制与战争裹挟",
+      "无法脱离皇权庇护而真正享有全盘独立地位"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Dependent on the precarious patronage of autocratic emperors",
+      "his institutions remaining tethered to dynastic fate"
+    ]
   },
   {
     "id": "huiyuan",
@@ -4160,7 +6160,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "立身极高、不入世途，把全部精力专注于方外解脱，对世间具体的战火与政治苦难保持抽离隔离。",
     "weaknessAdviceEn": "Radical monastic withdrawal; intentional detachment from frontline civic crises in favor of transcendent meditation.",
     "historicalQuoteZh": "桓玄入山见远，肃然起敬，不敢致难。《高僧传》评：远公神气卓朗，道风肃整，百代仰止。",
-    "historicalQuoteEn": "Even tyrant Huan Xuan stood in silent awe upon climbing Mount Lu, unable to utter threats before Huiyuan's commanding moral presence."
+    "historicalQuoteEn": "Even tyrant Huan Xuan stood in silent awe upon climbing Mount Lu, unable to utter threats before Huiyuan's commanding moral presence.",
+    "auxiliaryStrengthsZh": [
+      "以铁骨傲然捍卫信仰与学术独立性的大法骨",
+      "面对最残暴的世俗强权绝不屈膝低头，树立永恒的精神丰碑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unyielding defense of spiritual and intellectual autonomy",
+      "Stand fearless against political tyranny to protect core institutional principles"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "立身极高、不入世途",
+      "把全部精力专注于方外解脱，对世间具体的战火与政治苦难保持抽离隔离"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Radical monastic withdrawal",
+      "intentional detachment from frontline civic crises in favor of transcendent meditation"
+    ]
   },
   {
     "id": "deng_qiang",
@@ -4193,7 +6209,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "临战讨价还价、斤斤计较官爵利益，缺乏战略全局格局观，必须依赖王猛这等超级帅才统御方显其功。",
     "weaknessAdviceEn": "Mercenary transactional attitude before crucial battles; requires an apex strategic master like Wang Meng to channel his explosive ferocity.",
     "historicalQuoteZh": "《晋书》载：羌身先士卒，出入数万骑中，所向披靡。秦人语曰：‘关东有徐、王，关西有邓、张。’",
-    "historicalQuoteEn": "Book of Jin: Deng Qiang charged repeatedly through tens of thousands of enemy cavalry, completely unstoppable wherever he rode."
+    "historicalQuoteEn": "Book of Jin: Deng Qiang charged repeatedly through tens of thousands of enemy cavalry, completely unstoppable wherever he rode.",
+    "auxiliaryStrengthsZh": [
+      "能在千钧一发之际彻底撕碎敌军防线的终极单兵杀手锏",
+      "战意澎湃，越是大场面越能迸发非人战力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Ultimate breakthrough spearhead in decisive engagements",
+      "Thrives in maximum danger, shattering mass formations through lethal valor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "临战讨价还价、斤斤计较官爵利益",
+      "缺乏战略全局格局观，必须依赖王猛这等超级帅才统御方显其功"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Mercenary transactional attitude before crucial battles",
+      "requires an apex strategic master like Wang Meng to channel his explosive ferocity"
+    ]
   },
   {
     "id": "zhang_tianxi",
@@ -4226,7 +6258,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "丧失为君者的节操与担当，骨头过软、沉溺宴乐，虽全首领却沦为历史笑柄。",
     "weaknessAdviceEn": "Complete abdication of sovereign dignity; surrendered kingdoms twice without shame to purchase private salon comforts.",
     "historicalQuoteZh": "《晋书》：天锡机捷，善应对。顾恺之好食甘蔗，天锡问其故，答曰：‘渐入佳境。’天锡抚掌叹服。",
-    "historicalQuoteEn": "Book of Jin: Zhang Tianxi was celebrated for witty banter in salons; painter Gu Kaizhi and nobles found his lighthearted company delightful."
+    "historicalQuoteEn": "Book of Jin: Zhang Tianxi was celebrated for witty banter in salons; painter Gu Kaizhi and nobles found his lighthearted company delightful.",
+    "auxiliaryStrengthsZh": [
+      "九死一生的绝地变色龙求生智慧",
+      "在极度险恶的连续倾覆中，凭高超言谈与情商总能化险为夷保全性命"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of diplomatic survival and social charm",
+      "Maneuvered through multiple dynastic executions by disarming conquerors with self-deprecating wit"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "丧失为君者的节操与担当",
+      "骨头过软、沉溺宴乐，虽全首领却沦为历史笑柄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Complete abdication of sovereign dignity",
+      "surrendered kingdoms twice without shame to purchase private salon comforts"
+    ]
   },
   {
     "id": "feng_hong",
@@ -4259,7 +6307,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "亡国寄人篱下却认不清现实，身无立锥之地仍大摆宗主国架子，狂妄傲慢自掘坟墓。",
     "weaknessAdviceEn": "Fatal arrogance in exile; demanding royal subservience while relying on foreign bread provoked his immediate execution.",
     "historicalQuoteZh": "《晋书》评：冯弘杀其侄而自立，荒淫傲慢，逃奔高丽，犹以天子自居，终见诛灭。",
-    "historicalQuoteEn": "Book of Jin: Feng Hong murdered his nephew to rule; fleeing as a beggar to Goguryeo, he still acted like an emperor until slaughtered."
+    "historicalQuoteEn": "Book of Jin: Feng Hong murdered his nephew to rule; fleeing as a beggar to Goguryeo, he still acted like an emperor until slaughtered.",
+    "auxiliaryStrengthsZh": [
+      "在四面楚歌的灭国危局中顽强周旋、巧妙利用第三方跨界势力（高句丽）撤离死地的求生决断。",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Resourcefulness in orchestrating cross-border evacuation to escape total siege annihilation.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "亡国寄人篱下却认不清现实",
+      "身无立锥之地仍大摆宗主国架子，狂妄傲慢自掘坟墓"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal arrogance in exile",
+      "demanding royal subservience while relying on foreign bread provoked his immediate execution"
+    ]
   },
   {
     "id": "qifu_gangui",
@@ -4292,7 +6356,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "对宗室子侄的安保防线漏洞百出，在日常起居中缺乏最基本的贴身警戒，被叛乱侄子血溅当场。",
     "weaknessAdviceEn": "Careless domestic security; murdered in his private quarters by an envious nephew due to lax guard.",
     "historicalQuoteZh": "《晋书》载：乾归勇略过人，丧国复兴，诚陇右骁雄，然忽于防备，死于宵小。",
-    "historicalQuoteEn": "Book of Jin: Qifu Gangui was peerless in frontier bravery, resurrecting his state from ash; yet carelessness in private security ruined him."
+    "historicalQuoteEn": "Book of Jin: Qifu Gangui was peerless in frontier bravery, resurrecting his state from ash; yet carelessness in private security ruined him.",
+    "auxiliaryStrengthsZh": [
+      "百折不挠的绝地复盘再起力",
+      "哪怕公司破产倾覆，也能潜入巨头内部蛰伏偷师，伺机重整旗鼓再建商业帝国"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unrivaled Phoenix resilience",
+      "Even after losing his throne, infiltrated the conqueror's court to bide time and launch a spectacular resurrection"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对宗室子侄的安保防线漏洞百出",
+      "在日常起居中缺乏最基本的贴身警戒，被叛乱侄子血溅当场"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Careless domestic security",
+      "murdered in his private quarters by an envious nephew due to lax guard"
+    ]
   },
   {
     "id": "juqu_anzhou",
@@ -4325,7 +6405,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "深陷荒漠地缘死局，人口极度匮乏，在北方新兴柔然铁骑与北魏强敌挤压下注定难逃覆灭。",
     "weaknessAdviceEn": "Geographical dead-end; trapped in isolated oases with dwindling population between predatory steppe empires.",
     "historicalQuoteZh": "《魏书》载：沮渠安周保守高昌，柔然攻灭之，沮渠氏遂绝。",
-    "historicalQuoteEn": "Book of Wei: Juqu Anzhou held isolated Gaochang until Rouran steppe hordes besieged and extinguished his clan."
+    "historicalQuoteEn": "Book of Wei: Juqu Anzhou held isolated Gaochang until Rouran steppe hordes besieged and extinguished his clan.",
+    "auxiliaryStrengthsZh": [
+      "万里西迁在沙漠绿洲再辟生机的极端生存韧性",
+      "在母体被连根拔起后，依然能在边疆缝隙延续火种"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Extreme survival tenacity across thousands of miles of desert",
+      "Carried civilizational embers to barren frontiers after total domestic defeat"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "深陷荒漠地缘死局",
+      "人口极度匮乏，在北方新兴柔然铁骑与北魏强敌挤压下注定难逃覆灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Geographical dead-end",
+      "trapped in isolated oases with dwindling population between predatory steppe empires"
+    ]
   },
   {
     "id": "li_xin_xl",
@@ -4358,7 +6454,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "完全背弃开创者留下的‘守境安民、切勿主动挑衅强敌’的黄金祖训，急功近利以致国破家亡。",
     "weaknessAdviceEn": "Total repudiation of founding doctrine; reckless overconfidence walked his entire army into a textbook ambush.",
     "historicalQuoteZh": "其母尹太后泣谏曰：‘汝违先王之策，弃万全之守，吾见汝不归矣！’歆果败死撩泉。",
-    "historicalQuoteEn": "His mother Empress Yin wept before his march: 'You violate your father's golden rules; I shall never see you return!' He died in the trap."
+    "historicalQuoteEn": "His mother Empress Yin wept before his march: 'You violate your father's golden rules; I shall never see you return!' He died in the trap.",
+    "auxiliaryStrengthsZh": [
+      "敢于在边陲以弱击强、发起攻势作战的骁锐血气（唯此一点尚存沙场霸气）。",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fierce martial aggression attempting proactive attacks against larger regional rivals.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "完全背弃开创者留下的‘守境安民、切勿主动挑衅强敌’的黄金祖训",
+      "急功近利以致国破家亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Total repudiation of founding doctrine",
+      "reckless overconfidence walked his entire army into a textbook ambush"
+    ]
   },
   {
     "id": "li_xun_xl",
@@ -4391,7 +6503,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "大局已去无力回天，缺乏跳出死地另谋生路的战略回旋空间，终随孤城一同沉没。",
     "weaknessAdviceEn": "Trapped in an isolated tactical island without geopolitical exit routes; doomed by previous regime failures.",
     "historicalQuoteZh": "《晋书》载：敦煌城陷，恂自杀。蒙逊纵兵大掠，屠城三日，西凉遂亡。",
-    "historicalQuoteEn": "Book of Jin: Dunhuang fell after water breached the walls; Li Xun took his own life, and the western oasis dynasty was extinguished."
+    "historicalQuoteEn": "Book of Jin: Dunhuang fell after water breached the walls; Li Xun took his own life, and the western oasis dynasty was extinguished.",
+    "auxiliaryStrengthsZh": [
+      "危难受命绝不妥协的忠烈风骨",
+      "在整座大厦倾倒的绝境下，能团结孤城军民死战百日流尽最后一滴血"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Monumental loyalty under inescapable doom",
+      "Rallied a starving desert outpost to heroic hundred-day defense against overwhelming forces"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "大局已去无力回天",
+      "缺乏跳出死地另谋生路的战略回旋空间，终随孤城一同沉没"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Trapped in an isolated tactical island without geopolitical exit routes",
+      "doomed by previous regime failures"
+    ]
   },
   {
     "id": "kui_teng",
@@ -4424,7 +6552,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "面对石虎的凶残夺权与血洗石勒皇族无力抗衡，只能随波逐流沦为强暴政治的服从者。",
     "weaknessAdviceEn": "Powerless to stop the psychotic usurper Shi Hu from butchering founder Shi Le's imperial progeny.",
     "historicalQuoteZh": "《晋书》载：夔安与石勒同布衣之交，转战天下，官至太尉，为后赵勋臣之冠。",
-    "historicalQuoteEn": "Book of Jin: Kui An shared humble origins with Shi Le; fighting across China, he rose to Grand Commander as chief founding father."
+    "historicalQuoteEn": "Book of Jin: Kui An shared humble origins with Shi Le; fighting across China, he rose to Grand Commander as chief founding father.",
+    "auxiliaryStrengthsZh": [
+      "与草莽创业者从零到一打天下的顶级创始合伙人忠诚与执行力",
+      "既能冲锋陷阵，又能统摄文武安抚百官"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Premier co-founder execution from scratch",
+      "Blended frontline assault capability with ministerial administrative composure"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对石虎的凶残夺权与血洗石勒皇族无力抗衡",
+      "只能随波逐流沦为强暴政治的服从者"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Powerless to stop the psychotic usurper Shi Hu from butchering founder Shi Le's imperial progeny.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "yu_bing",
@@ -4457,7 +6601,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "地处东晋门阀平衡的夹缝中，虽能勉强维系稳定，但无力从根本上消除士族内耗与北伐困局。",
     "weaknessAdviceEn": "Constrained within delicate oligarchic gridlock; exhausted vital reserves maintaining status quo rather than structural breakthroughs.",
     "historicalQuoteZh": "《晋书》赞：冰识达清裁，处权事之间，内抚朝廷，外绥方岳，社稷赖之。",
-    "historicalQuoteEn": "Book of Jin: Yu Bing possessed penetrating clarity; balancing internal court factions and frontier armies, he was a true anchor of state."
+    "historicalQuoteEn": "Book of Jin: Yu Bing possessed penetrating clarity; balancing internal court factions and frontier armies, he was a true anchor of state.",
+    "auxiliaryStrengthsZh": [
+      "以大局为重打破宗族私利的卓越政治家胸怀",
+      "在关键权力交接点选择最稳健方案，避免主少国疑之厄"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Systemic maturity over clan self-interest",
+      "Engineered stable royal succession by prioritizing imperial survival over easy puppet manipulation"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "地处东晋门阀平衡的夹缝中",
+      "虽能勉强维系稳定，但无力从根本上消除士族内耗与北伐困局"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Constrained within delicate oligarchic gridlock",
+      "exhausted vital reserves maintaining status quo rather than structural breakthroughs"
+    ]
   },
   {
     "id": "yu_yi",
@@ -4490,7 +6650,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "行动急躁激进，在粮饷筹措与同僚配合尚未成熟时急于冒进出征，遭内部掣肘且体力过耗夭折。",
     "weaknessAdviceEn": "Impatience and logistical overextension; launched premature offensives against widespread court reluctance, draining his health.",
     "historicalQuoteZh": "王羲之常叹其书曰：‘小儿辈遂逼人！’《晋书》评：庾翼有经略四方之志，功名未遂，惜哉！",
-    "historicalQuoteEn": "Even Wang Xizhi marveled at his stroke dynamics; Book of Jin laments that his vast military vision was cut short by untimely death."
+    "historicalQuoteEn": "Even Wang Xizhi marveled at his stroke dynamics; Book of Jin laments that his vast military vision was cut short by untimely death.",
+    "auxiliaryStrengthsZh": [
+      "兼具军政硬核武装与极致书法美学的全能将星",
+      "敢于在偏安江南时树立光复神州的大格局志向"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Rare synthesis of frontline martial vigor and transcendent calligraphic art",
+      "Kept the dream of national reunification burning bright"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行动急躁激进",
+      "在粮饷筹措与同僚配合尚未成熟时急于冒进出征，遭内部掣肘且体力过耗夭折"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Impatience and logistical overextension",
+      "launched premature offensives against widespread court reluctance, draining his health"
+    ]
   },
   {
     "id": "su_jun",
@@ -4523,7 +6699,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "完全缺乏政治智慧与建设能力！攻占京师后放任暴行焚掠宗庙，在决战中酗酒单骑送命沦为反面教材。",
     "weaknessAdviceEn": "Zero strategic statecraft; reduced his uprising to mindless arson and pillage, meeting a drunken death on the spear points of Jin veterans.",
     "historicalQuoteZh": "《晋书》载：峻乘马醉突陈，坠马为陶侃部卒所杀，剖其胸取心。乱平，朝廷乃安。",
-    "historicalQuoteEn": "Book of Jin: Su Jun charged drunk, fell from horse, and was hacked to pieces by Tao Kan's spearmen; his catastrophic rebellion was finally crushed."
+    "historicalQuoteEn": "Book of Jin: Su Jun charged drunk, fell from horse, and was hacked to pieces by Tao Kan's spearmen; his catastrophic rebellion was finally crushed.",
+    "auxiliaryStrengthsZh": [
+      "凝聚破产流民爆发生死绝战力量的极限突击杀伤力",
+      "在战场前线身先士卒所向无敌"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Explosive military shock value rallying desperate dispossessed masses",
+      "devastating assault commander on open battlefields"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "完全缺乏政治智慧与建设能力",
+      "攻占京师后放任暴行焚掠宗庙，在决战中酗酒单骑送命沦为反面教材"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero strategic statecraft",
+      "reduced his uprising to mindless arson and pillage, meeting a drunken death on the spear points of Jin veterans"
+    ]
   },
   {
     "id": "xie_shang",
@@ -4556,7 +6748,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "军事指挥硬仗攻坚战力稍逊，在与前秦苻健部将交战中遭遇张遇重创，不得不依靠桓温等后方解围。",
     "weaknessAdviceEn": "Frontline military tactical vulnerabilities against northern iron cavalry; required allied rescue during major campaigns.",
     "historicalQuoteZh": "《晋书》赞：谢尚神怀畅远，才武兼备，起舞清华，迎玺归晋，谢氏门第自此隆崇。",
-    "historicalQuoteEn": "Book of Jin: Xie Shang was expansive and martially gifted; recovering the sacred Jade Seal, he propelled the Xie clan to paramount glory."
+    "historicalQuoteEn": "Book of Jin: Xie Shang was expansive and martially gifted; recovering the sacred Jade Seal, he propelled the Xie clan to paramount glory.",
+    "auxiliaryStrengthsZh": [
+      "将名士风度与边关实干完美兼容的跨界名将",
+      "既能登堂起舞风靡士林，又能统领边镇迎回传国重器"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Seamless fusion of elite cultural charisma and tough border governance",
+      "Earned supreme legitimacy by securing sacred imperial regalia"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "军事指挥硬仗攻坚战力稍逊",
+      "在与前秦苻健部将交战中遭遇张遇重创，不得不依靠桓温等后方解围"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Frontline military tactical vulnerabilities against northern iron cavalry",
+      "required allied rescue during major campaigns"
+    ]
   },
   {
     "id": "wang_xun",
@@ -4589,7 +6797,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在皇权与门阀家族撕扯中多受牵制，晚年政治舞台空间逼仄，未能彻底化解司马道子擅权乱局。",
     "weaknessAdviceEn": "Constrained by late Eastern Jin palace degeneration under Prince Daozi, unable to arrest systemic imperial unraveling.",
     "historicalQuoteZh": "乾隆帝定《伯远帖》为‘三希’真宝。董其昌题跋：‘潇洒古淡，东晋风流，宛然在目。’",
-    "historicalQuoteEn": "Emperor Qianlong enshrined Boyuan Tie as supreme treasure; Dong Qichang praised: 'Elegantly ancient, the living soul of Jin nobility.'"
+    "historicalQuoteEn": "Emperor Qianlong enshrined Boyuan Tie as supreme treasure; Dong Qichang praised: 'Elegantly ancient, the living soul of Jin nobility.'",
+    "auxiliaryStrengthsZh": [
+      "留下天下独一无二稀世真迹的传世法眼",
+      "以孤篇压全唐、一帖传千载的绝顶艺术造诣超然于政客倾轧之外"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sole surviving direct artifact legacy of an entire golden era",
+      "Ascended beyond temporal political decay through unrepeatable calligraphic mastery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在皇权与门阀家族撕扯中多受牵制",
+      "晚年政治舞台空间逼仄，未能彻底化解司马道子擅权乱局"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Constrained by late Eastern Jin palace degeneration under Prince Daozi",
+      "unable to arrest systemic imperial unraveling"
+    ]
   },
   {
     "id": "lu_ye",
@@ -4622,7 +6846,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "作风保守循旧、不慕功名，在拓土恢复中原的大业上缺乏积极主动作业的进攻热情。",
     "weaknessAdviceEn": "Conservative and risk-averse; focused purely on southern domestic stability rather than proactive national northern recovery.",
     "historicalQuoteZh": "《晋书》评：陆晔器量淹雅，风轨端凝，三世居公辅之位，清规自饬，江东领袖也。",
-    "historicalQuoteEn": "Book of Jin: Lu Ye possessed serene dignity and unyielding rectitude; serving three reigns as premier minister, he was the pride of Jiangnan."
+    "historicalQuoteEn": "Book of Jin: Lu Ye possessed serene dignity and unyielding rectitude; serving three reigns as premier minister, he was the pride of Jiangnan.",
+    "auxiliaryStrengthsZh": [
+      "以至公无私的崇高威望作为地方本土派与外来政权利益平衡的‘定海神针’",
+      "危难时刻挺身护卫正统"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Invaluable political bridge between native local power and incoming northern refugee regimes",
+      "Stood firm in palace crisis as universal moral anchor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "作风保守循旧、不慕功名",
+      "在拓土恢复中原的大业上缺乏积极主动作业的进攻热情"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Conservative and risk-averse",
+      "focused purely on southern domestic stability rather than proactive national northern recovery"
+    ]
   },
   {
     "id": "gu_rong",
@@ -4655,7 +6895,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过早病卒未能亲见东晋政权彻底稳固，在平衡南渡士族对本土吴姓世家的排挤压制上留存后患。",
     "weaknessAdviceEn": "Died prematurely, leaving local southern gentry vulnerable to aggressive northern migrant aristocratic monopolization.",
     "historicalQuoteZh": "时人语曰：‘机发奇策顾彦先。’《晋书》评：顾荣识断通赡，挥扇回麾，江表清晏，元皇化基，荣之力也。",
-    "historicalQuoteEn": "Book of Jin: Gu Rong's foresight was brilliant; waving his feather fan he pacified Jiangnan, single-handedly laying the throne for Emperor Yuan."
+    "historicalQuoteEn": "Book of Jin: Gu Rong's foresight was brilliant; waving his feather fan he pacified Jiangnan, single-handedly laying the throne for Emperor Yuan.",
+    "auxiliaryStrengthsZh": [
+      "以惊人威望‘挥羽扇散众敌’的一击破局力",
+      "善于在动荡期做出最符合地缘大势的关键决断，定国安民"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary soft power disarming armies with a wave of a fan",
+      "Engineered the foundational coalition that secured Southern China for centuries"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过早病卒未能亲见东晋政权彻底稳固",
+      "在平衡南渡士族对本土吴姓世家的排挤压制上留存后患"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Died prematurely",
+      "leaving local southern gentry vulnerable to aggressive northern migrant aristocratic monopolization"
+    ]
   },
   {
     "id": "he_xun",
@@ -4688,7 +6944,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过于泥古守礼、清廉至生活赤贫，缺乏解决现实经济粮饷与军事动员硬仗的实权手段。",
     "weaknessAdviceEn": "Overly dogmatic ritualist; lived in acute personal poverty, lacking leverage in brutal fiscal or military conflicts.",
     "historicalQuoteZh": "晋元帝手诏曰：‘贺太常德操清劭，儒冠江湘，五礼之废，一朝备定，社稷之臣也。’",
-    "historicalQuoteEn": "Emperor Yuan decreed: 'Lord He's virtue illuminates the south; all imperial rites were restored by his single hand. A titan of the realm.'"
+    "historicalQuoteEn": "Emperor Yuan decreed: 'Lord He's virtue illuminates the south; all imperial rites were restored by his single hand. A titan of the realm.'",
+    "auxiliaryStrengthsZh": [
+      "在蛮荒废墟中凭空搭建国家级礼乐文明与宪章制度的系统架构师",
+      "以绝对专业深度获得最高统治者顶格敬仰"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Civilizational system architect",
+      "Rebuilt the entire ceremonial and constitutional framework of an empire from imperial ashes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于泥古守礼、清廉至生活赤贫",
+      "缺乏解决现实经济粮饷与军事动员硬仗的实权手段"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly dogmatic ritualist",
+      "lived in acute personal poverty, lacking leverage in brutal fiscal or military conflicts"
+    ]
   },
   {
     "id": "ji_zhan",
@@ -4721,7 +6993,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "处处谨小慎微过度避嫌，在东晋早期多次面对门阀专横时采取避让自保，未能力争制度主导权。",
     "weaknessAdviceEn": "Excessive modesty borderlined on timidity; yielded political primacy to domineering northern immigrant oligarchs.",
     "historicalQuoteZh": "《晋书》赞：纪瞻和而能峻，清而通整，屡出师破贼，退让位冠，世称纯臣。",
-    "historicalQuoteEn": "Book of Jin: Ji Zhan was gentle yet stern in war; repeatedly routing rebels, he was celebrated as a model of immaculate integrity."
+    "historicalQuoteEn": "Book of Jin: Ji Zhan was gentle yet stern in war; repeatedly routing rebels, he was celebrated as a model of immaculate integrity.",
+    "auxiliaryStrengthsZh": [
+      "战功赫赫却能功成身退的顶级职场安全感智慧",
+      "在外部势力严密防范本土派的局势下以谦逊换取长治久安"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of post-victory deference",
+      "Won battlefield glory yet disarmed imperial suspicion by gracefully declining dangerous excess titles"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "处处谨小慎微过度避嫌",
+      "在东晋早期多次面对门阀专横时采取避让自保，未能力争制度主导权"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive modesty borderlined on timidity",
+      "yielded political primacy to domineering northern immigrant oligarchs"
+    ]
   },
   {
     "id": "dai_kui",
@@ -4754,7 +7042,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "与世俗权力体系彻底决裂，艺术造诣虽登峰造极，但毕生颠沛隐遁山林，物质生活受限。",
     "weaknessAdviceEn": "Radical societal withdrawal; absolute defiance of power guaranteed lifetime monastic poverty and material vulnerability.",
     "historicalQuoteZh": "逵破琴曰：‘戴安道不为王门伶人！’《晋书》评：戴逵孤峰独拔，雅操高蹈，名重当时。",
-    "historicalQuoteEn": "Smashed his instrument saying: 'Dai Andao is no prince's minstrel!' Book of Jin celebrates him as a peak of incorruptible hermitage."
+    "historicalQuoteEn": "Smashed his instrument saying: 'Dai Andao is no prince's minstrel!' Book of Jin celebrates him as a peak of incorruptible hermitage.",
+    "auxiliaryStrengthsZh": [
+      "以粉身碎骨的傲骨捍卫艺术家尊严的铁血品格",
+      "宁碎古琴不事权贵，成为中华文化史上独立人格的永恒象征"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unshakeable artistic sovereignty",
+      "Smashed his prized zither rather than flatter aristocratic tyrants, enshrining creative integrity forever"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "与世俗权力体系彻底决裂",
+      "艺术造诣虽登峰造极，但毕生颠沛隐遁山林，物质生活受限"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Radical societal withdrawal",
+      "absolute defiance of power guaranteed lifetime monastic poverty and material vulnerability"
+    ]
   },
   {
     "id": "wang_chen",
@@ -4787,7 +7091,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "私生活放荡无度、酗酒成瘾摧毁健康底盘，年仅三十七岁壮年暴毙，断送大好仕途。",
     "weaknessAdviceEn": "Destructive lifestyle and acute alcoholism; physical vessel collapsed at age 37, truncating a stellar career.",
     "historicalQuoteZh": "时人语曰：‘见阿字，觉山川自映发。’《晋书》：忱博学善属文，然好酒荒纵，以此陨命。",
-    "historicalQuoteEn": "Contemporary saying: 'Gazing upon Wang Chen, mountains and rivers seem to shine.' Yet chronic drinking extinguished his life."
+    "historicalQuoteEn": "Contemporary saying: 'Gazing upon Wang Chen, mountains and rivers seem to shine.' Yet chronic drinking extinguished his life.",
+    "auxiliaryStrengthsZh": [
+      "不拘小节大开大合的突击行政魄力",
+      "在突发特大灾难面前敢于越权开仓放粮拯救万民生命"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Bold, decisive crisis governance cutting through red tape",
+      "Emptied state granaries to feed starving millions during catastrophic drought"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "私生活放荡无度、酗酒成瘾摧毁健康底盘",
+      "年仅三十七岁壮年暴毙，断送大好仕途"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Destructive lifestyle and acute alcoholism",
+      "physical vessel collapsed at age 37, truncating a stellar career"
+    ]
   },
   {
     "id": "yin_zhongkan",
@@ -4820,7 +7140,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "以书生软心肠面对狼子野心（桓玄），兵败时犹怀妇人之仁，缺乏在乱世中雷霆诛除政敌的霹雳手段。",
     "weaknessAdviceEn": "Fatal softness against apex predators; treated ruthless warlords with gentlemanly trust, paying with his life and province.",
     "historicalQuoteZh": "仲堪戒子弟曰：‘贫者，士之常也。诸儿见我居此，勿谓我贫！’《晋书》：仲堪善名，然兵败自刎，悲夫！",
-    "historicalQuoteEn": "Instructed his sons: 'Poverty is the natural state of scholars; never forget simplicity.' Book of Jin laments his tragic end."
+    "historicalQuoteEn": "Instructed his sons: 'Poverty is the natural state of scholars; never forget simplicity.' Book of Jin laments his tragic end.",
+    "auxiliaryStrengthsZh": [
+      "令人肃然起敬的一尘不染道德操守",
+      "位居方面大督依然粗茶淡饭节俭爱民，成为千古官德丰碑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immaculate personal incorruptibility and moral gravitas",
+      "Governed massive provincial armies while living on humble gruel as a beacon of virtue"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "以书生软心肠面对狼子野心（桓玄）",
+      "兵败时犹怀妇人之仁，缺乏在乱世中雷霆诛除政敌的霹雳手段"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal softness against apex predators",
+      "treated ruthless warlords with gentlemanly trust, paying with his life and province"
+    ]
   },
   {
     "id": "liu_muzhi",
@@ -4853,7 +7189,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "因常年超负荷消耗心力脑力，暴饮暴食无度，致使身体代谢失衡在刘裕北伐未竞之际猝逝。",
     "weaknessAdviceEn": "Extreme cognitive overload and poor physical lifestyle; sudden death at home derailed Liu Yu's total northern conquest.",
     "historicalQuoteZh": "宋武帝刘裕哭之恸曰：‘穆之不死，天下何愁不定！’《宋书》：才谋总洽，决断如流，江左一人而已。",
-    "historicalQuoteEn": "Emperor Liu Yu wept: 'Had Muzhi lived, conquering the world would have been trivial!' Book of Song: Peerless administrative genius."
+    "historicalQuoteEn": "Emperor Liu Yu wept: 'Had Muzhi lived, conquering the world would have been trivial!' Book of Song: Peerless administrative genius.",
+    "auxiliaryStrengthsZh": [
+      "中国古代政务统筹与多线程并发执行处理能力的最高标杆",
+      "人支撑千军万马后方粮饷军机无一纰漏"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Paramount multi-threaded administrative engine",
+      "Solved endless logistical and political crises simultaneously with unflappable brilliance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "因常年超负荷消耗心力脑力",
+      "暴饮暴食无度，致使身体代谢失衡在刘裕北伐未竞之际猝逝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Extreme cognitive overload and poor physical lifestyle",
+      "sudden death at home derailed Liu Yu's total northern conquest"
+    ]
   },
   {
     "id": "shen_qingzhi",
@@ -4886,7 +7238,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "晚年功高震主，面对暴君宋前废帝刘子业的屠杀威胁缺乏先发制人的政治决断，惨遭毒杀。",
     "weaknessAdviceEn": "Excessive dynastic loyalty; failed to neutralize the psychotic child-emperor Liu Ziye in time, meeting assassination in retirement.",
     "historicalQuoteZh": "庆之谏伐北魏：‘治国伐乱，当与武夫谋，今与白面书生议之，事何由济！’文帝不从，果大败。",
-    "historicalQuoteEn": "His historic warning remains immortal: 'War must be planned with warriors, not white-faced bookworms!' Unheeded, the empire collapsed in blood."
+    "historicalQuoteEn": "His historic warning remains immortal: 'War must be planned with warriors, not white-faced bookworms!' Unheeded, the empire collapsed in blood.",
+    "auxiliaryStrengthsZh": [
+      "以最朴素底层实操真知痛击形而上空谈的高维务实智慧",
+      "深谙真实战场规律，从不被书生幻想所惑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme operational realism shredding academic delusions",
+      "Governed frontline combat with hard empirical truth rather than salon poetry"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年功高震主",
+      "面对暴君宋前废帝刘子业的屠杀威胁缺乏先发制人的政治决断，惨遭毒杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive dynastic loyalty",
+      "failed to neutralize the psychotic child-emperor Liu Ziye in time, meeting assassination in retirement"
+    ]
   },
   {
     "id": "zong_que",
@@ -4919,7 +7287,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "性格粗豪刚直，不擅朝堂细微派系博弈，数度因言语直率遭权贵嫉恨险遭贬黜。",
     "weaknessAdviceEn": "Outspoken and blunt in civil court circles, narrowly escaping factional demotions by staying on remote borders.",
     "historicalQuoteZh": "叔父炳问其志，悫曰：‘愿乘长风破万里浪！’炳曰：‘汝不富贵，即破我门户。’《宋书》良将第一。",
-    "historicalQuoteEn": "Asked his lifelong ambition: 'I wish to ride the great winds and break ten thousand miles of waves!' Leading general in the Book of Song."
+    "historicalQuoteEn": "Asked his lifelong ambition: 'I wish to ride the great winds and break ten thousand miles of waves!' Leading general in the Book of Song.",
+    "auxiliaryStrengthsZh": [
+      "以冲破天际的英雄气魄与出奇制胜的假狮破象战术克敌制胜",
+      "将浪漫志向与狡黠实战谋略完美统一"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Inspiring grand ambition unified with brilliant tactical cunning",
+      "Overcame terrifying elephant phalanxes through psychological warfare inventions"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格粗豪刚直",
+      "不擅朝堂细微派系博弈，数度因言语直率遭权贵嫉恨险遭贬黜"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Outspoken and blunt in civil court circles",
+      "narrowly escaping factional demotions by staying on remote borders"
+    ]
   },
   {
     "id": "wang_xuanmo",
@@ -4952,7 +7336,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "贪恋财帛、赏赐吝啬！在攻坚关键时刻搜刮民财失去基层士气拥戴，导致大好进攻战功败垂成。",
     "weaknessAdviceEn": "Disastrous stinginess and greed; extorted captured populations rather than distributing spoils, destroying army morale at the gates.",
     "historicalQuoteZh": "辛弃疾词云：‘元嘉草草，封狼居胥，赢得仓皇北顾。’玄谟攻滑台积绢万匹不赏，军民怨声载道。",
-    "historicalQuoteEn": "Poet Xin Qiji immortalized his folly: 'Yuanjia marched in haste, dreaming of Wolf Mountain, only to flee panic-stricken to the south.'"
+    "historicalQuoteEn": "Poet Xin Qiji immortalized his folly: 'Yuanjia marched in haste, dreaming of Wolf Mountain, only to flee panic-stricken to the south.'",
+    "auxiliaryStrengthsZh": [
+      "严厉法纪与坚韧不拔的据点防御战力",
+      "在兵败如山倒的危机中总能维持基本框架不灭"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Stubborn fortress grit and iron disciplinary endurance",
+      "Held fortified nodes even after massive macro collapses"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "贪恋财帛、赏赐吝啬",
+      "在攻坚关键时刻搜刮民财失去基层士气拥戴，导致大好进攻战功败垂成"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Disastrous stinginess and greed",
+      "extorted captured populations rather than distributing spoils, destroying army morale at the gates"
+    ]
   },
   {
     "id": "wang_rong",
@@ -4985,7 +7385,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "野心过大而心智极端幼稚！把血腥残酷的政治篡权政变当成写诗作文，缺乏真正军事与情报底盘，断送性命。",
     "weaknessAdviceEn": "Fatal romantic amateurism in bloody coups; treating lethal succession conspiracies like a salon debate led to prompt execution.",
     "historicalQuoteZh": "融每引镜自照曰：‘安陵、龙阳何足道哉！三十不为公辅，非丈夫也！’《南齐书》叹其急功速祸。",
-    "historicalQuoteEn": "Admired himself in mirrors, demanding supreme power before thirty; Book of Southern Qi mourns how hubris invited swift death."
+    "historicalQuoteEn": "Admired himself in mirrors, demanding supreme power before thirty; Book of Southern Qi mourns how hubris invited swift death.",
+    "auxiliaryStrengthsZh": [
+      "惊艳文坛的写作产出速度与敏捷口才",
+      "具备极高社交魅力与组织文化沙龙的凝聚力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Stunning creative output velocity and salon charisma",
+      "A prodigy capable of dictating master manifestos in minutes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "野心过大而心智极端幼稚",
+      "把血腥残酷的政治篡权政变当成写诗作文，缺乏真正军事与情报底盘，断送性命"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal romantic amateurism in bloody coups",
+      "treating lethal succession conspiracies like a salon debate led to prompt execution"
+    ]
   },
   {
     "id": "cao_jingzong",
@@ -5018,7 +7434,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "好赌纵酒、骄横跋扈，胜利后沉溺声色奢华，缺乏韦叡那种厚德载物的深层制度政治修养。",
     "weaknessAdviceEn": "Addicted to gambling and luxury; reckless vanity and vulgar hubris limited his evolution beyond battlefield shock.",
     "historicalQuoteZh": "景宗赋诗曰：‘去来双雀儿，不知命悬掌！’沈约叹曰：‘休文文不如此！’武帝大悦。",
-    "historicalQuoteEn": "His impromptu victory poem astounded literary court masters; Shen Yue admitted his own refined prose lacked Cao's raw vital power."
+    "historicalQuoteEn": "His impromptu victory poem astounded literary court masters; Shen Yue admitted his own refined prose lacked Cao's raw vital power.",
+    "auxiliaryStrengthsZh": [
+      "摧坚陷阵无所畏惧的先锋破局利刃",
+      "战法大开大合，善于在最混乱的战场上抓住敌军枢纽猛插致命一刀"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fierce assault spearhead",
+      "Pierced enemy tactical bottlenecks with overwhelming audacity and frontline naval precision"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "好赌纵酒、骄横跋扈",
+      "胜利后沉溺声色奢华，缺乏韦叡那种厚德载物的深层制度政治修养"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Addicted to gambling and luxury",
+      "reckless vanity and vulgar hubris limited his evolution beyond battlefield shock"
+    ]
   },
   {
     "id": "chen_qingzhi",
@@ -5051,7 +7483,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战略纵深与后方兵员补给彻底断绝，孤军深入洛阳孤立无援，终遭尔朱荣数十万大军合围溃散。",
     "weaknessAdviceEn": "Zero logistical depth and political isolation; overextended into northern heartlands without allied reinforcement, doomed when seasonal floods hit.",
     "historicalQuoteZh": "洛阳童谣曰：‘名师大将莫自牢，千兵万马避白袍！’《梁书》赞其节制整肃，神奇变化。",
-    "historicalQuoteEn": "Luoyang ballad warned: 'No master general can save his ground; thousands of armies must flee the White Gown!'"
+    "historicalQuoteEn": "Luoyang ballad warned: 'No master general can save his ground; thousands of armies must flee the White Gown!'",
+    "auxiliaryStrengthsZh": [
+      "以极度微量杠杆达成百倍史诗级战果的特种战术大师",
+      "战法飘忽如神，专打敌军软肋，百战百胜"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Ultimate asymmetrical warfare prodigy",
+      "Leveraged a tiny elite force through psychological shock and tactical speed to shatter vast armies"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战略纵深与后方兵员补给彻底断绝",
+      "孤军深入洛阳孤立无援，终遭尔朱荣数十万大军合围溃散"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero logistical depth and political isolation",
+      "overextended into northern heartlands without allied reinforcement, doomed when seasonal floods hit"
+    ]
   },
   {
     "id": "zhou_wenyu",
@@ -5084,7 +7532,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "性情过于笃直轻信降将，在兵荒马乱之际缺乏对反复小人的贴身防备，死于宵小偷袭暗算。",
     "weaknessAdviceEn": "Excessive trust in treacherous surrendered officers; murdered in his tent due to lax personal security.",
     "historicalQuoteZh": "陈武帝闻文育死，哭之恸，追赠太尉。《陈书》评：周文育勇冠一时，忠于陈氏，死非其罪。",
-    "historicalQuoteEn": "Emperor Chen Baxian wept bitter tears at his murder; Book of Chen honors him as the empire's bravest founding shield."
+    "historicalQuoteEn": "Emperor Chen Baxian wept bitter tears at his murder; Book of Chen honors him as the empire's bravest founding shield.",
+    "auxiliaryStrengthsZh": [
+      "在草莽微末期与统帅生死相依的基石级悍将",
+      "执行力顶级，水陆丛林作战战无不克"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Foundational battlefield enforcer",
+      "Bound his destiny to his leader from jungle outposts to imperial victory through unmatched loyalty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情过于笃直轻信降将",
+      "在兵荒马乱之际缺乏对反复小人的贴身防备，死于宵小偷袭暗算"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive trust in treacherous surrendered officers",
+      "murdered in his tent due to lax personal security"
+    ]
   },
   {
     "id": "hou_andu",
@@ -5117,7 +7581,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "功高震主第一禁忌！不知道‘天子无友’的残酷现实，酒后狂妄调侃君主权力，亲手将自己送上断头台。",
     "weaknessAdviceEn": "Ultimate hubris of kingmaking! Bragging of putting the emperor on the throne violated imperial sanctity, guaranteeing execution.",
     "historicalQuoteZh": "安都尝戏文帝曰：‘何如作临川王时？’文帝由是忌之。《陈书》评：安都才武绝伦，然功高骄肆，取诛自速。",
-    "historicalQuoteEn": "Jested drunkenly to the Emperor: 'Is being Son of Heaven as fun as your old prince days?' The emperor smiled, then ordered his death."
+    "historicalQuoteEn": "Jested drunkenly to the Emperor: 'Is being Son of Heaven as fun as your old prince days?' The emperor smiled, then ordered his death.",
+    "auxiliaryStrengthsZh": [
+      "在帝国生死存亡危急关头能横刀立马挽狂澜于既倒的超级擎天柱",
+      "具备挽救政权的大无畏魄力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Colossal martial pillar who rescued a dying dynasty multiple times",
+      "Decisive kingmaker who acted with lightning resolve"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "功高震主第一禁忌",
+      "不知道‘天子无友’的残酷现实，酒后狂妄调侃君主权力，亲手将自己送上断头台"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Ultimate hubris of kingmaking",
+      "Bragging of putting the emperor on the throne violated imperial sanctity, guaranteeing execution"
+    ]
   },
   {
     "id": "liu_xie",
@@ -5150,7 +7630,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "终生不求显达仕途，深居寺院甘受冷落，在生前现实世俗权力与财富层面极为微薄。",
     "weaknessAdviceEn": "Total disinterest in material wealth or bureaucratic promotion; lived and died in humble monastic obscurity.",
     "historicalQuoteZh": "沈约读其书，大加赏服，常置之几案。清代章学诚赞曰：‘《文心》体大思精，文章之统宗也。’",
-    "historicalQuoteEn": "Scholar-statesman Shen Yue kept the book perpetually on his desk; Qing historians hailed it as the sovereign fountainhead of criticism."
+    "historicalQuoteEn": "Scholar-statesman Shen Yue kept the book perpetually on his desk; Qing historians hailed it as the sovereign fountainhead of criticism.",
+    "auxiliaryStrengthsZh": [
+      "人穷数十年之功建构一套文明理论体系的旷世定力",
+      "辞约而旨丰，事单而理广，体大思精万代仰止"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unrivaled intellectual architecture",
+      "Dedicated decades of monastic solitude to construct the definitive theoretical bible of literature"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "终生不求显达仕途",
+      "深居寺院甘受冷落，在生前现实世俗权力与财富层面极为微薄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Total disinterest in material wealth or bureaucratic promotion",
+      "lived and died in humble monastic obscurity"
+    ]
   },
   {
     "id": "xiao_zixian",
@@ -5183,7 +7679,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "自恋情结过深，过于沉醉个人风仪与虚荣自赏，在面对重大政治风暴时缺乏底层铁血决断力。",
     "weaknessAdviceEn": "Excessive aristocratic vanity and narcissism; enamored with courtly manners while lacking frontline survival steel.",
     "historicalQuoteZh": "《梁书》载：子显清雅有风度，见者皆耸动。武帝曰：‘子显慢我，亦当自取其美。’撰《南齐书》成一家之言。",
-    "historicalQuoteEn": "Book of Liang: Xiao Zixian walked with such sublime aristocratic poise that even Emperor Wu smiled with indulgence at his pride."
+    "historicalQuoteEn": "Book of Liang: Xiao Zixian walked with such sublime aristocratic poise that even Emperor Wu smiled with indulgence at his pride.",
+    "auxiliaryStrengthsZh": [
+      "以客观良史之笔为前代家族王朝立传树碑的文化担当",
+      "在改朝换代后依然受到新政权极度礼遇"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Preserving the historical soul of one's fallen dynasty with dignity and precision",
+      "winning high office even from rival conquerors"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "自恋情结过深",
+      "过于沉醉个人风仪与虚荣自赏，在面对重大政治风暴时缺乏底层铁血决断力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive aristocratic vanity and narcissism",
+      "enamored with courtly manners while lacking frontline survival steel"
+    ]
   },
   {
     "id": "zhong_rong",
@@ -5216,7 +7728,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "直言不讳得罪大量宫廷权臣与当红文坛大佬，仕途极其逼仄，终生仅沉沦于中下级参军幕僚。",
     "weaknessAdviceEn": "Inflexible candor alienated powerful aristocrats, permanently stunting his civil career in minor secretarial posts.",
     "historicalQuoteZh": "《南史》评：嵘博学有思理，品第群诗，直绳品格，不随流俗，文章法眼也。",
-    "historicalQuoteEn": "History of Southern Dynasties: Zhong Rong was deeply learned; judging poets by timeless merit rather than social rank, he was poetry's golden scale."
+    "historicalQuoteEn": "History of Southern Dynasties: Zhong Rong was deeply learned; judging poets by timeless merit rather than social rank, he was poetry's golden scale.",
+    "auxiliaryStrengthsZh": [
+      "不向权威权贵低头的独立品评与学术鉴赏力",
+      "以无懈可击的标准建立行业坐标系，引领审美潮流"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fearless independent critical judgment",
+      "Established an enduring qualitative coordinate system for poetry that defied contemporary imperial taste"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "直言不讳得罪大量宫廷权臣与当红文坛大佬",
+      "仕途极其逼仄，终生仅沉沦于中下级参军幕僚"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Inflexible candor alienated powerful aristocrats",
+      "permanently stunting his civil career in minor secretarial posts"
+    ]
   },
   {
     "id": "lu_xiujing",
@@ -5249,7 +7777,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "潜心方外秘境，对世俗民生制度的直接改造有限，影响力主要集中在宗教与精神信仰领域。",
     "weaknessAdviceEn": "Focused strictly within the esoteric spiritual sphere, detached from practical civic and economic reform.",
     "historicalQuoteZh": "宋明帝召其入京，筑崇虚馆以居之。《宋书》：修静道行纯备，总括玄旨，道门大宗师也。",
-    "historicalQuoteEn": "Emperor Ming built him the Palace of Lofty Emptiness; Book of Song crowns him as the ultimate grandmaster of Daoist civilization."
+    "historicalQuoteEn": "Emperor Ming built him the Palace of Lofty Emptiness; Book of Song crowns him as the ultimate grandmaster of Daoist civilization.",
+    "auxiliaryStrengthsZh": [
+      "对庞大繁杂信息进行分类、重组与顶层标准建构的百科全书式宗师智慧",
+      "建立千古传世大典体系"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architectural classification of massive civilizational knowledge",
+      "Synthesized disparate esoteric traditions into a standardized national canon"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "潜心方外秘境",
+      "对世俗民生制度的直接改造有限，影响力主要集中在宗教与精神信仰领域"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Focused strictly within the esoteric spiritual sphere",
+      "detached from practical civic and economic reform"
+    ]
   },
   {
     "id": "ge_rong",
@@ -5282,7 +7826,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "乌合之众的虚胖幻觉！数量巨大却缺乏专业阵法训练与防骑兵冲击防火墙，被7000精骑一击穿透直捣中枢擒杀。",
     "weaknessAdviceEn": "Fatal delusion of mere size; massive, undisciplined mobs were easily sliced through by concentrated elite shock cavalry.",
     "historicalQuoteZh": "荣见尔朱荣兵少，狂笑曰：‘此易与耳，吾诸军持绳索反缚之足矣！’《魏书》：葛荣狂狡，自速屠戮。",
-    "historicalQuoteEn": "Seeing Erzhu Rong's small force, Ge Rong laughed: 'Bring ropes to tie them up like cattle!' He was captured minutes later."
+    "historicalQuoteEn": "Seeing Erzhu Rong's small force, Ge Rong laughed: 'Bring ropes to tie them up like cattle!' He was captured minutes later.",
+    "auxiliaryStrengthsZh": [
+      "在阶级矛盾白热化时期引爆底层起义、短时间内聚拢数十万大军的爆发性动员力！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Explosive mass mobilization of disenfranchised frontier legions",
+      "Shattered entrenched imperial armies through sheer numerical momentum"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "乌合之众的虚胖幻觉",
+      "数量巨大却缺乏专业阵法训练与防骑兵冲击防火墙，被7000精骑一击穿透直捣中枢擒杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal delusion of mere size",
+      "massive, undisciplined mobs were easily sliced through by concentrated elite shock cavalry"
+    ]
   },
   {
     "id": "du_luozhou",
@@ -5315,7 +7875,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "政治防谍与反间计谋严重欠缺，引狼入室轻信伪降的葛荣，在自己的大营中被对手斩杀吞并全部资产。",
     "weaknessAdviceEn": "Naive internal political defense; welcomed the treacherous Ge Rong into his camp, paying with his head and his army.",
     "historicalQuoteZh": "《魏书》载：洛周狂乱燕蓟，杀掠无道，葛荣因民怨设计诱杀之，并其部曲。",
-    "historicalQuoteEn": "Book of Wei: Du Luozhou ravished the northern marches with fire and sword until Ge Rong trapped and murdered him."
+    "historicalQuoteEn": "Book of Wei: Du Luozhou ravished the northern marches with fire and sword until Ge Rong trapped and murdered him.",
+    "auxiliaryStrengthsZh": [
+      "敢为人先在铁板一块的专制帝国率先打响第一枪的惊人反叛勇气与煽动力！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Audacious trailblazer courage",
+      "Struck the first revolutionary hammer blow that unraveled Northern Wei's century-old imperial apparatus"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治防谍与反间计谋严重欠缺",
+      "引狼入室轻信伪降的葛荣，在自己的大营中被对手斩杀吞并全部资产"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Naive internal political defense",
+      "welcomed the treacherous Ge Rong into his camp, paying with his head and his army"
+    ]
   },
   {
     "id": "yuan_cheng",
@@ -5348,7 +7924,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "孝文帝死后面对宣武帝、孝明帝朝政日益腐朽，虽极力规谏整肃，已难阻挡北魏国势走下坡路。",
     "weaknessAdviceEn": "Unable to arrest the post-Xiaowen dynastic decay; even his monumental virtue could not prevent the brewing frontier explosion.",
     "historicalQuoteZh": "孝文帝叹曰：‘任城，朕之鲁卫也！社稷安危，在此一人。’《魏书》：澄清身立操，名冠宗英。",
-    "historicalQuoteEn": "Emperor Xiaowen declared: 'Prince Rencheng is my ultimate shield; the empire's survival rests upon his shoulders alone.'"
+    "historicalQuoteEn": "Emperor Xiaowen declared: 'Prince Rencheng is my ultimate shield; the empire's survival rests upon his shoulders alone.'",
+    "auxiliaryStrengthsZh": [
+      "在激进制度变革中力挽狂澜为改革派保驾护航的宗室顶梁柱",
+      "以绝对公心与高洁威望压制内部保守势力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unshakeable royal stabilizer of radical progressive reform",
+      "Shielded modernizing policy from reactionary palace backlashes through sheer personal gravitas"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "孝文帝死后面对宣武帝、孝明帝朝政日益腐朽",
+      "虽极力规谏整肃，已难阻挡北魏国势走下坡路"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unable to arrest the post-Xiaowen dynastic decay",
+      "even his monumental virtue could not prevent the brewing frontier explosion"
+    ]
   },
   {
     "id": "li_biao",
@@ -5381,7 +7973,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "性格过刚必折、不懂政治妥协艺术；把反腐变成个人恩怨之争，与内阁宰相生死撕扯导致两败俱伤。",
     "weaknessAdviceEn": "Abrasive lack of emotional intelligence; escalated procedural disputes into toxic personal warfare with ministerial colleagues.",
     "historicalQuoteZh": "《魏书》评：李彪刚毅深刻，抗衡权戚，朝野肃然。然性躁而忿，以此致败，惜哉！",
-    "historicalQuoteEn": "Book of Wei: Li Biao was austere and terrifying to corrupt lords; yet unmanageable temper and vindictiveness ruined his own fortune."
+    "historicalQuoteEn": "Book of Wei: Li Biao was austere and terrifying to corrupt lords; yet unmanageable temper and vindictiveness ruined his own fortune.",
+    "auxiliaryStrengthsZh": [
+      "敢于对顶级权贵利益集团亮剑的铁血反腐利刃",
+      "以无懈可击的法条和证据撕开任何法外特权之网"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fearless anti-corruption prosecutor cutting through elite oligarchic impunity",
+      "Smashed aristocratic corruption through relentless statutory audit"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格过刚必折、不懂政治妥协艺术",
+      "把反腐变成个人恩怨之争，与内阁宰相生死撕扯导致两败俱伤"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Abrasive lack of emotional intelligence",
+      "escalated procedural disputes into toxic personal warfare with ministerial colleagues"
+    ]
   },
   {
     "id": "wang_su",
@@ -5414,7 +8022,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "沉重的心灵创伤与父仇包袱长期郁结体内，过早耗尽精力心血，年仅三十八岁英年逝去。",
     "weaknessAdviceEn": "Chronic physical consumption from deep familial trauma and overwork; died exhausted at age 38.",
     "historicalQuoteZh": "孝文帝常谓公卿曰：‘王肃入国，如宣尼见老彭，吾所敬重也！’《魏书》：肃文武兼资，典礼备焉。",
-    "historicalQuoteEn": "Emperor Xiaowen declared: 'Gaining Wang Su is like Confucius meeting Laozi; he brought the sacred rites of China to our throne.'"
+    "historicalQuoteEn": "Emperor Xiaowen declared: 'Gaining Wang Su is like Confucius meeting Laozi; he brought the sacred rites of China to our throne.'",
+    "auxiliaryStrengthsZh": [
+      "将南方士族最极致的文明典礼与治理制度成套‘技术转移’到北方游牧政权的跨时代功臣！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of civilizational technology transfer",
+      "Imported centuries of refined southern court etiquette and administrative law to civilize northern rulers"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "沉重的心灵创伤与父仇包袱长期郁结体内",
+      "过早耗尽精力心血，年仅三十八岁英年逝去"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Chronic physical consumption from deep familial trauma and overwork",
+      "died exhausted at age 38"
+    ]
   },
   {
     "id": "gongsun_biao",
@@ -5447,7 +8071,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "嫉贤妒能！试图用低级暗箭中伤真正的天下第一等国士（崔浩），反被最高统治者看穿心机身败名裂。",
     "weaknessAdviceEn": "Fatal professional jealousy; weaponizing backstabbing slanders against a superior genius like Cui Hao invited instant royal wrath.",
     "historicalQuoteZh": "《魏书》评：公孙表筹策多奇，然心胸褊隘，谮毁崔浩，自取灭亡，非智者所为。",
-    "historicalQuoteEn": "Book of Wei: Gongsun Biao was tactically ingenious but small-minded; scheming against Cui Hao, he brought about his own destruction."
+    "historicalQuoteEn": "Book of Wei: Gongsun Biao was tactically ingenious but small-minded; scheming against Cui Hao, he brought about his own destruction.",
+    "auxiliaryStrengthsZh": [
+      "在军事前线洞察敌军行军补给破绽、精准设伏截杀的硬核战术参谋计算力！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Surgical tactical ambush calculation",
+      "Exploited adversary march fatigue and supply delays to execute lethal traps"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "嫉贤妒能",
+      "试图用低级暗箭中伤真正的天下第一等国士（崔浩），反被最高统治者看穿心机身败名裂"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal professional jealousy",
+      "weaponizing backstabbing slanders against a superior genius like Cui Hao invited instant royal wrath"
+    ]
   },
   {
     "id": "xi_juan",
@@ -5480,7 +8120,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "晚年在北魏复杂的宗室权力洗牌中未能彻底站稳政治队形，在残酷的宫廷政治暗流中受牵连遇害。",
     "weaknessAdviceEn": "Lacked court political camouflage; fell victim to palace purges when the ruthless internal succession battles erupted.",
     "historicalQuoteZh": "《魏书》载：奚眷勇烈雄敢，深入漠北，俘斩万计，世祖嘉其忠勇，倚为爪牙。",
-    "historicalQuoteEn": "Book of Wei: Xi Juan was boldly fearless, plunging into deep desert territories to capture tens of thousands; Emperor Taiwu's supreme claw and fang."
+    "historicalQuoteEn": "Book of Wei: Xi Juan was boldly fearless, plunging into deep desert territories to capture tens of thousands; Emperor Taiwu's supreme claw and fang.",
+    "auxiliaryStrengthsZh": [
+      "在大纵深荒漠草原进行极限狂飙突击的超级机动兵团统帅力",
+      "行军神速，出其不意攻其不备"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Grand steppe operational mobility",
+      "Executed lightning cavalry maneuvers across waterless wastelands to shatter enemy bastions"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年在北魏复杂的宗室权力洗牌中未能彻底站稳政治队形",
+      "在残酷的宫廷政治暗流中受牵连遇害"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked court political camouflage",
+      "fell victim to palace purges when the ruthless internal succession battles erupted"
+    ]
   },
   {
     "id": "yuchi_guduo",
@@ -5513,7 +8169,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "职责仅限于保卫中枢与服从指令，不具备主动提出宏观顶层治国大政方针的政治开创格局。",
     "weaknessAdviceEn": "Confined strictly to military guard duty; lacked independent civil vision or grand statecraft initiatives.",
     "historicalQuoteZh": "《魏书》赞：尉迟古拔恪勤宿卫，历事三帝，纯固如铁，社稷之金汤也。",
-    "historicalQuoteEn": "Book of Wei: Yuchi Guba guarded the palaces through three emperors, true as cast iron, a living fortress of the imperial realm."
+    "historicalQuoteEn": "Book of Wei: Yuchi Guba guarded the palaces through three emperors, true as cast iron, a living fortress of the imperial realm.",
+    "auxiliaryStrengthsZh": [
+      "作为‘统帅护城河’最高典范的绝对可靠性",
+      "数十载如一日严守安全底线，赢得历代最高领袖生死托付"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme standard of the executive security ballast",
+      "Absolute reliability over decades earned total imperial reliance during life-and-death crises"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "职责仅限于保卫中枢与服从指令",
+      "不具备主动提出宏观顶层治国大政方针的政治开创格局"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Confined strictly to military guard duty",
+      "lacked independent civil vision or grand statecraft initiatives"
+    ]
   },
   {
     "id": "lu_xuan",
@@ -5546,7 +8218,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "以家族门第延续为第一优先考量，对现实皇权的倒行逆施采取隐忍自保姿态，缺乏雷霆对抗的公义决绝。",
     "weaknessAdviceEn": "Family preservation trumped broader public reform; accommodated royal excesses to guarantee clan survival.",
     "historicalQuoteZh": "崔浩常称叹曰：‘卢玄才通政术，德重人伦，真经国之器也！’《魏书》冠儒学传首位。",
-    "historicalQuoteEn": "Cui Hao praised him: 'Lu Xuan possesses towering statecraft and moral perfection, a true pillar of civilization.'"
+    "historicalQuoteEn": "Cui Hao praised him: 'Lu Xuan possesses towering statecraft and moral perfection, a true pillar of civilization.'",
+    "auxiliaryStrengthsZh": [
+      "打造跨越王朝更迭延续数百年‘百年家族长青企业’的家族治理与文化护城河架构力！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architect of multigenerational cultural immortality",
+      "Built clan governance codes that survived regime overthrows across half a millennium"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "以家族门第延续为第一优先考量",
+      "对现实皇权的倒行逆施采取隐忍自保姿态，缺乏雷霆对抗的公义决绝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Family preservation trumped broader public reform",
+      "accommodated royal excesses to guarantee clan survival"
+    ]
   },
   {
     "id": "zheng_xi",
@@ -5579,7 +8267,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "私德有亏、爱财纳贿，在位期间曾因生活奢靡受贿遭到朝廷御史李彪严词弹劾，晚节有损。",
     "weaknessAdviceEn": "Laxity in private financial integrity; censured by court prosecutors for accepting lavish gifts from local gentry.",
     "historicalQuoteZh": "康有为评《郑文公碑》：‘通篇骨法坚劲，如金石铿锵，魏碑之神圣也！’《魏书》：羲善文章，有文誉。",
-    "historicalQuoteEn": "Kang Youwei marveled at Zheng's stele: 'Iron bones forged in stone, ringing like bronze bells—the divine peak of Wei calligraphy!'"
+    "historicalQuoteEn": "Kang Youwei marveled at Zheng's stele: 'Iron bones forged in stone, ringing like bronze bells—the divine peak of Wei calligraphy!'",
+    "auxiliaryStrengthsZh": [
+      "借血脉后代之顶级艺术创作让自己名字永载人类石刻艺术青史的奇绝文化赋能！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immortalized on sacred cliff inscriptions through generational devotion",
+      "his monumental stele defined the majestic soul of Wei calligraphy"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "私德有亏、爱财纳贿",
+      "在位期间曾因生活奢靡受贿遭到朝廷御史李彪严词弹劾，晚节有损"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Laxity in private financial integrity",
+      "censured by court prosecutors for accepting lavish gifts from local gentry"
+    ]
   },
   {
     "id": "jia_si_bo",
@@ -5612,7 +8316,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "面对六镇起义前夕腐朽黑暗的社会总危机缺乏雷霆霹雳手段，只能在局部个案上施以道德抚慰。",
     "weaknessAdviceEn": "Limited to individual judicial mercy; powerless against the systemic structural rot consuming late Northern Wei.",
     "historicalQuoteZh": "《魏书》赞：贾思伯温恭笃友，器识淹通，掌大理而无滥狱，居重位而家无儋石，清贤之士也。",
-    "historicalQuoteEn": "Book of Wei: Jia Sibo was gentle and brotherly; administering supreme justice without wrongful executions, he died in voluntary poverty."
+    "historicalQuoteEn": "Book of Wei: Jia Sibo was gentle and brotherly; administering supreme justice without wrongful executions, he died in voluntary poverty.",
+    "auxiliaryStrengthsZh": [
+      "以仁爱平反冤狱、以纯儒学识教导君主的司法良心",
+      "散尽万贯家财济贫，构筑无上公信力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Merciful justice that clears wrongful convictions",
+      "Donated his entire fortune to the poor, earning unassailable moral stature"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对六镇起义前夕腐朽黑暗的社会总危机缺乏雷霆霹雳手段",
+      "只能在局部个案上施以道德抚慰"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Limited to individual judicial mercy",
+      "powerless against the systemic structural rot consuming late Northern Wei"
+    ]
   },
   {
     "id": "yuan_xie",
@@ -5645,7 +8365,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "把纯粹的叔侄亲情幻想带入血腥皇权斗争；明知侄儿宣武帝猜忌日深仍不肯领兵外逃自立，以死明志饮恨鸩酒。",
     "weaknessAdviceEn": "Naive belief in royal family affection; refused to rebel or flee when royal paranoia escalated, meekly drinking poisoned wine.",
     "historicalQuoteZh": "临终饮鸩叹曰：‘吾生何辜，而罹此祸！普天之下，安得忠臣！’《魏书》评其文雅高远，一代名王。",
-    "historicalQuoteEn": "Dying lament upon drinking poison: 'What crime have I committed? Across all heaven, where can a loyal servant find sanctuary!'"
+    "historicalQuoteEn": "Dying lament upon drinking poison: 'What crime have I committed? Across all heaven, where can a loyal servant find sanctuary!'",
+    "auxiliaryStrengthsZh": [
+      "在最高统帅突然陨落的千钧一发之际秘不发丧、从容稳定军心江山的卓越辅政定力！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of crisis succession control",
+      "Concealed the emperor's battlefield demise to execute a flawless transition without bloodshed"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "把纯粹的叔侄亲情幻想带入血腥皇权斗争",
+      "明知侄儿宣武帝猜忌日深仍不肯领兵外逃自立，以死明志饮恨鸩酒"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Naive belief in royal family affection",
+      "refused to rebel or flee when royal paranoia escalated, meekly drinking poisoned wine"
+    ]
   },
   {
     "id": "diao_yong",
@@ -5678,7 +8414,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "毕生专注地方工程与边镇屯田，在中央朝廷核心权力权力博弈场中的发言权相对边缘化。",
     "weaknessAdviceEn": "Confined to frontier public works, lacking direct influence over the high-stakes political decisions in Luoyang.",
     "historicalQuoteZh": "《魏书》评：刁雍通晓地理水脉，凿渠兴灌，漕运通利，北边蒙其惠，民赞神功。",
-    "historicalQuoteEn": "Book of Wei: Diao Yong possessed profound insight into waterways, carving canals that turned desert sands into blooming granaries."
+    "historicalQuoteEn": "Book of Wei: Diao Yong possessed profound insight into waterways, carving canals that turned desert sands into blooming granaries.",
+    "auxiliaryStrengthsZh": [
+      "在荒芜不毛之地依靠大型水利基建与漕运水网重构地缘经济命脉的超级工程基建大师！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Transforming barren wastelands into agricultural empires through master civil engineering and Yellow River grain transport!",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "毕生专注地方工程与边镇屯田",
+      "在中央朝廷核心权力权力博弈场中的发言权相对边缘化"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Confined to frontier public works",
+      "lacking direct influence over the high-stakes political decisions in Luoyang"
+    ]
   },
   {
     "id": "cui_guang",
@@ -5711,7 +8463,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "面对胡太后荒淫政乱与北魏末年大厦将倾的灾难，为保全自身不敢奋力诤谏，终成‘伴食太师’。",
     "weaknessAdviceEn": "Prioritized personal survival over bold national salvation; kept silent during palace corruption to safeguard his tenure.",
     "historicalQuoteZh": "《魏书》赞：崔光内明智略，外顺风规，历事四朝，不倾不危，纯谨之士，古之良史也。",
-    "historicalQuoteEn": "Book of Wei: Cui Guang was brilliant within and accommodating without; surviving four chaotic reigns unscathed, he was a model of prudent wisdom."
+    "historicalQuoteEn": "Book of Wei: Cui Guang was brilliant within and accommodating without; surviving four chaotic reigns unscathed, he was a model of prudent wisdom.",
+    "auxiliaryStrengthsZh": [
+      "在腥风血雨的四朝改弦易辙中做到‘零差错、零把柄、零树敌’的顶级生存明哲保身艺术！",
+      "善于发挥自身核心优势穿透迷局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Flawless operational defense across four bloody regimes",
+      "Zero mistakes, zero factional enmity, and total scholarly authority"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对胡太后荒淫政乱与北魏末年大厦将倾的灾难",
+      "为保全自身不敢奋力诤谏，终成‘伴食太师’"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Prioritized personal survival over bold national salvation",
+      "kept silent during palace corruption to safeguard his tenure"
+    ]
   },
   {
     "id": "li_hu",
@@ -5744,7 +8512,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "英年早逝未能亲睹关陇集团最终混一南北，生前征战过于劳瘁致使寿命受限。",
     "weaknessAdviceEn": "Died prematurely from prolonged battlefield exhaustion before witnessing the ultimate imperial unification achieved by his progeny.",
     "historicalQuoteZh": "《周书》本传赞：李虎少有大志，倜傥不群，文武兼资，与宇文泰协规大业，入统宿卫，出总元戎，功参八柱，庆流百代。",
-    "historicalQuoteEn": "Book of Zhou: Li Hu possessed colossal ambition and towering martial prowess; uniting with Yuwen Tai to forge the Eight Pillars, his glory flowed to birth the golden Tang."
+    "historicalQuoteEn": "Book of Zhou: Li Hu possessed colossal ambition and towering martial prowess; uniting with Yuwen Tai to forge the Eight Pillars, his glory flowed to birth the golden Tang.",
+    "auxiliaryStrengthsZh": [
+      "以铁血军功与宗族声望奠定百年帝国基石的开宗元勋风范",
+      "善于在关键历史十字路口站队最能成事的主线领袖（宇文泰），以八柱国之尊构筑不可撼动的关陇豪门底盘"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Paramount founding architect whose military and clan legacy seeded the Tang Empire",
+      "Aligned with the winning strategic partner (Yuwen Tai) to entrench his house as the supreme military aristocracy of China"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "英年早逝未能亲睹关陇集团最终混一南北",
+      "生前征战过于劳瘁致使寿命受限"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Died prematurely from prolonged battlefield exhaustion before witnessing the ultimate imperial unification achieved by his progeny.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "li_bi",
@@ -5777,7 +8561,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战场突击极其暴烈凶险，每每亲身陷阵与死神擦肩而过，在战后家族内部继承与政略平衡上略逊于于谨。",
     "weaknessAdviceEn": "Repeatedly gambled personal survival on razor-edge battlefield charges; slightly less adept at quiet bureaucratic survival than Yu Jin.",
     "historicalQuoteZh": "沙苑战胜，宇文泰握弼手曰：‘公真吾之韩信也！’《周书》八柱国名将，首推李弼之勇烈。",
-    "historicalQuoteEn": "Yuwen Tai grasped his hands in tears after Shayuan: 'You are my Han Xin!' Book of Zhou crowns his battlefield valor supreme among the Eight Pillars."
+    "historicalQuoteEn": "Yuwen Tai grasped his hands in tears after Shayuan: 'You are my Han Xin!' Book of Zhou crowns his battlefield valor supreme among the Eight Pillars.",
+    "auxiliaryStrengthsZh": [
+      "以几十骑微型奇兵刺破数十万大军中枢的顶级突击穿透力",
+      "善于在绝对绝境中找出对手最脆弱的衔接缝隙一击致命"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Lethal surgical shock assault",
+      "Decapitated an army of 200,000 with 60 hidden shock riders by exploiting battlefield overconfidence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战场突击极其暴烈凶险",
+      "每每亲身陷阵与死神擦肩而过，在战后家族内部继承与政略平衡上略逊于于谨"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Repeatedly gambled personal survival on razor-edge battlefield charges",
+      "slightly less adept at quiet bureaucratic survival than Yu Jin"
+    ]
   },
   {
     "id": "zhao_gui",
@@ -5810,7 +8610,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "密谋夺权时缺乏绝对保密防火墙与闪电执行力，过于相信同谋独孤信等人，导致机密外泄反遭宇文护反杀诛灭。",
     "weaknessAdviceEn": "Fatal hesitation and leak in counter-coup execution; trusting hesitant co-conspirators allowed tyrant Yuwen Hu to strike first.",
     "historicalQuoteZh": "《周书》评：赵贵首建大谋，迎奉黑獭（宇文泰），定策关中，八柱之任，功勋盖世，然死于权臣之手，悲夫！",
-    "historicalQuoteEn": "Book of Zhou: Zhao Gui initiated the grand coalition that made Yuwen Tai master of the West; his tragic execution by usurper Yuwen Hu remains deeply mourned."
+    "historicalQuoteEn": "Book of Zhou: Zhao Gui initiated the grand coalition that made Yuwen Tai master of the West; his tragic execution by usurper Yuwen Hu remains deeply mourned.",
+    "auxiliaryStrengthsZh": [
+      "在三军无主崩溃边缘力挽狂澜拥立真正领袖的开国首功决断力",
+      "眼光毒辣，敢作敢当"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme kingmaking resolve in total vacuum",
+      "Rode through enemy lines to hand command to Yuwen Tai, forging an empire"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "密谋夺权时缺乏绝对保密防火墙与闪电执行力",
+      "过于相信同谋独孤信等人，导致机密外泄反遭宇文护反杀诛灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal hesitation and leak in counter-coup execution",
+      "trusting hesitant co-conspirators allowed tyrant Yuwen Hu to strike first"
+    ]
   },
   {
     "id": "yu_jin",
@@ -5843,7 +8659,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在江陵破城后未能阻止西魏军团对南梁文教图书典籍的焚毁与贵族军民的野蛮瓜分，留下历史浩劫。",
     "weaknessAdviceEn": "Failed to prevent the tragic burning of 140,000 ancient imperial library scrolls during the sack of Jiangling.",
     "historicalQuoteZh": "宇文泰常谓诸将曰：‘于公，吾之蓍龟也！有疑必决。’《周书》：谨深沉有识略，名冠柱国。",
-    "historicalQuoteEn": "Yuwen Tai praised him: 'Lord Yu is my living oracle—whenever in doubt, he reveals the path.' Premier pillar of Zhou glory."
+    "historicalQuoteEn": "Yuwen Tai praised him: 'Lord Yu is my living oracle—whenever in doubt, he reveals the path.' Premier pillar of Zhou glory.",
+    "auxiliaryStrengthsZh": [
+      "出则为方面统帅灭一国（灭梁），入则为庙堂三公定国策的‘文武双绝第一谋相’",
+      "深谙进退自保之道"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sovereign dual mastery of continental warfare and imperial statecraft",
+      "Conquered rival empires abroad while anchoring domestic succession in peace"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在江陵破城后未能阻止西魏军团对南梁文教图书典籍的焚毁与贵族军民的野蛮瓜分",
+      "留下历史浩劫"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to prevent the tragic burning of 140",
+      "000 ancient imperial library scrolls during the sack of Jiangling"
+    ]
   },
   {
     "id": "houmochen_chong",
@@ -5876,7 +8708,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "祸从口出！身为最高军政八柱国之一，在残暴摄政王（宇文护）眼线下妄议宫廷夺权预言，招致灭顶之灾逼令自裁。",
     "weaknessAdviceEn": "Fatal indiscretion in speech; whispered political prophecies in a surveillance police state, provoking tyrant Yuwen Hu to surround his home.",
     "historicalQuoteZh": "十三岁临阵刺丑奴，天下咸骇。《周书》赞其：沉勇有断，骁捷无双，然言不由衷，死非其咎。",
-    "historicalQuoteEn": "Shocked all China by slaying rebel chieftains at 15; Book of Zhou praises his raw valor while mourning his tragic end from careless words."
+    "historicalQuoteEn": "Shocked all China by slaying rebel chieftains at 15; Book of Zhou praises his raw valor while mourning his tragic end from careless words.",
+    "auxiliaryStrengthsZh": [
+      "自少年即展现摧锋拔寨、单骑生擒敌酋的天赐武力与冲锋气魄",
+      "战阵之上永不言败"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Inborn shock assault fearlessness from boyhood",
+      "Capable of turning entire battles by assassinating enemy commanders in open field"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "祸从口出",
+      "身为最高军政八柱国之一，在残暴摄政王（宇文护）眼线下妄议宫廷夺权预言，招致灭顶之灾逼令自裁"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal indiscretion in speech",
+      "whispered political prophecies in a surveillance police state, provoking tyrant Yuwen Hu to surround his home"
+    ]
   },
   {
     "id": "yuan_xin",
@@ -5909,7 +8757,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "完全沦为关陇集团的吉祥物与牌坊，对北魏拓跋皇权被宇文氏最终篡夺无可奈何任人宰割。",
     "weaknessAdviceEn": "Pure ceremonial figurehead; helpless to prevent his imperial dynasty from being formally usurped by the Yuwen clan.",
     "historicalQuoteZh": "《周书》评：元欣宗室重器，居八柱之右，谦冲寡营，声犬自乐，宇文敬而全之，此长守富贵之术也。",
-    "historicalQuoteEn": "Book of Zhou: Yuan Xin stood atop the Eight Pillars yet cultivated humble harmlessness; Yuwen Tai revered and protected him for life."
+    "historicalQuoteEn": "Book of Zhou: Yuan Xin stood atop the Eight Pillars yet cultivated humble harmlessness; Yuwen Tai revered and protected him for life.",
+    "auxiliaryStrengthsZh": [
+      "在权臣当道时代以‘主动装糊涂、绝不抓兵权’实现全宗族平安的大智慧",
+      "不争即是争，保全一门富贵"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Strategic abdication of dangerous operational power",
+      "Disarmed suspicious military dictators by deliberately refusing command while retaining supreme social honor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "完全沦为关陇集团的吉祥物与牌坊",
+      "对北魏拓跋皇权被宇文氏最终篡夺无可奈何任人宰割"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pure ceremonial figurehead",
+      "helpless to prevent his imperial dynasty from being formally usurped by the Yuwen clan"
+    ]
   },
   {
     "id": "heba_sheng",
@@ -5942,7 +8806,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "子女家人留在敌国沦为人质，缺乏撤离保护机制；承受不住全家被杀的剧烈情感撕裂，郁愤暴毙。",
     "weaknessAdviceEn": "Failed to extract his children from enemy territory; the slaughter of his family broke his invincible spirit into fatal depression.",
     "historicalQuoteZh": "胜刺高欢马，欢惊走叹曰：‘今日几死于贺拔破胡之手！’《周书》：贺拔胜雄烈绝人，悲怀以没。",
-    "historicalQuoteEn": "Gao Huan shuddered after his narrow escape: 'Today I was within half an inch of death by Heba Sheng's spear!'"
+    "historicalQuoteEn": "Gao Huan shuddered after his narrow escape: 'Today I was within half an inch of death by Heba Sheng's spear!'",
+    "auxiliaryStrengthsZh": [
+      "千军万马中单骑斩将、差半寸改写整个中国历史的极致突击力",
+      "武艺之精湛冠绝南北朝"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Heroic shock assault that came within inches of altering Chinese history forever",
+      "Possessed peerless cavalry lance mastery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "子女家人留在敌国沦为人质，缺乏撤离保护机制",
+      "承受不住全家被杀的剧烈情感撕裂，郁愤暴毙"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to extract his children from enemy territory",
+      "the slaughter of his family broke his invincible spirit into fatal depression"
+    ]
   },
   {
     "id": "gao_aocao",
@@ -5975,7 +8855,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "骄狂自负、轻敌冒进！在战场上狂傲脱离主力阵线孤军深入，被友军妒忌拒关不纳，惨遭重兵围杀。",
     "weaknessAdviceEn": "Fatal vanity and arrogant isolation; rode far ahead of his supply lines and was locked out of river fortresses by envious allies to die.",
     "historicalQuoteZh": "临终仰天大呼：‘来！乞汝开国公！’引颈受刃。《北齐书》：敖曹勇冠当时，真霸王之俦也。",
-    "historicalQuoteEn": "Surrounded, yelled to enemy spearmen: 'Come take my head and claim your dukedom!' Book of Northern Qi compares him to Xiang Yu."
+    "historicalQuoteEn": "Surrounded, yelled to enemy spearmen: 'Come take my head and claim your dukedom!' Book of Northern Qi compares him to Xiang Yu.",
+    "auxiliaryStrengthsZh": [
+      "凭借一身不可思议的冷兵器格斗杀伤力迫使最高统治者低头膜拜的硬汉人格",
+      "霸气横溢所向披靡"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unadulterated warrior majesty that forced imperial conquerors to defer to his command",
+      "Absolute mastery of heavy cavalry shock"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "骄狂自负、轻敌冒进",
+      "在战场上狂傲脱离主力阵线孤军深入，被友军妒忌拒关不纳，惨遭重兵围杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal vanity and arrogant isolation",
+      "rode far ahead of his supply lines and was locked out of river fortresses by envious allies to die"
+    ]
   },
   {
     "id": "duan_shao",
@@ -6008,7 +8904,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "为北齐暴虐昏庸君主（如高洋、高湛）尽忠效力，虽能打胜仗，却无力扭转皇族内部残暴自毁的深层体制弊病。",
     "weaknessAdviceEn": "Tethered his genius to a degenerate ruling dynasty; battlefield victories merely postponed Northern Qi's inevitable internal self-destruction.",
     "historicalQuoteZh": "《北齐书》赞：段韶经纶大略，出将入相，忠勤克己，算无遗策，实北齐柱石之第一人也。",
-    "historicalQuoteEn": "Book of Northern Qi: Duan Shao was supreme in strategic vision and civic duty; undefeated in field battle, he was Northern Qi's greatest son."
+    "historicalQuoteEn": "Book of Northern Qi: Duan Shao was supreme in strategic vision and civic duty; undefeated in field battle, he was Northern Qi's greatest son.",
+    "auxiliaryStrengthsZh": [
+      "将冷静理性战术推演发挥到极致的一生不败之神",
+      "善于以严整阵型消解强敌狂暴冲击，反手破敌中枢"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Mathematical strategic composure",
+      "Defeated the fiercest Guanlong shock armies by absorbing their charge with disciplined infantry phalanxes before striking"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "为北齐暴虐昏庸君主（如高洋、高湛）尽忠效力",
+      "虽能打胜仗，却无力扭转皇族内部残暴自毁的深层体制弊病"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Tethered his genius to a degenerate ruling dynasty",
+      "battlefield victories merely postponed Northern Qi's inevitable internal self-destruction"
+    ]
   },
   {
     "id": "wang_sizheng",
@@ -6041,7 +8953,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "孤城死守缺乏外援接应，在敌军利用大自然水攻决堤时缺乏机动转移方案，终陷孤军覆没。",
     "weaknessAdviceEn": "Overly wedded to fixed static positions; vulnerable when opponents weaponized hydro-engineering to drown his fortress.",
     "historicalQuoteZh": "城破，思政仰天号恸，欲自杀，部将抱持之。高澄降阶执手礼敬。《周书》忠烈第一。",
-    "historicalQuoteEn": "Book of Zhou: Wang Sizheng wept as the walls flooded, seeking suicide; captor Gao Cheng descended the dais to bow to his peerless integrity."
+    "historicalQuoteEn": "Book of Zhou: Wang Sizheng wept as the walls flooded, seeking suicide; captor Gao Cheng descended the dais to bow to his peerless integrity.",
+    "auxiliaryStrengthsZh": [
+      "以血肉筑起不可逾越坚固堡垒的终极防守大师",
+      "善于化劣势为死地，以难以想象的意志消耗强敌数十万主力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of siege defense and architectural fortification",
+      "Pinned down massive invasion armies for an entire year through unshakeable fortitude"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "孤城死守缺乏外援接应",
+      "在敌军利用大自然水攻决堤时缺乏机动转移方案，终陷孤军覆没"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly wedded to fixed static positions",
+      "vulnerable when opponents weaponized hydro-engineering to drown his fortress"
+    ]
   },
   {
     "id": "shi_wansui",
@@ -6074,7 +9002,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "不懂政治防波堤与向上管理，被阴险毒辣的同僚（杨素）借皇帝猜忌借刀杀人，当殿屈死冤绝人寰。",
     "weaknessAdviceEn": "Zero defensive political intelligence; outmaneuvered by the cunning prime minister Yang Su, murdered in cold blood on the palace floor.",
     "historicalQuoteZh": "突厥问曰：‘隋将为谁？’答曰：‘史万岁。’突厥咸失色奔遁。《隋书》：万岁善抚士卒，死之日，三军莫不流涕。",
-    "historicalQuoteEn": "When steppe riders heard his name, they fled in terror. Book of Sui notes that on the day of his murder, all soldiers wept."
+    "historicalQuoteEn": "When steppe riders heard his name, they fled in terror. Book of Sui notes that on the day of his murder, all soldiers wept.",
+    "auxiliaryStrengthsZh": [
+      "人之名威震敌国万骑的无敌战神气魄",
+      "临阵身先士卒爱兵如子，能让三军为其效死"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Colossal martial aura that dispersed enemy armies by his mere name",
+      "Won absolute devotion from troops by sharing every battlefield privation"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "不懂政治防波堤与向上管理",
+      "被阴险毒辣的同僚（杨素）借皇帝猜忌借刀杀人，当殿屈死冤绝人寰"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero defensive political intelligence",
+      "outmaneuvered by the cunning prime minister Yang Su, murdered in cold blood on the palace floor"
+    ]
   },
   {
     "id": "li_delin",
@@ -6107,7 +9051,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "恃才自傲、言语抗直，在内阁中与高颎、苏威等形成尖锐同行相轻竞争，晚年被联手排挤出中枢。",
     "weaknessAdviceEn": "Academic pride and abrasive self-righteousness alienated cabinet peers, leaving him politically isolated in old age.",
     "historicalQuoteZh": "隋文帝叹曰：‘李德林之文，无双之才也！’《隋书》评：德林辞学渊富，宪章大定，社稷文章之宗。",
-    "historicalQuoteEn": "Emperor Wen praised: 'Li Delin's prose and legal mind are without peer!' Book of Sui celebrates him as the father of Sui civil codes."
+    "historicalQuoteEn": "Emperor Wen praised: 'Li Delin's prose and legal mind are without peer!' Book of Sui celebrates him as the father of Sui civil codes.",
+    "auxiliaryStrengthsZh": [
+      "以大仁慈与极高法典专业度洗刷乱世酷刑的宪章文明巨匠",
+      "以法治规范皇权，泽被后世百代"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Constitutional reformer who humanized penal law",
+      "Abolished barbaric tortures to establish the civilized foundational code for Sui and Tang dynasties"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "恃才自傲、言语抗直",
+      "在内阁中与高颎、苏威等形成尖锐同行相轻竞争，晚年被联手排挤出中枢"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Academic pride and abrasive self-righteousness alienated cabinet peers",
+      "leaving him politically isolated in old age"
+    ]
   },
   {
     "id": "niu_hong",
@@ -6140,7 +9100,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "为人过度宽退谦忍，在乱世纷争或残酷宫廷博弈中缺乏雷霆进攻手段，唯以守正防身。",
     "weaknessAdviceEn": "Ultra-passive forbearance; avoided conflict to a fault, leaving frontline political battles entirely to aggressive courtiers.",
     "historicalQuoteZh": "隋文帝叹曰：‘大笃厚人也！’《隋书》评其：牛弘宽裕纯和，以仁恕称，聚书兴学，功格区宇。",
-    "historicalQuoteEn": "Emperor Wen marvelled: 'A soul of purest magnanimity!' Book of Sui: His salvation of ancient literature blessed all generations."
+    "historicalQuoteEn": "Emperor Wen marvelled: 'A soul of purest magnanimity!' Book of Sui: His salvation of ancient literature blessed all generations.",
+    "auxiliaryStrengthsZh": [
+      "以一己之智拯救整个华夏典籍文明于灰烬之中的文化救世主",
+      "心宽似海，任何外界冒犯皆波澜不惊"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Cultural savior who rescued the ancient Chinese library from the ashes of 300 years of war",
+      "Superhuman emotional equanimity and patience"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "为人过度宽退谦忍",
+      "在乱世纷争或残酷宫廷博弈中缺乏雷霆进攻手段，唯以守正防身"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Ultra-passive forbearance",
+      "avoided conflict to a fault, leaving frontline political battles entirely to aggressive courtiers"
+    ]
   },
   {
     "id": "su_wei",
@@ -6173,7 +9149,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "隋炀帝继位后未能坚守早年骨鲠正道，在炀帝好大喜功与三征高句丽浪潮中数度妥协附和以保余年。",
     "weaknessAdviceEn": "Compromised his principles under Emperor Yang's megalomania, pandering to disastrous foreign wars to save his neck in old age.",
     "historicalQuoteZh": "隋文帝谓群臣曰：‘苏威之清正，朝廷之领袖也！’《隋书》评：苏威识识优纯，辅相开皇，功绩茂焉。",
-    "historicalQuoteEn": "Emperor Wen praised: 'Su Wei's purity of office makes him the moral leader of my court!' A foundational prime minister of Sui."
+    "historicalQuoteEn": "Emperor Wen praised: 'Su Wei's purity of office makes him the moral leader of my court!' A foundational prime minister of Sui.",
+    "auxiliaryStrengthsZh": [
+      "两代名臣代际传承的专业顶层设计能力",
+      "善于将父辈的理论制度落地为全国性庞大治理体系"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Generational master of statecraft",
+      "Converted familial administrative theory into practical empire-wide fiscal prosperity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "隋炀帝继位后未能坚守早年骨鲠正道",
+      "在炀帝好大喜功与三征高句丽浪潮中数度妥协附和以保余年"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Compromised his principles under Emperor Yang's megalomania",
+      "pandering to disastrous foreign wars to save his neck in old age"
+    ]
   },
   {
     "id": "yang_hu",
@@ -6206,7 +9198,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过度温良可能在急难险情中缺乏霹雳杀伐手段，需配合铁血战将作为互补执行手。",
     "weaknessAdviceEn": "Unbounded gentleness risks lacking tactical ferocity in sudden crises; partner with ruthless executive vanguards to enforce results.",
     "historicalQuoteZh": "《晋书》评：祜历职二纪，保釐南服，化被胡汉，身没之日，江汉之间望其碑而堕泪者相继。",
-    "historicalQuoteEn": "Book of Jin: Yang Hu guarded the southern marches for decades; on the day he departed, commoners wept profusely gazing upon his monument."
+    "historicalQuoteEn": "Book of Jin: Yang Hu guarded the southern marches for decades; on the day he departed, commoners wept profusely gazing upon his monument.",
+    "auxiliaryStrengthsZh": [
+      "以长线的制度善意与不可撼动的信誉构筑道德制高点",
+      "让竞争对手不战而折服"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Build insurmountable moral and strategic high ground through relentless institutional goodwill",
+      "disarming competitors through honor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过度温良可能在急难险情中缺乏霹雳杀伐手段",
+      "需配合铁血战将作为互补执行手"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unbounded gentleness risks lacking tactical ferocity in sudden crises",
+      "partner with ruthless executive vanguards to enforce results"
+    ]
   },
   {
     "id": "du_yu",
@@ -6239,7 +9247,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "不擅骑射却统领大军，常遭守旧武将讥诮；需以无可争辩的运筹帷幄胜绩确立指挥中枢。",
     "weaknessAdviceEn": "Physical or technical nontraditional traits invite peer skepticism; silence doubt through undeniable logistical and tactical triumphs.",
     "historicalQuoteZh": "《晋书》评：杜预博学多通，朝野称其‘武库’，顺流长驱，吴寇摧崩，破竹之功照耀简策。",
-    "historicalQuoteEn": "Book of Jin: Du Yu was revered across the realm as an 'Omniscient Armory'; his victorious surge shattered Wu like split bamboo."
+    "historicalQuoteEn": "Book of Jin: Du Yu was revered across the realm as an 'Omniscient Armory'; his victorious surge shattered Wu like split bamboo.",
+    "auxiliaryStrengthsZh": [
+      "将跨学科通才学识与关键战役的雷霆执行力融为一体",
+      "蓄势已久则破竹而下"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Synthesize multidisciplinary polymath knowledge with lightning execution when strategic momentum tilts favorably.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "不擅骑射却统领大军，常遭守旧武将讥诮",
+      "需以无可争辩的运筹帷幄胜绩确立指挥中枢"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Physical or technical nontraditional traits invite peer skepticism",
+      "silence doubt through undeniable logistical and tactical triumphs"
+    ]
   },
   {
     "id": "shi_chong",
@@ -6272,7 +9296,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "财富极度招摇且深度卷入派系政治，不知‘财不露白’与全身远害，终致杀身灭门。",
     "weaknessAdviceEn": "Ostentatious wealth flaunting without sovereign political protection inevitably triggers catastrophic expropriation and destruction.",
     "historicalQuoteZh": "《世说新语》记：崇以铁如意击珊瑚树，应手碎落；及就戮，叹曰：‘奴辈利吾财耳！’",
-    "historicalQuoteEn": "A New Account of Tales of the World: Shi Chong struck the coral tree with an iron ruyi; facing execution, he sighed: 'They only crave my fortune!'"
+    "historicalQuoteEn": "A New Account of Tales of the World: Shi Chong struck the coral tree with an iron ruyi; facing execution, he sighed: 'They only crave my fortune!'",
+    "auxiliaryStrengthsZh": [
+      "敏锐洞悉资本与财富的扩张规律",
+      "善于构筑顶级名流圈层并打造传世文化沙龙"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master wealth generation and high-society networking",
+      "orchestrate elite cultural salons to amplify prestige"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "财富极度招摇且深度卷入派系政治",
+      "不知‘财不露白’与全身远害，终致杀身灭门"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Ostentatious wealth flaunting without sovereign political protection inevitably triggers catastrophic expropriation and destruction.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "sima_zhao",
@@ -6305,7 +9345,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "政治手腕过于露骨赤裸（司马昭之心），易丧失道义合法性并在后世引发反噬风暴。",
     "weaknessAdviceEn": "Overly transparent machinations deplete systemic moral legitimacy, inviting historic cynicism and succession turbulence.",
     "historicalQuoteZh": "《三国志》引《汉晋春秋》：曹髦曰：‘司马昭之心，路人所知也。吾不能坐受废辱，今日便当自出决之。’",
-    "historicalQuoteEn": "Records of the Three Kingdoms: Cao Mao declared, 'Sima Zhao's imperial mind is patent to every commoner in the street; I cannot suffer deposition in silence.'"
+    "historicalQuoteEn": "Records of the Three Kingdoms: Cao Mao declared, 'Sima Zhao's imperial mind is patent to every commoner in the street; I cannot suffer deposition in silence.'",
+    "auxiliaryStrengthsZh": [
+      "以长远战略意志锁定终极权柄",
+      "善于在重大政治险滩中把控组织命脉并统摄顶级战将"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Maintain unyielding strategic focus on paramount leadership",
+      "command volatile, brilliant subordinates to conquer macro goals"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治手腕过于露骨赤裸（司马昭之心）",
+      "易丧失道义合法性并在后世引发反噬风暴"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly transparent machinations deplete systemic moral legitimacy",
+      "inviting historic cynicism and succession turbulence"
+    ]
   },
   {
     "id": "ruan_xian",
@@ -6338,7 +9394,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过于放浪形骸与轻视世俗规则可能导致官场被排挤与现实资源匮乏。",
     "weaknessAdviceEn": "Excessive disdain for pragmatic rules may cause political alienation and resource vulnerability.",
     "historicalQuoteZh": "《晋书》评：咸和乐神契，妙尽律吕之奥，虽荀勖之妙思，自谓不能及也。",
-    "historicalQuoteEn": "Book of Jin: Ruan Xian's intuitive musical genius pierced the deepest acoustic secrets, unmatched even by Xun Xu."
+    "historicalQuoteEn": "Book of Jin: Ruan Xian's intuitive musical genius pierced the deepest acoustic secrets, unmatched even by Xun Xu.",
+    "auxiliaryStrengthsZh": [
+      "培养不被世俗规训束缚的独特审美",
+      "以专业技艺与赤诚真性情立身破局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Cultivate unconventional aesthetic mastery and maintain authentic creative integrity without fear of social orthodoxy.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于放浪形骸与轻视世俗规则可能导致官场被排挤与现实资源匮乏。",
+      "设立刚性风险熔断防火墙，防微杜渐"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive disdain for pragmatic rules may cause political alienation and resource vulnerability.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "li_te",
@@ -6371,7 +9443,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "初胜之后轻信敌人伪降与和谈承诺，缺乏战略戒心容易遭遇致命伏击。",
     "weaknessAdviceEn": "Premature trust in false enemy capitulation or truces will leave strategic vanguards exposed to lethal ambushes.",
     "historicalQuoteZh": "《晋书》载：特雄武善骑射，沈毅有大度，流民归之如归市，抗暴于蜀，死战不屈。",
-    "historicalQuoteEn": "Book of Jin: Li Te was valiant, resolute, and magnanimous; displaced refugees flocked to him like a bustling market."
+    "historicalQuoteEn": "Book of Jin: Li Te was valiant, resolute, and magnanimous; displaced refugees flocked to him like a bustling market.",
+    "auxiliaryStrengthsZh": [
+      "在至暗时刻敢于挑起救护弱小的责任",
+      "以朴素正义感凝聚最坚固的生死团队"
+    ],
+    "auxiliaryStrengthsEn": [
+      "In darkest crises, shoulder direct responsibility for the vulnerable",
+      "moral courage forges unbreakable grassroots solidarity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "初胜之后轻信敌人伪降与和谈承诺",
+      "缺乏战略戒心容易遭遇致命伏击"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Premature trust in false enemy capitulation or truces will leave strategic vanguards exposed to lethal ambushes.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "li_xiong",
@@ -6404,7 +9492,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "立嗣问题上未能铁腕决断，舍亲子而立侄儿李班，最终埋下骨肉相残王朝早夭祸根。",
     "weaknessAdviceEn": "Ambiguous succession planning and failure to secure institutional continuity can sow fratricidal civil war post-mortem.",
     "historicalQuoteZh": "《晋书》评：雄宽厚容纳，虚己爱人，三十年间民安物阜，成汉基业，系于斯人。",
-    "historicalQuoteEn": "Book of Jin: Li Xiong governed with immense benevolence, nurturing commoners so that peace and plenty reigned in Sichuan for thirty years."
+    "historicalQuoteEn": "Book of Jin: Li Xiong governed with immense benevolence, nurturing commoners so that peace and plenty reigned in Sichuan for thirty years.",
+    "auxiliaryStrengthsZh": [
+      "善用减法治理与休养生息策略",
+      "给团队与基层最大的空间，休兵养民厚积薄发"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Adopt reductive governance and restorative patience",
+      "empower grassroots ecosystems with room to breathe and generate organic wealth"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "立嗣问题上未能铁腕决断",
+      "舍亲子而立侄儿李班，最终埋下骨肉相残王朝早夭祸根"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Ambiguous succession planning and failure to secure institutional continuity can sow fratricidal civil war post-mortem.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "fu_sheng",
@@ -6437,7 +9541,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "以残暴与恐怖统治维系威权，必将迅速逼反身边最亲近的心腹与战略伙伴。",
     "weaknessAdviceEn": "Relying on fear and terror to command teams will inevitably provoke fatal rebellion from inner circles.",
     "historicalQuoteZh": "《晋书》评：生多力善射，走及奔马，然猜虐无道，祸稔衅盈，自毙于凶德。",
-    "historicalQuoteEn": "Book of Jin: Fu Sheng possessed beast-wrestling power, yet unchecked tyranny authored his inevitable doom."
+    "historicalQuoteEn": "Book of Jin: Fu Sheng possessed beast-wrestling power, yet unchecked tyranny authored his inevitable doom.",
+    "auxiliaryStrengthsZh": [
+      "单兵突破力必须服务于长远组织目标",
+      "不可任由野蛮兽性与无序破坏欲主导行为"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Individual combat dominance must serve constructive long-term missions rather than reckless bloodlust.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "以残暴与恐怖统治维系威权",
+      "必将迅速逼反身边最亲近的心腹与战略伙伴"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Relying on fear and terror to command teams will inevitably provoke fatal rebellion from inner circles.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "yao_xiang",
@@ -6470,7 +9590,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战略纵深未稳时急于攻坚坚城名邑，树敌过多容易导致四面楚歌与过早透支。",
     "weaknessAdviceEn": "Attacking impregnable strongholds before establishing strategic depth creates dangerous multi-front attrition.",
     "historicalQuoteZh": "《晋书》评：姚襄雄武冠世，收合流离，甚得胡汉之心，关陇豪侠皆以死相托。",
-    "historicalQuoteEn": "Book of Jin: Yao Xiang's martial charisma captivated both barbarian and Han hearts, with warriors pledging their lives to him."
+    "historicalQuoteEn": "Book of Jin: Yao Xiang's martial charisma captivated both barbarian and Han hearts, with warriors pledging their lives to him.",
+    "auxiliaryStrengthsZh": [
+      "以至诚胸怀与卓越亲和力凝聚跨圈层人才",
+      "展现令人心折的人格魅力与号召力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unite diverse factions across cultural divides through authentic charisma and frontline valor.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战略纵深未稳时急于攻坚坚城名邑",
+      "树敌过多容易导致四面楚歌与过早透支"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Attacking impregnable strongholds before establishing strategic depth creates dangerous multi-front attrition.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "peng_chao",
@@ -6503,7 +9639,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "战术骄纵与轻视对手新锐将领，往往在看似全盘必胜之际遭遇致命背刺。",
     "weaknessAdviceEn": "Contempt for nimble adversaries invites sudden ambush at your most vulnerable supply nodes.",
     "historicalQuoteZh": "《资治通鉴》载：超长驱深入，连下数城，然失备于辎重，谢玄夜袭君川，超遂大溃。",
-    "historicalQuoteEn": "Zizhi Tongjian: Peng Chao drove deep into southern lines taking multiple citadels, yet neglected logistics until Xie Xuan's night raid broke his army."
+    "historicalQuoteEn": "Zizhi Tongjian: Peng Chao drove deep into southern lines taking multiple citadels, yet neglected logistics until Xie Xuan's night raid broke his army.",
+    "auxiliaryStrengthsZh": [
+      "在进攻势头最顺畅时",
+      "必须派遣精锐斥候严密封锁后勤生命线与粮草补给站"
+    ],
+    "auxiliaryStrengthsEn": [
+      "In aggressive expansions",
+      "allocate elite defensive resources to secure vulnerable supply lines and lifelines"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战术骄纵与轻视对手新锐将领",
+      "往往在看似全盘必胜之际遭遇致命背刺"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Contempt for nimble adversaries invites sudden ambush at your most vulnerable supply nodes.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "juqu_mengxun",
@@ -6536,7 +9688,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过于权诈多变与弑杀前主之名，容易导致周边势力常怀戒心难结深厚互信同盟。",
     "weaknessAdviceEn": "Excessive reliance on ruthless subterfuge breeds permanent suspicion among potential long-term strategic partners.",
     "historicalQuoteZh": "《晋书》评：蒙逊雄杰沉鸷，善于权变，控御遐荒，开化佛门，终成河西霸王。",
-    "historicalQuoteEn": "Book of Jin: Mengxun was deeply cunning and ambitious; he held dominion over the western frontiers while patronizing early Buddhist civilization."
+    "historicalQuoteEn": "Book of Jin: Mengxun was deeply cunning and ambitious; he held dominion over the western frontiers while patronizing early Buddhist civilization.",
+    "auxiliaryStrengthsZh": [
+      "在四战之地善于灵活腾挪外交杠杆",
+      "以文化崇尚（译经开窟）与铁血军事双轮驱动维系霸业"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Employ dynamic multidirectional diplomacy in precarious geopolitical environments",
+      "blend cultural patronage with tactical deterrence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于权诈多变与弑杀前主之名",
+      "容易导致周边势力常怀戒心难结深厚互信同盟"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive reliance on ruthless subterfuge breeds permanent suspicion among potential long-term strategic partners.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "bian_kun",
@@ -6569,7 +9737,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "文官统兵时若缺乏临阵战术机变，仅凭血气之勇正面死磕易遭敌军精骑合围包抄。",
     "weaknessAdviceEn": "Moral courage without dynamic battlefield tactical flexibility can lead to tragic tactical encirclement.",
     "historicalQuoteZh": "《晋书》评：卞壸守节纯诚，忠孝兼至，父子鼎立赴死，江左忠义第一人也。",
-    "historicalQuoteEn": "Book of Jin: Bian Kun maintained purest fidelity; father and sons charged to their deaths, celebrated as Eastern Jin's premier martyrs."
+    "historicalQuoteEn": "Book of Jin: Bian Kun maintained purest fidelity; father and sons charged to their deaths, celebrated as Eastern Jin's premier martyrs.",
+    "auxiliaryStrengthsZh": [
+      "在原则与底线问题上坚如磐石",
+      "以身体力行的铁血担当为组织树立不可磨灭的道德标杆"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Stand rock-solid on foundational ethical principles",
+      "lead from the absolute frontline when moral survival is on the line"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "文官统兵时若缺乏临阵战术机变",
+      "仅凭血气之勇正面死磕易遭敌军精骑合围包抄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Moral courage without dynamic battlefield tactical flexibility can lead to tragic tactical encirclement.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "mao_bao",
@@ -6602,7 +9786,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "明知前线粮尽孤立无援时应提前谋划水陆机动，避免被绝对优势敌军合围死守死地。",
     "weaknessAdviceEn": "When cut off without reinforcements, devise dynamic fluid retreat rather than static entrapment.",
     "historicalQuoteZh": "《晋书》载：宝勇锐善战，焚姑孰积聚以困峻；及邾城陷，宝赴江死之，仁义名流百代。",
-    "historicalQuoteEn": "Book of Jin: Mao Bao was brave and skilled, burning enemy depots to strangle rebels; when Zhucheng fell, he met death heroically in the Yangtze."
+    "historicalQuoteEn": "Book of Jin: Mao Bao was brave and skilled, burning enemy depots to strangle rebels; when Zhucheng fell, he met death heroically in the Yangtze.",
+    "auxiliaryStrengthsZh": [
+      "在严酷的竞争杀伐中始终葆有一份护佑微弱生命的纯善仁心",
+      "善念往往成为绝境中的福报源泉"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Maintain genuine compassion for vulnerable beings even in ruthless struggles",
+      "kindness seeds unexpected resilience in dire straits"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "明知前线粮尽孤立无援时应提前谋划水陆机动",
+      "避免被绝对优势敌军合围死守死地"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "When cut off without reinforcements",
+      "devise dynamic fluid retreat rather than static entrapment"
+    ]
   },
   {
     "id": "sima_shao",
@@ -6635,7 +9835,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "长期过度透支精力和高压搏杀易损耗寿算，需在重大平乱后建立科学修养机制。",
     "weaknessAdviceEn": "Relentless adrenaline burnout depletes vital life essence; institutionalize restorative pacing after high-stress crises.",
     "historicalQuoteZh": "《晋书》评：明帝聪明有机断，摧折强臣，光绍中绪，虽汉之光武无以加焉。",
-    "historicalQuoteEn": "Book of Jin: Emperor Ming was brilliantly perceptive and decisive, crushing insolent magnates to consolidate the Southern throne."
+    "historicalQuoteEn": "Book of Jin: Emperor Ming was brilliantly perceptive and decisive, crushing insolent magnates to consolidate the Southern throne.",
+    "auxiliaryStrengthsZh": [
+      "最高决策者敢于深入一线摸清真实敌情与数据",
+      "在危机关头展现身先士卒的铁血威慑力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Inspect frontline reality in disguise before executing fateful strategic counters",
+      "lead boldly from the front in existential moments"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "长期过度透支精力和高压搏杀易损耗寿算",
+      "需在重大平乱后建立科学修养机制"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Relentless adrenaline burnout depletes vital life essence",
+      "institutionalize restorative pacing after high-stress crises"
+    ]
   },
   {
     "id": "xi_jian",
@@ -6668,7 +9884,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过度充当调停人和稀泥有时会延缓结构性矛盾的彻底解决，关键时刻需施展更果决的制度外科手术。",
     "weaknessAdviceEn": "Perpetual mediation risks prolonging latent structural fractures; be prepared to deliver definitive institutional reforms.",
     "historicalQuoteZh": "《晋书》评：郗公宏谋远略，镇抚淮扬，使三朝获宁，门阀有所依怙。",
-    "historicalQuoteEn": "Book of Jin: Master Xi guarded the riverfront with profound foresight, bringing tranquility across three dynastic reigns."
+    "historicalQuoteEn": "Book of Jin: Master Xi guarded the riverfront with profound foresight, bringing tranquility across three dynastic reigns.",
+    "auxiliaryStrengthsZh": [
+      "在各方势力尖锐对立时",
+      "深耕独立军事与民意基本盘（如京口），以客观平衡者姿态掌控大局航向"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Build an independent sovereign base of strength",
+      "navigate conflicting factions from a position of calm, indispensable systemic balance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过度充当调停人和稀泥有时会延缓结构性矛盾的彻底解决",
+      "关键时刻需施展更果决的制度外科手术"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Perpetual mediation risks prolonging latent structural fractures",
+      "be prepared to deliver definitive institutional reforms"
+    ]
   },
   {
     "id": "fan_zhen",
@@ -6701,7 +9933,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "过于锋芒毕露直击君王核心信仰，需在世俗官场中学会自我保护防范政治冷藏。",
     "weaknessAdviceEn": "Blunt direct challenge to an autocrat's theological obsessions risks political exile; blend ideological courage with tactful diplomacy.",
     "historicalQuoteZh": "《梁书》记：缜著《神灭论》，其辞峭厉，武帝乃使中书舍人讽之，缜曰：‘范缜落落如矸石，不可得转也！’",
-    "historicalQuoteEn": "Book of Liang: Fan Zhen wrote the Treatise on Extinction of the Soul; pressured by royal courtiers, he replied: 'Fan Zhen is as unyielding as solid rock!'"
+    "historicalQuoteEn": "Book of Liang: Fan Zhen wrote the Treatise on Extinction of the Soul; pressured by royal courtiers, he replied: 'Fan Zhen is as unyielding as solid rock!'",
+    "auxiliaryStrengthsZh": [
+      "敢于在全社会盲从狂热的逆风中坚守理性逻辑与真理",
+      "以无懈可击的论辩体系傲立思想巅峰"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Dare to champion empirical reason and logical integrity against widespread mass frenzy",
+      "build ironclad philosophical clarity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于锋芒毕露直击君王核心信仰",
+      "需在世俗官场中学会自我保护防范政治冷藏"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Blunt direct challenge to an autocrat's theological obsessions risks political exile",
+      "blend ideological courage with tactful diplomacy"
+    ]
   },
   {
     "id": "wang_sengbian",
@@ -6734,7 +9982,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "在核心权力分享与君王废立大事上轻信政治盟友，内部防务空虚给果决对手留下闪电斩首窗口。",
     "weaknessAdviceEn": "Lax domestic vigilance and naive trust in ambitious junior partners creates a fatal window for lightning decapitation strikes.",
     "historicalQuoteZh": "《陈书》载：僧辩荡平巨寇，勋侔伊周，而晚节惑于和议，未防暴卒，悲夫！",
-    "historicalQuoteEn": "Book of Chen: Wang Sengbian queller of monsters achieved heroic stature, yet misjudged dynastic security, perishing in tragic surprise."
+    "historicalQuoteEn": "Book of Chen: Wang Sengbian queller of monsters achieved heroic stature, yet misjudged dynastic security, perishing in tragic surprise.",
+    "auxiliaryStrengthsZh": [
+      "在平定危局的大决战中善于协同友军步步为营",
+      "以深厚军事威望聚拢四方义军"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Coordinate coalition partners methodically in high-stakes turnaround campaigns",
+      "building unshakeable field authority"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在核心权力分享与君王废立大事上轻信政治盟友",
+      "内部防务空虚给果决对手留下闪电斩首窗口"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lax domestic vigilance and naive trust in ambitious junior partners creates a fatal window for lightning decapitation strikes.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "xie_lingyun",
@@ -6767,7 +10031,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "目空一切、出言无忌以及对政治体制的公然蔑视，极易招致国家机器的无情扑杀。",
     "weaknessAdviceEn": "Unbounded arrogance and overt disdain for ruling political authority inevitably invites lethal suppression.",
     "historicalQuoteZh": "《宋书》评：灵运兴会标举，诗冠江南，自谓才气超世，然肆意傲物，卒不免其祸。",
-    "historicalQuoteEn": "Book of Song: Xie Lingyun's poetic vision eclipsed Jiangnan; yet boundless pride and contempt for state authority authored his execution."
+    "historicalQuoteEn": "Book of Song: Xie Lingyun's poetic vision eclipsed Jiangnan; yet boundless pride and contempt for state authority authored his execution.",
+    "auxiliaryStrengthsZh": [
+      "将磅礴艺术感知力与大自然神韵深度链接",
+      "以开山立派的原创新作在文明史册中定格永恒印记"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Harness transcendent creative inspiration to pioneer an entirely new genre",
+      "stamping an everlasting seal on cultural history"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "目空一切、出言无忌以及对政治体制的公然蔑视",
+      "极易招致国家机器的无情扑杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unbounded arrogance and overt disdain for ruling political authority inevitably invites lethal suppression.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "zu_chongzhi",
@@ -6800,7 +10080,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "先进历法与科技成果常遭受守旧官僚戴法兴等人的无端打压，需善于运用详实数据与天象实测公开辩驳捍卫真理。",
     "weaknessAdviceEn": "Pioneering technological breakthroughs face reactionary bureaucratic resistance; defend truth with irrefutable empirical data.",
     "historicalQuoteZh": "《南齐书》载：冲之算数精奇，神解天测，造《大明历》，算圆周毫厘不爽，千载宗仰。",
-    "historicalQuoteEn": "Book of Southern Qi: Zu Chongzhi's mathematical computations were miraculous, piercing astronomical heavens and calculating Pi to perfection."
+    "historicalQuoteEn": "Book of Southern Qi: Zu Chongzhi's mathematical computations were miraculous, piercing astronomical heavens and calculating Pi to perfection.",
+    "auxiliaryStrengthsZh": [
+      "以绝对求真与数理精密的工匠精神深潜核心底层算法",
+      "用超越时代的硬核科技构筑世界级壁垒"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Dive into fundamental algorithmic truth and extreme mathematical precision",
+      "engineering generational competitive moats"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "先进历法与科技成果常遭受守旧官僚戴法兴等人的无端打压",
+      "需善于运用详实数据与天象实测公开辩驳捍卫真理"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pioneering technological breakthroughs face reactionary bureaucratic resistance",
+      "defend truth with irrefutable empirical data"
+    ]
   },
   {
     "id": "erzhu_zhao",
@@ -6833,7 +10129,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "仅凭个人蛮勇与部众凶悍，缺乏政治宽容与战略同盟建设，终在多方博弈中被高维智力对手分化瓦解。",
     "weaknessAdviceEn": "Relying purely on violent ferocity without diplomatic diplomacy or institutional alliance leaves one vulnerable to strategic outmaneuvering.",
     "historicalQuoteZh": "《魏书》评：兆手格猛兽，骁勇过人，跨冰涉河破洛，然凶狡无虑，覆败宜矣。",
-    "historicalQuoteEn": "Book of Wei: Erzhu Zhao could wrestle wild beasts with bare hands and charged across frozen rivers, yet brutal rashness invited swift destruction."
+    "historicalQuoteEn": "Book of Wei: Erzhu Zhao could wrestle wild beasts with bare hands and charged across frozen rivers, yet brutal rashness invited swift destruction.",
+    "auxiliaryStrengthsZh": [
+      "敢于在最恶劣天候与意想不到的地点实施闪电长途奔袭",
+      "打出令敌胆寒的绝对破局速度"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Execute lightning raids across harsh weather and unexpected terrain to break stalemates through raw speed.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "仅凭个人蛮勇与部众凶悍",
+      "缺乏政治宽容与战略同盟建设，终在多方博弈中被高维智力对手分化瓦解"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Relying purely on violent ferocity without diplomatic diplomacy or institutional alliance leaves one vulnerable to strategic outmaneuvering.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   },
   {
     "id": "yang_su",
@@ -6866,7 +10178,23 @@ const HISTORICAL_FIGURES = [
     "weaknessAdviceZh": "深涉皇位废立夺嫡旋涡，功高震主引发君王极度猜忌，晚年自知难免而忧惧抱病。",
     "weaknessAdviceEn": "Deep entanglement in royal succession struggles and supreme overshadowing prestige will ignite fatal sovereign paranoia.",
     "historicalQuoteZh": "《隋书》评：素兼资文武，志度英拔，督师所向，无不如志，造五牙顺江，江南底定，实当代第一雄才。",
-    "historicalQuoteEn": "Book of Sui: Yang Su was supremely gifted in sword and brush; his Five-Tooth flagships settled the Yangtze, crowned as the premier titan of his age."
+    "historicalQuoteEn": "Book of Sui: Yang Su was supremely gifted in sword and brush; his Five-Tooth flagships settled the Yangtze, crowned as the premier titan of his age.",
+    "auxiliaryStrengthsZh": [
+      "把重装工程技术创新（如五牙大舰）与严明无情的团队执行力融为一体",
+      "打造坚不可摧的降维打击杀手锏"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Combine cutting-edge engineering innovation with ruthless execution discipline to create unassailable asymmetric market dominance.",
+      "Leverages core natural talents to pierce strategic bottlenecks."
+    ],
+    "auxiliaryWeaknessesZh": [
+      "深涉皇位废立夺嫡旋涡",
+      "功高震主引发君王极度猜忌，晚年自知难免而忧惧抱病"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Deep entanglement in royal succession struggles and supreme overshadowing prestige will ignite fatal sovereign paranoia.",
+      "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
   }
 ];
 

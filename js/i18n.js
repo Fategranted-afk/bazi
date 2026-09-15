@@ -202,6 +202,8 @@ const I18N = (function() {
       history_full_profile: "深度剖析",
       history_absorb_strengths: "学优点 · 破局智慧",
       history_avoid_weaknesses: "戒缺点 · 避险熔断",
+      history_aux_strengths_label: "辅助要点 · 核心胜手：",
+      history_aux_weaknesses_label: "辅助戒律 · 避险防线：",
       history_classical_citation: "史料考据与历史定论：",
 
       tab_definitions: "📚 常见定义",
@@ -815,6 +817,8 @@ const I18N = (function() {
       history_full_profile: "Full Profile",
       history_absorb_strengths: "Strengths to Absorb",
       history_avoid_weaknesses: "Pitfalls to Avoid",
+      history_aux_strengths_label: "Auxiliary Strengths (2 Key Pillars):",
+      history_aux_weaknesses_label: "Auxiliary Pitfalls (2 Redlines):",
       history_classical_citation: "Classical Citation & Historical Judgment:",
 
       tab_definitions: "📚 Common Definitions",

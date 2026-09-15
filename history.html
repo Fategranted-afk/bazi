@@ -352,6 +352,12 @@
 
         // Top Badges
         const topM = reportData.topMatch;
+        const topAux = (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.getAuxiliaryPoints === 'function')
+          ? HistoricalEngine.getAuxiliaryPoints(topM, isEn)
+          : {
+              strengths: isEn ? (topM.auxiliaryStrengthsEn || ['Disciplined strategic execution', 'Tactical resourcefulness']) : (topM.auxiliaryStrengthsZh || ['善于发挥核心立身之本', '精准把握关键破局胜手']),
+              weaknesses: isEn ? (topM.auxiliaryWeaknessesEn || ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards']) : (topM.auxiliaryWeaknessesZh || ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
+            };
         document.getElementById("historyQuickBadges").innerHTML = `
           <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
             ${isEn ? `Day Master: ${bazi.dayMaster || 'Jia'}` : `元神日主: ${bazi.dayMaster || '甲'}（${reportData.nativeContext.dmEl}）`}
@@ -417,6 +423,21 @@
                   <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? "Learn" : "学优点"}</span>
                 </div>
                 <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? topM.strengthAdviceEn : topM.strengthAdviceZh}</p>
+                <div class="pt-2 border-t border-emerald-800/30 space-y-1">
+                  <div class="text-[10px] font-semibold text-emerald-400/90 flex items-center gap-1">
+                    <span>🔹</span><span>${isEn ? 'Auxiliary Strengths (2 Key Pillars):' : '辅助要点 · 核心胜手：'}</span>
+                  </div>
+                  <div class="space-y-1 text-[11px] text-emerald-200/90 font-sans leading-relaxed">
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-emerald-400 font-bold shrink-0">①</span>
+                      <span>${topAux.strengths[0]}</span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-emerald-400 font-bold shrink-0">②</span>
+                      <span>${topAux.strengths[1]}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <!-- Caution Weaknesses -->
@@ -428,6 +449,21 @@
                   <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? "Avoid" : "戒缺点"}</span>
                 </div>
                 <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? topM.weaknessAdviceEn : topM.weaknessAdviceZh}</p>
+                <div class="pt-2 border-t border-rose-800/30 space-y-1">
+                  <div class="text-[10px] font-semibold text-rose-400/90 flex items-center gap-1">
+                    <span>⚠️</span><span>${isEn ? 'Auxiliary Pitfalls (2 Redlines):' : '辅助戒律 · 避险防线：'}</span>
+                  </div>
+                  <div class="space-y-1 text-[11px] text-rose-200/90 font-sans leading-relaxed">
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-rose-400 font-bold shrink-0">①</span>
+                      <span>${topAux.weaknesses[0]}</span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-rose-400 font-bold shrink-0">②</span>
+                      <span>${topAux.weaknesses[1]}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -611,12 +647,12 @@
 
         content.innerHTML = `
           <div class="space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-3">
+            <div class="flex items-start justify-between border-b border-gray-800 pb-3">
               <div>
-                <div class="flex items-center space-x-3">
-                  <h3 class="text-xl font-bold font-serif-sc text-amber-200">${isEn ? f.nameEn : f.nameZh}</h3>
-                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
-                  <span class="px-2 py-0.5 rounded text-[10px] bg-purple-950/80 text-purple-300 border border-purple-800/50">${isEn ? f.eraNameEn : f.eraNameZh}</span>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-amber-300 font-serif-sc">${isEn ? f.nameEn : f.nameZh}</h3>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-amber-950/60 border border-amber-800 text-amber-200">${isEn ? f.dynastyEn : f.dynastyZh}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-indigo-950/60 border border-indigo-800 text-indigo-200">${isEn ? f.eraNameEn : f.eraNameZh}</span>
                 </div>
                 <p class="text-xs text-amber-400 mt-1 font-serif-sc">${isEn ? f.positionEn : f.positionZh}</p>
               </div>
@@ -632,20 +668,50 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-              <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-1.5">
+              <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-2">
                 <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1">
                   <span class="font-bold text-xs text-emerald-300">${isEn ? "Strengths to Absorb (Learn)" : "学优点 · 破局智慧"}</span>
                   <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? "Strength" : "学"}</span>
                 </div>
                 <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? f.strengthAdviceEn : f.strengthAdviceZh}</p>
+                <div class="pt-2 border-t border-emerald-800/30 space-y-1">
+                  <div class="text-[10px] font-semibold text-emerald-400/90 flex items-center gap-1">
+                    <span>🔹</span><span>${isEn ? 'Auxiliary Strengths (2 Key Pillars):' : '辅助要点 · 核心胜手：'}</span>
+                  </div>
+                  <div class="space-y-1 text-[11px] text-emerald-200/90 font-sans leading-relaxed">
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-emerald-400 font-bold shrink-0">①</span>
+                      <span>${aux.strengths[0]}</span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-emerald-400 font-bold shrink-0">②</span>
+                      <span>${aux.strengths[1]}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-1.5">
+              <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-2">
                 <div class="flex items-center justify-between border-b border-rose-800/40 pb-1">
                   <span class="font-bold text-xs text-rose-300">${isEn ? "Pitfalls to Avoid (Caution)" : "戒缺点 · 避险熔断"}</span>
                   <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? "Pitfall" : "戒"}</span>
                 </div>
                 <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? f.weaknessAdviceEn : f.weaknessAdviceZh}</p>
+                <div class="pt-2 border-t border-rose-800/30 space-y-1">
+                  <div class="text-[10px] font-semibold text-rose-400/90 flex items-center gap-1">
+                    <span>⚠️</span><span>${isEn ? 'Auxiliary Pitfalls (2 Redlines):' : '辅助戒律 · 避险防线：'}</span>
+                  </div>
+                  <div class="space-y-1 text-[11px] text-rose-200/90 font-sans leading-relaxed">
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-rose-400 font-bold shrink-0">①</span>
+                      <span>${aux.weaknesses[0]}</span>
+                    </div>
+                    <div class="flex items-start gap-1.5">
+                      <span class="text-rose-400 font-bold shrink-0">②</span>
+                      <span>${aux.weaknesses[1]}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 

@@ -7848,6 +7848,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!cachedHistoryReportData) return;
 
     const topM = cachedHistoryReportData.topMatch;
+    const topAux = (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.getAuxiliaryPoints === 'function')
+      ? HistoricalEngine.getAuxiliaryPoints(topM, isEn)
+      : {
+          strengths: isEn ? (topM.auxiliaryStrengthsEn || ['Disciplined strategic execution', 'Tactical resourcefulness']) : (topM.auxiliaryStrengthsZh || ['善于发挥核心立身之本', '精准把握关键破局胜手']),
+          weaknesses: isEn ? (topM.auxiliaryWeaknessesEn || ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards']) : (topM.auxiliaryWeaknessesZh || ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
+        };
     const syn = cachedHistoryReportData.synthesis;
     const ctx = cachedHistoryReportData.nativeContext;
 
@@ -7947,6 +7953,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? 'Learn' : '学优点'}</span>
               </div>
               <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? topM.strengthAdviceEn : topM.strengthAdviceZh}</p>
+              <div class="pt-2 border-t border-emerald-800/30 space-y-1">
+                <div class="text-[10px] font-semibold text-emerald-400/90 flex items-center gap-1">
+                  <span>🔹</span><span>${isEn ? 'Auxiliary Strengths (2 Key Pillars):' : '辅助要点 · 核心胜手：'}</span>
+                </div>
+                <div class="space-y-1 text-[11px] text-emerald-200/90 font-sans leading-relaxed">
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-emerald-400 font-bold shrink-0">①</span>
+                    <span>${topAux.strengths[0]}</span>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-emerald-400 font-bold shrink-0">②</span>
+                    <span>${topAux.strengths[1]}</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="p-4 rounded-xl bg-rose-950/20 border border-rose-800/50 space-y-2">
@@ -7957,6 +7978,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? 'Avoid' : '戒缺点'}</span>
               </div>
               <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? topM.weaknessAdviceEn : topM.weaknessAdviceZh}</p>
+              <div class="pt-2 border-t border-rose-800/30 space-y-1">
+                <div class="text-[10px] font-semibold text-rose-400/90 flex items-center gap-1">
+                  <span>⚠️</span><span>${isEn ? 'Auxiliary Pitfalls (2 Redlines):' : '辅助戒律 · 避险防线：'}</span>
+                </div>
+                <div class="space-y-1 text-[11px] text-rose-200/90 font-sans leading-relaxed">
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-rose-400 font-bold shrink-0">①</span>
+                    <span>${topAux.weaknesses[0]}</span>
+                  </div>
+                  <div class="flex items-start gap-1.5">
+                    <span class="text-rose-400 font-bold shrink-0">②</span>
+                    <span>${topAux.weaknesses[1]}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -8294,6 +8330,13 @@ document.addEventListener('DOMContentLoaded', () => {
       headerTitle.textContent = isEn ? 'Historical Titan Profile · In-Depth Dossier' : '乱世名将策论调阅 · 深度卡牌解密';
     }
 
+    const aux = (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.getAuxiliaryPoints === 'function')
+      ? HistoricalEngine.getAuxiliaryPoints(f, isEn)
+      : {
+          strengths: isEn ? (f.auxiliaryStrengthsEn || ['Disciplined strategic execution', 'Tactical resourcefulness']) : (f.auxiliaryStrengthsZh || ['善于发挥核心立身之本', '精准把握关键破局胜手']),
+          weaknesses: isEn ? (f.auxiliaryWeaknessesEn || ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards']) : (f.auxiliaryWeaknessesZh || ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
+        };
+
     content.innerHTML = `
       <div class="space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-3">
@@ -8317,20 +8360,50 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-          <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-1.5">
+          <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-2">
             <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1">
               <span class="font-bold text-xs text-emerald-300">${isEn ? 'Strengths to Absorb (Learn)' : '学优点 · 破局智慧'}</span>
               <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? 'Strength' : '学'}</span>
             </div>
             <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? f.strengthAdviceEn : f.strengthAdviceZh}</p>
+            <div class="pt-2 border-t border-emerald-800/30 space-y-1">
+              <div class="text-[10px] font-semibold text-emerald-400/90 flex items-center gap-1">
+                <span>🔹</span><span>${isEn ? 'Auxiliary Strengths (2 Key Pillars):' : '辅助要点 · 核心胜手：'}</span>
+              </div>
+              <div class="space-y-1 text-[11px] text-emerald-200/90 font-sans leading-relaxed">
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-400 font-bold shrink-0">①</span>
+                  <span>${aux.strengths[0]}</span>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-emerald-400 font-bold shrink-0">②</span>
+                  <span>${aux.strengths[1]}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-1.5">
+          <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-2">
             <div class="flex items-center justify-between border-b border-rose-800/40 pb-1">
               <span class="font-bold text-xs text-rose-300">${isEn ? 'Pitfalls to Avoid (Caution)' : '戒缺点 · 避险熔断'}</span>
               <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? 'Pitfall' : '戒'}</span>
             </div>
             <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? f.weaknessAdviceEn : f.weaknessAdviceZh}</p>
+            <div class="pt-2 border-t border-rose-800/30 space-y-1">
+              <div class="text-[10px] font-semibold text-rose-400/90 flex items-center gap-1">
+                <span>⚠️</span><span>${isEn ? 'Auxiliary Pitfalls (2 Redlines):' : '辅助戒律 · 避险防线：'}</span>
+              </div>
+              <div class="space-y-1 text-[11px] text-rose-200/90 font-sans leading-relaxed">
+                <div class="flex items-start gap-1.5">
+                  <span class="text-rose-400 font-bold shrink-0">①</span>
+                  <span>${aux.weaknesses[0]}</span>
+                </div>
+                <div class="flex items-start gap-1.5">
+                  <span class="text-rose-400 font-bold shrink-0">②</span>
+                  <span>${aux.weaknesses[1]}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -11649,6 +11722,12 @@ document.addEventListener('DOMContentLoaded', () => {
       cautionZh: `【戒其所短】：须高度警惕${topMatch.nameZh}的致命盲区——“${topMatch.weaknessAdviceZh}”。`,
       cautionEn: `[Guard Against Weaknesses]: Strictly guard against the fatal blindspot: "${topMatch.weaknessAdviceEn}".`
     });
+    const topAux = (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.getAuxiliaryPoints === 'function')
+      ? HistoricalEngine.getAuxiliaryPoints(topMatch, isEn)
+      : {
+          strengths: isEn ? (topMatch.auxiliaryStrengthsEn || ['Disciplined strategic execution', 'Tactical resourcefulness']) : (topMatch.auxiliaryStrengthsZh || ['善于发挥核心立身之本', '精准把握关键破局胜手']),
+          weaknesses: isEn ? (topMatch.auxiliaryWeaknessesEn || ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards']) : (topMatch.auxiliaryWeaknessesZh || ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
+        };
 
     container.innerHTML = `
       <!-- Page 1: Executive Summary Blueprint -->
@@ -11815,20 +11894,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Section 2: Dual Strategic Columns -->
           <div class="grid grid-cols-2 gap-2 text-xs font-serif-sc">
-            <div class="p-2.5 rounded bg-emerald-50/70 border border-emerald-800/40 space-y-1">
+            <div class="p-2 rounded bg-emerald-50/70 border border-emerald-800/40 space-y-1">
               <div class="flex items-center justify-between border-b border-emerald-800/20 pb-0.5">
                 <span class="font-bold text-emerald-950 text-[11px] flex items-center gap-1"><span>⚔️</span><span>${isEn ? 'I. Strengths to Absorb' : '一、学优点 · 破局战法'}</span></span>
                 <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-emerald-800 text-emerald-900">${isEn ? 'STRATEGY' : '胜局'}</span>
               </div>
-              <p class="text-[10.5px] text-emerald-950 leading-relaxed font-sans">${isEn ? topMatch.strengthAdviceEn : topMatch.strengthAdviceZh}</p>
+              <p class="text-[10px] text-emerald-950 leading-relaxed font-sans">${isEn ? topMatch.strengthAdviceEn : topMatch.strengthAdviceZh}</p>
+              <div class="pt-1 border-t border-emerald-800/20 text-[9.5px] text-emerald-900 leading-snug space-y-0.5 font-sans">
+                <div><b>①</b> ${topAux.strengths[0]}</div>
+                <div><b>②</b> ${topAux.strengths[1]}</div>
+              </div>
             </div>
 
-            <div class="p-2.5 rounded bg-rose-50/70 border border-rose-800/40 space-y-1">
+            <div class="p-2 rounded bg-rose-50/70 border border-rose-800/40 space-y-1">
               <div class="flex items-center justify-between border-b border-rose-800/20 pb-0.5">
                 <span class="font-bold text-rose-950 text-[11px] flex items-center gap-1"><span>🛡️</span><span>${isEn ? 'II. Pitfalls to Avoid' : '二、戒缺点 · 避险熔断'}</span></span>
                 <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-rose-800 text-rose-900">${isEn ? 'CIRCUIT-BREAKER' : '熔断'}</span>
               </div>
-              <p class="text-[10.5px] text-rose-950 leading-relaxed font-sans">${isEn ? topMatch.weaknessAdviceEn : topMatch.weaknessAdviceZh}</p>
+              <p class="text-[10px] text-rose-950 leading-relaxed font-sans">${isEn ? topMatch.weaknessAdviceEn : topMatch.weaknessAdviceZh}</p>
+              <div class="pt-1 border-t border-rose-800/20 text-[9.5px] text-rose-900 leading-snug space-y-0.5 font-sans">
+                <div><b>①</b> ${topAux.weaknesses[0]}</div>
+                <div><b>②</b> ${topAux.weaknesses[1]}</div>
+              </div>
             </div>
           </div>
 

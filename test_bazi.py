@@ -8082,6 +8082,28 @@ jsc_check84_cmd = [
     if (!yuwenTai) throw new Error("Missing Yuwen Tai (宇文泰) in historical figures database!");
     if (!yuwenTai.nameZh.startsWith('宇文泰') || !yuwenTai.nameEn.startsWith('Yuwen Tai')) throw new Error("Yuwen Tai names invalid");
 
+    // Explicitly verify Hulu Guang (斛律光) auxiliary 2 strengths and 2 weaknesses
+    var huluGuang = HISTORICAL_FIGURES.find(function(f) { return f.id === 'hulu_guang'; });
+    if (!huluGuang) throw new Error("Missing Hulu Guang (斛律光) in historical figures database!");
+    if (!huluGuang.auxiliaryStrengthsZh || huluGuang.auxiliaryStrengthsZh.length !== 2) {
+      throw new Error("Hulu Guang missing 2 auxiliary strengths (ZH)");
+    }
+    if (!huluGuang.auxiliaryWeaknessesZh || huluGuang.auxiliaryWeaknessesZh.length !== 2) {
+      throw new Error("Hulu Guang missing 2 auxiliary weaknesses (ZH)");
+    }
+    if (!huluGuang.auxiliaryStrengthsEn || huluGuang.auxiliaryStrengthsEn.length !== 2) {
+      throw new Error("Hulu Guang missing 2 auxiliary strengths (EN)");
+    }
+    if (!huluGuang.auxiliaryWeaknessesEn || huluGuang.auxiliaryWeaknessesEn.length !== 2) {
+      throw new Error("Hulu Guang missing 2 auxiliary weaknesses (EN)");
+    }
+    var auxHuluZh = HistoricalEngine.getAuxiliaryPoints(huluGuang, false);
+    var auxHuluEn = HistoricalEngine.getAuxiliaryPoints(huluGuang, true);
+    if (!auxHuluZh.strengths || auxHuluZh.strengths.length !== 2) throw new Error("auxHuluZh strengths invalid");
+    if (!auxHuluZh.weaknesses || auxHuluZh.weaknesses.length !== 2) throw new Error("auxHuluZh weaknesses invalid");
+    if (!auxHuluEn.strengths || auxHuluEn.strengths.length !== 2) throw new Error("auxHuluEn strengths invalid");
+    if (!auxHuluEn.weaknesses || auxHuluEn.weaknesses.length !== 2) throw new Error("auxHuluEn weaknesses invalid");
+
     // Verify all Eight Pillar Generals of Western Wei
     var eightPillars = ['yuwen_tai', 'yuan_xin', 'li_hu', 'li_bi', 'zhao_gui', 'yu_jin', 'dugu_xin', 'houmochen_chong'];
     eightPillars.forEach(function(pid) {
@@ -8230,7 +8252,7 @@ jsc_check84_cmd = [
       throw new Error("closeHistoryDetailModal is not a function on window");
     }
 
-    window.openHistoryDetailModal('yuwen_tai');
+    window.openHistoryDetailModal('hulu_guang');
     var modalEl = elementStore['historyFigureDetailModalDashboard'];
     if (modalEl.classList.contains('hidden')) {
       throw new Error("Modal should not have hidden class after openHistoryDetailModal");
@@ -8238,6 +8260,10 @@ jsc_check84_cmd = [
     if (document.body.style.overflow !== 'hidden') {
       throw new Error("document.body.style.overflow should be 'hidden' when modal is open");
     }
+    var modalContent = elementStore['historyDetailModalContentDashboard'].innerHTML;
+    if (!modalContent.includes("辅助要点 · 核心胜手：")) throw new Error("Modal missing auxiliary strengths header in ZH");
+    if (!modalContent.includes("辅助戒律 · 避险防线：")) throw new Error("Modal missing auxiliary weaknesses header in ZH");
+    if (!modalContent.includes("①") || !modalContent.includes("②")) throw new Error("Modal missing numbered auxiliary points");
 
     window.closeHistoryDetailModal();
     if (!modalEl.classList.contains('hidden')) {

@@ -316,6 +316,61 @@ class HistoricalEngine {
       cautionEn
     };
   }
+
+  /**
+   * Retrieves 2 auxiliary strengths and 2 auxiliary weaknesses for character cards
+   */
+  static getAuxiliaryPoints(figure, isEn) {
+    if (!figure) {
+      return {
+        strengths: isEn ? ['Core strategic initiative and disciplined execution.', 'Tactical resourcefulness in crisis.'] : ['善于发挥核心立身之本，稳扎稳打', '精准把握关键破局胜手，攻坚克难'],
+        weaknesses: isEn ? ['Vulnerability to strategic blindspots.', 'Need for strict behavioral circuit-breakers.'] : ['戒盲目冒进与短视冲动', '设立刚性自保后手与避险防线']
+      };
+    }
+
+    let strPts = [];
+    let weakPts = [];
+
+    if (isEn) {
+      if (Array.isArray(figure.auxiliaryStrengthsEn) && figure.auxiliaryStrengthsEn.length >= 2) {
+        strPts = figure.auxiliaryStrengthsEn.slice(0, 2);
+      } else if (figure.strengthAdviceEn) {
+        const parts = figure.strengthAdviceEn.split(/[;!]/).map(s => s.trim()).filter(Boolean);
+        strPts = parts.length >= 2 ? parts.slice(0, 2) : [figure.strengthAdviceEn, 'Leverages core tactical strengths to pierce strategic bottlenecks.'];
+      } else {
+        strPts = ['Core strategic initiative and execution.', 'Tactical resourcefulness in crisis.'];
+      }
+
+      if (Array.isArray(figure.auxiliaryWeaknessesEn) && figure.auxiliaryWeaknessesEn.length >= 2) {
+        weakPts = figure.auxiliaryWeaknessesEn.slice(0, 2);
+      } else if (figure.weaknessAdviceEn) {
+        const parts = figure.weaknessAdviceEn.split(/[;!]/).map(s => s.trim()).filter(Boolean);
+        weakPts = parts.length >= 2 ? parts.slice(0, 2) : [figure.weaknessAdviceEn, 'Erects rigid ethical and behavioral safeguards against blindspots.'];
+      } else {
+        weakPts = ['Vulnerability to tactical miscalculation.', 'Need for strict risk circuit-breakers.'];
+      }
+    } else {
+      if (Array.isArray(figure.auxiliaryStrengthsZh) && figure.auxiliaryStrengthsZh.length >= 2) {
+        strPts = figure.auxiliaryStrengthsZh.slice(0, 2);
+      } else if (figure.strengthAdviceZh) {
+        const parts = figure.strengthAdviceZh.split(/[；!！;。]/).map(s => s.trim()).filter(Boolean);
+        strPts = parts.length >= 2 ? parts.slice(0, 2) : [figure.strengthAdviceZh, '善于发挥自身核心优势破局'];
+      } else {
+        strPts = ['善于发挥核心立身之本，稳扎稳打', '精准把握关键破局胜手，攻坚克难'];
+      }
+
+      if (Array.isArray(figure.auxiliaryWeaknessesZh) && figure.auxiliaryWeaknessesZh.length >= 2) {
+        weakPts = figure.auxiliaryWeaknessesZh.slice(0, 2);
+      } else if (figure.weaknessAdviceZh) {
+        const parts = figure.weaknessAdviceZh.split(/[；!！;。]/).map(s => s.trim()).filter(Boolean);
+        weakPts = parts.length >= 2 ? parts.slice(0, 2) : [figure.weaknessAdviceZh, '设立刚性风险熔断防火墙，防微杜渐'];
+      } else {
+        weakPts = ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'];
+      }
+    }
+
+    return { strengths: strPts, weaknesses: weakPts };
+  }
 }
 
 // CommonJS export
