@@ -11777,6 +11777,8 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = `
       <!-- Page 1: Executive Summary Blueprint -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -11785,19 +11787,19 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-2">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-1.5">
           <!-- Header -->
-          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2.5">
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2">
             <div class="flex items-center justify-between">
               <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL BLUEPRINT' : '钦天监正堂之宝'}</span>
-              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首统览'}</span>
+              <span class="text-[10.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首统览'}</span>
             </div>
-            <h1 class="text-xl font-black font-serif-sc text-amber-900 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首三要终身统览'}</h1>
-            <p class="text-[11px] text-gray-700 font-serif-sc">${isEn ? 'Executive Lifetime Synthesis: Career Calling · Wealth Flow · Domestic Spouse Ballast · Three Sovereign Decrees' : '全相至高纲领：天命职能 · 金玉资财 · 配偶家庭（老婆） · 钦天监朱批终身三铁律'}</p>
+            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首三要终身统览'}</h1>
+            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? 'Executive Lifetime Synthesis: Career Calling · Wealth Flow · Domestic Spouse Ballast · Three Sovereign Decrees' : '全相至高纲领：天命职能 · 金玉资财 · 配偶家庭（老婆） · 钦天监朱批终身三铁律'}</p>
           </div>
 
           <!-- Subject Quick Metadata Banner -->
-          <div class="grid grid-cols-4 gap-2 text-[10.5px] bg-amber-50/70 p-2 rounded border border-amber-900/30 text-center font-serif-sc">
+          <div class="imperial-card imperial-card-gold grid grid-cols-4 gap-2 text-[10.5px] p-2 text-center font-serif-sc">
             <div><span class="text-gray-500">${isEn ? 'Subject:' : '命主造化:'}</span> <b class="text-amber-950 font-mono ml-0.5">${genderStr}</b></div>
             <div><span class="text-gray-500">${isEn ? 'Day Master:' : '日元元神:'}</span> <b class="text-amber-900 ml-0.5">${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`}</b></div>
             <div><span class="text-gray-500">${isEn ? 'Pattern:' : '统帅格局:'}</span> <b class="text-amber-900 ml-0.5 truncate">${domPat}</b></div>
@@ -11805,7 +11807,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Module 1: Career Calling -->
-          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-emerald p-2.5 text-xs space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span class="flex items-center gap-1.5"><span class="text-sm">🎯</span><span>${isEn ? 'I. Career Calling & Optimal Ecosystem (Career Trajectory)' : '一、事业立身与天命职能生态位（事业怎么样）'}</span></span>
               <span class="text-[10px] px-2 py-0.2 rounded bg-emerald-200/80 text-emerald-950 font-bold border border-emerald-600/40 font-mono">
@@ -11818,7 +11820,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Module 2: Wealth & Capital -->
-          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-gold p-2.5 text-xs space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span class="flex items-center gap-1.5"><span class="text-sm">💰</span><span>${isEn ? 'II. Wealth Engine & Capital Preservation (Wealth Outlook)' : '二、金玉资财与守财防漏红线（财富怎么样）'}</span></span>
               <span class="text-[10px] px-2 py-0.2 rounded bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40 font-mono">
@@ -11826,11 +11828,11 @@ document.addEventListener('DOMContentLoaded', () => {
               </span>
             </div>
             <div class="grid grid-cols-2 gap-2 text-[10px] text-gray-800 pt-0.5">
-              <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
+              <div class="p-1.5 bg-white/70 rounded border border-amber-900/15">
                 <b>${isEn ? 'Base Salary & Promotion: ' : '正财薪酬与现金流：'}</b>
                 <span class="leading-tight">${directWealthText}</span>
               </div>
-              <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
+              <div class="p-1.5 bg-white/70 rounded border border-amber-900/15">
                 <b>${isEn ? 'Side Ventures & Investments: ' : '偏财副业与投资红利：'}</b>
                 <span class="leading-tight">${indirectWealthText}</span>
               </div>
@@ -11839,7 +11841,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Module 3: Spouse & Marriage -->
-          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-rose p-2.5 text-xs space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span><span>${isEn ? 'III. Spouse & Marriage Palace (Domestic Breakwater Ballast)' : '三、配偶家庭与后方压舱石（配偶·老婆怎么样）'}</span></span>
               <span class="text-[10px] px-2 py-0.2 rounded bg-rose-200/80 text-rose-950 font-bold border border-rose-600/40 font-mono">
@@ -11852,7 +11854,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Module 4: Imperial Decrees -->
-          <div class="p-2 bg-amber-100/60 rounded border border-amber-900/40 text-xs space-y-0.5 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-2 text-xs space-y-0.5 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span class="flex items-center gap-1"><span class="text-sm">👑</span><span>${isEn ? 'IV. Imperial Decrees · Three Golden Rules for Life' : '四、钦天监朱批 · 终身不败立身三铁律'}</span></span>
               <span class="imperial-seal-stamp text-[9px] py-0.2 px-1.5">${isEn ? 'IMPERIAL DECREE' : '朱批定命'}</span>
@@ -11874,6 +11876,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 2: Special Prologue: Supreme Historical Soul Mirror -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -11882,20 +11886,20 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-2.5">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <!-- Header -->
-          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2.5">
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2">
             <div class="flex items-center justify-between">
               <span class="imperial-seal-stamp">${isEn ? 'HISTORICAL MIRROR' : '钦天监正堂之宝'}</span>
-              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首附卷'}</span>
+              <span class="text-[10.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首附卷'}</span>
             </div>
-            <h1 class="text-xl font-black font-serif-sc text-amber-900 tracking-wider">${isEn ? 'Qin Tian Jian · Supreme Historical Soul Mirror' : '钦天监 · 御制天机 · 乱世三百年至高天命历史镜像'}</h1>
-            <p class="text-[11px] text-gray-700 font-serif-sc">${isEn ? '300-Year Historical Resonance: Top #1 Archetype Synthesis & Strategic Directives' : '南北朝乱世风云 · 契合排行榜第一位先贤照胆 · 胜局战法与避险熔断'}</p>
+            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Supreme Historical Soul Mirror' : '钦天监 · 御制天机 · 乱世三百年至高天命历史镜像'}</h1>
+            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? '300-Year Historical Resonance: Top #1 Archetype Synthesis & Strategic Directives' : '南北朝乱世风云 · 契合排行榜第一位先贤照胆 · 胜局战法与避险熔断'}</p>
           </div>
 
           <!-- Top Match Hero Box -->
-          <div class="p-3 bg-amber-50/80 rounded border border-amber-900/40 space-y-2">
-            <div class="flex items-center justify-between border-b border-amber-900/20 pb-1.5">
+          <div class="imperial-card imperial-card-gold p-2.5 space-y-1.5">
+            <div class="flex items-center justify-between border-b border-amber-900/20 pb-1">
               <div>
                 <div class="flex items-center space-x-2">
                   <span class="text-lg font-bold font-serif-sc text-amber-950">${isEn ? topMatch.nameEn : topMatch.nameZh}</span>
@@ -11932,14 +11936,14 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Section 1: Personality Traits & Historical Feats -->
-          <div class="p-2.5 bg-amber-50/60 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc text-gray-800">
+          <div class="imperial-card p-2 text-xs space-y-0.5 font-serif-sc text-gray-800">
             <p class="leading-snug"><b>${isEn ? 'Personality Traits: ' : '性格心性特质：'}</b>${isEn ? topMatch.personalityEn : topMatch.personalityZh}</p>
             <p class="leading-snug"><b>${isEn ? 'Historical Feats: ' : '生平关键立功事迹：'}</b>${isEn ? topMatch.deedsEn : topMatch.deedsZh}</p>
           </div>
 
           <!-- Section 2: Dual Strategic Columns -->
           <div class="grid grid-cols-2 gap-2 text-xs font-serif-sc">
-            <div class="p-2 rounded bg-emerald-50/70 border border-emerald-800/40 space-y-1">
+            <div class="imperial-card imperial-card-emerald p-2 space-y-1">
               <div class="flex items-center justify-between border-b border-emerald-800/20 pb-0.5">
                 <span class="font-bold text-emerald-950 text-[11px] flex items-center gap-1"><span>⚔️</span><span>${isEn ? 'I. Strengths to Absorb' : '一、学优点 · 破局战法'}</span></span>
                 <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-emerald-800 text-emerald-900">${isEn ? 'STRATEGY' : '胜局'}</span>
@@ -11951,7 +11955,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
 
-            <div class="p-2 rounded bg-rose-50/70 border border-rose-800/40 space-y-1">
+            <div class="imperial-card imperial-card-rose p-2 space-y-1">
               <div class="flex items-center justify-between border-b border-rose-800/20 pb-0.5">
                 <span class="font-bold text-rose-950 text-[11px] flex items-center gap-1"><span>🛡️</span><span>${isEn ? 'II. Pitfalls to Avoid' : '二、戒缺点 · 避险熔断'}</span></span>
                 <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-rose-800 text-rose-900">${isEn ? 'CIRCUIT-BREAKER' : '熔断'}</span>
@@ -11965,12 +11969,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Section 3: Classical Citation -->
-          <div class="p-2 bg-amber-50/40 rounded border border-amber-900/20 text-[10.5px] text-gray-700 italic font-serif-sc">
+          <div class="imperial-card p-2 text-[10.5px] text-gray-700 italic font-serif-sc">
             <b>${isEn ? 'Classical Citation: ' : '史料正史考据：'}</b>${isEn ? topMatch.historicalQuoteEn : topMatch.historicalQuoteZh}
           </div>
 
           <!-- Section 4: Imperial Soul Synthesis & Modern Action Directive -->
-          <div class="p-2.5 bg-amber-50/70 rounded border-l-4 border-amber-800 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span>${isEn ? 'Imperial Soul Synthesis & Resonance Directives:' : '钦天监御制照命合参 · 当代行持准则：'}</span>
               <span class="imperial-seal-stamp text-[8.5px] py-0 px-1">${isEn ? 'SYNTHESIS' : '合参'}</span>
@@ -11989,6 +11993,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 3: Cover & Four Pillars Grand Altar -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -11997,17 +12003,19 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6">
-          <div class="text-center space-y-2 border-b-2 border-amber-900/60 pb-4">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
+          <!-- Header -->
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2">
             <div class="flex items-center justify-between">
               <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL SEAL' : '钦天监正堂之宝'}</span>
-              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷一图谱'}</span>
+              <span class="text-[10.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷一图谱'}</span>
             </div>
-            <h1 class="text-2xl font-black font-serif-sc text-amber-900 tracking-wider">${mainTitle}</h1>
-            <p class="text-xs text-gray-700 font-serif-sc">${isEn ? 'Volume I · Sacred Four Pillars & Five-Element Architecture' : '卷一 · 四柱本命神机图谱与五行气象'}</p>
+            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${mainTitle}</h1>
+            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? 'Volume I · Sacred Four Pillars & Five-Element Architecture' : '卷一 · 四柱本命神机图谱与五行气象'}</p>
           </div>
 
-          <div class="grid grid-cols-2 gap-4 text-xs bg-amber-50/60 p-3 rounded border border-amber-900/30 my-3">
+          <!-- Metadata Box -->
+          <div class="imperial-card imperial-card-gold grid grid-cols-2 gap-2 text-xs p-2.5 font-serif-sc">
             <div>
               <span class="text-gray-500">${isEn ? 'Subject:' : '本命造化:'}</span>
               <span class="font-bold text-gray-900 ml-1 font-mono">${genderStr}</span>
@@ -12026,52 +12034,57 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
-          <div class="space-y-1 my-2">
-            <h2 class="text-xs font-bold text-amber-900 tracking-wider">${isEn ? 'FOUR PILLARS SACRED GRID' : '四柱本命神机图谱'}</h2>
-            <table class="w-full text-xs text-center border-collapse border border-amber-900/40">
-              <thead class="bg-amber-100/70 text-amber-950 font-bold">
+          <!-- Sacred Four Pillars Grid Table -->
+          <div class="space-y-1">
+            <h2 class="text-xs font-bold text-amber-950 tracking-wider flex items-center justify-between">
+              <span>${isEn ? 'FOUR PILLARS SACRED GRID' : '四柱本命神机图谱'}</span>
+              <span class="text-[10px] text-amber-900/70 font-mono">${isEn ? 'Orthodox Natal Matrix' : '内府四柱大典'}</span>
+            </h2>
+            <table class="imperial-table text-xs text-center">
+              <thead>
                 <tr>
-                  <th class="p-1.5 border border-amber-900/30">${isEn ? 'Pillar' : '柱位'}</th>
-                  <th class="p-1.5 border border-amber-900/30">${isEn ? 'Year' : '年柱 (根基)'}</th>
-                  <th class="p-1.5 border border-amber-900/30">${isEn ? 'Month' : '月柱 (提纲)'}</th>
-                  <th class="p-1.5 border border-amber-900/30">${isEn ? 'Day' : '日柱 (本命元神)'}</th>
-                  <th class="p-1.5 border border-amber-900/30">${isEn ? 'Hour' : '时柱 (归宿愿景)'}</th>
+                  <th>${isEn ? 'Pillar' : '柱位'}</th>
+                  <th>${isEn ? 'Year' : '年柱 (根基)'}</th>
+                  <th>${isEn ? 'Month' : '月柱 (提纲)'}</th>
+                  <th>${isEn ? 'Day' : '日柱 (本命元神)'}</th>
+                  <th>${isEn ? 'Hour' : '时柱 (归宿愿景)'}</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-amber-900/30 font-serif-sc">
+              <tbody class="font-serif-sc">
                 <tr>
-                  <td class="p-1 font-bold bg-amber-50/50">${isEn ? 'Ten God' : '主气十神'}</td>
-                  <td class="p-1">${isEn ? I18N.getGod(p.year.stemGod, 'en') : p.year.stemGod}</td>
-                  <td class="p-1">${isEn ? I18N.getGod(p.month.stemGod, 'en') : p.month.stemGod}</td>
-                  <td class="p-1 font-bold text-amber-900">${isEn ? 'Day Master' : '本命元神'}</td>
-                  <td class="p-1">${isEn ? I18N.getGod(p.hour.stemGod, 'en') : p.hour.stemGod}</td>
+                  <td class="font-bold bg-amber-50/50">${isEn ? 'Ten God' : '主气十神'}</td>
+                  <td>${isEn ? I18N.getGod(p.year.stemGod, 'en') : p.year.stemGod}</td>
+                  <td>${isEn ? I18N.getGod(p.month.stemGod, 'en') : p.month.stemGod}</td>
+                  <td class="font-bold text-amber-900 bg-amber-100/70">${isEn ? 'Day Master' : '本命元神'}</td>
+                  <td>${isEn ? I18N.getGod(p.hour.stemGod, 'en') : p.hour.stemGod}</td>
                 </tr>
                 <tr class="text-base font-bold bg-amber-50/80">
-                  <td class="p-2 font-sans text-xs">${isEn ? 'Gan-Zhi' : '天干地支'}</td>
-                  <td class="p-2 text-amber-900">${isEn ? I18N.getStem(p.year.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.year.branch, 'en').split(' ')[0] : p.year.text}</td>
-                  <td class="p-2 text-amber-900">${isEn ? I18N.getStem(p.month.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.month.branch, 'en').split(' ')[0] : p.month.text}</td>
-                  <td class="p-2 text-red-900 font-black">${isEn ? I18N.getStem(p.day.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.day.branch, 'en').split(' ')[0] : p.day.text}</td>
-                  <td class="p-2 text-amber-900">${isEn ? I18N.getStem(p.hour.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.hour.branch, 'en').split(' ')[0] : p.hour.text}</td>
+                  <td class="font-sans text-xs">${isEn ? 'Gan-Zhi' : '天干地支'}</td>
+                  <td class="text-amber-900">${isEn ? I18N.getStem(p.year.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.year.branch, 'en').split(' ')[0] : p.year.text}</td>
+                  <td class="text-amber-900">${isEn ? I18N.getStem(p.month.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.month.branch, 'en').split(' ')[0] : p.month.text}</td>
+                  <td class="text-red-900 font-black bg-amber-100/90">${isEn ? I18N.getStem(p.day.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.day.branch, 'en').split(' ')[0] : p.day.text}</td>
+                  <td class="text-amber-900">${isEn ? I18N.getStem(p.hour.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.hour.branch, 'en').split(' ')[0] : p.hour.text}</td>
                 </tr>
                 <tr>
-                  <td class="p-1 font-bold bg-amber-50/50">${isEn ? 'Hidden Stems' : '地支藏干'}</td>
-                  <td class="p-1">${(p.year.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                  <td class="p-1">${(p.month.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                  <td class="p-1">${(p.day.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                  <td class="p-1">${(p.hour.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td class="font-bold bg-amber-50/50">${isEn ? 'Hidden Stems' : '地支藏干'}</td>
+                  <td>${(p.year.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td>${(p.month.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td class="bg-amber-100/50">${(p.day.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
+                  <td>${(p.hour.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
                 </tr>
                 <tr>
-                  <td class="p-1 font-bold bg-amber-50/50">${isEn ? 'Na-Yin Element' : '纳音五行'}</td>
-                  <td class="p-1">${isEn ? I18N.getNaYin(p.year.naYin, 'en') : p.year.naYin}</td>
-                  <td class="p-1">${isEn ? I18N.getNaYin(p.month.naYin, 'en') : p.month.naYin}</td>
-                  <td class="p-1">${isEn ? I18N.getNaYin(p.day.naYin, 'en') : p.day.naYin}</td>
-                  <td class="p-1">${isEn ? I18N.getNaYin(p.hour.naYin, 'en') : p.hour.naYin}</td>
+                  <td class="font-bold bg-amber-50/50">${isEn ? 'Na-Yin Element' : '纳音五行'}</td>
+                  <td>${isEn ? I18N.getNaYin(p.year.naYin, 'en') : p.year.naYin}</td>
+                  <td>${isEn ? I18N.getNaYin(p.month.naYin, 'en') : p.month.naYin}</td>
+                  <td class="bg-amber-100/50">${isEn ? I18N.getNaYin(p.day.naYin, 'en') : p.day.naYin}</td>
+                  <td>${isEn ? I18N.getNaYin(p.hour.naYin, 'en') : p.hour.naYin}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="p-3 bg-amber-50/80 rounded border border-amber-900/30 text-xs space-y-1.5">
+          <!-- Five Elements Balance Box -->
+          <div class="imperial-card p-2.5 text-xs space-y-1">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span>${isEn ? 'Five Elements Dynamic Balance:' : '五行能量分布与气机平衡:'}</span>
               <span class="font-mono">${elSummaryStr}</span>
@@ -12079,7 +12092,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-gray-800 leading-relaxed font-serif-sc">${portrait.patterns[0].gradeEvaluation ? (isEn ? (portrait.patterns[0].gradeEvaluation.strengthsAndFlawsEn || portrait.patterns[0].gradeEvaluation.strengthsAndFlaws) : portrait.patterns[0].gradeEvaluation.strengthsAndFlaws) : ''}</p>
           </div>
 
-          <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷一'}</span>
             <span>Page 3 / 8</span>
           </div>
@@ -12088,6 +12102,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 4: Volume I - 80/20 Grand Picture Pareto Strategy -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -12096,32 +12112,32 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume I: 80/20 Grand Picture Pareto Strategy' : '卷一 · 八经全相 80/20 关键枢纽战略战法 (立命定调与胜负大药)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume I: 80/20 Grand Picture Pareto Strategy' : '卷一 · 八经全相 80/20 关键枢纽战略战法 (立命定调与胜负大药)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'STRATEGIC PIVOT' : '全盘胜负手'}</span>
           </div>
 
           <!-- Outline of Grand Picture -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-gold p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <h3 class="font-bold text-amber-950">${isEn ? 'I. Grand Archetype & Sovereign Blueprint' : '一、命盘大局总相与生命大纲'}</h3>
             <p class="leading-relaxed">${isEn ? (gp.thesisEn || gp.thesis || '') : (gp.thesisZh || gp.thesis || '')}</p>
           </div>
 
           <!-- Strategic Pivot / Medicine of Chart -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <h3 class="font-bold text-amber-950">${isEn ? 'II. Strategic Breakthrough & 20% Pareto Lever' : '二、生杀破局与战略胜负手 (20% 关键抓手)'}</h3>
             <p class="leading-relaxed">${isEn ? (gp.campaignEn || gp.campaign || '') : (gp.campaignZh || gp.campaign || '')}</p>
           </div>
 
           <!-- Spatial Environment Resonance -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-emerald p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <h3 class="font-bold text-amber-950">${isEn ? 'III. Era Dynamics & Spatial Resonance' : '三、时代大潮与物理空间地缘场能共振'}</h3>
             <p class="leading-relaxed">${isEn ? (gp.eraEn || gp.era || '') : (gp.eraZh || gp.era || '')}</p>
           </div>
 
           <!-- Lifelong 3 Cardinal Rules -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-gold p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <h3 class="font-bold text-amber-950">${isEn ? 'IV. Three Lifelong Invariant Directives' : '四、立身处世终身三大铁律'}</h3>
             <div class="space-y-1">
               ${((isEn ? (gp.rulesEn || gp.rules) : (gp.rulesZh || gp.rules)) || []).map((r, idx) => `
@@ -12133,7 +12149,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
-          <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷二'}</span>
             <span>Page 4 / 8</span>
           </div>
@@ -12142,6 +12159,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 5: Volume III - 4D Kinship Profiles -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -12150,14 +12169,14 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume III: 4D Kinship Holographic Depth Profiles' : '卷三 · 六亲全息深度侧写 (配偶 · 子女 · 父母)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume III: 4D Kinship Holographic Depth Profiles' : '卷三 · 六亲全息深度侧写 (配偶 · 子女 · 父母)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'KINSHIP HARMONY' : '和合天伦'}</span>
           </div>
 
           <!-- Spouse Profile -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1.5 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-rose p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span>${isEn ? 'Spouse & Marriage Palace Depth Hologram' : '一、配偶与夫妻宫深度侧写 (Spouse Profile)'}</span>
               <span class="text-rose-800 font-mono">${isEn ? pc.spouse.archetype : pc.spouse.archetypeZh}</span>
@@ -12168,7 +12187,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Children Profile -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1.5 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-emerald p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span>${isEn ? 'Children & Legacy Depth Hologram' : '二、子女人才与晚景传承侧写 (Children Profile)'}</span>
               <span class="text-emerald-800 font-mono">${isEn ? pc.children.archetype : pc.children.archetypeZh}</span>
@@ -12179,17 +12198,18 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Parents Profile -->
-          <div class="p-3 bg-amber-50/60 rounded border border-amber-900/30 space-y-1.5 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-gold p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span>${isEn ? 'Ancestral Heritage & Parents Depth Hologram' : '三、祖荫福泽与父母渊源侧写 (Parents Profile)'}</span>
-              <span class="text-indigo-800 font-mono">${isEn ? (pc.parents.archetype || pc.parents.type || pc.parents.typeEn || 'Ancestral Heritage') : (pc.parents.archetypeZh || pc.parents.typeZh || pc.parents.type || '祖德延绵')}</span>
+              <span class="text-indigo-900 font-mono">${isEn ? (pc.parents.archetype || pc.parents.type || pc.parents.typeEn || 'Ancestral Heritage') : (pc.parents.archetypeZh || pc.parents.typeZh || pc.parents.type || '祖德延绵')}</span>
             </div>
             <p><b>${isEn ? 'Energy Baseline:' : '能量基石:'}</b> ${isEn ? pc.parents.energy : pc.parents.energyZh}</p>
             <p><b>${isEn ? 'Temperament & Demeanour:' : '家风气质:'}</b> ${isEn ? pc.parents.demeanour : pc.parents.demeanourZh}</p>
             <p><b>${isEn ? 'Ancestral Connection:' : '代际互动:'}</b> ${isEn ? pc.parents.relationship : pc.parents.relationshipZh}</p>
           </div>
 
-          <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷三'}</span>
             <span>Page 5 / 8</span>
           </div>
@@ -12198,6 +12218,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 6: Volume IV - Zen & Dao Trinity Wisdom -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -12206,15 +12228,15 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume IV: Zen & Dao Trinity Wisdom & Ultimate Liberation' : '卷四 · 禅道心智与传世解脱方策 (金刚经 · 坛经 · 庄子)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume IV: Zen & Dao Trinity Wisdom & Ultimate Liberation' : '卷四 · 禅道心智与传世解脱方策 (金刚经 · 坛经 · 庄子)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'LIBERATION WISDOM' : '顿悟解脱'}</span>
           </div>
 
-          <div class="space-y-3 text-xs leading-relaxed font-serif-sc text-gray-800">
+          <div class="space-y-2 text-xs leading-relaxed font-serif-sc text-gray-800">
             <!-- Diamond Sutra -->
-            <div class="p-3 bg-amber-50/60 rounded border-l-4 border-amber-700 space-y-1">
+            <div class="imperial-card imperial-card-accent p-2.5 space-y-0.5">
               <h3 class="font-bold text-amber-950">${isEn ? zen.diamond.title : zen.diamond.titleZh}</h3>
               <p class="font-bold text-red-900">${isEn ? zen.diamond.mantra : zen.diamond.mantraZh}</p>
               <p>${isEn ? zen.diamond.insight : zen.diamond.insightZh}</p>
@@ -12222,7 +12244,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <!-- Platform Sutra -->
-            <div class="p-3 bg-amber-50/60 rounded border-l-4 border-purple-700 space-y-1">
+            <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-purple-700">
               <h3 class="font-bold text-purple-950">${isEn ? zen.platform.title : zen.platform.titleZh}</h3>
               <p class="font-bold text-purple-900">${isEn ? zen.platform.mantra : zen.platform.mantraZh}</p>
               <p>${isEn ? zen.platform.insight : zen.platform.insightZh}</p>
@@ -12230,7 +12252,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
 
             <!-- Zhuangzi -->
-            <div class="p-3 bg-amber-50/60 rounded border-l-4 border-teal-700 space-y-1">
+            <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-teal-700">
               <h3 class="font-bold text-teal-950">${isEn ? zen.zhuangzi.title : zen.zhuangzi.titleZh}</h3>
               <p class="font-bold text-teal-900">${isEn ? zen.zhuangzi.mantra : zen.zhuangzi.mantraZh}</p>
               <p>${isEn ? zen.zhuangzi.insight : zen.zhuangzi.insightZh}</p>
@@ -12239,11 +12261,11 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Thoughtful side-note on Classical preservation and personal meditation -->
-          <div class="p-2 rounded bg-amber-50/70 border border-amber-900/30 text-[10px] text-gray-700 italic font-serif-sc">
+          <div class="imperial-card p-2 text-[10px] text-gray-700 italic font-serif-sc">
             <span>${reflectionPreservationNote}</span>
           </div>
 
-          <div class="flex items-center justify-between border-t-2 border-amber-900/60 pt-3">
+          <div class="flex items-center justify-between border-t-2 border-amber-900/60 pt-2">
             <div class="space-y-0.5 text-[11px] text-gray-700 font-serif-sc">
               <p><b>${isEn ? 'Certification Authority:' : '钦定勘验印鉴:'}</b> ${isEn ? 'Imperial Astronomical Bureau Archive (Qin Tian Jian)' : '钦天监正堂掌事 · 钦赐天机密卷'}</p>
               <p>${isEn ? 'This dossier is mathematically generated from orthodox canonical algorithms.' : '本战报依正统八典算法严密考订，纯正传承，万金不易。'}</p>
@@ -12253,6 +12275,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
+          <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
             <span>Page 6 / 8</span>
@@ -12262,6 +12285,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 7: Volume V - Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -12270,22 +12295,22 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-3">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume V: Decennial Trajectory & 14-Character Energy Synthesis' : '卷五 · 大运年景大势与十四字全景气机集成 (时运交感与时空场能)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume V: Decennial Trajectory & 14-Character Energy Synthesis' : '卷五 · 大运年景大势与十四字全景气机集成 (时运交感与时空场能)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'DYNAMIC RESONANCE' : '时运合一'}</span>
           </div>
 
           <!-- Transit Luck Coordinate -->
-          <div class="grid grid-cols-2 gap-3 text-xs bg-amber-50/60 p-2.5 rounded border border-amber-900/30 font-serif-sc">
+          <div class="imperial-card imperial-card-gold grid grid-cols-2 gap-2 text-xs p-2 font-serif-sc">
             <div>
               <span class="text-gray-500">${isEn ? 'Active Decade (10-Yr Pillar):' : '当运大运 (十年提纲):'}</span>
-              <div class="font-bold text-amber-900 font-mono text-[12.5px] mt-0.5">${decadePillarStr}</div>
+              <div class="font-bold text-amber-900 font-mono text-[12px] mt-0.5">${decadePillarStr}</div>
               <div class="text-[10px] text-gray-600 font-mono">${isEn ? 'Na-Yin:' : '纳音五行:'} ${decadeNaYinStr}</div>
             </div>
             <div>
               <span class="text-gray-500">${isEn ? 'Annual Mandate (Tai Sui):' : '当值流年 (太岁统辖):'}</span>
-              <div class="font-bold text-amber-900 font-mono text-[12.5px] mt-0.5">${annualPillarStr}</div>
+              <div class="font-bold text-amber-900 font-mono text-[12px] mt-0.5">${annualPillarStr}</div>
               <div class="text-[10px] text-gray-600 font-mono">${isEn ? 'Na-Yin:' : '纳音五行:'} ${annualNaYinStr}</div>
             </div>
           </div>
@@ -12293,24 +12318,24 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- 14-Character Multi-Dimensional Matrix Table -->
           <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <h3 class="text-xs font-bold text-amber-900 tracking-wider">${isEn ? '14-CHARACTER HOLOGRAPHIC MATRIX (NATAL 8 + TRANSIT 6)' : '十四字全相矩阵 (原局八字 + 岁运六字)'}</h3>
-              <span class="imperial-seal-stamp text-[10px] py-0.5 px-2">${isEn ? dmState.badgeEn : dmState.badgeZh}</span>
+              <h3 class="text-xs font-bold text-amber-950 tracking-wider">${isEn ? '14-CHARACTER HOLOGRAPHIC MATRIX (NATAL 8 + TRANSIT 6)' : '十四字全相矩阵 (原局八字 + 岁运六字)'}</h3>
+              <span class="imperial-seal-stamp text-[9.5px] py-0.2 px-1.5">${isEn ? dmState.badgeEn : dmState.badgeZh}</span>
             </div>
-            <table class="w-full text-xs text-center border-collapse border border-amber-900/40">
-              <thead class="bg-amber-100/70 text-amber-950 font-bold">
+            <table class="imperial-table text-xs text-center">
+              <thead>
                 <tr>
-                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Yr' : '原局年柱'}</th>
-                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Mo' : '原局月令'}</th>
-                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Day' : '本命日元'}</th>
-                  <th class="p-1 border border-amber-900/30">${isEn ? 'Natal Hr' : '原局时柱'}</th>
-                  <th class="p-1 border border-amber-900/30 bg-amber-200/50 text-amber-900">${isEn ? 'Transit Dec' : '当行大运'}</th>
-                  <th class="p-1 border border-amber-900/30 bg-amber-200/50 text-amber-900">${isEn ? 'Transit Ann' : '流年太岁'}</th>
-                  <th class="p-1 border border-amber-900/30 bg-amber-200/50 text-amber-900">${isEn ? 'Transit Mo' : '流月建星'}</th>
+                  <th>${isEn ? 'Natal Yr' : '原局年柱'}</th>
+                  <th>${isEn ? 'Natal Mo' : '原局月令'}</th>
+                  <th>${isEn ? 'Natal Day' : '本命日元'}</th>
+                  <th>${isEn ? 'Natal Hr' : '原局时柱'}</th>
+                  <th class="bg-amber-200/60 text-amber-950">${isEn ? 'Transit Dec' : '当行大运'}</th>
+                  <th class="bg-amber-200/60 text-amber-950">${isEn ? 'Transit Ann' : '流年太岁'}</th>
+                  <th class="bg-amber-200/60 text-amber-950">${isEn ? 'Transit Mo' : '流月建星'}</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-amber-900/30 font-serif-sc">
+              <tbody class="font-serif-sc">
                 <!-- Stems -->
-                <tr class="bg-amber-50/40">
+                <tr>
                   ${[0, 2, 4, 6, 8, 10, 12].map(idx => {
                     const c = charsList[idx] || {};
                     const cChar = isEn ? (c.charEn || c.char || '--') : (c.char || '--');
@@ -12318,26 +12343,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cEl = isEn ? (c.elementEn || c.el || '--') : (c.el || '--');
                     const isDM = (idx === 4);
                     return `
-                      <td class="p-1.5 ${isDM ? 'bg-amber-100/80 font-bold' : ''}">
-                        <div class="text-[10px] text-gray-500 font-mono">${cGod}</div>
+                      <td class="p-1 ${isDM ? 'bg-amber-100/90 font-bold' : ''}">
+                        <div class="text-[9.5px] text-gray-500 font-mono">${cGod}</div>
                         <div class="text-base font-bold ${isDM ? 'text-red-900' : 'text-amber-900'}">${cChar}</div>
-                        <div class="text-[9.5px] text-gray-600 font-mono">${cEl}</div>
+                        <div class="text-[9px] text-gray-600 font-mono">${cEl}</div>
                       </td>
                     `;
                   }).join('')}
                 </tr>
                 <!-- Branches -->
-                <tr class="bg-amber-50/80">
+                <tr>
                   ${[1, 3, 5, 7, 9, 11, 13].map(idx => {
                     const c = charsList[idx] || {};
                     const cChar = isEn ? (c.charEn || c.char || '--') : (c.char || '--');
                     const cGod = isEn ? (c.tenGodEn || c.tenGod || '--') : (c.tenGod || '--');
                     const cEl = isEn ? (c.elementEn || c.el || '--') : (c.el || '--');
                     return `
-                      <td class="p-1.5">
-                        <div class="text-[10px] text-gray-500 font-mono">${cGod}</div>
+                      <td class="p-1">
+                        <div class="text-[9.5px] text-gray-500 font-mono">${cGod}</div>
                         <div class="text-base font-bold text-amber-900">${cChar}</div>
-                        <div class="text-[9.5px] text-gray-600 font-mono">${cEl}</div>
+                        <div class="text-[9px] text-gray-600 font-mono">${cEl}</div>
                       </td>
                     `;
                   }).join('')}
@@ -12347,26 +12372,26 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Dynamic 5-Element Share & Dominant Force -->
-          <div class="p-2.5 bg-amber-50/80 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+          <div class="imperial-card p-2.5 text-xs space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span>${isEn ? 'Dynamic 5-Element Distribution (14 Characters):' : '十四字全场五行能量权重与气机统帅:'}</span>
-              <span class="font-mono text-[11px]">${elDistSummaryStr}</span>
+              <span class="font-mono text-[10.5px]">${elDistSummaryStr}</span>
             </div>
-            <div class="flex items-center justify-between text-[11px] text-gray-800">
+            <div class="flex items-center justify-between text-[10.5px] text-gray-800">
               <span><b>${isEn ? 'Dominant Force:' : '统帅五行:'}</b> ${isEn ? domEl.elementEn : domEl.element} (${domEl.percentage}%) · ${isEn ? domEl.roleEn : domEl.roleZh}</span>
               <span class="font-mono"><b>${isEn ? 'Support vs Drain:' : '扶抑比率:'}</b> ${dmState.supportCount} : ${dmState.drainCount} (${Math.round(dmState.dynamicRatio * 100)}%)</span>
             </div>
-            <p class="text-[11.5px] text-gray-700 leading-relaxed">${isEn ? dmState.statusEn : dmState.statusZh}</p>
+            <p class="text-[11px] text-gray-700 leading-relaxed">${isEn ? dmState.statusEn : dmState.statusZh}</p>
           </div>
 
           <!-- Tactical Strategic Focus & Action Directives -->
-          <div class="p-3 bg-amber-50/60 rounded border-l-4 border-amber-800 space-y-1.5 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span class="text-xs font-bold">${isEn ? interp.titleEn : interp.titleZh}</span>
-              <span class="text-[11px] text-amber-900 font-mono">${isEn ? dmState.natalStrengthEn : dmState.natalStrength}</span>
+              <span class="text-[10.5px] text-amber-900 font-mono">${isEn ? dmState.natalStrengthEn : dmState.natalStrength}</span>
             </div>
             <p><b>${isEn ? 'Core Strategic Focus:' : '核心战略攻守定调:'}</b> ${isEn ? interp.strategicFocusEn : interp.strategicFocusZh}</p>
-            <div class="space-y-1">
+            <div class="space-y-0.5">
               <b>${isEn ? 'Tactical Action Directives:' : '立命行事三策:'}</b>
               ${(isEn ? interp.actionDirectivesEn : interp.actionDirectivesZh).slice(0, 3).map((act, idx) => `
                 <div class="flex gap-1.5 ml-1">
@@ -12379,7 +12404,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Canonical Preservation Reflection Note -->
-          <div class="p-2 rounded bg-amber-50/50 border border-amber-900/30 text-[10px] text-gray-600 italic font-serif-sc">
+          <div class="imperial-card p-2 text-[10px] text-gray-600 italic font-serif-sc">
             <span>${reflectionPreservationNote}</span>
           </div>
 
@@ -12393,6 +12418,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Page 8: Volume VI - Career & Wealth Trajectory -->
       <div class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
           <div class="thread-eyelet eyelet-2"></div>
@@ -12401,34 +12428,34 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-6 space-y-2.5">
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-900">${isEn ? 'Volume VI: Career Breakthrough & Wealth Trajectory' : '卷六 · 职场打工人破局与财运事业全相推演 (向上管理 · 同僚防波堤 · 天命生态位 · 岁运财帛)'}</h2>
+            <h2 class="text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume VI: Career Breakthrough & Wealth Trajectory' : '卷六 · 职场打工人破局与财运事业全相推演 (向上管理 · 同僚防波堤 · 天命生态位 · 岁运财帛)'}</h2>
             <span class="imperial-seal-stamp">${isEn ? 'CAREER & WEALTH' : '天命经纶'}</span>
           </div>
 
           <!-- Section 1: Managing Upward & Superior Alignment -->
-          <div class="p-3 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1.5 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
+          <div class="imperial-card imperial-card-gold p-2.5 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
               <span class="flex items-center gap-1"><span>👑</span><span>${isEn ? 'I. Managing Upward & Superior Alignment Directive' : '一、向上管理心智与领导沟通破局准则'}</span></span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-200/60 text-amber-900 font-mono">${isEn ? 'Upward Alignment' : '闭环对齐'}</span>
+              <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 font-mono">${isEn ? 'Upward Alignment' : '闭环对齐'}</span>
             </div>
-            <p class="text-[11px] text-gray-800 leading-relaxed">${isEn ? (crMu ? crMu.styleEn : '') : (crMu ? crMu.styleZh : '')}</p>
-            <div class="p-2 bg-amber-100/60 rounded text-[10.5px] text-amber-950 leading-relaxed">
+            <p class="text-[10.5px] text-gray-800 leading-relaxed">${isEn ? (crMu ? crMu.styleEn : '') : (crMu ? crMu.styleZh : '')}</p>
+            <div class="p-1.5 bg-amber-100/60 rounded text-[10px] text-amber-950 leading-relaxed">
               <b>${isEn ? 'Core De-escalation Directive: ' : '核心避坑法门：'}</b>${isEn ? (crMu ? crMu.avoidOffendingEn : '') : (crMu ? crMu.avoidOffendingZh : '')}
             </div>
           </div>
 
           <!-- Section 2: Lateral Peer Collaboration & Attribution Firewalls -->
-          <div class="p-3 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1.5 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
+          <div class="imperial-card imperial-card-rose p-2.5 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
               <span class="flex items-center gap-1"><span>🤝</span><span>${isEn ? 'II. Peer Dynamics & Three Indispensable Firewalls' : '二、同僚横向协作与三大防抢功硬核防火墙'}</span></span>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-200/60 text-rose-900 font-mono">${isEn ? 'Lateral Defense' : '同僚护城河'}</span>
+              <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-rose-200/80 text-rose-950 font-mono">${isEn ? 'Lateral Defense' : '同僚护城河'}</span>
             </div>
-            <p class="text-[11px] text-gray-800 leading-relaxed">${isEn ? (crPd ? crPd.peerAnalysisEn : '') : (crPd ? crPd.peerAnalysisZh : '')}</p>
-            <div class="grid grid-cols-3 gap-2 pt-1 text-[10px]">
+            <p class="text-[10.5px] text-gray-800 leading-relaxed">${isEn ? (crPd ? crPd.peerAnalysisEn : '') : (crPd ? crPd.peerAnalysisZh : '')}</p>
+            <div class="grid grid-cols-3 gap-1.5 pt-0.5 text-[9.5px]">
               ${(crPd && crPd.threeFirewalls ? crPd.threeFirewalls : []).map(fw => `
-                <div class="p-1.5 rounded bg-amber-100/50 border border-amber-900/20 space-y-0.5">
+                <div class="p-1.5 rounded bg-white/70 border border-amber-900/15 space-y-0.5">
                   <div class="font-bold text-amber-900 truncate">${isEn ? fw.titleEn.split('(')[0] : fw.titleZh.split('（')[0]}</div>
                   <p class="text-gray-700 leading-tight line-clamp-3">${isEn ? fw.descEn : fw.descZh}</p>
                 </div>
@@ -12437,48 +12464,48 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Section 3: Precision Workplace Archetypes (Rank 1 & Rank 2) -->
-          <div class="space-y-1.5 font-serif-sc">
+          <div class="space-y-1 font-serif-sc">
             <div class="flex items-center justify-between">
-              <h3 class="text-xs font-bold text-amber-900 tracking-wider">${isEn ? 'III. DESTINY CALLING & WORKPLACE ARCHETYPES (OPTIMAL & SECONDARY)' : '三、天命职能四大生态位精准定向（最适合 vs 其次适合）'}</h3>
-              <span class="imperial-seal-stamp text-[10px] py-0.5 px-2">${isEn ? 'ECOSYSTEM' : '生态择位'}</span>
+              <h3 class="text-xs font-bold text-amber-950 tracking-wider">${isEn ? 'III. DESTINY CALLING & WORKPLACE ARCHETYPES (OPTIMAL & SECONDARY)' : '三、天命职能四大生态位精准定向（最适合 vs 其次适合）'}</h3>
+              <span class="imperial-seal-stamp text-[9.5px] py-0.2 px-1.5">${isEn ? 'ECOSYSTEM' : '生态择位'}</span>
             </div>
-            <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="grid grid-cols-2 gap-2 text-xs">
               ${crArchs.slice(0, 2).map((arch, aIdx) => `
-                <div class="p-2.5 rounded bg-amber-50/80 border ${aIdx === 0 ? 'border-amber-700' : 'border-amber-900/30'} space-y-1">
-                  <div class="flex items-center justify-between border-b border-amber-900/20 pb-1">
-                    <span class="font-bold text-amber-950 flex items-center gap-1 text-[11.5px]">
+                <div class="imperial-card ${aIdx === 0 ? 'imperial-card-emerald' : 'imperial-card-gold'} p-2 space-y-1">
+                  <div class="flex items-center justify-between border-b border-amber-900/20 pb-0.5">
+                    <span class="font-bold text-amber-950 flex items-center gap-1 text-[11px]">
                       <span>${arch.icon}</span><span>${isEn ? arch.nameEn.split('(')[0] : arch.nameZh.split('（')[0]}</span>
                     </span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded font-bold ${aIdx === 0 ? 'bg-emerald-200/80 text-emerald-950 border border-emerald-600/40' : 'bg-amber-200/80 text-amber-950 border border-amber-600/40'}">
+                    <span class="text-[9.5px] px-1.5 py-0.2 rounded font-bold ${aIdx === 0 ? 'bg-emerald-200/80 text-emerald-950 border border-emerald-600/40' : 'bg-amber-200/80 text-amber-950 border border-amber-600/40'}">
                       ${isEn ? arch.grade.en : arch.grade.zh} (${arch.fitScore}${isEn ? '/100' : '分'})
                     </span>
                   </div>
-                  <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Strengths: ' : '天赋优势：'}</b>${isEn ? arch.coreStrengthsEn : arch.coreStrengthsZh}</p>
-                  <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Tactic: ' : '破局战法：'}</b>${isEn ? arch.breakthroughTacticEn : arch.breakthroughTacticZh}</p>
+                  <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Strengths: ' : '天赋优势：'}</b>${isEn ? arch.coreStrengthsEn : arch.coreStrengthsZh}</p>
+                  <p class="text-[10px] text-amber-900 leading-tight"><b>${isEn ? 'Tactic: ' : '破局战法：'}</b>${isEn ? arch.breakthroughTacticEn : arch.breakthroughTacticZh}</p>
                 </div>
               `).join('')}
             </div>
           </div>
 
           <!-- Section 4: Timing Trajectory & Wealth Outlook -->
-          <div class="p-2.5 bg-amber-50/70 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-2 text-xs space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950">
               <span class="flex items-center gap-1"><span>⏳</span><span>${isEn ? 'IV. Wealth & Transit Hexagram Mandate' : '四、时空财运与周易值年卦经纶'}</span></span>
-              <span class="font-mono text-[10.5px] text-amber-900">
+              <span class="font-mono text-[10px] text-amber-900">
                 ${isEn ? (crTt && crTt.annualHex ? `Annual Hexagram: #${crTt.annualHex.number || ''} ${crTt.annualHex.nameEn || ''}` : '') : (crTt && crTt.annualHex ? `值年卦：第${crTt.annualHex.number || ''}卦 · ${crTt.annualHex.nameZh || ''}` : '')}
               </span>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-800 pt-0.5">
-              <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
+            <div class="grid grid-cols-2 gap-2 text-[10px] text-gray-800 pt-0.5">
+              <div class="p-1.5 bg-white/70 rounded border border-amber-900/15">
                 <b>${isEn ? 'Direct Wealth (Career Salary): ' : '正财主业薪酬：'}</b>
                 <span>${isEn ? (crTt ? (crTt.directWealthEvaluationEn || crTt.directWealthAnalysisEn || 'Direct wealth indicates stable core compensation.') : 'Direct wealth indicates stable core compensation.') : (crTt ? (crTt.directWealthEvaluationZh || crTt.directWealthAnalysisZh || '正财主业稳定，深耕岗位基本盘。') : '正财主业稳定，深耕岗位基本盘。')}</span>
               </div>
-              <div class="p-1.5 bg-white/60 rounded border border-amber-900/10">
+              <div class="p-1.5 bg-white/70 rounded border border-amber-900/15">
                 <b>${isEn ? 'Indirect Wealth (Investments): ' : '偏财副业投资：'}</b>
                 <span>${isEn ? (crTt ? (crTt.indirectWealthEvaluationEn || crTt.indirectWealthAnalysisEn || 'Indirect wealth advises defensive risk management.') : 'Indirect wealth advises defensive risk management.') : (crTt ? (crTt.indirectWealthEvaluationZh || crTt.indirectWealthAnalysisZh || '偏财副业适度进取，严防比劫夺财破耗。') : '偏财副业适度进取，严防比劫夺财破耗。')}</span>
               </div>
             </div>
-            <p class="text-[10.5px] text-gray-700 leading-tight pt-0.5">
+            <p class="text-[10px] text-gray-700 leading-tight pt-0.5">
               <b>${isEn ? 'Annual Hexagram Guidance: ' : '值年卦指引：'}</b>${isEn ? (crTt ? (crTt.annualHexTacticEn || (crTt.annualHex && crTt.annualHex.decisionEn) || 'Align actions with timing and maintain strategic patience.') : 'Align actions with timing and maintain strategic patience.') : (crTt ? (crTt.annualHexTacticZh || (crTt.annualHex && crTt.annualHex.decisionZh) || '顺应天道节律，进退有据。') : '顺应天道节律，进退有据。')}
             </p>
           </div>

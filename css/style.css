@@ -138,17 +138,43 @@ body {
    Imperial Thread-Bound PDF Dossier (A4 绝美精装排盘战报) Styles
    ========================================================================== */
 .imperial-page {
-  background-color: #fcfbf7;
-  color: #1a1a1a;
+  background-color: #fbf7ee;
+  background-image:
+    radial-gradient(ellipse at 50% 20%, rgba(255, 254, 250, 0.96) 0%, rgba(251, 247, 238, 0.92) 55%, rgba(242, 234, 218, 0.88) 100%),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 0%, transparent 20%, transparent 80%, rgba(139, 69, 19, 0.04) 100%);
+  color: #1a1612;
   width: 210mm;
   min-height: 297mm;
-  padding: 18mm 16mm 18mm 26mm; /* Extra left padding for thread binding spine */
+  padding: 16mm 14mm 16mm 24mm; /* Balanced margins for thread spine and A4 height budget */
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.2);
   margin: 0 auto 24px auto;
-  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", STSong, Georgia, serif;
+  font-family: "Songti SC", "Noto Serif SC", "Source Han Serif SC", STSong, "SimSun", Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Corner Silk Brocade Wraps (古籍线装 绫绢包角) */
+.imperial-corner-wrap-top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22mm;
+  height: 22mm;
+  background: linear-gradient(135deg, rgba(160, 110, 45, 0.45) 0%, rgba(160, 110, 45, 0.2) 42%, transparent 48%);
+  pointer-events: none;
+  z-index: 3;
+}
+.imperial-corner-wrap-bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 22mm;
+  height: 22mm;
+  background: linear-gradient(45deg, rgba(160, 110, 45, 0.45) 0%, rgba(160, 110, 45, 0.2) 42%, transparent 48%);
+  pointer-events: none;
+  z-index: 3;
 }
 
 /* Simulated 4-Hole Thread Binding Spine (四孔线装古书装订线) */
@@ -158,9 +184,10 @@ body {
   top: 0;
   bottom: 0;
   width: 20mm;
-  border-right: 1.5px dashed rgba(180, 145, 45, 0.4);
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.04), transparent);
+  border-right: 1.5px dashed rgba(180, 145, 45, 0.45);
+  background: linear-gradient(to right, rgba(120, 75, 30, 0.09) 0%, rgba(212, 175, 55, 0.04) 60%, transparent 100%);
   pointer-events: none;
+  z-index: 2;
 }
 .imperial-thread-spine::before {
   content: "";
@@ -169,19 +196,20 @@ body {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: repeating-linear-gradient(to bottom, #d4af37, #d4af37 12px, transparent 12px, transparent 18px);
-  opacity: 0.65;
+  background: repeating-linear-gradient(to bottom, #d4af37, #d4af37 12px, rgba(212, 175, 55, 0.15) 12px, rgba(212, 175, 55, 0.15) 18px);
+  box-shadow: 0 0 2px rgba(180, 120, 30, 0.4);
+  opacity: 0.85;
 }
 /* 4 Stitched Eyelets */
 .thread-eyelet {
   position: absolute;
-  left: 7.5mm;
-  width: 5mm;
-  height: 5mm;
+  left: 7.2mm;
+  width: 5.5mm;
+  height: 5.5mm;
   border-radius: 50%;
-  border: 1.5px solid #b45309;
-  background: #fbf8f0;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+  border: 1.8px solid #92400e;
+  background: #fbf6ec;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.35), 0 0 0 1px rgba(212, 175, 55, 0.45);
 }
 .eyelet-1 { top: 35mm; }
 .eyelet-2 { top: 95mm; }
@@ -193,11 +221,11 @@ body {
   position: absolute;
   top: 50%;
   left: 55%;
-  transform: translate(-50%, -50%) rotate(-32deg);
-  font-size: 58px;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 56px;
   font-weight: 900;
   letter-spacing: 12px;
-  color: rgba(212, 175, 55, 0.06);
+  color: rgba(212, 175, 55, 0.065);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -205,37 +233,116 @@ body {
   font-family: "Songti SC", "Noto Serif SC", serif;
 }
 
-/* Imperial Double-Line Border Frame */
+/* Imperial Triple-Line Border Frame (武英殿朱丝栏与暗金线) */
 .imperial-frame {
   position: relative;
   z-index: 2;
-  border: 2px solid #8b2500;
-  padding: 12px;
+  border: 2.5px solid #851c14;
+  padding: 10px 12px;
   min-height: 100%;
   box-sizing: border-box;
+  background: rgba(255, 253, 248, 0.5);
 }
 .imperial-frame::before {
   content: "";
   position: absolute;
-  inset: 4px;
-  border: 0.8px solid rgba(139, 37, 0, 0.45);
+  inset: 3.5px;
+  border: 0.9px solid rgba(133, 28, 20, 0.55);
+  pointer-events: none;
+}
+.imperial-frame::after {
+  content: "";
+  position: absolute;
+  inset: 6.5px;
+  border: 0.5px solid rgba(197, 155, 39, 0.35);
   pointer-events: none;
 }
 
-/* Imperial Vermilion Carved Seal */
+/* Imperial Vermilion Carved Seal (御制朱泥印鉴质感) */
 .imperial-seal-stamp {
   display: inline-block;
-  padding: 6px 10px;
-  border: 2.5px solid #c23531;
-  color: #c23531;
+  padding: 3.5px 7px;
+  border: 2px solid #a8201a;
+  color: #a8201a;
   font-weight: 900;
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 2px;
-  border-radius: 4px;
-  line-height: 1.2;
+  border-radius: 3px;
+  line-height: 1.15;
   text-align: center;
-  background: rgba(194, 53, 49, 0.04);
-  box-shadow: inset 0 0 4px rgba(194, 53, 49, 0.15);
+  background: linear-gradient(135deg, rgba(168, 32, 26, 0.08) 0%, rgba(220, 38, 38, 0.02) 100%);
+  box-shadow: inset 0 0 0 1px rgba(168, 32, 26, 0.65), inset 0 0 3px rgba(168, 32, 26, 0.2);
+  text-shadow: 0 0.5px 0.5px rgba(168, 32, 26, 0.25);
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  user-select: none;
+}
+
+/* Imperial High-Aesthetic Module Card */
+.imperial-card {
+  background: linear-gradient(180deg, rgba(255, 253, 248, 0.9) 0%, rgba(250, 245, 235, 0.82) 100%);
+  border: 1px solid rgba(146, 64, 14, 0.28);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(139, 69, 19, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+.imperial-card-accent {
+  border-left: 3.5px solid #851c14 !important;
+}
+.imperial-card-emerald {
+  border-left: 3.5px solid #065f46 !important;
+  background: linear-gradient(180deg, rgba(242, 253, 248, 0.9) 0%, rgba(235, 248, 241, 0.82) 100%);
+}
+.imperial-card-rose {
+  border-left: 3.5px solid #9f1239 !important;
+  background: linear-gradient(180deg, rgba(255, 245, 247, 0.9) 0%, rgba(253, 238, 241, 0.82) 100%);
+}
+.imperial-card-gold {
+  border-left: 3.5px solid #b45309 !important;
+  background: linear-gradient(180deg, rgba(255, 251, 240, 0.9) 0%, rgba(254, 244, 222, 0.82) 100%);
+}
+
+/* Classical Cloud & Fish-Tail Divider (仿古版刻象鼻鱼尾分隔线) */
+.imperial-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3px 0;
+  gap: 8px;
+  color: rgba(146, 64, 14, 0.4);
+  font-size: 8.5px;
+  letter-spacing: 2px;
+}
+.imperial-divider::before,
+.imperial-divider::after {
+  content: "";
+  flex: 1;
+  height: 0.8px;
+  background: linear-gradient(to right, transparent, rgba(146, 64, 14, 0.3), transparent);
+}
+
+/* Imperial Woodblock Altar Table */
+.imperial-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #851c14;
+  background: rgba(255, 253, 249, 0.95);
+  font-size: 11px;
+}
+.imperial-table th {
+  background: linear-gradient(180deg, rgba(246, 235, 214, 0.95) 0%, rgba(236, 220, 192, 0.95) 100%);
+  color: #3b1708;
+  font-weight: 800;
+  border: 1px solid rgba(133, 28, 20, 0.35);
+  padding: 4.5px 4px;
+  letter-spacing: 0.5px;
+}
+.imperial-table td {
+  border: 1px solid rgba(133, 28, 20, 0.25);
+  padding: 3.5px 4px;
+  text-align: center;
+}
+.imperial-table tr:nth-child(even) {
+  background: rgba(250, 243, 230, 0.45);
 }
 
 /* Print Optimization for A4 Dossier */

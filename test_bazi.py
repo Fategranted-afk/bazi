@@ -5347,6 +5347,10 @@ jsc_dossier5_cmd = [
     if (!enHtml.includes("Domestic Spouse Ballast")) throw new Error("Missing Spouse Ballast in EN Page 1");
     if (!enHtml.includes("Three Golden Rules for Life")) throw new Error("Missing Three Golden Rules in EN Page 1");
     if (enHtml.includes("undefined")) throw new Error("Found 'undefined' in EN Dossier HTML!");
+    if (!enHtml.includes("imperial-corner-wrap-top")) throw new Error("EN dossier missing imperial-corner-wrap-top");
+    if (!enHtml.includes("imperial-corner-wrap-bottom")) throw new Error("EN dossier missing imperial-corner-wrap-bottom");
+    if (!enHtml.includes("imperial-card")) throw new Error("EN dossier missing imperial-card classes");
+    if (!enHtml.includes("imperial-table")) throw new Error("EN dossier missing imperial-table classes");
     if (!enHtml.includes("Note: Preserving the authentic Chinese classical passage alongside vernacular translation is recommended for personal reflection and deeper meditation.")) {
       throw new Error("Missing reflection preservation note in EN");
     }
@@ -5361,6 +5365,10 @@ jsc_dossier5_cmd = [
     if (!zhHtml.includes("Page 1 / 8")) throw new Error("Missing Page 1 / 8 in ZH");
     if (!zhHtml.includes("Page 2 / 8")) throw new Error("Missing Page 2 / 8 in ZH");
     if (!zhHtml.includes("Page 8 / 8")) throw new Error("Missing Page 8 / 8 in ZH");
+    if (!zhHtml.includes("imperial-corner-wrap-top")) throw new Error("ZH dossier missing imperial-corner-wrap-top");
+    if (!zhHtml.includes("imperial-corner-wrap-bottom")) throw new Error("ZH dossier missing imperial-corner-wrap-bottom");
+    if (!zhHtml.includes("imperial-card")) throw new Error("ZH dossier missing imperial-card classes");
+    if (!zhHtml.includes("imperial-table")) throw new Error("ZH dossier missing imperial-table classes");
     if (!zhHtml.includes("乱世三百年至高天命历史镜像")) throw new Error("Missing Soul Mirror in ZH Page 2");
     if (!zhHtml.includes("学优点 · 破局战法")) throw new Error("Missing Strengths in ZH Page 2");
     if (!zhHtml.includes("戒缺点 · 避险熔断")) throw new Error("Missing Pitfalls in ZH Page 2");
@@ -8428,7 +8436,154 @@ run_check85 = subprocess.run(jsc_check85_cmd, capture_output=True, text=True)
 assert run_check85.returncode == 0, f"Check 85 test failed: stdout={run_check85.stdout} stderr={run_check85.stderr}"
 print("✓ 卷首单页PDF极速导出防多余空白第二页防御（高精度295.5mm限高 / 样式隔离 / jsPDF deletePage 剪除钩子）验证通过！")
 
-print("\n🎉 ALL 85 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 86. Validate Imperial Dossier Elevated Aesthetics, Antique Parchment Texture & Triple Border
+print("\n=== 86. Validating Imperial Dossier Elevated Aesthetics, Antique Parchment & Court Borders ===")
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+assert 'imperial-corner-wrap-top' in css_content, "Missing imperial-corner-wrap-top in style.css"
+assert 'imperial-corner-wrap-bottom' in css_content, "Missing imperial-corner-wrap-bottom in style.css"
+assert 'imperial-card' in css_content, "Missing imperial-card in style.css"
+assert 'imperial-card-accent' in css_content, "Missing imperial-card-accent in style.css"
+assert 'imperial-card-emerald' in css_content, "Missing imperial-card-emerald in style.css"
+assert 'imperial-card-rose' in css_content, "Missing imperial-card-rose in style.css"
+assert 'imperial-card-gold' in css_content, "Missing imperial-card-gold in style.css"
+assert 'imperial-divider' in css_content, "Missing imperial-divider in style.css"
+assert 'imperial-table' in css_content, "Missing imperial-table in style.css"
+
+jsc_check86_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    "-e",
+    '''
+    var window = this;
+    var location = { href: "http://localhost/", search: "", hash: "" };
+    var navigator = { language: "zh-CN", languages: ["zh-CN", "zh"] };
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); },
+      removeItem: function(k) { delete this._data[k]; }
+    };
+    var console = { log: function(){}, warn: function(){}, error: function(){} };
+    window.console = console;
+    window.addEventListener = function() {};
+    var performance = { now: function() { return Date.now(); } };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/chart.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || 'DIV').toUpperCase(),
+        value: id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : ""),
+        checked: false,
+        _rawInnerHTML: '',
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        innerText: '',
+        textContent: '',
+        className: '',
+        style: {},
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        _listeners: {},
+        _children: [],
+        appendChild: function(child) { this._children.push(child); },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = this._listeners[evt] || []; for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); },
+        querySelector: function(sel) { return makeEl('query_' + sel); },
+        querySelectorAll: function(sel) { return []; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined && this[a] !== null; },
+        getContext: function() { return { clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){}, arc: function(){}, setLineDash: function(){}, scale: function(){}, createLinearGradient: function(){ return { addColorStop: function(){} }; } }; }
+      };
+    }
+
+    var allIds = [
+      'landingPortalView', 'dashboardView', 'btnExportDossier', 'calcBtn',
+      'birthDate', 'birthTime', 'gender', 'citySelect', 'useTrueSolarTime', 'timezoneSelect',
+      'customLongitude', 'lateRatNextDay', 'imperialDossierModal', 'imperialDossierContainer',
+      'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'btnQuickExportSinglePdf',
+      'dossierDownloadSinglePdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus',
+      'dossierExportStatusMsg', 'dossierExportStatusDismiss'
+    ];
+    for (var i = 0; i < allIds.length; i++) {
+      elementStore[allIds[i]] = makeEl(allIds[i]);
+    }
+
+    var document = {
+      body: { style: {} },
+      documentElement: { lang: "zh-CN" },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelector: function(sel) { return makeEl('query_' + sel); },
+      querySelectorAll: function() { return []; },
+      createElement: function(tag) { return makeEl('created_' + tag, tag); },
+      addEventListener: function(evt, fn) { if (evt === 'DOMContentLoaded') fn(); }
+    };
+    window.document = document;
+
+    load("js/app.js");
+
+    elementStore['calcBtn'].trigger('click');
+    elementStore['btnExportDossier'].trigger('click');
+
+    // Test ZH Dossier layout
+    elementStore['dossierLangZh'].trigger('click');
+    var zhHtml = elementStore['imperialDossierContainer'].innerHTML;
+    if (!zhHtml.includes('imperial-corner-wrap-top')) throw new Error("ZH dossier missing imperial-corner-wrap-top");
+    if (!zhHtml.includes('imperial-corner-wrap-bottom')) throw new Error("ZH dossier missing imperial-corner-wrap-bottom");
+    if (!zhHtml.includes('imperial-card')) throw new Error("ZH dossier missing imperial-card classes");
+    if (!zhHtml.includes('imperial-table')) throw new Error("ZH dossier missing imperial-table classes");
+
+    // Test EN Dossier layout and zero Chinese characters
+    elementStore['dossierLangEn'].trigger('click');
+    var enHtml = elementStore['imperialDossierContainer'].innerHTML;
+    if (!enHtml.includes('imperial-corner-wrap-top')) throw new Error("EN dossier missing imperial-corner-wrap-top");
+    if (!enHtml.includes('imperial-corner-wrap-bottom')) throw new Error("EN dossier missing imperial-corner-wrap-bottom");
+    if (!enHtml.includes('imperial-card')) throw new Error("EN dossier missing imperial-card classes");
+    if (!enHtml.includes('imperial-table')) throw new Error("EN dossier missing imperial-table classes");
+    var zhMatches = enHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (zhMatches && zhMatches.length > 0) {
+      throw new Error("EN dossier contains residual Chinese: " + zhMatches.slice(0, 20).join(''));
+    }
+    '''
+]
+run_check86 = subprocess.run(jsc_check86_cmd, capture_output=True, text=True)
+assert run_check86.returncode == 0, f"Check 86 test failed: stdout={run_check86.stdout} stderr={run_check86.stderr}"
+print("✓ 皇家战报精装排版美化（仿古宣纸底纹/内府朱丝栏与暗金线/四角绫绢包角/御制朱印泥/木版祭坛神机表/双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 86 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
