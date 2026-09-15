@@ -10545,6 +10545,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const crPd = careerReport ? careerReport.peerDynamics : null;
     const crArchs = (careerReport && careerReport.workplaceArchetypes) ? careerReport.workplaceArchetypes : [];
     const crTt = careerReport ? careerReport.timingTrajectory : null;
+    const upwardRuleZh = (crMu && (crMu.generalRuleZh || crMu.avoidOffendingZh || crMu.styleZh)) || '以严密数据与结构化成果向上复命，多请示少冒进，克制叛逆锋芒。';
+    const upwardRuleEn = (crMu && (crMu.generalRuleEn || crMu.avoidOffendingEn || crMu.styleEn)) || 'Preserve institutional alignment and present structured results.';
 
     // Executive Summary Blueprint Data Extraction
     const sf = (portrait.canons && portrait.canons.shenfeng) || (bazi.canons && bazi.canons.shenfeng) || {};
@@ -10634,7 +10636,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Core Advantage: ' : '核心天赋优势：'}</b>${isEn ? arch1.coreStrengthsEn : arch1.coreStrengthsZh}</p>
             <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Breakthrough Tactic: ' : '向下突破与战略战法：'}</b>${isEn ? arch1.breakthroughTacticEn : arch1.breakthroughTacticZh}</p>
-            <p class="text-[10.5px] text-gray-700 leading-tight"><b>${isEn ? 'Managing Up & Colleagues: ' : '向上管理与职场沟通：'}</b>${isEn ? (crMu ? crMu.generalRuleEn : 'Preserve institutional alignment and present structured results.') : (crMu ? crMu.generalRuleZh : '以严密数据与结构化成果向上复命，多请示少冒进，克制叛逆锋芒。')}</p>
+            <p class="text-[10.5px] text-gray-700 leading-tight"><b>${isEn ? 'Managing Up & Colleagues: ' : '向上管理与职场沟通：'}</b>${isEn ? upwardRuleEn : upwardRuleZh}</p>
           </div>
 
           <!-- Module 2: Wealth & Capital -->

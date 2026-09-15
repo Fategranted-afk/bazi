@@ -5044,6 +5044,11 @@ jsc_yinyang_cmd = [
       if (typeof zn.isMutated !== "boolean") throw new Error("Missing isMutated boolean at age " + age);
       if (!zn.ruleInteractionZh) throw new Error("Missing ruleInteractionZh at age " + age);
       if (!zn.ruleInteractionEn) throw new Error("Missing ruleInteractionEn at age " + age);
+      if (!zn.stepDescriptionZh) throw new Error("Missing stepDescriptionZh at age " + age);
+      if (!zn.stepDescriptionEn) throw new Error("Missing stepDescriptionEn at age " + age);
+      if (typeof zn.yearInDecade !== "number") throw new Error("Missing yearInDecade at age " + age);
+      if (typeof zn.totalYearsInDecade !== "number") throw new Error("Missing totalYearsInDecade at age " + age);
+      if (typeof zn.yingLinePos !== "number") throw new Error("Missing yingLinePos at age " + age);
       if (!zn.hexagram || !zn.hexagram.nameZh || !zn.hexagram.nameEn) {
         throw new Error("Missing hexagram metadata at age " + age);
       }
@@ -5056,32 +5061,15 @@ jsc_yinyang_cmd = [
       if (!zn.isYangYear && !zn.isYangLine) quadrantsHit.yinYin = true;
       if (!zn.isYangYear && zn.isYangLine) quadrantsHit.yinYang = true;
 
-      // Assert Yin-Yang Law logic
-      var expectedRepulsion = (zn.isYangYear === zn.isYangLine);
-      if (zn.isRepulsion !== expectedRepulsion) {
-        throw new Error("isRepulsion mismatch at age " + age + ": got " + zn.isRepulsion + " expected " + expectedRepulsion);
-      }
+      if (zn.isMutated) repulsionCount++;
+      else attractionCount++;
 
-      if (zn.isRepulsion) {
-        repulsionCount++;
-        if (!zn.isMutated) throw new Error("Repulsion must mutate line at age " + age);
-        var flippedLine = zn.binary[zn.activeLinePos - 1];
-        var origLine = zn.baseBinary[zn.activeLinePos - 1];
-        if (flippedLine === origLine) {
-          throw new Error("Active line must flip on repulsion at age " + age);
-        }
-      } else {
-        attractionCount++;
-        if (zn.isMutated) throw new Error("Attraction must preserve line at age " + age);
-        if (zn.binary[zn.activeLinePos - 1] !== zn.baseBinary[zn.activeLinePos - 1]) {
-          throw new Error("Active line must NOT flip on attraction at age " + age);
-        }
-      }
+      var enFields = [zn.annualGanzhiEn, zn.ruleInteractionEn, zn.stepDescriptionEn, zn.hexagram.nameEn];
+      enFields.forEach(function(s) {
+        if (/[\u4e00-\u9fa5]/.test(s)) throw new Error("Residual Chinese in English field: " + s);
+      });
     }
 
-    if (repulsionCount === 0 || attractionCount === 0) {
-      throw new Error("Must encounter both repulsion and attraction across ages 1-60");
-    }
     if (yangYearsCount === 0 || yinYearsCount === 0) {
       throw new Error("Must encounter both Yang years and Yin years across ages 1-60");
     }
@@ -5089,27 +5077,63 @@ jsc_yinyang_cmd = [
       throw new Error("All 4 Yin-Yang Law quadrants must be exercised across 60 ages");
     }
 
-    // Canonical Prompt Scenario Verification:
-    // Natal Early Heaven Hexagram is Qian (乾为天). At age 22, active line is Line 3 (Yang Line).
-    // In Yang Year (e.g. 2024 甲辰): Repulsion -> Line 3 flips 1->0 -> derives Hexagram 10 《天泽履》.
-    // In Yin Year (e.g. 2025 乙巳): Attraction -> Line 3 unchanged -> retains Hexagram 1 《乾为天》.
+    // Canonical Authentic Yuan Tang & Ying Line Progression Verification:
+    // Chart with Qian as natal hexagram (all 6 lines Yang, 9 years each)
     var qianBazi = BaZiEngine.calculate({
       year: 1980, month: 1, day: 15, hour: 12, gender: "乾造",
       useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
     });
-    var qianHex = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 22, 2024);
-    if (qianHex.xianTian.hexagram.number !== 1) {
-      throw new Error("Expected natal Qian hexagram (1), got " + qianHex.xianTian.hexagram.number);
+
+    // 1. Yang Line Year 1:
+    // - In Yang Year (1980 庚申, Yang year): Yang meets Yang -> Unchanged -> retains Qian (1)
+    var qianAge1Yang = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 1, 1980);
+    if (qianAge1Yang.zhiNian.hexagram.number !== 1 || qianAge1Yang.zhiNian.isMutated) {
+      throw new Error("Yang line in Yang year (1980) must retain base hexagram Qian (1)");
     }
-    if (qianHex.zhiNian.activeLinePos !== 3 || !qianHex.zhiNian.isYangLine) {
-      throw new Error("Expected Line 3 Yang line at age 22, got line " + qianHex.zhiNian.activeLinePos + " yang: " + qianHex.zhiNian.isYangLine);
+    if (!qianAge1Yang.zhiNian.stepDescriptionZh.includes("逢阳年不动（守本卦）")) {
+      throw new Error("Expected stepDescriptionZh for Yang year unchanged, got: " + qianAge1Yang.zhiNian.stepDescriptionZh);
     }
-    if (!qianHex.zhiNian.isYangYear || !qianHex.zhiNian.isRepulsion || qianHex.zhiNian.hexagram.number !== 10) {
-      throw new Error("In Yang year 2024, expected repulsion to Tian Ze Lv (10), got hex " + qianHex.zhiNian.hexagram.number + " (" + qianHex.zhiNian.hexagram.nameZh + ")");
+
+    // - In Yin Year (1981 辛酉, Yin year): Yang meets Yin -> Mutates Line 1 (1->0) -> derives Tian Feng Gou (44)
+    var qianAge1Yin = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 1, 1981);
+    if (qianAge1Yin.zhiNian.hexagram.number !== 44 || !qianAge1Yin.zhiNian.isMutated) {
+      throw new Error("Yang line in Yin year (1981) must mutate Line 1 to Tian Feng Gou (44)");
     }
-    var qianHexYin = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 22, 2025);
-    if (qianHexYin.zhiNian.isYangYear || qianHexYin.zhiNian.isRepulsion || qianHexYin.zhiNian.hexagram.number !== 1) {
-      throw new Error("In Yin year 2025, expected attraction to retain Qian (1), got hex " + qianHexYin.zhiNian.hexagram.number + " (" + qianHexYin.zhiNian.hexagram.nameZh + ")");
+    if (!qianAge1Yin.zhiNian.stepDescriptionZh.includes("逢阴年相感 · 元堂（第初爻）阳变阴")) {
+      throw new Error("Expected stepDescriptionZh for Line 1 flip, got: " + qianAge1Yin.zhiNian.stepDescriptionZh);
+    }
+
+    // 2. Yang Line Year 2 & 3:
+    // Takes Ying line (Line 1 takes Line 4). Line 4 mutates (1->0) -> derives Xun (57)
+    var qianAge2 = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 2, 1982);
+    if (qianAge2.zhiNian.hexagram.number !== 57 || qianAge2.zhiNian.yingLinePos !== 4) {
+      throw new Error("Year 2 of Line 1 must mutate Ying line (Line 4) to Xun (57), got " + qianAge2.zhiNian.hexagram.number);
+    }
+    // Year 3 takes Ying line again -> mutates Line 4 (0->1) -> returns to Tian Feng Gou (44)
+    var qianAge3 = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 3, 1983);
+    if (qianAge3.zhiNian.hexagram.number !== 44 || qianAge3.zhiNian.yingLinePos !== 4) {
+      throw new Error("Year 3 of Line 1 must flip Ying line (Line 4) back to Tian Feng Gou (44), got " + qianAge3.zhiNian.hexagram.number);
+    }
+
+    // 3. Yang Line Year 4:
+    // Does not take Ying line, pushes line upward (Line 2) -> Tian Shan Dun (33)
+    var qianAge4 = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 4, 1984);
+    if (qianAge4.zhiNian.hexagram.number !== 33 || qianAge4.zhiNian.lastMutatedLine !== 2) {
+      throw new Error("Year 4 of Line 1 must push to Line 2 and derive Tian Shan Dun (33), got " + qianAge4.zhiNian.hexagram.number);
+    }
+
+    // 4. Yin Line Yuan Tang:
+    var kunBazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, gender: "坤造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var kunAge1 = IChingEngine.calculateFourPillarsHexagrams(kunBazi, 1, 1990);
+    if (!kunAge1.zhiNian.stepDescriptionZh.includes("无论阴阳年，元堂（第初爻）阴变阳")) {
+      throw new Error("Yin line year 1 must flip 0->1, got: " + kunAge1.zhiNian.stepDescriptionZh);
+    }
+    var kunAge2 = IChingEngine.calculateFourPillarsHexagrams(kunBazi, 2, 1991);
+    if (!kunAge2.zhiNian.stepDescriptionZh.includes("直接往上推一爻（第二爻）")) {
+      throw new Error("Yin line year 2 must push up line 2, got: " + kunAge2.zhiNian.stepDescriptionZh);
     }
     '''
 ]
@@ -5133,12 +5157,14 @@ jsc_dossier5_cmd = [
     load("data/lixuzhong.js");
     load("data/iching.js");
     load("data/tianji.js");
+    load("data/tengods.js");
     load("js/i18n.js");
     load("js/bazi-engine.js");
     load("js/portrait-engine.js");
     load("js/chart.js");
     load("js/luck-engine.js");
     load("js/iching-engine.js");
+    load("js/career-engine.js");
 
     var localStorage = {
       _data: {},
@@ -5220,6 +5246,9 @@ jsc_dossier5_cmd = [
       PortraitEngine: PortraitEngine,
       LuckEngine: LuckEngine,
       IChingEngine: IChingEngine,
+      CareerEngine: CareerEngine,
+      TenGodsDB: TenGodsDB,
+      TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
       SanMingDB: SanMingDB,
       QiongTongDB: QiongTongDB,
       ZiPingZhenQuanDB: ZiPingZhenQuanDB,
@@ -5396,16 +5425,24 @@ jsc_cycle_cmd = [
       if (pt.isMutated) mutatedCount++;
       else preservedCount++;
 
-      // Verify Yin-Yang law logic:
-      // like polarities repel -> isMutated = true
-      // opposite polarities attract -> isMutated = false
-      var expectedMutated = (pt.isYangYear === pt.isYangLine);
-      if (pt.isMutated !== expectedMutated) {
-        throw new Error("Yin-Yang law mismatch at age " + pt.age + ": isYangYear=" + pt.isYangYear + ", isYangLine=" + pt.isYangLine + ", isMutated=" + pt.isMutated);
+      if (!pt.stepDescriptionZh || pt.stepDescriptionZh.length === 0) {
+        throw new Error("Missing stepDescriptionZh at age " + pt.age);
+      }
+      if (!pt.stepDescriptionEn || pt.stepDescriptionEn.length === 0) {
+        throw new Error("Missing stepDescriptionEn at age " + pt.age);
+      }
+      if (typeof pt.yearInDecade !== 'number') {
+        throw new Error("Missing yearInDecade at age " + pt.age);
+      }
+      if (typeof pt.totalYearsInDecade !== 'number') {
+        throw new Error("Missing totalYearsInDecade at age " + pt.age);
+      }
+      if (typeof pt.yingLinePos !== 'number') {
+        throw new Error("Missing yingLinePos at age " + pt.age);
       }
 
       // Assert zero residual Chinese in English fields
-      var enFields = [pt.epochEn, pt.annualGanzhiEn, pt.ruleInteractionEn, pt.annualHex.nameEn, pt.annualTJ.liuNianEn, pt.annualTJ.riddleEn];
+      var enFields = [pt.epochEn, pt.annualGanzhiEn, pt.ruleInteractionEn, pt.stepDescriptionEn, pt.annualHex.nameEn, pt.annualTJ.liuNianEn, pt.annualTJ.riddleEn];
       enFields.forEach(function(str, fIdx) {
         if (!str || str.length === 0) throw new Error("Empty English field at age " + pt.age + " field " + fIdx);
         if (/[\u4e00-\u9fa5]/.test(str)) {
@@ -6584,11 +6621,11 @@ jsc_career_core_cmd = [
     var bazi1 = testCharts[0];
     var luck1 = LuckEngine.calculateLuck(bazi1, 2026);
     var res1 = CareerEngine.generateCareerReport(bazi1, luck1, 2026);
-    if (res1.timingTrajectory.annualHex.number !== 7) {
-      throw new Error("Expected Annual Hexagram 7 (地水师) for 1990 chart, got " + res1.timingTrajectory.annualHex.number);
+    if (res1.timingTrajectory.annualHex.number !== 27) {
+      throw new Error("Expected Annual Hexagram 27 (山雷颐) for 1990 chart, got " + res1.timingTrajectory.annualHex.number);
     }
-    if (res1.timingTrajectory.annualHex.character !== '䷆') {
-      throw new Error("Expected Hexagram character ䷆, got " + res1.timingTrajectory.annualHex.character);
+    if (res1.timingTrajectory.annualHex.character !== '䷚') {
+      throw new Error("Expected Hexagram character ䷚, got " + res1.timingTrajectory.annualHex.character);
     }
     if (res1.timingTrajectory.decadeGanzhi !== '丙戌' || res1.timingTrajectory.decadeGod !== '比肩') {
       throw new Error("Unexpected decade transit: " + res1.timingTrajectory.decadeGanzhi + " " + res1.timingTrajectory.decadeGod);

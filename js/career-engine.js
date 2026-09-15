@@ -168,7 +168,7 @@ class CareerEngine {
       peerDynamics,
       workplaceArchetypes,
       timingTrajectory,
-      glossary: TEN_GODS_GLOSSARY
+      glossary: (typeof TEN_GODS_GLOSSARY !== 'undefined') ? TEN_GODS_GLOSSARY : ((typeof TenGodsDB !== 'undefined' && TenGodsDB.getAll) ? TenGodsDB.getAll() : {})
     };
   }
 
@@ -320,6 +320,8 @@ class CareerEngine {
       styleEn,
       avoidOffendingZh,
       avoidOffendingEn,
+      generalRuleZh: avoidOffendingZh,
+      generalRuleEn: avoidOffendingEn,
       askingResourcesZh,
       askingResourcesEn,
       scripts
