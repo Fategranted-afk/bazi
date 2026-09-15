@@ -4360,19 +4360,20 @@ jsc_tianji_cmd = [
     if (userRes.xianTian.hexagram.number !== 44) {
       throw new Error("userChart xianTian expected Hexagram 44 (天风姤), got " + userRes.xianTian.hexagram.number);
     }
-    // HouTian must be derived by birth hour line mutation (以时剥换):
+    // HouTian must be derived by birth hour line mutation (以时剥换) + Upper/Lower swap (上下卦互换):
     // userChart hour branch is 辰 -> corresponds to Line 5 (辰戌: 5)
-    // XianTian Hexagram 44 (天风姤, [0, 1, 1, 1, 1, 1]) line 5 mutated (1 -> 0) gives [0, 1, 1, 1, 0, 1] -> Hexagram 50 (火风鼎)
-    if (userRes.houTian.hexagram.number !== 50) {
-      throw new Error("userChart houTian expected Hexagram 50 (火风鼎), got " + userRes.houTian.hexagram.number);
+    // XianTian Hexagram 44 (天风姤, [0, 1, 1, 1, 1, 1]) line 5 mutated gives [0, 1, 1, 1, 0, 1] (火风鼎)
+    // Upper and lower trigrams swapped: lower Li [1,0,1], upper Xun [0,1,1] -> [1, 0, 1, 0, 1, 1] -> Hexagram 37 (风火家人)
+    if (userRes.houTian.hexagram.number !== 37) {
+      throw new Error("userChart houTian expected Hexagram 37 (风火家人), got " + userRes.houTian.hexagram.number);
     }
     if (userRes.houTian.hourLinePos !== 5) {
       throw new Error("userChart houTian hourLinePos expected 5, got " + userRes.houTian.hourLinePos);
     }
 
     // 5. Test all 6 hour branch pairs on Qian natal hexagram (1 乾为天):
-    // 子/午 -> Line 1 (44 天风姤), 丑/未 -> Line 2 (13 天火同人), 寅/申 -> Line 3 (10 天泽履),
-    // 卯/酉 -> Line 4 (9 风天小畜), 辰/戌 -> Line 5 (14 火天大有), 巳/亥 -> Line 6 (43 泽天夬)
+    // 子/午 -> Line 1 (9 风天小畜), 丑/未 -> Line 2 (14 火天大有), 寅/申 -> Line 3 (43 泽天夬),
+    // 卯/酉 -> Line 4 (44 天风姤), 辰/戌 -> Line 5 (13 天火同人), 巳/亥 -> Line 6 (10 天泽履)
     var qianChartTemplate = {
       gender: "乾造",
       input: { year: 1984, gender: "乾造" },
@@ -4384,29 +4385,31 @@ jsc_tianji_cmd = [
       }
     };
     var hourTests = [
-      { branch: "子", expLine: 1, expHex: 44 },
-      { branch: "午", expLine: 1, expHex: 44 },
-      { branch: "丑", expLine: 2, expHex: 13 },
-      { branch: "未", expLine: 2, expHex: 13 },
-      { branch: "寅", expLine: 3, expHex: 10 },
-      { branch: "申", expLine: 3, expHex: 10 },
-      { branch: "卯", expLine: 4, expHex: 9 },
-      { branch: "酉", expLine: 4, expHex: 9 },
-      { branch: "辰", expLine: 5, expHex: 14 },
-      { branch: "戌", expLine: 5, expHex: 14 },
-      { branch: "巳", expLine: 6, expHex: 43 },
-      { branch: "亥", expLine: 6, expHex: 43 }
+      { branch: "子", expLine: 1, expHex: 9 },
+      { branch: "午", expLine: 1, expHex: 9 },
+      { branch: "丑", expLine: 2, expHex: 14 },
+      { branch: "未", expLine: 2, expHex: 14 },
+      { branch: "寅", expLine: 3, expHex: 43 },
+      { branch: "申", expLine: 3, expHex: 43 },
+      { branch: "卯", expLine: 4, expHex: 44 },
+      { branch: "酉", expLine: 4, expHex: 44 },
+      { branch: "辰", expLine: 5, expHex: 13 },
+      { branch: "戌", expLine: 5, expHex: 13 },
+      { branch: "巳", expLine: 6, expHex: 10 },
+      { branch: "亥", expLine: 6, expHex: 10 }
     ];
     hourTests.forEach(function(ht) {
       var c = JSON.parse(JSON.stringify(qianChartTemplate));
       c.pillars.hour.branch = ht.branch;
-      // In Qian chart (odd=46->6 乾, even=14->4 巽 for default, but let us test direct line mutation on Qian):
       var linesQian = [1, 1, 1, 1, 1, 1];
       var flipped = [...linesQian];
       flipped[ht.expLine - 1] = 1 - flipped[ht.expLine - 1];
-      var hex = IChingDB.getByLines(flipped);
+      var lower = flipped.slice(0, 3);
+      var upper = flipped.slice(3, 6);
+      var swapped = upper.concat(lower);
+      var hex = IChingDB.getByLines(swapped);
       if (hex.number !== ht.expHex) {
-        throw new Error("Hour test for " + ht.branch + " expected hex " + ht.expHex + ", got " + hex.number);
+        throw new Error("Hour test with swap for " + ht.branch + " expected hex " + ht.expHex + ", got " + hex.number);
       }
     });
     '''

@@ -542,8 +542,14 @@ class IChingEngine {
     const BRANCH_EN_MAP = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
     const hourBranchEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(hourBranch, 'en').split(' ')[0] : (BRANCH_EN_MAP[hourBranch] || 'Zi');
 
-    const houTianBinary = [...xianTianBinary];
-    houTianBinary[hourLinePos - 1] = 1 - houTianBinary[hourLinePos - 1];
+    // 1. 先天卦以时剥换（翻转出生时辰对应爻位）
+    const mutatedBinary = [...xianTianBinary];
+    mutatedBinary[hourLinePos - 1] = 1 - mutatedBinary[hourLinePos - 1];
+
+    // 2. 最后上下卦互相换位置（由体起用，体用互易，上卦与下卦对调）
+    const mutatedLowerTriBinary = mutatedBinary.slice(0, 3);
+    const mutatedUpperTriBinary = mutatedBinary.slice(3, 6);
+    const houTianBinary = mutatedUpperTriBinary.concat(mutatedLowerTriBinary);
 
     const houTianHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(houTianBinary) : null;
     const houTianTJ = (houTianHex && typeof TianJiDB !== 'undefined') ? TianJiDB.getByNumber(houTianHex.number) : null;
@@ -874,8 +880,8 @@ class IChingEngine {
         hourBranch,
         hourBranchEn,
         hourLinePos,
-        derivationRuleZh: `由体起用 · 以时剥换（${hourBranch}时值第${posNamesZh[hourLinePos - 1]}爻）· 先天第${posNamesZh[hourLinePos - 1]}爻${xianTianBinary[hourLinePos - 1] === 1 ? '阳变阴' : '阴变阳'}成后天【${houTianHex ? houTianHex.nameZh : ''}】`,
-        derivationRuleEn: `Time-Based Line Mutation (${hourBranchEn} Hour at Line ${hourLinePos}): Line ${hourLinePos} Inverted -> Later Heaven [${houTianHex ? houTianHex.nameEn : ''}]`
+        derivationRuleZh: `由体起用 · 以时剥换兼上下互易（${hourBranch}时值第${posNamesZh[hourLinePos - 1]}爻变爻，再上下卦对调）成后天【${houTianHex ? houTianHex.nameZh : ''}】`,
+        derivationRuleEn: `Time Mutation & Trigram Inversion (${hourBranchEn} Hour Line ${hourLinePos} Inverted, then Upper/Lower Swapped) -> Later Heaven [${houTianHex ? houTianHex.nameEn : ''}]`
       },
       zhiNian: {
         year: effSelectedYear,
