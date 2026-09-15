@@ -2430,7 +2430,7 @@ var console = {
   }
 };
 
-var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'btnResetToActualTime', 'btnResetToActualTimeTop', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui', 'navBtnCareer', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portalBtnFengShui', 'portalBtnCareer', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'timeDynamicsSection', 'tdAnnualBadge', 'timeDynamicsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-definitions', 'tenGodsContainer', 'tenGodsFilterGroup', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer', 'view-fengshui', 'btnJumpToHomeFromFengShui', 'fengshuiContentContainer', 'fengshuiQuickBadges', 'ziping100Section', 'ziping100Container', 'zipingScoreBadges', 'fourPillarsHexSection', 'fourPillarsHexContainer', 'fourPillarsAgeSlider', 'fourPillarsAgeDisplay', 'currentCountrySelect', 'currentCitySelect', 'currentCustomCityInput', 'fsCardCountrySelect', 'fsCardCitySelect', 'fsCardCustomCityInput', 'fengshuiCityEvaluationCard', 'view-career', 'btnJumpToHomeFromCareer', 'careerContentContainer', 'careerQuickBadgesDashboard'];
+var allIds = ['landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar', 'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge', 'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer', 'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn', 'btnResetToActualTime', 'btnResetToActualTimeTop', 'themeToggle', 'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay', 'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui', 'navBtnCareer', 'navBtnHistory', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc', 'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portalBtnFengShui', 'portalBtnCareer', 'portraitHeaderBadges', 'vigorStatusBadge', 'vigorSummaryText', 'vigorMetricsBars', 'climateSummaryBox', 'paretoCoreSection', 'paretoCoreContainer', 'patternWeightSummaryBar', 'portraitPatternsContainer', 'personaPersonality', 'personaCareer', 'personaWealth', 'personaAdvice', 'defectsContainer', 'mentalFrictionSection', 'remedyTabTailored', 'remedyTabComparison', 'remedyContainer', 'view-strategy', 'btnJumpToHomeFromStrategy', 'strategyContentContainer', 'view-friction', 'btnJumpToHomeFromFriction', 'frictionContentContainer', 'view-luck', 'luckCyclesSection', 'luckProgressionBadge', 'luckProgressionText', 'chronoNavigatorSection', 'chronoPlayBtn', 'chronoAgeValueBadge', 'chronoJumpCurrent', 'chronoJumpGolden', 'chronoJumpTransit', 'chronoAgeSlider', 'chronoTimelineCanvas', 'chronoYearCard', 'currentSelectedDecadeLabel', 'decadesContainer', 'currentSelectedAnnualLabel', 'annualContainer', 'currentSelectedMonthLabel', 'monthlyContainer', 'transitFortuneDetailCard', 'fortuneActiveBadge', 'fortuneCycleTabs', 'fortuneDetailBody', 'luckDailyDatePicker', 'luckTodayBtn', 'fivePillarsMatrixBody', 'luckInteractionsContainer', 'operationalPlaybookSection', 'operationalPlaybookContainer', 'ecologicalResonanceSection', 'ecologicalResonanceContainer', 'timeDynamicsSection', 'tdAnnualBadge', 'timeDynamicsContainer', 'view-canons', 'tab-sanming', 'sanmingAutoResult', 'smDaySelect', 'smHourSelect', 'smCustomQueryBtn', 'smCustomResult', 'smPatternsList', 'tab-qiongtong', 'qiongtongAutoResult', 'qtStemSelect', 'qtBranchSelect', 'qtCustomQueryBtn', 'qtCustomResult', 'tab-ziping', 'zipingAutoResult', 'zipingPatternsList', 'tab-ditiansui', 'ditiansuiAutoResult', 'dtsStemButtons', 'dtsCustomResult', 'dtsChaptersList', 'tab-yuanhai', 'yuanhaiChaptersList', 'yuanhaiTenGodsList', 'tab-shenfeng', 'shenfengAutoResult', 'shenfengTreatisesList', 'tab-yuzhao', 'yuzhaoAutoResult', 'yuzhaoAphorismsList', 'tab-lixuzhong', 'lixuzhongAutoResult', 'lixuzhongChaptersList', 'tab-definitions', 'tenGodsContainer', 'tenGodsFilterGroup', 'tab-search', 'dbSearchInput', 'dbSearchBtn', 'dbSearchResults', 'view-iching', 'ichingQueryInput', 'ichingSelect', 'ichingInstantBtn', 'ichingCoinBtn', 'ichingTimeBtn', 'coinTossArena', 'coinStepBadge', 'coinResetBtn', 'coinGraphic1', 'coinGraphic2', 'coinGraphic3', 'throwCoinBtn', 'coinLinesProgress', 'ichingResultContainer', 'ichingInitPrompt', 'ichingResultCard', 'ichingMetaBanner', 'originalHexagramCard', 'resultingHexagramCard', 'complementaryHexagramsBar', 'oracleFocusTag', 'canonicalScripturesContent', 'modernInterpretationCards', 'view-synastry', 'synastryModeRomantic', 'synastryModeBusiness', 'btnSynastryLoadA', 'synastryDateA', 'synastryTimeA', 'synastryGenderA', 'synastryLabelA', 'synastryDateB', 'synastryTimeB', 'synastryGenderB', 'synastryLabelB', 'calcSynastryBtn', 'synastryResultContainer', 'elementFluxCanvas', 'calculationProgressModal', 'calcProgressTitle', 'calcProgressStageText', 'calcProgressBarTrack', 'calcProgressBarInner', 'calcProgressPercentText', 'progressStep1', 'progressStep2', 'progressStep3', 'progressStep4', 'progressStep5', 'imperialDossierModal', 'dossierLangZh', 'dossierLangEn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss', 'imperialDossierContainer', 'view-fengshui', 'btnJumpToHomeFromFengShui', 'fengshuiContentContainer', 'fengshuiQuickBadges', 'ziping100Section', 'ziping100Container', 'zipingScoreBadges', 'fourPillarsHexSection', 'fourPillarsHexContainer', 'fourPillarsAgeSlider', 'fourPillarsAgeDisplay', 'currentCountrySelect', 'currentCitySelect', 'currentCustomCityInput', 'fsCardCountrySelect', 'fsCardCitySelect', 'fsCardCustomCityInput', 'fengshuiCityEvaluationCard', 'view-career', 'btnJumpToHomeFromCareer', 'careerContentContainer', 'careerQuickBadgesDashboard', 'view-history', 'historyContentContainer', 'historyQuickBadgesDashboard', 'btnToggleHistoryFullscreen', 'btnExitHistoryFullscreenFloating', 'btnJumpToHomeFromHistory', 'historyFigureDetailModalDashboard', 'btnCloseHistoryDetailModalDashboard', 'historyDetailModalContentDashboard', 'historyFullscreenIcon', 'historyFullscreenText'];
 var elementStore = {};
 
 function makeEl(id, tag) {
@@ -2447,7 +2447,8 @@ function makeEl(id, tag) {
     'navBtnIChing': 'view-iching',
     'navBtnSynastry': 'view-synastry',
     'navBtnFengShui': 'view-fengshui',
-    'navBtnCareer': 'view-career'
+    'navBtnCareer': 'view-career',
+    'navBtnHistory': 'view-history'
   };
   return {
     id: id,
@@ -2578,6 +2579,9 @@ load('js/portrait-engine.js');
 load('js/luck-engine.js');
 load('js/iching-engine.js');
 load('js/synastry-engine.js');
+load('js/career-engine.js');
+load('data/historical_figures.js');
+load('js/history-engine.js');
 load('js/visual-alchemy.js');
 load('js/chart.js');
 load('js/app.js');
@@ -2591,7 +2595,7 @@ document._domReady();
 elementStore['calcBtn'].trigger('click');
 
 // Switch all views in ZH
-var views = ['view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching', 'view-synastry', 'view-fengshui', 'view-home'];
+var views = ['view-strategy', 'view-friction', 'view-luck', 'view-canons', 'view-iching', 'view-synastry', 'view-fengshui', 'view-career', 'view-history', 'view-home'];
 views.forEach(function(vId) {
   var btn = document.querySelectorAll('.view-nav-btn').find(function(b) { return b.getAttribute('data-view') === vId; });
   if (btn) btn.trigger('click');
@@ -7541,7 +7545,453 @@ run_check82 = subprocess.run(jsc_check82_cmd, capture_output=True, text=True)
 assert run_check82.returncode == 0, f"Check 82 test failed: stdout={run_check82.stdout} stderr={run_check82.stderr}"
 print("✓ 八字命造输入重置至当前实际时间、预设'此时此刻'缺省激活、当地标准钟表时间显式呈现与双语零残留验证通过！")
 
-print("\n🎉 ALL 82 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 83. Validating Historical Figures Reference & Mirror Engine (104 Figures, 7 Eras, Standalone history.html, Integrated View, & Zero Residual Chinese)
+print("\n=== 83. Validating Historical Figures Reference & Mirror Engine (104 Figures & 7 Eras) ===")
+
+# Part A: File existence and content checks
+assert os.path.exists("data/historical_figures.js"), "data/historical_figures.js must exist"
+assert os.path.getsize("data/historical_figures.js") > 200000, "data/historical_figures.js must be > 200KB"
+assert os.path.exists("js/history-engine.js"), "js/history-engine.js must exist"
+assert os.path.exists("history.html"), "history.html must exist"
+
+with open("history.html", "r", encoding="utf-8") as f:
+    history_html_content = f.read()
+
+assert "data/historical_figures.js" in history_html_content, "history.html must reference data/historical_figures.js"
+assert "js/history-engine.js" in history_html_content, "history.html must reference js/history-engine.js"
+assert "topMirrorContainer" in history_html_content, "history.html must contain topMirrorContainer"
+assert "synthesisAdviceContainer" in history_html_content, "history.html must contain synthesisAdviceContainer"
+assert "topFiveContainer" in history_html_content, "history.html must contain topFiveContainer"
+assert "allFiguresGrid" in history_html_content, "history.html must contain allFiguresGrid"
+assert "figureDetailModal" in history_html_content, "history.html must contain figureDetailModal"
+assert "index.html?restore=true&view=history#dashboard" in history_html_content, "history.html return link must restore view-history"
+
+with open("index.html", "r", encoding="utf-8") as f:
+    index_html_content = f.read()
+
+assert "navBtnHistory" in index_html_content, "index.html must contain navBtnHistory"
+assert "view-history" in index_html_content, "index.html must contain view-history"
+assert "historyContentContainer" in index_html_content, "index.html must contain historyContentContainer"
+assert "historyFigureDetailModalDashboard" in index_html_content, "index.html must contain historyFigureDetailModalDashboard"
+assert 'data-jump-view="view-history"' in index_html_content, "index.html must contain data-jump-view='view-history'"
+
+# Part B: JSC Execution for Data Integrity, Similarity Engine, Multi-Chart Diversity & Zero Residual Chinese
+jsc_check83_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    var window = this;
+    var global = this;
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    // 1. Validate Database Integrity
+    if (typeof HISTORICAL_FIGURES === "undefined" || !Array.isArray(HISTORICAL_FIGURES)) {
+      throw new Error("HISTORICAL_FIGURES database is not defined or not an array");
+    }
+    if (HISTORICAL_FIGURES.length !== 104) {
+      throw new Error("Expected exactly 104 historical figures, got: " + HISTORICAL_FIGURES.length);
+    }
+
+    var requiredFields = [
+      "id", "nameZh", "nameEn", "dynastyZh", "dynastyEn", "eraTag", "eraNameZh", "eraNameEn",
+      "positionZh", "positionEn", "personalityZh", "personalityEn", "deedsZh", "deedsEn",
+      "archetype", "fiveElements", "tenGodsAffinity", "patternType",
+      "strengthAdviceZh", "strengthAdviceEn", "weaknessAdviceZh", "weaknessAdviceEn",
+      "historicalQuoteZh", "historicalQuoteEn"
+    ];
+
+    var eraCounts = {
+      "western_jin": 0,
+      "sixteen_kingdoms": 0,
+      "eastern_jin": 0,
+      "southern_dynasties": 0,
+      "northern_wei": 0,
+      "northern_zhou_qi": 0,
+      "sui": 0
+    };
+
+    var validArchetypes = ["executive", "military", "civil", "specialist"];
+
+    HISTORICAL_FIGURES.forEach(function(fig, idx) {
+      requiredFields.forEach(function(field) {
+        if (typeof fig[field] === "undefined" || fig[field] === null || fig[field] === "") {
+          throw new Error("Figure #" + (idx + 1) + " (" + (fig.id || "unknown") + ") is missing field: " + field);
+        }
+      });
+
+      if (!fig.fiveElements.dominant || !fig.fiveElements.secondary) {
+        throw new Error("Figure #" + (idx + 1) + " has invalid fiveElements");
+      }
+      if (!Array.isArray(fig.tenGodsAffinity) || fig.tenGodsAffinity.length === 0) {
+        throw new Error("Figure #" + (idx + 1) + " has invalid tenGodsAffinity");
+      }
+      if (validArchetypes.indexOf(fig.archetype) === -1) {
+        throw new Error("Figure #" + (idx + 1) + " has invalid archetype: " + fig.archetype);
+      }
+      if (typeof eraCounts[fig.eraTag] === "undefined") {
+        throw new Error("Figure #" + (idx + 1) + " has unknown eraTag: " + fig.eraTag);
+      }
+      eraCounts[fig.eraTag]++;
+
+      // Ensure English fields contain no Chinese characters
+      var enFields = [
+        "nameEn", "dynastyEn", "eraNameEn", "positionEn", "personalityEn", "deedsEn",
+        "strengthAdviceEn", "weaknessAdviceEn", "historicalQuoteEn"
+      ];
+      enFields.forEach(function(ef) {
+        if (/[\\u4e00-\\u9fa5]/.test(fig[ef])) {
+          throw new Error("Figure " + fig.id + " field " + ef + " contains residual Chinese: " + fig[ef]);
+        }
+      });
+    });
+
+    if (eraCounts["western_jin"] !== 16) throw new Error("western_jin count expected 16, got " + eraCounts["western_jin"]);
+    if (eraCounts["sixteen_kingdoms"] !== 25) throw new Error("sixteen_kingdoms count expected 25, got " + eraCounts["sixteen_kingdoms"]);
+    if (eraCounts["eastern_jin"] !== 17) throw new Error("eastern_jin count expected 17, got " + eraCounts["eastern_jin"]);
+    if (eraCounts["southern_dynasties"] !== 16) throw new Error("southern_dynasties count expected 16, got " + eraCounts["southern_dynasties"]);
+    if (eraCounts["northern_wei"] !== 15) throw new Error("northern_wei count expected 15, got " + eraCounts["northern_wei"]);
+    if (eraCounts["northern_zhou_qi"] !== 10) throw new Error("northern_zhou_qi count expected 10, got " + eraCounts["northern_zhou_qi"]);
+    if (eraCounts["sui"] !== 5) throw new Error("sui count expected 5, got " + eraCounts["sui"]);
+
+    // 2. Validate HistoricalEngine calculations across diverse charts
+    var testCharts = [
+      // Chart 1: Strong Jia Wood
+      {
+        bazi: BaZiEngine.calculate({ year: 1984, month: 2, day: 15, hour: 8, minute: 0, gender: "乾造" }),
+        name: "Strong Wood Chart"
+      },
+      // Chart 2: Weak Bing Fire
+      {
+        bazi: BaZiEngine.calculate({ year: 1996, month: 11, day: 28, hour: 23, minute: 30, gender: "坤造" }),
+        name: "Weak Fire Chart"
+      },
+      // Chart 3: Metal Rich Chart
+      {
+        bazi: BaZiEngine.calculate({ year: 1992, month: 8, day: 18, hour: 16, minute: 0, gender: "乾造" }),
+        name: "Strong Metal Chart"
+      }
+    ];
+
+    var topMatchesHistory = [];
+
+    testCharts.forEach(function(tc) {
+      var luck = LuckEngine.calculateLuck(tc.bazi, 2026);
+      var careerReport = CareerEngine.generateCareerReport(tc.bazi, luck, 2026);
+      var res = HistoricalEngine.calculateSimilarity(tc.bazi, luck, careerReport);
+
+      if (!res.topMatch || !res.topMatches || !res.allFiguresRanked || !res.synthesis) {
+        throw new Error(tc.name + " missing core result structure");
+      }
+      if (res.allFiguresRanked.length !== 104) {
+        throw new Error(tc.name + " expected 104 ranked figures, got: " + res.allFiguresRanked.length);
+      }
+      if (res.topMatches.length !== 5) {
+        throw new Error(tc.name + " expected 5 topMatches, got: " + res.topMatches.length);
+      }
+      if (res.topMatch.rank !== 1) {
+        throw new Error(tc.name + " topMatch rank is not 1");
+      }
+      if (res.topMatch.similarityScore < 90.0 || res.topMatch.similarityScore > 99.0) {
+        throw new Error(tc.name + " topMatch similarityScore out of expected range: " + res.topMatch.similarityScore);
+      }
+
+      // Check strictly descending order
+      for (var i = 0; i < res.allFiguresRanked.length - 1; i++) {
+        if (res.allFiguresRanked[i].similarityScore < res.allFiguresRanked[i + 1].similarityScore) {
+          throw new Error("Rank ordering violation at index " + i + ": " + res.allFiguresRanked[i].similarityScore + " < " + res.allFiguresRanked[i + 1].similarityScore);
+        }
+      }
+
+      // Check synthesis
+      var syn = res.synthesis;
+      if (!syn.summaryZh || !syn.summaryEn || !syn.learnZh || !syn.learnEn || !syn.cautionZh || !syn.cautionEn) {
+        throw new Error(tc.name + " synthesis advice is incomplete");
+      }
+      if (/[\\u4e00-\\u9fa5]/.test(syn.summaryEn)) {
+        throw new Error(tc.name + " synthesis summaryEn contains Chinese: " + syn.summaryEn);
+      }
+      if (/[\\u4e00-\\u9fa5]/.test(syn.learnEn)) {
+        throw new Error(tc.name + " synthesis learnEn contains Chinese: " + syn.learnEn);
+      }
+      if (/[\\u4e00-\\u9fa5]/.test(syn.cautionEn)) {
+        throw new Error(tc.name + " synthesis cautionEn contains Chinese: " + syn.cautionEn);
+      }
+
+      topMatchesHistory.push(res.topMatch.id);
+    });
+
+    // Verify chart differentiation: distinct charts should not all have the exact same #1 match
+    var uniqueTopMatches = Array.from(new Set(topMatchesHistory));
+    if (uniqueTopMatches.length < 2) {
+      throw new Error("HistoricalEngine failed chart differentiation: all charts produced same top match: " + topMatchesHistory);
+    }
+    '''
+]
+run_check83 = subprocess.run(jsc_check83_cmd, capture_output=True, text=True)
+assert run_check83.returncode == 0, f"Check 83 unit test failed: stdout={run_check83.stdout} stderr={run_check83.stderr}"
+
+# Part C: Full DOM Simulation in JSC (Interactive Filtering, View Switching & Zero Residual Chinese)
+jsc_check83_dom_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    var window = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    var global = this;
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+
+    // Setup Mock DOM
+    var allIds = [
+      'landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar',
+      'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge',
+      'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer',
+      'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn',
+      'btnResetToActualTime', 'btnResetToActualTimeTop', 'themeToggle', 'birthDate', 'birthTime', 'gender',
+      'citySelect', 'currentCountrySelect', 'currentCitySelect', 'currentCustomCityInput', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay',
+      'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy',
+      'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui',
+      'navBtnCareer', 'navBtnHistory', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc',
+      'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portalBtnFengShui',
+      'portalBtnCareer', 'view-career', 'careerContentContainer', 'careerQuickBadgesDashboard',
+      'btnJumpToHomeFromCareer', 'btnToggleCareerFullscreen', 'btnExitCareerFullscreenFloating',
+      'view-history', 'historyContentContainer', 'historyQuickBadgesDashboard', 'btnToggleHistoryFullscreen',
+      'btnExitHistoryFullscreenFloating', 'btnJumpToHomeFromHistory', 'btnOpenHistoryStandalone',
+      'historyFigureDetailModalDashboard', 'btnCloseHistoryDetailModalDashboard', 'historyDetailModalContentDashboard',
+      'historyFullscreenIcon', 'historyFullscreenText'
+    ];
+
+    var elementStore = {};
+
+    function makeEl(id, tag) {
+      var initialClasses = [];
+      if (id === 'dashboardView' || id === 'btnPortalTopNav' || id === 'advSolarTimeContainer' || id === 'historyFigureDetailModalDashboard' || id === 'btnExitHistoryFullscreenFloating') {
+        initialClasses = ['hidden'];
+      }
+      var navMap = {
+        'navBtnHome': 'view-home',
+        'navBtnStrategy': 'view-strategy',
+        'navBtnFriction': 'view-friction',
+        'navBtnLuck': 'view-luck',
+        'navBtnCanons': 'view-canons',
+        'navBtnIChing': 'view-iching',
+        'navBtnSynastry': 'view-synastry',
+        'navBtnFengShui': 'view-fengshui',
+        'navBtnCareer': 'view-career',
+        'navBtnHistory': 'view-history'
+      };
+      return {
+        id: id,
+        'data-view': navMap[id] || null,
+        tagName: (tag || 'DIV').toUpperCase(),
+        value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : '')),
+        checked: false,
+        _rawInnerHTML: '',
+        _children: [],
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        className: '',
+        style: {},
+        get innerHTML() {
+          var ch = (this._children || []).map(function(c) { return c.innerHTML || ''; }).join('');
+          return this._rawInnerHTML + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this._children = [];
+        },
+        appendChild: function(ch) {
+          (this._children = this._children || []).push(ch);
+        },
+        textContent: '',
+        classList: {
+          _classes: initialClasses,
+          add: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              if (this._classes.indexOf(arguments[i]) === -1) this._classes.push(arguments[i]);
+            }
+          },
+          remove: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              var idx = this._classes.indexOf(arguments[i]);
+              if (idx !== -1) this._classes.splice(idx, 1);
+            }
+          },
+          contains: function(c) { return this._classes.indexOf(c) !== -1; }
+        },
+        _listeners: {},
+        addEventListener: function(evt, fn) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        },
+        trigger: function(evt, data) {
+          var self = this;
+          (this._listeners[evt] || []).forEach(function(fn) {
+            fn.call(self, data || { target: self, preventDefault: function() {} });
+          });
+        },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        width: 300,
+        height: 200,
+        clientWidth: 300,
+        clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {},
+            beginPath: function() {},
+            moveTo: function() {},
+            lineTo: function() {},
+            closePath: function() {},
+            stroke: function() {},
+            fill: function() {},
+            fillText: function() {},
+            arc: function() {},
+            setLineDash: function() {},
+            scale: function() {},
+            createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        },
+        querySelector: function(s) {
+          if (s === '#dashHistorySearchInput') return makeEl('dashHistorySearchInput', 'INPUT');
+          if (s === '#dashHistorySortSelect') return makeEl('dashHistorySortSelect', 'SELECT');
+          return null;
+        },
+        querySelectorAll: function(s) { return []; }
+      };
+    }
+
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function(sel) {
+        if (sel === '.view-nav-btn') {
+          return Object.keys(elementStore).filter(function(k) { return k.startsWith('navBtn'); }).map(function(k) { return elementStore[k]; });
+        }
+        if (sel === '.dash-era-tab-btn' || sel === '.dash-arch-tab-btn' || sel === '.btn-dash-history-detail' || sel === '.btn-dash-history-card-detail') {
+          return [];
+        }
+        return [];
+      },
+      querySelector: function(sel) { return null; },
+      createElement: function(tag) { return makeEl('gen_' + Math.random(), tag); },
+      addEventListener: function(evt, fn) {
+        if (evt === 'DOMContentLoaded') document._domReady = fn;
+      },
+      documentElement: { lang: 'zh-CN' },
+      fullscreenElement: null,
+      exitFullscreen: function() { return Promise.resolve(); }
+    };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+    load("js/visual-alchemy.js");
+    load("js/chart.js");
+    load("js/app.js");
+
+    if (!document._domReady) throw new Error("DOMContentLoaded not registered");
+    document._domReady();
+
+    // 1. Trigger Calculation in ZH
+    elementStore['calcBtn'].trigger('click');
+
+    // 2. Switch to view-history
+    var navBtnHist = document.getElementById('navBtnHistory');
+    navBtnHist.trigger('click');
+
+    var histContainer = document.getElementById('historyContentContainer');
+    var histHtmlZh = histContainer.innerHTML;
+    if (!histHtmlZh || histHtmlZh.indexOf("乱世三百年历史人物深度相似度测算全相") === -1) {
+      throw new Error("historyContentContainer not populated in ZH: " + histHtmlZh.slice(0, 200));
+    }
+    if (histHtmlZh.indexOf("天命至高历史镜像") === -1) {
+      throw new Error("historyContentContainer missing Section 1 in ZH");
+    }
+    if (histHtmlZh.indexOf("学其优点 · 乱世破局战略胜手") === -1) {
+      throw new Error("historyContentContainer missing Strengths in ZH");
+    }
+    if (histHtmlZh.indexOf("戒其缺点 · 致命盲区与避险熔断") === -1) {
+      throw new Error("historyContentContainer missing Weaknesses in ZH");
+    }
+
+    // 3. Switch Language to EN
+    elementStore['langEnBtn'].trigger('click');
+    elementStore['calcBtn'].trigger('click');
+    navBtnHist.trigger('click');
+
+    var badgesDashboardEn = document.getElementById('historyQuickBadgesDashboard').innerHTML;
+    var histHtmlEn = histContainer.innerHTML;
+
+    // Check 100% Zero Residual Chinese in EN mode for historical figures view!
+    if (/[\\u4e00-\\u9fa5]/.test(badgesDashboardEn)) {
+      throw new Error("Residual Chinese in historyQuickBadgesDashboard in EN: " + badgesDashboardEn);
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(histHtmlEn)) {
+      throw new Error("Residual Chinese in historyContentContainer in EN: " + histHtmlEn.match(/[\\u4e00-\\u9fa5]+/g).join(', '));
+    }
+
+    // Check key English phrases
+    if (histHtmlEn.indexOf("Supreme Historical Soul Mirror Archetype") === -1) {
+      throw new Error("Missing Supreme Historical Soul Mirror Archetype in EN");
+    }
+    if (histHtmlEn.indexOf("Absorb Strengths (Winning Strategic Moves)") === -1) {
+      throw new Error("Missing Absorb Strengths in EN");
+    }
+    if (histHtmlEn.indexOf("Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)") === -1) {
+      throw new Error("Missing Avoid Weaknesses in EN");
+    }
+    if (histHtmlEn.indexOf("104 Historical Figures Catalog") === -1) {
+      throw new Error("Missing 104 Historical Figures Catalog title in EN");
+    }
+    '''
+]
+run_check83_dom = subprocess.run(jsc_check83_dom_cmd, capture_output=True, text=True)
+assert run_check83_dom.returncode == 0, f"Check 83 DOM simulation test failed: stdout={run_check83_dom.stdout} stderr={run_check83_dom.stderr}"
+
+print("✓ 历史人物参考引擎（104位风云人物全集、七大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 83 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

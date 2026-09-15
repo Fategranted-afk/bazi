@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>历史人物参考 · 南北乱世三百年人物镜像与学戒锦囊 · Historical Figures Mirror & Reference</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0B0F19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <!-- Custom Metaphysics CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen bg-[#0B0F19] text-gray-200">
+  <!-- Header -->
+  <header class="border-b border-gray-800 bg-[#16181f]/90 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 via-purple-700 to-indigo-800 flex items-center justify-center shadow-lg shadow-amber-900/30 text-white font-bold text-xl font-serif-sc hover:opacity-90 transition">
+          📜
+        </a>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold font-serif-sc text-amber-100 flex items-center gap-2">
+            <span id="historyPageTitle">历史人物参考 · 乱世三百年人物镜像</span>
+            <span class="chinese-seal text-[11px] py-0.5 border-amber-500 text-amber-400" id="historyPageSeal">史鉴推演</span>
+          </h1>
+          <p class="text-xs text-gray-400" id="historyPageSubtitle">
+            融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋一百零四位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <!-- Fullscreen Toggle Button in history.html -->
+        <button id="btnHistoryPageFullscreen" type="button" class="px-3.5 py-1.5 text-xs rounded-xl border border-indigo-600/50 bg-indigo-800/80 hover:bg-indigo-700 text-indigo-100 font-bold shadow-md transition flex items-center gap-1.5 cursor-pointer">
+          <span id="historyPageFullscreenIcon">⛶</span>
+          <span id="historyPageFullscreenText">进入全屏</span>
+        </button>
+
+        <!-- Return to Main Portal Button -->
+        <a id="historyBtnReturn" href="index.html?restore=true&view=history#dashboard" class="px-3.5 py-1.5 text-xs rounded-xl border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
+          <span>🏛️</span>
+          <span id="historyBtnReturnText">返回全相总盘</span>
+        </a>
+
+        <!-- Language Switcher Toggle Group -->
+        <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/80 p-0.5 shadow-sm" role="group">
+          <button id="historyLangZhBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow">
+            中文
+          </button>
+          <button id="historyLangEnBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200">
+            English
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <!-- Top Summary Banner -->
+    <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-indigo-950/40 border border-amber-500/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2 mb-1.5">
+          <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300" id="historyBannerSeal">以史为鉴</span>
+          <h2 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300" id="historyBannerTitle">
+            乱世三百年历史人物深度相似度测算全相
+          </h2>
+        </div>
+        <p class="text-xs text-gray-300 max-w-3xl leading-relaxed" id="historyBannerDesc">
+          夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 104 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。
+        </p>
+      </div>
+      <div id="historyQuickBadges" class="flex flex-wrap gap-2 text-xs">
+        <!-- Dynamically injected badges -->
+      </div>
+    </div>
+
+    <!-- Section 1: Top Soul Mirror -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🥇</span>
+          <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300" id="secTitleTopMirror">
+            一、天命至高历史镜像（本命天命共鸣最高人物）
+          </h3>
+        </div>
+        <span class="chinese-seal text-[10px] py-0.5 border-amber-500 text-amber-300" id="secSealTopMirror">天命共振</span>
+      </div>
+      <div id="topMirrorContainer" class="space-y-4">
+        <!-- Dynamically injected via JS -->
+      </div>
+    </section>
+
+    <!-- Section 2: Personalized Strategic Synthesis Advice (专属战略锦囊与学戒总纲) -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🎯</span>
+          <h3 class="text-base sm:text-lg font-bold font-serif-sc text-indigo-300" id="secTitleSynthesis">
+            二、命主专属战略锦囊（汲取长处 · 熔断死穴）
+          </h3>
+        </div>
+        <span class="chinese-seal text-[10px] py-0.5 border-indigo-500 text-indigo-300" id="secSealSynthesis">学戒大略</span>
+      </div>
+      <div id="synthesisAdviceContainer" class="space-y-4">
+        <!-- Dynamically injected via JS -->
+      </div>
+    </section>
+
+    <!-- Section 3: Top 5 Soul Resonance Mirrors (前五位历史投影) -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">👥</span>
+          <h3 class="text-base sm:text-lg font-bold font-serif-sc text-purple-300" id="secTitleTopFive">
+            三、前五位高契合度历史人物谱系
+          </h3>
+        </div>
+        <span class="chinese-seal text-[10px] py-0.5 border-purple-500 text-purple-300" id="secSealTopFive">群星谱系</span>
+      </div>
+      <div id="topFiveContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dynamically injected via JS -->
+      </div>
+    </section>
+
+    <!-- Section 4: All 104 Historical Figures Panorama & Filterable Gallery -->
+    <section class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🌌</span>
+          <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300" id="secTitlePanorama">
+            四、乱世三百年全景历史人物长卷（104位历史人物名录）
+          </h3>
+        </div>
+        <div class="text-xs text-gray-400 font-mono" id="historyCounterBadge">
+          共收录 104 位风云人物
+        </div>
+      </div>
+
+      <!-- Filter Controls Bar -->
+      <div class="bg-card p-4 rounded-2xl border border-gray-800 shadow-xl space-y-3">
+        <!-- Search & Sort Row -->
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="relative flex-1 min-w-[240px]">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">🔍</span>
+            <input type="text" id="historySearchInput" placeholder="输入历史人物姓名、时代、职位、性格特质搜索..." class="w-full pl-9 pr-4 py-2 bg-gray-900/90 border border-gray-700 rounded-xl text-xs text-gray-200 focus:outline-none focus:border-amber-500 transition">
+          </div>
+          <div class="flex items-center space-x-2">
+            <label class="text-xs text-gray-400" id="lblSortBy">排序：</label>
+            <select id="historySortSelect" class="bg-gray-900 border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-amber-500">
+              <option value="similarity">相似度最高 (Similarity)</option>
+              <option value="chronological">时代早晚 (Chronological)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Era Filter Tabs -->
+        <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="eraTabsContainer">
+          <button class="era-tab-btn active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition" data-era="all">
+            全部时代 (104)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="western_jin">
+            西晋风云 (16)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="sixteen_kingdoms">
+            五胡十六国 (25)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="eastern_jin">
+            东晋门阀 (17)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="southern_dynasties">
+            南朝更迭 (16)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="northern_wei">
+            北魏汉化 (15)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="northern_zhou_qi">
+            周齐对峙 (10)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="sui">
+            大隋统一 (5)
+          </button>
+        </div>
+
+        <!-- Archetype Filter Tabs -->
+        <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="archTabsContainer">
+          <button class="arch-tab-btn active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition" data-arch="all">
+            全部职能
+          </button>
+          <button class="arch-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-arch="executive">
+            👑 高管统帅
+          </button>
+          <button class="arch-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-arch="military">
+            ⚔️ 武职前线
+          </button>
+          <button class="arch-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-arch="civil">
+            📜 文职行政
+          </button>
+          <button class="arch-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-arch="specialist">
+            🔬 专精技术
+          </button>
+        </div>
+      </div>
+
+      <!-- Figures Cards Grid -->
+      <div id="allFiguresGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dynamically injected via JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-800/80 py-6 text-center text-xs text-gray-500">
+    <p id="historyFooterText">
+      © 2026 历史人物参考系统 · 南北乱世三百年人物镜像 · 以史为鉴 · 察己以律 · 顺势知命
+    </p>
+  </footer>
+
+  <!-- Detail Modal -->
+  <div id="figureDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-[#111420] border border-amber-500/40 rounded-2xl max-w-2xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+      <button id="btnCloseDetailModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold p-1">
+        ✕
+      </button>
+      <div id="detailModalContent" class="space-y-4">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/bazi-engine.js"></script>
+  <script src="js/luck-engine.js"></script>
+  <script src="js/career-engine.js"></script>
+  <script src="data/historical_figures.js"></script>
+  <script src="js/history-engine.js"></script>
+
+  <script>
+    (function() {
+      let currentLang = (typeof localStorage !== "undefined" && localStorage.getItem("bazi_lang")) ? localStorage.getItem("bazi_lang") : "zh";
+      let activeEra = "all";
+      let activeArch = "all";
+      let activeSort = "similarity";
+      let searchQuery = "";
+      let reportData = null;
+
+      function getChartData() {
+        try {
+          const stored = localStorage.getItem("lastBaziParams");
+          if (stored) {
+            const p = JSON.parse(stored);
+            return BaZiEngine.calculate(p);
+          }
+        } catch (e) {}
+        return BaZiEngine.calculate({
+          year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造"
+        });
+      }
+
+      const bazi = getChartData();
+      const currentYear = new Date().getFullYear();
+      const luck = (typeof LuckEngine !== "undefined") ? LuckEngine.calculateLuck(bazi, currentYear) : null;
+      const careerReport = (typeof CareerEngine !== "undefined") ? CareerEngine.generateCareerReport(bazi, luck, currentYear) : null;
+
+      function render() {
+        const isEn = (currentLang === "en");
+        document.documentElement.lang = isEn ? "en" : "zh-CN";
+
+        // Headers & Labels
+        document.getElementById("historyPageTitle").textContent = isEn
+          ? "Historical Figures Mirror & Reference"
+          : "历史人物参考 · 乱世三百年人物镜像";
+        document.getElementById("historyPageSeal").textContent = isEn ? "Historical Mirror" : "史鉴推演";
+        document.getElementById("historyPageSubtitle").textContent = isEn
+          ? "Synthesizing 104 Historical Titans across 300 Years of Division · Personality, Role & Life Battles · Similarity Matching & Strategic Advice"
+          : "融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋一百零四位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊";
+
+        const retEl = document.getElementById("historyBtnReturnText") || document.getElementById("historyBtnReturn");
+        if (retEl) retEl.textContent = isEn ? "Return to Master Dashboard" : "返回全相总盘";
+        const fsTextEl = document.getElementById("historyPageFullscreenText");
+        const isFsActive = !!document.fullscreenElement;
+        if (fsTextEl) fsTextEl.textContent = isFsActive ? (isEn ? "Exit Fullscreen" : "退出全屏") : (isEn ? "Enter Fullscreen" : "进入全屏");
+
+        document.getElementById("historyBannerSeal").textContent = isEn ? "Mirror of History" : "以史为鉴";
+        document.getElementById("historyBannerTitle").textContent = isEn
+          ? "300 Years of Chaotic Division · In-Depth Historical Archetype Resonance"
+          : "乱世三百年历史人物深度相似度测算全相";
+        document.getElementById("historyBannerDesc").textContent = isEn
+          ? "Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 104 famous historical figures to derive actionable wisdom and risk circuit-breakers."
+          : "夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 104 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。";
+
+        document.getElementById("secTitleTopMirror").textContent = isEn
+          ? "1. Supreme Historical Soul Mirror Archetype"
+          : "一、天命至高历史镜像（本命天命共鸣最高人物）";
+        document.getElementById("secSealTopMirror").textContent = isEn ? "Soul Resonance" : "天命共振";
+
+        document.getElementById("secTitleSynthesis").textContent = isEn
+          ? "2. Bespoke Strategic Synthesis (Absorb Strengths & Avoid Pitfalls)"
+          : "二、命主专属战略锦囊（汲取长处 · 熔断死穴）";
+        document.getElementById("secSealSynthesis").textContent = isEn ? "Strategic Mirror" : "学戒大略";
+
+        document.getElementById("secTitleTopFive").textContent = isEn
+          ? "3. Top 5 High-Affinity Historical Resonance Archetypes"
+          : "三、前五位高契合度历史人物谱系";
+        document.getElementById("secSealTopFive").textContent = isEn ? "Top 5 Archetypes" : "群星谱系";
+
+        document.getElementById("secTitlePanorama").textContent = isEn
+          ? "4. 300-Year Historical Panorama (104 Historical Figures Catalog)"
+          : "四、乱世三百年全景历史人物长卷（104位历史人物名录）";
+        document.getElementById("historyCounterBadge").textContent = isEn
+          ? "104 Historical Titans Curated"
+          : "共收录 104 位风云人物";
+        document.getElementById("historySearchInput").placeholder = isEn
+          ? "Search by name, era, position, personality, deeds..."
+          : "输入历史人物姓名、时代、职位、性格特质搜索...";
+        document.getElementById("lblSortBy").textContent = isEn ? "Sort by:" : "排序：";
+
+        document.getElementById("historyFooterText").textContent = isEn
+          ? "© 2026 Historical Figures Mirror System · 300 Years of Division Synthesized · Guided by Ancient Wisdom"
+          : "© 2026 历史人物参考系统 · 南北乱世三百年人物镜像 · 以史为鉴 · 察己以律 · 顺势知命";
+
+        // Toggle buttons style
+        const zhBtn = document.getElementById("historyLangZhBtn");
+        const enBtn = document.getElementById("historyLangEnBtn");
+        if (isEn) {
+          enBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow";
+          zhBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200";
+        } else {
+          zhBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow";
+          enBtn.className = "px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200";
+        }
+
+        // Calculate
+        reportData = HistoricalEngine.calculateSimilarity(bazi, luck, careerReport);
+        if (!reportData) return;
+
+        // Top Badges
+        const topM = reportData.topMatch;
+        document.getElementById("historyQuickBadges").innerHTML = `
+          <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
+            ${isEn ? `Day Master: ${bazi.dayMaster || 'Jia'}` : `元神日主: ${bazi.dayMaster || '甲'}（${reportData.nativeContext.dmEl}）`}
+          </span>
+          <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
+            ${isEn ? reportData.nativeContext.strengthGrade : reportData.nativeContext.strengthGrade} (${reportData.nativeContext.score100}分)
+          </span>
+          <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
+            ${isEn ? `Top Mirror: ${topM.nameEn} (${topM.similarityScore}%)` : `首位镜鉴: ${topM.nameZh} (${topM.similarityScore}%)`}
+          </span>
+        `;
+
+        // Render Section 1: Top Soul Mirror
+        document.getElementById("topMirrorContainer").innerHTML = `
+          <div class="bg-card p-6 sm:p-7 rounded-2xl border-2 border-amber-500/60 bg-gradient-to-br from-[#1c162b]/90 via-[#131622]/95 to-[#1c1f2e]/90 shadow-2xl space-y-5 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Top Row: Name, Dynasty, Score -->
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 pb-4">
+              <div class="space-y-1">
+                <div class="flex items-center space-x-3">
+                  <span class="text-3xl font-serif-sc font-bold text-amber-200 tracking-wide">${isEn ? topM.nameEn : topM.nameZh}</span>
+                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300 font-bold">${isEn ? topM.dynastyEn : topM.dynastyZh}</span>
+                  <span class="px-2 py-0.5 rounded text-[11px] bg-purple-950/80 text-purple-300 border border-purple-800/60">${isEn ? topM.eraNameEn : topM.eraNameZh}</span>
+                </div>
+                <p class="text-sm font-semibold text-amber-400 font-serif-sc">${isEn ? topM.positionEn : topM.positionZh}</p>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="text-right">
+                  <div class="text-[10px] text-gray-400 uppercase tracking-widest">${isEn ? "Soul Affinity" : "天命契合度"}</div>
+                  <div class="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">${topM.similarityScore}%</div>
+                </div>
+                <div class="w-12 h-12 rounded-full border-2 border-emerald-500/80 bg-emerald-950/40 flex items-center justify-center text-xl font-bold text-emerald-300 shadow-lg">
+                  👑
+                </div>
+              </div>
+            </div>
+
+            <!-- Personality & Deeds -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs leading-relaxed">
+              <div class="p-4 rounded-xl bg-black/40 border border-gray-800/80 space-y-2">
+                <span class="text-amber-300 font-bold flex items-center gap-1.5 text-xs">
+                  <span>🎭</span><span>${isEn ? "Personality & Behavioral DNA" : "生平心智与性格特质"}</span>
+                </span>
+                <p class="text-gray-300 font-sans">${isEn ? topM.personalityEn : topM.personalityZh}</p>
+              </div>
+              <div class="p-4 rounded-xl bg-black/40 border border-gray-800/80 space-y-2">
+                <span class="text-indigo-300 font-bold flex items-center gap-1.5 text-xs">
+                  <span>⚔️</span><span>${isEn ? "Core Deeds & Turning Points" : "核心历史事迹与胜负手"}</span>
+                </span>
+                <p class="text-gray-300 font-sans">${isEn ? topM.deedsEn : topM.deedsZh}</p>
+              </div>
+            </div>
+
+            <!-- Dual Core Advice: Learn & Caution -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <!-- Learn Strengths -->
+              <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/50 space-y-2">
+                <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1.5">
+                  <h4 class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                    <span>✨</span><span>${isEn ? "Absorb Strengths (Winning Strategic Moves)" : "学其优点 · 乱世破局战略胜手"}</span>
+                  </h4>
+                  <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? "Learn" : "学优点"}</span>
+                </div>
+                <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? topM.strengthAdviceEn : topM.strengthAdviceZh}</p>
+              </div>
+
+              <!-- Caution Weaknesses -->
+              <div class="p-4 rounded-xl bg-rose-950/20 border border-rose-800/50 space-y-2">
+                <div class="flex items-center justify-between border-b border-rose-800/40 pb-1.5">
+                  <h4 class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                    <span>🛡️</span><span>${isEn ? "Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)" : "戒其缺点 · 致命盲区与避险熔断"}</span>
+                  </h4>
+                  <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? "Avoid" : "戒缺点"}</span>
+                </div>
+                <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? topM.weaknessAdviceEn : topM.weaknessAdviceZh}</p>
+              </div>
+            </div>
+
+            <!-- Historical Quote -->
+            <div class="p-3.5 rounded-xl bg-amber-950/15 border border-amber-800/40 text-xs text-amber-200/90 italic flex items-start gap-2.5">
+              <span class="text-lg text-amber-400">📜</span>
+              <div class="leading-relaxed">
+                <strong>${isEn ? "Classical Citation & Historical Judgment: " : "经典史评与历史定论："}</strong>${isEn ? topM.historicalQuoteEn : topM.historicalQuoteZh}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Render Section 2: Synthesis Advice
+        const syn = reportData.synthesis;
+        document.getElementById("synthesisAdviceContainer").innerHTML = `
+          <div class="bg-card p-6 rounded-2xl border border-gray-800 shadow-xl space-y-4">
+            <div class="space-y-2">
+              <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-2">
+                <span>🌌</span><span>${isEn ? "Macro Historical Resonance Analysis" : "宏观时空场能与天命镜像深度透视"}</span>
+              </h4>
+              <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? syn.summaryEn : syn.summaryZh}</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              <div class="p-4 rounded-xl bg-indigo-950/20 border border-indigo-800/40 text-xs text-indigo-200 leading-relaxed space-y-1.5">
+                <span class="font-bold text-indigo-300 flex items-center gap-1.5">
+                  <span>💡</span><span>${isEn ? "Prime Strategic Directives" : "第一核心攻坚战略建议"}</span>
+                </span>
+                <p class="text-gray-300">${isEn ? syn.learnEn : syn.learnZh}</p>
+              </div>
+              <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-800/40 text-xs text-purple-200 leading-relaxed space-y-1.5">
+                <span class="font-bold text-purple-300 flex items-center gap-1.5">
+                  <span>🚨</span><span>${isEn ? "Defense & Cautionary Guardrails" : "防御红线与行为熔断预警"}</span>
+                </span>
+                <p class="text-gray-300">${isEn ? syn.cautionEn : syn.cautionZh}</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Render Section 3: Top 5 Resonance Mirrors
+        document.getElementById("topFiveContainer").innerHTML = reportData.topMatches.map((m, idx) => `
+          <div class="bg-card p-5 rounded-2xl border ${idx === 0 ? 'border-amber-500/60 bg-amber-950/10' : 'border-gray-800'} shadow-xl space-y-3 flex flex-col justify-between hover:border-amber-500/40 transition">
+            <div class="space-y-2.5">
+              <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="text-lg font-bold font-mono ${idx === 0 ? 'text-amber-400' : 'text-gray-400'}">#${m.rank}</span>
+                  <h4 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? m.nameEn : m.nameZh}</h4>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded-full border border-emerald-500/50 bg-emerald-950/60 text-emerald-300 font-bold font-mono">
+                  ${m.similarityScore}%
+                </span>
+              </div>
+              <div class="flex flex-wrap gap-1 text-[10px]">
+                <span class="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300">${isEn ? m.dynastyEn : m.dynastyZh}</span>
+                <span class="px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300">${isEn ? m.eraNameEn : m.eraNameZh}</span>
+                <span class="px-1.5 py-0.5 rounded bg-amber-950/60 text-amber-300">${isEn ? m.positionEn : m.positionZh}</span>
+              </div>
+              <p class="text-xs text-gray-300 leading-relaxed font-sans line-clamp-2">
+                ${isEn ? m.personalityEn : m.personalityZh}
+              </p>
+            </div>
+            <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between">
+              <button class="btn-view-detail text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer" data-id="${m.id}">
+                <span>${isEn ? "Examine Dossier" : "查阅完整评析"}</span> <span>→</span>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        // Render Section 4: 104 Figures Grid
+        renderFilteredFiguresGrid();
+      }
+
+      function renderFilteredFiguresGrid() {
+        if (!reportData) return;
+        const isEn = (currentLang === "en");
+
+        let list = [...reportData.allFiguresRanked];
+
+        // Filter by era
+        if (activeEra !== "all") {
+          list = list.filter(f => f.eraTag === activeEra);
+        }
+
+        // Filter by archetype
+        if (activeArch !== "all") {
+          list = list.filter(f => f.archetype === activeArch);
+        }
+
+        // Filter by search query
+        if (searchQuery.trim()) {
+          const q = searchQuery.trim().toLowerCase();
+          list = list.filter(f => {
+            return (
+              f.nameZh.toLowerCase().includes(q) ||
+              f.nameEn.toLowerCase().includes(q) ||
+              f.dynastyZh.toLowerCase().includes(q) ||
+              f.dynastyEn.toLowerCase().includes(q) ||
+              f.positionZh.toLowerCase().includes(q) ||
+              f.positionEn.toLowerCase().includes(q) ||
+              f.personalityZh.toLowerCase().includes(q) ||
+              f.personalityEn.toLowerCase().includes(q) ||
+              f.deedsZh.toLowerCase().includes(q) ||
+              f.deedsEn.toLowerCase().includes(q)
+            );
+          });
+        }
+
+        // Sort
+        if (activeSort === "chronological") {
+          // Keep dataset original historical chronological order
+          const dataset = HistoricalEngine.getDataset();
+          const orderMap = {};
+          dataset.forEach((item, idx) => { orderMap[item.id] = idx; });
+          list.sort((a, b) => (orderMap[a.id] || 0) - (orderMap[b.id] || 0));
+        } else {
+          // Default: sort by similarity descending
+          list.sort((a, b) => b.similarityScore - a.similarityScore);
+        }
+
+        const container = document.getElementById("allFiguresGrid");
+        if (list.length === 0) {
+          container.innerHTML = `
+            <div class="col-span-full p-8 text-center text-gray-500 text-xs">
+              ${isEn ? "No historical figures matched your current search filters." : "未找到匹配当前筛选条件的历史人物，请调整检索词或时代分类。"}
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = list.map(f => `
+          <div class="bg-card p-4 sm:p-5 rounded-xl border border-gray-800/90 shadow-lg space-y-3 flex flex-col justify-between hover:border-amber-500/40 transition">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-bold font-mono text-gray-400">#${f.rank}</span>
+                  <h4 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? f.nameEn : f.nameZh}</h4>
+                </div>
+                <span class="text-xs px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold font-mono">
+                  ${f.similarityScore}%
+                </span>
+              </div>
+              <div class="flex flex-wrap gap-1 text-[10px]">
+                <span class="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
+                <span class="px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300">${isEn ? f.eraNameEn : f.eraNameZh}</span>
+                <span class="px-1.5 py-0.5 rounded bg-indigo-950/60 text-indigo-300">${f.fiveElements.dominant}行 / ${f.patternType}</span>
+              </div>
+              <p class="text-xs text-amber-400/90 font-serif-sc line-clamp-1">${isEn ? f.positionEn : f.positionZh}</p>
+              <p class="text-[11px] text-gray-300 leading-relaxed font-sans line-clamp-2">${isEn ? f.personalityEn : f.personalityZh}</p>
+            </div>
+            <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between">
+              <button class="btn-view-detail text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer" data-id="${f.id}">
+                <span>${isEn ? "Full Profile" : "深度剖析"}</span> <span>→</span>
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        // Bind detail modal triggers
+        document.querySelectorAll(".btn-view-detail").forEach(btn => {
+          btn.addEventListener("click", function() {
+            const id = this.getAttribute("data-id");
+            showFigureModal(id);
+          });
+        });
+      }
+
+      function showFigureModal(id) {
+        if (!reportData) return;
+        const isEn = (currentLang === "en");
+        const f = reportData.allFiguresRanked.find(item => item.id === id);
+        if (!f) return;
+
+        const modal = document.getElementById("figureDetailModal");
+        const content = document.getElementById("detailModalContent");
+
+        content.innerHTML = `
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-3">
+              <div>
+                <div class="flex items-center space-x-3">
+                  <h3 class="text-xl font-bold font-serif-sc text-amber-200">${isEn ? f.nameEn : f.nameZh}</h3>
+                  <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-purple-950/80 text-purple-300 border border-purple-800/50">${isEn ? f.eraNameEn : f.eraNameZh}</span>
+                </div>
+                <p class="text-xs text-amber-400 mt-1 font-serif-sc">${isEn ? f.positionEn : f.positionZh}</p>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-gray-400">${isEn ? "Similarity Rank" : "契合度排名"}</span>
+                <div class="text-xl font-bold font-mono text-emerald-400">#${f.rank} · ${f.similarityScore}%</div>
+              </div>
+            </div>
+
+            <div class="space-y-2 text-xs leading-relaxed">
+              <p><strong class="text-amber-300">${isEn ? "Personality Traits: " : "性格特质："}</strong>${isEn ? f.personalityEn : f.personalityZh}</p>
+              <p><strong class="text-indigo-300">${isEn ? "Historical Feats: " : "生平关键事迹："}</strong>${isEn ? f.deedsEn : f.deedsZh}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+              <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-1.5">
+                <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1">
+                  <span class="font-bold text-xs text-emerald-300">${isEn ? "Strengths to Absorb (学优点)" : "学优点 · 破局智慧"}</span>
+                  <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? "Strength" : "学"}</span>
+                </div>
+                <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? f.strengthAdviceEn : f.strengthAdviceZh}</p>
+              </div>
+
+              <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-1.5">
+                <div class="flex items-center justify-between border-b border-rose-800/40 pb-1">
+                  <span class="font-bold text-xs text-rose-300">${isEn ? "Pitfalls to Avoid (戒缺点)" : "戒缺点 · 避险熔断"}</span>
+                  <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? "Pitfall" : "戒"}</span>
+                </div>
+                <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? f.weaknessAdviceEn : f.weaknessAdviceZh}</p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-black/50 border border-gray-800 text-xs text-gray-400 italic">
+              <strong>${isEn ? "Classical Citation: " : "史料考据："}</strong>${isEn ? f.historicalQuoteEn : f.historicalQuoteZh}
+            </div>
+          </div>
+        `;
+
+        modal.classList.remove("hidden");
+      }
+
+      // Close modal
+      document.getElementById("btnCloseDetailModal").addEventListener("click", () => {
+        document.getElementById("figureDetailModal").classList.add("hidden");
+      });
+      document.getElementById("figureDetailModal").addEventListener("click", (e) => {
+        if (e.target.id === "figureDetailModal") {
+          document.getElementById("figureDetailModal").classList.add("hidden");
+        }
+      });
+
+      // Filter events
+      document.querySelectorAll(".era-tab-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".era-tab-btn").forEach(b => {
+            b.className = "era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition";
+          });
+          this.className = "era-tab-btn active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition";
+          activeEra = this.getAttribute("data-era");
+          renderFilteredFiguresGrid();
+        });
+      });
+
+      document.querySelectorAll(".arch-tab-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          document.querySelectorAll(".arch-tab-btn").forEach(b => {
+            b.className = "arch-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition";
+          });
+          this.className = "arch-tab-btn active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition";
+          activeArch = this.getAttribute("data-arch");
+          renderFilteredFiguresGrid();
+        });
+      });
+
+      document.getElementById("historySearchInput").addEventListener("input", function() {
+        searchQuery = this.value;
+        renderFilteredFiguresGrid();
+      });
+
+      document.getElementById("historySortSelect").addEventListener("change", function() {
+        activeSort = this.value;
+        renderFilteredFiguresGrid();
+      });
+
+      // Language toggles
+      document.getElementById("historyLangZhBtn").addEventListener("click", () => {
+        currentLang = "zh";
+        try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "zh"); } catch(e){}
+        render();
+      });
+      document.getElementById("historyLangEnBtn").addEventListener("click", () => {
+        currentLang = "en";
+        try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "en"); } catch(e){}
+        render();
+      });
+
+      // Smart Return to Dashboard without forcing user to re-enter BaZi
+      const returnBtn = document.getElementById("historyBtnReturn");
+      if (returnBtn) {
+        returnBtn.addEventListener("click", function(e) {
+          e.preventDefault();
+          if (window.history.length > 1) {
+            window.history.back();
+          } else {
+            window.location.href = "index.html?restore=true&view=history#dashboard";
+          }
+        });
+      }
+
+      // Fullscreen Mode Handler for history.html
+      const fsBtn = document.getElementById("btnHistoryPageFullscreen");
+      const fsIcon = document.getElementById("historyPageFullscreenIcon");
+      const fsText = document.getElementById("historyPageFullscreenText");
+      if (fsBtn) {
+        fsBtn.addEventListener("click", function() {
+          if (!document.fullscreenElement) {
+            if (document.documentElement.requestFullscreen) {
+              document.documentElement.requestFullscreen().catch(() => {});
+            }
+          } else {
+            if (document.exitFullscreen) {
+              document.exitFullscreen().catch(() => {});
+            }
+          }
+        });
+
+        document.addEventListener("fullscreenchange", function() {
+          const isFs = !!document.fullscreenElement;
+          const isEn = (currentLang === "en");
+          if (fsIcon) fsIcon.textContent = isFs ? "🗗" : "⛶";
+          if (fsText) fsText.textContent = isFs ? (isEn ? "Exit Fullscreen" : "退出全屏") : (isEn ? "Enter Fullscreen" : "进入全屏");
+          if (isFs) {
+            fsBtn.classList.remove("bg-indigo-800/80", "hover:bg-indigo-700");
+            fsBtn.classList.add("bg-rose-800/80", "hover:bg-rose-700");
+          } else {
+            fsBtn.classList.remove("bg-rose-800/80", "hover:bg-rose-700");
+            fsBtn.classList.add("bg-indigo-800/80", "hover:bg-indigo-700");
+          }
+        });
+      }
+
+      render();
+    })();
+  </script>
+</body>
+</html>

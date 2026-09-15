@@ -423,6 +423,17 @@
               向上管理不得罪领导 · 同僚防抢功防火墙 · 文武技术高管四大生态位 · 岁运财运时序
             </p>
           </div>
+
+          <!-- Card 10: Historical Figures Reference -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-history">
+            <div class="flex items-center space-x-2 text-amber-400 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">📜</span>
+              <span data-i18n="portal_card10_title">历史人物参考 (南北乱世300年)</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card10_desc">
+              西晋八王至大隋统一 · 104位风云人物 · 性格位置生平胜负手 · 相似度测算与学戒大略
+            </p>
+          </div>
         </div>
       </section>
 
@@ -509,6 +520,11 @@
           <span class="text-base">💼</span>
           <span data-i18n="nav_view_career">职场打工人与财运事业推演</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/30 font-normal" data-i18n="seal_view_career">职场破局</span>
+        </button>
+        <button id="navBtnHistory" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-history">
+          <span class="text-base">📜</span>
+          <span data-i18n="nav_view_history">历史人物参考 (南北乱世300年)</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_history">史鉴推演</span>
         </button>
       </div>
     </nav>
@@ -1921,6 +1937,66 @@
     </div>
   </div>
 
+  <!-- View 10: Historical Figures Reference (历史人物参考 · 南北乱世三百年) -->
+  <div id="view-history" class="space-y-6 hidden">
+    <!-- Header Banner -->
+    <div class="p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-indigo-950/40 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300" data-i18n="seal_view_history">史鉴推演</span>
+            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-amber-300" data-i18n="history_banner_title">
+              历史人物参考 · 南北乱世三百年人物镜像
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="history_banner_desc">
+            夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋一百零四位历史风云人物 · 相似度测算与学戒大略。
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <div id="historyQuickBadgesDashboard" class="flex flex-wrap gap-2 text-xs">
+            <!-- Injected via JS -->
+          </div>
+          <button id="btnToggleHistoryFullscreen" type="button" class="px-3.5 py-1.5 rounded-xl bg-amber-700/80 hover:bg-amber-600 text-amber-100 text-xs font-bold transition border border-amber-500/40 shadow flex items-center gap-1.5 cursor-pointer">
+            <span id="historyFullscreenIcon">⛶</span>
+            <span id="historyFullscreenText" data-i18n="btn_enter_fullscreen_history">进入全屏推演</span>
+          </button>
+          <a id="btnOpenHistoryStandalone" href="history.html" class="px-3 py-1.5 rounded-xl bg-gray-800/80 hover:bg-gray-700 text-gray-300 text-xs font-medium transition border border-gray-700 shadow flex items-center gap-1 cursor-pointer">
+            <span>🚀</span>
+            <span data-i18n="btn_open_standalone_history">独立全屏推演</span>
+          </a>
+          <button id="btnJumpToHomeFromHistory" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
+            <span>←</span>
+            <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Exit Fullscreen Button (visible only in fullscreen mode) -->
+    <button id="btnExitHistoryFullscreenFloating" type="button" class="hidden fixed top-4 right-6 z-[10000] px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-2xl border border-rose-400/60 flex items-center gap-2 cursor-pointer transition active:scale-95">
+      <span>🗗</span>
+      <span data-i18n="btn_exit_fullscreen_history">退出全屏</span>
+    </button>
+
+    <!-- Content Container for Historical Figures Reference -->
+    <div id="historyContentContainer" class="space-y-6">
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- Historical Figure Detail Modal (In Dashboard) -->
+    <div id="historyFigureDetailModalDashboard" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[10050] hidden flex items-center justify-center p-4">
+      <div class="bg-[#111420] border border-amber-500/40 rounded-2xl max-w-2xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl relative">
+        <button id="btnCloseHistoryDetailModalDashboard" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold p-1 cursor-pointer">
+          ✕
+        </button>
+        <div id="historyDetailModalContentDashboard" class="space-y-4">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   </div>
   <!-- End of dashboardView (Page 2) -->
 
@@ -2040,6 +2116,8 @@
   <script src="js/bazi-engine.js"></script>
   <script src="js/fengshui-engine.js"></script>
   <script src="js/career-engine.js"></script>
+  <script src="data/historical_figures.js"></script>
+  <script src="js/history-engine.js"></script>
   <script src="js/portrait-engine.js?v=2026091404"></script>
   <script src="js/luck-engine.js?v=2026091404"></script>
   <script src="js/iching-engine.js?v=2026091404"></script>

@@ -295,6 +295,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderCareerWealth === 'function' && currentBaziResult) {
       renderCareerWealth(currentBaziResult, currentLuckResult);
     }
+    if (typeof renderHistoricalFiguresView === 'function' && currentBaziResult) {
+      renderHistoricalFiguresView(currentBaziResult, currentLuckResult);
+    }
+    if (typeof updateHistoryFullscreenUI === 'function') {
+      const viewHist = document.getElementById('view-history');
+      updateHistoryFullscreenUI(viewHist && viewHist.classList.contains('history-fullscreen-mode'));
+    }
 
     const playText = document.getElementById('ichingCyclePlayText');
     if (playText) {
@@ -1026,6 +1033,9 @@ document.addEventListener('DOMContentLoaded', () => {
       renderFourPillarsHexagrams(result);
       if (typeof renderCareerWealth === 'function') {
         renderCareerWealth(result, currentLuckResult);
+      }
+      if (typeof renderHistoricalFiguresView === 'function') {
+        renderHistoricalFiguresView(result, currentLuckResult);
       }
       updateDashboardSummaryBar();
       updateLandingPreview();
@@ -7749,6 +7759,585 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // ==========================================
+  // 📜 历史人物参考与南北乱世三百年人物镜像 (Historical Figures Mirror & Reference)
+  // ==========================================
+  let historyActiveEra = 'all';
+  let historyActiveArch = 'all';
+  let historyActiveSort = 'similarity';
+  let historySearchQuery = '';
+  let cachedHistoryReportData = null;
+
+  const HISTORY_EL_MAP_EN = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
+  const HISTORY_DM_MAP_EN = {
+    '甲': 'Jia (Yang Wood)', '乙': 'Yi (Yin Wood)',
+    '丙': 'Bing (Yang Fire)', '丁': 'Ding (Yin Fire)',
+    '戊': 'Wu (Yang Earth)', '己': 'Ji (Yin Earth)',
+    '庚': 'Geng (Yang Metal)', '辛': 'Xin (Yin Metal)',
+    '壬': 'Ren (Yang Water)', '癸': 'Gui (Yin Water)'
+  };
+  const HISTORY_PATTERN_MAP_EN = {
+    '正官格': 'Direct Officer',
+    '从弱格': 'Follow Weakness',
+    '伤官见官': 'Hurting Officer Clashing Officer',
+    '枭神夺食': 'Indirect Resource Seizing Food',
+    '羊刃格': 'Yang Blade',
+    '官杀混杂': 'Mixed Officer & 7-Killings',
+    '伤官佩印': 'Hurting Officer with Resource',
+    '食神吐秀': 'Eating God Output',
+    '伤官生财': 'Hurting Officer Generating Wealth',
+    '伤官用印': 'Hurting Officer with Resource',
+    '官印相生': 'Officer & Resource Flow',
+    '杀印相生': '7-Killings & Resource Harmony',
+    '食神生财': 'Eating God Generating Wealth',
+    '羊刃驾杀': 'Yang Blade Harnessing 7-Killings',
+    '建禄格': 'Thriving Lu Formation',
+    '伤官驾杀': 'Hurting Officer Controlling 7-Killings',
+    '专旺格': 'Dominant Pure Formation',
+    '财官双美': 'Dual Wealth & Officer',
+    '偏印格': 'Indirect Resource Formation',
+    '七杀格': 'Seven Killings Formation',
+    '正印格': 'Direct Resource Formation',
+    '食神用印': 'Eating God with Resource',
+    '正财格': 'Direct Wealth Formation',
+    '偏财格': 'Indirect Wealth Formation',
+    '食神制杀': 'Eating God Subduing 7-Killings',
+    '从杀格': 'Follow 7-Killings Formation',
+    '从儿格': 'Follow Output Formation',
+    '从财格': 'Follow Wealth Formation',
+    '阳刃倒戈': 'Yang Blade Revolt',
+    '财多身弱': 'Wealth Heavy Day Master Weak',
+    '曲直格': 'Wood Pure Formation',
+    '从革格': 'Metal Pure Formation',
+    '润下格': 'Water Pure Formation',
+    '炎上格': 'Fire Pure Formation',
+    '稼穑格': 'Earth Pure Formation'
+  };
+  const HISTORY_STRENGTH_MAP_EN = {
+    '极旺格': 'Extremely Strong',
+    '较旺格': 'Relatively Strong',
+    '较弱格': 'Relatively Weak',
+    '极弱格': 'Extremely Weak',
+    '中和格': 'Balanced Neutral',
+    '偏旺': 'Slightly Strong',
+    '偏弱': 'Slightly Weak'
+  };
+
+  function renderHistoricalFiguresView(bazi, luck) {
+    const isEn = (currentLang === 'en');
+    const container = document.getElementById('historyContentContainer');
+    const badgesContainer = document.getElementById('historyQuickBadgesDashboard');
+    if (!container) return;
+
+    if (!bazi || !bazi.pillars) {
+      container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">${isEn ? 'Awaiting natal chart calculation to generate historical figures resonance...' : '八字排盘数据就绪后自动生成历史人物相似度与学戒锦囊...'}</p>`;
+      return;
+    }
+
+    if (typeof HistoricalEngine === 'undefined' || typeof HistoricalEngine.calculateSimilarity !== 'function') {
+      container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">${isEn ? 'Historical Engine initializing...' : '历史人物推演引擎初始化中...'}</p>`;
+      return;
+    }
+
+    const currentYear = new Date().getFullYear();
+    const careerReport = (typeof CareerEngine !== 'undefined' && typeof CareerEngine.generateCareerReport === 'function')
+      ? CareerEngine.generateCareerReport(bazi, luck, currentYear)
+      : null;
+
+    cachedHistoryReportData = HistoricalEngine.calculateSimilarity(bazi, luck, careerReport);
+    if (!cachedHistoryReportData) return;
+
+    const topM = cachedHistoryReportData.topMatch;
+    const syn = cachedHistoryReportData.synthesis;
+    const ctx = cachedHistoryReportData.nativeContext;
+
+    // Badges Dashboard
+    if (badgesContainer) {
+      badgesContainer.innerHTML = `
+        <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
+          ${isEn ? `Day Master: ${HISTORY_DM_MAP_EN[bazi.dayMaster] || bazi.dayMaster || 'Jia'}` : `元神日主: ${bazi.dayMaster || '甲'}（${ctx.dmEl}）`}
+        </span>
+        <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
+          ${isEn ? (HISTORY_STRENGTH_MAP_EN[ctx.strengthGrade] || 'Strength') : ctx.strengthGrade} (${ctx.score100}${isEn ? ' pts' : '分'})
+        </span>
+        <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
+          ${isEn ? `Top Mirror: ${topM.nameEn} (${topM.similarityScore}%)` : `首位镜鉴: ${topM.nameZh} (${topM.similarityScore}%)`}
+        </span>
+      `;
+    }
+
+    // Main Sections
+    container.innerHTML = `
+      <!-- Top Banner (Inside Dashboard) -->
+      <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-indigo-950/40 border border-amber-500/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1.5">
+            <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? 'Mirror of History' : '以史为鉴'}</span>
+            <h2 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300">
+              ${isEn ? '300 Years of Chaotic Division · In-Depth Historical Archetype Resonance' : '乱世三百年历史人物深度相似度测算全相'}
+            </h2>
+          </div>
+          <p class="text-xs text-gray-300 max-w-3xl leading-relaxed">
+            ${isEn
+              ? 'Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 104 famous historical figures to derive actionable wisdom and risk circuit-breakers.'
+              : '夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 104 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。'}
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 1: Top Soul Mirror -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl">🥇</span>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300">
+              ${isEn ? '1. Supreme Historical Soul Mirror Archetype' : '一、天命至高历史镜像（本命天命共鸣最高人物）'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-amber-500 text-amber-300">${isEn ? 'Soul Resonance' : '天命共振'}</span>
+        </div>
+
+        <div class="bg-card p-6 sm:p-7 rounded-2xl border-2 border-amber-500/60 bg-gradient-to-br from-[#1c162b]/90 via-[#131622]/95 to-[#1c1f2e]/90 shadow-2xl space-y-5 relative overflow-hidden">
+          <div class="absolute -right-10 -top-10 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <!-- Top Row -->
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-gray-800 pb-4">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-3">
+                <span class="text-3xl font-serif-sc font-bold text-amber-200 tracking-wide">${isEn ? topM.nameEn : topM.nameZh}</span>
+                <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300 font-bold">${isEn ? topM.dynastyEn : topM.dynastyZh}</span>
+                <span class="px-2 py-0.5 rounded text-[11px] bg-purple-950/80 text-purple-300 border border-purple-800/60">${isEn ? topM.eraNameEn : topM.eraNameZh}</span>
+              </div>
+              <p class="text-sm font-semibold text-amber-400 font-serif-sc">${isEn ? topM.positionEn : topM.positionZh}</p>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="text-right">
+                <div class="text-[10px] text-gray-400 uppercase tracking-widest">${isEn ? 'Soul Affinity' : '天命契合度'}</div>
+                <div class="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">${topM.similarityScore}%</div>
+              </div>
+              <div class="w-12 h-12 rounded-full border-2 border-emerald-500/80 bg-emerald-950/40 flex items-center justify-center text-xl font-bold text-emerald-300 shadow-lg">
+                👑
+              </div>
+            </div>
+          </div>
+
+          <!-- Personality & Deeds -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs leading-relaxed">
+            <div class="p-4 rounded-xl bg-black/40 border border-gray-800/80 space-y-2">
+              <span class="text-amber-300 font-bold flex items-center gap-1.5 text-xs">
+                <span>🎭</span><span>${isEn ? 'Personality & Behavioral DNA' : '生平心智与性格特质'}</span>
+              </span>
+              <p class="text-gray-300 font-sans">${isEn ? topM.personalityEn : topM.personalityZh}</p>
+            </div>
+            <div class="p-4 rounded-xl bg-black/40 border border-gray-800/80 space-y-2">
+              <span class="text-indigo-300 font-bold flex items-center gap-1.5 text-xs">
+                <span>⚔️</span><span>${isEn ? 'Core Deeds & Turning Points' : '核心历史事迹与胜负手'}</span>
+              </span>
+              <p class="text-gray-300 font-sans">${isEn ? topM.deedsEn : topM.deedsZh}</p>
+            </div>
+          </div>
+
+          <!-- Dual Core Advice: Learn & Caution -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+            <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-800/50 space-y-2">
+              <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1.5">
+                <h4 class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                  <span>✨</span><span>${isEn ? 'Absorb Strengths (Winning Strategic Moves)' : '学其优点 · 乱世破局战略胜手'}</span>
+                </h4>
+                <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? 'Learn' : '学优点'}</span>
+              </div>
+              <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? topM.strengthAdviceEn : topM.strengthAdviceZh}</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-rose-950/20 border border-rose-800/50 space-y-2">
+              <div class="flex items-center justify-between border-b border-rose-800/40 pb-1.5">
+                <h4 class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                  <span>🛡️</span><span>${isEn ? 'Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)' : '戒其缺点 · 致命盲区与避险熔断'}</span>
+                </h4>
+                <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? 'Avoid' : '戒缺点'}</span>
+              </div>
+              <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? topM.weaknessAdviceEn : topM.weaknessAdviceZh}</p>
+            </div>
+          </div>
+
+          <!-- Historical Quote -->
+          <div class="p-3.5 rounded-xl bg-amber-950/15 border border-amber-800/40 text-xs text-amber-200/90 italic flex items-start gap-2.5">
+            <span class="text-lg text-amber-400">📜</span>
+            <div class="leading-relaxed">
+              <strong>${isEn ? 'Classical Citation & Historical Judgment: ' : '经典史评与历史定论：'}</strong>${isEn ? topM.historicalQuoteEn : topM.historicalQuoteZh}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Bespoke Strategic Synthesis Advice -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl">🎯</span>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-indigo-300">
+              ${isEn ? '2. Bespoke Strategic Synthesis (Absorb Strengths & Avoid Pitfalls)' : '二、命主专属战略锦囊（汲取长处 · 熔断死穴）'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-indigo-500 text-indigo-300">${isEn ? 'Strategic Mirror' : '学戒大略'}</span>
+        </div>
+
+        <div class="bg-card p-6 rounded-2xl border border-gray-800 shadow-xl space-y-4">
+          <div class="space-y-2">
+            <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-2">
+              <span>🌌</span><span>${isEn ? 'Macro Historical Resonance Analysis' : '宏观时空场能与天命镜像深度透视'}</span>
+            </h4>
+            <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? syn.summaryEn : syn.summaryZh}</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 rounded-xl bg-indigo-950/20 border border-indigo-800/40 text-xs text-indigo-200 leading-relaxed space-y-1.5">
+              <span class="font-bold text-indigo-300 flex items-center gap-1.5">
+                <span>💡</span><span>${isEn ? 'Prime Strategic Directives' : '第一核心攻坚战略建议'}</span>
+              </span>
+              <p class="text-gray-300">${isEn ? syn.learnEn : syn.learnZh}</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-800/40 text-xs text-purple-200 leading-relaxed space-y-1.5">
+              <span class="font-bold text-purple-300 flex items-center gap-1.5">
+                <span>🚨</span><span>${isEn ? 'Defense & Cautionary Guardrails' : '防御红线与行为熔断预警'}</span>
+              </span>
+              <p class="text-gray-300">${isEn ? syn.cautionEn : syn.cautionZh}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Top 5 High-Affinity Resonance Mirrors -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl">👥</span>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-purple-300">
+              ${isEn ? '3. Top 5 High-Affinity Historical Resonance Archetypes' : '三、前五位高契合度历史人物谱系'}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-purple-500 text-purple-300">${isEn ? 'Top 5 Archetypes' : '群星谱系'}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          ${cachedHistoryReportData.topMatches.map((m, idx) => `
+            <div class="bg-card p-5 rounded-2xl border ${idx === 0 ? 'border-amber-500/60 bg-amber-950/10' : 'border-gray-800'} shadow-xl space-y-3 flex flex-col justify-between hover:border-amber-500/40 transition">
+              <div class="space-y-2.5">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg font-bold font-mono ${idx === 0 ? 'text-amber-400' : 'text-gray-400'}">#${m.rank}</span>
+                    <h4 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? m.nameEn : m.nameZh}</h4>
+                  </div>
+                  <span class="text-xs px-2 py-0.5 rounded-full border border-emerald-500/50 bg-emerald-950/60 text-emerald-300 font-bold font-mono">
+                    ${m.similarityScore}%
+                  </span>
+                </div>
+                <div class="flex flex-wrap gap-1 text-[10px]">
+                  <span class="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300">${isEn ? m.dynastyEn : m.dynastyZh}</span>
+                  <span class="px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300">${isEn ? m.eraNameEn : m.eraNameZh}</span>
+                  <span class="px-1.5 py-0.5 rounded bg-amber-950/60 text-amber-300">${isEn ? m.positionEn : m.positionZh}</span>
+                </div>
+                <p class="text-xs text-gray-300 leading-relaxed font-sans line-clamp-2">
+                  ${isEn ? m.personalityEn : m.personalityZh}
+                </p>
+              </div>
+              <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between">
+                <button class="btn-dash-history-detail text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer" data-id="${m.id}">
+                  <span>${isEn ? 'Examine Dossier' : '查阅完整评析'}</span> <span>→</span>
+                </button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- Section 4: 104 Figures Panorama & Gallery -->
+      <div class="space-y-4">
+        <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
+          <div class="flex items-center space-x-2">
+            <span class="text-2xl">🌌</span>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300">
+              ${isEn ? '4. 300-Year Historical Panorama (104 Historical Figures Catalog)' : '四、乱世三百年全景历史人物长卷（104位历史人物名录）'}
+            </h3>
+          </div>
+          <div class="text-xs text-gray-400 font-mono">
+            ${isEn ? '104 Historical Titans Curated' : '共收录 104 位风云人物'}
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="bg-card p-4 rounded-2xl border border-gray-800 shadow-xl space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="relative flex-1 min-w-[240px]">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">🔍</span>
+              <input type="text" id="dashHistorySearchInput" value="${historySearchQuery}" placeholder="${isEn ? 'Search by name, era, position, personality, deeds...' : '输入历史人物姓名、时代、职位、性格特质搜索...'}" class="w-full pl-9 pr-4 py-2 bg-gray-900/90 border border-gray-700 rounded-xl text-xs text-gray-200 focus:outline-none focus:border-amber-500 transition">
+            </div>
+            <div class="flex items-center space-x-2">
+              <label class="text-xs text-gray-400">${isEn ? 'Sort by:' : '排序：'}</label>
+              <select id="dashHistorySortSelect" class="bg-gray-900 border border-gray-700 rounded-xl px-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-amber-500">
+                <option value="similarity" ${historyActiveSort === 'similarity' ? 'selected' : ''}>${isEn ? 'Similarity Highest' : '相似度最高 (Similarity)'}</option>
+                <option value="chronological" ${historyActiveSort === 'chronological' ? 'selected' : ''}>${isEn ? 'Chronological Order' : '时代早晚 (Chronological)'}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Era Tabs -->
+          <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="dashEraTabsContainer">
+            <button class="dash-era-tab-btn ${historyActiveEra === 'all' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="all">
+              ${isEn ? 'All Eras (104)' : '全部时代 (104)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'western_jin' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="western_jin">
+              ${isEn ? 'Western Jin (16)' : '西晋风云 (16)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'sixteen_kingdoms' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sixteen_kingdoms">
+              ${isEn ? '16 Kingdoms (25)' : '五胡十六国 (25)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'eastern_jin' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="eastern_jin">
+              ${isEn ? 'Eastern Jin (17)' : '东晋门阀 (17)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'southern_dynasties' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="southern_dynasties">
+              ${isEn ? 'Southern Dynasties (16)' : '南朝更迭 (16)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'northern_wei' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="northern_wei">
+              ${isEn ? 'Northern Wei (15)' : '北魏汉化 (15)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'northern_zhou_qi' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="northern_zhou_qi">
+              ${isEn ? 'Zhou & Qi (10)' : '周齐对峙 (10)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'sui' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui">
+              ${isEn ? 'Sui Dynasty (5)' : '大隋统一 (5)'}
+            </button>
+          </div>
+
+          <!-- Archetype Tabs -->
+          <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="dashArchTabsContainer">
+            <button class="dash-arch-tab-btn ${historyActiveArch === 'all' ? 'active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-arch="all">
+              ${isEn ? 'All Roles' : '全部职能'}
+            </button>
+            <button class="dash-arch-tab-btn ${historyActiveArch === 'executive' ? 'active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-arch="executive">
+              👑 ${isEn ? 'Executive Leader' : '高管统帅'}
+            </button>
+            <button class="dash-arch-tab-btn ${historyActiveArch === 'military' ? 'active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-arch="military">
+              ⚔️ ${isEn ? 'Military Frontline' : '武职前线'}
+            </button>
+            <button class="dash-arch-tab-btn ${historyActiveArch === 'civil' ? 'active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-arch="civil">
+              📜 ${isEn ? 'Civil Administration' : '文职行政'}
+            </button>
+            <button class="dash-arch-tab-btn ${historyActiveArch === 'specialist' ? 'active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-arch="specialist">
+              🔬 ${isEn ? 'Technical Specialist' : '专精技术'}
+            </button>
+          </div>
+        </div>
+
+        <!-- Catalog Grid Container -->
+        <div id="dashHistoryCatalogGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by renderDashHistoryCatalog() -->
+        </div>
+      </div>
+    `;
+
+    // Render the filterable grid
+    renderDashHistoryCatalog();
+
+    // Attach search and filter events
+    const searchInp = document.getElementById('dashHistorySearchInput');
+    if (searchInp) {
+      searchInp.addEventListener('input', (e) => {
+        historySearchQuery = e.target.value;
+        renderDashHistoryCatalog();
+      });
+    }
+
+    const sortSel = document.getElementById('dashHistorySortSelect');
+    if (sortSel) {
+      sortSel.addEventListener('change', (e) => {
+        historyActiveSort = e.target.value;
+        renderDashHistoryCatalog();
+      });
+    }
+
+    const eraBtns = document.querySelectorAll('.dash-era-tab-btn');
+    eraBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        historyActiveEra = btn.getAttribute('data-era') || 'all';
+        eraBtns.forEach(b => {
+          if (b === btn) {
+            b.className = 'dash-era-tab-btn active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition';
+          } else {
+            b.className = 'dash-era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition';
+          }
+        });
+        renderDashHistoryCatalog();
+      });
+    });
+
+    const archBtns = document.querySelectorAll('.dash-arch-tab-btn');
+    archBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        historyActiveArch = btn.getAttribute('data-arch') || 'all';
+        archBtns.forEach(b => {
+          if (b === btn) {
+            b.className = 'dash-arch-tab-btn active px-3 py-1 rounded-lg border border-indigo-500/50 bg-indigo-950/60 text-indigo-200 font-medium transition';
+          } else {
+            b.className = 'dash-arch-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition';
+          }
+        });
+        renderDashHistoryCatalog();
+      });
+    });
+
+    // Top 5 detail buttons
+    document.querySelectorAll('.btn-dash-history-detail').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        openHistoryDetailModal(id);
+      });
+    });
+  }
+
+  function renderDashHistoryCatalog() {
+    if (!cachedHistoryReportData) return;
+    const isEn = (currentLang === 'en');
+    const container = document.getElementById('dashHistoryCatalogGrid');
+    if (!container) return;
+
+    let list = [...cachedHistoryReportData.allFiguresRanked];
+
+    if (historyActiveEra !== 'all') {
+      list = list.filter(f => f.eraTag === historyActiveEra);
+    }
+    if (historyActiveArch !== 'all') {
+      list = list.filter(f => f.archetype === historyActiveArch);
+    }
+    if (historySearchQuery.trim()) {
+      const q = historySearchQuery.trim().toLowerCase();
+      list = list.filter(f => (
+        f.nameZh.toLowerCase().includes(q) ||
+        f.nameEn.toLowerCase().includes(q) ||
+        f.dynastyZh.toLowerCase().includes(q) ||
+        f.dynastyEn.toLowerCase().includes(q) ||
+        f.positionZh.toLowerCase().includes(q) ||
+        f.positionEn.toLowerCase().includes(q) ||
+        f.personalityZh.toLowerCase().includes(q) ||
+        f.personalityEn.toLowerCase().includes(q) ||
+        f.deedsZh.toLowerCase().includes(q) ||
+        f.deedsEn.toLowerCase().includes(q)
+      ));
+    }
+
+    if (historyActiveSort === 'chronological') {
+      const dataset = (typeof HistoricalEngine !== 'undefined') ? HistoricalEngine.getDataset() : [];
+      const orderMap = {};
+      dataset.forEach((item, idx) => { orderMap[item.id] = idx; });
+      list.sort((a, b) => (orderMap[a.id] || 0) - (orderMap[b.id] || 0));
+    } else {
+      list.sort((a, b) => b.similarityScore - a.similarityScore);
+    }
+
+    if (list.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full p-8 text-center text-gray-500 text-xs">
+          ${isEn ? 'No historical figures matched your current search filters.' : '未找到匹配当前筛选条件的历史人物，请调整检索词或时代分类。'}
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = list.map(f => `
+      <div class="bg-card p-4 sm:p-5 rounded-xl border border-gray-800/90 shadow-lg space-y-3 flex flex-col justify-between hover:border-amber-500/40 transition">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold font-mono text-gray-400">#${f.rank}</span>
+              <h4 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? f.nameEn : f.nameZh}</h4>
+            </div>
+            <span class="text-xs px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold font-mono">
+              ${f.similarityScore}%
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-1 text-[10px]">
+            <span class="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
+            <span class="px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300">${isEn ? f.eraNameEn : f.eraNameZh}</span>
+            <span class="px-1.5 py-0.5 rounded bg-indigo-950/60 text-indigo-300">${isEn ? (HISTORY_EL_MAP_EN[f.fiveElements.dominant] || 'Element') + ' / ' + (HISTORY_PATTERN_MAP_EN[f.patternType] || f.patternType) : (f.fiveElements.dominant + '行 / ' + f.patternType)}</span>
+          </div>
+          <p class="text-xs text-amber-400/90 font-serif-sc line-clamp-1">${isEn ? f.positionEn : f.positionZh}</p>
+          <p class="text-[11px] text-gray-300 leading-relaxed font-sans line-clamp-2">${isEn ? f.personalityEn : f.personalityZh}</p>
+        </div>
+        <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between">
+          <button class="btn-dash-history-card-detail text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer" data-id="${f.id}">
+            <span>${isEn ? 'Full Profile' : '深度剖析'}</span> <span>→</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('.btn-dash-history-card-detail').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        openHistoryDetailModal(id);
+      });
+    });
+  }
+
+  function openHistoryDetailModal(id) {
+    if (!cachedHistoryReportData) return;
+    const isEn = (currentLang === 'en');
+    const f = cachedHistoryReportData.allFiguresRanked.find(item => item.id === id);
+    if (!f) return;
+
+    const modal = document.getElementById('historyFigureDetailModalDashboard');
+    const content = document.getElementById('historyDetailModalContentDashboard');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <div class="space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-3">
+          <div>
+            <div class="flex items-center space-x-3">
+              <h3 class="text-xl font-bold font-serif-sc text-amber-200">${isEn ? f.nameEn : f.nameZh}</h3>
+              <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-purple-950/80 text-purple-300 border border-purple-800/50">${isEn ? f.eraNameEn : f.eraNameZh}</span>
+            </div>
+            <p class="text-xs text-amber-400 mt-1 font-serif-sc">${isEn ? f.positionEn : f.positionZh}</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-gray-400">${isEn ? 'Similarity Rank' : '契合度排名'}</span>
+            <div class="text-xl font-bold font-mono text-emerald-400">#${f.rank} · ${f.similarityScore}%</div>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-xs leading-relaxed">
+          <p><strong class="text-amber-300">${isEn ? 'Personality Traits: ' : '性格特质：'}</strong>${isEn ? f.personalityEn : f.personalityZh}</p>
+          <p><strong class="text-indigo-300">${isEn ? 'Historical Feats: ' : '生平关键事迹：'}</strong>${isEn ? f.deedsEn : f.deedsZh}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+          <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-1.5">
+            <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1">
+              <span class="font-bold text-xs text-emerald-300">${isEn ? 'Strengths to Absorb (Learn)' : '学优点 · 破局智慧'}</span>
+              <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? 'Strength' : '学'}</span>
+            </div>
+            <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? f.strengthAdviceEn : f.strengthAdviceZh}</p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-1.5">
+            <div class="flex items-center justify-between border-b border-rose-800/40 pb-1">
+              <span class="font-bold text-xs text-rose-300">${isEn ? 'Pitfalls to Avoid (Caution)' : '戒缺点 · 避险熔断'}</span>
+              <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? 'Pitfall' : '戒'}</span>
+            </div>
+            <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? f.weaknessAdviceEn : f.weaknessAdviceZh}</p>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-black/50 border border-gray-800 text-xs text-gray-400 italic">
+          <strong>${isEn ? 'Classical Citation: ' : '史料考据：'}</strong>${isEn ? f.historicalQuoteEn : f.historicalQuoteZh}
+        </div>
+      </div>
+    `;
+
+    modal.classList.remove('hidden');
+  }
+
   // Primary View Navigation Logic
   // activePrimaryView already declared at top
   const viewNavBtns = document.querySelectorAll('.view-nav-btn');
@@ -7761,7 +8350,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'view-iching': document.getElementById('view-iching'),
     'view-synastry': document.getElementById('view-synastry'),
     'view-fengshui': document.getElementById('view-fengshui'),
-    'view-career': document.getElementById('view-career')
+    'view-career': document.getElementById('view-career'),
+    'view-history': document.getElementById('view-history')
   };
 
   function switchPrimaryView(targetViewId) {
@@ -7825,6 +8415,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // If switching to career view, render if chart exists
     if (targetViewId === 'view-career' && currentBaziResult && typeof renderCareerWealth === 'function') {
       renderCareerWealth(currentBaziResult, currentLuckResult);
+    }
+
+    // If switching to history view, render if chart exists
+    if (targetViewId === 'view-history' && currentBaziResult && typeof renderHistoricalFiguresView === 'function') {
+      renderHistoricalFiguresView(currentBaziResult, currentLuckResult);
     }
 
     // If switching to iching view, render Four Pillars Hexagrams & Cycle Progression if chart exists
@@ -7975,6 +8570,91 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!document.fullscreenElement && viewCareer && viewCareer.classList.contains('career-fullscreen-mode')) {
         setCareerFullscreenState(false);
       }
+      if (!document.fullscreenElement && viewHistory && viewHistory.classList.contains('history-fullscreen-mode')) {
+        setHistoryFullscreenState(false);
+      }
+    });
+  }
+
+  // History Fullscreen Mode Controller (Seamlessly Enter / Exit Fullscreen without losing BaZi data)
+  const btnToggleHistoryFullscreen = document.getElementById('btnToggleHistoryFullscreen');
+  const btnExitHistoryFullscreenFloating = document.getElementById('btnExitHistoryFullscreenFloating');
+  const viewHistory = document.getElementById('view-history');
+
+  function updateHistoryFullscreenUI(isFullscreen) {
+    const isEn = (currentLang === 'en');
+    const historyFullscreenIcon = document.getElementById('historyFullscreenIcon');
+    const historyFullscreenText = document.getElementById('historyFullscreenText');
+    const btn = document.getElementById('btnToggleHistoryFullscreen');
+    const floatBtn = document.getElementById('btnExitHistoryFullscreenFloating');
+
+    if (historyFullscreenIcon) {
+      historyFullscreenIcon.textContent = isFullscreen ? '🗗' : '⛶';
+    }
+    if (historyFullscreenText) {
+      historyFullscreenText.textContent = isFullscreen
+        ? (isEn ? 'Exit Fullscreen' : '退出全屏')
+        : (isEn ? 'Enter Fullscreen' : '进入全屏推演');
+    }
+    if (btn) {
+      if (isFullscreen) {
+        btn.classList.remove('bg-amber-700/80', 'hover:bg-amber-600');
+        btn.classList.add('bg-rose-700/80', 'hover:bg-rose-600');
+      } else {
+        btn.classList.remove('bg-rose-700/80', 'hover:bg-rose-600');
+        btn.classList.add('bg-amber-700/80', 'hover:bg-amber-600');
+      }
+    }
+    if (floatBtn) {
+      if (isFullscreen) {
+        floatBtn.classList.remove('hidden');
+      } else {
+        floatBtn.classList.add('hidden');
+      }
+    }
+  }
+
+  function setHistoryFullscreenState(enable) {
+    if (!viewHistory) return;
+    if (enable) {
+      viewHistory.classList.add('history-fullscreen-mode');
+      if (viewHistory.requestFullscreen && !document.fullscreenElement) {
+        viewHistory.requestFullscreen().catch(() => {});
+      }
+      updateHistoryFullscreenUI(true);
+    } else {
+      viewHistory.classList.remove('history-fullscreen-mode');
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+      updateHistoryFullscreenUI(false);
+    }
+  }
+
+  if (btnToggleHistoryFullscreen) {
+    btnToggleHistoryFullscreen.addEventListener('click', () => {
+      if (!viewHistory) return;
+      const isCurrentlyFullscreen = viewHistory.classList.contains('history-fullscreen-mode');
+      setHistoryFullscreenState(!isCurrentlyFullscreen);
+    });
+  }
+
+  if (btnExitHistoryFullscreenFloating) {
+    btnExitHistoryFullscreenFloating.addEventListener('click', () => {
+      setHistoryFullscreenState(false);
+    });
+  }
+
+  const btnJumpToHomeFromHistory = document.getElementById('btnJumpToHomeFromHistory');
+  if (btnJumpToHomeFromHistory) {
+    btnJumpToHomeFromHistory.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+
+  const btnCloseHistoryDetailModalDashboard = document.getElementById('btnCloseHistoryDetailModalDashboard');
+  if (btnCloseHistoryDetailModalDashboard) {
+    btnCloseHistoryDetailModalDashboard.addEventListener('click', () => {
+      const modal = document.getElementById('historyFigureDetailModalDashboard');
+      if (modal) modal.classList.add('hidden');
     });
   }
 
@@ -11667,8 +12347,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof window !== 'undefined' && window.location) {
     const hash = window.location.hash || '';
     const search = window.location.search || '';
-    if (hash.includes('dashboard') || search.includes('restore=true') || search.includes('view=career')) {
-      const targetView = search.includes('view=career') ? 'view-career' : null;
+    if (hash.includes('dashboard') || search.includes('restore=true') || search.includes('view=career') || search.includes('view=history')) {
+      const targetView = search.includes('view=history') ? 'view-history' : (search.includes('view=career') ? 'view-career' : null);
       switchToDashboardView(targetView);
     }
   }

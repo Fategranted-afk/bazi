@@ -508,8 +508,9 @@ body {
   animation: spin-slow 10s linear infinite;
 }
 
-/* Career Fullscreen Mode: seamless entering and exiting fullscreen without reloading or losing state */
-.career-fullscreen-mode {
+/* Career & History Fullscreen Modes: seamless entering and exiting fullscreen without reloading or losing state */
+.career-fullscreen-mode,
+.history-fullscreen-mode {
   position: fixed !important;
   inset: 0 !important;
   z-index: 9999 !important;
@@ -524,7 +525,8 @@ body {
 }
 
 @media (min-width: 768px) {
-  .career-fullscreen-mode {
+  .career-fullscreen-mode,
+  .history-fullscreen-mode {
     padding: 2rem 3rem 5rem 3rem !important;
   }
 }
