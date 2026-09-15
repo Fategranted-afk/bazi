@@ -531,3 +531,70 @@ body {
   }
 }
 
+/* 🎴 Historical Destiny Card Detail Modal (Rock-Solid Viewport Fixed & Card Draw Animation) */
+.history-card-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 100050 !important;
+  margin: 0 !important;
+  padding: 1rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  overflow: hidden !important;
+}
+
+.history-card-modal-backdrop.hidden {
+  display: none !important;
+}
+
+.history-card-modal-container {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 44rem !important;
+  max-height: 88vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 1.5rem !important;
+  border: 2px solid rgba(245, 158, 11, 0.6) !important;
+  background: linear-gradient(180deg, #1c1815 0%, #111420 40%, #0d0f17 100%) !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 158, 11, 0.25) !important;
+  animation: historyCardDraw 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  overflow: hidden !important;
+  transform-origin: center center !important;
+}
+
+@keyframes historyCardDraw {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.history-card-modal-header {
+  flex-shrink: 0 !important;
+  padding: 1rem 1.5rem !important;
+  background: linear-gradient(90deg, rgba(69, 26, 3, 0.7) 0%, rgba(120, 53, 15, 0.35) 50%, rgba(69, 26, 3, 0.7) 100%) !important;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.history-card-modal-body {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  padding: 1.5rem !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+

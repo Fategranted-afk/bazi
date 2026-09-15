@@ -7879,8 +7879,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <p class="text-xs text-gray-300 max-w-3xl leading-relaxed">
             ${isEn
-              ? 'Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 104 famous historical figures to derive actionable wisdom and risk circuit-breakers.'
-              : '夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 104 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。'}
+              ? 'Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 208 famous historical figures to derive actionable wisdom and risk circuit-breakers.'
+              : '夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 208 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。'}
           </p>
         </div>
       </div>
@@ -8051,17 +8051,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Section 4: 104 Figures Panorama & Gallery -->
+      <!-- Section 4: 208 Figures Panorama & Gallery -->
       <div class="space-y-4">
         <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
           <div class="flex items-center space-x-2">
             <span class="text-2xl">🌌</span>
             <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300">
-              ${isEn ? '4. 300-Year Historical Panorama (104 Historical Figures Catalog)' : '四、乱世三百年全景历史人物长卷（104位历史人物名录）'}
+              ${isEn ? '4. 300-Year Historical Panorama (208 Historical Figures Catalog)' : '四、乱世三百年全景历史人物长卷（208位历史人物名录）'}
             </h3>
           </div>
           <div class="text-xs text-gray-400 font-mono">
-            ${isEn ? '104 Historical Titans Curated' : '共收录 104 位风云人物'}
+            ${isEn ? '208 Historical Titans Curated' : '共收录 208 位风云人物'}
           </div>
         </div>
 
@@ -8084,28 +8084,28 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Era Tabs -->
           <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="dashEraTabsContainer">
             <button class="dash-era-tab-btn ${historyActiveEra === 'all' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="all">
-              ${isEn ? 'All Eras (104)' : '全部时代 (104)'}
+              ${isEn ? 'All Eras (208)' : '全部时代 (208)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'western_jin' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="western_jin">
-              ${isEn ? 'Western Jin (16)' : '西晋风云 (16)'}
+              ${isEn ? 'Western Jin (32)' : '西晋风云 (32)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'sixteen_kingdoms' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sixteen_kingdoms">
-              ${isEn ? '16 Kingdoms (25)' : '五胡十六国 (25)'}
+              ${isEn ? '16 Kingdoms (50)' : '五胡十六国 (50)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'eastern_jin' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="eastern_jin">
-              ${isEn ? 'Eastern Jin (17)' : '东晋门阀 (17)'}
+              ${isEn ? 'Eastern Jin (34)' : '东晋门阀 (34)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'southern_dynasties' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="southern_dynasties">
-              ${isEn ? 'Southern Dynasties (16)' : '南朝更迭 (16)'}
+              ${isEn ? 'Southern Dynasties (32)' : '南朝更迭 (32)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'northern_wei' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="northern_wei">
-              ${isEn ? 'Northern Wei (15)' : '北魏汉化 (15)'}
+              ${isEn ? 'Northern Wei (30)' : '北魏汉化 (30)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'northern_zhou_qi' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="northern_zhou_qi">
-              ${isEn ? 'Zhou & Qi (10)' : '周齐对峙 (10)'}
+              ${isEn ? 'Zhou & Qi (20)' : '周齐对峙 (20)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'sui' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui">
-              ${isEn ? 'Sui Dynasty (5)' : '大隋统一 (5)'}
+              ${isEn ? 'Sui Dynasty (10)' : '大隋统一 (10)'}
             </button>
           </div>
 
@@ -8287,7 +8287,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const modal = document.getElementById('historyFigureDetailModalDashboard');
     const content = document.getElementById('historyDetailModalContentDashboard');
+    const headerTitle = document.getElementById('historyCardModalHeaderTitle');
     if (!modal || !content) return;
+
+    if (headerTitle) {
+      headerTitle.textContent = isEn ? 'Historical Titan Profile · In-Depth Dossier' : '乱世名将策论调阅 · 深度卡牌解密';
+    }
 
     content.innerHTML = `
       <div class="space-y-4">
@@ -8336,6 +8341,46 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     modal.classList.remove('hidden');
+    if (document.body && document.body.style) {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeHistoryDetailModal() {
+    const modal = document.getElementById('historyFigureDetailModalDashboard');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+    if (document.body && document.body.style) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Bind close events for the card modal
+  const closeHistoryCardBtn = document.getElementById('historyDetailModalCloseBtnDashboard');
+  const historyCardModalBackdrop = document.getElementById('historyFigureDetailModalDashboard');
+  if (closeHistoryCardBtn) {
+    closeHistoryCardBtn.addEventListener('click', closeHistoryDetailModal);
+  }
+  if (historyCardModalBackdrop) {
+    historyCardModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === historyCardModalBackdrop) {
+        closeHistoryDetailModal();
+      }
+    });
+  }
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('historyFigureDetailModalDashboard');
+      if (modal && !modal.classList.contains('hidden')) {
+        closeHistoryDetailModal();
+      }
+    }
+  });
+
+  if (typeof window !== 'undefined') {
+    window.openHistoryDetailModal = openHistoryDetailModal;
+    window.closeHistoryDetailModal = closeHistoryDetailModal;
   }
 
   // Primary View Navigation Logic
@@ -10768,6 +10813,21 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const btnQuickExportSinglePdf = document.getElementById('btnQuickExportSinglePdf');
+    const btnDownloadSinglePdf = document.getElementById('dossierDownloadSinglePdfBtn');
+
+    if (btnQuickExportSinglePdf) {
+      btnQuickExportSinglePdf.addEventListener('click', () => {
+        downloadImperialSinglePagePDF(currentLang);
+      });
+    }
+
+    if (btnDownloadSinglePdf) {
+      btnDownloadSinglePdf.addEventListener('click', () => {
+        downloadImperialSinglePagePDF(currentDossierLang || currentLang);
+      });
+    }
+
     if (btnDismiss) {
       btnDismiss.addEventListener('click', () => {
         const statusEl = document.getElementById('dossierExportStatus');
@@ -10822,6 +10882,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const titleEl = document.querySelector('[data-i18n="dossier_modal_title"]');
     const printBtnEl = document.querySelector('#dossierPrintBtn span:last-child');
     const downloadBtnEl = document.querySelector('#dossierDownloadPdfBtn span:last-child');
+    const downloadSingleBtnEl = document.querySelector('#dossierDownloadSinglePdfBtn span:last-child');
     const closeBtnEl = document.getElementById('dossierCloseBtn');
 
     if (titleEl) {
@@ -10833,7 +10894,10 @@ document.addEventListener('DOMContentLoaded', () => {
       printBtnEl.textContent = isEn ? 'System Print / Save as PDF' : '系统打印 / 另存为 PDF';
     }
     if (downloadBtnEl) {
-      downloadBtnEl.textContent = isEn ? 'Direct Download PDF' : '直接下载 PDF 文件';
+      downloadBtnEl.textContent = isEn ? 'Direct Download 8-Page PDF' : '直接下载 8 页 PDF 文件';
+    }
+    if (downloadSingleBtnEl) {
+      downloadSingleBtnEl.textContent = isEn ? 'Export Page 1 PDF' : '导出卷首单页 PDF';
     }
     if (closeBtnEl) {
       closeBtnEl.textContent = isEn ? 'Close Preview' : '关闭预览';
@@ -10917,7 +10981,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
 
     showDossierStatus(
-      isEn ? '⏳ Compiling 7-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 7 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
+      isEn ? '⏳ Compiling 8-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 8 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
       'info'
     );
 
@@ -10945,7 +11009,7 @@ document.addEventListener('DOMContentLoaded', () => {
             orientation: 'portrait'
           },
           pagebreak: {
-            mode: [] // Pure 7-page continuous A4 rendering without spurious spacer injections
+            mode: [] // Pure 8-page continuous A4 rendering without spurious spacer injections
           }
         };
 
@@ -10970,6 +11034,122 @@ document.addEventListener('DOMContentLoaded', () => {
     container.classList.remove('exporting-pdf');
     // 2. Secondary: Built-in zero-dependency client-side PDF emitter
     fallbackExportPDF(container, filename, isEn);
+  }
+
+  function downloadImperialSinglePagePDF(lang) {
+    const activeLang = lang || currentDossierLang || currentLang || 'zh';
+    const isEn = (activeLang === 'en');
+
+    renderImperialDossierPages(activeLang);
+
+    const container = document.getElementById('imperialDossierContainer');
+    if (!container) return;
+
+    const page1 = container.querySelector('.imperial-page');
+    if (!page1) return;
+
+    const bazi = currentBaziResult;
+    const yrStem = (bazi && bazi.pillars && bazi.pillars.year && bazi.pillars.year.text) ? bazi.pillars.year.text : (isEn ? 'Chart' : '命造');
+    const dateStr = (bazi && bazi.input && bazi.input.year)
+      ? `${bazi.input.year}${String(bazi.input.month).padStart(2,'0')}${String(bazi.input.day).padStart(2,'0')}`
+      : new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const filename = isEn ? `Imperial_BaZi_Summary_Page1_${dateStr}` : `钦天监御制卷首统览单页_${yrStem}_${dateStr}`;
+
+    showDossierStatus(
+      isEn ? '⏳ Compiling 1-Page Qin Tian Jian Executive Blueprint A4 PDF...' : '⏳ 正在快速编译卷首统览单页 PDF，请稍候...',
+      'info'
+    );
+
+    page1.classList.add('exporting-pdf-single');
+
+    if (typeof html2pdf !== 'undefined') {
+      try {
+        const opt = {
+          margin: 0,
+          filename: `${filename}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            letterRendering: true,
+            scrollY: 0,
+            scrollX: 0,
+            backgroundColor: '#fcfbf7',
+            logging: false
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          }
+        };
+
+        html2pdf().set(opt).from(page1).save().then(() => {
+          page1.classList.remove('exporting-pdf-single');
+          showDossierStatus(
+            isEn ? '✅ 1-Page Imperial Blueprint PDF generated and download started!' : '✅ 卷首统览单页 PDF 已成功生成并开始下载！',
+            'success'
+          );
+        }).catch((err) => {
+          page1.classList.remove('exporting-pdf-single');
+          console.warn('html2pdf single-page export notice, invoking fallback:', err);
+          fallbackExportPDFSinglePage(page1, filename, isEn);
+        });
+        return;
+      } catch (err) {
+        page1.classList.remove('exporting-pdf-single');
+        console.warn('html2pdf single-page invocation error:', err);
+      }
+    }
+
+    page1.classList.remove('exporting-pdf-single');
+    fallbackExportPDFSinglePage(page1, filename, isEn);
+  }
+
+  function fallbackExportPDFSinglePage(page1, filename, isEn) {
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
+    if (!page1) {
+      triggerPrintFallback(isEn);
+      return;
+    }
+
+    renderPagesToJpegs([page1]).then((jpegList) => {
+      if (!jpegList || jpegList.length === 0) {
+        triggerPrintFallback(isEn);
+        return;
+      }
+      const pdfBytes = compileA4PdfFromJpegs(jpegList);
+      if (typeof Blob === 'undefined' || typeof URL === 'undefined') {
+        triggerPrintFallback(isEn);
+        return;
+      }
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `${filename}.pdf`;
+      if (document.body && typeof document.body.appendChild === 'function') {
+        document.body.appendChild(link);
+      }
+      if (typeof link.click === 'function') {
+        link.click();
+      }
+      setTimeout(() => {
+        if (link.parentNode && typeof link.parentNode.removeChild === 'function') {
+          link.parentNode.removeChild(link);
+        }
+        if (typeof URL.revokeObjectURL === 'function') {
+          URL.revokeObjectURL(blobUrl);
+        }
+      }, 2000);
+      showDossierStatus(
+        isEn ? '✅ 1-Page Imperial Blueprint PDF generated and download started!' : '✅ 卷首统览单页 PDF 已成功生成并开始下载！',
+        'success'
+      );
+    }).catch((err) => {
+      console.warn('Single-page canvas rasterization notice, opening print fallback:', err);
+      triggerPrintFallback(isEn);
+    });
   }
 
   function fallbackExportPDF(container, filename, isEn) {
@@ -11230,6 +11410,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global exposure for controllers and testing
   if (typeof window !== 'undefined') {
     window.downloadImperialDossierPDF = downloadImperialDossierPDF;
+    window.downloadImperialSinglePagePDF = downloadImperialSinglePagePDF;
+    window.fallbackExportPDFSinglePage = fallbackExportPDFSinglePage;
     window.printImperialDossier = printImperialDossier;
     window.compileA4PdfFromJpegs = compileA4PdfFromJpegs;
     window.openImperialDossierModal = openImperialDossierModal;
@@ -11427,6 +11609,47 @@ document.addEventListener('DOMContentLoaded', () => {
       ? '3. Fortify Domestic Sanctuary & Somatic Reserve: Honor the spouse as your ultimate financial breakwater and emotional ballast; guard vitality against overwork.'
       : '三、以后方压舱石固本培元（安内）：配偶乃一生财库防波堤与理智护航者，遇风浪当共商大计，修心养气方保终身立于不败之地。';
 
+    let histData = null;
+    if (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.calculateSimilarity === 'function') {
+      try {
+        histData = HistoricalEngine.calculateSimilarity(bazi, luck, careerReport);
+      } catch (e) {
+        console.warn('HistoricalEngine calculateSimilarity error in dossier:', e);
+      }
+    }
+    const topMatch = (histData && histData.topMatch) || {
+      id: 'yuwen_tai',
+      nameZh: '宇文泰',
+      nameEn: 'Yuwen Tai',
+      dynastyZh: '西魏 / 北周',
+      dynastyEn: 'Western Wei / Northern Zhou',
+      eraNameZh: '周齐对峙',
+      eraNameEn: 'Zhou & Qi Division',
+      positionZh: '西魏大丞相 · 八柱国之首 · 北周实际奠基人',
+      positionEn: 'Prime Minister of Western Wei · Supreme Leader of Eight Pillar Generals',
+      similarityScore: 92,
+      dimensions: { elementAffinity: 23, patternResonance: 28, archetypeConcordance: 23, energyTemperament: 18 },
+      personalityZh: '沉毅有度、见识渊深、求贤若渴、法度严明',
+      personalityEn: 'Resolute, deeply discerning, insatiably talent-seeking, strict institutional discipline.',
+      deedsZh: '以劣势关陇抗衡高欢庞大东魏，创立府兵制与苏绰六条诏书，确立关陇军事贵族集团根基。',
+      deedsEn: 'Commanded Western Wei against Eastern Wei, established the Fubing militia system and Guanlong aristocracy.',
+      strengthAdviceZh: '在资源极度劣势下，以制度再造与组织凝聚力凝聚人心，善用顶层制度创新破局。',
+      strengthAdviceEn: 'Overcame severe resource inferiority through institutional redesign and cohesive talent empowerment.',
+      weaknessAdviceZh: '严苛制度推进过急时容易树敌，晚年权力交接须防止权臣专断。',
+      weaknessAdviceEn: 'Overly rapid institutional enforcement risks backlash; secure succession safeguards against over-centralization.',
+      historicalQuoteZh: '《周书》评：“太祖沈毅有大度，潜济之谋，非人所测。”',
+      historicalQuoteEn: 'Book of Zhou: "Taizu was resolute and magnanimous; his grand strategies were beyond common comprehension."',
+      rank: 1
+    };
+    const topSyn = (histData && histData.synthesis) || (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.generateSynthesisAdvice === 'function' ? HistoricalEngine.generateSynthesisAdvice(bazi, topMatch, dmState.natalStrength) : {
+      summaryZh: `命主元神【${bazi.dayMaster || '甲'}】，与【${topMatch.dynastyZh} · ${topMatch.nameZh}】形成高达 ${topMatch.similarityScore}% 的至高天命共鸣。`,
+      summaryEn: `The native's Day Master exhibits an extraordinary ${topMatch.similarityScore}% celestial resonance with [${topMatch.nameEn}] of ${topMatch.dynastyEn}.`,
+      learnZh: `【学其所长】：命主应当汲取${topMatch.nameZh}一生最精纯的战略胜手——“${topMatch.strengthAdviceZh}”。`,
+      learnEn: `[Absorb Strengths]: Internalize ${topMatch.nameEn}'s prime strategic mastery: "${topMatch.strengthAdviceEn}".`,
+      cautionZh: `【戒其所短】：须高度警惕${topMatch.nameZh}的致命盲区——“${topMatch.weaknessAdviceZh}”。`,
+      cautionEn: `[Guard Against Weaknesses]: Strictly guard against the fatal blindspot: "${topMatch.weaknessAdviceEn}".`
+    });
+
     container.innerHTML = `
       <!-- Page 1: Executive Summary Blueprint -->
       <div class="imperial-page relative">
@@ -11520,12 +11743,119 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Master Executive Summary' : '大明/大清钦天监 · 卷首 终身统览'}</span>
-            <span>Page 1 / 7</span>
+            <span>Page 1 / 8</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 2: Cover & Four Pillars Grand Altar -->
+      <!-- Page 2: Special Prologue: Supreme Historical Soul Mirror -->
+      <div class="imperial-page relative">
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-6 space-y-2.5">
+          <!-- Header -->
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2.5">
+            <div class="flex items-center justify-between">
+              <span class="imperial-seal-stamp">${isEn ? 'HISTORICAL MIRROR' : '钦天监正堂之宝'}</span>
+              <span class="text-[11px] text-gray-600 font-mono">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首附卷'}</span>
+            </div>
+            <h1 class="text-xl font-black font-serif-sc text-amber-900 tracking-wider">${isEn ? 'Qin Tian Jian · Supreme Historical Soul Mirror' : '钦天监 · 御制天机 · 乱世三百年至高天命历史镜像'}</h1>
+            <p class="text-[11px] text-gray-700 font-serif-sc">${isEn ? '300-Year Historical Resonance: Top #1 Archetype Synthesis & Strategic Directives' : '南北朝乱世风云 · 契合排行榜第一位先贤照胆 · 胜局战法与避险熔断'}</p>
+          </div>
+
+          <!-- Top Match Hero Box -->
+          <div class="p-3 bg-amber-50/80 rounded border border-amber-900/40 space-y-2">
+            <div class="flex items-center justify-between border-b border-amber-900/20 pb-1.5">
+              <div>
+                <div class="flex items-center space-x-2">
+                  <span class="text-lg font-bold font-serif-sc text-amber-950">${isEn ? topMatch.nameEn : topMatch.nameZh}</span>
+                  <span class="imperial-seal-stamp text-[9px] py-0.2 px-1.5">${isEn ? topMatch.dynastyEn : topMatch.dynastyZh}</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-900/20 text-purple-900 border border-purple-900/30 font-serif-sc">${isEn ? topMatch.eraNameEn : topMatch.eraNameZh}</span>
+                </div>
+                <div class="text-[11px] text-amber-900 font-serif-sc mt-0.5">${isEn ? topMatch.positionEn : topMatch.positionZh}</div>
+              </div>
+              <div class="text-right">
+                <div class="text-[10px] text-gray-500 font-serif-sc">${isEn ? 'Celestial Match' : '天命契合榜首'}</div>
+                <div class="text-base font-black font-mono text-emerald-800">#1 · ${topMatch.similarityScore}%</div>
+              </div>
+            </div>
+
+            <!-- 4D Dimension Breakdown Badges -->
+            <div class="grid grid-cols-4 gap-1.5 text-center text-[9.5px] font-mono">
+              <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Element' : '五行气机'}</div>
+                <div class="font-bold text-amber-950">${topMatch.dimensions ? topMatch.dimensions.elementAffinity : 23}/25</div>
+              </div>
+              <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Pattern' : '格局共鸣'}</div>
+                <div class="font-bold text-amber-950">${topMatch.dimensions ? topMatch.dimensions.patternResonance : 28}/30</div>
+              </div>
+              <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Archetype' : '职场择位'}</div>
+                <div class="font-bold text-amber-950">${topMatch.dimensions ? topMatch.dimensions.archetypeConcordance : 23}/25</div>
+              </div>
+              <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Energy' : '心性能量'}</div>
+                <div class="font-bold text-amber-950">${topMatch.dimensions ? topMatch.dimensions.energyTemperament : 18}/20</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 1: Personality Traits & Historical Feats -->
+          <div class="p-2.5 bg-amber-50/60 rounded border border-amber-900/30 text-xs space-y-1 font-serif-sc text-gray-800">
+            <p class="leading-snug"><b>${isEn ? 'Personality Traits: ' : '性格心性特质：'}</b>${isEn ? topMatch.personalityEn : topMatch.personalityZh}</p>
+            <p class="leading-snug"><b>${isEn ? 'Historical Feats: ' : '生平关键立功事迹：'}</b>${isEn ? topMatch.deedsEn : topMatch.deedsZh}</p>
+          </div>
+
+          <!-- Section 2: Dual Strategic Columns -->
+          <div class="grid grid-cols-2 gap-2 text-xs font-serif-sc">
+            <div class="p-2.5 rounded bg-emerald-50/70 border border-emerald-800/40 space-y-1">
+              <div class="flex items-center justify-between border-b border-emerald-800/20 pb-0.5">
+                <span class="font-bold text-emerald-950 text-[11px] flex items-center gap-1"><span>⚔️</span><span>${isEn ? 'I. Strengths to Absorb' : '一、学优点 · 破局战法'}</span></span>
+                <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-emerald-800 text-emerald-900">${isEn ? 'STRATEGY' : '胜局'}</span>
+              </div>
+              <p class="text-[10.5px] text-emerald-950 leading-relaxed font-sans">${isEn ? topMatch.strengthAdviceEn : topMatch.strengthAdviceZh}</p>
+            </div>
+
+            <div class="p-2.5 rounded bg-rose-50/70 border border-rose-800/40 space-y-1">
+              <div class="flex items-center justify-between border-b border-rose-800/20 pb-0.5">
+                <span class="font-bold text-rose-950 text-[11px] flex items-center gap-1"><span>🛡️</span><span>${isEn ? 'II. Pitfalls to Avoid' : '二、戒缺点 · 避险熔断'}</span></span>
+                <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-rose-800 text-rose-900">${isEn ? 'CIRCUIT-BREAKER' : '熔断'}</span>
+              </div>
+              <p class="text-[10.5px] text-rose-950 leading-relaxed font-sans">${isEn ? topMatch.weaknessAdviceEn : topMatch.weaknessAdviceZh}</p>
+            </div>
+          </div>
+
+          <!-- Section 3: Classical Citation -->
+          <div class="p-2 bg-amber-50/40 rounded border border-amber-900/20 text-[10.5px] text-gray-700 italic font-serif-sc">
+            <b>${isEn ? 'Classical Citation: ' : '史料正史考据：'}</b>${isEn ? topMatch.historicalQuoteEn : topMatch.historicalQuoteZh}
+          </div>
+
+          <!-- Section 4: Imperial Soul Synthesis & Modern Action Directive -->
+          <div class="p-2.5 bg-amber-50/70 rounded border-l-4 border-amber-800 space-y-1 text-xs text-gray-800 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950">
+              <span>${isEn ? 'Imperial Soul Synthesis & Resonance Directives:' : '钦天监御制照命合参 · 当代行持准则：'}</span>
+              <span class="imperial-seal-stamp text-[8.5px] py-0 px-1">${isEn ? 'SYNTHESIS' : '合参'}</span>
+            </div>
+            <p class="text-[10.5px] leading-relaxed">${isEn ? topSyn.summaryEn : topSyn.summaryZh}</p>
+            <p class="text-[10.5px] text-amber-950 font-bold leading-relaxed pt-0.5">${isEn ? `Anchor your strategies to ${topMatch.nameEn}'s enduring institutional acumen while guarding your mental resilience.` : `立足【${topMatch.nameZh}】之宏大格局与制度智慧，深筑护城河，防微杜渐。`}</p>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Historical Soul Mirror Prologue' : '大明/大清钦天监 · 卷首附卷 历史照命'}</span>
+            <span>Page 2 / 8</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3: Cover & Four Pillars Grand Altar -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -11619,12 +11949,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷一'}</span>
-            <span>Page 2 / 7</span>
+            <span>Page 3 / 8</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 2: Volume I - 80/20 Grand Picture Pareto Strategy -->
+      <!-- Page 4: Volume I - 80/20 Grand Picture Pareto Strategy -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -11673,12 +12003,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷二'}</span>
-            <span>Page 3 / 7</span>
+            <span>Page 4 / 8</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 4: Volume III - 4D Kinship Profiles -->
+      <!-- Page 5: Volume III - 4D Kinship Profiles -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -11729,12 +12059,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-2 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷三'}</span>
-            <span>Page 4 / 7</span>
+            <span>Page 5 / 8</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 5: Volume IV - Zen & Dao Trinity Wisdom -->
+      <!-- Page 6: Volume IV - Zen & Dao Trinity Wisdom -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -11793,12 +12123,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
-            <span>Page 5 / 7</span>
+            <span>Page 6 / 8</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 6: Volume V - Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
+      <!-- Page 7: Volume V - Decennial Trajectory & 14-Character Dynamic Energy Synthesis -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -11924,12 +12254,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷五'}</span>
-            <span>Page 6 / 7</span>
+            <span>Page 7 / 8</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 7: Volume VI - Career & Wealth Trajectory -->
+      <!-- Page 8: Volume VI - Career & Wealth Trajectory -->
       <div class="imperial-page relative">
         <div class="imperial-thread-spine">
           <div class="thread-eyelet eyelet-1"></div>
@@ -12024,7 +12354,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 6' : '大明/大清钦天监 · 卷六'}</span>
-            <span>Page 7 / 7 · Complete Dossier</span>
+            <span>Page 8 / 8 · Complete Dossier</span>
           </div>
         </div>
       </div>

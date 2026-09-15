@@ -5231,6 +5231,8 @@ jsc_dossier5_cmd = [
     load("js/luck-engine.js");
     load("js/iching-engine.js");
     load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
 
     var localStorage = {
       _data: {},
@@ -5246,7 +5248,7 @@ jsc_dossier5_cmd = [
       error: function(m, e) { throw new Error(m + (e ? " " + (e.stack || e) : "")); }
     };
 
-    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "btnResetToActualTime", "btnResetToActualTimeTop", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "navBtnFengShui", "navBtnCareer", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portalBtnFengShui", "portalBtnCareer", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "timeDynamicsSection", "tdAnnualBadge", "timeDynamicsContainer", "view-canons", "tab-sanming", "sanmingAutoResult", "smDaySelect", "smHourSelect", "smCustomQueryBtn", "smCustomResult", "smPatternsList", "tab-qiongtong", "qiongtongAutoResult", "qtStemSelect", "qtBranchSelect", "qtCustomQueryBtn", "qtCustomResult", "tab-ziping", "zipingAutoResult", "zipingPatternsList", "tab-ditiansui", "ditiansuiAutoResult", "dtsStemButtons", "dtsCustomResult", "dtsChaptersList", "tab-yuanhai", "yuanhaiChaptersList", "yuanhaiTenGodsList", "tab-shenfeng", "shenfengAutoResult", "shenfengTreatisesList", "tab-yuzhao", "yuzhaoAutoResult", "yuzhaoAphorismsList", "tab-lixuzhong", "lixuzhongAutoResult", "lixuzhongChaptersList", "tab-definitions", "tenGodsContainer", "tenGodsFilterGroup", "tab-search", "dbSearchInput", "dbSearchBtn", "dbSearchResults", "view-iching", "ichingQueryInput", "ichingSelect", "ichingInstantBtn", "ichingCoinBtn", "ichingTimeBtn", "coinTossArena", "coinStepBadge", "coinResetBtn", "coinGraphic1", "coinGraphic2", "coinGraphic3", "throwCoinBtn", "coinLinesProgress", "ichingResultContainer", "ichingInitPrompt", "ichingResultCard", "ichingMetaBanner", "originalHexagramCard", "resultingHexagramCard", "complementaryHexagramsBar", "oracleFocusTag", "canonicalScripturesContent", "modernInterpretationCards", "view-synastry", "synastryModeRomantic", "synastryModeBusiness", "btnSynastryLoadA", "synastryDateA", "synastryTimeA", "synastryGenderA", "synastryLabelA", "synastryDateB", "synastryTimeB", "synastryGenderB", "synastryLabelB", "calcSynastryBtn", "synastryResultContainer", "elementFluxCanvas", "calculationProgressModal", "calcProgressTitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5", "imperialDossierModal", "dossierLangZh", "dossierLangEn", "dossierDownloadPdfBtn", "dossierPrintBtn", "dossierCloseBtn", "dossierExportStatus", "dossierExportStatusMsg", "dossierExportStatusDismiss", "imperialDossierContainer", "view-fengshui", "btnJumpToHomeFromFengShui", "fengshuiContentContainer", "fengshuiQuickBadges", "ziping100Section", "ziping100Container", "zipingScoreBadges", "fourPillarsHexSection", "fourPillarsHexContainer", "fourPillarsAgeSlider", "fourPillarsAgeDisplay", "currentCountrySelect", "currentCitySelect", "currentCustomCityInput", "fsCardCountrySelect", "fsCardCitySelect", "fsCardCustomCityInput", "fengshuiCityEvaluationCard", "view-career", "btnJumpToHomeFromCareer", "careerContentContainer", "careerQuickBadgesDashboard"];
+    var allIds = ["landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar", "dashboardSummaryBadges", "landingQuickPreviewBox", "landingPreviewMeta", "landingPreviewStatusBadge", "portalPresetsContainer", "portalFeaturesGrid", "btnToggleAdvSolar", "advSolarTimeContainer", "langZhBtn", "langEnBtn", "btnExportDossier", "btnToggleFlux", "btnInstallPwa", "nowBtn", "btnResetToActualTime", "btnResetToActualTimeTop", "themeToggle", "birthDate", "birthTime", "gender", "citySelect", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay", "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "navBtnFengShui", "navBtnCareer", "view-home", "pillarsContainer", "dmTitle", "dmElementDesc", "elementRadarCanvas", "elementsBarContainer", "portalBtnStrategy", "portalBtnFriction", "portalBtnFengShui", "portalBtnCareer", "portraitHeaderBadges", "vigorStatusBadge", "vigorSummaryText", "vigorMetricsBars", "climateSummaryBox", "paretoCoreSection", "paretoCoreContainer", "patternWeightSummaryBar", "portraitPatternsContainer", "personaPersonality", "personaCareer", "personaWealth", "personaAdvice", "defectsContainer", "mentalFrictionSection", "remedyTabTailored", "remedyTabComparison", "remedyContainer", "view-strategy", "btnJumpToHomeFromStrategy", "strategyContentContainer", "view-friction", "btnJumpToHomeFromFriction", "frictionContentContainer", "view-luck", "luckCyclesSection", "luckProgressionBadge", "luckProgressionText", "chronoNavigatorSection", "chronoPlayBtn", "chronoAgeValueBadge", "chronoJumpCurrent", "chronoJumpGolden", "chronoJumpTransit", "chronoAgeSlider", "chronoTimelineCanvas", "chronoYearCard", "currentSelectedDecadeLabel", "decadesContainer", "currentSelectedAnnualLabel", "annualContainer", "currentSelectedMonthLabel", "monthlyContainer", "transitFortuneDetailCard", "fortuneActiveBadge", "fortuneCycleTabs", "fortuneDetailBody", "luckDailyDatePicker", "luckTodayBtn", "fivePillarsMatrixBody", "luckInteractionsContainer", "operationalPlaybookSection", "operationalPlaybookContainer", "ecologicalResonanceSection", "ecologicalResonanceContainer", "timeDynamicsSection", "tdAnnualBadge", "timeDynamicsContainer", "view-canons", "tab-sanming", "sanmingAutoResult", "smDaySelect", "smHourSelect", "smCustomQueryBtn", "smCustomResult", "smPatternsList", "tab-qiongtong", "qiongtongAutoResult", "qtStemSelect", "qtBranchSelect", "qtCustomQueryBtn", "qtCustomResult", "tab-ziping", "zipingAutoResult", "zipingPatternsList", "tab-ditiansui", "ditiansuiAutoResult", "dtsStemButtons", "dtsCustomResult", "dtsChaptersList", "tab-yuanhai", "yuanhaiChaptersList", "yuanhaiTenGodsList", "tab-shenfeng", "shenfengAutoResult", "shenfengTreatisesList", "tab-yuzhao", "yuzhaoAutoResult", "yuzhaoAphorismsList", "tab-lixuzhong", "lixuzhongAutoResult", "lixuzhongChaptersList", "tab-definitions", "tenGodsContainer", "tenGodsFilterGroup", "tab-search", "dbSearchInput", "dbSearchBtn", "dbSearchResults", "view-iching", "ichingQueryInput", "ichingSelect", "ichingInstantBtn", "ichingCoinBtn", "ichingTimeBtn", "coinTossArena", "coinStepBadge", "coinResetBtn", "coinGraphic1", "coinGraphic2", "coinGraphic3", "throwCoinBtn", "coinLinesProgress", "ichingResultContainer", "ichingInitPrompt", "ichingResultCard", "ichingMetaBanner", "originalHexagramCard", "resultingHexagramCard", "complementaryHexagramsBar", "oracleFocusTag", "canonicalScripturesContent", "modernInterpretationCards", "view-synastry", "synastryModeRomantic", "synastryModeBusiness", "btnSynastryLoadA", "synastryDateA", "synastryTimeA", "synastryGenderA", "synastryLabelA", "synastryDateB", "synastryTimeB", "synastryGenderB", "synastryLabelB", "calcSynastryBtn", "synastryResultContainer", "elementFluxCanvas", "calculationProgressModal", "calcProgressTitle", "calcProgressStageText", "calcProgressBarTrack", "calcProgressBarInner", "calcProgressPercentText", "progressStep1", "progressStep2", "progressStep3", "progressStep4", "progressStep5", "imperialDossierModal", "dossierLangZh", "dossierLangEn", "dossierDownloadPdfBtn", "btnQuickExportSinglePdf", "dossierDownloadSinglePdfBtn", "dossierPrintBtn", "dossierCloseBtn", "dossierExportStatus", "dossierExportStatusMsg", "dossierExportStatusDismiss", "imperialDossierContainer", "view-fengshui", "btnJumpToHomeFromFengShui", "fengshuiContentContainer", "fengshuiQuickBadges", "ziping100Section", "ziping100Container", "zipingScoreBadges", "fourPillarsHexSection", "fourPillarsHexContainer", "fourPillarsAgeSlider", "fourPillarsAgeDisplay", "currentCountrySelect", "currentCitySelect", "currentCustomCityInput", "fsCardCountrySelect", "fsCardCitySelect", "fsCardCustomCityInput", "fengshuiCityEvaluationCard", "view-career", "btnJumpToHomeFromCareer", "careerContentContainer", "careerQuickBadgesDashboard", "historyFigureDetailModalDashboard", "historyDetailModalCloseBtnDashboard", "historyDetailModalContentDashboard", "historyCardModalHeaderTitle"];
 
     var elementStore = {};
     function makeEl(id, tag) {
@@ -5313,6 +5315,8 @@ jsc_dossier5_cmd = [
       LuckEngine: LuckEngine,
       IChingEngine: IChingEngine,
       CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine,
+      HISTORICAL_FIGURES: HISTORICAL_FIGURES,
       TenGodsDB: TenGodsDB,
       TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
       SanMingDB: SanMingDB,
@@ -5333,8 +5337,10 @@ jsc_dossier5_cmd = [
     elementStore["dossierLangEn"].trigger("click");
 
     var enHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!enHtml.includes("Page 1 / 7")) throw new Error("Missing Page 1 / 7 in EN");
-    if (!enHtml.includes("Page 7 / 7")) throw new Error("Missing Page 7 / 7 in EN");
+    if (!enHtml.includes("Page 1 / 8")) throw new Error("Missing Page 1 / 8 in EN");
+    if (!enHtml.includes("Page 2 / 8")) throw new Error("Missing Page 2 / 8 in EN");
+    if (!enHtml.includes("Page 8 / 8")) throw new Error("Missing Page 8 / 8 in EN");
+    if (!enHtml.includes("Supreme Historical Soul Mirror")) throw new Error("Missing Supreme Historical Soul Mirror in EN Page 2");
     if (!enHtml.includes("Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Decennial Trajectory title in EN");
     if (!enHtml.includes("14-CHARACTER HOLOGRAPHIC MATRIX")) throw new Error("Missing 14-char matrix in EN");
     if (!enHtml.includes("Career Calling & Optimal Ecosystem")) throw new Error("Missing Career Calling in EN Page 1");
@@ -5352,8 +5358,12 @@ jsc_dossier5_cmd = [
 
     elementStore["dossierLangZh"].trigger("click");
     var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!zhHtml.includes("Page 1 / 7")) throw new Error("Missing Page 1 / 7 in ZH");
-    if (!zhHtml.includes("Page 7 / 7")) throw new Error("Missing Page 7 / 7 in ZH");
+    if (!zhHtml.includes("Page 1 / 8")) throw new Error("Missing Page 1 / 8 in ZH");
+    if (!zhHtml.includes("Page 2 / 8")) throw new Error("Missing Page 2 / 8 in ZH");
+    if (!zhHtml.includes("Page 8 / 8")) throw new Error("Missing Page 8 / 8 in ZH");
+    if (!zhHtml.includes("乱世三百年至高天命历史镜像")) throw new Error("Missing Soul Mirror in ZH Page 2");
+    if (!zhHtml.includes("学优点 · 破局战法")) throw new Error("Missing Strengths in ZH Page 2");
+    if (!zhHtml.includes("戒缺点 · 避险熔断")) throw new Error("Missing Pitfalls in ZH Page 2");
     if (!zhHtml.includes("大运年景大势与十四字全景气机集成")) throw new Error("Missing 14-char decennial title in ZH");
     if (!zhHtml.includes("十四字全相矩阵")) throw new Error("Missing 14-char matrix in ZH");
     if (!zhHtml.includes("事业立身与天命职能生态位（事业怎么样）")) throw new Error("Missing Career Summary in ZH Page 1");
@@ -5364,8 +5374,8 @@ jsc_dossier5_cmd = [
     '''
 ]
 run_dossier5 = subprocess.run(jsc_dossier5_cmd, capture_output=True, text=True)
-assert run_dossier5.returncode == 0, f"Imperial Dossier 7-Page check failed: stdout={run_dossier5.stdout} stderr={run_dossier5.stderr}"
-print("✓ 钦天监 · 御制天机精装战报（七页典藏架构/卷首三要终身统览/14字全景气机/职场破局/零undefined/中英双语 100% 零中文残留）验证通过！")
+assert run_dossier5.returncode == 0, f"Imperial Dossier 8-Page check failed: stdout={run_dossier5.stdout} stderr={run_dossier5.stderr}"
+print("✓ 钦天监 · 御制天机精装战报（八页典藏架构/卷首附卷历史照命镜像/卷首三要终身统览/14字全景气机/职场破局/零undefined/中英双语 100% 零中文残留）验证通过！")
 
 # 72. Validate Lifelong Chrono-Navigator Curvature at Decade Transition Boundaries
 print("\n=== 72. Validating Lifelong Chrono-Navigator Curvature at Decade Boundaries ===")
@@ -7599,8 +7609,8 @@ jsc_check83_cmd = [
     if (typeof HISTORICAL_FIGURES === "undefined" || !Array.isArray(HISTORICAL_FIGURES)) {
       throw new Error("HISTORICAL_FIGURES database is not defined or not an array");
     }
-    if (HISTORICAL_FIGURES.length !== 104) {
-      throw new Error("Expected exactly 104 historical figures, got: " + HISTORICAL_FIGURES.length);
+    if (HISTORICAL_FIGURES.length !== 208) {
+      throw new Error("Expected exactly 208 historical figures, got: " + HISTORICAL_FIGURES.length);
     }
 
     var requiredFields = [
@@ -7656,13 +7666,13 @@ jsc_check83_cmd = [
       });
     });
 
-    if (eraCounts["western_jin"] !== 16) throw new Error("western_jin count expected 16, got " + eraCounts["western_jin"]);
-    if (eraCounts["sixteen_kingdoms"] !== 25) throw new Error("sixteen_kingdoms count expected 25, got " + eraCounts["sixteen_kingdoms"]);
-    if (eraCounts["eastern_jin"] !== 17) throw new Error("eastern_jin count expected 17, got " + eraCounts["eastern_jin"]);
-    if (eraCounts["southern_dynasties"] !== 16) throw new Error("southern_dynasties count expected 16, got " + eraCounts["southern_dynasties"]);
-    if (eraCounts["northern_wei"] !== 15) throw new Error("northern_wei count expected 15, got " + eraCounts["northern_wei"]);
-    if (eraCounts["northern_zhou_qi"] !== 10) throw new Error("northern_zhou_qi count expected 10, got " + eraCounts["northern_zhou_qi"]);
-    if (eraCounts["sui"] !== 5) throw new Error("sui count expected 5, got " + eraCounts["sui"]);
+    if (eraCounts["western_jin"] !== 32) throw new Error("western_jin count expected 32, got " + eraCounts["western_jin"]);
+    if (eraCounts["sixteen_kingdoms"] !== 50) throw new Error("sixteen_kingdoms count expected 50, got " + eraCounts["sixteen_kingdoms"]);
+    if (eraCounts["eastern_jin"] !== 34) throw new Error("eastern_jin count expected 34, got " + eraCounts["eastern_jin"]);
+    if (eraCounts["southern_dynasties"] !== 32) throw new Error("southern_dynasties count expected 32, got " + eraCounts["southern_dynasties"]);
+    if (eraCounts["northern_wei"] !== 30) throw new Error("northern_wei count expected 30, got " + eraCounts["northern_wei"]);
+    if (eraCounts["northern_zhou_qi"] !== 20) throw new Error("northern_zhou_qi count expected 20, got " + eraCounts["northern_zhou_qi"]);
+    if (eraCounts["sui"] !== 10) throw new Error("sui count expected 10, got " + eraCounts["sui"]);
 
     // 2. Validate HistoricalEngine calculations across diverse charts
     var testCharts = [
@@ -7693,8 +7703,8 @@ jsc_check83_cmd = [
       if (!res.topMatch || !res.topMatches || !res.allFiguresRanked || !res.synthesis) {
         throw new Error(tc.name + " missing core result structure");
       }
-      if (res.allFiguresRanked.length !== 104) {
-        throw new Error(tc.name + " expected 104 ranked figures, got: " + res.allFiguresRanked.length);
+      if (res.allFiguresRanked.length !== 208) {
+        throw new Error(tc.name + " expected 208 ranked figures, got: " + res.allFiguresRanked.length);
       }
       if (res.topMatches.length !== 5) {
         throw new Error(tc.name + " expected 5 topMatches, got: " + res.topMatches.length);
@@ -7775,8 +7785,8 @@ jsc_check83_dom_cmd = [
       'btnJumpToHomeFromCareer', 'btnToggleCareerFullscreen', 'btnExitCareerFullscreenFloating',
       'view-history', 'historyContentContainer', 'historyQuickBadgesDashboard', 'btnToggleHistoryFullscreen',
       'btnExitHistoryFullscreenFloating', 'btnJumpToHomeFromHistory', 'btnOpenHistoryStandalone',
-      'historyFigureDetailModalDashboard', 'btnCloseHistoryDetailModalDashboard', 'historyDetailModalContentDashboard',
-      'historyFullscreenIcon', 'historyFullscreenText'
+      'historyFigureDetailModalDashboard', 'historyDetailModalCloseBtnDashboard', 'btnCloseHistoryDetailModalDashboard', 'historyDetailModalContentDashboard', 'historyCardModalHeaderTitle',
+      'historyFullscreenIcon', 'historyFullscreenText', 'btnQuickExportSinglePdf', 'dossierDownloadSinglePdfBtn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierModal', 'imperialDossierContainer', 'dossierLangZh', 'dossierLangEn'
     ];
 
     var elementStore = {};
@@ -7883,6 +7893,7 @@ jsc_check83_dom_cmd = [
     allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
 
     var document = {
+      body: { style: {} },
       getElementById: function(id) {
         if (!elementStore[id]) elementStore[id] = makeEl(id);
         return elementStore[id];
@@ -7981,17 +7992,267 @@ jsc_check83_dom_cmd = [
     if (histHtmlEn.indexOf("Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)") === -1) {
       throw new Error("Missing Avoid Weaknesses in EN");
     }
-    if (histHtmlEn.indexOf("104 Historical Figures Catalog") === -1) {
-      throw new Error("Missing 104 Historical Figures Catalog title in EN");
+    if (histHtmlEn.indexOf("208 Historical Figures Catalog") === -1) {
+      throw new Error("Missing 208 Historical Figures Catalog title in EN");
     }
     '''
 ]
 run_check83_dom = subprocess.run(jsc_check83_dom_cmd, capture_output=True, text=True)
 assert run_check83_dom.returncode == 0, f"Check 83 DOM simulation test failed: stdout={run_check83_dom.stdout} stderr={run_check83_dom.stderr}"
 
-print("✓ 历史人物参考引擎（104位风云人物全集、七大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
+print("✓ 历史人物参考引擎（208位风云人物全集、七大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 83 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 84. Validate 208 Historical Figures Expansion, Stabilized Card-Draw Modal, Page 2 Soul Mirror in Imperial Dossier & Quick 1-Page PDF
+print("\n=== 84. Validating 208 Figures Expansion, Card-Draw Modal, Page 2 Soul Mirror & Quick 1-Page PDF ===")
+jsc_check84_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    var window = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    window.setTimeout = function(cb, ms) { cb(); return 1; };
+    window.clearTimeout = function(id) {};
+    window.setInterval = function(cb, ms) { return 1; };
+    window.clearInterval = function(id) {};
+    window.__headlessTest = true;
+
+    var setTimeout = window.setTimeout;
+    var clearTimeout = window.clearTimeout;
+    var setInterval = window.setInterval;
+    var clearInterval = window.clearInterval;
+
+    var global = this;
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) {
+        throw new Error(m + (e ? " " + (e.stack || e) : ""));
+      }
+    };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/career-engine.js");
+    load("js/visual-alchemy.js");
+    load("js/chart.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    // 1. Verify exact 208 figures count and prominent titans
+    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 208) {
+      throw new Error("Expected exactly 208 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
+    }
+
+    // Explicitly verify Li Hu (progenitor of Tang) and Yuwen Tai (Eight Pillars leader)
+    var liHu = HISTORICAL_FIGURES.find(function(f) { return f.id === 'li_hu'; });
+    if (!liHu) throw new Error("Missing Li Hu (李虎) in historical figures database!");
+    if (liHu.nameZh !== '李虎' || !liHu.nameEn.startsWith('Li Hu')) throw new Error("Li Hu names invalid");
+    if (!liHu.strengthAdviceZh || !liHu.strengthAdviceEn || !liHu.weaknessAdviceZh || !liHu.weaknessAdviceEn) {
+      throw new Error("Li Hu advice fields missing");
+    }
+
+    var yuwenTai = HISTORICAL_FIGURES.find(function(f) { return f.id === 'yuwen_tai'; });
+    if (!yuwenTai) throw new Error("Missing Yuwen Tai (宇文泰) in historical figures database!");
+    if (!yuwenTai.nameZh.startsWith('宇文泰') || !yuwenTai.nameEn.startsWith('Yuwen Tai')) throw new Error("Yuwen Tai names invalid");
+
+    // Verify all Eight Pillar Generals of Western Wei
+    var eightPillars = ['yuwen_tai', 'yuan_xin', 'li_hu', 'li_bi', 'zhao_gui', 'yu_jin', 'dugu_xin', 'houmochen_chong'];
+    eightPillars.forEach(function(pid) {
+      var found = HISTORICAL_FIGURES.find(function(f) { return f.id === pid; });
+      if (!found) throw new Error("Missing Eight Pillar General: " + pid);
+    });
+
+    // 2. Mock DOM environment for Dossier & Card Modal verification
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        width: 300,
+        height: 200,
+        clientWidth: 300,
+        clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            arc: function(){}, setLineDash: function(){}, scale: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; }
+          };
+        },
+        options: [{ textContent: "乾造", value: "乾造" }],
+        selectedIndex: 0,
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        _listeners: {},
+        _children: [],
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = this._listeners[evt] || []; for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); },
+        appendChild: function(child) { this._children.push(child); },
+        querySelector: function(sel) {
+          if (sel === '.imperial-page' || sel === '.imperial-page:first-child') {
+            return makeEl('mockPage1', 'DIV');
+          }
+          return null;
+        },
+        querySelectorAll: function(sel) {
+          if (sel === '.imperial-page') {
+            return [makeEl('mockPage1', 'DIV'), makeEl('mockPage2', 'DIV')];
+          }
+          return [];
+        }
+      };
+    }
+
+    var allIds = [
+      'calcBtn', 'birthDate', 'birthTime', 'gender', 'citySelect', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay',
+      'imperialDossierModal', 'imperialDossierContainer', 'dossierLangZh', 'dossierLangEn', 'btnExportDossier',
+      'btnQuickExportSinglePdf', 'dossierDownloadSinglePdfBtn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn',
+      'dossierExportStatus', 'dossierExportStatusMsg', 'dossierExportStatusDismiss',
+      'historyFigureDetailModalDashboard', 'historyDetailModalCloseBtnDashboard', 'historyDetailModalContentDashboard', 'historyCardModalHeaderTitle',
+      'view-history', 'historyContentContainer', 'historyQuickBadgesDashboard', 'navBtnHistory'
+    ];
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      body: { style: {} },
+      documentElement: { lang: "zh-CN" },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelector: function(sel) {
+        if (sel === '#dossierDownloadSinglePdfBtn span:last-child') return makeEl('singlePdfBtnText', 'SPAN');
+        if (sel === '#dossierDownloadPdfBtn span:last-child') return makeEl('pdfBtnText', 'SPAN');
+        if (sel === '#dossierPrintBtn span:last-child') return makeEl('printBtnText', 'SPAN');
+        if (sel === '[data-i18n="dossier_modal_title"]') return makeEl('titleEl', 'H2');
+        return null;
+      },
+      querySelectorAll: function(sel) { return []; },
+      createElement: function(tag) { return makeEl('gen_' + Math.random(), tag); },
+      addEventListener: function(evt, fn) { if (evt === 'DOMContentLoaded') this._domReady = fn; }
+    };
+
+    var window = this;
+    window.document = document;
+    window.addEventListener = function() {};
+    window.HistoricalEngine = HistoricalEngine;
+    window.HISTORICAL_FIGURES = HISTORICAL_FIGURES;
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // 3. Test 8-Page Imperial Dossier Rendering in ZH and EN
+    elementStore['calcBtn'].trigger('click');
+    elementStore['btnExportDossier'].trigger('click');
+
+    // Test ZH Dossier
+    elementStore['dossierLangZh'].trigger('click');
+    var dossierZh = elementStore['imperialDossierContainer'].innerHTML;
+    if (!dossierZh.includes("Page 1 / 8")) throw new Error("ZH Dossier missing Page 1 / 8");
+    if (!dossierZh.includes("Page 2 / 8")) throw new Error("ZH Dossier missing Page 2 / 8");
+    if (!dossierZh.includes("Page 8 / 8 · Complete Dossier")) throw new Error("ZH Dossier missing Page 8 / 8 · Complete Dossier");
+    if (!dossierZh.includes("乱世三百年至高天命历史镜像")) throw new Error("ZH Dossier missing Page 2 Soul Mirror Title");
+    if (!dossierZh.includes("学优点 · 破局战法")) throw new Error("ZH Dossier missing Strengths column");
+    if (!dossierZh.includes("戒缺点 · 避险熔断")) throw new Error("ZH Dossier missing Pitfalls column");
+    if (dossierZh.includes("undefined")) throw new Error("ZH Dossier contains 'undefined'");
+
+    // Test EN Dossier
+    elementStore['dossierLangEn'].trigger('click');
+    var dossierEn = elementStore['imperialDossierContainer'].innerHTML;
+    if (!dossierEn.includes("Page 1 / 8")) throw new Error("EN Dossier missing Page 1 / 8");
+    if (!dossierEn.includes("Page 2 / 8")) throw new Error("EN Dossier missing Page 2 / 8");
+    if (!dossierEn.includes("Page 8 / 8 · Complete Dossier")) throw new Error("EN Dossier missing Page 8 / 8 · Complete Dossier");
+    if (!dossierEn.includes("Supreme Historical Soul Mirror")) throw new Error("EN Dossier missing Page 2 Soul Mirror Title");
+    if (!dossierEn.includes("Strengths to Absorb")) throw new Error("EN Dossier missing Strengths column in EN");
+    if (!dossierEn.includes("Pitfalls to Avoid")) throw new Error("EN Dossier missing Pitfalls column in EN");
+    if (dossierEn.includes("undefined")) throw new Error("EN Dossier contains 'undefined'");
+
+    // Zero residual Chinese check on entire 8-page EN Dossier
+    var zhMatches = dossierEn.match(/[\u4e00-\u9fa5]/g);
+    if (zhMatches && zhMatches.length > 0) {
+      throw new Error("EN Dossier contains residual Chinese (" + zhMatches.length + " characters): " + zhMatches.slice(0, 30).join(""));
+    }
+
+    // 4. Test Single-Page Quick PDF Export invocation
+    if (typeof window.downloadImperialSinglePagePDF !== 'function') {
+      throw new Error("downloadImperialSinglePagePDF is not a function on window");
+    }
+    // Invoke single page export - ensure it doesn't throw
+    window.downloadImperialSinglePagePDF('en');
+
+    // 5. Test Card Modal open/close & scroll lock
+    if (typeof window.openHistoryDetailModal !== 'function') {
+      throw new Error("openHistoryDetailModal is not a function on window");
+    }
+    if (typeof window.closeHistoryDetailModal !== 'function') {
+      throw new Error("closeHistoryDetailModal is not a function on window");
+    }
+
+    window.openHistoryDetailModal('yuwen_tai');
+    var modalEl = elementStore['historyFigureDetailModalDashboard'];
+    if (modalEl.classList.contains('hidden')) {
+      throw new Error("Modal should not have hidden class after openHistoryDetailModal");
+    }
+    if (document.body.style.overflow !== 'hidden') {
+      throw new Error("document.body.style.overflow should be 'hidden' when modal is open");
+    }
+
+    window.closeHistoryDetailModal();
+    if (!modalEl.classList.contains('hidden')) {
+      throw new Error("Modal should have hidden class after closeHistoryDetailModal");
+    }
+    if (document.body.style.overflow !== '') {
+      throw new Error("document.body.style.overflow should be restored after closeHistoryDetailModal");
+    }
+    '''
+]
+run_check84 = subprocess.run(jsc_check84_cmd, capture_output=True, text=True)
+assert run_check84.returncode == 0, f"Check 84 test failed: stdout={run_check84.stdout} stderr={run_check84.stderr}"
+print("✓ 208位历史人物大典扩充、卡牌调阅窗口永久锁定、皇家战报第二页天命照命镜像注入与卷首单页PDF极速导出验证通过！")
+
+print("\n🎉 ALL 84 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

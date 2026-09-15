@@ -30,7 +30,7 @@
             <span class="chinese-seal text-[11px] py-0.5 border-amber-500 text-amber-400" id="historyPageSeal">史鉴推演</span>
           </h1>
           <p class="text-xs text-gray-400" id="historyPageSubtitle">
-            融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋一百零四位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊
+            融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋二百零八位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊
           </p>
         </div>
       </div>
@@ -73,7 +73,7 @@
           </h2>
         </div>
         <p class="text-xs text-gray-300 max-w-3xl leading-relaxed" id="historyBannerDesc">
-          夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 104 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。
+          夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 208 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。
         </p>
       </div>
       <div id="historyQuickBadges" class="flex flex-wrap gap-2 text-xs">
@@ -129,17 +129,17 @@
       </div>
     </section>
 
-    <!-- Section 4: All 104 Historical Figures Panorama & Filterable Gallery -->
+    <!-- Section 4: All 208 Historical Figures Panorama & Filterable Gallery -->
     <section class="space-y-4">
       <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
         <div class="flex items-center space-x-2">
           <span class="text-2xl">🌌</span>
           <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300" id="secTitlePanorama">
-            四、乱世三百年全景历史人物长卷（104位历史人物名录）
+            四、乱世三百年全景历史人物长卷（208位历史人物名录）
           </h3>
         </div>
         <div class="text-xs text-gray-400 font-mono" id="historyCounterBadge">
-          共收录 104 位风云人物
+          共收录 208 位风云人物
         </div>
       </div>
 
@@ -163,28 +163,28 @@
         <!-- Era Filter Tabs -->
         <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="eraTabsContainer">
           <button class="era-tab-btn active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition" data-era="all">
-            全部时代 (104)
+            全部时代 (208)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="western_jin">
-            西晋风云 (16)
+            西晋风云 (32)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="sixteen_kingdoms">
-            五胡十六国 (25)
+            五胡十六国 (50)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="eastern_jin">
-            东晋门阀 (17)
+            东晋门阀 (34)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="southern_dynasties">
-            南朝更迭 (16)
+            南朝更迭 (32)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="northern_wei">
-            北魏汉化 (15)
+            北魏汉化 (30)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="northern_zhou_qi">
-            周齐对峙 (10)
+            周齐对峙 (20)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="sui">
-            大隋统一 (5)
+            大隋统一 (10)
           </button>
         </div>
 
@@ -222,13 +222,23 @@
     </p>
   </footer>
 
-  <!-- Detail Modal -->
-  <div id="figureDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-[#111420] border border-amber-500/40 rounded-2xl max-w-2xl w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto shadow-2xl relative">
-      <button id="btnCloseDetailModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl font-bold p-1">
-        ✕
-      </button>
-      <div id="detailModalContent" class="space-y-4">
+  <!-- Historical Figure Detail Modal (Destiny Card Draw Style · Rock-Solid Viewport Center) -->
+  <div id="figureDetailModal" class="history-card-modal-backdrop hidden">
+    <div class="history-card-modal-container">
+      <!-- Card Draw Header Banner -->
+      <div class="history-card-modal-header">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">🎴</span>
+          <span class="font-serif-sc font-bold text-amber-200 tracking-wider text-sm sm:text-base" id="historyCardModalHeaderTitle">
+            天命人物卡牌 · 深度解析
+          </span>
+        </div>
+        <button id="btnCloseDetailModal" class="w-8 h-8 rounded-full bg-black/50 hover:bg-amber-500/20 text-gray-400 hover:text-amber-300 border border-amber-500/30 flex items-center justify-center text-base font-bold transition cursor-pointer" title="关闭卡牌">
+          ✕
+        </button>
+      </div>
+      <!-- Scrollable Card Body -->
+      <div id="detailModalContent" class="history-card-modal-body space-y-4">
         <!-- Injected via JS -->
       </div>
     </div>
@@ -278,8 +288,8 @@
           : "历史人物参考 · 乱世三百年人物镜像";
         document.getElementById("historyPageSeal").textContent = isEn ? "Historical Mirror" : "史鉴推演";
         document.getElementById("historyPageSubtitle").textContent = isEn
-          ? "Synthesizing 104 Historical Titans across 300 Years of Division · Personality, Role & Life Battles · Similarity Matching & Strategic Advice"
-          : "融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋一百零四位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊";
+          ? "Synthesizing 208 Historical Titans across 300 Years of Division · Personality, Role & Life Battles · Similarity Matching & Strategic Advice"
+          : "融汇西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐至大隋二百零八位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊";
 
         const retEl = document.getElementById("historyBtnReturnText") || document.getElementById("historyBtnReturn");
         if (retEl) retEl.textContent = isEn ? "Return to Master Dashboard" : "返回全相总盘";
@@ -292,8 +302,8 @@
           ? "300 Years of Chaotic Division · In-Depth Historical Archetype Resonance"
           : "乱世三百年历史人物深度相似度测算全相";
         document.getElementById("historyBannerDesc").textContent = isEn
-          ? "Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 104 famous historical figures to derive actionable wisdom and risk circuit-breakers."
-          : "夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 104 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。";
+          ? "Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 208 famous historical figures to derive actionable wisdom and risk circuit-breakers."
+          : "夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 208 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。";
 
         document.getElementById("secTitleTopMirror").textContent = isEn
           ? "1. Supreme Historical Soul Mirror Archetype"
@@ -311,11 +321,11 @@
         document.getElementById("secSealTopFive").textContent = isEn ? "Top 5 Archetypes" : "群星谱系";
 
         document.getElementById("secTitlePanorama").textContent = isEn
-          ? "4. 300-Year Historical Panorama (104 Historical Figures Catalog)"
-          : "四、乱世三百年全景历史人物长卷（104位历史人物名录）";
+          ? "4. 300-Year Historical Panorama (208 Historical Figures Catalog)"
+          : "四、乱世三百年全景历史人物长卷（208位历史人物名录）";
         document.getElementById("historyCounterBadge").textContent = isEn
-          ? "104 Historical Titans Curated"
-          : "共收录 104 位风云人物";
+          ? "208 Historical Titans Curated"
+          : "共收录 208 位风云人物";
         document.getElementById("historySearchInput").placeholder = isEn
           ? "Search by name, era, position, personality, deeds..."
           : "输入历史人物姓名、时代、职位、性格特质搜索...";
@@ -594,6 +604,10 @@
 
         const modal = document.getElementById("figureDetailModal");
         const content = document.getElementById("detailModalContent");
+        const headerTitle = document.getElementById("historyCardModalHeaderTitle");
+        if (headerTitle) {
+          headerTitle.textContent = isEn ? "Destiny Archetype Card · Deep Exegesis" : "天命人物卡牌 · 深度解析";
+        }
 
         content.innerHTML = `
           <div class="space-y-4">
@@ -620,7 +634,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
               <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-800/50 space-y-1.5">
                 <div class="flex items-center justify-between border-b border-emerald-800/40 pb-1">
-                  <span class="font-bold text-xs text-emerald-300">${isEn ? "Strengths to Absorb (学优点)" : "学优点 · 破局智慧"}</span>
+                  <span class="font-bold text-xs text-emerald-300">${isEn ? "Strengths to Absorb (Learn)" : "学优点 · 破局智慧"}</span>
                   <span class="chinese-seal text-[9px] py-0 border-emerald-500 text-emerald-400">${isEn ? "Strength" : "学"}</span>
                 </div>
                 <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${isEn ? f.strengthAdviceEn : f.strengthAdviceZh}</p>
@@ -628,7 +642,7 @@
 
               <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-800/50 space-y-1.5">
                 <div class="flex items-center justify-between border-b border-rose-800/40 pb-1">
-                  <span class="font-bold text-xs text-rose-300">${isEn ? "Pitfalls to Avoid (戒缺点)" : "戒缺点 · 避险熔断"}</span>
+                  <span class="font-bold text-xs text-rose-300">${isEn ? "Pitfalls to Avoid (Caution)" : "戒缺点 · 避险熔断"}</span>
                   <span class="chinese-seal text-[9px] py-0 border-rose-500 text-rose-400">${isEn ? "Pitfall" : "戒"}</span>
                 </div>
                 <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${isEn ? f.weaknessAdviceEn : f.weaknessAdviceZh}</p>
@@ -642,15 +656,27 @@
         `;
 
         modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
       }
 
-      // Close modal
-      document.getElementById("btnCloseDetailModal").addEventListener("click", () => {
-        document.getElementById("figureDetailModal").classList.add("hidden");
-      });
+      function closeFigureModal() {
+        const modal = document.getElementById("figureDetailModal");
+        if (modal) {
+          modal.classList.add("hidden");
+          document.body.style.overflow = "";
+        }
+      }
+
+      // Close modal events
+      document.getElementById("btnCloseDetailModal").addEventListener("click", closeFigureModal);
       document.getElementById("figureDetailModal").addEventListener("click", (e) => {
         if (e.target.id === "figureDetailModal") {
-          document.getElementById("figureDetailModal").classList.add("hidden");
+          closeFigureModal();
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeFigureModal();
         }
       });
 
