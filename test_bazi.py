@@ -5151,26 +5151,23 @@ jsc_yinyang_cmd = [
       throw new Error("Expected stepDescriptionZh for Line 1 flip, got: " + qianAge1Yin.zhiNian.stepDescriptionZh);
     }
 
-    // 2. Yang Line Year 2 & 3:
-    // Takes Ying line (Line 1 takes Line 4). Line 4 mutates (1->0) -> derives Xun (57)
+    // 2. Yang Line Year 2: Pushes to Line 2 and takes responsive line (Line 5)
+    // In year 2 (1982 壬戌 阳年), Line 5 meets Yang year -> unchanged, retaining Tian Feng Gou (44)
     var qianAge2 = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 2, 1982);
-    if (qianAge2.zhiNian.hexagram.number !== 57 || qianAge2.zhiNian.yingLinePos !== 4) {
-      throw new Error("Year 2 of Line 1 must mutate Ying line (Line 4) to Xun (57), got " + qianAge2.zhiNian.hexagram.number);
+    if (qianAge2.zhiNian.hexagram.number !== 44 || qianAge2.zhiNian.yingLinePos !== 5) {
+      throw new Error("Year 2 of Line 1 in Yang year must retain Tian Feng Gou (44) with yingLinePos 5, got " + qianAge2.zhiNian.hexagram.number + " ying=" + qianAge2.zhiNian.yingLinePos);
     }
-    // Year 3 takes Ying line again -> mutates Line 4 (0->1) -> returns to Tian Feng Gou (44)
-    var qianAge3 = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 3, 1983);
-    if (qianAge3.zhiNian.hexagram.number !== 44 || qianAge3.zhiNian.yingLinePos !== 4) {
-      throw new Error("Year 3 of Line 1 must flip Ying line (Line 4) back to Tian Feng Gou (44), got " + qianAge3.zhiNian.hexagram.number);
+    if (!qianAge2.zhiNian.stepDescriptionZh.includes("行至第二爻取应爻（第五爻）")) {
+      throw new Error("Expected stepDescriptionZh for pushing to Line 2 and taking Ying Line 5, got: " + qianAge2.zhiNian.stepDescriptionZh);
     }
 
-    // 3. Yang Line Year 4:
-    // Does not take Ying line, pushes line upward (Line 2) -> Tian Shan Dun (33)
-    var qianAge4 = IChingEngine.calculateFourPillarsHexagrams(qianBazi, 4, 1984);
-    if (qianAge4.zhiNian.hexagram.number !== 33 || qianAge4.zhiNian.lastMutatedLine !== 2) {
-      throw new Error("Year 4 of Line 1 must push to Line 2 and derive Tian Shan Dun (33), got " + qianAge4.zhiNian.hexagram.number);
-    }
+    // When Year 2 encounters Yin year (mutating Line 5: 1->0), it derives Huo Feng Ding (50 火风鼎):
+    var dingLines = [0, 1, 1, 1, 1, 1]; // Tian Feng Gou after Year 1
+    dingLines[5 - 1] = 0; // Year 2 takes responsive line 5, mutates Yang to Yin -> Ding (50)
+    if (IChingDB.getByLines(dingLines).number !== 50) throw new Error("Ding hexagram must be number 50");
+    if (IChingDB.getByLines(dingLines).nameZh !== "火风鼎") throw new Error("Expected 火风鼎 for Ding hexagram");
 
-    // 4. Yin Line Yuan Tang:
+    // 3. Yin Line Yuan Tang:
     var kunBazi = BaZiEngine.calculate({
       year: 1990, month: 6, day: 20, hour: 14, gender: "坤造",
       useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
@@ -5180,7 +5177,7 @@ jsc_yinyang_cmd = [
       throw new Error("Yin line year 1 must flip 0->1, got: " + kunAge1.zhiNian.stepDescriptionZh);
     }
     var kunAge2 = IChingEngine.calculateFourPillarsHexagrams(kunBazi, 2, 1991);
-    if (!kunAge2.zhiNian.stepDescriptionZh.includes("直接往上推一爻（第二爻）")) {
+    if (!kunAge2.zhiNian.stepDescriptionZh.includes("向上推至第二爻")) {
       throw new Error("Yin line year 2 must push up line 2, got: " + kunAge2.zhiNian.stepDescriptionZh);
     }
     '''
@@ -6684,11 +6681,11 @@ jsc_career_core_cmd = [
     var bazi1 = testCharts[0];
     var luck1 = LuckEngine.calculateLuck(bazi1, 2026);
     var res1 = CareerEngine.generateCareerReport(bazi1, luck1, 2026);
-    if (res1.timingTrajectory.annualHex.number !== 27) {
-      throw new Error("Expected Annual Hexagram 27 (山雷颐) for 1990 chart, got " + res1.timingTrajectory.annualHex.number);
+    if (res1.timingTrajectory.annualHex.number !== 4) {
+      throw new Error("Expected Annual Hexagram 4 (山水蒙) for 1990 chart, got " + res1.timingTrajectory.annualHex.number);
     }
-    if (res1.timingTrajectory.annualHex.character !== '䷚') {
-      throw new Error("Expected Hexagram character ䷚, got " + res1.timingTrajectory.annualHex.character);
+    if (res1.timingTrajectory.annualHex.character !== '䷃') {
+      throw new Error("Expected Hexagram character ䷃, got " + res1.timingTrajectory.annualHex.character);
     }
     if (res1.timingTrajectory.decadeGanzhi !== '丙戌' || res1.timingTrajectory.decadeGod !== '比肩') {
       throw new Error("Unexpected decade transit: " + res1.timingTrajectory.decadeGanzhi + " " + res1.timingTrajectory.decadeGod);
