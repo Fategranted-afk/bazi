@@ -493,16 +493,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const y = now.getFullYear();
     const m = String(now.getMonth() + 1).padStart(2, '0');
     const d = String(now.getDate()).padStart(2, '0');
-    birthDatePicker.value = `${y}-${m}-${d}`;
+    if (birthDatePicker) birthDatePicker.value = `${y}-${m}-${d}`;
 
     const h = String(now.getHours()).padStart(2, '0');
     const min = String(now.getMinutes()).padStart(2, '0');
-    birthTimePicker.value = `${h}:${min}`;
+    if (birthTimePicker) birthTimePicker.value = `${h}:${min}`;
   }
   setCurrentTime();
 
-  nowBtn.addEventListener('click', () => {
+  // Reset Natal Inputs & Recalculate with Actual Real-World Time
+  function resetToActualCurrentTime() {
     setCurrentTime();
+    if (genderSelect) genderSelect.value = '乾造';
+    if (useSolarTimeCheck) useSolarTimeCheck.checked = false;
     if (portalPresetsContainer) {
       const presetBtns = portalPresetsContainer.querySelectorAll('.archetype-preset-card');
       presetBtns.forEach(b => {
@@ -510,13 +513,24 @@ document.addEventListener('DOMContentLoaded', () => {
         else b.classList.remove('active');
       });
     }
-    if (activeMainPage === 'landing') {
-      updateLandingPreview();
-    } else {
-      triggerCalculate();
+    triggerCalculate();
+    updateLandingPreview();
+    if (activeMainPage === 'dashboard') {
       updateDashboardSummaryBar();
     }
-  });
+  }
+
+  nowBtn.addEventListener('click', resetToActualCurrentTime);
+
+  const btnResetToActualTime = document.getElementById('btnResetToActualTime');
+  if (btnResetToActualTime) {
+    btnResetToActualTime.addEventListener('click', resetToActualCurrentTime);
+  }
+
+  const btnResetToActualTimeTop = document.getElementById('btnResetToActualTimeTop');
+  if (btnResetToActualTimeTop) {
+    btnResetToActualTimeTop.addEventListener('click', resetToActualCurrentTime);
+  }
 
   // Element Color Class Helper
   function getElementClass(element) {
@@ -609,9 +623,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const tzSign = timezone >= 0 ? '+' : '';
 
     if (!useTrueSolarTime) {
+      const dateStr = birthDatePicker ? birthDatePicker.value : '';
+      const timeStr = birthTimePicker ? birthTimePicker.value : '';
       detailEl.innerHTML = isEn
-        ? `<span class="text-gray-400">True Solar Time correction disabled. Calculation utilizes local standard clock time (Timezone UTC${tzSign}${timezone}:00).</span>`
-        : `<span class="text-gray-400">当前未启用真太阳时校正，直接采用当地标准钟表时间（时区 UTC${tzSign}${timezone}:00）排盘。</span>`;
+        ? `<span class="text-gray-300"><b>Standard Clock Time:</b> ${dateStr} ${timeStr} (UTC${tzSign}${timezone}:00) · True Solar Time correction disabled.</span>`
+        : `<span class="text-gray-300"><b>当地标准钟表时间：</b>${dateStr} ${timeStr}（时区 UTC${tzSign}${timezone}:00）· 当前未启用真太阳时校正。</span>`;
       return;
     }
 
@@ -878,7 +894,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const presetKey = btn.getAttribute('data-preset');
         if (presetKey === 'now') {
-          setCurrentTime();
+          resetToActualCurrentTime();
+          return;
         } else if (ARCHETYPE_PRESETS[presetKey]) {
           const cfg = ARCHETYPE_PRESETS[presetKey];
           if (birthDatePicker) birthDatePicker.value = cfg.date;
@@ -886,6 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (genderSelect) genderSelect.value = cfg.gender;
           if (customLonInput) customLonInput.value = cfg.lon.toFixed(2);
           if (timezoneSelect) timezoneSelect.value = String(cfg.tz);
+          triggerCalculate();
         }
         updateLandingPreview();
       });
@@ -11600,9 +11618,15 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderFourPillarsHexagrams = renderFourPillarsHexagrams;
   window.renderHexagramCycle = renderHexagramCycle;
   window.drawHexagramCycleChart = drawHexagramCycleChart;
+  window.resetToActualCurrentTime = resetToActualCurrentTime;
+  window.setCurrentTime = setCurrentTime;
 
-  // Restore user inputs from localStorage if available
-  if (typeof localStorage !== 'undefined') {
+  // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
+  const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';
+  const locSearch = (typeof window !== 'undefined' && window.location && window.location.search) ? window.location.search : '';
+  const isReturningToDashboard = locHash.includes('dashboard') || locSearch.includes('restore=true') || locSearch.includes('view=career');
+
+  if (isReturningToDashboard && typeof localStorage !== 'undefined') {
     try {
       const savedParams = localStorage.getItem('lastBaziParams');
       if (savedParams) {
@@ -11623,6 +11647,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     } catch (e) {}
+  } else {
+    // Fresh portal session: strictly initialize to the actual real-world time
+    setCurrentTime();
+    if (portalPresetsContainer) {
+      const presetBtns = portalPresetsContainer.querySelectorAll('.archetype-preset-card');
+      presetBtns.forEach(b => {
+        if (b.getAttribute('data-preset') === 'now') b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
   }
 
   // Initial Calculation Run & Prepare Landing Preview

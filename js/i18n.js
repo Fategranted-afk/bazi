@@ -374,6 +374,8 @@ const I18N = (function() {
       chk_late_rat: "夜子时直接换次日柱 (23点后算次日)",
       solar_ready: "真太阳时与经度校正已就绪",
       calc_perf: "⚡ 毫秒级极速排盘",
+      btn_reset_actual_time: "⏱️ 重置为实际时间",
+      btn_reset_time_short: "⏱ 归位实际时间",
       solar_term_pending: "节气与节令星排盘中",
 
       // Four Pillars
@@ -949,6 +951,8 @@ const I18N = (function() {
       chk_late_rat: "Late Zi counts as Next Day (after 23:00)",
       solar_ready: "True Solar Time & Longitude Ready",
       calc_perf: "⚡ Millisecond Calculation",
+      btn_reset_actual_time: "⏱️ Reset to Actual Time",
+      btn_reset_time_short: "⏱ Reset to Actual",
       solar_term_pending: "Calculating Solar Terms & Meridian...",
 
       // Four Pillars
