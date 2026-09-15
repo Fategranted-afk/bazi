@@ -104,7 +104,8 @@ class ElementChart {
         else ctx.lineTo(x, y);
       }
       ctx.closePath();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      const isLight = typeof document !== 'undefined' && document.documentElement && typeof document.documentElement.getAttribute === 'function' && document.documentElement.getAttribute('data-theme') === 'light';
+      ctx.strokeStyle = isLight ? 'rgba(80, 60, 30, 0.15)' : 'rgba(255, 255, 255, 0.08)';
       ctx.lineWidth = 1;
       ctx.stroke();
     }
@@ -117,7 +118,8 @@ class ElementChart {
       ctx.beginPath();
       ctx.moveTo(centerX, centerY);
       ctx.lineTo(x, y);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      const isLightAxis = typeof document !== 'undefined' && document.documentElement && typeof document.documentElement.getAttribute === 'function' && document.documentElement.getAttribute('data-theme') === 'light';
+      ctx.strokeStyle = isLightAxis ? 'rgba(80, 60, 30, 0.22)' : 'rgba(255, 255, 255, 0.12)';
       ctx.stroke();
 
       // Draw Element labels

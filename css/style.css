@@ -21,13 +21,235 @@
 }
 
 [data-theme="light"] {
-  --bg-primary: #f8f6f0;
-  --bg-secondary: #eee9dc;
-  --bg-card: #ffffff;
-  --bg-card-hover: #faf7f2;
-  --text-main: #1f2937;
-  --text-muted: #6b7280;
-  --border-color: #e5e7eb;
+  /* Softer, warm-toned, eye-friendly parchment background with lowered brightness */
+  --bg-primary: #ebe5d8;
+  --bg-secondary: #ded7c7;
+  --bg-card: #f5f0e4;
+  --bg-card-hover: #eae3d3;
+  --text-main: #18181b;
+  --text-muted: #3f3f46;
+  --border-color: #cbbeaa;
+  --accent-gold: #92400e;
+  --accent-red: #b91c1c;
+  --accent-jade: #065f46;
+  --seal-red: #a8201a;
+
+  /* Five Elements colors - darkened for crisp contrast on warm light canvas */
+  --color-wood: #047857;
+  --color-fire: #b91c1c;
+  --color-earth: #b45309;
+  --color-metal: #a16207;
+  --color-water: #1d4ed8;
+}
+
+/* Light Theme Contrast & Legibility Overrides (浅昼护眼微沉调与高对比字色) */
+[data-theme="light"] header {
+  background-color: rgba(235, 229, 216, 0.95) !important;
+  border-bottom-color: #cbbeaa !important;
+}
+
+[data-theme="light"] header h1,
+[data-theme="light"] header .text-amber-100 {
+  color: #78350f !important;
+}
+
+[data-theme="light"] header .text-gray-400,
+[data-theme="light"] header .text-gray-300 {
+  color: #4b5563 !important;
+}
+
+[data-theme="light"] #themeToggle,
+[data-theme="light"] #nowBtn,
+[data-theme="light"] #btnToggleFlux,
+[data-theme="light"] #langZhBtn,
+[data-theme="light"] #langEnBtn {
+  background-color: #e5ded0 !important;
+  border-color: #cbbeaa !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] #langZhBtn.bg-amber-600 {
+  background-color: #b45309 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .bg-card,
+[data-theme="light"] section.bg-card,
+[data-theme="light"] .pillar-card,
+[data-theme="light"] .archetype-preset-card {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: 0 2px 8px rgba(100, 80, 50, 0.08) !important;
+}
+
+[data-theme="light"] .bg-gray-900\/40,
+[data-theme="light"] .bg-gray-900\/50,
+[data-theme="light"] .bg-gray-900\/60,
+[data-theme="light"] .bg-gray-900\/70,
+[data-theme="light"] .bg-gray-900\/80,
+[data-theme="light"] .bg-gray-900,
+[data-theme="light"] .bg-gray-800\/40,
+[data-theme="light"] .bg-gray-800\/50,
+[data-theme="light"] .bg-gray-800\/60,
+[data-theme="light"] .bg-gray-800\/80,
+[data-theme="light"] .bg-gray-800,
+[data-theme="light"] .bg-gray-850,
+[data-theme="light"] .bg-gray-950,
+[data-theme="light"] .bg-gray-950\/60,
+[data-theme="light"] .bg-\[\#161822\],
+[data-theme="light"] .bg-\[\#16181f\],
+[data-theme="light"] .bg-\[\#121316\] {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] .border-gray-800,
+[data-theme="light"] .border-gray-700,
+[data-theme="light"] .border-gray-700\/50,
+[data-theme="light"] .border-gray-600 {
+  border-color: var(--border-color) !important;
+}
+
+/* Text Colors: Invert Pale Hues into Crisp Dark Ink / Rich Bronze */
+[data-theme="light"] .text-gray-100,
+[data-theme="light"] .text-gray-200,
+[data-theme="light"] .text-gray-300 {
+  color: #1f2937 !important;
+}
+
+[data-theme="light"] .text-gray-400,
+[data-theme="light"] .text-gray-500 {
+  color: #3f3f46 !important;
+}
+
+[data-theme="light"] .text-white:not(.chinese-seal):not(#langZhBtn):not(#langEnBtn):not(.btn-keep-white):not(.imperial-seal-stamp) {
+  color: #111827 !important;
+}
+
+[data-theme="light"] .text-amber-100,
+[data-theme="light"] .text-amber-200 {
+  color: #78350f !important;
+}
+
+[data-theme="light"] .text-amber-300,
+[data-theme="light"] .text-amber-400 {
+  color: #92400e !important;
+}
+
+[data-theme="light"] .text-rose-200,
+[data-theme="light"] .text-rose-300 {
+  color: #9f1239 !important;
+}
+
+[data-theme="light"] .text-emerald-200,
+[data-theme="light"] .text-emerald-300 {
+  color: #065f46 !important;
+}
+
+[data-theme="light"] .text-teal-200,
+[data-theme="light"] .text-teal-300 {
+  color: #115e59 !important;
+}
+
+[data-theme="light"] .text-purple-200,
+[data-theme="light"] .text-purple-300 {
+  color: #581c87 !important;
+}
+
+[data-theme="light"] .text-blue-200,
+[data-theme="light"] .text-blue-300 {
+  color: #1e40af !important;
+}
+
+/* Gradient Headings in Light Mode */
+[data-theme="light"] h1.bg-gradient-to-r,
+[data-theme="light"] .bg-gradient-to-r.from-amber-100 {
+  background-image: linear-gradient(to right, #78350f, #92400e, #831843) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Form Inputs & Dropdowns */
+[data-theme="light"] input[type="date"],
+[data-theme="light"] input[type="time"],
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="number"],
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: #fdfaf3 !important;
+  color: #18181b !important;
+  border-color: #cbbeaa !important;
+}
+[data-theme="light"] input:focus,
+[data-theme="light"] select:focus {
+  border-color: #92400e !important;
+  box-shadow: 0 0 0 2px rgba(146, 64, 14, 0.15) !important;
+}
+
+/* Navigation Tabs & Primary Nav */
+[data-theme="light"] #primaryViewNav {
+  background-color: #ded7c7 !important;
+  border-color: #cbbeaa !important;
+}
+[data-theme="light"] #primaryViewNav button {
+  color: #4b5563 !important;
+}
+[data-theme="light"] #primaryViewNav button.active,
+[data-theme="light"] #primaryViewNav button[data-active="true"] {
+  background-color: #f5f0e4 !important;
+  color: #78350f !important;
+  border-color: #cbbeaa !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Pill Badges & Chips */
+[data-theme="light"] .bg-amber-950\/60,
+[data-theme="light"] .bg-amber-950\/50,
+[data-theme="light"] .bg-amber-950\/40,
+[data-theme="light"] .bg-amber-900\/50,
+[data-theme="light"] .bg-amber-900\/40 {
+  background-color: rgba(217, 119, 6, 0.15) !important;
+  color: #78350f !important;
+  border-color: rgba(180, 83, 9, 0.35) !important;
+}
+[data-theme="light"] .bg-emerald-950\/60,
+[data-theme="light"] .bg-emerald-950\/50 {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #065f46 !important;
+  border-color: rgba(5, 150, 105, 0.35) !important;
+}
+[data-theme="light"] .bg-rose-950\/60,
+[data-theme="light"] .bg-rose-950\/50 {
+  background-color: rgba(244, 63, 94, 0.15) !important;
+  color: #9f1239 !important;
+  border-color: rgba(225, 29, 72, 0.35) !important;
+}
+[data-theme="light"] .bg-purple-950\/60,
+[data-theme="light"] .bg-purple-950\/50 {
+  background-color: rgba(168, 85, 247, 0.15) !important;
+  color: #581c87 !important;
+  border-color: rgba(147, 51, 234, 0.35) !important;
+}
+[data-theme="light"] .bg-blue-950\/60,
+[data-theme="light"] .bg-blue-950\/50 {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  color: #1e40af !important;
+  border-color: rgba(37, 99, 235, 0.35) !important;
+}
+
+/* Modals */
+[data-theme="light"] #historyFigureDetailModalDashboard > div,
+[data-theme="light"] #calculationProgressModal > div {
+  background-color: #f5f0e4 !important;
+  border-color: #cbbeaa !important;
+  color: #18181b !important;
+}
+
+/* Pillar Card Details */
+[data-theme="light"] .pillar-badge {
+  background: rgba(0, 0, 0, 0.06) !important;
+  color: #374151 !important;
 }
 
 body {
@@ -275,6 +497,42 @@ body {
   text-shadow: 0 0.5px 0.5px rgba(168, 32, 26, 0.25);
   font-family: "Songti SC", "Noto Serif SC", serif;
   user-select: none;
+}
+
+/* Imperial Vermilion Square Seal (御批朱砂方印: 钦天御批) */
+.imperial-seal-square {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 2px solid #a8201a;
+  box-shadow: inset 0 0 0 1px #a8201a, inset 0 0 4px rgba(168, 32, 26, 0.25), 0 1px 3px rgba(168, 32, 26, 0.2);
+  border-radius: 3px;
+  background: linear-gradient(135deg, rgba(168, 32, 26, 0.12) 0%, rgba(220, 38, 38, 0.04) 100%);
+  color: #a8201a;
+  font-weight: 900;
+  font-family: "Songti SC", "Noto Serif SC", STSong, "SimSun", serif;
+  font-size: 12px;
+  line-height: 1.15;
+  text-align: center;
+  letter-spacing: 2px;
+  padding-left: 2px;
+  user-select: none;
+  transform: rotate(-1.5deg);
+  text-shadow: 0 0.5px 0.5px rgba(168, 32, 26, 0.25);
+  box-sizing: border-box;
+}
+.imperial-seal-square.is-en {
+  font-size: 7.5px;
+  letter-spacing: 0.5px;
+  padding-left: 0;
+  line-height: 1.1;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transform: rotate(-1deg);
 }
 
 /* Imperial High-Aesthetic Module Card */

@@ -11855,14 +11855,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Module 4: Imperial Decrees -->
           <div class="imperial-card imperial-card-accent p-2 text-xs space-y-0.5 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
               <span class="flex items-center gap-1"><span class="text-sm">👑</span><span>${isEn ? 'IV. Imperial Decrees · Three Golden Rules for Life' : '四、钦天监朱批 · 终身不败立身三铁律'}</span></span>
-              <span class="imperial-seal-stamp text-[9px] py-0.2 px-1.5">${isEn ? 'IMPERIAL DECREE' : '朱批定命'}</span>
+              <span class="text-[9.5px] text-amber-900 font-mono">${isEn ? 'SOVEREIGN MANDATE' : '天机不易'}</span>
             </div>
-            <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight pt-0.5">
-              <p>${rule1}</p>
-              <p>${rule2}</p>
-              <p>${rule3}</p>
+            <div class="flex items-center justify-between gap-2.5 pt-0.5">
+              <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight flex-1">
+                <p>${rule1}</p>
+                <p>${rule2}</p>
+                <p>${rule3}</p>
+              </div>
+              <div class="imperial-seal-square ${isEn ? 'is-en' : ''} flex-shrink-0 self-center" title="${isEn ? 'Imperial Rescript' : '钦天御批'}">
+                ${isEn ? 'IMPERIAL<br>RESCRIPT' : '钦天<br>御批'}
+              </div>
             </div>
           </div>
 
@@ -12260,21 +12265,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
-          <!-- Thoughtful side-note on Classical preservation and personal meditation -->
-          <div class="imperial-card p-2 text-[10px] text-gray-700 italic font-serif-sc">
-            <span>${reflectionPreservationNote}</span>
-          </div>
-
-          <div class="flex items-center justify-between border-t-2 border-amber-900/60 pt-2">
-            <div class="space-y-0.5 text-[11px] text-gray-700 font-serif-sc">
-              <p><b>${isEn ? 'Certification Authority:' : '钦定勘验印鉴:'}</b> ${isEn ? 'Imperial Astronomical Bureau Archive (Qin Tian Jian)' : '钦天监正堂掌事 · 钦赐天机密卷'}</p>
-              <p>${isEn ? 'This dossier is mathematically generated from orthodox canonical algorithms.' : '本战报依正统八典算法严密考订，纯正传承，万金不易。'}</p>
-            </div>
-            <div class="imperial-seal-stamp text-sm py-1.5 px-3">
-              ${isEn ? 'IMPERIAL SEAL OF ASTRONOMY' : '钦天监正堂之宝'}
-            </div>
-          </div>
-
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
@@ -12403,11 +12393,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><b>${isEn ? 'Somatic Tuning & Rhythm:' : '身心调和与气血调摄:'}</b> ${isEn ? interp.physicalTuningEn : interp.physicalTuningZh}</p>
           </div>
 
-          <!-- Canonical Preservation Reflection Note -->
-          <div class="imperial-card p-2 text-[10px] text-gray-600 italic font-serif-sc">
-            <span>${reflectionPreservationNote}</span>
-          </div>
-
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷五'}</span>
@@ -12508,6 +12493,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-[10px] text-gray-700 leading-tight pt-0.5">
               <b>${isEn ? 'Annual Hexagram Guidance: ' : '值年卦指引：'}</b>${isEn ? (crTt ? (crTt.annualHexTacticEn || (crTt.annualHex && crTt.annualHex.decisionEn) || 'Align actions with timing and maintain strategic patience.') : 'Align actions with timing and maintain strategic patience.') : (crTt ? (crTt.annualHexTacticZh || (crTt.annualHex && crTt.annualHex.decisionZh) || '顺应天道节律，进退有据。') : '顺应天道节律，进退有据。')}
             </p>
+          </div>
+
+          <!-- Thoughtful side-note on Classical preservation and personal meditation -->
+          <div class="imperial-card p-1.5 text-[9.5px] text-gray-700 italic font-serif-sc">
+            <span>${reflectionPreservationNote}</span>
+          </div>
+
+          <!-- Imperial Bureau Final Certification & Grand Seal -->
+          <div class="flex items-center justify-between border-t-2 border-amber-900/60 pt-1.5">
+            <div class="space-y-0.5 text-[10.5px] text-gray-700 font-serif-sc">
+              <p><b>${isEn ? 'Certification Authority:' : '钦定勘验印鉴:'}</b> ${isEn ? 'Imperial Astronomical Bureau Archive (Qin Tian Jian)' : '钦天监正堂掌事 · 钦赐天机密卷'}</p>
+              <p>${isEn ? 'This dossier is mathematically generated from orthodox canonical algorithms.' : '本战报依正统八典算法严密考订，纯正传承，万金不易。'}</p>
+            </div>
+            <div class="imperial-seal-stamp text-sm py-1.5 px-3">
+              ${isEn ? 'IMPERIAL SEAL OF ASTRONOMY' : '钦天监正堂之宝'}
+            </div>
           </div>
 
           <!-- Verification Stamp & Complete Footer -->

@@ -8450,6 +8450,7 @@ assert 'imperial-card-rose' in css_content, "Missing imperial-card-rose in style
 assert 'imperial-card-gold' in css_content, "Missing imperial-card-gold in style.css"
 assert 'imperial-divider' in css_content, "Missing imperial-divider in style.css"
 assert 'imperial-table' in css_content, "Missing imperial-table in style.css"
+assert 'imperial-seal-square' in css_content, "Missing imperial-seal-square in style.css"
 
 jsc_check86_cmd = [
     '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
@@ -8564,6 +8565,15 @@ jsc_check86_cmd = [
     if (!zhHtml.includes('imperial-corner-wrap-bottom')) throw new Error("ZH dossier missing imperial-corner-wrap-bottom");
     if (!zhHtml.includes('imperial-card')) throw new Error("ZH dossier missing imperial-card classes");
     if (!zhHtml.includes('imperial-table')) throw new Error("ZH dossier missing imperial-table classes");
+    if (!zhHtml.includes('imperial-seal-square')) throw new Error("ZH dossier missing imperial-seal-square");
+    if (!zhHtml.includes('钦天<br>御批')) throw new Error("ZH dossier missing 钦天御批 square seal");
+
+    var zhPages = zhHtml.split('class="imperial-page');
+    if (!zhPages[1].includes('钦天<br>御批')) throw new Error("Page 1 missing 钦天御批 square seal in bottom right");
+    if (zhPages[6].includes('钦定勘验印鉴')) throw new Error("Page 6 should NOT have 钦定勘验印鉴 (moved to last page)");
+    if (!zhPages[8].includes('钦定勘验印鉴')) throw new Error("Page 8 missing 钦定勘验印鉴");
+    if (!zhPages[8].includes('钦天监正堂之宝')) throw new Error("Page 8 missing 钦天监正堂之宝");
+    if (!zhPages[8].includes('研读时参验古典原文与白话指引对照')) throw new Error("Page 8 missing reflection preservation note");
 
     // Test EN Dossier layout and zero Chinese characters
     elementStore['dossierLangEn'].trigger('click');
@@ -8572,6 +8582,15 @@ jsc_check86_cmd = [
     if (!enHtml.includes('imperial-corner-wrap-bottom')) throw new Error("EN dossier missing imperial-corner-wrap-bottom");
     if (!enHtml.includes('imperial-card')) throw new Error("EN dossier missing imperial-card classes");
     if (!enHtml.includes('imperial-table')) throw new Error("EN dossier missing imperial-table classes");
+    if (!enHtml.includes('imperial-seal-square')) throw new Error("EN dossier missing imperial-seal-square");
+    if (!enHtml.includes('IMPERIAL<br>RESCRIPT')) throw new Error("EN dossier missing IMPERIAL RESCRIPT square seal");
+
+    var enPages = enHtml.split('class="imperial-page');
+    if (!enPages[1].includes('IMPERIAL<br>RESCRIPT')) throw new Error("EN Page 1 missing IMPERIAL RESCRIPT");
+    if (enPages[6].includes('Certification Authority:')) throw new Error("EN Page 6 should NOT have Certification Authority");
+    if (!enPages[8].includes('Certification Authority:')) throw new Error("EN Page 8 missing Certification Authority");
+    if (!enPages[8].includes('IMPERIAL SEAL OF ASTRONOMY')) throw new Error("EN Page 8 missing IMPERIAL SEAL OF ASTRONOMY");
+
     var zhMatches = enHtml.match(/[\\u4e00-\\u9fa5]/g);
     if (zhMatches && zhMatches.length > 0) {
       throw new Error("EN dossier contains residual Chinese: " + zhMatches.slice(0, 20).join(''));
@@ -8582,7 +8601,27 @@ run_check86 = subprocess.run(jsc_check86_cmd, capture_output=True, text=True)
 assert run_check86.returncode == 0, f"Check 86 test failed: stdout={run_check86.stdout} stderr={run_check86.stderr}"
 print("✓ 皇家战报精装排版美化（仿古宣纸底纹/内府朱丝栏与暗金线/四角绫绢包角/御制朱印泥/木版祭坛神机表/双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 86 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 87. Validate Light Theme Low-Brightness Tone & High-Contrast Typography
+print("\n=== 87. Validating Light Theme Low-Brightness Tone & High-Contrast Typography ===")
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+assert '--bg-primary: #ebe5d8;' in css_content, "Missing toned-down eye-care --bg-primary in style.css"
+assert '--bg-card: #f5f0e4;' in css_content, "Missing non-glare --bg-card in style.css"
+assert '[data-theme="light"] header' in css_content, "Missing light theme header override"
+assert '[data-theme="light"] .text-gray-100' in css_content, "Missing light theme text-gray-100 contrast override"
+assert '[data-theme="light"] .text-amber-100' in css_content, "Missing light theme text-amber-100 contrast override"
+assert '[data-theme="light"] .text-amber-300' in css_content, "Missing light theme text-amber-300 contrast override"
+assert '[data-theme="light"] input[type="date"]' in css_content, "Missing light theme input override"
+assert '[data-theme="light"] #primaryViewNav' in css_content, "Missing light theme nav override"
+
+with open('js/chart.js', 'r', encoding='utf-8') as f:
+    chart_content = f.read()
+assert "getAttribute('data-theme') === 'light'" in chart_content, "Missing light theme radar chart stroke adaptation"
+
+print("✓ 浅昼护眼微沉调与高对比文字显示（柔和米宣底色/降亮度防刺眼眩光/高对比深墨字色/雷达网线适配/零文字淹没）验证通过！")
+
+print("\n🎉 ALL 87 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
