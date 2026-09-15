@@ -11133,7 +11133,36 @@ document.addEventListener('DOMContentLoaded', () => {
       'info'
     );
 
+    // Strict 1-Page Shield: Add exporting classes and clamp dimensions strictly within A4 height
+    container.classList.add('exporting-pdf-single');
     page1.classList.add('exporting-pdf-single');
+
+    const prevInlineStyles = {
+      height: page1.style.height,
+      minHeight: page1.style.minHeight,
+      maxHeight: page1.style.maxHeight,
+      margin: page1.style.margin,
+      boxShadow: page1.style.boxShadow,
+      overflow: page1.style.overflow
+    };
+
+    page1.style.height = '295.5mm';
+    page1.style.minHeight = '295.5mm';
+    page1.style.maxHeight = '296mm';
+    page1.style.margin = '0 auto';
+    page1.style.boxShadow = 'none';
+    page1.style.overflow = 'hidden';
+
+    const cleanupSingleExport = () => {
+      container.classList.remove('exporting-pdf-single');
+      page1.classList.remove('exporting-pdf-single');
+      page1.style.height = prevInlineStyles.height || '';
+      page1.style.minHeight = prevInlineStyles.minHeight || '';
+      page1.style.maxHeight = prevInlineStyles.maxHeight || '';
+      page1.style.margin = prevInlineStyles.margin || '';
+      page1.style.boxShadow = prevInlineStyles.boxShadow || '';
+      page1.style.overflow = prevInlineStyles.overflow || '';
+    };
 
     if (typeof html2pdf !== 'undefined') {
       try {
@@ -11154,28 +11183,43 @@ document.addEventListener('DOMContentLoaded', () => {
             unit: 'mm',
             format: 'a4',
             orientation: 'portrait'
+          },
+          pagebreak: {
+            mode: [] // Strict continuous single A4 page without page-break insertions
           }
         };
 
-        html2pdf().set(opt).from(page1).save().then(() => {
-          page1.classList.remove('exporting-pdf-single');
+        html2pdf().set(opt).from(page1).toPdf().get('pdf').then((pdf) => {
+          if (pdf) {
+            const total = (pdf.internal && typeof pdf.internal.getNumberOfPages === 'function')
+              ? pdf.internal.getNumberOfPages()
+              : (typeof pdf.getNumberOfPages === 'function' ? pdf.getNumberOfPages() : 1);
+            // Defensively prune any extraneous blank page beyond page 1
+            if (total > 1 && typeof pdf.deletePage === 'function') {
+              for (let p = total; p > 1; p--) {
+                pdf.deletePage(p);
+              }
+            }
+          }
+        }).save().then(() => {
+          cleanupSingleExport();
           showDossierStatus(
             isEn ? '✅ 1-Page Imperial Blueprint PDF generated and download started!' : '✅ 卷首统览单页 PDF 已成功生成并开始下载！',
             'success'
           );
         }).catch((err) => {
-          page1.classList.remove('exporting-pdf-single');
+          cleanupSingleExport();
           console.warn('html2pdf single-page export notice, invoking fallback:', err);
           fallbackExportPDFSinglePage(page1, filename, isEn);
         });
         return;
       } catch (err) {
-        page1.classList.remove('exporting-pdf-single');
+        cleanupSingleExport();
         console.warn('html2pdf single-page invocation error:', err);
       }
     }
 
-    page1.classList.remove('exporting-pdf-single');
+    cleanupSingleExport();
     fallbackExportPDFSinglePage(page1, filename, isEn);
   }
 
@@ -11191,7 +11235,8 @@ document.addEventListener('DOMContentLoaded', () => {
         triggerPrintFallback(isEn);
         return;
       }
-      const pdfBytes = compileA4PdfFromJpegs(jpegList);
+      const singlePageJpeg = [jpegList[0]];
+      const pdfBytes = compileA4PdfFromJpegs(singlePageJpeg);
       if (typeof Blob === 'undefined' || typeof URL === 'undefined') {
         triggerPrintFallback(isEn);
         return;

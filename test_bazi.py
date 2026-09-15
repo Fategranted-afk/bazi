@@ -8278,7 +8278,157 @@ run_check84 = subprocess.run(jsc_check84_cmd, capture_output=True, text=True)
 assert run_check84.returncode == 0, f"Check 84 test failed: stdout={run_check84.stdout} stderr={run_check84.stderr}"
 print("✓ 208位历史人物大典扩充、卡牌调阅窗口永久锁定、皇家战报第二页天命照命镜像注入与卷首单页PDF极速导出验证通过！")
 
-print("\n🎉 ALL 84 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 85. Validate Single-Page Executive Blueprint PDF Blank Page Defense
+print("\n=== 85. Validating Single-Page Executive Blueprint PDF Blank Page Defense ===")
+assert 'exporting-pdf-single' in css_content, "Missing .exporting-pdf-single in style.css"
+assert 'height: 295.5mm !important;' in css_content, "Missing height clamping in .exporting-pdf-single"
+assert 'page-break-after: avoid !important;' in css_content, "Missing page-break-after: avoid in .exporting-pdf-single"
+assert 'deletePage(p)' in app_content or 'deletePage' in app_content, "Missing jsPDF deletePage pruning in downloadImperialSinglePagePDF"
+assert 'singlePageJpeg = [jpegList[0]]' in app_content, "Missing fallback single-page clamp in fallbackExportPDFSinglePage"
+
+jsc_check85_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    r'''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/portrait-engine.js");
+    load("js/history-engine.js");
+
+    var deletedPages = [];
+    var mockPdfInstance = {
+      internal: {
+        getNumberOfPages: function() { return 2; }
+      },
+      deletePage: function(p) {
+        deletedPages.push(p);
+      },
+      save: function() {
+        return Promise.resolve();
+      }
+    };
+
+    var html2pdfCalled = false;
+    var mockHtml2PdfWorker = {
+      set: function(opt) {
+        if (!opt.pagebreak || !Array.isArray(opt.pagebreak.mode) || opt.pagebreak.mode.length !== 0) {
+          throw new Error("Single page export must set pagebreak: { mode: [] }");
+        }
+        return this;
+      },
+      from: function(el) { return this; },
+      toPdf: function() { return this; },
+      get: function(prop) {
+        return {
+          then: function(cb) {
+            cb(mockPdfInstance);
+            return {
+              save: function() {
+                html2pdfCalled = true;
+                return Promise.resolve();
+              }
+            };
+          }
+        };
+      }
+    };
+
+    var console = { log: function(){}, warn: function(){}, error: function(){} };
+    var window = this;
+    window.console = console;
+    window.addEventListener = function() {};
+    window.html2pdf = function() { return mockHtml2PdfWorker; };
+    window.HistoricalEngine = HistoricalEngine;
+    window.HISTORICAL_FIGURES = HISTORICAL_FIGURES;
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        _listeners: {},
+        _children: [],
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = this._listeners[evt] || []; for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); },
+        appendChild: function(child) { this._children.push(child); },
+        querySelector: function(sel) {
+          if (sel === '.imperial-page') return mockPage1;
+          return makeEl('mock_' + Math.random());
+        },
+        querySelectorAll: function(sel) {
+          if (sel === '.imperial-page') return [mockPage1];
+          return [];
+        }
+      };
+    }
+
+    var mockContainer = makeEl('imperialDossierContainer');
+    var mockPage1 = makeEl('mockPage1');
+    mockContainer.querySelector = function(s) { return mockPage1; };
+
+    elementStore['imperialDossierContainer'] = mockContainer;
+
+    var document = {
+      body: { style: {} },
+      documentElement: { lang: "zh-CN" },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelector: function(s) {
+        if (s === '.imperial-page') return mockPage1;
+        return makeEl('mockQuery');
+      },
+      querySelectorAll: function() { return []; },
+      createElement: function(tag) { return makeEl('gen_' + Math.random(), tag); },
+      addEventListener: function(evt, fn) { if (evt === 'DOMContentLoaded') fn(); }
+    };
+    window.document = document;
+
+    load("js/app.js");
+
+    // Invoke downloadImperialSinglePagePDF
+    window.downloadImperialSinglePagePDF('zh');
+
+    if (!html2pdfCalled) throw new Error("html2pdf was not called during single page export");
+    if (deletedPages.indexOf(2) === -1) {
+      throw new Error("jsPDF pruning hook failed to delete extraneous page 2: " + JSON.stringify(deletedPages));
+    }
+    '''
+]
+run_check85 = subprocess.run(jsc_check85_cmd, capture_output=True, text=True)
+assert run_check85.returncode == 0, f"Check 85 test failed: stdout={run_check85.stdout} stderr={run_check85.stderr}"
+print("✓ 卷首单页PDF极速导出防多余空白第二页防御（高精度295.5mm限高 / 样式隔离 / jsPDF deletePage 剪除钩子）验证通过！")
+
+print("\n🎉 ALL 85 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
