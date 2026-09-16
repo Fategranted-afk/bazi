@@ -2647,7 +2647,33 @@ class PortraitEngine {
         statusBadgeZh: isZhuangziPrimary ? '🏆 本命第一主药' : '🛡️ 协同护持经',
         statusBadgeEn: isZhuangziPrimary ? '🏆 Primary Sovereign Antidote' : '🛡️ Auxiliary Shield',
         isPrimary: isZhuangziPrimary,
-        quotes: sortedZhuangziQuotes
+        quotes: sortedZhuangziQuotes,
+        threePillars: [
+          {
+            nameZh: '《逍遥游》· 无待超然与降维破局',
+            nameEn: 'Scroll I: Free & Easy Wandering (Autonomous Elevation)',
+            quoteZh: '“乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！” —— 《庄子·内篇·逍遥游第一》',
+            quoteEn: '“Riding the true course of Heaven and Earth and steering the permutations of the six cosmic breaths to roam the boundless—upon what then does one depend?” —— Zhuangzi, Ch. 1',
+            exegesisZh: '打破以自我为中心的狭隘尺度，降维俯瞰世俗得失毁誉。不依附外界评价与虚妄指标，自得“无待”之终极自由。',
+            exegesisEn: 'Shatter petty self-centered metrics and rise above mundane gains and losses. Free from dependence on external validation, attain autonomous sovereignty.'
+          },
+          {
+            nameZh: '《养生主》· 庖丁解牛与依乎天理',
+            nameEn: 'Scroll III: Butcher Ding (Operating Along Structural Seams)',
+            quoteZh: '“以无厚入有间，恢恢乎其于游刃必有余地矣...因其固然，技也进乎道矣。” —— 《庄子·内篇·养生主第三》',
+            quoteEn: '“Inserting that which has no thickness into crevices that have space: boundlessly expansive, the blade wanders with room to spare... Conforming to nature, craft transcends into Dao.” —— Zhuangzi, Ch. 3',
+            exegesisZh: '顺应事物内在客观规律与人性节理，不硬碰筋骨硬结与体制高墙。避开阻力最大处，以巧劲化解千钧，保全锋刃与元神不伤。',
+            exegesisEn: 'Glide along objective patterns and human dynamics; never collide with rigid bones. Avoid peak resistance, leveraging subtle seams to preserve razor edge and inner vitality.'
+          },
+          {
+            nameZh: '《山木》· 物物不物与龙蛇俱化',
+            nameEn: 'Scroll XX: The Mountain Tree (Mastering Tools Without Subjugation)',
+            quoteZh: '“物物而不物于物，则胡可得而累邪！无誉无訾，一龙一蛇，与时俱化，而或者不肯为。” —— 《庄子·外篇·山木第二十》',
+            quoteEn: '“Master circumstances without being mastered by them: how then can one be burdened? Free from praise or blame, now a dragon, now a serpent, evolving with the times.” —— Zhuangzi, Ch. 20',
+            exegesisZh: '支配外物而不被外物所奴役。资产、代码与名利皆是服务生命的工具，绝不本末倒置。顺应时代与周期沉浮，与时俱化，神守太虚。',
+            exegesisEn: 'Govern external assets and tools without being enslaved by metrics. Titles and technology serve human flourishing; evolve fluidly with temporal tides.'
+          }
+        ]
       }
     };
 

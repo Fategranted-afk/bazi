@@ -2191,6 +2191,16 @@ const I18N = (function() {
                 q.practicalZh = q.practicalEn || q.practicalZh;
               });
             }
+            if (zd[k].threePillars && Array.isArray(zd[k].threePillars)) {
+              zd[k].threePillars.forEach(p => {
+                p.name = p.nameEn || p.name;
+                p.nameZh = p.nameEn || p.nameZh;
+                p.quote = p.quoteEn || p.quote;
+                p.quoteZh = p.quoteEn || p.quoteZh;
+                p.exegesis = p.exegesisEn || p.exegesis;
+                p.exegesisZh = p.exegesisEn || p.exegesisZh;
+              });
+            }
           }
         });
       }

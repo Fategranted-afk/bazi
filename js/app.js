@@ -8421,10 +8421,10 @@ document.addEventListener('DOMContentLoaded', () => {
               ${isEn ? "Armor & Weapon" : "穿铠甲 · 执利刃"}
             </div>
             <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-purple-200 font-mono">
-              ${isEn ? "Curved Diplomacy" : "求忌直 · 曲之得"}
+              ${isEn ? "Strategic Alliances" : "善恶咸用 · 结盟友"}
             </div>
             <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-blue-200 font-mono">
-              ${isEn ? "Three Audits" : "察人 · 察势 · 查己"}
+              ${isEn ? "Slander Poise" : "谤而不辩 · 去浊清"}
             </div>
             <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-rose-200 font-mono">
               ${isEn ? "Silent Wisdom" : "知不示 · 密而测"}
@@ -8440,10 +8440,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="flex items-center justify-between text-xs font-bold text-gray-300">
             <span class="flex items-center gap-1.5">
               <span>📚</span>
-              <span>${isEn ? "Rong Ku Jian Complete 8 Scrolls Compendium" : "《荣枯鉴》传世八卷全相大成"}</span>
+              <span>${isEn ? "Rong Ku Jian Complete 10 Scrolls Compendium" : "《荣枯鉴》传世十卷全相大成"}</span>
             </span>
             <span class="text-[11px] text-gray-400 font-normal">
-              ${isEn ? "Empirical strategy manual grounded in human nature and power dynamics" : "汇通古文经典、现代白话释义、实战法则与历史案例"}
+              ${isEn ? "Empirical strategy manual across all 10 scrolls grounded in human nature and power dynamics" : "汇通古文经典、现代白话释义、实操保全法则与传世博弈案例全十卷"}
             </span>
           </div>
 
@@ -8464,7 +8464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="space-y-3">
                     <div class="flex items-center justify-between border-b border-gray-800 pb-2">
                       <div class="flex items-center space-x-2">
-                        <span class="text-amber-400 font-mono font-bold text-xs">#0${s.num}</span>
+                        <span class="text-amber-400 font-mono font-bold text-xs">#${String(s.num).padStart(2, '0')}</span>
                         <h4 class="text-sm font-bold text-amber-200 font-serif-sc">
                           ${isEn ? s.nameEn : s.nameZh}
                         </h4>
@@ -12731,6 +12731,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const crArchs = (careerReport && careerReport.workplaceArchetypes) ? careerReport.workplaceArchetypes : [];
     const crTt = careerReport ? careerReport.timingTrajectory : null;
     const crRk = careerReport ? careerReport.rongkujian : null;
+    const rkManual = crRk || ((typeof RongKuJianDB !== 'undefined' && bazi) ? RongKuJianDB.evaluateNativeScrolls(bazi.dayMaster, bazi.isStrong, bazi.godCounts, (bazi.pattern && bazi.pattern.name)) : null);
     const upwardRuleZh = (crMu && (crMu.generalRuleZh || crMu.avoidOffendingZh || crMu.styleZh)) || '以严密数据与结构化成果向上复命，多请示少冒进，克制叛逆锋芒。';
     const upwardRuleEn = (crMu && (crMu.generalRuleEn || crMu.avoidOffendingEn || crMu.styleEn)) || 'Preserve institutional alignment and present structured results.';
 
@@ -13484,7 +13485,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Page 6: Volume IV - Zen & Dao Trinity Wisdom -->
+      <!-- Page 6: Volume IV - Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Strategy -->
       <div class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
@@ -13496,62 +13497,140 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
-          <div class="border-b-2 border-amber-900/60 pb-2 flex items-center justify-between">
-            <h2 class="text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume IV: Zen & Dao Trinity Wisdom & Ultimate Liberation' : '卷四 · 禅道心智与传世解脱方策 (金刚经 · 坛经 · 庄子)'}</h2>
-            <span class="imperial-seal-stamp">${isEn ? 'LIBERATION WISDOM' : '顿悟解脱'}</span>
+        <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
+          <div class="border-b-2 border-amber-900/60 pb-1 flex items-center justify-between">
+            <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume IV: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex' : '卷四 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典 (三经解脱 · 冯道十卷)'}</h2>
+            <span class="imperial-seal-stamp">${isEn ? 'MIND & SURVIVAL' : '心智保全'}</span>
           </div>
 
-          <div class="space-y-2 text-xs leading-relaxed font-serif-sc text-gray-800">
+          <div class="space-y-1 text-xs leading-relaxed font-serif-sc text-gray-800">
             ${zen && zen.diagnostic ? `
-              <div class="p-2 bg-amber-100/90 rounded border border-amber-900/40 text-[10.5px] space-y-1">
+              <div class="p-1.5 bg-amber-100/90 rounded border border-amber-900/40 text-[9.5px] space-y-0.5">
                 <div class="flex items-center justify-between font-bold text-amber-950">
                   <span>${isEn ? 'Sovereign Psychological Diagnostic: ' + (zen.diagnostic.archetypeEn || zen.diagnostic.archetype) : '本命精神心理深度诊断：' + (zen.diagnostic.archetypeZh || zen.diagnostic.archetype)}</span>
                   <span class="text-red-900 font-bold">${isEn ? 'Primary Remedy: ' + (zen.diagnostic.primaryCanonTitleEn || zen.diagnostic.primaryCanonTitle) : '第一救应主药：' + (zen.diagnostic.primaryCanonTitleZh || zen.diagnostic.primaryCanonTitle)}</span>
                 </div>
                 <p class="text-gray-800">${isEn ? (zen.diagnostic.stateAnalysisEn || zen.diagnostic.stateAnalysis) : (zen.diagnostic.stateAnalysisZh || zen.diagnostic.stateAnalysis)}</p>
-                <div class="pt-0.5 text-gray-900 font-bold border-t border-amber-900/20">
-                  <span class="text-amber-900">${isEn ? 'Decree: ' : '钦天监心智令：'}</span>${isEn ? (zen.diagnostic.decreeEn || zen.diagnostic.decree) : (zen.diagnostic.decreeZh || zen.diagnostic.decree)}
+                <div class="pt-0.5 text-gray-900 font-bold border-t border-amber-900/20 flex items-center justify-between">
+                  <span><span class="text-amber-900">${isEn ? 'Decree: ' : '钦天监心智令：'}</span>${isEn ? (zen.diagnostic.decreeEn || zen.diagnostic.decree) : (zen.diagnostic.decreeZh || zen.diagnostic.decree)}</span>
                 </div>
               </div>
             ` : ''}
 
             <!-- Diamond Sutra -->
-            <div class="imperial-card imperial-card-accent p-2.5 space-y-0.5">
+            <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5">
               <div class="flex items-center justify-between">
-                <h3 class="font-bold text-amber-950">${isEn ? zen.diamond.title : zen.diamond.titleZh}</h3>
-                <span class="text-[9px] px-1.5 py-0.2 rounded ${zen.diamond.isPrimary ? 'bg-amber-300 text-amber-950 font-bold border border-amber-700' : 'bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40'} font-mono">${zen.diamond.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Cognitive De-Biasing & Anti-Anxiety Shield' : '破相执 · 焦虑脱敏盾'}</span>
+                <h3 class="font-bold text-amber-950 text-xs">${isEn ? 'The Diamond Sutra: De-Biasing & Non-Attachment' : '《金刚经》：破“相”之执 · 应无所住而生其心'}</h3>
+                <span class="text-[8.5px] px-1.5 py-0.2 rounded ${zen.diamond.isPrimary ? 'bg-amber-300 text-amber-950 font-bold border border-amber-700' : 'bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40'} font-mono">${zen.diamond.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Cognitive De-Biasing & Anti-Anxiety Shield' : '破相执 · 焦虑脱敏盾'}</span>
               </div>
-              <p class="font-bold text-red-900">${isEn ? zen.diamond.mantra : zen.diamond.mantraZh}</p>
-              <p>${isEn ? zen.diamond.insight : zen.diamond.insightZh}</p>
-              <p class="text-gray-700 italic">${isEn ? zen.diamond.quotes[0].verse : zen.diamond.quotes[0].verseZh} —— ${isEn ? zen.diamond.quotes[0].source : zen.diamond.quotes[0].sourceZh}</p>
+              <p class="font-bold text-red-900 text-[10px]">${isEn ? '“All conditioned forms are illusory. Seeing all forms as non-forms, one perceives the True Self. Arouse the mind without resting on any clinging.”' : '“凡所有相，皆是虚妄。若见诸相非相，则见如来。应无所住而生其心。”'}</p>
+              <p class="text-[9.5px] text-gray-800">${zen.diamond.isPrimary 
+                ? (isEn ? '【Primary Antidote · Shattering Illusory Forms】: Mental friction stems from clinging to forms—perfectionist ego, fear of judgment, and catastrophe fantasy. Recognize these as mental illusions generated by the nervous system.' : '【对症破除命主虚妄心相】：内耗的核心病根在于“执相”。命主潜意识里执着于“完美我相”（我必须事事做到完美无瑕）、“被审判人相”（外界每个人都在苛责挑剔我）、“灾难众生相”（万一失败将坠入万劫不复）。这些全是交感神经在大脑剧场自编自导的虚妄电影。')
+                : (isEn ? '【Auxiliary Shield · Formless Illumination】: As an auxiliary shield, whenever self-judgment or tension arises, illuminate delusions with "All conditioned dharmas are like dreams, bubbles, and shadows," denying ground for mental fixation.' : '【协同护持 · 破相照空】：作为协同护持心法，当自我审判或硬磕紧绷出现时，随时以“一切有为法如梦幻泡影”照破虚妄，不给妄念着相立足之根基。')}</p>
+              <p class="text-gray-700 italic text-[9px]">${isEn ? '“All conditioned forms are illusory. Seeing all forms as non-forms, one perceives the True Self.” —— The Diamond Sutra, Ch. 5' : '“凡所有相，皆是虚妄。若见诸相非相，则见如来。” —— 《金刚经·如理实见分第五》'}</p>
             </div>
 
             <!-- Platform Sutra -->
-            <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-purple-700">
+            <div class="imperial-card p-1.5 space-y-0.5 border-l-4 border-purple-700">
               <div class="flex items-center justify-between">
-                <h3 class="font-bold text-purple-950">${isEn ? zen.platform.title : zen.platform.titleZh}</h3>
-                <span class="text-[9px] px-1.5 py-0.2 rounded ${zen.platform.isPrimary ? 'bg-purple-300 text-purple-950 font-bold border border-purple-700' : 'bg-purple-200/80 text-purple-950 font-bold border border-purple-600/40'} font-mono">${zen.platform.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Self-Compassion & Rumination Circuit-Breaker' : '见自性 · 精神内耗熔断'}</span>
+                <h3 class="font-bold text-purple-950 text-xs">${isEn ? 'The Platform Sutra: Direct Severance & Intrinsic Completeness' : '《六祖坛经》：直断妄念 · 本来无一物与顿悟自性'}</h3>
+                <span class="text-[8.5px] px-1.5 py-0.2 rounded ${zen.platform.isPrimary ? 'bg-purple-300 text-purple-950 font-bold border border-purple-700' : 'bg-purple-200/80 text-purple-950 font-bold border border-purple-600/40'} font-mono">${zen.platform.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Self-Compassion & Rumination Circuit-Breaker' : '见自性 · 精神内耗熔断'}</span>
               </div>
-              <p class="font-bold text-purple-900">${isEn ? zen.platform.mantra : zen.platform.mantraZh}</p>
-              <p>${isEn ? zen.platform.insight : zen.platform.insightZh}</p>
-              <p class="text-gray-700 italic">${isEn ? zen.platform.quotes[0].verse : zen.platform.quotes[0].verseZh} —— ${isEn ? zen.platform.quotes[0].source : zen.platform.quotes[0].sourceZh}</p>
+              <p class="font-bold text-purple-900 text-[10px]">${isEn ? '“Deluded minds speak with mouth; wise minds execute with heart. Reciting without action is like illusion; acting in alignment unites speech and heart. How wondrous that self-nature is inherently complete!”' : '“迷人口说，智者心行。口诵心不行，如幻如化；口诵心行，则心口相应。何期自性，本自具足！”'}</p>
+              <p class="text-[9.5px] text-gray-800">${zen.platform.isPrimary
+                ? (isEn ? '【Primary Antidote · Shattering Analysis Paralysis】: Excessive mental compute traps the mind in circular rumination. Master Huineng decrees: "Deluded minds speak; wise minds act!" Terminate mental loops through immediate messy kinetic shipping.' : '【对症击穿分析瘫痪与空想内耗】：命主思维推演算力过剩，陷入双向拉扯与完美主义拖延泥潭。六祖一语当头棒喝：“迷人口说，智者心行。口诵心不行，如幻如化！”停止在脑海里打转推演，唯有心行合一、下场实操，以粗糙的行动交付才能彻底粉碎虚妄心魔。')
+                : (isEn ? '【Auxiliary Shield · Direct Enlightenment】: As an auxiliary shield, constantly remind yourself that self-nature is fundamentally complete; external weather cannot stain the heart, never begging outward for sympathy or validation.' : '【协同护持 · 顿悟见性】：作为协同护持心法，时刻提醒命主自性本自具足无动摇，外界风雨不染自心，绝不向外乞求怜悯与认同。')}</p>
+              <p class="text-gray-700 italic text-[9px]">${isEn ? '“Deluded minds speak with mouth, while the wise execute in heart. Oral recitation devoid of action is like an illusion; action aligned with heart bridges speech and reality.” —— The Platform Sutra, Ch. 2' : '“迷人口说，智者心行。口诵心不行，如幻如化，如露如电；口诵心行，则心口相应。” —— 《六祖坛经·般若品第二》'}</p>
             </div>
 
-            <!-- Zhuangzi -->
-            <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-teal-700">
+            <!-- Zhuangzi: 3 Distinct Classical Pillars -->
+            <div class="imperial-card p-1.5 space-y-0.5 border-l-4 border-teal-700">
               <div class="flex items-center justify-between">
-                <h3 class="font-bold text-teal-950">${isEn ? zen.zhuangzi.title : zen.zhuangzi.titleZh}</h3>
-                <span class="text-[9px] px-1.5 py-0.2 rounded ${zen.zhuangzi.isPrimary ? 'bg-teal-300 text-teal-950 font-bold border border-teal-700' : 'bg-teal-200/80 text-teal-950 font-bold border border-teal-600/40'} font-mono">${zen.zhuangzi.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Somatic Calm & Perspective Transcendence' : '逍遥游 · 精神松弛与降维破局'}</span>
+                <h3 class="font-bold text-teal-950 text-xs">${isEn ? 'Zhuangzi: Beyond Material Subjugation · Free Roaming & Butcher Ding' : '《庄子》：物物而不物于物 · 乘物以游心与庖丁解牛'}</h3>
+                <span class="text-[8.5px] px-1.5 py-0.2 rounded ${zen.zhuangzi.isPrimary ? 'bg-teal-300 text-teal-950 font-bold border border-teal-700' : 'bg-teal-200/80 text-teal-950 font-bold border border-teal-600/40'} font-mono">${zen.zhuangzi.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Somatic Calm & Perspective Transcendence' : '逍遥游 · 精神松弛与降维破局'}</span>
               </div>
-              <p class="font-bold text-teal-900">${isEn ? zen.zhuangzi.mantra : zen.zhuangzi.mantraZh}</p>
-              <p>${isEn ? zen.zhuangzi.insight : zen.zhuangzi.insightZh}</p>
-              <p class="text-gray-700 italic">${isEn ? zen.zhuangzi.quotes[0].verse : zen.zhuangzi.quotes[0].verseZh} —— ${isEn ? zen.zhuangzi.quotes[0].source : zen.zhuangzi.quotes[0].sourceZh}</p>
+              <p class="font-bold text-teal-900 text-[10px]">${isEn ? '“Subjugate things rather than being subjugated by things: how then can one be burdened? Riding the cosmic order to wander in the boundless—upon what then does one depend?”' : '“物物而不物于物，则胡可得而累邪！乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！”'}</p>
+              <p class="text-[9.5px] text-gray-800">${zen.zhuangzi.isPrimary
+                ? (isEn ? '【Primary Antidote · Soothing Overheated Overdrive】: Heavy self-inflicted pressure collides with immovable realities. Zhuangzi decrees: accept what is natural, master circumstances without becoming enslaved, and reclaim strategic leeway.' : '【对症化解战车超频与死磕硬碰】：命主自我施压过甚，常在不可控的现实障碍前硬磕碰壁。庄子以“知其不可奈何而安之若命”与“物物而不物于物”大智当头棒喝，放下强行改造客观世界之执念，换取精神彻底松弛与战略从容。')
+                : (isEn ? '【Auxiliary Shield · Free Roaming】: As an auxiliary shield, inject expansive Daoist transcendence, treating worldly vicissitudes as a grand game, preserving sovereign vitality with effortless ease.' : '【协同护持 · 乘物游心】：作为协同护持心法，注入大开大合的道家超然气象，将世俗逆境视作旷达游戏，保全元神游刃有余。')}</p>
+
+              <!-- Three Distinct Pillars of Zhuangzi -->
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-1 pt-1 border-t border-teal-900/20 text-[9px]">
+                <div class="p-1 rounded bg-teal-50/80 border border-teal-800/30 space-y-0.2">
+                  <div class="font-bold text-teal-950">${isEn ? '① Xiao Yao You (Free Roaming)' : '①《逍遥游》· 无待超然'}</div>
+                  <p class="text-gray-700 italic">${isEn ? '“Riding the true course of Heaven and Earth... upon what depend?” —— Ch. 1' : '“乘天地之正，而御六气之辩，以游无穷者！” —— 《逍遥游第一》'}</p>
+                  <p class="text-teal-900 font-semibold">${isEn ? 'Transcend petty metrics; achieve boundless autonomy.' : '跳出狭隘尺度，降维俯瞰得失，自得无待之大自由。'}</p>
+                </div>
+                <div class="p-1 rounded bg-teal-50/80 border border-teal-800/30 space-y-0.2">
+                  <div class="font-bold text-teal-950">${isEn ? '② Butcher Ding (Mastering Seams)' : '②《养生主》· 庖丁解牛'}</div>
+                  <p class="text-gray-700 italic">${isEn ? '“Inserting what has no thickness into seams... room to spare.” —— Ch. 3' : '“以无厚入有间，恢恢乎其于游刃必有余地矣！” —— 《养生主第三》'}</p>
+                  <p class="text-teal-900 font-semibold">${isEn ? 'Glide along objective seams; avoid blunt resistance.' : '顺应客观节理，不硬碰硬骨，保全锋刃与元神不伤。'}</p>
+                </div>
+                <div class="p-1 rounded bg-teal-50/80 border border-teal-800/30 space-y-0.2">
+                  <div class="font-bold text-teal-950">${isEn ? '③ Mountain Tree (Tool Mastery)' : '③《山木》· 物物不物'}</div>
+                  <p class="text-gray-700 italic">${isEn ? '“Master things rather than being mastered: how burdened?” —— Ch. 20' : '“物物而不物于物，则胡可得而累邪！一龙一蛇与时俱化。” —— 《山木第二十》'}</p>
+                  <p class="text-teal-900 font-semibold">${isEn ? 'Govern tools without being enslaved; evolve with times.' : '支配外物而不被外物所奴役，与时代顺势流转。'}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Five Dynasties Prime Minister Feng Dao: Rong Ku Jian 10 Scrolls Placed Directly Below 3 Canons -->
+            <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 border-l-4 border-amber-800 bg-amber-50/90">
+              <div class="flex items-center justify-between border-b border-amber-900/30 pb-0.5">
+                <div class="flex items-center space-x-1 font-bold text-amber-950">
+                  <span>📜</span>
+                  <span class="text-[10.5px]">${isEn ? "Prime Minister Feng Dao's Rong Ku Jian 10-Scroll Survival Codex" : "五代权相冯道《荣枯鉴》（小人经）传世十卷 · 处世保全大典"}</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <span class="text-[8px] px-1 py-0.2 rounded bg-amber-300 text-amber-950 font-bold border border-amber-700 font-mono">
+                    ${isEn ? ("🏆 Primary: " + (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameEn.split('(')[0].trim() : "Tact")) : ("🏆 本命首修：" + (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameZh.split('·')[0].trim() : "圆通卷"))}
+                  </span>
+                  <span class="text-[8px] px-1 py-0.2 rounded bg-rose-200 text-rose-950 font-bold border border-rose-600/40 font-mono">
+                    ${isEn ? ("⚠️ Blindspot: " + (rkManual && rkManual.blindspotScroll ? rkManual.blindspotScroll.nameEn.split('(')[0].trim() : "Crisis")) : ("⚠️ 首要避坑：" + (rkManual && rkManual.blindspotScroll ? rkManual.blindspotScroll.nameZh.split('·')[0].trim() : "解厄卷"))}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Tailored Diagnosis -->
+              <p class="text-[9.5px] text-gray-800 leading-tight">
+                <b>${isEn ? "Personalized Survival Protocol: " : "本命职场博弈生存法门："}</b>
+                ${isEn ? (rkManual ? rkManual.diagnosisEn : "Integrity as bone, manners as garment; deploy armor and a blade while remaining upright.") : (rkManual ? rkManual.diagnosisZh : "直为骨媚为仪，穿上铠甲拿着刀做好人，善恶咸用，谤而不辩，藏富如藏刃。")}
+              </p>
+
+              <!-- Primary Scroll Exegesis & Action Rule -->
+              ${rkManual && rkManual.primaryScroll ? `
+                <div class="p-1 bg-amber-100/80 rounded border border-amber-900/30 text-[9px] space-y-0.2">
+                  <div class="font-bold text-amber-950 flex items-center justify-between">
+                    <span>${isEn ? ("Primary Canon Excerpt [" + rkManual.primaryScroll.nameEn.split('(')[0].trim() + "]:") : ("首修原典【" + rkManual.primaryScroll.nameZh.split('·')[0].trim() + "】：")}</span>
+                    <span class="text-amber-800 font-mono italic text-[8.5px]">${isEn ? rkManual.primaryScroll.sealEn : rkManual.primaryScroll.sealZh}</span>
+                  </div>
+                  <p class="text-gray-900 font-serif-sc italic">${isEn ? rkManual.primaryScroll.coreQuoteEn : rkManual.primaryScroll.coreQuoteZh}</p>
+                  <p class="text-emerald-950 font-semibold pt-0.2 border-t border-amber-900/20">
+                    <span class="text-emerald-800">${isEn ? "Survival Protocol: " : "打工人保全法则："}</span>${isEn ? rkManual.primaryScroll.workplaceRulesEn[0] : rkManual.primaryScroll.workplaceRulesZh[0]}
+                  </p>
+                </div>
+              ` : ''}
+
+              <!-- 10 Scrolls Quick Matrix -->
+              <div class="pt-0.5 border-t border-amber-900/30 flex flex-wrap items-center justify-between gap-1 text-[8px] font-mono">
+                <span class="font-bold text-amber-950">${isEn ? "10 Scrolls:" : "传世十卷全相："}</span>
+                <div class="flex flex-wrap gap-0.5">
+                  ${(rkManual && rkManual.allScrolls ? rkManual.allScrolls : []).map(s => {
+                    const isPri = rkManual && rkManual.primaryScroll && (s.id === rkManual.primaryScroll.id);
+                    const isBld = rkManual && rkManual.blindspotScroll && (s.id === rkManual.blindspotScroll.id);
+                    const chipStyle = isPri
+                      ? 'bg-amber-300 text-amber-950 font-bold border border-amber-700'
+                      : (isBld ? 'bg-rose-200 text-rose-950 font-bold border border-rose-500' : 'bg-amber-100/60 text-gray-700 border border-amber-900/20');
+                    const label = isEn ? (s.sealEn || s.nameEn.split('(')[0].slice(0, 8)) : (s.nameZh.split('·')[0].trim());
+                    return `<span class="px-1 py-0.2 rounded ${chipStyle}">#${String(s.num).padStart(2, '0')} ${label}</span>`;
+                  }).join('')}
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Footer -->
-          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-0.5 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
             <span>Page 6 / 8</span>
           </div>

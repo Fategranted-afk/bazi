@@ -9846,6 +9846,8 @@ jsc_check93_cmd = [
     load("js/app.js");
     if (document._domReady) document._domReady();
 
+    elementStore["birthDate"].value = "1995-03-24";
+    elementStore["birthTime"].value = "09:30";
     elementStore["calcBtn"].trigger("click");
     elementStore["btnExportDossier"].trigger("click");
 
@@ -11226,11 +11228,11 @@ jsc_check99_cmd = [
       throw new Error("RongKuJianDB is undefined");
     }
     var scrolls = RongKuJianDB.getAllScrolls();
-    if (scrolls.length !== 8) {
-      throw new Error("RongKuJian scrolls count should be 8, got " + scrolls.length);
+    if (scrolls.length !== 10) {
+      throw new Error("RongKuJian scrolls count should be 10, got " + scrolls.length);
     }
 
-    var expectedIds = ["yuantong", "wenda", "jiee", "jieyi", "mingjian", "shiwei", "jiangxin", "chuaizhi"];
+    var expectedIds = ["yuantong", "wenda", "jiee", "jiaojie", "jieyi", "mingjian", "bangyan", "shiwei", "jiangxin", "chuaizhi"];
     expectedIds.forEach(function(id, idx) {
       var s = RongKuJianDB.getScrollById(id);
       if (!s) throw new Error("Missing scroll: " + id);
@@ -11248,8 +11250,8 @@ jsc_check99_cmd = [
     if (!crZh.rongkujian.primaryScroll || !crZh.rongkujian.blindspotScroll) {
       throw new Error("crZh.rongkujian missing primaryScroll or blindspotScroll");
     }
-    if (crZh.rongkujian.allScrolls.length !== 8) {
-      throw new Error("crZh.rongkujian.allScrolls length !== 8");
+    if (crZh.rongkujian.allScrolls.length !== 10) {
+      throw new Error("crZh.rongkujian.allScrolls length !== 10");
     }
 
     // 4. Headless DOM simulation for renderCareerWealth and renderImperialDossierPages
@@ -11337,7 +11339,75 @@ jsc_check99_cmd = [
     load("js/app.js");
     if (document._domReady) document._domReady();
 
-    // Test renderCareerWealth in ZH
+    // 5. Test Imperial Dossier Page 6 in ZH
+    elementStore["imperialDossierContainer"].innerHTML = "";
+    window.renderImperialDossierPages(bazi, luck, "zh");
+    var dosZh = elementStore["imperialDossierContainer"].innerHTML;
+
+    // Assert 3 Canons & Zhuangzi's 3 distinct pillars on Page 6
+    if (!dosZh.includes("《金刚经》：破“相”之执 · 应无所住而生其心")) {
+      throw new Error("Missing Diamond Sutra title on Page 6 ZH");
+    }
+    if (!dosZh.includes("《六祖坛经》：直断妄念 · 本来无一物与顿悟自性")) {
+      throw new Error("Missing Platform Sutra title on Page 6 ZH");
+    }
+    if (!dosZh.includes("《庄子》：物物而不物于物 · 乘物以游心与庖丁解牛")) {
+      throw new Error("Missing Zhuangzi title on Page 6 ZH");
+    }
+    if (!dosZh.includes("①《逍遥游》· 无待超然")) {
+      throw new Error("Missing Zhuangzi Pillar 1 on Page 6 ZH");
+    }
+    if (!dosZh.includes("②《养生主》· 庖丁解牛")) {
+      throw new Error("Missing Zhuangzi Pillar 2 on Page 6 ZH");
+    }
+    if (!dosZh.includes("③《山木》· 物物不物")) {
+      throw new Error("Missing Zhuangzi Pillar 3 on Page 6 ZH");
+    }
+
+    // Assert Rong Ku Jian 10 scrolls placed on Page 6 directly below 3 Canons
+    if (!dosZh.includes("五代权相冯道《荣枯鉴》（小人经）传世十卷 · 处世保全大典")) {
+      throw new Error("Missing Rong Ku Jian title on Page 6 ZH");
+    }
+    if (!dosZh.includes("#01") || !dosZh.includes("#10")) {
+      throw new Error("Missing #01 or #10 in Rong Ku Jian on Page 6 ZH");
+    }
+
+    // 6. Test Imperial Dossier Page 6 in EN and zero residual Chinese
+    elementStore["imperialDossierContainer"].innerHTML = "";
+    window.renderImperialDossierPages(bazi, luck, "en");
+    var dosEn = elementStore["imperialDossierContainer"].innerHTML;
+
+    if (!dosEn.includes("The Diamond Sutra: De-Biasing & Non-Attachment")) {
+      throw new Error("Missing Diamond Sutra title on Page 6 EN");
+    }
+    if (!dosEn.includes("The Platform Sutra: Direct Severance")) {
+      throw new Error("Missing Platform Sutra title on Page 6 EN");
+    }
+    if (!dosEn.includes("Zhuangzi: Beyond Material Subjugation")) {
+      throw new Error("Missing Zhuangzi title on Page 6 EN");
+    }
+    if (!dosEn.includes("① Xiao Yao You")) {
+      throw new Error("Missing Zhuangzi Pillar 1 on Page 6 EN");
+    }
+    if (!dosEn.includes("② Butcher Ding")) {
+      throw new Error("Missing Zhuangzi Pillar 2 on Page 6 EN");
+    }
+    if (!dosEn.includes("③ Mountain Tree")) {
+      throw new Error("Missing Zhuangzi Pillar 3 on Page 6 EN");
+    }
+    if (!dosEn.includes("Prime Minister Feng Dao's Rong Ku Jian 10-Scroll Survival Codex")) {
+      throw new Error("Missing Rong Ku Jian title on Page 6 EN");
+    }
+
+    var residualZh = dosEn.match(/[\u4e00-\u9fa5]/g);
+    if (residualZh && residualZh.length > 0) {
+      throw new Error("Found residual Chinese in Imperial Dossier EN (" + residualZh.length + "): " + residualZh.slice(0, 30).join(""));
+    }
+
+    // 7. Test renderCareerWealth in ZH
+    if (typeof window.setLanguage === "function") {
+      window.setLanguage("zh");
+    }
     elementStore["careerContentContainer"].innerHTML = "";
     window.renderCareerWealth(bazi, luck);
     var cwZh = elementStore["careerContentContainer"].innerHTML;
@@ -11347,11 +11417,14 @@ jsc_check99_cmd = [
     if (!cwZh.includes("五代权相冯道 · 本命职场博弈生存法门")) {
       throw new Error("Missing Feng Dao title in renderCareerWealth ZH");
     }
-    if (!cwZh.includes("#01") || !cwZh.includes("#08")) {
-      throw new Error("Missing 8 scrolls in renderCareerWealth ZH");
+    if (!cwZh.includes("《荣枯鉴》传世十卷全相大成")) {
+      throw new Error("Missing 《荣枯鉴》传世十卷全相大成 in renderCareerWealth ZH");
+    }
+    if (!cwZh.includes("#01") || !cwZh.includes("#10")) {
+      throw new Error("Missing #01 or #10 in renderCareerWealth ZH");
     }
 
-    // Test renderCareerWealth in EN & zero residual Chinese
+    // 8. Test renderCareerWealth in EN & zero residual Chinese
     if (typeof window.setLanguage === "function") {
       window.setLanguage("en");
     }
@@ -11364,37 +11437,20 @@ jsc_check99_cmd = [
     if (!cwEn.includes("Feng Dao's Survival Protocol")) {
       throw new Error("Missing Feng Dao protocol in renderCareerWealth EN");
     }
-
-    var residualZh = cwEn.match(/[\u4e00-\u9fa5]/g);
-    if (residualZh && residualZh.length > 0) {
-      throw new Error("Found residual Chinese in Career Wealth EN (" + residualZh.length + "): " + residualZh.slice(0, 30).join(""));
+    if (!cwEn.includes("Rong Ku Jian Complete 10 Scrolls Compendium")) {
+      throw new Error("Missing Rong Ku Jian Complete 10 Scrolls Compendium in renderCareerWealth EN");
     }
 
-    // Switch back to ZH to test Imperial Dossier
-    if (typeof window.setLanguage === "function") {
-      window.setLanguage("zh");
-    }
-
-    // Test Imperial Dossier Page 8 contains Rong Ku Jian directive
-    elementStore["imperialDossierContainer"].innerHTML = "";
-    window.renderImperialDossierPages(bazi, luck, "zh");
-    var dosZh = elementStore["imperialDossierContainer"].innerHTML;
-    if (!dosZh.includes("五代权相冯道《荣枯鉴》处世保全法旨")) {
-      throw new Error("Missing Rong Ku Jian in Imperial Dossier Page 8 ZH");
-    }
-
-    elementStore["imperialDossierContainer"].innerHTML = "";
-    window.renderImperialDossierPages(bazi, luck, "en");
-    var dosEn = elementStore["imperialDossierContainer"].innerHTML;
-    if (!dosEn.includes("Feng Dao Rong Ku Jian Workplace Directive")) {
-      throw new Error("Missing Rong Ku Jian in Imperial Dossier Page 8 EN");
+    var cwResidualZh = cwEn.match(/[\u4e00-\u9fa5]/g);
+    if (cwResidualZh && cwResidualZh.length > 0) {
+      throw new Error("Found residual Chinese in Career Wealth EN (" + cwResidualZh.length + "): " + cwResidualZh.slice(0, 30).join(""));
     }
     """
 ]
 
 run_check99 = subprocess.run(jsc_check99_cmd, capture_output=True, text=True)
 assert run_check99.returncode == 0, f"Check 99 test failed: stdout={run_check99.stdout} stderr={run_check99.stderr}"
-print("✓ 禅道三经（《金刚经》《六祖坛经》《庄子》）八组经文扩充与徽章格式对齐、五代·冯道《荣枯鉴》全八卷职场实操手册（数据库/职场引擎/DOM渲染/皇家战报Page 8/中英双语100%零中文残留）验证通过！")
+print("✓ 禅道三经（《金刚经》《六祖坛经》《庄子》三大独立法门逍遥游/庖丁解牛/山木）经文扩充、五代·冯道《荣枯鉴》传世全十卷职场实操大典（数据库/职场引擎/DOM渲染/皇家战报Page 6与Page 8/中英双语100%零中文残留）验证通过！")
 
 print("\n🎉 ALL 99 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 

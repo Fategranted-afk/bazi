@@ -1,7 +1,7 @@
 /**
  * 《荣枯鉴》 (Rong Ku Jian - The Classic of Glory and Wither) Database
  * Authored by Five Dynasties Prime Minister Feng Dao (五代·冯道, 882–954).
- * Comprehensive 8 Scrolls (全八卷) with ancient canonical verses,
+ * Comprehensive 10 Scrolls (全十卷) with ancient canonical verses,
  * modern vernacular workplace exegeses, survival protocols, and historical case studies.
  * Strictly bilingual with 100% zero residual Chinese in English mode.
  */
@@ -11,8 +11,8 @@ const RONG_KU_JIAN_DATA = {
   titleEn: 'The Rong Ku Jian Workplace Strategy & Survival Codex (Feng Dao)',
   authorZh: '五代 · 冯道 (历仕五朝十一帝，拜相二十余载，全躯保民，被尊为“长乐老”)',
   authorEn: 'Five Dynasties Prime Minister Feng Dao (Served 5 Dynasties & 11 Emperors)',
-  overviewZh: '《荣枯鉴》（又称《小人经》）乃五代权相冯道洞悉千年人性本质、官场博弈、权力生态与吉凶祸福之不传秘典。全书分为八卷：圆通、闻达、解厄、节义、明鉴、示伪、降心、揣知。它摒弃虚伪空洞的道德说教，直击“穿上铠甲拿着刀做好人”、“直为骨媚为仪”、“外小人内君子”、“察人察势查己”的现实硬核生存智慧，堪称古今打工人与操盘统帅最锋利的职场实战防身手册。',
-  overviewEn: 'The Rong Ku Jian is an ancient geopolitical and interpersonal survival codex authored by Prime Minister Feng Dao. Spanning 8 scrolls—Tact, Advancement, Crisis Management, Integrity & Armor, Astute Discernment, Camouflage, Subduing Minds, and Deep Observation—it strips away hypocritical moralism to provide pragmatic operational protocols: wielding moral character as an inner core while wearing armor and holding a sword, mastering upward loyalty, and establishing impenetrable workplace firewalls.',
+  overviewZh: '《荣枯鉴》（又称《小人经》）乃五代权相冯道洞悉千年人性本质、官场博弈、权力生态与吉凶祸福之不传秘典。全书分为十卷：圆通、闻达、解厄、交结、节义、明鉴、谤言、示伪、降心、揣知。它摒弃虚伪空洞的道德说教，直击“穿上铠甲拿着刀做好人”、“直为骨媚为仪”、“善恶咸用”、“谤而不辩”、“察人察势查己”的现实硬核生存智慧，堪称古今打工人与操盘统帅最锋利的职场实战防身手册。',
+  overviewEn: 'The Rong Ku Jian is an ancient geopolitical and interpersonal survival codex authored by Prime Minister Feng Dao. Spanning 10 scrolls—Tact, Advancement, Crisis Management, Strategic Alliances, Integrity & Armor, Astute Discernment, Slander Defense, Camouflage, Subduing Minds, and Deep Observation—it strips away hypocritical moralism to provide pragmatic operational protocols: wielding moral character as an inner core while wearing armor and holding a sword, mastering upward loyalty, building cross-camp alliances, defusing workplace smears with poise, and establishing impenetrable workplace firewalls.',
   scrolls: [
     {
       id: 'yuantong',
@@ -108,10 +108,41 @@ const RONG_KU_JIAN_DATA = {
       historicalCasesEn: 'General Qi Jiguang weathered the fall of Grand Secretary Zhang Juzheng because he built legendary military documentation and maintained personal survival buffers. In contrast, scholars who provoked ruthless dynastic conquerors with blunt ideological defiance caused the slaughter of entire extended clans, illustrating the disaster of uncalibrated heroics.'
     },
     {
-      id: 'jieyi',
+      id: 'jiaojie',
       num: 4,
+      nameZh: '交结卷 · 结盟立党与善恶咸用',
+      nameEn: 'Scroll IV: Strategic Alliances & Power Alignments (Pragmatic Coalitions)',
+      sealZh: '交结之道',
+      sealEn: 'Strategic Alliance',
+      coreQuoteZh: '“智不拒贤，明不远恶，善恶咸用也。顺则为友，逆则为敌，敌友常易也。人冀人愚而自明，示人以愚，其谋乃大。人忌人明而自愚，智无潜藏，其害无止。”',
+      coreQuoteEn: '"The wise do not reject the worthy, nor do the lucid shun the cunning: both the virtuous and the shrewd have their utility. Alignment creates friends while divergence creates foes, and friends and foes constantly trade places. Men wish others to appear foolish while displaying their own wisdom; display foolishness to others, and your grand strategy unfolds unhindered. Men resent brilliance in others; if wisdom is not concealed, calamity never ceases."',
+      originalVerses: [
+        { zh: '智不拒贤，明不远恶，善恶咸用也。顺则为友，逆则为敌，敌友常易也。', en: 'The wise reject not virtue nor shun malice; all temperaments serve strategic utility. Alignment creates allies while opposition breeds rivals; allies and rivals trade roles as incentives shift.' },
+        { zh: '贵以识人者贵，贱以养奸者贱。贵不自贵，贱不自贱，贵贱易焉。', en: 'Nobility stems from perceptive talent reading; degradation comes from nurturing betrayal. The noble who eschew vanity remain exalted; the humble who abandon self-pity ascend.' },
+        { zh: '人冀人愚而自明，示人以愚，其谋乃大。人忌人明而自愚，智无潜藏，其害无止。', en: 'Others covet being thought brilliant; project mild foolishness to mask grand designs. Men resent conspicuous acumen; wisdom left unshielded invites unending sabotages.' },
+        { zh: '明不接愚，愚者勿长其明。智不结怨，仇者无惧其智。', en: 'Do not debate with obstinate dullards; do not bestow strategic sight upon the treacherous. The truly wise avoid gratuitous feuds; a cornered foe fears not your intellect.' },
+        { zh: '君子仁交，惟忧仁不尽善。小人阴结，惟患阴不制的。君子弗胜小人，殆于此也。', en: 'The idealist frets over imperfect virtue; the schemer obsesses solely over tactical leverage. Gentlemen falter before petty rivals primarily due to this asymmetric focus.' }
+      ],
+      vernacularZh: '在成年人的利益网络中，人际关系没有永恒的道德好坏，只有永恒的利益咬合与周期契合。真正的战略操盘手“善恶咸用”：既能与道德高尚的君子同甘共苦，也能与精明利己的小人甚至灰色角色分润合作。他人总希望自己比你聪明，你若处处显摆智商优越感，必成众矢之的；适度在琐事上“示人以愚”、装糊涂、不争口舌之快，对方对你放下戒备，你的核心战略才能从容落地。君子之所以屡遭小人暗算，就是因为君子纠结于道德完美，而小人只专注于现实靶心与利益杠杆。',
+      vernacularEn: 'In adult professional ecosystems, alliances are defined by incentive alignment and structural utility rather than moral absolutes. The master strategist employs both high-minded idealists and sharp-elbowed pragmatists. Human nature desires cognitive superiority; flaunting intellect invites immediate sabotage. Displaying benign simplicity disarms suspicion, allowing grand moves to mature. Idealists falter because they obsess over moral optics, while pragmatists focus ruthlessly on leverage.',
+      workplaceRulesZh: [
+        '【善恶咸用，建立跨阵营协作网络】：在职场与商业博弈中，不要有道德洁癖。只要对方在特定环节具备不可替代的专业技能或资源通路，即可依规签订契约、合理分润。',
+        '【示人以愚，把聪明留在最关键处】：平时开会沟通多点头、少抢风头，在非原则性小事上甘拜下风；让同事和上司觉得你“踏实无害”，核心关键时刻一剑封喉。',
+        '【动态敌友观，绝不结死仇】：利益顺应时是盟友，利益冲突时是对手；凡事留三分余地，不把竞争对手逼入死角，为未来的重新结盟留足旋转门。'
+      ],
+      workplaceRulesEn: [
+        '[Utilize All Archetypes Without Moral Snobbery]: Partner pragmatically with diverse personalities. As long as a collaborator controls critical technical nodes or resources, align interests through transparent contracts.',
+        '[Project Benign Simplicity, Reserve Acumen for Decisive Strikes]: Yield minor conversational victories and avoid unnecessary brilliance in daily meetings. When others perceive you as unthreatening, your key strategic maneuvers face zero friction.',
+        '[Fluid Coalitions Without Irreversible Feuds]: Allies and adversaries rotate with incentive tides. Never corner an opponent into total humiliation; preserve revolving doors for future alignment.'
+      ],
+      historicalCasesZh: '战国张仪与苏秦合纵连横，虽政见截然相反、各为其主，却私下互通信使、互通有无，善用彼此声势在六国与秦廷之间纵横捭阖；曾国藩剿捻期间，既重用刚正不阿之彭玉麟，又倚重手段狠辣精明之李鸿章、鲍超，善恶咸用各尽其才，终成同治中兴第一重臣。',
+      historicalCasesEn: 'During the Warring States period, rival strategists Zhang Yi and Su Qin represented opposing courts yet maintained confidential correspondence, using each other\'s maneuvers to secure sovereign leverage. Similarly, Qing statesman Zeng Guofan mobilized both moral purists and ruthless pragmatists to suppress rebellions, achieving dynastic preservation.'
+    },
+    {
+      id: 'jieyi',
+      num: 5,
       nameZh: '节义卷 · 铠甲佩刀与真伪君子',
-      nameEn: 'Scroll IV: Integrity & Survival Armor (Wielding the Blade Behind the Smile)',
+      nameEn: 'Scroll V: Integrity & Survival Armor (Wielding the Blade Behind the Smile)',
       sealZh: '节义之度',
       sealEn: 'Integrity Armor',
       coreQuoteZh: '“外君子而内小人者，真小人也；外小人而内君子者，真君子也。做好人跟穿上铠甲拿着刀做好人不冲突，甚至是有刀有铠甲才是做好人的前提。德与刀，是我们做一个好人的成本。有刀而不砍出去，才叫真正的善良。”',
@@ -140,70 +171,102 @@ const RONG_KU_JIAN_DATA = {
     },
     {
       id: 'mingjian',
-      num: 5,
-      nameZh: '明鉴卷 · 识破捧杀与顺风防坑',
-      nameEn: 'Scroll V: Discerning Schemes & Traps (Seeing Beyond Traps in Prosperity)',
-      sealZh: '明鉴之察',
-      sealEn: 'Insightful Audit',
-      coreQuoteZh: '“福不察非福，祸不预必祸。施小信而大诈逞，窥小处而大谋定。事不可绝，言不能尽，至亲亦戒也。权予忠者其业不毁，权予能者其身不倦，权予善者其名不损。”',
-      coreQuoteEn: '"Prosperity unexamined is an ambush; peril unbudgeted is fatal certainty. Conceding minor honesty prepares grand deception; observing micro-habits reveals macro-destiny. Retain reserves in every deal; leave an honorable exit even for adversaries."',
+      num: 6,
+      nameZh: '明鉴卷 · 利益洞察与破局防捧',
+      nameEn: 'Scroll VI: Astute Discernment (Dissecting Flattery & Preserving Advantage)',
+      sealZh: '明鉴之法',
+      sealEn: 'Clear Vision',
+      coreQuoteZh: '“福不可受尽，利不可占全。占全则怨聚，受尽则祸临。人皆喜谀而恶讦，誉之者未必真善，毁之者未必至恶。察言以观其行，核实以断其诈。捧杀之害，甚于白刃；顺从之毒，烈于鸩羽。”',
+      coreQuoteEn: '"Never exhaust good fortune to the dregs; never monopolize profits to the brim. Monopolizing invites collective rancor; exhausting fortune summons catastrophe. Men crave flattery and despise critique. Praisers are seldom benign, and accusers are rarely wholly malicious. The trap of over-flattery is sharper than naked steel."',
       originalVerses: [
-        { zh: '福不察非福，祸不预必祸。施小信而大诈逞，窥小处而大谋定。', en: 'Apparent fortune without provenance is poison; unforeseen hazard guarantees catastrophe. Baiting with small concessions enables massive deception.' },
-        { zh: '事不可绝，言不能尽，至亲亦戒也。佯惧实忍，外恭内忌，奸人亦惑也。', en: 'Never push matters to the brink; never utter all thoughts. Feigned meekness shields inner resolve, confusing aggressive competitors.' },
-        { zh: '知戒近福，惑人远祸，俟变亦存也。天恩难测，惟财可恃。', en: 'Vigilant restraint courts blessing; deliberate opacity fends off attack. Executive favors fluctuate; hard liquid reserves endure.' },
-        { zh: '私人惟用，其利致远。以奸治奸，奸灭自安。伏恶勿善，其患不生。', en: 'Entrust core posts to proven loyalists. Counter bad-faith actors with sharp legal precision; eliminate systemic sabotage thoroughly.' },
-        { zh: '计非全者莫施，人非智者弗谋，愚者应当戒哉。', en: 'Never launch half-baked strategies; never conspire with the obtuse. The uninitiated must maintain strict prudence.' }
+        { zh: '福不可受尽，利不可占全。占全则怨聚，受尽则祸临。', en: 'Do not drain fortune dry nor claim every coin on the table. Complete monopoly gathers hatred; boundless enjoyment invites collapse.' },
+        { zh: '无妄之福必有隐祸，非常之利必伏巨险。', en: 'Unearned windfalls conceal covert ruin; extraordinary windfalls harbor lethal cliffs.' },
+        { zh: '誉之者未必真善，毁之者未必至恶。', en: 'Loud praisers rarely harbor pure virtue; fierce critics rarely embody pure evil.' },
+        { zh: '察言以观其行，核实以断其诈。', en: 'Examine speech to scrutinize daily behavior; audit documentation to expose concealed falsehoods.' },
+        { zh: '顺从之毒，烈于鸩羽；捧杀之害，甚于白刃。', en: 'Unconditional servility poisons like hemlock; fatal over-flattery destroys faster than steel.' }
       ],
-      vernacularZh: '顺境与天降横财往往是最致命的捧杀大坑。管仲买鹿灭楚、高价收绨灭鲁梁，皆是“用暴利诱使对手弃本逐末”。遇到一上来百依百顺、客气过分、许诺奇高的人，必须逆向溯源其背后的杀机。事不可做绝，说话留余地；打败对手后，甚至要替对手撰写体面的宣传稿，让其体面认输而不至于鱼死网破。用人优先级：忠诚第一、能力第二、良善第三。',
-      vernacularEn: 'Sudden windfall is frequently a calculated ambush. Guan Zhong famously conquered the state of Chu by artificially bidding up deer prices, enticing Chu farmers to abandon crops before abruptly blockading grain. Whenever clients or partners present hyper-generous terms with zero friction, investigate the hidden motive. Never humiliate defeated rivals; draft their exit PR so they do not resort to scorched-earth retaliation.',
+      vernacularZh: '好事不要占尽，利益一定要分润。一个人若把好处全捞光，身边所有人都会变成他的敌人。世界上最阴险的陷阱是“捧杀”：当所有人都在热烈夸赞你、哄抬你时，往往正是要把你架在火上烤的危险时刻。无缘无故从天而降的超额利润，背后必有不可承受的隐性代价。听话听音，看人看行，不要看对方说了什么漂亮话，只看其真金白银的交付与实际利益的流向。',
+      vernacularEn: 'Never monopolize bounty; unshared success transforms every onlooker into a covert predator. Flattery is the most lethal organizational venom: being placed on an artificial pedestal often precedes being sacrificed. Unearned windfalls always conceal catastrophic hidden clauses. Ignore eloquent promises and audit where actual cash and resource streams flow.',
       workplaceRulesZh: [
-        '【反思顺境暴利，警惕产业捧杀】：面对高出市场价数倍的薪酬跳槽邀请或离奇大单，必须审查其现金流合规性与背锅风险，防范“买鹿灭楚”陷阱。',
-        '【赢了之后，帮对手也写好宣传稿】：职场竞聘或部门争夺资源获胜后，主动在公开场合肯定对手的贡献与亮点，给足其团队台阶，化解死仇。',
-        '【关键底牌，唯己自知】：真正的业务核心人脉、发家第一桶金、私人底牌资产，除了自己谁也不透露，言不可尽。'
+        '【主动分润功劳，消除同僚怨气】：项目大获成功、得到高额奖金时，主动给团队与周边协作部门分发福利、在报告中突出协作者的贡献，把潜在敌人转化为利益共同体。',
+        '【警惕异常捧杀，越是受夸越要夹紧尾巴】：当领导或同僚突然在公开场合把你捧得极高时，保持极度清醒，迅速核查是否有甩锅风险或重大坑位在等着你。',
+        '【以现金流与实际控制权为唯一锚点】：不为“期权画饼”、“行业名气”打白工，严密核算投入产出比与现金流安全冗余。'
       ],
       workplaceRulesEn: [
-        '[Scrutinize Windfalls & Flattery]: Evaluate outsized salary offers or effortless sales leads through risk-inversion: are you being positioned as a regulatory scapegoat?',
-        '[Draft the Rival\'s Victory Narrative]: When winning executive turf wars, praise your rival\'s contributions publicly, offering them a face-saving exit to prevent vendettas.',
-        '[Guard Core Leverage Inviolably]: Keep confidential connections, personal balance sheets, and proprietary models strictly to yourself.'
+        '[Disperse Accolades & Profits Generously]: When securing lucrative triumphs, credit cross-functional allies openly. Transform potential rivals into beneficiaries.',
+        '[Armor Against Flattery Traps]: When peers or superiors suddenly shower uncharacteristic adulation, heighten vigilance against impending scapegoating.',
+        '[Anchor Reality in Cash Flow & Control]: Never sacrifice liquidity for empty corporate equity promises or vanity titles; evaluate initiatives by verifiable cash flow buffers.'
       ],
-      historicalCasesZh: '管仲治齐，高价收购衡山国兵器诱其废耕，继而断粮，衡山国不战自降；苹果公司1997年乔布斯重返时，主动向劲敌微软示弱并达成IE合作换取1.5亿美元投资解围，随后暗度陈仓开辟iPod与移动闭环，终成全球霸主，正是“事不可绝、俟变亦存”之范例。',
-      historicalCasesEn: 'Guan Zhong subdued the state of Hengshan by buying their weapons at inflated prices until food supplies withered, conquering them without drawing a sword. In 1997, Steve Jobs accepted a $150M lifeline from Microsoft and integrated IE into Mac, biding time until iPod and iPhone rewritten tech history.'
+      historicalCasesZh: '春秋管仲辅佐齐桓公，深谙“利益驱动”之法，以“买鹿制楚”、“买绢制鲁”的商战策略不战而屈人之兵；同时管仲富拟于公侯，修建三归台，主动自污以绝齐桓公猜忌，功盖天下而得以善终。',
+      historicalCasesEn: 'Guan Zhong engineered economic warfare to subdue rival states for Qi without bloody siegecraft. Despite monumental state influence, he indulged in personal mansions, deliberately signaling zero political ambition to disarm Duke Huan\'s suspicions and preserve his life.'
+    },
+    {
+      id: 'bangyan',
+      num: 7,
+      nameZh: '谤言卷 · 谣言化解与去浊澄清',
+      nameEn: 'Scroll VII: Slander Neutralization & Narrative Defense (Dissolving Malice)',
+      sealZh: '除谤之道',
+      sealEn: 'Slander Shield',
+      coreQuoteZh: '“人微不诤，才庸不荐。攻其人忌，人难容也。陷其窘地人自污，谤之易也；善其仇者人莫识，谤之奇也；究其末事人未察，谤之实也；设其恶言人弗辩，谤之成也。谤而不辩，其事自明，人恶稍减也；谤而强辩，其事反浊，人怨益增也。失于上者，下必毁之；失于下者，上必疑之。假天责人掩私，假民言事见信，人者尽惑焉。”',
+      coreQuoteEn: '"When slandered, withholding anxious defense allows truth to surface naturally, steadily eroding malice; defending frantically muddies the waters, multiplying resentments. Losing favor with superiors triggers contempt from subordinates; alienating subordinates breeds suspicion from above. Pettiness cloaks private malice in higher moral slogans, leaving the unobservant utterly deceived."',
+      originalVerses: [
+        { zh: '人微不诤，才庸不荐。攻其人忌，人难容也。', en: 'Do not bicker with the insignificant; do not sponsor the incompetent. Striking at an opponent\'s most taboo vulnerability renders them intolerable to the collective.' },
+        { zh: '陷其窘地人自污，谤之易也；善其仇者人莫识，谤之奇也；究其末事人未察，谤之实也；设其恶言人弗辩，谤之成也。', en: 'Forcing a rival into dilemmas where self-compromise occurs is facile slander; recruiting their covert adversaries is exquisite slander; exaggerating trivial flaws creates credible slander; crafting unprovable slurs seals the smear.' },
+        { zh: '谤而不辩，其事自明，人恶稍减也；谤而强辩，其事反浊，人怨益增也。', en: 'Remaining poised under gossip lets facts speak, progressively deflating spite; heated refutation merely spreads the rumor and multiplies suspicion.' },
+        { zh: '失于上者，下必毁之；失于下者，上必疑之。', en: 'A subordinate abandoned by upper leadership is instantly torn down by peers; one alienated from the rank and file invites managerial distrust.' },
+        { zh: '假天责人掩私，假民言事见信，人者尽惑焉。', en: 'Weaponizing sacred values masks selfish ambition; invoking collective outrage manufactures consensus: all mortals are easily led astray.' }
+      ],
+      vernacularZh: '在职场中，流言蜚语和背后捅刀是竞争的必然副产品。面对恶意诽谤与流言，最愚蠢的做法是情绪失控、到处找人辩解对质——“越描越黑，反引更多围观”。高段位的化解之道是“谤而不辩”，冷处理、不动声色，用不可撼动的业务成果与客观交付让谣言不攻自破。看清小人毁谤的套路：小人最擅长打着“为了公司大局”、“代表民意”的高大上道德旗号掩盖私心，搜集你的微小工作瑕疵无限放大。只要你牢牢维系与直接决策者的信任同盟，下属与同僚的闲言碎语便如秋风过耳，根本动摇不了你的根基。',
+      vernacularEn: 'Workplace rumors and whispers are systemic byproducts of organizational friction. Anxious, emotional refutations are fatal blunders: they amplify the controversy and signal guilt. The premier survival protocol is poised restraint: "withholding frantic debate lets the waters clarify." Disarm smears through immutable metric deliveries and direct executive trust. Petty operators disguise selfish attacks behind lofty buzzwords; as long as your direct supervisor retains unshakeable faith in your performance, horizontal gossip evaporates into dust.',
+      workplaceRulesZh: [
+        '【冷面降维，绝不在烂事中自证清白】：遭遇闲言碎语或职场背刺时，严禁情绪化在群里公开撕逼或挨个解释；不进入对方预设的自证陷阱，用无可辩驳的数据与交付打脸。',
+        '【筑牢向上信用壁垒，流言自然熄灭】：职场中“失于上者下必毁之”。只要你与直接上级、核心业务链保持高频透明的定期同步与深厚互信，外界的小道消息便毫无杀伤力。',
+        '【看破假借大局之名的小人伎俩】：当有人打着“合规”、“公允”、“为大家好”的旗号刁难挑刺时，一眼识破其争夺资源的核心动机，按章办事、留存书面证据，绝不妥协。'
+      ],
+      workplaceRulesEn: [
+        '[Emotional Detachment & Refusal to Self-Justify]: Never engage in frantic public arguments or defensive explanations. Falling into defensive traps gives life to rumors; crush malice with undeniable quantitative output.',
+        '[Fortify Upward Trust Capital]: A professional abandoned by executive leadership is instantly devoured. Maintain transparent cadence and mutual trust with your primary decision-maker; peer rumors cannot pierce an executive shield.',
+        '[Decipher Moral Pretexts in Bad-Faith Attacks]: When rivals weaponize corporate values or compliance pretexts to sabotage initiatives, recognize their resource-hoarding agenda. Counter strictly through documented audit trails.'
+      ],
+      historicalCasesZh: '北宋寇准拜相受王钦若诽谤中伤，寇准深谙“谤而不辩”之理，从不对质争辩，而是专注整军安邦、澶渊之盟定大局，宋真宗终悟其忠纯；明代名相徐阶在严嵩父子权倾朝野、谗言四起之时，隐忍不发、恭谨自守十余载，避其锋芒，最终一举扫除奸佞。',
+      historicalCasesEn: 'During the Northern Song dynasty, Chancellor Kou Zhun faced relentless smear campaigns orchestrated by Wang Qinruo. Refusing public spats, Kou Zhun delivered geopolitical victory at Chanyuan, allowing accomplishments to dissolve slander. Similarly, Ming Chancellor Xu Jie endured ten years of gossip during Yan Song\'s reign, maintaining calm professionalism until the moment for total reform arrived.'
     },
     {
       id: 'shiwei',
-      num: 6,
-      nameZh: '示伪卷 · 迂回求索与曲意成全',
-      nameEn: 'Scroll VI: Tactical Camouflage (Curved Negotiation & Long-Term Loyalty)',
+      num: 8,
+      nameZh: '示伪卷 · 战略伪装与曲中取胜',
+      nameEn: 'Scroll VIII: Strategic Camouflage (The Art of Curved Diplomacy)',
       sealZh: '示伪之术',
       sealEn: 'Strategic Mask',
-      coreQuoteZh: '“顺其上者，伪非过焉；逆其上者，真是罪焉。求忌直也，曲之乃得；拒忌明也，婉之无失。曲则有情，为吉；直则无情，为煞。明争为下，暗争为上；进求为下，退求为上。”',
-      coreQuoteEn: '"Aligning with superiors renders superficial camouflage harmless; defying leadership makes blunt truth a crime. Asking directly provokes resistance; curved diplomacy secures results. Rebuffing openly makes mortal enemies; graceful evasion preserves alliances. Curved movement brings harmony; blunt collision breeds calamity."',
+      coreQuoteZh: '“无伪则无真，大伪则至真。求忌直，曲之乃得；言忌露，晦之方达。势弱者示以恭，势强者示以诚。顺其上者伪非过，全其身者诡非恶。大人者，不失赤子之心；达人者，不滞迹相之表。”',
+      coreQuoteEn: '"Truth emerges through strategic masking; consummate adaptation mirrors ultimate reality. Never pursue direct collisions when curved detours yield victory; never expose sensitive intentions when subtlety arrives unhindered. The vulnerable display humble deference; the mighty project transparent candor."',
       originalVerses: [
-        { zh: '顺其上者，伪非过焉。逆其上者，真是罪焉。', en: 'Conforming to executive directives shields you; unvarnished insubordination turns righteousness into guilt.' },
-        { zh: '伪不足自祸，真无忌人恶。求忌直也，曲之乃得；拒忌明也，婉之无失。', en: 'Tactical compliance causes no harm; reckless candor invites destruction. Requesting benefits requires nuance; declining requests requires gentle grace.' },
-        { zh: '忠主仁也，君子仁不弃旧。仁主行也，小人行弗怀恩。', en: 'True loyalty is demonstrated through unwavering fidelity across cycles. Genuine leadership shares real profits rather than empty slogans.' },
-        { zh: '俗礼不拘者非伪，事恶守诺者非信，物异而情易改矣。', en: 'Discarding empty pleasantries is not deceit; blind loyalty to harmful pledges is not integrity. Circumstances evolve, and human allegiances pivot.' }
+        { zh: '无伪则无真，大伪则至真。', en: 'Without diplomatic camouflage, raw truth invites immediate execution; consummate discretion preserves noble purpose.' },
+        { zh: '求忌直，曲之乃得；言忌露，晦之方达。', en: 'Straightforward demands provoke stubborn defense; curved maneuvers secure surrender. Blunt proclamations invite vetoes; coded nuance reaches the goal.' },
+        { zh: '势弱者示以恭，势强者示以诚。', en: 'When power is deficient, demonstrate impeccable deference; when power is supreme, govern with transparent reliability.' },
+        { zh: '顺其上者伪非过，全其身者诡非恶。', en: 'Tactfully yielding to managerial ego is pragmatic prudence; strategizing for personal survival carries zero moral guilt.' },
+        { zh: '大人者，不失赤子之心；达人者，不滞迹相之表。', en: 'The enlightened safeguard core principles inwardly while flexibly adopting external diplomacy.' }
       ],
-      vernacularZh: '顺应上级部署即便带有策略性伪装也绝非过错，直接当面违背领导命令即使理由再正确也会被定为死罪。求取资源最忌直白生硬，迂回铺垫才能得偿所愿；拒绝别人最忌生硬打脸，委婉道出难处才能不树死敌。“曲则有情为吉，直则无情为煞”。最高级的忠诚是跨越周期的君子之仁，认准的大佬哪怕失势也绝不当墙头草。环境在变，人情态度也会变，高点不狂低点不颓。',
-      vernacularEn: 'Strategic deference preserves survival. Demanding resources bluntly forces counterparties into defensiveness; curved diplomacy allows them to grant concessions gracefully. Outright refusal burns bridges permanently; explaining structural constraints provides dignified cover. True fidelity shines across market winters—never morph into an opportunist flip-flopper. Remain balanced at summits and patient in troughs.',
+      vernacularZh: '职场与政治从不是非黑即白的温室，过度直来直去是心智未成熟的表现。很多事情正面硬推推不动，绕个弯子、以退为进、换个名义往往一推即就。“求忌直，曲之乃得”：想争取资源或职位，切忌赤裸裸开口索要，而是先帮领导解决心头大患，让领导主动为你争取。弱小时学会伏低做小，收起你的锋芒；强大时以诚待人，建立公信力。外圆内方，不执着于虚名形式。',
+      vernacularEn: 'Mature operators abandon childish black-and-white dogmas. Straight lines provoke insurmountable friction; curvilinear diplomacy maneuvers around obstacles effortlessly. If you desire promotions or headcount, never beg directly: eliminate a critical headache for your superior, allowing them to champion your ascension. Adopt humble compliance when under-resourced; adopt transparent integrity when commanding dominant market share.',
       workplaceRulesZh: [
-        '【求忌直曲之乃得，满足对方掌控感】：争取加薪或资源时，不提“我付出了多少”，而是把方案包装成“此举能帮上级解决什么痛点、带来多大业绩亮点”。',
-        '【拒忌明婉之无失，留足人情人际后路】：面对不合理需求，不当面生硬说“不”，而是用“这事我非常想支持，但目前系统/预算卡在X环节，我们一起看看怎么推进”化解矛盾。',
-        '【君子不弃旧，绝不做墙头草】：选定信任的长线导师与领导，在其遭遇波折时坚定守在身边，熬过寒冬者必将成为未来新权力的核心柱石。'
+        '【以退为进，以迂为直】：遭遇阻力时，不要硬顶。先赞同对方的初衷，顺势提出小规模试点或分步执行方案，用事实说话逐步拿到主控权。',
+        '【弱小时示弱藏拙，绝不逞英雄】：资历浅或资源少时，多向资深同事请教，展示求知与谦卑姿态，降低外界防御门槛。',
+        '【外圆内方，守住心中真我】：形式上可以妥协让步，但战略内核与核心资产控制权绝不拱手相让，表面云淡风轻，内心坚如磐石。'
       ],
       workplaceRulesEn: [
-        '[Curved Advocacy]: When requesting headcount or budget, frame it not as personal need, but as an indispensable asset to fulfill your superior\'s annual KPI.',
-        '[Gentle Rebuff Without Rupture]: Never say flat "No." Say: "I am eager to champion this; however, corporate policy currently constrains budget X. Let us examine viable paths together."',
-        '[Long-Term Alliance Across Winters]: Stand by proven mentors during temporary downturns. Those who weather ice storms together become the inner cabinet of the next empire.'
+        '[Retreat to Advance, Curves Over Lines]: When hitting bureaucratic walls, validate the counterparty\'s anxieties first, proposing an innocuous pilot project to seize control organically.',
+        '[Strategic Vulnerability in Formative Years]: When outmatched, display humble curiosity to lower organizational antibodies and buy runway.',
+        '[External Softness, Internal Steel]: Concede on diplomatic optics while retaining non-negotiable control over intellectual property, critical client pipelines, and source code.'
       ],
-      historicalCasesZh: '关羽身陷曹营，受尽曹操厚赐，但始终明牌宣称“吾受刘将军厚恩，誓以共死，立功报曹乃去”，曹操不仅不怒反生崇敬；战国触龙说赵太后，不谈国事而先拉家常、为子孙谋长远，终使赵太后心悦诚服送长安君入齐为质，皆是“曲之乃得”之千古神作。',
-      historicalCasesEn: 'Guan Yu was lavished with honors by Cao Cao, yet openly stated his unshakeable allegiance to Liu Bei. Cao Cao admired his transparent integrity rather than executing him. Similarly, Chu Long persuaded the Queen Dowager of Zhao to send her beloved prince as a hostage by speaking gently of parental love and generational estate planning.'
+      historicalCasesZh: '汉高祖刘邦在鸿门宴上面对项羽雷霆之怒，伏地叩首自称“不知何意能先入关破秦”，把项羽捧为上将军，极尽示弱恭顺之能事，终得脱身；越王勾践卧薪尝胆、为夫差尝粪问疾，示伪麻痹吴王十余载，终实现“三千越甲可吞吴”。',
+      historicalCasesEn: 'At the Feast at Hong Gate, Liu Bang bowed low before Xiang Yu, crediting the hegemon for his victories and adopting absolute deference to secure survival. King Goujian of Yue performed menial subservience for King Fuchai of Wu for decades, completely numbing his rival until the moment for total overthrow arrived.'
     },
     {
       id: 'jiangxin',
-      num: 7,
+      num: 9,
       nameZh: '降心卷 · 驭人慑心与恩威相济',
-      nameEn: 'Scroll VII: Subduing Minds & Power Dynamics (Awe, Grace, and Boundless Control)',
+      nameEn: 'Scroll IX: Subduing Minds & Power Dynamics (Awe, Grace, and Boundless Control)',
       sealZh: '降心之驭',
       sealEn: 'Subduing Will',
       coreQuoteZh: '“以智治人，智穷人背也。伏人慑心，其志无改也。上宠者弗明责，受怨者休暗结。术不显则功成，谋暗用则致胜。君子制于亲，小人畏于烈。谏非善辩，理不直言，无嫌乃及焉。恩莫弃贤者，威亦施奸恶，恩威戒偏也。”',
@@ -232,9 +295,9 @@ const RONG_KU_JIAN_DATA = {
     },
     {
       id: 'chuaizhi',
-      num: 8,
+      num: 10,
       nameZh: '揣知卷 · 洞察人心与断敌动机',
-      nameEn: 'Scroll VIII: Deep Discernment & Strategic Secrecy (Disarming Hostility at the Root)',
+      nameEn: 'Scroll X: Deep Discernment & Strategic Secrecy (Disarming Hostility at the Root)',
       sealZh: '揣知之神',
       sealEn: 'Deep Discernment',
       coreQuoteZh: '“善察者知人，善思者知心。知人者不惧，知心者堪御。知不示人，示人祸患矣。密而测之，人忌处解矣。附贵而缘，殃祸可避。结左右以知情，无不知也。置险难以绝念，无不破哉。见三岁儿童抱金砖于闹市世人皆魔鬼，笑脸弥勒旁立法韦驮群魔皆圣贤。”',
@@ -271,7 +334,11 @@ class RongKuJianDB {
 
   static getScroll(id) {
     if (!id) return RONG_KU_JIAN_DATA.scrolls[0];
-    return RONG_KU_JIAN_DATA.scrolls.find(s => s.id === id || s.id === id.replace('-', '')) || RONG_KU_JIAN_DATA.scrolls[0];
+    const cleanId = String(id).toLowerCase().replace(/[^a-z]/g, '');
+    return RONG_KU_JIAN_DATA.scrolls.find(s => {
+      const sClean = s.id.toLowerCase().replace(/[^a-z]/g, '');
+      return s.id === id || sClean === cleanId;
+    }) || RONG_KU_JIAN_DATA.scrolls[0];
   }
 
   static getScrollById(id) {
@@ -279,7 +346,7 @@ class RongKuJianDB {
   }
 
   /**
-   * Evaluates native's Day Master, Vigor, Pattern & Ten Gods to assign tailored scrolls
+   * Evaluates native's Day Master, Vigor, Pattern & Ten Gods to assign tailored scrolls across all 10 scrolls
    */
   static evaluateNativeScrolls(dm, isStrong, godCounts = {}, primaryPattern = '') {
     const scrolls = RONG_KU_JIAN_DATA.scrolls;
@@ -291,40 +358,40 @@ class RongKuJianDB {
     const hasWealth = ((godCounts.directWealth || 0) + (godCounts.indirectWealth || 0)) >= 2;
 
     let primaryScrollId = 'wenda';
-    let blindspotScrollId = 'chuaizhi';
+    let blindspotScrollId = 'bangyan';
     let diagnosisZh = '';
     let diagnosisEn = '';
 
     if (pat.includes('伤官') || hasHurting) {
       primaryScrollId = 'wenda';
-      blindspotScrollId = 'shiwei';
-      diagnosisZh = '命带伤官秀气敏锐，智力超群但生性孤傲反叛，最易在向上管理中当面顶撞领导、显露智商优越感。必读【闻达卷】与【示伪卷】，深参“直为骨媚为仪”与“求忌直曲之乃得”，收敛锋芒，方得大成。';
-      diagnosisEn = 'Endowed with Hurting Officer intellectual acuity, your brilliance risks friction through blunt contradictions and visible intellectual pride. Prioritize Scroll II (Advancement) and Scroll VI (Camouflage) to master curved diplomacy.';
+      blindspotScrollId = 'bangyan';
+      diagnosisZh = '命带伤官秀气敏锐，智力超群但生性孤傲反叛，最易在向上管理中当面顶撞领导、显露智商优越感，进而招致同僚嫉恨毁谤。必读【闻达卷】与【谤言卷】，深参“直为骨媚为仪”与“谤而不辩去浊澄清”，收敛锋芒、不陷自证陷阱，方得大成。';
+      diagnosisEn = 'Endowed with Hurting Officer intellectual acuity, your brilliance risks friction through blunt contradictions and vulnerability to peer slander. Prioritize Scroll II (Advancement) and Scroll VII (Slander Defense) to master curved diplomacy and refuse the trap of frantic self-justification.';
     } else if (pat.includes('七杀') || hasKillings) {
       primaryScrollId = 'jiangxin';
       blindspotScrollId = 'jiee';
-      diagnosisZh = '命带七杀杀伐决断，魄力非凡但性急刚烈，极易在逆境中硬碰硬、激化派系冲突。必读【降心卷】与【解厄卷】，参透“以智治人智穷人背、伏人慑心其志无改”与李世民恩威驭尉迟恭之大将心法，学会引而不发。';
-      diagnosisEn = 'Seven Killings confers heroic drive but risks aggressive collisions. Study Scroll VII (Subduing Minds) and Scroll III (Crisis Shield) to master calm deterrence and emotional gravity over brute-force resistance.';
+      diagnosisZh = '命带七杀杀伐决断，魄力非凡但性急刚烈，极易在逆境中硬碰硬、激化派系冲突。必读【降心卷】与【解厄卷】，参透“以智治人智穷人背、伏人慑心其志无改”与李世民恩威驭尉迟恭之大将心法，学会引而不发、丰年屯粮。';
+      diagnosisEn = 'Seven Killings confers heroic drive but risks aggressive collisions. Study Scroll IX (Subduing Minds) and Scroll III (Crisis Shield) to master calm deterrence and emotional gravity over brute-force resistance.';
     } else if (isStrong && hasFriendRob) {
       primaryScrollId = 'jieyi';
-      blindspotScrollId = 'chuaizhi';
-      diagnosisZh = '日主身强且比劫环伺，天性重义爽朗，却最易遭遇同僚同侪抢功甩锅或背刺分财。必读【节义卷】与【揣知卷】，领悟“做好人跟穿上铠甲拿着刀做好人不冲突”与“置险难以绝念”，筑牢人际防御工事。';
-      diagnosisEn = 'Vigorous constitution with strong Friend/Rob-Wealth traits risks peer exploitation and betrayal. Immerse in Scroll IV (Integrity Armor) and Scroll VIII (Deep Discernment) to wield armor alongside benevolence.';
+      blindspotScrollId = 'jiaojie';
+      diagnosisZh = '日主身强且比劫环伺，天性重义爽朗，却最易遭遇同僚同侪抢功甩锅或盲目交友被背刺分财。必读【节义卷】与【交结卷】，领悟“做好人跟穿上铠甲拿着刀做好人不冲突”与“善恶咸用、示人以愚”，筑牢人际防御工事。';
+      diagnosisEn = 'Vigorous constitution with strong Friend/Rob-Wealth traits risks peer exploitation and betrayal. Immerse in Scroll V (Integrity Armor) and Scroll IV (Strategic Alliances) to wield armor alongside benevolence, practicing benign simplicity.';
     } else if (hasWealth) {
       primaryScrollId = 'mingjian';
       blindspotScrollId = 'yuantong';
-      diagnosisZh = '命带财星敏锐善谋，商机嗅觉极灵，但最易在顺境高光时因贪功冒进或被商业伙伴“捧杀”跌入大坑。必读【明鉴卷】与【圆通卷】，参透管仲绝粮之计，守死正现金流，留足冗余退路。';
-      diagnosisEn = 'Endowed with sharp commercial instincts, you are most vulnerable to flattery traps and over-leveraging during boom cycles. Study Scroll V (Discerning Traps) and Scroll I (Universal Tact) to secure cash cushions.';
+      diagnosisZh = '命带财星敏锐善谋，商机嗅觉极灵，但最易在顺境高光时因贪功冒进或被商业伙伴“捧杀”跌入大坑。必读【明鉴卷】与【圆通卷】，参透管仲绝粮之计，主动分润功劳，守死正现金流，留足冗余退路。';
+      diagnosisEn = 'Endowed with sharp commercial instincts, you are most vulnerable to flattery traps and over-leveraging during boom cycles. Study Scroll VI (Discerning Traps) and Scroll I (Universal Tact) to secure cash cushions and share gains generously.';
     } else if (pat.includes('正官') || hasOfficer) {
       primaryScrollId = 'wenda';
-      blindspotScrollId = 'jieyi';
-      diagnosisZh = '正官当权守序持重，善于在体制规矩内推进，但有时过于君子风范、缺乏防范小人阴招之獠牙。必读【闻达卷】与【节义卷】，领会“外小人而内君子”之真谛，为道德风骨插上锋利双翼。';
-      diagnosisEn = 'Direct Officer bestows order and structural respect, but risks vulnerability to opportunistic sabotage. Study Scroll II (Advancement) and Scroll IV (Armor) to augment institutional integrity with tactical defenses.';
+      blindspotScrollId = 'shiwei';
+      diagnosisZh = '正官当权守序持重，善于在体制规矩内推进，但有时过于方正坦直、缺乏防范小人阴招之掩护。必读【闻达卷】与【示伪卷】，领会“外小人而内君子”、“求忌直曲之乃得”之真谛，为道德风骨插上锋利双翼。';
+      diagnosisEn = 'Direct Officer bestows order and structural respect, but risks vulnerability to rigid directness. Study Scroll II (Advancement) and Scroll VIII (Camouflage) to augment institutional integrity with curved diplomacy.';
     } else {
       primaryScrollId = 'yuantong';
-      blindspotScrollId = 'jiee';
-      diagnosisZh = '格局纯和稳健，行持重在顺应大势与避凶趋吉。必读【圆通卷】与【解厄卷】，通晓“天理有常、富不露相、藏富如藏刃”，在世态变迁中稳操胜券。';
-      diagnosisEn = 'A balanced and steady constitution requires cyclical alignment and risk containment. Prioritize Scroll I (Tact) and Scroll III (Crisis Shield) to sustain continuous flourishing without overexposure.';
+      blindspotScrollId = 'chuaizhi';
+      diagnosisZh = '格局纯和稳健，行持重在顺应大势与情报感知。必读【圆通卷】与【揣知卷】，通晓“天理有常、富不露相、知不示人密而测”，广结善缘、筑牢护城河，在世态变迁中稳操胜券。';
+      diagnosisEn = 'A balanced and steady constitution requires cyclical alignment and acute intelligence radar. Prioritize Scroll I (Tact) and Scroll X (Deep Discernment) to sustain continuous flourishing through quiet observation.';
     }
 
     const primaryScroll = this.getScroll(primaryScrollId);
