@@ -9068,14 +9068,278 @@ run_check89 = subprocess.run(jsc_check89_cmd, capture_output=True, text=True)
 assert run_check89.returncode == 0, f"Check 89 test failed: stdout={run_check89.stdout} stderr={run_check89.stderr}"
 print("✓ 周易六十四卦专属重点解析、人生巅峰低谷跳转、历史人物四维心智契合度评析与全跨度动态分布验证通过！")
 
-print("\n🎉 ALL 89 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 90. Validating Pattern Exegesis in Grand Picture (20/80 Pareto Rule, Strengths, Taboos & Direct Vernacular Conclusions)
+# ==============================================================================
 
+# ==============================================================================
+# 90. Validating Pattern Exegesis in Grand Picture (20/80 Pareto Rule, Strengths, Taboos & Direct Vernacular Conclusions)
+# ==============================================================================
 
+# ==============================================================================
+# 90. Validating Pattern Exegesis in Grand Picture (20/80 Pareto Rule, Strengths, Taboos & Direct Vernacular Conclusions)
+# ==============================================================================
+print("\n=== 90. Validating Pattern Exegesis in Grand Picture (20/80 Pareto Rule, Strengths, Taboos & Direct Vernacular Conclusions) ===")
 
+jsc_check90_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    var window = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    var global = this;
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(msg, e) { print("CONSOLE_ERROR: " + msg + " " + (e ? (e.stack || e) : "")); }
+    };
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
 
+    var allIds = [
+      'landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar',
+      'dashboardSummaryBadges', 'portalPresetsContainer', 'portalFeaturesGrid',
+      'langZhBtn', 'langEnBtn', 'btnExportDossier', 'nowBtn',
+      'birthDate', 'birthTime', 'gender', 'citySelect', 'currentCountrySelect', 'currentCitySelect', 'currentCustomCityInput', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay',
+      'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy',
+      'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui',
+      'navBtnCareer', 'navBtnHistory', 'view-home', 'view-strategy', 'pillarsContainer', 'dmTitle', 'dmElementDesc',
+      'elementRadarCanvas', 'elementsBarContainer', 'paretoCoreContainer', 'strategyContentContainer'
+    ];
 
+    var elementStore = {};
+    function makeEl(id, tag) {
+      var navMap = {
+        'navBtnHome': 'view-home',
+        'navBtnStrategy': 'view-strategy',
+        'navBtnFriction': 'view-friction',
+        'navBtnLuck': 'view-luck',
+        'navBtnCanons': 'view-canons',
+        'navBtnIChing': 'view-iching',
+        'navBtnSynastry': 'view-synastry',
+        'navBtnFengShui': 'view-fengshui',
+        'navBtnCareer': 'view-career',
+        'navBtnHistory': 'view-history'
+      };
+      return {
+        id: id,
+        'data-view': navMap[id] || null,
+        tagName: (tag || 'DIV').toUpperCase(),
+        value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : '')),
+        checked: false,
+        _rawInnerHTML: '',
+        _children: [],
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        className: '',
+        style: {},
+        get innerHTML() {
+          var ch = (this._children || []).map(function(c) { return c.innerHTML || ''; }).join('');
+          return this._rawInnerHTML + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this._children = [];
+        },
+        appendChild: function(ch) { (this._children = this._children || []).push(ch); },
+        textContent: '',
+        classList: {
+          _classes: [],
+          add: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              if (this._classes.indexOf(arguments[i]) === -1) this._classes.push(arguments[i]);
+            }
+          },
+          remove: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              var idx = this._classes.indexOf(arguments[i]);
+              if (idx !== -1) this._classes.splice(idx, 1);
+            }
+          },
+          contains: function(c) { return this._classes.indexOf(c) !== -1; }
+        },
+        _listeners: {},
+        addEventListener: function(evt, fn) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        },
+        trigger: function(evt) {
+          var list = this._listeners[evt] || [];
+          for (var i = 0; i < list.length; i++) list[i].call(this, { target: this, preventDefault: function() {}, stopPropagation: function() {} });
+          if (this['on' + evt]) this['on' + evt].call(this, { target: this, preventDefault: function() {}, stopPropagation: function() {} });
+        },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {}, beginPath: function() {}, moveTo: function() {}, lineTo: function() {},
+            closePath: function() {}, stroke: function() {}, fill: function() {}, fillText: function() {}, arc: function() {},
+            setLineDash: function() {}, scale: function() {}, createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        },
+        querySelector: function(sel) { return null; },
+        querySelectorAll: function(sel) { return []; }
+      };
+    }
 
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
 
+    var document = {
+      body: { style: {} },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function(sel) {
+        if (sel === '.view-nav-btn') {
+          return Object.keys(elementStore).filter(function(k) { return k.startsWith('navBtn'); }).map(function(k) { return elementStore[k]; });
+        }
+        return [];
+      },
+      querySelector: function(sel) { return null; },
+      createElement: function(tag) { return makeEl('gen_' + Math.random(), tag); },
+      addEventListener: function(evt, fn) {
+        if (evt === 'DOMContentLoaded') document._domReady = fn;
+      },
+      documentElement: { lang: 'zh-CN' }
+    };
 
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/ditiansui.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('js/i18n.js');
+    load('js/bazi-engine.js');
+    load('js/fengshui-engine.js');
+    load('js/portrait-engine.js');
+    load('js/luck-engine.js');
+    load('js/iching-engine.js');
+    load('js/synastry-engine.js');
+    load('js/chart.js');
+    load('js/career-engine.js');
+    load('data/historical_figures.js');
+    load('js/history-engine.js');
+    load('js/app.js');
 
+    if (document._domReady) document._domReady();
+
+    // 1. Validate multiple archetypes in PortraitEngine.generatePatternExegesis
+    var testDates = [
+      { year: 1990, month: 5, day: 15, hour: 10, minute: 0, gender: "male" }, // Chart 1
+      { year: 2002, month: 10, day: 10, hour: 19, minute: 30, gender: "male" }, // Chart 2 (User's chart: Ren DM, You month, Cai pattern)
+      { year: 1984, month: 2, day: 4, hour: 8, minute: 0, gender: "female" },  // Chart 3
+      { year: 1976, month: 8, day: 12, hour: 14, minute: 0, gender: "male" }   // Chart 4
+    ];
+
+    testDates.forEach(function(inp, idx) {
+      var bazi = BaZiEngine.calculate({
+        year: inp.year, month: inp.month, day: inp.day, hour: inp.hour, minute: inp.minute,
+        gender: inp.gender, useTrueSolarTime: false, isLateRatNextDay: false,
+        longitude: 116.4, timezone: 8.0
+      });
+
+      var pZh = PortraitEngine.analyze(bazi, "zh");
+      var pEn = PortraitEngine.analyze(bazi, "en");
+
+      var gpZh = pZh.paretoCore.grandPicture;
+      var gpEn = pEn.paretoCore.grandPicture;
+
+      if (!gpZh || !gpZh.patternAnalysis) {
+        throw new Error("Chart " + idx + " missing gpZh.patternAnalysis");
+      }
+      if (!gpEn || !gpEn.patternAnalysis) {
+        throw new Error("Chart " + idx + " missing gpEn.patternAnalysis");
+      }
+
+      var paZh = gpZh.patternAnalysis;
+      var paEn = gpEn.patternAnalysis;
+
+      // Validate Chinese fields
+      if (!paZh.nameZh || paZh.nameZh.length < 2) throw new Error("Chart " + idx + " invalid nameZh");
+      if (!paZh.summaryZh || paZh.summaryZh.length < 20) throw new Error("Chart " + idx + " summaryZh too short");
+      if (!paZh.favorableZh || paZh.favorableZh.length < 20) throw new Error("Chart " + idx + " favorableZh too short");
+      if (!paZh.tabooZh || paZh.tabooZh.length < 20) throw new Error("Chart " + idx + " tabooZh too short");
+      if (!paZh.paretoConclusionZh || paZh.paretoConclusionZh.length < 30) throw new Error("Chart " + idx + " paretoConclusionZh too short");
+
+      // Validate English fields (100% zero residual Chinese)
+      var enList = [paEn.nameEn, paEn.summaryEn, paEn.favorableEn, paEn.tabooEn, paEn.paretoConclusionEn];
+      enList.forEach(function(str, sIdx) {
+        if (!str || str.length < 5) throw new Error("Chart " + idx + " empty/short EN field at " + sIdx);
+        if (/[\u4e00-\u9fa5]/.test(str)) {
+          throw new Error("Chart " + idx + " residual Chinese in EN field " + sIdx + ": " + str);
+        }
+      });
+    });
+
+    // 2. DOM Rendering Verification (Main Dashboard & Strategy View)
+    elementStore['calcBtn'].trigger('click');
+
+    var paretoZh = elementStore['paretoCoreContainer'].innerHTML;
+    if (paretoZh.indexOf("主导格局深度解析") === -1) {
+      throw new Error("Missing 主导格局深度解析 in paretoCoreContainer (ZH)");
+    }
+    if (paretoZh.indexOf("格之可取") === -1 || paretoZh.indexOf("需要避讳的地方") === -1) {
+      throw new Error("Missing 格之可取 or 需要避讳的地方 in paretoCoreContainer (ZH)");
+    }
+    if (paretoZh.indexOf("二八法则 · 白话实战定论") === -1) {
+      throw new Error("Missing 二八法则 · 白话实战定论 in paretoCoreContainer (ZH)");
+    }
+
+    // Check Strategy View
+    elementStore['navBtnStrategy'].trigger('click');
+    var stratZh = elementStore['strategyContentContainer'].innerHTML;
+    if (stratZh.indexOf("主导格局深度解析") === -1) {
+      throw new Error("Missing 主导格局深度解析 in strategyContentContainer (ZH)");
+    }
+    if (stratZh.indexOf("二八法则 · 白话实战定论") === -1) {
+      throw new Error("Missing 二八法则 · 白话实战定论 in strategyContentContainer (ZH)");
+    }
+
+    // Switch to English mode & recalculate
+    elementStore['langEnBtn'].trigger('click');
+    elementStore['calcBtn'].trigger('click');
+
+    var paretoEn = elementStore['paretoCoreContainer'].innerHTML;
+    if (paretoEn.indexOf("Dominant Pattern Analysis") === -1) {
+      throw new Error("Missing Dominant Pattern Analysis in paretoCoreContainer (EN)");
+    }
+    if (paretoEn.indexOf("Core Strengths to Harness") === -1 || paretoEn.indexOf("Fatal Taboos to Avoid") === -1) {
+      throw new Error("Missing Core Strengths or Fatal Taboos in paretoCoreContainer (EN)");
+    }
+    if (paretoEn.indexOf("Pareto Bottom-Line Direct Vernacular Takeaway") === -1) {
+      throw new Error("Missing Pareto Bottom-Line Direct Vernacular Takeaway in paretoCoreContainer (EN)");
+    }
+
+    // Check Strategy View in English
+    elementStore['navBtnStrategy'].trigger('click');
+    var stratEn = elementStore['strategyContentContainer'].innerHTML;
+    if (stratEn.indexOf("Dominant Pattern Analysis") === -1) {
+      throw new Error("Missing Dominant Pattern Analysis in strategyContentContainer (EN)");
+    }
+    if (stratEn.indexOf("Pareto Bottom-Line Direct Vernacular Takeaway") === -1) {
+      throw new Error("Missing Pareto Bottom-Line Direct Vernacular Takeaway in strategyContentContainer (EN)");
+    }
+    '''
+]
+
+run_check90 = subprocess.run(jsc_check90_cmd, capture_output=True, text=True)
+assert run_check90.returncode == 0, f"Check 90 test failed: stdout={run_check90.stdout} stderr={run_check90.stderr}"
+print("✓ 主导格局深度解析（二八法则 · 格之可取与避讳大忌 · 白话实战定论 · 双语100%零中文残留与DOM渲染）验证通过！")
+
+print("\n🎉 ALL 90 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 

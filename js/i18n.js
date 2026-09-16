@@ -2424,6 +2424,13 @@ const I18N = (function() {
         gp.era = gp.eraEn;
         gp.highlights = gp.highlightsEn;
         gp.rules = gp.rulesEn;
+        if (gp.patternAnalysis) {
+          gp.patternAnalysis.name = gp.patternAnalysis.nameEn;
+          gp.patternAnalysis.summary = gp.patternAnalysis.summaryEn;
+          gp.patternAnalysis.favorable = gp.patternAnalysis.favorableEn;
+          gp.patternAnalysis.taboo = gp.patternAnalysis.tabooEn;
+          gp.patternAnalysis.paretoConclusion = gp.patternAnalysis.paretoConclusionEn;
+        }
       }
 
       if (pc.canons) {

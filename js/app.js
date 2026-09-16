@@ -1699,12 +1699,66 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
 
-          <!-- 2. 生杀破局与战略胜负手 -->
+          <!-- 2. 主导格局深度解析 (二八法则 · 格之可取与避讳大忌) -->
+          ${gp.patternAnalysis ? `
+          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/40 space-y-3 shadow-lg">
+            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-amber-500/20">
+              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+                <span>📜</span>
+                <span>${isEn ? '2. Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-bold">
+                ${isEn ? (gp.patternAnalysis.nameEn || gp.patternAnalysis.name) : (gp.patternAnalysis.nameZh || gp.patternAnalysis.name)}
+              </span>
+            </div>
+            
+            <p class="text-xs text-gray-200 leading-relaxed font-sans">
+              ${isEn ? (gp.patternAnalysis.summaryEn || gp.patternAnalysis.summary) : (gp.patternAnalysis.summaryZh || gp.patternAnalysis.summary)}
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
+              <!-- 格之可取 (20% 核心胜手) -->
+              <div class="p-3 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
+                <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                  <span>🟢</span>
+                  <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                  ${isEn ? (gp.patternAnalysis.favorableEn || gp.patternAnalysis.favorable) : (gp.patternAnalysis.favorableZh || gp.patternAnalysis.favorable)}
+                </p>
+              </div>
+
+              <!-- 需要避讳的地方 (80% 损耗暗礁) -->
+              <div class="p-3 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
+                <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                  <span>🔴</span>
+                  <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                  ${isEn ? (gp.patternAnalysis.tabooEn || gp.patternAnalysis.taboo) : (gp.patternAnalysis.tabooZh || gp.patternAnalysis.taboo)}
+                </p>
+              </div>
+            </div>
+
+            <!-- 二八法则白话文结论 -->
+            <div class="p-3 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
+              <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+                <span>💡</span>
+                <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
+              </span>
+              <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
+                ${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion) : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion)}
+              </p>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- 3. 生杀破局与战略胜负手 -->
           <div class="p-4 rounded-xl bg-black/40 border border-rose-900/40 space-y-2">
             <div class="flex items-center justify-between">
               <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
                 <span>⚔️</span>
-                <span>${isEn ? '2. Strategic Breakthrough Campaign & 20% Lever' : '二、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
+                <span>${isEn ? '3. Strategic Breakthrough Campaign & 20% Lever' : '三、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
               </h4>
               <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
                 ${isEn ? 'Disease & Medicine Alchemy' : '以病取药 · 相神救应'}
@@ -2751,12 +2805,66 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 2. 生杀破局与战略胜负手 -->
+        <!-- 2. 主导格局深度解析 (二八法则 · 格之可取与避讳大忌) -->
+        ${gp.patternAnalysis ? `
+        <div class="p-4 sm:p-5 rounded-xl bg-black/45 border border-amber-500/40 space-y-3 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-1.5 border-b border-amber-500/20">
+            <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+              <span>📜</span>
+              <span>${isEn ? '2. Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
+            </h4>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
+              ${isEn ? (gp.patternAnalysis.nameEn || gp.patternAnalysis.name) : (gp.patternAnalysis.nameZh || gp.patternAnalysis.name)}
+            </span>
+          </div>
+
+          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-sans">
+            ${isEn ? (gp.patternAnalysis.summaryEn || gp.patternAnalysis.summary) : (gp.patternAnalysis.summaryZh || gp.patternAnalysis.summary)}
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+            <!-- 格之可取 (20% 核心胜手) -->
+            <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-500/40 space-y-1.5">
+              <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                <span>🟢</span>
+                <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
+              </span>
+              <p class="text-xs text-gray-300 leading-relaxed font-sans">
+                ${isEn ? (gp.patternAnalysis.favorableEn || gp.patternAnalysis.favorable) : (gp.patternAnalysis.favorableZh || gp.patternAnalysis.favorable)}
+              </p>
+            </div>
+
+            <!-- 需要避讳的地方 (80% 损耗暗礁) -->
+            <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-500/40 space-y-1.5">
+              <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                <span>🔴</span>
+                <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+              </span>
+              <p class="text-xs text-gray-300 leading-relaxed font-sans">
+                ${isEn ? (gp.patternAnalysis.tabooEn || gp.patternAnalysis.taboo) : (gp.patternAnalysis.tabooZh || gp.patternAnalysis.taboo)}
+              </p>
+            </div>
+          </div>
+
+          <!-- 二八法则白话文结论 -->
+          <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1.5">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+              <span>💡</span>
+              <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
+            </span>
+            <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
+              ${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion) : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion)}
+            </p>
+          </div>
+        </div>
+        ` : ''}
+
+        <!-- 3. 生杀破局与战略胜负手 -->
         <div class="p-4 rounded-xl bg-black/45 border border-rose-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
               <span>⚔️</span>
-              <span>${isEn ? '2. Strategic Breakthrough Campaign & 20% Lever' : '二、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
+              <span>${isEn ? '3. Strategic Breakthrough Campaign & 20% Lever' : '三、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
             </h4>
             <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
               ${isEn ? 'Disease & Medicine Alchemy' : '以病取药 · 相神救应'}
@@ -2767,12 +2875,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 3. 六亲后方与家庭压舱石 -->
+        <!-- 4. 六亲后方与家庭压舱石 -->
         <div class="p-4 rounded-xl bg-black/45 border border-emerald-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
               <span>🛡️</span>
-              <span>${isEn ? '3. Domestic Sanctuary & Kinship Ballast' : '三、六亲后方与家庭压舱石'}</span>
+              <span>${isEn ? '4. Domestic Sanctuary & Kinship Ballast' : '四、六亲后方与家庭压舱石'}</span>
             </h4>
             <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
               ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
@@ -2783,12 +2891,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 4. 时代跃迁与宏观时空场能共振 -->
+        <!-- 5. 时代跃迁与宏观时空场能共振 -->
         <div class="p-4 rounded-xl bg-black/45 border border-teal-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
               <span>🚀</span>
-              <span>${isEn ? '4. Macro Era Supercycle & Spatial Trajectory' : '四、时代跃迁与宏观时空场能共振'}</span>
+              <span>${isEn ? '5. Macro Era Supercycle & Spatial Trajectory' : '五、时代跃迁与宏观时空场能共振'}</span>
             </h4>
             <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
               ${isEn ? 'Period 9 AI Era & Geographic Leverage' : '离九运AI浪潮 · 地理借势'}
@@ -2799,12 +2907,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 5. 终身立身不败之黄金三则 -->
+        <!-- 6. 终身立身不败之黄金三则 -->
         <div class="p-4 sm:p-5 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
               <span>🎯</span>
-              <span>${isEn ? '5. Sovereign Grand Directives (Lifetime Golden Rules)' : '五、终身立身不败之黄金三则'}</span>
+              <span>${isEn ? '6. Sovereign Grand Directives (Lifetime Golden Rules)' : '六、终身立身不败之黄金三则'}</span>
             </h4>
             <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30 font-bold">
               ${isEn ? 'Supreme Life Guidelines' : '守正不败总纲'}
@@ -12253,6 +12361,11 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="imperial-card imperial-card-gold p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
             <h3 class="font-bold text-amber-950">${isEn ? 'I. Grand Archetype & Sovereign Blueprint' : '一、命盘大局总相与生命大纲'}</h3>
             <p class="leading-relaxed">${isEn ? (gp.thesisEn || gp.thesis || '') : (gp.thesisZh || gp.thesis || '')}</p>
+            ${gp.patternAnalysis ? `
+            <div class="pt-1 text-[11px] border-t border-amber-900/20 text-gray-700 leading-normal">
+              <span class="font-bold text-amber-900">${isEn ? 'Pareto 80/20 Mandate:' : '二八法则实战定论:'}</span> ${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion || '') : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion || '')}
+            </div>
+            ` : ''}
           </div>
 
           <!-- Strategic Pivot / Medicine of Chart -->
