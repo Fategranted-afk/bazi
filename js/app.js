@@ -8097,6 +8097,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   </span>
                 </div>
                 <div class="text-xs space-y-2 text-gray-300">
+                  <p><strong class="text-amber-400">${isEn ? 'Functional Output: ' : '核心产出技能：'}</strong>${isEn ? a.functionalOutputsEn : a.functionalOutputsZh}</p>
                   <p><strong class="text-emerald-400">${isEn ? 'Core Strengths: ' : '天赋优势：'}</strong>${isEn ? a.coreStrengthsEn : a.coreStrengthsZh}</p>
                   <p><strong class="text-sky-400">${isEn ? 'Typical Roles: ' : '代表岗位：'}</strong>${isEn ? a.typicalRolesEn : a.typicalRolesZh}</p>
                   <p><strong class="text-rose-400">${isEn ? 'Deadly Blindspot: ' : '致命盲点：'}</strong>${isEn ? a.pitfallAlertEn : a.pitfallAlertZh}</p>
@@ -12259,7 +12260,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.renderImperialDossierPages = renderImperialDossierPages;
   }
 
-  function renderImperialDossierPages(lang) {
+  function renderImperialDossierPages(arg1, arg2, arg3) {
+    let lang = currentDossierLang || currentLang || 'zh';
+    if (typeof arg1 === 'string') {
+      lang = arg1;
+    } else if (typeof arg3 === 'string') {
+      lang = arg3;
+      if (arg1 && typeof arg1 === 'object') currentBaziResult = arg1;
+      if (arg2 && typeof arg2 === 'object') currentLuckResult = arg2;
+    } else if (typeof arg2 === 'string') {
+      lang = arg2;
+      if (arg1 && typeof arg1 === 'object') currentBaziResult = arg1;
+    }
     const container = document.getElementById('imperialDossierContainer');
     if (!container) return;
 
@@ -12409,10 +12421,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const keyMedicineText = isEn ? (rawMedicineEn.split('.')[0] || 'Discipline & Solar Warmth') : (rawMedicineZh.split('与')[0] || '相神救应');
 
     const arch1 = (crArchs && crArchs.length > 0) ? crArchs[0] : {
-      icon: '🏛️',
-      nameZh: '高管 / 统帅型',
-      nameEn: 'Executive / Commander',
+      icon: '👑',
+      nameZh: '高管 / 统帅 (操盘统帅 · 损益全局 · 资源调配 · 组织治理 · 战略拍板)',
+      nameEn: 'Executive & General Manager (P&L Ownership, Strategic Allocation & Organizational Governance)',
       fitScore: 95,
+      functionalOutputsZh: '【核心产出技能：操盘统帅 & 全局损益(P&L)统筹】适合承担终局商业责任与战略总指挥：全局操盘与损益P&L独立核算兜底、年度资本与资源流动性配置、组织治理与合伙人考核激励。',
+      functionalOutputsEn: '[Core Functional Outputs: Executive Stewardship & P&L Accountability] Primed for sovereign governance and final business accountability: Panoramic P&L Ownership and Organizational Governance.',
       coreStrengthsZh: '具备宏观全景视野与极强战略定力，擅长制定顶层规则、调配核心资源。',
       coreStrengthsEn: 'Commanding panoramic strategic vision and systemic discipline in orchestrating high-stakes organizational campaigns.',
       breakthroughTacticZh: '以制度建威权，以成果赢话语，不争细节琐碎，专攻关键抓手。',
@@ -12718,9 +12732,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${arch1.icon} ${isEn ? arch1.nameEn.split('(')[0].trim() : arch1.nameZh.split('（')[0].trim()} (${arch1.fitScore}${isEn ? '/100' : '分'})
               </span>
             </div>
-            <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Core Advantage: ' : '核心天赋优势：'}</b>${isEn ? arch1.coreStrengthsEn : arch1.coreStrengthsZh}</p>
-            <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Breakthrough Tactic: ' : '向下突破与战略战法：'}</b>${isEn ? arch1.breakthroughTacticEn : arch1.breakthroughTacticZh}</p>
-            <p class="text-[10.5px] text-gray-700 leading-tight"><b>${isEn ? 'Managing Up & Colleagues: ' : '向上管理与职场沟通：'}</b>${isEn ? upwardRuleEn : upwardRuleZh}</p>
+            <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Functional Output: ' : '核心产出技能：'}</b>${isEn ? (arch1.functionalOutputsEn ? arch1.functionalOutputsEn.replace(/^\[Core Functional Outputs: /, '').split(']')[0] : 'Strategic Leadership') : (arch1.functionalOutputsZh ? arch1.functionalOutputsZh.replace(/^【核心产出技能：/, '').split('】')[0] : '操盘统帅')}</p>
+            <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Core Advantage: ' : '核心天赋优势：'}</b>${isEn ? arch1.coreStrengthsEn : arch1.coreStrengthsZh}</p>
+            <p class="text-[10px] text-amber-900 leading-tight"><b>${isEn ? 'Breakthrough Tactic: ' : '向下突破与战略战法：'}</b>${isEn ? arch1.breakthroughTacticEn : arch1.breakthroughTacticZh}</p>
+            <p class="text-[10px] text-gray-700 leading-tight"><b>${isEn ? 'Managing Up & Colleagues: ' : '向上管理与职场沟通：'}</b>${isEn ? upwardRuleEn : upwardRuleZh}</p>
           </div>
 
           <!-- Module 2: Wealth & Capital -->
@@ -13509,6 +13524,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       ${(arch.grade && isEn) ? arch.grade.en : (arch.grade ? arch.grade.zh : (isEn ? 'Prime Fit' : '第一梯队'))} (${arch.fitScore}${isEn ? '/100' : '分'})
                     </span>
                   </div>
+                  <p class="text-[9.5px] text-amber-950 leading-tight"><b>${isEn ? 'Outputs: ' : '核心产出：'}</b>${isEn ? (arch.functionalOutputsEn ? arch.functionalOutputsEn.replace(/^\[Core Functional Outputs: /, '').split(']')[0] : 'Strategic execution') : (arch.functionalOutputsZh ? arch.functionalOutputsZh.replace(/^【核心产出技能：/, '').split('】')[0] : '专业产出')}</p>
                   <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Strengths: ' : '天赋优势：'}</b>${isEn ? arch.coreStrengthsEn : arch.coreStrengthsZh}</p>
                   <p class="text-[10px] text-amber-900 leading-tight"><b>${isEn ? 'Tactic: ' : '破局战法：'}</b>${isEn ? arch.breakthroughTacticEn : arch.breakthroughTacticZh}</p>
                 </div>
@@ -13875,6 +13891,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.drawHexagramCycleChart = drawHexagramCycleChart;
   window.resetToActualCurrentTime = resetToActualCurrentTime;
   window.setCurrentTime = setCurrentTime;
+  window.renderCareerWealth = renderCareerWealth;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';

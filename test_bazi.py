@@ -10389,6 +10389,290 @@ run_check95 = subprocess.run(jsc_check95_cmd, capture_output=True, text=True)
 assert run_check95.returncode == 0, f"Check 95 test failed: stdout={run_check95.stdout} stderr={run_check95.stderr}"
 print("✓ 64卦全相正缘神机直断动态推演、自然意图正则鲁棒性、问事重点高光卡片与五行配偶时空场景（双语零残留）验证通过！")
 
-print("\n🎉 ALL 95 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 96. Validate Workplace Archetype & Four Ecological Niches Rigorous Calibration (Concrete Tasks, Roles & Zero Chinese)
+print("\n=== 96. Validating Workplace Archetype & Four Ecological Niches Rigorous Calibration ===")
+
+jsc_check96_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r"""
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/iching-engine.js");
+    load("js/portrait-engine.js");
+    load("js/chart.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+
+    // 1. Validate CareerEngine Archetype Definitions & Concrete Skill Granularity
+    var testBazi = BaZiEngine.calculate({ year: 2000, month: 5, day: 20, hour: 10, minute: 30, gender: "乾造" });
+    var archetypes = CareerEngine.computeWorkplaceArchetypes(testBazi);
+    if (!archetypes || archetypes.length !== 4) throw new Error("Expected 4 calibrated archetypes");
+
+    var archMap = {};
+    archetypes.forEach(function(a) { archMap[a.key] = a; });
+
+    var requiredKeys = ["civil", "martial", "specialist", "executive"];
+    requiredKeys.forEach(function(k) {
+      if (!archMap[k]) throw new Error("Missing archetype key: " + k);
+      var arch = archMap[k];
+      if (!arch.functionalOutputsZh || !arch.functionalOutputsEn) {
+        throw new Error("Missing functionalOutputs in archetype: " + k);
+      }
+      if (!arch.typicalRolesZh || !arch.typicalRolesEn) {
+        throw new Error("Missing typicalRoles in archetype: " + k);
+      }
+      if (!arch.coreStrengthsZh || !arch.coreStrengthsEn) {
+        throw new Error("Missing coreStrengths in archetype: " + k);
+      }
+      if (!arch.pitfallAlertZh || !arch.pitfallAlertEn) {
+        throw new Error("Missing pitfallAlert in archetype: " + k);
+      }
+      if (!arch.breakthroughTacticZh || !arch.breakthroughTacticEn) {
+        throw new Error("Missing breakthroughTactic in archetype: " + k);
+      }
+
+      // Check 100% zero residual Chinese in all English properties
+      var enFields = [
+        arch.nameEn, arch.functionalOutputsEn, arch.coreStrengthsEn,
+        arch.typicalRolesEn, arch.pitfallAlertEn, arch.breakthroughTacticEn, arch.grade.en
+      ];
+      enFields.forEach(function(str) {
+        var m = str.match(/[\u4e00-\u9fa5]/g);
+        if (m && m.length > 0) {
+          throw new Error("Residual Chinese in " + k + " English field: " + m.join(""));
+        }
+      });
+    });
+
+    // 2. Concrete Work Deliverables Assertions
+    // Specialist: Coding & Systems Architecture & Quantitative Analytics
+    var spec = archMap["specialist"];
+    if (!spec.functionalOutputsZh.includes("写代码") || !spec.functionalOutputsZh.includes("分析")) {
+      throw new Error("Specialist must explicitly state '写代码' and '分析' in functionalOutputsZh");
+    }
+    if (!spec.functionalOutputsEn.includes("Coding") || !spec.functionalOutputsEn.includes("Quantitative Analysis")) {
+      throw new Error("Specialist must explicitly state 'Coding' and 'Quantitative Analysis' in functionalOutputsEn");
+    }
+    if (!spec.typicalRolesZh.includes("系统架构师") || !spec.typicalRolesEn.includes("Architect")) {
+      throw new Error("Specialist must feature Systems Architect in typical roles");
+    }
+
+    // Civil: Writing & Policy Drafting & Institutional Governance
+    var civ = archMap["civil"];
+    if (!civ.functionalOutputsZh.includes("写东西") || !civ.functionalOutputsZh.includes("研报")) {
+      throw new Error("Civil must explicitly state '写东西' and '研报' in functionalOutputsZh");
+    }
+    if (!civ.functionalOutputsEn.includes("Writing") || !civ.functionalOutputsEn.includes("Research")) {
+      throw new Error("Civil must explicitly state 'Writing' and 'Research' in functionalOutputsEn");
+    }
+    if (!civ.typicalRolesZh.includes("法务") || !civ.typicalRolesEn.includes("Legal")) {
+      throw new Error("Civil must feature Legal/Compliance Counsel in typical roles");
+    }
+
+    // Martial: Frontline Dealmaking & Field Ops & Crisis PMO
+    var mart = archMap["martial"];
+    if (!mart.functionalOutputsZh.includes("打硬仗") || !mart.functionalOutputsZh.includes("商务")) {
+      throw new Error("Martial must explicitly state '打硬仗' and '商务' in functionalOutputsZh");
+    }
+    if (!mart.functionalOutputsEn.includes("Dealmaking") || !mart.functionalOutputsEn.includes("Frontline")) {
+      throw new Error("Martial must explicitly state 'Dealmaking' and 'Frontline' in functionalOutputsEn");
+    }
+    if (!mart.typicalRolesZh.includes("商务总监") || !mart.typicalRolesEn.includes("Sales Director")) {
+      throw new Error("Martial must feature Sales Director in typical roles");
+    }
+
+    // Executive: Panoramic P&L Ownership & Governance
+    var exec = archMap["executive"];
+    if (!exec.functionalOutputsZh.includes("操盘统帅") || !exec.functionalOutputsZh.includes("P&L")) {
+      throw new Error("Executive must explicitly state '操盘统帅' and 'P&L' in functionalOutputsZh");
+    }
+    if (!exec.functionalOutputsEn.includes("P&L") || !exec.functionalOutputsEn.includes("Stewardship")) {
+      throw new Error("Executive must explicitly state 'P&L' and 'Stewardship' in functionalOutputsEn");
+    }
+    if (!exec.typicalRolesZh.includes("总经理") || !exec.typicalRolesEn.includes("General Manager")) {
+      throw new Error("Executive must feature General Manager in typical roles");
+    }
+
+    // 3. DOM Rendering Validation in Headless JSC
+    var elementStore = {};
+    function makeElement(id) {
+      return {
+        id: id,
+        innerHTML: "",
+        textContent: "",
+        value: "",
+        attributes: {},
+        getAttribute: function(a) { return this.attributes[a] || ""; },
+        setAttribute: function(a, v) { this.attributes[a] = v; },
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        classList: {
+          add: function() {},
+          remove: function() {},
+          contains: function() { return false; }
+        },
+        style: {},
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            arc: function(){}, setLineDash: function(){}, scale: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; }
+          };
+        },
+        appendChild: function() {},
+        addEventListener: function() {},
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; }
+      };
+    }
+
+    var requiredDomIds = [
+      "careerQuickBadgesDashboard", "careerContentContainer", "careerBannerTitle", "careerBannerDesc",
+      "archetypesContainer", "managingUpContainer", "peerDynamicsContainer", "timingContainer",
+      "imperialDossierContainer", "dossierLangZh", "dossierLangEn", "calcBtn", "btnExportDossier",
+      "birthDate", "birthTime", "gender", "useTrueSolarTime", "citySelect", "currentResidenceCountrySelect",
+      "currentResidenceCitySelect"
+    ];
+    requiredDomIds.forEach(function(id) { elementStore[id] = makeElement(id); });
+
+    var document = {
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeElement(id);
+        return elementStore[id];
+      },
+      querySelector: function() { return makeElement("query"); },
+      querySelectorAll: function() { return []; },
+      createElement: function(t) { return makeElement("dyn_" + t); },
+      documentElement: { getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      addEventListener: function(evt, handler) {
+        if (evt === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(a, b) { if (typeof print !== 'undefined') print("Check96 Console Error:", a, b); },
+      info: function() {}
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      addEventListener: function() {},
+      location: { hash: "", search: "" },
+      requestAnimationFrame: function(cb) { cb(); return 1; },
+      cancelAnimationFrame: function() {},
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      innerWidth: 1200, innerHeight: 800,
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      PortraitEngine: PortraitEngine,
+      LuckEngine: LuckEngine,
+      IChingEngine: IChingEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine,
+      HISTORICAL_FIGURES: HISTORICAL_FIGURES,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      TenGodsDB: TenGodsDB,
+      TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
+      SanMingDB: SanMingDB,
+      QiongTongDB: QiongTongDB,
+      ZiPingZhenQuanDB: ZiPingZhenQuanDB,
+      DiTianSuiDB: DiTianSuiDB,
+      YuanHaiDB: YuanHaiDB,
+      ShenFengDB: ShenFengDB,
+      YuZhaoDB: YuZhaoDB,
+      LiXuZhongDB: LiXuZhongDB
+    };
+    var requestAnimationFrame = window.requestAnimationFrame;
+    var cancelAnimationFrame = window.cancelAnimationFrame;
+    var setTimeout = window.setTimeout;
+    var clearTimeout = window.clearTimeout;
+    var localStorage = { getItem: function() { return null; }, setItem: function() {}, removeItem: function() {} };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // Test career-engine report generation with app DOM rendering
+    var luck = LuckEngine.calculateLuck(testBazi, 2026);
+    var careerReport = CareerEngine.generateCareerReport(testBazi, luck, 2026);
+    if (!careerReport || !careerReport.workplaceArchetypes) throw new Error("Failed to generate career report");
+
+    // Test renderCareerWealth in Chinese
+    window.setLanguage("zh");
+    window.renderCareerWealth(testBazi, luck);
+    var cHtmlZh = elementStore["careerContentContainer"].innerHTML;
+    if (!cHtmlZh.includes("核心产出技能：")) {
+      throw new Error("careerContentContainer in ZH missing '核心产出技能：'");
+    }
+    if (!cHtmlZh.includes("写代码") || !cHtmlZh.includes("写东西") || !cHtmlZh.includes("打硬仗") || !cHtmlZh.includes("操盘统帅")) {
+      throw new Error("careerContentContainer in ZH missing calibrated action task terms");
+    }
+
+    // Test renderCareerWealth in English
+    window.setLanguage("en");
+    window.renderCareerWealth(testBazi, luck);
+    var cHtmlEn = elementStore["careerContentContainer"].innerHTML;
+    if (!cHtmlEn.includes("Functional Output:")) {
+      throw new Error("careerContentContainer in EN missing 'Functional Output:'");
+    }
+    var cEnMatches = cHtmlEn.match(/[\u4e00-\u9fa5]/g);
+    if (cEnMatches && cEnMatches.length > 0) {
+      throw new Error("Residual Chinese in careerContentContainer EN: " + cEnMatches.slice(0, 30).join(""));
+    }
+
+    // Test Imperial Dossier Page 1 & Page 8
+    elementStore["calcBtn"].trigger = function(e) {
+      if (this._listener) this._listener(e);
+    };
+    window.renderImperialDossierPages(testBazi, luck, "zh");
+    var dossZh = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dossZh.includes("核心产出技能：")) {
+      throw new Error("Imperial Dossier Page 1 in ZH missing '核心产出技能：'");
+    }
+    if (!dossZh.includes("核心产出：")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing '核心产出：'");
+    }
+
+    window.renderImperialDossierPages(testBazi, luck, "en");
+    var dossEn = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dossEn.includes("Functional Output:")) {
+      throw new Error("Imperial Dossier Page 1 in EN missing 'Functional Output:'");
+    }
+    if (!dossEn.includes("Outputs:")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing 'Outputs:'");
+    }
+    var dossEnMatches = dossEn.match(/[\u4e00-\u9fa5]/g);
+    if (dossEnMatches && dossEnMatches.length > 0) {
+      throw new Error("Residual Chinese in Imperial Dossier EN: " + dossEnMatches.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check96 = subprocess.run(jsc_check96_cmd, capture_output=True, text=True)
+assert run_check96.returncode == 0, f"Check 96 test failed: stdout={run_check96.stdout} stderr={run_check96.stderr}"
+print("✓ 天命职能四大生态位精准定向严谨校准（写代码/写东西/做分析/打硬仗/操盘统帅、代表岗位分工、中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 96 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
