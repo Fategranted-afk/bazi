@@ -492,6 +492,12 @@ const I18N = (function() {
       iching_canonical_sec_title: "📜 文王卦辞与先秦经文全典 (Canonical Scriptures)",
       iching_modern_sec_title: "💡 周易现代实战全相研解 (Modern Multi-Dimensional Analysis)",
       seal_modern_iching: "极深研几",
+      iching_quick_intent_label: "🎯 快捷心念直测:",
+      iching_chip_romance: "什么时候碰到对象，在何方",
+      iching_chip_career: "事业跳槽创业与生态位",
+      iching_chip_wealth: "投资理财与财富守成",
+      iching_chip_decision: "进退去留抉择可行性",
+      iching_focus_badge: "🎯 问事重点研读",
 
       // Defects
       sec_defects_title: "⚠️ 命主缺陷、心性盲区与败局暗礁深度透视",
@@ -1109,6 +1115,12 @@ const I18N = (function() {
       iching_canonical_sec_title: "📜 King Wen Judgments & Ancient Canonical Scriptures",
       iching_modern_sec_title: "💡 Zhou Yi Modern Strategic Multi-Dimensional Interpretations",
       seal_modern_iching: "Deep Insight",
+      iching_quick_intent_label: "🎯 Quick Inquiry Presets:",
+      iching_chip_romance: "Spouse timing & direction",
+      iching_chip_career: "Career transition & ecosystem",
+      iching_chip_wealth: "Investment & wealth shields",
+      iching_chip_decision: "Decision feasibility & choice",
+      iching_focus_badge: "🎯 Inquiry Focus",
 
       // Defects
       sec_defects_title: "⚠️ Day Master Defects, Blindspots & Crisis Reefs",

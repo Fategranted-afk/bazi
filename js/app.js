@@ -9849,6 +9849,18 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       ichingQueryInput.addEventListener('input', handleQueryUpdate);
       ichingQueryInput.addEventListener('change', handleQueryUpdate);
+
+      document.querySelectorAll('.iching-intent-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const isEn = (currentLang === 'en');
+          const q = isEn ? (chip.getAttribute('data-intent-en') || chip.getAttribute('data-intent')) : chip.getAttribute('data-intent');
+          ichingQueryInput.value = q;
+          if (lastDivinationResult) {
+            lastDivinationResult.query = q;
+            renderIChingResult(lastDivinationResult);
+          }
+        });
+      });
     }
 
     function populateIChingDropdown() {
@@ -10705,6 +10717,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. Modern Multi-Dimensional In-Depth Interpretations
     if (modernInterpretationCards) {
       const m = orig.modernInterpretation || {};
+      const inquiryCat = (typeof IChingEngine !== 'undefined' && typeof IChingEngine.analyzeCustomInquiry === 'function' && res.query)
+        ? (IChingEngine.analyzeCustomInquiry(res.query, res, null, null, currentLang) || {}).category
+        : '';
+      const isCareer = (inquiryCat === 'career');
+      const isWealth = (inquiryCat === 'wealth');
+      const isRomance = (inquiryCat === 'romance');
+      const isDecision = (inquiryCat === 'decision');
+
+      const focusBadge = `<span class="text-[9.5px] px-1.5 py-0.2 rounded font-bold font-serif-sc tracking-wide bg-amber-400/25 text-amber-200 border border-amber-400/50">${isEn ? '🎯 Inquiry Focus' : '🎯 问事重点研读'}</span>`;
+
       modernInterpretationCards.innerHTML = `
         <!-- Dimension 1: Philosophy -->
         <div class="p-4 rounded-xl bg-card border border-border-color space-y-2 shadow">
@@ -10719,49 +10741,49 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <!-- Dimension 2: Career -->
-        <div class="p-4 rounded-xl bg-card border border-border-color space-y-2 shadow">
+        <div class="p-4 rounded-xl bg-card ${isCareer ? 'border-2 border-blue-500/80 bg-blue-950/30 ring-1 ring-blue-500/40' : 'border border-border-color'} space-y-2 shadow">
           <div class="flex items-center justify-between">
             <span class="font-bold text-sm text-blue-300 font-serif-sc flex items-center gap-1.5">
               <span>💼</span>
               <span>${isEn ? 'Career & Strategic Decisions' : '事业发展与重大抉择'}</span>
             </span>
-            <span class="chinese-seal text-[10px] py-0">${isEn ? 'CAREER' : '功业建树'}</span>
+            ${isCareer ? focusBadge : `<span class="chinese-seal text-[10px] py-0">${isEn ? 'CAREER' : '功业建树'}</span>`}
           </div>
           <p class="text-xs text-gray-300 leading-relaxed">${isEn ? m.careerEn : m.careerZh}</p>
         </div>
 
         <!-- Dimension 3: Wealth -->
-        <div class="p-4 rounded-xl bg-card border border-border-color space-y-2 shadow">
+        <div class="p-4 rounded-xl bg-card ${isWealth ? 'border-2 border-emerald-500/80 bg-emerald-950/30 ring-1 ring-emerald-500/40' : 'border border-border-color'} space-y-2 shadow">
           <div class="flex items-center justify-between">
             <span class="font-bold text-sm text-emerald-300 font-serif-sc flex items-center gap-1.5">
               <span>💰</span>
               <span>${isEn ? 'Finance & Business Acumen' : '求财商业与资本投资'}</span>
             </span>
-            <span class="chinese-seal text-[10px] py-0">${isEn ? 'WEALTH' : '经商理财'}</span>
+            ${isWealth ? focusBadge : `<span class="chinese-seal text-[10px] py-0">${isEn ? 'WEALTH' : '经商理财'}</span>`}
           </div>
           <p class="text-xs text-gray-300 leading-relaxed">${isEn ? m.wealthEn : m.wealthZh}</p>
         </div>
 
         <!-- Dimension 4: Love & Marriage -->
-        <div class="p-4 rounded-xl bg-card border border-border-color space-y-2 shadow">
+        <div class="p-4 rounded-xl bg-card ${isRomance ? 'border-2 border-rose-500/80 bg-rose-950/30 ring-1 ring-rose-500/40' : 'border border-border-color'} space-y-2 shadow">
           <div class="flex items-center justify-between">
             <span class="font-bold text-sm text-rose-300 font-serif-sc flex items-center gap-1.5">
               <span>💑</span>
               <span>${isEn ? 'Love, Marriage & Relationships' : '情感婚姻与人际合和'}</span>
             </span>
-            <span class="chinese-seal text-[10px] py-0">${isEn ? 'RELATION' : '情缘伦常'}</span>
+            ${isRomance ? focusBadge : `<span class="chinese-seal text-[10px] py-0">${isEn ? 'RELATION' : '情缘伦常'}</span>`}
           </div>
           <p class="text-xs text-gray-300 leading-relaxed">${isEn ? (m.relationshipEn || m.loveEn || '') : (m.relationshipZh || m.loveZh || '')}</p>
         </div>
 
         <!-- Dimension 5: Action Guidance (Full Span) -->
-        <div class="md:col-span-2 p-4 rounded-xl bg-gradient-to-r from-amber-950/30 via-black/40 to-amber-950/30 border border-amber-500/40 space-y-2 shadow">
+        <div class="md:col-span-2 p-4 rounded-xl ${isDecision ? 'bg-gradient-to-r from-amber-950/50 via-black/60 to-amber-950/50 border-2 border-amber-500/80 ring-1 ring-amber-500/40' : 'bg-gradient-to-r from-amber-950/30 via-black/40 to-amber-950/30 border border-amber-500/40'} space-y-2 shadow">
           <div class="flex items-center justify-between">
             <span class="font-bold text-sm text-amber-300 font-serif-sc flex items-center gap-1.5">
               <span>🛡️</span>
               <span>${isEn ? 'Action Guidance (Favorable & Taboo)' : '趋避锦囊 · 宜与忌行持准则'}</span>
             </span>
-            <span class="chinese-seal text-[10px] py-0">${isEn ? 'STRATEGY' : '进退枢机'}</span>
+            ${isDecision ? focusBadge : `<span class="chinese-seal text-[10px] py-0">${isEn ? 'STRATEGY' : '进退枢机'}</span>`}
           </div>
           <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${isEn ? m.actionGuidanceEn : m.actionGuidanceZh}</p>
         </div>
@@ -12425,10 +12447,42 @@ document.addEventListener('DOMContentLoaded', () => {
       '亥': { zh: '西北偏北 (乾水通达)', en: 'North-Northwest (Reflective Harbor)' }
     };
     const spDirObj = branchDirMap[spBranch] || branchDirMap['子'];
-    const spTimingZh = `2026年(丙午)至2027年(丁未)逢岁运夫妻宫生合引动，正缘机缘最为成熟；或逢地支六合及生旺之年结成良缘。`;
-    const spTimingEn = `Temporal window matures across 2026 through 2027 under dynamic spousal palace alignment, or during resonant Liu-He combination years.`;
-    const spSettingZh = `结缘方位锁定${spDirObj.zh}；多在光线充沛的高规格文教沙龙、学术博览、高端行业论坛，或由长辈师友正式推介引荐之所。`;
-    const spSettingEn = `Favorable direction anchors in ${spDirObj.en}; encountered within refined cultural forums, academic symposia, distinguished design salons, or through trusted mentors.`;
+    const branchElMap = {
+      '子': '水', '亥': '水',
+      '寅': '木', '卯': '木',
+      '巳': '火', '午': '火',
+      '申': '金', '酉': '金',
+      '辰': '土', '戌': '土', '丑': '土', '未': '土'
+    };
+    const spEl = branchElMap[spBranch] || '水';
+    const spSettingDescMap = {
+      '水': {
+        zh: '多在滨水湖海、跨区域学术交流、数据智识论坛或幽雅清吧茶叙之所。',
+        en: 'encountered near scenic waterfronts, inter-regional academic exchange, intellectual seminars, or boutique lounges.'
+      },
+      '木': {
+        zh: '多在高等学府文科校区、文创设计产业园、草木葱郁之林苑或精品书廊沙龙。',
+        en: 'encountered within premier university campuses, creative design hubs, lush arboretums, or literary salons.'
+      },
+      '火': {
+        zh: '多在光线充沛的高规格文教沙龙、学术博览、高端行业论坛，或由长辈师友正式推介引荐之所。',
+        en: 'encountered within refined cultural forums, academic symposia, distinguished design salons, or through trusted mentors.'
+      },
+      '金': {
+        zh: '多在核心金融商贸中心、现代律政合规机构、知名企业总部或高规格品鉴发布会。',
+        en: 'encountered within premier financial centers, legal institutions, corporate headquarters, or exclusive symposiums.'
+      },
+      '土': {
+        zh: '多在稳健不动产机构、传统历史文化名胜、大型博览中心或温馨家友联谊聚会之所。',
+        en: 'encountered within architectural heritage sites, civic expo centers, community gatherings, or trusted family introductions.'
+      }
+    };
+    const spSettingObj = spSettingDescMap[spEl] || spSettingDescMap['火'];
+    const targetYr = (aPillar && aPillar.year) || new Date().getFullYear();
+    const spTimingZh = `${targetYr}年(${aPillar ? aPillar.text : '岁运'})至${targetYr + 1}年逢岁运夫妻宫生合引动，正缘机缘最为成熟；或逢地支六合及生旺之年结成良缘。`;
+    const spTimingEn = `Temporal window matures across ${targetYr} through ${targetYr + 1} under dynamic spousal palace alignment, or during resonant Liu-He combination years.`;
+    const spSettingZh = `结缘方位锁定${spDirObj.zh}；${spSettingObj.zh}`;
+    const spSettingEn = `Favorable direction anchors in ${spDirObj.en}; ${spSettingObj.en}`;
     const spEncounterSummaryZh = `${spTimingZh} ${spSettingZh}`;
     const spEncounterSummaryEn = `${spTimingEn} ${spSettingEn}`;
 
@@ -13485,8 +13539,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
 
-          <!-- Thoughtful side-note on Classical preservation and personal meditation -->
-          <div class="imperial-card p-1.5 text-[9.5px] text-gray-700 italic font-serif-sc">
+          <!-- Classical preservation marginalia note -->
+          <div class="text-[8.5px] text-gray-500 italic font-serif-sc text-center py-0.5">
             <span>${reflectionPreservationNote}</span>
           </div>
 

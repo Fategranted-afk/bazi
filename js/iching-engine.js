@@ -1540,10 +1540,10 @@ class IChingEngine {
 
     // Intent classification
     let category = 'general';
-    const romanceRegex = /(对象|正缘|女朋友|男朋友|结婚|婚期|婚配|姻缘|恋爱|情缘|另一半|老公|老婆|伴侣|脱单|桃花|何时碰到|什么时候碰到|在何方|在哪个方向|复合|分手|爱人|相亲|意中人|情侣|嫁|娶|romance|love|dating|marriage|marry|spouse|partner|girlfriend|boyfriend|wife|husband|soulmate|single|breakup|reunite|wedding)/i;
-    const wealthRegex = /(财运|求财|赚钱|发财|投资|买房|购房|房产|炒股|股票|基金|理财|虚拟货币|加密货币|现金流|借钱|还债|债务|破财|盈利|分红|身家|利润|wealth|money|investment|real estate|property|house|stock|shares|crypto|fund|profit|cash flow|debt|loss|capital|financial|rich|portfolio)/i;
-    const careerRegex = /(事业|工作|跳槽|换工作|晋升|升职|提拔|求职|面试|创业|做生意|开公司|合伙|辞职|离职|前途|仕途|领导|上司|老板|职场|调动|竞聘|考公|上岸|career|job|promotion|switch job|new job|boss|startup|business|venture|quit|resign|employment|interview|workplace|corporation|colleague|executive|leadership|civil service)/i;
-    const decisionRegex = /(吉凶|能不能|能成吗|会不会|可不可行|是否|成败|如何选择|去还是留|去不去|做不做|行不行|好不好|决策|选择|何去何从|前景|结果|怎么选|可行|可行性|抉择|去留|decision|choice|feasible|feasibility|will it happen|can i|should i|stay or leave|option a|option b|success|fail|outcome|auspicious|omen|judgment)/i;
+    const romanceRegex = /(对象|正缘|女朋友|男朋友|结婚|婚期|婚配|姻缘|恋爱|情缘|另一半|老公|老婆|伴侣|脱单|桃花|何时碰到|什么时候碰到|在何方|在哪个方向|复合|分手|爱人|相亲|意中人|情侣|嫁|娶|妻子|丈夫|配偶|良缘|良配|真爱|何在|何处|哪方|何时遇|何时能遇|遇到爱|意中人|找对象|寻良配|脱单|romance|love|dating|marriage|marry|spouse|partner|girlfriend|boyfriend|wife|husband|soulmate|single|breakup|reunite|wedding)/i;
+    const wealthRegex = /(财运|求财|赚钱|发财|投资|买房|购房|房产|炒股|股票|基金|理财|虚拟货币|加密货币|现金流|借钱|还债|债务|破财|盈利|分红|身家|利润|收入|薪水|薪资|财富|副业|偏财|正财|横财|进财|财帛|资产|资金|金钱|商业|回报|收益|wealth|money|investment|real estate|property|house|stock|shares|crypto|fund|profit|cash flow|debt|loss|capital|financial|rich|portfolio|salary|income)/i;
+    const careerRegex = /(事业|工作|跳槽|换工作|晋升|升职|提拔|求职|面试|创业|做生意|开公司|合伙|辞职|离职|前途|仕途|领导|上司|老板|职场|调动|竞聘|考公|上岸|体制|转行|找工作|加薪|新单位|入职|降薪|裁员|单位|单位发展|被裁|就业|招聘|career|job|promotion|switch job|new job|boss|startup|business|venture|quit|resign|employment|interview|workplace|corporation|colleague|executive|leadership|civil service|salary raise)/i;
+    const decisionRegex = /(吉凶|能不能|能成吗|会不会|可不可行|是否|成败|如何选择|去还是留|去不去|做不做|行不行|好不好|决策|选择|何去何从|前景|结果|怎么选|可行|可行性|抉择|去留|动向|可行吗|能去吗|该不该|走不走|留不留|decision|choice|feasible|feasibility|will it happen|can i|should i|stay or leave|option a|option b|success|fail|outcome|auspicious|omen|judgment)/i;
 
     if (romanceRegex.test(q)) {
       category = 'romance';
@@ -1565,65 +1565,136 @@ class IChingEngine {
     let catDataEn = {};
 
     if (category === 'romance') {
-      const yrZh = `${baseYear} 丙午年 (离火天时) 至 ${baseYear + 1} 丁未年 (火土相生结缔)`;
-      const yrEn = `${baseYear} Bing-Wu (Fire Zenith) through ${baseYear + 1} Ding-Wei (Fire-Earth Synergy)`;
-      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh}) 与 ${loAttr.seasonZh} (${loAttr.monthsZh})${resUpAttr ? '；次应变卦 ' + resUpAttr.monthsZh : ''}`;
-      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn}) & ${loAttr.seasonEn} (${loAttr.monthsEn})${resUpAttr ? '; secondary window in ' + resUpAttr.monthsEn : ''}`;
+      const isHex50 = (orig.number === 50);
+
+      // Timing Window
+      let yrZh = '';
+      let yrEn = '';
+      if (isHex50) {
+        yrZh = `${baseYear} 丙午年 (离火天时) 至 ${baseYear + 1} 丁未年 (火土相生结缔)`;
+        yrEn = `${baseYear} Bing-Wu (Fire Zenith) through ${baseYear + 1} Ding-Wei (Fire-Earth Synergy)`;
+      } else {
+        yrZh = `${baseYear}年 (${upAttr.nameZh}${upAttr.elementZh}气当令) 至 ${baseYear + 1}年 (${loAttr.nameZh}${loAttr.elementZh}气相生结缔)`;
+        yrEn = `${baseYear} (${upAttr.nameEn} · ${upAttr.elementEn}) through ${baseYear + 1} (${loAttr.nameEn} · ${loAttr.elementEn})`;
+      }
+      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh}) 与 ${loAttr.seasonZh} (${loAttr.monthsZh})${resUpAttr ? '；次应变卦 ' + resUpAttr.seasonZh + ' (' + resUpAttr.monthsZh + ')' : ''}`;
+      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn}) & ${loAttr.seasonEn} (${loAttr.monthsEn})${resUpAttr ? '; secondary window in ' + resUpAttr.seasonEn + ' (' + resUpAttr.monthsEn + ')' : ''}`;
       const dayZh = `逢${upAttr.elementZh}、${loAttr.elementZh}五行生旺日，或地支六合感应之良辰吉日`;
       const dayEn = `Days resonant with ${upAttr.elementEn} and ${loAttr.elementEn} vitality, or harmonious Liu-He combination dates`;
-      const timeSumZh = `机缘已然成熟！本卦火风相济，主爻居五爻尊位，二爻得中相应。最快在当前${baseYear}岁末秋冬之交初现机缘端倪，${baseYear + 1}春夏火土相生之时最为成熟，正缘定鼎。`;
-      const timeSumEn = `The window is actively opening! With Fire and Wind in harmony and governing lines at positions 5 and 2, initial sparks surface in late ${baseYear}, culminating in solid matrimonial fruition during Spring/Summer ${baseYear + 1}.`;
 
+      let timeSumZh = '';
+      let timeSumEn = '';
+      if (isHex50) {
+        timeSumZh = `机缘已然成熟！本卦火风相济，主爻居五爻尊位，二爻得中相应。最快在当前${baseYear}岁末秋冬之交初现机缘端倪，${baseYear + 1}春夏火土相生之时最为成熟，正缘定鼎。`;
+        timeSumEn = `The window is actively opening! With Fire and Wind in harmony and governing lines at positions 5 and 2, initial sparks surface in late ${baseYear}, culminating in solid matrimonial fruition during Spring/Summer ${baseYear + 1}.`;
+      } else {
+        timeSumZh = `机缘已然成熟！本卦【${orig.nameZh}】（${upAttr.elementZh}${loAttr.elementZh}相生相济），定断主爻【${govNameZh}】临照${secondaryLine ? '、动爻【' + secNameZh + '】相呼应' : ''}。最快在当前${baseYear}${upAttr.seasonZh}初现机缘端倪，${baseYear + 1}${loAttr.seasonZh}之时最为成熟，正缘缔结。`;
+        timeSumEn = `The window is actively opening! With Hexagram [${orig.nameEn}] bringing ${upAttr.elementEn} and ${loAttr.elementEn} into harmony, and governing line at ${govNameEn}${secondaryLine ? ' with ' + secNameEn : ''}, initial sparks surface in ${baseYear} (${upAttr.seasonEn}), culminating in solid matrimonial fruition during ${baseYear + 1} (${loAttr.seasonEn}).`;
+      }
+
+      // Spatial Window
       const dirZh = `${upAttr.directionZh} (${upAttr.nameZh}${upAttr.natureZh}) · ${loAttr.directionZh} (${loAttr.nameZh}${loAttr.natureZh})${resUpAttr ? '；次应变卦 ' + resUpAttr.directionZh + ' (' + resUpAttr.nameZh + resUpAttr.natureZh + ')' : ''}`;
       const dirEn = `${upAttr.directionEn} (${upAttr.nameEn}) · ${loAttr.directionEn} (${loAttr.nameEn})${resUpAttr ? '; secondary ' + resUpAttr.directionEn + ' (' + resUpAttr.nameEn + ')' : ''}`;
-      const envZh = '光线充沛的高层景观建筑、文化艺术博览展厅、知名高校人文校区、高端设计与商业沙龙、精品学术书咖、前沿科技论坛，或由良师益友正式推介引荐';
-      const envEn = 'Sun-drenched elevated architectures, cultural art expositions, premier university corridors, curated design & business salons, boutique literary cafes, tech summits, or formal introductions through respected mentors';
+
+      let envZh = '';
+      let envEn = '';
+      let spaSumZh = '';
+      let spaSumEn = '';
+      if (isHex50) {
+        envZh = '光线充沛的高层景观建筑、文化艺术博览展厅、知名高校人文校区、高端设计与商业沙龙、精品学术书咖、前沿科技论坛，或由良师益友正式推介引荐';
+        envEn = 'Sun-drenched elevated architectures, cultural art expositions, premier university corridors, curated design & business salons, boutique literary cafes, tech summits, or formal introductions through respected mentors';
+        spaSumZh = '正缘方位锁定正南方与东南方；重点移步至光线明朗、文化底蕴深厚的高规格空间，西北方与东北方亦有长远宿缘呼应。';
+        spaSumEn = 'Primary consort sectors are anchored in the South and Southeast; seek vibrant, culturally refined spaces. Northwest and Northeast also hold enduring resonance.';
+      } else {
+        envZh = `${upAttr.environmentZh}、${loAttr.environmentZh}，或由良师益友正式推介引荐之所`;
+        envEn = `${upAttr.environmentEn}, ${loAttr.environmentEn}, or formal introductions through respected mentors`;
+        spaSumZh = `正缘方位锁定${upAttr.directionZh}与${loAttr.directionZh}；重点移步至${upAttr.environmentZh.split('、').slice(0, 2).join('、')}等优质场域${resUpAttr ? '，' + resUpAttr.directionZh + (resLoAttr ? '与' + resLoAttr.directionZh : '') + '亦有长远宿缘呼应' : ''}。`;
+        spaSumEn = `Primary consort sectors are anchored in ${upAttr.directionEn} and ${loAttr.directionEn}; seek refined environments such as ${upAttr.environmentEn.split(',').slice(0, 2).join(', ')}${resUpAttr ? '. ' + resUpAttr.directionEn + (resLoAttr ? ' and ' + resLoAttr.directionEn : '') + ' also hold enduring resonance' : ''}.`;
+      }
       const distZh = '以自身常住地为太极坐标，偏向中远距离、来自外地迁入或跨区域跨行业交流中相识；非狭隘近邻偶然闲逛，多在具备知性门槛与文明礼仪的优质场域相逢。';
       const distEn = 'Anchored from your residence as the central coordinate: tends toward mid-to-long distance, relocation background, or inter-regional professional exchange; encountered in distinguished intellectual settings rather than casual happenstance.';
-      const spaSumZh = '正缘方位锁定正南方与东南方；重点移步至光线明朗、文化底蕴深厚的高规格空间，西北方与东北方亦有长远宿缘呼应。';
-      const spaSumEn = 'Primary consort sectors are anchored in the South and Southeast; seek vibrant, culturally refined spaces. Northwest and Northeast also hold enduring resonance.';
 
-      const archNameZh = '知性温厚 · 秀外慧中 · 务实有底蕴型正配良缘';
-      const archNameEn = 'Cultured Intellectual · Inner Elegance & Solid Grounding';
-      const trZh = `深契主爻【${govNameZh}${govStatementZh ? '·' + govStatementZh : ''}】${secNameZh ? '与动爻【' + secNameZh + (secStatementZh ? '·' + secStatementZh : '') + '】' : ''}：外表端庄文雅、谈吐从容大度（黄耳象君子虚心）；内在务实沉稳、具备扎实专业立身之本与独立经济储蓄安全垫（鼎有实、金铉象尊贵），为人正派不惹是非。`;
-      const trEn = `Resonating with governing Line ${govNameEn} (Nobility & Modesty) and Line ${secNameEn || 'Supporting Line'} (Solid Practicality): outwardly composed, gracious, and articulate with perceptive empathy; inwardly grounded with solid professional competence and reliable financial reserves, ethical and drama-free.`;
+      // Archetype
+      let archNameZh = '';
+      let archNameEn = '';
+      let trZh = '';
+      let trEn = '';
+      if (isHex50) {
+        archNameZh = '知性温厚 · 秀外慧中 · 务实有底蕴型正配良缘';
+        archNameEn = 'Cultured Intellectual · Inner Elegance & Solid Grounding';
+        trZh = `深契主爻【${govNameZh}${govStatementZh ? '·' + govStatementZh : ''}】${secNameZh ? '与动爻【' + secNameZh + (secStatementZh ? '·' + secStatementZh : '') + '】' : ''}：外表端庄文雅、谈吐从容大度（黄耳象君子虚心）；内在务实沉稳、具备扎实专业立身之本与独立经济储蓄安全垫（鼎有实、金铉象尊贵），为人正派不惹是非。`;
+        trEn = `Resonating with governing Line ${govNameEn} (Nobility & Modesty) and Line ${secNameEn || 'Supporting Line'} (Solid Practicality): outwardly composed, gracious, and articulate with perceptive empathy; inwardly grounded with solid professional competence and reliable financial reserves, ethical and drama-free.`;
+      } else {
+        archNameZh = `${upAttr.personaZh.split('、').slice(0, 2).join(' · ')} · 务实有底蕴型正配良缘`;
+        archNameEn = `${upAttr.personaEn.split(',').slice(0, 2).join(' · ')} & Grounded Partner`;
+        trZh = `深契主爻【${govNameZh}${govStatementZh ? '·' + govStatementZh : ''}】${secNameZh ? '与动爻【' + secNameZh + (secStatementZh ? '·' + secStatementZh : '') + '】' : ''}：外表${upAttr.personaZh.split('、').slice(0, 2).join('、')}；内在${loAttr.personaZh.split('、').slice(0, 2).join('、')}，具备扎实专业立身之本与独立经济储蓄安全垫，为人正派不惹是非。`;
+        trEn = `Resonating with governing Line ${govNameEn}${secNameEn ? ' and Line ' + secNameEn : ''}: outwardly ${upAttr.personaEn.split(',').slice(0, 2).join(', ')}; inwardly ${loAttr.personaEn.split(',').slice(0, 2).join(', ')}, possessing solid professional competence and reliable financial reserves, ethical and drama-free.`;
+      }
       const dynZh = '彼此相处重在坦诚真挚与思想共振；对方看重人品与三观契合，不喜浮夸做作。交往宜循序渐进，以礼相待、相敬如宾，自成琴瑟和鸣。';
       const dynEn = 'Connection thrives upon authentic intellectual resonance, shared values, and mutual respect. The partner values ethical substance over superficial display. Gentle patience and grounded sincerity foster lifelong companionship.';
+
+      // Headline
+      let headZh = '';
+      let headEn = '';
+      if (isHex50) {
+        headZh = `【正缘神机直断 · 重器定鼎】：天时火风交感，定断主爻【${govNameZh}】临照。正缘气场清纯厚重，时空交汇正逢其时；对象在正南或东南高雅文教之所，谦和知性有积蓄，乃一生同舟共济之正配良伴！`;
+        headEn = `【Direct Consort Verdict · Sacred Cauldron Matrimony】: Fire and Wind converge in auspicious harmony; governing line ${govNameEn} anchors an authentic lifelong destiny. The counterpart resides in South/Southeast intellectual spaces—composed, cultured, and financially grounded—a loyal partner of mutual elevation!`;
+      } else {
+        headZh = `【正缘神机直断 · ${orig.nameZh}】：天时${upAttr.nameZh}${loAttr.nameZh}交感，定断主爻【${govNameZh}】临照。正缘气场清纯厚重，时空交汇正逢其时；对象在${upAttr.directionZh}或${loAttr.directionZh}优质之所，${upAttr.personaZh.split('、').slice(0, 2).join('、')}，乃一生同舟共济之正配良伴！`;
+        headEn = `【Direct Consort Verdict · ${orig.nameEn} Matrimony】: Celestial resonance of ${upAttr.nameEn} and ${loAttr.nameEn}; governing line ${govNameEn} anchors an authentic lifelong destiny. Counterpart resides in ${upAttr.directionEn} & ${loAttr.directionEn} distinguished sectors—${upAttr.personaEn.split(',').slice(0, 2).join(', ')}—a loyal partner of mutual elevation!`;
+      }
+
+      // Action Directives
+      let actEnvZh = '';
+      let actEnvEn = '';
+      let actDirZh = '';
+      let actDirEn = '';
+      if (isHex50) {
+        actEnvZh = '高规格文教沙龙、学术研讨会、行业论坛或精品艺术展';
+        actEnvEn = 'distinguished cultural forums, symposia, and curated exhibitions';
+        actDirZh = '正南方与东南方';
+        actDirEn = 'the South and Southeast';
+      } else {
+        actEnvZh = `${upAttr.environmentZh.split('、').slice(0, 2).join('、')}等优质社交与文化场域`;
+        actEnvEn = `quality settings such as ${upAttr.environmentEn.split(',').slice(0, 2).join(', ')}`;
+        actDirZh = `${upAttr.directionZh}与${loAttr.directionZh}`;
+        actDirEn = `${upAttr.directionEn} and ${loAttr.directionEn}`;
+      }
 
       catDataZh = {
         categoryName: '感情 · 正缘与婚配时空',
         defaultQuery: '什么时候可以碰到对象，以及对象在何方',
-        headline: `【正缘神机直断 · 重器定鼎】：天时火风交感，定断主爻【${govNameZh}】临照。正缘气场清纯厚重，时空交汇正逢其时；对象在正南或东南高雅文教之所，谦和知性有积蓄，乃一生同舟共济之正配良伴！`,
+        headline: headZh,
         timing: { title: '应期时限 (什么时候碰得到)', exactYear: yrZh, seasonAndMonths: moZh, favorableDays: dayZh, summary: timeSumZh },
         spatial: { title: '结缘方位与场景 (对象在何方)', directions: dirZh, environment: envZh, distance: distZh, summary: spaSumZh },
         archetype: { title: '对方气质画像与心性 (人物画像)', archetypeName: archNameZh, traits: trZh, dynamics: dynZh },
         actionDirectives: {
           title: '破局战法与行持准则 (如何行动)',
           items: [
-            '【修饬形象与知性风采】：提振个人精气神与审美知性风范，主动摆脱封闭内耗，积极参与高规格文教沙龙、学术研讨会、行业论坛或精品艺术展。',
-            '【畅通正缘引荐网络】：重点关注正南方与东南方的人脉圈层；若有值得信赖的长辈师友或正派同僚安排引见相识，切莫推脱，当大方赴约。',
+            `【修饬形象与知性风采】：提振个人精气神与审美知性风范，主动摆脱封闭内耗，积极参与${actEnvZh}。`,
+            `【畅通正缘引荐网络】：重点关注${actDirZh}的人脉圈层；若有值得信赖的长辈师友或正派同僚安排引见相识，切莫推脱，当大方赴约。`,
             '【求真务实徐徐图之】：结识初期以真实底色示人，多探讨理想抱负与生活价值观，不急于求成，在知性互动中建立坚不可摧的信任基盘。'
           ]
         },
-        grade: { score: 95, tag: '上上吉卦 · 重器定鼎', level: 'emerald' }
+        grade: { score: 95, tag: isHex50 ? '上上吉卦 · 重器定鼎' : '上吉之象 · 良缘天成', level: 'emerald' }
       };
 
       catDataEn = {
         categoryName: 'Romance · Consort & Timing/Direction',
         defaultQuery: 'When and where will I meet my spouse?',
-        headline: `【Direct Consort Verdict · Sacred Cauldron Matrimony】: Fire and Wind converge in auspicious harmony; governing line ${govNameEn} anchors an authentic lifelong destiny. The counterpart resides in South/Southeast intellectual spaces—composed, cultured, and financially grounded—a loyal partner of mutual elevation!`,
+        headline: headEn,
         timing: { title: 'Timing & Temporal Window (When)', exactYear: yrEn, seasonAndMonths: moEn, favorableDays: dayEn, summary: timeSumEn },
         spatial: { title: 'Direction & Physical Setting (Where)', directions: dirEn, environment: envEn, distance: distEn, summary: spaSumEn },
         archetype: { title: 'Partner Archetype & Demeanour (Who)', archetypeName: archNameEn, traits: trEn, dynamics: dynEn },
         actionDirectives: {
           title: 'Action Directives & Tactical Playbook (How)',
           items: [
-            '[Elevate Personal Presence]: Cultivate refined intellectual elegance; discard insular isolation and engage in distinguished cultural forums, symposia, and curated exhibitions.',
-            '[Activate Favorable Networks]: Focus on relationships in the South and Southeast; welcome formal introductions orchestrated by respected mentors and trustworthy peers.',
+            `[Elevate Personal Presence]: Cultivate refined intellectual elegance; discard insular isolation and engage in ${actEnvEn}.`,
+            `[Activate Favorable Networks]: Focus on relationships in ${actDirEn}; welcome formal introductions orchestrated by respected mentors and trustworthy peers.`,
             '[Lead with Authentic Gravitas]: Present your genuine competence and life philosophy; avoid rushed expectations and build foundational trust through intellectual dialogue.'
           ]
         },
-        grade: { score: 95, tag: 'Supreme Auspicious · Sovereign Matrimony', level: 'emerald' }
+        grade: { score: 95, tag: isHex50 ? 'Supreme Auspicious · Sovereign Matrimony' : 'Auspicious Alignment · Matrimonial Harmony', level: 'emerald' }
       };
     } else if (category === 'career') {
       const yrZh = `${baseYear}年 至 ${baseYear + 1}年`;

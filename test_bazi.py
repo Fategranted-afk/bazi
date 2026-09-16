@@ -10143,6 +10143,252 @@ run_check94 = subprocess.run(jsc_check94_cmd, capture_output=True, text=True)
 assert run_check94.returncode == 0, f"Check 94 test failed: stdout={run_check94.stdout} stderr={run_check94.stderr}"
 print("✓ 周易问事神机直断（正缘应期/方位/心性三策/五大领域）、置顶直断卡片动态渲染与皇家战报世俗正缘实操支柱（双语零残留）验证通过！")
 
-print("\n🎉 ALL 94 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 95. Validating Dynamic 64 Hexagrams Romance Resolution, Query Intent Robustness,
+#     Preset Chips, Modern Interpretation Focus & Five-Element Spouse Settings
+# ==============================================================================
+print("\n=== 95. Validating Dynamic 64 Hexagrams Romance Resolution, Query Intent Robustness & Five-Element Spouse Settings ===")
+
+jsc_check95_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/chart.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) { throw new Error(m + (e ? " " + (e.stack || e) : "")); }
+    };
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        value: id === "birthDate" ? "1995-03-24" : (id === "birthTime" ? "09:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        attributes: {},
+        options: [{ textContent: "乾造", value: "乾造" }],
+        selectedIndex: 0,
+        focus: function() {},
+        blur: function() {},
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            arc: function(){}, setLineDash: function(){}, scale: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; }
+          };
+        },
+        _listeners: {},
+        _children: [],
+        appendChild: function(c) { this._children.push(c); },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this.attributes[a] || ""; },
+        setAttribute: function(a, v) { this.attributes[a] = v; },
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = (this._listeners[evt] || []).slice(); for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); }
+      };
+    }
+
+    var allIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "calcBtn", "birthDate", "birthTime", "gender", "citySelect", "useTrueSolarTime", "timezoneSelect",
+      "imperialDossierModal", "imperialDossierContainer", "dossierLangZh", "dossierLangEn", "btnExportDossier",
+      "dossierCityCountrySelect", "dossierCitySelect", "currentCountrySelect", "currentCitySelect", "currentCustomCityInput",
+      "ichingCastBtn", "ichingMethodSelect", "ichingQueryInput", "ichingResultCard", "ichingTargetedInquiryCard",
+      "ichingOriginalCard", "ichingResultingCard", "ichingMutualCard", "ichingOppositeCard", "ichingReverseCard",
+      "ichingZhiNianCard", "ichingHexCycleContainer", "modernInterpretationCards"
+    ];
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function(){ return "dark"; }, setAttribute: function(){} },
+      getElementById: function(id) { if (!elementStore[id]) elementStore[id] = makeEl(id); return elementStore[id]; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      addEventListener: function(event, handler) { if (event === "DOMContentLoaded") this._domReady = handler; }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      innerWidth: 1200, innerHeight: 800,
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      PortraitEngine: PortraitEngine,
+      LuckEngine: LuckEngine,
+      IChingEngine: IChingEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine,
+      HISTORICAL_FIGURES: HISTORICAL_FIGURES,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      TenGodsDB: TenGodsDB,
+      TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
+      SanMingDB: SanMingDB,
+      QiongTongDB: QiongTongDB,
+      ZiPingZhenQuanDB: ZiPingZhenQuanDB,
+      DiTianSuiDB: DiTianSuiDB,
+      YuanHaiDB: YuanHaiDB,
+      ShenFengDB: ShenFengDB,
+      YuZhaoDB: YuZhaoDB,
+      LiXuZhongDB: LiXuZhongDB
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // 1. Validate Dynamic Romance Resolution for Hexagram 11 (地天泰)
+    var lines11 = [
+      IChingEngine.buildLineObject(1, 9),
+      IChingEngine.buildLineObject(2, 9),
+      IChingEngine.buildLineObject(3, 9),
+      IChingEngine.buildLineObject(4, 8),
+      IChingEngine.buildLineObject(5, 8),
+      IChingEngine.buildLineObject(6, 8)
+    ];
+    var divRes11 = IChingEngine.synthesizeDivination(lines11, "instant", "什么时候可以碰到对象， 以及对象在何方");
+    var res11Zh = IChingEngine.analyzeCustomInquiry("什么时候可以碰到对象， 以及对象在何方", divRes11, null, null, "zh");
+
+    if (res11Zh.category !== "romance") throw new Error("Hex 11 category should be romance");
+    if (!res11Zh.headline.includes("地天泰")) throw new Error("Hex 11 headline should mention 地天泰, got: " + res11Zh.headline);
+    if (!res11Zh.spatial.directions.includes("西南方") || !res11Zh.spatial.directions.includes("西北方")) {
+      throw new Error("Hex 11 directions must mention 西南方 and 西北方, got: " + res11Zh.spatial.directions);
+    }
+    if (res11Zh.spatial.summary.includes("正南方与东南方")) {
+      throw new Error("Hex 11 spatial summary should NOT hardcode south/southeast!");
+    }
+    if (res11Zh.archetype.traits.includes("黄耳") || res11Zh.archetype.traits.includes("鼎有实")) {
+      throw new Error("Hex 11 traits should NOT contain Hex 50 specific line text!");
+    }
+    if (res11Zh.actionDirectives.items[1].includes("正南方与东南方")) {
+      throw new Error("Hex 11 action directives should NOT hardcode south/southeast!");
+    }
+    if (!res11Zh.actionDirectives.items[1].includes("西南方") || !res11Zh.actionDirectives.items[1].includes("西北方")) {
+      throw new Error("Hex 11 action directives must dynamically mention 西南方 and 西北方!");
+    }
+
+    // 2. Validate Natural Query Intent Robustness
+    var intentChecks = [
+      { q: "我什么时候能碰到真爱？对方在哪里？", expected: "romance" },
+      { q: "配偶在何处？", expected: "romance" },
+      { q: "妻子何在？", expected: "romance" },
+      { q: "丈夫在何处？", expected: "romance" },
+      { q: "良缘何时至？", expected: "romance" },
+      { q: "今年能不能加薪？", expected: "career" },
+      { q: "转行可行吗？", expected: "career" },
+      { q: "收入如何提高？", expected: "wealth" },
+      { q: "最近能发笔横财吗？", expected: "wealth" },
+      { q: "眼下这件事去留进退吉凶如何决断", expected: "decision" }
+    ];
+    intentChecks.forEach(function(ic) {
+      var r = IChingEngine.analyzeCustomInquiry(ic.q, divRes11, null, null, "zh");
+      if (r.category !== ic.expected) {
+        throw new Error("Query '" + ic.q + "' expected category '" + ic.expected + "', got '" + r.category + "'");
+      }
+    });
+
+    // 3. Validate Modern Interpretation Active Focus Highlighting
+    window.renderIChingResult(divRes11);
+    var modernHtmlZh = elementStore["modernInterpretationCards"].innerHTML;
+    if (!modernHtmlZh.includes("border-rose-500/80")) throw new Error("Missing rose border on active romance card in ZH modern interpretations");
+    if (!modernHtmlZh.includes("问事重点研读")) throw new Error("Missing '问事重点研读' badge in ZH modern interpretations");
+
+    // Switch to English and verify zero residual Chinese
+    window.setLanguage("en");
+    var res11En = IChingEngine.analyzeCustomInquiry("When will I meet my spouse?", divRes11, null, null, "en");
+    var enJson = JSON.stringify(res11En);
+    var enMatches = enJson.match(/[\u4e00-\u9fa5]/g);
+    if (enMatches && enMatches.length > 0) {
+      throw new Error("Residual Chinese in Hex 11 EN romance analysis: " + enMatches.join(""));
+    }
+    if (res11En.actionDirectives.items[1].includes("South and Southeast")) {
+      throw new Error("Hex 11 EN action directives should NOT hardcode South and Southeast!");
+    }
+    if (!res11En.actionDirectives.items[1].includes("Southwest") || !res11En.actionDirectives.items[1].includes("Northwest")) {
+      throw new Error("Hex 11 EN action directives must dynamically mention Southwest and Northwest!");
+    }
+    window.renderIChingResult(divRes11);
+    var modernHtmlEn = elementStore["modernInterpretationCards"].innerHTML;
+    if (!modernHtmlEn.includes("Inquiry Focus")) throw new Error("Missing 'Inquiry Focus' badge in EN modern interpretations");
+    var modernEnMatches = modernHtmlEn.match(/[\u4e00-\u9fa5]/g);
+    if (modernEnMatches && modernEnMatches.length > 0) {
+      throw new Error("Residual Chinese in EN modern interpretations: " + modernEnMatches.join(""));
+    }
+
+    // 4. Validate Imperial Dossier dynamic spouse timing & setting
+    elementStore["calcBtn"].trigger("click");
+    elementStore["btnExportDossier"].trigger("click");
+    elementStore["dossierLangZh"].trigger("click");
+    var dZh = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dZh.includes("正缘应期与结缘方位")) throw new Error("Page 1 missing spouse timing in ZH");
+    if (!dZh.includes("应期时限与场景方位")) throw new Error("Page 5 missing spouse setting in ZH");
+
+    elementStore["dossierLangEn"].trigger("click");
+    var dEn = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dEn.includes("Spouse Encounter Timing & Direction")) throw new Error("Page 1 missing spouse timing in EN");
+    if (!dEn.includes("Encounter Timing & Setting")) throw new Error("Page 5 missing spouse setting in EN");
+    var dEnResidual = dEn.match(/[\u4e00-\u9fa5]/g);
+    if (dEnResidual && dEnResidual.length > 0) {
+      throw new Error("Residual Chinese in Imperial Dossier EN: " + dEnResidual.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check95 = subprocess.run(jsc_check95_cmd, capture_output=True, text=True)
+assert run_check95.returncode == 0, f"Check 95 test failed: stdout={run_check95.stdout} stderr={run_check95.stderr}"
+print("✓ 64卦全相正缘神机直断动态推演、自然意图正则鲁棒性、问事重点高光卡片与五行配偶时空场景（双语零残留）验证通过！")
+
+print("\n🎉 ALL 95 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
