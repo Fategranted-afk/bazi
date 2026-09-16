@@ -3264,7 +3264,7 @@ class PortraitEngine {
    * 📜 主导格局深度解析 (二八法则 · 格之可取与避讳大忌)
    * 总结主导格局核心定性、20%核心胜手(所当取者)、80%损耗暗礁(所当避者)与直白白话文实战定论
    */
-  static generatePatternExegesis(patNameZh, dm, vigor, bazi) {
+  static generatePatternExegesis(patNameZh, dm, vigor, bazi, rank = 1, weightPct = null) {
     const pat = patNameZh || '';
 
     // Determine archetype category
@@ -3377,11 +3377,27 @@ class PortraitEngine {
     };
 
     const res = exegesisData[type] || exegesisData['wealth'];
+    
+    // Tailor summary prefix based on rank (Rank 1 vs Rank 2 vs Rank 3)
+    let sZh = res.summaryZh;
+    let sEn = res.summaryEn;
+    const patEn = this.getPatternEn ? this.getPatternEn(pat) : pat;
+    const wtStr = weightPct ? `（全盘能量占比：${weightPct}%）` : '';
+    const wtStrEn = weightPct ? ` · ${weightPct}% Energy Share` : '';
+
+    if (rank === 2) {
+      sZh = `本命以【${pat}】充当第二强力辅助生发枢纽${wtStr}。在《子平真诠》与《渊海子平》统摄下，第二大格承前启后，既是第一核心主格的落地执行抓手与价值放大器，又是全相活力生生不息的能量发源地。` + res.summaryZh.replace(/^本命以【.*?】.*?[。]/, '');
+      sEn = `[Rank 2: Secondary Operational Catalyst${wtStrEn}] Powered by [${patEn}], this pattern serves as the tactical engine and execution vehicle for the primary mandate, transforming strategic vision into concrete deliveries. ` + res.summaryEn.replace(/^.*?[.]\s*/, '');
+    } else if (rank === 3) {
+      sZh = `本命以【${pat}】坐镇第三潜质调和底盘${wtStr}。在深层充当危机平衡相神与风险防波堤，在关键时刻提供稳固制衡力量，防止前两大格局在急速扩张或重压面前过刚折翼。` + res.summaryZh.replace(/^本命以【.*?】.*?[。]/, '');
+      sEn = `[Rank 3: Tertiary Stabilizing Buffer${wtStrEn}] Supported by [${patEn}], this pattern acts as the defensive ballast and risk hedge, ensuring structural balance and checking excessive expansion. ` + res.summaryEn.replace(/^.*?[.]\s*/, '');
+    }
+
     return {
       nameZh: res.nameZh,
       nameEn: res.nameEn,
-      summaryZh: res.summaryZh,
-      summaryEn: res.summaryEn,
+      summaryZh: sZh,
+      summaryEn: sEn,
       favorableZh: res.favorableZh,
       favorableEn: res.favorableEn,
       tabooZh: res.tabooZh,
@@ -3389,10 +3405,126 @@ class PortraitEngine {
       paretoConclusionZh: res.paretoConclusionZh,
       paretoConclusionEn: res.paretoConclusionEn,
       name: res.nameZh,
-      summary: res.summaryZh,
+      summary: sZh,
       favorable: res.favorableZh,
       taboo: res.tabooZh,
       paretoConclusion: res.paretoConclusionZh
+    };
+  }
+
+
+
+  /**
+   * 📜 前三主导格局深度解析与二八法则统融 (Top 3 Dominant Patterns & Holistic Pareto Synthesis)
+   * 针对全盘能量占比前三的格局，逐格深剖20%胜手与80%暗礁，并生成三格通融的战略总论
+   */
+  static generateTop3PatternsExegesis(patternList, dm, vigor, bazi) {
+    let list = Array.isArray(patternList) ? [...patternList] : [];
+    if (list.length > 0) {
+      list.sort((a, b) => (b.weightPct || 0) - (a.weightPct || 0));
+    }
+    
+    // Ensure at least 3 patterns are populated
+    const fallbackPatterns = [
+      { name: '财格 (正财 / 偏财 / 财旺生官 / 食伤生财)', weightPct: 35 },
+      { name: '官杀格 (正官格 / 七杀格 / 杀印相生)', weightPct: 25 },
+      { name: '食伤格 (食神生财 / 伤官配印 / 秀气发越)', weightPct: 18 }
+    ];
+
+    while (list.length < 3) {
+      const idx = list.length;
+      list.push(fallbackPatterns[idx] || { name: '印绶格 (正印格 / 文明修身 / 信用壁垒)', weightPct: 15 });
+    }
+
+    const top3 = list.slice(0, 3);
+    const rankConfigs = [
+      {
+        rank: 1,
+        rankZh: '#1 第一核心主导格局',
+        rankEn: '#1 Primary Governing Pattern',
+        roleZh: '坐镇核心帅印 · 司权全盘',
+        roleEn: 'Primary Sovereign Pivot · Strategic Core'
+      },
+      {
+        rank: 2,
+        rankZh: '#2 第二辅助生发格局',
+        rankEn: '#2 Secondary Operating Pattern',
+        roleZh: '承前启后 · 活力生发枢纽',
+        roleEn: 'Secondary Operational Engine · Kinetic Catalyst'
+      },
+      {
+        rank: 3,
+        rankZh: '#3 第三潜质调和格局',
+        rankEn: '#3 Tertiary Stabilizing Pattern',
+        roleZh: '防波底盘 · 危机平衡相神',
+        roleEn: 'Tertiary Stabilizing Buffer · Risk Hedge'
+      }
+    ];
+
+    const topPatterns = top3.map((pat, idx) => {
+      const cfg = rankConfigs[idx] || rankConfigs[0];
+      const pWeight = pat.weightPct || (idx === 0 ? 35 : (idx === 1 ? 25 : 18));
+      const exe = this.generatePatternExegesis(pat.name, dm, vigor, bazi, idx + 1, pWeight);
+      const patEnName = (typeof this.getPatternEn === 'function') ? this.getPatternEn(pat.name) : pat.name;
+      return {
+        rank: idx + 1,
+        rankZh: cfg.rankZh,
+        rankEn: cfg.rankEn,
+        roleZh: cfg.roleZh,
+        roleEn: cfg.roleEn,
+        weightPct: pWeight,
+        patNameZh: pat.name,
+        patNameEn: patEnName,
+        nameZh: exe.nameZh,
+        nameEn: exe.nameEn,
+        summaryZh: exe.summaryZh,
+        summaryEn: exe.summaryEn,
+        favorableZh: exe.favorableZh,
+        favorableEn: exe.favorableEn,
+        tabooZh: exe.tabooZh,
+        tabooEn: exe.tabooEn,
+        paretoConclusionZh: exe.paretoConclusionZh,
+        paretoConclusionEn: exe.paretoConclusionEn,
+        name: exe.nameZh,
+        summary: exe.summaryZh,
+        favorable: exe.favorableZh,
+        taboo: exe.tabooZh,
+        paretoConclusion: exe.paretoConclusionZh
+      };
+    });
+
+    // Unified Cross-Pattern Holistic Synthesis
+    const p1 = topPatterns[0];
+    const p2 = topPatterns[1];
+    const p3 = topPatterns[2];
+
+    const synthesisZh = `【前三主导格局相生相制 · 综合全相战略实战总论】全盘命局绝非单一孤立之静态格局，而是由【${p1.patNameZh}】（${p1.weightPct}%）、【${p2.patNameZh}】（${p2.weightPct}%）与【${p3.patNameZh}】（${p3.weightPct}%）三大核心机能交织演化的立体运化生态。第一大格执掌全盘帅印，确立长线战略定力与终局价值坐标；第二大格充当生发枢纽，提供源源不绝的战术推进、商业变现与破局穿透力；第三大格化为深层压舱石，在关键风险关口构筑合规与风控防波堤，制衡前两者可能滋生的孤傲与冒进。在二八实战法则上，命主真正的统帅级超级杠杆，绝不是在三者各自80%的内耗暗礁中疲于奔命（坚决斩断盲目加杠杆、意气硬碰硬与清高空想），而是将三者的20%核心胜手合龙——“以第一大格的终身定力锁定主航道，以第二大格的锋芒产品攻城拔寨，以第三大格的合规制度兜牢安全底线”，三相合一，方成经邦济世、立于不败之地之大成格局！`;
+
+    const synthesisEn = `[Top 3 Patterns Synergy & Unified Strategic Directives] This chart operates not as an isolated single pattern, but as an integrated multi-dimensional triumvirate: anchored by [${p1.patNameEn}] (${p1.weightPct}%) as the primary sovereign pivot, catalyzed by [${p2.patNameEn}] (${p2.weightPct}%) as the operational engine, and secured by [${p3.patNameEn}] (${p3.weightPct}%) as the stabilizing risk hedge. Pattern 1 commands the overarching strategic vision and north star; Pattern 2 generates tactical execution, creative breakthrough, and economic monetization; Pattern 3 fortifies institutional compliance and domestic ballast, checking any reckless overextension. Under the Pareto 80/20 Law, your supreme winning edge lies not in battling the collective 80% friction traps (speculative leverage, ego confrontations, or ivory-tower hesitation), but in synchronizing their vital 20% levers: anchor your career to Pattern 1's enduring focus, conquer market frontiers with Pattern 2's sharp execution, and safeguard your downside with Pattern 3's ironclad governance. This tripartite alignment unlocks compounding, unassailable life triumph.`;
+
+    return {
+      // Primary pattern legacy compatibility fields
+      nameZh: p1.nameZh,
+      nameEn: p1.nameEn,
+      summaryZh: p1.summaryZh,
+      summaryEn: p1.summaryEn,
+      favorableZh: p1.favorableZh,
+      favorableEn: p1.favorableEn,
+      tabooZh: p1.tabooZh,
+      tabooEn: p1.tabooEn,
+      paretoConclusionZh: p1.paretoConclusionZh,
+      paretoConclusionEn: p1.paretoConclusionEn,
+      name: p1.nameZh,
+      summary: p1.summaryZh,
+      favorable: p1.favorableZh,
+      taboo: p1.tabooZh,
+      paretoConclusion: p1.paretoConclusionZh,
+      // Top 3 Patterns Array & Holistic Synthesis
+      topPatterns,
+      synthesisZh,
+      synthesisEn,
+      synthesisTitleZh: '👑 前三主导格局通融 · 综合全相破局总论',
+      synthesisTitleEn: '👑 Top 3 Patterns Synergy · Unified Executive Action Directive'
     };
   }
 
@@ -3531,7 +3663,7 @@ class PortraitEngine {
     ];
 
     
-    const patternAnalysis = this.generatePatternExegesis(patNameZh, dm, vigor, bazi);
+    const patternAnalysis = this.generateTop3PatternsExegesis(patternList, dm, vigor, bazi);
 return {
       titleZh: '👑 全盘大局通融 · 综合全息画像',
       titleEn: '👑 Grand Holistic Synthesis · Master Destiny Portrait',

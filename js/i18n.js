@@ -2409,6 +2409,7 @@ const I18N = (function() {
       if (pc.primaryPatternNameZh) {
         const transPatName = getPatternName(pc.primaryPatternNameZh, 'en') || pc.primaryPatternNameEn;
         pc.primaryPatternName = transPatName;
+        pc.primaryPatternNameEn = transPatName;
         pc.primaryPatternDesc = (pc.primaryPatternDescEn || pc.primaryPatternDescZh || '')
           .replace(new RegExp(pc.primaryPatternNameZh, 'g'), transPatName)
           .replace(/【.+?】/g, `[${transPatName}]`);
@@ -2430,6 +2431,19 @@ const I18N = (function() {
           gp.patternAnalysis.favorable = gp.patternAnalysis.favorableEn;
           gp.patternAnalysis.taboo = gp.patternAnalysis.tabooEn;
           gp.patternAnalysis.paretoConclusion = gp.patternAnalysis.paretoConclusionEn;
+          gp.patternAnalysis.synthesis = gp.patternAnalysis.synthesisEn;
+          gp.patternAnalysis.synthesisTitle = gp.patternAnalysis.synthesisTitleEn;
+          if (Array.isArray(gp.patternAnalysis.topPatterns)) {
+            gp.patternAnalysis.topPatterns.forEach(p => {
+              p.rank = p.rankEn;
+              p.role = p.roleEn;
+              p.name = p.nameEn;
+              p.summary = p.summaryEn;
+              p.favorable = p.favorableEn;
+              p.taboo = p.tabooEn;
+              p.paretoConclusion = p.paretoConclusionEn;
+            });
+          }
         }
       }
 

@@ -1629,7 +1629,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex items-center space-x-2">
               <span class="chinese-seal text-xs py-0.5">${isEn ? 'PARETO 20% FULCRUM' : '👑 帕累托 20% 统帅枢纽'}</span>
               <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300">
-                ${isEn ? `Primary Dominant Pattern: ${pc.primaryPatternNameEn || pc.primaryPatternNameZh} (${pc.primaryPatternWeightPct}%)` : `第一核心主导格局：${pc.primaryPatternNameZh}（能量占比：${pc.primaryPatternWeightPct}%）`}
+                ${isEn ? `Primary Dominant Pattern: ${pc.primaryPatternName || pc.primaryPatternNameEn || pc.primaryPatternNameZh} (${pc.primaryPatternWeightPct}%)` : `第一核心主导格局：${pc.primaryPatternNameZh || pc.primaryPatternName}（能量占比：${pc.primaryPatternWeightPct}%）`}
               </h3>
             </div>
             <span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40 font-mono">
@@ -1701,55 +1701,117 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- 2. 主导格局深度解析 (二八法则 · 格之可取与避讳大忌) -->
           ${gp.patternAnalysis ? `
-          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/40 space-y-3 shadow-lg">
-            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-amber-500/20">
+          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/40 space-y-3.5 shadow-lg">
+            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-amber-500/20">
               <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
                 <span>📜</span>
-                <span>${isEn ? '2. Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
+                <span>${isEn ? '2. Top 3 Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、前三主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
               </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-bold">
-                ${isEn ? (gp.patternAnalysis.nameEn || gp.patternAnalysis.name) : (gp.patternAnalysis.nameZh || gp.patternAnalysis.name)}
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
+                ${isEn ? 'Top 3 Synergy Matrix' : '前三主导格局 · 综合通融'}
               </span>
             </div>
             
-            <p class="text-xs text-gray-200 leading-relaxed font-sans">
-              ${isEn ? (gp.patternAnalysis.summaryEn || gp.patternAnalysis.summary) : (gp.patternAnalysis.summaryZh || gp.patternAnalysis.summary)}
+            <p class="text-xs text-gray-400 font-serif-sc">
+              ${isEn ? 'Multi-dimensional analysis of the top 3 governing patterns: 20% levers, 80% taboos, and unified synthesis.' : '原局前三主导核心格局多维对校 · 逐格深剖20%核心胜手与80%损耗暗礁 · 汇通全相破局战略总论'}
             </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
-              <!-- 格之可取 (20% 核心胜手) -->
-              <div class="p-3 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
-                <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
-                  <span>🟢</span>
-                  <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
-                </span>
-                <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                  ${isEn ? (gp.patternAnalysis.favorableEn || gp.patternAnalysis.favorable) : (gp.patternAnalysis.favorableZh || gp.patternAnalysis.favorable)}
-                </p>
-              </div>
+            <div class="space-y-3 pt-0.5">
+              ${(gp.patternAnalysis.topPatterns || [gp.patternAnalysis]).map((pat, pIdx) => {
+                const rankStyles = [
+                  { border: 'border-amber-500/50', bg: 'bg-amber-950/15', text: 'text-amber-300', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40', tagZh: '#1 第一核心主导格局', tagEn: '#1 Primary Governing Pattern' },
+                  { border: 'border-emerald-500/40', bg: 'bg-emerald-950/15', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', tagZh: '#2 第二辅助生发格局', tagEn: '#2 Secondary Operating Pattern' },
+                  { border: 'border-purple-500/40', bg: 'bg-purple-950/15', text: 'text-purple-300', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/40', tagZh: '#3 第三潜质调和格局', tagEn: '#3 Tertiary Stabilizing Pattern' }
+                ];
+                const st = rankStyles[pIdx] || rankStyles[0];
+                const pName = isEn ? (pat.nameEn || pat.name) : (pat.nameZh || pat.name);
+                const pSum = isEn ? (pat.summaryEn || pat.summary) : (pat.summaryZh || pat.summary);
+                const pFav = isEn ? (pat.favorableEn || pat.favorable) : (pat.favorableZh || pat.favorable);
+                const pTab = isEn ? (pat.tabooEn || pat.taboo) : (pat.tabooZh || pat.taboo);
+                const pCon = isEn ? (pat.paretoConclusionEn || pat.paretoConclusion) : (pat.paretoConclusionZh || pat.paretoConclusion);
+                const pRole = isEn ? (pat.roleEn || pat.role) : (pat.roleZh || pat.role);
+                const pWeight = pat.weightPct ? `${pat.weightPct}%` : '';
 
-              <!-- 需要避讳的地方 (80% 损耗暗礁) -->
-              <div class="p-3 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
-                <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
-                  <span>🔴</span>
-                  <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
-                </span>
-                <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                  ${isEn ? (gp.patternAnalysis.tabooEn || gp.patternAnalysis.taboo) : (gp.patternAnalysis.tabooZh || gp.patternAnalysis.taboo)}
-                </p>
-              </div>
+                return `
+                  <div class="p-3 sm:p-3.5 rounded-xl ${st.bg} border ${st.border} space-y-2.5 transition-all">
+                    <!-- Pattern Header -->
+                    <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
+                      <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono border ${st.badge}">
+                          ${isEn ? (pat.rankEn || st.tagEn) : (pat.rankZh || st.tagZh)}
+                        </span>
+                        <span class="text-xs sm:text-sm font-bold ${st.text} font-serif-sc">
+                          ${pName}
+                        </span>
+                      </div>
+                      <div class="flex items-center gap-2 text-[10px] font-mono">
+                        ${pWeight ? `<span class="px-1.5 py-0.2 rounded bg-black/40 text-amber-300 border border-amber-500/30 font-bold">${pWeight}</span>` : ''}
+                        ${pRole ? `<span class="text-gray-400 font-serif-sc truncate">${pRole}</span>` : ''}
+                      </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <p class="text-xs text-gray-200 leading-relaxed font-sans">
+                      ${pSum}
+                    </p>
+
+                    <!-- 20% Lever vs 80% Taboo Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-0.5">
+                      <!-- 20% Favorable Lever -->
+                      <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
+                        <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                          <span>🟢</span>
+                          <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
+                        </span>
+                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                          ${pFav}
+                        </p>
+                      </div>
+
+                      <!-- 80% Taboo Reef -->
+                      <div class="p-2.5 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
+                        <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                          <span>🔴</span>
+                          <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+                        </span>
+                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                          ${pTab}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Direct Vernacular Conclusion -->
+                    <div class="p-2.5 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
+                      <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+                        <span>💡</span>
+                        <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
+                      </span>
+                      <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
+                        ${pCon}
+                      </p>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
 
-            <!-- 二八法则白话文结论 -->
-            <div class="p-3 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
-              <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
-                <span>💡</span>
-                <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
-              </span>
-              <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
-                ${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion) : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion)}
-              </p>
-            </div>
+            <!-- Comprehensive Cross-Pattern Synthesis Card -->
+            ${gp.patternAnalysis.synthesisZh ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-br from-amber-950/30 via-[#181622] to-black border-2 border-amber-500/60 shadow-xl space-y-2 mt-1">
+                <div class="flex items-center justify-between pb-1.5 border-b border-amber-500/30">
+                  <h5 class="text-xs sm:text-sm font-bold text-amber-200 flex items-center gap-1.5 font-serif-sc">
+                    <span>👑</span>
+                    <span>${isEn ? (gp.patternAnalysis.synthesisTitleEn || 'Unified Top 3 Synergy Directive') : (gp.patternAnalysis.synthesisTitleZh || '前三主导格局通融 · 综合全相破局总论')}</span>
+                  </h5>
+                  <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold font-serif-sc">
+                    ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
+                  </span>
+                </div>
+                <p class="text-xs text-amber-100/95 leading-relaxed font-serif-sc font-medium">
+                  ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
+                </p>
+              </div>
+            ` : ''}
           </div>
           ` : ''}
 
@@ -2806,58 +2868,120 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <!-- 2. 主导格局深度解析 (二八法则 · 格之可取与避讳大忌) -->
-        ${gp.patternAnalysis ? `
-        <div class="p-4 sm:p-5 rounded-xl bg-black/45 border border-amber-500/40 space-y-3 shadow-lg">
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-1.5 border-b border-amber-500/20">
-            <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
-              <span>📜</span>
-              <span>${isEn ? '2. Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
-            </h4>
-            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
-              ${isEn ? (gp.patternAnalysis.nameEn || gp.patternAnalysis.name) : (gp.patternAnalysis.nameZh || gp.patternAnalysis.name)}
-            </span>
-          </div>
-
-          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-sans">
-            ${isEn ? (gp.patternAnalysis.summaryEn || gp.patternAnalysis.summary) : (gp.patternAnalysis.summaryZh || gp.patternAnalysis.summary)}
-          </p>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-            <!-- 格之可取 (20% 核心胜手) -->
-            <div class="p-3.5 rounded-xl bg-emerald-950/25 border border-emerald-500/40 space-y-1.5">
-              <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
-                <span>🟢</span>
-                <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
+          ${gp.patternAnalysis ? `
+          <div class="p-4 sm:p-5 rounded-xl bg-black/45 border border-amber-500/40 space-y-3.5 shadow-lg">
+            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-amber-500/20">
+              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+                <span>📜</span>
+                <span>${isEn ? '2. Top 3 Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、前三主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
+              </h4>
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
+                ${isEn ? 'Top 3 Synergy Matrix' : '前三主导格局 · 综合通融'}
               </span>
-              <p class="text-xs text-gray-300 leading-relaxed font-sans">
-                ${isEn ? (gp.patternAnalysis.favorableEn || gp.patternAnalysis.favorable) : (gp.patternAnalysis.favorableZh || gp.patternAnalysis.favorable)}
-              </p>
             </div>
-
-            <!-- 需要避讳的地方 (80% 损耗暗礁) -->
-            <div class="p-3.5 rounded-xl bg-rose-950/25 border border-rose-500/40 space-y-1.5">
-              <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
-                <span>🔴</span>
-                <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
-              </span>
-              <p class="text-xs text-gray-300 leading-relaxed font-sans">
-                ${isEn ? (gp.patternAnalysis.tabooEn || gp.patternAnalysis.taboo) : (gp.patternAnalysis.tabooZh || gp.patternAnalysis.taboo)}
-              </p>
-            </div>
-          </div>
-
-          <!-- 二八法则白话文结论 -->
-          <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1.5">
-            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
-              <span>💡</span>
-              <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
-            </span>
-            <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
-              ${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion) : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion)}
+            
+            <p class="text-xs text-gray-400 font-serif-sc">
+              ${isEn ? 'Multi-dimensional analysis of the top 3 governing patterns: 20% levers, 80% taboos, and unified synthesis.' : '原局前三主导核心格局多维对校 · 逐格深剖20%核心胜手与80%损耗暗礁 · 汇通全相破局战略总论'}
             </p>
+
+            <div class="space-y-3 pt-0.5">
+              ${(gp.patternAnalysis.topPatterns || [gp.patternAnalysis]).map((pat, pIdx) => {
+                const rankStyles = [
+                  { border: 'border-amber-500/50', bg: 'bg-amber-950/15', text: 'text-amber-300', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40', tagZh: '#1 第一核心主导格局', tagEn: '#1 Primary Governing Pattern' },
+                  { border: 'border-emerald-500/40', bg: 'bg-emerald-950/15', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', tagZh: '#2 第二辅助生发格局', tagEn: '#2 Secondary Operating Pattern' },
+                  { border: 'border-purple-500/40', bg: 'bg-purple-950/15', text: 'text-purple-300', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/40', tagZh: '#3 第三潜质调和格局', tagEn: '#3 Tertiary Stabilizing Pattern' }
+                ];
+                const st = rankStyles[pIdx] || rankStyles[0];
+                const pName = isEn ? (pat.nameEn || pat.name) : (pat.nameZh || pat.name);
+                const pSum = isEn ? (pat.summaryEn || pat.summary) : (pat.summaryZh || pat.summary);
+                const pFav = isEn ? (pat.favorableEn || pat.favorable) : (pat.favorableZh || pat.favorable);
+                const pTab = isEn ? (pat.tabooEn || pat.taboo) : (pat.tabooZh || pat.taboo);
+                const pCon = isEn ? (pat.paretoConclusionEn || pat.paretoConclusion) : (pat.paretoConclusionZh || pat.paretoConclusion);
+                const pRole = isEn ? (pat.roleEn || pat.role) : (pat.roleZh || pat.role);
+                const pWeight = pat.weightPct ? `${pat.weightPct}%` : '';
+
+                return `
+                  <div class="p-3 sm:p-3.5 rounded-xl ${st.bg} border ${st.border} space-y-2.5 transition-all">
+                    <!-- Pattern Header -->
+                    <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
+                      <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono border ${st.badge}">
+                          ${isEn ? (pat.rankEn || st.tagEn) : (pat.rankZh || st.tagZh)}
+                        </span>
+                        <span class="text-xs sm:text-sm font-bold ${st.text} font-serif-sc">
+                          ${pName}
+                        </span>
+                      </div>
+                      <div class="flex items-center gap-2 text-[10px] font-mono">
+                        ${pWeight ? `<span class="px-1.5 py-0.2 rounded bg-black/40 text-amber-300 border border-amber-500/30 font-bold">${pWeight}</span>` : ''}
+                        ${pRole ? `<span class="text-gray-400 font-serif-sc truncate">${pRole}</span>` : ''}
+                      </div>
+                    </div>
+
+                    <!-- Summary -->
+                    <p class="text-xs text-gray-200 leading-relaxed font-sans">
+                      ${pSum}
+                    </p>
+
+                    <!-- 20% Lever vs 80% Taboo Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-0.5">
+                      <!-- 20% Favorable Lever -->
+                      <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
+                        <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                          <span>🟢</span>
+                          <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
+                        </span>
+                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                          ${pFav}
+                        </p>
+                      </div>
+
+                      <!-- 80% Taboo Reef -->
+                      <div class="p-2.5 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
+                        <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                          <span>🔴</span>
+                          <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+                        </span>
+                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                          ${pTab}
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- Direct Vernacular Conclusion -->
+                    <div class="p-2.5 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
+                      <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+                        <span>💡</span>
+                        <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
+                      </span>
+                      <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
+                        ${pCon}
+                      </p>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Comprehensive Cross-Pattern Synthesis Card -->
+            ${gp.patternAnalysis.synthesisZh ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-br from-amber-950/30 via-[#181622] to-black border-2 border-amber-500/60 shadow-xl space-y-2 mt-1">
+                <div class="flex items-center justify-between pb-1.5 border-b border-amber-500/30">
+                  <h5 class="text-xs sm:text-sm font-bold text-amber-200 flex items-center gap-1.5 font-serif-sc">
+                    <span>👑</span>
+                    <span>${isEn ? (gp.patternAnalysis.synthesisTitleEn || 'Unified Top 3 Synergy Directive') : (gp.patternAnalysis.synthesisTitleZh || '前三主导格局通融 · 综合全相破局总论')}</span>
+                  </h5>
+                  <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold font-serif-sc">
+                    ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
+                  </span>
+                </div>
+                <p class="text-xs text-amber-100/95 leading-relaxed font-serif-sc font-medium">
+                  ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
+                </p>
+              </div>
+            ` : ''}
           </div>
-        </div>
-        ` : ''}
+          ` : ''}
 
         <!-- 3. 生杀破局与战略胜负手 -->
         <div class="p-4 rounded-xl bg-black/45 border border-rose-900/40 space-y-2">
@@ -5638,6 +5762,90 @@ document.addEventListener('DOMContentLoaded', () => {
     const domEl = synthesis.dominantElement;
     const interp = synthesis.strategicFieldInterpretation;
 
+    const chars = (synthesis.characters && synthesis.characters.length === 14)
+      ? synthesis.characters
+      : [];
+
+    const columns = [
+      {
+        key: 'year',
+        titleZh: '年柱',
+        titleEn: 'Year',
+        subZh: '根基祖业',
+        subEn: 'Ancestral',
+        isTransit: false,
+        stem: chars[0] || {},
+        branch: chars[1] || {},
+        isDayMaster: false
+      },
+      {
+        key: 'month',
+        titleZh: '月柱',
+        titleEn: 'Month',
+        subZh: '提纲门户',
+        subEn: 'Career Hub',
+        isTransit: false,
+        stem: chars[2] || {},
+        branch: chars[3] || {},
+        isDayMaster: false
+      },
+      {
+        key: 'day',
+        titleZh: '日柱',
+        titleEn: 'Day',
+        subZh: '元神自身',
+        subEn: 'Day Master',
+        isTransit: false,
+        stem: chars[4] || {},
+        branch: chars[5] || {},
+        isDayMaster: true
+      },
+      {
+        key: 'hour',
+        titleZh: '时柱',
+        titleEn: 'Hour',
+        subZh: '归宿子息',
+        subEn: 'Offspring',
+        isTransit: false,
+        stem: chars[6] || {},
+        branch: chars[7] || {},
+        isDayMaster: false
+      },
+      {
+        key: 'decade',
+        titleZh: '当行大运',
+        titleEn: 'Decade',
+        subZh: '十年大势',
+        subEn: '10-Yr Macro',
+        isTransit: true,
+        stem: chars[8] || {},
+        branch: chars[9] || {},
+        isDayMaster: false
+      },
+      {
+        key: 'annual',
+        titleZh: '流年太岁',
+        titleEn: 'Annual',
+        subZh: '当年岁君',
+        subEn: 'Annual King',
+        isTransit: true,
+        stem: chars[10] || {},
+        branch: chars[11] || {},
+        isDayMaster: false
+      },
+      {
+        key: 'monthTransit',
+        titleZh: '流月建星',
+        titleEn: 'Monthly',
+        subZh: '当月节令',
+        subEn: 'Monthly Node',
+        isTransit: true,
+        stem: chars[12] || {},
+        branch: chars[13] || {},
+        isDayMaster: false
+      }
+    ];
+
     const elStyles = {
       '木': { bg: 'bg-emerald-950/40', border: 'border-emerald-500/50', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30', bar: 'from-emerald-600 to-emerald-400' },
       '火': { bg: 'bg-rose-950/40', border: 'border-rose-500/50', text: 'text-rose-300', badge: 'bg-rose-500/20 text-rose-300 border-rose-500/30', bar: 'from-rose-600 to-rose-400' },
@@ -5647,13 +5855,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     container.innerHTML = `
-      <!-- Card 1: 14 Characters Holographic Roster -->
+      <!-- Card 1: 14 Characters Holographic 7-Pillar Matrix (Heavenly Stems on Top, Earthly Branches Below) -->
       <div class="p-4 sm:p-5 rounded-2xl bg-black/40 border border-gray-800 space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
           <div class="flex items-center space-x-2">
             <span class="text-lg">🪐</span>
             <h4 class="text-sm font-bold text-amber-300 font-serif-sc">
-              ${isEn ? '14-Character Multi-Dimensional Matrix (Natal 8 + Decade 2 + Annual 2 + Month 2)' : '十四字全景矩阵（原局八字 + 大运两字 + 流年两字 + 流月两字）'}
+              ${isEn ? '14-Character Spatial-Temporal Matrix (7 Pillars: Stems on Top · Branches Below)' : '十四字时空全息矩阵（七柱统揽 · 天干在上 · 地支在下）'}
             </h4>
           </div>
           <span class="text-xs font-mono text-gray-400">
@@ -5661,31 +5869,95 @@ document.addEventListener('DOMContentLoaded', () => {
           </span>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 pt-1">
-          ${synthesis.characters.map(c => {
-            const st = elStyles[c.el] || elStyles['木'];
-            return `
-              <div class="p-2.5 rounded-xl border ${st.border} ${st.bg} flex flex-col justify-between space-y-1 text-center">
-                <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/60 pb-1">
-                  <span class="truncate font-mono">${isEn ? c.sourceEn : c.sourceZh}</span>
-                  <span class="px-1 py-0.2 rounded text-[9px] font-mono border ${c.isTransit ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'bg-gray-800 text-gray-300 border-gray-700'}">
-                    ${c.isTransit ? (isEn ? 'Transit' : '岁运') : (isEn ? 'Natal' : '原局')}
-                  </span>
-                </div>
-                <div class="py-1">
-                  <div class="text-lg font-bold font-serif-sc ${st.text}">
-                    ${isEn ? c.charEn : c.char}
-                  </div>
-                  <div class="text-[10px] font-mono ${st.text}">
-                    ${isEn ? c.elementEn : c.el}
-                  </div>
-                </div>
-                <div class="pt-1 border-t border-gray-800/60 text-[10px] font-semibold text-purple-300 truncate">
-                  ${isEn ? c.tenGodEn : c.tenGod}
-                </div>
+        <div class="overflow-x-auto pb-1.5 -mx-1 px-1 custom-scrollbar">
+          <div class="min-w-[680px] space-y-2">
+            <!-- Group Banners: Natal 4 Pillars (8 chars) vs Transit 3 Pillars (6 chars) -->
+            <div class="grid grid-cols-7 gap-2 sm:gap-2.5 text-center text-xs font-serif-sc font-bold">
+              <div class="col-span-4 py-1.5 px-2 rounded-xl bg-gray-800/60 border border-gray-700/70 text-amber-200/90 flex items-center justify-center gap-1.5 shadow-sm">
+                <span>🏛️</span>
+                <span>${isEn ? 'Natal Four Pillars (8 Characters · Innate Base)' : '原局四柱（八字 · 先天命基）'}</span>
               </div>
-            `;
-          }).join('')}
+              <div class="col-span-3 py-1.5 px-2 rounded-xl bg-indigo-950/60 border border-indigo-500/40 text-indigo-200 flex items-center justify-center gap-1.5 shadow-sm">
+                <span>⏳</span>
+                <span>${isEn ? 'Transit Three Pillars (6 Characters · Dynamic Triggers)' : '岁运三柱（六字 · 动态引动）'}</span>
+              </div>
+            </div>
+
+            <!-- 7 Pillars Grid (Columns: Year, Month, Day, Hour, Decade, Annual, Monthly) -->
+            <div class="grid grid-cols-7 gap-2 sm:gap-2.5">
+              ${columns.map(col => {
+                const s = col.stem || {};
+                const b = col.branch || {};
+                const sSt = elStyles[s.el] || elStyles['木'];
+                const bSt = elStyles[b.el] || elStyles['水'];
+                const isDM = col.isDayMaster;
+                const isTransit = col.isTransit;
+
+                const colBg = isDM
+                  ? 'bg-amber-950/20 border-amber-500/60 ring-1 ring-amber-500/40 shadow-lg shadow-amber-500/5'
+                  : (isTransit ? 'bg-indigo-950/20 border-indigo-500/30' : 'bg-black/40 border-gray-800');
+
+                const titleColor = isDM ? 'text-amber-300 font-bold' : (isTransit ? 'text-indigo-300 font-bold' : 'text-gray-200 font-bold');
+                const badgeStyle = isDM
+                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                  : (isTransit ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30' : 'bg-gray-800 text-gray-300 border-gray-700');
+
+                return `
+                  <div class="p-2 sm:p-2.5 rounded-xl border ${colBg} flex flex-col justify-between space-y-2 text-center transition-all">
+                    <!-- Column Header -->
+                    <div class="space-y-0.5 border-b border-gray-800/80 pb-1.5">
+                      <div class="flex items-center justify-between text-[10px] font-mono">
+                        <span class="font-serif-sc ${titleColor}">${isEn ? col.titleEn : col.titleZh}</span>
+                        <span class="px-1 py-0.2 rounded text-[9px] font-mono border ${badgeStyle}">
+                          ${isDM ? (isEn ? 'Day Master' : '日主') : (isTransit ? (isEn ? 'Transit' : '岁运') : (isEn ? 'Natal' : '原局'))}
+                        </span>
+                      </div>
+                      <div class="text-[9.5px] text-gray-400 font-serif-sc truncate">
+                        ${isEn ? col.subEn : col.subZh}
+                      </div>
+                    </div>
+
+                    <!-- Heavenly Stem -->
+                    <div class="p-2 rounded-lg border ${sSt.border} ${sSt.bg} flex flex-col items-center justify-between space-y-1">
+                      <div class="flex items-center justify-between w-full text-[9.5px] font-mono">
+                        <span class="text-gray-400 font-semibold">${isEn ? 'Stem' : '天干'}</span>
+                        <span class="font-bold ${isDM ? 'text-amber-300' : 'text-purple-300'} truncate">
+                          ${isEn ? (s.tenGodEn || s.tenGod) : s.tenGod}
+                        </span>
+                      </div>
+                      <div class="text-xl sm:text-2xl font-bold font-serif-sc ${sSt.text} py-0.5">
+                        ${isEn ? (s.charEn || s.char) : s.char}
+                      </div>
+                      <span class="px-1.5 py-0.2 rounded-full text-[9px] font-mono border ${sSt.badge}">
+                        ${isEn ? (s.elementEn || s.el) : s.el}
+                      </span>
+                    </div>
+
+                    <!-- Meridian Flow Connector -->
+                    <div class="flex items-center justify-center -my-0.5 text-gray-500/70 select-none">
+                      <span class="text-[10px] font-mono leading-none">↓</span>
+                    </div>
+
+                    <!-- Earthly Branch -->
+                    <div class="p-2 rounded-lg border ${bSt.border} ${bSt.bg} flex flex-col items-center justify-between space-y-1">
+                      <div class="flex items-center justify-between w-full text-[9.5px] font-mono">
+                        <span class="text-gray-400 font-semibold">${isEn ? 'Branch' : '地支'}</span>
+                        <span class="font-bold text-purple-300 truncate">
+                          ${isEn ? (b.tenGodEn || b.tenGod) : b.tenGod}
+                        </span>
+                      </div>
+                      <div class="text-xl sm:text-2xl font-bold font-serif-sc ${bSt.text} py-0.5">
+                        ${isEn ? (b.charEn || b.char) : b.char}
+                      </div>
+                      <span class="px-1.5 py-0.2 rounded-full text-[9px] font-mono border ${bSt.badge}">
+                        ${isEn ? (b.elementEn || b.el) : b.el}
+                      </span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -5811,6 +6083,8 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
   }
+
+  if (typeof window !== 'undefined') window.render14CharEnergySynthesis = render14CharEnergySynthesis;
 
   // 子平 100 分制生克量化评分与格局高低
   function renderZiping100Score(res) {
@@ -12701,7 +12975,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       <span>${arch.icon}</span><span>${isEn ? arch.nameEn.split('(')[0] : arch.nameZh.split('（')[0]}</span>
                     </span>
                     <span class="text-[9.5px] px-1.5 py-0.2 rounded font-bold ${aIdx === 0 ? 'bg-emerald-200/80 text-emerald-950 border border-emerald-600/40' : 'bg-amber-200/80 text-amber-950 border border-amber-600/40'}">
-                      ${isEn ? arch.grade.en : arch.grade.zh} (${arch.fitScore}${isEn ? '/100' : '分'})
+                      ${(arch.grade && isEn) ? arch.grade.en : (arch.grade ? arch.grade.zh : (isEn ? 'Prime Fit' : '第一梯队'))} (${arch.fitScore}${isEn ? '/100' : '分'})
                     </span>
                   </div>
                   <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Strengths: ' : '天赋优势：'}</b>${isEn ? arch.coreStrengthsEn : arch.coreStrengthsZh}</p>

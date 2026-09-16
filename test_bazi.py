@@ -9186,6 +9186,7 @@ jsc_check90_cmd = [
             setLineDash: function() {}, scale: function() {}, createLinearGradient: function() { return { addColorStop: function() {} }; }
           };
         },
+        appendChild: function(c) { this._children = this._children || []; this._children.push(c); },
         querySelector: function(sel) { return null; },
         querySelectorAll: function(sel) { return []; }
       };
@@ -9341,5 +9342,202 @@ run_check90 = subprocess.run(jsc_check90_cmd, capture_output=True, text=True)
 assert run_check90.returncode == 0, f"Check 90 test failed: stdout={run_check90.stdout} stderr={run_check90.stderr}"
 print("✓ 主导格局深度解析（二八法则 · 格之可取与避讳大忌 · 白话实战定论 · 双语100%零中文残留与DOM渲染）验证通过！")
 
-print("\n🎉 ALL 90 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 91. Validate 14-Character Dynamic Energy Synthesis 7-Pillar Architecture (Heavenly Stems on Top, Earthly Branches Below)
+print("\n=== 91. Validating 14-Character Dynamic Energy Synthesis 7-Pillar Architecture (Stems Top / Branches Bottom) ===")
+jsc_check91_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    var console = { log: print, error: print, warn: print, info: print };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/portrait-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+    load("js/synastry-engine.js");
+
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "div").toUpperCase(),
+        className: "",
+        innerHTML: "",
+        textContent: "",
+        style: {},
+        value: "",
+        dataset: {},
+        children: [],
+        options: [{ value: 'male', text: 'Male' }, { value: 'female', text: 'Female' }],
+        selectedIndex: 0,
+        addEventListener: function() {},
+        setAttribute: function() {},
+        getAttribute: function() { return null; },
+        removeAttribute: function() {},
+        appendChild: function() {},
+        removeChild: function() {},
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; },
+        classList: {
+          add: function() {},
+          remove: function() {},
+          contains: function() { return false; },
+          toggle: function() {}
+        },
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {},
+            beginPath: function() {},
+            moveTo: function() {},
+            lineTo: function() {},
+            stroke: function() {},
+            fill: function() {},
+            arc: function() {},
+            fillText: function() {},
+            scale: function() {},
+            setLineDash: function() {},
+            createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        }
+      };
+    }
+
+    var elements = {
+      fourteenCharEnergyContainer: makeEl("fourteenCharEnergyContainer"),
+      fourteenCharBadge: makeEl("fourteenCharBadge")
+    };
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeEl("body"),
+      getElementById: function(id) {
+        if (!elements[id]) elements[id] = makeEl(id);
+        return elements[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+    var window = {
+      console: console,
+      document: document,
+      navigator: { serviceWorker: null, userAgent: "Mozilla" },
+      addEventListener: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      ElementChart: { render: function() {}, renderRadar: function() {}, renderBar: function() {}, renderTimeline: function() {} }
+    };
+    var ElementChart = window.ElementChart;
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // Test with the user's specific birth chart
+    // 壬午 己酉 乙酉 壬午
+    var bazi = BaZiEngine.calculate({
+      year: 2002, month: 9, day: 15, hour: 12, minute: 0,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // 1. Render in Chinese mode
+    window.render14CharEnergySynthesis(bazi, luck, false);
+    var htmlZh = elements.fourteenCharEnergyContainer.innerHTML;
+
+    // Check group banners
+    if (htmlZh.indexOf("原局四柱（八字 · 先天命基）") === -1) {
+      throw new Error("Missing Natal Four Pillars banner in ZH mode");
+    }
+    if (htmlZh.indexOf("岁运三柱（六字 · 动态引动）") === -1) {
+      throw new Error("Missing Transit Three Pillars banner in ZH mode");
+    }
+
+    // Check 7 pillars titles in order
+    var titlesZh = ["年柱", "月柱", "日柱", "时柱", "当行大运", "流年太岁", "流月建星"];
+    var lastIndex = -1;
+    titlesZh.forEach(function(t) {
+      var idx = htmlZh.indexOf(t);
+      if (idx === -1) throw new Error("Missing pillar title: " + t);
+      if (idx <= lastIndex) throw new Error("Pillar titles out of order: " + t);
+      lastIndex = idx;
+    });
+
+    // Check Stems on top ("天干") and Branches below ("地支")
+    var stemMatchesZh = htmlZh.match(/天干/g);
+    var branchMatchesZh = htmlZh.match(/地支/g);
+    if (!stemMatchesZh || stemMatchesZh.length < 7) {
+      throw new Error("Expected at least 7 '天干' occurrences, got " + (stemMatchesZh ? stemMatchesZh.length : 0));
+    }
+    if (!branchMatchesZh || branchMatchesZh.length < 7) {
+      throw new Error("Expected at least 7 '地支' occurrences, got " + (branchMatchesZh ? branchMatchesZh.length : 0));
+    }
+
+    // Check Day Master presence
+    if (htmlZh.indexOf("日主") === -1) {
+      throw new Error("Missing Day Master indicator in ZH mode");
+    }
+
+    // 2. Render in English mode
+    window.render14CharEnergySynthesis(bazi, luck, true);
+    var htmlEn = elements.fourteenCharEnergyContainer.innerHTML;
+
+    // Check group banners in English
+    if (htmlEn.indexOf("Natal Four Pillars (8 Characters · Innate Base)") === -1) {
+      throw new Error("Missing Natal Four Pillars banner in EN mode");
+    }
+    if (htmlEn.indexOf("Transit Three Pillars (6 Characters · Dynamic Triggers)") === -1) {
+      throw new Error("Missing Transit Three Pillars banner in EN mode");
+    }
+
+    // Check 7 pillar titles in English in order
+    var titlesEn = ["Year", "Month", "Day", "Hour", "Decade", "Annual", "Monthly"];
+    var lastIndexEn = -1;
+    titlesEn.forEach(function(t) {
+      var idx = htmlEn.indexOf(">" + t + "<");
+      if (idx === -1) throw new Error("Missing English pillar title: " + t);
+      if (idx <= lastIndexEn) throw new Error("English pillar titles out of order: " + t);
+      lastIndexEn = idx;
+    });
+
+    // Check Stem on top and Branch below in English
+    var stemMatchesEn = htmlEn.match(/>Stem</g);
+    var branchMatchesEn = htmlEn.match(/>Branch</g);
+    if (!stemMatchesEn || stemMatchesEn.length !== 7) {
+      throw new Error("Expected exactly 7 '>Stem<' occurrences in EN mode, got " + (stemMatchesEn ? stemMatchesEn.length : 0));
+    }
+    if (!branchMatchesEn || branchMatchesEn.length !== 7) {
+      throw new Error("Expected exactly 7 '>Branch<' occurrences in EN mode, got " + (branchMatchesEn ? branchMatchesEn.length : 0));
+    }
+
+    // Check 100% zero residual Chinese in English mode
+    var chineseMatches = htmlEn.match(/[\u4e00-\u9fa5]/g);
+    if (chineseMatches && chineseMatches.length > 0) {
+      throw new Error("Residual Chinese found in English mode 14-char container: " + chineseMatches.join(""));
+    }
+    '''
+]
+
+run_check91 = subprocess.run(jsc_check91_cmd, capture_output=True, text=True)
+assert run_check91.returncode == 0, f"Check 91 test failed: stdout={run_check91.stdout} stderr={run_check91.stderr}"
+print("✓ 十四字时空全息能量统揽七柱天干在上地支在下全新架构（年月日时大运流年流月顺序/双语零残留）验证通过！")
+
+print("\n🎉 ALL 91 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
