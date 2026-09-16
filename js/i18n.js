@@ -2142,6 +2142,23 @@ const I18N = (function() {
         zd.titleZh = zd.titleEn || zd.titleZh;
         zd.subtitle = zd.subtitleEn || zd.subtitle;
         zd.subtitleZh = zd.subtitleEn || zd.subtitleZh;
+        if (zd.diagnostic) {
+          const dg = zd.diagnostic;
+          dg.archetype = dg.archetypeEn || dg.archetype;
+          dg.archetypeZh = dg.archetypeEn || dg.archetypeZh;
+          dg.stateAnalysis = dg.stateAnalysisEn || dg.stateAnalysis;
+          dg.stateAnalysisZh = dg.stateAnalysisEn || dg.stateAnalysisZh;
+          dg.corePitfall = dg.corePitfallEn || dg.corePitfall;
+          dg.corePitfallZh = dg.corePitfallEn || dg.corePitfallZh;
+          dg.primaryCanonTitle = dg.primaryCanonTitleEn || dg.primaryCanonTitle;
+          dg.primaryCanonTitleZh = dg.primaryCanonTitleEn || dg.primaryCanonTitleZh;
+          dg.rationale = dg.rationaleEn || dg.rationale;
+          dg.rationaleZh = dg.rationaleEn || dg.rationaleZh;
+          dg.decree = dg.decreeEn || dg.decree;
+          dg.decreeZh = dg.decreeEn || dg.decreeZh;
+          dg.godNuances = dg.godNuancesEn || dg.godNuances;
+          dg.godNuancesZh = dg.godNuancesEn || dg.godNuancesZh;
+        }
         ['diamond', 'platform', 'zhuangzi'].forEach(k => {
           if (zd[k]) {
             zd[k].title = zd[k].titleEn || zd[k].title;
@@ -2160,6 +2177,8 @@ const I18N = (function() {
             zd[k].practicalPracticeZh = zd[k].practicalPracticeEn || zd[k].practicalPracticeZh;
             zd[k].badge = zd[k].badgeEn || zd[k].badge;
             zd[k].badgeZh = zd[k].badgeEn || zd[k].badgeZh;
+            zd[k].statusBadge = zd[k].statusBadgeEn || zd[k].statusBadge;
+            zd[k].statusBadgeZh = zd[k].statusBadgeEn || zd[k].statusBadgeZh;
             if (zd[k].quotes && Array.isArray(zd[k].quotes)) {
               zd[k].quotes.forEach(q => {
                 q.verse = q.verseEn || q.verse;

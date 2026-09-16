@@ -10880,4 +10880,235 @@ run_check97 = subprocess.run(jsc_check97_cmd, capture_output=True, text=True)
 assert run_check97.returncode == 0, f"Check 97 test failed: stdout={run_check97.stdout} stderr={run_check97.stderr}"
 print("✓ 百岁岁运六十四卦行持全景总谱当年最宜决策标定（桃花/事业/读书/守成/防险与组合）与皇家战报卷首第一页雅致排版（印章避让/文辞雅化/零中文残留）验证通过！")
 
-print("\n🎉 ALL 97 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 98. Validating Dynamic Psychological State Diagnostics & Zen-Dao 3 Canons Prescription
+# ==============================================================================
+print("\n=== 98. Validating Dynamic Psychological State Diagnostics & Zen-Dao 3 Canons Prescription ===")
+
+jsc_check98_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/chart.js");
+
+    // 1. Diagnostic Unit Tests across Archetypes
+    // 1.1 Weak + High Friction (1984-12-10 23:30)
+    var bWeakHigh = BaZiEngine.calculate({ year: 1984, month: 12, day: 10, hour: 23, minute: 30, gender: "乾造" });
+    var pWeakHigh = PortraitEngine.analyze(bWeakHigh, "zh");
+    var diagWeakHigh = pWeakHigh.mentalFriction.zenDaoWisdom.diagnostic;
+    if (!diagWeakHigh) throw new Error("Missing diagnostic in Weak High chart");
+    if (!diagWeakHigh.archetypeZh.includes("能量透支与高度防御焦虑型")) {
+      throw new Error("Wrong archetype for Weak High: " + diagWeakHigh.archetypeZh);
+    }
+    if (diagWeakHigh.primaryCanonKey !== "platform") {
+      throw new Error("Weak High primary canon should be platform, got: " + diagWeakHigh.primaryCanonKey);
+    }
+    if (!pWeakHigh.mentalFriction.zenDaoWisdom.platform.isPrimary) {
+      throw new Error("platform.isPrimary should be true for Weak High");
+    }
+    if (!pWeakHigh.mentalFriction.zenDaoWisdom.platform.statusBadgeZh.includes("本命第一主药")) {
+      throw new Error("Missing statusBadgeZh on platform for Weak High");
+    }
+
+    // 1.2 Strong + High Friction (1976-11-05 08:00)
+    var bStrongHigh = BaZiEngine.calculate({ year: 1976, month: 11, day: 5, hour: 8, minute: 0, gender: "坤造" });
+    var pStrongHigh = PortraitEngine.analyze(bStrongHigh, "zh");
+    var diagStrongHigh = pStrongHigh.mentalFriction.zenDaoWisdom.diagnostic;
+    if (!diagStrongHigh) throw new Error("Missing diagnostic in Strong High chart");
+    if (!diagStrongHigh.archetypeZh.includes("高压强控与狂躁完美主义型")) {
+      throw new Error("Wrong archetype for Strong High: " + diagStrongHigh.archetypeZh);
+    }
+    if (diagStrongHigh.primaryCanonKey !== "zhuangzi") {
+      throw new Error("Strong High primary canon should be zhuangzi, got: " + diagStrongHigh.primaryCanonKey);
+    }
+    if (!pStrongHigh.mentalFriction.zenDaoWisdom.zhuangzi.isPrimary) {
+      throw new Error("zhuangzi.isPrimary should be true for Strong High");
+    }
+
+    // 1.3 Neutral + High Friction (1985-09-15 12:00)
+    var bNeutHigh = BaZiEngine.calculate({ year: 1985, month: 9, day: 15, hour: 12, minute: 0, gender: "乾造" });
+    var pNeutHigh = PortraitEngine.analyze(bNeutHigh, "zh");
+    var diagNeutHigh = pNeutHigh.mentalFriction.zenDaoWisdom.diagnostic;
+    if (!diagNeutHigh.archetypeZh.includes("认知拉扯与分析瘫痪型")) {
+      throw new Error("Wrong archetype for Neutral High: " + diagNeutHigh.archetypeZh);
+    }
+    if (diagNeutHigh.primaryCanonKey !== "platform") {
+      throw new Error("Neutral High primary canon should be platform, got: " + diagNeutHigh.primaryCanonKey);
+    }
+
+    // 1.4 Weak + Low Friction (1970-02-01 12:00)
+    var bWeakLow = BaZiEngine.calculate({ year: 1970, month: 2, day: 1, hour: 12, minute: 0, gender: "乾造" });
+    var pWeakLow = PortraitEngine.analyze(bWeakLow, "zh");
+    var diagWeakLow = pWeakLow.mentalFriction.zenDaoWisdom.diagnostic;
+    if (!diagWeakLow.archetypeZh.includes("敏感慎微与谨慎防守型")) {
+      throw new Error("Wrong archetype for Weak Low: " + diagWeakLow.archetypeZh);
+    }
+    if (diagWeakLow.primaryCanonKey !== "diamond") {
+      throw new Error("Weak Low primary canon should be diamond, got: " + diagWeakLow.primaryCanonKey);
+    }
+    if (!pWeakLow.mentalFriction.zenDaoWisdom.diamond.isPrimary) {
+      throw new Error("diamond.isPrimary should be true for Weak Low");
+    }
+
+    // 2. Headless DOM Simulation for #frictionContentContainer
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "",
+        checked: false,
+        options: [{ text: "男", value: "乾造" }, { text: "女", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          add: function() {},
+          remove: function() {},
+          contains: function() { return false; }
+        },
+        className: "",
+        style: {},
+        _children: [],
+        _listener: null,
+        addEventListener: function(evt, handler) { this._listener = handler; },
+        appendChild: function(c) {
+          this._children.push(c);
+          if (c && c.innerHTML) {
+            this.innerHTML += c.innerHTML;
+          }
+        },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        getBoundingClientRect: function() { return { width: 400, height: 300, left: 0, top: 0 }; },
+        getContext: function() { return {}; }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "imperialDossierModal", "imperialDossierContainer", "calcBtn",
+      "birthDate", "birthTime", "gender", "useSolarTime", "lateRatAsNextDay",
+      "customLongitude", "timezoneSelect", "citySelect", "fsec-canons", "view-friction",
+      "frictionContentContainer"
+    ];
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+    elementStore["birthDate"].value = "1976-11-05";
+    elementStore["birthTime"].value = "08:00";
+    elementStore["gender"].value = "坤造";
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      IChingEngine: IChingEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      CareerEngine: CareerEngine
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // Test renderFrictionView in ZH
+    var testPZh = PortraitEngine.analyze(bStrongHigh, "zh");
+    window.renderFrictionView(testPZh, bStrongHigh, false);
+    var fsecCanonsZh = elementStore["frictionContentContainer"].innerHTML;
+
+    if (!fsecCanonsZh.includes("心理状态诊断")) {
+      throw new Error("Missing 心理状态诊断 in renderFrictionView ZH");
+    }
+    if (!fsecCanonsZh.includes("高压强控与狂躁完美主义型")) {
+      throw new Error("Missing archetype title in renderFrictionView ZH");
+    }
+    if (!fsecCanonsZh.includes("首选救应主药：")) {
+      throw new Error("Missing primary prescription in renderFrictionView ZH");
+    }
+    if (!fsecCanonsZh.includes("本命第一主药")) {
+      throw new Error("Missing 本命第一主药 badge in renderFrictionView ZH");
+    }
+    if (!fsecCanonsZh.includes("协同护持经")) {
+      throw new Error("Missing 协同护持经 badge in renderFrictionView ZH");
+    }
+
+    // Test renderFrictionView in EN & Zero Residual Chinese
+    var testPEn = I18N.translatePortrait(testPZh, "en");
+    elementStore["frictionContentContainer"].innerHTML = "";
+    window.renderFrictionView(testPEn, bStrongHigh, true);
+    var fsecCanonsEn = elementStore["frictionContentContainer"].innerHTML;
+
+    if (!fsecCanonsEn.includes("SOVEREIGN DIAGNOSTIC")) {
+      throw new Error("Missing SOVEREIGN DIAGNOSTIC in renderFrictionView EN");
+    }
+    if (!fsecCanonsEn.includes("Hyper-Controlling Perfectionism")) {
+      throw new Error("Missing translated archetype in renderFrictionView EN");
+    }
+    if (!fsecCanonsEn.includes("No.1 Remedy: Zhuangzi")) {
+      throw new Error("Missing No.1 Remedy: Zhuangzi in renderFrictionView EN");
+    }
+    if (!fsecCanonsEn.includes("Primary Sovereign Antidote")) {
+      throw new Error("Missing Primary Sovereign Antidote badge in renderFrictionView EN");
+    }
+    if (!fsecCanonsEn.includes("Auxiliary Shield")) {
+      throw new Error("Missing Auxiliary Shield badge in renderFrictionView EN");
+    }
+
+    var enZhMatches = fsecCanonsEn.match(/[\u4e00-\u9fa5]/g);
+    if (enZhMatches && enZhMatches.length > 0) {
+      throw new Error("Found residual Chinese in Mental Friction View EN (" + enZhMatches.length + "): " + enZhMatches.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check98 = subprocess.run(jsc_check98_cmd, capture_output=True, text=True)
+assert run_check98.returncode == 0, f"Check 98 test failed: stdout={run_check98.stdout} stderr={run_check98.stderr}"
+print("✓ 全息精神心理状态深度诊断与三经首选处方引擎（内耗+身旺衰六大原型/救应主药/协同护持/金边高亮与中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 98 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")

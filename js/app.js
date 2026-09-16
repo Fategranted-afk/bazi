@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // Update gender select options
-      if (genderSelect && typeof I18N !== 'undefined') {
+      if (genderSelect && genderSelect.options && typeof I18N !== 'undefined') {
         if (genderSelect.options[0]) genderSelect.options[0].textContent = I18N.t('opt_qian', lang);
         if (genderSelect.options[1]) genderSelect.options[1].textContent = I18N.t('opt_kun', lang);
       }
@@ -3396,6 +3396,81 @@ document.addEventListener('DOMContentLoaded', () => {
     let zenHtml = '';
     if (mf.zenDaoWisdom) {
       const zd = mf.zenDaoWisdom;
+      const diag = zd.diagnostic;
+
+      let diagBannerHtml = '';
+      if (diag) {
+        const primaryTitle = isEn ? (diag.primaryCanonTitleEn || diag.primaryCanonTitle) : (diag.primaryCanonTitleZh || diag.primaryCanonTitle);
+        const archetypeTitle = isEn ? (diag.archetypeEn || diag.archetype) : (diag.archetypeZh || diag.archetype);
+        const stateAnalysis = isEn ? (diag.stateAnalysisEn || diag.stateAnalysis) : (diag.stateAnalysisZh || diag.stateAnalysis);
+        const corePitfall = isEn ? (diag.corePitfallEn || diag.corePitfall) : (diag.corePitfallZh || diag.corePitfall);
+        const rationale = isEn ? (diag.rationaleEn || diag.rationale) : (diag.rationaleZh || diag.rationale);
+        const decree = isEn ? (diag.decreeEn || diag.decree) : (diag.decreeZh || diag.decree);
+        const godNuances = isEn ? (diag.godNuancesEn || diag.godNuances) : (diag.godNuancesZh || diag.godNuances);
+
+        diagBannerHtml = `
+          <div class="p-4 sm:p-5 rounded-xl border border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-purple-950/20 to-black/80 shadow-xl space-y-3.5">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-amber-500/30">
+              <div class="flex items-center space-x-2">
+                <span class="chinese-seal text-[10px] py-0.5">${isEn ? 'SOVEREIGN DIAGNOSTIC' : '🧠 心理状态诊断'}</span>
+                <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300">
+                  ${archetypeTitle}
+                </h4>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-sm animate-pulse flex items-center gap-1.5">
+                  <span>🏆</span>
+                  <span>${isEn ? 'No.1 Remedy: ' + primaryTitle : '首选救应主药：' + primaryTitle}</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="p-3 bg-black/60 rounded-lg border border-gray-800/80 space-y-1.5 flex flex-col justify-between">
+                <div class="space-y-1">
+                  <div class="font-bold text-amber-200/90 flex items-center gap-1.5">
+                    <span>🔍</span>
+                    <span>${isEn ? 'Neuro-Psychological State & Coping Mode:' : '精神心理状态与神经应对模式：'}</span>
+                  </div>
+                  <p class="text-gray-300 leading-relaxed font-serif-sc">
+                    ${stateAnalysis}
+                  </p>
+                </div>
+                ${godNuances ? `
+                  <div class="text-[11px] text-amber-300/80 pt-1.5 border-t border-gray-800/60 font-serif-sc leading-relaxed">
+                    ${godNuances}
+                  </div>
+                ` : ''}
+              </div>
+
+              <div class="p-3 bg-black/60 rounded-lg border border-rose-900/30 space-y-1.5 flex flex-col justify-between">
+                <div class="space-y-1">
+                  <div class="font-bold text-rose-300/90 flex items-center gap-1.5">
+                    <span>⚠️</span>
+                    <span>${isEn ? 'Core Friction Pitfall & Cognitive Trap:' : '核心内耗死穴与认知陷阱：'}</span>
+                  </div>
+                  <p class="text-gray-300 leading-relaxed font-serif-sc">
+                    ${corePitfall}
+                  </p>
+                </div>
+                <div class="pt-1.5 border-t border-rose-900/20 text-[11px] text-emerald-300/90 font-serif-sc leading-relaxed">
+                  <span class="font-bold text-amber-300">${isEn ? '💡 Rationale for Primary Remedy: ' : '💡 首选主药对症原由：'}</span>
+                  ${rationale}
+                </div>
+              </div>
+            </div>
+
+            <div class="p-2.5 bg-amber-950/30 rounded-lg border border-amber-500/40 text-xs flex items-center gap-2">
+              <span class="text-base">📜</span>
+              <div class="text-amber-200 font-serif-sc leading-relaxed">
+                <span class="font-bold text-amber-300">${isEn ? 'Sovereign Directive: ' : '钦天监心智令：'}</span>
+                ${decree}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
       const classics = [
         { key: 'diamond', item: zd.diamond, icon: '💎', theme: 'border-amber-500/60 bg-amber-950/20 text-amber-300' },
         { key: 'platform', item: zd.platform, icon: '🪞', theme: 'border-indigo-500/60 bg-indigo-950/20 text-indigo-300' },
@@ -3405,6 +3480,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const cardsHtml = classics.map(c => {
         const it = c.item;
         if (!it) return '';
+
+        const isPrimary = (diag && diag.primaryCanonKey === c.key) || it.isPrimary;
+        const cardBorderClass = isPrimary 
+          ? 'border-amber-400 ring-2 ring-amber-400/40 shadow-xl shadow-amber-500/10 bg-gradient-to-b from-amber-950/30 via-black/60 to-black/80' 
+          : `${c.theme.split(' ')[0]} bg-black/50`;
+
+        const statusBadgeHtml = isPrimary
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-black shadow-sm font-mono flex items-center gap-1">${isEn ? (it.statusBadge || it.statusBadgeEn || '🏆 Primary Sovereign Antidote') : (it.statusBadgeZh || it.statusBadge || '🏆 本命第一主药')}</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-gray-900/80 border border-gray-700/60 flex items-center gap-1">${isEn ? (it.statusBadge || it.statusBadgeEn || '🛡️ Auxiliary Shield') : (it.statusBadgeZh || it.statusBadge || '🛡️ 协同护持经')}</span>`;
 
         const quotesList = it.quotes || [];
         const quotesHtml = quotesList.map(q => `
@@ -3427,7 +3511,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
 
         return `
-          <div class="p-4 sm:p-5 rounded-xl border ${c.theme.split(' ')[0]} bg-black/50 shadow-lg space-y-3.5 flex flex-col justify-between">
+          <div class="p-4 sm:p-5 rounded-xl border ${cardBorderClass} shadow-lg space-y-3.5 flex flex-col justify-between transition-all">
             <div class="space-y-3">
               <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
                 <div class="flex items-center space-x-2">
@@ -3436,7 +3520,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${isEn ? (it.titleEn || it.title) : (it.titleZh || it.title)}
                   </h5>
                 </div>
-                <span class="chinese-seal text-[9px] py-0">${isEn ? (it.badgeEn || 'Classic Zen') : (it.badgeZh || '三教至理')}</span>
+                <div class="flex items-center gap-1.5">
+                  ${statusBadgeHtml}
+                  <span class="chinese-seal text-[9px] py-0">${isEn ? (it.badgeEn || 'Classic Zen') : (it.badgeZh || '三教至理')}</span>
+                </div>
               </div>
 
               <div class="p-3 bg-black/60 rounded-lg border-l-3 border-amber-400 font-serif-sc text-xs text-amber-200 font-semibold leading-relaxed">
@@ -3444,13 +3531,13 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
 
               <div class="p-3 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
-                <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight:' : '微言大义与心智洞见：'}</span>
-                <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">${isEn ? (it.insightEn || it.insight) : (it.insightZh || it.insight)}</p>
+                <span class="text-xs font-bold text-gray-300 block">💡 ${isEn ? 'Metaphysical Insight & Diagnostic:' : '微言大义与心智洞见：'}</span>
+                <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">${isEn ? (it.mindsetAnalysisEn || it.insightEn || it.insight) : (it.mindsetAnalysisZh || it.insightZh || it.insight)}</p>
               </div>
 
               <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 space-y-1">
                 <span class="text-xs font-bold text-emerald-300 block">🚀 ${isEn ? 'Modern Actionable Mindset:' : '现实处世与实操心法：'}</span>
-                <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${isEn ? (it.practicalEn || it.practical) : (it.practicalZh || it.practical)}</p>
+                <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${isEn ? (it.practicalPracticeEn || it.practicalEn || it.practical) : (it.practicalPracticeZh || it.practicalZh || it.practical)}</p>
               </div>
             </div>
 
@@ -3493,6 +3580,8 @@ document.addEventListener('DOMContentLoaded', () => {
               ? 'The ultimate resolution of mental friction does not lie in endlessly wrestling with internal thoughts, but in transcending them through classical Zen and Dao wisdom. The Diamond Sutra shatters attachments to forms; the Platform Sutra returns directly to original self-nature; Zhuangzi transforms worldly friction into effortless roaming with the universal flow.' 
               : '世间一切精神内耗，皆源于“向内抓住不放”之执念。欲彻底根治，必须从认知维度降维打击：以《金刚经》破除一切得失幻相，以《六祖坛经》直悟本来无一物，以《庄子》物物而不物于物，化精神内耗为空灵洞见，乘物游心，笑看浮沉。'}
           </p>
+
+          ${diagBannerHtml}
 
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-1">
             ${cardsHtml}
@@ -13259,11 +13348,24 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <div class="space-y-2 text-xs leading-relaxed font-serif-sc text-gray-800">
+            ${zen && zen.diagnostic ? `
+              <div class="p-2 bg-amber-100/90 rounded border border-amber-900/40 text-[10.5px] space-y-1">
+                <div class="flex items-center justify-between font-bold text-amber-950">
+                  <span>${isEn ? 'Sovereign Psychological Diagnostic: ' + (zen.diagnostic.archetypeEn || zen.diagnostic.archetype) : '本命精神心理深度诊断：' + (zen.diagnostic.archetypeZh || zen.diagnostic.archetype)}</span>
+                  <span class="text-red-900 font-bold">${isEn ? 'Primary Remedy: ' + (zen.diagnostic.primaryCanonTitleEn || zen.diagnostic.primaryCanonTitle) : '第一救应主药：' + (zen.diagnostic.primaryCanonTitleZh || zen.diagnostic.primaryCanonTitle)}</span>
+                </div>
+                <p class="text-gray-800">${isEn ? (zen.diagnostic.stateAnalysisEn || zen.diagnostic.stateAnalysis) : (zen.diagnostic.stateAnalysisZh || zen.diagnostic.stateAnalysis)}</p>
+                <div class="pt-0.5 text-gray-900 font-bold border-t border-amber-900/20">
+                  <span class="text-amber-900">${isEn ? 'Decree: ' : '钦天监心智令：'}</span>${isEn ? (zen.diagnostic.decreeEn || zen.diagnostic.decree) : (zen.diagnostic.decreeZh || zen.diagnostic.decree)}
+                </div>
+              </div>
+            ` : ''}
+
             <!-- Diamond Sutra -->
             <div class="imperial-card imperial-card-accent p-2.5 space-y-0.5">
               <div class="flex items-center justify-between">
                 <h3 class="font-bold text-amber-950">${isEn ? zen.diamond.title : zen.diamond.titleZh}</h3>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40 font-mono">${isEn ? 'Cognitive De-Biasing & Anti-Anxiety Shield' : '破相执 · 焦虑脱敏盾'}</span>
+                <span class="text-[9px] px-1.5 py-0.2 rounded ${zen.diamond.isPrimary ? 'bg-amber-300 text-amber-950 font-bold border border-amber-700' : 'bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40'} font-mono">${zen.diamond.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Cognitive De-Biasing & Anti-Anxiety Shield' : '破相执 · 焦虑脱敏盾'}</span>
               </div>
               <p class="font-bold text-red-900">${isEn ? zen.diamond.mantra : zen.diamond.mantraZh}</p>
               <p>${isEn ? zen.diamond.insight : zen.diamond.insightZh}</p>
@@ -13274,7 +13376,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-purple-700">
               <div class="flex items-center justify-between">
                 <h3 class="font-bold text-purple-950">${isEn ? zen.platform.title : zen.platform.titleZh}</h3>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-purple-200/80 text-purple-950 font-bold border border-purple-600/40 font-mono">${isEn ? 'Self-Compassion & Rumination Circuit-Breaker' : '见自性 · 精神内耗熔断'}</span>
+                <span class="text-[9px] px-1.5 py-0.2 rounded ${zen.platform.isPrimary ? 'bg-purple-300 text-purple-950 font-bold border border-purple-700' : 'bg-purple-200/80 text-purple-950 font-bold border border-purple-600/40'} font-mono">${zen.platform.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Self-Compassion & Rumination Circuit-Breaker' : '见自性 · 精神内耗熔断'}</span>
               </div>
               <p class="font-bold text-purple-900">${isEn ? zen.platform.mantra : zen.platform.mantraZh}</p>
               <p>${isEn ? zen.platform.insight : zen.platform.insightZh}</p>
@@ -13285,7 +13387,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-teal-700">
               <div class="flex items-center justify-between">
                 <h3 class="font-bold text-teal-950">${isEn ? zen.zhuangzi.title : zen.zhuangzi.titleZh}</h3>
-                <span class="text-[9px] px-1.5 py-0.2 rounded bg-teal-200/80 text-teal-950 font-bold border border-teal-600/40 font-mono">${isEn ? 'Somatic Calm & Perspective Transcendence' : '逍遥游 · 精神松弛与降维破局'}</span>
+                <span class="text-[9px] px-1.5 py-0.2 rounded ${zen.zhuangzi.isPrimary ? 'bg-teal-300 text-teal-950 font-bold border border-teal-700' : 'bg-teal-200/80 text-teal-950 font-bold border border-teal-600/40'} font-mono">${zen.zhuangzi.isPrimary ? (isEn ? '🏆 PRIMARY · ' : '🏆 首选 · ') : ''}${isEn ? 'Somatic Calm & Perspective Transcendence' : '逍遥游 · 精神松弛与降维破局'}</span>
               </div>
               <p class="font-bold text-teal-900">${isEn ? zen.zhuangzi.mantra : zen.zhuangzi.mantraZh}</p>
               <p>${isEn ? zen.zhuangzi.insight : zen.zhuangzi.insightZh}</p>
