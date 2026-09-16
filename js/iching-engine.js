@@ -150,6 +150,29 @@ class IChingEngine {
   }
 
   /**
+   * Cast hexagram from custom line configurations
+   */
+  static castCustomLines(customLines, customQuery = '') {
+    const lines = customLines.map((l, idx) => {
+      const pos = l.position || (idx + 1);
+      let val;
+      if (typeof l === 'number') {
+        val = l;
+      } else if (l.value !== undefined) {
+        val = l.value;
+      } else {
+        if (l.isMoving) {
+          val = (l.nature === 1) ? 9 : 6;
+        } else {
+          val = (l.nature === 1) ? 7 : 8;
+        }
+      }
+      return this.buildLineObject(pos, val, 'custom');
+    });
+    return this.synthesizeDivination(lines, 'custom', customQuery);
+  }
+
+  /**
    * Cast Plum Blossom Time Hexagram (梅花易数时间卦)
    */
   static castTimeHexagram(date = new Date(), customQuery = '') {

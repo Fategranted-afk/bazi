@@ -5639,7 +5639,7 @@ jsc_cycle_cmd = [
       "ichingCyclePlayBtn", "ichingCyclePlayIcon", "ichingCyclePlayText",
       "ichingCyclePrevBtn", "ichingCycleAgeBadge", "ichingCycleNextBtn",
       "ichingTabTimeline", "ichingTabYaoStages", "ichingTabCosmic",
-      "ichingBtnEpochHandover", "ichingBtnRealAge"
+      "ichingBtnEpochHandover", "ichingBtnRealAge", "ichingBtnPeak", "ichingBtnTrough"
     ];
     cycleDomIds.forEach(function(id) { elements[id] = makeEl(id); });
 
@@ -5831,7 +5831,7 @@ jsc_cycle74_cmd = [
       "ichingCyclePlayBtn", "ichingCyclePlayIcon", "ichingCyclePlayText",
       "ichingCyclePrevBtn", "ichingCycleAgeBadge", "ichingCycleNextBtn",
       "ichingTabTimeline", "ichingTabYaoStages", "ichingTabCosmic",
-      "ichingBtnEpochHandover", "ichingBtnRealAge",
+      "ichingBtnEpochHandover", "ichingBtnRealAge", "ichingBtnPeak", "ichingBtnTrough",
       "view-home", "view-strategy", "view-friction", "view-luck", "view-canons",
       "view-iching", "view-synastry", "view-fengshui",
       "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "navBtnFengShui"
@@ -7961,7 +7961,7 @@ jsc_check83_dom_cmd = [
 
     var histContainer = document.getElementById('historyContentContainer');
     var histHtmlZh = histContainer.innerHTML;
-    if (!histHtmlZh || histHtmlZh.indexOf("乱世三百年历史人物深度相似度测算全相") === -1) {
+    if (!histHtmlZh || histHtmlZh.indexOf("天命至高历史镜像") === -1) {
       throw new Error("historyContentContainer not populated in ZH: " + histHtmlZh.slice(0, 200));
     }
     if (histHtmlZh.indexOf("天命至高历史镜像") === -1) {
@@ -8621,7 +8621,456 @@ assert "getAttribute('data-theme') === 'light'" in chart_content, "Missing light
 
 print("✓ 浅昼护眼微沉调与高对比文字显示（柔和米宣底色/降亮度防刺眼眩光/高对比深墨字色/雷达网线适配/零文字淹没）验证通过！")
 
-print("\n🎉 ALL 87 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 88. Validate Complementary Hexagrams Exegeses, Quad-Synthesis, Line Deduplication & Enlarged Imperial Seal
+print("\n=== 88. Validating Complementary Hexagrams Exegeses, Quad-Synthesis, Line Deduplication & Enlarged Imperial Seal ===")
+
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+# Verify enlarged imperial seal (26mm x 26mm) and multiply blend mode
+assert 'width: 26mm;' in css_content, "Missing enlarged 26mm width for imperial-seal-square"
+assert 'height: 26mm;' in css_content, "Missing enlarged 26mm height for imperial-seal-square"
+assert 'mix-blend-mode: multiply;' in css_content, "Missing mix-blend-mode multiply for authentic stamp overlay"
+assert '[data-theme="light"] .bg-black' in css_content, "Missing light theme .bg-black override to clean paper"
+assert '[data-theme="light"] .from-rose-950' in css_content, "Missing light theme rose container override"
+assert '[data-theme="light"] .from-amber-950' in css_content, "Missing light theme amber container override"
+assert '[data-theme="light"] #fourteenCharEnergySection' in css_content, "Missing light theme section background reset"
+
+# Verify js/app.js complementary hexagrams, quad-synthesis, and line deduplication
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_content = f.read()
+
+assert 'Nuclear Hexagram (Internal Evolution)' in app_content, "Missing English Nuclear Hexagram header in app.js"
+assert 'Opposite Hexagram (Shadow & Dialectic)' in app_content, "Missing English Opposite Hexagram header in app.js"
+assert 'Inverted Hexagram (Counterpart & Cyclical)' in app_content, "Missing English Inverted Hexagram header in app.js"
+assert '互卦 (中程内在推演)' in app_content, "Missing Chinese Nuclear Hexagram header in app.js"
+assert '错卦 (对立面审视)' in app_content, "Missing Chinese Opposite Hexagram header in app.js"
+assert '综卦 (换位与周期)' in app_content, "Missing Chinese Inverted Hexagram header in app.js"
+assert '四维全景时空贯通定论 (本卦·互卦·错卦·综卦综合推演总结)' in app_content, "Missing Chinese Quad-Hexagram Synthesis in app.js"
+assert 'Holistic Quad-Hexagram Synthesis & Strategic Verdict' in app_content, "Missing English Quad-Hexagram Synthesis in app.js"
+assert 'cleanExegesisZh' in app_content or 'replace(primaryLine.posAnalysisZh' in app_content, "Missing exegesis deduplication in app.js deciding line"
+
+# Verify iching.js line exegesis deduplication across all 384 lines
+with open('data/iching.js', 'r', encoding='utf-8') as f:
+    iching_content = f.read()
+
+import json
+start = iching_content.find("const ICHING_DATA = [")
+end = iching_content.find("class IChingDB")
+arr_str = iching_content[start + len("const ICHING_DATA = "):end].strip().rstrip(";")
+iching_data = json.loads(arr_str)
+
+dup_found_zh = 0
+dup_found_en = 0
+for h in iching_data:
+    for l in h["lines"]:
+        pos_zh = l.get("posAnalysisZh", "")
+        exe_zh = l.get("exegesisZh", "")
+        if pos_zh and pos_zh in exe_zh:
+            dup_found_zh += 1
+        pos_en = l.get("posAnalysisEn", "")
+        exe_en = l.get("exegesisEn", "")
+        if pos_en and pos_en in exe_en:
+            dup_found_en += 1
+
+assert dup_found_zh == 0, f"Found {dup_found_zh} residual duplicate posAnalysisZh inside exegesisZh!"
+assert dup_found_en == 0, f"Found {dup_found_en} residual duplicate posAnalysisEn inside exegesisEn!"
+
+# Run JSC End-to-End simulation for complementary hexagrams & zero residual Chinese in English mode
+jsc_check88_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    '''
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/iching-engine.js");
+
+    // 1. Test IChing Divination with moving lines (e.g. Hexagram 47 Line 2)
+    var testLines = [
+      { position: 1, nature: 0, isMoving: false },
+      { position: 2, nature: 1, isMoving: true },
+      { position: 3, nature: 0, isMoving: false },
+      { position: 4, nature: 1, isMoving: false },
+      { position: 5, nature: 1, isMoving: false },
+      { position: 6, nature: 0, isMoving: false }
+    ];
+    var simRes = IChingEngine.castCustomLines(testLines, "事业与重大抉择");
+    if (!simRes.nuclearHexagram || !simRes.oppositeHexagram || !simRes.invertedHexagram) {
+      throw new Error("Missing complementary hexagrams in simRes");
+    }
+
+    var nuc = simRes.nuclearHexagram;
+    var opp = simRes.oppositeHexagram;
+    var inv = simRes.invertedHexagram;
+
+    if (!nuc.judgmentZh || !nuc.judgmentEn || !nuc.greatXiangZh || !nuc.greatXiangEn) {
+      throw new Error("Nuclear hexagram missing canonical scriptures!");
+    }
+    if (!opp.judgmentZh || !opp.judgmentEn || !opp.greatXiangZh || !opp.greatXiangEn) {
+      throw new Error("Opposite hexagram missing canonical scriptures!");
+    }
+    if (!inv.judgmentZh || !inv.judgmentEn || !inv.greatXiangZh || !inv.greatXiangEn) {
+      throw new Error("Inverted hexagram missing canonical scriptures!");
+    }
+
+    // Verify all 384 lines in ICHING_DATA have zero duplication
+    ICHING_DATA.forEach(function(h) {
+      h.lines.forEach(function(l) {
+        if (l.exegesisZh.indexOf(l.posAnalysisZh) !== -1) {
+          throw new Error("Found duplicate posAnalysisZh in hex " + h.number + " line " + l.position);
+        }
+        if (l.exegesisEn.indexOf(l.posAnalysisEn) !== -1) {
+          throw new Error("Found duplicate posAnalysisEn in hex " + h.number + " line " + l.position);
+        }
+      });
+    });
+    '''
+]
+run_check88 = subprocess.run(jsc_check88_cmd, capture_output=True, text=True)
+assert run_check88.returncode == 0, f"Check 88 test failed: stdout={run_check88.stdout} stderr={run_check88.stderr}"
+print("✓ 互卦错卦综卦深度解析、四维全景时空贯通定论、爻辞冗余文字去重、26mm大号朱砂方印与浅昼护眼底色验证通过！")
+
+
+# ==============================================================================
+# 89. Validating 64 Hexagrams Bespoke Domain Focus, Peak/Trough Jump, Historical Character Correlation & Wide Dynamic Spread
+# ==============================================================================
+print("\n=== 89. Validating 64 Hexagrams Bespoke Domain Focus, Peak/Trough Jump, Historical Character Correlation & Wide Dynamic Spread ===")
+
+# Part A: I Ching 64 Hexagrams Domain Focus & 384 Lines English Cleanliness
+with open("data/iching.js", "r", encoding="utf-8") as f:
+    iching_js_content = f.read()
+
+# Assert 0 generic boilerplate
+boilerplate_target = "蕴含天地阴阳消长之道，提示当前所处时空的枢纽转机"
+bp_count = iching_js_content.count(boilerplate_target)
+assert bp_count == 0, f"Found {bp_count} occurrences of generic boilerplate in data/iching.js!"
+
+# Part B: JSC Verification of 64 Hexagrams, Peak/Trough Jump, Historical Correlation & Wide Dynamic Spread
+jsc_check89_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    var window = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    var global = this;
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+
+    var allIds = [
+      'landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar',
+      'dashboardSummaryBadges', 'landingQuickPreviewBox', 'landingPreviewMeta', 'landingPreviewStatusBadge',
+      'portalPresetsContainer', 'portalFeaturesGrid', 'btnToggleAdvSolar', 'advSolarTimeContainer',
+      'langZhBtn', 'langEnBtn', 'btnExportDossier', 'btnToggleFlux', 'btnInstallPwa', 'nowBtn',
+      'btnResetToActualTime', 'btnResetToActualTimeTop', 'themeToggle', 'birthDate', 'birthTime', 'gender',
+      'citySelect', 'currentCountrySelect', 'currentCitySelect', 'currentCustomCityInput', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay',
+      'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy',
+      'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui',
+      'navBtnCareer', 'navBtnHistory', 'view-home', 'pillarsContainer', 'dmTitle', 'dmElementDesc',
+      'elementRadarCanvas', 'elementsBarContainer', 'portalBtnStrategy', 'portalBtnFriction', 'portalBtnFengShui',
+      'portalBtnCareer', 'view-career', 'careerContentContainer', 'careerQuickBadgesDashboard',
+      'btnJumpToHomeFromCareer', 'btnToggleCareerFullscreen', 'btnExitCareerFullscreenFloating',
+      'view-history', 'historyContentContainer', 'historyQuickBadgesDashboard', 'btnToggleHistoryFullscreen',
+      'btnExitHistoryFullscreenFloating', 'btnJumpToHomeFromHistory', 'btnOpenHistoryStandalone',
+      'historyFigureDetailModalDashboard', 'historyDetailModalCloseBtnDashboard', 'btnCloseHistoryDetailModalDashboard', 'historyDetailModalContentDashboard', 'historyCardModalHeaderTitle',
+      'historyFullscreenIcon', 'historyFullscreenText', 'btnQuickExportSinglePdf', 'dossierDownloadSinglePdfBtn', 'dossierDownloadPdfBtn', 'dossierPrintBtn', 'dossierCloseBtn', 'imperialDossierModal', 'imperialDossierContainer', 'dossierLangZh', 'dossierLangEn',
+      'fourPillarsHexSection', 'fourPillarsHexContainer', 'fourPillarsAgeSlider', 'fourPillarsAgeDisplay',
+      'ichingCycleSection', 'ichingCycleContainer', 'ichingCycleCanvas',
+      'ichingCyclePlayBtn', 'ichingCyclePlayIcon', 'ichingCyclePlayText',
+      'ichingCyclePrevBtn', 'ichingCycleAgeBadge', 'ichingCycleNextBtn',
+      'ichingTabTimeline', 'ichingTabYaoStages', 'ichingTabCosmic',
+      'ichingBtnEpochHandover', 'ichingBtnRealAge', 'ichingBtnPeak', 'ichingBtnTrough'
+    ];
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      var initialClasses = [];
+      if (id === 'dashboardView' || id === 'btnPortalTopNav' || id === 'advSolarTimeContainer' || id === 'historyFigureDetailModalDashboard' || id === 'btnExitHistoryFullscreenFloating') {
+        initialClasses = ['hidden'];
+      }
+      var navMap = {
+        'navBtnHome': 'view-home',
+        'navBtnStrategy': 'view-strategy',
+        'navBtnFriction': 'view-friction',
+        'navBtnLuck': 'view-luck',
+        'navBtnCanons': 'view-canons',
+        'navBtnIChing': 'view-iching',
+        'navBtnSynastry': 'view-synastry',
+        'navBtnFengShui': 'view-fengshui',
+        'navBtnCareer': 'view-career',
+        'navBtnHistory': 'view-history'
+      };
+      return {
+        id: id,
+        'data-view': navMap[id] || null,
+        tagName: (tag || 'DIV').toUpperCase(),
+        value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : '')),
+        checked: false,
+        _rawInnerHTML: '',
+        _children: [],
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        className: '',
+        style: {},
+        get innerHTML() {
+          var ch = (this._children || []).map(function(c) { return c.innerHTML || ''; }).join('');
+          return this._rawInnerHTML + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this._children = [];
+        },
+        appendChild: function(ch) { (this._children = this._children || []).push(ch); },
+        textContent: '',
+        classList: {
+          _classes: initialClasses,
+          add: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              if (this._classes.indexOf(arguments[i]) === -1) this._classes.push(arguments[i]);
+            }
+          },
+          remove: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              var idx = this._classes.indexOf(arguments[i]);
+              if (idx !== -1) this._classes.splice(idx, 1);
+            }
+          },
+          contains: function(c) { return this._classes.indexOf(c) !== -1; }
+        },
+        _listeners: {},
+        addEventListener: function(evt, fn) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        },
+        trigger: function(evt) {
+          var list = this._listeners[evt] || [];
+          for (var i = 0; i < list.length; i++) list[i].call(this, { target: this });
+        },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {}, beginPath: function() {}, moveTo: function() {}, lineTo: function() {},
+            closePath: function() {}, stroke: function() {}, fill: function() {}, fillText: function() {}, arc: function() {},
+            setLineDash: function() {}, scale: function() {}, createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        },
+        querySelector: function(s) { return null; },
+        querySelectorAll: function(s) { return []; }
+      };
+    }
+
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      body: { style: {} },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function(sel) {
+        if (sel === '.view-nav-btn') {
+          return Object.keys(elementStore).filter(function(k) { return k.startsWith('navBtn'); }).map(function(k) { return elementStore[k]; });
+        }
+        if (sel === '.iching-milestone-btn') {
+          return [
+            elementStore['ichingBtnEpochHandover'],
+            elementStore['ichingBtnRealAge'],
+            elementStore['ichingBtnPeak'],
+            elementStore['ichingBtnTrough']
+          ];
+        }
+        return [];
+      },
+      querySelector: function(sel) { return null; },
+      createElement: function(tag) { return makeEl('gen_' + Math.random(), tag); },
+      addEventListener: function(evt, fn) {
+        if (evt === 'DOMContentLoaded') document._domReady = fn;
+      },
+      documentElement: { lang: 'zh-CN' },
+      fullscreenElement: null,
+      exitFullscreen: function() { return Promise.resolve(); }
+    };
+
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/ditiansui.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('js/i18n.js');
+    load('js/bazi-engine.js');
+    load('js/fengshui-engine.js');
+    load('js/portrait-engine.js');
+    load('js/luck-engine.js');
+    load('js/iching-engine.js');
+    load('js/synastry-engine.js');
+    load('js/career-engine.js');
+    load('data/historical_figures.js');
+    load('js/history-engine.js');
+    load('js/visual-alchemy.js');
+    load('js/chart.js');
+    load('js/app.js');
+
+    // 1. Verify 64 Hexagrams Bespoke Domain Focus & Lines
+    if (!ICHING_DATA || ICHING_DATA.length !== 64) {
+      throw new Error("ICHING_DATA missing or length !== 64");
+    }
+    ICHING_DATA.forEach(function(h) {
+      var mi = h.modernInterpretation || {};
+      if (!mi.philosophyZh || mi.philosophyZh.indexOf("核心重点在于【") === -1) {
+        throw new Error("Hex " + h.number + " philosophyZh missing 核心重点在于【");
+      }
+      if (!mi.philosophyEn || mi.philosophyEn.indexOf("[Core Focus:") === -1) {
+        throw new Error("Hex " + h.number + " philosophyEn missing [Core Focus:");
+      }
+      if (/[\u4e00-\u9fa5]/.test(mi.philosophyEn)) {
+        throw new Error("Hex " + h.number + " philosophyEn contains Chinese!");
+      }
+      h.lines.forEach(function(l) {
+        if (/[\u4e00-\u9fa5]/.test(l.statementEn)) {
+          throw new Error("Hex " + h.number + " line " + l.position + " statementEn contains Chinese!");
+        }
+        if (/[\u4e00-\u9fa5]/.test(l.xiangEn)) {
+          throw new Error("Hex " + h.number + " line " + l.position + " xiangEn contains Chinese!");
+        }
+        if (/[\u4e00-\u9fa5]/.test(l.guidanceEn)) {
+          throw new Error("Hex " + h.number + " line " + l.position + " guidanceEn contains Chinese!");
+        }
+        if (/[\u4e00-\u9fa5]/.test(l.exegesisEn)) {
+          throw new Error("Hex " + h.number + " line " + l.position + " exegesisEn contains Chinese!");
+        }
+      });
+    });
+
+    document._domReady();
+
+    // 2. Trigger calculation and test Milestone Peak / Trough Jump
+    elementStore['calcBtn'].trigger('click');
+    elementStore['navBtnIChing'].trigger('click');
+
+    var btnPeak = elementStore['ichingBtnPeak'];
+    var btnTrough = elementStore['ichingBtnTrough'];
+    if (!btnPeak || !btnTrough) throw new Error("Missing peak or trough button!");
+
+    // Verify label contains age
+    if (btnPeak.innerHTML.indexOf("人生巅峰") === -1 || btnPeak.innerHTML.indexOf("岁") === -1) {
+      throw new Error("Peak button missing dynamic age in ZH: " + btnPeak.innerHTML);
+    }
+    if (btnTrough.innerHTML.indexOf("人生低谷") === -1 || btnTrough.innerHTML.indexOf("岁") === -1) {
+      throw new Error("Trough button missing dynamic age in ZH: " + btnTrough.innerHTML);
+    }
+
+    // Trigger Peak jump
+    btnPeak.trigger('click');
+    var peakAge = parseInt(elementStore['fourPillarsAgeSlider'].value, 10);
+    if (peakAge < 1 || peakAge > 100) throw new Error("Invalid peakAge: " + peakAge);
+
+    // Trigger Trough jump
+    btnTrough.trigger('click');
+    var troughAge = parseInt(elementStore['fourPillarsAgeSlider'].value, 10);
+    if (troughAge < 1 || troughAge > 100) throw new Error("Invalid troughAge: " + troughAge);
+    if (peakAge === troughAge) throw new Error("Peak and trough age should not be identical!");
+
+    // 3. Verify Historical Engine Character Correlation & Wide Dynamic Score Distribution
+    var testCharts = [
+      { bazi: BaZiEngine.calculate({ year: 1984, month: 2, day: 15, hour: 8, minute: 0, gender: '乾造' }), name: 'Wood Chart' },
+      { bazi: BaZiEngine.calculate({ year: 1996, month: 11, day: 28, hour: 23, minute: 30, gender: '坤造' }), name: 'Fire Chart' },
+      { bazi: BaZiEngine.calculate({ year: 1992, month: 8, day: 18, hour: 16, minute: 0, gender: '乾造' }), name: 'Metal Chart' }
+    ];
+
+    testCharts.forEach(function(tc) {
+      var luck = LuckEngine.calculateLuck(tc.bazi, 2026);
+      var career = CareerEngine.generateCareerReport(tc.bazi, luck, 2026);
+      var res = HistoricalEngine.calculateSimilarity(tc.bazi, luck, career);
+
+      var topScore = res.topMatch.similarityScore;
+      var bottomScore = res.allFiguresRanked[207].similarityScore;
+      var spread = topScore - bottomScore;
+
+      if (topScore < 93.0 || topScore > 96.5) {
+        throw new Error(tc.name + " topMatch score out of natural top range: " + topScore);
+      }
+      if (spread < 55.0) {
+        throw new Error(tc.name + " dynamic score spread too small (clustering detected): " + spread);
+      }
+      if (bottomScore > 35.0) {
+        throw new Error(tc.name + " bottom score too high (clustering detected): " + bottomScore);
+      }
+
+      // Check strictly non-increasing
+      for (var k = 0; k < res.allFiguresRanked.length - 1; k++) {
+        if (res.allFiguresRanked[k].similarityScore < res.allFiguresRanked[k + 1].similarityScore) {
+          throw new Error("Rank order violation in " + tc.name + " at index " + k);
+        }
+      }
+
+      // Verify bespoke evaluation
+      res.topMatches.forEach(function(m) {
+        if (!m.correlationEvaluationZh || !m.correlationEvaluationEn) {
+          throw new Error("Missing correlationEvaluation on " + m.nameZh);
+        }
+        if (/[\u4e00-\u9fa5]/.test(m.correlationEvaluationEn.personalityResonance)) {
+          throw new Error("Residual Chinese in personalityResonance EN on " + m.nameZh);
+        }
+        if (/[\u4e00-\u9fa5]/.test(m.correlationEvaluationEn.deedsReflection)) {
+          throw new Error("Residual Chinese in deedsReflection EN on " + m.nameZh);
+        }
+        if (/[\u4e00-\u9fa5]/.test(m.correlationEvaluationEn.strengthsLeverage)) {
+          throw new Error("Residual Chinese in strengthsLeverage EN on " + m.nameZh);
+        }
+        if (/[\u4e00-\u9fa5]/.test(m.correlationEvaluationEn.weaknessFirewall)) {
+          throw new Error("Residual Chinese in weaknessFirewall EN on " + m.nameZh);
+        }
+        if (/[\u4e00-\u9fa5]/.test(m.correlationEvaluationEn.verdict)) {
+          throw new Error("Residual Chinese in verdict EN on " + m.nameZh);
+        }
+      });
+    });
+
+    // 4. Verify Historical View Redundant Banner Removed & Evaluation Rendered in DOM
+    elementStore['navBtnHistory'].trigger('click');
+    var histHtmlZh = elementStore['historyContentContainer'].innerHTML;
+    if (histHtmlZh.indexOf("乱世三百年历史人物深度相似度测算全相") !== -1) {
+      throw new Error("Redundant banner still present in historyContentContainer!");
+    }
+    if (histHtmlZh.indexOf("天命心智深度契合评析") === -1) {
+      throw new Error("Missing 天命心智深度契合评析 in historyContentContainer!");
+    }
+
+    // Switch to EN
+    elementStore['langEnBtn'].trigger('click');
+    elementStore['calcBtn'].trigger('click');
+    elementStore['navBtnHistory'].trigger('click');
+    var histHtmlEn = elementStore['historyContentContainer'].innerHTML;
+    if (histHtmlEn.indexOf("Bespoke Soul & Mindset Resonance Evaluation") === -1) {
+      throw new Error("Missing Bespoke Soul & Mindset Resonance Evaluation in EN!");
+    }
+    if (/[\u4e00-\u9fa5]/.test(histHtmlEn)) {
+      throw new Error("Residual Chinese in historyContentContainer in EN: " + histHtmlEn.match(/[\u4e00-\u9fa5]+/g).join(', '));
+    }
+    '''
+]
+run_check89 = subprocess.run(jsc_check89_cmd, capture_output=True, text=True)
+assert run_check89.returncode == 0, f"Check 89 test failed: stdout={run_check89.stdout} stderr={run_check89.stderr}"
+print("✓ 周易六十四卦专属重点解析、人生巅峰低谷跳转、历史人物四维心智契合度评析与全跨度动态分布验证通过！")
+
+print("\n🎉 ALL 89 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
+
 
 
 

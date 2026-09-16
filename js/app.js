@@ -6398,6 +6398,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Milestone buttons
+    const activePtsForBtns = (cachedIChingCycleData && cachedIChingCycleData.length > 0) ? cachedIChingCycleData : points;
+    if (activePtsForBtns && activePtsForBtns.length > 0) {
+      const peakPt = activePtsForBtns.reduce((best, curr) => (curr.score > best.score ? curr : best), activePtsForBtns[0]);
+      const troughPt = activePtsForBtns.reduce((lowest, curr) => (curr.score < lowest.score ? curr : lowest), activePtsForBtns[0]);
+      const btnPeak = document.getElementById('ichingBtnPeak');
+      const btnTrough = document.getElementById('ichingBtnTrough');
+      if (btnPeak) {
+        btnPeak.innerHTML = `🏆 <span data-i18n="ms_peak">${isEn ? `Apex Peak (${peakPt.age})` : `人生巅峰 (${peakPt.age}岁)`}</span>`;
+      }
+      if (btnTrough) {
+        btnTrough.innerHTML = `⚓ <span data-i18n="ms_trough">${isEn ? `Valley Crucible (${troughPt.age})` : `人生低谷 (${troughPt.age}岁)`}</span>`;
+      }
+    }
+
     document.querySelectorAll('.iching-milestone-btn').forEach(btn => {
       if (!btn._hooked) {
         btn._hooked = true;
@@ -6405,16 +6419,26 @@ document.addEventListener('DOMContentLoaded', () => {
           const activeRes = currentBaziResult || res;
           const activeBYear = (activeRes && activeRes.input && activeRes.input.year) || (activeRes && activeRes.birthYear) || 1990;
           const ageAttr = btn.getAttribute('data-age');
+          const activePts = (cachedIChingCycleData && cachedIChingCycleData.length > 0) ? cachedIChingCycleData : points;
           if (ageAttr) {
             setIChingActiveAge(parseInt(ageAttr, 10));
           } else if (btn.id === 'ichingBtnEpochHandover') {
-            const activePts = (cachedIChingCycleData && cachedIChingCycleData.length > 0) ? cachedIChingCycleData : points;
             const xtYears = (activePts[0] && activePts[0].governingHex) ? (activePts.find(p => !p.isXianTian) ? activePts.find(p => !p.isXianTian).age : 48) : 48;
             setIChingActiveAge(xtYears);
           } else if (btn.id === 'ichingBtnRealAge') {
             const currentYear = new Date().getFullYear();
             const realAge = Math.max(1, Math.min(100, Math.abs(currentYear - activeBYear)));
             setIChingActiveAge(realAge);
+          } else if (btn.id === 'ichingBtnPeak') {
+            if (activePts && activePts.length > 0) {
+              const peakPt = activePts.reduce((best, curr) => (curr.score > best.score ? curr : best), activePts[0]);
+              setIChingActiveAge(peakPt.age);
+            }
+          } else if (btn.id === 'ichingBtnTrough') {
+            if (activePts && activePts.length > 0) {
+              const troughPt = activePts.reduce((lowest, curr) => (curr.score < lowest.score ? curr : lowest), activePts[0]);
+              setIChingActiveAge(troughPt.age);
+            }
           }
         });
       }
@@ -7874,23 +7898,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Main Sections
     container.innerHTML = `
-      <!-- Top Banner (Inside Dashboard) -->
-      <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-indigo-950/40 border border-amber-500/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-2 mb-1.5">
-            <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">${isEn ? 'Mirror of History' : '以史为鉴'}</span>
-            <h2 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300">
-              ${isEn ? '300 Years of Chaotic Division · In-Depth Historical Archetype Resonance' : '乱世三百年历史人物深度相似度测算全相'}
-            </h2>
-          </div>
-          <p class="text-xs text-gray-300 max-w-3xl leading-relaxed">
-            ${isEn
-              ? 'Using bronze as a mirror, one can adjust attire; using history as a mirror, one understands dynastic rise and fall; using persons as a mirror, one discerns success and folly. Across three centuries of upheaval from Western Jin to Sui, this engine compares your Day Master, strength, patterns, and four workplace archetypes against 208 famous historical figures to derive actionable wisdom and risk circuit-breakers.'
-              : '夫以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。从西晋永嘉之乱到隋朝重归一统的三百年乱世，汇聚了中国历史上最极致的政治博弈、军事谋略与人性张力。本引擎依据您的八字元神五行、身强身弱分值、主导格局十神与四大职场生态位，对 208 位著名历史人物进行多维相似度精密对校，助您汲取先贤胜局智慧，并建立规避倾覆的熔断警报。'}
-          </p>
-        </div>
-      </div>
-
       <!-- Section 1: Top Soul Mirror -->
       <div class="space-y-4">
         <div class="flex items-center justify-between border-b border-gray-800 pb-2">
@@ -7919,10 +7926,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex items-center space-x-3">
               <div class="text-right">
                 <div class="text-[10px] text-gray-400 uppercase tracking-widest">${isEn ? 'Soul Affinity' : '天命契合度'}</div>
-                <div class="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">${topM.similarityScore}%</div>
-              </div>
-              <div class="w-12 h-12 rounded-full border-2 border-emerald-500/80 bg-emerald-950/40 flex items-center justify-center text-xl font-bold text-emerald-300 shadow-lg">
-                👑
+                <div class="text-3xl font-bold font-mono text-emerald-400">#1 · ${topM.similarityScore}%</div>
               </div>
             </div>
           </div>
@@ -7992,6 +7996,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>${topAux.weaknesses[1]}</span>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bespoke Soul & Mindset Resonance Evaluation -->
+          <div class="p-4 rounded-xl bg-purple-950/20 border border-purple-700/50 space-y-2.5 text-xs">
+            <div class="flex items-center justify-between border-b border-purple-800/40 pb-1.5">
+              <h4 class="font-bold text-purple-300 flex items-center gap-1.5 font-serif-sc">
+                <span>🔮</span><span>${isEn ? 'Bespoke Soul & Mindset Resonance Evaluation' : '天命心智深度契合评析 (性格·事迹·优缺点综合推论)'}</span>
+              </h4>
+              <span class="chinese-seal text-[9px] py-0 border-purple-500 text-purple-300 font-bold">${isEn ? 'Evaluation' : '考评'}</span>
+            </div>
+            <div class="space-y-1.5 leading-relaxed text-gray-200 font-sans">
+              <p><strong class="text-amber-300">${isEn ? '• Personality Resonance: ' : '• 性格同频：'}</strong>${isEn ? (topM.correlationEvaluationEn && topM.correlationEvaluationEn.personalityResonance ? topM.correlationEvaluationEn.personalityResonance.replace('[Personality Resonance]: ', '') : topM.personalityEn) : (topM.correlationEvaluationZh && topM.correlationEvaluationZh.personalityResonance ? topM.correlationEvaluationZh.personalityResonance.replace('【性格同频】：', '') : topM.personalityZh)}</p>
+              <p><strong class="text-indigo-300">${isEn ? '• Deeds Reflection: ' : '• 事迹折射：'}</strong>${isEn ? (topM.correlationEvaluationEn && topM.correlationEvaluationEn.deedsReflection ? topM.correlationEvaluationEn.deedsReflection.replace('[Deeds Reflection]: ', '') : topM.deedsEn) : (topM.correlationEvaluationZh && topM.correlationEvaluationZh.deedsReflection ? topM.correlationEvaluationZh.deedsReflection.replace('【事迹折射】：', '') : topM.deedsZh)}</p>
+              <p><strong class="text-emerald-300">${isEn ? '• Strengths Leverage: ' : '• 优势借力：'}</strong>${isEn ? (topM.correlationEvaluationEn && topM.correlationEvaluationEn.strengthsLeverage ? topM.correlationEvaluationEn.strengthsLeverage.replace('[Strengths Leverage]: ', '') : topM.strengthAdviceEn) : (topM.correlationEvaluationZh && topM.correlationEvaluationZh.strengthsLeverage ? topM.correlationEvaluationZh.strengthsLeverage.replace('【优点借力】：', '') : topM.strengthAdviceZh)}</p>
+              <p><strong class="text-rose-300">${isEn ? '• Vulnerability Firewall: ' : '• 缺点熔断：'}</strong>${isEn ? (topM.correlationEvaluationEn && topM.correlationEvaluationEn.weaknessFirewall ? topM.correlationEvaluationEn.weaknessFirewall.replace('[Vulnerability Circuit-Breaker]: ', '') : topM.weaknessAdviceEn) : (topM.correlationEvaluationZh && topM.correlationEvaluationZh.weaknessFirewall ? topM.correlationEvaluationZh.weaknessFirewall.replace('【缺点熔断】：', '') : topM.weaknessAdviceZh)}</p>
+              <div class="pt-1.5 border-t border-purple-800/30 text-purple-200 font-serif-sc">
+                <strong>⚖️ ${isEn ? 'Oracle Verdict: ' : '全局断论：'}</strong>${isEn ? (topM.correlationEvaluationEn && topM.correlationEvaluationEn.verdict ? topM.correlationEvaluationEn.verdict : `Resonance: ${topM.similarityScore}%.`) : (topM.correlationEvaluationZh && topM.correlationEvaluationZh.verdict ? topM.correlationEvaluationZh.verdict : `天命心智契合度 ${topM.similarityScore}%。`)}
               </div>
             </div>
           </div>
@@ -8403,6 +8426,25 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span>${aux.weaknesses[1]}</span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bespoke Soul & Mindset Resonance Evaluation -->
+        <div class="p-3.5 rounded-xl bg-purple-950/20 border border-purple-800/40 space-y-2 text-xs">
+          <div class="flex items-center justify-between border-b border-purple-800/30 pb-1">
+            <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1">
+              <span>🔮</span><span>${isEn ? 'Destiny & Mindset Resonance Evaluation' : '天命心智深度契合评析 (性格·事迹·优缺点综合推论)'}</span>
+            </span>
+            <span class="chinese-seal text-[9px] py-0 border-purple-500 text-purple-400 font-bold">${isEn ? 'Evaluation' : '考评'}</span>
+          </div>
+          <div class="space-y-1.5 text-gray-200 font-sans leading-relaxed">
+            <p><strong class="text-amber-300">${isEn ? '• Personality Resonance: ' : '• 性格同频：'}</strong>${isEn ? (f.correlationEvaluationEn && f.correlationEvaluationEn.personalityResonance ? f.correlationEvaluationEn.personalityResonance.replace('[Personality Resonance]: ', '') : f.personalityEn) : (f.correlationEvaluationZh && f.correlationEvaluationZh.personalityResonance ? f.correlationEvaluationZh.personalityResonance.replace('【性格同频】：', '') : f.personalityZh)}</p>
+            <p><strong class="text-indigo-300">${isEn ? '• Deeds Reflection: ' : '• 事迹折射：'}</strong>${isEn ? (f.correlationEvaluationEn && f.correlationEvaluationEn.deedsReflection ? f.correlationEvaluationEn.deedsReflection.replace('[Deeds Reflection]: ', '') : f.deedsEn) : (f.correlationEvaluationZh && f.correlationEvaluationZh.deedsReflection ? f.correlationEvaluationZh.deedsReflection.replace('【事迹折射】：', '') : f.deedsZh)}</p>
+            <p><strong class="text-emerald-300">${isEn ? '• Strengths Leverage: ' : '• 优势借力：'}</strong>${isEn ? (f.correlationEvaluationEn && f.correlationEvaluationEn.strengthsLeverage ? f.correlationEvaluationEn.strengthsLeverage.replace('[Strengths Leverage]: ', '') : f.strengthAdviceEn) : (f.correlationEvaluationZh && f.correlationEvaluationZh.strengthsLeverage ? f.correlationEvaluationZh.strengthsLeverage.replace('【优点借力】：', '') : f.strengthAdviceZh)}</p>
+            <p><strong class="text-rose-300">${isEn ? '• Vulnerability Firewall: ' : '• 缺点熔断：'}</strong>${isEn ? (f.correlationEvaluationEn && f.correlationEvaluationEn.weaknessFirewall ? f.correlationEvaluationEn.weaknessFirewall.replace('[Vulnerability Circuit-Breaker]: ', '') : f.weaknessAdviceEn) : (f.correlationEvaluationZh && f.correlationEvaluationZh.weaknessFirewall ? f.correlationEvaluationZh.weaknessFirewall.replace('【缺点熔断】：', '') : f.weaknessAdviceZh)}</p>
+            <div class="pt-1 border-t border-purple-800/30 text-purple-200 font-serif-sc">
+              <strong>⚖️ ${isEn ? 'Oracle Verdict: ' : '全局断论：'}</strong>${isEn ? (f.correlationEvaluationEn && f.correlationEvaluationEn.verdict ? f.correlationEvaluationEn.verdict : `Resonance: ${f.similarityScore}%.`) : (f.correlationEvaluationZh && f.correlationEvaluationZh.verdict ? f.correlationEvaluationZh.verdict : `天命心智契合度 ${f.similarityScore}%。`)}
             </div>
           </div>
         </div>
@@ -9767,41 +9809,96 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Complementary Hexagram Perspective Badges (互卦 / 错卦 / 综卦)
+    // 4. Complementary Hexagram Perspective Badges (互卦 / 错卦 / 综卦 - 深度结构演化与战略推演)
     if (complementaryHexagramsBar) {
       complementaryHexagramsBar.innerHTML = `
-        <!-- 互卦 (Nuclear) -->
-        <div class="p-3.5 rounded-xl bg-black/40 border border-teal-700/40 space-y-1">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-teal-300 font-serif-sc">${isEn ? '🔄 Nuclear Hexagram (互卦)' : '🔄 互卦 (中程内在推演)'}</span>
-            <span class="text-[11px] font-mono text-teal-400 font-bold">${nuc ? `第${nuc.number}卦` : ''}</span>
+        <!-- 互卦 (Nuclear: 中程内在推演) -->
+        <div class="p-4 rounded-xl bg-black/40 border border-teal-700/50 space-y-2.5 shadow-lg">
+          <div class="flex items-center justify-between border-b border-teal-800/40 pb-1.5">
+            <span class="text-xs font-bold text-teal-300 font-serif-sc flex items-center gap-1">
+              <span>🔄</span>
+              <span>${isEn ? 'Nuclear Hexagram (Internal Evolution)' : '互卦 (中程内在推演)'}</span>
+            </span>
+            <span class="text-[11px] font-mono text-teal-400 font-bold px-1.5 py-0.2 rounded bg-teal-500/10 border border-teal-500/30">
+              ${nuc ? (isEn ? `Hexagram ${nuc.number}` : `第${nuc.number}卦`) : ''}
+            </span>
           </div>
-          <div class="text-xs font-bold text-gray-200 font-serif-sc">${nuc ? (isEn ? nuc.nameEn : nuc.nameZh) : '---'}</div>
-          <p class="text-[11px] text-gray-400 leading-tight">
-            ${isEn ? 'Reflects hidden process and internal motives' : '去初上二爻，取二三四为下、三四五为上，表征事态深层内在动因。'}
+          <div class="flex items-baseline justify-between">
+            <div class="text-sm font-bold text-gray-100 font-serif-sc">${nuc ? (isEn ? nuc.nameEn : nuc.nameZh) : '---'}</div>
+            <span class="text-[10px] text-teal-300/80 font-mono">${nuc ? (isEn ? `${nuc.upperTrigramEn} / ${nuc.lowerTrigramEn}` : `上${nuc.upperTrigram} · 下${nuc.lowerTrigram}`) : ''}</span>
+          </div>
+          <div class="p-2 bg-black/50 rounded-lg border border-teal-900/30 text-[11px] space-y-1">
+            <div class="text-amber-200/90 font-serif-sc">
+              <span class="font-bold text-amber-400">${isEn ? '【Judgment】: ' : '【文王卦辞】：'}</span>“${nuc ? (isEn ? nuc.judgmentEn : nuc.judgmentZh) : ''}”
+            </div>
+            <div class="text-gray-300 font-serif-sc italic text-[10.5px]">
+              <span class="font-bold text-teal-400">${isEn ? '【Image】: ' : '【大象传】：'}</span>“${nuc ? (isEn ? nuc.greatXiangEn : nuc.greatXiangZh) : ''}”
+            </div>
+          </div>
+          <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+            ${isEn 
+              ? `[Internal Motive & Intermediate Unfolding]: Derived from lines 2-3-4 and 3-4-5. The nuclear hexagram reveals hidden drivers unfolding beneath appearances. Breakthrough relies on consolidating internal governance rather than superficial displays.`
+              : `【结构源起与内在动因】：去初上二爻，取二三四为下互、三四五为上互，表征事态深层内在动因。事态由本卦推进中必经【${nuc ? nuc.nameZh : ''}】之淬炼发酵；成败核心在于内部治理与机制整肃，不可为外在虚名所惑。`}
           </p>
         </div>
 
-        <!-- 错卦 (Opposite) -->
-        <div class="p-3.5 rounded-xl bg-black/40 border border-rose-700/40 space-y-1">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-rose-300 font-serif-sc">${isEn ? '⚖️ Opposite Hexagram (错卦)' : '⚖️ 错卦 (对立面审视)'}</span>
-            <span class="text-[11px] font-mono text-rose-400 font-bold">${opp ? `第${opp.number}卦` : ''}</span>
+        <!-- 错卦 (Opposite: 对立面审视) -->
+        <div class="p-4 rounded-xl bg-black/40 border border-rose-700/50 space-y-2.5 shadow-lg">
+          <div class="flex items-center justify-between border-b border-rose-800/40 pb-1.5">
+            <span class="text-xs font-bold text-rose-300 font-serif-sc flex items-center gap-1">
+              <span>⚖️</span>
+              <span>${isEn ? 'Opposite Hexagram (Shadow & Dialectic)' : '错卦 (对立面审视)'}</span>
+            </span>
+            <span class="text-[11px] font-mono text-rose-400 font-bold px-1.5 py-0.2 rounded bg-rose-500/10 border border-rose-500/30">
+              ${opp ? (isEn ? `Hexagram ${opp.number}` : `第${opp.number}卦`) : ''}
+            </span>
           </div>
-          <div class="text-xs font-bold text-gray-200 font-serif-sc">${opp ? (isEn ? opp.nameEn : opp.nameZh) : '---'}</div>
-          <p class="text-[11px] text-gray-400 leading-tight">
-            ${isEn ? 'Reveals polar opposites, shadow tensions and risks' : '六爻阴阳全反，表征事态的对立视角、逆境危机与隐蔽盲区。'}
+          <div class="flex items-baseline justify-between">
+            <div class="text-sm font-bold text-gray-100 font-serif-sc">${opp ? (isEn ? opp.nameEn : opp.nameZh) : '---'}</div>
+            <span class="text-[10px] text-rose-300/80 font-mono">${opp ? (isEn ? `${opp.upperTrigramEn} / ${opp.lowerTrigramEn}` : `上${opp.upperTrigram} · 下${opp.lowerTrigram}`) : ''}</span>
+          </div>
+          <div class="p-2 bg-black/50 rounded-lg border border-rose-900/30 text-[11px] space-y-1">
+            <div class="text-amber-200/90 font-serif-sc">
+              <span class="font-bold text-amber-400">${isEn ? '【Judgment】: ' : '【文王卦辞】：'}</span>“${opp ? (isEn ? opp.judgmentEn : opp.judgmentZh) : ''}”
+            </div>
+            <div class="text-gray-300 font-serif-sc italic text-[10.5px]">
+              <span class="font-bold text-rose-400">${isEn ? '【Image】: ' : '【大象传】：'}</span>“${opp ? (isEn ? opp.greatXiangEn : opp.greatXiangZh) : ''}”
+            </div>
+          </div>
+          <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+            ${isEn 
+              ? `[Shadow Warning & Polar Antithesis]: All six lines inverted. Exposes polar opposite risks, shadow vulnerabilities, and worst-case scenarios if one acts with reckless bias in the base hexagram. Maintain dialectical balance.`
+              : `【全息对立与风险盲区预警】：六爻阴阳彻底全反，表征事态的对立视角、逆境危机与隐蔽盲区。若在本卦中执念过深、偏激冒进，最易坠入【${opp ? opp.nameZh : ''}】之反面困局。必须将此作为风险防范底线，反向自省。`}
           </p>
         </div>
 
-        <!-- 综卦 (Inverted) -->
-        <div class="p-3.5 rounded-xl bg-black/40 border border-indigo-700/40 space-y-1">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-indigo-300 font-serif-sc">${isEn ? '🌀 Inverted Hexagram (综卦)' : '🌀 综卦 (换位与周期)'}</span>
-            <span class="text-[11px] font-mono text-indigo-400 font-bold">${inv ? `第${inv.number}卦` : ''}</span>
+        <!-- 综卦 (Inverted: 换位与周期) -->
+        <div class="p-4 rounded-xl bg-black/40 border border-indigo-700/50 space-y-2.5 shadow-lg">
+          <div class="flex items-center justify-between border-b border-indigo-800/40 pb-1.5">
+            <span class="text-xs font-bold text-indigo-300 font-serif-sc flex items-center gap-1">
+              <span>🌀</span>
+              <span>${isEn ? 'Inverted Hexagram (Counterpart & Cyclical)' : '综卦 (换位与周期)'}</span>
+            </span>
+            <span class="text-[11px] font-mono text-indigo-400 font-bold px-1.5 py-0.2 rounded bg-indigo-500/10 border border-indigo-500/30">
+              ${inv ? (isEn ? `Hexagram ${inv.number}` : `第${inv.number}卦`) : ''}
+            </span>
           </div>
-          <div class="text-xs font-bold text-gray-200 font-serif-sc">${inv ? (isEn ? inv.nameEn : inv.nameZh) : '---'}</div>
-          <p class="text-[11px] text-gray-400 leading-tight">
-            ${isEn ? 'Observes the situation from the other party’s perspective' : '将全卦上下颠倒翻转，表征站在对方立场与时空翻覆后的全景。'}
+          <div class="flex items-baseline justify-between">
+            <div class="text-sm font-bold text-gray-100 font-serif-sc">${inv ? (isEn ? inv.nameEn : inv.nameZh) : '---'}</div>
+            <span class="text-[10px] text-indigo-300/80 font-mono">${inv ? (isEn ? `${inv.upperTrigramEn} / ${inv.lowerTrigramEn}` : `上${inv.upperTrigram} · 下${inv.lowerTrigram}`) : ''}</span>
+          </div>
+          <div class="p-2 bg-black/50 rounded-lg border border-indigo-900/30 text-[11px] space-y-1">
+            <div class="text-amber-200/90 font-serif-sc">
+              <span class="font-bold text-amber-400">${isEn ? '【Judgment】: ' : '【文王卦辞】：'}</span>“${inv ? (isEn ? inv.judgmentEn : inv.judgmentZh) : ''}”
+            </div>
+            <div class="text-gray-300 font-serif-sc italic text-[10.5px]">
+              <span class="font-bold text-indigo-400">${isEn ? '【Image】: ' : '【大象传】：'}</span>“${inv ? (isEn ? inv.greatXiangEn : inv.greatXiangZh) : ''}”
+            </div>
+          </div>
+          <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+            ${isEn 
+              ? `[Counterpart Perspective & Full-Cycle Turnover]: Hexagram flipped 180°. Reveals the chessboard from the competitor's or collaborator's shoes, and depicts future conditions when the temporal cycle turns. Decouple from self-bias.`
+              : `【换位思考与时空翻转全景】：将全卦上下颠倒翻转，表征站在对方、对手立场或时空周期颠倒翻覆后的全景。洞悉对方利益诉求与终局翻转规律，方能破除自我中心之单向执念，执掌博弈主动权。`}
           </p>
         </div>
       `;
@@ -9833,6 +9930,10 @@ document.addEventListener('DOMContentLoaded', () => {
           const primaryLine = (targetPos && orig.lines) ? orig.lines[targetPos - 1] : null;
           if (!primaryLine) return '';
 
+          // Deduplicate exegesis against position analysis
+          const cleanExegesisZh = (primaryLine.exegesisZh || '').replace(primaryLine.posAnalysisZh || '', '').replace(/\s+/g, ' ').trim();
+          const cleanExegesisEn = (primaryLine.exegesisEn || '').replace(primaryLine.posAnalysisEn || '', '').replace(/\s+/g, ' ').trim();
+
           return `
             <!-- Primary Deciding Line Highlight Card (断卦核心主爻 · 深度密解与实战大典) -->
             <div class="p-4 rounded-xl bg-gradient-to-br from-amber-950/60 via-black/70 to-amber-950/40 border-2 border-amber-500 shadow-2xl space-y-3 ring-1 ring-amber-400/40">
@@ -9854,13 +9955,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="text-xs text-gray-400 font-serif-sc italic pt-1 border-t border-gray-800/60">${isEn ? primaryLine.xiangEn : primaryLine.xiangZh}</div>
               </div>
 
-              <!-- In-Depth Vernacular Exegesis -->
+              <!-- In-Depth Vernacular Exegesis (Deduplicated against Position Analysis) -->
               <div class="p-3 bg-black/40 rounded-lg border border-gray-800 space-y-1.5 text-xs">
                 <div class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
                   <span>🔍</span>
                   <span>${isEn ? 'Line In-Depth Exegesis & Subtle Meaning' : '爻辞微言大义与白话深度剖析'}</span>
                 </div>
-                <p class="text-gray-200 leading-relaxed font-serif-sc">${isEn ? primaryLine.exegesisEn : primaryLine.exegesisZh}</p>
+                <p class="text-gray-200 leading-relaxed font-serif-sc">${isEn ? cleanExegesisEn : cleanExegesisZh}</p>
               </div>
 
               <!-- Position Dynamics & Temporal Stage -->
@@ -9885,6 +9986,29 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="p-2.5 rounded-lg bg-amber-500/20 border border-amber-500/40 text-xs text-amber-200 flex items-start gap-2">
                 <span class="font-bold text-amber-400 whitespace-nowrap">🎯 ${isEn ? 'Action Directive:' : '核心行事指引：'}</span>
                 <span class="font-medium">${isEn ? primaryLine.guidanceEn : primaryLine.guidanceZh}</span>
+              </div>
+
+              <!-- Quad-Hexagram Holistic Synthesis & Strategic Verdict (四维全景时空贯通定论) -->
+              <div class="p-3.5 rounded-xl bg-gradient-to-br from-amber-900/30 via-black/60 to-purple-950/30 border border-amber-500/50 space-y-2 text-xs">
+                <div class="flex items-center justify-between border-b border-amber-500/30 pb-1.5">
+                  <div class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                    <span>🌐</span>
+                    <span>${isEn ? 'Holistic Quad-Hexagram Synthesis & Strategic Verdict' : '四维全景时空贯通定论 (本卦·互卦·错卦·综卦综合推演总结)'}</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">${isEn ? 'QUAD-SYNTHESIS' : '四象贯通'}</span>
+                </div>
+                <div class="space-y-1.5 text-gray-200 leading-relaxed font-serif-sc">
+                  <p><b class="text-amber-400 font-bold">1. ${isEn ? 'Base Hexagram (Baseline Realism)' : '本卦为体 (当下基盘)'}：</b>${isEn ? `[${orig.nameEn}] establishes the concrete reality and starting posture. Judgment counsels: “${orig.judgmentEn}”.` : `【${orig.nameZh}】奠定当下时空基准盘，明示客观处境。经文卦辞曰：“${orig.judgmentZh}”。`}</p>
+                  <p><b class="text-teal-400 font-bold">2. ${isEn ? 'Nuclear Hexagram (Inner Motive)' : '互卦为因 (内在发酵)'}：</b>${nuc ? (isEn ? `[${nuc.nameEn}] drives the internal evolutionary mechanics beneath external forms. Core dynamic: “${nuc.greatXiangEn}”.` : `【${nuc.nameZh}】主导中程深层内在动因，防患于未萌。大象曰：“${nuc.greatXiangZh}”。`) : '---'}</p>
+                  <p><b class="text-rose-400 font-bold">3. ${isEn ? 'Opposite Hexagram (Shadow Boundary)' : '错卦为戒 (对立盲区)'}：</b>${opp ? (isEn ? `[${opp.nameEn}] exposes polar shadow vulnerabilities and worst-case friction. Warning: “${opp.greatXiangEn}”.` : `【${opp.nameZh}】照见对立面的极端危机与认知盲区，以警偏颇。大象曰：“${opp.greatXiangZh}”。`) : '---'}</p>
+                  <p><b class="text-indigo-400 font-bold">4. ${isEn ? 'Inverted Hexagram (Counterpart Mirror)' : '综卦为照 (换位全景)'}：</b>${inv ? (isEn ? `[${inv.nameEn}] mirrors the counterpart’s perspective and cyclical turnover. Image: “${inv.greatXiangEn}”.` : `【${inv.nameZh}】呈现对手/合作方立场及未来时空反转后的全相。大象曰：“${inv.greatXiangZh}”。`) : '---'}</p>
+                  <div class="pt-1.5 border-t border-amber-500/30 text-amber-200">
+                    <b class="text-amber-300 font-bold">⚡ ${isEn ? 'Final Oracle Synthesis & Strategic Key:' : '终极贯通决策断论与破局胜负手：'}</b>
+                    <span>${isEn 
+                      ? `Synthesizing the four perspectives into ${primaryLine.nameEn} (“${primaryLine.statementEn}”): ${primaryLine.guidanceEn}`
+                      : `四维汇聚于【${primaryLine.nameZh}】（“${primaryLine.statementZh}”）。此爻即为全盘破局的核心胜负手！行持指引：${primaryLine.guidanceZh}`}</span>
+                  </div>
+                </div>
               </div>
             </div>
           `;
@@ -9981,7 +10105,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/80 space-y-1.5 text-xs">
                     <div class="text-gray-300 leading-relaxed">
                       <span class="text-amber-400 font-semibold font-serif-sc">${isEn ? '【Exegesis】: ' : '【爻辞深度精解】：'}</span>
-                      ${isEn ? l.exegesisEn : l.exegesisZh}
+                      ${isEn 
+                        ? (l.exegesisEn || '').replace(l.posAnalysisEn || '', '').replace(/\s+/g, ' ').trim()
+                        : (l.exegesisZh || '').replace(l.posAnalysisZh || '', '').replace(/\s+/g, ' ').trim()}
                     </div>
                     <div class="text-gray-400 text-[11px] pt-1 border-t border-gray-800/50">
                       <span class="text-sky-300 font-semibold font-serif-sc">${isEn ? '【Position】: ' : '【时空位阶】：'}</span>
@@ -11854,18 +11980,18 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Module 4: Imperial Decrees -->
-          <div class="imperial-card imperial-card-accent p-2 text-xs space-y-0.5 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-2.5 text-xs space-y-0.5 font-serif-sc relative overflow-hidden">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
               <span class="flex items-center gap-1"><span class="text-sm">👑</span><span>${isEn ? 'IV. Imperial Decrees · Three Golden Rules for Life' : '四、钦天监朱批 · 终身不败立身三铁律'}</span></span>
               <span class="text-[9.5px] text-amber-900 font-mono">${isEn ? 'SOVEREIGN MANDATE' : '天机不易'}</span>
             </div>
-            <div class="flex items-center justify-between gap-2.5 pt-0.5">
-              <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight flex-1">
+            <div class="relative pt-0.5 min-h-[44px]">
+              <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight pr-14">
                 <p>${rule1}</p>
                 <p>${rule2}</p>
                 <p>${rule3}</p>
               </div>
-              <div class="imperial-seal-square ${isEn ? 'is-en' : ''} flex-shrink-0 self-center" title="${isEn ? 'Imperial Rescript' : '钦天御批'}">
+              <div class="imperial-seal-square ${isEn ? 'is-en' : ''}" title="${isEn ? 'Imperial Rescript' : '钦天御批'}">
                 ${isEn ? 'IMPERIAL<br>RESCRIPT' : '钦天<br>御批'}
               </div>
             </div>

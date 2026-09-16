@@ -103,11 +103,169 @@
   border-color: var(--border-color) !important;
 }
 
+/* Light Theme Card Tiles & Sub-Boxes (彻底消除黑盒底色，呈现温润宣纸质感) */
+[data-theme="light"] .bg-black,
+[data-theme="light"] .bg-black\/10,
+[data-theme="light"] .bg-black\/20,
+[data-theme="light"] .bg-black\/25,
+[data-theme="light"] .bg-black\/30,
+[data-theme="light"] .bg-black\/35,
+[data-theme="light"] .bg-black\/40,
+[data-theme="light"] .bg-black\/50,
+[data-theme="light"] .bg-black\/60,
+[data-theme="light"] .bg-black\/70,
+[data-theme="light"] .bg-black\/80,
+[data-theme="light"] .bg-black\/90 {
+  background-color: #ffffff !important;
+  border-color: #ded7c7 !important;
+  box-shadow: 0 1px 3px rgba(100, 80, 50, 0.04) !important;
+}
+
+/* Light Theme Tinted Card Containers (五行与能量抢救专项优雅浅调) */
+[data-theme="light"] .from-rose-950\/15,
+[data-theme="light"] .from-rose-950\/20,
+[data-theme="light"] .from-rose-950\/25,
+[data-theme="light"] .from-rose-950\/40 {
+  background-image: linear-gradient(135deg, #fff5f5 0%, #fef2f2 50%, #faf5ef 100%) !important;
+  background-color: #fff5f5 !important;
+  border-color: #fecdd3 !important;
+}
+
+[data-theme="light"] .from-amber-950\/10,
+[data-theme="light"] .from-amber-950\/20,
+[data-theme="light"] .from-amber-950\/25,
+[data-theme="light"] .from-amber-950\/30,
+[data-theme="light"] .from-amber-950\/40,
+[data-theme="light"] .from-amber-950\/50,
+[data-theme="light"] .from-amber-950\/60,
+[data-theme="light"] .from-amber-900\/25,
+[data-theme="light"] .from-amber-900\/30,
+[data-theme="light"] .from-yellow-950\/25,
+[data-theme="light"] .from-orange-950\/25 {
+  background-image: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #faf5ef 100%) !important;
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+[data-theme="light"] .from-emerald-950\/15,
+[data-theme="light"] .from-emerald-950\/20,
+[data-theme="light"] .from-emerald-950\/25,
+[data-theme="light"] .from-emerald-950\/30,
+[data-theme="light"] .from-emerald-950\/40 {
+  background-image: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #faf5ef 100%) !important;
+  background-color: #f0fdf4 !important;
+  border-color: #a7f3d0 !important;
+}
+
+[data-theme="light"] .from-purple-950\/20,
+[data-theme="light"] .from-purple-950\/30,
+[data-theme="light"] .from-purple-950\/40,
+[data-theme="light"] .from-violet-950\/25,
+[data-theme="light"] .from-indigo-950\/15,
+[data-theme="light"] .from-indigo-950\/20,
+[data-theme="light"] .from-indigo-950\/40 {
+  background-image: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #faf5ef 100%) !important;
+  background-color: #faf5ff !important;
+  border-color: #e9d5ff !important;
+}
+
+[data-theme="light"] .from-cyan-950\/20,
+[data-theme="light"] .from-teal-950\/15,
+[data-theme="light"] .from-teal-950\/25,
+[data-theme="light"] .from-sky-950\/25 {
+  background-image: linear-gradient(135deg, #ecfeff 0%, #f0fdfa 50%, #faf5ef 100%) !important;
+  background-color: #ecfeff !important;
+  border-color: #a5f3fc !important;
+}
+
+/* Major Dark Card Containers with Hex Gradients */
+[data-theme="light"] #fourteenCharEnergySection,
+[data-theme="light"] #timeDynamicsSection,
+[data-theme="light"] #operationalPlaybookSection,
+[data-theme="light"] #ecologicalResonanceSection,
+[data-theme="light"] #transitFortuneDetailCard,
+[data-theme="light"] #originalHexagramCard,
+[data-theme="light"] #resultingHexagramCard,
+[data-theme="light"] #portalBtnStrategy,
+[data-theme="light"] #portalBtnFriction,
+[data-theme="light"] #portalBtnFengShui,
+[data-theme="light"] #portalBtnCareer {
+  background-image: none !important;
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Neutralize Black Gradient Stops in Light Mode */
+[data-theme="light"] .via-black\/40,
+[data-theme="light"] .via-black\/50,
+[data-theme="light"] .via-black\/60,
+[data-theme="light"] .via-black\/70,
+[data-theme="light"] .to-black,
+[data-theme="light"] .to-black\/40,
+[data-theme="light"] .to-black\/50,
+[data-theme="light"] .to-black\/60,
+[data-theme="light"] .to-black\/70,
+[data-theme="light"] .to-black\/80 {
+  --tw-gradient-to: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* Delicate Light Mode Borders */
 [data-theme="light"] .border-gray-800,
+[data-theme="light"] .border-gray-800\/80,
+[data-theme="light"] .border-gray-800\/60,
+[data-theme="light"] .border-gray-800\/50,
 [data-theme="light"] .border-gray-700,
 [data-theme="light"] .border-gray-700\/50,
 [data-theme="light"] .border-gray-600 {
-  border-color: var(--border-color) !important;
+  border-color: #ded7c7 !important;
+}
+
+[data-theme="light"] .border-rose-900\/40,
+[data-theme="light"] .border-rose-900\/50,
+[data-theme="light"] .border-rose-900\/60,
+[data-theme="light"] .border-rose-800\/40,
+[data-theme="light"] .border-rose-800\/50,
+[data-theme="light"] .border-rose-800\/60 {
+  border-color: #fecdd3 !important;
+}
+
+[data-theme="light"] .border-emerald-900\/40,
+[data-theme="light"] .border-emerald-900\/50,
+[data-theme="light"] .border-emerald-900\/60,
+[data-theme="light"] .border-emerald-800\/40,
+[data-theme="light"] .border-emerald-800\/50,
+[data-theme="light"] .border-emerald-800\/60 {
+  border-color: #a7f3d0 !important;
+}
+
+[data-theme="light"] .border-amber-900\/40,
+[data-theme="light"] .border-amber-900\/50,
+[data-theme="light"] .border-amber-800\/40,
+[data-theme="light"] .border-amber-800\/50,
+[data-theme="light"] .border-amber-800\/60,
+[data-theme="light"] .border-amber-600\/30,
+[data-theme="light"] .border-amber-600\/40 {
+  border-color: #fde68a !important;
+}
+
+[data-theme="light"] .border-purple-900\/40,
+[data-theme="light"] .border-purple-900\/50,
+[data-theme="light"] .border-purple-800\/40,
+[data-theme="light"] .border-purple-800\/50,
+[data-theme="light"] .border-purple-800\/60,
+[data-theme="light"] .border-violet-900\/40,
+[data-theme="light"] .border-indigo-900\/40,
+[data-theme="light"] .border-indigo-900\/50,
+[data-theme="light"] .border-indigo-800\/40 {
+  border-color: #e9d5ff !important;
+}
+
+[data-theme="light"] .border-cyan-900\/40,
+[data-theme="light"] .border-cyan-900\/50,
+[data-theme="light"] .border-teal-900\/40,
+[data-theme="light"] .border-teal-900\/50,
+[data-theme="light"] .border-sky-900\/40 {
+  border-color: #a5f3fc !important;
 }
 
 /* Text Colors: Invert Pale Hues into Crisp Dark Ink / Rich Bronze */
@@ -499,40 +657,47 @@ body {
   user-select: none;
 }
 
-/* Imperial Vermilion Square Seal (御批朱砂方印: 钦天御批) */
+/* Imperial Vermilion Square Seal (御批朱砂方印: 钦天御批 - 26mm x 26mm 皇家勘验覆盖方印) */
 .imperial-seal-square {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  min-height: 44px;
-  border: 2px solid #a8201a;
-  box-shadow: inset 0 0 0 1px #a8201a, inset 0 0 4px rgba(168, 32, 26, 0.25), 0 1px 3px rgba(168, 32, 26, 0.2);
-  border-radius: 3px;
-  background: linear-gradient(135deg, rgba(168, 32, 26, 0.12) 0%, rgba(220, 38, 38, 0.04) 100%);
+  position: absolute;
+  right: 14px;
+  bottom: -4px;
+  width: 26mm;
+  height: 26mm;
+  min-width: 26mm;
+  min-height: 26mm;
+  border: 2.5px solid #a8201a;
+  box-shadow: inset 0 0 0 1.2px #a8201a, inset 0 0 6px rgba(168, 32, 26, 0.25), 0 2px 6px rgba(168, 32, 26, 0.18);
+  border-radius: 4px;
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.14) 0%, rgba(168, 32, 26, 0.05) 100%);
   color: #a8201a;
   font-weight: 900;
   font-family: "Songti SC", "Noto Serif SC", STSong, "SimSun", serif;
-  font-size: 12px;
+  font-size: 21px;
   line-height: 1.15;
   text-align: center;
-  letter-spacing: 2px;
-  padding-left: 2px;
+  letter-spacing: 3px;
+  padding-left: 3px;
   user-select: none;
-  transform: rotate(-1.5deg);
+  transform: rotate(-2.5deg);
   text-shadow: 0 0.5px 0.5px rgba(168, 32, 26, 0.25);
   box-sizing: border-box;
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  z-index: 10;
+  pointer-events: none;
 }
 .imperial-seal-square.is-en {
-  font-size: 7.5px;
-  letter-spacing: 0.5px;
+  font-size: 11px;
+  letter-spacing: 1px;
   padding-left: 0;
-  line-height: 1.1;
+  line-height: 1.15;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  transform: rotate(-1deg);
+  transform: rotate(-2deg);
 }
 
 /* Imperial High-Aesthetic Module Card */
