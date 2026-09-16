@@ -145,6 +145,9 @@ class CareerEngine {
     // 4. Module: Timing Trajectory of Career & Wealth (时空财运与事业窗口推演)
     const timingTrajectory = this.computeTimingTrajectory(bazi, effLuck, effYear, realAge, dm, isStrong, godCounts);
 
+    // 5. Module: Rong Ku Jian Workplace Strategy Codex (五代·冯道《荣枯鉴》职场实操全相手册)
+    const rongkujian = this.computeRongKuJianManual(dm, isStrong, godCounts, primaryPattern);
+
     return {
       bazi,
       dm,
@@ -168,8 +171,19 @@ class CareerEngine {
       peerDynamics,
       workplaceArchetypes,
       timingTrajectory,
+      rongkujian,
       glossary: (typeof TEN_GODS_GLOSSARY !== 'undefined') ? TEN_GODS_GLOSSARY : ((typeof TenGodsDB !== 'undefined' && TenGodsDB.getAll) ? TenGodsDB.getAll() : {})
     };
+  }
+
+  /**
+   * 5. 《荣枯鉴》全相职场生存与破局推演 (Rong Ku Jian Workplace Strategy Codex)
+   */
+  static computeRongKuJianManual(dm, isStrong, godCounts, primaryPattern) {
+    if (typeof RongKuJianDB !== 'undefined' && typeof RongKuJianDB.evaluateNativeScrolls === 'function') {
+      return RongKuJianDB.evaluateNativeScrolls(dm, isStrong, godCounts, primaryPattern);
+    }
+    return null;
   }
 
   /**
@@ -240,8 +254,8 @@ class CareerEngine {
     if (hasHurting) {
       styleZh = '命带伤官秀气，思维跳跃且极具敏锐洞察力，天生反感形式主义与平庸教条。在向上沟通中，容易因一眼看出方案漏洞而直接反驳，潜意识带有一种“智力优越感”。';
       styleEn = 'Endowed with Hurting Officer acuity, your intellect is razor-sharp and naturally intolerant of bureaucratic inertia. In upward interactions, you risk expressing intellectual impatience when spotting flaws in executive directives.';
-      avoidOffendingZh = '【核心避坑法门 · 戒当面硬怼】：绝不在部门大会或公开场合指出上司的逻辑漏洞或决策失误。上司最在乎的是权威与安全感；私下一对一沟通，并采取“赞同全局大方向 + 补充边缘兜底试验方案”的话术，让功劳归于上司，方能化戾气为助力。';
-      avoidOffendingEn = '[Prime Directive: Avoid Public Contradiction]: Never dismantle a superior\'s proposal in open forums. Superiors prioritize status certainty and control. Deliver feedback exclusively in 1-on-1 sessions, praising their macro vision before proposing incremental safety-net experiments.';
+      avoidOffendingZh = '【核心避坑法门 · 戒当面硬怼（《荣枯鉴·闻达卷》：直为骨媚为仪；直而无媚上疑也）】：绝不在部门大会或公开场合指出上司的逻辑漏洞或决策失误。上司最在乎的是权威与掌控感；遵照冯道“求忌直曲之乃得、顺其上者伪非过”，私下一对一沟通，并采取“赞同全局大方向 + 补充边缘兜底试验方案”的话术，让功劳归于上司，方能化戾气为助力。';
+      avoidOffendingEn = '[Prime Directive: Avoid Public Contradiction (Rong Ku Jian: Integrity as bone, manners as garment; frankness without deference breeds suspicion)]: Never dismantle a superior\'s proposal in open forums. Superiors prioritize status certainty and control. Adopt Feng Dao\'s curved diplomacy: deliver feedback exclusively in 1-on-1 sessions, praising their macro vision before proposing incremental safety-net experiments.';
     } else if (hasKillings) {
       styleZh = '命带七杀刚烈之气，执行力与抗压魄力极强，但在面对微观管理型或情绪多变的上司时，容易产生强烈的逆反心理，遇强则硬抗。';
       styleEn = 'Guided by Seven Killings intensity, you possess extraordinary execution grit but chafe under micromanagement or volatile superiors, instinctively meeting institutional pressure with fierce internal resistance.';
@@ -344,7 +358,7 @@ class CareerEngine {
     if (hasRobWealth || peerScore >= 25) {
       peerAnalysisZh = '命局中比劫（尤其是劫财）气机活跃，在职场同僚关系中呈现典型的“竞合博弈态势”。一方面你待人豪爽热情，能迅速与同事打成一片；但另一方面，你极易遭遇“比劫争财”暗礁——同级别同事抢功、成果被合伙人截胡、或者在关键晋升名额面前遭遇表面称兄道弟背地暗施冷箭。';
       peerAnalysisEn = 'Companion and Rob Wealth energies are highly pronounced, placing peer relationships in an intense competitive-collaborative paradox. While naturally engaging and generous, you are exposed to Peer Wealth Robbery—colleagues claiming credit for your labor, lateral friction, or subtle betrayal when promotion slots narrow.';
-      betrayalWarningZh = '【同僚竞争高危预警】：谨防“过度相信口头承诺”。职场中绝不可把同僚当作无话不谈的知心密友，任何涉及项目归属、绩效分配与客户资源的环节，必须白纸黑字留痕；警惕搭便车的同事在项目成功时出来摘桃子。';
+      betrayalWarningZh = '【同僚竞争高危预警（《荣枯鉴·节义卷》：穿上铠甲拿着刀做好人）】：谨防“过度相信口头承诺”。冯道开示：“外小人而内君子者，真君子也；德与刀是做好人的成本，有刀而不砍出去才是真正的善良。”职场中绝不可把同僚当作无话不谈的知心密友，任何涉及项目归属、绩效分配与客户资源的环节，必须白纸黑字留痕形成防御威慑；警惕搭便车的同事在项目成功时出来摘桃子。';
       betrayalWarningEn = '[Peer Betrayal Warning]: Guard against naive reliance on verbal assurances. Never treat lateral competitors as intimate emotional confidants. Ensure deal attribution, client rosters, and deliverable timestamps are documented in immutable corporate systems; beware of free-riding peers appearing only to claim credit at harvest.';
     } else {
       peerAnalysisZh = '命中比劫气机温和清纯，在团队中为人正直本分，不喜拉帮结派与恶性内耗。你通常倾向于就事论事，与大多数同事能维持体面专业的职场距离。';

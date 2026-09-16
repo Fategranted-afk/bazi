@@ -11111,4 +11111,290 @@ run_check98 = subprocess.run(jsc_check98_cmd, capture_output=True, text=True)
 assert run_check98.returncode == 0, f"Check 98 test failed: stdout={run_check98.stdout} stderr={run_check98.stderr}"
 print("✓ 全息精神心理状态深度诊断与三经首选处方引擎（内耗+身旺衰六大原型/救应主药/协同护持/金边高亮与中英双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 98 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==========================================
+# 99. Check Zen-Dao 3 Canons 8-Quote Expansion & Feng Dao Rong Ku Jian Workplace Strategy Codex
+# ==========================================
+print("\n=== 99. Validating Zen-Dao 3 Canons 8-Quote Expansion & Feng Dao Rong Ku Jian 8-Scroll Workplace Strategy Codex ===")
+
+# 99.1 Static code & file integrity checks
+assert os.path.exists("data/rongkujian.js"), "data/rongkujian.js missing!"
+assert os.path.getsize("data/rongkujian.js") > 15000, "data/rongkujian.js too small!"
+
+with open("index.html", "r", encoding="utf-8") as f:
+    index_html = f.read()
+assert '<script src="data/rongkujian.js"></script>' in index_html, "rongkujian.js script tag missing in index.html!"
+
+with open("career.html", "r", encoding="utf-8") as f:
+    career_html = f.read()
+assert '<script src="data/rongkujian.js"></script>' in career_html, "rongkujian.js script tag missing in career.html!"
+assert 'id="secTitleRongKuJian"' in career_html, "secTitleRongKuJian missing in career.html!"
+assert 'id="rongkujianContainer"' in career_html, "rongkujianContainer missing in career.html!"
+
+with open("js/portrait-engine.js", "r", encoding="utf-8") as f:
+    pe_code = f.read()
+assert "离相寂灭分第十四" in pe_code, "Diamond Sutra 8th quote missing in portrait-engine.js!"
+assert "顿渐品第八" in pe_code, "Platform Sutra 8th quote missing in portrait-engine.js!"
+assert "达生第十九" in pe_code, "Zhuangzi 8th quote missing in portrait-engine.js!"
+assert "🏆 首选 · " in pe_code, "Primary badge prefix missing in portrait-engine.js!"
+
+with open("js/career-engine.js", "r", encoding="utf-8") as f:
+    ce_code = f.read()
+assert "computeRongKuJianManual" in ce_code, "computeRongKuJianManual missing in career-engine.js!"
+assert "RongKuJianDB" in ce_code, "RongKuJianDB reference missing in career-engine.js!"
+assert "rongkujian" in ce_code, "rongkujian field missing in career-engine.js!"
+
+with open("js/app.js", "r", encoding="utf-8") as f:
+    app_code = f.read()
+assert "五、《荣枯鉴》职场实操全相手册" in app_code, "Section 5 title missing in app.js!"
+assert "五代权相冯道 · 本命职场博弈生存法门" in app_code, "Feng Dao directive title missing in app.js!"
+assert "五代权相冯道《荣枯鉴》处世保全法旨" in app_code, "Imperial Dossier Page 8 Rong Ku Jian card missing in app.js!"
+
+# 99.2 JSC Runtime Validation
+jsc_check99_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    load("data/ditiansui.js");
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/i18n.js");
+
+    // 1. Verify Zen-Dao 3 Canons 8 quotes & badge formats
+    var bazi = BaZiEngine.calculate({ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造" });
+    var portraitZh = PortraitEngine.analyze(bazi, "zh");
+    var zd = portraitZh.mentalFriction.zenDaoWisdom;
+
+    if (zd.diamond.quotes.length !== 8) {
+      throw new Error("Diamond Sutra quotes count should be 8, got " + zd.diamond.quotes.length);
+    }
+    if (zd.platform.quotes.length !== 8) {
+      throw new Error("Platform Sutra quotes count should be 8, got " + zd.platform.quotes.length);
+    }
+    if (zd.zhuangzi.quotes.length !== 8) {
+      throw new Error("Zhuangzi quotes count should be 8, got " + zd.zhuangzi.quotes.length);
+    }
+
+    if (!zd.diamond.quotes[7].sourceZh.includes("离相寂灭分第十四")) {
+      throw new Error("Diamond Sutra quote 8 source mismatch: " + zd.diamond.quotes[7].sourceZh);
+    }
+    if (!zd.platform.quotes[7].sourceZh.includes("顿渐品第八")) {
+      throw new Error("Platform Sutra quote 8 source mismatch: " + zd.platform.quotes[7].sourceZh);
+    }
+    if (!zd.zhuangzi.quotes[7].sourceZh.includes("达生第十九")) {
+      throw new Error("Zhuangzi quote 8 source mismatch: " + zd.zhuangzi.quotes[7].sourceZh);
+    }
+
+    var primaryCanon = zd.diagnostic.primaryCanonKey;
+    var primaryObj = zd[primaryCanon];
+    if (!primaryObj.badgeZh.startsWith("🏆 首选 · ")) {
+      throw new Error("Primary badge format should start with '🏆 首选 · ', got: " + primaryObj.badgeZh);
+    }
+
+    ['diamond', 'platform', 'zhuangzi'].forEach(function(k) {
+      if (k !== primaryCanon) {
+        var auxObj = zd[k];
+        if (auxObj.badgeZh.startsWith("🏆") || auxObj.badgeZh.includes("协同护持")) {
+          throw new Error("Auxiliary badge format should NOT have '🏆' or '协同护持', got: " + auxObj.badgeZh);
+        }
+      }
+    });
+
+    var portraitEn = I18N.translatePortrait(portraitZh, "en");
+    var zdEn = portraitEn.mentalFriction.zenDaoWisdom;
+    var primaryEnObj = zdEn[primaryCanon];
+    if (!primaryEnObj.badgeEn.startsWith("🏆 Primary · ")) {
+      throw new Error("Primary EN badge should start with '🏆 Primary · ', got: " + primaryEnObj.badgeEn);
+    }
+
+    // 2. Verify Rong Ku Jian Database
+    if (typeof RongKuJianDB === "undefined") {
+      throw new Error("RongKuJianDB is undefined");
+    }
+    var scrolls = RongKuJianDB.getAllScrolls();
+    if (scrolls.length !== 8) {
+      throw new Error("RongKuJian scrolls count should be 8, got " + scrolls.length);
+    }
+
+    var expectedIds = ["yuantong", "wenda", "jiee", "jieyi", "mingjian", "shiwei", "jiangxin", "chuaizhi"];
+    expectedIds.forEach(function(id, idx) {
+      var s = RongKuJianDB.getScrollById(id);
+      if (!s) throw new Error("Missing scroll: " + id);
+      if (s.num !== idx + 1) throw new Error("Scroll num mismatch for " + id);
+      if (!s.workplaceRulesZh || s.workplaceRulesZh.length < 3) throw new Error("Scroll rules < 3: " + id);
+      if (!s.workplaceRulesEn || s.workplaceRulesEn.length < 3) throw new Error("Scroll rules EN < 3: " + id);
+    });
+
+    // 3. Verify CareerEngine.generateCareerReport returns rongkujian
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+    var crZh = CareerEngine.generateCareerReport(bazi, luck, 2026);
+    if (!crZh.rongkujian) {
+      throw new Error("crZh.rongkujian is missing");
+    }
+    if (!crZh.rongkujian.primaryScroll || !crZh.rongkujian.blindspotScroll) {
+      throw new Error("crZh.rongkujian missing primaryScroll or blindspotScroll");
+    }
+    if (crZh.rongkujian.allScrolls.length !== 8) {
+      throw new Error("crZh.rongkujian.allScrolls length !== 8");
+    }
+
+    // 4. Headless DOM simulation for renderCareerWealth and renderImperialDossierPages
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "",
+        checked: false,
+        options: [{ text: "男", value: "乾造" }, { text: "女", value: "坤造" }],
+        selectedIndex: 0,
+        classList: { add: function() {}, remove: function() {}, contains: function() { return false; } },
+        className: "",
+        style: {},
+        _children: [],
+        _listener: null,
+        addEventListener: function(evt, handler) { this._listener = handler; },
+        appendChild: function(c) {
+          this._children.push(c);
+          if (c && c.innerHTML) this.innerHTML += c.innerHTML;
+        },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        getBoundingClientRect: function() { return { width: 400, height: 300, left: 0, top: 0 }; },
+        getContext: function() { return { clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){}, arc: function(){}, setLineDash: function(){}, scale: function(){}, createLinearGradient: function(){ return { addColorStop: function(){} }; } }; }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "imperialDossierModal", "imperialDossierContainer", "calcBtn",
+      "birthDate", "birthTime", "gender", "useSolarTime", "lateRatAsNextDay",
+      "customLongitude", "timezoneSelect", "citySelect", "fsec-canons", "view-friction",
+      "frictionContentContainer", "careerContentContainer", "careerTargetYear",
+      "careerQuickBadgesDashboard", "currentCountrySelect", "currentCitySelect"
+    ];
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+    elementStore["birthDate"].value = "1988-10-24";
+    elementStore["birthTime"].value = "14:30";
+    elementStore["gender"].value = "乾造";
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      IChingEngine: IChingEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      CareerEngine: CareerEngine,
+      RongKuJianDB: RongKuJianDB
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // Test renderCareerWealth in ZH
+    elementStore["careerContentContainer"].innerHTML = "";
+    window.renderCareerWealth(bazi, luck);
+    var cwZh = elementStore["careerContentContainer"].innerHTML;
+    if (!cwZh.includes("五、《荣枯鉴》职场实操全相手册")) {
+      throw new Error("Missing Section 5 in renderCareerWealth ZH");
+    }
+    if (!cwZh.includes("五代权相冯道 · 本命职场博弈生存法门")) {
+      throw new Error("Missing Feng Dao title in renderCareerWealth ZH");
+    }
+    if (!cwZh.includes("#01") || !cwZh.includes("#08")) {
+      throw new Error("Missing 8 scrolls in renderCareerWealth ZH");
+    }
+
+    // Test renderCareerWealth in EN & zero residual Chinese
+    if (typeof window.setLanguage === "function") {
+      window.setLanguage("en");
+    }
+    elementStore["careerContentContainer"].innerHTML = "";
+    window.renderCareerWealth(bazi, luck);
+    var cwEn = elementStore["careerContentContainer"].innerHTML;
+    if (!cwEn.includes("V. The Rong Ku Jian Workplace Strategy Codex")) {
+      throw new Error("Missing Section 5 in renderCareerWealth EN");
+    }
+    if (!cwEn.includes("Feng Dao's Survival Protocol")) {
+      throw new Error("Missing Feng Dao protocol in renderCareerWealth EN");
+    }
+
+    var residualZh = cwEn.match(/[\u4e00-\u9fa5]/g);
+    if (residualZh && residualZh.length > 0) {
+      throw new Error("Found residual Chinese in Career Wealth EN (" + residualZh.length + "): " + residualZh.slice(0, 30).join(""));
+    }
+
+    // Switch back to ZH to test Imperial Dossier
+    if (typeof window.setLanguage === "function") {
+      window.setLanguage("zh");
+    }
+
+    // Test Imperial Dossier Page 8 contains Rong Ku Jian directive
+    elementStore["imperialDossierContainer"].innerHTML = "";
+    window.renderImperialDossierPages(bazi, luck, "zh");
+    var dosZh = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dosZh.includes("五代权相冯道《荣枯鉴》处世保全法旨")) {
+      throw new Error("Missing Rong Ku Jian in Imperial Dossier Page 8 ZH");
+    }
+
+    elementStore["imperialDossierContainer"].innerHTML = "";
+    window.renderImperialDossierPages(bazi, luck, "en");
+    var dosEn = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dosEn.includes("Feng Dao Rong Ku Jian Workplace Directive")) {
+      throw new Error("Missing Rong Ku Jian in Imperial Dossier Page 8 EN");
+    }
+    """
+]
+
+run_check99 = subprocess.run(jsc_check99_cmd, capture_output=True, text=True)
+assert run_check99.returncode == 0, f"Check 99 test failed: stdout={run_check99.stdout} stderr={run_check99.stderr}"
+print("✓ 禅道三经（《金刚经》《六祖坛经》《庄子》）八组经文扩充与徽章格式对齐、五代·冯道《荣枯鉴》全八卷职场实操手册（数据库/职场引擎/DOM渲染/皇家战报Page 8/中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 99 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+

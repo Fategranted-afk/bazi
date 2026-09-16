@@ -8141,6 +8141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pd = report.peerDynamics;
     const archs = report.workplaceArchetypes;
     const tt = report.timingTrajectory;
+    const rk = report.rongkujian;
 
     container.innerHTML = `
       <!-- Pillar 1: Managing Up -->
@@ -8365,6 +8366,159 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
+
+      ${rk ? `
+      <!-- Pillar 5: Rong Ku Jian Workplace Strategy Codex -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center space-x-2">
+            <span class="text-xl">📜</span>
+            <h3 class="text-base font-bold font-serif-sc text-amber-300">
+              ${isEn ? "V. The Rong Ku Jian Workplace Strategy Codex (Feng Dao's Art of Survival)" : "五、《荣枯鉴》职场实操全相手册 · 处世保全与博弈大典"}
+            </h3>
+          </div>
+          <span class="chinese-seal text-[10px] py-0.5 border-amber-500 text-amber-300">
+            ${isEn ? "Workplace Codex" : "职场真经"}
+          </span>
+        </div>
+
+        <!-- Rong Ku Jian Diagnostic & Tailored Directives Banner -->
+        <div class="p-5 rounded-2xl border border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-purple-950/20 to-black/80 shadow-2xl space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-amber-500/30">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0.5">${isEn ? "PERSONALIZED CODEX" : "🧠 命理量身定制"}</span>
+              <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-200">
+                ${isEn ? "Feng Dao's Survival Protocol for Your BaZi Configuration" : "五代权相冯道 · 本命职场博弈生存法门"}
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold font-mono bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-sm flex items-center gap-1.5">
+                <span>🏆</span>
+                <span>${isEn ? "Primary Study: " + (rk.primaryScroll.nameEn.split('(')[0]) : "本命首修：" + rk.primaryScroll.nameZh.split('·')[0]}</span>
+              </span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold font-mono bg-rose-950/60 text-rose-300 border border-rose-800/50 shadow-sm flex items-center gap-1.5">
+                <span>⚠️</span>
+                <span>${isEn ? "Key Blindspot: " + (rk.blindspotScroll.nameEn.split('(')[0]) : "首要避坑：" + rk.blindspotScroll.nameZh.split('·')[0]}</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="p-4 bg-black/60 rounded-xl border border-gray-800 space-y-2 text-xs">
+            <div class="font-bold text-amber-300 flex items-center gap-1.5">
+              <span>💡</span>
+              <span>${isEn ? "Destiny Pattern & Workplace Survival Assessment:" : "命盘十神心性与职场博弈诊断："}</span>
+            </div>
+            <p class="text-gray-300 leading-relaxed font-serif-sc">
+              ${isEn ? rk.diagnosisEn : rk.diagnosisZh}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 text-[11px]">
+            <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-amber-200 font-mono">
+              ${isEn ? "Bone & Manners" : "直为骨 · 媚为仪"}
+            </div>
+            <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-emerald-200 font-mono">
+              ${isEn ? "Armor & Weapon" : "穿铠甲 · 执利刃"}
+            </div>
+            <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-purple-200 font-mono">
+              ${isEn ? "Curved Diplomacy" : "求忌直 · 曲之得"}
+            </div>
+            <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-blue-200 font-mono">
+              ${isEn ? "Three Audits" : "察人 · 察势 · 查己"}
+            </div>
+            <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-rose-200 font-mono">
+              ${isEn ? "Silent Wisdom" : "知不示 · 密而测"}
+            </div>
+            <div class="p-2 rounded-lg bg-black/40 border border-gray-800 text-center text-yellow-200 font-mono">
+              ${isEn ? "Severe Deterrence" : "置险难 · 绝敌念"}
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 Scrolls Grid / Cards -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between text-xs font-bold text-gray-300">
+            <span class="flex items-center gap-1.5">
+              <span>📚</span>
+              <span>${isEn ? "Rong Ku Jian Complete 8 Scrolls Compendium" : "《荣枯鉴》传世八卷全相大成"}</span>
+            </span>
+            <span class="text-[11px] text-gray-400 font-normal">
+              ${isEn ? "Empirical strategy manual grounded in human nature and power dynamics" : "汇通古文经典、现代白话释义、实战法则与历史案例"}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            ${rk.allScrolls.map(s => {
+              const isPrimary = (s.id === rk.primaryScroll.id);
+              const isBlindspot = (s.id === rk.blindspotScroll.id);
+              const borderClass = isPrimary 
+                ? "border-amber-400 ring-2 ring-amber-400/40 shadow-xl bg-gradient-to-b from-amber-950/25 via-black/60 to-black/80" 
+                : (isBlindspot ? "border-rose-800/60 bg-gradient-to-b from-rose-950/20 via-black/60 to-black/80" : "border-gray-800 bg-black/50");
+              
+              const badgeTag = isPrimary 
+                ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-400 text-black shadow font-mono">${isEn ? "🏆 Primary Study" : "🏆 本命首修"}</span>`
+                : (isBlindspot ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-600 text-white shadow font-mono">${isEn ? "⚠️ Key Blindspot" : "⚠️ 本命戒惕"}</span>` : "");
+
+              return `
+                <div class="p-5 rounded-2xl border ${borderClass} shadow-lg space-y-3.5 flex flex-col justify-between hover:border-amber-500/40 transition">
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                      <div class="flex items-center space-x-2">
+                        <span class="text-amber-400 font-mono font-bold text-xs">#0${s.num}</span>
+                        <h4 class="text-sm font-bold text-amber-200 font-serif-sc">
+                          ${isEn ? s.nameEn : s.nameZh}
+                        </h4>
+                      </div>
+                      <div class="flex items-center gap-1.5">
+                        ${badgeTag}
+                        <span class="chinese-seal text-[9px] py-0 border-amber-500 text-amber-300">
+                          ${isEn ? s.sealEn : s.sealZh}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Core Quote -->
+                    <div class="p-3 rounded-xl bg-black/60 border-l-3 border-amber-400 text-xs text-amber-100/90 font-serif-sc leading-relaxed">
+                      ${isEn ? s.coreQuoteEn : s.coreQuoteZh}
+                    </div>
+
+                    <!-- Modern Workplace Vernacular -->
+                    <div class="space-y-1 text-xs">
+                      <strong class="text-purple-300 flex items-center gap-1">
+                        <span>💡</span><span>${isEn ? "Modern Workplace Exegesis:" : "现代职场白话解构："}</span>
+                      </strong>
+                      <p class="text-gray-300 leading-relaxed font-sans">
+                        ${isEn ? s.vernacularEn : s.vernacularZh}
+                      </p>
+                    </div>
+
+                    <!-- Workplace Action Rules -->
+                    <div class="space-y-1.5 text-xs pt-2 border-t border-gray-800/80">
+                      <strong class="text-emerald-400 flex items-center gap-1">
+                        <span>🚀</span><span>${isEn ? "Actionable Survival Protocols:" : "打工人实操保全法则："}</span>
+                      </strong>
+                      <ul class="space-y-1.5 text-gray-300">
+                        ${(isEn ? s.workplaceRulesEn : s.workplaceRulesZh).map(r => `
+                          <li class="p-2 rounded-lg bg-black/40 border border-gray-800/60 leading-relaxed">
+                            ${r}
+                          </li>
+                        `).join('')}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <!-- Historical Case -->
+                  <div class="pt-2 border-t border-gray-800/80 text-[11px] text-gray-400 font-serif-sc leading-relaxed">
+                    <span class="text-amber-400 font-bold">${isEn ? "🏛️ Historical / Business Case: " : "🏛️ 传世博弈案例："}</span>
+                    ${isEn ? s.historicalCasesEn : s.historicalCasesZh}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+      ` : ''}
     `;
   }
 
@@ -12576,6 +12730,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const crPd = careerReport ? careerReport.peerDynamics : null;
     const crArchs = (careerReport && careerReport.workplaceArchetypes) ? careerReport.workplaceArchetypes : [];
     const crTt = careerReport ? careerReport.timingTrajectory : null;
+    const crRk = careerReport ? careerReport.rongkujian : null;
     const upwardRuleZh = (crMu && (crMu.generalRuleZh || crMu.avoidOffendingZh || crMu.styleZh)) || '以严密数据与结构化成果向上复命，多请示少冒进，克制叛逆锋芒。';
     const upwardRuleEn = (crMu && (crMu.generalRuleEn || crMu.avoidOffendingEn || crMu.styleEn)) || 'Preserve institutional alignment and present structured results.';
 
@@ -13744,6 +13899,19 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <p class="text-[10px] text-gray-700 leading-tight pt-0.5">
               <b>${isEn ? 'Annual Hexagram Guidance: ' : '值年卦指引：'}</b>${isEn ? (crTt ? (crTt.annualHexTacticEn || (crTt.annualHex && crTt.annualHex.decisionEn) || 'Align actions with timing and maintain strategic patience.') : 'Align actions with timing and maintain strategic patience.') : (crTt ? (crTt.annualHexTacticZh || (crTt.annualHex && crTt.annualHex.decisionZh) || '顺应天道节律，进退有据。') : '顺应天道节律，进退有据。')}
+            </p>
+          </div>
+
+          <!-- Section 5: Feng Dao Rong Ku Jian Workplace Survival Directive -->
+          <div class="imperial-card imperial-card-accent p-2 text-xs space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950">
+              <span class="flex items-center gap-1"><span>📜</span><span>${isEn ? 'V. Feng Dao Rong Ku Jian Workplace Directive' : '五、五代权相冯道《荣枯鉴》处世保全法旨'}</span></span>
+              <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 font-mono">
+                ${isEn ? (crRk && crRk.primaryScroll ? crRk.primaryScroll.nameEn.split('(')[0] : 'Workplace Armor') : (crRk && crRk.primaryScroll ? crRk.primaryScroll.nameZh.split('·')[0] : '职场真经')}
+              </span>
+            </div>
+            <p class="text-[10px] text-gray-800 leading-tight">
+              <b>${isEn ? 'Personalized Survival Directive: ' : '本命博弈法门：'}</b>${isEn ? (crRk ? crRk.diagnosisEn : 'Integrity as bone, manners as garment; cultivate unassailable technical reserves and impenetrable boundary shields.') : (crRk ? crRk.diagnosisZh : '直为骨媚为仪，穿上铠甲拿着刀做好人，藏富如藏刃，不与基数对抗。')}
             </p>
           </div>
 

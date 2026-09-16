@@ -2279,6 +2279,16 @@ class PortraitEngine {
         insightEn: '[The Dao in Daily Chores]: Supreme wisdom abides in grounded ordinary actions: dressing, eating, washing feet, sitting quietly. Rumination is the soul drifting away from the flesh; full presence restores peace.',
         practicalZh: '【日用即道】：焦虑翻滚时，立刻去喝一杯温水、洗一把脸、擦干净桌面；人在哪里，心就在哪里，以微小实体动作截断精神风暴。',
         practicalEn: '[Presence in Action]: When anxiety surges, sip warm water, wash your face, or wipe your desk. Dwell fully in physical action to abort mental storms.'
+      },
+      {
+        verseZh: '“若菩萨心住于法而行布施，如人入暗，则无所见；若菩萨心不住法而行布施，如人有目，日光明照，见种种色。”',
+        verseEn: '"If a bodhisattva practices giving while abiding in dogma, it is like entering total darkness, perceiving nothing. If a bodhisattva practices giving without abiding in dogma, it is like one with vision in bright sunlight, perceiving all manner of forms clearly."',
+        sourceZh: '《金刚经·离相寂灭分第十四》',
+        sourceEn: 'The Diamond Sutra, Ch. 14',
+        insightZh: '【心不住法·无相交付】：带着沉重功利执念与得失心做事，犹如在暗夜摸索，充满恐惧与窒息；不住于相、纯粹专注地去交付，如同烈日当空，万物昭然，元神无所挂碍。',
+        insightEn: '[Unconditioned Pure Shipping]: Delivering with rigid attachment to reward is like wandering in the dark, plagued by anxiety; delivering purely without ego fixation is like walking in broad daylight, seeing all things clearly.',
+        practicalZh: '【无相心法】：工作或创作时，彻底忘掉“我能得到什么评价、会不会被领导挑剔”，全神贯注于眼前的代码、文档或方案打磨，福德不求自至。',
+        practicalEn: '[Formless Delivery Practice]: When creating or shipping, completely release thoughts of praise or blame. Immerse mind and body purely into crafting the work itself; excellence flows effortlessly.'
       }
     ];
 
@@ -2392,6 +2402,16 @@ class PortraitEngine {
         insightEn: '[Embodied Practice over Cerebral Loops]: Theorizing philosophies in cerebral comfort while stagnating in action is sterile fantasy. Concrete physical shipping instantly shatters phantom mental demons.',
         practicalZh: '【即刻下场行动】：不再做空头理论家，把任何一个微小的想法在10分钟内转化为实际行动（发一封邮件、写一段代码），行动出真知。',
         practicalEn: '[Immediate Kinetic Shipping]: Stop lingering as an abstract critic; convert any idea into physical execution within 10 minutes (write code, send an email); action generates truth.'
+      },
+      {
+        verseZh: '“心平何劳持戒，行直何用修禅。恩则孝养父母，义则上下相怜。让则尊卑和睦，忍则众恶无喧。若能钻木出火，淤泥定生红莲。”',
+        verseEn: '"When the mind is equanimous, what need is there to keep precepts? When conduct is upright, what need is there to sit in meditation? Repay kindness by caring for parents; practice righteousness with mutual compassion between above and below. Deference yields harmony; patience silences turmoil. Rubbing wood brings forth fire, and pristine red lotuses surely bloom from murky mud."',
+        sourceZh: '《六祖坛经·顿渐品第八》',
+        sourceEn: 'The Platform Sutra, Ch. 8',
+        insightZh: '【日用行持即无上菩提】：开悟解脱不在深山孤坐，而在日常待人接物与职场行持之中。心平气和、行止正直、上下体谅、知所进退，工位处处即道场。',
+        insightEn: '[Equanimous Action in Daily Life]: True awakening does not require solitary monastic retreat; it manifests in daily workplace relations. Upright integrity and patient forbearance transform the cubicle into a sacred dojo.',
+        practicalZh: '【工位修禅法】：把每次繁冗的沟通、被同事催促甚至无理挑剔，都当成炼心的“淤泥红莲”。不生瞋恨，平心直行，瞬间熄灭内耗心火。',
+        practicalEn: '[Workplace Zen]: Regard difficult interactions and unreasonable deadlines as fertile mud that grows the red lotus. Maintain inner stillness and calm action, snuffing out friction instantly.'
       }
     ];
 
@@ -2505,6 +2525,16 @@ class PortraitEngine {
         insightEn: '[Transcending Dimensional Limits]: Chronic interpersonal friction arises from attempting to enlighten minds bound by different cognitive planes. Recognizing that each person is conditioned by their temporal and spatial cage extinguishes the urge to argue.',
         practicalZh: '【终结无谓争辩】：遇到认知不在一个频道的人，微笑着说“你说得对”，立刻抽身离去，绝不浪费一秒宝贵脑力在低维纠缠中。',
         practicalEn: '[Ending Low-Dimensional Debates]: When encountering minds trapped in narrow frames, smile and say "You are right," departing immediately without wasting cognitive compute.'
+      },
+      {
+        verseZh: '“臣将为鐻，未尝敢气，必齐以静心。齐三日，而不敢怀庆赏爵禄；齐五日，不敢怀非誉巧拙；齐七日，辄然忘吾有四肢形体也。然后入山林，观天性...以此全其天也。”',
+        verseEn: '"When I am about to carve a bell stand, I guard against exhausting my vital breath, fasting to still the mind. After three days, I no longer consider reward or rank. After five days, I no longer consider blame, praise, skill, or clumsiness. After seven days, I forget that I have limbs and body. Only then do I enter the forest to observe the heavenly nature of trees... joining natural wood to natural spirit."',
+        sourceZh: '《庄子·外篇·达生第十九·梓庆为鐻》',
+        sourceEn: 'Zhuangzi, Ch. 19',
+        insightZh: '【心斋忘誉·纯全天性】：神工鬼斧的顶尖产出源于“三日忘庆赏爵禄，五日忘非誉巧拙，七日忘形骸四肢”。屏蔽功利与外界毁誉，心智算力纯粹回归天然，无为而无不为。',
+        insightEn: '[Fasting the Mind]: Mastery arises from forgetting titles and bonuses, forgetting worldly criticism, and letting the ego dissolve. Bypassing external evaluation channels innate genius.',
+        practicalZh: '【心斋工作流】：在攻坚重大任务或核心技术前，闭关断联两小时，关掉指标通知，忘掉考核与他人眼光，聚精会神物我两忘。',
+        practicalEn: '[Deep-Flow Mind-Fast]: Before tackling mission-critical code or strategy, disconnect from notifications for two hours. Forget metrics and social judgment; immerse completely in timeless focus.'
       }
     ];
 
@@ -2568,8 +2598,8 @@ class PortraitEngine {
         practicalPracticeEn: diamondPracticeEn,
         practicalZh: diamondPracticeZh,
         practicalEn: diamondPracticeEn,
-        badgeZh: isDiamondPrimary ? '🏆 钦天监第一主药 · 破相解脱' : '破相执 · 焦虑脱敏盾',
-        badgeEn: isDiamondPrimary ? '🏆 Primary: Formless Liberation' : 'Cognitive De-Biasing Shield',
+        badgeZh: isDiamondPrimary ? '🏆 首选 · 破相执 · 焦虑脱敏盾' : '破相执 · 焦虑脱敏盾',
+        badgeEn: isDiamondPrimary ? '🏆 Primary · Cognitive De-Biasing Shield' : 'Cognitive De-Biasing Shield',
         statusBadgeZh: isDiamondPrimary ? '🏆 本命第一主药' : '🛡️ 协同护持经',
         statusBadgeEn: isDiamondPrimary ? '🏆 Primary Sovereign Antidote' : '🛡️ Auxiliary Shield',
         isPrimary: isDiamondPrimary,
@@ -2590,8 +2620,8 @@ class PortraitEngine {
         practicalPracticeEn: platformPracticeEn,
         practicalZh: platformPracticeZh,
         practicalEn: platformPracticeEn,
-        badgeZh: isPlatformPrimary ? '🏆 钦天监第一主药 · 直断妄念' : '见自性 · 精神内耗熔断',
-        badgeEn: isPlatformPrimary ? '🏆 Primary: Direct Severance' : 'Self-Compassion Circuit-Breaker',
+        badgeZh: isPlatformPrimary ? '🏆 首选 · 见自性 · 精神内耗熔断' : '见自性 · 精神内耗熔断',
+        badgeEn: isPlatformPrimary ? '🏆 Primary · Self-Compassion Circuit-Breaker' : 'Self-Compassion Circuit-Breaker',
         statusBadgeZh: isPlatformPrimary ? '🏆 本命第一主药' : '🛡️ 协同护持经',
         statusBadgeEn: isPlatformPrimary ? '🏆 Primary Sovereign Antidote' : '🛡️ Auxiliary Shield',
         isPrimary: isPlatformPrimary,
@@ -2612,8 +2642,8 @@ class PortraitEngine {
         practicalPracticeEn: zhuangziPracticeEn,
         practicalZh: zhuangziPracticeZh,
         practicalEn: zhuangziPracticeEn,
-        badgeZh: isZhuangziPrimary ? '🏆 钦天监第一主药 · 乘物游心' : '逍遥游 · 精神松弛与降维破局',
-        badgeEn: isZhuangziPrimary ? '🏆 Primary: Free Roaming' : 'Somatic Calm & Transcendence',
+        badgeZh: isZhuangziPrimary ? '🏆 首选 · 逍遥游 · 精神松弛与降维破局' : '逍遥游 · 精神松弛与降维破局',
+        badgeEn: isZhuangziPrimary ? '🏆 Primary · Somatic Calm & Transcendence' : 'Somatic Calm & Transcendence',
         statusBadgeZh: isZhuangziPrimary ? '🏆 本命第一主药' : '🛡️ 协同护持经',
         statusBadgeEn: isZhuangziPrimary ? '🏆 Primary Sovereign Antidote' : '🛡️ Auxiliary Shield',
         isPrimary: isZhuangziPrimary,
