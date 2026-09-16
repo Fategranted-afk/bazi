@@ -986,7 +986,12 @@ class IChingEngine {
         lastMutatedLine,
         hexagram: zhiNianHex,
         tianJi: zhiNianTJ,
-        binary: zhiNianBinary
+        binary: zhiNianBinary,
+        optimalAction: this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated),
+        optimalActionZh: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).shortBadgeZh || '',
+        optimalActionEn: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).shortBadgeEn || '',
+        optimalDirectiveZh: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).actionZh || '',
+        optimalDirectiveEn: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).actionEn || ''
       }
     };
   }
@@ -1048,6 +1053,10 @@ class IChingEngine {
       const dyn = this.evaluateBaZiHexDynamicInteraction(dm, dmEl, isStrong, zn.hexagram, zn.annualStem, zn.annualBranch);
       const baziAdjustedScore = Math.max(25, Math.min(98, Math.round(rawScore + dyn.scoreModifier)));
 
+      const optAction = this.evaluateYearlyOptimalAction(
+        bazi, zn.hexagram, zn.annualStem, zn.annualBranch, age, yr, dyn, baziAdjustedScore, zn.isMutated
+      );
+
       points.push({
         age,
         year: yr,
@@ -1085,6 +1094,11 @@ class IChingEngine {
         elementalResonanceEn: dyn.elementalResonanceEn,
         dynamicInterpretationZh: dyn.dynamicInterpretationZh,
         dynamicInterpretationEn: dyn.dynamicInterpretationEn,
+        optimalAction: optAction,
+        optimalActionZh: optAction.shortBadgeZh,
+        optimalActionEn: optAction.shortBadgeEn,
+        optimalDirectiveZh: optAction.actionZh,
+        optimalDirectiveEn: optAction.actionEn,
         rawScore,
         score: baziAdjustedScore
       });
@@ -1317,6 +1331,260 @@ class IChingEngine {
       dynamicInterpretationZh: interpZh,
       dynamicInterpretationEn: interpEn,
       scoreModifier: scoreMod
+    };
+  }
+
+  /**
+   * Evaluates the optimal action / worldly focus (当年最适合做什么) for a specific year in the 100-year hexagram cycle.
+   * Categories:
+   * 1. 桃花 (Romance / Affinity / Marriage)
+   * 2. 事业 (Career / Offensive / Expansion)
+   * 3. 读书 (Deep Study / Knowledge / Certifications)
+   * 4. 守成 (Consolidation / Defense / Stability)
+   * 5. 风险 (Risk Management / Volatility Caution)
+   * Supports single focus and hybrid synergies, e.g. "桃花 + 事业", "事业 + 读书", "读书 + 守成", "事业 + 防险", "桃花 + 守成", etc.
+   */
+  static evaluateYearlyOptimalAction(bazi, hex, annualStem, annualBranch, age, yr, dyn, score, isMutated) {
+    const hexNum = hex ? hex.number : 1;
+    const dm = (bazi && (bazi.dayMaster || (bazi.pillars && bazi.pillars.day && bazi.pillars.day.stem))) || '甲';
+    const rawGender = (bazi && ((bazi.input && bazi.input.gender) || bazi.gender)) || '乾造';
+    const isMale = (rawGender === '乾造' || rawGender === 'male' || rawGender === 'Yang Male');
+    const dayBranch = (bazi && bazi.pillars && bazi.pillars.day && bazi.pillars.day.branch) || '子';
+    const yearBranch = (bazi && bazi.pillars && bazi.pillars.year && bazi.pillars.year.branch) || '子';
+
+    // 1. Romance / Relationship Triggers
+    const romanceHexes = [31, 53, 54, 32, 58, 45, 11, 22, 59, 61];
+    const isRomanceHex = romanceHexes.includes(hexNum);
+    const fourPeachBranches = ['子', '午', '卯', '酉'];
+    const isPeachBranch = fourPeachBranches.includes(annualBranch);
+
+    const xianChiMap = {
+      '寅': '卯', '午': '卯', '戌': '卯',
+      '申': '酉', '子': '酉', '辰': '酉',
+      '巳': '午', '酉': '午', '丑': '午',
+      '亥': '子', '卯': '子', '未': '子'
+    };
+    const isXianChi = (xianChiMap[dayBranch] === annualBranch) || (xianChiMap[yearBranch] === annualBranch);
+
+    const liuHeMap = {
+      '子': '丑', '丑': '子', '寅': '亥', '亥': '寅',
+      '卯': '戌', '戌': '卯', '辰': '酉', '酉': '辰',
+      '巳': '申', '申': '巳', '午': '未', '未': '午'
+    };
+    const isSpousePalaceHarmonized = (liuHeMap[dayBranch] === annualBranch);
+
+    const TEN_GOD_MAP_LOCAL = {
+      '甲': { '戊': '偏财', '己': '正财', '庚': '七杀', '辛': '正官', '丙': '食神', '丁': '伤官', '壬': '偏印', '癸': '正印', '甲': '比肩', '乙': '劫财' },
+      '乙': { '戊': '正财', '己': '偏财', '庚': '正官', '辛': '七杀', '丙': '伤官', '丁': '食神', '壬': '正印', '癸': '偏印', '甲': '劫财', '乙': '比肩' },
+      '丙': { '庚': '偏财', '辛': '正财', '壬': '七杀', '癸': '正官', '戊': '食神', '己': '伤官', '甲': '偏印', '乙': '正印', '丙': '比肩', '丁': '劫财' },
+      '丁': { '庚': '正财', '辛': '偏财', '壬': '正官', '癸': '七杀', '戊': '伤官', '己': '食神', '甲': '正印', '乙': '偏印', '丙': '劫财', '丁': '比肩' },
+      '戊': { '壬': '偏财', '癸': '正财', '甲': '七杀', '乙': '正官', '庚': '食神', '辛': '伤官', '丙': '偏印', '丁': '正印', '戊': '比肩', '己': '劫财' },
+      '己': { '壬': '正财', '癸': '偏财', '甲': '正官', '乙': '七杀', '庚': '伤官', '辛': '食神', '丙': '正印', '丁': '偏印', '戊': '劫财', '己': '比肩' },
+      '庚': { '甲': '偏财', '乙': '正财', '丙': '七杀', '丁': '正官', '壬': '食神', '癸': '伤官', '戊': '偏印', '己': '正印', '庚': '比肩', '辛': '劫财' },
+      '辛': { '甲': '正财', '乙': '偏财', '丙': '正官', '丁': '七杀', '壬': '伤官', '癸': '食神', '戊': '正印', '己': '偏印', '庚': '劫财', '辛': '比肩' },
+      '壬': { '丙': '偏财', '丁': '正财', '戊': '七杀', '己': '正官', '甲': '食神', '乙': '伤官', '庚': '偏印', '辛': '正印', '壬': '比肩', '癸': '劫财' },
+      '癸': { '丙': '正财', '丁': '偏财', '戊': '正官', '己': '七杀', '甲': '伤官', '乙': '食神', '庚': '正印', '辛': '偏印', '壬': '劫财', '癸': '比肩' }
+    };
+    const stemGod = (TEN_GOD_MAP_LOCAL[dm] && TEN_GOD_MAP_LOCAL[dm][annualStem]) || '比肩';
+    const isSpouseStar = isMale ? (stemGod === '正财' || stemGod === '偏财') : (stemGod === '正官' || stemGod === '七杀');
+
+    let hasRomance = false;
+    if (isRomanceHex) {
+      hasRomance = true;
+    } else if (age >= 18 && age <= 58) {
+      if ((isPeachBranch && (isSpouseStar || isSpousePalaceHarmonized)) || isXianChi || (isSpouseStar && isSpousePalaceHarmonized)) {
+        hasRomance = true;
+      }
+    }
+
+    // 2. Career / Expansion Triggers
+    const careerHexes = [1, 14, 35, 46, 19, 7, 34, 49, 50, 55, 13, 26, 42, 24, 8];
+    const isCareerHex = careerHexes.includes(hexNum);
+    const isCareerGod = (stemGod === '正官' || stemGod === '七杀' || stemGod === '正财' || stemGod === '偏财');
+    let hasCareer = false;
+    if (isCareerHex) {
+      hasCareer = true;
+    } else if (age >= 20 && age <= 65 && isCareerGod && score >= 70) {
+      hasCareer = true;
+    }
+
+    // 3. Study / Deep Knowledge Triggers
+    const studyHexes = [4, 20, 22, 30, 48, 27, 60, 57];
+    const isStudyHex = studyHexes.includes(hexNum);
+    const isStudyGod = (stemGod === '正印' || stemGod === '偏印' || stemGod === '食神' || stemGod === '伤官');
+    let hasStudy = false;
+    if (isStudyHex) {
+      hasStudy = true;
+    } else if (age <= 28 && (isStudyGod || score >= 65)) {
+      hasStudy = true;
+    } else if (isStudyGod && (dyn && dyn.elementalResonanceZh && dyn.elementalResonanceZh.includes('吐秀'))) {
+      hasStudy = true;
+    }
+
+    // 4. Risk / Caution Triggers
+    const riskHexes = [29, 47, 39, 36, 23, 12, 18, 3, 25, 43, 44, 6, 10];
+    const isRiskHex = riskHexes.includes(hexNum);
+    let hasRisk = false;
+    if (isRiskHex || score <= 45 || (dyn && dyn.elementalResonanceZh && dyn.elementalResonanceZh.includes('大起大落'))) {
+      hasRisk = true;
+    }
+
+    // 5. Consolidation / Defense Triggers
+    const consolidationHexes = [2, 15, 33, 37, 52, 63, 64, 9, 56];
+    const isConsolidationHex = consolidationHexes.includes(hexNum);
+    let hasConsolidation = false;
+    if (isConsolidationHex || (age >= 60 && !hasCareer) || (score >= 50 && score <= 68 && !hasCareer && !hasStudy && !hasRomance)) {
+      hasConsolidation = true;
+    }
+
+    // Synthesis and priority matching
+    // Case A: Romance + Career
+    if (hasRomance && hasCareer) {
+      return {
+        type: 'romance_career',
+        tagZh: '桃花 + 事业',
+        tagEn: 'Romance + Career',
+        shortBadgeZh: '【桃花 + 事业】',
+        shortBadgeEn: '[Romance + Career]',
+        actionZh: '双线并进：事业勇猛开拓把握跃迁胜手，红鸾相感极易在职场或重要场合结识情投意合之良缘正偶。',
+        actionEn: 'Dual Progression: Advance career fronts with bold initiative while welcoming serendipitous romance through professional and social synergy.',
+        badgeClass: 'bg-gradient-to-r from-rose-500/25 to-amber-500/25 text-rose-300 border border-rose-500/40 shadow-sm'
+      };
+    }
+
+    // Case B: Career + Study
+    if (hasCareer && hasStudy) {
+      return {
+        type: 'career_study',
+        tagZh: '事业 + 读书',
+        tagEn: 'Career + Study',
+        shortBadgeZh: '【事业 + 读书】',
+        shortBadgeEn: '[Career + Study]',
+        actionZh: '知行合一：以学术深研与核心技能精进化作职场跃迁杠杆，极其适宜考取权威执照、发表专著并获高层提拔。',
+        actionEn: 'Integrated Mastery: Leverage deep scholarly research and technical certifications to unlock decisive professional promotions.',
+        badgeClass: 'bg-gradient-to-r from-emerald-500/25 to-blue-500/25 text-emerald-300 border border-emerald-500/40 shadow-sm'
+      };
+    }
+
+    // Case C: Romance + Study
+    if (hasRomance && hasStudy) {
+      return {
+        type: 'romance_study',
+        tagZh: '桃花 + 读书',
+        tagEn: 'Romance + Study',
+        shortBadgeZh: '【桃花 + 读书】',
+        shortBadgeEn: '[Romance + Study]',
+        actionZh: '文思灵动：同窗学业或文化交流中极易偶遇志同道合之良缘，琴瑟和鸣，彼此勉励共同成长。',
+        actionEn: 'Intellectual Affinity: Academic and cultural pursuits naturally cultivate kindred romantic connections and mutual elevation.',
+        badgeClass: 'bg-gradient-to-r from-rose-500/25 to-blue-500/25 text-rose-300 border border-rose-500/40 shadow-sm'
+      };
+    }
+
+    // Case D: Career + Risk Caution
+    if (hasCareer && hasRisk) {
+      return {
+        type: 'career_risk',
+        tagZh: '事业 + 防险',
+        tagEn: 'Career + Caution',
+        shortBadgeZh: '【事业 + 防险】',
+        shortBadgeEn: '[Career + Caution]',
+        actionZh: '险中求胜：外部战线机遇虽大但暗礁密布，务必前置法务合同与现金流防火墙，严禁盲目加杠杆。',
+        actionEn: 'Calculated Offensive: Seize high-leverage commercial breakthroughs while establishing rigid contractual and liquidity safeguards.',
+        badgeClass: 'bg-gradient-to-r from-emerald-500/25 to-rose-500/25 text-amber-300 border border-amber-500/40 shadow-sm'
+      };
+    }
+
+    // Case E: Romance + Consolidation
+    if (hasRomance && hasConsolidation) {
+      return {
+        type: 'romance_consolidation',
+        tagZh: '桃花 + 守成',
+        tagEn: 'Romance + Stability',
+        shortBadgeZh: '【桃花 + 守成】',
+        shortBadgeEn: '[Romance + Stability]',
+        actionZh: '家庭温润：对外宜沉淀守成、不折腾；对内细水长流守护情感后方，适宜成家立业、安居筑巢。',
+        actionEn: 'Domestic Sanctuary: Maintain external stability while nurturing deep domestic bonds; prime for courtship, marriage, and homebuilding.',
+        badgeClass: 'bg-gradient-to-r from-rose-500/25 to-amber-500/25 text-pink-300 border border-rose-500/30 shadow-sm'
+      };
+    }
+
+    // Case F: Study + Consolidation
+    if (hasStudy && hasConsolidation) {
+      return {
+        type: 'study_consolidation',
+        tagZh: '读书 + 守成',
+        tagEn: 'Study + Stability',
+        shortBadgeZh: '【读书 + 守成】',
+        shortBadgeEn: '[Study + Stability]',
+        actionZh: '沉潜蓄势：宜闭门深造、阅读研析、修身养性，守好当下基本盘，不争一时短长，以学问夯实未来十年地基。',
+        actionEn: 'Quiet Cultivation: Deepen intellectual mastery and internal composure; consolidate existing assets and lay long-term foundations.',
+        badgeClass: 'bg-gradient-to-r from-blue-500/25 to-amber-500/25 text-cyan-300 border border-blue-500/30 shadow-sm'
+      };
+    }
+
+    // Single Focuses
+    if (hasRisk) {
+      return {
+        type: 'risk',
+        tagZh: '防范风险',
+        tagEn: 'Risk Defense',
+        shortBadgeZh: '【防范风险】',
+        shortBadgeEn: '[Risk Defense]',
+        actionZh: '如履薄冰：岁运波荡暗涌，严防合同诈骗、官非纠纷、剧烈投资亏损或身体过劳，当退守内修。',
+        actionEn: 'Vigilant Defense: Navigating volatile currents; rigorously prevent contractual disputes, speculative losses, and burnout.',
+        badgeClass: 'bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm'
+      };
+    }
+
+    if (hasRomance) {
+      return {
+        type: 'romance',
+        tagZh: '桃花结缘',
+        tagEn: 'Romance & Affinity',
+        shortBadgeZh: '【桃花结缘】',
+        shortBadgeEn: '[Romance & Affinity]',
+        actionZh: '红鸾星照：人缘气场温和舒畅，极适宜相亲互动、确立良缘婚配、拓展高价值人际网络。',
+        actionEn: 'Romantic Radiance: Auspicious relationship currents; prime for courtship, marriage proposals, and harmonious interpersonal ties.',
+        badgeClass: 'bg-rose-500/20 text-rose-300 border border-rose-500/40 shadow-sm'
+      };
+    }
+
+    if (hasCareer) {
+      return {
+        type: 'career',
+        tagZh: '事业开拓',
+        tagEn: 'Career Expansion',
+        shortBadgeZh: '【事业开拓】',
+        shortBadgeEn: '[Career Expansion]',
+        actionZh: '乘风破浪：运势如日中天，主动抢滩进攻，挑大梁带队攻坚，争取职务跃迁与商业变现大胜。',
+        actionEn: 'Strategic Offensive: Seize commanding leadership roles, expand commercial reach, and execute high-stakes campaigns.',
+        badgeClass: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
+      };
+    }
+
+    if (hasStudy) {
+      return {
+        type: 'study',
+        tagZh: '读书进修',
+        tagEn: 'Deep Study',
+        shortBadgeZh: '【读书进修】',
+        shortBadgeEn: '[Deep Study]',
+        actionZh: '文昌大开：专注沉浸式求学深造、研习硬核专业逻辑、考取职称证照与打磨技术作品，灵感源源不绝。',
+        actionEn: 'Scholarly Excellence: Optimal for immersion in rigorous education, professional certifications, and creative breakthrough.',
+        badgeClass: 'bg-blue-500/20 text-blue-300 border border-blue-500/40 shadow-sm'
+      };
+    }
+
+    // Default: 稳健守成 (Prudent Stability)
+    return {
+      type: 'consolidation',
+      tagZh: '稳健守成',
+      tagEn: 'Prudent Stability',
+      shortBadgeZh: '【稳健守成】',
+      shortBadgeEn: '[Prudent Stability]',
+      actionZh: '持盈保泰：气数平稳中和，适宜深耕主业、沉淀口碑、优化资产配置，积小胜为大胜，蓄势待发。',
+      actionEn: 'Steadfast Ballast: Harmonious and steady momentum; focus on deepening core strengths, customer trust, and asset preservation.',
+      badgeClass: 'bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm'
     };
   }
 

@@ -5382,7 +5382,7 @@ jsc_dossier5_cmd = [
     if (!zhHtml.includes("专属空间风水调理策")) throw new Error("Missing Remedies in ZH Page 7");
     if (!zhHtml.includes("事业立身与天命职能生态位（事业怎么样）")) throw new Error("Missing Career Summary in ZH Page 1");
     if (!zhHtml.includes("金玉资财与守财防漏红线（财富怎么样）")) throw new Error("Missing Wealth Summary in ZH Page 1");
-    if (!zhHtml.includes("配偶家庭与后方压舱石（配偶·老婆怎么样）")) throw new Error("Missing Spouse Summary in ZH Page 1");
+    if (!zhHtml.includes("配偶家庭与后方压舱石（正缘配偶怎么样）") && !zhHtml.includes("配偶家庭与后方压舱石")) throw new Error("Missing Spouse Summary in ZH Page 1");
     if (!zhHtml.includes("钦天监朱批 · 终身不败立身三铁律")) throw new Error("Missing 3 Golden Rules in ZH Page 1");
     if (zhHtml.includes("undefined")) throw new Error("Found 'undefined' in ZH Dossier HTML!");
     '''
@@ -10673,6 +10673,211 @@ run_check96 = subprocess.run(jsc_check96_cmd, capture_output=True, text=True)
 assert run_check96.returncode == 0, f"Check 96 test failed: stdout={run_check96.stdout} stderr={run_check96.stderr}"
 print("✓ 天命职能四大生态位精准定向严谨校准（写代码/写东西/做分析/打硬仗/操盘统帅、代表岗位分工、中英双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 96 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 97. Validating Hexagram Trajectory Yearly Optimal Action (当年最宜) & Imperial Dossier Page 1 Polish
+print("\n=== 97. Validating Hexagram Trajectory Yearly Optimal Action & Imperial Dossier Page 1 Polish ===")
+jsc_check97_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/chart.js");
 
+    var testBazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(testBazi, 2026);
 
+    // 1. Direct unit verification of evaluateYearlyOptimalAction
+    var optRomanceCareer = IChingEngine.evaluateYearlyOptimalAction(testBazi, { number: 31, nameZh: "泽山咸", nameEn: "Influence" }, "庚", "午", 28, 2018, { isFavorable: true }, 88, true);
+    if (!optRomanceCareer || !optRomanceCareer.shortBadgeZh.includes("桃花") || !optRomanceCareer.shortBadgeZh.includes("事业")) {
+      throw new Error("Expected 桃花 + 事业 combination, got: " + JSON.stringify(optRomanceCareer));
+    }
+    if (!optRomanceCareer.shortBadgeEn.includes("Romance") || !optRomanceCareer.shortBadgeEn.includes("Career")) {
+      throw new Error("Expected [Romance + Career] in English, got: " + optRomanceCareer.shortBadgeEn);
+    }
+
+    var optStudy = IChingEngine.evaluateYearlyOptimalAction(testBazi, { number: 4, nameZh: "山水蒙", nameEn: "Youthful Folly" }, "壬", "子", 20, 2010, { isFavorable: true }, 75, false);
+    if (!optStudy || !optStudy.shortBadgeZh.includes("读书")) {
+      throw new Error("Expected 读书 for Hexagram Meng at age 20, got: " + JSON.stringify(optStudy));
+    }
+
+    var optRisk = IChingEngine.evaluateYearlyOptimalAction(testBazi, { number: 29, nameZh: "坎为水", nameEn: "The Abysmal Water" }, "戊", "申", 45, 2035, { isFavorable: false }, 38, true);
+    if (!optRisk || (!optRisk.shortBadgeZh.includes("风险") && !optRisk.shortBadgeZh.includes("防范"))) {
+      throw new Error("Expected 风险 for Hexagram Kan with low score, got: " + JSON.stringify(optRisk));
+    }
+
+    var optStability = IChingEngine.evaluateYearlyOptimalAction(testBazi, { number: 52, nameZh: "艮为山", nameEn: "Keeping Still" }, "己", "丑", 68, 2058, { isFavorable: true }, 72, false);
+    if (!optStability || !optStability.shortBadgeZh.includes("守成")) {
+      throw new Error("Expected 守成 for Hexagram Gen at age 68, got: " + JSON.stringify(optStability));
+    }
+
+    // 2. Lifelong cycle 100-point roster verification
+    var cyclePoints = IChingEngine.calculateLifelongCycle(testBazi);
+    if (!Array.isArray(cyclePoints) || cyclePoints.length !== 100) {
+      throw new Error("Lifelong cycle must have 100 points");
+    }
+    cyclePoints.forEach(function(pt) {
+      if (!pt.optimalAction || !pt.optimalAction.shortBadgeZh || !pt.optimalAction.shortBadgeEn) {
+        throw new Error("Missing optimalAction at age " + pt.age);
+      }
+      if (/[\u4e00-\u9fa5]/.test(pt.optimalAction.shortBadgeEn) || /[\u4e00-\u9fa5]/.test(pt.optimalAction.actionEn)) {
+        throw new Error("Residual Chinese in English optimalAction at age " + pt.age);
+      }
+    });
+
+    // 3. Mock DOM and verify Imperial Dossier Page 1 Polish
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          add: function() {},
+          remove: function() {},
+          contains: function() { return false; }
+        },
+        className: "",
+        style: {},
+        _children: [],
+        _listener: null,
+        addEventListener: function(evt, handler) { this._listener = handler; },
+        appendChild: function(c) { this._children.push(c); },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        getBoundingClientRect: function() { return { width: 400, height: 300, left: 0, top: 0 }; },
+        getContext: function() { return {}; }
+      };
+    }
+
+    var dossierDomIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "imperialDossierModal", "imperialDossierContainer", "calcBtn",
+      "birthDate", "birthTime", "gender", "useSolarTime", "lateRatAsNextDay",
+      "customLongitude", "timezoneSelect", "citySelect"
+    ];
+    dossierDomIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") this._domReady = handler;
+      }
+    };
+
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function() {},
+      info: function() {}
+    };
+    var localStorage = {
+      getItem: function() { return null; },
+      setItem: function() {},
+      removeItem: function() {}
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      IChingEngine: IChingEngine,
+      LuckEngine: LuckEngine,
+      HistoricalEngine: (typeof HistoricalEngine !== "undefined" ? HistoricalEngine : undefined),
+      SpatialFengShuiEngine: (typeof SpatialFengShuiEngine !== "undefined" ? SpatialFengShuiEngine : undefined),
+      CareerEngine: CareerEngine
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    window.renderImperialDossierPages(testBazi, luck, "zh");
+    var dossZh = elementStore["imperialDossierContainer"].innerHTML;
+
+    // Check Page 1 Subtitle refinement
+    if (!dossZh.includes("正缘配偶（家庭压舱石）")) {
+      throw new Error("Page 1 in ZH missing refined subtitle: 正缘配偶（家庭压舱石）");
+    }
+    if (dossZh.includes("配偶家庭（老婆）")) {
+      throw new Error("Page 1 in ZH still contains colloquial: 配偶家庭（老婆）");
+    }
+
+    // Check Module 1 Breakthrough tactic label
+    if (!dossZh.includes("战略战法与攻坚胜手：")) {
+      throw new Error("Page 1 in ZH missing 战略战法与攻坚胜手：");
+    }
+    if (dossZh.includes("向下突破与战略战法：")) {
+      throw new Error("Page 1 in ZH still contains 向下突破与战略战法：");
+    }
+
+    // Check Module 3 Spouse title
+    if (!dossZh.includes("三、配偶家庭与后方压舱石（正缘配偶怎么样）")) {
+      throw new Error("Page 1 in ZH missing 三、配偶家庭与后方压舱石（正缘配偶怎么样）");
+    }
+    if (dossZh.includes("配偶·老婆怎么样")) {
+      throw new Error("Page 1 in ZH still contains colloquial 配偶·老婆怎么样");
+    }
+
+    // Check Module 4 Seal right padding clearance
+    if (!dossZh.includes('style="padding-right: 30mm;"')) {
+      throw new Error("Page 1 in ZH missing padding-right: 30mm for seal clearance");
+    }
+
+    // Check English mode zero residual Chinese
+    window.renderImperialDossierPages(testBazi, luck, "en");
+    var dossEn = elementStore["imperialDossierContainer"].innerHTML;
+    var dossEnMatches = dossEn.match(/[\u4e00-\u9fa5]/g);
+    if (dossEnMatches && dossEnMatches.length > 0) {
+      throw new Error("Residual Chinese in Imperial Dossier EN: " + dossEnMatches.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check97 = subprocess.run(jsc_check97_cmd, capture_output=True, text=True)
+assert run_check97.returncode == 0, f"Check 97 test failed: stdout={run_check97.stdout} stderr={run_check97.stderr}"
+print("✓ 百岁岁运六十四卦行持全景总谱当年最宜决策标定（桃花/事业/读书/守成/防险与组合）与皇家战报卷首第一页雅致排版（印章避让/文辞雅化/零中文残留）验证通过！")
+
+print("\n🎉 ALL 97 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")

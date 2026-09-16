@@ -6966,8 +6966,18 @@ document.addEventListener('DOMContentLoaded', () => {
           elTransitBadge.className = `px-1.5 py-0.2 rounded text-[9px] font-mono font-bold ${item.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}`;
         }
         elTransitTitle.textContent = `${item.year} ${isEn ? item.annualGanzhiEn : item.annualGanzhiZh} · ${isEn ? hex.nameEn : hex.nameZh}`;
-        elTransitTitle.className = `text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'} truncate`;
+        elTransitTitle.className = `text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'}`;
         if (elTransitDesc) elTransitDesc.textContent = isEn ? item.ruleInteractionEn : item.ruleInteractionZh;
+
+        const elActionBadge = document.getElementById('ichingTelemetryOptimalActionBadge');
+        if (elActionBadge && item.optimalAction) {
+          elActionBadge.textContent = isEn ? (item.optimalAction.shortBadgeEn || '') : (item.optimalAction.shortBadgeZh || '');
+          elActionBadge.className = `px-2 py-0.5 rounded text-[10px] font-bold font-mono ${item.optimalAction.badgeClass || 'bg-amber-500/20 text-amber-300'}`;
+        }
+        const elActionDirective = document.getElementById('ichingTelemetryOptimalActionDirective');
+        if (elActionDirective && item.optimalAction) {
+          elActionDirective.textContent = isEn ? (item.optimalAction.actionEn || '') : (item.optimalAction.actionZh || '');
+        }
 
         if (elTJScore) elTJScore.textContent = `${item.score}% ${isEn ? 'Score' : '能级'}`;
         elTJDirective.textContent = isEn ? (tj.liuNianEn || 'Auspicious achievements with disciplined execution.') : (tj.liuNianZh || '吉庆临门，加官进禄，稳健守正求通。');
@@ -7055,12 +7065,25 @@ document.addEventListener('DOMContentLoaded', () => {
               ${item.isMutated ? (isEn ? 'Mutated' : '变卦') : (isEn ? 'Preserved' : '守本')}
             </span>
           </div>
-          <div id="ichingTelemetryTransitTitle" class="text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'} truncate">
-            ${item.year} ${isEn ? item.annualGanzhiEn : item.annualGanzhiZh} · ${isEn ? hex.nameEn : hex.nameZh}
+          <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+            <span id="ichingTelemetryTransitTitle" class="text-sm font-bold font-serif-sc ${item.isMutated ? 'text-amber-300' : 'text-emerald-300'}">
+              ${item.year} ${isEn ? item.annualGanzhiEn : item.annualGanzhiZh} · ${isEn ? hex.nameEn : hex.nameZh}
+            </span>
+            <span id="ichingTelemetryOptimalActionBadge" class="px-2 py-0.5 rounded text-[10px] font-bold font-mono ${item.optimalAction ? item.optimalAction.badgeClass : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}">
+              ${isEn ? (item.optimalAction ? item.optimalAction.shortBadgeEn : '[Optimal Action]') : (item.optimalAction ? item.optimalAction.shortBadgeZh : '【当年最宜】')}
+            </span>
           </div>
-          <p id="ichingTelemetryTransitDesc" class="text-[10.5px] font-mono text-gray-300 leading-tight truncate">
+          <p id="ichingTelemetryTransitDesc" class="text-[10.5px] font-mono text-gray-400 leading-tight">
             ${isEn ? item.ruleInteractionEn : item.ruleInteractionZh}
           </p>
+          <div class="p-2 rounded-lg bg-white/5 border border-gray-800/80 text-[11px] space-y-0.5 mt-1">
+            <div class="text-[10px] font-semibold text-amber-400 flex items-center gap-1">
+              <span>🎯</span> <span>${isEn ? 'Optimal Yearly Strategy:' : '当年最适合做什么：'}</span>
+            </div>
+            <p id="ichingTelemetryOptimalActionDirective" class="text-gray-200 leading-relaxed font-sans">
+              ${isEn ? (item.optimalAction ? item.optimalAction.actionEn : '') : (item.optimalAction ? item.optimalAction.actionZh : '')}
+            </p>
+          </div>
         </div>
 
         <!-- 4. Tian Ji Directive & Riddle -->
@@ -7096,7 +7119,61 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         ` : ''}
       </div>
+
+      <!-- 6. 100-Year Hexagram Trajectory Roster -->
+      <div class="p-3.5 rounded-2xl bg-black/40 border border-gray-800 space-y-2.5 shadow">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+          <div class="flex items-center space-x-2 text-xs">
+            <span class="text-amber-400 font-bold">📜</span>
+            <span class="font-bold text-gray-200 font-serif-sc">${isEn ? '100-Year Lifelong Hexagrams & Optimal Action Roster' : '百岁岁运六十四卦行持全景总谱'}</span>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? '(Click any card to inspect year)' : '（点击任意年份卡片可瞬时联动调阅）'}</span>
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-gray-400 font-mono">
+            <span class="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">${isEn ? 'Romance' : '桃花'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${isEn ? 'Career' : '事业'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">${isEn ? 'Study' : '读书'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">${isEn ? 'Stability' : '守成'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-rose-900/40 text-rose-300 border border-rose-700/40">${isEn ? 'Risk' : '防险'}</span>
+          </div>
+        </div>
+
+        <!-- Horizontal Scrollable Year Hexagram Cards -->
+        <div id="ichingRosterScrollTrack" class="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+          ${points.map(pt => {
+            const isSelected = (pt.age === item.age);
+            const ptHex = pt.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
+            const ptOpt = pt.optimalAction || {};
+            return `
+              <div class="iching-roster-card flex-shrink-0 w-36 sm:w-40 p-2.5 rounded-xl border transition cursor-pointer text-left ${isSelected ? 'border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg' : 'border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60'}" data-age="${pt.age}">
+                <div class="flex items-center justify-between text-[10.5px] font-mono text-gray-400 border-b border-gray-800/60 pb-1">
+                  <span class="font-bold ${isSelected ? 'text-amber-300' : 'text-gray-300'}">${pt.age}${isEn ? 'y' : '岁'} · ${pt.year}</span>
+                  <span class="text-[9px] px-1 py-0.2 rounded ${pt.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">${pt.isMutated ? (isEn ? 'Mut' : '变') : (isEn ? 'Base' : '本')}</span>
+                </div>
+                <div class="pt-1.5 font-serif-sc font-bold text-xs truncate ${isSelected ? 'text-amber-200' : 'text-gray-200'}">
+                  ${isEn ? ptHex.nameEn : ptHex.nameZh}
+                </div>
+                <div class="pt-1">
+                  <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-bold font-mono ${ptOpt.badgeClass || 'bg-amber-500/20 text-amber-300'}">
+                    ${isEn ? (ptOpt.shortBadgeEn || '[Focus]') : (ptOpt.shortBadgeZh || '【当年最宜】')}
+                  </span>
+                </div>
+                <p class="text-[9.5px] text-gray-400 line-clamp-1 pt-1 font-sans">
+                  ${isEn ? (ptOpt.actionEn || '') : (ptOpt.actionZh || '')}
+                </p>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
     `;
+
+    // Hook roster card click events
+    container.querySelectorAll('.iching-roster-card').forEach(c => {
+      c.addEventListener('click', () => {
+        const age = parseInt(c.getAttribute('data-age'), 10);
+        if (age) setIChingActiveAge(age);
+      });
+    });
 
     // Hook canvas click and drag safely (no multiple listeners on window)
     const canvas = document.getElementById('ichingCycleCanvas');
@@ -7346,27 +7423,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ctx.arc) ctx.arc(activeCoord.x, activeCoord.y, 8, 0, Math.PI * 2);
       ctx.strokeStyle = '#ef4444';
       ctx.lineWidth = 2;
-      if (ctx.stroke) ctx.stroke();
-
       const pt = activeCoord.point;
       const hexName = isEn ? (pt.annualHex ? pt.annualHex.nameEn : 'Hexagram') : (pt.annualHex ? pt.annualHex.nameZh : '卦');
-      const tooltipText = `${pt.age}${isEn ? 'y' : '岁'} · ${hexName}`;
+      const actBadge = isEn ? (pt.optimalAction ? pt.optimalAction.shortBadgeEn : '') : (pt.optimalAction ? pt.optimalAction.shortBadgeZh : '');
+      const tooltipText = `${pt.age}${isEn ? 'y' : '岁'} · ${hexName} ${actBadge}`.trim();
 
-      const flagW = Math.max(80, tooltipText.length * 6.5 + 16);
+      const flagW = Math.max(90, tooltipText.length * 7 + 18);
       let flagX = activeCoord.x - flagW / 2;
       if (flagX < padL) flagX = padL;
       if (flagX + flagW > padL + chartW) flagX = padL + chartW - flagW;
-      const flagY = Math.max(padT - 6, activeCoord.y - 26);
+      const flagY = Math.max(padT - 6, activeCoord.y - 28);
 
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
-      if (ctx.fillRect) ctx.fillRect(flagX, flagY, flagW, 18);
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+      if (ctx.fillRect) ctx.fillRect(flagX, flagY, flagW, 20);
       ctx.strokeStyle = '#f59e0b';
       ctx.lineWidth = 1;
-      if (ctx.strokeRect) ctx.strokeRect(flagX, flagY, flagW, 18);
+      if (ctx.strokeRect) ctx.strokeRect(flagX, flagY, flagW, 20);
 
       ctx.fillStyle = '#fef3c7';
       ctx.font = '10px sans-serif';
-      if (ctx.fillText) ctx.fillText(tooltipText, flagX + 6, flagY + 12);
+      if (ctx.fillText) ctx.fillText(tooltipText, flagX + 6, flagY + 14);
     }
   }
 
@@ -12508,6 +12584,20 @@ document.addEventListener('DOMContentLoaded', () => {
       ? (crTt ? (crTt.indirectWealthEvaluationEn || crTt.indirectWealthAnalysisEn || 'Indirect wealth advises prudent equity and venture investments.') : 'Indirect wealth advises prudent equity and venture investments.')
       : (crTt ? (crTt.indirectWealthEvaluationZh || crTt.indirectWealthAnalysisZh || '偏财副业适度进取，善用信息差获利，严控杠杆。') : '偏财副业适度进取，善用信息差获利，严控杠杆。');
 
+    const cleanDirectWealthText = isEn
+      ? directWealthText.replace(/^(?:\[[^\]]+\][：:]\s*)+/, '')
+      : directWealthText.replace(/^(?:【[^】]+】[：:]\s*)+/, '');
+    const cleanIndirectWealthText = isEn
+      ? indirectWealthText.replace(/^(?:\[[^\]]+\][：:]\s*)+/, '')
+      : indirectWealthText.replace(/^(?:【[^】]+】[：:]\s*)+/, '');
+
+    const cleanSpDemeanour = isEn
+      ? spDemeanour.replace(/^(?:\[[^\]]+\][：:]\s*)+/, '')
+      : spDemeanour.replace(/^(?:【[^】]+】[：:]\s*)+/, '');
+    const cleanSpRelationship = isEn
+      ? spRelationship.replace(/^(?:\[[^\]]+\][：:]\s*)+/, '')
+      : spRelationship.replace(/^(?:【[^】]+】[：:]\s*)+/, '');
+
     const rule1 = isEn
       ? '1. Govern Ferocious Drive with Structural Law: Tame excessive ambition through ironclad rules and self-discipline, converting turbulent friction into supreme authority.'
       : '一、以法度驾驭锋芒（守正）：极度偏旺之势切忌任性逞强，须以严苛制度与自我纪律约束锋芒，凶煞自转威权帅印。';
@@ -12713,7 +12803,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="text-[10.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷首统览'}</span>
             </div>
             <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首三要终身统览'}</h1>
-            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? 'Executive Lifetime Synthesis: Career Calling · Wealth Flow · Domestic Spouse Ballast · Three Sovereign Decrees' : '全相至高纲领：天命职能 · 金玉资财 · 配偶家庭（老婆） · 钦天监朱批终身三铁律'}</p>
+            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? 'Executive Lifetime Synthesis: Career Calling · Wealth Flow · Domestic Spouse Ballast · Three Sovereign Decrees' : '全相至高纲领：天命职能 · 金玉资财 · 正缘配偶（家庭压舱石） · 钦天监朱批终身三铁律'}</p>
           </div>
 
           <!-- Subject Quick Metadata Banner -->
@@ -12729,12 +12819,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
               <span class="flex items-center gap-1.5"><span class="text-sm">🎯</span><span>${isEn ? 'I. Career Calling & Optimal Ecosystem (Career Trajectory)' : '一、事业立身与天命职能生态位（事业怎么样）'}</span></span>
               <span class="text-[10px] px-2 py-0.2 rounded bg-emerald-200/80 text-emerald-950 font-bold border border-emerald-600/40 font-mono">
-                ${arch1.icon} ${isEn ? arch1.nameEn.split('(')[0].trim() : arch1.nameZh.split('（')[0].trim()} (${arch1.fitScore}${isEn ? '/100' : '分'})
+                ${arch1.icon} ${isEn ? arch1.nameEn.split(/[（(]/)[0].trim() : arch1.nameZh.split(/[（(]/)[0].trim()} (${arch1.fitScore}${isEn ? '/100' : '分'})
               </span>
             </div>
             <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Functional Output: ' : '核心产出技能：'}</b>${isEn ? (arch1.functionalOutputsEn ? arch1.functionalOutputsEn.replace(/^\[Core Functional Outputs: /, '').split(']')[0] : 'Strategic Leadership') : (arch1.functionalOutputsZh ? arch1.functionalOutputsZh.replace(/^【核心产出技能：/, '').split('】')[0] : '操盘统帅')}</p>
             <p class="text-[10px] text-gray-800 leading-tight"><b>${isEn ? 'Core Advantage: ' : '核心天赋优势：'}</b>${isEn ? arch1.coreStrengthsEn : arch1.coreStrengthsZh}</p>
-            <p class="text-[10px] text-amber-900 leading-tight"><b>${isEn ? 'Breakthrough Tactic: ' : '向下突破与战略战法：'}</b>${isEn ? arch1.breakthroughTacticEn : arch1.breakthroughTacticZh}</p>
+            <p class="text-[10px] text-amber-900 leading-tight"><b>${isEn ? 'Breakthrough Tactic: ' : '战略战法与攻坚胜手：'}</b>${isEn ? arch1.breakthroughTacticEn : arch1.breakthroughTacticZh}</p>
             <p class="text-[10px] text-gray-700 leading-tight"><b>${isEn ? 'Managing Up & Colleagues: ' : '向上管理与职场沟通：'}</b>${isEn ? upwardRuleEn : upwardRuleZh}</p>
           </div>
 
@@ -12749,11 +12839,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="grid grid-cols-2 gap-2 text-[10px] text-gray-800 pt-0.5">
               <div class="p-1.5 bg-white/70 rounded border border-amber-900/15">
                 <b>${isEn ? 'Base Salary & Promotion: ' : '正财薪酬与现金流：'}</b>
-                <span class="leading-tight">${directWealthText}</span>
+                <span class="leading-tight">${cleanDirectWealthText}</span>
               </div>
               <div class="p-1.5 bg-white/70 rounded border border-amber-900/15">
                 <b>${isEn ? 'Side Ventures & Investments: ' : '偏财副业与投资红利：'}</b>
-                <span class="leading-tight">${indirectWealthText}</span>
+                <span class="leading-tight">${cleanIndirectWealthText}</span>
               </div>
             </div>
             <p class="text-[10px] text-rose-900 leading-tight"><b>${isEn ? 'Anti-Leakage Rule: ' : '守财防漏戒律：'}</b>${isEn ? 'Guard liquidity reserves with discipline. Strictly avoid unhedged high-leverage gambles, unvetted angel partnerships, or cosigning personal loans to prevent sudden wealth plunder.' : '严守现金储备安全垫，严禁高杠杆投机与无担保民间借贷，防范“比劫夺财”，将流动资本牢固转化为核心资产。'}</p>
@@ -12762,15 +12852,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Module 3: Spouse & Marriage -->
           <div class="imperial-card imperial-card-rose p-2.5 text-xs space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-1">
-              <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span><span>${isEn ? 'III. Spouse & Marriage Palace (Domestic Breakwater Ballast)' : '三、配偶家庭与后方压舱石（配偶·老婆怎么样）'}</span></span>
+              <span class="flex items-center gap-1.5"><span class="text-sm">🛡️</span><span>${isEn ? 'III. Spouse & Marriage Palace (Domestic Breakwater Ballast)' : '三、配偶家庭与后方压舱石（正缘配偶怎么样）'}</span></span>
               <span class="text-[10px] px-2 py-0.2 rounded bg-rose-200/80 text-rose-950 font-bold border border-rose-600/40 font-mono">
                 ${isEn ? `Day Branch [${spBranchEn}] · ${spArch}` : `日支坐【${spBranch}】· ${spArch}`}
               </span>
             </div>
-            <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Spouse Archetype & Demeanour: ' : '配偶心性与气质风范：'}</b>${spDemeanour}</p>
+            <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Spouse Archetype & Demeanour: ' : '配偶心性与气质风范：'}</b>${cleanSpDemeanour}</p>
             <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Domestic Breakwater Ballast: ' : '防波堤与财富护航功能：'}</b>${isEn ? 'The partner serves as your ultimate financial breakwater and emotional ballast—anchoring family assets, offering sound rational counsel during crises, and mitigating reckless extremes.' : '配偶不仅在暗中稳住财富底盘，更能在命主锋芒过盛或外部突遭狂风暴雨时提供最坚不可摧的理智庇护与精神压舱石。'}</p>
             <p class="text-[10px] text-emerald-900 leading-tight"><b>${isEn ? 'Spouse Encounter Timing & Direction: ' : '正缘应期与结缘方位：'}</b>${isEn ? spEncounterSummaryEn : spEncounterSummaryZh}</p>
-            <p class="text-[10px] text-gray-700 leading-tight"><b>${isEn ? 'Harmony Mandate: ' : '相处共融之道：'}</b>${spRelationship}</p>
+            <p class="text-[10px] text-gray-700 leading-tight"><b>${isEn ? 'Harmony Mandate: ' : '相处共融之道：'}</b>${cleanSpRelationship}</p>
           </div>
 
           <!-- Module 4: Imperial Decrees -->
@@ -12780,7 +12870,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="text-[9.5px] text-amber-900 font-mono">${isEn ? 'SOVEREIGN MANDATE' : '天机不易'}</span>
             </div>
             <div class="relative pt-0.5 min-h-[44px]">
-              <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight pr-14">
+              <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight" style="padding-right: 30mm;">
                 <p>${rule1}</p>
                 <p>${rule2}</p>
                 <p>${rule3}</p>

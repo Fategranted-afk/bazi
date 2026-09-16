@@ -766,20 +766,20 @@ class CareerEngine {
     const annualGanzhiEn = CareerEngine.getGanzhiEn(annualGanzhi);
 
     const directWealthAnalysisZh = directWealthScore >= 75
-      ? `【正财（主业薪酬与升职运势：${directWealthScore}分 · 稳健高光】大运【${decadeGanzhi}】（${decadeGod}）与流年【${annualGanzhi}】（${annualGod}）形成主业护持，主业岗位稳定性高，是向领导层申请绩效晋级、加薪谈判的黄金窗口期。踏实交付即能换来确定性的现金流增长。`
-      : `【正财（主业薪酬与升职运势：${directWealthScore}分 · 守成固本】当前大运【${decadeGanzhi}】与流年【${annualGanzhi}】主业面临结构性考核调整或组织重组阵痛。建议收起锋芒，不争一时职位虚名，扎实守住岗位基本盘，避免盲目裸辞。`;
+      ? `【主业薪酬 · ${directWealthScore}分稳健高光】：大运【${decadeGanzhi}】（${decadeGod}）与流年【${annualGanzhi}】（${annualGod}）形成主业护持，主业岗位稳定性高，是向领导层申请绩效晋级、加薪谈判的黄金窗口期，踏实交付即能换来确定性的现金流增长。`
+      : `【主业薪酬 · ${directWealthScore}分守成固本】：当前大运【${decadeGanzhi}】与流年【${annualGanzhi}】主业面临结构性考核调整或组织重组阵痛。建议收起锋芒，不争一时职位虚名，扎实守住岗位基本盘，避免盲目裸辞。`;
 
     const directWealthAnalysisEn = directWealthScore >= 75
-      ? `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Strong High-Growth Window]: Decade [${decadeGanzhiEn}] (${decadeGodEn}) and Annual Transit [${annualGanzhiEn}] (${annualGodEn}) consolidate career stability. A prime strategic window to negotiate grade advancement and merit compensation increases based on measurable deliveries.`
-      : `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Defensive Consolidation]: Decade [${decadeGanzhiEn}] and Annual Transit [${annualGanzhiEn}] face institutional restructuring or revised KPI scrutiny. Maintain steady discipline, preserve your core post, and resist impulsive job switches.`;
+      ? `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Strong High-Growth Window)]: Decade [${decadeGanzhiEn}] (${decadeGodEn}) and Annual Transit [${annualGanzhiEn}] (${annualGodEn}) consolidate career stability. A prime strategic window to negotiate grade advancement and merit compensation increases based on measurable deliveries.`
+      : `[Direct Wealth (Base Salary & Career Promotion: Score ${directWealthScore}/100 - Defensive Consolidation)]: Decade [${decadeGanzhiEn}] and Annual Transit [${annualGanzhiEn}] face institutional restructuring or revised KPI scrutiny. Maintain steady discipline, preserve your core post, and resist impulsive job switches.`;
 
     const indirectWealthAnalysisZh = indirectWealthScore >= 75
-      ? `【偏财（副业孵化与投资红利：${indirectWealthScore}分 · 适度进取】偏财气机生旺，具备开展副业咨询、知识IP变现、技术出海或稳健股权投资的契机。可投入不超过闲置资金30%的轻资产试水，善用个人专业信息差获利。`
-      : `【偏财（副业孵化与投资红利：${indirectWealthScore}分 · 严防破耗】偏财气机受制或受劫财冲克，严禁参与高杠杆借贷、击鼓传花式虚拟资产炒作或无资质的民间合伙借贷，防备“比劫分财”导致资金链断裂。`;
+      ? `【副业投资 · ${indirectWealthScore}分适度进取】：偏财气机生旺，具备开展副业咨询、知识IP变现、技术出海或稳健股权投资的契机。可投入不超过闲置资金30%的轻资产试水，善用个人专业信息差获利。`
+      : `【副业投资 · ${indirectWealthScore}分严防破耗】：偏财气机受制或受劫财冲克，严禁参与高杠杆借贷、击鼓传花式虚拟资产炒作或无资质的民间合伙借贷，防备“比劫分财”导致资金链断裂。`;
 
     const indirectWealthAnalysisEn = indirectWealthScore >= 75
-      ? `[Indirect Wealth (Side-Hustles & Investment Yields: Score ${indirectWealthScore}/100 - Calculated Expansion]: Secondary capital engines are stimulated. Favorable for launching consulting advisories, digital IP productization, or disciplined venture investments capped at 30% of liquid reserves.`
-      : `[Indirect Wealth (Side-Hustles & Investment Yields: Score ${indirectWealthScore}/100 - High-Risk Defense]: Speculative channels face intense impedance and peer plunder risks. Strictly avoid high-leverage trading, unvetted angel syndicates, or cosigning personal loans to prevent sudden insolvency.`;
+      ? `[Indirect Wealth (Side-Hustles & Investment Yields: Score ${indirectWealthScore}/100 - Calculated Expansion)]: Secondary capital engines are stimulated. Favorable for launching consulting advisories, digital IP productization, or disciplined venture investments capped at 30% of liquid reserves.`
+      : `[Indirect Wealth (Side-Hustles & Investment Yields: Score ${indirectWealthScore}/100 - High-Risk Defense)]: Speculative channels face intense impedance and peer plunder risks. Strictly avoid high-leverage trading, unvetted angel syndicates, or cosigning personal loans to prevent sudden insolvency.`;
 
     // 12 Monthly transits tactical roadmap
     const monthlyRoadmap = this.computeMonthlyRoadmap(bazi, effYear, dm, isStrong);
