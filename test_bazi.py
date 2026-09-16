@@ -5231,6 +5231,7 @@ jsc_dossier5_cmd = [
     load("js/luck-engine.js");
     load("js/iching-engine.js");
     load("js/career-engine.js");
+    load("js/fengshui-engine.js");
     load("data/historical_figures.js");
     load("js/history-engine.js");
 
@@ -5317,6 +5318,7 @@ jsc_dossier5_cmd = [
       CareerEngine: CareerEngine,
       HistoricalEngine: HistoricalEngine,
       HISTORICAL_FIGURES: HISTORICAL_FIGURES,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
       TenGodsDB: TenGodsDB,
       TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
       SanMingDB: SanMingDB,
@@ -5343,6 +5345,8 @@ jsc_dossier5_cmd = [
     if (!enHtml.includes("Supreme Historical Soul Mirror")) throw new Error("Missing Supreme Historical Soul Mirror in EN Page 2");
     if (!enHtml.includes("Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Decennial Trajectory title in EN");
     if (!enHtml.includes("14-CHARACTER HOLOGRAPHIC MATRIX")) throw new Error("Missing 14-char matrix in EN");
+    if (!enHtml.includes("Current Residence City Geographic Five-Element Evaluation")) throw new Error("Missing Residence City Evaluation title in EN Page 7");
+    if (!enHtml.includes("Bespoke Spatial Feng Shui Remedies")) throw new Error("Missing Remedies in EN Page 7");
     if (!enHtml.includes("Career Calling & Optimal Ecosystem")) throw new Error("Missing Career Calling in EN Page 1");
     if (!enHtml.includes("Domestic Spouse Ballast")) throw new Error("Missing Spouse Ballast in EN Page 1");
     if (!enHtml.includes("Three Golden Rules for Life")) throw new Error("Missing Three Golden Rules in EN Page 1");
@@ -5374,6 +5378,8 @@ jsc_dossier5_cmd = [
     if (!zhHtml.includes("戒缺点 · 避险熔断")) throw new Error("Missing Pitfalls in ZH Page 2");
     if (!zhHtml.includes("大运年景大势与十四字全景气机集成")) throw new Error("Missing 14-char decennial title in ZH");
     if (!zhHtml.includes("十四字全相矩阵")) throw new Error("Missing 14-char matrix in ZH");
+    if (!zhHtml.includes("当前居住城市地缘五行气数评估")) throw new Error("Missing Residence City Evaluation title in ZH Page 7");
+    if (!zhHtml.includes("专属空间风水调理策")) throw new Error("Missing Remedies in ZH Page 7");
     if (!zhHtml.includes("事业立身与天命职能生态位（事业怎么样）")) throw new Error("Missing Career Summary in ZH Page 1");
     if (!zhHtml.includes("金玉资财与守财防漏红线（财富怎么样）")) throw new Error("Missing Wealth Summary in ZH Page 1");
     if (!zhHtml.includes("配偶家庭与后方压舱石（配偶·老婆怎么样）")) throw new Error("Missing Spouse Summary in ZH Page 1");
@@ -9702,6 +9708,187 @@ run_check92 = subprocess.run(jsc_check92_cmd, capture_output=True, text=True)
 assert run_check92.returncode == 0, f"Check 92 test failed: stdout={run_check92.stdout} stderr={run_check92.stderr}"
 print("✓ 穷通宝鉴120节令全集覆盖、子平量化评分调候生克动态校准与弱身单一任务专家心智同频（双语零残留）验证通过！")
 
-print("\n🎉 ALL 92 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 93. Validate Page 7 Residence City Geographic Five-Element Evaluation in Imperial Dossier
+print("\n=== 93. Validating Imperial Dossier Page 7 Residence City Geographic Qi & Remedies ===")
+jsc_check93_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/chart.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var localStorage = {
+      _data: {"current_residence_country": "Canada", "current_residence_city": "toronto"},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) { throw new Error(m + (e ? " " + (e.stack || e) : "")); }
+    };
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: id === "birthDate" ? "1995-03-24" : (id === "birthTime" ? "09:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        options: [{ textContent: "乾造", value: "乾造" }],
+        selectedIndex: 0,
+        focus: function() {},
+        blur: function() {},
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            arc: function(){}, setLineDash: function(){}, scale: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; }
+          };
+        },
+        _listeners: {},
+        _children: [],
+        appendChild: function(c) { this._children.push(c); },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function() { return ""; },
+        setAttribute: function() {},
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = (this._listeners[evt] || []).slice(); for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); }
+      };
+    }
+
+    var allIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "calcBtn", "birthDate", "birthTime", "gender", "citySelect", "useTrueSolarTime", "timezoneSelect",
+      "imperialDossierModal", "imperialDossierContainer", "dossierLangZh", "dossierLangEn", "btnExportDossier",
+      "dossierCityCountrySelect", "dossierCitySelect", "currentCountrySelect", "currentCitySelect", "currentCustomCityInput"
+    ];
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function(){ return "dark"; }, setAttribute: function(){} },
+      getElementById: function(id) { if (!elementStore[id]) elementStore[id] = makeEl(id); return elementStore[id]; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      addEventListener: function(event, handler) { if (event === "DOMContentLoaded") this._domReady = handler; }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      innerWidth: 1200, innerHeight: 800,
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      PortraitEngine: PortraitEngine,
+      LuckEngine: LuckEngine,
+      IChingEngine: IChingEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine,
+      HISTORICAL_FIGURES: HISTORICAL_FIGURES,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      TenGodsDB: TenGodsDB,
+      TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
+      SanMingDB: SanMingDB,
+      QiongTongDB: QiongTongDB,
+      ZiPingZhenQuanDB: ZiPingZhenQuanDB,
+      DiTianSuiDB: DiTianSuiDB,
+      YuanHaiDB: YuanHaiDB,
+      ShenFengDB: ShenFengDB,
+      YuZhaoDB: YuZhaoDB,
+      LiXuZhongDB: LiXuZhongDB
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    elementStore["calcBtn"].trigger("click");
+    elementStore["btnExportDossier"].trigger("click");
+
+    // 1. Verify ZH Dossier Page 7
+    elementStore["dossierLangZh"].trigger("click");
+    var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
+    if (!zhHtml.includes("当前居住城市地缘五行气数评估")) throw new Error("Missing ZH City Evaluation Header");
+    if (!zhHtml.includes("大多伦多中枢湖滨区")) throw new Error("Missing ZH Subregion");
+    if (!zhHtml.includes("高密度核心都会")) throw new Error("Missing ZH Dense Metropolis");
+    if (!zhHtml.includes("全球金融商贸中枢与人工智能前沿高地")) throw new Error("Missing ZH Pillar Industry");
+    if (!zhHtml.includes("专属空间风水调理策")) throw new Error("Missing ZH Remedies");
+    if (!zhHtml.includes("空间色彩：引动相生共振")) throw new Error("Missing ZH Remedy 1");
+    if (!zhHtml.includes("器物生机：地缘太极定鼎")) throw new Error("Missing ZH Remedy 2");
+    if (!zhHtml.includes("坐向定向：顺承地气纳祥")) throw new Error("Missing ZH Remedy 3");
+    if (!zhHtml.includes("⚖️")) throw new Error("Missing ZH Relation Exegesis Icon");
+
+    // 2. Verify EN Dossier Page 7
+    elementStore["dossierLangEn"].trigger("click");
+    var enHtml = elementStore["imperialDossierContainer"].innerHTML;
+    if (!enHtml.includes("Current Residence City Geographic Five-Element Evaluation")) throw new Error("Missing EN City Evaluation Header");
+    if (!enHtml.includes("GTA Core & Waterfront")) throw new Error("Missing EN Subregion");
+    if (!enHtml.includes("Pillar Industries:")) throw new Error("Missing EN Pillar Industry Label");
+    if (!enHtml.includes("Frontier AI")) throw new Error("Missing EN Pillar Industry Content");
+    if (!enHtml.includes("Spatial Palette: Nurturing Resonance")) throw new Error("Missing EN Remedy 1");
+    if (!enHtml.includes("Metaphysical Anchors: Terrestrial Taiji Alignment")) throw new Error("Missing EN Remedy 2");
+    if (!enHtml.includes("Directional Orientation: Harnessing Terrestrial Qi")) throw new Error("Missing EN Remedy 3");
+
+    var matches = enHtml.match(/[\u4e00-\u9fa5]/g);
+    if (matches && matches.length > 0) {
+      throw new Error("Residual Chinese in EN Dossier HTML (" + matches.length + "): " + matches.slice(0, 30).join(""));
+    }
+
+    // 3. Verify Interactive City Switcher on Dossier Page 7
+    elementStore["dossierCityCountrySelect"].trigger("change", { target: { value: "UK" } });
+    var enHtmlUk = elementStore["imperialDossierContainer"].innerHTML;
+    if (!enHtmlUk.includes("UK")) throw new Error("Missing UK in EN Dossier after switch");
+    """
+]
+
+run_check93 = subprocess.run(jsc_check93_cmd, capture_output=True, text=True)
+assert run_check93.returncode == 0, f"Check 93 test failed: stdout={run_check93.stdout} stderr={run_check93.stderr}"
+print("✓ 皇家排盘战报卷五（第七页）居住城市地缘五行气数评估、互动切城、生克制化与专属空间调理三策（双语零残留）验证通过！")
+
+print("\n🎉 ALL 93 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
