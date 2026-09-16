@@ -26,7 +26,7 @@ class PortraitEngine {
     const vigor = this.evaluateVigor(bazi);
 
     // 2. 气候与调候用神诊断 (Climate & Seasonal Adjustment from 《穷通宝鉴》 & 《滴天髓》)
-    const climate = this.evaluateClimate(dm, monthBranch);
+    const climate = this.evaluateClimate(dm, monthBranch, bazi.zipingScore);
 
     // 3. 格局甄别、四维精解与能量占比计算 (Pattern Diagnostics with 4 Dimensions & Energy Weights)
     const patterns = this.diagnosePatterns(bazi, vigor);
@@ -188,18 +188,30 @@ class PortraitEngine {
   /**
    * 2. 气候与调候用神诊断 (《穷通宝鉴》 & 《滴天髓》)
    */
-  static evaluateClimate(dm, monthBranch) {
-    const reading = (typeof QiongTongDB !== 'undefined') ? QiongTongDB.getReading(dm, monthBranch) : null;
+  static evaluateClimate(dm, monthBranch, zipingScore) {
+    const reading = (typeof QiongTongDB !== 'undefined') ? QiongTongDB.getReading(dm, monthBranch, zipingScore) : null;
     if (reading) {
       return {
         climate: reading.climate,
         primary: reading.primary,
         secondary: reading.secondary,
+        primaryEn: reading.primaryEn,
+        secondaryEn: reading.secondaryEn,
         classicText: reading.classic_text,
         vernacular: reading.vernacular,
         favorable: reading.favorable,
+        favorableEn: reading.favorableEn,
         taboos: reading.taboos,
-        source: reading.source
+        taboosEn: reading.taboosEn,
+        source: reading.source,
+        isZipingCalibrated: reading.isZipingCalibrated || false,
+        zipingVigorNoteZh: reading.zipingVigorNoteZh || '',
+        zipingVigorNoteEn: reading.zipingVigorNoteEn || '',
+        zipingScoreValue: reading.zipingScoreValue,
+        zipingCategoryZh: reading.zipingCategoryZh,
+        zipingCategoryEn: reading.zipingCategoryEn,
+        rawPrimary: reading.rawPrimary || reading.primary,
+        rawSecondary: reading.rawSecondary || reading.secondary
       };
     }
 
@@ -224,7 +236,7 @@ class PortraitEngine {
     const dayPillar = bazi.pillars.day.text;
     const hourPillar = bazi.pillars.hour.text;
     const monthBranch = bazi.solarInfo.monthBranch;
-    climate = climate || this.evaluateClimate(dm, monthBranch);
+    climate = climate || this.evaluateClimate(dm, monthBranch, bazi.zipingScore);
 
     const list = [];
 
@@ -2770,7 +2782,20 @@ class PortraitEngine {
     // 2. 《穷通宝鉴》 (Qiong Tong Bao Jian - Climatic 20% Fulcrum)
     let qiongtong = null;
     if (typeof QiongTongDB !== 'undefined') {
-      const qt = QiongTongDB.getReading(dayMaster, monthBranch) || {};
+      const zipingScore = bazi.zipingScore || (typeof BaZiEngine !== 'undefined' ? BaZiEngine.calculateZipingScore(bazi) : null);
+      const qt = QiongTongDB.getReading(dayMaster, monthBranch, zipingScore) || {};
+      const favStrZh = Array.isArray(qt.favorable) ? qt.favorable.join('、') : (qt.favorable || '丙火暄照、癸水滋润');
+      const favStrEn = Array.isArray(qt.favorableEn) ? qt.favorableEn.join(', ') : (qt.favorableEn || 'Sunlight warmth and nourishing moisture');
+      const tabStrZh = Array.isArray(qt.taboos) ? qt.taboos.join('、') : (qt.taboos || '严冬无火、酷暑无水');
+      const tabStrEn = Array.isArray(qt.taboosEn) ? qt.taboosEn.join(', ') : (qt.taboosEn || 'Severe chill without warmth or scorching heat without water');
+
+      let summZh = qt.vernacular || `月令提纲为命盘气象主轴，寒暖燥湿失衡则百病丛生，得调候用神照拂则生机盎然、名利水到渠成。`;
+      let summEn = qt.vernacularEn || `The Month decree governs natal meteorological balance; favorable seasonal balancing stars unlock career flow and physical vitality.`;
+      if (qt.isZipingCalibrated && qt.zipingVigorNoteZh) {
+        summZh = `${qt.zipingVigorNoteZh} ${summZh}`;
+        summEn = `${qt.zipingVigorNoteEn} ${summEn}`;
+      }
+
       qiongtong = {
         canonId: 'qiongtong',
         canonNameZh: '穷通宝鉴',
@@ -2779,14 +2804,17 @@ class PortraitEngine {
         titleEn: '👑 Qiong Tong Bao Jian: 20% Climatic Balance & Seasonal Mandate Fulcrum',
         subtitleZh: '清·余春台《穷通宝鉴》：“终南捷径，先观提纲月令。调候为急，专执用神。”',
         subtitleEn: 'Qiong Tong Bao Jian: "The supreme shortcut lies in the Month Order. Climatic adjustment is paramount; sovereign focus governs destiny."',
-        pivotNameZh: qt.climateDesc || `${dayMaster}生于${monthBranch}月 · 气候调候`,
-        pivotNameEn: qt.climateDescEn || `${dayMaster} born in ${monthBranch} Month · Seasonal Balance`,
-        summaryZh: qt.vernacular || `月令提纲为命盘气象主轴，寒暖燥湿失衡则百病丛生，得调候用神照拂则生机盎然、名利水到渠成。`,
-        summaryEn: qt.vernacularEn || `The Month decree governs natal meteorological balance; favorable seasonal balancing stars unlock career flow and physical vitality.`,
-        favorableZh: qt.favorable || '丙火暄照、癸水滋润',
-        favorableEn: qt.favorableEn || 'Sunlight warmth and nourishing moisture',
-        taboosZh: qt.taboos || '严冬无火、酷暑无水',
-        taboosEn: qt.taboosEn || 'Severe chill without warmth or scorching heat without water',
+        pivotNameZh: qt.isZipingCalibrated ? `【调候生克校准】${qt.primary}` : (qt.climateDesc || `${dayMaster}生于${monthBranch}月 · 气候调候`),
+        pivotNameEn: qt.isZipingCalibrated ? `[Calibrated Regulator] ${qt.primaryEn || qt.primary}` : (qt.climateDescEn || `${dayMaster} born in ${monthBranch} Month · Seasonal Balance`),
+        summaryZh: summZh,
+        summaryEn: summEn,
+        favorableZh: favStrZh,
+        favorableEn: favStrEn,
+        taboosZh: tabStrZh,
+        taboosEn: tabStrEn,
+        isZipingCalibrated: qt.isZipingCalibrated || false,
+        zipingVigorNoteZh: qt.zipingVigorNoteZh || '',
+        zipingVigorNoteEn: qt.zipingVigorNoteEn || '',
         modernStrategyZh: qt.modernCareer || '根据四季五行调候方位选择发展城市，居住及办公环境保持适度温湿度与采光。',
         modernStrategyEn: qt.modernCareerEn || 'Select metropolitan hubs matching seasonal climatic needs; optimize living and workspaces for natural light and air flow.',
         genderDiffZh: gender === 'female'

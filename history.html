@@ -336,12 +336,22 @@
               strengths: isEn ? (topM.auxiliaryStrengthsEn || ['Disciplined strategic execution', 'Tactical resourcefulness']) : (topM.auxiliaryStrengthsZh || ['善于发挥核心立身之本', '精准把握关键破局胜手']),
               weaknesses: isEn ? (topM.auxiliaryWeaknessesEn || ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards']) : (topM.auxiliaryWeaknessesZh || ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
             };
+        const uChar = reportData.nativeContext.userCharacter;
+        const strGradeEnMap = { '极旺格': 'Extremely Strong', '较旺格': 'Relatively Strong', '较弱格': 'Relatively Weak', '极弱格': 'Extremely Weak', '中和格': 'Balanced Neutral', '偏旺': 'Slightly Strong', '偏弱': 'Slightly Weak' };
+        const strGradeDisplay = isEn ? (strGradeEnMap[reportData.nativeContext.strengthGrade] || (reportData.nativeContext.score100 >= 50 ? 'Relatively Strong' : 'Relatively Weak')) : reportData.nativeContext.strengthGrade;
+        const modeLabel = isEn
+          ? `Mode: ${(uChar && uChar.operationalModeEn ? uChar.operationalModeEn.split(' (')[0] : 'Specialist')}`
+          : `心智模式: ${(uChar && uChar.operationalModeZh ? uChar.operationalModeZh.split(' (')[0] : '单一任务纵深型')}`;
+
         document.getElementById("historyQuickBadges").innerHTML = `
           <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
             ${isEn ? `Day Master: ${bazi.dayMaster || 'Jia'}` : `元神日主: ${bazi.dayMaster || '甲'}（${reportData.nativeContext.dmEl}）`}
           </span>
           <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
-            ${isEn ? reportData.nativeContext.strengthGrade : reportData.nativeContext.strengthGrade} (${reportData.nativeContext.score100}分)
+            ${strGradeDisplay} (${reportData.nativeContext.score100}${isEn ? ' pts' : '分'})
+          </span>
+          <span class="px-2.5 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/60 text-cyan-300 font-bold">
+            ${modeLabel}
           </span>
           <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
             ${isEn ? `Top Mirror: ${topM.nameEn} (${topM.similarityScore}%)` : `首位镜鉴: ${topM.nameZh} (${topM.similarityScore}%)`}
@@ -484,6 +494,22 @@
               </h4>
               <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? syn.summaryEn : syn.summaryZh}</p>
             </div>
+            ${uChar && uChar.cognitiveBandwidthZh ? `
+              <div class="p-4 rounded-xl bg-cyan-950/20 border border-cyan-800/40 text-xs text-cyan-200 leading-relaxed space-y-1">
+                <div class="flex items-center justify-between border-b border-cyan-800/30 pb-1">
+                  <span class="font-bold text-cyan-300 flex items-center gap-1.5">
+                    <span>⚡</span><span>${isEn ? "Cognitive Bandwidth & Strategic Operational Cadence:" : "心智带宽与作战模式 (单任务深耕 vs 多线并进)："}</span>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-700/40">
+                    ${isEn ? (uChar.operationalModeEn.split(' (')[0]) : (uChar.operationalModeZh.split(' (')[0])}
+                  </span>
+                </div>
+                <p class="text-gray-300 pt-1 font-sans">
+                  <strong class="text-cyan-200">${isEn ? uChar.operationalModeEn : uChar.operationalModeZh}:</strong>
+                  ${isEn ? uChar.cognitiveBandwidthEn : uChar.cognitiveBandwidthZh}
+                </p>
+              </div>
+            ` : ''}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               <div class="p-4 rounded-xl bg-indigo-950/20 border border-indigo-800/40 text-xs text-indigo-200 leading-relaxed space-y-1.5">
                 <span class="font-bold text-indigo-300 flex items-center gap-1.5">

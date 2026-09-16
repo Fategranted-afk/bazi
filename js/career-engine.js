@@ -477,7 +477,22 @@ class CareerEngine {
     if (wealthTotal > 0 && officerTotal > 0) rawScores.executive += 16;
     if (officerTotal > 0 && resourceTotal > 0) rawScores.executive += 14;
 
-    // 5. Day Master vigor nuance
+    // 5. Day Master vigor nuance & ZiPing 100-point somatic/cognitive bandwidth
+    const zScore = (bazi && bazi.zipingScore && typeof bazi.zipingScore.totalScore === 'number')
+      ? bazi.zipingScore.totalScore
+      : (isStrong ? 60 : 35);
+
+    if (zScore < 45) {
+      // 身弱格 / 较弱格 (<45分): 能量负荷不足以支持多线并进与全能霸主统帅，心智带宽聚焦于单一任务纵深、专业绝技与制度合规
+      rawScores.executive -= 32;
+      rawScores.martial -= 28;
+      rawScores.specialist += 26;
+      rawScores.civil += 18;
+    } else if (zScore >= 60) {
+      rawScores.executive += 18;
+      rawScores.martial += 14;
+    }
+
     if (isStrong) {
       rawScores.martial += 10;
       rawScores.executive += 10;

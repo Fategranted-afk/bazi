@@ -1747,16 +1747,35 @@ const I18N = (function() {
 
     // Climate
     if (p.climate) {
-      p.climate.primary = getGod(p.climate.primary, 'en');
-      p.climate.secondary = getGod(p.climate.secondary, 'en');
+      if (p.climate.primaryEn) {
+        p.climate.primary = p.climate.primaryEn;
+      } else {
+        p.climate.primary = getGod(p.climate.primary, 'en');
+      }
+      if (p.climate.secondaryEn) {
+        p.climate.secondary = p.climate.secondaryEn;
+      } else {
+        p.climate.secondary = getGod(p.climate.secondary, 'en');
+      }
       p.climate.climate = p.climate.climate
         .replace(/日主生于/g, 'Day Master born in ')
         .replace(/月，/g, ' Month: ')
         .replace(/调候/g, 'seasonal balance ')
         .replace(/寒暖/g, 'cold and warm ')
         .replace(/燥湿/g, 'dry and humid ');
-      p.climate.favorable = p.climate.favorable.map(f => getGod(f, 'en'));
-      p.climate.taboos = p.climate.taboos.map(t => getGod(t, 'en'));
+      if (p.climate.favorableEn && Array.isArray(p.climate.favorableEn)) {
+        p.climate.favorable = p.climate.favorableEn;
+      } else {
+        p.climate.favorable = p.climate.favorable.map(f => getGod(f, 'en'));
+      }
+      if (p.climate.taboosEn && Array.isArray(p.climate.taboosEn)) {
+        p.climate.taboos = p.climate.taboosEn;
+      } else {
+        p.climate.taboos = p.climate.taboos.map(t => getGod(t, 'en'));
+      }
+      if (p.climate.zipingVigorNoteEn) {
+        p.climate.zipingVigorNoteZh = p.climate.zipingVigorNoteEn;
+      }
     }
 
     // Patterns

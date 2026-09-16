@@ -9538,6 +9538,170 @@ run_check91 = subprocess.run(jsc_check91_cmd, capture_output=True, text=True)
 assert run_check91.returncode == 0, f"Check 91 test failed: stdout={run_check91.stdout} stderr={run_check91.stderr}"
 print("✓ 十四字时空全息能量统揽七柱天干在上地支在下全新架构（年月日时大运流年流月顺序/双语零残留）验证通过！")
 
-print("\n🎉 ALL 91 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
+print("\n=== 92. Validating Qiong Tong 120 Combinations, ZiPing Vigor Calibration & Single-Task Specialist Resonance ===")
+
+jsc_check92_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r'''
+    load("data/qiongtong.js");
+    load("data/ditiansui.js");
+    load("data/zipingzhenquan.js");
+    load("data/historical_figures.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+    load("js/i18n.js");
+
+    // 1. Validate Qiong Tong 120 Combinations Full Coverage
+    var stems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    var branches = ['寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥', '子', '丑'];
+    var totalPairs = 0;
+
+    stems.forEach(function(s) {
+      if (!QIONG_TONG_DATA[s]) throw new Error("Missing stem in QIONG_TONG_DATA: " + s);
+      branches.forEach(function(b) {
+        var entry = QIONG_TONG_DATA[s][b];
+        if (!entry) throw new Error("Missing entry for " + s + " in " + b + " month");
+        if (!entry.title || !entry.climate || !entry.classic_text || !entry.primary || !entry.secondary) {
+          throw new Error("Incomplete entry fields for " + s + " in " + b);
+        }
+        totalPairs++;
+      });
+    });
+    if (totalPairs !== 120) throw new Error("Expected exactly 120 canonical combinations, got " + totalPairs);
+
+    // 2. Validate ZiPing 100-Point Vigor Synthesis & Climate Calibration for Weak Chart
+    // Custom chart: 辛巳 辛丑 丙子 壬辰 (Bing Fire in Chou month)
+    var customChart = BaZiEngine.calculate({ year: 2002, month: 1, day: 8, hour: 8, gender: '乾造' });
+    var ziping = customChart.zipingScore;
+
+    if (Math.abs(ziping.totalScore - 16.5) > 0.1) {
+      throw new Error("Expected ZiPing score 16.5 for 辛巳 辛丑 丙子 壬辰, got " + ziping.totalScore);
+    }
+    if (ziping.categoryZh.indexOf('较弱格') === -1) {
+      throw new Error("Expected 较弱格 category, got " + ziping.categoryZh);
+    }
+
+    // Chou month reading for Bing Fire with weak ZiPing score
+    var readingChou = QiongTongDB.getReading('丙', '丑', ziping);
+    if (!readingChou.isZipingCalibrated) {
+      throw new Error("Expected isZipingCalibrated to be true for 16.5 pt chart");
+    }
+    if (readingChou.primary.indexOf('甲木') === -1) {
+      throw new Error("Expected primary regulator to include 甲木 for 丙 in 丑 month, got " + readingChou.primary);
+    }
+    if (readingChou.secondary.indexOf('丙火') === -1) {
+      throw new Error("Expected secondary regulator to include 丙火 for 丙 in 丑 month, got " + readingChou.secondary);
+    }
+    if (!readingChou.zipingVigorNoteZh || readingChou.zipingVigorNoteZh.indexOf('子平生克量化统衡校准') === -1) {
+      throw new Error("Missing or invalid zipingVigorNoteZh in Chou month reading");
+    }
+    if (!readingChou.zipingVigorNoteEn || readingChou.zipingVigorNoteEn.indexOf('ZiPing Quantitative Vigor Calibration') === -1) {
+      throw new Error("Missing or invalid zipingVigorNoteEn in Chou month reading");
+    }
+
+    // Also test Yin month where raw Qiong Tong prescribes 壬水/庚金 (draining), but weak DM requires calibration to 甲木/丙火
+    var readingYin = QiongTongDB.getReading('丙', '寅', ziping);
+    if (!readingYin.isZipingCalibrated) {
+      throw new Error("Expected isZipingCalibrated in Yin month for weak DM");
+    }
+    if (readingYin.primary.indexOf('甲木') === -1 || readingYin.secondary.indexOf('丙火') === -1) {
+      throw new Error("Expected calibrated primary 甲木 and secondary 丙火 for weak Bing Fire in Yin month, got " + readingYin.primary + " / " + readingYin.secondary);
+    }
+
+    // 3. Validate Historical Figures Single-Task Specialist Resonance & Cognitive Bandwidth
+    var careerReport = CareerEngine.generateCareerReport(customChart, null, 2026);
+    var topArchetype = careerReport.workplaceArchetypes[0].key;
+    if (topArchetype !== 'specialist' && topArchetype !== 'civil') {
+      throw new Error("Expected top archetype to be specialist or civil for weak DM, got: " + topArchetype);
+    }
+
+    var histResult = HistoricalEngine.calculateSimilarity(customChart, null, careerReport);
+    if (!histResult) throw new Error("calculateSimilarity returned null");
+
+    var uChar = histResult.nativeContext.userCharacter;
+    if (uChar.operationalMode !== 'single_focus') {
+      throw new Error("Expected operationalMode 'single_focus' for weak chart, got: " + uChar.operationalMode);
+    }
+    if (uChar.operationalModeZh.indexOf('单一任务纵深型') === -1) {
+      throw new Error("Expected operationalModeZh to contain 单一任务纵深型, got: " + uChar.operationalModeZh);
+    }
+    if (uChar.operationalModeEn.indexOf('Single-Task') === -1) {
+      throw new Error("Expected operationalModeEn to contain Single-Task, got: " + uChar.operationalModeEn);
+    }
+
+    // Top match figure MUST be specialist or civil, strictly NOT executive (like Yuwen Tai)
+    var topFig = histResult.topMatch;
+    if (topFig.archetype !== 'specialist' && topFig.archetype !== 'civil') {
+      throw new Error("Top historical figure archetype for weak DM must be specialist or civil! Got: " + topFig.nameZh + " (" + topFig.archetype + ")");
+    }
+    if (topFig.id === 'yuwen_tai' || topFig.nameZh === '宇文泰') {
+      throw new Error("Top figure for weak Day Master (16.5 pts) cannot be 宇文泰 (executive)!");
+    }
+
+    // 4. Validate DOM Simulation & 100% Zero Residual Chinese
+    var mockElements = {};
+    function makeEl(id) {
+      return {
+        id: id,
+        innerHTML: '',
+        style: {},
+        classList: { add: function(){}, remove: function(){}, contains: function(){ return false; } },
+        appendChild: function(){},
+        setAttribute: function(){},
+        getAttribute: function(){ return ''; },
+        addEventListener: function(){},
+        querySelectorAll: function(){ return []; }
+      };
+    }
+    ['climateSummaryBox', 'qiongtongAutoResult', 'historyQuickBadges', 'synthesisAdviceContainer', 'topMirrorContainer'].forEach(function(id) {
+      mockElements[id] = makeEl(id);
+    });
+
+    var docMock = {
+      getElementById: function(id) {
+        if (!mockElements[id]) mockElements[id] = makeEl(id);
+        return mockElements[id];
+      },
+      querySelectorAll: function() { return []; },
+      body: { appendChild: function(){} }
+    };
+
+    // Verify Portrait Engine integration with calibrated climate
+    var portraitZh = PortraitEngine.analyze(customChart, 'zh');
+    if (!portraitZh.climate.isZipingCalibrated) {
+      throw new Error("portraitZh climate not marked as isZipingCalibrated");
+    }
+
+    var portraitEn = PortraitEngine.analyze(customChart, 'en');
+    I18N.translatePortrait(portraitEn, 'en');
+    if (!portraitEn.climate.isZipingCalibrated) {
+      throw new Error("portraitEn climate not marked as isZipingCalibrated");
+    }
+    // Verify zero Chinese in translated climate fields
+    var zhReg = /[\u4e00-\u9fa5]/;
+    if (zhReg.test(portraitEn.climate.primary)) {
+      throw new Error("Residual Chinese in portraitEn climate primary: " + portraitEn.climate.primary);
+    }
+    if (zhReg.test(portraitEn.climate.secondary)) {
+      throw new Error("Residual Chinese in portraitEn climate secondary: " + portraitEn.climate.secondary);
+    }
+    portraitEn.climate.favorable.forEach(function(f) {
+      if (zhReg.test(f)) throw new Error("Residual Chinese in portraitEn climate favorable: " + f);
+    });
+    portraitEn.climate.taboos.forEach(function(t) {
+      if (zhReg.test(t)) throw new Error("Residual Chinese in portraitEn climate taboos: " + t);
+    });
+    '''
+]
+
+run_check92 = subprocess.run(jsc_check92_cmd, capture_output=True, text=True)
+assert run_check92.returncode == 0, f"Check 92 test failed: stdout={run_check92.stdout} stderr={run_check92.stderr}"
+print("✓ 穷通宝鉴120节令全集覆盖、子平量化评分调候生克动态校准与弱身单一任务专家心智同频（双语零残留）验证通过！")
+
+print("\n🎉 ALL 92 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 

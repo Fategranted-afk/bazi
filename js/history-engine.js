@@ -118,12 +118,47 @@ class HistoricalEngine {
     if (rank3Arch === 'martial') rank3Arch = 'military';
     if (rank4Arch === 'martial') rank4Arch = 'military';
 
+    // Cognitive Bandwidth & Operational Mode (Single-Task vs Multi-Task)
+    let operationalMode = 'balanced_modular';
+    let operationalModeZh = '阶段聚焦交替型 (敏捷推进 · 模块迭代)';
+    let operationalModeEn = 'Modular Focused Agile (Iterative Execution · Phased Milestones)';
+    let cognitiveBandwidthZh = '心智带宽适度，宜分阶段分模块聚焦推进，完成一阶段再拓展下一阶段。';
+    let cognitiveBandwidthEn = 'Balanced modular bandwidth; optimal performance via phased milestone execution.';
+
+    if (score100 < 45) {
+      operationalMode = 'single_focus';
+      operationalModeZh = '单一任务纵深型 (专业深耕 · 单点爆破)';
+      operationalModeEn = 'Single-Task In-Depth Specialist (Deep Craft Mastery · Focused Penetration)';
+      cognitiveBandwidthZh = '心智带宽聚焦单一战线，忌多线并进与过度消耗；深耕单点专业壁垒即可破局。';
+      cognitiveBandwidthEn = 'Cognitive bandwidth thrives on single-track depth; avoid multitasking drain and conquer via specialized excellence.';
+
+      // Weak Day Master: cognitive bandwidth cannot sustain sprawling multi-theater executive/military commands
+      if (rank1Arch === 'executive' || rank1Arch === 'military') {
+        const oldRank1 = rank1Arch;
+        rank1Arch = 'specialist';
+        rank2Arch = 'civil';
+        rank3Arch = oldRank1 === 'executive' ? 'civil' : 'executive';
+        rank4Arch = 'military';
+      }
+    } else if (score100 >= 60) {
+      operationalMode = 'multi_task';
+      operationalModeZh = '多线并进全能型 (宏观统驭 · 跨界统合)';
+      operationalModeEn = 'Multi-Front Strategic Orchestrator (Systemic Governance · Cross-Domain Scaling)';
+      cognitiveBandwidthZh = '心智带宽深厚，可任多领域并发攻坚与宏观统御；宜全面开辟版图。';
+      cognitiveBandwidthEn = 'Robust systemic bandwidth capable of concurrent multi-domain command and strategic scaling.';
+    }
+
     const profile = {
       dm,
       dmEl,
       score100,
       strengthGrade,
       isStrong,
+      operationalMode,
+      operationalModeZh,
+      operationalModeEn,
+      cognitiveBandwidthZh,
+      cognitiveBandwidthEn,
       primaryPattern,
       patternList,
       nativeTenGods,
@@ -220,12 +255,23 @@ class HistoricalEngine {
   static calculateFigureCorrelation(fig, profile, bazi) {
     const GENERATES = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
     const CONTROLS = { '木': '土', '土': '水', '水': '火', '火': '金', '金': '木' };
+    const GENERATED_BY = { '火': '木', '土': '火', '金': '土', '水': '金', '木': '水' };
 
     // 1. 性格契合度 (Personality Correlation: 0 - 100)
     const pMatches = this.countMatches(fig.personalityZh, profile.personalityTraitsZh);
     let pScore = 38 + Math.min(52, pMatches * 15);
     if (fig.archetype === profile.rank1Arch) pScore += 10;
-    pScore = Math.min(100, Math.max(20, pScore));
+    if (profile.operationalMode === 'single_focus') {
+      if (fig.archetype === 'executive') pScore -= 24;
+      else if (fig.archetype === 'military') pScore -= 20;
+      else if (fig.archetype === 'specialist') pScore += 18;
+      else if (fig.archetype === 'civil') pScore += 10;
+    } else if (profile.operationalMode === 'multi_task') {
+      if (fig.archetype === 'executive') pScore += 16;
+      else if (fig.archetype === 'military') pScore += 12;
+      else if (fig.archetype === 'specialist') pScore -= 14;
+    }
+    pScore = Math.min(100, Math.max(15, pScore));
 
     // 2. 事迹作为同频 (Deeds Correlation: 0 - 100)
     const dMatches = this.countMatches(fig.deedsZh, profile.deedsKeywordsZh);
@@ -233,12 +279,23 @@ class HistoricalEngine {
     if (fig.archetype === profile.rank1Arch) dScore += 20;
     else if (fig.archetype === profile.rank2Arch) dScore += 12;
     else if (fig.archetype === profile.rank3Arch) dScore += 5;
-    dScore = Math.min(100, Math.max(18, dScore));
+    if (profile.operationalMode === 'single_focus') {
+      if (fig.archetype === 'executive') dScore -= 36;
+      else if (fig.archetype === 'military') dScore -= 28;
+      else if (fig.archetype === 'specialist') dScore += 26;
+      else if (fig.archetype === 'civil') dScore += 16;
+    } else if (profile.operationalMode === 'multi_task') {
+      if (fig.archetype === 'executive') dScore += 20;
+      else if (fig.archetype === 'military') dScore += 15;
+      else if (fig.archetype === 'specialist') dScore -= 18;
+    }
+    dScore = Math.min(100, Math.max(15, dScore));
 
     // 3. 优势禀赋借力 (Strengths Synergy: 0 - 100)
     const sMatches = this.countMatches(fig.strengthAdviceZh, profile.strengthsKeywordsZh);
     let sScore = 38 + Math.min(50, sMatches * 15);
     if (fig.archetype === profile.rank1Arch) sScore += 10;
+    if (profile.operationalMode === 'single_focus' && fig.archetype === 'specialist') sScore += 16;
     sScore = Math.min(100, Math.max(20, sScore));
 
     // 4. 缺点盲区熔断 (Weakness Circuit-Breaker: 0 - 100)
@@ -246,7 +303,7 @@ class HistoricalEngine {
     let wScore = 36 + Math.min(50, wMatches * 14);
     if (profile.isStrong && (fig.weaknessAdviceZh.indexOf('骄') !== -1 || fig.weaknessAdviceZh.indexOf('满') !== -1 || fig.weaknessAdviceZh.indexOf('专') !== -1 || fig.weaknessAdviceZh.indexOf('急') !== -1)) {
       wScore += 14;
-    } else if (!profile.isStrong && (fig.weaknessAdviceZh.indexOf('软') !== -1 || fig.weaknessAdviceZh.indexOf('疑') !== -1 || fig.weaknessAdviceZh.indexOf('守') !== -1 || fig.weaknessAdviceZh.indexOf('退') !== -1)) {
+    } else if (!profile.isStrong && (fig.weaknessAdviceZh.indexOf('软') !== -1 || fig.weaknessAdviceZh.indexOf('疑') !== -1 || fig.weaknessAdviceZh.indexOf('守') !== -1 || fig.weaknessAdviceZh.indexOf('退') !== -1 || fig.weaknessAdviceZh.indexOf('耗') !== -1 || fig.weaknessAdviceZh.indexOf('散') !== -1)) {
       wScore += 14;
     }
     wScore = Math.min(100, Math.max(20, wScore));
@@ -256,17 +313,31 @@ class HistoricalEngine {
     const fDom = fig.fiveElements.dominant;
     const fSec = fig.fiveElements.secondary;
     let elScore = 40;
-    if (fDom === dmEl) elScore += 35;
-    else if (GENERATES[fDom] === dmEl) elScore += 28;
-    else if (GENERATES[dmEl] === fDom) elScore += 20;
-    else if (CONTROLS[dmEl] === fDom) elScore += 15;
-    else elScore += 10;
-    if (fSec === dmEl || GENERATES[fSec] === dmEl) elScore += 10;
-    elScore = Math.min(100, Math.max(20, elScore));
+
+    if (profile.operationalMode === 'single_focus') {
+      const resEl = GENERATED_BY[dmEl];
+      if (fDom === dmEl && fSec === resEl) elScore += 45;
+      else if (fDom === resEl && fSec === dmEl) elScore += 42;
+      else if (fDom === dmEl) elScore += 32;
+      else if (fDom === resEl) elScore += 30;
+      else if (fSec === dmEl || fSec === resEl) elScore += 18;
+      else elScore -= 15;
+    } else {
+      if (fDom === dmEl) elScore += 35;
+      else if (GENERATES[fDom] === dmEl) elScore += 28;
+      else if (GENERATES[dmEl] === fDom) elScore += 20;
+      else if (CONTROLS[dmEl] === fDom) elScore += 15;
+      else elScore += 10;
+      if (fSec === dmEl || GENERATES[fSec] === dmEl) elScore += 10;
+    }
+    elScore = Math.min(100, Math.max(15, elScore));
 
     let tenGodOverlap = 0;
     (fig.tenGodsAffinity || []).forEach(g => {
       if (profile.nativeTenGods.has(g)) tenGodOverlap++;
+      if (profile.operationalMode === 'single_focus') {
+        if (g === '正印' || g === '偏印' || g === '比肩' || g === '食神') tenGodOverlap += 0.8;
+      }
     });
     let godScore = 38 + Math.min(52, tenGodOverlap * 18);
     if (fig.patternType && (fig.patternType.indexOf(profile.primaryPattern.slice(0, 2)) !== -1 || profile.primaryPattern.indexOf(fig.patternType.slice(0, 2)) !== -1)) {
@@ -480,9 +551,16 @@ class HistoricalEngine {
     const dmEn = dmMapEn[dm] || dm;
     const gradeEn = strengthMapEn[strengthGrade] || (isStrong ? 'Strong' : 'Flexible');
 
-    const summaryZh = `命主元神【${dm}】，身居【${strengthGrade}】，在乱世三百年浩瀚星河中，与【${topMatch.dynastyZh} · ${topMatch.nameZh}】（${topMatch.positionZh}）形成高达 ${topMatch.similarityScore}% 的至高天命共鸣。此人物在三百年金戈铁马中所展现的【${topMatch.personalityZh.split('、')[0]}】与【${topMatch.personalityZh.split('、')[1] || '深邃格局'}】，正是命主原局心智特质在历史宏大时空场能下的同频投射。`;
+    let modeTextZh = '';
+    let modeTextEn = '';
+    if (profile && profile.operationalModeZh) {
+      modeTextZh = `【心智带宽与作战模式】：${profile.operationalModeZh}。${profile.cognitiveBandwidthZh}`;
+      modeTextEn = `[Cognitive Bandwidth & Operational Mode]: ${profile.operationalModeEn}. ${profile.cognitiveBandwidthEn}`;
+    }
 
-    const summaryEn = `The native's Day Master [${dmEn}] in a [${gradeEn}] configuration exhibits an extraordinary ${topMatch.similarityScore}% celestial resonance with [${topMatch.nameEn}] (${topMatch.positionEn}) of the ${topMatch.dynastyEn}. The strategic posture and traits manifested by this historical figure serve as an authentic historical archetype mirror for your decision-making.`;
+    const summaryZh = `命主元神【${dm}】，身居【${strengthGrade}】${profile && profile.operationalModeZh ? `，心智带宽呈现【${profile.operationalModeZh.split(' ')[0]}】` : ''}，在乱世三百年浩瀚星河中，与【${topMatch.dynastyZh} · ${topMatch.nameZh}】（${topMatch.positionZh}）形成高达 ${topMatch.similarityScore}% 的至高天命共鸣。此人物在三百年金戈铁马中所展现的【${topMatch.personalityZh.split('、')[0]}】与【${topMatch.personalityZh.split('、')[1] || '深邃格局'}】，正是命主原局心智特质在历史宏大时空场能下的同频投射。${modeTextZh ? '\n\n' + modeTextZh : ''}`;
+
+    const summaryEn = `The native's Day Master [${dmEn}] in a [${gradeEn}] configuration (${profile && profile.operationalModeEn ? profile.operationalModeEn.split(' (')[0] : 'Strategic Profile'}) exhibits an extraordinary ${topMatch.similarityScore}% celestial resonance with [${topMatch.nameEn}] (${topMatch.positionEn}) of the ${topMatch.dynastyEn}. The strategic posture and traits manifested by this historical figure serve as an authentic historical archetype mirror for your decision-making.${modeTextEn ? '\n\n' + modeTextEn : ''}`;
 
     const learnZh = `【学其所长 · 借力破局】：命主应当汲取${topMatch.nameZh}一生最精纯的战略胜手——“${topMatch.strengthAdviceZh}”。在现实职场与事业操盘中，将其转化为自身攻坚克难的核心杠杆，以大格局、定力与执行力穿透眼前迷局。`;
 
@@ -498,7 +576,11 @@ class HistoricalEngine {
       learnZh,
       learnEn,
       cautionZh,
-      cautionEn
+      cautionEn,
+      operationalModeZh: profile ? profile.operationalModeZh : '',
+      operationalModeEn: profile ? profile.operationalModeEn : '',
+      cognitiveBandwidthZh: profile ? profile.cognitiveBandwidthZh : '',
+      cognitiveBandwidthEn: profile ? profile.cognitiveBandwidthEn : ''
     };
   }
 

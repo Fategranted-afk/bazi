@@ -1272,7 +1272,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const favHtml = pData.climate.favorable.map(f => `<span class="px-2 py-0.5 text-[11px] rounded bg-blue-900/30 text-blue-300 border border-blue-700/30 mr-1.5 inline-block">${f}</span>`).join('');
       const tabHtml = pData.climate.taboos.map(t => `<span class="px-2 py-0.5 text-[11px] rounded bg-rose-900/30 text-rose-300 border border-rose-700/30 mr-1.5 inline-block">${t}</span>`).join('');
 
+      const zipingNote = isEn ? (pData.climate.zipingVigorNoteEn || pData.climate.zipingVigorNoteZh) : pData.climate.zipingVigorNoteZh;
+
       climateBoxEl.innerHTML = `
+        ${pData.climate.isZipingCalibrated && zipingNote ? `
+          <div class="mb-2 p-2 rounded bg-amber-950/40 border border-amber-500/40 text-[11px] leading-snug">
+            <div class="flex items-center gap-1.5 font-bold text-amber-300 mb-1">
+              <span>⚖️</span>
+              <span>${isEn ? 'ZiPing Quantitative Vigor Calibration' : '子平生克量化统衡校准'}</span>
+              <span class="ml-auto text-[10px] px-1.5 py-0.2 rounded bg-amber-900/60 text-amber-200 border border-amber-600/40">
+                ${isEn ? (pData.climate.zipingCategoryEn || 'Weak Pattern') : (pData.climate.zipingCategoryZh || '较弱格')}
+              </span>
+            </div>
+            <div class="text-amber-200/90 font-sans">
+              ${zipingNote}
+            </div>
+          </div>
+        ` : ''}
         <div class="grid grid-cols-2 gap-2 pb-1 border-b border-gray-800">
           <div>
             <span class="text-blue-300 font-medium block text-[11px]">${isEn ? 'Primary Seasonal Regulator' : '首要调候用神'}</span>
@@ -3789,37 +3805,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. 《穷通宝鉴》 Auto Matching (Day Master + Month Branch)
-    const qtReading = QiongTongDB.getReading(dayMaster, monthBranch);
+    const zipingScore = (res && res.zipingScore) ? res.zipingScore : (typeof BaZiEngine !== 'undefined' ? BaZiEngine.calculateZipingScore(res) : null);
+    const qtReading = QiongTongDB.getReading(dayMaster, monthBranch, zipingScore);
     const qtContainer = document.getElementById('qiongtongAutoResult');
     if (qtReading) {
-      const favorableTags = qtReading.favorable.map(f => `<span class="px-2 py-0.5 text-xs rounded bg-blue-900/30 text-blue-300 border border-blue-700/30 mr-1.5 mb-1 inline-block">${f}</span>`).join('');
-      const tabooTags = qtReading.taboos.map(t => `<span class="px-2 py-0.5 text-xs rounded bg-rose-900/30 text-rose-300 border border-rose-700/30 mr-1.5 mb-1 inline-block">${t}</span>`).join('');
+      const favList = isEn && qtReading.favorableEn ? qtReading.favorableEn : qtReading.favorable;
+      const tabList = isEn && qtReading.taboosEn ? qtReading.taboosEn : qtReading.taboos;
+      const favorableTags = favList.map(f => `<span class="px-2 py-0.5 text-xs rounded bg-blue-900/30 text-blue-300 border border-blue-700/30 mr-1.5 mb-1 inline-block">${f}</span>`).join('');
+      const tabooTags = tabList.map(t => `<span class="px-2 py-0.5 text-xs rounded bg-rose-900/30 text-rose-300 border border-rose-700/30 mr-1.5 mb-1 inline-block">${t}</span>`).join('');
+
+      const primaryText = isEn && qtReading.primaryEn ? qtReading.primaryEn : qtReading.primary;
+      const secondaryText = isEn && qtReading.secondaryEn ? qtReading.secondaryEn : qtReading.secondary;
+      const zipingNoteText = isEn ? (qtReading.zipingVigorNoteEn || qtReading.zipingVigorNoteZh) : qtReading.zipingVigorNoteZh;
 
       qtContainer.innerHTML = `
         <div class="bg-card p-5 rounded-xl border border-border-color shadow-lg space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-700/40">
             <div class="flex items-center space-x-2">
               <span class="chinese-seal">${isEn ? 'Qiong Tong Bao Jian' : '穷通宝鉴'}</span>
-              <h3 class="text-lg font-bold text-blue-400 font-serif-sc">${qtReading.title}</h3>
+              <h3 class="text-lg font-bold text-blue-400 font-serif-sc">${isEn ? 'Seasonal Climate & Regulators' : qtReading.title}</h3>
             </div>
             <span class="text-xs text-gray-400">${isEn ? 'Qing Dynasty · Edited by Yu Chuntai / Lan Jiang Wang' : '清·余春台编订 / 栏江网原著'}</span>
           </div>
 
+          ${qtReading.isZipingCalibrated && zipingNoteText ? `
+            <div class="p-3 bg-amber-950/40 rounded-xl border border-amber-500/50 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                  <span>⚖️</span><span>${isEn ? 'ZiPing Quantitative Vigor Dynamic Calibration' : '子平生克量化统衡动态校准'}</span>
+                </span>
+                <span class="chinese-seal text-[9px] py-0 border-amber-500 text-amber-300">
+                  ${isEn ? (qtReading.zipingCategoryEn || 'Weak Pattern') : (qtReading.zipingCategoryZh || '较弱格')}
+                </span>
+              </div>
+              <p class="text-xs text-amber-100/90 leading-relaxed font-sans">${zipingNoteText}</p>
+            </div>
+          ` : ''}
+
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div class="p-3 bg-blue-950/20 border-l-4 border-blue-500 rounded-r">
               <span class="text-xs text-blue-300 font-semibold block mb-0.5">${isEn ? '🌟 Primary Climate Regulator:' : '🌟 首要调候用神：'}</span>
-              <span class="text-base font-bold text-amber-300 font-serif-sc">${qtReading.primary}</span>
+              <span class="text-base font-bold text-amber-300 font-serif-sc">${primaryText}</span>
             </div>
             <div class="p-3 bg-indigo-950/20 border-l-4 border-indigo-500 rounded-r">
               <span class="text-xs text-indigo-300 font-semibold block mb-0.5">${isEn ? '✨ Secondary Auxiliary God:' : '✨ 次要辅佐用神：'}</span>
-              <span class="text-base font-bold text-indigo-200 font-serif-sc">${qtReading.secondary}</span>
+              <span class="text-base font-bold text-indigo-200 font-serif-sc">${secondaryText}</span>
             </div>
           </div>
 
           <div class="p-3.5 bg-black/20 rounded-lg border border-gray-800">
-            <p class="text-xs text-blue-300 font-medium mb-1">${isEn ? '【Climate Outline】' : '【气候提纲】'}${qtReading.climate}</p>
-            <p class="text-sm font-serif-sc text-gray-200 leading-relaxed font-medium mb-2">“${qtReading.classic_text}”</p>
-            <p class="text-xs text-gray-400 leading-relaxed">${qtReading.vernacular}</p>
+            <p class="text-xs text-blue-300 font-medium mb-1">${isEn ? '【Climate Outline】' : '【气候提纲】'}${isEn ? 'Seasonal temperature, humidity, and elemental flow govern vitality.' : qtReading.climate}</p>
+            <p class="text-sm font-serif-sc text-gray-200 leading-relaxed font-medium mb-2">“${isEn ? 'Canonical text prescribes seasonal balance and constitutional strength.' : qtReading.classic_text}”</p>
+            <p class="text-xs text-gray-400 leading-relaxed">${isEn ? 'Harmonizing elemental flows through seasonal regulators ensures constitutional vitality.' : qtReading.vernacular}</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 border-t border-gray-700/30">
@@ -8265,12 +8302,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Badges Dashboard
     if (badgesContainer) {
+      const modeLabel = isEn
+        ? `Mode: ${(ctx.userCharacter && ctx.userCharacter.operationalModeEn ? ctx.userCharacter.operationalModeEn.split(' (')[0] : 'Specialist')}`
+        : `心智模式: ${(ctx.userCharacter && ctx.userCharacter.operationalModeZh ? ctx.userCharacter.operationalModeZh.split(' (')[0] : '单一任务纵深型')}`;
+
       badgesContainer.innerHTML = `
         <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
           ${isEn ? `Day Master: ${HISTORY_DM_MAP_EN[bazi.dayMaster] || bazi.dayMaster || 'Jia'}` : `元神日主: ${bazi.dayMaster || '甲'}（${ctx.dmEl}）`}
         </span>
         <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
           ${isEn ? (HISTORY_STRENGTH_MAP_EN[ctx.strengthGrade] || 'Strength') : ctx.strengthGrade} (${ctx.score100}${isEn ? ' pts' : '分'})
+        </span>
+        <span class="px-2.5 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/60 text-cyan-300 font-bold">
+          ${modeLabel}
         </span>
         <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
           ${isEn ? `Top Mirror: ${topM.nameEn} (${topM.similarityScore}%)` : `首位镜鉴: ${topM.nameZh} (${topM.similarityScore}%)`}
@@ -8430,6 +8474,22 @@ document.addEventListener('DOMContentLoaded', () => {
             </h4>
             <p class="text-xs text-gray-300 leading-relaxed font-sans">${isEn ? syn.summaryEn : syn.summaryZh}</p>
           </div>
+          ${ctx.userCharacter && ctx.userCharacter.cognitiveBandwidthZh ? `
+            <div class="p-4 rounded-xl bg-cyan-950/20 border border-cyan-800/40 text-xs text-cyan-200 leading-relaxed space-y-1">
+              <div class="flex items-center justify-between border-b border-cyan-800/30 pb-1">
+                <span class="font-bold text-cyan-300 flex items-center gap-1.5">
+                  <span>⚡</span><span>${isEn ? 'Cognitive Bandwidth & Strategic Operational Cadence:' : '心智带宽与作战模式 (单任务深耕 vs 多线并进)：'}</span>
+                </span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-cyan-900/60 text-cyan-300 border border-cyan-700/40">
+                  ${isEn ? (ctx.userCharacter.operationalModeEn.split(' (')[0]) : (ctx.userCharacter.operationalModeZh.split(' (')[0])}
+                </span>
+              </div>
+              <p class="text-gray-300 pt-1 font-sans">
+                <strong class="text-cyan-200">${isEn ? ctx.userCharacter.operationalModeEn : ctx.userCharacter.operationalModeZh}:</strong>
+                ${isEn ? ctx.userCharacter.cognitiveBandwidthEn : ctx.userCharacter.cognitiveBandwidthZh}
+              </p>
+            </div>
+          ` : ''}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div class="p-4 rounded-xl bg-indigo-950/20 border border-indigo-800/40 text-xs text-indigo-200 leading-relaxed space-y-1.5">
               <span class="font-bold text-indigo-300 flex items-center gap-1.5">
@@ -12418,6 +12478,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-lg font-bold font-serif-sc text-amber-950">${isEn ? topMatch.nameEn : topMatch.nameZh}</span>
                   <span class="imperial-seal-stamp text-[9px] py-0.2 px-1.5">${isEn ? topMatch.dynastyEn : topMatch.dynastyZh}</span>
                   <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-900/20 text-purple-900 border border-purple-900/30 font-serif-sc">${isEn ? topMatch.eraNameEn : topMatch.eraNameZh}</span>
+                  ${histData && histData.nativeContext && histData.nativeContext.userCharacter && histData.nativeContext.userCharacter.operationalModeZh ? `
+                    <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-900/15 text-amber-900 border border-amber-900/30 font-serif-sc">${isEn ? (histData.nativeContext.userCharacter.operationalModeEn.split(' (')[0]) : (histData.nativeContext.userCharacter.operationalModeZh.split(' (')[0])}</span>
+                  ` : ''}
                 </div>
                 <div class="text-[11px] text-amber-900 font-serif-sc mt-0.5">${isEn ? topMatch.positionEn : topMatch.positionZh}</div>
               </div>
