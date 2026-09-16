@@ -9889,6 +9889,260 @@ run_check93 = subprocess.run(jsc_check93_cmd, capture_output=True, text=True)
 assert run_check93.returncode == 0, f"Check 93 test failed: stdout={run_check93.stdout} stderr={run_check93.stderr}"
 print("✓ 皇家排盘战报卷五（第七页）居住城市地缘五行气数评估、互动切城、生克制化与专属空间调理三策（双语零残留）验证通过！")
 
-print("\n🎉 ALL 93 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 94. Validating I Ching Targeted Inquiry Resolution (Direct Divine Answers for Romance, Timing & Direction) & Imperial Dossier Worldly Pillars
+print("\n=== 94. Validating I Ching Targeted Inquiry Resolution & Imperial Dossier Worldly Romance Pillars ===")
+jsc_check94_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/chart.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+    var navigator = { serviceWorker: { register: function() { return Promise.resolve(); } } };
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(m, e) { throw new Error(m + (e ? " " + (e.stack || e) : "")); }
+    };
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        value: id === "birthDate" ? "1995-03-24" : (id === "birthTime" ? "09:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() { return (this._rawInnerHTML || "") + (this._children || []).map(function(c){ return c.innerHTML || ""; }).join(""); },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        options: [{ textContent: "乾造", value: "乾造" }],
+        selectedIndex: 0,
+        focus: function() {},
+        blur: function() {},
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            arc: function(){}, setLineDash: function(){}, scale: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; }
+          };
+        },
+        _listeners: {},
+        _children: [],
+        appendChild: function(c) { this._children.push(c); },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function() { return ""; },
+        setAttribute: function() {},
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = (this._listeners[evt] || []).slice(); for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); }
+      };
+    }
+
+    var allIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "calcBtn", "birthDate", "birthTime", "gender", "citySelect", "useTrueSolarTime", "timezoneSelect",
+      "imperialDossierModal", "imperialDossierContainer", "dossierLangZh", "dossierLangEn", "btnExportDossier",
+      "dossierCityCountrySelect", "dossierCitySelect", "currentCountrySelect", "currentCitySelect", "currentCustomCityInput",
+      "ichingCastBtn", "ichingMethodSelect", "ichingQueryInput", "ichingResultCard", "ichingTargetedInquiryCard",
+      "ichingOriginalCard", "ichingResultingCard", "ichingMutualCard", "ichingOppositeCard", "ichingReverseCard",
+      "ichingZhiNianCard", "ichingHexCycleContainer"
+    ];
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function(){ return "dark"; }, setAttribute: function(){} },
+      getElementById: function(id) { if (!elementStore[id]) elementStore[id] = makeEl(id); return elementStore[id]; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      addEventListener: function(event, handler) { if (event === "DOMContentLoaded") this._domReady = handler; }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      innerWidth: 1200, innerHeight: 800,
+      location: { reload: function(){} },
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      PortraitEngine: PortraitEngine,
+      LuckEngine: LuckEngine,
+      IChingEngine: IChingEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine,
+      HISTORICAL_FIGURES: HISTORICAL_FIGURES,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      TenGodsDB: TenGodsDB,
+      TEN_GODS_GLOSSARY: TEN_GODS_GLOSSARY,
+      SanMingDB: SanMingDB,
+      QiongTongDB: QiongTongDB,
+      ZiPingZhenQuanDB: ZiPingZhenQuanDB,
+      DiTianSuiDB: DiTianSuiDB,
+      YuanHaiDB: YuanHaiDB,
+      ShenFengDB: ShenFengDB,
+      YuZhaoDB: YuZhaoDB,
+      LiXuZhongDB: LiXuZhongDB
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // 1. Validate User Test Case: Dayan 49 yarrow method, Hexagram 50 (火风鼎), lines 2 & 5 moving -> Hexagram 33 (天山遁)
+    var l1 = IChingEngine.buildLineObject(1, 8);
+    var l2 = IChingEngine.buildLineObject(2, 9);
+    var l3 = IChingEngine.buildLineObject(3, 7);
+    var l4 = IChingEngine.buildLineObject(4, 7);
+    var l5 = IChingEngine.buildLineObject(5, 6);
+    var l6 = IChingEngine.buildLineObject(6, 7);
+    var userQuery = "什么时候可以碰到对象， 以及对象在何方";
+    var divinationRes = IChingEngine.synthesizeDivination([l1, l2, l3, l4, l5, l6], "蓍草大衍筮法 (四十九蓍神机)", userQuery);
+
+    if (divinationRes.originalHexagram.number !== 50) throw new Error("Original hexagram must be 50");
+    if (divinationRes.resultingHexagram.number !== 33) throw new Error("Resulting hexagram must be 33");
+    if (divinationRes.movingLinesPositions.length !== 2 || divinationRes.movingLinesPositions[0] !== 2 || divinationRes.movingLinesPositions[1] !== 5) {
+      throw new Error("Moving lines must be [2, 5]");
+    }
+
+    // Chinese Mode Check
+    var inquiryResZh = IChingEngine.analyzeCustomInquiry(userQuery, divinationRes, null, null, "zh");
+    if (inquiryResZh.category !== "romance") throw new Error("Expected romance category, got " + inquiryResZh.category);
+    if (!inquiryResZh.headline.includes("正缘神机直断")) throw new Error("Headline mismatch in ZH: " + inquiryResZh.headline);
+    if (!inquiryResZh.timing.exactYear.includes("2026") && !inquiryResZh.timing.exactYear.includes("2027")) {
+      throw new Error("Timing exactYear must reference 2026/2027, got " + inquiryResZh.timing.exactYear);
+    }
+    if (!inquiryResZh.spatial.directions.includes("南") && !inquiryResZh.spatial.directions.includes("离火")) {
+      throw new Error("Spatial direction must include South/Li Fire, got " + inquiryResZh.spatial.directions);
+    }
+    if (inquiryResZh.actionDirectives.items.length !== 3) {
+      throw new Error("Expected 3 action directives, got " + inquiryResZh.actionDirectives.items.length);
+    }
+
+    // English Mode Check & 100% Zero Residual Chinese
+    var inquiryResEn = IChingEngine.analyzeCustomInquiry(userQuery, divinationRes, null, null, "en");
+    if (inquiryResEn.category !== "romance") throw new Error("Expected romance category in EN, got " + inquiryResEn.category);
+    if (inquiryResEn.categoryName !== "Romance · Consort & Timing/Direction") {
+      throw new Error("Category name in EN mismatch: " + inquiryResEn.categoryName);
+    }
+    var enJsonStr = JSON.stringify(inquiryResEn);
+    var zhInEnMatch = enJsonStr.match(/[\u4e00-\u9fa5]/g);
+    if (zhInEnMatch && zhInEnMatch.length > 0) {
+      throw new Error("Found residual Chinese in English inquiry result: " + zhInEnMatch.join(""));
+    }
+
+    // Check all 5 categories in EN mode for 100% Zero Residual Chinese
+    var sampleQueries = [
+      { q: "什么时候可以遇到正缘桃花结婚", cat: "romance" },
+      { q: "今年适合跳槽创业还是留在原公司", cat: "career" },
+      { q: "下半年投资买房合伙做生意财运如何", cat: "wealth" },
+      { q: "眼下这件事去留进退吉凶如何", cat: "decision" },
+      { q: "未来三年宏观大运走势", cat: "general" }
+    ];
+    sampleQueries.forEach(function(sq) {
+      var rEn = IChingEngine.analyzeCustomInquiry(sq.q, divinationRes, null, null, "en");
+      var jsonStr = JSON.stringify(rEn);
+      var reg = /[\u4e00-\u9fa5]/;
+      if (reg.test(jsonStr)) {
+        throw new Error("Found residual Chinese in inquiry EN for category " + sq.cat + ": " + jsonStr.match(/[\u4e00-\u9fa5]/g).join(""));
+      }
+    });
+
+    // 2. Validate DOM Rendering of #ichingTargetedInquiryCard
+    window.renderIChingResult(divinationRes);
+    var cardHtmlZh = elementStore["ichingTargetedInquiryCard"].innerHTML;
+    if (!cardHtmlZh.includes("问事神机直断")) throw new Error("Missing targeted inquiry banner in ZH DOM");
+    if (!cardHtmlZh.includes("正缘神机直断")) throw new Error("Missing inquiry verdict in ZH DOM");
+    if (!cardHtmlZh.includes("应期时限")) throw new Error("Missing timing column in ZH DOM");
+    if (!cardHtmlZh.includes("结缘方位与场景")) throw new Error("Missing spatial column in ZH DOM");
+    if (!cardHtmlZh.includes("对方气质画像与心性")) throw new Error("Missing archetype column in ZH DOM");
+    if (!cardHtmlZh.includes("破局战法与行持准则")) throw new Error("Missing action directives in ZH DOM");
+
+    // Switch to English and render
+    window.setLanguage("en");
+    var cardHtmlEn = elementStore["ichingTargetedInquiryCard"].innerHTML;
+    if (!cardHtmlEn.includes("Targeted Inquiry Direct Resolution")) throw new Error("Missing targeted inquiry banner in EN DOM");
+    if (!cardHtmlEn.includes("Timing & Temporal Window")) throw new Error("Missing timing column in EN DOM");
+    if (!cardHtmlEn.includes("Direction & Physical Setting")) throw new Error("Missing spatial column in EN DOM");
+    if (!cardHtmlEn.includes("Action Directives & Tactical Playbook")) throw new Error("Missing action directives in EN DOM");
+    var domEnZhMatches = cardHtmlEn.match(/[\u4e00-\u9fa5]/g);
+    if (domEnZhMatches && domEnZhMatches.length > 0) {
+      throw new Error("Found residual Chinese in EN targeted inquiry DOM (" + domEnZhMatches.length + "): " + domEnZhMatches.join(""));
+    }
+
+    // 3. Validate Imperial Dossier Spouse & Actionable Pillars
+    elementStore["calcBtn"].trigger("click");
+    elementStore["btnExportDossier"].trigger("click");
+
+    // ZH Mode Dossier Checks
+    elementStore["dossierLangZh"].trigger("click");
+    var dZhHtml = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dZhHtml.includes("正缘应期与结缘方位")) throw new Error("Missing Spouse Timing & Direction in Page 1 Module 3 ZH");
+    if (!dZhHtml.includes("应期时限与场景方位")) throw new Error("Missing Encounter Timing & Setting in Page 5 ZH");
+    if (!dZhHtml.includes("破相执 · 焦虑脱敏盾")) throw new Error("Missing Diamond Sutra Action Shield in Page 6 ZH");
+    if (!dZhHtml.includes("见自性 · 精神内耗熔断")) throw new Error("Missing Platform Sutra Circuit Breaker in Page 6 ZH");
+    if (!dZhHtml.includes("逍遥游 · 精神松弛与降维破局")) throw new Error("Missing Zhuangzi Transcendence in Page 6 ZH");
+
+    // EN Mode Dossier Checks & 100% Zero Residual Chinese
+    elementStore["dossierLangEn"].trigger("click");
+    var dEnHtml = elementStore["imperialDossierContainer"].innerHTML;
+    if (!dEnHtml.includes("Spouse Encounter Timing & Direction")) throw new Error("Missing Spouse Timing & Direction in Page 1 Module 3 EN");
+    if (!dEnHtml.includes("Encounter Timing & Setting")) throw new Error("Missing Encounter Timing & Setting in Page 5 EN");
+    if (!dEnHtml.includes("Cognitive De-Biasing & Anti-Anxiety Shield")) throw new Error("Missing Diamond Sutra Shield in Page 6 EN");
+    if (!dEnHtml.includes("Self-Compassion & Rumination Circuit-Breaker")) throw new Error("Missing Platform Sutra Breaker in Page 6 EN");
+    if (!dEnHtml.includes("Somatic Calm & Perspective Transcendence")) throw new Error("Missing Zhuangzi Transcendence in Page 6 EN");
+
+    var dEnZhMatches = dEnHtml.match(/[\u4e00-\u9fa5]/g);
+    if (dEnZhMatches && dEnZhMatches.length > 0) {
+      throw new Error("Found residual Chinese in Imperial Dossier EN (" + dEnZhMatches.length + "): " + dEnZhMatches.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check94 = subprocess.run(jsc_check94_cmd, capture_output=True, text=True)
+assert run_check94.returncode == 0, f"Check 94 test failed: stdout={run_check94.stdout} stderr={run_check94.stderr}"
+print("✓ 周易问事神机直断（正缘应期/方位/心性三策/五大领域）、置顶直断卡片动态渲染与皇家战报世俗正缘实操支柱（双语零残留）验证通过！")
+
+print("\n🎉 ALL 94 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 

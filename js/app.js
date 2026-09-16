@@ -9825,6 +9825,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // I Ching state already declared at top
 
   function initIChingController() {
+    if (typeof window !== 'undefined') window.renderIChingResult = renderIChingResult;
     const ichingQueryInput = document.getElementById('ichingQueryInput');
     const ichingSelect = document.getElementById('ichingSelect');
     const ichingInstantBtn = document.getElementById('ichingInstantBtn');
@@ -9838,6 +9839,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const coinGraphic3 = document.getElementById('coinGraphic3');
     const throwCoinBtn = document.getElementById('throwCoinBtn');
     const coinLinesProgress = document.getElementById('coinLinesProgress');
+
+    if (ichingQueryInput) {
+      const handleQueryUpdate = () => {
+        if (lastDivinationResult) {
+          lastDivinationResult.query = ichingQueryInput.value.trim();
+          renderIChingResult(lastDivinationResult);
+        }
+      };
+      ichingQueryInput.addEventListener('input', handleQueryUpdate);
+      ichingQueryInput.addEventListener('change', handleQueryUpdate);
+    }
 
     function populateIChingDropdown() {
       if (!ichingSelect || typeof IChingDB === 'undefined') return;
@@ -10062,7 +10074,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderIChingResult(res) {
+    if (typeof window !== 'undefined') window.renderIChingResult = renderIChingResult;
     if (!res || !res.originalHexagram) return;
+    lastDivinationResult = res;
 
     const ichingInitPrompt = document.getElementById('ichingInitPrompt');
     const ichingResultCard = document.getElementById('ichingResultCard');
@@ -10119,6 +10133,125 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="font-bold text-amber-200 font-serif-sc">“${res.query}”</span>
         </div>
       `;
+    }
+
+    // 1.5 Targeted Custom Inquiry Direct Resolution Card (问事神机直断)
+    const ichingTargetedInquiryCard = document.getElementById('ichingTargetedInquiryCard');
+    if (ichingTargetedInquiryCard) {
+      const baziCtx = (typeof currentBaziResult !== 'undefined' && currentBaziResult) ? currentBaziResult : null;
+      const inquiryRes = (typeof IChingEngine !== 'undefined' && typeof IChingEngine.analyzeCustomInquiry === 'function')
+        ? IChingEngine.analyzeCustomInquiry(res.query, res, (of.targetLines && orig.lines ? orig.lines[of.targetLines[0] - 1] : null), baziCtx, currentLang)
+        : null;
+
+      if (inquiryRes) {
+        const gradeBadgeClass = (inquiryRes.verdictGrade.level === 'rose')
+          ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+          : (inquiryRes.verdictGrade.level === 'amber')
+            ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+            : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+
+        ichingTargetedInquiryCard.innerHTML = `
+          <div class="p-5 rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-amber-950/30 via-black/60 to-black/80 shadow-2xl space-y-4">
+            <!-- Header Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-800/40 pb-3">
+              <div class="flex items-center space-x-2">
+                <span class="text-xl">🎯</span>
+                <h3 class="text-base sm:text-lg font-black font-serif-sc text-amber-300 tracking-wider">
+                  ${isEn ? 'Targeted Inquiry Direct Resolution' : '问事神机直断 · 天机洞照'}
+                </h3>
+                <span class="px-2 py-0.5 rounded text-[11px] font-mono border ${gradeBadgeClass}">
+                  ${inquiryRes.verdictGrade.tag} (${inquiryRes.verdictGrade.score}${isEn ? ' pts' : '分'})
+                </span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-200 border border-purple-500/30 text-xs font-serif-sc">
+                ${isEn ? inquiryRes.categoryEn : inquiryRes.categoryName}
+              </span>
+            </div>
+
+            <!-- Direct Headline Verdict Box -->
+            <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-100 font-serif-sc text-xs sm:text-sm leading-relaxed">
+              <div class="flex items-center gap-1.5 font-bold text-amber-300 mb-1">
+                <span>⚡</span>
+                <span>${isEn ? 'Direct Strategic Verdict:' : '直断圣批：'}</span>
+              </div>
+              <p class="text-gray-100 font-medium">${inquiryRes.headline}</p>
+            </div>
+
+            <!-- 3-Column Holographic Grid: Timing, Spatial, Archetype -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Column 1: Timing -->
+              <div class="p-3.5 rounded-xl bg-black/50 border border-amber-700/30 space-y-2 flex flex-col justify-between">
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-1.5 font-bold text-amber-300 text-xs font-serif-sc border-b border-amber-800/20 pb-1">
+                    <span>⏱️</span>
+                    <span>${inquiryRes.timing.title}</span>
+                  </div>
+                  <div class="text-[11.5px] text-gray-200 space-y-1">
+                    <div><b class="text-amber-400">${isEn ? 'Year Window: ' : '天命年份：'}</b>${inquiryRes.timing.exactYear}</div>
+                    <div><b class="text-amber-400">${isEn ? 'Seasons/Months: ' : '节令月份：'}</b>${inquiryRes.timing.seasonAndMonths}</div>
+                    <div><b class="text-amber-400">${isEn ? 'Favorable Days: ' : '生旺吉日：'}</b>${inquiryRes.timing.favorableDays}</div>
+                  </div>
+                </div>
+                <p class="text-[11px] text-gray-400 leading-snug pt-1.5 border-t border-gray-800 italic">
+                  ${inquiryRes.timing.summary}
+                </p>
+              </div>
+
+              <!-- Column 2: Spatial -->
+              <div class="p-3.5 rounded-xl bg-black/50 border border-teal-700/30 space-y-2 flex flex-col justify-between">
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-1.5 font-bold text-teal-300 text-xs font-serif-sc border-b border-teal-800/20 pb-1">
+                    <span>🧭</span>
+                    <span>${inquiryRes.spatial.title}</span>
+                  </div>
+                  <div class="text-[11.5px] text-gray-200 space-y-1">
+                    <div><b class="text-teal-400">${isEn ? 'Directions: ' : '吉旺方位：'}</b>${inquiryRes.spatial.directions}</div>
+                    <div><b class="text-teal-400">${isEn ? 'Environment: ' : '场景场域：'}</b>${inquiryRes.spatial.environment}</div>
+                    <div><b class="text-teal-400">${isEn ? 'Distance/Scope: ' : '距离格度：'}</b>${inquiryRes.spatial.distance}</div>
+                  </div>
+                </div>
+                <p class="text-[11px] text-gray-400 leading-snug pt-1.5 border-t border-gray-800 italic">
+                  ${inquiryRes.spatial.summary}
+                </p>
+              </div>
+
+              <!-- Column 3: Archetype -->
+              <div class="p-3.5 rounded-xl bg-black/50 border border-purple-700/30 space-y-2 flex flex-col justify-between">
+                <div class="space-y-1.5">
+                  <div class="flex items-center gap-1.5 font-bold text-purple-300 text-xs font-serif-sc border-b border-purple-800/20 pb-1">
+                    <span>👤</span>
+                    <span>${inquiryRes.archetype.title}</span>
+                  </div>
+                  <div class="text-[11.5px] text-gray-200 space-y-1">
+                    <div class="font-bold text-purple-300">${inquiryRes.archetype.archetypeName}</div>
+                    <div><b class="text-purple-400">${isEn ? 'Traits: ' : '气度心性：'}</b>${inquiryRes.archetype.traits}</div>
+                    <div><b class="text-purple-400">${isEn ? 'Dynamics: ' : '相处共鸣：'}</b>${inquiryRes.archetype.dynamics}</div>
+                  </div>
+                </div>
+                <div class="text-[10.5px] text-purple-300/80 pt-1.5 border-t border-gray-800 font-mono">
+                  ${inquiryRes.hexagramCorrelation.analysis}
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Directives -->
+            <div class="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-600/30 space-y-2">
+              <div class="flex items-center gap-1.5 font-bold text-emerald-300 text-xs font-serif-sc">
+                <span>🛡️</span>
+                <span>${inquiryRes.actionDirectives.title}</span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-xs text-gray-200 font-serif-sc">
+                ${inquiryRes.actionDirectives.items.map((it, idx) => `
+                  <div class="p-2 rounded-lg bg-black/40 border border-emerald-800/20 flex gap-2">
+                    <span class="font-bold text-emerald-400 font-mono">${idx + 1}.</span>
+                    <span class="leading-relaxed">${it}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
     }
 
     // Helper: Render Hexagram Graphic Stack
@@ -12277,6 +12410,28 @@ document.addEventListener('DOMContentLoaded', () => {
       ? (sp.relationship && !/[\u4e00-\u9fa5]/.test(sp.relationship) ? sp.relationship : 'Harmonious domestic foundation; mutual strategic counsel.')
       : (sp.relationshipZh || '相敬如宾，家庭压舱石稳固，遇风浪共商大计。');
 
+    const branchDirMap = {
+      '子': { zh: '正北方 (坎水深沉之区)', en: 'True North (Water Haven)' },
+      '丑': { zh: '东北偏北 (艮土福地)', en: 'North-Northeast (Mountain Haven)' },
+      '寅': { zh: '东北偏东 (艮木生发)', en: 'East-Northeast (Growth Corridor)' },
+      '卯': { zh: '正东方 (震木昌盛之区)', en: 'True East (Wood Corridor)' },
+      '辰': { zh: '东南偏东 (巽土和顺)', en: 'East-Southeast (Verdant Sanctuary)' },
+      '巳': { zh: '东南偏南 (巽火文昌)', en: 'South-Southeast (Cultural Sector)' },
+      '午': { zh: '正南方 (离火光明之区)', en: 'True South (Solar Zenith)' },
+      '未': { zh: '西南偏南 (坤土宽和)', en: 'South-Southwest (Nurturing Hearth)' },
+      '申': { zh: '西南偏西 (坤金滋润)', en: 'West-Southwest (Grounded Haven)' },
+      '酉': { zh: '正西方 (兑金钟鼎之区)', en: 'True West (Aesthetic Corridor)' },
+      '戌': { zh: '西北偏西 (乾土信厚)', en: 'West-Northwest (Executive Haven)' },
+      '亥': { zh: '西北偏北 (乾水通达)', en: 'North-Northwest (Reflective Harbor)' }
+    };
+    const spDirObj = branchDirMap[spBranch] || branchDirMap['子'];
+    const spTimingZh = `2026年(丙午)至2027年(丁未)逢岁运夫妻宫生合引动，正缘机缘最为成熟；或逢地支六合及生旺之年结成良缘。`;
+    const spTimingEn = `Temporal window matures across 2026 through 2027 under dynamic spousal palace alignment, or during resonant Liu-He combination years.`;
+    const spSettingZh = `结缘方位锁定${spDirObj.zh}；多在光线充沛的高规格文教沙龙、学术博览、高端行业论坛，或由长辈师友正式推介引荐之所。`;
+    const spSettingEn = `Favorable direction anchors in ${spDirObj.en}; encountered within refined cultural forums, academic symposia, distinguished design salons, or through trusted mentors.`;
+    const spEncounterSummaryZh = `${spTimingZh} ${spSettingZh}`;
+    const spEncounterSummaryEn = `${spTimingEn} ${spSettingEn}`;
+
     const directWealthText = isEn
       ? (crTt ? (crTt.directWealthEvaluationEn || crTt.directWealthAnalysisEn || 'Direct wealth indicates stable core salary and promotions.') : 'Direct wealth indicates stable core salary and promotions.')
       : (crTt ? (crTt.directWealthEvaluationZh || crTt.directWealthAnalysisZh || '正财主业稳定，深耕岗位基本盘换取稳健增长。') : '正财主业稳定，深耕岗位基本盘换取稳健增长。');
@@ -12545,6 +12700,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <p class="text-[10.5px] text-gray-800 leading-tight"><b>${isEn ? 'Spouse Archetype & Demeanour: ' : '配偶心性与气质风范：'}</b>${spDemeanour}</p>
             <p class="text-[10.5px] text-amber-900 leading-tight"><b>${isEn ? 'Domestic Breakwater Ballast: ' : '防波堤与财富护航功能：'}</b>${isEn ? 'The partner serves as your ultimate financial breakwater and emotional ballast—anchoring family assets, offering sound rational counsel during crises, and mitigating reckless extremes.' : '配偶不仅在暗中稳住财富底盘，更能在命主锋芒过盛或外部突遭狂风暴雨时提供最坚不可摧的理智庇护与精神压舱石。'}</p>
+            <p class="text-[10px] text-emerald-900 leading-tight"><b>${isEn ? 'Spouse Encounter Timing & Direction: ' : '正缘应期与结缘方位：'}</b>${isEn ? spEncounterSummaryEn : spEncounterSummaryZh}</p>
             <p class="text-[10px] text-gray-700 leading-tight"><b>${isEn ? 'Harmony Mandate: ' : '相处共融之道：'}</b>${spRelationship}</p>
           </div>
 
@@ -12892,6 +13048,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><b>${isEn ? 'Energy Baseline:' : '能量基石:'}</b> ${isEn ? pc.spouse.energy : pc.spouse.energyZh}</p>
             <p><b>${isEn ? 'Temperament & Demeanour:' : '性格与气质:'}</b> ${isEn ? pc.spouse.demeanour : pc.spouse.demeanourZh}</p>
             <p><b>${isEn ? 'Relationship Dynamics:' : '相处共融:'}</b> ${isEn ? pc.spouse.relationship : pc.spouse.relationshipZh}</p>
+            <p><b>${isEn ? 'Encounter Timing & Setting:' : '应期时限与场景方位:'}</b> ${isEn ? spEncounterSummaryEn : spEncounterSummaryZh}</p>
           </div>
 
           <!-- Children Profile -->
@@ -12945,7 +13102,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="space-y-2 text-xs leading-relaxed font-serif-sc text-gray-800">
             <!-- Diamond Sutra -->
             <div class="imperial-card imperial-card-accent p-2.5 space-y-0.5">
-              <h3 class="font-bold text-amber-950">${isEn ? zen.diamond.title : zen.diamond.titleZh}</h3>
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-amber-950">${isEn ? zen.diamond.title : zen.diamond.titleZh}</h3>
+                <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 font-bold border border-amber-600/40 font-mono">${isEn ? 'Cognitive De-Biasing & Anti-Anxiety Shield' : '破相执 · 焦虑脱敏盾'}</span>
+              </div>
               <p class="font-bold text-red-900">${isEn ? zen.diamond.mantra : zen.diamond.mantraZh}</p>
               <p>${isEn ? zen.diamond.insight : zen.diamond.insightZh}</p>
               <p class="text-gray-700 italic">${isEn ? zen.diamond.quotes[0].verse : zen.diamond.quotes[0].verseZh} —— ${isEn ? zen.diamond.quotes[0].source : zen.diamond.quotes[0].sourceZh}</p>
@@ -12953,7 +13113,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- Platform Sutra -->
             <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-purple-700">
-              <h3 class="font-bold text-purple-950">${isEn ? zen.platform.title : zen.platform.titleZh}</h3>
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-purple-950">${isEn ? zen.platform.title : zen.platform.titleZh}</h3>
+                <span class="text-[9px] px-1.5 py-0.2 rounded bg-purple-200/80 text-purple-950 font-bold border border-purple-600/40 font-mono">${isEn ? 'Self-Compassion & Rumination Circuit-Breaker' : '见自性 · 精神内耗熔断'}</span>
+              </div>
               <p class="font-bold text-purple-900">${isEn ? zen.platform.mantra : zen.platform.mantraZh}</p>
               <p>${isEn ? zen.platform.insight : zen.platform.insightZh}</p>
               <p class="text-gray-700 italic">${isEn ? zen.platform.quotes[0].verse : zen.platform.quotes[0].verseZh} —— ${isEn ? zen.platform.quotes[0].source : zen.platform.quotes[0].sourceZh}</p>
@@ -12961,7 +13124,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- Zhuangzi -->
             <div class="imperial-card p-2.5 space-y-0.5 border-l-4 border-teal-700">
-              <h3 class="font-bold text-teal-950">${isEn ? zen.zhuangzi.title : zen.zhuangzi.titleZh}</h3>
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-teal-950">${isEn ? zen.zhuangzi.title : zen.zhuangzi.titleZh}</h3>
+                <span class="text-[9px] px-1.5 py-0.2 rounded bg-teal-200/80 text-teal-950 font-bold border border-teal-600/40 font-mono">${isEn ? 'Somatic Calm & Perspective Transcendence' : '逍遥游 · 精神松弛与降维破局'}</span>
+              </div>
               <p class="font-bold text-teal-900">${isEn ? zen.zhuangzi.mantra : zen.zhuangzi.mantraZh}</p>
               <p>${isEn ? zen.zhuangzi.insight : zen.zhuangzi.insightZh}</p>
               <p class="text-gray-700 italic">${isEn ? zen.zhuangzi.quotes[0].verse : zen.zhuangzi.quotes[0].verseZh} —— ${isEn ? zen.zhuangzi.quotes[0].source : zen.zhuangzi.quotes[0].sourceZh}</p>

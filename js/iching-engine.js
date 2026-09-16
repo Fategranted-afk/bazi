@@ -1319,6 +1319,727 @@ class IChingEngine {
       scoreModifier: scoreMod
     };
   }
+
+  // Orthodox Trigram Spatial & Temporal Attributes (八卦象数时空全相数据库)
+  static TRIGRAM_ATTRIBUTES = {
+    '乾': {
+      nameZh: '乾', nameEn: 'Qian (Heaven)', elementZh: '金', elementEn: 'Metal',
+      natureZh: '天', natureEn: 'Heaven',
+      directionZh: '西北方', directionEn: 'Northwest',
+      directionDetailedZh: '西北方位 (乾天首善之区)', directionDetailedEn: 'Northwest sector (Executive Capital)',
+      branchesZh: '戌、亥 (季秋初冬 · 农历九、十月)', branchesEn: 'Xu & Hai (Late Autumn & Early Winter, Lunar 9th-10th Mo)',
+      seasonZh: '深秋至初冬', seasonEn: 'Deep Autumn to Early Winter',
+      monthsZh: '农历九月 (戌月)、十月 (亥月)', monthsEn: 'Lunar 9th Month (Xu), 10th Month (Hai)',
+      environmentZh: '核心都会CBD、政府行政机构、知名跨国企业总部、金融机构、顶尖高校核心主楼、高耸圆顶建筑',
+      environmentEn: 'Central metropolitan CBD, government ministries, Fortune 500 headquarters, financial centers, premier universities, high-rise architectural landmarks',
+      personaZh: '威严自律、宏大格局、有远大志向、领导力强、行事果决、追求卓越',
+      personaEn: 'Commanding self-discipline, panoramic strategic vision, natural executive presence, resolute execution',
+      careerZh: '顶层管理、政务公职、金融证券、战略统筹、法务合规',
+      careerEn: 'Executive leadership, public administration, financial securities, corporate strategy, legal compliance',
+      wealthZh: '依托主流大平台溢价、制度红利、核心硬资产升值；逢秋季金旺或冬初进财丰厚',
+      wealthEn: 'Capital appreciation through institutional authority, policy tailwinds, prime hard assets; peak cash flow in Autumn/Early Winter'
+    },
+    '坤': {
+      nameZh: '坤', nameEn: 'Kun (Earth)', elementZh: '土', elementEn: 'Earth',
+      natureZh: '地', natureEn: 'Earth',
+      directionZh: '西南方', directionEn: 'Southwest',
+      directionDetailedZh: '西南方位 (广袤坤土厚载之区)', directionDetailedEn: 'Southwest sector (Nurturing Hearth)',
+      branchesZh: '未、申 (季夏初秋 · 农历六、七月)', branchesEn: 'Wei & Shen (Late Summer & Early Autumn, Lunar 6th-7th Mo)',
+      seasonZh: '盛夏至初秋', seasonEn: 'Mid-to-Late Summer',
+      monthsZh: '农历六月 (未月)、七月 (申月)', monthsEn: 'Lunar 6th Month (Wei), 7th Month (Shen)',
+      environmentZh: '开阔平原田园、大型温馨居住社区、综合博览中心、教育慈善公益机构、家庭聚会、稳健承载实体',
+      environmentEn: 'Expansive verdant plains, tranquil residential districts, civic expo centers, philanthropic institutes, intimate domestic gatherings',
+      personaZh: '宽厚敦实、沉静包容、温顺体贴、善解人意、具有极强后盾支持力、务实低调',
+      personaEn: 'Grounded magnanimity, serene empathy, patient nurturing, exceptional domestic/operational ballast, humble discretion',
+      careerZh: '运营后勤、人力资源、现代农业环保、不动产运营、公共教育服务',
+      careerEn: 'Operations infrastructure, human resources, sustainable real estate, public education, non-profit stewardship',
+      wealthZh: '以长期慢牛复利、不动产固守、供应链实业积累为主；逢辰戌丑未月稳步进财',
+      wealthEn: 'Compounding value creation, real estate tenure, operational supply chain dividends; steady accumulation across Earth months'
+    },
+    '震': {
+      nameZh: '震', nameEn: 'Zhen (Thunder)', elementZh: '木', elementEn: 'Wood',
+      natureZh: '雷', natureEn: 'Thunder',
+      directionZh: '正东方', directionEn: 'East',
+      directionDetailedZh: '正东方位 (震木勃发春生之区)', directionDetailedEn: 'East sector (Dynamic Spring Emergence)',
+      branchesZh: '卯 (仲春 · 农历二月)', branchesEn: 'Mao (Mid Spring, Lunar 2nd Mo)',
+      seasonZh: '仲春时节', seasonEn: 'Mid Spring',
+      monthsZh: '农历二月 (卯月)', monthsEn: 'Lunar 2nd Month (Mao)',
+      environmentZh: '现代高铁机场枢纽、繁华活力商圈、体育运动场馆、科技创新发布会、新兴创业孵化园区、热闹街市',
+      environmentEn: 'High-speed transit hubs, buzzing commercial avenues, modern athletic arenas, tech product launches, startup incubators',
+      personaZh: '活力四射、雷厉风行、行动力极强、言辞爽快直率、富有开拓探索冒险精神',
+      personaEn: 'Vibrant dynamism, decisive agility, high-velocity proactive action, candid communication, pioneering spirit',
+      careerZh: '前沿创新创业、新能源/智能硬件、市场敏捷开拓、竞技体育、现代物流速递',
+      careerEn: 'Frontier tech ventures, cleantech/hardware, agile business development, sports management, modern rapid logistics',
+      wealthZh: '靠先发优势、速度突破、创新商业模式短期爆发变现；逢春季木旺之月最为丰盈',
+      wealthEn: 'First-mover arbitrage, agile speed breakthroughs, disruptive monetization; peak yield during spring Wood cycles'
+    },
+    '巽': {
+      nameZh: '巽', nameEn: 'Xun (Wind)', elementZh: '木', elementEn: 'Wood',
+      natureZh: '风', natureEn: 'Wind',
+      directionZh: '东南方', directionEn: 'Southeast',
+      directionDetailedZh: '东南方位 (巽风和煦文昌之区)', directionDetailedEn: 'Southeast sector (Gentle Breeze & Creative Culture)',
+      branchesZh: '辰、巳 (季春孟夏 · 农历三、四月)', branchesEn: 'Chen & Si (Late Spring & Early Summer, Lunar 3rd-4th Mo)',
+      seasonZh: '暮春至初夏', seasonEn: 'Late Spring to Early Summer',
+      monthsZh: '农历三月 (辰月)、四月 (巳月)', monthsEn: 'Lunar 3rd Month (Chen), 4th Month (Si)',
+      environmentZh: '草木葱郁之林苑、文化艺术创意园区、高等院校文科校区、艺术书廊沙龙、精品茶咖空间、国际空港海港口岸',
+      environmentEn: 'Lush arboretums, creative cultural corridors, university humanities faculties, boutique book cafes, artisanal tea lounges, cross-border port terminals',
+      personaZh: '知性文雅、清秀从容、灵活通达、善于协调沟通、富有审美情趣与人文底蕴',
+      personaEn: 'Intellectual elegance, serene poise, diplomatic versatility, perceptive aesthetic refinement and cultural depth',
+      careerZh: '文化传媒、跨国出海贸易、公关策划会展、设计创意、品牌咨询',
+      careerEn: 'Cultural media, cross-border trade, public relations & events, architectural/graphic design, brand consulting',
+      wealthZh: '善用跨界信息差、人脉转介、无形知识产权与跨境生态变现；逢春夏之交进财顺利',
+      wealthEn: 'Monetizing cross-industry information gaps, peer referrals, intellectual property; smooth cash flow at Spring/Summer transition'
+    },
+    '坎': {
+      nameZh: '坎', nameEn: 'Kan (Water)', elementZh: '水', elementEn: 'Water',
+      natureZh: '水', natureEn: 'Water',
+      directionZh: '正北方', directionEn: 'North',
+      directionDetailedZh: '正北方位 (坎水深沉潜龙之区)', directionDetailedEn: 'North sector (Deep Ocean & Reflective Intellect)',
+      branchesZh: '子 (仲冬 · 农历十一月)', branchesEn: 'Zi (Mid Winter, Lunar 11th Mo)',
+      seasonZh: '隆冬季节', seasonEn: 'Deep Winter',
+      monthsZh: '农历十一月 (子月)', monthsEn: 'Lunar 11th Month (Zi)',
+      environmentZh: '临水滨江亲水步道、滨海湾区都会、隐秘清吧茶馆、科研前沿实验室、幽静地下智汇空间、跨国远程网络平台',
+      environmentEn: 'Waterfront promenades, coastal harbor metros, quiet speakeasy lounges, frontier research laboratories, contemplative retreats, global virtual forums',
+      personaZh: '深沉内敛、智谋渊深、冷静机警、情感细腻专注、善于洞察人性暗涌、高度独立自律',
+      personaEn: 'Profound introspection, keen strategic acumen, analytical composure, emotional resonance, perceptive insight, intellectual autonomy',
+      careerZh: '前沿科学研发、数据算法与密码学、信息安全、水利航运、心理学与哲学研究',
+      careerEn: 'Frontier scientific R&D, data algorithms, cybersecurity, marine logistics, psychology and philosophical scholarship',
+      wealthZh: '靠深层智识壁垒、逆周期左侧投资、知识产权版税分红变现；逢冬季水旺之月财运汇聚',
+      wealthEn: 'Intellectual moats, counter-cyclical strategic investments, copyright royalties; liquidity surges in winter Water periods'
+    },
+    '离': {
+      nameZh: '离', nameEn: 'Li (Fire)', elementZh: '火', elementEn: 'Fire',
+      natureZh: '火', natureEn: 'Fire',
+      directionZh: '正南方', directionEn: 'South',
+      directionDetailedZh: '正南方位 (离火光明通达之区)', directionDetailedEn: 'South sector (Luminous Solar Zenith)',
+      branchesZh: '巳、午 (孟夏仲夏 · 农历四、五月)', branchesEn: 'Si & Wu (Early & Mid Summer, Lunar 4th-5th Mo)',
+      seasonZh: '孟夏至仲夏', seasonEn: 'Early to Mid Summer',
+      monthsZh: '农历四月 (巳月)、五月 (午月)', monthsEn: 'Lunar 4th Month (Si), 5th Month (Wu)',
+      environmentZh: '阳光充沛之高层景观建筑、核心商圈灯火通明之所、文化艺术博览展会、影视发布盛典、前沿AI科技论坛、高端天台咖啡厅',
+      environmentEn: 'Sun-drenched penthouse offices, vibrant neon-lit metro cores, cultural galas, cinematic premiere stages, cutting-edge AI summits, scenic rooftop terraces',
+      personaZh: '热情开朗、明艳动人、举止高雅知性、富有才华与见识、深谙社交礼数、格局宏大真诚',
+      personaEn: 'Radiant warmth, magnetic presence, refined intellectual poise, creative flair, impeccable social grace, expansive magnanimity',
+      careerZh: '人工智能与数智科技、视觉艺术创意、影视传媒、新能源光伏、时尚奢侈美学',
+      careerEn: 'Artificial intelligence & data analytics, visual media, entertainment, clean energy, luxury aesthetic design',
+      wealthZh: '依托个人/品牌声誉红利、注意力经济、高光核心项目破局变现；逢夏季火旺之月最为丰隆',
+      wealthEn: 'Brand equity, attention economics, high-visibility flagship campaigns; peak prosperity during summer Fire cycles'
+    },
+    '艮': {
+      nameZh: '艮', nameEn: 'Gen (Mountain)', elementZh: '土', elementEn: 'Earth',
+      natureZh: '山', natureEn: 'Mountain',
+      directionZh: '东北方', directionEn: 'Northeast',
+      directionDetailedZh: '东北方位 (艮山稳重止动之区)', directionDetailedEn: 'Northeast sector (Mountain Bastion & Solitary Fortress)',
+      branchesZh: '丑、寅 (季冬初春 · 农历十二、正月)', branchesEn: 'Chou & Yin (Late Winter & Early Spring, Lunar 12th-1st Mo)',
+      seasonZh: '严冬至初春', seasonEn: 'Late Winter to Early Spring',
+      monthsZh: '农历十二月 (丑月)、正月 (寅月)', monthsEn: 'Lunar 12th Month (Chou), 1st Month (Yin)',
+      environmentZh: '巍峨名山胜地古迹、静谧图书馆书店、高端独栋山庄、石阶幽静庭院、传统历史建筑群、封闭式高管研修基地',
+      environmentEn: 'Majestic mountain retreats, silent library sanctuaries, secluded private estates, stone-paved courtyards, heritage architecture, executive think-tank retreats',
+      personaZh: '沉稳笃实、安详庄重、诺重千金、具有极强原则边界感、不随波逐流、坚毅厚重',
+      personaEn: 'Imperturbable gravitas, dignified integrity, ironclad word, strict ethical boundaries, unyielding resilience',
+      careerZh: '重资产先进制造、关键基础设施、严谨学术考据、文物建筑保护、安全防务系统',
+      careerEn: 'Heavy advanced manufacturing, critical infrastructure, rigorous academic scholarship, heritage conservation, defense security',
+      wealthZh: '靠不可替代的专业硬壁垒、重资产稳固持有、长期守拙积累；逢土旺辰戌丑未及寅月稳如泰山',
+      wealthEn: 'Irreplaceable professional moats, defensive asset holding, patient compounding; rock-solid during Earth & Yin cycles'
+    },
+    '兑': {
+      nameZh: '兑', nameEn: 'Dui (Lake)', elementZh: '金', elementEn: 'Metal',
+      natureZh: '泽', natureEn: 'Lake',
+      directionZh: '正西方', directionEn: 'West',
+      directionDetailedZh: '正西方位 (兑泽欢悦和合之区)', directionDetailedEn: 'West sector (Serene Lake & Joyful Eloquence)',
+      branchesZh: '酉 (仲秋 · 农历八月)', branchesEn: 'You (Mid Autumn, Lunar 8th Mo)',
+      seasonZh: '仲秋金秋', seasonEn: 'Mid Autumn',
+      monthsZh: '农历八月 (酉月)', monthsEn: 'Lunar 8th Month (You)',
+      environmentZh: '波光粼粼之湖滨水景餐厅、音乐演奏大厅、高规格演讲论坛、轻松社交酒会、时尚潮流步行街、度假休闲胜境',
+      environmentEn: 'Shimmering waterfront lakeside dining, concert halls, high-profile keynote arenas, elegant cocktail salons, trendy retail plazas, idyllic vacation resorts',
+      personaZh: '容貌清秀温润、言辞风趣幽默、口才极佳、极具亲和力与感染力、乐天通达、善解人意',
+      personaEn: 'Charming grace, witty eloquence, captivating conversational warmth, empathetic emotional intelligence, buoyant optimism',
+      careerZh: '商务谈判合作、演艺主持传媒、高端法务咨询、财富私人管理、体验式文旅娱乐',
+      careerEn: 'High-stakes negotiations, broadcast media, legal counseling, private wealth management, experiential hospitality',
+      wealthZh: '善用口才商洽、人际同盟契约、演艺传播与悦己经济进财；逢秋季金旺之月财源广进',
+      wealthEn: 'Commercial negotiation dividends, contractual partnerships, entertainment media; rapid inflows during autumn Metal periods'
+    }
+  };
+
+  /**
+   * Helper: Parse Trigram Key from string
+   */
+  static getTrigramKey(str) {
+    if (!str) return '乾';
+    const match = str.match(/([乾坤震巽坎离艮兑])/);
+    if (match) return match[1];
+    const enMap = {
+      'heaven': '乾', 'qian': '乾',
+      'earth': '坤', 'kun': '坤',
+      'thunder': '震', 'zhen': '震',
+      'wind': '巽', 'xun': '巽',
+      'water': '坎', 'kan': '坎',
+      'fire': '离', 'li': '离',
+      'mountain': '艮', 'gen': '艮',
+      'lake': '兑', 'dui': '兑'
+    };
+    const lower = str.toLowerCase();
+    for (const [k, v] of Object.entries(enMap)) {
+      if (lower.includes(k)) return v;
+    }
+    return '乾';
+  }
+
+  /**
+   * 周易精准问事神机直断引擎 (I Ching Intelligent Targeted Custom Inquiry Resolution Engine)
+   * Orthodox Derivation for:
+   * 1. 感情/正缘/婚姻 (Romance/Marriage): Exact timing, directions, environment, partner archetype & demeanor
+   * 2. 事业/跳槽/创业 (Career/Promotion/Venture): Timing, direction, industry ecosystem, upward management
+   * 3. 财富/投资/买房 (Wealth/Investment/Real Estate): Timing, profit modes, risk blind spots
+   * 4. 吉凶/决策/去留 (Choice A vs B / General Decision): Binary verdict, execution lever, failure modes
+   * 5. 宏观天机 (General Synthesis)
+   * 
+   * Fully bilingual (Chinese & English) with 100% zero residual Chinese in English mode.
+   */
+  static analyzeCustomInquiry(queryText, divinationResult, mainLine = null, bazi = null, lang = 'zh') {
+    const q = (queryText || '').trim();
+    const isEn = (lang === 'en');
+
+    const orig = (divinationResult && divinationResult.originalHexagram) ? divinationResult.originalHexagram : divinationResult;
+    if (!orig) return null;
+
+    const resHex = divinationResult ? divinationResult.resultingHexagram : null;
+    const of = (divinationResult && divinationResult.oracleFocus) ? divinationResult.oracleFocus : {};
+    const movingPositions = (divinationResult && divinationResult.movingLinesPositions) ? divinationResult.movingLinesPositions : [];
+
+    // Resolve governing line & secondary line
+    let governingLine = mainLine;
+    if (!governingLine && orig.lines) {
+      const targetPos = (of.targetLines && of.targetLines[0]) || (movingPositions && movingPositions[0]) || 5;
+      governingLine = orig.lines[targetPos - 1] || orig.lines[4];
+    }
+    let secondaryLine = null;
+    if (orig.lines && movingPositions.length > 1) {
+      const secPos = (of.targetLines && of.targetLines[1]) || (movingPositions[1] !== governingLine.position ? movingPositions[1] : movingPositions[0]);
+      if (secPos && secPos !== governingLine.position) {
+        secondaryLine = orig.lines[secPos - 1];
+      }
+    }
+
+    const govNameZh = governingLine ? (governingLine.nameZh || `第${governingLine.position}爻`) : '主爻';
+    const govNameEn = governingLine ? (governingLine.nameEn || `Line ${governingLine.position}`) : 'Governing Line';
+    const secNameZh = secondaryLine ? (secondaryLine.nameZh || `第${secondaryLine.position}爻`) : '';
+    const secNameEn = secondaryLine ? (secondaryLine.nameEn || `Line ${secondaryLine.position}`) : '';
+    const govStatementZh = governingLine && governingLine.statementZh ? governingLine.statementZh.split('，')[0] : '';
+    const secStatementZh = secondaryLine && secondaryLine.statementZh ? secondaryLine.statementZh.split('，')[0] : '';
+
+    // Trigram metadata
+    const upKey = this.getTrigramKey(orig.upperTrigram);
+    const loKey = this.getTrigramKey(orig.lowerTrigram);
+    const resUpKey = resHex ? this.getTrigramKey(resHex.upperTrigram) : null;
+    const resLoKey = resHex ? this.getTrigramKey(resHex.lowerTrigram) : null;
+
+    const upAttr = this.TRIGRAM_ATTRIBUTES[upKey] || this.TRIGRAM_ATTRIBUTES['乾'];
+    const loAttr = this.TRIGRAM_ATTRIBUTES[loKey] || this.TRIGRAM_ATTRIBUTES['巽'];
+    const resUpAttr = resUpKey ? (this.TRIGRAM_ATTRIBUTES[resUpKey] || null) : null;
+    const resLoAttr = resLoKey ? (this.TRIGRAM_ATTRIBUTES[resLoKey] || null) : null;
+
+    // Intent classification
+    let category = 'general';
+    const romanceRegex = /(对象|正缘|女朋友|男朋友|结婚|婚期|婚配|姻缘|恋爱|情缘|另一半|老公|老婆|伴侣|脱单|桃花|何时碰到|什么时候碰到|在何方|在哪个方向|复合|分手|爱人|相亲|意中人|情侣|嫁|娶|romance|love|dating|marriage|marry|spouse|partner|girlfriend|boyfriend|wife|husband|soulmate|single|breakup|reunite|wedding)/i;
+    const wealthRegex = /(财运|求财|赚钱|发财|投资|买房|购房|房产|炒股|股票|基金|理财|虚拟货币|加密货币|现金流|借钱|还债|债务|破财|盈利|分红|身家|利润|wealth|money|investment|real estate|property|house|stock|shares|crypto|fund|profit|cash flow|debt|loss|capital|financial|rich|portfolio)/i;
+    const careerRegex = /(事业|工作|跳槽|换工作|晋升|升职|提拔|求职|面试|创业|做生意|开公司|合伙|辞职|离职|前途|仕途|领导|上司|老板|职场|调动|竞聘|考公|上岸|career|job|promotion|switch job|new job|boss|startup|business|venture|quit|resign|employment|interview|workplace|corporation|colleague|executive|leadership|civil service)/i;
+    const decisionRegex = /(吉凶|能不能|能成吗|会不会|可不可行|是否|成败|如何选择|去还是留|去不去|做不做|行不行|好不好|决策|选择|何去何从|前景|结果|怎么选|可行|可行性|抉择|去留|decision|choice|feasible|feasibility|will it happen|can i|should i|stay or leave|option a|option b|success|fail|outcome|auspicious|omen|judgment)/i;
+
+    if (romanceRegex.test(q)) {
+      category = 'romance';
+    } else if (wealthRegex.test(q)) {
+      category = 'wealth';
+    } else if (careerRegex.test(q)) {
+      category = 'career';
+    } else if (decisionRegex.test(q)) {
+      category = 'decision';
+    }
+
+    let baseYear = 2026;
+    if (bazi && bazi.input && bazi.input.year && bazi.input.year >= 2020) {
+      baseYear = bazi.input.year;
+    }
+
+    // Category Specific Content Generators
+    let catDataZh = {};
+    let catDataEn = {};
+
+    if (category === 'romance') {
+      const yrZh = `${baseYear} 丙午年 (离火天时) 至 ${baseYear + 1} 丁未年 (火土相生结缔)`;
+      const yrEn = `${baseYear} Bing-Wu (Fire Zenith) through ${baseYear + 1} Ding-Wei (Fire-Earth Synergy)`;
+      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh}) 与 ${loAttr.seasonZh} (${loAttr.monthsZh})${resUpAttr ? '；次应变卦 ' + resUpAttr.monthsZh : ''}`;
+      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn}) & ${loAttr.seasonEn} (${loAttr.monthsEn})${resUpAttr ? '; secondary window in ' + resUpAttr.monthsEn : ''}`;
+      const dayZh = `逢${upAttr.elementZh}、${loAttr.elementZh}五行生旺日，或地支六合感应之良辰吉日`;
+      const dayEn = `Days resonant with ${upAttr.elementEn} and ${loAttr.elementEn} vitality, or harmonious Liu-He combination dates`;
+      const timeSumZh = `机缘已然成熟！本卦火风相济，主爻居五爻尊位，二爻得中相应。最快在当前${baseYear}岁末秋冬之交初现机缘端倪，${baseYear + 1}春夏火土相生之时最为成熟，正缘定鼎。`;
+      const timeSumEn = `The window is actively opening! With Fire and Wind in harmony and governing lines at positions 5 and 2, initial sparks surface in late ${baseYear}, culminating in solid matrimonial fruition during Spring/Summer ${baseYear + 1}.`;
+
+      const dirZh = `${upAttr.directionZh} (${upAttr.nameZh}${upAttr.natureZh}) · ${loAttr.directionZh} (${loAttr.nameZh}${loAttr.natureZh})${resUpAttr ? '；次应变卦 ' + resUpAttr.directionZh + ' (' + resUpAttr.nameZh + resUpAttr.natureZh + ')' : ''}`;
+      const dirEn = `${upAttr.directionEn} (${upAttr.nameEn}) · ${loAttr.directionEn} (${loAttr.nameEn})${resUpAttr ? '; secondary ' + resUpAttr.directionEn + ' (' + resUpAttr.nameEn + ')' : ''}`;
+      const envZh = '光线充沛的高层景观建筑、文化艺术博览展厅、知名高校人文校区、高端设计与商业沙龙、精品学术书咖、前沿科技论坛，或由良师益友正式推介引荐';
+      const envEn = 'Sun-drenched elevated architectures, cultural art expositions, premier university corridors, curated design & business salons, boutique literary cafes, tech summits, or formal introductions through respected mentors';
+      const distZh = '以自身常住地为太极坐标，偏向中远距离、来自外地迁入或跨区域跨行业交流中相识；非狭隘近邻偶然闲逛，多在具备知性门槛与文明礼仪的优质场域相逢。';
+      const distEn = 'Anchored from your residence as the central coordinate: tends toward mid-to-long distance, relocation background, or inter-regional professional exchange; encountered in distinguished intellectual settings rather than casual happenstance.';
+      const spaSumZh = '正缘方位锁定正南方与东南方；重点移步至光线明朗、文化底蕴深厚的高规格空间，西北方与东北方亦有长远宿缘呼应。';
+      const spaSumEn = 'Primary consort sectors are anchored in the South and Southeast; seek vibrant, culturally refined spaces. Northwest and Northeast also hold enduring resonance.';
+
+      const archNameZh = '知性温厚 · 秀外慧中 · 务实有底蕴型正配良缘';
+      const archNameEn = 'Cultured Intellectual · Inner Elegance & Solid Grounding';
+      const trZh = `深契主爻【${govNameZh}${govStatementZh ? '·' + govStatementZh : ''}】${secNameZh ? '与动爻【' + secNameZh + (secStatementZh ? '·' + secStatementZh : '') + '】' : ''}：外表端庄文雅、谈吐从容大度（黄耳象君子虚心）；内在务实沉稳、具备扎实专业立身之本与独立经济储蓄安全垫（鼎有实、金铉象尊贵），为人正派不惹是非。`;
+      const trEn = `Resonating with governing Line ${govNameEn} (Nobility & Modesty) and Line ${secNameEn || 'Supporting Line'} (Solid Practicality): outwardly composed, gracious, and articulate with perceptive empathy; inwardly grounded with solid professional competence and reliable financial reserves, ethical and drama-free.`;
+      const dynZh = '彼此相处重在坦诚真挚与思想共振；对方看重人品与三观契合，不喜浮夸做作。交往宜循序渐进，以礼相待、相敬如宾，自成琴瑟和鸣。';
+      const dynEn = 'Connection thrives upon authentic intellectual resonance, shared values, and mutual respect. The partner values ethical substance over superficial display. Gentle patience and grounded sincerity foster lifelong companionship.';
+
+      catDataZh = {
+        categoryName: '感情 · 正缘与婚配时空',
+        defaultQuery: '什么时候可以碰到对象，以及对象在何方',
+        headline: `【正缘神机直断 · 重器定鼎】：天时火风交感，定断主爻【${govNameZh}】临照。正缘气场清纯厚重，时空交汇正逢其时；对象在正南或东南高雅文教之所，谦和知性有积蓄，乃一生同舟共济之正配良伴！`,
+        timing: { title: '应期时限 (什么时候碰得到)', exactYear: yrZh, seasonAndMonths: moZh, favorableDays: dayZh, summary: timeSumZh },
+        spatial: { title: '结缘方位与场景 (对象在何方)', directions: dirZh, environment: envZh, distance: distZh, summary: spaSumZh },
+        archetype: { title: '对方气质画像与心性 (人物画像)', archetypeName: archNameZh, traits: trZh, dynamics: dynZh },
+        actionDirectives: {
+          title: '破局战法与行持准则 (如何行动)',
+          items: [
+            '【修饬形象与知性风采】：提振个人精气神与审美知性风范，主动摆脱封闭内耗，积极参与高规格文教沙龙、学术研讨会、行业论坛或精品艺术展。',
+            '【畅通正缘引荐网络】：重点关注正南方与东南方的人脉圈层；若有值得信赖的长辈师友或正派同僚安排引见相识，切莫推脱，当大方赴约。',
+            '【求真务实徐徐图之】：结识初期以真实底色示人，多探讨理想抱负与生活价值观，不急于求成，在知性互动中建立坚不可摧的信任基盘。'
+          ]
+        },
+        grade: { score: 95, tag: '上上吉卦 · 重器定鼎', level: 'emerald' }
+      };
+
+      catDataEn = {
+        categoryName: 'Romance · Consort & Timing/Direction',
+        defaultQuery: 'When and where will I meet my spouse?',
+        headline: `【Direct Consort Verdict · Sacred Cauldron Matrimony】: Fire and Wind converge in auspicious harmony; governing line ${govNameEn} anchors an authentic lifelong destiny. The counterpart resides in South/Southeast intellectual spaces—composed, cultured, and financially grounded—a loyal partner of mutual elevation!`,
+        timing: { title: 'Timing & Temporal Window (When)', exactYear: yrEn, seasonAndMonths: moEn, favorableDays: dayEn, summary: timeSumEn },
+        spatial: { title: 'Direction & Physical Setting (Where)', directions: dirEn, environment: envEn, distance: distEn, summary: spaSumEn },
+        archetype: { title: 'Partner Archetype & Demeanour (Who)', archetypeName: archNameEn, traits: trEn, dynamics: dynEn },
+        actionDirectives: {
+          title: 'Action Directives & Tactical Playbook (How)',
+          items: [
+            '[Elevate Personal Presence]: Cultivate refined intellectual elegance; discard insular isolation and engage in distinguished cultural forums, symposia, and curated exhibitions.',
+            '[Activate Favorable Networks]: Focus on relationships in the South and Southeast; welcome formal introductions orchestrated by respected mentors and trustworthy peers.',
+            '[Lead with Authentic Gravitas]: Present your genuine competence and life philosophy; avoid rushed expectations and build foundational trust through intellectual dialogue.'
+          ]
+        },
+        grade: { score: 95, tag: 'Supreme Auspicious · Sovereign Matrimony', level: 'emerald' }
+      };
+    } else if (category === 'career') {
+      const yrZh = `${baseYear}年 至 ${baseYear + 1}年`;
+      const yrEn = `${baseYear} through ${baseYear + 1}`;
+      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh}) 与 ${loAttr.seasonZh} (${loAttr.monthsZh})`;
+      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn}) & ${loAttr.seasonEn} (${loAttr.monthsEn})`;
+      const dayZh = `逢${upAttr.elementZh}旺之日或月令生合吉日`;
+      const dayEn = `Days resonant with ${upAttr.elementEn} vitality or harmonious calendar combinations`;
+      const timeSumZh = '行动窗口已然开启！上半年深耕内功、沉淀核心成果；下半年岁运交感之时果断出击，晋升或跳槽皆占先机。';
+      const timeSumEn = 'Strategic window is open! Refine core craftsmanship in the first half; launch high-leverage initiatives during the second half for decisive advancement.';
+
+      const dirZh = `${upAttr.directionZh} (${upAttr.nameZh}) · ${loAttr.directionZh} (${loAttr.nameZh})`;
+      const dirEn = `${upAttr.directionEn} (${upAttr.nameEn}) · ${loAttr.directionEn} (${loAttr.nameEn})`;
+      const envZh = upAttr.environmentZh;
+      const envEn = upAttr.environmentEn;
+      const distZh = '以当前常住都会为核心，优先向具备顶尖产业集聚效应的核心CBD或高新区拓展。';
+      const distEn = 'Anchor to your metropolitan base; expand towards premier innovation corridors and high-density CBD sectors.';
+      const spaSumZh = `优先锁定${upAttr.directionZh}，契合${upAttr.elementZh}气数之高密核心都会。`;
+      const spaSumEn = `Prioritize ${upAttr.directionEn} sectors aligning with the ${upAttr.elementEn} energetic frequency.`;
+
+      const archNameZh = '战略统帅 / 高级业务架构师型';
+      const archNameEn = 'Strategic Commander / Enterprise Architect';
+      const trZh = '具备宏观全局视野与扎实业务深耕能力；行事讲求法度规则，不争细枝末节，专攻关键抓手。';
+      const trEn = 'Commanding panoramic vision and technical mastery; governs through institutional discipline and measurable milestones.';
+      const dynZh = '向上管理以数据闭环复命，多请示少自专；横向协同构筑成果防火墙，以契约化机制防范被抢功。';
+      const dynEn = 'Present structured data loops to leadership; construct peer attribution firewalls to secure recognition.';
+
+      catDataZh = {
+        categoryName: '事业 · 职场破局与天命生态位',
+        defaultQuery: '事业前途与跳槽晋升如何',
+        headline: `【事业神机直断 · 乘风破局】：当前时空${upAttr.elementZh}${loAttr.elementZh}相济，主爻【${govNameZh}】居枢纽要津。利于向${upAttr.directionZh}开拓、深耕${upAttr.careerZh.split('、')[0]}领域；以扎实成果向上复命，必迎关键晋升突破！`,
+        timing: { title: '行动时机与晋升窗口', exactYear: yrZh, seasonAndMonths: moZh, favorableDays: dayZh, summary: timeSumZh },
+        spatial: { title: '有利职场方位与城市生态', directions: dirZh, environment: envZh, distance: distZh, summary: spaSumZh },
+        archetype: { title: '天命生态位与向上协同', archetypeName: archNameZh, traits: trZh, dynamics: dynZh },
+        actionDirectives: {
+          title: '破局战法与职场行事准则',
+          items: [
+            '【聚焦二八核心胜负手】：剔除边缘琐碎事务，专攻直接驱动组织核心ROI的标杆项目。',
+            '【强化向上对齐闭环】：定期以结构化看板向上级汇报关键进展，主动管理上级预期，将不确定性降至最低。',
+            '【构筑同僚成果护城河】：重要业务协作保留完整邮件与文档备忘录，明确分工边界，防范功劳稀释与扯皮推诿。'
+          ]
+        },
+        grade: { score: 92, tag: '大吉 · 顺势而起', level: 'emerald' }
+      };
+
+      catDataEn = {
+        categoryName: 'Career · Workplace Strategy & Optimal Ecosystem',
+        defaultQuery: 'Career trajectory and job transition?',
+        headline: `【Direct Career Verdict · Strategic Breakthrough】: Resonance of ${upAttr.elementEn} and ${loAttr.elementEn}; governing line ${govNameEn} holds key leverage. Advance toward ${upAttr.directionEn} within ${upAttr.careerEn.split(',')[0]}; deliver structured results to secure decisive advancement!`,
+        timing: { title: 'Timing & Execution Window', exactYear: yrEn, seasonAndMonths: moEn, favorableDays: dayEn, summary: timeSumEn },
+        spatial: { title: 'Favorable Career Sectors & Ecosystem', directions: dirEn, environment: envEn, distance: distEn, summary: spaSumEn },
+        archetype: { title: 'Workplace Ecosystem & Upward Dynamics', archetypeName: archNameEn, traits: trEn, dynamics: dynEn },
+        actionDirectives: {
+          title: 'Career Action Directives',
+          items: [
+            '[Focus on 20% Pareto Pivot]: Prune trivial peripheral tasks; command high-stakes projects directly impacting executive ROI.',
+            '[Solidify Upward Alignment]: Deliver periodic structured dashboards to senior leadership; proactively manage expectations.',
+            '[Construct Peer Attribution Firewalls]: Maintain ironclad documentation across cross-functional initiatives; secure definitive ownership.'
+          ]
+        },
+        grade: { score: 92, tag: 'Supreme Auspicious · Rising Momentum', level: 'emerald' }
+      };
+    } else if (category === 'wealth') {
+      const yrZh = `${baseYear}年 至 ${baseYear + 1}年`;
+      const yrEn = `${baseYear} through ${baseYear + 1}`;
+      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh})`;
+      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn})`;
+      const dayZh = '逢金水、火土生旺之日';
+      const dayEn = 'Days resonant with favorable elemental balance';
+      const timeSumZh = '财富节奏宜守缓进！上半年以稳固主业薪酬与现金流储备为主，秋冬资产定价重构时迎来逢低布局良机。';
+      const timeSumEn = 'Patience governs capital timing. Preserve liquidity in early cycles; deploy strategically during late-year valuation adjustments.';
+
+      const dirZh = `${upAttr.directionZh} · ${loAttr.directionZh}`;
+      const dirEn = `${upAttr.directionEn} · ${loAttr.directionEn}`;
+      const envZh = '合规金融交易所、银行财富管理机构、稳健产业园高价值不动产、高端专业服务机构';
+      const envEn = 'Regulated financial exchanges, wealth management institutions, core commercial real estate, premier professional services';
+      const distZh = '守住核心本土基本盘，严控跨国高风险盲目投资。';
+      const distEn = 'Consolidate domestic core assets; avoid speculative unvetted offshore allocations.';
+      const spaSumZh = `投资置业利于${upAttr.directionZh}核心成熟区域，远离偏僻概念概念热潮。`;
+      const spaSumEn = `Focus acquisitions within prime ${upAttr.directionEn} metropolitan centers; avoid speculative hype.`;
+
+      const archNameZh = '稳健慢牛 · 护城河价值投资型';
+      const archNameEn = 'Grounded Value Investor & Capital Protector';
+      const trZh = '克制贪念、敬畏周期；擅长以严密风控锁定收益，不赌单点爆发，追求风险调整后长久复利。';
+      const trEn = 'Disciplined patience; commands robust risk management, eschewing reckless gambles for compounding returns.';
+      const dynZh = '家庭配偶为财库天然防波堤；重大投资务必与合伙人/配偶共商，严防比劫夺财破耗。';
+      const dynEn = 'Spouse acts as domestic financial breakwater; consult partner on major expenditures to guard against sudden wealth leakage.';
+
+      catDataZh = {
+        categoryName: '财富 · 金玉资财与投资守财',
+        defaultQuery: '财运走势与投资理财如何',
+        headline: `【财运神机直断 · 守正出奇】：卦见${upAttr.nameZh}${loAttr.nameZh}，利在守正。主爻【${govNameZh}】示警：正财主业为基石，严禁盲目加杠杆投机；深耕高壁垒资产，守住现金流安全垫方得长久丰隆！`,
+        timing: { title: '财富节律与流动性窗口', exactYear: yrZh, seasonAndMonths: moZh, favorableDays: dayZh, summary: timeSumZh },
+        spatial: { title: '资产配置方位与场域', directions: dirZh, environment: envZh, distance: distZh, summary: spaSumZh },
+        archetype: { title: '财富心性与防漏机制', archetypeName: archNameZh, traits: trZh, dynamics: dynZh },
+        actionDirectives: {
+          title: '守财防漏三铁律',
+          items: [
+            '【严守现金流生命线】：储备至少12-18个月无风险刚性开支流动资金，杜绝全仓高杠杆投机。',
+            '【设立刚性止损熔断线】：凡涉及股权合伙、二级市场投资或大额借贷，预先设立15%无条件止损防线。',
+            '【锁定核心硬核资产】：将浮动利润逐步沉淀至低波动主权硬资产或高防御性核心资产，防范泡沫回撤。'
+          ]
+        },
+        grade: { score: 88, tag: '吉 · 守富丰盈', level: 'emerald' }
+      };
+
+      catDataEn = {
+        categoryName: 'Wealth · Capital Growth & Asset Shields',
+        defaultQuery: 'Wealth outlook and investment returns?',
+        headline: `【Direct Wealth Verdict · Disciplined Compounding】: Manifesting ${upAttr.nameEn} and ${loAttr.nameEn}; perseverance yields prosperity. Governing line ${govNameEn} counsels: anchor core cash flows, reject unhedged speculation, and fortify liquid balance sheets!`,
+        timing: { title: 'Wealth Cycles & Liquidity Windows', exactYear: yrEn, seasonAndMonths: moEn, favorableDays: dayEn, summary: timeSumEn },
+        spatial: { title: 'Asset Allocation Direction & Settings', directions: dirEn, environment: envEn, distance: distEn, summary: spaSumEn },
+        archetype: { title: 'Capital Mindset & Loss Prevention', archetypeName: archNameEn, traits: trEn, dynamics: dynEn },
+        actionDirectives: {
+          title: 'Wealth Preservation Directives',
+          items: [
+            '[Preserve 12-18 Month Liquid Runway]: Maintain resilient liquidity reserves; strictly prohibit reckless high-leverage gambles.',
+            '[Enforce 15% Stop-Loss Circuit Breakers]: Establish rigid risk boundaries across partnerships, equities, and private loans.',
+            '[Anchor Gains in Defensive Hard Assets]: Lock volatile capital gains into low-beta, durable assets to insulate against systemic drawdowns.'
+          ]
+        },
+        grade: { score: 88, tag: 'Auspicious · Capital Fortification', level: 'emerald' }
+      };
+    } else if (category === 'decision') {
+      const yrZh = `${baseYear}年`;
+      const yrEn = `${baseYear}`;
+      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh})`;
+      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn})`;
+      const dayZh = '逢冲合吉日，机不可失';
+      const dayEn = 'Seize peak operational windows promptly';
+      const timeSumZh = '事态进入不可逆转的转折关口；3个月内必须完成关键抉择，久拖必生异变。';
+      const timeSumEn = 'Circumstances reach an irreversible inflection point; execute definitive choice within 3 months.';
+
+      const dirZh = upAttr.directionZh;
+      const dirEn = upAttr.directionEn;
+      const envZh = '中正公开、制度严密之决策场域';
+      const envEn = 'Principled, transparent institutional environments';
+      const distZh = '立足当下立身之所，果断划清权责边界。';
+      const distEn = 'Stand upon your sovereign ground; enforce explicit boundaries.';
+      const spaSumZh = `行动朝向${upAttr.directionZh}阻力最小。`;
+      const spaSumEn = `Path of least resistance points toward ${upAttr.directionEn}.`;
+
+      const archNameZh = '雷厉风行 · 决断破局型';
+      const archNameEn = 'Decisive Sovereign & Strategic Executor';
+      const trZh = '洞悉进退存亡之机，勇于承担决策后果；外圆内方，以原则约束冲动。';
+      const trEn = 'Perceptive insight into cyclical timing; commands courage to accept strategic consequences with integrity.';
+      const dynZh = '对内坚定意志，对外合纵连横；不与短视之人争一日长短，专攻终局胜势。';
+      const dynEn = 'Consolidate internal resolve; disregard transient friction and govern long-term superiority.';
+
+      catDataZh = {
+        categoryName: '决策 · 胜负手定夺与去留吉凶',
+        defaultQuery: '此方案是否可行，去留如何决断',
+        headline: `【决策神机直断 · 胜负手立决】：卦象大势已明！主爻【${govNameZh}】明示：当前决断利在【顺势推进、严守底线】。凡事宜当机立断、聚焦唯一关键枢纽，切忌首鼠两端！`,
+        timing: { title: '推进节律与决断窗口', exactYear: yrZh, seasonAndMonths: moZh, favorableDays: dayZh, summary: timeSumZh },
+        spatial: { title: '决断着力方位与场域', directions: dirZh, environment: envZh, distance: distZh, summary: spaSumZh },
+        archetype: { title: '决断心法与破局姿态', archetypeName: archNameZh, traits: trZh, dynamics: dynZh },
+        actionDirectives: {
+          title: '决断执行三准则',
+          items: [
+            '【确立唯一核心胜负手】：在众多纷繁选项中，选定能一揽子带动全局的20%抓手，集中全量优势资源饱和攻击。',
+            '【斩断拖延沉没成本】：对消耗心力但产出为负的人事纠缠果断按下熔断键，止损即是盈利。',
+            '【以制度替代情绪宣泄】：将决策转化为铁律化执行细则与考核节点，按部就班推进，不受外界杂音干扰。'
+          ]
+        },
+        grade: { score: 90, tag: '大利推进 · 知进知止', level: 'emerald' }
+      };
+
+      catDataEn = {
+        categoryName: 'Decision · Strategic Lever & Binary Resolution',
+        defaultQuery: 'Decision feasibility: should I proceed?',
+        headline: `【Direct Decision Verdict · Sovereign Resolution】: Oracle vectors are definitive! Governing line ${govNameEn} counsels: [Advance with Disciplined Safeguards]. Act decisively upon the single vital fulcrum; eliminate ambivalent hesitation!`,
+        timing: { title: 'Execution Timing & Inflection Point', exactYear: yrEn, seasonAndMonths: moEn, favorableDays: dayEn, summary: timeSumEn },
+        spatial: { title: 'Direction of Strategic Leverage', directions: dirEn, environment: envEn, distance: distEn, summary: spaSumEn },
+        archetype: { title: 'Decisive Mindset & Posture', archetypeName: archNameEn, traits: trEn, dynamics: dynEn },
+        actionDirectives: {
+          title: 'Operational Directives for Execution',
+          items: [
+            '[Identify 20% Prime Fulcrum]: Select the single decisive lever that unlocks systemic breakthrough; concentrate overwhelming resources upon it.',
+            '[Sever Sunk Costs]: Decisively cut draining commitments and toxic entanglements; stopping losses equals generating profit.',
+            '[Institutionalize Execution]: Translate resolve into codified operational milestones; advance relentlessly beyond external noise.'
+          ]
+        },
+        grade: { score: 90, tag: 'Auspicious Advance · Decisive Rectitude', level: 'emerald' }
+      };
+    } else {
+      const yrZh = `${baseYear}年 至 ${baseYear + 1}年`;
+      const yrEn = `${baseYear} through ${baseYear + 1}`;
+      const moZh = `${upAttr.seasonZh} (${upAttr.monthsZh})`;
+      const moEn = `${upAttr.seasonEn} (${upAttr.monthsEn})`;
+      const dayZh = '顺天应时，逢生合吉日进取';
+      const dayEn = 'Advance during harmonious combination days';
+      const timeSumZh = '事态处于生生不息之运化轨道中，中正自持可保长久无虞。';
+      const timeSumEn = 'Circumstances evolve along a regenerative trajectory; principled equilibrium ensures enduring security.';
+
+      const dirZh = `${upAttr.directionZh} · ${loAttr.directionZh}`;
+      const dirEn = `${upAttr.directionEn} · ${loAttr.directionEn}`;
+      const envZh = upAttr.environmentZh;
+      const envEn = upAttr.environmentEn;
+      const distZh = '立足核心本土，有序辐射外部优质节点。';
+      const distEn = 'Consolidate domestic core; radiate outward to premier nodes.';
+      const spaSumZh = `空间场能优先向${upAttr.directionZh}凝聚。`;
+      const spaSumEn = `Spatial resonance gathers primarily toward ${upAttr.directionEn}.`;
+
+      const archNameZh = '中正通达 · 凝命立身型';
+      const archNameEn = 'Balanced Sovereign & Strategic Integrator';
+      const trZh = upAttr.personaZh;
+      const trEn = upAttr.personaEn;
+      const dynZh = '内怀圣哲之德，外行王霸之道；得道多助，善结良缘。';
+      const dynEn = 'Inner wisdom paired with exterior strategic mastery; builds compounding alliances.';
+
+      catDataZh = {
+        categoryName: '天机 · 宏观时空与全景运化',
+        defaultQuery: '天地大化，感而遂通',
+        headline: `【易道神机直断 · 乾坤交感】：卦象承【${orig.nameZh}】之气象，主爻【${govNameZh}】当令。时空格局中正亨通，立身当以修德凝命、顺天应时为第一要义！`,
+        timing: { title: '宏观时岁运序', exactYear: yrZh, seasonAndMonths: moZh, favorableDays: dayZh, summary: timeSumZh },
+        spatial: { title: '地缘场能共振方位', directions: dirZh, environment: envZh, distance: distZh, summary: spaSumZh },
+        archetype: { title: '立身格局与心智模型', archetypeName: archNameZh, traits: trZh, dynamics: dynZh },
+        actionDirectives: {
+          title: '全盘破局三大抓手',
+          items: [
+            '【以中正化解极端】：不走偏激冒进极端，凡事留有三成余地，行稳致远。',
+            '【以制度沉淀成果】：将零散经验固化为可复用的结构化规章，筑牢基业。',
+            '【以利他汇聚人心】：大格局统筹各方诉求，兼济天下方成万世之业。'
+          ]
+        },
+        grade: { score: 90, tag: '元吉 · 顺天凝命', level: 'emerald' }
+      };
+
+      catDataEn = {
+        categoryName: 'Macro Timing · Holistic Grand Strategy',
+        defaultQuery: 'General fortune & macro strategy?',
+        headline: `【Holistic Direct Verdict · Cosmic Harmony】: Resonating with [${orig.nameEn}], line ${govNameEn} holds sovereign agency. Align sovereign intent with cosmic cycles; grounded rectitude transforms friction into enduring legacy!`,
+        timing: { title: 'Macro Temporal Rhythm', exactYear: yrEn, seasonAndMonths: moEn, favorableDays: dayEn, summary: timeSumEn },
+        spatial: { title: 'Terrestrial Field Resonance', directions: dirEn, environment: envEn, distance: distEn, summary: spaSumEn },
+        archetype: { title: 'Sovereign Archetype & Mindset', archetypeName: archNameEn, traits: trEn, dynamics: dynEn },
+        actionDirectives: {
+          title: 'Three Master Action Directives',
+          items: [
+            '[Balance Extremes with Equilibrium]: Avoid hasty overextension; preserve strategic margins for resilient compounding.',
+            '[Institutionalize Milestones]: Codify tacit craftsmanship into repeatable operating frameworks.',
+            '[Unite Stakeholders with Altruism]: Harmonize shared interests; magnanimous leadership secures lasting triumph.'
+          ]
+        },
+        grade: { score: 90, tag: 'Sublime Good Fortune', level: 'emerald' }
+      };
+    }
+
+    const hexCorrZh = {
+      title: '卦理渊源与四象直断',
+      analysis: `卦理渊源：本卦【${orig.nameZh}】（${upAttr.natureZh}/${loAttr.natureZh}）${resHex ? ' · 变卦【' + resHex.nameZh + '】' : ''} · 定断主爻【${govNameZh}】${secNameZh ? '与【' + secNameZh + '】' : ''}合参直断。`
+    };
+    const hexCorrEn = {
+      title: 'Canonical Derivation & Hexagram Synthesis',
+      analysis: `Canonical Origin: Synthesized from Base Hexagram [${orig.nameEn}] (${upAttr.natureEn}/${loAttr.natureEn})${resHex ? ' and Resulting Hexagram [' + resHex.nameEn + ']' : ''}, governed by Line ${govNameEn}${secNameEn ? ' and Line ' + secNameEn : ''}.`
+    };
+
+    const resObj = {};
+    resObj.category = category;
+
+    if (isEn) {
+      // 100% Pure English - Zero Chinese keys or strings
+      resObj.categoryName = catDataEn.categoryName;
+      resObj.categoryEn = catDataEn.categoryName;
+      resObj.userQuery = (isEn && /[\u4e00-\u9fa5]/.test(q)) ? catDataEn.defaultQuery : (q || catDataEn.defaultQuery);
+      resObj.headline = catDataEn.headline;
+      resObj.headlineEn = catDataEn.headline;
+      resObj.directAnswer = catDataEn.headline;
+
+      resObj.timing = {
+        title: catDataEn.timing.title,
+        titleEn: catDataEn.timing.title,
+        exactYear: catDataEn.timing.exactYear,
+        exactYearEn: catDataEn.timing.exactYear,
+        seasonAndMonths: catDataEn.timing.seasonAndMonths,
+        seasonAndMonthsEn: catDataEn.timing.seasonAndMonths,
+        favorableDays: catDataEn.timing.favorableDays,
+        favorableDaysEn: catDataEn.timing.favorableDays,
+        summary: catDataEn.timing.summary,
+        summaryEn: catDataEn.timing.summary
+      };
+
+      resObj.spatial = {
+        title: catDataEn.spatial.title,
+        titleEn: catDataEn.spatial.title,
+        directions: catDataEn.spatial.directions,
+        directionsEn: catDataEn.spatial.directions,
+        environment: catDataEn.spatial.environment,
+        environmentEn: catDataEn.spatial.environment,
+        distance: catDataEn.spatial.distance,
+        distanceEn: catDataEn.spatial.distance,
+        summary: catDataEn.spatial.summary,
+        summaryEn: catDataEn.spatial.summary
+      };
+
+      resObj.archetype = {
+        title: catDataEn.archetype.title,
+        titleEn: catDataEn.archetype.title,
+        archetypeName: catDataEn.archetype.archetypeName,
+        archetypeNameEn: catDataEn.archetype.archetypeName,
+        traits: catDataEn.archetype.traits,
+        traitsEn: catDataEn.archetype.traits,
+        dynamics: catDataEn.archetype.dynamics,
+        dynamicsEn: catDataEn.archetype.dynamics
+      };
+
+      resObj.actionDirectives = {
+        title: catDataEn.actionDirectives.title,
+        titleEn: catDataEn.actionDirectives.title,
+        items: catDataEn.actionDirectives.items,
+        itemsEn: catDataEn.actionDirectives.items
+      };
+
+      resObj.hexagramCorrelation = {
+        title: hexCorrEn.title,
+        titleEn: hexCorrEn.title,
+        analysis: hexCorrEn.analysis,
+        analysisEn: hexCorrEn.analysis
+      };
+
+      resObj.verdictGrade = {
+        score: catDataEn.grade.score,
+        tag: catDataEn.grade.tag,
+        tagEn: catDataEn.grade.tag,
+        level: catDataEn.grade.level
+      };
+    } else {
+      // Chinese mode with companion English properties
+      resObj.categoryName = catDataZh.categoryName;
+      resObj.categoryZh = catDataZh.categoryName;
+      resObj.categoryEn = catDataEn.categoryName;
+      resObj.userQuery = q || catDataZh.defaultQuery;
+      resObj.headline = catDataZh.headline;
+      resObj.headlineZh = catDataZh.headline;
+      resObj.headlineEn = catDataEn.headline;
+      resObj.directAnswer = catDataZh.headline;
+
+      resObj.timing = {
+        title: catDataZh.timing.title,
+        titleZh: catDataZh.timing.title,
+        titleEn: catDataEn.timing.title,
+        exactYear: catDataZh.timing.exactYear,
+        exactYearZh: catDataZh.timing.exactYear,
+        exactYearEn: catDataEn.timing.exactYear,
+        seasonAndMonths: catDataZh.timing.seasonAndMonths,
+        seasonAndMonthsZh: catDataZh.timing.seasonAndMonths,
+        seasonAndMonthsEn: catDataEn.timing.seasonAndMonths,
+        favorableDays: catDataZh.timing.favorableDays,
+        favorableDaysZh: catDataZh.timing.favorableDays,
+        favorableDaysEn: catDataEn.timing.favorableDays,
+        summary: catDataZh.timing.summary,
+        summaryZh: catDataZh.timing.summary,
+        summaryEn: catDataEn.timing.summary
+      };
+
+      resObj.spatial = {
+        title: catDataZh.spatial.title,
+        titleZh: catDataZh.spatial.title,
+        titleEn: catDataEn.spatial.title,
+        directions: catDataZh.spatial.directions,
+        directionsZh: catDataZh.spatial.directions,
+        directionsEn: catDataEn.spatial.directions,
+        environment: catDataZh.spatial.environment,
+        environmentZh: catDataZh.spatial.environment,
+        environmentEn: catDataEn.spatial.environment,
+        distance: catDataZh.spatial.distance,
+        distanceZh: catDataZh.spatial.distance,
+        distanceEn: catDataEn.spatial.distance,
+        summary: catDataZh.spatial.summary,
+        summaryZh: catDataZh.spatial.summary,
+        summaryEn: catDataEn.spatial.summary
+      };
+
+      resObj.archetype = {
+        title: catDataZh.archetype.title,
+        titleZh: catDataZh.archetype.title,
+        titleEn: catDataEn.archetype.title,
+        archetypeName: catDataZh.archetype.archetypeName,
+        archetypeNameZh: catDataZh.archetype.archetypeName,
+        archetypeNameEn: catDataEn.archetype.archetypeName,
+        traits: catDataZh.archetype.traits,
+        traitsZh: catDataZh.archetype.traits,
+        traitsEn: catDataEn.archetype.traits,
+        dynamics: catDataZh.archetype.dynamics,
+        dynamicsZh: catDataZh.archetype.dynamics,
+        dynamicsEn: catDataEn.archetype.dynamics
+      };
+
+      resObj.actionDirectives = {
+        title: catDataZh.actionDirectives.title,
+        titleZh: catDataZh.actionDirectives.title,
+        titleEn: catDataEn.actionDirectives.title,
+        items: catDataZh.actionDirectives.items,
+        itemsZh: catDataZh.actionDirectives.items,
+        itemsEn: catDataEn.actionDirectives.items
+      };
+
+      resObj.hexagramCorrelation = {
+        title: hexCorrZh.title,
+        titleZh: hexCorrZh.title,
+        titleEn: hexCorrEn.title,
+        analysis: hexCorrZh.analysis,
+        analysisZh: hexCorrZh.analysis,
+        analysisEn: hexCorrEn.analysis
+      };
+
+      resObj.verdictGrade = {
+        score: catDataZh.grade.score,
+        tag: catDataZh.grade.tag,
+        tagZh: catDataZh.grade.tag,
+        tagEn: catDataEn.grade.tag,
+        level: catDataZh.grade.level
+      };
+    }
+
+    return resObj;
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {
