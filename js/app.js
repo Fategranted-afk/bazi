@@ -157,6 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const dashboardSummaryBadges = document.getElementById('dashboardSummaryBadges');
   const btnReturnToPortal = document.getElementById('btnReturnToPortal');
   const btnPortalTopNav = document.getElementById('btnPortalTopNav');
+  const btnExportDossier = document.getElementById('btnExportDossier');
+  const btnQuickExportSinglePdf = document.getElementById('btnQuickExportSinglePdf');
   const landingQuickPreviewBox = document.getElementById('landingQuickPreviewBox');
   const landingPreviewMeta = document.getElementById('landingPreviewMeta');
   const landingPreviewStatusBadge = document.getElementById('landingPreviewStatusBadge');
@@ -686,6 +688,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnPortalTopNav) {
       btnPortalTopNav.classList.remove('hidden');
     }
+    if (btnExportDossier) {
+      btnExportDossier.classList.remove('hidden');
+    }
+    if (btnQuickExportSinglePdf) {
+      btnQuickExportSinglePdf.classList.remove('hidden');
+    }
     updateDashboardSummaryBar();
     if (targetView && typeof switchPrimaryView === 'function') {
       switchPrimaryView(targetView);
@@ -710,6 +718,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnPortalTopNav) {
       btnPortalTopNav.classList.add('hidden');
+    }
+    if (btnExportDossier) {
+      btnExportDossier.classList.add('hidden');
+    }
+    if (btnQuickExportSinglePdf) {
+      btnQuickExportSinglePdf.classList.add('hidden');
     }
     updateLandingPreview();
     if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {

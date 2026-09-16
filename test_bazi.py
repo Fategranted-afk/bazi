@@ -11452,5 +11452,198 @@ run_check99 = subprocess.run(jsc_check99_cmd, capture_output=True, text=True)
 assert run_check99.returncode == 0, f"Check 99 test failed: stdout={run_check99.stdout} stderr={run_check99.stderr}"
 print("✓ 禅道三经（《金刚经》《六祖坛经》《庄子》三大独立法门逍遥游/庖丁解牛/山木）经文扩充、五代·冯道《荣枯鉴》传世全十卷职场实操大典（数据库/职场引擎/DOM渲染/皇家战报Page 6与Page 8/中英双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 99 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 100. Validating PDF Export Buttons Hidden on Landing Portal Until BaZi Calculated ===
+print("\n=== 100. Validating PDF Export Buttons Hidden on Landing Portal Until BaZi Calculated ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_html = f.read()
+
+btn_dossier_m = re.search(r'<button\s+id="btnExportDossier"[^>]*class="([^"]*)"', idx_html)
+assert btn_dossier_m, "Missing #btnExportDossier in index.html"
+assert 'hidden' in btn_dossier_m.group(1).split(), f"#btnExportDossier must contain 'hidden' class in initial HTML: {btn_dossier_m.group(1)}"
+
+btn_quick_m = re.search(r'<button\s+id="btnQuickExportSinglePdf"[^>]*class="([^"]*)"', idx_html)
+assert btn_quick_m, "Missing #btnQuickExportSinglePdf in index.html"
+assert 'hidden' in btn_quick_m.group(1).split(), f"#btnQuickExportSinglePdf must contain 'hidden' class in initial HTML: {btn_quick_m.group(1)}"
+
+jsc_check100_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      var classes = [];
+      if (id === 'btnExportDossier' || id === 'btnQuickExportSinglePdf' || id === 'btnPortalTopNav' || id === 'dashboardView' || id === 'advSolarTimeContainer') {
+        classes = ['hidden'];
+      }
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "",
+        checked: false,
+        options: [{ text: "男", value: "乾造" }, { text: "女", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          add: function(cls) {
+            if (classes.indexOf(cls) === -1) classes.push(cls);
+          },
+          remove: function(cls) {
+            var idx = classes.indexOf(cls);
+            if (idx !== -1) classes.splice(idx, 1);
+          },
+          contains: function(cls) {
+            return classes.indexOf(cls) !== -1;
+          }
+        },
+        className: classes.join(" "),
+        style: {},
+        _children: [],
+        _listeners: {},
+        addEventListener: function(evt, handler) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(handler);
+        },
+        trigger: function(evt, e) {
+          var list = this._listeners[evt] || [];
+          for (var i = 0; i < list.length; i++) list[i](e || {});
+        },
+        appendChild: function(c) {
+          this._children.push(c);
+          if (c && c.innerHTML) this.innerHTML += c.innerHTML;
+        },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        getBoundingClientRect: function() { return { width: 400, height: 300, left: 0, top: 0 }; },
+        getContext: function() { return { clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){}, arc: function(){}, setLineDash: function(){}, scale: function(){}, createLinearGradient: function(){ return { addColorStop: function(){} }; } }; }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "btnExportDossier", "btnQuickExportSinglePdf", "btnToggleFlux", "btnInstallPwa",
+      "imperialDossierModal", "imperialDossierContainer", "calcBtn",
+      "birthDate", "birthTime", "gender", "useSolarTime", "lateRatAsNextDay",
+      "customLongitude", "timezoneSelect", "citySelect", "fsec-canons", "view-friction",
+      "frictionContentContainer", "careerContentContainer", "careerTargetYear",
+      "careerQuickBadgesDashboard", "currentCountrySelect", "currentCitySelect"
+    ];
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+    elementStore["birthDate"].value = "1990-06-20";
+    elementStore["birthTime"].value = "14:30";
+    elementStore["gender"].value = "乾造";
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") handler();
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){} },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      SynastryEngine: SynastryEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine
+    };
+
+    load("js/app.js");
+
+    // 1. Initial State on Landing Portal: PDF buttons MUST have 'hidden'
+    if (!elementStore['btnExportDossier'].classList.contains('hidden')) {
+      throw new Error("Initial state error: #btnExportDossier must have 'hidden' class on landing portal");
+    }
+    if (!elementStore['btnQuickExportSinglePdf'].classList.contains('hidden')) {
+      throw new Error("Initial state error: #btnQuickExportSinglePdf must have 'hidden' class on landing portal");
+    }
+
+    // 2. Trigger calculation: user submits BaZi -> switches to Dashboard
+    elementStore['calcBtn'].trigger('click');
+
+    // 3. In Dashboard: PDF buttons MUST NOT have 'hidden'
+    if (elementStore['btnExportDossier'].classList.contains('hidden')) {
+      throw new Error("Dashboard state error: #btnExportDossier must NOT have 'hidden' class after BaZi calculated");
+    }
+    if (elementStore['btnQuickExportSinglePdf'].classList.contains('hidden')) {
+      throw new Error("Dashboard state error: #btnQuickExportSinglePdf must NOT have 'hidden' class after BaZi calculated");
+    }
+
+    // 4. Return to Landing Portal via btnReturnToPortal
+    elementStore['btnReturnToPortal'].trigger('click');
+
+    // 5. Back on Landing Portal: PDF buttons MUST be hidden again
+    if (!elementStore['btnExportDossier'].classList.contains('hidden')) {
+      throw new Error("Return to portal error: #btnExportDossier must be hidden again");
+    }
+    if (!elementStore['btnQuickExportSinglePdf'].classList.contains('hidden')) {
+      throw new Error("Return to portal error: #btnQuickExportSinglePdf must be hidden again");
+    }
+
+    // 6. Calculate again and test return via btnPortalTopNav
+    elementStore['calcBtn'].trigger('click');
+    if (elementStore['btnExportDossier'].classList.contains('hidden')) {
+      throw new Error("Second dashboard error: #btnExportDossier must be visible");
+    }
+    elementStore['btnPortalTopNav'].trigger('click');
+    if (!elementStore['btnExportDossier'].classList.contains('hidden')) {
+      throw new Error("TopNav portal return error: #btnExportDossier must be hidden");
+    }
+    if (!elementStore['btnQuickExportSinglePdf'].classList.contains('hidden')) {
+      throw new Error("TopNav portal return error: #btnQuickExportSinglePdf must be hidden");
+    }
+    """
+]
+
+run_check100 = subprocess.run(jsc_check100_cmd, capture_output=True, text=True)
+assert run_check100.returncode == 0, f"Check 100 test failed: stdout={run_check100.stdout} stderr={run_check100.stderr}"
+print("✓ 初始门庭页面隐藏皇家战报PDF与首页PDF按钮、排盘后在控制面板正常显示、返回门庭重新隐藏（显隐状态机严格受控）验证通过！")
+
+print("\n🎉 ALL 100 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
