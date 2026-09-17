@@ -92,10 +92,10 @@ const VisualAlchemy = (function() {
 
     // Initialize waves with elevated luminous colors
     fluxWaves = [
-      { yRatio: 0.22, speed: 0.0008, amplitude: 38, wavelength: 0.0018, color: 'rgba(251, 191, 36, 0.20)', lightColor: 'rgba(217, 119, 6, 0.10)' },
-      { yRatio: 0.50, speed: 0.0006, amplitude: 48, wavelength: 0.0014, color: 'rgba(168, 85, 247, 0.18)', lightColor: 'rgba(147, 51, 234, 0.08)' },
-      { yRatio: 0.76, speed: 0.0007, amplitude: 42, wavelength: 0.0016, color: 'rgba(16, 185, 129, 0.18)', lightColor: 'rgba(5, 150, 105, 0.09)' },
-      { yRatio: 0.38, speed: 0.0005, amplitude: 32, wavelength: 0.0022, color: 'rgba(59, 130, 246, 0.18)', lightColor: 'rgba(37, 99, 235, 0.08)' }
+      { yRatio: 0.22, speed: 0.0008, amplitude: 38, wavelength: 0.0018, color: 'rgba(251, 191, 36, 0.24)', lightColor: 'rgba(217, 119, 6, 0.16)' },
+      { yRatio: 0.50, speed: 0.0006, amplitude: 48, wavelength: 0.0014, color: 'rgba(168, 85, 247, 0.22)', lightColor: 'rgba(147, 51, 234, 0.14)' },
+      { yRatio: 0.76, speed: 0.0007, amplitude: 42, wavelength: 0.0016, color: 'rgba(16, 185, 129, 0.22)', lightColor: 'rgba(5, 150, 105, 0.14)' },
+      { yRatio: 0.38, speed: 0.0005, amplitude: 32, wavelength: 0.0022, color: 'rgba(59, 130, 246, 0.22)', lightColor: 'rgba(37, 99, 235, 0.14)' }
     ];
 
     // Resize handling with DPR awareness for full-screen fixed canvas
@@ -185,7 +185,7 @@ const VisualAlchemy = (function() {
        (document.documentElement && document.documentElement.classList && document.documentElement.classList.contains('light')) ||
        (document.body && document.body.classList && document.body.classList.contains('light-theme')));
 
-    // 1. Render Full-Page Ambient Luminous Flux Waves (流光飘带)
+    // 1. Render Full-Page Ambient Luminous Flux Waves (流光飘带 - 双层柔和微光光晕与丝缎光带)
     fluxWaves.forEach((wave, idx) => {
       const baseY = h * wave.yRatio;
       const t = now * wave.speed + idx * 1.5;
@@ -198,10 +198,14 @@ const VisualAlchemy = (function() {
         if (fluxCtx.lineTo) fluxCtx.lineTo(x, y);
       }
 
-      // Draw elegant soft glowing stroke
+      // Outer soft glowing aura ribbon
       fluxCtx.strokeStyle = isLight ? wave.lightColor : wave.color;
-      fluxCtx.lineWidth = 18 + idx * 4;
+      fluxCtx.lineWidth = 36 + idx * 6;
       fluxCtx.lineCap = 'round';
+      if (fluxCtx.stroke) fluxCtx.stroke();
+
+      // Inner silky radiant core ribbon
+      fluxCtx.lineWidth = 10 + idx * 3;
       if (fluxCtx.stroke) fluxCtx.stroke();
     });
 
@@ -230,6 +234,15 @@ const VisualAlchemy = (function() {
   function setActiveElement(element) {
     if (element && ELEMENTS.some(e => e.name === element)) {
       activeElement = element;
+      const targetIdx = ELEMENTS.findIndex(e => e.name === element);
+      if (targetIdx >= 0 && particles.length > 0) {
+        particles.forEach((p, i) => {
+          if (i % 2 === 0) {
+            p.elementIdx = targetIdx;
+            p.element = ELEMENTS[targetIdx];
+          }
+        });
+      }
     }
   }
 
