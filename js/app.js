@@ -236,6 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof populateCurrentCityOptions === 'function') {
         populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
       }
+
+      if (typeof syncAppSimulatorOptions === 'function') {
+        syncAppSimulatorOptions('A');
+        syncAppSimulatorOptions('B');
+      }
     }
 
     // Re-calculate & re-render if chart exists
@@ -12174,6 +12179,168 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // Feature: Dual-Track 'What-If' Decision Simulator (双轨对抗推演沙盘)
   // ==========================================================================
+  function syncAppSimulatorOptions(prefix) {
+    const isEn = (currentLang === 'en');
+    const countryEl = document.getElementById('simCountry' + prefix);
+    const instSelect = document.getElementById('simInst' + prefix);
+    const entSelect = document.getElementById('simEnt' + prefix);
+    if (!countryEl || !instSelect || !entSelect) return;
+
+    let countryKey = countryEl.value || 'UK';
+    if (countryKey === 'United Kingdom') countryKey = 'UK';
+
+    // Institutions
+    const instList = (typeof INSTITUTIONS_DB !== 'undefined' && INSTITUTIONS_DB[countryKey]) ? INSTITUTIONS_DB[countryKey] : [];
+    let instHtml = `<option value="">${isEn ? '-- Custom / None --' : '-- 自选/无学府联动 --'}</option>`;
+    instList.forEach(inst => {
+      const name = isEn ? inst.nameEn : inst.nameZh;
+      instHtml += `<option value="${inst.id}">${name} (QS #${inst.qsRank})</option>`;
+    });
+    instSelect.innerHTML = instHtml;
+
+    // Enterprises
+    const entList = (typeof ENTERPRISES_DB !== 'undefined' && ENTERPRISES_DB[countryKey]) ? ENTERPRISES_DB[countryKey] : [];
+    let entHtml = `<option value="">${isEn ? '-- Custom / None --' : '-- 自选/无名企联动 --'}</option>`;
+    entList.forEach(ent => {
+      const name = isEn ? ent.nameEn : ent.nameZh;
+      entHtml += `<option value="${ent.id}">${name}</option>`;
+    });
+    entSelect.innerHTML = entHtml;
+  }
+
+  function handleAppSimulatorInstitutionChange(prefix) {
+    const isEn = (currentLang === 'en');
+    const countryKey = document.getElementById('simCountry' + prefix)?.value || 'UK';
+    const instId = document.getElementById('simInst' + prefix)?.value;
+    const badgeEl = document.getElementById('simMatchedBadge' + prefix);
+    const entSelect = document.getElementById('simEnt' + prefix);
+    const entRoleContainer = document.getElementById('simEntRoleContainer' + prefix);
+
+    if (entSelect) entSelect.value = '';
+    if (entRoleContainer) entRoleContainer.classList.add('hidden');
+
+    if (!instId) {
+      if (badgeEl) badgeEl.classList.add('hidden');
+      return;
+    }
+
+    const instList = (typeof INSTITUTIONS_DB !== 'undefined' && INSTITUTIONS_DB[countryKey]) ? INSTITUTIONS_DB[countryKey] : [];
+    const inst = instList.find(i => i.id === instId);
+    if (!inst) return;
+
+    const cityInput = document.getElementById('simCity' + prefix);
+    const industrySelect = document.getElementById('simIndustry' + prefix);
+    const roleSelect = document.getElementById('simRole' + prefix);
+    const titleInput = document.getElementById('simTitle' + prefix);
+
+    if (cityInput) cityInput.value = inst.city;
+    if (industrySelect) industrySelect.value = 'academia_research';
+    if (roleSelect) roleSelect.value = 'specialist';
+    if (titleInput) {
+      titleInput.value = isEn ? `${inst.nameEn} · Academic Research` : `${inst.nameZh} · 高校学术科研`;
+    }
+
+    if (badgeEl) {
+      badgeEl.classList.remove('hidden');
+      const top5 = isEn ? inst.top5SubjectsEn.join(', ') : inst.top5SubjectsZh.join('、');
+      badgeEl.innerHTML = `
+        <div class="flex items-center justify-between text-amber-300 font-bold">
+          <span>🏛️ ${isEn ? inst.nameEn : inst.nameZh}</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-950/80 border border-amber-500/40">QS #${inst.qsRank} · THE #${inst.theRank}</span>
+        </div>
+        <div class="text-[10px] text-gray-300">${isEn ? 'Standout Disciplines: ' : '前五强王牌学科：'}<span class="text-amber-200">${top5}</span></div>
+        <div class="text-[10px] text-gray-400 italic">${isEn ? inst.academicAdvantageEn : inst.academicAdvantageZh}</div>
+      `;
+    }
+
+    executeScenarioSimulation();
+  }
+
+  function handleAppSimulatorEnterpriseChange(prefix) {
+    const isEn = (currentLang === 'en');
+    const countryKey = document.getElementById('simCountry' + prefix)?.value || 'UK';
+    const entId = document.getElementById('simEnt' + prefix)?.value;
+    const badgeEl = document.getElementById('simMatchedBadge' + prefix);
+    const instSelect = document.getElementById('simInst' + prefix);
+    const entRoleContainer = document.getElementById('simEntRoleContainer' + prefix);
+    const entRoleSelect = document.getElementById('simEntRole' + prefix);
+
+    if (instSelect) instSelect.value = '';
+
+    if (!entId) {
+      if (badgeEl) badgeEl.classList.add('hidden');
+      if (entRoleContainer) entRoleContainer.classList.add('hidden');
+      return;
+    }
+
+    const entList = (typeof ENTERPRISES_DB !== 'undefined' && ENTERPRISES_DB[countryKey]) ? ENTERPRISES_DB[countryKey] : [];
+    const ent = entList.find(e => e.id === entId);
+    if (!ent) return;
+
+    const cityInput = document.getElementById('simCity' + prefix);
+    const industrySelect = document.getElementById('simIndustry' + prefix);
+    const roleSelect = document.getElementById('simRole' + prefix);
+    const titleInput = document.getElementById('simTitle' + prefix);
+
+    if (cityInput && ent.primaryCities && ent.primaryCities.length > 0) {
+      cityInput.value = ent.primaryCities[0];
+    }
+    if (industrySelect) industrySelect.value = ent.industry;
+
+    if (entRoleContainer && entRoleSelect) {
+      entRoleContainer.classList.remove('hidden');
+      let rolesHtml = '';
+      ent.typicalRoles.forEach(r => {
+        const roleName = isEn ? r.titleEn : r.titleZh;
+        rolesHtml += `<option value="${r.roleKey}" data-title="${isEn ? r.titleEn : r.titleZh}">${roleName}</option>`;
+      });
+      entRoleSelect.innerHTML = rolesHtml;
+
+      const firstRole = ent.typicalRoles[0];
+      if (roleSelect) roleSelect.value = firstRole.roleKey;
+      if (titleInput) {
+        titleInput.value = isEn ? `${ent.nameEn} · ${firstRole.titleEn}` : `${ent.nameZh} · ${firstRole.titleZh}`;
+      }
+    }
+
+    if (badgeEl) {
+      badgeEl.classList.remove('hidden');
+      badgeEl.innerHTML = `
+        <div class="flex items-center justify-between text-indigo-300 font-bold">
+          <span>🏢 ${isEn ? ent.nameEn : ent.nameZh}</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-950/80 border border-indigo-500/40">${isEn ? ent.fortune500RankEn : ent.fortune500Rank}</span>
+        </div>
+        <div class="text-[10px] text-gray-300">${isEn ? 'Corporate Culture: ' : '企业十神文化：'}<span class="text-indigo-200">${isEn ? ent.corporateCultureEn : ent.corporateCultureZh}</span></div>
+      `;
+    }
+
+    executeScenarioSimulation();
+  }
+
+  function handleAppSimulatorEnterpriseRoleChange(prefix) {
+    const isEn = (currentLang === 'en');
+    const entRoleSelect = document.getElementById('simEntRole' + prefix);
+    const roleSelect = document.getElementById('simRole' + prefix);
+    const titleInput = document.getElementById('simTitle' + prefix);
+    const entSelect = document.getElementById('simEnt' + prefix);
+    const countryKey = document.getElementById('simCountry' + prefix)?.value || 'UK';
+
+    if (!entRoleSelect || !roleSelect) return;
+    const selectedOption = entRoleSelect.options[entRoleSelect.selectedIndex];
+    roleSelect.value = entRoleSelect.value;
+
+    if (titleInput && entSelect && entSelect.value) {
+      const entList = (typeof ENTERPRISES_DB !== 'undefined' && ENTERPRISES_DB[countryKey]) ? ENTERPRISES_DB[countryKey] : [];
+      const ent = entList.find(e => e.id === entSelect.value);
+      const roleTitle = selectedOption?.getAttribute('data-title') || entRoleSelect.value;
+      if (ent) {
+        titleInput.value = `${isEn ? ent.nameEn : ent.nameZh} · ${roleTitle}`;
+      }
+    }
+
+    executeScenarioSimulation();
+  }
+
   function initScenarioSimulator() {
     const btnRun = document.getElementById('btnRunSimulator');
     if (btnRun) {
@@ -12181,6 +12348,31 @@ document.addEventListener('DOMContentLoaded', () => {
         executeScenarioSimulation();
       });
     }
+
+    document.getElementById('simCountryA')?.addEventListener('change', () => {
+      syncAppSimulatorOptions('A');
+      executeScenarioSimulation();
+    });
+    document.getElementById('simCountryB')?.addEventListener('change', () => {
+      syncAppSimulatorOptions('B');
+      executeScenarioSimulation();
+    });
+
+    document.getElementById('simInstA')?.addEventListener('change', () => handleAppSimulatorInstitutionChange('A'));
+    document.getElementById('simInstB')?.addEventListener('change', () => handleAppSimulatorInstitutionChange('B'));
+
+    document.getElementById('simEntA')?.addEventListener('change', () => handleAppSimulatorEnterpriseChange('A'));
+    document.getElementById('simEntB')?.addEventListener('change', () => handleAppSimulatorEnterpriseChange('B'));
+
+    document.getElementById('simEntRoleA')?.addEventListener('change', () => handleAppSimulatorEnterpriseRoleChange('A'));
+    document.getElementById('simEntRoleB')?.addEventListener('change', () => handleAppSimulatorEnterpriseRoleChange('B'));
+
+    ['simIndustryA', 'simRoleA', 'simManagerA', 'simIndustryB', 'simRoleB', 'simManagerB'].forEach(id => {
+      document.getElementById(id)?.addEventListener('change', executeScenarioSimulation);
+    });
+
+    syncAppSimulatorOptions('A');
+    syncAppSimulatorOptions('B');
   }
 
   function executeScenarioSimulation() {
@@ -12188,14 +12380,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!container || typeof ScenarioSimulatorEngine === 'undefined') return;
     const isEn = (currentLang === 'en');
 
+    const instIdA = document.getElementById('simInstA')?.value || '';
+    const entIdA = document.getElementById('simEntA')?.value || '';
+    const entRoleTitleA = document.getElementById('simEntRoleA')?.selectedOptions?.[0]?.getAttribute('data-title') || '';
+
     const optA = {
       title: (document.getElementById('simTitleA')?.value || '').trim() || (isEn ? 'Option A' : '方案 A'),
       country: document.getElementById('simCountryA')?.value || 'UK',
       city: (document.getElementById('simCityA')?.value || '').trim() || 'Birmingham',
       industry: document.getElementById('simIndustryA')?.value || 'academia_research',
       role: document.getElementById('simRoleA')?.value || 'specialist',
-      manager: document.getElementById('simManagerA')?.value || 'resource'
+      roleTitle: entRoleTitleA || null,
+      roleTitleEn: entRoleTitleA || null,
+      manager: document.getElementById('simManagerA')?.value || 'resource',
+      institution: instIdA,
+      enterprise: entIdA
     };
+
+    const instIdB = document.getElementById('simInstB')?.value || '';
+    const entIdB = document.getElementById('simEntB')?.value || '';
+    const entRoleTitleB = document.getElementById('simEntRoleB')?.selectedOptions?.[0]?.getAttribute('data-title') || '';
 
     const optB = {
       title: (document.getElementById('simTitleB')?.value || '').trim() || (isEn ? 'Option B' : '方案 B'),
@@ -12203,7 +12407,11 @@ document.addEventListener('DOMContentLoaded', () => {
       city: (document.getElementById('simCityB')?.value || '').trim() || 'Shenzhen',
       industry: document.getElementById('simIndustryB')?.value || 'finance_quant',
       role: document.getElementById('simRoleB')?.value || 'specialist',
-      manager: document.getElementById('simManagerB')?.value || 'killings'
+      roleTitle: entRoleTitleB || null,
+      roleTitleEn: entRoleTitleB || null,
+      manager: document.getElementById('simManagerB')?.value || 'killings',
+      institution: instIdB,
+      enterprise: entIdB
     };
 
     const simRes = ScenarioSimulatorEngine.simulateOptions(optA, optB, currentBaziResult, currentLuckResult, currentLang);

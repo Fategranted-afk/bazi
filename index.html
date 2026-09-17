@@ -2084,9 +2084,28 @@
             <span class="text-[11px] text-gray-500">主选方向</span>
           </div>
           <div>
-            <label class="block text-xs text-gray-400 mb-1">方案名称 (Title)</label>
+            <label class="block text-xs text-gray-400 mb-1" id="lblTitleA">方案名称 (Title)</label>
             <input id="simTitleA" type="text" value="英国伯明翰 · 高校学术科研" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none" />
           </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" id="lblInstA">目标名校 (University)</label>
+              <select id="simInstA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
+                <option value="">-- 自选/无学府联动 --</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" id="lblEntA">目标五百强 (Enterprise)</label>
+              <select id="simEntA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
+                <option value="">-- 自选/无名企联动 --</option>
+              </select>
+            </div>
+          </div>
+          <div id="simEntRoleContainerA" class="hidden">
+            <label class="block text-[11px] text-indigo-400 mb-1" id="lblEntRoleA">企业典型核心岗位 (Typical Role)</label>
+            <select id="simEntRoleA" class="w-full text-xs p-1.5 rounded bg-indigo-950/60 border border-indigo-700 text-indigo-200 focus:outline-none"></select>
+          </div>
+          <div id="simMatchedBadgeA" class="hidden text-xs p-2.5 rounded-xl bg-black/40 border border-indigo-900/50 space-y-1"></div>
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
@@ -2145,9 +2164,28 @@
             <span class="text-[11px] text-gray-500">对比备选</span>
           </div>
           <div>
-            <label class="block text-xs text-gray-400 mb-1">方案名称 (Title)</label>
+            <label class="block text-xs text-gray-400 mb-1" id="lblTitleB">方案名称 (Title)</label>
             <input id="simTitleB" type="text" value="深圳/伦敦 · 量化对冲基金" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none" />
           </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" id="lblInstB">目标名校 (University)</label>
+              <select id="simInstB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none">
+                <option value="">-- 自选/无学府联动 --</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" id="lblEntB">目标五百强 (Enterprise)</label>
+              <select id="simEntB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none">
+                <option value="">-- 自选/无名企联动 --</option>
+              </select>
+            </div>
+          </div>
+          <div id="simEntRoleContainerB" class="hidden">
+            <label class="block text-[11px] text-purple-400 mb-1" id="lblEntRoleB">企业典型核心岗位 (Typical Role)</label>
+            <select id="simEntRoleB" class="w-full text-xs p-1.5 rounded bg-purple-950/60 border border-purple-700 text-purple-200 focus:outline-none"></select>
+          </div>
+          <div id="simMatchedBadgeB" class="hidden text-xs p-2.5 rounded-xl bg-black/40 border border-purple-900/50 space-y-1"></div>
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
@@ -2503,6 +2541,8 @@
   <script src="data/historical_figures.js"></script>
   <script src="js/history-engine.js"></script>
   <script src="js/advisor-engine.js"></script>
+  <script src="data/institutions.js"></script>
+  <script src="data/enterprises.js"></script>
   <script src="js/simulator-engine.js"></script>
   <script src="js/social-card-engine.js"></script>
   <script src="js/portrait-engine.js?v=2026091404"></script>

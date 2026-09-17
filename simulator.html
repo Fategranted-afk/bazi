@@ -147,6 +147,31 @@
             <input id="simTitleA" type="text" value="英国伯明翰 · 高校学术科研" class="w-full text-xs p-2 rounded-lg bg-gray-900 border border-gray-700 text-gray-100 focus:border-indigo-500 focus:outline-none" />
           </div>
 
+          <!-- University & Enterprise Direct Link Selectors -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium" id="lblInstA">目标名校 (University)</label>
+              <select id="simInstA" class="w-full text-xs p-2 rounded-lg bg-gray-900 border border-gray-700 text-gray-100 focus:border-indigo-500 focus:outline-none">
+                <option value="">-- 自选/无学府联动 --</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium" id="lblEntA">目标五百强 (Enterprise)</label>
+              <select id="simEntA" class="w-full text-xs p-2 rounded-lg bg-gray-900 border border-gray-700 text-gray-100 focus:border-indigo-500 focus:outline-none">
+                <option value="">-- 自选/无名企联动 --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Enterprise Typical Roles -->
+          <div id="simEntRoleContainerA" class="hidden">
+            <label class="block text-indigo-400 mb-1 font-medium" id="lblEntRoleA">企业典型核心岗位 (Typical Role)</label>
+            <select id="simEntRoleA" class="w-full text-xs p-2 rounded-lg bg-indigo-950/60 border border-indigo-700 text-indigo-200 focus:outline-none"></select>
+          </div>
+
+          <!-- Matched Badge Info -->
+          <div id="simMatchedBadgeA" class="hidden text-xs p-3 rounded-xl bg-black/40 border border-indigo-900/50 space-y-1"></div>
+
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-gray-300 mb-1 font-medium" id="lblCountryA">国家 (Country)</label>
@@ -214,6 +239,31 @@
             <label class="block text-gray-300 mb-1 font-medium" id="lblTitleB">方案名称 (Title)</label>
             <input id="simTitleB" type="text" value="中国深圳 · 量化对冲基金" class="w-full text-xs p-2 rounded-lg bg-gray-900 border border-gray-700 text-gray-100 focus:border-purple-500 focus:outline-none" />
           </div>
+
+          <!-- University & Enterprise Direct Link Selectors -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium" id="lblInstB">目标名校 (University)</label>
+              <select id="simInstB" class="w-full text-xs p-2 rounded-lg bg-gray-900 border border-gray-700 text-gray-100 focus:border-purple-500 focus:outline-none">
+                <option value="">-- 自选/无学府联动 --</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1 font-medium" id="lblEntB">目标五百强 (Enterprise)</label>
+              <select id="simEntB" class="w-full text-xs p-2 rounded-lg bg-gray-900 border border-gray-700 text-gray-100 focus:border-purple-500 focus:outline-none">
+                <option value="">-- 自选/无名企联动 --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Enterprise Typical Roles -->
+          <div id="simEntRoleContainerB" class="hidden">
+            <label class="block text-purple-400 mb-1 font-medium" id="lblEntRoleB">企业典型核心岗位 (Typical Role)</label>
+            <select id="simEntRoleB" class="w-full text-xs p-2 rounded-lg bg-purple-950/60 border border-purple-700 text-purple-200 focus:outline-none"></select>
+          </div>
+
+          <!-- Matched Badge Info -->
+          <div id="simMatchedBadgeB" class="hidden text-xs p-3 rounded-xl bg-black/40 border border-purple-900/50 space-y-1"></div>
 
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -313,6 +363,8 @@
   <script src="js/bazi-engine.js"></script>
   <script src="js/luck-engine.js"></script>
   <script src="js/career-engine.js"></script>
+  <script src="data/institutions.js"></script>
+  <script src="data/enterprises.js"></script>
   <script src="js/simulator-engine.js"></script>
 
   <script>
@@ -362,6 +414,169 @@
         `;
       }
 
+      function syncInstitutionsAndEnterprises(prefix) {
+        const isEn = (currentLang === "en");
+        const countryEl = document.getElementById("simCountry" + prefix);
+        const instSelect = document.getElementById("simInst" + prefix);
+        const entSelect = document.getElementById("simEnt" + prefix);
+        if (!countryEl || !instSelect || !entSelect) return;
+
+        let countryKey = countryEl.value || "UK";
+        if (countryKey === "United Kingdom") countryKey = "UK";
+
+        // Institutions
+        const instList = (typeof INSTITUTIONS_DB !== "undefined" && INSTITUTIONS_DB[countryKey]) ? INSTITUTIONS_DB[countryKey] : [];
+        let instHtml = `<option value="">${isEn ? "-- Custom / None --" : "-- 自选/无学府联动 --"}</option>`;
+        instList.forEach(inst => {
+          const name = isEn ? inst.nameEn : inst.nameZh;
+          instHtml += `<option value="${inst.id}">${name} (QS #${inst.qsRank})</option>`;
+        });
+        instSelect.innerHTML = instHtml;
+
+        // Enterprises
+        const entList = (typeof ENTERPRISES_DB !== "undefined" && ENTERPRISES_DB[countryKey]) ? ENTERPRISES_DB[countryKey] : [];
+        let entHtml = `<option value="">${isEn ? "-- Custom / None --" : "-- 自选/无名企联动 --"}</option>`;
+        entList.forEach(ent => {
+          const name = isEn ? ent.nameEn : ent.nameZh;
+          entHtml += `<option value="${ent.id}">${name}</option>`;
+        });
+        entSelect.innerHTML = entHtml;
+      }
+
+      function handleInstitutionChange(prefix) {
+        const isEn = (currentLang === "en");
+        const countryKey = document.getElementById("simCountry" + prefix)?.value || "UK";
+        const instId = document.getElementById("simInst" + prefix)?.value;
+        const badgeEl = document.getElementById("simMatchedBadge" + prefix);
+        const entSelect = document.getElementById("simEnt" + prefix);
+        const entRoleContainer = document.getElementById("simEntRoleContainer" + prefix);
+
+        if (entSelect) entSelect.value = "";
+        if (entRoleContainer) entRoleContainer.classList.add("hidden");
+
+        if (!instId) {
+          if (badgeEl) badgeEl.classList.add("hidden");
+          return;
+        }
+
+        const instList = (typeof INSTITUTIONS_DB !== "undefined" && INSTITUTIONS_DB[countryKey]) ? INSTITUTIONS_DB[countryKey] : [];
+        const inst = instList.find(i => i.id === instId);
+        if (!inst) return;
+
+        const cityInput = document.getElementById("simCity" + prefix);
+        const industrySelect = document.getElementById("simIndustry" + prefix);
+        const roleSelect = document.getElementById("simRole" + prefix);
+        const titleInput = document.getElementById("simTitle" + prefix);
+
+        if (cityInput) cityInput.value = inst.city;
+        if (industrySelect) industrySelect.value = "academia_research";
+        if (roleSelect) roleSelect.value = "specialist";
+        if (titleInput) {
+          titleInput.value = isEn ? `${inst.nameEn} · Academic Research` : `${inst.nameZh} · 高校学术科研`;
+        }
+
+        if (badgeEl) {
+          badgeEl.classList.remove("hidden");
+          const top5 = isEn ? inst.top5SubjectsEn.join(", ") : inst.top5SubjectsZh.join("、");
+          badgeEl.innerHTML = `
+            <div class="flex items-center justify-between text-amber-300 font-bold">
+              <span>🏛️ ${isEn ? inst.nameEn : inst.nameZh}</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-950/80 border border-amber-500/40">QS #${inst.qsRank} · THE #${inst.theRank}</span>
+            </div>
+            <div class="text-[10px] text-gray-300">${isEn ? "Standout Disciplines: " : "前五强王牌学科："}<span class="text-amber-200">${top5}</span></div>
+            <div class="text-[10px] text-gray-400 italic">${isEn ? inst.academicAdvantageEn : inst.academicAdvantageZh}</div>
+          `;
+        }
+
+        runSimulation();
+      }
+
+      function handleEnterpriseChange(prefix) {
+        const isEn = (currentLang === "en");
+        const countryKey = document.getElementById("simCountry" + prefix)?.value || "UK";
+        const entId = document.getElementById("simEnt" + prefix)?.value;
+        const badgeEl = document.getElementById("simMatchedBadge" + prefix);
+        const instSelect = document.getElementById("simInst" + prefix);
+        const entRoleContainer = document.getElementById("simEntRoleContainer" + prefix);
+        const entRoleSelect = document.getElementById("simEntRole" + prefix);
+
+        if (instSelect) instSelect.value = "";
+
+        if (!entId) {
+          if (badgeEl) badgeEl.classList.add("hidden");
+          if (entRoleContainer) entRoleContainer.classList.add("hidden");
+          return;
+        }
+
+        const entList = (typeof ENTERPRISES_DB !== "undefined" && ENTERPRISES_DB[countryKey]) ? ENTERPRISES_DB[countryKey] : [];
+        const ent = entList.find(e => e.id === entId);
+        if (!ent) return;
+
+        const cityInput = document.getElementById("simCity" + prefix);
+        const industrySelect = document.getElementById("simIndustry" + prefix);
+        const roleSelect = document.getElementById("simRole" + prefix);
+        const titleInput = document.getElementById("simTitle" + prefix);
+
+        if (cityInput && ent.primaryCities && ent.primaryCities.length > 0) {
+          cityInput.value = ent.primaryCities[0];
+        }
+        if (industrySelect) industrySelect.value = ent.industry;
+
+        // Populate roles
+        if (entRoleContainer && entRoleSelect) {
+          entRoleContainer.classList.remove("hidden");
+          let rolesHtml = "";
+          ent.typicalRoles.forEach((r, idx) => {
+            const roleName = isEn ? r.titleEn : r.titleZh;
+            rolesHtml += `<option value="${r.roleKey}" data-title="${isEn ? r.titleEn : r.titleZh}">${roleName}</option>`;
+          });
+          entRoleSelect.innerHTML = rolesHtml;
+
+          const firstRole = ent.typicalRoles[0];
+          if (roleSelect) roleSelect.value = firstRole.roleKey;
+          if (titleInput) {
+            titleInput.value = isEn ? `${ent.nameEn} · ${firstRole.titleEn}` : `${ent.nameZh} · ${firstRole.titleZh}`;
+          }
+        }
+
+        if (badgeEl) {
+          badgeEl.classList.remove("hidden");
+          badgeEl.innerHTML = `
+            <div class="flex items-center justify-between text-indigo-300 font-bold">
+              <span>🏢 ${isEn ? ent.nameEn : ent.nameZh}</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-950/80 border border-indigo-500/40">${isEn ? ent.fortune500RankEn : ent.fortune500Rank}</span>
+            </div>
+            <div class="text-[10px] text-gray-300">${isEn ? "Corporate Culture: " : "企业十神文化："}<span class="text-indigo-200">${isEn ? ent.corporateCultureEn : ent.corporateCultureZh}</span></div>
+          `;
+        }
+
+        runSimulation();
+      }
+
+      function handleEnterpriseRoleChange(prefix) {
+        const isEn = (currentLang === "en");
+        const entRoleSelect = document.getElementById("simEntRole" + prefix);
+        const roleSelect = document.getElementById("simRole" + prefix);
+        const titleInput = document.getElementById("simTitle" + prefix);
+        const entSelect = document.getElementById("simEnt" + prefix);
+        const countryKey = document.getElementById("simCountry" + prefix)?.value || "UK";
+
+        if (!entRoleSelect || !roleSelect) return;
+        const selectedOption = entRoleSelect.options[entRoleSelect.selectedIndex];
+        roleSelect.value = entRoleSelect.value;
+
+        if (titleInput && entSelect && entSelect.value) {
+          const entList = (typeof ENTERPRISES_DB !== "undefined" && ENTERPRISES_DB[countryKey]) ? ENTERPRISES_DB[countryKey] : [];
+          const ent = entList.find(e => e.id === entSelect.value);
+          const roleTitle = selectedOption?.getAttribute("data-title") || entRoleSelect.value;
+          if (ent) {
+            titleInput.value = `${isEn ? ent.nameEn : ent.nameZh} · ${roleTitle}`;
+          }
+        }
+
+        runSimulation();
+      }
+
       function updateI18n() {
         const isEn = (currentLang === "en");
         document.documentElement.lang = isEn ? "en" : "zh-CN";
@@ -405,6 +620,12 @@
         document.getElementById("lblIndustryA").textContent = isEn ? "Industry Sector" : "行业赛道 (Industry)";
         document.getElementById("lblRoleA").textContent = isEn ? "Workplace Role" : "岗位生态位 (Role)";
         document.getElementById("lblManagerA").textContent = isEn ? "Manager / Environment" : "直属上司/环境 (Boss)";
+        const lblInstA = document.getElementById("lblInstA");
+        if (lblInstA) lblInstA.textContent = isEn ? "Target University (Top 20)" : "目标名校 (University)";
+        const lblEntA = document.getElementById("lblEntA");
+        if (lblEntA) lblEntA.textContent = isEn ? "Target Enterprise (Fortune 500)" : "目标五百强 (Enterprise)";
+        const lblEntRoleA = document.getElementById("lblEntRoleA");
+        if (lblEntRoleA) lblEntRoleA.textContent = isEn ? "Typical Core Role" : "企业典型核心岗位 (Typical Role)";
 
         document.getElementById("optTitleLabelB").textContent = isEn ? "Option B · Alternative / Pivot" : "方案 B · 对比备选";
         document.getElementById("optBadgeB").textContent = isEn ? "Alternative" : "对冲备选";
@@ -414,6 +635,12 @@
         document.getElementById("lblIndustryB").textContent = isEn ? "Industry Sector" : "行业赛道 (Industry)";
         document.getElementById("lblRoleB").textContent = isEn ? "Workplace Role" : "岗位生态位 (Role)";
         document.getElementById("lblManagerB").textContent = isEn ? "Manager / Environment" : "直属上司/环境 (Boss)";
+        const lblInstB = document.getElementById("lblInstB");
+        if (lblInstB) lblInstB.textContent = isEn ? "Target University (Top 20)" : "目标名校 (University)";
+        const lblEntB = document.getElementById("lblEntB");
+        if (lblEntB) lblEntB.textContent = isEn ? "Target Enterprise (Fortune 500)" : "目标五百强 (Enterprise)";
+        const lblEntRoleB = document.getElementById("lblEntRoleB");
+        if (lblEntRoleB) lblEntRoleB.textContent = isEn ? "Typical Core Role" : "企业典型核心岗位 (Typical Role)";
 
         document.getElementById("btnRunSimText").textContent = isEn
           ? "Run Dual-Track Holographic Simulation"
@@ -432,6 +659,8 @@
         }
 
         renderBadges();
+        syncInstitutionsAndEnterprises("A");
+        syncInstitutionsAndEnterprises("B");
       }
 
       function runSimulation() {
@@ -439,14 +668,26 @@
         if (!container || typeof ScenarioSimulatorEngine === "undefined") return;
         const isEn = (currentLang === "en");
 
+        const instIdA = document.getElementById("simInstA")?.value || "";
+        const entIdA = document.getElementById("simEntA")?.value || "";
+        const entRoleTitleA = document.getElementById("simEntRoleA")?.selectedOptions?.[0]?.getAttribute("data-title") || "";
+
         const optA = {
           title: (document.getElementById("simTitleA")?.value || "").trim() || (isEn ? "Option A" : "方案 A"),
           country: document.getElementById("simCountryA")?.value || "UK",
           city: (document.getElementById("simCityA")?.value || "").trim() || "Birmingham",
           industry: document.getElementById("simIndustryA")?.value || "academia_research",
           role: document.getElementById("simRoleA")?.value || "specialist",
-          manager: document.getElementById("simManagerA")?.value || "resource"
+          roleTitle: entRoleTitleA || null,
+          roleTitleEn: entRoleTitleA || null,
+          manager: document.getElementById("simManagerA")?.value || "resource",
+          institution: instIdA,
+          enterprise: entIdA
         };
+
+        const instIdB = document.getElementById("simInstB")?.value || "";
+        const entIdB = document.getElementById("simEntB")?.value || "";
+        const entRoleTitleB = document.getElementById("simEntRoleB")?.selectedOptions?.[0]?.getAttribute("data-title") || "";
 
         const optB = {
           title: (document.getElementById("simTitleB")?.value || "").trim() || (isEn ? "Option B" : "方案 B"),
@@ -454,7 +695,11 @@
           city: (document.getElementById("simCityB")?.value || "").trim() || "Shenzhen",
           industry: document.getElementById("simIndustryB")?.value || "finance_quant",
           role: document.getElementById("simRoleB")?.value || "specialist",
-          manager: document.getElementById("simManagerB")?.value || "killings"
+          roleTitle: entRoleTitleB || null,
+          roleTitleEn: entRoleTitleB || null,
+          manager: document.getElementById("simManagerB")?.value || "killings",
+          institution: instIdB,
+          enterprise: entIdB
         };
 
         const simRes = ScenarioSimulatorEngine.simulateOptions(optA, optB, bazi, luck, currentLang);
@@ -466,16 +711,11 @@
         container.innerHTML = `
           <!-- Verdict Summary Banner -->
           <div class="p-5 rounded-2xl border ${simRes.winner === 'A' ? 'border-indigo-500/60 bg-indigo-950/40' : simRes.winner === 'B' ? 'border-purple-500/60 bg-purple-950/40' : 'border-amber-500/60 bg-amber-950/40'} shadow-2xl space-y-2">
-            <div class="flex items-start space-x-3">
-              <span class="text-2xl mt-0.5">⚖️</span>
-              <div>
-                <span class="text-xs font-bold ${simRes.winner === 'A' ? 'text-indigo-300' : simRes.winner === 'B' ? 'text-purple-300' : 'text-amber-300'} font-mono uppercase tracking-wider">
-                  ${isEn ? 'STRATEGIC DECISION VERDICT' : '战略推演结论'} · ${simRes.winner === 'tie' ? (isEn ? 'Balanced Parity' : '平局对冲') : (isEn ? 'Winner Option ' + simRes.winner + ' (+' + simRes.delta + ' pts)' : '方案 ' + simRes.winner + ' 显著胜出 (领先 +' + simRes.delta + ' 分)')}
-                </span>
-                <p class="text-sm sm:text-base font-bold text-gray-100 font-serif-sc mt-1 leading-relaxed">
-                  ${simRes.summary}
-                </p>
-              </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl">⚖️</span>
+              <h4 class="text-base sm:text-lg font-bold text-gray-100 font-serif-sc">
+                ${simRes.summary}
+              </h4>
             </div>
           </div>
 
@@ -588,33 +828,26 @@
             </div>
           </div>
         `;
-
-        if (typeof window !== "undefined" && typeof window.scrollTo === "function") {
-          const resEl = document.getElementById("simStandaloneResultsContainer");
-          if (resEl) {
-            resEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }
       }
 
       // Presets Handler
       function setupPresets() {
         const presets = {
           uk_vs_sz: {
-            titleA: "英国伯明翰 · 高校学术科研", countryA: "UK", cityA: "Birmingham", industryA: "academia_research", roleA: "specialist", managerA: "resource",
-            titleB: "中国深圳 · 量化对冲基金", countryB: "China", cityB: "Shenzhen", industryB: "finance_quant", roleB: "specialist", managerB: "killings"
+            titleA: "英国伯明翰 · 高校学术科研", countryA: "UK", cityA: "Birmingham", industryA: "academia_research", roleA: "specialist", managerA: "resource", instA: "birmingham", entA: "",
+            titleB: "中国深圳 · 量化对冲基金", countryB: "China", cityB: "Shenzhen", industryB: "finance_quant", roleB: "specialist", managerB: "killings", instB: "", entB: "tencent"
           },
           bj_vs_sv: {
-            titleA: "中国北京 · 重点国企机关高管", countryA: "China", cityA: "Beijing", industryA: "civil_admin", roleA: "executive", managerA: "officer",
-            titleB: "美国硅谷 · 前沿大模型架构师", countryB: "USA", cityB: "San Francisco", industryB: "tech_ai", roleB: "specialist", managerB: "wealth"
+            titleA: "中国北京 · 重点国企机关高管", countryA: "China", cityA: "Beijing", industryA: "civil_admin", roleA: "executive", managerA: "officer", instA: "peking", entA: "",
+            titleB: "美国硅谷 · 前沿大模型架构师", countryB: "USA", cityB: "San Francisco", industryB: "tech_ai", roleB: "specialist", managerB: "wealth", instB: "", entB: "nvidia"
           },
           hz_vs_sh: {
-            titleA: "中国杭州 · 电商核心系统开发", countryA: "China", cityA: "Hangzhou", industryA: "tech_ai", roleA: "specialist", managerA: "rob_wealth",
-            titleB: "中国上海 · 外资投行法务风控", countryB: "China", cityB: "Shanghai", industryB: "finance_quant", roleB: "civil", managerB: "resource"
+            titleA: "中国杭州 · 电商核心系统开发", countryA: "China", cityA: "Hangzhou", industryA: "tech_ai", roleA: "specialist", managerA: "rob_wealth", instA: "zhejiang", entA: "alibaba",
+            titleB: "中国上海 · 外资投行法务风控", countryB: "China", cityB: "Shanghai", industryB: "finance_quant", roleB: "civil", managerB: "resource", instA: "", entB: "hsbc"
           },
           van_vs_gz: {
-            titleA: "加拿大温哥华 · 跨国贸易与移民深耕", countryA: "Canada", cityA: "Vancouver", industryA: "manufacturing", roleA: "civil", managerA: "resource",
-            titleB: "中国广州 · 跨境出海新锐品牌开拓", countryB: "China", cityB: "Guangzhou", industryB: "creative_media", roleB: "martial", managerB: "wealth"
+            titleA: "加拿大温哥华 · 跨国贸易与移民深耕", countryA: "Canada", cityA: "Vancouver", industryA: "manufacturing", roleA: "civil", managerA: "resource", instA: "ubc", entA: "",
+            titleB: "中国广州 · 跨境出海新锐品牌开拓", countryB: "China", cityB: "Guangzhou", industryB: "creative_media", roleB: "martial", managerB: "wealth", instB: "", entB: "byd"
           }
         };
 
@@ -624,19 +857,25 @@
             const data = presets[key];
             if (!data) return;
 
-            document.getElementById("simTitleA").value = data.titleA;
             document.getElementById("simCountryA").value = data.countryA;
+            syncInstitutionsAndEnterprises("A");
+            document.getElementById("simTitleA").value = data.titleA;
             document.getElementById("simCityA").value = data.cityA;
             document.getElementById("simIndustryA").value = data.industryA;
             document.getElementById("simRoleA").value = data.roleA;
             document.getElementById("simManagerA").value = data.managerA;
+            if (data.instA) document.getElementById("simInstA").value = data.instA;
+            if (data.entA) document.getElementById("simEntA").value = data.entA;
 
-            document.getElementById("simTitleB").value = data.titleB;
             document.getElementById("simCountryB").value = data.countryB;
+            syncInstitutionsAndEnterprises("B");
+            document.getElementById("simTitleB").value = data.titleB;
             document.getElementById("simCityB").value = data.cityB;
             document.getElementById("simIndustryB").value = data.industryB;
             document.getElementById("simRoleB").value = data.roleB;
             document.getElementById("simManagerB").value = data.managerB;
+            if (data.instB) document.getElementById("simInstB").value = data.instB;
+            if (data.entB) document.getElementById("simEntB").value = data.entB;
 
             runSimulation();
           });
@@ -645,6 +884,33 @@
 
       // Event Listeners
       document.getElementById("btnRunStandaloneSimulator")?.addEventListener("click", runSimulation);
+
+      // Country change listeners
+      document.getElementById("simCountryA")?.addEventListener("change", () => {
+        syncInstitutionsAndEnterprises("A");
+        runSimulation();
+      });
+      document.getElementById("simCountryB")?.addEventListener("change", () => {
+        syncInstitutionsAndEnterprises("B");
+        runSimulation();
+      });
+
+      // Institution change listeners
+      document.getElementById("simInstA")?.addEventListener("change", () => handleInstitutionChange("A"));
+      document.getElementById("simInstB")?.addEventListener("change", () => handleInstitutionChange("B"));
+
+      // Enterprise change listeners
+      document.getElementById("simEntA")?.addEventListener("change", () => handleEnterpriseChange("A"));
+      document.getElementById("simEntB")?.addEventListener("change", () => handleEnterpriseChange("B"));
+
+      // Enterprise Role change listeners
+      document.getElementById("simEntRoleA")?.addEventListener("change", () => handleEnterpriseRoleChange("A"));
+      document.getElementById("simEntRoleB")?.addEventListener("change", () => handleEnterpriseRoleChange("B"));
+
+      // Standard input changes auto run
+      ["simIndustryA", "simRoleA", "simManagerA", "simIndustryB", "simRoleB", "simManagerB"].forEach(id => {
+        document.getElementById(id)?.addEventListener("change", runSimulation);
+      });
 
       document.getElementById("simLangZhBtn")?.addEventListener("click", () => {
         currentLang = "zh";
@@ -681,9 +947,13 @@
       // Initialization
       updateI18n();
       setupPresets();
-      // Auto run first simulation on load
+      // Set initial defaults
+      if (document.getElementById("simInstA")) document.getElementById("simInstA").value = "birmingham";
+      handleInstitutionChange("A");
+      if (document.getElementById("simEntB")) document.getElementById("simEntB").value = "tencent";
+      handleEnterpriseChange("B");
       setTimeout(runSimulation, 50);
-    })();
+    })();;
   </script>
 </body>
 </html>

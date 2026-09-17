@@ -12023,6 +12023,226 @@ run_check104 = subprocess.run(jsc_check104_cmd, capture_output=True, text=True)
 assert run_check104.returncode == 0, f"Check 104 JSC test failed: stdout={run_check104.stdout} stderr={run_check104.stderr}"
 print("✓ 独立胜负沙盘页面 (simulator.html)、主盘双轨导航入口、预设一键推演与英文100%零中文残留验证通过！")
 
-print("\n🎉 ALL 104 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 105. Validate 80 Top Universities, World Fortune 500 Database, Upgraded Advisor Romance Intent & Micro-Ecosystem Simulator
+print("\n=== 105. Validating 80 Top Universities, World Fortune 500 Database, Romance Intent & Micro-Ecosystems ===")
+
+jsc_check105_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    load('data/institutions.js');
+    load('data/enterprises.js');
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/ditiansui.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('data/tengods.js');
+    load('data/rongkujian.js');
+    load('js/i18n.js');
+    load('js/bazi-engine.js');
+    load('js/luck-engine.js');
+    load('js/career-engine.js');
+    load('js/advisor-engine.js');
+    load('js/simulator-engine.js');
+
+    // 1. Validate 80 Top Universities Database
+    if (typeof INSTITUTIONS_DB === 'undefined') throw new Error("INSTITUTIONS_DB missing");
+    var countries = ['UK', 'China', 'USA', 'Canada'];
+    var totalInsts = 0;
+    countries.forEach(function(c) {
+      if (!INSTITUTIONS_DB[c] || INSTITUTIONS_DB[c].length !== 20) {
+        throw new Error("INSTITUTIONS_DB[" + c + "] must contain exactly 20 universities, got " + (INSTITUTIONS_DB[c] ? INSTITUTIONS_DB[c].length : 0));
+      }
+      INSTITUTIONS_DB[c].forEach(function(inst) {
+        totalInsts++;
+        if (!inst.id || !inst.nameZh || !inst.nameEn || !inst.city || !inst.qsRank || !inst.theRank) {
+          throw new Error("Institution " + inst.id + " missing basic fields");
+        }
+        if (!inst.top5SubjectsZh || inst.top5SubjectsZh.length !== 5 || !inst.top5SubjectsEn || inst.top5SubjectsEn.length !== 5) {
+          throw new Error("Institution " + inst.id + " must contain exactly 5 standout disciplines");
+        }
+        if (!inst.elementalFocus || !inst.elementalFocus.primary || !inst.elementalFocus.secondary) {
+          throw new Error("Institution " + inst.id + " missing elementalFocus");
+        }
+        if (!inst.academicAdvantageZh || !inst.academicAdvantageEn) {
+          throw new Error("Institution " + inst.id + " missing academic advantage notes");
+        }
+      });
+    });
+    if (totalInsts !== 80) throw new Error("Total institutions must be exactly 80, got " + totalInsts);
+
+    // 2. Validate World Fortune 500 Database
+    if (typeof ENTERPRISES_DB === 'undefined') throw new Error("ENTERPRISES_DB missing");
+    var totalEnts = 0;
+    countries.forEach(function(c) {
+      if (!ENTERPRISES_DB[c] || ENTERPRISES_DB[c].length < 4) {
+        throw new Error("ENTERPRISES_DB[" + c + "] must contain leading enterprises, got " + (ENTERPRISES_DB[c] ? ENTERPRISES_DB[c].length : 0));
+      }
+      ENTERPRISES_DB[c].forEach(function(ent) {
+        totalEnts++;
+        if (!ent.id || !ent.nameZh || !ent.nameEn || !ent.industry || !ent.fortune500Rank || !ent.corporateCultureZh || !ent.corporateCultureEn) {
+          throw new Error("Enterprise " + ent.id + " missing core profile fields");
+        }
+        if (!ent.elementalField || !ent.elementalField.primary || !ent.elementalField.secondary) {
+          throw new Error("Enterprise " + ent.id + " missing elementalField");
+        }
+        if (!ent.typicalRoles || ent.typicalRoles.length < 5) {
+          throw new Error("Enterprise " + ent.id + " must have at least 5 typical roles");
+        }
+        ent.typicalRoles.forEach(function(r) {
+          if (!r.titleZh || !r.titleEn || !r.roleKey) {
+            throw new Error("Typical role in " + ent.id + " missing titles or roleKey");
+          }
+        });
+      });
+    });
+
+    // 3. Validate AdvisorEngine Natural Language Intent Recognition & Romance/Spouse Timing
+    var bazi = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 20, hour: 14, minute: 30,
+      gender: 'male', city: 'London'
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // Query 3a: '对象何时来'
+    var advRomance = AdvisorEngine.generateAdvice('对象何时来', bazi, luck, 2026, 'zh');
+    if (advRomance.category !== 'romance_timing') {
+      throw new Error("'对象何时来' must be classified as romance_timing, got: " + advRomance.category);
+    }
+    if (advRomance.title !== '世俗婚恋与正缘应期神策') {
+      throw new Error("Expected title '世俗婚恋与正缘应期神策', got: " + advRomance.title);
+    }
+    if (!advRomance.diagnosis.includes('配偶') || !advRomance.diagnosis.includes('日元')) {
+      throw new Error("Diagnosis missing spouse palace analysis: " + advRomance.diagnosis);
+    }
+    if (advRomance.tactics.length < 3) {
+      throw new Error("Expected at least 3 romance tactics, got " + advRomance.tactics.length);
+    }
+    if (!advRomance.mentalAnchor.includes('咸卦')) {
+      throw new Error("Mental anchor must quote Hexagram Xian, got: " + advRomance.mentalAnchor);
+    }
+
+    // Query 3b: '考研能上岸吗'
+    var advExam = AdvisorEngine.generateAdvice('考研能上岸吗', bazi, luck, 2026, 'zh');
+    if (advExam.category !== 'academic_exam') {
+      throw new Error("'考研能上岸吗' must be classified as academic_exam, got: " + advExam.category);
+    }
+
+    // Query 3c: '跟朋友合伙开公司'
+    var advPartner = AdvisorEngine.generateAdvice('跟朋友合伙开公司', bazi, luck, 2026, 'zh');
+    if (advPartner.category !== 'partnership') {
+      throw new Error("'跟朋友合伙开公司' must be classified as partnership, got: " + advPartner.category);
+    }
+
+    // Query 3d: Fallback general query (NOT wealth!)
+    var advGeneral = AdvisorEngine.generateAdvice('今天天气真好', bazi, luck, 2026, 'zh');
+    if (advGeneral.category !== 'general') {
+      throw new Error("'今天天气真好' must fall back to general, got: " + advGeneral.category);
+    }
+
+    // Query 3e: English Romance Timing & Zero Residual Chinese
+    var advRomanceEn = AdvisorEngine.generateAdvice('When will my destiny partner arrive?', bazi, luck, 2026, 'en');
+    if (advRomanceEn.category !== 'romance_timing') {
+      throw new Error("English query must be romance_timing, got: " + advRomanceEn.category);
+    }
+    if (advRomanceEn.title !== 'Romance Timing & Destiny Spouse Oracle') {
+      throw new Error("Expected English title 'Romance Timing & Destiny Spouse Oracle', got: " + advRomanceEn.title);
+    }
+    var advJsonEn = JSON.stringify(advRomanceEn);
+    var leaksAdv = advJsonEn.match(/[一-龥]/g);
+    if (leaksAdv && leaksAdv.length > 0) {
+      throw new Error("Residual Chinese in English AdvisorEngine romance advice: " + leaksAdv.join(""));
+    }
+
+    // 4. Validate ScenarioSimulatorEngine with Institution, Enterprise & Micro-Ecosystems
+    var simOptA = {
+      title: '英国伯明翰 · 高校学术科研',
+      country: 'UK',
+      city: 'Birmingham',
+      industry: 'academia_research',
+      role: 'specialist',
+      manager: 'resource',
+      institution: 'birmingham'
+    };
+    var simOptB = {
+      title: '中国深圳 · 量化对冲基金',
+      country: 'China',
+      city: 'Shenzhen',
+      industry: 'finance_quant',
+      role: 'specialist',
+      manager: 'killings',
+      enterprise: 'tencent'
+    };
+    var simResZh = ScenarioSimulatorEngine.simulateOptions(simOptA, simOptB, bazi, luck, 'zh');
+    if (!simResZh || !simResZh.summary) throw new Error("ScenarioSimulator failed to produce result");
+
+    // Verify Opt A extracted Birmingham Top 5 Standout Disciplines
+    var noteAHasDisciplines = simResZh.optionA.notes.some(function(n) { return n.includes('前五强王牌学科') && n.includes('材料科学'); });
+    if (!noteAHasDisciplines) {
+      throw new Error("Option A notes missing Birmingham Standout Disciplines: " + JSON.stringify(simResZh.optionA.notes));
+    }
+
+    // Verify Opt B extracted Tencent Corporate Ten Gods Culture
+    var noteBHasCulture = simResZh.optionB.notes.some(function(n) { return n.includes('企业十神文化') && n.includes('腾讯'); });
+    if (!noteBHasCulture) {
+      throw new Error("Option B notes missing Tencent Corporate Culture: " + JSON.stringify(simResZh.optionB.notes));
+    }
+
+    // Verify Micro-Ecosystem differentiation (Shenzhen Finance vs London Finance)
+    var simLondon = {
+      title: '英国伦敦 · 宏观量化基金',
+      country: 'UK',
+      city: 'London',
+      industry: 'finance_quant',
+      role: 'specialist',
+      manager: 'officer',
+      enterprise: 'hsbc'
+    };
+    var simEcoRes = ScenarioSimulatorEngine.simulateOptions(simOptB, simLondon, bazi, luck, 'zh');
+    var szEco = simEcoRes.optionA.notes.some(function(n) { return n.includes('深圳金融微生态：高频量化与赛马制穿透'); });
+    var ldEco = simEcoRes.optionB.notes.some(function(n) { return n.includes('伦敦金融微生态：全球宏观对冲与普通法制度合规'); });
+    if (!szEco || !ldEco) {
+      throw new Error("Micro-ecosystem differentiation failed between Shenzhen Finance and London Finance");
+    }
+
+    // Verify English Simulator Zero Residual Chinese
+    var simOptAEn = {
+      title: 'University of Oxford · Academic Research',
+      country: 'UK',
+      city: 'Oxford',
+      industry: 'academia_research',
+      role: 'specialist',
+      manager: 'resource',
+      institution: 'oxford'
+    };
+    var simOptBEn = {
+      title: 'HSBC Holdings · Quantitative Risk Modeler',
+      country: 'UK',
+      city: 'London',
+      industry: 'finance_quant',
+      role: 'specialist',
+      manager: 'officer',
+      enterprise: 'hsbc'
+    };
+    var simResEn = ScenarioSimulatorEngine.simulateOptions(simOptAEn, simOptBEn, bazi, luck, 'en');
+    var simJsonEn = JSON.stringify(simResEn);
+    var leaksSim = simJsonEn.match(/[一-龥]/g);
+    if (leaksSim && leaksSim.length > 0) {
+      throw new Error("Residual Chinese in English ScenarioSimulator result: " + leaksSim.join(""));
+    }
+    """
+]
+run_check105 = subprocess.run(jsc_check105_cmd, capture_output=True, text=True)
+assert run_check105.returncode == 0, f"Check 105 JSC test failed: stdout={run_check105.stdout} stderr={run_check105.stderr}"
+print("✓ 四国八十强名校全相数据库（QS/THE排名与前五王牌学科）、世界五百强领军企业数据库、随身军师正缘应期意图精准识别与沙盘微生态对抗推演（双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 105 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
