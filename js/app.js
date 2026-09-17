@@ -1935,7 +1935,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>💡</span>
                         <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
                       </span>
-                      <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
+                      <p class="text-xs text-amber-100/95 pattern-vernacular-text leading-relaxed font-sans font-medium">
                         ${pCon}
                       </p>
                     </div>
@@ -1956,7 +1956,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
                   </span>
                 </div>
-                <p class="text-xs text-amber-100/95 leading-relaxed font-serif-sc font-medium">
+                <p class="text-xs text-amber-100/95 pattern-synthesis-text leading-relaxed font-serif-sc font-medium">
                   ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
                 </p>
               </div>
@@ -3103,7 +3103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span>💡</span>
                         <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
                       </span>
-                      <p class="text-xs text-amber-100/95 leading-relaxed font-sans font-medium">
+                      <p class="text-xs text-amber-100/95 pattern-vernacular-text leading-relaxed font-sans font-medium">
                         ${pCon}
                       </p>
                     </div>
@@ -3124,7 +3124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
                   </span>
                 </div>
-                <p class="text-xs text-amber-100/95 leading-relaxed font-serif-sc font-medium">
+                <p class="text-xs text-amber-100/95 pattern-synthesis-text leading-relaxed font-serif-sc font-medium">
                   ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
                 </p>
               </div>

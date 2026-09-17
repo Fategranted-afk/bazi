@@ -8618,14 +8618,35 @@ assert '[data-theme="light"] header' in css_content, "Missing light theme header
 assert '[data-theme="light"] .text-gray-100' in css_content, "Missing light theme text-gray-100 contrast override"
 assert '[data-theme="light"] .text-amber-100' in css_content, "Missing light theme text-amber-100 contrast override"
 assert '[data-theme="light"] .text-amber-300' in css_content, "Missing light theme text-amber-300 contrast override"
+assert '[data-theme="light"] [class*="text-amber-100"]' in css_content, "Missing light theme [class*='text-amber-100'] contrast override"
+assert '[data-theme="light"] [class*="text-amber-200"]' in css_content, "Missing light theme [class*='text-amber-200'] contrast override"
+assert '[data-theme="light"] .pattern-synthesis-text' in css_content, "Missing light theme .pattern-synthesis-text contrast override"
+assert '[data-theme="light"] .pattern-vernacular-text' in css_content, "Missing light theme .pattern-vernacular-text contrast override"
+assert '[data-theme="light"] .text-yellow-100' in css_content, "Missing light theme text-yellow-100 contrast override"
+assert '[data-theme="light"] .text-yellow-300' in css_content, "Missing light theme text-yellow-300 contrast override"
+assert '[data-theme="light"] .text-slate-300' in css_content, "Missing light theme text-slate-300 contrast override"
+assert '[data-theme="light"] .text-zinc-300' in css_content, "Missing light theme text-zinc-300 contrast override"
+assert '[data-theme="light"] .text-cyan-100' in css_content, "Missing light theme text-cyan-100 contrast override"
+assert '[data-theme="light"] .text-sky-200' in css_content, "Missing light theme text-sky-200 contrast override"
+assert '[data-theme="light"] .text-indigo-100' in css_content, "Missing light theme text-indigo-100 contrast override"
+assert '[data-theme="light"] .text-purple-100' in css_content, "Missing light theme text-purple-100 contrast override"
+assert '[data-theme="light"] .text-red-100' in css_content, "Missing light theme text-red-100 contrast override"
+assert '[data-theme="light"] .text-rose-100' in css_content, "Missing light theme text-rose-100 contrast override"
+assert 'html.light [class*="text-amber-100"]' in css_content, "Missing html.light text-amber-100 override"
+assert 'body.light-theme [class*="text-amber-100"]' in css_content, "Missing body.light-theme text-amber-100 override"
 assert '[data-theme="light"] input[type="date"]' in css_content, "Missing light theme input override"
 assert '[data-theme="light"] #primaryViewNav' in css_content, "Missing light theme nav override"
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_content = f.read()
+assert 'pattern-synthesis-text' in app_content, "Missing pattern-synthesis-text class in app.js"
+assert 'pattern-vernacular-text' in app_content, "Missing pattern-vernacular-text class in app.js"
 
 with open('js/chart.js', 'r', encoding='utf-8') as f:
     chart_content = f.read()
 assert "getAttribute('data-theme') === 'light'" in chart_content, "Missing light theme radar chart stroke adaptation"
 
-print("✓ 浅昼护眼微沉调与高对比文字显示（柔和米宣底色/降亮度防刺眼眩光/高对比深墨字色/雷达网线适配/零文字淹没）验证通过！")
+print("✓ 浅昼护眼微沉调与高对比文字显示（柔和米宣底色/降亮度防刺眼眩光/前三格局通融高对比深墨字色/全色系防白与防浅/雷达网线适配/零文字淹没）验证通过！")
 
 # 88. Validate Complementary Hexagrams Exegeses, Quad-Synthesis, Line Deduplication & Enlarged Imperial Seal
 print("\n=== 88. Validating Complementary Hexagrams Exegeses, Quad-Synthesis, Line Deduplication & Enlarged Imperial Seal ===")
