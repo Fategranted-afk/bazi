@@ -12,7 +12,7 @@ const VisualAlchemy = (function() {
   let fluxCtx = null;
   let animationId = null;
   let isRunning = false;
-  let isFluxEnabled = true;
+  let isFluxEnabled = false;
   let activeElement = '木';
   let mousePos = { x: -1000, y: -1000, isHover: false };
   let particles = [];
@@ -133,7 +133,7 @@ const VisualAlchemy = (function() {
   const FRAME_INTERVAL = 1000 / 30; // ~30 fps cap for ambient particle flux, saving 60-75% GPU/CPU power
 
   function startLoop() {
-    if (isRunning) return;
+    if (!isFluxEnabled || isRunning) return;
     isRunning = true;
     lastFrameTime = performance.now();
     loop(lastFrameTime);

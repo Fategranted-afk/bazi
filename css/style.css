@@ -27,7 +27,7 @@
   --bg-card: #f5f0e4;
   --bg-card-hover: #eae3d3;
   --text-main: #18181b;
-  --text-muted: #3f3f46;
+  --text-muted: #1e293b;
   --border-color: #cbbeaa;
   --accent-gold: #92400e;
   --accent-red: #b91c1c;
@@ -43,6 +43,13 @@
 }
 
 /* Light Theme Contrast & Legibility Overrides (浅昼护眼微沉调与高对比字色) */
+[data-theme="light"] body,
+[data-theme="light"] .bg-\[\#0B0F19\],
+[data-theme="light"] .bg-\[\#0b0f19\] {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-main) !important;
+}
+
 [data-theme="light"] header {
   background-color: rgba(235, 229, 216, 0.95) !important;
   border-bottom-color: #cbbeaa !important;
@@ -55,7 +62,7 @@
 
 [data-theme="light"] header .text-gray-400,
 [data-theme="light"] header .text-gray-300 {
-  color: #4b5563 !important;
+  color: #1e293b !important;
 }
 
 [data-theme="light"] #themeToggle,
@@ -65,7 +72,7 @@
 [data-theme="light"] #langEnBtn {
   background-color: #e5ded0 !important;
   border-color: #cbbeaa !important;
-  color: #1f2937 !important;
+  color: #18181b !important;
 }
 
 [data-theme="light"] #langZhBtn.bg-amber-600 {
@@ -96,11 +103,58 @@
 [data-theme="light"] .bg-gray-850,
 [data-theme="light"] .bg-gray-950,
 [data-theme="light"] .bg-gray-950\/60,
+[data-theme="light"] .bg-slate-800,
+[data-theme="light"] .bg-slate-900,
+[data-theme="light"] .bg-slate-950,
+[data-theme="light"] .bg-zinc-800,
+[data-theme="light"] .bg-zinc-900,
+[data-theme="light"] .bg-zinc-950,
 [data-theme="light"] .bg-\[\#161822\],
 [data-theme="light"] .bg-\[\#16181f\],
-[data-theme="light"] .bg-\[\#121316\] {
+[data-theme="light"] .bg-\[\#121316\],
+[data-theme="light"] .bg-\[\#12141c\],
+[data-theme="light"] .bg-\[\#1a1d26\],
+[data-theme="light"] .bg-\[\#171922\],
+[data-theme="light"] .bg-\[\#1a1c24\],
+[data-theme="light"] .bg-\[\#12141e\],
+[data-theme="light"] .bg-\[\#0d0f17\],
+[data-theme="light"] .bg-\[\#0e111a\],
+[data-theme="light"] .bg-\[\#161824\],
+[data-theme="light"] .bg-\[\#0c0e14\],
+[data-theme="light"] .bg-\[\#151821\],
+[data-theme="light"] .bg-\[\#13151f\],
+[data-theme="light"] .bg-\[\#181b28\],
+[data-theme="light"] .bg-\[\#121520\],
+[data-theme="light"] .bg-\[\#121422\],
+[data-theme="light"] .bg-\[\#0c0f18\],
+[data-theme="light"] .bg-\[\#14121d\],
+[data-theme="light"] .bg-\[\#1c2033\],
+[data-theme="light"] .bg-\[\#171926\],
+[data-theme="light"] .bg-\[\#1a1622\],
+[data-theme="light"] .bg-\[\#181523\] {
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] #advisorModal > div,
+[data-theme="light"] #socialCardModal > div,
+[data-theme="light"] #imperialDossierModal > div,
+[data-theme="light"] #historyFigureDetailModalDashboard > div,
+[data-theme="light"] #calculationProgressModal > div {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme="light"] #socialCardModal .bg-black\/60,
+[data-theme="light"] #socialCardModal .bg-\[\#0d0f17\],
+[data-theme="light"] #advisorModal .bg-\[\#0d0f17\],
+[data-theme="light"] #advisorModal .bg-black\/50,
+[data-theme="light"] #advisorModal .bg-gray-900\/40,
+[data-theme="light"] #advisorModal .bg-gray-900,
+[data-theme="light"] #advisorModal #advisorContextBadges {
+  background-color: #fdfaf3 !important;
+  border-color: #ded7c7 !important;
 }
 
 /* Light Theme Card Tiles & Sub-Boxes (彻底消除黑盒底色，呈现温润宣纸质感) */
@@ -272,16 +326,17 @@
 [data-theme="light"] .text-gray-100,
 [data-theme="light"] .text-gray-200,
 [data-theme="light"] .text-gray-300 {
-  color: #1f2937 !important;
+  color: #0f172a !important;
 }
 
 [data-theme="light"] .text-gray-400,
-[data-theme="light"] .text-gray-500 {
-  color: #3f3f46 !important;
+[data-theme="light"] .text-gray-500,
+[data-theme="light"] .text-gray-600 {
+  color: #1e293b !important;
 }
 
 [data-theme="light"] .text-white:not(.chinese-seal):not(#langZhBtn):not(#langEnBtn):not(.btn-keep-white):not(.imperial-seal-stamp) {
-  color: #111827 !important;
+  color: #0f172a !important;
 }
 
 [data-theme="light"] .text-amber-100,
@@ -291,7 +346,7 @@
 
 [data-theme="light"] .text-amber-300,
 [data-theme="light"] .text-amber-400 {
-  color: #92400e !important;
+  color: #854d0e !important;
 }
 
 [data-theme="light"] .text-rose-200,
