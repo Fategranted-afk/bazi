@@ -11864,35 +11864,123 @@ jsc_check103_cmd = [
       throw new Error("Residual Chinese in Social Copy Text EN: " + copyEnLeaks.join(""));
     }
 
-    // 3. Canvas 2D Rendering Mock
-    var renderCalls = [];
-    var fakeCanvas = {
+    // 3. Canvas 2D Rendering Mock & Centerpiece Elevation Validation
+    var zhTexts = [];
+    var fakeCanvasZh = {
       width: 0,
       height: 0,
       getContext: function() {
         return {
           createLinearGradient: function() { return { addColorStop: function(){} }; },
-          fillRect: function(){ renderCalls.push("fillRect"); },
-          strokeRect: function(){ renderCalls.push("strokeRect"); },
+          createRadialGradient: function() { return { addColorStop: function(){} }; },
+          fillRect: function(){},
+          strokeRect: function(){},
           beginPath: function(){},
           arc: function(){},
           fill: function(){},
-          fillText: function(t){ renderCalls.push(t); }
+          stroke: function(){},
+          fillText: function(t){ zhTexts.push(t); },
+          save: function(){}, restore: function(){}, clip: function(){},
+          moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
         };
       }
     };
-    SocialCardEngine.renderToCanvas(fakeCanvas, bazi, luck, "zh");
-    if (fakeCanvas.width !== 750 || fakeCanvas.height !== 1180) {
-      throw new Error("Canvas dimensions mismatch: " + fakeCanvas.width + "x" + fakeCanvas.height);
+    SocialCardEngine.renderToCanvas(fakeCanvasZh, bazi, luck, "zh");
+    if (fakeCanvasZh.width !== 750 || fakeCanvasZh.height !== 1180) {
+      throw new Error("Canvas dimensions mismatch: " + fakeCanvasZh.width + "x" + fakeCanvasZh.height);
     }
-    if (renderCalls.length < 10) {
-      throw new Error("Insufficient canvas draw operations recorded: " + renderCalls.length);
+    if (zhTexts.length < 10) {
+      throw new Error("Insufficient canvas text operations recorded: " + zhTexts.length);
     }
+
+    // 4. Validate Four Progress Bars ("四大生态位定向") are strictly REMOVED
+    var hasOldBars = zhTexts.some(function(t) { return t.includes("四大生态位") || t.includes("ECOLOGICAL NICHES"); });
+    if (hasOldBars) {
+      throw new Error("Failure: Four progress bars (四大生态位定向) must be removed from Canvas!");
+    }
+
+    // 5. Validate Historical Figure Centerpiece Elevated Components
+    var zhAllText = zhTexts.join(" ");
+    if (!zhAllText.replace(/\\s+/g, "").includes("天命照命镜像·先贤同频")) {
+      throw new Error("Missing elevated historical figure centerpiece header in ZH canvas");
+    }
+    if (!zhAllText.includes("立身功业")) {
+      throw new Error("Missing Key Legacy (立身功业) in centerpiece");
+    }
+    if (!zhAllText.includes("天机诫勉")) {
+      throw new Error("Missing Karmic Lesson (天机诫勉) in centerpiece");
+    }
+    if (!cardZh.figureLegacy || !cardZh.figureAdvice || !cardZh.figureDynasty) {
+      throw new Error("Historical figure data missing legacy/advice/dynasty fields in ZH");
+    }
+
+    // 6. Validate English Canvas Mode & 100% Zero Chinese Residuals
+    var enTexts = [];
+    var fakeCanvasEn = {
+      width: 0,
+      height: 0,
+      getContext: function() {
+        return {
+          createLinearGradient: function() { return { addColorStop: function(){} }; },
+          createRadialGradient: function() { return { addColorStop: function(){} }; },
+          fillRect: function(){},
+          strokeRect: function(){},
+          beginPath: function(){},
+          arc: function(){},
+          fill: function(){},
+          stroke: function(){},
+          fillText: function(t){ enTexts.push(t); },
+          save: function(){}, restore: function(){}, clip: function(){},
+          moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
+        };
+      }
+    };
+    SocialCardEngine.renderToCanvas(fakeCanvasEn, bazi, luck, "en");
+    var enAllText = enTexts.join(" ");
+    if (!enAllText.includes("SOUL MIRROR HISTORICAL PERSONA")) {
+      throw new Error("Missing EN centerpiece header");
+    }
+    if (!enAllText.includes("KEY LEGACY") || !enAllText.includes("KARMIC LESSON")) {
+      throw new Error("Missing EN Key Legacy / Karmic Lesson in centerpiece");
+    }
+    var enCanvasZhLeaks = enAllText.match(/[\\u4e00-\\u9fa5]/g);
+    if (enCanvasZhLeaks && enCanvasZhLeaks.length > 0) {
+      throw new Error("Residual Chinese found on EN Canvas: " + enCanvasZhLeaks.join(""));
+    }
+
+    // 7. Validate Classical Portrait Generation across archetypes (Xiao Tong, Haba Yue, Wang Yangming)
+    var archetypeTests = [
+      { id: "xiao_tong", nameZh: "萧统", archetype: "specialist", seal: "昭明" },
+      { id: "haba_yue", nameZh: "贺拔岳", archetype: "military", seal: "定乱" },
+      { id: "wang_yangming", nameZh: "王阳明", archetype: "executive", seal: "阳明" }
+    ];
+    archetypeTests.forEach(function(at) {
+      var pTexts = [];
+      var pCanvas = {
+        getContext: function() {
+          return {
+            createLinearGradient: function() { return { addColorStop: function(){} }; },
+            createRadialGradient: function() { return { addColorStop: function(){} }; },
+            fillRect: function(){}, strokeRect: function(){},
+            beginPath: function(){}, arc: function(){}, fill: function(){}, stroke: function(){},
+            fillText: function(t){ pTexts.push(t); },
+            save: function(){}, restore: function(){}, clip: function(){},
+            moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
+          };
+        }
+      };
+      SocialCardEngine.drawClassicalPortrait(pCanvas.getContext(), {
+        isEn: false, figureId: at.id, figureArchetype: at.archetype
+      }, 145, 448, 52);
+      if (!pTexts.some(function(t) { return t.includes(at.seal); })) {
+        throw new Error("Portrait seal stamp missing for " + at.id);
+      }
+    });
     """
 ]
 run_check103 = subprocess.run(jsc_check103_cmd, capture_output=True, text=True)
 assert run_check103.returncode == 0, f"Check 103 test failed: stdout={run_check103.stdout} stderr={run_check103.stderr}"
-print("✓ 社交名片与战报生成引擎（竖屏Canvas超清绘制/照命先贤与天命职能/社交文案复制/英文100%零中文残留）验证通过！")
+print("✓ 社交名片核心画像升级与战报引擎（4大天赋进度条去除/照命先贤中央C位画卷/人物古典画风肖像与朱砂御印/立身功业与天机诫勉/英文100%零中文残留）验证通过！")
 
 # 104. Validate Standalone Decision Simulator Page (simulator.html) & Dual Navigation Integration
 print("\n=== 104. Validating Standalone Decision Simulator Page (simulator.html) & Navigation Integration ===")
