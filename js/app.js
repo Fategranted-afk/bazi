@@ -498,6 +498,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', newTheme);
+    if (newTheme === 'light') {
+      document.documentElement.classList.add('light');
+      if (document.body) document.body.classList.add('light-theme');
+    } else {
+      document.documentElement.classList.remove('light');
+      if (document.body) document.body.classList.remove('light-theme');
+    }
     themeToggle.textContent = newTheme === 'dark' ? '🌙 暗夜' : '☀️ 浅昼';
     if (currentBaziResult) {
       ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);

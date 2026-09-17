@@ -131,7 +131,41 @@
 [data-theme="light"] .bg-\[\#1c2033\],
 [data-theme="light"] .bg-\[\#171926\],
 [data-theme="light"] .bg-\[\#1a1622\],
-[data-theme="light"] .bg-\[\#181523\] {
+[data-theme="light"] .bg-\[\#181523\],
+[data-theme="light"] [class*="bg-[#161822]"],
+[data-theme="light"] [class*="bg-[#16181f]"],
+[data-theme="light"] [class*="bg-[#121316]"],
+[data-theme="light"] [class*="bg-[#12141c]"],
+[data-theme="light"] [class*="bg-[#1a1d26]"],
+[data-theme="light"] [class*="bg-[#171922]"],
+[data-theme="light"] [class*="bg-[#1a1c24]"],
+[data-theme="light"] [class*="bg-[#12141e]"],
+[data-theme="light"] [class*="bg-[#0d0f17]"],
+[data-theme="light"] [class*="bg-[#0e111a]"],
+[data-theme="light"] [class*="bg-[#161824]"],
+[data-theme="light"] [class*="bg-[#0c0e14]"],
+[data-theme="light"] [class*="bg-[#151821]"],
+[data-theme="light"] [class*="bg-[#13151f]"],
+[data-theme="light"] [class*="bg-[#181b28]"],
+[data-theme="light"] [class*="bg-[#121520]"],
+[data-theme="light"] [class*="bg-[#121422]"],
+[data-theme="light"] [class*="bg-[#0c0f18]"],
+[data-theme="light"] [class*="bg-[#14121d]"],
+[data-theme="light"] [class*="bg-[#1c2033]"],
+[data-theme="light"] [class*="bg-[#171926]"],
+[data-theme="light"] [class*="bg-[#1a1622]"],
+[data-theme="light"] [class*="bg-[#181523]"],
+[data-theme="light"] [class*="bg-[#0a0d18]"],
+[data-theme="light"] [class*="bg-[#090b12]"],
+[data-theme="light"] [class*="bg-gray-900"],
+[data-theme="light"] [class*="bg-gray-800"],
+[data-theme="light"] [class*="bg-gray-950"],
+[data-theme="light"] [class*="bg-slate-800"],
+[data-theme="light"] [class*="bg-slate-900"],
+[data-theme="light"] [class*="bg-slate-950"],
+[data-theme="light"] [class*="bg-zinc-800"],
+[data-theme="light"] [class*="bg-zinc-900"],
+[data-theme="light"] [class*="bg-zinc-950"] {
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
 }
@@ -159,6 +193,8 @@
 
 /* Light Theme Card Tiles & Sub-Boxes (彻底消除黑盒底色，呈现温润宣纸质感) */
 [data-theme="light"] .bg-black,
+[data-theme="light"] [class*="bg-black"],
+[data-theme="light"] [class*="bg-[#000000]"],
 [data-theme="light"] .bg-black\/10,
 [data-theme="light"] .bg-black\/20,
 [data-theme="light"] .bg-black\/25,
@@ -325,13 +361,20 @@
 /* Text Colors: Invert Pale Hues into Crisp Dark Ink / Rich Bronze */
 [data-theme="light"] .text-gray-100,
 [data-theme="light"] .text-gray-200,
-[data-theme="light"] .text-gray-300 {
+[data-theme="light"] .text-gray-300,
+[data-theme="light"] [class*="text-gray-100"],
+[data-theme="light"] [class*="text-gray-200"],
+[data-theme="light"] [class*="text-gray-300"] {
   color: #0f172a !important;
+  font-weight: 500;
 }
 
 [data-theme="light"] .text-gray-400,
 [data-theme="light"] .text-gray-500,
-[data-theme="light"] .text-gray-600 {
+[data-theme="light"] .text-gray-600,
+[data-theme="light"] [class*="text-gray-400"],
+[data-theme="light"] [class*="text-gray-500"],
+[data-theme="light"] [class*="text-gray-600"] {
   color: #1e293b !important;
 }
 

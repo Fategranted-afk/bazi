@@ -104,9 +104,9 @@
     <!-- ==================================================================== -->
     <!-- Page 1: Initial Portal Landing View (初始页面 · 命元启承门庭 - 视觉居中平衡) -->
     <!-- ==================================================================== -->
-    <div id="landingPortalView" class="space-y-8 animate-fade-in max-w-6xl mx-auto w-full">
+    <div id="landingPortalView" class="space-y-8 animate-fade-in max-w-6xl mx-auto w-full flex flex-col items-center justify-center">
       <!-- Hero Zen Greeting & Talisman -->
-      <div class="text-center space-y-4 pt-4 pb-2 mx-auto">
+      <div class="text-center space-y-4 pt-4 pb-2 mx-auto flex flex-col items-center justify-center">
         <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 via-rose-600 to-indigo-900 p-0.5 shadow-2xl shadow-amber-900/40 mb-1">
           <div class="w-full h-full bg-[#161822] rounded-2xl flex items-center justify-center border border-amber-500/30">
             <span class="text-2xl font-bold text-amber-300 font-serif-sc" data-i18n="portal_talisman_qiankun">乾坤</span>
@@ -120,20 +120,20 @@
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-serif-sc tracking-wide bg-gradient-to-r from-amber-100 via-amber-300 to-rose-200 bg-clip-text text-transparent" data-i18n="portal_hero_title">
           八字命盘与古典玄览系统
         </h1>
-        <p class="max-w-2xl mx-auto text-xs sm:text-sm text-gray-300 font-serif-sc leading-relaxed px-4" data-i18n="portal_hero_subtitle">
+        <p class="max-w-2xl mx-auto text-xs sm:text-sm text-gray-300 font-serif-sc leading-relaxed px-4 text-center" data-i18n="portal_hero_subtitle">
           探微天地三才，观照阴阳大化 · 汇通《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》八大经典原著库与周易六十四卦
         </p>
       </div>
 
       <!-- Quick Archetype Presets Bar -->
-      <section class="space-y-3 mx-auto w-full">
+      <section class="space-y-3 mx-auto w-full flex flex-col items-center justify-center">
         <div class="flex flex-col sm:flex-row items-center justify-center gap-2 text-center pb-1">
           <h2 class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc flex items-center justify-center gap-2">
             <span data-i18n="portal_presets_title">🌟 命盘速选典范 (Archetype Presets)</span>
           </h2>
           <span class="text-[11px] text-gray-400" data-i18n="portal_presets_sub">点击一键载入经典格局命盘，即时动态演算并预览</span>
         </div>
-        <div id="portalPresetsContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 justify-center mx-auto">
+        <div id="portalPresetsContainer" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 justify-center mx-auto w-full">
           <!-- Preset 1: Leader -->
           <button type="button" class="archetype-preset-card p-3 rounded-xl text-left cursor-pointer" data-preset="leader">
             <div class="flex items-center justify-between mb-1">
@@ -187,7 +187,7 @@
       </section>
 
       <!-- Sacred Input Altar & Live Natal Preview Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start justify-center mx-auto w-full">
         <!-- Input Form Section (7 Columns) -->
         <section class="lg:col-span-7 bg-card p-5 sm:p-6 rounded-2xl border border-border-color shadow-xl space-y-4">
           <div class="flex items-center justify-between pb-3 border-b border-gray-800">
@@ -339,8 +339,8 @@
       </div>
 
       <!-- Seven Canonical Vistas Feature Showcase -->
-      <section class="space-y-4 pt-4">
-        <div class="text-center space-y-1">
+      <section class="space-y-4 pt-4 mx-auto w-full max-w-6xl flex flex-col items-center justify-center">
+        <div class="text-center space-y-1 mx-auto">
           <h2 class="text-base sm:text-lg font-bold text-amber-200 font-serif-sc" data-i18n="portal_showcase_title">
             🏛️ 乾坤大观 · 七大核心研索维度
           </h2>
@@ -349,7 +349,7 @@
           </p>
         </div>
 
-        <div id="portalFeaturesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs">
+        <div id="portalFeaturesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-xs w-full justify-center">
           <!-- Card 1: Core Base -->
           <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-home">
             <div class="flex items-center space-x-2 text-amber-400 mb-1.5 font-bold font-serif-sc">
@@ -486,7 +486,7 @@
       </section>
 
       <!-- Classical Metaphysics Zen Quote -->
-      <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-800/30 text-center text-xs text-amber-300/80 font-serif-sc">
+      <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-800/30 text-center text-xs text-amber-300/80 font-serif-sc mx-auto max-w-4xl w-full">
         <span data-i18n="portal_zen_quote">“欲识三元万法宗，先观帝载与神功。坤元合德机缄通，五气顺行天地同。” —— 《滴天髓》</span>
       </div>
     </div>
@@ -2349,8 +2349,8 @@
 
   </main>
 
-  <!-- Ambient Dynamic Elemental Flux Canvas (Disabled per user request) -->
-  <canvas id="elementFluxCanvas" class="hidden pointer-events-none fixed inset-0 z-[-1] opacity-0"></canvas>
+  <!-- Ambient Dynamic Elemental Flux Canvas (Full-page Ambient Celestial Flux) -->
+  <canvas id="elementFluxCanvas" class="pointer-events-none fixed inset-0 z-0 w-full h-full"></canvas>
 
   <!-- Historical Figure Detail Modal (Destiny Card Draw Style · Rock-Solid Viewport Center) -->
   <div id="historyFigureDetailModalDashboard" class="history-card-modal-backdrop hidden">
