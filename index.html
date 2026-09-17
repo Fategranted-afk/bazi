@@ -2439,9 +2439,15 @@
             </p>
           </div>
         </div>
-        <button id="advisorCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="advisor_close_btn">
-          关闭参谋
-        </button>
+        <div class="flex items-center gap-2">
+          <button id="advisorHeaderClearBtn" class="px-2.5 py-1.5 rounded-lg bg-gray-800/90 hover:bg-rose-900/40 text-gray-300 hover:text-rose-200 text-xs transition border border-gray-700 cursor-pointer flex items-center gap-1" title="清空对话" data-i18n="advisor_clear_btn">
+            <span>🧹</span>
+            <span data-i18n="advisor_clear_btn">清空问对</span>
+          </button>
+          <button id="advisorCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="advisor_close_btn">
+            关闭参谋
+          </button>
+        </div>
       </div>
 
       <!-- Native Context Badges Strip -->

@@ -11940,13 +11940,313 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   let advisorChatHistory = [];
   let advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
+  const ADVISOR_STORAGE_KEY = 'bazi_advisor_history_v2';
+  const ADVISOR_CTX_KEY = 'bazi_advisor_context_v2';
+
+  function loadAdvisorChatFromStorage() {
+    try {
+      if (typeof localStorage === 'undefined') return;
+      const savedHist = localStorage.getItem(ADVISOR_STORAGE_KEY);
+      if (savedHist) {
+        advisorChatHistory = JSON.parse(savedHist);
+      }
+      const savedCtx = localStorage.getItem(ADVISOR_CTX_KEY);
+      if (savedCtx) {
+        advisorSessionContext = JSON.parse(savedCtx);
+      }
+    } catch (e) {
+      console.warn('Failed to load advisor history from storage:', e);
+    }
+  }
+
+  function saveAdvisorChatToStorage() {
+    try {
+      if (typeof localStorage === 'undefined') return;
+      localStorage.setItem(ADVISOR_STORAGE_KEY, JSON.stringify(advisorChatHistory));
+      localStorage.setItem(ADVISOR_CTX_KEY, JSON.stringify(advisorSessionContext));
+    } catch (e) {
+      console.warn('Failed to save advisor history to storage:', e);
+    }
+  }
+
+  function clearAdvisorChatHistory() {
+    advisorChatHistory = [];
+    advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
+    saveAdvisorChatToStorage();
+    renderAdvisorChatStream();
+  }
+
+  function toggleAdvisorMicroAction(el) {
+    if (!el) return;
+    const msgIdx = parseInt(el.getAttribute('data-msg-idx'), 10);
+    const actId = el.getAttribute('data-act-id');
+    const isChecked = el.checked;
+
+    if (advisorChatHistory[msgIdx] && advisorChatHistory[msgIdx].advice) {
+      if (!advisorChatHistory[msgIdx].advice.checkedActions) {
+        advisorChatHistory[msgIdx].advice.checkedActions = {};
+      }
+      advisorChatHistory[msgIdx].advice.checkedActions[actId] = isChecked;
+      saveAdvisorChatToStorage();
+    }
+
+    const textSpan = el.closest('label') ? el.closest('label').querySelector('.micro-action-text') : null;
+    if (textSpan) {
+      if (isChecked) {
+        textSpan.classList.add('line-through', 'opacity-60', 'text-emerald-400');
+      } else {
+        textSpan.classList.remove('line-through', 'opacity-60', 'text-emerald-400');
+      }
+    }
+  }
+
+  function exportAdvisorTimingToIcs(msgIdx) {
+    const msg = advisorChatHistory[msgIdx];
+    const timingCard = msg?.advice?.timingCard;
+    if (!timingCard) return;
+    const isEn = (currentLang === 'en');
+
+    const windows = [timingCard.primaryWindow, timingCard.secondaryWindow, timingCard.tertiaryWindow].filter(Boolean);
+    const icsLines = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Qintianjian Bureau//Bazi Web Advisor//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'X-WR-CALNAME:' + (isEn ? 'Imperial Astrological Timing Calendar' : '钦天监黄金应期时令行事历')
+    ];
+
+    windows.forEach((win, idx) => {
+      const dates = win.gregorianDates || { start: '20260707', end: '20260807' };
+      const uid = 'bazi-' + Date.now() + '-' + idx + '@qintianjian.local';
+      const nowIso = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      const summary = `[${win.badge}] ${win.lunarMonth} (${win.solarTerm}) - ${win.action}`;
+      const desc = `${isEn ? 'Probability' : '应期概率'}: ${win.probability}%\n${isEn ? 'Mechanism' : '气数成因'}: ${win.mechanism}\n${isEn ? 'Shen Sha' : '值月吉神'}: ${(win.shenShaBadges || []).join(', ')}\n${isEn ? 'Tactical Action' : '实战对策'}: ${win.action}`;
+
+      icsLines.push('BEGIN:VEVENT');
+      icsLines.push(`UID:${uid}`);
+      icsLines.push(`DTSTAMP:${nowIso}`);
+      icsLines.push(`DTSTART;VALUE=DATE:${dates.start}`);
+      icsLines.push(`DTEND;VALUE=DATE:${dates.end}`);
+      icsLines.push(`SUMMARY:${summary}`);
+      icsLines.push(`DESCRIPTION:${desc.replace(/\n/g, '\\n')}`);
+      icsLines.push('STATUS:CONFIRMED');
+      icsLines.push('END:VEVENT');
+    });
+
+    icsLines.push('END:VCALENDAR');
+    if (typeof Blob === 'undefined' || typeof document === 'undefined') return;
+
+    try {
+      const icsBlob = new Blob([icsLines.join('\r\n')], { type: 'text/calendar;charset=utf-8' });
+      const url = URL.createObjectURL(icsBlob);
+      const dlLink = document.createElement('a');
+      dlLink.href = url;
+      dlLink.download = `qintianjian-timing-${Date.now()}.ics`;
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      document.body.removeChild(dlLink);
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.warn('ICS export failed:', e);
+    }
+  }
+
+  function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+    if (!text) return y;
+    const isCjk = /[\u4e00-\u9fa5]/.test(text);
+    const units = isCjk ? text.split('') : text.split(' ');
+    let line = '';
+    let curY = y;
+    for (let n = 0; n < units.length; n++) {
+      const sep = (isCjk || line === '') ? '' : ' ';
+      const testLine = line + sep + units[n];
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && line !== '') {
+        ctx.fillText(line, x, curY);
+        line = units[n];
+        curY += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    if (line) {
+      ctx.fillText(line, x, curY);
+    }
+    return curY;
+  }
+
+  function exportAdvisorEdictPoster(msgIdx) {
+    const msg = advisorChatHistory[msgIdx];
+    if (!msg || !msg.advice) return;
+    const a = msg.advice;
+    const isEn = (currentLang === 'en');
+
+    if (typeof document === 'undefined') return;
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = 900;
+      canvas.height = 1250;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      // Background gradient (antique imperial parchment / dark court lacquer)
+      const bgGrad = ctx.createLinearGradient(0, 0, 900, 1250);
+      bgGrad.addColorStop(0, '#1c150c');
+      bgGrad.addColorStop(0.5, '#241a0e');
+      bgGrad.addColorStop(1, '#0e0b07');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 900, 1250);
+
+      // Decorative Double Borders
+      ctx.strokeStyle = '#d97706'; // Imperial Amber / Gold
+      ctx.lineWidth = 4;
+      ctx.strokeRect(28, 28, 844, 1194);
+
+      ctx.strokeStyle = '#991b1b'; // Cinnabar Red
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(36, 36, 828, 1178);
+
+      // Corner Ornaments
+      ctx.fillStyle = '#d97706';
+      const corners = [[36, 36], [864, 36], [36, 1214], [864, 1214]];
+      corners.forEach(([cx, cy]) => {
+        ctx.fillRect(cx - 5, cy - 5, 10, 10);
+      });
+
+      // Header Title
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 30px "Noto Serif SC", "Songti SC", "SimSun", serif';
+      ctx.fillText(isEn ? 'IMPERIAL ASTRONOMICAL BUREAU' : '大明欽天監秘傳 · 隨身軍師朱批手令', 450, 85);
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '14px sans-serif';
+      ctx.fillText(isEn ? 'IMPERIAL METAPHYSICS COURT ADVISOR DIRECTIVE' : '順天應勢 · 借權成事 · 處世決策秘策', 450, 115);
+
+      // Dividing Gold Line
+      ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)';
+      ctx.beginPath();
+      ctx.moveTo(80, 135);
+      ctx.lineTo(820, 135);
+      ctx.stroke();
+
+      // User Context Strip
+      const meta = a.contextMeta || {};
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#fde68a';
+      ctx.font = 'bold 15px sans-serif';
+      const ctxText = isEn
+        ? `Day Master: ${meta.dm || 'Native'}  |  Vigor: ${meta.score || 70}/100 [${meta.tier || 'Strong'}]  |  Transit: ${meta.year || 2026} (${meta.ganzhi || 'Bing-Wu'})`
+        : `本命日元: 【${meta.dm || '甲'}】  |  子平活力: ${meta.score || 70}分（${meta.tier || '较旺格'}）  |  值年岁运: ${meta.year || 2026} ${meta.ganzhi || '丙午'}`;
+      ctx.fillText(ctxText, 80, 170);
+
+      // Direct Verdict Box
+      ctx.fillStyle = 'rgba(153, 27, 27, 0.25)';
+      ctx.fillRect(80, 200, 740, 150);
+      ctx.strokeStyle = '#b91c1c';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(80, 200, 740, 150);
+
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 16px "Noto Serif SC", serif';
+      ctx.fillText(isEn ? '🧙 IMPERIAL VERDICT' : '🧙 钦天监朱批判词', 105, 235);
+
+      ctx.fillStyle = '#fef08a';
+      ctx.font = '14px sans-serif';
+      const verdictText = (a.directAnswer || '').replace(/[\*\_]/g, '');
+      wrapCanvasText(ctx, verdictText, 105, 270, 690, 24);
+
+      // Key Tactical Rules
+      ctx.fillStyle = '#34d399';
+      ctx.font = 'bold 18px "Noto Serif SC", serif';
+      ctx.fillText(isEn ? '⚔️ TACTICAL EXECUTION RULES' : '⚔️ 兵法策论 · 落地抓手', 80, 395);
+
+      let curY = 430;
+      (a.tactics || []).slice(0, 3).forEach((t, i) => {
+        ctx.fillStyle = '#a7f3d0';
+        ctx.font = '14px sans-serif';
+        const cleanedT = t.replace(/[\*\_]/g, '');
+        curY = wrapCanvasText(ctx, `${i + 1}. ${cleanedT}`, 80, curY, 740, 24) + 16;
+      });
+
+      // Red Lines
+      ctx.fillStyle = '#fb7185';
+      ctx.font = 'bold 18px "Noto Serif SC", serif';
+      ctx.fillText(isEn ? '⚠️ RED LINE BOUNDARIES' : '⚠️ 避坑铁律 · 禁忌红线', 80, curY + 15);
+      curY += 50;
+      (a.redLines || []).slice(0, 2).forEach((r) => {
+        ctx.fillStyle = '#fecdd3';
+        ctx.font = '14px sans-serif';
+        const cleanedR = r.replace(/[\*\_]/g, '');
+        curY = wrapCanvasText(ctx, `• ${cleanedR}`, 80, curY, 740, 24) + 12;
+      });
+
+      // Classical Anchor
+      if (a.mentalAnchor) {
+        curY += 20;
+        ctx.fillStyle = 'rgba(217, 119, 6, 0.15)';
+        ctx.fillRect(80, curY, 740, 90);
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(80, curY, 740, 90);
+
+        ctx.fillStyle = '#fde68a';
+        ctx.font = 'italic 13px "Noto Serif SC", serif';
+        wrapCanvasText(ctx, `📜 ${a.mentalAnchor.replace(/[\*\_]/g, '')}`, 105, curY + 35, 690, 22);
+        curY += 110;
+      }
+
+      // Imperial Seal Stamp (in vermilion ink on bottom right)
+      const sealX = 660, sealY = 1000;
+      ctx.save();
+      ctx.strokeStyle = '#dc2626';
+      ctx.fillStyle = 'rgba(220, 38, 38, 0.15)';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(sealX, sealY, 140, 140);
+      ctx.fillRect(sealX, sealY, 140, 140);
+      ctx.strokeStyle = 'rgba(220, 38, 38, 0.5)';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(sealX + 6, sealY + 6, 128, 128);
+      ctx.fillStyle = '#dc2626';
+      ctx.font = 'bold 22px "Noto Serif SC", serif';
+      ctx.textAlign = 'center';
+      if (isEn) {
+        ctx.fillText('IMPERIAL', sealX + 70, sealY + 60);
+        ctx.fillText('SEAL', sealX + 70, sealY + 95);
+      } else {
+        ctx.fillText('欽天監', sealX + 70, sealY + 58);
+        ctx.fillText('御制印', sealX + 70, sealY + 98);
+      }
+      ctx.restore();
+
+      // Footer
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(isEn ? 'Issued by Qintianjian Imperial Metaphysics Engine · Confidential Strategy' : '大明钦天监天机智库 · 秘府随身手令 · 谨密奉行', 450, 1205);
+
+      // Download
+      const imgData = canvas.toDataURL('image/png');
+      const dlLink = document.createElement('a');
+      dlLink.href = imgData;
+      dlLink.download = `qintianjian-edict-${Date.now()}.png`;
+      document.body.appendChild(dlLink);
+      dlLink.click();
+      document.body.removeChild(dlLink);
+    } catch (e) {
+      console.warn('Canvas export failed:', e);
+    }
+  }
 
   function initAdvisorAgent() {
+    loadAdvisorChatFromStorage();
     const btnOpen = document.getElementById('btnOpenAdvisorFloating');
     const modal = document.getElementById('advisorModal');
     const btnClose = document.getElementById('advisorCloseBtn');
     const btnSend = document.getElementById('advisorSendBtn');
     const btnClear = document.getElementById('advisorClearBtn');
+    const btnHeaderClear = document.getElementById('advisorHeaderClearBtn');
     const input = document.getElementById('advisorQueryInput');
 
     if (btnOpen) {
@@ -11986,9 +12286,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnClear) {
       btnClear.addEventListener('click', () => {
-        advisorChatHistory = [];
-        advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
-        renderAdvisorChatStream();
+        clearAdvisorChatHistory();
+      });
+    }
+
+    if (btnHeaderClear) {
+      btnHeaderClear.addEventListener('click', () => {
+        clearAdvisorChatHistory();
       });
     }
   }
@@ -12023,9 +12327,19 @@ document.addEventListener('DOMContentLoaded', () => {
             isEn ? 'Avoid impulsive reactionary decisions after 23:00.' : '子时（23点）后严禁推演重大决策或内耗反刍。'
           ],
           mentalAnchor: isEn ? 'Rong Ku Jian: "Follow the grain of time, preserve the vessel."' : '《荣枯鉴》：“顺天应势，借权成事，此之谓大通。”',
-          smartFollowUps: initialFollowUps
+          smartFollowUps: initialFollowUps,
+          microActions: isEn ? [
+            { id: 'somatic', badge: 'Somatic Reset', text: 'Stand up and walk away from your desk for 2 minutes to clear cognitive static' },
+            { id: 'tactical', badge: 'Real-World Action', text: 'Define today single most critical deliverable and execute with uninterrupted focus' },
+            { id: 'spatial', badge: 'Spatial Alignment', text: 'Clear desktop clutter to create open visual breathing room for clear perception' }
+          ] : [
+            { id: 'somatic', badge: '躯体动作', text: '立即站起身走动2分钟，做3次深呼吸，以物理位移斩断内耗回路' },
+            { id: 'tactical', badge: '现实推进', text: '圈定今日最关键的1项硬核交付成果，单核单线全速推进' },
+            { id: 'spatial', badge: '空间微调', text: '清理办公桌正前方杂物，留出一片开阔明亮的视觉留白空间' }
+          ]
         }
       });
+      saveAdvisorChatToStorage();
     }
     renderAdvisorChatStream();
     const input = document.getElementById('advisorQueryInput');
@@ -12110,6 +12424,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    saveAdvisorChatToStorage();
     renderAdvisorChatStream();
   }
 
@@ -12123,7 +12438,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    stream.innerHTML = advisorChatHistory.map(msg => {
+    stream.innerHTML = advisorChatHistory.map((msg, idx) => {
       if (msg.sender === 'user') {
         return `
           <div class="flex justify-end">
@@ -12143,7 +12458,13 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="flex items-center space-x-2">
                 <span class="text-amber-400 font-bold font-serif-sc text-sm sm:text-base">${a.title || (isEn ? 'Imperial Strategy Directive' : '钦天监军师秘卷')}</span>
               </div>
-              <span class="text-[10px] text-gray-500">${msg.time}</span>
+              <div class="flex items-center gap-2">
+                <button type="button" class="advisor-export-edict-btn px-2 py-1 rounded bg-amber-900/40 hover:bg-amber-800/60 border border-amber-600/40 text-amber-200 text-[10px] font-medium transition cursor-pointer flex items-center gap-1 active:scale-95" data-msg-idx="${idx}" title="${isEn ? 'Export Imperial Edict Poster' : '导出朱批手令长图'}">
+                  <span>📜</span>
+                  <span>${isEn ? 'Export Edict' : '朱批手令'}</span>
+                </button>
+                <span class="text-[10px] text-gray-500">${msg.time}</span>
+              </div>
             </div>
 
             <!-- Direct Conversational Answer (军师直陈精要) -->
@@ -12160,6 +12481,62 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             ` : ''}
 
+            <!-- Clarification Diagnostic Tree (主动反向澄清诊断树) -->
+            ${a.diagnosticTree ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-r from-cyan-950/40 to-slate-900/60 border border-cyan-500/40 space-y-2.5 shadow-md">
+                <div class="flex items-center justify-between border-b border-cyan-800/30 pb-2">
+                  <span class="text-xs sm:text-sm font-bold text-cyan-300 font-serif-sc flex items-center gap-1.5">
+                    <span>🧭</span>
+                    <span>${a.diagnosticTree.title}</span>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-950 border border-cyan-700/40 text-cyan-300 font-mono">DIAGNOSTIC TREE</span>
+                </div>
+                <div class="text-xs text-slate-300">${a.diagnosticTree.prompt}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  ${(a.diagnosticTree.nodes || []).map(n => `
+                    <button type="button" class="advisor-diag-node text-left p-2.5 rounded-lg border border-cyan-500/30 bg-slate-900/80 hover:bg-cyan-900/40 hover:border-cyan-400 transition cursor-pointer active:scale-95 group" data-diag-query="${encodeURIComponent(n.query)}">
+                      <div class="text-xs font-bold text-cyan-200 group-hover:text-cyan-100 flex items-center justify-between">
+                        <span>${n.label}</span>
+                        <span class="text-cyan-400 text-xs">➔</span>
+                      </div>
+                      <div class="text-[10px] text-slate-400 mt-1 line-clamp-1">${n.query}</div>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Synastry Tactical Oracle Card (双人合盘与博弈攻心) -->
+            ${a.synastryCard ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-r from-purple-950/40 via-purple-900/30 to-black/60 border border-purple-500/50 space-y-2.5 shadow-md">
+                <div class="flex items-center justify-between border-b border-purple-800/40 pb-2">
+                  <span class="text-xs sm:text-sm font-bold text-purple-300 font-serif-sc flex items-center gap-1.5">
+                    <span>🔮</span>
+                    <span>${a.synastryCard.title}</span>
+                  </span>
+                  <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-purple-900/80 text-purple-200 border border-purple-500/40 font-mono">
+                    ${isEn ? 'Match' : '契合度'}: ${a.synastryCard.score}/100
+                  </span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-300 font-medium">${a.synastryCard.targetInfo}</span>
+                  <span class="px-2 py-0.5 rounded bg-purple-800/60 text-purple-200 font-bold">${a.synastryCard.allianceArchetype}</span>
+                </div>
+                <div class="text-xs text-purple-200/90 leading-relaxed">${a.synastryCard.mechanism}</div>
+                <div class="space-y-1.5 pt-2 border-t border-purple-800/30 text-xs">
+                  <div class="p-2 rounded bg-purple-950/50 border border-purple-700/30 text-emerald-300">
+                    <span class="font-bold">⚔️ ${isEn ? 'Core Strategy' : '攻心相处法门'}:</span> ${a.synastryCard.coreKey}
+                  </div>
+                  <div class="p-2 rounded bg-purple-950/50 border border-purple-700/30 text-rose-300">
+                    <span class="font-bold">⚠️ ${isEn ? 'Friction Red Line' : '相处触碰雷区'}:</span> ${a.synastryCard.frictionRedLine}
+                  </div>
+                  <div class="p-2 rounded bg-purple-950/50 border border-purple-700/30 text-sky-300">
+                    <span class="font-bold">☯️ ${isEn ? 'Energy Balance' : '能量平衡锦囊'}:</span> ${a.synastryCard.energyBalance}
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+
             <!-- Precision Monthly Transit Timing Card (流月时令黄金应期全相表) -->
             ${a.timingCard ? `
               <div class="p-3.5 rounded-xl bg-[#121520] border border-amber-600/50 space-y-2.5 shadow-md">
@@ -12168,7 +12545,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>📅</span>
                     <span>${a.timingCard.title}</span>
                   </span>
-                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950 border border-amber-700/40 text-amber-300 font-mono">12-MONTH RADAR</span>
+                  <div class="flex items-center gap-1.5">
+                    <button type="button" class="advisor-export-ics-btn px-2 py-0.5 rounded-full bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-500/50 text-emerald-200 text-[10px] font-mono transition cursor-pointer flex items-center gap-1 active:scale-95" data-msg-idx="${idx}" title="${isEn ? 'Export to Calendar (.ICS)' : '一键写入系统日历'}">
+                      <span>📅</span>
+                      <span>${isEn ? 'Calendar (.ICS)' : '写入日历 (.ICS)'}</span>
+                    </button>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950 border border-amber-700/40 text-amber-300 font-mono">12-MONTH RADAR</span>
+                  </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -12181,6 +12564,12 @@ document.addEventListener('DOMContentLoaded', () => {
                       </div>
                       <div class="text-xs font-bold text-white mt-1">${a.timingCard.primaryWindow.lunarMonth}</div>
                       <div class="text-[10px] text-amber-200/80">${a.timingCard.primaryWindow.solarTerm}</div>
+                      ${a.timingCard.primaryWindow.shenShaBadges && a.timingCard.primaryWindow.shenShaBadges.length ? `
+                        <div class="flex flex-wrap gap-1 mt-1">
+                          ${a.timingCard.primaryWindow.shenShaBadges.map(s => `<span class="text-[9px] px-1 py-0.2 rounded bg-amber-900/70 text-amber-200 border border-amber-700/30">${s}</span>`).join('')}
+                          ${a.timingCard.primaryWindow.voidStatus ? `<span class="text-[9px] px-1 py-0.2 rounded bg-indigo-950 text-indigo-300 border border-indigo-700/30">${a.timingCard.primaryWindow.voidStatus}</span>` : ''}
+                        </div>
+                      ` : ''}
                       <div class="text-[10px] text-gray-300 leading-tight mt-1">${a.timingCard.primaryWindow.mechanism}</div>
                     </div>
                     <div class="text-[10px] text-emerald-300 pt-1 mt-1 border-t border-amber-800/40 font-medium">🎯 ${a.timingCard.primaryWindow.action}</div>
@@ -12195,6 +12584,12 @@ document.addEventListener('DOMContentLoaded', () => {
                       </div>
                       <div class="text-xs font-bold text-white mt-1">${a.timingCard.secondaryWindow.lunarMonth}</div>
                       <div class="text-[10px] text-emerald-200/80">${a.timingCard.secondaryWindow.solarTerm}</div>
+                      ${a.timingCard.secondaryWindow.shenShaBadges && a.timingCard.secondaryWindow.shenShaBadges.length ? `
+                        <div class="flex flex-wrap gap-1 mt-1">
+                          ${a.timingCard.secondaryWindow.shenShaBadges.map(s => `<span class="text-[9px] px-1 py-0.2 rounded bg-emerald-900/70 text-emerald-200 border border-emerald-700/30">${s}</span>`).join('')}
+                          ${a.timingCard.secondaryWindow.voidStatus ? `<span class="text-[9px] px-1 py-0.2 rounded bg-indigo-950 text-indigo-300 border border-indigo-700/30">${a.timingCard.secondaryWindow.voidStatus}</span>` : ''}
+                        </div>
+                      ` : ''}
                       <div class="text-[10px] text-gray-300 leading-tight mt-1">${a.timingCard.secondaryWindow.mechanism}</div>
                     </div>
                     <div class="text-[10px] text-emerald-300 pt-1 mt-1 border-t border-emerald-800/40 font-medium">🎯 ${a.timingCard.secondaryWindow.action}</div>
@@ -12209,6 +12604,12 @@ document.addEventListener('DOMContentLoaded', () => {
                       </div>
                       <div class="text-xs font-bold text-white mt-1">${a.timingCard.tertiaryWindow.lunarMonth}</div>
                       <div class="text-[10px] text-blue-200/80">${a.timingCard.tertiaryWindow.solarTerm}</div>
+                      ${a.timingCard.tertiaryWindow.shenShaBadges && a.timingCard.tertiaryWindow.shenShaBadges.length ? `
+                        <div class="flex flex-wrap gap-1 mt-1">
+                          ${a.timingCard.tertiaryWindow.shenShaBadges.map(s => `<span class="text-[9px] px-1 py-0.2 rounded bg-blue-900/70 text-blue-200 border border-blue-700/30">${s}</span>`).join('')}
+                          ${a.timingCard.tertiaryWindow.voidStatus ? `<span class="text-[9px] px-1 py-0.2 rounded bg-indigo-950 text-indigo-300 border border-indigo-700/30">${a.timingCard.tertiaryWindow.voidStatus}</span>` : ''}
+                        </div>
+                      ` : ''}
                       <div class="text-[10px] text-gray-300 leading-tight mt-1">${a.timingCard.tertiaryWindow.mechanism}</div>
                     </div>
                     <div class="text-[10px] text-blue-300 pt-1 mt-1 border-t border-blue-800/40 font-medium">🎯 ${a.timingCard.tertiaryWindow.action}</div>
@@ -12280,6 +12681,33 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             ` : ''}
 
+            <!-- Micro-Actions Checklist (三阶落地微动作 · 即刻破局清单) -->
+            ${a.microActions && a.microActions.length ? `
+              <div class="advisor-micro-actions p-3.5 rounded-xl bg-gradient-to-r from-amber-950/30 via-slate-900/50 to-black/40 border border-amber-500/30 space-y-2">
+                <div class="flex items-center justify-between border-b border-amber-800/30 pb-1.5">
+                  <div class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+                    <span>⚡</span>
+                    <span>${isEn ? 'Tactical Micro-Actions (Execute Now)' : '三阶落地微动作 · 即刻破局清单'}</span>
+                  </div>
+                  <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'CHECKLIST' : '实战打卡'}</span>
+                </div>
+                <div class="space-y-1.5">
+                  ${a.microActions.map(act => {
+                    const isChecked = a.checkedActions && a.checkedActions[act.id];
+                    return `
+                      <label class="flex items-start gap-2.5 p-2 rounded-lg bg-black/30 hover:bg-black/40 cursor-pointer transition text-xs text-slate-200">
+                        <input type="checkbox" class="advisor-micro-checkbox mt-0.5 rounded border-amber-400 text-amber-500 focus:ring-amber-400 cursor-pointer" data-msg-idx="${idx}" data-act-id="${act.id}" ${isChecked ? 'checked' : ''}>
+                        <div>
+                          <span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-500/20 text-amber-300 font-semibold mr-1.5">${act.badge}</span>
+                          <span class="micro-action-text ${isChecked ? 'line-through opacity-60 text-emerald-400' : ''}">${act.text}</span>
+                        </div>
+                      </label>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            ` : ''}
+
             <!-- Mental Anchor -->
             ${a.mentalAnchor ? `
               <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-700/40 text-xs text-amber-300/90 font-serif-sc italic">
@@ -12329,6 +12757,37 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Bind click listeners on diagnostic tree nodes
+    stream.querySelectorAll('.advisor-diag-node').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = decodeURIComponent(btn.getAttribute('data-diag-query'));
+        handleAdvisorQuery(q);
+      });
+    });
+
+    // Bind click listeners on export edict poster buttons
+    stream.querySelectorAll('.advisor-export-edict-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        exportAdvisorEdictPoster(mIdx);
+      });
+    });
+
+    // Bind click listeners on export calendar buttons
+    stream.querySelectorAll('.advisor-export-ics-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        exportAdvisorTimingToIcs(mIdx);
+      });
+    });
+
+    // Bind change listeners on micro-action checkboxes
+    stream.querySelectorAll('.advisor-micro-checkbox').forEach(chk => {
+      chk.addEventListener('change', () => {
+        toggleAdvisorMicroAction(chk);
+      });
+    });
+
     // Bind click listeners on action links
     stream.querySelectorAll('.advisor-action-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -12348,6 +12807,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     stream.scrollTop = stream.scrollHeight;
+  }
+
+  if (typeof window !== 'undefined') {
+    window.exportAdvisorTimingToIcs = exportAdvisorTimingToIcs;
+    window.exportAdvisorEdictPoster = exportAdvisorEdictPoster;
+    window.toggleAdvisorMicroAction = toggleAdvisorMicroAction;
+    window.clearAdvisorChatHistory = clearAdvisorChatHistory;
+    window.handleAdvisorQuery = handleAdvisorQuery;
+  }
+  if (typeof globalThis !== 'undefined') {
+    globalThis.exportAdvisorTimingToIcs = exportAdvisorTimingToIcs;
+    globalThis.exportAdvisorEdictPoster = exportAdvisorEdictPoster;
+    globalThis.toggleAdvisorMicroAction = toggleAdvisorMicroAction;
+    globalThis.clearAdvisorChatHistory = clearAdvisorChatHistory;
+    globalThis.handleAdvisorQuery = handleAdvisorQuery;
   }
 
   // ==========================================================================

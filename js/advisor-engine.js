@@ -146,6 +146,18 @@ class AdvisorEngine {
           query: 'Dealing with excessive overthinking and self-doubt lately. What is my optimal cognitive reframing anchor and physical reset?'
         },
         {
+          id: 'health_vitality',
+          icon: '🫁',
+          title: 'Health & Five-Element Vitality',
+          query: 'Evaluating my Five Elements balance and current transit, what are my organ vulnerabilities, sleep remedies, and wellness rhythm?'
+        },
+        {
+          id: 'synastry_inquiry',
+          icon: '👥',
+          title: 'Partner & Peer Synastry Match',
+          query: 'Evaluate compatibility between my chart and my partner/colleague: what are our elemental friction zones and alliance tactics?'
+        },
+        {
           id: 'wealth_window',
           icon: '💰',
           title: 'Wealth & Initiative Timing',
@@ -186,12 +198,147 @@ class AdvisorEngine {
         query: '近期精神内耗反刍严重、怀疑自我算力，如何用我命造最适宜的禅道心法与躯体动作实现硬重启？'
       },
       {
+        id: 'health_vitality',
+        icon: '🫁',
+        title: '身心气血与五脏调摄',
+        query: '结合我八字五行旺衰与当下岁运，我的五脏气血弱项在哪里？如何通过作息食疗与空间调养进行身心硬重启？'
+      },
+      {
+        id: 'synastry_inquiry',
+        icon: '👥',
+        title: '双人合盘与博弈攻心',
+        query: '评测我与伴侣/领导的命盘相处合化：对方气场对我是否补益用神？相处有哪些必须避开的克伐雷区？'
+      },
+      {
         id: 'wealth_window',
         icon: '💰',
         title: '财运时机与投资攻守',
         query: '当下岁运流月逢何神司权？我适宜开拓副业与商业变现，还是当收拢现金流、以沉淀绝技为先？'
       }
     ];
+  }
+
+  /**
+   * Calculate Xun Kong (Earthly Branches in Void / 空亡) from Day/Year Stem and Branch
+   */
+  static calculateKongWang(stem, branch) {
+    const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const sIdx = STEMS.indexOf(stem);
+    const bIdx = BRANCHES.indexOf(branch);
+    if (sIdx === -1 || bIdx === -1) return ['戌', '亥'];
+    const xunStart = (bIdx - sIdx + 12) % 12;
+    const v1 = (xunStart - 2 + 12) % 12;
+    const v2 = (xunStart - 1 + 12) % 12;
+    return [BRANCHES[v1], BRANCHES[v2]];
+  }
+
+  /**
+   * Evaluate Noble Stars (Shen Sha / 神煞) for a given Lunar Month
+   */
+  static evaluateMonthShenSha(dayStem, yearBranch, monthBranch, lang = 'zh') {
+    const isEn = (lang === 'en');
+    const badges = [];
+
+    // Tian Yi Nobleman (天乙贵人)
+    const tianYiMap = {
+      '甲': ['丑', '未'], '戊': ['丑', '未'], '庚': ['丑', '未'],
+      '乙': ['子', '申'], '己': ['子', '申'],
+      '丙': ['亥', '酉'], '丁': ['亥', '酉'],
+      '壬': ['卯', '巳'], '癸': ['卯', '巳'],
+      '辛': ['午', '寅']
+    };
+    if (tianYiMap[dayStem] && tianYiMap[dayStem].includes(monthBranch)) {
+      badges.push(isEn ? '✨ Tian Yi Nobleman' : '✨ 天乙贵人值守');
+    }
+
+    // Wen Chang (文昌贵人)
+    const wenChangMap = {
+      '甲': '巳', '乙': '午', '丙': '申', '丁': '酉', '戊': '申',
+      '己': '酉', '庚': '亥', '辛': '子', '壬': '寅', '癸': '卯'
+    };
+    if (wenChangMap[dayStem] === monthBranch) {
+      badges.push(isEn ? '📖 Wen Chang Noble' : '📖 文昌贵人启智');
+    }
+
+    // Hong Luan & Tian Xi (红鸾天喜)
+    const BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const yIdx = BRANCHES.indexOf(yearBranch);
+    if (yIdx !== -1) {
+      const hlIdx = (3 - yIdx + 12) % 12;
+      const txIdx = (hlIdx + 6) % 12;
+      if (BRANCHES[hlIdx] === monthBranch) {
+        badges.push(isEn ? '🌸 Hong Luan Romance' : '🌸 红鸾喜庆动照');
+      } else if (BRANCHES[txIdx] === monthBranch) {
+        badges.push(isEn ? '🎉 Tian Xi Joy Noble' : '🎉 天喜临门护佑');
+      }
+    }
+
+    // Post Horse (驿马星)
+    const yimaMap = {
+      '申': '寅', '子': '寅', '辰': '寅',
+      '寅': '申', '午': '申', '戌': '申',
+      '巳': '亥', '酉': '亥', '丑': '亥',
+      '亥': '巳', '卯': '巳', '未': '巳'
+    };
+    if (yimaMap[yearBranch] === monthBranch) {
+      badges.push(isEn ? '🐎 Post Horse Pivot' : '🐎 驿马跃迁催动');
+    }
+
+    return badges;
+  }
+
+  /**
+   * Evaluate Synastry Dynamics with Partner or Superior
+   */
+  static evaluateSynastryTactics(targetStr, bazi, luck, lang = 'zh') {
+    const isEn = (lang === 'en');
+    const dm = bazi?.dayMaster || '甲';
+    const db = bazi?.pillars?.day?.branch || '午';
+
+    let targetYear = 1998;
+    const matchYear = (targetStr || '').match(/\b(19\d{2}|20\d{2})\b/);
+    if (matchYear) {
+      targetYear = parseInt(matchYear[1], 10);
+    }
+    const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const gzIdx = (targetYear - 4) % 60;
+    const targetStem = STEMS[gzIdx % 10];
+    const targetBranch = BRANCHES[gzIdx % 12];
+    const targetGz = `${targetStem}${targetBranch}`;
+
+    let score = 86;
+    let harmonyReasonZh = '地支三合化气生身，气数相投互为犄角';
+    let harmonyReasonEn = 'Harmonious elemental branch resonance aligns pacing';
+
+    const branchSixHarmonies = { '子': '丑', '丑': '子', '寅': '亥', '亥': '寅', '卯': '戌', '戌': '卯', '辰': '酉', '酉': '辰', '巳': '申', '申': '巳', '午': '未', '未': '午' };
+    const branchClashes = { '子': '午', '午': '子', '丑': '未', '未': '丑', '寅': '申', '申': '寅', '卯': '酉', '酉': '卯', '辰': '戌', '戌': '辰', '巳': '亥', '亥': '巳' };
+
+    if (branchSixHarmonies[db] === targetBranch) {
+      score = 96;
+      harmonyReasonZh = '地支六合归位（天作之合），极具默契与灵魂共振';
+      harmonyReasonEn = 'Six-Harmony branch union represents exceptional soulmate resonance';
+    } else if (['寅', '午', '戌'].includes(db) && ['寅', '午', '戌'].includes(targetBranch)) {
+      score = 92;
+      harmonyReasonZh = '寅午戌三合局同气连枝，长远目标志向高度契合';
+      harmonyReasonEn = 'Tri-Union elemental fire alliance drives aligned long-term visions';
+    } else if (branchClashes[db] === targetBranch) {
+      score = 73;
+      harmonyReasonZh = '逢冲动荡，初见吸引力极强，需注重理性包容与情绪脱敏';
+      harmonyReasonEn = 'Branch polarity creates intense initial magnetism followed by friction';
+    }
+
+    return {
+      title: isEn ? 'Synastry Tactical Oracle & Relationship Matrix' : '双人命盘博弈与天合地合神机卡',
+      targetInfo: isEn ? `Partner Profile: Year ${targetYear} (${AdvisorEngine._ganzhiToEn(targetGz)})` : `对方气数：${targetYear}年生人（${targetGz}）`,
+      score: score,
+      allianceArchetype: score >= 90 ? (isEn ? 'Soulmate Resonance & Mutual Compounding' : '天作之合 · 灵魂共鸣型') : (isEn ? 'Pragmatic Alliance & Growth Balance' : '现实互补 · 磨合成长型'),
+      mechanism: isEn ? harmonyReasonEn : harmonyReasonZh,
+      coreKey: isEn ? 'Core Alliance Strategy: Lead with transparent delivery and clear mutual boundaries.' : '攻心相处法门：多展现交付确定性与专业边界，以平等同盟相待，忌居高临下指导。',
+      frictionRedLine: isEn ? 'Friction Red Line: Enforce a 24-hour delayed reaction before confronting sensitive friction.' : '相处触碰雷区：严禁在疲惫期互翻旧账或单方面冷战，遇争议设置 24 小时情绪隔离期。',
+      energyBalance: isEn ? 'Energy Balance: Other person provides vital grounding; reciprocate with strategic insight.' : '能量平衡锦囊：对方能为你提供宝贵的现实落地感，你当以远见与情绪共鸣回馈。'
+    };
   }
 
   /**
@@ -223,6 +370,12 @@ class AdvisorEngine {
     if (/选哪个|选a还是|还是去|跳槽还是|去深圳还是|还是留任|比较|vs|compare|which option/i.test(q)) {
       return 'decision_compare';
     }
+    if (/器官|五脏|失眠原因|怎么调理|养生方|organ|sleep remedy|diet/i.test(q)) {
+      return 'health_organ';
+    }
+    if (/买房方位|哪个城市买|首付|贷款|房产|property direction|mortgage/i.test(q)) {
+      return 'property_timing';
+    }
     if (/为什么|何故|原理|根据什么|怎么算出来|八字怎么看|why|reason|how to deduce/i.test(q)) {
       return 'general_why';
     }
@@ -233,8 +386,33 @@ class AdvisorEngine {
    * Classify user query intent robustly, with multi-turn session context inheritance
    */
   static detectIntent(userQuery, sessionContext = null) {
-    const q = (userQuery || '').toLowerCase();
+    const q = (userQuery || '').toLowerCase().trim();
     const sub = this.detectSubcategory(userQuery);
+
+    // 0a. Vague Confusion / Directionless / Lost
+    if (/^(我)?(很)?迷茫|不知道(该)?怎么(办|选)|求指点|指点(一下)?|今年好难受|我该怎么办|心乱|心烦|救救我|给我点建议|^迷茫$|confused|so lost|i am lost|help me|what should i do|feel stuck/i.test(q)) {
+      return 'vague_confusion';
+    }
+
+    // 0b. Synastry / Compatibility / Match with another person
+    if (/我和(他|她|ta|对方)合不合|合盘|看下我们合不合|我们合适吗|对方(是|属|生于|八字)|他(是|属)|她(是|属)|相亲对象|领导是\d{4}|领导属|合不合|配不配|相克|相生|synastry|compatibility|compatib|are we compatible|partner's chart|boss was born/i.test(q)) {
+      return 'synastry_inquiry';
+    }
+
+    // 0c. Health & Vitality / Organs / Sleep / Wellness
+    if (/健康|身体|失眠|五脏|气血|生病|养生|作息|精力|疲惫|脾胃|肝胆|心肾|心脏|甲状腺|头痛|wellness|vitality|health|body|sleep|insomnia|organ/i.test(q)) {
+      return 'health_vitality';
+    }
+
+    // 0d. Real Estate / Housing / Moving / Relocation
+    if (/买房|置业|买房时机|搬家|乔迁|迁居|定居|安居|买房子|房产|动产|换城市|real estate|buy a house|property|move house|relocat|moving/i.test(q)) {
+      return 'real_estate_moving';
+    }
+
+    // 0e. Legal Dispute / Lawsuit / Defense / Contract Breach / Layoff
+    if (/小人|官非|打官司|起诉|纠纷|合同|诉讼|背刺|辞退|裁员|被坑|劳动仲裁|legal|lawsuit|dispute|contract|court|sue|layoff|betray/i.test(q)) {
+      return 'legal_dispute';
+    }
 
     // 1. Romance / Marriage / Dating / Partner
     if (/对象|婚恋|结婚|恋爱|脱单|另一半|正缘|伴侣|男朋友|女朋友|老公|老婆|姻缘|桃花|夫妻|配偶|红鸾|天喜|相亲|嫁|娶|romance|partner|marriage|dating|love|spouse|boyfriend|girlfriend|wife|husband|relationship|peach blossom/i.test(q)) {
@@ -288,6 +466,9 @@ class AdvisorEngine {
       return 'romance_timing';
     }
 
+    if (sub === 'health_organ') return 'health_vitality';
+    if (sub === 'property_timing') return 'real_estate_moving';
+
     return 'general';
   }
 
@@ -296,158 +477,300 @@ class AdvisorEngine {
    */
   static calculateMonthlyTransitWindows(bazi, luck, currentYear = 2026, category = 'romance_timing', lang = 'zh') {
     const isEn = (lang === 'en');
+    const dm = bazi?.dayMaster || '甲';
     const db = bazi?.pillars?.day?.branch || '午';
+    const yb = bazi?.pillars?.year?.branch || '午';
+
+    // Void Branches
+    const voidBranches = this.calculateKongWang(dm, db);
+    const isDayBranchVoid = voidBranches.includes(db);
+
+    const enrichWin = (w, monthBranch, startDate, endDate) => {
+      w.startDate = startDate;
+      w.endDate = endDate;
+      w.gregorianDates = {
+        start: startDate ? startDate.replace(/-/g, '') : '20260707',
+        end: endDate ? endDate.replace(/-/g, '') : '20260807'
+      };
+      w.shenShaBadges = this.evaluateMonthShenSha(dm, yb, monthBranch, lang);
+      if (isDayBranchVoid && (monthBranch === db || voidBranches.includes(monthBranch))) {
+        w.voidStatus = isEn ? '⚡ Void Pierced · Surge' : '⚡ 冲空填实 · 奇运突破';
+      } else {
+        w.voidStatus = '';
+      }
+      return w;
+    };
 
     if (category === 'romance_timing') {
-      let pMonthZh = '农历六月（乙未月）';
-      let pMonthEn = 'Lunar Month 6 (Yi-Wei)';
-      let pTermZh = '小暑 至 大暑（公历 7月7日 ~ 8月6日）';
-      let pTermEn = 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)';
-      let pMechZh = '午未六合化土生财，岁君六合入夫妻宫！逢合主定，气数聚合之第一吉相';
-      let pMechEn = 'Six-Harmony union combines with the Annual King and Spouse Palace; harmony anchors formal commitment';
-      let pActZh = '最宜确立恋爱名分、坦诚心扉、见家长或共同制定长远发展盟约';
-      let pActEn = 'Prime window for formalizing relationship milestones and long-term commitments';
-      let pProb = 92;
+      const p = enrichWin({
+        badge: isEn ? '🥇 Primary Peak Window' : '🥇 首席黄金应期',
+        lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
+        solarTerm: isEn ? 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)' : '小暑 至 大暑（公历 7月7日 ~ 8月6日）',
+        probability: 92,
+        mechanism: isEn ? 'Six-Harmony union combines with the Annual King and Spouse Palace; harmony anchors formal commitment' : '午未六合化土生财，岁君六合入夫妻宫！逢合主定，气数聚合之第一吉相',
+        action: isEn ? 'Prime window for formalizing relationship milestones and long-term commitments' : '最宜确立恋爱名分、坦诚心扉、见家长或共同制定长远发展盟约'
+      }, '未', '2026-07-07', '2026-08-06');
 
-      let sMonthZh = '农历五月（甲午月）';
-      let sMonthEn = 'Lunar Month 5 (Jia-Wu)';
-      let sTermZh = '芒种 至 夏至（公历 6月5日 ~ 7月6日）';
-      let sTermEn = 'Grain in Ear to Summer Solstice (Jun 5 ~ Jul 6)';
-      let sMechZh = '岁君伏吟（甲午值守），同气相感，桃花星动，异性同侪吸引力峰值';
-      let sMechEn = 'Annual King duplication vibrates matching resonance; social magnetism and peer attraction peak';
-      let sActZh = '主动走出舒适区参与行业峰会、艺术沙龙或校友聚会，触动引力场';
-      let sActEn = 'Proactively attend professional symposiums, elite salons, and alumni gatherings';
-      let sProb = 88;
+      const s = enrichWin({
+        badge: isEn ? '🥈 Secondary Peak Window' : '🥈 次席高光应期',
+        lunarMonth: isEn ? 'Lunar Month 5 (Jia-Wu)' : '农历五月（甲午月）',
+        solarTerm: isEn ? 'Grain in Ear to Summer Solstice (Jun 5 ~ Jul 6)' : '芒种 至 夏至（公历 6月5日 ~ 7月6日）',
+        probability: 88,
+        mechanism: isEn ? 'Annual King duplication vibrates matching resonance; social magnetism and peer attraction peak' : '岁君伏吟（甲午值守），同气相感，桃花星动，异性同侪吸引力峰值',
+        action: isEn ? 'Proactively attend professional symposiums, elite salons, and alumni gatherings' : '主动走出舒适区参与行业峰会、艺术沙龙或校友聚会，触动引力场'
+      }, '午', '2026-06-05', '2026-07-06');
 
-      let tMonthZh = '农历九月（戊戌月）';
-      let tMonthEn = 'Lunar Month 9 (Wu-Xu)';
-      let tTermZh = '寒露 至 霜降（公历 10月8日 ~ 11月6日）';
-      let tTermEn = 'Cold Dew to Frost Descent (Oct 8 ~ Nov 6)';
-      let tMechZh = '寅午戌三合火局大成入库，财官双美，情感关系尘埃落定';
-      let tMechEn = 'Tri-Union fire alliance consolidates in storage; stability and alignment materialize';
-      let tActZh = '宜商议未来定居城市与共同生活规划，明确长期生活定所';
-      let tActEn = 'Align upon shared future domestic living plans and joint milestones';
-      let tProb = 82;
+      const t = enrichWin({
+        badge: isEn ? '🥉 Tertiary Window' : '🥉 合局收官应期',
+        lunarMonth: isEn ? 'Lunar Month 9 (Wu-Xu)' : '农历九月（戊戌月）',
+        solarTerm: isEn ? 'Cold Dew to Frost Descent (Oct 8 ~ Nov 6)' : '寒露 至 霜降（公历 10月8日 ~ 11月6日）',
+        probability: 82,
+        mechanism: isEn ? 'Tri-Union fire alliance consolidates in storage; stability and alignment materialize' : '寅午戌三合火局大成入库，财官双美，情感关系尘埃落定',
+        action: isEn ? 'Align upon shared future domestic living plans and joint milestones' : '宜商议未来定居城市与共同生活规划，明确长期生活定所'
+      }, '戌', '2026-10-08', '2026-11-06');
 
-      let cMonthZh = '农历十一月（庚子月）';
-      let cMonthEn = 'Lunar Month 11 (Geng-Zi)';
-      let cTermZh = '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）';
-      let cTermEn = 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)';
-      let cMechZh = '子午相冲冲动夫妻宫与岁君，水火交战，情绪易敏感挑剔甚至冷战';
-      let cMechEn = 'Zi-Wu clash stirs the Spouse Palace; heightened emotional sensitivity requires patience';
-      let cActZh = '遇事执行24小时冷敷隔离法则，多体恤倾听，切忌冲动做决绝决定';
-      let cActEn = 'Practice 24-hour delayed reaction; prioritize attentive listening over confrontation';
+      const c = enrichWin({
+        badge: isEn ? '⚠️ Cautionary Buffer Month' : '⚠️ 情绪磨合预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 45,
+        mechanism: isEn ? 'Zi-Wu clash stirs the Spouse Palace; heightened emotional sensitivity requires patience' : '子午相冲冲动夫妻宫与岁君，水火交战，情绪易敏感挑剔甚至冷战',
+        action: isEn ? 'Practice 24-hour delayed reaction; prioritize attentive listening over confrontation' : '遇事执行24小时冷敷隔离法则，多体恤倾听，切忌冲动做决绝决定'
+      }, '子', '2026-12-07', '2027-01-04');
 
       return {
         title: isEn ? '2026 Bing-Wu Transit: 12-Month Romance Timing & Auspicious Windows' : '2026 丙午流年 · 十二流月正缘时令应期全相表',
         category: category,
-        primaryWindow: {
-          badge: isEn ? '🥇 Primary Peak Window' : '🥇 首席黄金应期',
-          lunarMonth: isEn ? pMonthEn : pMonthZh,
-          solarTerm: isEn ? pTermEn : pTermZh,
-          probability: pProb,
-          mechanism: isEn ? pMechEn : pMechZh,
-          action: isEn ? pActEn : pActZh
-        },
-        secondaryWindow: {
-          badge: isEn ? '🥈 Secondary Peak Window' : '🥈 次席高光应期',
-          lunarMonth: isEn ? sMonthEn : sMonthZh,
-          solarTerm: isEn ? sTermEn : sTermZh,
-          probability: sProb,
-          mechanism: isEn ? sMechEn : sMechZh,
-          action: isEn ? sActEn : sActZh
-        },
-        tertiaryWindow: {
-          badge: isEn ? '🥉 Tertiary Window' : '🥉 合局收官应期',
-          lunarMonth: isEn ? tMonthEn : tMonthZh,
-          solarTerm: isEn ? tTermEn : tTermZh,
-          probability: tProb,
-          mechanism: isEn ? tMechEn : tMechZh,
-          action: isEn ? tActEn : tActZh
-        },
-        cautionaryMonth: {
-          badge: isEn ? '⚠️ Cautionary Buffer Month' : '⚠️ 情绪磨合预警月',
-          lunarMonth: isEn ? cMonthEn : cMonthZh,
-          solarTerm: isEn ? cTermEn : cTermZh,
-          probability: 45,
-          mechanism: isEn ? cMechEn : cMechZh,
-          action: isEn ? cActEn : cActZh
-        }
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
       };
     } else if (category === 'academic_exam') {
+      const p = enrichWin({
+        badge: isEn ? '🥇 Prime Exam Window' : '🥇 首席考学黄金期',
+        lunarMonth: isEn ? 'Lunar Month 2 (Xin-Mao)' : '农历二月（辛卯月）',
+        solarTerm: isEn ? 'Awakening of Insects to Spring Equinox (Mar 5 ~ Apr 4)' : '惊蛰 至 春分（公历 3月5日 ~ 4月4日）',
+        probability: 93,
+        mechanism: isEn ? 'Wen Chang noble star shines; Wood-Fire clarity compounds mental retention' : '文昌贵人当权，木火通明，深度记忆与逻辑调取效率峰值',
+        action: isEn ? 'Ideal for major written examinations, paper submissions, and thesis proposals' : '最宜参加重要笔试、提交关键学术论文或研究立项'
+      }, '卯', '2026-03-05', '2026-04-04');
+
+      const s = enrichWin({
+        badge: isEn ? '🥈 Defense & Admission Window' : '🥈 答辩放榜顺遂期',
+        lunarMonth: isEn ? 'Lunar Month 5 (Jia-Wu)' : '农历五月（甲午月）',
+        solarTerm: isEn ? 'Grain in Ear to Summer Solstice (Jun 5 ~ Jul 6)' : '芒种 至 夏至（公历 6月5日 ~ 7月6日）',
+        probability: 87,
+        mechanism: isEn ? 'Output star vitality illuminates intellectual breakthroughs' : '食伤吐秀大展宏图，面试答辩表达力极具感染力',
+        action: isEn ? 'Ideal for interview defense, meeting supervisors, and scholarship interviews' : '最宜导师拜会交流、复试答辩及奖学金争夺'
+      }, '午', '2026-06-05', '2026-07-06');
+
+      const t = enrichWin({
+        badge: isEn ? '🥉 Acceptance Confirmation' : '🥉 录取盖章收官期',
+        lunarMonth: isEn ? 'Lunar Month 10 (Ji-Hai)' : '农历十月（己亥月）',
+        solarTerm: isEn ? 'Beginning of Winter to Minor Snow (Nov 7 ~ Dec 6)' : '立冬 至 小雪（公历 11月7日 ~ 12月6日）',
+        probability: 80,
+        mechanism: isEn ? 'Direct Resource combines with Day Master, solidifying institutional moats' : '正印生身入库，官方录取与院校注册尘埃落定',
+        action: isEn ? 'Secure formal visa, official enrollment confirmation, and lab allocation' : '宜落实正式录取通知、签证办理与实验室入驻'
+      }, '亥', '2026-11-07', '2026-12-06');
+
+      const c = enrichWin({
+        badge: isEn ? '⚠️ Energy Depletion Warning' : '⚠️ 备考心力损耗预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 50,
+        mechanism: isEn ? 'Water-Fire clash scatters cognitive stamina; avoid late-night cramming' : '水火交冲耗损心肾阳气，易心浮气躁或注意力涣散',
+        action: isEn ? 'Guard against all-nighters; enforce 8 hours of sleep before crunch tests' : '严禁熬夜刷题，考前以平稳作息与慢跑散步稳固元神'
+      }, '子', '2026-12-07', '2027-01-04');
+
       return {
         title: isEn ? '2026 Academic & Examination Timing Windows' : '2026 丙午流年 · 考学申博与文昌应期全相表',
         category: category,
-        primaryWindow: {
-          badge: isEn ? '🥇 Prime Exam Window' : '🥇 首席考学黄金期',
-          lunarMonth: isEn ? 'Lunar Month 2 (Xin-Mao)' : '农历二月（辛卯月）',
-          solarTerm: isEn ? 'Awakening of Insects to Spring Equinox (Mar 5 ~ Apr 4)' : '惊蛰 至 春分（公历 3月5日 ~ 4月4日）',
-          probability: 93,
-          mechanism: isEn ? 'Wen Chang noble star shines; Wood-Fire clarity compounds mental retention' : '文昌贵人当权，木火通明，深度记忆与逻辑调取效率峰值',
-          action: isEn ? 'Ideal for major written examinations, paper submissions, and thesis proposals' : '最宜参加重要笔试、提交关键学术论文或研究立项'
-        },
-        secondaryWindow: {
-          badge: isEn ? '🥈 Defense & Admission Window' : '🥈 答辩放榜顺遂期',
-          lunarMonth: isEn ? 'Lunar Month 5 (Jia-Wu)' : '农历五月（甲午月）',
-          solarTerm: isEn ? 'Grain in Ear to Summer Solstice (Jun 5 ~ Jul 6)' : '芒种 至 夏至（公历 6月5日 ~ 7月6日）',
-          probability: 87,
-          mechanism: isEn ? 'Output star vitality illuminates intellectual breakthroughs' : '食伤吐秀大展宏图，面试答辩表达力极具感染力',
-          action: isEn ? 'Ideal for interview defense, meeting supervisors, and scholarship interviews' : '最宜导师拜会交流、复试答辩及奖学金争夺'
-        },
-        tertiaryWindow: {
-          badge: isEn ? '🥉 Acceptance Confirmation' : '🥉 录取盖章收官期',
-          lunarMonth: isEn ? 'Lunar Month 10 (Ji-Hai)' : '农历十月（己亥月）',
-          solarTerm: isEn ? 'Beginning of Winter to Minor Snow (Nov 7 ~ Dec 6)' : '立冬 至 小雪（公历 11月7日 ~ 12月6日）',
-          probability: 80,
-          mechanism: isEn ? 'Direct Resource combines with Day Master, solidifying institutional moats' : '正印生身入库，官方录取与院校注册尘埃落定',
-          action: isEn ? 'Secure formal visa, official enrollment confirmation, and lab allocation' : '宜落实正式录取通知、签证办理与实验室入驻'
-        },
-        cautionaryMonth: {
-          badge: isEn ? '⚠️ Energy Depletion Warning' : '⚠️ 备考心力损耗预警月',
-          lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
-          solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
-          probability: 50,
-          mechanism: isEn ? 'Water-Fire clash scatters cognitive stamina; avoid late-night cramming' : '水火交冲耗损心肾阳气，易心浮气躁或注意力涣散',
-          action: isEn ? 'Guard against all-nighters; enforce 8 hours of sleep before crunch tests' : '严禁熬夜刷题，考前以平稳作息与慢跑散步稳固元神'
-        }
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
+      };
+    } else if (category === 'health_vitality') {
+      const p = enrichWin({
+        badge: isEn ? '🥇 Cellular Recovery Window' : '🥇 固本培元回阳期',
+        lunarMonth: isEn ? 'Lunar Month 10 (Ji-Hai)' : '农历十月（己亥月）',
+        solarTerm: isEn ? 'Beginning of Winter to Minor Snow (Nov 7 ~ Dec 6)' : '立冬 至 小雪（公历 11月7日 ~ 12月6日）',
+        probability: 92,
+        mechanism: isEn ? 'Water energy restores Kidney and Heart balance; prime window for cellular recuperation' : '亥水润泽燥火，心肾相交，水火既济，乃元气固本与深度睡眠调摄之第一吉相',
+        action: isEn ? 'Adopt restorative circadian habits, drink nourishing herbal infusions, and avoid late screen time' : '严守子时睡眠、温补肾水、以八段锦或慢走温养气血，忌大汗淋漓'
+      }, '亥', '2026-11-07', '2026-12-06');
+
+      const s = enrichWin({
+        badge: isEn ? '🥈 Spleen & Metabolism Window' : '🥈 脾胃代谢畅旺期',
+        lunarMonth: isEn ? 'Lunar Month 4 (Gui-Si)' : '农历四月（癸巳月）',
+        solarTerm: isEn ? 'Beginning of Summer to Grain Buds (May 5 ~ Jun 4)' : '立夏 至 小满（公历 5月5日 ~ 6月4日）',
+        probability: 87,
+        mechanism: isEn ? 'Dew energy harmonizes digestion and boosts mitochondrial vitality' : '雨露滋润生旺之位，调和脾胃运化，体能代谢效率达到周期峰值',
+        action: isEn ? 'Optimize digestive nutrition; engage in consistent moderate aerobic exercise' : '调理清淡饮食、排湿健脾、晨间快走或有氧运动激活周身微循环'
+      }, '巳', '2026-05-05', '2026-06-04');
+
+      const t = enrichWin({
+        badge: isEn ? '🥉 Musculoskeletal Recovery' : '🥉 经络舒展复健期',
+        lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
+        solarTerm: isEn ? 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)' : '小暑 至 大暑（公历 7月7日 ~ 8月6日）',
+        probability: 81,
+        mechanism: isEn ? 'Six-Harmony stabilizes muscle tissue and musculoskeletal flexibility' : '午未六合化土，肌肉经络舒展，适合运动损伤康复与身心释压',
+        action: isEn ? 'Schedule full somatic bodywork, acupuncture, or posture corrective therapy' : '安排推拿正骨、针灸艾灸或全身筋膜深度放松调理'
+      }, '未', '2026-07-07', '2026-08-06');
+
+      const c = enrichWin({
+        badge: isEn ? '⚠️ Cardiovascular Strain Warning' : '⚠️ 心肾交战透支预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 40,
+        mechanism: isEn ? 'Zi-Wu clash stirs cardiovascular tension; guard against mental burnout' : '子午相冲水火激战，心血管与神经负荷加重，极易因劳累出现失眠头痛',
+        action: isEn ? 'Enforce strict 23:00 sleep cutoff; halt intense night-time cognitive workouts' : '严禁子时熬夜刷手机，睡前温水泡脚，心率亢奋时执行冷水冲腕阻断'
+      }, '子', '2026-12-07', '2027-01-04');
+
+      return {
+        title: isEn ? '2026 Health, Vitality & Five-Element Circadian Timing' : '2026 丙午流年 · 身心气血与五脏调摄时令全相表',
+        category: category,
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
+      };
+    } else if (category === 'real_estate_moving') {
+      const p = enrichWin({
+        badge: isEn ? '🥇 Prime Deed & Purchase Window' : '🥇 置业签约黄金期',
+        lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
+        solarTerm: isEn ? 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)' : '小暑 至 大暑（公历 7月7日 ~ 8月6日）',
+        probability: 94,
+        mechanism: isEn ? 'Six-Harmony consolidates Earth storage; prime window for property deed finalization' : '午未六合化土生财入印库，房产契约与宅基气场聚合稳固',
+        action: isEn ? 'Finalize property purchases, execute mortgage deeds, or confirm long-term leases' : '宜签订购房合同、敲定银行贷款利率、落定核心安居居所'
+      }, '未', '2026-07-07', '2026-08-06');
+
+      const s = enrichWin({
+        badge: isEn ? '🥈 Asset Optimization Window' : '🥈 房产优化重组期',
+        lunarMonth: isEn ? 'Lunar Month 9 (Wu-Xu)' : '农历九月（戊戌月）',
+        solarTerm: isEn ? 'Cold Dew to Frost Descent (Oct 8 ~ Nov 6)' : '寒露 至 霜降（公历 10月8日 ~ 11月6日）',
+        probability: 88,
+        mechanism: isEn ? 'Tri-Union fire transforms into stable Earth assets; wealth storage locked' : '寅午戌三合火局化生重土，利于大额资产重组与置换高能级不动产',
+        action: isEn ? 'Complete key renovations, conduct property appraisals, or transition properties' : '宜收房验房、推进大件硬装施工与资产优化配置'
+      }, '戌', '2026-10-08', '2026-11-06');
+
+      const t = enrichWin({
+        badge: isEn ? '🥉 Relocation & Moving Window' : '🥉 乔迁入宅发轫期',
+        lunarMonth: isEn ? 'Lunar Month 1 (Geng-Yin)' : '农历正月（庚寅月）',
+        solarTerm: isEn ? 'Beginning of Spring to Rain Water (Feb 4 ~ Mar 4)' : '立春 至 雨水（公历 2月4日 ~ 3月4日）',
+        probability: 82,
+        mechanism: isEn ? 'Post Horse and birth vitality trigger smooth household relocation' : '新岁长生动土，驿马逢生，利于搬家乔迁入宅生旺气象',
+        action: isEn ? 'Execute official move-in ceremonies and clear old spatial clutter' : '选定吉日举行乔迁温居仪式，彻底清理旧居滞气杂物'
+      }, '寅', '2026-02-04', '2026-03-04');
+
+      const c = enrichWin({
+        badge: isEn ? '⚠️ Title Dispute Warning' : '⚠️ 产权条款防坑预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 40,
+        mechanism: isEn ? 'Zi-Wu clash disturbs foundation qi; risk of contractual disputes or leaks' : '子午冲犯宅基气机，易因房屋漏水、产权条款或定金纠纷产生耗损',
+        action: isEn ? 'Avoid signing non-refundable property deposits; thoroughly review title encumbrances' : '避开在此月签署大额不可退定金，务必严查产权背书与物业细节'
+      }, '子', '2026-12-07', '2027-01-04');
+
+      return {
+        title: isEn ? '2026 Real Estate Acquisition & Relocation Timing' : '2026 丙午流年 · 置业安居与乔迁买房时令全相表',
+        category: category,
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
+      };
+    } else if (category === 'legal_dispute') {
+      const p = enrichWin({
+        badge: isEn ? '🥇 Statutory Justice Window' : '🥇 法度立案维权期',
+        lunarMonth: isEn ? 'Lunar Month 2 (Xin-Mao)' : '农历二月（辛卯月）',
+        solarTerm: isEn ? 'Awakening of Insects to Spring Equinox (Mar 5 ~ Apr 4)' : '惊蛰 至 春分（公历 3月5日 ~ 4月4日）',
+        probability: 93,
+        mechanism: isEn ? 'Direct Officer commands statutory order; institutional justice strongly prevails' : '正官星当令司权，体制规则与程序正义庇护，利于依法维权抗争',
+        action: isEn ? 'Collect and notarize evidence; submit official legal notices or labor arbitrations' : '全面固化证据链条、发送正规律师函、提起劳动仲裁或诉讼立案'
+      }, '卯', '2026-03-05', '2026-04-04');
+
+      const s = enrichWin({
+        badge: isEn ? '🥈 Mediation Settlement Window' : '🥈 谈判调解止损期',
+        lunarMonth: isEn ? 'Lunar Month 10 (Ji-Hai)' : '农历十月（己亥月）',
+        solarTerm: isEn ? 'Beginning of Winter to Minor Snow (Nov 7 ~ Dec 6)' : '立冬 至 小雪（公历 11月7日 ~ 12月6日）',
+        probability: 89,
+        mechanism: isEn ? 'Tian De noble star intervenes; amicable settlement and mediation favored' : '天德吉星化解凶煞，官杀化印，利于在权威第三方主持下和解',
+        action: isEn ? 'Negotiate settlement covenants, release agreements, and exit compensations' : '签署具有法律约束力的调解协议书，锁定赔偿条款并解除竞业限制'
+      }, '亥', '2026-11-07', '2026-12-06');
+
+      const t = enrichWin({
+        badge: isEn ? '🥉 Resolution & Restitution' : '🥉 纠纷了结收官期',
+        lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
+        solarTerm: isEn ? 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)' : '小暑 至 大暑（公历 7月7日 ~ 8月6日）',
+        probability: 83,
+        mechanism: isEn ? 'Six-Harmony dissolves adversarial tension; adversary momentum dissipates' : '午未六合化解戾气，对方破绽暴露，谈判筹码完全倒向命主',
+        action: isEn ? 'Solidify financial restitution and establish irreversible mutual waivers' : '落实资金到账赔付，白纸黑字签署免责与互不追究协议'
+      }, '未', '2026-07-07', '2026-08-06');
+
+      const c = enrichWin({
+        badge: isEn ? '⚠️ Peak Friction Hazard Month' : '⚠️ 激化冲突高危预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 38,
+        mechanism: isEn ? 'Tian Ke Di Chong peak friction; heightened risk of impulsive escalations' : '天克地冲水火相战，小人跳梁背刺，极易因情绪激动而在法庭失言',
+        action: isEn ? 'Maintain complete silence; refrain from verbal sparring and delegate to legal counsel' : '绝不私下与对方进行情绪化口舌争吵，全权委托专业律师依法对接'
+      }, '子', '2026-12-07', '2027-01-04');
+
+      return {
+        title: isEn ? '2026 Legal Defense & Interpersonal Protection Windows' : '2026 丙午流年 · 维权自保与官非小人防坑时令全相表',
+        category: category,
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
       };
     } else {
       // Career / Wealth Timing
+      const p = enrichWin({
+        badge: isEn ? '🥇 Prime Career Window' : '🥇 首席晋升黄金期',
+        lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
+        solarTerm: isEn ? 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)' : '小暑 至 大暑（公历 7月7日 ~ 8月6日）',
+        probability: 91,
+        mechanism: isEn ? 'Six-Harmony wealth alliance stabilizes revenue compounding' : '午未六合化土生财，岁运相合利于职级晋升与项目成果变现',
+        action: isEn ? 'Initiate performance reviews, pitch pivotal initiatives, or formalize equity agreements' : '主动发起绩效汇报、争取关键核心项目主导权、敲定期权提成'
+      }, '未', '2026-07-07', '2026-08-06');
+
+      const s = enrichWin({
+        badge: isEn ? '🥈 Pivot & Breakthrough Window' : '🥈 破局跃升爆发期',
+        lunarMonth: isEn ? 'Lunar Month 9 (Wu-Xu)' : '农历九月（戊戌月）',
+        solarTerm: isEn ? 'Cold Dew to Frost Descent (Oct 8 ~ Nov 6)' : '寒露 至 霜降（公历 10月8日 ~ 11月6日）',
+        probability: 86,
+        mechanism: isEn ? 'Tri-Union fire authority unlocks broader jurisdictional scope' : '寅午戌三合火局大成，财星透干，适合开辟第二增长曲线',
+        action: isEn ? 'Execute strategic pivot, sign high-value commercial contracts, or launch prototypes' : '落实跳槽换轨、签署大额商业合同或上线独立商业产品'
+      }, '戌', '2026-10-08', '2026-11-06');
+
+      const t = enrichWin({
+        badge: isEn ? '🥉 Foundation Laying Window' : '🥉 积蓄发轫蓄势期',
+        lunarMonth: isEn ? 'Lunar Month 1 (Geng-Yin)' : '农历正月（庚寅月）',
+        solarTerm: isEn ? 'Beginning of Spring to Rain Water (Feb 4 ~ Mar 4)' : '立春 至 雨水（公历 2月4日 ~ 3月4日）',
+        probability: 78,
+        mechanism: isEn ? 'Birth-phase vitality kicks off new multi-year trajectory' : '三合长生位萌发，新岁气机生发，适合确立全年作战地图',
+        action: isEn ? 'Map annual goals, sharpen core technical skills, and build strategic alliances' : '制定全年关键战役目标，打磨不可替代之看家本领'
+      }, '寅', '2026-02-04', '2026-03-04');
+
+      const c = enrichWin({
+        badge: isEn ? '⚠️ High Friction Risk Month' : '⚠️ 职场博弈高摩擦预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 42,
+        mechanism: isEn ? 'Zi-Wu clash prompts organizational friction or sudden restructuring' : '天克地冲组织动荡，易生口角是非或架构突变',
+        action: isEn ? 'Adopt low-profile stance; avoid overt confrontations and preserve energy reserves' : '以静制动，严禁当面顶撞上级或卷入无谓派系争斗'
+      }, '子', '2026-12-07', '2027-01-04');
+
       return {
         title: isEn ? '2026 Career Elevation & Wealth Opportunity Windows' : '2026 丙午流年 · 事业晋升与财富潮汐全相表',
         category: category,
-        primaryWindow: {
-          badge: isEn ? '🥇 Prime Career Window' : '🥇 首席晋升黄金期',
-          lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
-          solarTerm: isEn ? 'Minor Heat to Major Heat (Jul 7 ~ Aug 6)' : '小暑 至 大暑（公历 7月7日 ~ 8月6日）',
-          probability: 91,
-          mechanism: isEn ? 'Six-Harmony wealth alliance stabilizes revenue compounding' : '午未六合化土生财，岁运相合利于职级晋升与项目成果变现',
-          action: isEn ? 'Initiate performance reviews, pitch pivotal initiatives, or formalize equity agreements' : '主动发起绩效汇报、争取关键核心项目主导权、敲定期权提成'
-        },
-        secondaryWindow: {
-          badge: isEn ? '🥈 Pivot & Breakthrough Window' : '🥈 破局跃升爆发期',
-          lunarMonth: isEn ? 'Lunar Month 9 (Wu-Xu)' : '农历九月（戊戌月）',
-          solarTerm: isEn ? 'Cold Dew to Frost Descent (Oct 8 ~ Nov 6)' : '寒露 至 霜降（公历 10月8日 ~ 11月6日）',
-          probability: 86,
-          mechanism: isEn ? 'Tri-Union fire authority unlocks broader jurisdictional scope' : '寅午戌三合火局大成，财星透干，适合开辟第二增长曲线',
-          action: isEn ? 'Execute strategic pivot, sign high-value commercial contracts, or launch prototypes' : '落实跳槽换轨、签署大额商业合同或上线独立商业产品'
-        },
-        tertiaryWindow: {
-          badge: isEn ? '🥉 Foundation Laying Window' : '🥉 积蓄发轫蓄势期',
-          lunarMonth: isEn ? 'Lunar Month 1 (Geng-Yin)' : '农历正月（庚寅月）',
-          solarTerm: isEn ? 'Beginning of Spring to Rain Water (Feb 4 ~ Mar 4)' : '立春 至 雨水（公历 2月4日 ~ 3月4日）',
-          probability: 78,
-          mechanism: isEn ? 'Birth-phase vitality kicks off new multi-year trajectory' : '三合长生位萌发，新岁气机生发，适合确立全年作战地图',
-          action: isEn ? 'Map annual goals, sharpen core technical skills, and build strategic alliances' : '制定全年关键战役目标，打磨不可替代之看家本领'
-        },
-        cautionaryMonth: {
-          badge: isEn ? '⚠️ High Friction Risk Month' : '⚠️ 职场博弈高摩擦预警月',
-          lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
-          solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
-          probability: 42,
-          mechanism: isEn ? 'Zi-Wu clash prompts organizational friction or sudden restructuring' : '天克地冲组织动荡，易生口角是非或架构突变',
-          action: isEn ? 'Adopt low-profile stance; avoid overt confrontations and preserve energy reserves' : '以静制动，严禁当面顶撞上级或卷入无谓派系争斗'
-        }
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
       };
     }
   }
@@ -540,6 +863,56 @@ class AdvisorEngine {
         { icon: '📜', title: '他人脸色脱敏', query: '依五代冯道《荣枯鉴》，如何做到对他人脸色与评价彻底脱敏？' },
         { icon: '🗡️', title: '多余算力变现', query: '如何将颅内多余的内耗算力转化为现实世界具有杀伤力的硬核作品？' }
       ];
+    } else if (category === 'vague_confusion') {
+      return isEn ? [
+        { icon: '💼', title: 'Career Roadblock', query: 'Career strategy: how should I manage up or pivot to a new job?' },
+        { icon: '💰', title: 'Wealth Strategy', query: 'Wealth strategy: how should I protect cash flow and build income?' },
+        { icon: '💖', title: 'Romance Timing', query: 'When will my destiny partner arrive based on my Spouse Palace?' }
+      ] : [
+        { icon: '💼', title: '职场卡点破局', query: '职场卡点：我该如何向上管理破局或转轨跳槽？' },
+        { icon: '💰', title: '财富现金流固守', query: '财富困局：当下岁运我该如何守住现金流或轻量化增收？' },
+        { icon: '💖', title: '世俗婚恋正缘', query: '情感迷茫：结合我夫妻宫与岁运，我的正缘何时出现？' }
+      ];
+    } else if (category === 'synastry_inquiry') {
+      return isEn ? [
+        { icon: '💡', title: 'Alliance Key', query: 'What is the master key to maintaining a long-term strategic alliance with this person?' },
+        { icon: '⚠️', title: 'Friction Red Lines', query: 'What critical emotional or communication triggers must we strictly avoid?' },
+        { icon: '📅', title: 'Peak Harmony Timing', query: 'Which lunar months command the highest mutual cooperation resonance this year?' }
+      ] : [
+        { icon: '💡', title: '攻心相处法门', query: '与对方长期相处的首席核心法门与沟通技巧是什么？' },
+        { icon: '⚠️', title: '触碰禁忌雷区', query: '在两人深度博弈或日常相处中，有哪些绝不能碰的死穴与雷区？' },
+        { icon: '📅', title: '合化高光月份', query: '今年在农历哪几个月我们双方的合作或情感最容易达成共识？' }
+      ];
+    } else if (category === 'health_vitality') {
+      return isEn ? [
+        { icon: '🫁', title: 'Organ Balance', query: 'Which of my Five Elements organs are most vulnerable to energy depletion?' },
+        { icon: '🌙', title: 'Circadian Sleep Reset', query: 'What is the optimal sleep cutoff and physical protocol to cure insomnia?' },
+        { icon: '🍵', title: 'Herbal Dietary Remedies', query: 'What specific seasonal foods and teas nourish my Day Master energy?' }
+      ] : [
+        { icon: '🫁', title: '五脏弱项防损', query: '我命盘中哪一个五行脏腑最容易在当前岁运透支或受克？' },
+        { icon: '🌙', title: '睡眠硬重启法门', query: '失眠多梦或深度疲惫时，如何通过时令作息斩断神经亢奋？' },
+        { icon: '🍵', title: '五行食疗调摄', query: '依我八字喜用神，日常宜多补充哪种性味色彩的食疗与茶饮？' }
+      ];
+    } else if (category === 'real_estate_moving') {
+      return isEn ? [
+        { icon: '📅', title: 'Purchase Window', query: 'Which lunar month is the safest and most favorable for signing property deeds?' },
+        { icon: '🧭', title: 'Auspicious Directions', query: 'Which geographic city and residential direction best complements my chart?' },
+        { icon: '🏠', title: 'Home Feng Shui', query: 'What spatial Feng Shui elements should I inspect before committing to a home?' }
+      ] : [
+        { icon: '📅', title: '购房签约时机', query: '今年最适宜签订购房合同或落定贷款的黄金窗口在几月份？' },
+        { icon: '🧭', title: '利己安居方位', query: '依我八字喜用神，买房置业选在城市的什么方位对自身场能最有利？' },
+        { icon: '🏠', title: '户型风水避坑', query: '看房选房时，有哪些房屋朝向或缺角煞气是必须坚决避开的？' }
+      ];
+    } else if (category === 'legal_dispute') {
+      return isEn ? [
+        { icon: '⚖️', title: 'Statutory Defense', query: 'How does Feng Daos Rong Ku Jian advise preserving evidence and statutory rights?' },
+        { icon: '🛡️', title: 'Handling Betrayal', query: 'How to handle peer sabotage or unfair contract termination without losing leverage?' },
+        { icon: '📅', title: 'Mediation Settlement', query: 'Which lunar month is most favorable for achieving an enforceable settlement?' }
+      ] : [
+        { icon: '⚖️', title: '法度维权存证', query: '依五代冯道《荣枯鉴·法度卷》，如何做到合法合规固化证据而不打草惊蛇？' },
+        { icon: '🛡️', title: '化解小人背刺', query: '遭遇同事背刺或不公对待时，如何利用冷面延时化解对方攻势？' },
+        { icon: '📅', title: '谈判调解时机', query: '今年在农历几月份进行谈判或调解，最容易争取到理想赔付结果？' }
+      ];
     }
 
     // Default general
@@ -561,7 +934,7 @@ class AdvisorEngine {
     const isEn = (lang === 'en');
     const links = [];
 
-    if (category === 'career_pivot' || category === 'manage_up' || category === 'academic_exam' || subcategory === 'decision_compare') {
+    if (category === 'career_pivot' || category === 'manage_up' || category === 'academic_exam' || category === 'legal_dispute' || subcategory === 'decision_compare') {
       links.push({
         id: 'open_simulator',
         icon: '⚖️',
@@ -570,7 +943,7 @@ class AdvisorEngine {
       });
     }
 
-    if (category === 'romance_timing') {
+    if (category === 'romance_timing' || category === 'synastry_inquiry') {
       links.push({
         id: 'open_dossier_spouse',
         icon: '📜',
@@ -585,11 +958,11 @@ class AdvisorEngine {
       });
     }
 
-    if (category === 'wealth_window' || subcategory === 'spatial_remedy') {
+    if (category === 'wealth_window' || category === 'real_estate_moving' || category === 'health_vitality' || subcategory === 'spatial_remedy') {
       links.push({
         id: 'open_fengshui',
         icon: '🧭',
-        label: isEn ? 'Check Residence & Space Feng Shui' : '测算空间风水与聚财阵',
+        label: isEn ? 'Check Residence & Space Feng Shui' : '测算空间风水与五行调理',
         action: 'open_fengshui'
       });
     }
@@ -639,6 +1012,8 @@ class AdvisorEngine {
     let directAnswer = '';
     let timingCard = null;
     let profileCard = null;
+    let synastryCard = null;
+    let diagnosticTree = null;
 
     const dm = ctx.dayMaster;
     const db = ctx.dayBranch;
@@ -834,6 +1209,90 @@ class AdvisorEngine {
       ];
 
       mentalAnchor = `《滴天髓》云：“何知其人富？财气通门户。何知其人贵？官星有理会。财官相生，自致千钟。”`;
+    } else if (category === 'vague_confusion') {
+      title = '心神定海与迷茫破局神策';
+      directAnswer = `【军师直陈】：回禀命主，气数处于岁运交更之际，迷茫与算力空转乃能量重组常态。无靶之箭，空耗心神。请点击下方军师为您诊断的 4 大现实卡点，军师即刻为您调取相对应急兵法：`;
+      diagnosticTree = {
+        title: '钦天监迷茫诊断罗盘 · 厘清核心困局',
+        prompt: '点击下方任一关键战场，军师即刻为您调取相对应急兵法：',
+        nodes: [
+          { id: 'diag_career', label: '职场卡点 · 向上管理与转轨去留', query: '职场卡点：我该如何向上管理破局或转轨跳槽？' },
+          { id: 'diag_wealth', label: '财富困局 · 现金流固守与增收防坑', query: '财富困局：当下岁运我该如何守住现金流或轻量化增收？' },
+          { id: 'diag_romance', label: '世俗婚恋 · 正缘应期与情感破局', query: '结合我的日支配偶宫、桃花星与当下岁运，我命定正缘何时出现？对方相貌心性与相处避坑红线是什么？' },
+          { id: 'diag_health', label: '身心调摄 · 五脏气血与硬核重启', query: '身心调摄：近期疲惫焦虑严重，如何根据五行气血进行身心硬重启？' }
+        ]
+      };
+      diagnosis = `命主日元坐【${dm}】，子平活力为 ${ctx.vigorScore} 分（${ctx.vigorTier}）。真正的平庸之人不会迷茫。你能感到迷茫，说明内在元神渴望跃迁但受困于现实阻力，心智算力处于空转状态。`;
+      tactics = [
+        `【物理行动切断空想】：迷茫是空想的产物。立刻挑出一件能在 10 分钟内闭环的具体小事去交付，行动是融化内耗的唯一溶剂。`,
+        `【锁定第一矛盾抓手】：人生无法同时打赢四场战役。在职场、财富、婚恋、健康中挑出最痛的一项集中突破。`,
+        `【秉承《${ctx.firstScroll}》顺天应人】：不逆大势，接受当下的蓄力节奏，蓄深水以待大舟。`
+      ];
+      redLines = [
+        `严禁在深夜迷茫时刷手机短视频或向无关人员倾倒情绪垃圾；`,
+        `严禁因一时空虚而做重大且不可逆的冲动开支或草率决定。`
+      ];
+      mentalAnchor = `《金刚经》云：“过去心不可得，现在心不可得，未来心不可得。应无所住，而生其心。”`;
+    } else if (category === 'synastry_inquiry') {
+      title = '双人合盘与博弈攻心神机';
+      synastryCard = this.evaluateSynastryTactics(query, bazi, luck, 'zh');
+      directAnswer = `【军师直陈】：回禀命主，双人相处之要在“明其性情、借其长板、避其刑冲”。已为您推演双盘博弈与合化神机卡，综合契合度评分为 ${synastryCard.score} 分（${synastryCard.allianceArchetype}）。核心法门在于：${synastryCard.coreKey}`;
+      diagnosis = `命主日元坐【${dm}】，日支为【${db}】。人与人相处本质是两大五行场能的对流互锁。${synastryCard.mechanism}。`;
+      tactics = [
+        `【攻心法门】：${synastryCard.coreKey}`,
+        `【雷区隔离】：${synastryCard.frictionRedLine}`,
+        `【长效平衡】：${synastryCard.energyBalance}`
+      ];
+      redLines = [
+        `严禁在双方五行冲克之流月因一时琐事冷战赌气；`,
+        `严禁试图按自己的行为习惯强制改造对方天生秉性。`
+      ];
+      mentalAnchor = `《周易·系辞》云：“二人同心，其利断金；同心之言，其臭如兰。”`;
+    } else if (category === 'health_vitality') {
+      title = '身心气血与五脏调摄神策';
+      directAnswer = `【军师直陈】：回禀命主，您的命盘以五行气血调摄为要。2026 丙午火旺之年，务必注重“降心火、滋肾水、健脾土”。黄金调摄窗口在农历十月与农历四月。睡前温水泡脚并严守 23:00 子时就寝，即可大幅修复元气！`;
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'health_vitality', 'zh');
+      diagnosis = `命主日元【${dm}】，子平活力评分为 ${ctx.vigorScore} 分（${ctx.vigorTier}）。在五脏气血中，火旺易导致心烦失眠、口苦心悸；土燥易致脾胃胀闷、体液代谢滞缓。调候首重“水火既济”。`;
+      tactics = [
+        `【时令作息铁律】：子时（23:00~01:00）胆经当令，午时（11:00~13:00）心经当令。子午两时静卧闭目，哪怕不睡着也能养护心肾阳气。`,
+        `【饮食五行滋润】：日常多饮百合莲子水、黑芝麻桑葚茶或石斛汤，少食烧烤油炸辛辣，以清润之品化解岁运燥热。`,
+        `【空间气场净化】：卧室保持通风整洁，床头不放充电设备，床尾可置一小巧陶瓷水盂调节卧室温湿度。`
+      ];
+      redLines = [
+        `严禁长期熬夜透支心肾阴液，否则极易出现心悸头晕与神经衰弱；`,
+        `严禁在盛怒或剧烈情绪波动后立即暴饮暴食或剧烈运动。`
+      ];
+      mentalAnchor = `《黄帝内经》云：“正气存内，邪不可干。阴平阳秘，精神乃治；阴阳离决，精气乃绝。”`;
+    } else if (category === 'real_estate_moving') {
+      title = '置业安居与乔迁买房神机';
+      directAnswer = `【军师直陈】：回禀命主，今年置业安居的最佳黄金签约窗口在农历六月（乙未月·午未六合印库）与农历九月（戊戌月·土厚藏金）！安居宜选城市中补益喜用神的方位，避开农历十一月冲宅基月份签约，务必严审产权条款。`;
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'real_estate_moving', 'zh');
+      diagnosis = `命主日元坐【${dm}】，子平活力评分为 ${ctx.vigorScore} 分。在八字中，房产不动产以“印星与辰戌丑未四库”为象。2026 丙午岁运火土相生，利于锁定稳健实体资产作为安身立命之所。`;
+      tactics = [
+        `【方位与地缘借势】：优选城市中契合自身用神的板块（如水木喜东方、北方；火木喜南方、东方），向生旺方位布局不动产更能聚财安神。`,
+        `【户型太极完整性】：看房优先选择户型方正、采光通透之宅；若遇西北缺角（损长者/事业）或西南缺角（损女主/财运），必须用泰山石敢当化解。`,
+        `【现金流严苛封顶】：买房首付与月供严禁超过总现金流的 35%，留足 12 个月以上应急储备金以抵御大环境波动。`
+      ];
+      redLines = [
+        `严禁在流月与日支冲刑之期（如农历十一月）草率支付大额不可退定金；`,
+        `严禁购买产权不明、抵押复杂或缺乏核心流动性的偏远高杠杆房产。`
+      ];
+      mentalAnchor = `《黄帝宅经》云：“地善即苗茂，宅吉即人荣。夫宅者，乃是阴阳之枢纽，人伦之轨模。”`;
+    } else if (category === 'legal_dispute') {
+      title = '维权自保与官非小人防坑神策';
+      directAnswer = `【军师直陈】：回禀命主，凡涉争议纷争，第一铁律是“以法度固证据，以冷面退小人”。最佳谈判调解窗口在农历二月与农历十月。严禁私下情绪化口角互喷，一切以文字证据和专业律师对接为准！`;
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'legal_dispute', 'zh');
+      diagnosis = `命主日元坐【${dm}】，子平活力评分为 ${ctx.vigorScore} 分。岁运遇刑冲化煞之期，难免遭遇职场小人挑拨或合同争议。制服小人绝非逞一时口舌之快，而在“法度严明、证据确凿”。`;
+      tactics = [
+        `【留痕存证与静默收集】：依《荣枯鉴·法度卷》，所有争议绝不依赖口头承诺。将录音、微信记录、考勤与邮件整理成证据闭环，未亮剑前神色如常。`,
+        `【24小时延时与冷面拒绝】：面对非分苛求或甩锅，固定话术回复：“我已记录，稍后交法务与律师核实后出具正式答复”，以制度屏障化解对手锋芒。`,
+        `【化争端为和解筹码】：谈判核心不在于把对方逼入绝境，而在于通过法律筹码锁定最有利的经济赔偿与清白结案。`
+      ];
+      redLines = [
+        `严禁在情绪失控时签署任何含有放弃权利条款的免责书或离职单；`,
+        `严禁通过非正规或涉嫌违法的灰色手段报复对方，以防有理变成理亏。`
+      ];
+      mentalAnchor = `五代·冯道《荣枯鉴·法度卷》云：“法者，立国之本，保身之规。不可轻犯，不可忽失。顺法者存，逆法者亡。”`;
     } else {
       // General Fallback
       title = '元神气机与宏观定调神策';
@@ -855,6 +1314,69 @@ class AdvisorEngine {
       mentalAnchor = `《庄子·逍遥游》云：“适莽苍者，三餐而反，腹犹果然；适百里者，宿舂粮；适千里者，三月聚粮。若夫乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！”`;
     }
 
+    let microActions = [];
+    if (category === 'romance_timing') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '今日整理仪容神采，慢跑或拉伸20分钟，以充盈气色激活异性引力场' },
+        { id: 'tactical', badge: '现实推进', text: '本周主动报名参加 1 场高质量行业研讨会、读书沙龙或朋友私密聚会' },
+        { id: 'spatial', badge: '空间微调', text: '清理卧室正东或正南杂物，换上一瓶新鲜水养鲜花（忌塑料假花）' }
+      ];
+    } else if (category === 'manage_up') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '汇报前执行 3 轮 4-7-8 呼吸法，强行降低心率，消除在权威面前的防御紧张' },
+        { id: 'tactical', badge: '现实推进', text: '准备 1 页精炼闭环小结，用三句话定式向直属上级同步交付进度与关键卡点' },
+        { id: 'spatial', badge: '空间微调', text: '工位左侧放置紫砂文昌印或金属名片夹，借西北乾金之气稳住职场气场' }
+      ];
+    } else if (category === 'career_pivot') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '绝不在深夜疲惫时浏览招聘网站或做冲动离职决定，保证8小时深度睡眠' },
+        { id: 'tactical', badge: '现实推进', text: '在现有工位全力打磨出 1 个不可替代的标杆作品或案例，作为核心谈判敲门砖' },
+        { id: 'spatial', badge: '空间微调', text: '办公桌摆放黑曜石或白水晶原石，阻断低效同事消耗，护持沉潜心流' }
+      ];
+    } else if (category === 'academic_exam') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '将每天复习切分为 3 个连续 90 分钟无干扰心流块，以实体手写草稿代替空想' },
+        { id: 'tactical', badge: '现实推进', text: '主动向导师或行业专家发送 1 封阶段性学术汇报邮件，争取关键推荐与资源' },
+        { id: 'spatial', badge: '空间微调', text: '书桌左前方安放九层文昌塔或 4 支富贵竹，借木火通明之气提振记忆提取' }
+      ];
+    } else if (category === 'overthinking') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '立即用冰凉冷水猛冲面部与双手腕内侧 15 秒，强行阻断交感神经反刍警报' },
+        { id: 'tactical', badge: '现实推进', text: '拿出一张白纸把脑中所有焦虑烂账无逻辑写下，随后只挑出 1 件具体体力活去干' },
+        { id: 'spatial', badge: '空间微调', text: '立刻离开当前座位走动 2 分钟，擦净桌面，断开空间内耗物理锚定' }
+      ];
+    } else if (category === 'health_vitality') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '晚间 22:30 关闭手机并用温水泡脚 15 分钟，确保 23:00 前安卧入眠固守肾阳' },
+        { id: 'tactical', badge: '现实推进', text: '晨间空腹饮用温水一杯，进行 10 分钟八段锦或慢走，排解体液湿滞' },
+        { id: 'spatial', badge: '空间微调', text: '卧室保持空气流通，床头切忌堆放过多充电插座或强辐射电子产品' }
+      ];
+    } else if (category === 'real_estate_moving') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '实地踏勘目标楼盘时，在房屋中心闭目静立 1 分钟，感知身心是否舒缓安定' },
+        { id: 'tactical', badge: '现实推进', text: '严格核对房屋产调信息与产权抵押状态，确认无任何隐性连带债务' },
+        { id: 'spatial', badge: '空间微调', text: '若有缺角，在对应方位安置泰山石敢当或常青绿植填补宅基太极能量' }
+      ];
+    } else if (category === 'legal_dispute') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '面对挑衅执行 24 小时冷面隔离，绝不当场被激怒回复任何情绪化文字' },
+        { id: 'tactical', badge: '现实推进', text: '将所有聊天记录、邮件与合同按时间线整理为不可篡改的 PDF 证据链条' },
+        { id: 'spatial', badge: '空间微调', text: '随身携带白玉或黄水晶饰物，以土金之气化解暴戾官杀，借制度规则维权' }
+      ];
+    } else if (category === 'synastry_inquiry') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '与对方交流时保持平稳语速，先倾听对方 70% 的诉求再做理智表态' },
+        { id: 'tactical', badge: '现实推进', text: '在涉及利益或责任分工的关键节点，以书面备忘录形式友好确认边界' },
+        { id: 'spatial', badge: '空间微调', text: '在共同所处空间摆放温润陶瓷或暖色灯光，中和水火对冲之戾气' }
+      ];
+    } else {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '站起身离开座椅快步走动 2 分钟，深呼吸 3 次恢复心智确定感' },
+        { id: 'tactical', badge: '现实推进', text: '聚焦今日最具长线复利的一件硬核任务，关闭多任务窗口单核推进' },
+        { id: 'spatial', badge: '空间微调', text: '清理办公桌面杂乱文件，留出一片整洁清爽的视觉留白空间' }
+      ];
+    }
+
     const smartFollowUps = this.anticipateQuestions(category, subcategory, bazi, 'zh');
     const actionLinks = this.getActionLinks(category, subcategory, 'zh');
 
@@ -865,6 +1387,9 @@ class AdvisorEngine {
       directAnswer: directAnswer,
       timingCard: timingCard,
       profileCard: profileCard,
+      synastryCard: synastryCard,
+      diagnosticTree: diagnosticTree,
+      microActions: microActions,
       contextMeta: {
         dm: ctx.dayMaster,
         score: ctx.vigorScore,
@@ -918,6 +1443,11 @@ class AdvisorEngine {
     const enDb = this._branchToEn(ctx.dayBranch);
     const enGz = this._ganzhiToEn(ctx.activeAnnualGanzhi);
 
+    const cleanHex = (ctx.activeHexagram || 'The Creative').replace(/[\u4e00-\u9fa5]/g, '').trim() || 'The Creative';
+    const cleanArchetype = (ctx.primaryArchetype || 'Specialist & Engineering').replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Specialist & Engineering';
+    const cleanScroll = (ctx.firstScroll || 'Scroll I: Adaptability').replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Scroll I: Adaptability';
+    const cleanTier = (ctx.vigorTier || 'Moderately Strong').replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Moderately Strong';
+
     const isMale = (!ctx.gender || ctx.gender.includes('乾') || ctx.gender.includes('男'));
     const spouseStarEn = isMale ? 'Direct Wealth / Indirect Wealth' : 'Direct Officer / Seven Killings';
 
@@ -929,6 +1459,8 @@ class AdvisorEngine {
     let directAnswer = '';
     let timingCard = null;
     let profileCard = null;
+    let synastryCard = null;
+    let diagnosticTree = null;
 
     let spouseArchetypeEn = 'independent, enterprising, proactive, and resilient';
     if (['子', '午', '卯', '酉'].includes(ctx.dayBranch)) {
@@ -945,7 +1477,7 @@ class AdvisorEngine {
     } else if (ctx.dayBranch === '子') {
       palaceTransitEn = `The 2026 Bing-Wu transit clashes with your Spouse Palace [${enDb}]. Clashes break single inertia, triggering sudden cross-city encounters or romantic acceleration; established couples should practice attentive patience.`;
     } else {
-      palaceTransitEn = `Governed by Hexagram [${ctx.activeHexagram}], the 2026 Bing-Wu cycle compounds subtle charisma. Optimal relational windows flourish dynamically through late summer into autumn.`;
+      palaceTransitEn = `Governed by Hexagram [${cleanHex}], the 2026 Bing-Wu cycle compounds subtle charisma. Optimal relational windows flourish dynamically through late summer into autumn.`;
     }
 
     if (category === 'romance_timing') {
@@ -970,11 +1502,7 @@ class AdvisorEngine {
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'romance_timing', 'en');
       }
 
-      diagnosis = `Day Master resides on [${enDm}], with the Spouse Palace rooted in [${enDb}], and a ZiPing vigor score of ${ctx.vigorScore}/100 (${ctx.vigorTier}). In classical synastry, ${isMale ? `males take Wealth stars (${spouseStarEn}) as spouse indicators.` : `females take Officer/Killing stars (${spouseStarEn}) as spouse indicators.`}
-` +
-        `[Spouse Archetype]: Seated on [${enDb}], your partner embodies a persona that is [${spouseArchetypeEn}].
-` +
-        `[Transit Timing Resonance]: ${palaceTransitEn}`;
+      diagnosis = `Day Master resides on [${enDm}], with the Spouse Palace rooted in [${enDb}], and a ZiPing vigor score of ${ctx.vigorScore}/100 (${cleanTier}). In classical synastry, ${isMale ? `males take Wealth stars (${spouseStarEn}) as spouse indicators.` : `females take Officer/Killing stars (${spouseStarEn}) as spouse indicators.`}\n[Spouse Archetype]: Seated on [${enDb}], your partner embodies a persona that is [${spouseArchetypeEn}].\n[Transit Timing Resonance]: ${palaceTransitEn}`;
 
       tactics = [
         `[Optimal Encounter Field]: Your destiny partner resonates within intellectual conferences, professional symposiums, artistic venues, travel journeys, or curated introductions by high-caliber confidants.`,
@@ -998,7 +1526,7 @@ class AdvisorEngine {
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'academic_exam', 'en');
       }
 
-      diagnosis = `Day Master [${enDm}] holds a vigor score of ${ctx.vigorScore}/100 (${ctx.vigorTier}). Scholarly advancement is governed by Resource (Institutional Prestige) and Output (Original Intellect). ${isWeak ? 'A sensitive Day Master thrives in structured academia under supportive mentorship, where credentials construct an unassailable moat.' : 'A vigorous Day Master commands abundant Output energy, ideal for interdisciplinary breakthroughs and trailblazing thesis work.'}`;
+      diagnosis = `Day Master [${enDm}] holds a vigor score of ${ctx.vigorScore}/100 (${cleanTier}). Scholarly advancement is governed by Resource (Institutional Prestige) and Output (Original Intellect). ${isWeak ? 'A sensitive Day Master thrives in structured academia under supportive mentorship, where credentials construct an unassailable moat.' : 'A vigorous Day Master commands abundant Output energy, ideal for interdisciplinary breakthroughs and trailblazing thesis work.'}`;
 
       tactics = [
         `[Wen Chang Spatial Alignment]: Place a 9-tier Pagoda or 4 stalks of lucky bamboo on the left corner of your study desk to harmonize Wood-Fire cognition and deep memory retention.`,
@@ -1016,7 +1544,7 @@ class AdvisorEngine {
       title = 'Partnership Synergy & Strategic Alliance Protocol';
       directAnswer = `Imperial Verdict: Successful partnership requires clear covenants before camaraderie. Codify voting rights, vesting thresholds, and exit provisions in binding legal agreements to harness co-founder momentum without governance strife.`;
 
-      diagnosis = `Day Master [${enDm}] commands vigor of ${ctx.vigorScore}/100 (${ctx.vigorTier}). Alliance success hinges on whether Companion elements share burdens or compete for spoils. ${isWeak ? 'A sensitive Day Master benefits greatly from robust co-founders to absorb market shocks and provide frontline momentum.' : 'A vigorous Day Master radiates strong leadership; ensure strict contractual governance to prevent equity disputes.'}`;
+      diagnosis = `Day Master [${enDm}] commands vigor of ${ctx.vigorScore}/100 (${cleanTier}). Alliance success hinges on whether Companion elements share burdens or compete for spoils. ${isWeak ? 'A sensitive Day Master benefits greatly from robust co-founders to absorb market shocks and provide frontline momentum.' : 'A vigorous Day Master radiates strong leadership; ensure strict contractual governance to prevent equity disputes.'}`;
 
       tactics = [
         `[Contracts Before Camaraderie]: Never substitute friendship for corporate bylaws. Explicitly codify voting rights, vesting cliffs, and exit buyout mechanisms in writing.`,
@@ -1032,14 +1560,14 @@ class AdvisorEngine {
       mentalAnchor = `Rong Ku Jian: "Those who benefit all under heaven find all gates open; those who sow distrust among peers sever their own path. Clear boundaries and firm covenants avert strife."`;
     } else if (category === 'manage_up') {
       title = 'Upward Management & Workplace Directive';
-      directAnswer = `Imperial Verdict: Anchored in the [${ctx.primaryArchetype.replace(/[一-龥]/g, '').trim() || 'Specialist'}] archetype, upward management succeeds by dismantling executive defense with certainty. Lead with three metrics: delivery progress, bottleneck blockers, and two actionable options (Option A vs B).`;
+      directAnswer = `Imperial Verdict: Anchored in the [${cleanArchetype}] archetype, upward management succeeds by dismantling executive defense with certainty. Lead with three metrics: delivery progress, bottleneck blockers, and two actionable options (Option A vs B).`;
 
-      diagnosis = `Day Master is seated on [${enDm}], with a ZiPing vigor score of ${ctx.vigorScore}/100 (${ctx.vigorTier}), rooted in the [${ctx.primaryArchetype}] workplace niche. In upward management, ${isWeak ? 'a sensitive Day Master tends to experience heightened defensive friction around authority; yet your prime moat is deep precision and deliverable dependability.' : 'a vigorous Day Master radiates pioneering authority, yet may inadvertently bypass granular updates and appear resistant to managerial oversight.'}`;
+      diagnosis = `Day Master is seated on [${enDm}], with a ZiPing vigor score of ${ctx.vigorScore}/100 (${cleanTier}), rooted in the [${cleanArchetype}] workplace niche. In upward management, ${isWeak ? 'a sensitive Day Master tends to experience heightened defensive friction around authority; yet your prime moat is deep precision and deliverable dependability.' : 'a vigorous Day Master radiates pioneering authority, yet may inadvertently bypass granular updates and appear resistant to managerial oversight.'}`;
 
       tactics = [
         `[Conclusion-First with Metric Anchors]: Superiors value certainty over emotions. Lead with three objective milestones (tangible deliverable, % completed, bottleneck blockers) to dissipate emotional friction.`,
-        `[Transform Objections into Scenarios]: Applying Feng Dao's Rong Ku Jian (${ctx.firstScroll}), never confront directly. Frame counter-proposals as: "Boss, aligned with your strategic intent, we have two execution paths (Option A vs B) with the following tradeoffs—which do you prefer to greenlight?"`,
-        `[Clear Boundaries for Resources]: Operating within the [${ctx.primaryArchetype}] archetype, explicitly request clear deliverables and quiet focus blocks to preserve mental bandwidth.`
+        `[Transform Objections into Scenarios]: Applying Feng Dao's Rong Ku Jian (${cleanScroll}), never confront directly. Frame counter-proposals as: "Boss, aligned with your strategic intent, we have two execution paths (Option A vs B) with the following tradeoffs—which do you prefer to greenlight?"`,
+        `[Clear Boundaries for Resources]: Operating within the [${cleanArchetype}] archetype, explicitly request clear deliverables and quiet focus blocks to preserve mental bandwidth.`
       ];
 
       redLines = [
@@ -1054,13 +1582,13 @@ class AdvisorEngine {
         directAnswer = `Imperial Verdict: The optimal career transition windows fall in Lunar Month 6 (Yi-Wei) and Lunar Month 9 (Wu-Xu). Ship a definitive masterpiece in your current post first before greenlighting aggressive mobility.`;
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'career_pivot', 'en');
       } else {
-        directAnswer = `Imperial Verdict: Navigating under Hexagram [${(ctx.activeHexagram || 'The Creative').replace(/[一-龥]/g, '').trim()}], only consider pivots that amplify your primary calling [${(ctx.primaryArchetype || 'Specialist').replace(/[一-龥]/g, '').trim()}]. Reject roles demanding superficial social appeasement.`;
+        directAnswer = `Imperial Verdict: Navigating under Hexagram [${cleanHex}], only consider pivots that amplify your primary calling [${cleanArchetype}]. Reject roles demanding superficial social appeasement.`;
       }
 
-      diagnosis = `Navigating transit year ${ctx.activeAnnualYear} (${enGz}) governed by Hexagram [${ctx.activeHexagram}]. With a vigor score of ${ctx.vigorScore}/100, your field favors ${isWeak ? 'deep craftsmanship, specialized focus, and conservative consolidation' : 'bold multi-dimensional expansion and strategic frontline pioneering'}. The central directive is discerning true elevation from reactive escapism.`;
+      diagnosis = `Navigating transit year ${ctx.activeAnnualYear} (${enGz}) governed by Hexagram [${cleanHex}]. With a vigor score of ${ctx.vigorScore}/100, your field favors ${isWeak ? 'deep craftsmanship, specialized focus, and conservative consolidation' : 'bold multi-dimensional expansion and strategic frontline pioneering'}. The central directive is discerning true elevation from reactive escapism.`;
 
       tactics = [
-        `[Archetype Alignment Filter]: Only pursue opportunities that directly reinforce your primary niche [${ctx.primaryArchetype}] and honor your need for depth; decline tracks that demand frivolous social pandering.`,
+        `[Archetype Alignment Filter]: Only pursue opportunities that directly reinforce your primary niche [${cleanArchetype}] and honor your need for depth; decline tracks that demand frivolous social pandering.`,
         `[Geographic Five-Element Synergy]: Verify that the prospective location and industry resonate with your favorable elements (e.g. academia in Water/Wood, technology in Fire/Wood). Moving toward favorable elemental vectors yields compound acceleration.`,
         `[Done is Better Than Speculation]: ${isWeak ? 'Avoid impulsive resignations without proof. Ship a bulletproof piece of work in your current post to serve as your undeniable leverage.' : 'Establish downside protection, then execute decisively to seize broader strategic autonomy.'}`
       ];
@@ -1094,12 +1622,12 @@ class AdvisorEngine {
       directAnswer = `Imperial Verdict: The core doctrine is Direct Wealth as unshakeable anchor, with lightweight auxiliary initiatives compounding in Lunar Months 6 and 9. Avoid speculative high-leverage gambles.`;
       timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'wealth_window', 'en');
 
-      diagnosis = `Transiting year ${ctx.activeAnnualYear} (${enGz}) governed by Hexagram [${ctx.activeHexagram}]. Vigor sits at ${ctx.vigorScore}/100 (${ctx.vigorTier}). For wealth and career cultivation, the core protocol is "Direct Wealth as anchor, Indirect Wealth as opportune upside, compounding steadily."`;
+      diagnosis = `Transiting year ${ctx.activeAnnualYear} (${enGz}) governed by Hexagram [${cleanHex}]. Vigor sits at ${ctx.vigorScore}/100 (${cleanTier}). For wealth and career cultivation, the core protocol is "Direct Wealth as anchor, Indirect Wealth as opportune upside, compounding steadily."`;
 
       tactics = [
         `[Consolidate the Core Base]: Keep your primary vocation completely unshakeable, allocating 80% of mental bandwidth to deepening irreplaceable technical depth.`,
         `[Lightweight 0-to-1 Second Curves]: For auxiliary ventures, validate prototypes with minimal capital burn before deploying further resources.`,
-        `[Prudent Discretion]: Heed the counsel of ${ctx.firstScroll}—accumulate wealth with disciplined subtlety; deep waters carry mighty vessels with silence.`
+        `[Prudent Discretion]: Heed the counsel of ${cleanScroll}—accumulate wealth with disciplined subtlety; deep waters carry mighty vessels with silence.`
       ];
 
       redLines = [
@@ -1108,16 +1636,100 @@ class AdvisorEngine {
       ];
 
       mentalAnchor = `Di Tian Sui: "How is great wealth discerned? When the qi of wealth opens the gates. Direct and Indirect Wealth mutually generative establish enduring fortune."`;
+    } else if (category === 'vague_confusion') {
+      title = 'Macro Strategic Guidance & Compass Diagnostic';
+      directAnswer = `Imperial Verdict: Ruminating in vacuum breeds anxiety; only structured classification brings clarity. Your Day Master [${enDm}] possesses sharp perception, but excess bandwidth requires targeted anchoring. Review the 4 strategic pathways below to illuminate your immediate priority.`;
+      diagnosticTree = {
+        title: 'Imperial Clarification Compass: Select Your Core Dilemma',
+        prompt: 'Tap any strategic pathway to deploy targeted guidance:',
+        nodes: [
+          { id: 'diag_career', label: 'Career Crossroads & Breakthrough', query: 'My career direction is uncertain, what is my breakthrough path and timing?' },
+          { id: 'diag_wealth', label: 'Wealth Defense & Financial Horizon', query: 'How is my wealth fortune and investment defense strategy this year?' },
+          { id: 'diag_romance', label: 'Destiny Romance & Relationship Timing', query: 'When will my destiny romantic partner appear and what are their traits?' },
+          { id: 'diag_health', label: 'Energy Depletion & Physical Reset', query: 'I feel exhausted and stressed, what is my somatic vitality reset protocol?' }
+        ]
+      };
+      diagnosis = `Day Master seated on [${enDm}], with a ZiPing vigor score of ${ctx.vigorScore}/100 (${cleanTier}). Uncertainty stems from an overload of divergent choices rather than a deficit of talent. Ground your energy by selecting a single life theater to conquer first.`;
+      tactics = [
+        `[Single-Theater Concentration]: Discard all multi-tasking illusions. Focus entirely on one primary life arena for the next 90 days.`,
+        `[Somatic Discharge]: When feeling overwhelmed, cease mental calculation immediately. Cleanse physical surroundings to reset inner mental order.`,
+        `[Embody Feng Dao's Rong Ku Jian]: True masters never rush into blind action. Clarify boundaries first, then execute with deliberate composure.`
+      ];
+      redLines = [
+        `Strictly forbid making radical lifestyle or career declarations while in a confused mental state;`,
+        `Never seek external validation from peers who carry their own unexamined anxieties.`
+      ];
+      mentalAnchor = `Zhuangzi: "The fish trap exists because of the fish; once you've gotten the fish, you can forget the trap. Words exist because of meaning; once you've gotten the meaning, you can forget the words."`;
+    } else if (category === 'synastry_inquiry') {
+      title = 'Synastry Dynamics & Alliance Strategy';
+      synastryCard = this.evaluateSynastryTactics(query, bazi, luck, 'en');
+      directAnswer = `Imperial Verdict: Evaluated against your Day Master [${enDm}] and Spouse Palace [${enDb}], your interpersonal resonance reveals a compatibility score of ${synastryCard.score}/100 (${synastryCard.allianceArchetype}). Deepen collaboration through explicit expectations and boundary agreements.`;
+      diagnosis = `Day Master [${enDm}] paired with transiting energies. Interpersonal synergy is governed by elemental complementary balance. With a compatibility rating of ${synastryCard.score}/100, mutual understanding requires active translation of each other's emotional dialect.`;
+      tactics = [
+        `[Covenants Before Camaraderie]: Explicitly codify mutual responsibilities, deliverables, and boundaries to eliminate ambiguous resentment.`,
+        `[Pacing Synchronization]: Honor the other person's decision latency without applying coercive urgency; give space for natural alignment.`,
+        `[24-Hour Emotional Decoupling]: When disagreements emerge, enforce a 24-hour cool-down protocol before delivering formal counter-proposals.`
+      ];
+      redLines = [
+        `Never criticize each other's foundational values or core family background during heated debates;`,
+        `Never rely solely on verbal tacit understanding for high-stakes collaborative commitments.`
+      ];
+      mentalAnchor = `Rong Ku Jian: "Those who benefit others open every gateway; those who cultivate distrust sever their own foundation. Firm agreements avert enduring strife."`;
+    } else if (category === 'health_vitality') {
+      title = 'Five-Element Vitality & Circadian Reset';
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'health_vitality', 'en');
+      directAnswer = `Imperial Verdict: Day Master [${enDm}] indicates elemental sensitivity in digestive balance and circadian rhythm. In transit year ${ctx.activeAnnualYear} (${enGz}), enforce sleep before 23:00 (Zi hour) and incorporate daily morning movement to dissipate internal stagnation.`;
+      diagnosis = `Day Master is [${enDm}] with vigor score ${ctx.vigorScore}/100 (${cleanTier}). Under seasonal transit shifts, physical resilience hinges upon preserving kidney essence and harmonizing digestion. Chronic mental rumination tends to drain splenic qi.`;
+      tactics = [
+        `[Zi Hour Bedtime Invariant]: Disconnect all electronic screens by 22:30. Ensure deep recumbency before 23:00 to replenish vital essence.`,
+        `[Warm Hydration & Morning Movement]: Drink a cup of warm water upon waking and execute 10 minutes of somatic stretching to activate lymphatic flow.`,
+        `[Spatial Airflow & Toxin Clearance]: Maintain bedroom ventilation and remove excessive high-radiation charging stations from the bedside.`
+      ];
+      redLines = [
+        `Strictly forbid intense anaerobic workouts or alcohol intake past 22:00;`,
+        `Never ignore persistent gastrointestinal discomfort or rely on caffeine to mask physical depletion.`
+      ];
+      mentalAnchor = `Yellow Emperor's Inner Canon: "The three months of spring are called the period of renewal. Sleep late and rise early, stroll in the courtyard with loose hair and unfastened robes, to let one's aspirations take birth."`;
+    } else if (category === 'real_estate_moving') {
+      title = 'Property Acquisition & Relocation Oracle';
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'real_estate_moving', 'en');
+      directAnswer = `Imperial Verdict: Property acquisitions and relocations are governed by the Seal star and Earth branches. Favorable golden windows emerge in Lunar Months 6 (Yi-Wei) and 9 (Wu-Xu). Prioritize capital liquidity defense and sound structural feng shui over speculative appreciation.`;
+      diagnosis = `Day Master [${enDm}] holds a vigor score of ${ctx.vigorScore}/100 (${cleanTier}). Property ownership represents the physical manifestation of Resource (Seal star). In transit year ${ctx.activeAnnualYear} (${enGz}), focus on debt conservative thresholds and location micro-climates.`;
+      tactics = [
+        `[Physical Spatial Resonance Sensing]: When inspecting prospective residences, pause silently at the center of the floor plan for one minute to assess autonomic ease.`,
+        `[Conservative Mortgage Threshold]: Cap all monthly mortgage obligations strictly beneath 35% of stable primary monthly cash flow.`,
+        `[Remedy Geometric Missing Corners]: If residential floor plans exhibit missing corners, place grounding stone or verdant greenery in that quadrant to balance room energy.`
+      ];
+      redLines = [
+        `Never sign purchase agreements under high-pressure sales tactics without independent legal and title review;`,
+        `Never over-leverage personal credit cards or short-term bridge debt for down payments.`
+      ];
+      mentalAnchor = `Book of Burial: "Qi rides the wind and scatters, but is retained by water. The ancients collected it to prevent dispersal, guided it to assure its retention; hence it was called Feng Shui."`;
+    } else if (category === 'legal_dispute') {
+      title = 'Dispute Resolution & Legal Defense Protocol';
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'legal_dispute', 'en');
+      directAnswer = `Imperial Verdict: Encountering confrontational transit friction demands rigorous composure. Win not through theatrical rhetoric, but via unassailable documentary evidence and disciplined procedural strategy under the canon of Rong Ku Jian.`;
+      diagnosis = `Day Master [${enDm}] with vigor score ${ctx.vigorScore}/100 (${cleanTier}). Transiting tensions activate Officer/Killing friction. The key to subduing adversaries lies in dispassionate institutional discipline and airtight evidentiary chains.`;
+      tactics = [
+        `[Silent Evidence Preservation]: Catalog all correspondence, emails, timesheets, and contracts into a secure, immutable chronology before signaling legal intent.`,
+        `[24-Hour Delayed Corporate Response]: Respond to adversarial provocations with scripted neutrality: "Received; our legal counsel is reviewing the matter for formal reply."`,
+        `[Convert Friction into Settlement Leverage]: Aim not for emotional annihilation of opponents, but for clean contractual closure and financial restitution.`
+      ];
+      redLines = [
+        `Strictly forbid signing any settlement waivers or release documents while in an emotionally compromised state;`,
+        `Never resort to questionable informal tactics that could jeopardize clean evidentiary standing.`
+      ];
+      mentalAnchor = `Rong Ku Jian (Scroll on Law & Conduct): "The law is the foundation of order and the shield of self-preservation. It must never be taken lightly. Those who align with due process endure."`;
     } else {
       title = 'Macro Elemental Alignment & Strategic Overview';
-      directAnswer = `Imperial Verdict: Navigating under the 2026 Bing-Wu transit governed by Hexagram [${(ctx.activeHexagram || 'The Creative').replace(/[一-龥]/g, '').trim()}], the overarching mandate is internal consolidation and disciplined alignment. Tap any of the anticipated prompts below to explore deeper.`;
+      directAnswer = `Imperial Verdict: Navigating under the 2026 Bing-Wu transit governed by Hexagram [${cleanHex}], the overarching mandate is internal consolidation and disciplined alignment. Tap any of the anticipated prompts below to explore deeper.`;
 
-      diagnosis = `Day Master [${enDm}] carries a vigor score of ${ctx.vigorScore}/100 (${ctx.vigorTier}) under the ${ctx.activeAnnualYear} (${enGz}) transit governed by Hexagram [${ctx.activeHexagram}]. Your field is currently positioned in a phase of ${isWeak ? 'internal consolidation, stealth mastery, and energy conservation' : 'steady strategic expansion, grounded authority, and broad momentum'}.`;
+      diagnosis = `Day Master [${enDm}] carries a vigor score of ${ctx.vigorScore}/100 (${cleanTier}) under the ${ctx.activeAnnualYear} (${enGz}) transit governed by Hexagram [${cleanHex}]. Your field is currently positioned in a phase of ${isWeak ? 'internal consolidation, stealth mastery, and energy conservation' : 'steady strategic expansion, grounded authority, and broad momentum'}.`;
 
       tactics = [
         `[Harmonize with Natural Cycles]: Align personal rhythms with seasonal transitions. Prioritize restorative sleep and physical grounding to nurture your core root.`,
         `[Focus on Compounding Anchors]: Discard superficial noise and channel mental bandwidth into one or two high-leverage initiatives.`,
-        `[Pragmatic Adaptability]: Embody the wisdom of ${ctx.firstScroll}—remain flexible, calm, and let patience resolve outer obstacles.`
+        `[Pragmatic Adaptability]: Embody the wisdom of ${cleanScroll}—remain flexible, calm, and let patience resolve outer obstacles.`
       ];
 
       redLines = [
@@ -1126,6 +1738,69 @@ class AdvisorEngine {
       ];
 
       mentalAnchor = `Zhuangzi (Free and Easy Wandering): "He who travels to the green woods takes three meals and returns with his belly still full; he who travels a hundred leagues pounds grain by night; he who travels a thousand leagues gathers provisions for three months. Mount the true order of heaven and earth, and ride upon the changes of the six energies!"`;
+    }
+
+    let microActions = [];
+    if (category === 'romance_timing') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Refresh personal grooming and take a 20-minute brisk walk to activate social vitality' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Register for 1 high-caliber industry conference, book salon, or curated private gathering this week' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Clear bedroom East or South quadrant and place fresh water flowers (avoid artificial blooms)' }
+      ];
+    } else if (category === 'manage_up') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Complete 3 cycles of 4-7-8 tactical breathing before executive briefings to eliminate physiological tension' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Draft a 1-page milestone memo using the 3-sentence framework (progress, bottleneck, two options)' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Position a solid metallic cardholder or grounding seal on the left of your desk to anchor authority' }
+      ];
+    } else if (category === 'career_pivot') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Strictly avoid browsing job boards late at night; secure 8 hours of restorative sleep before deciding' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Deliver 1 indisputable benchmark project in your current post as your primary negotiation leverage' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Place a raw clear quartz crystal on your desk to protect quiet focus and block workplace distractions' }
+      ];
+    } else if (category === 'academic_exam') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Structure daily study into 3 unbroken 90-minute immersion blocks using physical pen and paper' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Send a concise milestone update email to your academic advisor to secure guidance and resources' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Place a 9-tier pagoda or 4 stems of lucky bamboo on the left corner of your desk to focus memory' }
+      ];
+    } else if (category === 'overthinking') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Splash ice-cold water on face and inner wrists for 15 seconds to immediately halt the mental loop' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Externalize all swirling thoughts onto physical paper, then engage in 1 single tangible physical chore' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Stand up and walk away from your workstation for 2 minutes; wipe down desk to clear spatial anchor' }
+      ];
+    } else if (category === 'health_vitality') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Power down digital devices at 22:30 and take a warm foot bath to ensure sleep before 23:00' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Drink warm water upon waking and perform 10 minutes of gentle morning stretching' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Ventilate bedroom thoroughly and remove high-radiation electronics from bedside tables' }
+      ];
+    } else if (category === 'real_estate_moving') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Pause and stand quietly for 1 minute at the center of any candidate property to assess autonomic calm' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Thoroughly verify property title, encumbrances, and municipal zoning to ensure clean legal ownership' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Address any missing floor plan corners with grounding stone or vibrant indoor plants' }
+      ];
+    } else if (category === 'legal_dispute') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Apply a 24-hour delayed reaction protocol to provocations; never reply in emotional agitation' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Compile all emails, chat histories, and contracts into an organized chronological PDF dossier' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Carry a piece of white jade or yellow quartz to steady inner composure and support clear strategy' }
+      ];
+    } else if (category === 'synastry_inquiry') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Maintain a calm vocal cadence and listen attentively to 70% of the counterparty points first' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Codify collaborative boundaries and deliverables in written memos rather than verbal assumptions' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Introduce warm ceramic elements or ambient warm lighting in shared spaces to harmonize energy' }
+      ];
+    } else {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Stand up, step outside for 2 minutes, and take 3 diaphragmatic breaths to restore clarity' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Focus exclusively on today most compounding high-leverage priority in single-task mode' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Clear desktop clutter to create an open visual field that fosters serene concentration' }
+      ];
     }
 
     const smartFollowUps = this.anticipateQuestions(category, subcategory, bazi, 'en');
@@ -1138,15 +1813,18 @@ class AdvisorEngine {
       directAnswer: directAnswer,
       timingCard: timingCard,
       profileCard: profileCard,
+      synastryCard: synastryCard,
+      diagnosticTree: diagnosticTree,
+      microActions: microActions,
       contextMeta: {
         dm: enDm,
         score: ctx.vigorScore,
-        tier: ctx.vigorTier,
+        tier: cleanTier,
         year: ctx.activeAnnualYear,
         ganzhi: enGz,
-        hex: (ctx.activeHexagram || 'The Creative').replace(/[一-龥]/g, '').trim() || 'The Creative',
-        scroll: (ctx.firstScroll || 'Scroll I: Adaptability').replace(/[一-龥]/g, '').trim() || 'Scroll I: Adaptability',
-        archetype: (ctx.primaryArchetype || 'Specialist & Engineering').replace(/[一-龥]/g, '').trim() || 'Specialist & Engineering'
+        hex: cleanHex,
+        scroll: cleanScroll,
+        archetype: cleanArchetype
       },
       diagnosis: diagnosis,
       tactics: tactics,
