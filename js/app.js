@@ -12156,7 +12156,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   </div>
                   <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-800/80 text-amber-200 font-mono tracking-wider">QUICK VERDICT</span>
                 </div>
-                <div class="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">${a.directAnswer}</div>
+                <div class="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">${(a.directAnswer || '').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-200 font-bold">$1</strong>')}</div>
               </div>
             ` : ''}
 

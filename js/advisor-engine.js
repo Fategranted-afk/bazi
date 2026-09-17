@@ -674,7 +674,7 @@ class AdvisorEngine {
       title = '世俗婚恋与正缘应期神策';
 
       if (subcategory === 'timing_precision') {
-        directAnswer = `【军师直陈】：回禀命主，具体正缘显化与深度破局的黄金应期，首推 **2026 丙午年农历六月（乙未月·小暑至大暑）**、**农历五月（甲午月·芒种至夏至）** 与 **农历九月（戊戌月·寒露至霜降）**！其中以**农历六月（午未六合夫妻宫）**能量最为聚合稳定，逢合主定，是定下恋爱名分或打破单身僵局的第一首选窗口（应期概率 92%）；农历十一月（庚子月）水火对冲，切忌因一时敏感挑剔而心生冷战。下方已为您精细测算流月时令全相表，请命主审阅。`;
+        directAnswer = `【军师直陈】：回禀命主，具体正缘显化与深度破局的黄金应期，首推 2026 丙午年农历六月（乙未月·小暑至大暑）、农历五月（甲午月·芒种至夏至） 与 农历九月（戊戌月·寒露至霜降）！其中以【农历六月（午未六合夫妻宫）】能量最为聚合稳定，逢合主定，是定下恋爱名分或打破单身僵局的第一首选窗口（应期概率 92%）；农历十一月（庚子月）水火对冲，切忌因一时敏感挑剔而心生冷战。下方已为您精细测算流月时令全相表，请命主审阅。`;
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'romance_timing', 'zh');
       } else if (subcategory === 'spouse_profile') {
         directAnswer = `【军师直陈】：回禀命主，依您日支坐【${db}】配偶宫推演，对方五官容貌【${spouseArchetype}】；身材骨相匀称修长，富有灵动神采与艺术审美；心性外柔内刚，重视精神契合与生活仪式感；职业圈层多在文化传媒、前沿科技研发、教育学术或专业咨询领域。相处时宜多倾听认同，切忌冷面挑刺。下方已为您整理配偶全相画像。`;
@@ -688,7 +688,7 @@ class AdvisorEngine {
           bestMatchAdvice: '以平等同盟之心相待，遇事共同推演决策，尊重彼此专业边界，忌居高临下挑刺'
         };
       } else {
-        directAnswer = `【军师直陈】：回禀命主，您的正缘将在 **2026 丙午至 2027 丁未年** 显化，黄金应期在**农历五月、六月与九月**。对方五官清雅灵动、气质高洁、极重精神共鸣。相处第一铁律是切忌在子午冲克月份（农历五月与十一月）因一时情绪敏感而做出绝决判断，以《周易·咸卦》虚受之道相待即能良缘天成。`;
+        directAnswer = `【军师直陈】：回禀命主，您的正缘将在 2026 丙午至 2027 丁未年 显化，黄金应期在农历五月、六月与九月。对方五官清雅灵动、气质高洁、极重精神共鸣。相处第一铁律是切忌在子午冲克月份（农历五月与十一月）因一时情绪敏感而做出绝决判断，以《周易·咸卦》虚受之道相待即能良缘天成。`;
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'romance_timing', 'zh');
       }
 
@@ -717,7 +717,7 @@ class AdvisorEngine {
     } else if (category === 'academic_exam') {
       title = '学业考学与文昌深造锦囊';
       if (subcategory === 'timing_precision') {
-        directAnswer = `【军师直陈】：回禀命主，学业考学与录取的黄金应期落在**农历二月（辛卯月·文昌贵人）**与**农历五月（甲午月·食伤吐秀）**！岁运逢官印相生，夏秋季节放榜申博最为顺畅。`;
+        directAnswer = `【军师直陈】：回禀命主，学业考学与录取的黄金应期落在【农历二月（辛卯月·文昌贵人）】与【农历五月（甲午月·食伤吐秀）】！岁运逢官印相生，夏秋季节放榜申博最为顺畅。`;
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'academic_exam', 'zh');
       } else {
         directAnswer = `【军师直陈】：回禀命主，您命盘印星护持、食伤秀气，非常适宜在高校科研或技术研发深造。备考关键是以“3个连续90分钟无干扰心流模块”替代碎片化刷题，书桌左侧安放文昌塔或四支富贵竹即可大幅提振记忆调取效率！`;
@@ -777,7 +777,7 @@ class AdvisorEngine {
     } else if (category === 'career_pivot') {
       title = '战略转轨与去留决断神机';
       if (subcategory === 'timing_precision') {
-        directAnswer = `【军师直陈】：回禀命主，今年职业转轨与跳槽的最佳窗口在**农历六月（乙未月·食伤生财）**与**农历九月（戊戌月·财星透干）**！在此之前宜在现工位沉淀核心作品，切忌裸辞；秋季金旺水润之际正是大展宏图之黄金良机。`;
+        directAnswer = `【军师直陈】：回禀命主，今年职业转轨与跳槽的最佳窗口在【农历六月（乙未月·食伤生财）】与【农历九月（戊戌月·财星透干）】！在此之前宜在现工位沉淀核心作品，切忌裸辞；秋季金旺水润之际正是大展宏图之黄金良机。`;
         timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'career_pivot', 'zh');
       } else {
         directAnswer = `【军师直陈】：回禀命主，当前岁运值年卦坐【${ctx.activeHexagram}】，子平活力为 ${ctx.vigorScore} 分。当前十字路口首要原则是“生态位不匹配绝不动，用神方位不契合绝不迁”。若新机会能深度发挥你【${ctx.primaryArchetype}】之专长，可在下半年果断出击；反之若需大量无效社交，坚决深耕留任。`;
