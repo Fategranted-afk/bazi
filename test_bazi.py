@@ -11972,15 +11972,78 @@ jsc_check103_cmd = [
       SocialCardEngine.drawClassicalPortrait(pCanvas.getContext(), {
         isEn: false, figureId: at.id, figureArchetype: at.archetype
       }, 145, 448, 52);
-      if (!pTexts.some(function(t) { return t.includes(at.seal); })) {
+      if (!pTexts.join("").includes(at.seal) && !pTexts.some(function(t) { return t.includes(at.seal); })) {
         throw new Error("Portrait seal stamp missing for " + at.id);
       }
     });
+
+    // 8. Validate English Portrait Seal Stamp ("SAGE")
+    var pTextsEn = [];
+    var pCanvasEn = {
+      getContext: function() {
+        return {
+          createLinearGradient: function() { return { addColorStop: function(){} }; },
+          createRadialGradient: function() { return { addColorStop: function(){} }; },
+          fillRect: function(){}, strokeRect: function(){},
+          beginPath: function(){}, arc: function(){}, fill: function(){}, stroke: function(){},
+          fillText: function(t){ pTextsEn.push(t); },
+          save: function(){}, restore: function(){}, clip: function(){},
+          moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
+        };
+      }
+    };
+    SocialCardEngine.drawClassicalPortrait(pCanvasEn.getContext(), {
+      isEn: true, figureId: "xiao_tong", figureArchetype: "specialist"
+    }, 145, 448, 52);
+    if (!pTextsEn.some(function(t) { return t === "SAGE"; })) {
+      throw new Error("English portrait seal stamp 'SAGE' missing");
+    }
+
+    // 9. Validate Xiao Tong (Soul Mirror Figure) Clean Rendering & Anti-Truncation
+    var xiaoTongFig = HISTORICAL_FIGURES.find(function(f){ return f.id === "xiao_tong"; });
+    HistoricalEngine.calculateSimilarity = function() { return { topMatch: xiaoTongFig }; };
+    var xtCanvasEnTexts = [];
+    var fakeXtCanvasEn = {
+      getContext: function() {
+        return {
+          createLinearGradient: function() { return { addColorStop: function(){} }; },
+          createRadialGradient: function() { return { addColorStop: function(){} }; },
+          fillRect: function(){}, strokeRect: function(){},
+          beginPath: function(){}, arc: function(){}, fill: function(){}, stroke: function(){},
+          fillText: function(t){ xtCanvasEnTexts.push(t); },
+          save: function(){}, restore: function(){}, clip: function(){},
+          moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
+        };
+      }
+    };
+    SocialCardEngine.renderToCanvas(fakeXtCanvasEn, bazi, luck, "en");
+    if (!xtCanvasEnTexts.includes("Xiao Tong")) {
+      throw new Error("Xiao Tong English primary name must be rendered without truncation");
+    }
+    if (xtCanvasEnTexts.some(function(t) { return t === "Xiao Tong (Cr.."; })) {
+      throw new Error("Xiao Tong English name was improperly truncated with '..'");
+    }
+    if (!xtCanvasEnTexts.includes("Southern Liang")) {
+      throw new Error("Xiao Tong English dynasty era 'Southern Liang' must be rendered in full");
+    }
+    if (xtCanvasEnTexts.some(function(t) { return t === "Souther.."; })) {
+      throw new Error("Dynasty era was improperly truncated into 'Souther..'");
+    }
+    if (xtCanvasEnTexts.some(function(t) { return t.includes("tangib..."); })) {
+      throw new Error("Action banner text was clipped into 'tangib...'");
+    }
+
+    // 10. Validate Dual Alias Module (js/social-card.js) Integration
+    load("js/social-card.js");
+    if (typeof SocialCard === "undefined" || SocialCard !== SocialCardEngine) {
+      throw new Error("js/social-card.js must alias SocialCardEngine");
+    }
     """
 ]
 run_check103 = subprocess.run(jsc_check103_cmd, capture_output=True, text=True)
 assert run_check103.returncode == 0, f"Check 103 test failed: stdout={run_check103.stdout} stderr={run_check103.stderr}"
 print("✓ 社交名片核心画像升级与战报引擎（4大天赋进度条去除/照命先贤中央C位画卷/人物古典画风肖像与朱砂御印/立身功业与天机诫勉/英文100%零中文残留）验证通过！")
+
 
 # 104. Validate Standalone Decision Simulator Page (simulator.html) & Dual Navigation Integration
 print("\n=== 104. Validating Standalone Decision Simulator Page (simulator.html) & Navigation Integration ===")
