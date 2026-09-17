@@ -35,6 +35,70 @@ class SocialCardEngine {
   }
 
   /**
+   * Safe multi-line canvas text wrapping with alignment & defensive fallback for headless tests
+   */
+  static drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 2, align = 'center') {
+    if (!text) return y;
+    ctx.textAlign = align;
+    const str = String(text).trim();
+    if (!str) return y;
+
+    const hasCjk = /[\u4e00-\u9fa5]/.test(str);
+    let lines = [];
+    let curLine = '';
+
+    const measure = (t) => {
+      if (ctx.measureText && typeof ctx.measureText === 'function') {
+        try {
+          return ctx.measureText(t).width;
+        } catch (e) {}
+      }
+      return t.length * 10;
+    };
+
+    if (hasCjk) {
+      for (let i = 0; i < str.length; i++) {
+        const testLine = curLine + str[i];
+        if (measure(testLine) > maxWidth && curLine.length > 0) {
+          lines.push(curLine);
+          curLine = str[i];
+        } else {
+          curLine = testLine;
+        }
+      }
+      if (curLine) lines.push(curLine);
+    } else {
+      const words = str.split(' ');
+      for (let i = 0; i < words.length; i++) {
+        const testLine = curLine ? `${curLine} ${words[i]}` : words[i];
+        if (measure(testLine) > maxWidth && curLine.length > 0) {
+          lines.push(curLine);
+          curLine = words[i];
+        } else {
+          curLine = testLine;
+        }
+      }
+      if (curLine) lines.push(curLine);
+    }
+
+    if (maxLines && lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      let lastLine = lines[lines.length - 1];
+      while (measure(lastLine + '...') > maxWidth && lastLine.length > 1) {
+        lastLine = lastLine.slice(0, -1);
+      }
+      lines[lines.length - 1] = lastLine + '...';
+    }
+
+    let curY = y;
+    for (let i = 0; i < lines.length; i++) {
+      ctx.fillText(lines[i], x, curY);
+      curY += lineHeight;
+    }
+    return curY;
+  }
+
+  /**
    * Extract key card data from bazi and auxiliary engines
    */
   static extractCardData(bazi, luck, lang = 'zh') {
@@ -57,26 +121,57 @@ class SocialCardEngine {
     const dStr = isEn ? this._ganzhiToEn(rawD) : rawD;
     const hStr = isEn ? this._ganzhiToEn(rawH) : rawH;
 
-    // Archetype Title
+    // Archetype Title & Niches
     let archetypeTitleZh = '技术人员 · 首席天命主场';
     let archetypeTitleEn = 'Specialist & Engineering · Prime Calling';
+    let archetypeTagZh = '写代码 · 深度研发 · 算法架构 · 数据量化分析';
+    let archetypeTagEn = 'Coding · Deep Architecture · Quantitative Analytics';
+
     let niches = [
-      { name: isEn ? 'Specialist' : '技术研发', score: 96 },
-      { name: isEn ? 'Civil Admin' : '文职治理', score: 82 },
-      { name: isEn ? 'Executive' : '操盘统帅', score: 68 },
-      { name: isEn ? 'Frontline' : '武职开拓', score: 45 }
+      { key: 'specialist', icon: '💻', name: isEn ? 'Specialist (Tech)' : '技术研发', score: 96 },
+      { key: 'civil', icon: '📜', name: isEn ? 'Civil & Policy' : '文职治理', score: 82 },
+      { key: 'executive', icon: '👑', name: isEn ? 'Executive Lead' : '高管统帅', score: 68 },
+      { key: 'martial', icon: '⚔️', name: isEn ? 'Frontline Ops' : '一线武职', score: 45 }
     ];
 
     if (typeof CareerEngine !== 'undefined' && typeof CareerEngine.computeWorkplaceArchetypes === 'function') {
       try {
         const archs = CareerEngine.computeWorkplaceArchetypes(safeBazi, lang);
         if (archs && archs.length >= 4) {
-          archetypeTitleZh = `${archs[0].nameZh || '技术人员'} · 首席天命主场`;
-          archetypeTitleEn = `${archs[0].nameEn || 'Specialist & Engineering'} · Prime Calling`;
-          niches = archs.slice(0, 4).map(a => ({
-            name: isEn ? (a.nameEn || 'Specialist') : (a.nameZh || '技术人员'),
-            score: a.rawScore || a.fitScore || a.score || 80
-          }));
+          const rawZh0 = archs[0].nameZh || '技术人员';
+          const cleanZh0 = rawZh0.split('(')[0].trim() || '技术人员';
+          const rawEn0 = archs[0].nameEn || 'Specialist & Engineering';
+          const cleanEn0 = rawEn0.split('(')[0].trim() || 'Specialist & Engineering';
+
+          archetypeTitleZh = `${cleanZh0} · 首席天命主场`;
+          archetypeTitleEn = `${cleanEn0} · Prime Calling`;
+
+          const mZh = rawZh0.match(/\((.*?)\)/);
+          if (mZh && mZh[1]) archetypeTagZh = mZh[1];
+          const mEn = rawEn0.match(/\((.*?)\)/);
+          if (mEn && mEn[1]) archetypeTagEn = mEn[1];
+
+          niches = archs.slice(0, 4).map(a => {
+            const shortZh = (a.nameZh || '').split('(')[0].trim() || '生态位';
+            const shortEn = (a.nameEn || '').split('(')[0].trim() || 'Niche';
+            const icon = a.key === 'specialist' ? '💻' : a.key === 'civil' ? '📜' : a.key === 'executive' ? '👑' : '⚔️';
+
+            let finalScore = 75;
+            if (typeof a.fitScore === 'number') {
+              finalScore = Math.min(100, Math.max(10, Math.round(a.fitScore)));
+            } else if (typeof a.score === 'number') {
+              finalScore = Math.min(100, Math.max(10, Math.round(a.score)));
+            } else if (typeof a.rawScore === 'number') {
+              finalScore = Math.min(100, Math.max(10, Math.round((a.rawScore / 200) * 100)));
+            }
+
+            return {
+              key: a.key,
+              icon: icon,
+              name: isEn ? shortEn : shortZh,
+              score: finalScore
+            };
+          });
         }
       } catch (e) {}
     }
@@ -95,8 +190,12 @@ class SocialCardEngine {
           figureNameZh = hMatch.topMatch.nameZh || '王阳明';
           figureNameEn = hMatch.topMatch.nameEn || 'Wang Yangming';
           figureSim = (hMatch.topMatch.similarityScore || 89.4) + '%';
-          figureQuoteZh = hMatch.topMatch.historicalQuoteZh || figureQuoteZh;
-          figureQuoteEn = hMatch.topMatch.historicalQuoteEn || figureQuoteEn;
+          if (hMatch.topMatch.historicalQuoteZh) {
+            figureQuoteZh = `“${hMatch.topMatch.historicalQuoteZh.replace(/^[“"']|[”"']$/g, '')}”`;
+          }
+          if (hMatch.topMatch.historicalQuoteEn) {
+            figureQuoteEn = `"${hMatch.topMatch.historicalQuoteEn.replace(/^[“"']|[”"']$/g, '')}"`;
+          }
         }
       } catch (e) {}
     }
@@ -130,6 +229,7 @@ class SocialCardEngine {
       tier: tier,
       pillarsStr: `${yStr}  ${mStr}  ${dStr}  ${hStr}`,
       archetypeTitle: isEn ? archetypeTitleEn : archetypeTitleZh,
+      archetypeTag: isEn ? archetypeTagEn : archetypeTagZh,
       niches: niches,
       figureName: isEn ? figureNameEn : figureNameZh,
       figureSim: figureSim,
@@ -157,15 +257,16 @@ class SocialCardEngine {
 
     // 1. Background gradient
     const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, '#0e111a');
-    bgGrad.addColorStop(0.4, '#17141f');
-    bgGrad.addColorStop(1, '#0a0d14');
+    bgGrad.addColorStop(0, '#0c0f18');
+    bgGrad.addColorStop(0.35, '#14121d');
+    bgGrad.addColorStop(0.7, '#10131e');
+    bgGrad.addColorStop(1, '#090b12');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
     // Decorative antique double frame
     ctx.strokeStyle = '#926a38';
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2.5;
     ctx.strokeRect(28, 28, W - 56, H - 56);
     ctx.strokeStyle = '#4a341b';
     ctx.lineWidth = 1;
@@ -178,142 +279,176 @@ class SocialCardEngine {
     ctx.fillStyle = '#d97706';
     corners.forEach(([cx, cy]) => {
       ctx.beginPath();
-      ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 4.5, 0, Math.PI * 2);
       ctx.fill();
     });
 
     // 2. Top Imperial Brand & Seal Stamp
     ctx.fillStyle = '#b45309';
-    ctx.font = 'bold 22px serif';
+    ctx.font = 'bold 20px serif';
     ctx.textAlign = 'center';
-    ctx.fillText(data.isEn ? 'IMPERIAL ARCHIVE · METAPHYSICS ENGINE' : '✦ 钦 天 监 · 御 制 天 机 战 报 ✦', W / 2, 85);
+    ctx.fillText(data.isEn ? 'IMPERIAL ARCHIVE · METAPHYSICS ENGINE' : '✦ 钦 天 监 · 御 制 天 机 战 报 ✦', W / 2, 76);
 
     // Seal Box
     ctx.strokeStyle = '#b91c1c';
     ctx.lineWidth = 2;
-    ctx.strokeRect(W / 2 - 65, 105, 130, 42);
+    ctx.strokeRect(W / 2 - 55, 96, 110, 34);
     ctx.fillStyle = '#ef4444';
-    ctx.font = 'bold 18px serif';
-    ctx.fillText(data.isEn ? 'SEAL OF FATE' : '钦天御览', W / 2, 133);
+    ctx.font = 'bold 16px serif';
+    ctx.fillText(data.isEn ? 'SEAL OF FATE' : '钦天御览', W / 2, 120);
 
-    // 3. Four Pillars Display Bar
-    ctx.fillStyle = '#1c1e2d';
-    ctx.fillRect(60, 175, W - 120, 80);
-    ctx.strokeStyle = '#374151';
+    // 3. Four Pillars Display Bar (Box 1)
+    const box1Y = 152;
+    const box1H = 80;
+    ctx.fillStyle = '#171926';
+    ctx.fillRect(60, box1Y, W - 120, box1H);
+    ctx.strokeStyle = '#333b4f';
     ctx.lineWidth = 1;
-    ctx.strokeRect(60, 175, W - 120, 80);
+    ctx.strokeRect(60, box1Y, W - 120, box1H);
 
     ctx.fillStyle = '#f59e0b';
     ctx.font = 'bold 26px sans-serif';
-    ctx.fillText(data.pillarsStr, W / 2, 222);
+    ctx.textAlign = 'center';
+    ctx.fillText(data.pillarsStr, W / 2, box1Y + 44);
 
     ctx.fillStyle = '#9ca3af';
-    ctx.font = '14px sans-serif';
-    ctx.fillText(data.isEn ? 'Four Pillars GanZhi Matrix · Day Master: ' + data.dayMaster : '命造四柱干支统揽 · 日元统摄：' + data.dayMaster, W / 2, 246);
+    ctx.font = '13px sans-serif';
+    ctx.fillText(data.isEn ? 'Four Pillars GanZhi Matrix · Day Master: ' + data.dayMaster : '命造四柱干支统揽 · 日元统摄：' + data.dayMaster, W / 2, box1Y + 68);
 
-    // 4. Personality & Archetype Title Box
-    ctx.fillStyle = '#181b2a';
-    ctx.fillRect(60, 280, W - 120, 135);
+    // 4. Personality & Archetype Title Box (Box 2)
+    const box2Y = 248;
+    const box2H = 128;
+    ctx.fillStyle = '#161926';
+    ctx.fillRect(60, box2Y, W - 120, box2H);
     ctx.strokeStyle = '#d97706';
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(60, 280, W - 120, 135);
+    ctx.strokeRect(60, box2Y, W - 120, box2H);
 
+    // Main Calling Title
     ctx.fillStyle = '#fbbf24';
-    ctx.font = 'bold 26px sans-serif';
-    ctx.fillText(data.archetypeTitle, W / 2, 330);
+    ctx.font = 'bold 23px sans-serif';
+    this.drawWrappedText(ctx, data.archetypeTitle, W / 2, box2Y + 38, 590, 26, 1, 'center');
 
-    ctx.fillStyle = '#e5e7eb';
-    ctx.font = '16px sans-serif';
+    // Subtitle keywords
+    if (data.archetypeTag) {
+      ctx.fillStyle = '#fde68a';
+      ctx.font = '13px sans-serif';
+      this.drawWrappedText(ctx, data.archetypeTag, W / 2, box2Y + 70, 590, 18, 1, 'center');
+    }
+
+    // Vigor score
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '14px sans-serif';
     const subText = data.isEn
       ? `ZiPing Vigor Score: ${data.score}/100 (${data.tier})`
       : `子平生克量化活力：${data.score} 分 · 【${data.tier}】`;
-    ctx.fillText(subText, W / 2, 370);
+    ctx.fillText(subText, W / 2, box2Y + 104);
 
-    // 5. Workplace Archetype 4 Niches Ladder
-    ctx.fillStyle = '#111422';
-    ctx.fillRect(60, 440, W - 120, 175);
-    ctx.strokeStyle = '#374151';
+    // 5. Workplace Archetype 4 Niches Ladder (Box 3)
+    const box3Y = 394;
+    const box3H = 186;
+    ctx.fillStyle = '#10131e';
+    ctx.fillRect(60, box3Y, W - 120, box3H);
+    ctx.strokeStyle = '#333b4f';
     ctx.lineWidth = 1;
-    ctx.strokeRect(60, 440, W - 120, 175);
+    ctx.strokeRect(60, box3Y, W - 120, box3H);
 
     ctx.fillStyle = '#9ca3af';
     ctx.font = 'bold 15px sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(data.isEn ? 'WORKPLACE ECOLOGICAL NICHES' : '天命职能四大生态位定向', 85, 475);
+    ctx.textAlign = 'center';
+    ctx.fillText(data.isEn ? '✦ WORKPLACE ECOLOGICAL NICHES ✦' : '✦ 天 命 职 能 四 大 生 态 位 定 向 ✦', W / 2, box3Y + 32);
 
-    let startY = 505;
+    let startY = box3Y + 66;
     data.niches.forEach((n, idx) => {
-      ctx.fillStyle = '#d1d5db';
+      // Label on the left
+      ctx.fillStyle = '#e5e7eb';
       ctx.font = '14px sans-serif';
-      ctx.fillText(n.name, 85, startY);
+      ctx.textAlign = 'left';
+      ctx.fillText(`${n.icon || ''} ${n.name}`, 80, startY);
 
-      // Bar track
-      ctx.fillStyle = '#1f2937';
-      ctx.fillRect(230, startY - 12, 380, 12);
+      // Track
+      const trackX = 220;
+      const trackW = 380;
+      ctx.fillStyle = '#1c2132';
+      ctx.fillRect(trackX, startY - 12, trackW, 12);
 
       // Active bar
-      const barColor = idx === 0 ? '#10b981' : idx === 1 ? '#3b82f6' : idx === 2 ? '#f59e0b' : '#6b7280';
+      const barColor = idx === 0 ? '#10b981' : idx === 1 ? '#3b82f6' : idx === 2 ? '#f59e0b' : '#818cf8';
       ctx.fillStyle = barColor;
-      ctx.fillRect(230, startY - 12, (n.score / 100) * 380, 12);
+      const fillW = Math.min(trackW, Math.max(8, (n.score / 100) * trackW));
+      ctx.fillRect(trackX, startY - 12, fillW, 12);
 
-      // Score
+      // Score on the right
       ctx.fillStyle = '#fbbf24';
-      ctx.font = 'bold 14px sans-serif';
-      ctx.fillText(String(n.score), 630, startY);
+      ctx.font = 'bold 14px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(data.isEn ? `${n.score}` : `${n.score} 分`, 655, startY);
 
-      startY += 26;
+      startY += 27;
     });
 
-    // 6. Soul Mirror Historical Figure Card
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#181b2a';
-    ctx.fillRect(60, 640, W - 120, 170);
+    // 6. Soul Mirror Historical Figure Card (Box 4)
+    const box4Y = 598;
+    const box4H = 172;
+    ctx.fillStyle = '#151726';
+    ctx.fillRect(60, box4Y, W - 120, box4H);
     ctx.strokeStyle = '#4f46e5';
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(60, 640, W - 120, 170);
+    ctx.strokeRect(60, box4Y, W - 120, box4H);
 
-    ctx.fillStyle = '#818cf8';
-    ctx.font = 'bold 18px sans-serif';
-    ctx.fillText(data.isEn ? 'SOUL MIRROR HISTORICAL PERSONA' : '✦ 天 命 照 命 镜 像 · 先 贤 同 频 ✦', W / 2, 678);
+    ctx.fillStyle = '#a5b4fc';
+    ctx.font = 'bold 15px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(data.isEn ? '✦ SOUL MIRROR HISTORICAL PERSONA ✦' : '✦ 天 命 照 命 镜 像 · 先 贤 同 频 ✦', W / 2, box4Y + 32);
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 24px serif';
-    ctx.fillText(`${data.figureName}  (${data.figureSim})`, W / 2, 720);
+    ctx.font = 'bold 22px serif';
+    ctx.fillText(`${data.figureName}  (${data.figureSim})`, W / 2, box4Y + 70);
 
-    ctx.fillStyle = '#9ca3af';
-    ctx.font = 'italic 15px sans-serif';
-    ctx.fillText(data.figureQuote, W / 2, 765);
+    // Multi-line wrapped quote
+    ctx.fillStyle = '#cbd5e1';
+    ctx.font = 'italic 13.5px serif';
+    this.drawWrappedText(ctx, data.figureQuote, W / 2, box4Y + 106, 570, 22, 2, 'center');
 
-    // 7. Annual Transit Hexagram & Strategic Guidance
-    ctx.fillStyle = '#1c1825';
-    ctx.fillRect(60, 835, W - 120, 175);
+    // 7. Annual Transit Hexagram & Strategic Guidance (Box 5)
+    const box5Y = 788;
+    const box5H = 188;
+    ctx.fillStyle = '#181523';
+    ctx.fillRect(60, box5Y, W - 120, box5H);
     ctx.strokeStyle = '#b45309';
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(60, 835, W - 120, 175);
+    ctx.strokeRect(60, box5Y, W - 120, box5H);
 
     ctx.fillStyle = '#f59e0b';
     ctx.font = 'bold 18px sans-serif';
+    ctx.textAlign = 'center';
     const hexTitle = data.isEn
       ? `${data.annualYear} Annual Transit: Hexagram [${data.hexName}]`
       : `${data.annualYear} ${data.annualGanzhi}年 · 值年卦【${data.hexName}】`;
-    ctx.fillText(hexTitle, W / 2, 875);
+    ctx.fillText(hexTitle, W / 2, box5Y + 34);
 
-    ctx.fillStyle = '#e5e7eb';
-    ctx.font = '16px sans-serif';
-    ctx.fillText(data.hexDirective, W / 2, 925);
+    // Directive wrapped
+    ctx.fillStyle = '#e2e8f0';
+    ctx.font = '14.5px sans-serif';
+    this.drawWrappedText(ctx, data.hexDirective, W / 2, box5Y + 72, 570, 22, 2, 'center');
 
-    ctx.fillStyle = '#10b981';
-    ctx.font = 'bold 15px sans-serif';
-    ctx.fillText(data.isEn ? 'Direct Action: Consolidate core skills & output tangible works.' : '年度行持：以硬核作品立世，顺应天理，游刃有余。', W / 2, 965);
+    // Action banner
+    ctx.fillStyle = '#34d399';
+    ctx.font = 'bold 14px sans-serif';
+    const actionText = data.isEn
+      ? 'Direct Action: Consolidate core skills & output tangible works.'
+      : '年度行持：以硬核作品立世，顺应天理，游刃有余。';
+    this.drawWrappedText(ctx, actionText, W / 2, box5Y + 148, 570, 20, 1, 'center');
 
     // 8. Footer Brand & Link
-    ctx.fillStyle = '#4b5563';
-    ctx.font = '14px monospace';
-    ctx.fillText('bazi-git-main-fategranted-afk.vercel.app', W / 2, 1070);
-
     ctx.fillStyle = '#6b7280';
-    ctx.font = '13px sans-serif';
-    ctx.fillText(data.isEn ? 'BaZi-AI · Agentic Metaphysics & Decision Engine' : '八字排盘与现代战略决策引擎 · 东方数理全息', W / 2, 1095);
+    ctx.font = '13px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('bazi-git-main-fategranted-afk.vercel.app', W / 2, 1022);
+
+    ctx.fillStyle = '#4b5563';
+    ctx.font = '12px sans-serif';
+    ctx.fillText(data.isEn ? 'BaZi-AI · Agentic Metaphysics & Decision Engine' : '八字排盘与现代战略决策引擎 · 东方数理全息', W / 2, 1046);
   }
 
   /**
