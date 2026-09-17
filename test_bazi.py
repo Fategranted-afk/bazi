@@ -11644,6 +11644,256 @@ run_check100 = subprocess.run(jsc_check100_cmd, capture_output=True, text=True)
 assert run_check100.returncode == 0, f"Check 100 test failed: stdout={run_check100.stdout} stderr={run_check100.stderr}"
 print("✓ 初始门庭页面隐藏皇家战报PDF与首页PDF按钮、排盘后在控制面板正常显示、返回门庭重新隐藏（显隐状态机严格受控）验证通过！")
 
-print("\n🎉 ALL 100 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 101. Validating Interactive Advisor Agent Engine (AdvisorEngine) ===
+print("\n=== 101. Validating Interactive Advisor Agent Engine (AdvisorEngine) ===")
+jsc_check101_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("js/advisor-engine.js");
+
+    var baziWeak = BaZiEngine.calculate({
+      year: 2002, month: 6, day: 20, hour: 14, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(baziWeak, 2026);
+
+    // 1. Build context
+    var ctxZh = AdvisorEngine.buildContext(baziWeak, luck, 2026, 6, "zh");
+    if (!ctxZh || !ctxZh.dayMaster || !ctxZh.firstScroll) {
+      throw new Error("AdvisorEngine.buildContext failed for ZH");
+    }
+    var ctxEn = AdvisorEngine.buildContext(baziWeak, luck, 2026, 6, "en");
+    if (!ctxEn || !ctxEn.dayMaster || !ctxEn.primaryArchetype) {
+      throw new Error("AdvisorEngine.buildContext failed for EN");
+    }
+
+    // 2. Curated Prompts
+    var pZh = AdvisorEngine.getCuratedPrompts("zh");
+    if (!pZh || pZh.length < 4) throw new Error("Missing curated prompts in ZH");
+    var pEn = AdvisorEngine.getCuratedPrompts("en");
+    if (!pEn || pEn.length < 4) throw new Error("Missing curated prompts in EN");
+    var pEnStr = JSON.stringify(pEn);
+    if (/[\u4e00-\u9fa5]/.test(pEnStr)) {
+      throw new Error("Found residual Chinese in curated prompts EN: " + pEnStr);
+    }
+
+    // 3. Four Core Categories Generation & Zero-Leak Testing
+    var categories = ["manage_up", "career_pivot", "overthinking", "wealth_window"];
+    for (var i = 0; i < categories.length; i++) {
+      var cat = categories[i];
+      var advZh = AdvisorEngine.generateAdvice(cat, baziWeak, luck, 2026, "zh");
+      if (!advZh.diagnosis || !advZh.tactics || advZh.tactics.length < 3 || !advZh.redLines || !advZh.mentalAnchor) {
+        throw new Error("Incomplete advice generated for ZH category: " + cat);
+      }
+
+      var advEn = AdvisorEngine.generateAdvice(cat, baziWeak, luck, 2026, "en");
+      if (!advEn.diagnosis || !advEn.tactics || advEn.tactics.length < 3 || !advEn.redLines || !advEn.mentalAnchor) {
+        throw new Error("Incomplete advice generated for EN category: " + cat);
+      }
+      var advEnStr = JSON.stringify(advEn);
+      var resZh = advEnStr.match(/[\u4e00-\u9fa5]/g);
+      if (resZh && resZh.length > 0) {
+        throw new Error("Residual Chinese detected in advice category " + cat + ": " + resZh.join(""));
+      }
+    }
+    """
+]
+run_check101 = subprocess.run(jsc_check101_cmd, capture_output=True, text=True)
+assert run_check101.returncode == 0, f"Check 101 test failed: stdout={run_check101.stdout} stderr={run_check101.stderr}"
+print("✓ 钦天监随身军师引擎（上下文注入/四大情境智策/三经与冯道十卷融合/英文100%零中文残留）验证通过！")
+
+# === 102. Validating Dual-Track 'What-If' Decision Simulator Engine (ScenarioSimulatorEngine) ===
+print("\n=== 102. Validating Dual-Track 'What-If' Decision Simulator Engine (ScenarioSimulatorEngine) ===")
+jsc_check102_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/simulator-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1995, month: 10, day: 12, hour: 8, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    // 1. Geographic five-element lookup
+    var ukCity = ScenarioSimulatorEngine.getCityElement("UK", "birmingham");
+    if (ukCity.elem !== "Earth") throw new Error("UK Birmingham must be Earth, got: " + ukCity.elem);
+    var cnCity = ScenarioSimulatorEngine.getCityElement("China", "shenzhen");
+    if (cnCity.elem !== "Fire") throw new Error("China Shenzhen must be Fire, got: " + cnCity.elem);
+
+    // 2. Industry five-element mapping
+    var indAcademia = ScenarioSimulatorEngine.getIndustryElements("academia_research");
+    if (indAcademia.primary !== "Water") throw new Error("Academia primary must be Water");
+    var indFinance = ScenarioSimulatorEngine.getIndustryElements("finance_quant");
+    if (indFinance.primary !== "Metal") throw new Error("Finance quant primary must be Metal");
+
+    // 3. Manager leadership dynamic mapping
+    var mgrKillings = ScenarioSimulatorEngine.getManagerDynamic("killings");
+    if (mgrKillings.pressure !== 30) throw new Error("Killings pressure mismatch");
+    var mgrResource = ScenarioSimulatorEngine.getManagerDynamic("resource");
+    if (mgrResource.pressure >= 0) throw new Error("Resource must reduce pressure");
+
+    // 4. Dual-Track Simulation in ZH
+    var optA = {
+      title: "英国伯明翰 · 高校学术科研",
+      country: "UK",
+      city: "Birmingham",
+      industry: "academia_research",
+      role: "specialist",
+      manager: "resource"
+    };
+    var optB = {
+      title: "中国深圳 · 量化对冲基金",
+      country: "China",
+      city: "Shenzhen",
+      industry: "finance_quant",
+      role: "specialist",
+      manager: "killings"
+    };
+    var simZh = ScenarioSimulatorEngine.simulateOptions(optA, optB, bazi, null, "zh");
+    if (!simZh.optionA || !simZh.optionB || !simZh.summary) throw new Error("Simulation ZH output missing required fields");
+    if (typeof simZh.optionA.score !== "number" || typeof simZh.optionB.score !== "number") throw new Error("Scores must be numbers");
+    if (!simZh.winner || (simZh.winner !== "A" && simZh.winner !== "B" && simZh.winner !== "tie")) throw new Error("Invalid winner");
+
+    // 5. Dual-Track Simulation in EN & Zero Residual Chinese
+    var simEn = ScenarioSimulatorEngine.simulateOptions(optA, optB, bazi, null, "en");
+    if (!simEn.optionA || !simEn.optionB || !simEn.summary) throw new Error("Simulation EN output missing required fields");
+    var simEnStr = JSON.stringify(simEn);
+    var resZhSim = simEnStr.match(/[\u4e00-\u9fa5]/g);
+    if (resZhSim && resZhSim.length > 0) {
+      throw new Error("Residual Chinese in Scenario Simulation EN: " + resZhSim.join(""));
+    }
+    """
+]
+run_check102 = subprocess.run(jsc_check102_cmd, capture_output=True, text=True)
+assert run_check102.returncode == 0, f"Check 102 test failed: stdout={run_check102.stdout} stderr={run_check102.stderr}"
+print("✓ 现实决策双轨推演沙盘引擎（城市与赛道五行/上级十神场能/综合胜率与能耗比/英文100%零中文残留）验证通过！")
+
+# === 103. Validating Social Identity Card Engine & Modal Lifecycle (SocialCardEngine) ===
+print("\n=== 103. Validating Social Identity Card Engine & Modal Lifecycle (SocialCardEngine) ===")
+jsc_check103_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+    load("js/iching-engine.js");
+    load("js/social-card-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // 1. Extract card data
+    var cardZh = SocialCardEngine.extractCardData(bazi, luck, "zh");
+    if (!cardZh.dayMaster || !cardZh.archetypeTitle || !cardZh.figureName || !cardZh.hexName) {
+      throw new Error("SocialCardEngine.extractCardData ZH failed");
+    }
+
+    var cardEn = SocialCardEngine.extractCardData(bazi, luck, "en");
+    if (!cardEn.dayMaster || !cardEn.archetypeTitle || !cardEn.figureName || !cardEn.hexName) {
+      throw new Error("SocialCardEngine.extractCardData EN failed");
+    }
+    var cardEnStr = JSON.stringify(cardEn);
+    var cardZhLeaks = cardEnStr.match(/[\u4e00-\u9fa5]/g);
+    if (cardZhLeaks && cardZhLeaks.length > 0) {
+      throw new Error("Residual Chinese in Social Card EN: " + cardZhLeaks.join(""));
+    }
+
+    // 2. Social Share Text Generation & Zero Chinese in EN
+    var copyZh = SocialCardEngine.generateSocialCopyText(bazi, luck, "zh");
+    if (!copyZh.includes("【我的东方数理命盘与战略战报】")) {
+      throw new Error("Missing header in ZH copy text");
+    }
+
+    var copyEn = SocialCardEngine.generateSocialCopyText(bazi, luck, "en");
+    if (!copyEn.includes("BaZi-AI Decision Engine Profile")) {
+      throw new Error("Missing header in EN copy text");
+    }
+    var copyEnLeaks = copyEn.match(/[\u4e00-\u9fa5]/g);
+    if (copyEnLeaks && copyEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in Social Copy Text EN: " + copyEnLeaks.join(""));
+    }
+
+    // 3. Canvas 2D Rendering Mock
+    var renderCalls = [];
+    var fakeCanvas = {
+      width: 0,
+      height: 0,
+      getContext: function() {
+        return {
+          createLinearGradient: function() { return { addColorStop: function(){} }; },
+          fillRect: function(){ renderCalls.push("fillRect"); },
+          strokeRect: function(){ renderCalls.push("strokeRect"); },
+          beginPath: function(){},
+          arc: function(){},
+          fill: function(){},
+          fillText: function(t){ renderCalls.push(t); }
+        };
+      }
+    };
+    SocialCardEngine.renderToCanvas(fakeCanvas, bazi, luck, "zh");
+    if (fakeCanvas.width !== 750 || fakeCanvas.height !== 1180) {
+      throw new Error("Canvas dimensions mismatch: " + fakeCanvas.width + "x" + fakeCanvas.height);
+    }
+    if (renderCalls.length < 10) {
+      throw new Error("Insufficient canvas draw operations recorded: " + renderCalls.length);
+    }
+    """
+]
+run_check103 = subprocess.run(jsc_check103_cmd, capture_output=True, text=True)
+assert run_check103.returncode == 0, f"Check 103 test failed: stdout={run_check103.stdout} stderr={run_check103.stderr}"
+print("✓ 社交名片与战报生成引擎（竖屏Canvas超清绘制/照命先贤与天命职能/社交文案复制/英文100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 103 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 

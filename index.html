@@ -56,6 +56,12 @@
           <span data-i18n="btn_quick_export_single_text">快速生成首页 PDF</span>
         </button>
 
+        <!-- Social Card Export Button -->
+        <button id="btnOpenSocialCard" class="hidden px-3 py-1.5 text-xs rounded-lg border border-purple-600/50 bg-gradient-to-r from-purple-700/80 to-indigo-800/80 hover:from-purple-600 hover:to-indigo-700 text-purple-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer" data-i18n="btn_open_social_card" title="生成专属竖屏国风社交名片战报">
+          <span>🎴</span>
+          <span data-i18n="btn_open_social_card_text">社交名片</span>
+        </button>
+
         <!-- Dynamic Ambient Flux Toggle -->
         <button id="btnToggleFlux" class="px-2.5 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-amber-300/90 transition flex items-center gap-1" title="切换东方动态气机" data-i18n="alchemy_toggle_label">
           ✨ 东方气机流光
@@ -1969,6 +1975,157 @@
     <div id="careerContentContainer" class="space-y-6">
       <!-- Injected via JS -->
     </div>
+
+    <!-- Dual-Track 'What-If' Decision Simulator Sandbox -->
+    <div id="scenarioSimulatorSection" class="p-5 sm:p-6 rounded-2xl border border-indigo-500/40 bg-gradient-to-b from-[#131625]/90 to-[#0b0d18]/90 shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/30 pb-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300">胜负沙盘</span>
+            <h3 class="text-lg sm:text-xl font-bold font-serif-sc text-indigo-200" data-i18n="simulator_sec_title">
+              现实决策 · 双轨对抗推演沙盘
+            </h3>
+          </div>
+          <p class="text-xs text-gray-400" data-i18n="simulator_sec_sub">
+            并排对比两个职业/城市/环境方案，以五行生克与十神场能测算综合胜率与能耗比
+          </p>
+        </div>
+        <button id="btnRunSimulator" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-600 hover:from-indigo-500 hover:to-amber-500 text-white font-bold text-xs sm:text-sm shadow-xl border border-indigo-400/40 transition active:scale-95 cursor-pointer flex items-center gap-2" data-i18n="sim_run_btn">
+          <span>⚡</span>
+          <span>启动双轨全息推演</span>
+        </button>
+      </div>
+
+      <!-- Two-Column Side-by-Side Configuration Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Option A Config -->
+        <div class="p-4 rounded-xl border border-indigo-800/50 bg-black/40 space-y-3">
+          <div class="flex items-center justify-between border-b border-indigo-900/50 pb-2">
+            <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-1.5" data-i18n="sim_opt_a_title">
+              <span>🅰️</span> 方案 A
+            </h4>
+            <span class="text-[11px] text-gray-500">主选方向</span>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">方案名称 (Title)</label>
+            <input id="simTitleA" type="text" value="英国伯明翰 · 高校学术科研" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none" />
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
+              <select id="simCountryA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="UK" selected>英国 (UK)</option>
+                <option value="China">中国 (China)</option>
+                <option value="USA">美国 (USA)</option>
+                <option value="Canada">加拿大 (Canada)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">目标城市 (City)</label>
+              <input id="simCityA" type="text" value="Birmingham" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">行业赛道 (Industry)</label>
+            <select id="simIndustryA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+              <option value="academia_research" selected>高校学术与科研治学 (水/木)</option>
+              <option value="tech_ai">AI人工智能与前沿科技 (火/木)</option>
+              <option value="finance_quant">金融量化与对冲投资 (金/水)</option>
+              <option value="civil_admin">体制机关与合规行政 (土/火)</option>
+              <option value="manufacturing">实体智能制造与工程硬件 (土/金)</option>
+              <option value="creative_media">文化出海与数字内容创意 (木/火)</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">岗位生态位 (Role)</label>
+              <select id="simRoleA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="specialist" selected>技术人员 · 单一深度</option>
+                <option value="civil">文职治理 · 综合保障</option>
+                <option value="martial">武职开拓 · 一线攻坚</option>
+                <option value="executive">操盘统帅 · 全局决断</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">直属上司/环境 (Boss)</label>
+              <select id="simManagerA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="resource" selected>温和放权护持 (正印型)</option>
+                <option value="killings">严格结果导向 (七杀型)</option>
+                <option value="rob_wealth">同侪高压赛马 (比劫型)</option>
+                <option value="wealth">商业效益驱动 (财星型)</option>
+                <option value="officer">体制合规秩序 (正官型)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option B Config -->
+        <div class="p-4 rounded-xl border border-purple-800/50 bg-black/40 space-y-3">
+          <div class="flex items-center justify-between border-b border-purple-900/50 pb-2">
+            <h4 class="text-sm font-bold text-purple-300 flex items-center gap-1.5" data-i18n="sim_opt_b_title">
+              <span>🅱️</span> 方案 B
+            </h4>
+            <span class="text-[11px] text-gray-500">对比备选</span>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">方案名称 (Title)</label>
+            <input id="simTitleB" type="text" value="深圳/伦敦 · 量化对冲基金" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none" />
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
+              <select id="simCountryB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="China" selected>中国 (China)</option>
+                <option value="UK">英国 (UK)</option>
+                <option value="USA">美国 (USA)</option>
+                <option value="Canada">加拿大 (Canada)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">目标城市 (City)</label>
+              <input id="simCityB" type="text" value="Shenzhen" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200" />
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">行业赛道 (Industry)</label>
+            <select id="simIndustryB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+              <option value="finance_quant" selected>金融量化与对冲投资 (金/水)</option>
+              <option value="tech_ai">AI人工智能与前沿科技 (火/木)</option>
+              <option value="academia_research">高校学术与科研治学 (水/木)</option>
+              <option value="civil_admin">体制机关与合规行政 (土/火)</option>
+              <option value="manufacturing">实体智能制造与工程硬件 (土/金)</option>
+              <option value="creative_media">文化出海与数字内容创意 (木/火)</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">岗位生态位 (Role)</label>
+              <select id="simRoleB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="specialist" selected>技术人员 · 单一深度</option>
+                <option value="civil">文职治理 · 综合保障</option>
+                <option value="martial">武职开拓 · 一线攻坚</option>
+                <option value="executive">操盘统帅 · 全局决断</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">直属上司/环境 (Boss)</label>
+              <select id="simManagerB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="killings" selected>严格结果导向 (七杀型)</option>
+                <option value="rob_wealth">同侪高压赛马 (比劫型)</option>
+                <option value="wealth">商业效益驱动 (财星型)</option>
+                <option value="resource">温和放权护持 (正印型)</option>
+                <option value="officer">体制合规秩序 (正官型)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulation Results Output Dashboard -->
+      <div id="simResultsContainer" class="space-y-4">
+        <!-- Dynamically injected via ScenarioSimulatorEngine -->
+      </div>
+    </div>
   </div>
 
   <!-- View 10: Historical Figures Reference (历史人物参考 · 南北乱世三百年) -->
@@ -2143,6 +2300,104 @@
     </div>
   </div>
 
+  <!-- Floating Advisor Trigger Button (Shown in Dashboard View) -->
+  <button id="btnOpenAdvisorFloating" class="hidden fixed bottom-6 right-6 z-50 px-4 py-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-600 text-white font-bold shadow-2xl border border-amber-400/50 flex items-center gap-2 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer shadow-amber-950/60" title="呼出钦天监随身军师">
+    <span class="text-xl">🧙</span>
+    <span class="text-xs sm:text-sm font-serif-sc font-bold" data-i18n="floating_advisor_btn">军师问对</span>
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+  </button>
+
+  <!-- Interactive Advisor Agent Modal (天机军师 · 钦天监随身参谋) -->
+  <div id="advisorModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">
+    <div class="w-full max-w-3xl rounded-2xl border border-amber-600/50 bg-[#12141e]/98 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <!-- Header -->
+      <div class="p-4 sm:p-5 border-b border-amber-700/40 bg-gradient-to-r from-amber-950/60 via-black/40 to-amber-950/60 flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🧙</span>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+              <span data-i18n="advisor_modal_title">钦天监随身军师 · 天机问对</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 border border-emerald-700/40 font-mono">LIVE ADVISOR</span>
+            </h3>
+            <p class="text-xs text-gray-400" data-i18n="advisor_modal_sub">
+              以命主本命生克、十四字时空场能与冯道十卷为体，答疑现实困境
+            </p>
+          </div>
+        </div>
+        <button id="advisorCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="advisor_close_btn">
+          关闭参谋
+        </button>
+      </div>
+
+      <!-- Native Context Badges Strip -->
+      <div id="advisorContextBadges" class="p-3 bg-black/50 border-b border-gray-800 flex flex-wrap gap-2 text-xs">
+        <!-- Dynamically injected via AdvisorEngine -->
+      </div>
+
+      <!-- Curated Prompt Chips (Click-to-Ask) -->
+      <div class="p-3.5 bg-gray-900/40 border-b border-gray-800 space-y-1.5">
+        <div class="text-[11px] font-bold text-amber-300/80 uppercase tracking-wider flex items-center gap-1.5" data-i18n="advisor_quick_prompts_title">
+          <span>⚔️ 临场参谋锦囊 (点击即问)</span>
+        </div>
+        <div id="advisorPromptChips" class="flex flex-wrap gap-2 text-xs">
+          <!-- Injected via AdvisorEngine.getCuratedPrompts -->
+        </div>
+      </div>
+
+      <!-- Dialogue Stream Body -->
+      <div id="advisorChatStream" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
+        <!-- Message bubbles dynamically injected -->
+      </div>
+
+      <!-- Bottom Query Input Bar -->
+      <div class="p-3 sm:p-4 border-t border-gray-800 bg-[#0d0f17] flex items-center gap-2">
+        <input id="advisorQueryInput" type="text" class="flex-1 text-xs sm:text-sm p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-gray-100 placeholder-gray-500 focus:border-amber-500 focus:outline-none" placeholder="输入你面临的具体现实职场或抉择困境（如：下周如何向上级汇报/要资源，跳槽去哪...）" data-i18n-placeholder="advisor_input_placeholder" />
+        <button id="advisorSendBtn" type="button" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs sm:text-sm shadow-md transition active:scale-95 cursor-pointer flex items-center gap-1.5" data-i18n="advisor_send_btn">
+          <span>⚡</span>
+          <span>参谋请策</span>
+        </button>
+        <button id="advisorClearBtn" type="button" class="px-3 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 text-xs transition border border-gray-700 cursor-pointer" title="清空对话" data-i18n="advisor_clear_btn">
+          <span>🗑️</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Identity Card Modal (竖屏高颜值社交战报) -->
+  <div id="socialCardModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">
+    <div class="w-full max-w-md rounded-2xl border border-purple-600/50 bg-[#12141e]/98 shadow-2xl overflow-hidden flex flex-col max-h-[95vh]">
+      <!-- Header -->
+      <div class="p-4 border-b border-purple-800/40 bg-gradient-to-r from-purple-950/60 via-black/40 to-indigo-950/60 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">🎴</span>
+          <h3 class="text-sm sm:text-base font-bold text-purple-200 font-serif-sc" data-i18n="social_modal_title">
+            东方数理 · 专属社交战报名片
+          </h3>
+        </div>
+        <button id="socialCardCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="social_close_btn">
+          关闭
+        </button>
+      </div>
+
+      <!-- Canvas Preview Area -->
+      <div class="flex-1 overflow-y-auto p-4 flex flex-col items-center justify-center bg-black/60">
+        <canvas id="socialCardCanvas" class="w-full max-w-[340px] rounded-xl shadow-2xl border border-amber-700/50 bg-[#0e111a]"></canvas>
+      </div>
+
+      <!-- Action Buttons Footer -->
+      <div class="p-4 border-t border-gray-800 bg-[#0d0f17] flex items-center justify-between gap-3">
+        <button id="btnCopySocialText" type="button" class="flex-1 py-2.5 px-3 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-bold transition border border-gray-700 flex items-center justify-center gap-1.5 cursor-pointer active:scale-95" data-i18n="social_copy_btn">
+          <span>📋</span>
+          <span>复制分享文案</span>
+        </button>
+        <button id="btnDownloadSocialImage" type="button" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-600 hover:from-purple-500 hover:to-amber-500 text-white text-xs font-bold shadow-lg transition flex items-center justify-center gap-1.5 cursor-pointer active:scale-95" data-i18n="social_download_btn">
+          <span>📥</span>
+          <span>保存超清名片 (PNG)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="mt-12 py-6 border-t border-gray-800 text-center text-xs text-gray-500">
     <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理八大经典名著集成</p>
@@ -2170,6 +2425,9 @@
   <script src="js/career-engine.js"></script>
   <script src="data/historical_figures.js"></script>
   <script src="js/history-engine.js"></script>
+  <script src="js/advisor-engine.js"></script>
+  <script src="js/simulator-engine.js"></script>
+  <script src="js/social-card-engine.js"></script>
   <script src="js/portrait-engine.js?v=2026091404"></script>
   <script src="js/luck-engine.js?v=2026091404"></script>
   <script src="js/iching-engine.js?v=2026091404"></script>

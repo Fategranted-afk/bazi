@@ -159,6 +159,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnPortalTopNav = document.getElementById('btnPortalTopNav');
   const btnExportDossier = document.getElementById('btnExportDossier');
   const btnQuickExportSinglePdf = document.getElementById('btnQuickExportSinglePdf');
+  const btnOpenSocialCard = document.getElementById('btnOpenSocialCard');
+  const btnOpenAdvisorFloating = document.getElementById('btnOpenAdvisorFloating');
   const landingQuickPreviewBox = document.getElementById('landingQuickPreviewBox');
   const landingPreviewMeta = document.getElementById('landingPreviewMeta');
   const landingPreviewStatusBadge = document.getElementById('landingPreviewStatusBadge');
@@ -694,6 +696,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnQuickExportSinglePdf) {
       btnQuickExportSinglePdf.classList.remove('hidden');
     }
+    if (btnOpenSocialCard) {
+      btnOpenSocialCard.classList.remove('hidden');
+    }
+    if (btnOpenAdvisorFloating) {
+      btnOpenAdvisorFloating.classList.remove('hidden');
+    }
     updateDashboardSummaryBar();
     if (targetView && typeof switchPrimaryView === 'function') {
       switchPrimaryView(targetView);
@@ -724,6 +732,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnQuickExportSinglePdf) {
       btnQuickExportSinglePdf.classList.add('hidden');
+    }
+    if (btnOpenSocialCard) {
+      btnOpenSocialCard.classList.add('hidden');
+    }
+    if (btnOpenAdvisorFloating) {
+      btnOpenAdvisorFloating.classList.add('hidden');
     }
     updateLandingPreview();
     if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
@@ -11891,6 +11905,506 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+
+  // ==========================================================================
+  // Feature: Interactive Advisor Agent (钦天监随身军师 · 军师问对)
+  // ==========================================================================
+  let advisorChatHistory = [];
+
+  function initAdvisorAgent() {
+    const btnOpen = document.getElementById('btnOpenAdvisorFloating');
+    const modal = document.getElementById('advisorModal');
+    const btnClose = document.getElementById('advisorCloseBtn');
+    const btnSend = document.getElementById('advisorSendBtn');
+    const btnClear = document.getElementById('advisorClearBtn');
+    const input = document.getElementById('advisorQueryInput');
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        openAdvisorModal();
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        closeAdvisorModal();
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeAdvisorModal();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeAdvisorModal();
+        }
+      });
+    }
+
+    if (btnSend && input) {
+      btnSend.addEventListener('click', () => {
+        handleAdvisorQuery(input.value.trim());
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          handleAdvisorQuery(input.value.trim());
+        }
+      });
+    }
+
+    if (btnClear) {
+      btnClear.addEventListener('click', () => {
+        advisorChatHistory = [];
+        renderAdvisorChatStream();
+      });
+    }
+  }
+
+  function openAdvisorModal() {
+    const modal = document.getElementById('advisorModal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    refreshAdvisorContextBadges();
+    renderAdvisorPromptChips();
+    if (advisorChatHistory.length === 0) {
+      const isEn = (currentLang === 'en');
+      advisorChatHistory.push({
+        sender: 'advisor',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        advice: {
+          title: isEn ? 'Imperial Advisor Initialized' : '钦天监随身军师奉旨当值',
+          diagnosis: isEn
+            ? 'Greetings. I have aligned your Four Pillars natal vigor with the 14-character temporal field and classical codices. Tap any tactical chip above or state your specific workplace dilemma below.'
+            : '命主安好。本参谋已将您本命子平生克量化（100分制）、十四字岁运时空场能与《荣枯鉴》十卷全相融会贯通。请点击上方锦囊速问，或直接输入您面临的现实抉择困境。',
+          tactics: [
+            isEn ? 'Upward reporting: Lead with objective milestones to dismantle tension.' : '向上管理：先讲指标结果与落地抓手，消解权威博弈防御。',
+            isEn ? 'Workplace bounds: Use 24-hour delayed refusal to protect focus blocks.' : '处世守则：依冯道保全之策，遇非份请求施以24小时延时拒绝。'
+          ],
+          redLines: [
+            isEn ? 'Avoid impulsive reactionary decisions after 23:00.' : '子时（23点）后严禁推演重大决策或内耗反刍。'
+          ],
+          mentalAnchor: isEn ? 'Rong Ku Jian: "Follow the grain of time, preserve the vessel."' : '《荣枯鉴》：“顺天应势，借权成事，此之谓大通。”'
+        }
+      });
+    }
+    renderAdvisorChatStream();
+    const input = document.getElementById('advisorQueryInput');
+    if (input) input.focus();
+  }
+
+  function closeAdvisorModal() {
+    const modal = document.getElementById('advisorModal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  function refreshAdvisorContextBadges() {
+    const badgesContainer = document.getElementById('advisorContextBadges');
+    if (!badgesContainer || typeof AdvisorEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const ctx = AdvisorEngine.buildContext(currentBaziResult, currentLuckResult, new Date().getFullYear(), null, currentLang);
+    if (!ctx) return;
+
+    badgesContainer.innerHTML = `
+      <span class="px-2.5 py-1 rounded-full border border-amber-500/40 bg-amber-950/60 text-amber-300 font-bold">
+        ${isEn ? `Day Master: ${ctx.dayMaster} (${ctx.element})` : `日元统摄: ${ctx.dayMaster}（${ctx.element}）`}
+      </span>
+      <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
+        ${isEn ? `Vigor: ${ctx.vigorScore}/100 [${ctx.vigorTier}]` : `子平活力: ${ctx.vigorScore}分 · 【${ctx.vigorTier}】`}
+      </span>
+      <span class="px-2.5 py-1 rounded-full border border-blue-500/40 bg-blue-950/60 text-blue-300 font-bold">
+        ${isEn ? `${ctx.activeAnnualYear} Transit: [${ctx.activeHexagram}]` : `${ctx.activeAnnualYear} ${ctx.activeAnnualGanzhi} · 值年卦【${ctx.activeHexagram}】`}
+      </span>
+      <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
+        ${isEn ? `Codex: ${ctx.firstScroll}` : `首修宝卷: 《${ctx.firstScroll}》`}
+      </span>
+      <span class="px-2.5 py-1 rounded-full border border-indigo-500/40 bg-indigo-950/60 text-indigo-300 font-bold">
+        ${isEn ? `Calling: ${ctx.primaryArchetype.split('(')[0]}` : `天命主场: ${ctx.primaryArchetype.split('(')[0]}`}
+      </span>
+    `;
+  }
+
+  function renderAdvisorPromptChips() {
+    const chipsContainer = document.getElementById('advisorPromptChips');
+    if (!chipsContainer || typeof AdvisorEngine === 'undefined') return;
+    const prompts = AdvisorEngine.getCuratedPrompts(currentLang);
+    chipsContainer.innerHTML = prompts.map(p => `
+      <button type="button" class="advisor-chip px-3 py-1.5 rounded-xl border border-gray-700 bg-gray-800/80 hover:bg-amber-900/40 hover:border-amber-500/60 text-gray-300 hover:text-amber-200 transition text-xs font-medium flex items-center gap-1.5 cursor-pointer active:scale-95" data-chip-query="${encodeURIComponent(p.query)}">
+        <span>${p.icon}</span>
+        <span>${p.title}</span>
+      </button>
+    `).join('');
+
+    chipsContainer.querySelectorAll('.advisor-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = decodeURIComponent(btn.getAttribute('data-chip-query'));
+        handleAdvisorQuery(q);
+      });
+    });
+  }
+
+  function handleAdvisorQuery(query) {
+    if (!query) return;
+    const input = document.getElementById('advisorQueryInput');
+    if (input) input.value = '';
+
+    const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    advisorChatHistory.push({
+      sender: 'user',
+      text: query,
+      time: timeStr
+    });
+
+    if (typeof AdvisorEngine !== 'undefined' && typeof AdvisorEngine.generateAdvice === 'function') {
+      const currentYear = new Date().getFullYear();
+      const advice = AdvisorEngine.generateAdvice(query, currentBaziResult, currentLuckResult, currentYear, currentLang);
+      advisorChatHistory.push({
+        sender: 'advisor',
+        time: timeStr,
+        advice: advice
+      });
+    }
+
+    renderAdvisorChatStream();
+  }
+
+  function renderAdvisorChatStream() {
+    const stream = document.getElementById('advisorChatStream');
+    if (!stream) return;
+    const isEn = (currentLang === 'en');
+
+    if (advisorChatHistory.length === 0) {
+      stream.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">${isEn ? 'No dialogue yet. Select a prompt chip above or type your question.' : '暂无问对记录。点击上方锦囊或输入问题开始参谋。'}</p>`;
+      return;
+    }
+
+    stream.innerHTML = advisorChatHistory.map(msg => {
+      if (msg.sender === 'user') {
+        return `
+          <div class="flex justify-end">
+            <div class="max-w-[85%] rounded-2xl rounded-tr-sm bg-gradient-to-r from-amber-700 to-amber-600 text-white p-3.5 shadow-md space-y-1">
+              <div class="text-xs font-medium leading-relaxed">${msg.text}</div>
+              <div class="text-[10px] text-amber-200/70 text-right">${msg.time}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      const a = msg.advice || {};
+      return `
+        <div class="flex justify-start">
+          <div class="max-w-[92%] sm:max-w-[85%] rounded-2xl rounded-tl-sm bg-[#181b28] border border-amber-600/40 text-gray-200 p-4 shadow-xl space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-amber-400 font-bold font-serif-sc text-sm sm:text-base">${a.title || (isEn ? 'Imperial Strategy Directive' : '钦天监军师秘卷')}</span>
+              </div>
+              <span class="text-[10px] text-gray-500">${msg.time}</span>
+            </div>
+
+            <!-- Diagnosis -->
+            <div class="p-3 rounded-xl bg-black/40 border border-gray-800/60 text-xs sm:text-sm text-gray-300 leading-relaxed">
+              <div class="text-[11px] font-bold text-amber-400 mb-1 flex items-center gap-1">
+                <span>🔍</span> <span>${isEn ? 'Energy Qi Diagnostics' : '气数根源 · 场能诊断'}</span>
+              </div>
+              ${a.diagnosis || ''}
+            </div>
+
+            <!-- Tactics -->
+            ${a.tactics && a.tactics.length ? `
+              <div class="space-y-1.5">
+                <div class="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
+                  <span>⚔️</span> <span>${isEn ? 'Tactical Strategic Rules' : '兵法策论 · 落地抓手'}</span>
+                </div>
+                <div class="space-y-1.5">
+                  ${a.tactics.map(t => `<div class="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-xs sm:text-sm text-emerald-200 leading-relaxed">${t}</div>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Red Lines -->
+            ${a.redLines && a.redLines.length ? `
+              <div class="space-y-1.5">
+                <div class="text-[11px] font-bold text-rose-400 flex items-center gap-1">
+                  <span>⚠️</span> <span>${isEn ? 'Red Line Boundaries' : '避坑铁律 · 禁忌红线'}</span>
+                </div>
+                <div class="space-y-1">
+                  ${a.redLines.map(r => `<div class="text-xs text-rose-300/90 flex items-start gap-1.5"><span class="text-rose-400">•</span><span>${r}</span></div>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Mental Anchor -->
+            ${a.mentalAnchor ? `
+              <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-700/40 text-xs text-amber-300/90 font-serif-sc italic">
+                ${a.mentalAnchor}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    stream.scrollTop = stream.scrollHeight;
+  }
+
+  // ==========================================================================
+  // Feature: Dual-Track 'What-If' Decision Simulator (双轨对抗推演沙盘)
+  // ==========================================================================
+  function initScenarioSimulator() {
+    const btnRun = document.getElementById('btnRunSimulator');
+    if (btnRun) {
+      btnRun.addEventListener('click', () => {
+        executeScenarioSimulation();
+      });
+    }
+  }
+
+  function executeScenarioSimulation() {
+    const container = document.getElementById('simResultsContainer');
+    if (!container || typeof ScenarioSimulatorEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+
+    const optA = {
+      title: (document.getElementById('simTitleA')?.value || '').trim() || (isEn ? 'Option A' : '方案 A'),
+      country: document.getElementById('simCountryA')?.value || 'UK',
+      city: (document.getElementById('simCityA')?.value || '').trim() || 'Birmingham',
+      industry: document.getElementById('simIndustryA')?.value || 'academia_research',
+      role: document.getElementById('simRoleA')?.value || 'specialist',
+      manager: document.getElementById('simManagerA')?.value || 'resource'
+    };
+
+    const optB = {
+      title: (document.getElementById('simTitleB')?.value || '').trim() || (isEn ? 'Option B' : '方案 B'),
+      country: document.getElementById('simCountryB')?.value || 'China',
+      city: (document.getElementById('simCityB')?.value || '').trim() || 'Shenzhen',
+      industry: document.getElementById('simIndustryB')?.value || 'finance_quant',
+      role: document.getElementById('simRoleB')?.value || 'specialist',
+      manager: document.getElementById('simManagerB')?.value || 'killings'
+    };
+
+    const simRes = ScenarioSimulatorEngine.simulateOptions(optA, optB, currentBaziResult, currentLuckResult, currentLang);
+    if (!simRes) return;
+
+    const a = simRes.optionA;
+    const b = simRes.optionB;
+
+    container.innerHTML = `
+      <!-- Verdict Summary Banner -->
+      <div class="p-4 rounded-xl border ${simRes.winner === 'A' ? 'border-indigo-500/60 bg-indigo-950/40' : simRes.winner === 'B' ? 'border-purple-500/60 bg-purple-950/40' : 'border-amber-500/60 bg-amber-950/40'} shadow-xl space-y-2">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl">⚖️</span>
+          <h4 class="text-sm sm:text-base font-bold text-gray-100 font-serif-sc">
+            ${simRes.summary}
+          </h4>
+        </div>
+      </div>
+
+      <!-- Comparative Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Option A Result Card -->
+        <div class="p-5 rounded-xl border ${simRes.winner === 'A' ? 'border-indigo-500 shadow-indigo-950/50' : 'border-gray-800'} bg-[#121422] shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+            <div>
+              <span class="text-xs font-bold text-indigo-400">🅰️ ${a.cityName} · ${a.industryName.split('(')[0]}</span>
+              <h5 class="text-base font-bold text-gray-100 mt-0.5">${a.title}</h5>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-black text-indigo-400 font-mono">${a.score} <span class="text-xs text-gray-400 font-normal">/ 100</span></div>
+              <div class="text-[11px] font-bold ${a.score >= 80 ? 'text-emerald-400' : 'text-amber-400'}">${a.verdictTag}</div>
+            </div>
+          </div>
+
+          <!-- Metrics Bars -->
+          <div class="space-y-2.5 text-xs">
+            <div>
+              <div class="flex justify-between text-[11px] mb-1 text-gray-300">
+                <span>${isEn ? 'Five-Element Affinity' : '五行用神气数契合度'}</span>
+                <span class="font-bold text-emerald-400 font-mono">${a.affinityRate}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full bg-emerald-500 rounded-full" style="width: ${a.affinityRate}%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] mb-1 text-gray-300">
+                <span>${isEn ? 'Mental Energy Drain / Friction' : '心智能量损耗与内耗率'}</span>
+                <span class="font-bold ${a.frictionRate > 70 ? 'text-rose-400' : 'text-amber-400'} font-mono">${a.frictionRate}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full ${a.frictionRate > 70 ? 'bg-rose-500' : 'bg-amber-500'} rounded-full" style="width: ${a.frictionRate}%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] mb-1 text-gray-300">
+                <span>${isEn ? '3-Year Breakthrough Potential' : '三年期财官爆发潜力'}</span>
+                <span class="font-bold text-indigo-400 font-mono">${a.potentialRate}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full bg-indigo-500 rounded-full" style="width: ${a.potentialRate}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategic Notes -->
+          <div class="space-y-1.5 border-t border-gray-800 pt-3">
+            ${a.notes.map(n => `<div class="text-xs text-gray-300 leading-relaxed bg-black/30 p-2 rounded-lg border border-gray-800/40">${n}</div>`).join('')}
+          </div>
+        </div>
+
+        <!-- Option B Result Card -->
+        <div class="p-5 rounded-xl border ${simRes.winner === 'B' ? 'border-purple-500 shadow-purple-950/50' : 'border-gray-800'} bg-[#121422] shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+            <div>
+              <span class="text-xs font-bold text-purple-400">🅱️ ${b.cityName} · ${b.industryName.split('(')[0]}</span>
+              <h5 class="text-base font-bold text-gray-100 mt-0.5">${b.title}</h5>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-black text-purple-400 font-mono">${b.score} <span class="text-xs text-gray-400 font-normal">/ 100</span></div>
+              <div class="text-[11px] font-bold ${b.score >= 80 ? 'text-emerald-400' : 'text-amber-400'}">${b.verdictTag}</div>
+            </div>
+          </div>
+
+          <!-- Metrics Bars -->
+          <div class="space-y-2.5 text-xs">
+            <div>
+              <div class="flex justify-between text-[11px] mb-1 text-gray-300">
+                <span>${isEn ? 'Five-Element Affinity' : '五行用神气数契合度'}</span>
+                <span class="font-bold text-emerald-400 font-mono">${b.affinityRate}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full bg-emerald-500 rounded-full" style="width: ${b.affinityRate}%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] mb-1 text-gray-300">
+                <span>${isEn ? 'Mental Energy Drain / Friction' : '心智能量损耗与内耗率'}</span>
+                <span class="font-bold ${b.frictionRate > 70 ? 'text-rose-400' : 'text-amber-400'} font-mono">${b.frictionRate}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full ${b.frictionRate > 70 ? 'bg-rose-500' : 'bg-amber-500'} rounded-full" style="width: ${b.frictionRate}%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-[11px] mb-1 text-gray-300">
+                <span>${isEn ? '3-Year Breakthrough Potential' : '三年期财官爆发潜力'}</span>
+                <span class="font-bold text-purple-400 font-mono">${b.potentialRate}%</span>
+              </div>
+              <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full bg-purple-500 rounded-full" style="width: ${b.potentialRate}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strategic Notes -->
+          <div class="space-y-1.5 border-t border-gray-800 pt-3">
+            ${b.notes.map(n => `<div class="text-xs text-gray-300 leading-relaxed bg-black/30 p-2 rounded-lg border border-gray-800/40">${n}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ==========================================================================
+  // Feature: Social Identity Card (社交战报 · 竖屏国风名片)
+  // ==========================================================================
+  function initSocialCard() {
+    const btnOpen = document.getElementById('btnOpenSocialCard');
+    const modal = document.getElementById('socialCardModal');
+    const btnClose = document.getElementById('socialCardCloseBtn');
+    const btnCopy = document.getElementById('btnCopySocialText');
+    const btnDownload = document.getElementById('btnDownloadSocialImage');
+    const canvas = document.getElementById('socialCardCanvas');
+
+    if (btnOpen && modal) {
+      btnOpen.addEventListener('click', () => {
+        openSocialCardModal();
+      });
+    }
+
+    if (btnClose && modal) {
+      btnClose.addEventListener('click', () => {
+        closeSocialCardModal();
+      });
+    }
+
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeSocialCardModal();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeSocialCardModal();
+        }
+      });
+    }
+
+    if (btnCopy) {
+      btnCopy.addEventListener('click', () => {
+        if (typeof SocialCardEngine !== 'undefined') {
+          const text = SocialCardEngine.generateSocialCopyText(currentBaziResult, currentLuckResult, currentLang);
+          if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            navigator.clipboard.writeText(text).then(() => {
+              const orig = btnCopy.innerHTML;
+              btnCopy.innerHTML = (currentLang === 'en') ? '✓ Copied to Clipboard!' : '✓ 已复制到剪贴板！';
+              setTimeout(() => { btnCopy.innerHTML = orig; }, 2000);
+            }).catch(() => {
+              fallbackCopyText(text);
+            });
+          } else {
+            fallbackCopyText(text);
+          }
+        }
+      });
+    }
+
+    if (btnDownload && canvas) {
+      btnDownload.addEventListener('click', () => {
+        try {
+          const dataUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = `BaZi_AI_Social_Card_${new Date().getFullYear()}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        } catch (e) {
+          console.warn('Canvas download error:', e);
+        }
+      });
+    }
+  }
+
+  function openSocialCardModal() {
+    const modal = document.getElementById('socialCardModal');
+    const canvas = document.getElementById('socialCardCanvas');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+    if (canvas && typeof SocialCardEngine !== 'undefined' && typeof SocialCardEngine.renderToCanvas === 'function') {
+      SocialCardEngine.renderToCanvas(canvas, currentBaziResult, currentLuckResult, currentLang);
+    }
+  }
+
+  function closeSocialCardModal() {
+    const modal = document.getElementById('socialCardModal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  function fallbackCopyText(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      alert((currentLang === 'en') ? 'Copied to clipboard!' : '已复制到剪贴板！');
+    } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
   // ==========================================================================
   // Feature 1: Imperial Thread-Bound PDF Dossier (A4 绝美精装排盘战报)
   // ==========================================================================
@@ -14128,6 +14642,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initIChingController();
   initSynastryController();
   initImperialDossier();
+  initAdvisorAgent();
+  initScenarioSimulator();
+  initSocialCard();
   initPWA();
   initVisualAlchemy();
   initPortalPresets();
@@ -14345,6 +14862,15 @@ document.addEventListener('DOMContentLoaded', () => {
   window.resetToActualCurrentTime = resetToActualCurrentTime;
   window.setCurrentTime = setCurrentTime;
   window.renderCareerWealth = renderCareerWealth;
+  window.initAdvisorAgent = initAdvisorAgent;
+  window.openAdvisorModal = openAdvisorModal;
+  window.closeAdvisorModal = closeAdvisorModal;
+  window.handleAdvisorQuery = handleAdvisorQuery;
+  window.initScenarioSimulator = initScenarioSimulator;
+  window.executeScenarioSimulation = executeScenarioSimulation;
+  window.initSocialCard = initSocialCard;
+  window.openSocialCardModal = openSocialCardModal;
+  window.closeSocialCardModal = closeSocialCardModal;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';
