@@ -749,7 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btnOpenSimulatorPage.classList.add('hidden');
     }
     if (btnOpenAdvisorFloating) {
-      btnOpenAdvisorFloating.classList.add('hidden');
+      btnOpenAdvisorFloating.classList.remove('hidden');
     }
     updateLandingPreview();
     if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
@@ -1100,6 +1100,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const container = document.getElementById('pillarsContainer');
     container.innerHTML = '';
+    const shenShaData = (typeof BaZiEngine !== 'undefined' && typeof BaZiEngine.calculateShenSha === 'function')
+      ? BaZiEngine.calculateShenSha(res, currentLang)
+      : null;
 
     pillars.forEach((pKey, idx) => {
       const p = res.pillars[pKey];
@@ -1125,6 +1128,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const zodiacText = isYearPillar && typeof I18N !== 'undefined'
         ? ` <span class="text-[10px] text-amber-300 font-mono">(${isEn ? `Zodiac: ${I18N.getZodiac(p.branch, 'en')}` : `属${I18N.getZodiac(p.branch, 'zh')}`})</span>`
         : '';
+
+      const badges = (shenShaData && shenShaData.pillarsShenSha && shenShaData.pillarsShenSha[pKey]) || [];
+      const shenShaHtml = badges.length > 0
+        ? badges.map(b => `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold border ${b.color}" title="${b.desc}">${b.icon} ${b.name}</span>`).join('')
+        : `<span class="text-[10px] text-gray-500 py-0.5">${typeof I18N !== 'undefined' ? I18N.t('pillar_shensha_none', currentLang) : (isEn ? 'Harmonious Flow' : '气机平和')}</span>`;
 
       card.innerHTML = `
         <div class="w-full flex justify-between items-center mb-2 pb-1 border-b border-gray-700/40">
@@ -1169,6 +1177,17 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="w-full text-center mt-2 pt-2 border-t border-gray-700/30">
           <span class="text-xs text-gray-400">${typeof I18N !== 'undefined' ? I18N.t('nayin_prefix', currentLang) : '纳音：'}</span>
           <span class="text-xs font-semibold text-amber-200/90">${typeof I18N !== 'undefined' ? I18N.getNaYin(p.naYin, currentLang) : p.naYin}</span>
+        </div>
+
+        <!-- Auspicious Deities & Shen Sha Badges -->
+        <div class="w-full mt-2 pt-2 border-t border-gray-700/30">
+          <div class="text-[10px] text-gray-400 mb-1 font-medium flex justify-between items-center">
+            <span data-i18n="pillar_shensha_title">${typeof I18N !== 'undefined' ? I18N.t('pillar_shensha_title', currentLang) : (isEn ? 'Auspicious Stars' : '吉神星煞')}</span>
+            <span class="text-[9px] text-amber-400/80 font-mono" data-i18n="pillar_shensha_sub">${typeof I18N !== 'undefined' ? I18N.t('pillar_shensha_sub', currentLang) : (isEn ? 'Shen Sha' : '神煞鉴照')}</span>
+          </div>
+          <div class="flex flex-wrap gap-1 justify-center min-h-[22px]">
+            ${shenShaHtml}
+          </div>
         </div>
       `;
 
@@ -1218,6 +1237,73 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderImperialDossierPages === 'function') {
       renderImperialDossierPages(currentLang);
     }
+    renderFourAuspiciousDeities(res, shenShaData);
+  }
+
+  // Render Canonical Four Major Auspicious Deities Matrix (天乙贵人 · 文昌贵人 · 红鸾天喜 · 驿马星动)
+  function renderFourAuspiciousDeities(res, precalcShenSha = null) {
+    const container = document.getElementById('fourDeitiesCardsContainer');
+    if (!container) return;
+    const isEn = (currentLang === 'en');
+    const shenSha = precalcShenSha || (typeof BaZiEngine !== 'undefined' && typeof BaZiEngine.calculateShenSha === 'function' ? BaZiEngine.calculateShenSha(res, currentLang) : null);
+    if (!shenSha || !shenSha.fourAuspicious) return;
+
+    container.innerHTML = shenSha.fourAuspicious.map(d => `
+      <div class="deity-card p-4 rounded-xl border border-amber-600/30 bg-[#161824]/90 hover:border-amber-500/60 transition shadow-lg flex flex-col justify-between space-y-3">
+        <div>
+          <!-- Header -->
+          <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">${d.icon}</span>
+              <span class="font-bold font-serif-sc text-sm text-amber-200">${isEn ? d.nameEn : d.nameZh}</span>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full border font-mono ${d.statusClass}">
+              ${d.status}
+            </span>
+          </div>
+
+          <!-- Verse -->
+          <div class="mt-2.5 p-2 rounded-lg bg-black/40 border border-gray-800/80 text-[11px] text-amber-300/90 font-serif-sc leading-relaxed">
+            ${isEn ? d.verseEn : d.verseZh}
+          </div>
+
+          <!-- Content Details -->
+          <div class="mt-2.5 space-y-2 text-xs text-gray-300">
+            <p>
+              <span class="text-gray-400 font-medium">${typeof I18N !== 'undefined' ? I18N.t('deity_card_location_label', currentLang) : (isEn ? 'Chart Position: ' : '命盘落位：')}</span>
+              <span class="font-semibold text-amber-200">${d.locationText}</span>
+            </p>
+            <p class="text-gray-400 text-[11px] leading-relaxed">
+              <span class="text-gray-300 font-medium">${typeof I18N !== 'undefined' ? I18N.t('deity_card_essence_label', currentLang) : (isEn ? 'Manifested Power: ' : '显化威能：')}</span>
+              ${isEn ? d.essenceEn : d.essenceZh}
+            </p>
+            <p class="text-emerald-400/90 text-[11px] leading-relaxed">
+              <span class="text-emerald-300 font-medium">${typeof I18N !== 'undefined' ? I18N.t('deity_card_trigger_label', currentLang) : (isEn ? 'Transit Cycle: ' : '岁运时令：')}</span>
+              ${isEn ? d.triggerEn : d.triggerZh}
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick Ask Advisor Button -->
+        <div class="pt-2 border-t border-gray-800/60">
+          <button type="button" class="btn-ask-deity-advisor w-full py-1.5 px-2.5 rounded-lg bg-gradient-to-r from-amber-700/60 to-amber-800/60 hover:from-amber-600 hover:to-amber-700 text-amber-100 text-xs font-medium transition border border-amber-500/30 flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer" data-deity-query="${encodeURIComponent(isEn ? d.advisorQueryEn : d.advisorQueryZh)}">
+            <span>🧙</span>
+            <span>${typeof I18N !== 'undefined' ? I18N.t('deity_ask_advisor_btn', currentLang) : (isEn ? 'Ask Advisor About This Star ➔' : '问军师此吉神引动时机 ➔')}</span>
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    // Bind ask buttons
+    container.querySelectorAll('.btn-ask-deity-advisor').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const query = decodeURIComponent(btn.getAttribute('data-deity-query') || '');
+        if (query) {
+          openAdvisorModal();
+          handleAdvisorQuery(query);
+        }
+      });
+    });
   }
 
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
@@ -12249,9 +12335,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnHeaderClear = document.getElementById('advisorHeaderClearBtn');
     const input = document.getElementById('advisorQueryInput');
 
+    function openAdvisorSafely() {
+      if (!currentBaziResult) {
+        triggerCalculate();
+        if (typeof updateDashboardSummaryBar === 'function') updateDashboardSummaryBar();
+      }
+      openAdvisorModal();
+    }
+
     if (btnOpen) {
       btnOpen.addEventListener('click', () => {
-        openAdvisorModal();
+        openAdvisorSafely();
+      });
+    }
+
+    const btnHeaderOpenAdvisor = document.getElementById('btnHeaderOpenAdvisor');
+    if (btnHeaderOpenAdvisor) {
+      btnHeaderOpenAdvisor.addEventListener('click', () => {
+        openAdvisorSafely();
+      });
+    }
+
+    const btnRibbonOpenAdvisor = document.getElementById('btnRibbonOpenAdvisor');
+    if (btnRibbonOpenAdvisor) {
+      btnRibbonOpenAdvisor.addEventListener('click', () => {
+        openAdvisorSafely();
+      });
+    }
+
+    const btnDeitiesAskAdvisor = document.getElementById('btnDeitiesAskAdvisor');
+    if (btnDeitiesAskAdvisor) {
+      btnDeitiesAskAdvisor.addEventListener('click', () => {
+        openAdvisorSafely();
+        const isEn = (currentLang === 'en');
+        handleAdvisorQuery(isEn ? 'When are my 4 auspicious deities active in 2026, and how to harness them?' : '2026年我的四大吉神（天乙、文昌、红鸾天喜、驿马）何时当值？如何借势布局？');
+      });
+    }
+
+    const portalCardAdvisor = document.getElementById('portalCardAdvisor');
+    if (portalCardAdvisor) {
+      portalCardAdvisor.addEventListener('click', () => {
+        if (!currentBaziResult) {
+          triggerCalculate();
+        }
+        showDynamicCalculationProgress('natal', () => {
+          switchToDashboardView('view-home');
+          openAdvisorModal();
+        });
       });
     }
 
@@ -15751,6 +15881,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initSocialCard = initSocialCard;
   window.openSocialCardModal = openSocialCardModal;
   window.closeSocialCardModal = closeSocialCardModal;
+  window.renderFourAuspiciousDeities = renderFourAuspiciousDeities;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';

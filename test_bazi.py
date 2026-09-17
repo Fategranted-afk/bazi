@@ -12515,7 +12515,82 @@ run_check107 = subprocess.run(jsc_check107_cmd, capture_output=True, text=True)
 assert run_check107.returncode == 0, f"Check 107 JSC test failed: stdout={run_check107.stdout} stderr={run_check107.stderr}"
 print("✓ 军师全相六大维度（一键导出系统日历ICS、三阶落地微动作清单打卡、双人合盘博弈攻心卡、主动反向澄清诊断树、会话持久化与朱批手令长图导出、健康/置业/法务三大高频场景覆盖、旬空与月建神煞深度融入、双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 107 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 108. Validating Four Major Auspicious Deities Matrix (Shen Sha) & Multi-Entry Navigation ===
+print("\n=== 108. Validating Four Major Auspicious Deities Matrix (Shen Sha) & Multi-Entry Navigation ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_content = f.read()
+
+assert 'id="fourAuspiciousDeitiesSection"' in idx_content, "Missing #fourAuspiciousDeitiesSection in index.html"
+assert 'id="fourDeitiesCardsContainer"' in idx_content, "Missing #fourDeitiesCardsContainer in index.html"
+assert 'id="btnHeaderOpenAdvisor"' in idx_content, "Missing #btnHeaderOpenAdvisor in index.html"
+assert 'id="btnRibbonOpenAdvisor"' in idx_content, "Missing #btnRibbonOpenAdvisor in index.html"
+assert 'id="portalCardAdvisor"' in idx_content, "Missing #portalCardAdvisor in index.html"
+assert 'id="btnDeitiesAskAdvisor"' in idx_content, "Missing #btnDeitiesAskAdvisor in index.html"
+
+jsc_check108_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+
+    // Test Case 1: 1990-06-20 12:30 乾造 (庚午年 壬午月 甲申日 庚午时)
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    var shenShaZh = BaZiEngine.calculateShenSha(bazi, "zh");
+    if (!shenShaZh || !shenShaZh.fourAuspicious || shenShaZh.fourAuspicious.length !== 4) {
+      throw new Error("Invalid fourAuspicious in ZH mode: " + JSON.stringify(shenShaZh));
+    }
+
+    var tianYi = shenShaZh.fourAuspicious.find(function(d) { return d.id === 'tianyi'; });
+    var wenChang = shenShaZh.fourAuspicious.find(function(d) { return d.id === 'wenchang'; });
+    var hongLuan = shenShaZh.fourAuspicious.find(function(d) { return d.id === 'hongluan_tianxi'; });
+    var yima = shenShaZh.fourAuspicious.find(function(d) { return d.id === 'yima'; });
+
+    if (!tianYi || !wenChang || !hongLuan || !yima) {
+      throw new Error("One of the 4 deities missing from fourAuspicious array");
+    }
+
+    // Test Case 2: 1992-08-08 15:30 乾造 (壬申 戊申 丙辰 丙申) -> 丙见申为文昌, 申子辰见辰为华盖
+    var bazi2 = BaZiEngine.calculate({
+      year: 1992, month: 8, day: 8, hour: 15, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var shenSha2 = BaZiEngine.calculateShenSha(bazi2, "zh");
+    if (!shenSha2.pillarsShenSha.year.some(function(b) { return b.id === 'wenchang'; })) {
+      throw new Error("Expected Wen Chang in Year pillar for 壬申年 丙日主");
+    }
+    if (!shenSha2.pillarsShenSha.day.some(function(b) { return b.id === 'huagai'; })) {
+      throw new Error("Expected Hua Gai in Day pillar for 申年辰日");
+    }
+
+    // English Mode Zero Residual Chinese Check
+    var shenShaEn = BaZiEngine.calculateShenSha(bazi, "en");
+    var enJson = JSON.stringify(shenShaEn);
+    var leaks = enJson.match(/[\u4e00-\u9fa5]/g);
+    if (leaks && leaks.length > 0) {
+      throw new Error("Residual Chinese in calculateShenSha English mode: " + leaks.join(""));
+    }
+    """
+]
+run_check108 = subprocess.run(jsc_check108_cmd, capture_output=True, text=True)
+assert run_check108.returncode == 0, f"Check 108 JSC test failed: stdout={run_check108.stdout} stderr={run_check108.stderr}"
+print("✓ 命造四大吉神全相鉴照（天乙贵人、文昌贵人、红鸾天喜、驿马星动柱位神煞与四大吉神卡片、多端入口与双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 108 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

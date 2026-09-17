@@ -1087,6 +1087,300 @@ class BaZiEngine {
       tierReasonEn
     };
   }
+
+  /**
+   * Calculate Canonical Shen Sha (四柱神煞与四大吉神)
+   * Evaluates Tian Yi, Wen Chang, Hong Luan, Tian Xi, Yi Ma, Lu Shen, Jiang Xing, Hua Gai, etc.
+   */
+  static calculateShenSha(bazi, lang = 'zh') {
+    if (!bazi || !bazi.pillars) return null;
+    const isEn = (lang === 'en');
+    const dayStem = bazi.pillars.day?.stem || '甲';
+    const yearStem = bazi.pillars.year?.stem || '甲';
+    const yearBranch = bazi.pillars.year?.branch || '子';
+    const dayBranch = bazi.pillars.day?.branch || '子';
+
+    const pillarKeys = ['year', 'month', 'day', 'hour'];
+    const pillarNamesZh = { year: '年柱', month: '月柱', day: '日柱', hour: '时柱' };
+    const pillarNamesEn = { year: 'Year Pillar', month: 'Month Pillar', day: 'Day Pillar', hour: 'Hour Pillar' };
+
+    // 1. Tian Yi Nobleman (天乙贵人)
+    // 甲戊庚牛羊，乙己鼠猴乡，丙丁猪鸡位，壬癸兔蛇藏，六辛逢马虎
+    const tianYiMap = {
+      '甲': ['丑', '未'], '戊': ['丑', '未'], '庚': ['丑', '未'],
+      '乙': ['子', '申'], '己': ['子', '申'],
+      '丙': ['亥', '酉'], '丁': ['亥', '酉'],
+      '壬': ['卯', '巳'], '癸': ['卯', '巳'],
+      '辛': ['午', '寅']
+    };
+    const dayTianYi = tianYiMap[dayStem] || [];
+    const yearTianYi = tianYiMap[yearStem] || [];
+    const allTianYiBranches = Array.from(new Set([...dayTianYi, ...yearTianYi]));
+
+    // 2. Wen Chang Nobleman (文昌贵人)
+    // 甲巳乙午丙戊申，丁己酉位庚亥寻，辛子壬寅癸见卯
+    const wenChangMap = {
+      '甲': '巳', '乙': '午', '丙': '申', '丁': '酉', '戊': '申',
+      '己': '酉', '庚': '亥', '辛': '子', '壬': '寅', '癸': '卯'
+    };
+    const dayWenChang = wenChangMap[dayStem];
+    const yearWenChang = wenChangMap[yearStem];
+
+    // 3. Hong Luan & Tian Xi (红鸾天喜)
+    // 卯上起子逆数太岁，对宫天喜
+    const BRANCHES_ORDER = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const yIdx = BRANCHES_ORDER.indexOf(yearBranch);
+    const hongLuanBranch = yIdx !== -1 ? BRANCHES_ORDER[(3 - yIdx + 12) % 12] : '卯';
+    const tianXiBranch = yIdx !== -1 ? BRANCHES_ORDER[((3 - yIdx + 12) % 12 + 6) % 12] : '酉';
+
+    // 4. Yi Ma Post Horse (驿马星动)
+    // 申子辰马在寅，寅午戌马在申，巳酉丑马在亥，亥卯未马在巳
+    const yimaMap = {
+      '申': '寅', '子': '寅', '辰': '寅',
+      '寅': '申', '午': '申', '戌': '申',
+      '巳': '亥', '酉': '亥', '丑': '亥',
+      '亥': '巳', '卯': '巳', '未': '巳'
+    };
+    const yearYiMa = yimaMap[yearBranch];
+    const dayYiMa = yimaMap[dayBranch];
+    const allYiMaBranches = Array.from(new Set([yearYiMa, dayYiMa].filter(Boolean)));
+
+    // 5. Lu Shen (禄神)
+    const luShenMap = {
+      '甲': '寅', '乙': '卯', '丙': '巳', '丁': '午', '戊': '巳',
+      '己': '午', '庚': '申', '辛': '酉', '壬': '亥', '癸': '子'
+    };
+    const luShenBranch = luShenMap[dayStem];
+
+    // 6. Jiang Xing (将星)
+    const jiangXingMap = {
+      '申': '子', '子': '子', '辰': '子',
+      '寅': '午', '午': '午', '戌': '午',
+      '巳': '酉', '酉': '酉', '丑': '酉',
+      '亥': '卯', '卯': '卯', '未': '卯'
+    };
+    const jiangXingBranch = jiangXingMap[yearBranch];
+
+    // 7. Hua Gai (华盖)
+    const huaGaiMap = {
+      '申': '辰', '子': '辰', '辰': '辰',
+      '寅': '戌', '午': '戌', '戌': '戌',
+      '巳': '丑', '酉': '丑', '丑': '丑',
+      '亥': '未', '卯': '未', '未': '未'
+    };
+    const huaGaiBranch = huaGaiMap[yearBranch];
+
+    // Evaluate for each pillar
+    const pillarsShenSha = {};
+    pillarKeys.forEach(pKey => {
+      const p = bazi.pillars[pKey];
+      if (!p) return;
+      const b = p.branch;
+      const badges = [];
+
+      // Tian Yi
+      if (dayTianYi.includes(b) || yearTianYi.includes(b)) {
+        const isDayNoble = dayTianYi.includes(b);
+        badges.push({
+          id: 'tianyi',
+          name: isEn ? 'Tian Yi Noble' : (isDayNoble ? '天乙贵人(日贵)' : '天乙贵人(岁贵)'),
+          icon: '✨',
+          color: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+          desc: isEn ? 'Supreme Nobleman: shields against hazards, grants divine rescue.' : '至尊第一吉神：逢凶化吉，危难时刻必有贵人援手。'
+        });
+      }
+
+      // Wen Chang
+      if (b === dayWenChang || b === yearWenChang) {
+        badges.push({
+          id: 'wenchang',
+          name: isEn ? 'Wen Chang Wisdom' : '文昌贵人',
+          icon: '📖',
+          color: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+          desc: isEn ? 'Academic & Wisdom Star: boosts cognition, research, exams, and innovation.' : '科甲智慧吉神：文思敏捷，利学业申博、执笔破圈与考学晋升。'
+        });
+      }
+
+      // Hong Luan
+      if (b === hongLuanBranch) {
+        badges.push({
+          id: 'hongluan',
+          name: isEn ? 'Hong Luan Romance' : '红鸾正缘',
+          icon: '🌸',
+          color: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+          desc: isEn ? 'Destined Romance Star: sparks true soulmate affinity and matrimonial bond.' : '正缘第一吉神：主情缘和顺、定下名分、喜结良缘与婚育之喜。'
+        });
+      }
+
+      // Tian Xi
+      if (b === tianXiBranch) {
+        badges.push({
+          id: 'tianxi',
+          name: isEn ? 'Tian Xi Celebration' : '天喜吉神',
+          icon: '🎉',
+          color: 'bg-pink-500/20 text-pink-300 border-pink-500/40',
+          desc: isEn ? 'Joyful Blessing Star: softens interpersonal tension, brings household happiness.' : '祥和喜乐吉神：对宫拱照红鸾，增进和睦喜悦，化解冷战阻碍。'
+        });
+      }
+
+      // Yi Ma
+      if (allYiMaBranches.includes(b)) {
+        badges.push({
+          id: 'yima',
+          name: isEn ? 'Post Horse Dynamic' : '驿马星动',
+          icon: '🐎',
+          color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+          desc: isEn ? 'Pivotal Mobility Star: drives career leap, relocation, and expansion.' : '时空跃迁动星：主动能爆发、迁徙出洋、异地开拓与晋升换轨。'
+        });
+      }
+
+      // Lu Shen
+      if (b === luShenBranch) {
+        badges.push({
+          id: 'lushen',
+          name: isEn ? 'Prosperity Salary' : '专位禄神',
+          icon: '🏛️',
+          color: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+          desc: isEn ? 'Salary & Self-Reliance Star: signifies authentic foundational strength.' : '福禄本源之星：主身体强健、食禄丰足、自立自强与稳健资产。'
+        });
+      }
+
+      // Jiang Xing
+      if (b === jiangXingBranch) {
+        badges.push({
+          id: 'jiangxing',
+          name: isEn ? 'General Command' : '将星当权',
+          icon: '⭐',
+          color: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+          desc: isEn ? 'Leadership Authority Star: confers organizational command and strategic edge.' : '统帅掌印之星：主大局统御、领导威望、决断果敢与管理实权。'
+        });
+      }
+
+      // Hua Gai
+      if (b === huaGaiBranch) {
+        badges.push({
+          id: 'huagai',
+          name: isEn ? 'Canopy Spiritual' : '华盖灵性',
+          icon: '📜',
+          color: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+          desc: isEn ? 'Spiritual Insight Star: deep intellect, artistic talent, and philosophical introspection.' : '艺术哲学之星：主灵性超凡、深度思辨、见解独到与沉静自持。'
+        });
+      }
+
+      pillarsShenSha[pKey] = badges;
+    });
+
+    const bPinyin = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
+
+    // Helper to find location description
+    function findLocations(targetBranches) {
+      const locsZh = [];
+      const locsEn = [];
+      pillarKeys.forEach(pKey => {
+        const b = bazi.pillars[pKey]?.branch;
+        if (targetBranches.includes(b)) {
+          if (!isEn) locsZh.push(`${pillarNamesZh[pKey]}【${b}】`);
+          locsEn.push(`${pillarNamesEn[pKey]} [${bPinyin[b] || b}]`);
+        }
+      });
+      if (isEn) {
+        return {
+          present: locsEn.length > 0,
+          desc: locsEn.length > 0 ? locsEn.join(', ') : 'Not in natal pillars',
+          descEn: locsEn.length > 0 ? locsEn.join(', ') : 'Not in natal pillars'
+        };
+      }
+      return {
+        present: locsZh.length > 0,
+        desc: locsZh.length > 0 ? locsZh.join('、') : '原局未透',
+        descZh: locsZh.length > 0 ? locsZh.join('、') : '原局未透',
+        descEn: locsEn.length > 0 ? locsEn.join(', ') : 'Not in natal pillars'
+      };
+    }
+
+    const tianYiLoc = findLocations(allTianYiBranches);
+    const wenChangLoc = findLocations([dayWenChang, yearWenChang].filter(Boolean));
+    const hongLuanLoc = findLocations([hongLuanBranch]);
+    const tianXiLoc = findLocations([tianXiBranch]);
+    const yimaLoc = findLocations(allYiMaBranches);
+
+    const tianYiEnList = allTianYiBranches.map(b => bPinyin[b] || b).join('/');
+    const wenChangEnList = [dayWenChang, yearWenChang].filter(Boolean).map(b => bPinyin[b] || b).join('/');
+    const hongLuanEn = bPinyin[hongLuanBranch] || hongLuanBranch;
+    const tianXiEn = bPinyin[tianXiBranch] || tianXiBranch;
+    const yimaEnList = allYiMaBranches.map(b => bPinyin[b] || b).join('/');
+
+    const fourAuspicious = [
+      {
+        id: 'tianyi',
+        name: isEn ? 'Tian Yi Nobleman' : '天乙贵人',
+        icon: '👑',
+        status: tianYiLoc.present ? (isEn ? 'Present in Natal Chart' : '本命坐守 · 岁岁护佑') : (isEn ? 'Awaiting Transit Awakening' : '原局待发 · 岁运引动'),
+        statusClass: tianYiLoc.present ? 'bg-amber-950/80 text-amber-300 border-amber-500/50' : 'bg-gray-800/80 text-gray-300 border-gray-700',
+        locationText: isEn ? tianYiLoc.descEn : tianYiLoc.descZh,
+        verse: isEn ? 'Ancient Codex: "Tian Yi transforms hardship into fortune and summons paramount mentors."' : '“甲戊庚牛羊，乙己鼠猴乡，丙丁猪鸡位，壬癸兔蛇藏，六辛逢马虎” —— 《渊海子平》',
+        essence: isEn ? 'The supreme paramount deity. Shields against existential crises; attracts influential mentors and transforms peril into triumph.' : '至尊极品吉神。凡命带天乙，一生遇大难必有高位贵人或长辈恩师出手托底救应，遇险呈祥，是消灾化劫第一枢纽。',
+        trigger: isEn ? `Triggered in [${tianYiEnList}] transit years or lunar months; optimal for seeking vital sponsorship.` : `岁运遇【${allTianYiBranches.join(' / ')}】流年或农历流月，贵人星动，宜主动拜见贵人、争取核心资源。`,
+        advisorQuery: isEn ? 'When is my Tian Yi Nobleman active in 2026, and how to harness mentor support?' : '我的天乙贵人在2026年何时当值？如何主动接引贵人助力？'
+      },
+      {
+        id: 'wenchang',
+        name: isEn ? 'Wen Chang Wisdom Star' : '文昌贵人',
+        icon: '📚',
+        status: wenChangLoc.present ? (isEn ? 'Present in Natal Chart' : '文曲入命 · 才思泉涌') : (isEn ? 'Awaiting Transit Awakening' : '潜龙在渊 · 岁运启智'),
+        statusClass: wenChangLoc.present ? 'bg-blue-950/80 text-blue-300 border-blue-500/50' : 'bg-gray-800/80 text-gray-300 border-gray-700',
+        locationText: isEn ? wenChangLoc.descEn : wenChangLoc.descZh,
+        verse: isEn ? 'Ancient Codex: "Wen Chang rules scholastic brilliance, strategic patents, and cognitive sharpness."' : '“甲巳乙午丙戊申，丁己酉位庚亥寻，辛子壬寅癸见卯” —— 《子平真诠》',
+        essence: isEn ? 'Academy and intellectual beacon. Fuels cognitive fluency, academic honors, technical research, and publication breakthroughs.' : '科甲文章之宿。主思维缜密敏锐、考学申博、专业绝技、论文专利与技术壁垒突破。遇之如破竹，举重若轻。',
+        trigger: isEn ? `Awakened during [${wenChangEnList}] cycles; ideal for concentrated study, certifications, and exams.` : `岁运逢【${[dayWenChang, yearWenChang].filter(Boolean).join(' / ')}】之期，考运智识爆发，最宜闭关精研与重磅考试。`,
+        advisorQuery: isEn ? 'When is my Wen Chang star at peak power, and how to optimize career advancement?' : '我的文昌贵人何时最旺？2026年如何催动考学、晋升与技术突破？'
+      },
+      {
+        id: 'hongluan_tianxi',
+        name: isEn ? 'Hong Luan & Tian Xi' : '红鸾天喜',
+        icon: '🌸',
+        status: (hongLuanLoc.present || tianXiLoc.present) ? (isEn ? 'Present in Natal Chart' : '吉曜照临 · 良缘早定') : (isEn ? 'Awaiting Transit Awakening' : '待时而动 · 流年待发'),
+        statusClass: (hongLuanLoc.present || tianXiLoc.present) ? 'bg-rose-950/80 text-rose-300 border-rose-500/50' : 'bg-gray-800/80 text-gray-300 border-gray-700',
+        locationText: isEn ? `Hong Luan: ${hongLuanLoc.descEn} | Tian Xi: ${tianXiLoc.descEn}` : `红鸾：${hongLuanLoc.descZh} · 天喜：${tianXiLoc.descZh}`,
+        verse: isEn ? 'Ancient Codex: "Hong Luan anchors genuine matrimony; Tian Xi brings domestic joy and celebration."' : '“卯上起子逆数太岁，对宫天喜相随朝” —— 《三命通会》',
+        essence: isEn ? 'Paramount soulmate and matrimonial star. Magnetizes true romantic destiny, resolves relationship estrangement, and brings joyous celebration.' : '婚恋正缘第一吉神。主异性缘佳、正缘交契、定下恋爱名分或步入婚姻殿堂；天喜对冲拱照，主家宅喜庆与添丁添喜。',
+        trigger: isEn ? `Triggered in [${hongLuanEn}] Hong Luan year or [${tianXiEn}] Tian Xi year; primary window for committed partnership.` : `流年遇【${hongLuanBranch}】红鸾发动、遇【${tianXiBranch}】天喜照临，是婚恋结缘或破除单身僵局的黄金窗口。`,
+        advisorQuery: isEn ? 'When will I encounter my destined partner, and in which direction are they located?' : '什么时候可以碰到对象，以及对象在何方？'
+      },
+      {
+        id: 'yima',
+        name: isEn ? 'Yi Ma Post Horse' : '驿马星动',
+        icon: '🐎',
+        status: yimaLoc.present ? (isEn ? 'Present in Natal Chart' : '天马行空 · 动能充沛') : (isEn ? 'Awaiting Transit Awakening' : '蓄势待发 · 逢冲即发'),
+        statusClass: yimaLoc.present ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50' : 'bg-gray-800/80 text-gray-300 border-gray-700',
+        locationText: isEn ? yimaLoc.descEn : yimaLoc.descZh,
+        verse: isEn ? 'Ancient Codex: "The Post Horse unleashes rapid mobility, geographic transitions, and career velocity."' : '“申子辰马在寅，寅午戌马在申，巳酉丑马在亥，亥卯未马在巳” —— 《神峰通考》',
+        essence: isEn ? 'Dynamic vector of momentum and expansion. Drives overseas relocation, swift promotion leaps, and boundary-breaking entrepreneurial moves.' : '时空动能与跨界跃迁第一吉星。主动能爆发、出洋留学、异地开拓、职级三级跳与突破行业内卷瓶颈。宜动不宜静。',
+        trigger: isEn ? `Ignited during [${yimaEnList}] cycles; prime for bold pivots, strategic travel, and cross-border ventures.` : `流年遇【${allYiMaBranches.join(' / ')}】之期，气机激荡，最利换赛道、出差考察、海外立业与升迁调动。`,
+        advisorQuery: isEn ? 'Should I pivot or hold steady in 2026? When will the Post Horse trigger my career surge?' : '2026年适合跳槽还是守成？驿马星何时发动财运爆发？'
+      }
+    ];
+
+    if (!isEn) {
+      fourAuspicious.forEach(item => {
+        item.nameZh = item.name;
+        item.verseZh = item.verse;
+        item.essenceZh = item.essence;
+        item.triggerZh = item.trigger;
+        item.advisorQueryZh = item.advisorQuery;
+      });
+    }
+
+    return {
+      pillarsShenSha,
+      fourAuspicious,
+      tianYiLoc,
+      wenChangLoc,
+      hongLuanLoc,
+      tianXiLoc,
+      yimaLoc
+    };
+  }
 }
 
 // Export for ES modules and browser global
