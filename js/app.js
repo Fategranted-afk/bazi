@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnExportDossier = document.getElementById('btnExportDossier');
   const btnQuickExportSinglePdf = document.getElementById('btnQuickExportSinglePdf');
   const btnOpenSocialCard = document.getElementById('btnOpenSocialCard');
+  const btnOpenSimulatorPage = document.getElementById('btnOpenSimulatorPage');
   const btnOpenAdvisorFloating = document.getElementById('btnOpenAdvisorFloating');
   const landingQuickPreviewBox = document.getElementById('landingQuickPreviewBox');
   const landingPreviewMeta = document.getElementById('landingPreviewMeta');
@@ -699,6 +700,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnOpenSocialCard) {
       btnOpenSocialCard.classList.remove('hidden');
     }
+    if (btnOpenSimulatorPage) {
+      btnOpenSimulatorPage.classList.remove('hidden');
+    }
     if (btnOpenAdvisorFloating) {
       btnOpenAdvisorFloating.classList.remove('hidden');
     }
@@ -735,6 +739,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnOpenSocialCard) {
       btnOpenSocialCard.classList.add('hidden');
+    }
+    if (btnOpenSimulatorPage) {
+      btnOpenSimulatorPage.classList.add('hidden');
     }
     if (btnOpenAdvisorFloating) {
       btnOpenAdvisorFloating.classList.add('hidden');
@@ -9301,6 +9308,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'view-synastry': document.getElementById('view-synastry'),
     'view-fengshui': document.getElementById('view-fengshui'),
     'view-career': document.getElementById('view-career'),
+    'view-simulator': document.getElementById('view-simulator'),
     'view-history': document.getElementById('view-history')
   };
 
@@ -9365,6 +9373,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // If switching to career view, render if chart exists
     if (targetViewId === 'view-career' && currentBaziResult && typeof renderCareerWealth === 'function') {
       renderCareerWealth(currentBaziResult, currentLuckResult);
+    }
+
+    // If switching to simulator view, run simulation if empty
+    if (targetViewId === 'view-simulator' && currentBaziResult) {
+      const simContainer = document.getElementById('simResultsContainer');
+      if (simContainer && !simContainer.children.length && typeof executeScenarioSimulation === 'function') {
+        executeScenarioSimulation();
+      }
     }
 
     // If switching to history view, render if chart exists
@@ -9447,6 +9463,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnJumpToHomeFromCareer = document.getElementById('btnJumpToHomeFromCareer');
   if (btnJumpToHomeFromCareer) {
     btnJumpToHomeFromCareer.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+  const btnJumpToSimulatorFromCareer = document.getElementById('btnJumpToSimulatorFromCareer');
+  if (btnJumpToSimulatorFromCareer) {
+    btnJumpToSimulatorFromCareer.addEventListener('click', () => switchPrimaryView('view-simulator'));
+  }
+  const btnJumpToHomeFromSimulator = document.getElementById('btnJumpToHomeFromSimulator');
+  if (btnJumpToHomeFromSimulator) {
+    btnJumpToHomeFromSimulator.addEventListener('click', () => switchPrimaryView('view-home'));
   }
 
   // Career Fullscreen Mode Controller (Seamlessly Enter / Exit Fullscreen without losing BaZi data)
@@ -14918,8 +14942,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof window !== 'undefined' && window.location) {
     const hash = window.location.hash || '';
     const search = window.location.search || '';
-    if (hash.includes('dashboard') || search.includes('restore=true') || search.includes('view=career') || search.includes('view=history')) {
-      const targetView = search.includes('view=history') ? 'view-history' : (search.includes('view=career') ? 'view-career' : null);
+    if (hash.includes('dashboard') || search.includes('restore=true') || search.includes('view=career') || search.includes('view=history') || search.includes('view=simulator')) {
+      const targetView = search.includes('view=simulator') ? 'view-simulator' : (search.includes('view=history') ? 'view-history' : (search.includes('view=career') ? 'view-career' : null));
       switchToDashboardView(targetView);
     }
   }

@@ -11894,6 +11894,135 @@ run_check103 = subprocess.run(jsc_check103_cmd, capture_output=True, text=True)
 assert run_check103.returncode == 0, f"Check 103 test failed: stdout={run_check103.stdout} stderr={run_check103.stderr}"
 print("✓ 社交名片与战报生成引擎（竖屏Canvas超清绘制/照命先贤与天命职能/社交文案复制/英文100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 103 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 104. Validate Standalone Decision Simulator Page (simulator.html) & Dual Navigation Integration
+print("\n=== 104. Validating Standalone Decision Simulator Page (simulator.html) & Navigation Integration ===")
+import re
+
+# 1. File existence and basic integrity of simulator.html
+sim_path = "/Users/nickzhu/.gemini/antigravity/scratch/bazi-web/simulator.html"
+assert os.path.exists(sim_path), "simulator.html must exist in workspace root"
+with open(sim_path, "r", encoding="utf-8") as f:
+    sim_content = f.read()
+
+assert len(sim_content) > 10000, f"simulator.html content suspiciously short: {len(sim_content)} bytes"
+assert "<!DOCTYPE html>" in sim_content
+assert "simulator-engine.js" in sim_content
+assert "career-engine.js" in sim_content
+assert "bazi-engine.js" in sim_content
+assert "luck-engine.js" in sim_content
+assert "simBtnReturn" in sim_content
+assert "btnSimPageFullscreen" in sim_content
+assert "btnRunStandaloneSimulator" in sim_content
+assert "simStandaloneResultsContainer" in sim_content
+assert 'data-preset="uk_vs_sz"' in sim_content
+assert 'data-preset="bj_vs_sv"' in sim_content
+assert 'data-preset="hz_vs_sh"' in sim_content
+assert 'data-preset="van_vs_gz"' in sim_content
+
+# 2. Integration into index.html
+with open("/Users/nickzhu/.gemini/antigravity/scratch/bazi-web/index.html", "r", encoding="utf-8") as f:
+    index_content = f.read()
+
+assert 'id="btnOpenSimulatorPage"' in index_content, "index.html missing btnOpenSimulatorPage"
+assert 'hidden' in re.search(r'<a[^>]*id="btnOpenSimulatorPage"[^>]*>', index_content).group(0), "btnOpenSimulatorPage must have initial hidden class"
+assert 'id="navBtnSimulator"' in index_content, "index.html missing navBtnSimulator"
+assert 'data-view="view-simulator"' in index_content, "index.html missing data-view='view-simulator'"
+assert 'id="view-simulator"' in index_content, "index.html missing view-simulator element"
+assert 'id="btnOpenSimulatorStandalone"' in index_content, "index.html missing btnOpenSimulatorStandalone link"
+assert 'id="btnJumpToSimulatorFromCareer"' in index_content, "index.html missing btnJumpToSimulatorFromCareer portal button"
+assert 'data-jump-view="view-simulator"' in index_content, "index.html missing landing showcase Card 11 for simulator"
+
+# 3. Integration into js/app.js
+with open("/Users/nickzhu/.gemini/antigravity/scratch/bazi-web/js/app.js", "r", encoding="utf-8") as f:
+    app_content = f.read()
+
+assert "'view-simulator': document.getElementById('view-simulator')" in app_content, "app.js missing view-simulator in primaryViews"
+assert "btnOpenSimulatorPage.classList.remove('hidden')" in app_content, "app.js must unhide btnOpenSimulatorPage on dashboard switch"
+assert "btnOpenSimulatorPage.classList.add('hidden')" in app_content, "app.js must hide btnOpenSimulatorPage on landing switch"
+assert "btnJumpToSimulatorFromCareer" in app_content, "app.js missing jump listener for simulator from career"
+assert "btnJumpToHomeFromSimulator" in app_content, "app.js missing jump listener back home from simulator"
+assert "view=simulator" in app_content, "app.js missing view=simulator route check"
+
+# 4. i18n parity check
+with open("/Users/nickzhu/.gemini/antigravity/scratch/bazi-web/js/i18n.js", "r", encoding="utf-8") as f:
+    i18n_content = f.read()
+
+assert "nav_view_simulator" in i18n_content, "i18n.js missing nav_view_simulator key"
+assert "seal_view_simulator" in i18n_content, "i18n.js missing seal_view_simulator key"
+assert "btn_open_simulator_text" in i18n_content, "i18n.js missing btn_open_simulator_text key"
+assert "btn_open_standalone_simulator" in i18n_content, "i18n.js missing btn_open_standalone_simulator key"
+assert "btn_goto_simulator_view" in i18n_content, "i18n.js missing btn_goto_simulator_view key"
+assert "portal_card11_title" in i18n_content, "i18n.js missing portal_card11_title key"
+
+# 5. Headless simulation test via JavaScriptCore
+jsc_check104_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/ditiansui.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('data/tengods.js');
+    load('data/rongkujian.js');
+    load('js/i18n.js');
+    load('js/bazi-engine.js');
+    load('js/luck-engine.js');
+    load('js/career-engine.js');
+    load('js/simulator-engine.js');
+
+    var bazi = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 20, hour: 14, minute: 30,
+      gender: 'male', city: 'London'
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // Verify Simulation in EN produces zero residual Chinese
+    var optA = {
+      title: 'Academic Research Fellow in Birmingham',
+      country: 'UK',
+      city: 'Birmingham',
+      industry: 'academia_research',
+      role: 'specialist',
+      manager: 'resource'
+    };
+    var optB = {
+      title: 'Quant Hedge Fund Strategist in Shenzhen',
+      country: 'China',
+      city: 'Shenzhen',
+      industry: 'finance_quant',
+      role: 'specialist',
+      manager: 'killings'
+    };
+
+    var resEn = ScenarioSimulatorEngine.simulateOptions(optA, optB, bazi, luck, 'en');
+    if (!resEn) throw new Error("ScenarioSimulatorEngine failed to produce EN result");
+    if (!resEn.summary || !resEn.optionA || !resEn.optionB) throw new Error("Invalid simulation result structure");
+
+    var leakSummary = (resEn.summary || '').match(/[\u4e00-\u9fa5]/g);
+    if (leakSummary && leakSummary.length > 0) {
+      throw new Error("Residual Chinese in EN simulator summary: " + leakSummary.join(""));
+    }
+    var leakAdviceA = (resEn.optionA.advice || '').match(/[\u4e00-\u9fa5]/g);
+    if (leakAdviceA && leakAdviceA.length > 0) {
+      throw new Error("Residual Chinese in EN optionA advice: " + leakAdviceA.join(""));
+    }
+    var leakAdviceB = (resEn.optionB.advice || '').match(/[\u4e00-\u9fa5]/g);
+    if (leakAdviceB && leakAdviceB.length > 0) {
+      throw new Error("Residual Chinese in EN optionB advice: " + leakAdviceB.join(""));
+    }
+    """
+]
+run_check104 = subprocess.run(jsc_check104_cmd, capture_output=True, text=True)
+assert run_check104.returncode == 0, f"Check 104 JSC test failed: stdout={run_check104.stdout} stderr={run_check104.stderr}"
+print("✓ 独立胜负沙盘页面 (simulator.html)、主盘双轨导航入口、预设一键推演与英文100%零中文残留验证通过！")
+
+print("\n🎉 ALL 104 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 

@@ -62,6 +62,12 @@
           <span data-i18n="btn_open_social_card_text">社交名片</span>
         </button>
 
+        <!-- Decision Simulator Standalone Page Button -->
+        <a id="btnOpenSimulatorPage" href="simulator.html" target="_blank" class="hidden px-3 py-1.5 text-xs rounded-lg border border-indigo-600/50 bg-gradient-to-r from-indigo-700/80 to-purple-800/80 hover:from-indigo-600 hover:to-purple-700 text-indigo-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer" data-i18n="btn_open_simulator" title="打开现实决策双轨对抗推演沙盘">
+          <span>⚖️</span>
+          <span data-i18n="btn_open_simulator_text">胜负沙盘</span>
+        </a>
+
         <!-- Dynamic Ambient Flux Toggle -->
         <button id="btnToggleFlux" class="px-2.5 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-amber-300/90 transition flex items-center gap-1" title="切换东方动态气机" data-i18n="alchemy_toggle_label">
           ✨ 东方气机流光
@@ -446,6 +452,17 @@
               西晋八王至大隋统一 · 208位风云人物 · 性格位置生平胜负手 · 相似度测算与学戒大略
             </p>
           </div>
+
+          <!-- Card 11: Scenario Simulator Sandbox -->
+          <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-simulator">
+            <div class="flex items-center space-x-2 text-indigo-400 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">⚖️</span>
+              <span data-i18n="portal_card11_title">现实决策 · 双轨对抗推演沙盘</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card11_desc">
+              并排对比两套方案 · 五行生克与十神场能测算 · 综合胜率与能耗比量化 · 独立沙盘大页
+            </p>
+          </div>
         </div>
       </section>
 
@@ -532,6 +549,11 @@
           <span class="text-base">💼</span>
           <span data-i18n="nav_view_career">职场打工人与财运事业推演</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/30 font-normal" data-i18n="seal_view_career">职场破局</span>
+        </button>
+        <button id="navBtnSimulator" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-simulator">
+          <span class="text-base">⚖️</span>
+          <span data-i18n="nav_view_simulator">胜负沙盘 (双轨对抗推演)</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/30 font-normal" data-i18n="seal_view_simulator">推演对决</span>
         </button>
         <button id="navBtnHistory" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-history">
           <span class="text-base">📜</span>
@@ -1974,6 +1996,61 @@
     <!-- Content Container for Career & Wealth Trajectory -->
     <div id="careerContentContainer" class="space-y-6">
       <!-- Injected via JS -->
+    </div>
+
+    <!-- Dual-Track Scenario Simulator Portal Banner in Career View -->
+    <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-[#0b0d18] shadow-xl flex flex-wrap items-center justify-between gap-4">
+      <div class="space-y-1">
+        <div class="flex items-center space-x-2">
+          <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300" data-i18n="seal_view_simulator">推演对决</span>
+          <h4 class="text-base font-bold text-indigo-200 font-serif-sc" data-i18n="simulator_sec_title">
+            现实决策 · 双轨对抗推演沙盘
+          </h4>
+        </div>
+        <p class="text-xs text-gray-400 max-w-xl" data-i18n="simulator_sec_sub">
+          并排对比两个职业/城市/环境方案，以五行生克与十神场能测算综合胜率与能耗比
+        </p>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="btnJumpToSimulatorFromCareer" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center gap-1.5">
+          <span>⚖️</span>
+          <span data-i18n="btn_goto_simulator_view">前往推演沙盘</span>
+        </button>
+        <a href="simulator.html" target="_blank" class="px-3.5 py-2 rounded-xl border border-indigo-500/40 bg-gray-800/80 hover:bg-gray-700 text-indigo-200 text-xs font-medium transition flex items-center gap-1 cursor-pointer">
+          <span>🚀</span>
+          <span data-i18n="btn_open_standalone_simulator">独立大页</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- View 12: Scenario Simulator Sandbox (胜负沙盘 · 双轨全息决策对抗) -->
+  <div id="view-simulator" class="space-y-6 hidden">
+    <!-- Header Banner -->
+    <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-slate-950/40 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-500 text-indigo-300" data-i18n="seal_view_simulator">推演对决</span>
+            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-indigo-200" data-i18n="simulator_sec_title">
+              现实决策 · 双轨对抗推演沙盘
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="simulator_sec_sub">
+            并排对比两个职业/城市/环境方案，以五行生克与十神场能测算综合胜率与能耗比
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a id="btnOpenSimulatorStandalone" href="simulator.html" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold transition border border-indigo-400/40 shadow flex items-center gap-1.5 cursor-pointer">
+            <span>🚀</span>
+            <span data-i18n="btn_open_standalone_simulator">在独立窗口打开沙盘</span>
+          </a>
+          <button id="btnJumpToHomeFromSimulator" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
+            <span>←</span>
+            <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Dual-Track 'What-If' Decision Simulator Sandbox -->
