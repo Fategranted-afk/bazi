@@ -11939,6 +11939,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Feature: Interactive Advisor Agent (钦天监随身军师 · 军师问对)
   // ==========================================================================
   let advisorChatHistory = [];
+  let advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
 
   function initAdvisorAgent() {
     const btnOpen = document.getElementById('btnOpenAdvisorFloating');
@@ -11948,13 +11949,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnClear = document.getElementById('advisorClearBtn');
     const input = document.getElementById('advisorQueryInput');
 
-    if (btnOpen && modal) {
+    if (btnOpen) {
       btnOpen.addEventListener('click', () => {
         openAdvisorModal();
       });
     }
 
-    if (btnClose && modal) {
+    if (btnClose) {
       btnClose.addEventListener('click', () => {
         closeAdvisorModal();
       });
@@ -11964,19 +11965,20 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.addEventListener('click', (e) => {
         if (e.target === modal) closeAdvisorModal();
       });
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-          closeAdvisorModal();
+    }
+
+    if (btnSend) {
+      btnSend.addEventListener('click', () => {
+        if (input && input.value.trim()) {
+          handleAdvisorQuery(input.value.trim());
         }
       });
     }
 
-    if (btnSend && input) {
-      btnSend.addEventListener('click', () => {
-        handleAdvisorQuery(input.value.trim());
-      });
+    if (input) {
       input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey && input.value.trim()) {
+          e.preventDefault();
           handleAdvisorQuery(input.value.trim());
         }
       });
@@ -11985,6 +11987,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnClear) {
       btnClear.addEventListener('click', () => {
         advisorChatHistory = [];
+        advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
         renderAdvisorChatStream();
       });
     }
@@ -11998,14 +12001,20 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAdvisorPromptChips();
     if (advisorChatHistory.length === 0) {
       const isEn = (currentLang === 'en');
+      const initialFollowUps = (typeof AdvisorEngine !== 'undefined' && typeof AdvisorEngine.anticipateQuestions === 'function')
+        ? AdvisorEngine.anticipateQuestions('romance_timing', 'comprehensive', currentBaziResult, currentLang)
+        : [];
       advisorChatHistory.push({
         sender: 'advisor',
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         advice: {
           title: isEn ? 'Imperial Advisor Initialized' : '钦天监随身军师奉旨当值',
-          diagnosis: isEn
-            ? 'Greetings. I have aligned your Four Pillars natal vigor with the 14-character temporal field and classical codices. Tap any tactical chip above or state your specific workplace dilemma below.'
+          directAnswer: isEn
+            ? 'Greetings. I have aligned your Four Pillars natal vigor with the 14-character temporal field and classical codices. Tap any tactical chip above or state your specific workplace or life dilemma below.'
             : '命主安好。本参谋已将您本命子平生克量化（100分制）、十四字岁运时空场能与《荣枯鉴》十卷全相融会贯通。请点击上方锦囊速问，或直接输入您面临的现实抉择困境。',
+          diagnosis: isEn
+            ? 'Your energetic field is calibrated to the active transit year. State any decision crossroads or inquiries regarding romance, career, academics, or mindset.'
+            : '当前岁运时空场能与本命气机构成动态共振。您可随时垂询关于正缘应期、跳槽转轨、向上管理、考学申博或心智内耗之现实抉择。',
           tactics: [
             isEn ? 'Upward reporting: Lead with objective milestones to dismantle tension.' : '向上管理：先讲指标结果与落地抓手，消解权威博弈防御。',
             isEn ? 'Workplace bounds: Use 24-hour delayed refusal to protect focus blocks.' : '处世守则：依冯道保全之策，遇非份请求施以24小时延时拒绝。'
@@ -12013,7 +12022,8 @@ document.addEventListener('DOMContentLoaded', () => {
           redLines: [
             isEn ? 'Avoid impulsive reactionary decisions after 23:00.' : '子时（23点）后严禁推演重大决策或内耗反刍。'
           ],
-          mentalAnchor: isEn ? 'Rong Ku Jian: "Follow the grain of time, preserve the vessel."' : '《荣枯鉴》：“顺天应势，借权成事，此之谓大通。”'
+          mentalAnchor: isEn ? 'Rong Ku Jian: "Follow the grain of time, preserve the vessel."' : '《荣枯鉴》：“顺天应势，借权成事，此之谓大通。”',
+          smartFollowUps: initialFollowUps
         }
       });
     }
@@ -12086,7 +12096,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (typeof AdvisorEngine !== 'undefined' && typeof AdvisorEngine.generateAdvice === 'function') {
       const currentYear = new Date().getFullYear();
-      const advice = AdvisorEngine.generateAdvice(query, currentBaziResult, currentLuckResult, currentYear, currentLang);
+      const advice = AdvisorEngine.generateAdvice(query, currentBaziResult, currentLuckResult, currentYear, currentLang, advisorSessionContext);
+      if (advice) {
+        advisorSessionContext.lastCategory = advice.category;
+        advisorSessionContext.lastSubcategory = advice.subcategory;
+        if (!advisorSessionContext.history) advisorSessionContext.history = [];
+        advisorSessionContext.history.push({ query, category: advice.category, subcategory: advice.subcategory });
+      }
       advisorChatHistory.push({
         sender: 'advisor',
         time: timeStr,
@@ -12122,7 +12138,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const a = msg.advice || {};
       return `
         <div class="flex justify-start">
-          <div class="max-w-[92%] sm:max-w-[85%] rounded-2xl rounded-tl-sm bg-[#181b28] border border-amber-600/40 text-gray-200 p-4 shadow-xl space-y-3">
+          <div class="max-w-[95%] sm:max-w-[88%] rounded-2xl rounded-tl-sm bg-[#181b28] border border-amber-600/40 text-gray-200 p-4 shadow-xl space-y-3.5">
             <div class="flex items-center justify-between border-b border-gray-800 pb-2">
               <div class="flex items-center space-x-2">
                 <span class="text-amber-400 font-bold font-serif-sc text-sm sm:text-base">${a.title || (isEn ? 'Imperial Strategy Directive' : '钦天监军师秘卷')}</span>
@@ -12130,9 +12146,111 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="text-[10px] text-gray-500">${msg.time}</span>
             </div>
 
+            <!-- Direct Conversational Answer (军师直陈精要) -->
+            ${a.directAnswer ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/70 via-amber-900/40 to-black/60 border border-amber-500/60 shadow-lg space-y-1.5">
+                <div class="text-[11px] font-bold text-amber-300 flex items-center justify-between font-serif-sc">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm">🧙</span>
+                    <span>${isEn ? 'Imperial Advisor Direct Verdict' : '军师直陈精要'}</span>
+                  </div>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-800/80 text-amber-200 font-mono tracking-wider">QUICK VERDICT</span>
+                </div>
+                <div class="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">${a.directAnswer}</div>
+              </div>
+            ` : ''}
+
+            <!-- Precision Monthly Transit Timing Card (流月时令黄金应期全相表) -->
+            ${a.timingCard ? `
+              <div class="p-3.5 rounded-xl bg-[#121520] border border-amber-600/50 space-y-2.5 shadow-md">
+                <div class="flex items-center justify-between border-b border-amber-700/30 pb-2">
+                  <span class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                    <span>📅</span>
+                    <span>${a.timingCard.title}</span>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950 border border-amber-700/40 text-amber-300 font-mono">12-MONTH RADAR</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <!-- Primary Window -->
+                  <div class="p-2.5 rounded-lg bg-amber-950/40 border border-amber-500/50 space-y-1 flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-center justify-between text-[11px] font-bold text-amber-300">
+                        <span>${a.timingCard.primaryWindow.badge}</span>
+                        <span class="px-1.5 py-0.5 rounded bg-amber-800/70 text-[10px] font-mono text-amber-100">${a.timingCard.primaryWindow.probability}%</span>
+                      </div>
+                      <div class="text-xs font-bold text-white mt-1">${a.timingCard.primaryWindow.lunarMonth}</div>
+                      <div class="text-[10px] text-amber-200/80">${a.timingCard.primaryWindow.solarTerm}</div>
+                      <div class="text-[10px] text-gray-300 leading-tight mt-1">${a.timingCard.primaryWindow.mechanism}</div>
+                    </div>
+                    <div class="text-[10px] text-emerald-300 pt-1 mt-1 border-t border-amber-800/40 font-medium">🎯 ${a.timingCard.primaryWindow.action}</div>
+                  </div>
+
+                  <!-- Secondary Window -->
+                  <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-600/40 space-y-1 flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-center justify-between text-[11px] font-bold text-emerald-300">
+                        <span>${a.timingCard.secondaryWindow.badge}</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-800/70 text-[10px] font-mono text-emerald-100">${a.timingCard.secondaryWindow.probability}%</span>
+                      </div>
+                      <div class="text-xs font-bold text-white mt-1">${a.timingCard.secondaryWindow.lunarMonth}</div>
+                      <div class="text-[10px] text-emerald-200/80">${a.timingCard.secondaryWindow.solarTerm}</div>
+                      <div class="text-[10px] text-gray-300 leading-tight mt-1">${a.timingCard.secondaryWindow.mechanism}</div>
+                    </div>
+                    <div class="text-[10px] text-emerald-300 pt-1 mt-1 border-t border-emerald-800/40 font-medium">🎯 ${a.timingCard.secondaryWindow.action}</div>
+                  </div>
+
+                  <!-- Tertiary Window -->
+                  <div class="p-2.5 rounded-lg bg-blue-950/30 border border-blue-600/40 space-y-1 flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-center justify-between text-[11px] font-bold text-blue-300">
+                        <span>${a.timingCard.tertiaryWindow.badge}</span>
+                        <span class="px-1.5 py-0.5 rounded bg-blue-800/70 text-[10px] font-mono text-blue-100">${a.timingCard.tertiaryWindow.probability}%</span>
+                      </div>
+                      <div class="text-xs font-bold text-white mt-1">${a.timingCard.tertiaryWindow.lunarMonth}</div>
+                      <div class="text-[10px] text-blue-200/80">${a.timingCard.tertiaryWindow.solarTerm}</div>
+                      <div class="text-[10px] text-gray-300 leading-tight mt-1">${a.timingCard.tertiaryWindow.mechanism}</div>
+                    </div>
+                    <div class="text-[10px] text-blue-300 pt-1 mt-1 border-t border-blue-800/40 font-medium">🎯 ${a.timingCard.tertiaryWindow.action}</div>
+                  </div>
+                </div>
+
+                <!-- Cautionary Month -->
+                ${a.timingCard.cautionaryMonth ? `
+                  <div class="p-2 rounded-lg bg-rose-950/30 border border-rose-800/40 text-[11px] text-rose-300 flex items-start gap-2">
+                    <span class="font-bold text-rose-400 whitespace-nowrap">${a.timingCard.cautionaryMonth.badge}:</span>
+                    <div class="space-y-0.5 flex-1">
+                      <div class="font-bold text-rose-200">${a.timingCard.cautionaryMonth.lunarMonth} · ${a.timingCard.cautionaryMonth.solarTerm}</div>
+                      <div class="text-[10px] text-rose-300/80">${a.timingCard.cautionaryMonth.mechanism} · 避坑：${a.timingCard.cautionaryMonth.action}</div>
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            ` : ''}
+
+            <!-- Destiny Partner Profile Card (命定配偶面相五行画像) -->
+            ${a.profileCard ? `
+              <div class="p-3.5 rounded-xl bg-purple-950/20 border border-purple-600/40 space-y-2 text-xs">
+                <div class="flex items-center justify-between border-b border-purple-800/40 pb-1.5">
+                  <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1">
+                    <span>👤</span>
+                    <span>${a.profileCard.title}</span>
+                  </span>
+                  <span class="px-2 py-0.5 rounded-full bg-purple-900/60 text-purple-200 text-[10px] font-mono">${a.profileCard.palaceSign}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-300">
+                  <div><span class="text-purple-400 font-bold">${isEn ? 'Appearance:' : '相貌特征：'}</span> ${a.profileCard.appearance}</div>
+                  <div><span class="text-purple-400 font-bold">${isEn ? 'Stature:' : '骨相身段：'}</span> ${a.profileCard.stature}</div>
+                  <div class="sm:col-span-2"><span class="text-purple-400 font-bold">${isEn ? 'Temperament:' : '心智心性：'}</span> ${a.profileCard.temperament}</div>
+                  <div class="sm:col-span-2"><span class="text-purple-400 font-bold">${isEn ? 'Career Domains:' : '行业圈层：'}</span> ${a.profileCard.careerFields}</div>
+                  <div class="sm:col-span-2 p-2 rounded bg-purple-950/40 border border-purple-800/30 text-purple-200 text-[11px]"><span class="font-bold">💡 ${isEn ? 'Alliance Advice:' : '相处盟约法门：'}</span> ${a.profileCard.bestMatchAdvice}</div>
+                </div>
+              </div>
+            ` : ''}
+
             <!-- Diagnosis -->
             <div class="p-3 rounded-xl bg-black/40 border border-gray-800/60 text-xs sm:text-sm text-gray-300 leading-relaxed">
-              <div class="text-[11px] font-bold text-amber-400 mb-1 flex items-center gap-1">
+              <div class="text-[11px] font-bold text-amber-400 mb-1 flex items-center gap-1 font-serif-sc">
                 <span>🔍</span> <span>${isEn ? 'Energy Qi Diagnostics' : '气数根源 · 场能诊断'}</span>
               </div>
               ${a.diagnosis || ''}
@@ -12141,7 +12259,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- Tactics -->
             ${a.tactics && a.tactics.length ? `
               <div class="space-y-1.5">
-                <div class="text-[11px] font-bold text-emerald-400 flex items-center gap-1">
+                <div class="text-[11px] font-bold text-emerald-400 flex items-center gap-1 font-serif-sc">
                   <span>⚔️</span> <span>${isEn ? 'Tactical Strategic Rules' : '兵法策论 · 落地抓手'}</span>
                 </div>
                 <div class="space-y-1.5">
@@ -12153,7 +12271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- Red Lines -->
             ${a.redLines && a.redLines.length ? `
               <div class="space-y-1.5">
-                <div class="text-[11px] font-bold text-rose-400 flex items-center gap-1">
+                <div class="text-[11px] font-bold text-rose-400 flex items-center gap-1 font-serif-sc">
                   <span>⚠️</span> <span>${isEn ? 'Red Line Boundaries' : '避坑铁律 · 禁忌红线'}</span>
                 </div>
                 <div class="space-y-1">
@@ -12168,10 +12286,66 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${a.mentalAnchor}
               </div>
             ` : ''}
+
+            <!-- Action Links (跨系统快捷联动) -->
+            ${a.actionLinks && a.actionLinks.length ? `
+              <div class="pt-1 flex flex-wrap gap-2">
+                ${a.actionLinks.map(link => `
+                  <button type="button" class="advisor-action-btn px-3 py-1.5 rounded-lg border border-amber-600/50 bg-amber-950/40 hover:bg-amber-800/60 text-amber-200 hover:text-white transition text-xs font-bold flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-sm" data-action="${link.action}">
+                    <span>${link.icon}</span>
+                    <span>${link.label}</span>
+                  </button>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            <!-- Smart Anticipated Follow-up Questions (军师智能预判启发气泡) -->
+            ${a.smartFollowUps && a.smartFollowUps.length ? `
+              <div class="pt-2.5 border-t border-gray-800/70 space-y-1.5">
+                <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1 font-mono">
+                  <span>💡</span>
+                  <span>${isEn ? 'Anticipated Inquiries (1-Click to Ask):' : '军师预判追问建议（点击即问）：'}</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  ${a.smartFollowUps.map(f => `
+                    <button type="button" class="advisor-followup-pill px-2.5 py-1.5 rounded-lg border border-gray-700 bg-gray-900/80 hover:bg-amber-900/50 hover:border-amber-500/70 text-gray-300 hover:text-amber-200 transition text-[11px] font-medium flex items-center gap-1 cursor-pointer active:scale-95" data-followup-query="${encodeURIComponent(f.query)}">
+                      <span>${f.icon}</span>
+                      <span>${f.title}</span>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
     }).join('');
+
+    // Bind click listeners on follow-up pills
+    stream.querySelectorAll('.advisor-followup-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const q = decodeURIComponent(btn.getAttribute('data-followup-query'));
+        handleAdvisorQuery(q);
+      });
+    });
+
+    // Bind click listeners on action links
+    stream.querySelectorAll('.advisor-action-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const act = btn.getAttribute('data-action');
+        closeAdvisorModal();
+        if (act === 'open_simulator') {
+          const sBtn = document.getElementById('navBtnSimulator');
+          if (sBtn) sBtn.click();
+        } else if (act === 'open_fengshui') {
+          const fBtn = document.getElementById('navBtnFengShui');
+          if (fBtn) fBtn.click();
+        } else if (act === 'open_dossier_spouse') {
+          const dBtn = document.getElementById('btnExportDossier');
+          if (dBtn) dBtn.click();
+        }
+      });
+    });
 
     stream.scrollTop = stream.scrollHeight;
   }

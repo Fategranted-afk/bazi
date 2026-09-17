@@ -12242,7 +12242,138 @@ run_check105 = subprocess.run(jsc_check105_cmd, capture_output=True, text=True)
 assert run_check105.returncode == 0, f"Check 105 JSC test failed: stdout={run_check105.stdout} stderr={run_check105.stderr}"
 print("✓ 四国八十强名校全相数据库（QS/THE排名与前五王牌学科）、世界五百强领军企业数据库、随身军师正缘应期意图精准识别与沙盘微生态对抗推演（双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 105 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 106. Validating Advisor Intelligence, Direct Verdict, Multi-turn Context Memory & Monthly Timing ===
+print("\n=== 106. Validating Advisor Intelligence, Direct Verdict, Multi-turn Context Memory & Monthly Timing ===")
+jsc_check106_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    "-e",
+    """
+    load("data/institutions.js");
+    load("data/enterprises.js");
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/iching-engine.js");
+    load("js/simulator-engine.js");
+    load("js/advisor-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 20, hour: 14, minute: 30,
+      gender: "male", city: "London"
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // 1. Multi-turn dialogue simulation
+    var sessionCtx = { lastCategory: null, lastSubcategory: null, history: [] };
+
+    // Turn 1: Broad Romance Consultation
+    var q1 = "结合我的日支配偶宫、桃花星与当下岁运，我命定正缘何时出现？对方相貌心性与相处避坑红线是什么？";
+    var adv1 = AdvisorEngine.generateAdvice(q1, bazi, luck, 2026, "zh", sessionCtx);
+    if (adv1.category !== "romance_timing") {
+      throw new Error("Turn 1 category must be romance_timing, got: " + adv1.category);
+    }
+    if (!adv1.directAnswer || !adv1.directAnswer.includes("军师直陈")) {
+      throw new Error("Turn 1 must have directAnswer, got: " + adv1.directAnswer);
+    }
+    if (!adv1.smartFollowUps || adv1.smartFollowUps.length !== 3) {
+      throw new Error("Turn 1 must have 3 smartFollowUps, got: " + (adv1.smartFollowUps ? adv1.smartFollowUps.length : 0));
+    }
+    if (!adv1.actionLinks || adv1.actionLinks.length === 0) {
+      throw new Error("Turn 1 must have actionable deep links");
+    }
+
+    // Update session context
+    sessionCtx.lastCategory = adv1.category;
+    sessionCtx.lastSubcategory = adv1.subcategory;
+    sessionCtx.history.push({ query: q1, category: adv1.category });
+
+    // Turn 2: Follow-up Elliptical Query "那具体期限是什么时候"
+    var q2 = "那具体期限是什么时候";
+    var adv2 = AdvisorEngine.generateAdvice(q2, bazi, luck, 2026, "zh", sessionCtx);
+    if (adv2.category !== "romance_timing") {
+      throw new Error("Turn 2 must inherit romance_timing context, but got: " + adv2.category);
+    }
+    if (adv2.subcategory !== "timing_precision") {
+      throw new Error("Turn 2 subcategory must be timing_precision, got: " + adv2.subcategory);
+    }
+    if (!adv2.directAnswer.includes("农历六月") || !adv2.directAnswer.includes("农历五月") || !adv2.directAnswer.includes("92%")) {
+      throw new Error("Turn 2 directAnswer missing expected months/probabilities: " + adv2.directAnswer);
+    }
+    if (!adv2.timingCard || !adv2.timingCard.primaryWindow) {
+      throw new Error("Turn 2 timingCard missing or invalid");
+    }
+    if (!adv2.timingCard.primaryWindow.lunarMonth.includes("农历六月")) {
+      throw new Error("Primary window must be Month 6, got: " + adv2.timingCard.primaryWindow.lunarMonth);
+    }
+    if (!adv2.timingCard.secondaryWindow.lunarMonth.includes("农历五月")) {
+      throw new Error("Secondary window must be Month 5, got: " + adv2.timingCard.secondaryWindow.lunarMonth);
+    }
+    if (!adv2.timingCard.cautionaryMonth.lunarMonth.includes("农历十一月")) {
+      throw new Error("Cautionary month must be Month 11, got: " + adv2.timingCard.cautionaryMonth.lunarMonth);
+    }
+
+    // Turn 3: Follow-up "长相性格呢"
+    var q3 = "长相性格呢";
+    var adv3 = AdvisorEngine.generateAdvice(q3, bazi, luck, 2026, "zh", sessionCtx);
+    if (adv3.category !== "romance_timing") {
+      throw new Error("Turn 3 must inherit romance_timing, got: " + adv3.category);
+    }
+    if (adv3.subcategory !== "spouse_profile") {
+      throw new Error("Turn 3 subcategory must be spouse_profile, got: " + adv3.subcategory);
+    }
+    if (!adv3.profileCard || !adv3.profileCard.appearance) {
+      throw new Error("Turn 3 profileCard missing or empty");
+    }
+
+    // 2. English Multi-Turn Simulation & 100% Zero Residual Chinese
+    var sessionCtxEn = { lastCategory: null, lastSubcategory: null, history: [] };
+    var advEn1 = AdvisorEngine.generateAdvice("When will my destiny partner arrive?", bazi, luck, 2026, "en", sessionCtxEn);
+    sessionCtxEn.lastCategory = advEn1.category;
+    sessionCtxEn.lastSubcategory = advEn1.subcategory;
+
+    var advEn2 = AdvisorEngine.generateAdvice("When is the specific deadline and timing?", bazi, luck, 2026, "en", sessionCtxEn);
+    if (advEn2.category !== "romance_timing" || advEn2.subcategory !== "timing_precision") {
+      throw new Error("English Turn 2 classification failed: " + advEn2.category + " / " + advEn2.subcategory);
+    }
+    if (!advEn2.directAnswer.includes("Lunar Month 6") || !advEn2.directAnswer.includes("92%")) {
+      throw new Error("English Turn 2 directAnswer missing timing info: " + advEn2.directAnswer);
+    }
+    if (!advEn2.timingCard || !advEn2.timingCard.primaryWindow) {
+      throw new Error("English Turn 2 timingCard missing");
+    }
+
+    var advEn2Json = JSON.stringify(advEn2);
+    var leaks106 = advEn2Json.match(/[一-龥]/g);
+    if (leaks106 && leaks106.length > 0) {
+      throw new Error("Residual Chinese in English AdvisorEngine advice: " + leaks106.join(""));
+    }
+
+    var advEn3 = AdvisorEngine.generateAdvice("What is their appearance and character?", bazi, luck, 2026, "en", sessionCtxEn);
+    var advEn3Json = JSON.stringify(advEn3);
+    var leaks106b = advEn3Json.match(/[一-龥]/g);
+    if (leaks106b && leaks106b.length > 0) {
+      throw new Error("Residual Chinese in English AdvisorEngine profile advice: " + leaks106b.join(""));
+    }
+    """
+]
+run_check106 = subprocess.run(jsc_check106_cmd, capture_output=True, text=True)
+assert run_check106.returncode == 0, f"Check 106 JSC test failed: stdout={run_check106.stdout} stderr={run_check106.stderr}"
+print("✓ 军师直陈精要前置、多轮对话上下文记忆与代词继承（问具体期限直断农历月份/避开general误判）、流月时令黄金应期全相表、智能预判追问气泡与跨系统联动（双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 106 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
