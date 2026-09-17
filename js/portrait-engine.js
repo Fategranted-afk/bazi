@@ -3932,8 +3932,8 @@ class PortraitEngine {
       topPatterns,
       synthesisZh,
       synthesisEn,
-      synthesisTitleZh: '👑 前三主导格局通融 · 综合全相破局总论',
-      synthesisTitleEn: '👑 Top 3 Patterns Synergy · Unified Executive Action Directive'
+      synthesisTitleZh: '前三主导格局通融 · 综合全相破局总论',
+      synthesisTitleEn: 'Top 3 Patterns Synergy · Unified Executive Action Directive'
     };
   }
 
