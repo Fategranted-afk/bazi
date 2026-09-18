@@ -3482,6 +3482,101 @@ class PortraitEngine {
       };
     }
 
+    // 9. 《兰台妙选》 (Lan Tai Miao Xuan - NaYin Imagery & Great Patterns)
+    let lantai = null;
+    if (typeof LanTaiDB !== 'undefined') {
+      const matched = LanTaiDB.getMatchingPatterns(bazi);
+      const topPat = matched[0] || LanTaiDB.getAllPatterns()[0];
+      lantai = {
+        canonId: 'lantai',
+        canonNameZh: '兰台妙选',
+        canonNameEn: 'Lan Tai Miao Xuan',
+        titleZh: '👑 《兰台妙选》：纳音神机与象数奇格大观',
+        titleEn: '👑 Lan Tai Miao Xuan: NaYin Image & Grand Pattern Fulcrum',
+        subtitleZh: '明·西山老人《兰台妙选》：“水火既济，有经邦济世之才；苍龙驾海，势跨乾坤。”',
+        subtitleEn: 'Lan Tai Miao Xuan: "Water and Fire in fulfilled equilibrium govern nations; the Azure Dragon gallops across boundless oceans."',
+        pivotNameZh: `纳音大格【${topPat.nameZh}】`,
+        pivotNameEn: `NaYin Pattern [${topPat.nameEn}]`,
+        summaryZh: `《兰台妙选》专研四柱纳音生克与象数大格。命盘气象契合【${topPat.nameZh}】。${topPat.meaningZh}`,
+        summaryEn: `Lan Tai Miao Xuan deciphers NaYin acoustic imagery. The natal matrix resonates with [${topPat.nameEn}]. ${topPat.meaningEn}`,
+        modernStrategyZh: topPat.modernInterpretationZh,
+        modernStrategyEn: topPat.modernInterpretationEn,
+        genderDiffZh: '【男女命纳音差异】：乾造以象数大格显开拓威权，坤造以纳音清澄涵养高雅福慧。',
+        genderDiffEn: '[Gender Dynamics]: Male native projects executive authority through grand patterns; female native preserves intuitive grace and deep blessing.',
+        matchedPatterns: matched
+      };
+    }
+
+    // 10. 《五行精纪》 (Wu Xing Jing Ji - Year Root & Song Dynasty Ancient Lu-Ming)
+    let wuxing = null;
+    if (typeof WuXingJingJiDB !== 'undefined') {
+      const ya = WuXingJingJiDB.getYearRootAnalysis(bazi);
+      wuxing = {
+        canonId: 'wuxing',
+        canonNameZh: '五行精纪',
+        canonNameEn: 'Wu Xing Jing Ji',
+        titleZh: '👑 《五行精纪》：年本为主与宋代古法禄命枢纽',
+        titleEn: '👑 Wu Xing Jing Ji: Year Root Foundation & Ancient Lu-Ming Fulcrum',
+        subtitleZh: '宋·廖中《五行精纪》：“以年为本，以日为主，以月为门户，以时为引从。”',
+        subtitleEn: 'Wu Xing Jing Ji: "Take the Year as sovereign Root, Day as self, Month as portal, Hour as guiding conclusion."',
+        pivotNameZh: `年本太极根基【${bazi.pillars?.year?.text || '年柱'}】(${bazi.pillars?.year?.naYin || '纳音'})`,
+        pivotNameEn: `Year Root Foundation [${bazi.pillars?.year?.text || 'Year'}] (${bazi.pillars?.year?.naYin || 'NaYin'})`,
+        summaryZh: ya.rootQualityZh + ' ' + ya.naYinResonanceZh,
+        summaryEn: ya.rootQualityEn + ' ' + ya.naYinResonanceEn,
+        modernStrategyZh: ya.lumaAdviceZh,
+        modernStrategyEn: ya.lumaAdviceEn,
+        genderDiffZh: '【男女命年根差异】：乾造重在承继宗族文化与时代红利，坤造重在筑牢底盘安全感与原生滋养。',
+        genderDiffEn: '[Gender Dynamics]: Male native leverages ancestral legacy and macro era beta; female native builds foundational security and rooted nourishment.'
+      };
+    }
+
+    // 11. 《千里命稿》 (Qian Li Ming Gao - Useful God Protocols & Case Law)
+    let qianli = null;
+    if (typeof QianLiDB !== 'undefined') {
+      const ys = QianLiDB.evaluateNativeYongShen(bazi, vigor);
+      qianli = {
+        canonId: 'qianli',
+        canonNameZh: '千里命稿',
+        canonNameEn: 'Qian Li Ming Gao',
+        titleZh: '👑 《千里命稿》：用神五法与民国实操断案枢纽',
+        titleEn: '👑 Qian Li Ming Gao: Five Useful God Protocols & Modern Case Law Fulcrum',
+        subtitleZh: '民国·韦千里《千里命稿》：“强则抑之，衰则扶之。融会古今，实证断案。”',
+        subtitleEn: 'Qian Li Ming Gao: "Restrain the strong, nourish the delicate; synthesizing timeless doctrine into empirical case law."',
+        pivotNameZh: `用神定式【${ys.nameZh}】`,
+        pivotNameEn: `Useful God Protocol [${ys.nameEn}]`,
+        summaryZh: `${ys.rationaleZh} ${ys.quoteZh}`,
+        summaryEn: `${ys.rationaleEn} ${ys.quoteEn}`,
+        modernStrategyZh: ys.modernInterpretationZh,
+        modernStrategyEn: ys.modernInterpretationEn,
+        genderDiffZh: '【男女命用神实战】：乾造以用神开创功名事业，坤造以用神平衡身心节律与人际场能。',
+        genderDiffEn: '[Gender Dynamics]: Male native deploys the Useful God to drive career execution; female native balances emotional rhythms and relational harmony.'
+      };
+    }
+
+    // 12. 徐乐吾评注 (Xu Lewu Commentaries Middleware - 10 Stems 12 Months Decision Tree)
+    let xulewu = null;
+    if (typeof XuLewuDB !== 'undefined') {
+      const mBranch = (bazi.solarInfo && bazi.solarInfo.monthBranch) || bazi.pillars?.month?.branch || '子';
+      const ex = XuLewuDB.getMiddlewareExegesis(bazi.dayMaster, mBranch, vigor);
+      xulewu = {
+        canonId: 'xulewu',
+        canonNameZh: '子平真诠评注与造化元钥评注',
+        canonNameEn: 'Xu Lewu Commentaries',
+        titleZh: '👑 徐乐吾评注：十干月令喜忌具象实操规则中间件',
+        titleEn: '👑 Xu Lewu Commentaries: Concrete Monthly Decision Rule Middleware',
+        subtitleZh: '民国·徐乐吾：“以评注为实操中间件，将抽象古意翻译为具象化案例与决策规则。”',
+        subtitleEn: 'Xu Lewu: "Acting as an operational middleware, translating esoteric poetry into concrete, testable decision trees."',
+        pivotNameZh: `月令喜忌中间件【${bazi.dayMaster}生于${mBranch}月】`,
+        pivotNameEn: `Monthly Decision Rule [${bazi.dayMaster} in ${mBranch} Month]`,
+        summaryZh: `【徐乐吾实操规则】：${ex.abstractRuleZh}\n【身强身弱细化】：${ex.finetunedRuleZh}`,
+        summaryEn: `[Xu Lewu Middleware Rule]: ${ex.abstractRuleEn}\n[Vigor Calibration]: ${ex.finetunedRuleEn}`,
+        modernStrategyZh: `【实证案例解析】：${ex.concreteCaseZh}`,
+        modernStrategyEn: `[Empirical Case Analysis]: ${ex.concreteCaseEn}`,
+        genderDiffZh: '【男女命月令取用】：乾造取用重在经世致用与制度晋升，坤造取用重在温润安和与专业定力。',
+        genderDiffEn: '[Gender Dynamics]: Male native focuses on governance and professional mastery; female native focuses on holistic harmony and specialized craft.'
+      };
+    }
+
     // Retain deep specialized readings for Spouse, Children, Parents, and Environment
     const spouse = (typeof YuZhaoDB !== 'undefined') ? YuZhaoDB.getSpousePalaceReading(bazi, gender) : null;
     const children = (typeof YuZhaoDB !== 'undefined') ? YuZhaoDB.getChildrenPalaceReading(bazi, gender) : null;
@@ -3499,24 +3594,33 @@ class PortraitEngine {
       yuanhai,
       shenfeng,
       yuzhao,
-      lixuzhong
+      lixuzhong,
+      lantai,
+      wuxing,
+      qianli,
+      xulewu
     };
+
+    const schoolsPortrait = this.generateClassicalSchoolsPortrait(
+      bazi, vigor, patterns, climate, canons
+    );
 
     const grandPicture = this.generateGrandPicture(
       bazi, vigor, patterns, climate, canons, spouse, children, parents, environment
     );
 
     return {
-      titleZh: '👑 八经全盘核心画像 · 帕累托 20% 关键枢纽全相分析',
-      titleEn: '👑 Eight Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis',
-      descriptionZh: '八大经典名著全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，贯通夫妻、子女、父母六亲全息与宏观时代场能交互。',
-      descriptionEn: 'Synthesizing all 8 classical treatises to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.',
+      titleZh: '👑 经典全盘核心画像 · 帕累托 20% 关键枢纽全相分析',
+      titleEn: '👑 Classical Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis',
+      descriptionZh: '四大流派古典名著全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，贯通夫妻、子女、父母六亲全息与宏观时代场能交互。',
+      descriptionEn: 'Synthesizing the four classical schools and all master treatises to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.',
       primaryPatternNameZh: primaryPatternName,
       primaryPatternNameEn: topPattern.nameEn || primaryPatternName,
       primaryPatternWeightPct: primaryPatternPct,
       primaryPatternDescZh: `全盘五大格局中，【${primaryPatternName}】以 ${primaryPatternPct}% 绝对能量占比位居第一核心主导，统摄命主一生之骨相气魄与成败枢纽。《子平真诠》《三命通会》《渊海子平》诸经法度皆以此格为全相定盘针。`,
       primaryPatternDescEn: `Among natal patterns, [${topPattern.nameEn || primaryPatternName}] leads with ${primaryPatternPct}% dominant energy weight, steering character, decisive breakthroughs, and career trajectory across classical canons.`,
       grandPicture,
+      schoolsPortrait,
       canons,
       fulcrum: shenfeng, // For backwards compatibility
       spouse: spouse ? (() => {
@@ -4099,6 +4203,147 @@ return {
         `${patNameEn.split(' ')[0]} Governs`,
         `Alchemy of Medicine & Disease`
       ]
+    };
+  }
+
+  static generateClassicalSchoolsPortrait(bazi, vigor, patterns, climate, canons) {
+    const dm = (bazi && bazi.dayMaster) || '甲';
+    const mb = (bazi && bazi.solarInfo && bazi.solarInfo.monthBranch) || (bazi && bazi.pillars?.month?.branch) || '子';
+    const isStrong = vigor && (vigor.isStrong || vigor.isExtreme || (vigor.totalScore >= 50));
+
+    const stemMapEn = {
+      '甲': 'Jia (Yang Wood)', '乙': 'Yi (Yin Wood)', '丙': 'Bing (Yang Fire)', '丁': 'Ding (Yin Fire)',
+      '戊': 'Wu (Yang Earth)', '己': 'Ji (Yin Earth)', '庚': 'Geng (Yang Metal)', '辛': 'Xin (Yin Metal)',
+      '壬': 'Ren (Yang Water)', '癸': 'Gui (Yin Water)'
+    };
+    const branchMapEn = {
+      '子': 'Zi (Rat/Water)', '丑': 'Chou (Ox/Earth)', '寅': 'Yin (Tiger/Wood)', '卯': 'Mao (Rabbit/Wood)',
+      '辰': 'Chen (Dragon/Earth)', '巳': 'Si (Snake/Fire)', '午': 'Wu (Horse/Fire)', '未': 'Wei (Goat/Earth)',
+      '申': 'Shen (Monkey/Metal)', '酉': 'You (Rooster/Metal)', '戌': 'Xu (Dog/Earth)', '亥': 'Hai (Pig/Water)'
+    };
+    const naYinMapEn = {
+      '海中金': 'Sea Metal', '炉中火': 'Furnace Fire', '大林木': 'Great Forest Wood', '路旁土': 'Roadside Earth',
+      '剑锋金': 'Sword Edge Metal', '山头火': 'Mountaintop Fire', '涧下水': 'Valley Stream Water', '城头土': 'City Rampart Earth',
+      '白蜡金': 'White Wax Metal', '杨柳木': 'Willow Wood', '泉中水': 'Spring Water', '屋上土': 'Rooftop Earth',
+      '霹雳火': 'Thunderbolt Fire', '松柏木': 'Pine and Cypress Wood', '长流水': 'Everflowing River Water', '沙中金': 'Sand Metal',
+      '山下火': 'Foot of Mountain Fire', '平地木': 'Flatland Wood', '壁上土': 'Wall Earth', '金箔金': 'Gold Foil Metal',
+      '佛灯火': 'Lamp Fire', '天河水': 'Celestial River Water', '大驿土': 'Post Station Earth', '钗钏金': 'Hairpin Metal',
+      '桑柘木': 'Mulberry Wood', '大溪水': 'Great Torrent Water', '沙中土': 'Sand Earth', '天上火': 'Heavenly Fire',
+      '石榴木': 'Pomegranate Wood', '大海水': 'Great Ocean Water'
+    };
+
+    function toPillarEn(pillarText) {
+      if (!pillarText || typeof pillarText !== 'string') return 'Pillar';
+      const s = pillarText[0];
+      const b = pillarText[1];
+      const sEn = stemMapEn[s] ? stemMapEn[s].split(' ')[0] : (s || '');
+      const bEn = branchMapEn[b] ? branchMapEn[b].split(' ')[0] : (b || '');
+      return `${sEn}-${bEn}`;
+    }
+
+    function toNaYinEn(ny) {
+      if (!ny) return 'Acoustic NaYin';
+      if (naYinMapEn[ny]) return naYinMapEn[ny];
+      for (const [k, v] of Object.entries(naYinMapEn)) {
+        if (ny.includes(k)) return v;
+      }
+      return 'Harmonic Tone';
+    }
+
+    const dmEn = stemMapEn[dm] || 'Day Master';
+    const mbEn = branchMapEn[mb] || 'Month Branch';
+
+    // 1. 古法禄命纳音宗 (Ancient Lu-Ming & NaYin School)
+    const yPillar = bazi && bazi.pillars?.year?.text || '甲子';
+    const yNaYin = bazi && bazi.pillars?.year?.naYin || '海中金';
+    const dNaYin = bazi && bazi.pillars?.day?.naYin || '海中金';
+    const yPillarEn = toPillarEn(yPillar);
+    const yNaYinEn = toNaYinEn(yNaYin);
+    const dNaYinEn = toNaYinEn(dNaYin);
+
+    const lantaiPats = (canons && canons.lantai && canons.lantai.matchedPatterns) || [];
+    const topLantai = lantaiPats[0] ? lantaiPats[0].nameZh : '气象纯正格';
+    const topLantaiEn = lantaiPats[0] ? (lantaiPats[0].nameEn || 'Pristine Energy Pattern') : 'Pristine Energy Pattern';
+
+    const ancientLuMing = {
+      schoolId: 'ancient_luming',
+      schoolNameZh: '古法禄命纳音宗',
+      schoolNameEn: 'Ancient Lu-Ming & NaYin School',
+      classicsZh: '《李虚中命书》《五行精纪》《兰台妙选》《玉照定真经》',
+      classicsEn: 'Li Xu Zhong Ming Shu, Wu Xing Jing Ji, Lan Tai Miao Xuan, Yu Zhao Ding Zhen Jing',
+      coreTenetZh: '以年为万年根基（年本为主），参验天元禄、地元命、人元身三元一体，辨识纳音音律生旺墓绝与宫位六亲刑冲。',
+      coreTenetEn: 'Establishes Year Pillar as eternal root; synthesizes Three Primes (Rank, Destiny, Body), NaYin acoustic vitality, and palace relational alignments.',
+      nativePortraitZh: `命主生于【${yPillar}】年，纳音【${yNaYin}】奠定祖基底盘，日主纳音【${dNaYin}】与之呼应。古法禄命判词：气象合于《兰台妙选》【${topLantai}】，得时代之风与长者福泽庇佑，根基扎实，能御大风大浪。`,
+      nativePortraitEn: `Born in [${yPillarEn}] year with [${yNaYinEn}] NaYin root, resonating with Day NaYin [${dNaYinEn}]. Ancient verdict: Aligns with Lan Tai Miao Xuan [${topLantaiEn}], endowed with solid generational grounding to withstand macro storms.`,
+      strategicAdviceZh: '【禄命实战定策】：善借时代宏观趋势与大平台背景（年根之势），不单打独斗，注重家族声望与长期资产沉淀。',
+      strategicAdviceEn: '【Strategic Rule】: Leverage macro trends and institutional platforms (Year Root); avoid isolated struggles; compound familial prestige and patient asset reserves.'
+    };
+
+    // 2. 子平正统格局理气宗 (Orthodox Ziping & Pattern School)
+    const topPat = patterns && patterns[0] ? patterns[0].name : '正官格';
+    const topPatEn = patterns && patterns[0] ? (patterns[0].nameEn || 'Direct Officer Pattern') : 'Direct Officer Pattern';
+    const sfDisease = (canons && canons.shenfeng && canons.shenfeng.pivotNameZh) || '秀气郁滞';
+    const sfDiseaseEn = (canons && canons.shenfeng && canons.shenfeng.pivotNameEn) || 'Stagnant Vitality';
+    const sfMed = (canons && canons.shenfeng && canons.shenfeng.medicineZh) || '食伤泄秀';
+    const sfMedEn = (canons && canons.shenfeng && canons.shenfeng.medicineEn) || 'Output Expression';
+
+    const orthodoxZiping = {
+      schoolId: 'orthodox_ziping',
+      schoolNameZh: '子平正统格局理气宗',
+      schoolNameEn: 'Orthodox Ziping & Pattern School',
+      classicsZh: '《渊海子平》《三命通会》《神峰通考》《滴天髓》《子平真诠》',
+      classicsEn: 'Yuan Hai Zi Ping, San Ming Tong Hui, Shen Feng Tong Kao, Di Tian Sui, Zi Ping Zhen Quan',
+      coreTenetZh: '以日元为体，以月令提纲为用，精析八格成败救应，辨析“有病方为贵”之对症主药与雕枯动静法度。',
+      coreTenetEn: 'Day Master as subject, Month Order as command; rigorous dissection of pattern formation, defects, remedies, and the pivotal Disease & Medicine doctrine.',
+      nativePortraitZh: `日元【${dm}】以【${topPat}】为第一主导格局。张神峰病药辨证：命局带【${sfDisease}】，透出【${sfMed}】为克制病灶之神药。沈孝瞻《子平真诠》判词：成败在于相神护卫，去病则财禄相随。`,
+      nativePortraitEn: `Day Master [${dmEn}] led by [${topPatEn}]. Zhang Shenfeng diagnosis: natal matrix carries [${sfDiseaseEn}], employing [${sfMedEn}] as divine medicine. Shen Xiaozhan verdict: success rests on supporting gods and swift remedies.`,
+      strategicAdviceZh: '【理气实战定策】：认准单一核心突破口（神药），在关键赛道形成压倒性专业壁垒；对破格凶煞建立合规与契约防火墙。',
+      strategicAdviceEn: '【Strategic Rule】: Focus single-mindedly on the divine medicine to build uncontested competitive moats; erect contractual firewalls against breaking defects.'
+    };
+
+    // 3. 自然调候气候物象宗 (Natural Climate & Seasonal School)
+    const qtPrimary = (canons && canons.qiongtong && canons.qiongtong.primaryGod) || (['亥', '子', '丑'].includes(mb) ? '丙火 (暄照)' : (['巳', '午', '未'].includes(mb) ? '壬水 (润泽)' : '丙火/癸水'));
+    const qtPrimaryEn = (canons && canons.qiongtong && canons.qiongtong.primaryGodEn) || (['亥', '子', '丑'].includes(mb) ? 'Bing Fire (Solar Warmth)' : (['巳', '午', '未'].includes(mb) ? 'Ren Water (Cooling Hydration)' : 'Bing Fire / Gui Water'));
+
+    const seasonalClimate = {
+      schoolId: 'seasonal_climate',
+      schoolNameZh: '自然调候气候物象宗',
+      schoolNameEn: 'Natural Seasonal Climate School',
+      classicsZh: '《穷通宝鉴》《造化元钥评注》',
+      classicsEn: 'Qiong Tong Bao Jian, Zao Hua Yuan Yao Commentaries',
+      coreTenetZh: '穷通天道寒暖燥湿之物理铁律，以大自然太阳暄照、雨露滋养、炉冶锻造、江河蓄水观人命生发化育之机。',
+      coreTenetEn: 'Deciphers cosmic thermodynamic laws of heat, cold, dryness, and moisture, viewing destiny through natural imagery: solar rays, sweet rain, smelting fires, and river dams.',
+      nativePortraitZh: `生于【${mb}】月，气候气机鲜明。首要调候用神以【${qtPrimary}】为第一急务。调候得力，则犹如枯木逢春、雪地照金，心智通透灵感迸发；调候欠缺，则易感身心疲乏或情绪焦躁。`,
+      nativePortraitEn: `Born in [${mbEn}] with distinct seasonal climate. Primary regulator [${qtPrimaryEn}] is the urgent first priority. Harmonized climate unlocks lucid intellect; neglected climate breeds chronic fatigue.`,
+      strategicAdviceZh: '【气候实战定策】：优先优化工作与居住的微气候与采光通风；注重身心节律，在冰冷环境中保持热忱，在焦灼压力中主动降温。',
+      strategicAdviceEn: '【Strategic Rule】: Prioritize ergonomic lighting and spatial ventilation; preserve psychological warmth during cold downturns and enforce cooling timeouts in high-stress sprints.'
+    };
+
+    // 4. 近世民国通俗中间件宗 (Modern Practical & Case Law Middleware School)
+    const xuEx = (canons && canons.xulewu) || null;
+    const qlYs = (canons && canons.qianli) || null;
+    const protoName = (qlYs && qlYs.pivotNameZh) || '扶抑用神法';
+    const protoNameEn = (qlYs && qlYs.pivotNameEn) || 'Supporting & Restraining Protocol';
+
+    const modernPractical = {
+      schoolId: 'modern_practical',
+      schoolNameZh: '近世民国通俗实战宗',
+      schoolNameEn: 'Modern Practical & Case Law Middleware School',
+      classicsZh: '《子平真诠评注》(徐乐吾) · 《造化元钥评注》(徐乐吾) · 《千里命稿》(韦千里)',
+      classicsEn: 'Xu Lewu Zi Ping & Zao Hua Yuan Yao Commentaries, Wei Qianli Qian Li Ming Gao',
+      coreTenetZh: '将抽象古意转化为具体实操判断规则的“中间件系统”；以民国实证案例为检验基石，详析用神五法与岁运决策树。',
+      coreTenetEn: 'The sovereign "middleware compiler" translating esoteric ancient poetry into concrete operational decision trees backed by documented historical case law.',
+      nativePortraitZh: `综合徐乐吾评注与韦千里断案：日元【${dm}】生于【${mb}】月，遵循【${protoName}】。徐乐吾实操定式：${isStrong ? '身旺能任财官，宜以克泄引化吐秀' : '身弱先重根气生扶，借平台与贵人破局'}。结合近代百例实证断案，此格走专业高地与实业领军之路最为稳健。`,
+      nativePortraitEn: `Synthesizing Xu Lewu and Wei Qianli: Day Master [${dmEn}] born in [${mbEn}] follows [${protoNameEn}]. Xu Lewu decision heuristic: ${isStrong ? 'Vigorous self sustains Wealth and Officer through creative output' : 'Delicate self anchors into protective platforms and mentorship first'}. Documented historical case precedents demonstrate this profile compounds most stably along professional specialist and enterprise leadership trajectories.`,
+      strategicAdviceZh: '【中间件实战定策】：杜绝玄虚狂想，以客观量化指标考核执行结果；将古法智慧转化为敏捷微动作与合同治理准则。',
+      strategicAdviceEn: '【Strategic Rule】: Eliminate mystical ambiguity; govern through empirical metrics and translate classical heuristics into concrete agile milestones.'
+    };
+
+    return {
+      ancientLuMing,
+      orthodoxZiping,
+      seasonalClimate,
+      modernPractical
     };
   }
 }

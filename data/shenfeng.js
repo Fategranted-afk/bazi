@@ -319,6 +319,38 @@ class ShenFengDB {
     return SHEN_FENG_DATA.treatises;
   }
 
+  static getMovementStillnessAnalysis(bazi) {
+    if (!bazi || !bazi.pillars) {
+      return {
+        titleZh: '动静生克法与干支交感',
+        titleEn: 'Movement and Stillness Qi Dynamics',
+        analysisZh: '天干主动而速，地支主静而迟。岁运引动藏干，事端乃显。',
+        analysisEn: 'Heavenly Stems govern swift public momentum; Earthly Branches govern steady underlying stability. Transits awaken hidden roots.'
+      };
+    }
+    const p = bazi.pillars;
+    const branches = [p.year?.branch, p.month?.branch, p.day?.branch, p.hour?.branch].filter(Boolean);
+    const hasClash = branches.includes('子') && branches.includes('午') ||
+                    branches.includes('卯') && branches.includes('酉') ||
+                    branches.includes('寅') && branches.includes('申') ||
+                    branches.includes('巳') && branches.includes('亥');
+    
+    return {
+      titleZh: '《神峰通考》动静生克法与干支交感',
+      titleEn: 'Shen Feng Tong Kao: Dynamic Movement vs Stillness Exegesis',
+      stemDynamicsZh: '天干主动见速：透出之干主外部机遇、社会名誉与公开风口，来势迅猛。',
+      stemDynamicsEn: 'Stems govern swift manifest movement: external openings, public reputation, and rapid market waves.',
+      branchDynamicsZh: hasClash 
+        ? '地支见刑冲暗动：底层组织与根基常有自我变革与周期重塑之势，静中有动。'
+        : '地支安和主静：底盘稳固，财务安全垫与深层心智沉静，厚积薄发。',
+      branchDynamicsEn: hasClash
+        ? 'Branches hold subterranean active tension: organizational restructuring and periodic self-reinvention.'
+        : 'Branches hold serene stillness: resilient ground, private capital safety nets, and grounded emotional anchors.',
+      verdictZh: '【张神峰动静总诀】：静者守其常，动者察其变；大运流年引动藏干刑冲之时，即为战略跃迁之契机。',
+      verdictEn: '【Zhang Shenfeng Core Rule】: Hold constancy during stillness; seize turning points when transits awaken hidden roots.'
+    };
+  }
+
   static search(keyword) {
     const results = [];
     if (!keyword || typeof keyword !== 'string') return results;
@@ -326,24 +358,34 @@ class ShenFengDB {
 
     // Search treatises
     SHEN_FENG_DATA.treatises.forEach(t => {
-      if (t.titleZh.toLowerCase().includes(kw) || t.quoteZh.toLowerCase().includes(kw) || t.vernacularZh.toLowerCase().includes(kw)) {
+      if (t.titleZh.toLowerCase().includes(kw) || t.quoteZh.toLowerCase().includes(kw) || t.vernacularZh.toLowerCase().includes(kw) ||
+          (t.titleEn && t.titleEn.toLowerCase().includes(kw)) || (t.quoteEn && t.quoteEn.toLowerCase().includes(kw))) {
         results.push({
           source: '《神峰通考》· 专论',
+          sourceEn: 'Shen Feng Tong Kao: Treatises',
           title: t.titleZh,
+          titleEn: t.titleEn || t.titleZh,
           content: t.quoteZh,
-          detail: t.vernacularZh
+          contentEn: t.quoteEn || t.quoteZh,
+          detail: t.vernacularZh,
+          detailEn: t.vernacularEn || t.vernacularZh
         });
       }
     });
 
     // Search disease archetypes
     for (const [k, d] of Object.entries(SHEN_FENG_DATA.diseaseArchetypes)) {
-      if (k.toLowerCase().includes(kw) || d.nameZh.toLowerCase().includes(kw) || d.medicineZh.toLowerCase().includes(kw) || d.modernStrategyZh.toLowerCase().includes(kw)) {
+      if (k.toLowerCase().includes(kw) || d.nameZh.toLowerCase().includes(kw) || d.medicineZh.toLowerCase().includes(kw) || d.modernStrategyZh.toLowerCase().includes(kw) ||
+          (d.nameEn && d.nameEn.toLowerCase().includes(kw)) || (d.medicineEn && d.medicineEn.toLowerCase().includes(kw))) {
         results.push({
           source: '《神峰通考》· 病药说',
+          sourceEn: 'Shen Feng Tong Kao: Disease & Medicine',
           title: d.nameZh + ' (解药：' + d.medicineZh + ')',
+          titleEn: (d.nameEn || d.nameZh) + ' (Medicine: ' + (d.medicineEn || d.medicineZh) + ')',
           content: d.rationaleZh,
-          detail: d.modernStrategyZh
+          contentEn: d.rationaleEn || d.rationaleZh,
+          detail: d.modernStrategyZh,
+          detailEn: d.modernStrategyEn || d.modernStrategyZh
         });
       }
     }

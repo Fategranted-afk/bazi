@@ -1286,12 +1286,28 @@
           <span data-i18n="tab_lixuzhong">🎵 《李虚中命书》</span>
           <span class="text-[10px] bg-teal-500/20 text-teal-300 px-1 py-0.2 rounded" data-i18n="tab_lixuzhong_badge">三元纳音音律</span>
         </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-lantai">
+          <span data-i18n="tab_lantai">🪷 《兰台妙选》</span>
+          <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1 py-0.2 rounded" data-i18n="tab_lantai_badge">纳音神机奇格</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-wuxing">
+          <span data-i18n="tab_wuxing">📜 《五行精纪》</span>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1 py-0.2 rounded" data-i18n="tab_wuxing_badge">宋代古法禄命</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-qianli">
+          <span data-i18n="tab_qianli">📑 《千里命稿》</span>
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded" data-i18n="tab_qianli_badge">民国实务断案</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-schools">
+          <span data-i18n="tab_schools">🏛️ 四大学派全景</span>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_schools_badge">古典画像统揽</span>
+        </button>
         <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-definitions">
           <span data-i18n="tab_definitions">📚 常见定义</span>
           <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_definitions_badge">十神真诠</span>
         </button>
         <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-search">
-          <span data-i18n="tab_search">🔍 八典全库搜索</span>
+          <span data-i18n="tab_search">🔍 经典全库搜索</span>
         </button>
       </div>
 
@@ -1357,6 +1373,9 @@
           </div>
           <div id="qtCustomResult"></div>
         </div>
+
+        <!-- Xu Lewu Zao Hua Yuan Yao Commentary Middleware -->
+        <div id="qiongtongXuLewuContainer"></div>
       </div>
 
       <!-- Tab 3: 《子平真诠》 (Zi Ping Zhen Quan) -->
@@ -1376,6 +1395,9 @@
             <!-- Injected via JavaScript -->
           </div>
         </div>
+
+        <!-- Xu Lewu Zi Ping Zhen Quan Commentary Middleware -->
+        <div id="zipingXuLewuContainer"></div>
       </div>
 
       <!-- Tab 4: 《滴天髓》 -->
@@ -1479,6 +1501,83 @@
         </div>
       </div>
 
+      <!-- Tab: 《兰台妙选》 (Lan Tai Miao Xuan) -->
+      <div id="tab-lantai" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_lantai_auto">当前命盘纳音奇格直配 (《兰台妙选》象数神机与大格详析)：</div>
+          <div id="lantaiAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-indigo-300 mb-2" data-i18n="canon_lantai_patterns_title">🪷 《兰台妙选》传世纳音奇格与贵征象数全库</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_lantai_patterns_desc">明·西山老人传，以纳音气象与象数神机论大格，如水火既济、苍龙驾海、蚌珠照月等千古名格：</p>
+          <div id="lantaiPatternsList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: 《五行精纪》 (Wu Xing Jing Ji) -->
+      <div id="tab-wuxing" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_wuxing_auto">当前命盘年本根基与纳音交互直配 (宋·廖中《五行精纪》)：</div>
+          <div id="wuxingAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-emerald-300 mb-2" data-i18n="canon_wuxing_chapters_title">📜 《五行精纪》宋代古法禄命大集精要专论</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_wuxing_chapters_desc">宋代命学总集成，详论年本为主、纳音音律十二长生与禄马乘旺借气法门：</p>
+          <div id="wuxingChaptersList" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: 《千里命稿》 (Qian Li Ming Gao) -->
+      <div id="tab-qianli" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_qianli_auto">当前命盘用神五法归宿与近代实操断案 (民国·韦千里《千里命稿》)：</div>
+          <div id="qianliAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div class="bg-[#1a1c24] p-4 rounded-xl border border-gray-800">
+          <h4 class="text-sm font-bold text-blue-300 mb-2" data-i18n="canon_qianli_protocols_title">📑 《千里命稿》用神五法与现代命学精要</h4>
+          <p class="text-xs text-gray-400 mb-3" data-i18n="canon_qianli_protocols_desc">民国韦千里开创现代通俗子平精要：详析扶抑、调候、通关、病药、专旺五大取用法则：</p>
+          <div id="qianliProtocolsList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-gray-200 mb-2" data-i18n="canon_qianli_cases_title">民国名流实务断案批注录</h4>
+          <div id="qianliCaseStudiesList" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Classical Schools Holographic Synthesis (四大学派全景画像) -->
+      <div id="tab-schools" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <h4 class="text-sm font-bold text-amber-300 mb-1 flex items-center gap-2">
+            <span>🏛️</span>
+            <span data-i18n="canon_schools_title">命理四大流派古典全景画像统揽</span>
+          </h4>
+          <p class="text-xs text-gray-400 mb-4" data-i18n="canon_schools_desc">
+            融会古法禄命纳音宗、子平正统格局理气宗、调候气候物象宗、近世通俗中间件宗，提炼立体多维的古典命理画像：
+          </p>
+          <div id="schoolsPortraitContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
       <!-- Tab: Common Definitions & Ten Gods Glossary (常见定义 · 十神真诠) -->
       <div id="tab-definitions" class="tab-pane hidden p-5 space-y-6">
         <div>
@@ -1502,17 +1601,17 @@
         </div>
       </div>
 
-      <!-- Tab 9: Universal Search Engine -->
+      <!-- Tab: Universal Search Engine -->
       <div id="tab-search" class="tab-pane hidden p-5 space-y-4">
         <div class="max-w-2xl mx-auto space-y-3">
           <h3 class="text-base font-bold text-center text-amber-200 font-serif-sc" data-i18n="search_title">
-            八大典籍万象全库联合检索系统
+            十一大典籍万象全库联合检索系统
           </h3>
           <p class="text-xs text-gray-400 text-center" data-i18n="search_desc">
-            一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》八大名著，输入术语、格局或断语即刻全文检索。
+            一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》《兰台妙选》《五行精纪》《千里命稿》名著及徐乐吾评注，输入术语、格局或断语即刻全文检索。
           </p>
           <div class="flex gap-2">
-            <input type="text" id="dbSearchInput" placeholder="输入搜索词，如：病药说、玉照、三元禄、伤官吐秀、丙火、调候、救应..." class="flex-1 bg-black/40 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500" data-i18n-placeholder="search_placeholder">
+            <input type="text" id="dbSearchInput" placeholder="输入搜索词，如：病药说、苍龙驾海、年本、通关、徐乐吾、玉照、三元禄、伤官吐秀、丙火、调候..." class="flex-1 bg-black/40 border border-gray-700 rounded-lg px-4 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500" data-i18n-placeholder="search_placeholder">
             <button id="dbSearchBtn" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-sm font-bold transition" data-i18n="btn_search">
               联合检索
             </button>
@@ -2535,8 +2634,8 @@
 
   <!-- Footer -->
   <footer class="mt-12 py-6 border-t border-gray-800 text-center text-xs text-gray-500">
-    <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理八大经典名著集成</p>
-    <p data-i18n="footer_citations">引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》</p>
+    <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理传世经典名著全相集成</p>
+    <p data-i18n="footer_citations">引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》·《兰台妙选》·《五行精纪》·《千里命稿》· 徐乐吾评注</p>
   </footer>
 
   <!-- Scripts -->
@@ -2551,6 +2650,10 @@
   <script src="data/shenfeng.js"></script>
   <script src="data/yuzhao.js"></script>
   <script src="data/lixuzhong.js"></script>
+  <script src="data/lantaimiaoxuan.js"></script>
+  <script src="data/wuxingjingji.js"></script>
+  <script src="data/qianliminggao.js"></script>
+  <script src="data/xulewu_commentary.js"></script>
   <script src="data/iching.js"></script>
   <script src="data/tianji.js"></script>
   <script src="data/tengods.js"></script>

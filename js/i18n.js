@@ -626,9 +626,33 @@ const I18N = (function() {
       tab_yuzhao_badge: "宫位六亲直断",
       tab_lixuzhong: "🎵 《李虚中命书》",
       tab_lixuzhong_badge: "三元纳音音律",
-      tab_search: "🔍 八典全库搜索",
+      tab_lantai: "🪷 《兰台妙选》",
+      tab_lantai_badge: "纳音神机奇格",
+      tab_wuxing: "📜 《五行精纪》",
+      tab_wuxing_badge: "宋代古法禄命",
+      tab_qianli: "📑 《千里命稿》",
+      tab_qianli_badge: "民国实务断案",
+      tab_schools: "🏛️ 四大学派全景",
+      tab_schools_badge: "古典画像统揽",
+      tab_search: "🔍 经典全库搜索",
 
       // Canons Contents
+      canon_lantai_auto: "当前命盘纳音奇格直配 (《兰台妙选》象数神机与大格详析)：",
+      canon_lantai_patterns_title: "🪷 《兰台妙选》传世纳音奇格与贵征象数全库",
+      canon_lantai_patterns_desc: "明·西山老人传，以纳音气象与象数神机论大格，如水火既济、苍龙驾海、蚌珠照月等千古名格：",
+
+      canon_wuxing_auto: "当前命盘年本根基与纳音交互直配 (宋·廖中《五行精纪》)：",
+      canon_wuxing_chapters_title: "📜 《五行精纪》宋代古法禄命大集精要专论",
+      canon_wuxing_chapters_desc: "宋代命学总集成，详论年本为主、纳音音律十二长生与禄马乘旺借气法门：",
+
+      canon_qianli_auto: "当前命盘用神五法归宿与近代实操断案 (民国·韦千里《千里命稿》)：",
+      canon_qianli_protocols_title: "📑 《千里命稿》用神五法与现代命学精要",
+      canon_qianli_protocols_desc: "民国韦千里开创现代通俗子平精要：详析扶抑、调候、通关、病药、专旺五大取用法则：",
+      canon_qianli_cases_title: "民国名流实务断案批注录",
+
+      canon_schools_title: "🏛️ 命理四大流派古典全景画像统揽",
+      canon_schools_desc: "融会古法禄命纳音宗、子平正统格局理气宗、调候气候物象宗、近世通俗中间件宗，提炼立体多维的古典命理画像：",
+
       canon_sanming_auto: "当前命盘直配断语 (日柱与时柱组合 · 包含含义、出处、成格、用法四维详解)：",
       canon_sanming_exp_title: "📖 查阅《三命通会》六十甲子日时全断 (720种组合)",
       canon_sanming_exp_desc: "选择任意日柱与时辰，即刻调阅万民英在卷八、卷九中的原著断法与四维详解。",
@@ -1303,9 +1327,33 @@ const I18N = (function() {
       tab_yuzhao_badge: "Palace Astrology",
       tab_lixuzhong: "🎵 Li Xu Zhong Ming Shu",
       tab_lixuzhong_badge: "Three Primes & NaYin",
+      tab_lantai: "🪷 Lan Tai Miao Xuan",
+      tab_lantai_badge: "NaYin Imagery",
+      tab_wuxing: "📜 Wu Xing Jing Ji",
+      tab_wuxing_badge: "Song Ancient Lu-Ming",
+      tab_qianli: "📑 Qian Li Ming Gao",
+      tab_qianli_badge: "Practical Case Law",
+      tab_schools: "🏛️ Four Schools Synthesis",
+      tab_schools_badge: "Holographic Portrait",
       tab_search: "🔍 Universal Search",
 
       // Canons Contents
+      canon_lantai_auto: "Natal NaYin Pattern Reading (Lan Tai Miao Xuan Imagery & Grand Configurations):",
+      canon_lantai_patterns_title: "🪷 Lan Tai Miao Xuan Great NaYin Configurations Database",
+      canon_lantai_patterns_desc: "Ming dynasty classic deciphering sublime NaYin imagery: Water-Fire Equilibrium, Azure Dragon, Moon Pearl, and historic configurations:",
+
+      canon_wuxing_auto: "Natal Year-Root & NaYin Resonance (Song Dynasty Wu Xing Jing Ji):",
+      canon_wuxing_chapters_title: "📜 Wu Xing Jing Ji: Song Dynasty Ancient Lu-Ming Treatises",
+      canon_wuxing_chapters_desc: "The Song Dynasty master encyclopedia detailing Year Root supremacy, NaYin vitality phases, and Nobles riding vigor:",
+
+      canon_qianli_auto: "Natal Five Useful God Protocols & Case Precedent (Wei Qianli's Qian Li Ming Gao):",
+      canon_qianli_protocols_title: "📑 Qian Li Ming Gao: Five Useful God Protocols & Modern Essentials",
+      canon_qianli_protocols_desc: "Republican master Wei Qianli's modern masterwork: Supporting, Regulation, Bridging, Disease-Medicine, and Specialized Dominance:",
+      canon_qianli_cases_title: "Republican Era Historical Case Law & Verdicts",
+
+      canon_schools_title: "🏛️ Four Classical Metaphysical Schools Holographic Synthesis",
+      canon_schools_desc: "Synthesizing Ancient Lu-Ming NaYin, Orthodox Ziping Patterns, Seasonal Climate Regulation, and Modern Practical Case Middleware:",
+
       canon_sanming_auto: "Natal Day-Hour Combination Reading (4D Analysis: Meaning, Source, Formation, Usage):",
       canon_sanming_exp_title: "📖 Explore 60 JiaZi Day-Hour Combinations (720 Pairs)",
       canon_sanming_exp_desc: "Select any Day and Hour pillar to view Wan Minying's classic treatise and 4D practical analysis.",

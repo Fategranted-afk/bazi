@@ -37,6 +37,24 @@ const YU_ZHAO_DATA = {
       quoteEn: 'Harmony between Year and Month signifies flourishing ancestral legacy; Resource meeting Officer denotes noble fathers and benevolent mothers; unhindered Indirect Wealth grants paternal longevity; Year-Month clashes indicate self-made migration from ancestral soil.',
       vernacularZh: '年柱代表祖辈根基与家族传承，月柱代表父母抚育与原生家庭门风。年月相生者得父母长辈倾力托举；年月相冲相战者，多自幼离乡背井白手起家，破除原生家庭桎梏而独立自强。',
       vernacularEn: 'Year Pillar governs ancestral roots; Month Pillar governs parental upbringing and familial culture. Generating relationships grant deep parental shelter; clashing pillars foster early independence, requiring the native to build their own empire away from home.'
+    },
+    {
+      id: 'suiyun_jiaogan',
+      titleZh: '岁运交感与刑冲破害直断',
+      titleEn: 'Transit-Pillar Intersection & Clash Verdicts',
+      quoteZh: '太岁冲刑，吉凶见于朝夕；岁月交加，喜庆集于门庭。日逢时冲，晚景多变；月被年伤，早年离析。煞刃交加，行险以求全；贵马相扶，乘风而直上。',
+      quoteEn: 'Annual clash triggers swift consequences overnight; harmonious conjunction gathers celebrations into households. Day-Hour clash implies dynamic late-career transformation; Year-Month friction indicates early self-reliance.',
+      vernacularZh: '晋代郭璞开篇即点明四柱岁运交感神机：大运流年引动命中地支刑冲破害，即是命运能量的总引爆点。冲开喜用库藏则财富暴涨，冲破用神根基则须慎防波折；以日时为终局，以岁月为先兆。',
+      vernacularEn: 'Master Guo Pu emphasizes that transits activating natal clashes trigger rapid breakthroughs or sudden pivot requirements. Unlocking favorable storage generates unexpected wealth; shielding vulnerable roots prevents unnecessary friction.'
+    },
+    {
+      id: 'xingchong_poshen',
+      titleZh: '四柱刑害神煞吉凶应验诀',
+      titleEn: 'Four Pillars Penalty, Harm & Auspicious Star Verdicts',
+      quoteZh: '子卯相刑，门风自慎；丑戌未相刑，持重以防内诈。六害临门，骨肉须宽容；六合交泰，所谋多成遂。吉神乘旺，千灾自解；凶煞无制，防微杜渐。',
+      quoteEn: 'Zi-Mao penalty counsels self-discipline; Earth penalties advise vigilant governance against internal deception. Six Harms counsel familial grace; Six Harmonies ensure smooth execution of strategic plans.',
+      vernacularZh: '玉照定真经独创四柱神煞与地支刑冲互看之法：刑害虽为不利之兆，然若带天乙贵人或印绶护持，反而淬炼出超常的心智深度与危机免疫力；凡事防微杜渐，以正道自持则无往不利。',
+      vernacularEn: 'Guo Pu pioneered integrating branch penalties with deity stars: branch tensions shielded by Noble Stars forge rare depth and crisis immunity; principled integrity reliably transmutes hazards into triumphs.'
     }
   ],
 
@@ -976,6 +994,49 @@ class YuZhaoDB {
     return YU_ZHAO_DATA.aphorisms;
   }
 
+  static getTransitInteractionReading(bazi) {
+    if (!bazi || !bazi.pillars) {
+      return {
+        titleZh: '四柱岁运交感直断',
+        titleEn: 'Pillar-Transit Interaction Direct Verdict',
+        verdictZh: '四柱相生互照，岁运逢冲亦有吉神护佑。',
+        verdictEn: 'Pillars mutually generate; transits meeting clashes are sheltered by auspicious stars.'
+      };
+    }
+    const p = bazi.pillars;
+    const branches = [p.year?.branch, p.month?.branch, p.day?.branch, p.hour?.branch].filter(Boolean);
+    const dayBranch = p.day?.branch || '子';
+    const monthBranch = p.month?.branch || '子';
+
+    let verdictZh = '《玉照定真经》断诀：';
+    let verdictEn = 'Yu Zhao Ding Zhen Jing Direct Verdict: ';
+
+    if (dayBranch === monthBranch) {
+      verdictZh += '日月同支比和，立身沉稳坚毅，然中年须防婚恋与合伙之暗耗。';
+      verdictEn += 'Day and Month share the same branch: resolute character; maintain clear boundaries in partnership.';
+    } else if (
+      (dayBranch === '子' && monthBranch === '午') || (dayBranch === '午' && monthBranch === '子') ||
+      (dayBranch === '卯' && monthBranch === '酉') || (dayBranch === '酉' && monthBranch === '卯') ||
+      (dayBranch === '寅' && monthBranch === '申') || (dayBranch === '申' && monthBranch === '寅') ||
+      (dayBranch === '巳' && monthBranch === '亥') || (dayBranch === '亥' && monthBranch === '巳') ||
+      (dayBranch === '辰' && monthBranch === '戌') || (dayBranch === '戌' && monthBranch === '辰') ||
+      (dayBranch === '丑' && monthBranch === '未') || (dayBranch === '未' && monthBranch === '丑')
+    ) {
+      verdictZh += '日月逢冲，早年多离乡创业，自立门户破茧成蝶，动中求财大富。';
+      verdictEn += 'Day and Month clash: early self-made pioneer leaving ancestral ground to amass dynamic wealth.';
+    } else {
+      verdictZh += '四柱宫位气机顺行，得父母长者庇荫，晚景子嗣昌明。';
+      verdictEn += 'Smooth circulation across pillars: blessed by ancestral support and promising descendants.';
+    }
+
+    return {
+      titleZh: '《玉照定真经》四柱岁运交感与刑冲神煞直断',
+      titleEn: 'Yu Zhao Ding Zhen Jing: Structural Clash & Transit Hologram',
+      verdictZh,
+      verdictEn
+    };
+  }
+
   static search(keyword) {
     const results = [];
     if (!keyword || typeof keyword !== 'string') return results;
@@ -983,24 +1044,34 @@ class YuZhaoDB {
 
     // Search aphorisms
     YU_ZHAO_DATA.aphorisms.forEach(a => {
-      if (a.titleZh.toLowerCase().includes(kw) || a.quoteZh.toLowerCase().includes(kw) || a.vernacularZh.toLowerCase().includes(kw)) {
+      if (a.titleZh.toLowerCase().includes(kw) || a.quoteZh.toLowerCase().includes(kw) || a.vernacularZh.toLowerCase().includes(kw) ||
+          (a.titleEn && a.titleEn.toLowerCase().includes(kw)) || (a.quoteEn && a.quoteEn.toLowerCase().includes(kw))) {
         results.push({
           source: '《玉照定真经》· 经文',
+          sourceEn: 'Yu Zhao Ding Zhen Jing: Aphorisms',
           title: a.titleZh,
+          titleEn: a.titleEn || a.titleZh,
           content: a.quoteZh,
-          detail: a.vernacularZh
+          contentEn: a.quoteEn || a.quoteZh,
+          detail: a.vernacularZh,
+          detailEn: a.vernacularEn || a.vernacularZh
         });
       }
     });
 
     // Search spouse profiles
     for (const [branch, p] of Object.entries(YU_ZHAO_DATA.spousePalaceProfiles)) {
-      if (branch.includes(kw) || p.archetypeZh.toLowerCase().includes(kw) || p.traitsZh.toLowerCase().includes(kw) || p.adviceZh.toLowerCase().includes(kw)) {
+      if (branch.includes(kw) || p.archetypeZh.toLowerCase().includes(kw) || p.traitsZh.toLowerCase().includes(kw) || p.adviceZh.toLowerCase().includes(kw) ||
+          (p.archetypeEn && p.archetypeEn.toLowerCase().includes(kw)) || (p.traitsEn && p.traitsEn.toLowerCase().includes(kw))) {
         results.push({
           source: '《玉照定真经》· 夫妻宫',
+          sourceEn: 'Yu Zhao Ding Zhen Jing: Spouse Palace',
           title: '日坐【' + branch + '】配偶原型：' + p.archetypeZh,
+          titleEn: 'Day Branch [' + branch + '] Consort Archetype: ' + (p.archetypeEn || p.archetypeZh),
           content: p.traitsZh,
-          detail: p.adviceZh
+          contentEn: p.traitsEn || p.traitsZh,
+          detail: p.adviceZh,
+          detailEn: p.adviceEn || p.adviceZh
         });
       }
     }
@@ -1008,12 +1079,17 @@ class YuZhaoDB {
     // Search 60 day pillar profiles
     if (YU_ZHAO_DATA.dayPillarProfiles) {
       for (const [pillar, p] of Object.entries(YU_ZHAO_DATA.dayPillarProfiles)) {
-        if (pillar.includes(kw) || p.archetypeZh.toLowerCase().includes(kw) || p.traitsZh.toLowerCase().includes(kw)) {
+        if (pillar.includes(kw) || p.archetypeZh.toLowerCase().includes(kw) || p.traitsZh.toLowerCase().includes(kw) ||
+            (p.archetypeEn && p.archetypeEn.toLowerCase().includes(kw)) || (p.traitsEn && p.traitsEn.toLowerCase().includes(kw))) {
           results.push({
             source: '《玉照定真经》· 六十甲子日柱',
+            sourceEn: 'Yu Zhao Ding Zhen Jing: 60 JiaZi Day Pillar',
             title: '日柱【' + pillar + '】配偶：' + p.archetypeZh,
+            titleEn: 'Day Pillar [' + pillar + '] Consort: ' + (p.archetypeEn || p.archetypeZh),
             content: p.traitsZh,
-            detail: p.adviceZh
+            contentEn: p.traitsEn || p.traitsZh,
+            detail: p.adviceZh,
+            detailEn: p.adviceEn || p.adviceZh
           });
         }
       }

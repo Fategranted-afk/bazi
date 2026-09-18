@@ -46,6 +46,13 @@ canons = [
     ('data/qiongtong.js', '《穷通宝鉴》'),
     ('data/zipingzhenquan.js', '《子平真诠》'),
     ('data/yuanhai.js', '《渊海子平》'),
+    ('data/shenfeng.js', '《神峰通考》'),
+    ('data/yuzhao.js', '《玉照定真经》'),
+    ('data/lixuzhong.js', '《李虚中命书》'),
+    ('data/lantaimiaoxuan.js', '《兰台妙选》'),
+    ('data/wuxingjingji.js', '《五行精纪》'),
+    ('data/qianliminggao.js', '《千里命稿》'),
+    ('data/xulewu_commentary.js', '《徐乐吾评注》'),
     ('js/bazi-engine.js', '排盘引擎'),
     ('js/chart.js', '五行雷达图'),
     ('js/app.js', '界面控制器'),
@@ -13462,7 +13469,133 @@ assert run_check112.returncode == 0, f"Check 112 JSC test failed: stdout={run_ch
 
 print("✓ 社交名片高阶工艺重构（云雷纹回纹边框/四角绫绢包角/32颗金珠项圈肖像/立身功业与天机诫勉双护城河/四柱建筑式阵列）与百岁六十四卦总谱全景动态直连（100%绑定气机轨迹/非硬编码地水师/防险护身标定/双语零中文残留）验证通过！")
 
-print("\n🎉 ALL 112 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 113. Validating Expanded Canon Databases, Xu Lewu Middleware & Four Classical Schools Synthesis
+print("\n=== 113. Validating Expanded Five Canons Databases, Xu Lewu Middleware & Four Classical Schools Synthesis ===")
+jsc_check113_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/lantaimiaoxuan.js");
+    load("data/wuxingjingji.js");
+    load("data/qianliminggao.js");
+    load("data/xulewu_commentary.js");
+    load("data/tengods.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    // 1. Validate LanTaiDB
+    if (typeof LanTaiDB === "undefined") throw new Error("LanTaiDB is not defined");
+    var ltPatterns = LanTaiDB.getAllPatterns();
+    if (!ltPatterns || ltPatterns.length < 6) throw new Error("LanTaiDB should have at least 6 patterns, got " + (ltPatterns ? ltPatterns.length : 0));
+    var testBazi1 = {
+      dayMaster: "壬",
+      dayMasterElement: "水",
+      dayMasterYinYang: "阳",
+      solarInfo: { monthBranch: "子" },
+      pillars: {
+        year: { stem: "甲", branch: "辰", text: "甲辰", naYin: "佛灯火" },
+        month: { stem: "丙", branch: "寅", text: "丙寅", naYin: "炉中火" },
+        day: { stem: "壬", branch: "戌", text: "壬戌", naYin: "大海水" },
+        hour: { stem: "庚", branch: "子", text: "庚子", naYin: "壁上土" }
+      }
+    };
+    var ltMatched = LanTaiDB.getMatchingPatterns(testBazi1);
+    if (!ltMatched || ltMatched.length === 0) throw new Error("LanTaiDB getMatchingPatterns should match patterns for testBazi1");
+    var ltSearch = LanTaiDB.search("苍龙");
+    if (!ltSearch || ltSearch.length === 0 || !ltSearch[0].sourceEn) throw new Error("LanTaiDB search '苍龙' failed or missing bilingual fields");
+
+    // 2. Validate WuXingJingJiDB
+    if (typeof WuXingJingJiDB === "undefined") throw new Error("WuXingJingJiDB is not defined");
+    var wxChapters = WuXingJingJiDB.getAllChapters();
+    if (!wxChapters || wxChapters.length < 4) throw new Error("WuXingJingJiDB should have at least 4 chapters");
+    var yrAnalysis = WuXingJingJiDB.getYearRootAnalysis(testBazi1);
+    if (!yrAnalysis || !yrAnalysis.titleZh || !yrAnalysis.rootQualityZh || !yrAnalysis.rootQualityEn) {
+      throw new Error("WuXingJingJiDB getYearRootAnalysis failed");
+    }
+    var wxSearch = WuXingJingJiDB.search("年本");
+    if (!wxSearch || wxSearch.length === 0 || !wxSearch[0].detailEn) throw new Error("WuXingJingJiDB search failed or missing detailEn");
+
+    // 3. Validate QianLiDB
+    if (typeof QianLiDB === "undefined") throw new Error("QianLiDB is not defined");
+    var qlProtocols = QianLiDB.getAllProtocols();
+    if (!qlProtocols || qlProtocols.length < 5) throw new Error("QianLiDB should have at least 5 protocols");
+    var qlCases = QianLiDB.getCaseStudies();
+    if (!qlCases || qlCases.length < 2) throw new Error("QianLiDB should have at least 2 cases");
+    var qlEval = QianLiDB.evaluateNativeYongShen(testBazi1, { isStrong: true, totalScore: 65 });
+    if (!qlEval || !qlEval.nameZh || !qlEval.rationaleZh || !qlEval.rationaleEn) throw new Error("QianLiDB evaluateNativeYongShen failed");
+    var qlSearch = QianLiDB.search("扶抑");
+    if (!qlSearch || qlSearch.length === 0 || !qlSearch[0].sourceEn) throw new Error("QianLiDB search failed");
+
+    // 4. Validate XuLewuDB Middleware
+    if (typeof XuLewuDB === "undefined") throw new Error("XuLewuDB is not defined");
+    var manifesto = XuLewuDB.getManifesto();
+    if (!manifesto || !manifesto.titleZh || !manifesto.valueZh || !manifesto.controversyZh) throw new Error("XuLewuDB manifesto failed");
+    var xuExegesis = XuLewuDB.getMiddlewareExegesis("甲", "寅", { isStrong: true, totalScore: 70 });
+    if (!xuExegesis || !xuExegesis.abstractRuleZh || !xuExegesis.finetunedRuleZh || !xuExegesis.concreteCaseZh) {
+      throw new Error("XuLewuDB getMiddlewareExegesis failed");
+    }
+    var xuSearch = XuLewuDB.search("中间件");
+    if (!xuSearch || xuSearch.length === 0) throw new Error("XuLewuDB search '中间件' failed");
+
+    // 5. Validate Classical Schools Synthesis (Four Schools Holographic Portrait)
+    var schools = PortraitEngine.generateClassicalSchoolsPortrait(
+      testBazi1,
+      { isStrong: true, totalScore: 65 },
+      [{ name: "偏财格", weightPct: 35 }],
+      { primary: "丙火" },
+      { lantai: { matchedPatterns: ltMatched } }
+    );
+    if (!schools || !schools.ancientLuMing || !schools.orthodoxZiping || !schools.seasonalClimate || !schools.modernPractical) {
+      throw new Error("PortraitEngine.generateClassicalSchoolsPortrait missing one or more of the four schools");
+    }
+    ['ancientLuMing', 'orthodoxZiping', 'seasonalClimate', 'modernPractical'].forEach(function(k) {
+      var s = schools[k];
+      if (!s.schoolNameZh || !s.schoolNameEn || !s.classicsZh || !s.classicsEn ||
+          !s.coreTenetZh || !s.coreTenetEn || !s.nativePortraitZh || !s.nativePortraitEn ||
+          !s.strategicAdviceZh || !s.strategicAdviceEn) {
+        throw new Error("School " + k + " missing required bilingual fields");
+      }
+      var enLeaks = (s.schoolNameEn + " " + s.classicsEn + " " + s.coreTenetEn + " " + s.nativePortraitEn + " " + s.strategicAdviceEn).match(/[\\u4e00-\\u9fa5]/g);
+      if (enLeaks && enLeaks.length > 0) {
+        throw new Error("Residual Chinese in English school " + k + ": " + enLeaks.join(""));
+      }
+    });
+
+    // 6. Universal 12-Classics Search Integration
+    var allResults = [
+      ...DiTianSuiDB.search("火"),
+      ...SanMingDB.search("火"),
+      ...QiongTongDB.search("火"),
+      ...ZiPingZhenQuanDB.search("火"),
+      ...YuanHaiDB.search("火"),
+      ...ShenFengDB.search("火"),
+      ...YuZhaoDB.search("火"),
+      ...LiXuZhongDB.search("火"),
+      ...LanTaiDB.search("火"),
+      ...WuXingJingJiDB.search("火"),
+      ...QianLiDB.search("火"),
+      ...XuLewuDB.search("火")
+    ];
+    if (allResults.length < 12) {
+      throw new Error("Combined search for '火' should yield at least 12 results across 12 databases, got " + allResults.length);
+    }
+    '''
+]
+run_check113 = subprocess.run(jsc_check113_cmd, capture_output=True, text=True)
+assert run_check113.returncode == 0, f"Check 113 JSC test failed: stdout={run_check113.stdout} stderr={run_check113.stderr}"
+
+print("✓ 扩充五经经典数据库（《兰台妙选》《五行精纪》《千里命稿》）、徐乐吾评注实操中间件系统与四大学派古典画像统揽（中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 113 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

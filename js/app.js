@@ -260,6 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderLiXuZhongChapters === 'function') {
       renderLiXuZhongChapters();
     }
+    if (typeof renderLanTaiPatterns === 'function') {
+      renderLanTaiPatterns();
+    }
+    if (typeof renderWuXingChapters === 'function') {
+      renderWuXingChapters();
+    }
+    if (typeof renderQianLiProtocols === 'function') {
+      renderQianLiProtocols();
+    }
     if (typeof window !== 'undefined' && typeof window.refreshIChingOnLangChange === 'function') {
       window.refreshIChingOnLangChange();
     }
@@ -4138,6 +4147,41 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    // 2b. 《造化元钥评注》（徐乐吾中间件）月令喜忌案例细化
+    const qtXuContainer = document.getElementById('qiongtongXuLewuContainer');
+    if (qtXuContainer && typeof XuLewuDB !== 'undefined') {
+      const ex = XuLewuDB.getMiddlewareExegesis(dayMaster, monthBranch, res.vigor);
+      qtXuContainer.innerHTML = `
+        <div class="bg-card p-5 rounded-xl border border-blue-500/30 shadow-lg space-y-3 mt-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-blue-500/20">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0 border-blue-400 text-blue-300">${isEn ? 'Zao Hua Yuan Yao' : '造化元钥评注'}</span>
+              <h4 class="text-sm font-bold text-blue-300 font-serif-sc">${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '徐乐吾十干生于十二月令具象案例解析'}</h4>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-200">
+              ${isEn ? `${dayMaster} in ${monthBranch} Month` : `${dayMaster}生于${monthBranch}月`} · ${isEn ? 'Operational Middleware' : '实操中间件'}
+            </span>
+          </div>
+
+          <div class="p-3 bg-black/30 rounded-lg border border-blue-900/30 text-xs space-y-1">
+            <span class="text-amber-300 font-bold block">💡 ${isEn ? '1. Operational Middleware Decision Tree (Concrete Rule):' : '1. 具象化实操判断规则（将抽象古意翻译为决策规则）：'}</span>
+            <p class="text-gray-200 leading-relaxed">${isEn ? ex.abstractRuleEn : ex.abstractRuleZh}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
+            <div class="p-3 bg-black/30 rounded-lg border border-emerald-900/30 space-y-1">
+              <span class="text-emerald-400 font-bold block">⚖️ ${isEn ? '2. Vigor Calibration Heuristic:' : '2. 身强身弱细化微调准则：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? ex.finetunedRuleEn : ex.finetunedRuleZh}</p>
+            </div>
+            <div class="p-3 bg-black/30 rounded-lg border border-indigo-900/30 space-y-1">
+              <span class="text-indigo-300 font-bold block">🏛️ ${isEn ? '3. Documented Historical Case Precedent:' : '3. 民国政商实务断案范例：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? ex.concreteCaseEn : ex.concreteCaseZh}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
     // 3. 《子平真诠》 Auto Pattern Matching
     // Detect month god for pattern diagnosis
     const monthGod = res.pillars.month.stemGod;
@@ -4217,6 +4261,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
               </div>
             ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    // 3b. 《子平真诠评注》（徐乐吾中间件）格局成败实操细化
+    const zpXuContainer = document.getElementById('zipingXuLewuContainer');
+    if (zpXuContainer && typeof XuLewuDB !== 'undefined') {
+      const manifesto = XuLewuDB.getManifesto();
+      const ex = XuLewuDB.getMiddlewareExegesis(dayMaster, monthBranch, res.vigor);
+      zpXuContainer.innerHTML = `
+        <div class="bg-card p-5 rounded-xl border border-purple-500/30 shadow-lg space-y-3 mt-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-purple-500/20">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0 border-purple-400 text-purple-300">${isEn ? 'Zi Ping Commentary' : '子平真诠评注'}</span>
+              <h4 class="text-sm font-bold text-purple-300 font-serif-sc">${isEn ? manifesto.titleEn : manifesto.titleZh}</h4>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-200">
+              ${isEn ? 'Sovereign Middleware' : '核心实操中间件'}
+            </span>
+          </div>
+
+          <div class="p-3 bg-black/30 rounded-lg border border-purple-900/30 text-xs space-y-1">
+            <span class="text-amber-300 font-bold block">⚖️ ${isEn ? 'Academic Positioning & Middleware Value:' : '徐乐吾评注核心价值（学术定位与中间件功能）：'}</span>
+            <p class="text-gray-200 leading-relaxed">${isEn ? manifesto.valueEn : manifesto.valueZh}</p>
+            <p class="text-gray-400 leading-relaxed pt-1.5 border-t border-gray-800 text-[11px]">${isEn ? manifesto.controversyEn : manifesto.controversyZh}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 text-xs">
+            <div class="p-2.5 bg-black/30 rounded-lg border border-emerald-900/30">
+              <span class="text-emerald-400 font-bold block mb-1">🎯 ${isEn ? 'Monthly Decision Heuristic:' : '本造月令取用实操定式：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? ex.abstractRuleEn : ex.abstractRuleZh}</p>
+            </div>
+            <div class="p-2.5 bg-black/30 rounded-lg border border-rose-900/30">
+              <span class="text-rose-400 font-bold block mb-1">⚡ ${isEn ? 'Vigor Calibration & Balance:' : '身强身弱实战微调准则：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? ex.finetunedRuleEn : ex.finetunedRuleZh}</p>
+            </div>
           </div>
         </div>
       `;
@@ -4505,6 +4586,186 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
+    }
+
+    // 8. 《兰台妙选》 (Lan Tai Miao Xuan) Auto Matching
+    const lantaiContainer = document.getElementById('lantaiAutoResult');
+    if (lantaiContainer && typeof LanTaiDB !== 'undefined') {
+      const matches = LanTaiDB.getMatchingPatterns(res);
+      if (matches.length > 0) {
+        lantaiContainer.innerHTML = matches.map(pat => `
+          <div class="bg-card p-5 rounded-xl border border-indigo-500/30 shadow-lg space-y-3 mb-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-indigo-500/20">
+              <div class="flex items-center space-x-2">
+                <span class="chinese-seal text-[10px] py-0 border-indigo-400 text-indigo-300">${isEn ? 'Lan Tai Miao Xuan' : '兰台妙选'}</span>
+                <h4 class="text-base font-bold text-indigo-300 font-serif-sc">${isEn ? pat.nameEn : pat.nameZh}</h4>
+              </div>
+              <span class="text-[11px] px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-200">
+                ${isEn ? pat.categoryEn : pat.category}
+              </span>
+            </div>
+
+            <div class="bg-indigo-950/20 border-l-4 border-indigo-500 p-3 rounded-r text-xs">
+              <span class="text-indigo-300/80 font-medium block mb-0.5">${isEn ? 'Classic Quote:' : '原经古赋：'}</span>
+              <p class="font-serif-sc text-indigo-100 font-semibold leading-relaxed">${isEn ? pat.quoteEn : pat.quoteZh}</p>
+            </div>
+
+            <div class="p-3 bg-black/30 rounded-lg border border-indigo-900/30 text-xs space-y-1">
+              <span class="text-amber-300 font-bold block">✨ ${isEn ? 'Metaphysical Conception & Imagery:' : '象数神机与大格详析：'}</span>
+              <p class="text-gray-200 leading-relaxed">${isEn ? pat.meaningEn : pat.meaningZh}</p>
+            </div>
+
+            <div class="p-3 bg-black/30 rounded-lg border border-emerald-900/30 text-xs space-y-1">
+              <span class="text-emerald-400 font-bold block">🚀 ${isEn ? 'Modern Strategic Archetype:' : '现代心智与社会画像：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? pat.modernInterpretationEn : pat.modernInterpretationZh}</p>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        lantaiContainer.innerHTML = `
+          <div class="bg-card p-5 rounded-xl border border-gray-800 text-xs space-y-2">
+            <div class="flex items-center space-x-2 text-indigo-300 font-bold">
+              <span>🪷</span>
+              <span>${isEn ? 'Lan Tai Miao Xuan Configuration Appraisal' : '兰台妙选象数全景考据'}</span>
+            </div>
+            <p class="text-gray-300 leading-relaxed">
+              ${isEn 
+                ? 'The native chart does not strictly trigger singular extreme NaYin configurations (e.g. Pure Water-Fire or Azure Dragon); however, the four pillars exhibit balanced NaYin acoustic harmony, supporting steady compounding and structural stability without extreme disruption.' 
+                : '本造虽未入《兰台妙选》极端奇格（如苍龙驾海、纯粹水火既济等绝品大格），然四柱干支纳音五行中正稳厚，气脉调和，避开了极度偏枯相克的风险，主一生行事稳健、根基坚实。'}
+            </p>
+          </div>
+        `;
+      }
+    }
+
+    // 9. 《五行精纪》 (Wu Xing Jing Ji) Auto Matching
+    const wuxingContainer = document.getElementById('wuxingAutoResult');
+    if (wuxingContainer && typeof WuXingJingJiDB !== 'undefined') {
+      const yr = WuXingJingJiDB.getYearRootAnalysis(res);
+      wuxingContainer.innerHTML = `
+        <div class="bg-card p-5 rounded-xl border border-emerald-500/30 shadow-lg space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-emerald-500/20">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0 border-emerald-400 text-emerald-300">${isEn ? 'Wu Xing Jing Ji' : '五行精纪'}</span>
+              <h3 class="text-base font-bold text-emerald-300 font-serif-sc">${isEn ? yr.titleEn : yr.titleZh}</h3>
+            </div>
+            <span class="text-xs text-gray-400">${isEn ? 'Song Dynasty · Liao Zhong' : '宋·廖中著'}</span>
+          </div>
+
+          <div class="bg-emerald-950/20 border-l-4 border-emerald-500 p-3 rounded-r text-xs">
+            <p class="text-emerald-300/80 mb-0.5 font-medium">${isEn ? 'Song Dynasty Ancient Method Core Doctrine:' : '宋代古法命学总纲（年本为主）：'}</p>
+            <p class="font-serif-sc text-emerald-100 font-semibold leading-relaxed">
+              ${isEn ? '“Take Year as Root, Day as Self, Month as Portal, Hour as Destination. When the Year Root is noble and profound, life withstands hurricanes without tipping.”' : '“以年为本，以日为主，以月为门户，以时为引从。年本尊荣，如君临万国，树立千丈；根基深厚，方受风雨而不倾。”'}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-black/30 rounded-lg border border-emerald-900/30 space-y-1.5">
+              <span class="text-emerald-400 font-bold block">🌳 ${isEn ? 'Year Root Quality & Ancestral Foundation:' : '年本岁命根基底盘全息：'}</span>
+              <p class="text-gray-200 leading-relaxed">${isEn ? yr.rootQualityEn : yr.rootQualityZh}</p>
+            </div>
+            <div class="p-3 bg-black/30 rounded-lg border border-teal-900/30 space-y-1.5">
+              <span class="text-teal-300 font-bold block">🎵 ${isEn ? 'NaYin Acoustic Resonance (Year & Day):' : '年日纳音律吕同和交互：'}</span>
+              <p class="text-gray-200 leading-relaxed">${isEn ? yr.naYinResonanceEn : yr.naYinResonanceZh}</p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-black/30 rounded-lg border border-amber-900/30 text-xs space-y-1">
+            <span class="text-amber-300 font-bold block">⚡ ${isEn ? 'Lu-Ma Riding Vitality Strategic Direction:' : '禄马乘旺与宏观大平台借势策：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? yr.lumaAdviceEn : yr.lumaAdviceZh}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 10. 《千里命稿》 (Qian Li Ming Gao) Auto Matching
+    const qianliContainer = document.getElementById('qianliAutoResult');
+    if (qianliContainer && typeof QianLiDB !== 'undefined') {
+      const ql = QianLiDB.evaluateNativeYongShen(res, res.vigor);
+      qianliContainer.innerHTML = `
+        <div class="bg-card p-5 rounded-xl border border-blue-500/30 shadow-lg space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-blue-500/20">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0 border-blue-400 text-blue-300">${isEn ? 'Qian Li Ming Gao' : '千里命稿'}</span>
+              <h3 class="text-base font-bold text-blue-300 font-serif-sc">${isEn ? ql.nameEn : ql.nameZh}</h3>
+            </div>
+            <span class="text-xs text-gray-400">${isEn ? 'Republican Era · Wei Qianli' : '民国·韦千里著'}</span>
+          </div>
+
+          <div class="bg-blue-950/20 border-l-4 border-blue-500 p-3 rounded-r text-xs">
+            <p class="text-blue-300/80 mb-0.5 font-medium">${isEn ? 'Yong Shen Protocol Doctrine:' : '用神五法精义断语：'}</p>
+            <p class="font-serif-sc text-blue-100 font-semibold leading-relaxed">${isEn ? ql.quoteEn : ql.quoteZh}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-black/30 rounded-lg border border-blue-900/30 space-y-1.5">
+              <span class="text-blue-400 font-bold block">⚖️ ${isEn ? 'Native Chart Application Rationale:' : '本造用神归宿与辨析依据：'}</span>
+              <p class="text-gray-200 leading-relaxed">${isEn ? ql.rationaleEn : ql.rationaleZh}</p>
+            </div>
+            <div class="p-3 bg-black/30 rounded-lg border border-cyan-900/30 space-y-1.5">
+              <span class="text-cyan-300 font-bold block">💡 ${isEn ? 'Modern Operational Action Rule:' : '近代实战定式与行动指南：'}</span>
+              <p class="text-gray-200 leading-relaxed">${isEn ? ql.modernInterpretationEn : ql.modernInterpretationZh}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 11. Classical Schools Synthesis (四大学派全景画像)
+    const schoolsContainer = document.getElementById('schoolsPortraitContainer');
+    if (schoolsContainer && typeof PortraitEngine !== 'undefined') {
+      const pData = PortraitEngine.analyze(res, currentLang);
+      const schools = (pData && pData.paretoCore && pData.paretoCore.schoolsPortrait)
+        || PortraitEngine.generateClassicalSchoolsPortrait(res, res.vigor, res.patterns, res.climate, (pData && pData.paretoCore && pData.paretoCore.canons));
+      
+      if (schools) {
+        const schoolList = [
+          { data: schools.ancientLuMing, border: 'border-amber-500/30', badgeBg: 'bg-amber-500/20', textCol: 'text-amber-300', icon: '🏛️' },
+          { data: schools.orthodoxZiping, border: 'border-purple-500/30', badgeBg: 'bg-purple-500/20', textCol: 'text-purple-300', icon: '📜' },
+          { data: schools.seasonalClimate, border: 'border-emerald-500/30', badgeBg: 'bg-emerald-500/20', textCol: 'text-emerald-300', icon: '🌿' },
+          { data: schools.modernPractical, border: 'border-blue-500/30', badgeBg: 'bg-blue-500/20', textCol: 'text-blue-300', icon: '⚙️' }
+        ];
+
+        schoolsContainer.innerHTML = schoolList.map(s => {
+          const sc = s.data;
+          if (!sc) return '';
+          return `
+            <div class="bg-card p-5 rounded-xl border ${s.border} shadow-lg space-y-3.5 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-lg">${s.icon}</span>
+                    <h4 class="text-base font-bold ${s.textCol} font-serif-sc">${isEn ? sc.schoolNameEn : sc.schoolNameZh}</h4>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded ${s.badgeBg} ${s.textCol}">
+                    ${isEn ? 'Classical School' : '古典学派画像'}
+                  </span>
+                </div>
+
+                <div class="text-xs text-gray-400">
+                  <span class="text-gray-300 font-semibold">${isEn ? 'Core Classics: ' : '传世典籍：'}</span>
+                  <span>${isEn ? sc.classicsEn : sc.classicsZh}</span>
+                </div>
+
+                <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800/80 text-xs space-y-1">
+                  <span class="text-gray-200 font-bold block">🎯 ${isEn ? 'School Methodology & Core Tenet:' : '学派宗旨与核心方法论：'}</span>
+                  <p class="text-gray-300 leading-relaxed">${isEn ? sc.coreTenetEn : sc.coreTenetZh}</p>
+                </div>
+
+                <div class="p-3 bg-black/30 rounded-lg border border-gray-800/80 text-xs space-y-1">
+                  <span class="${s.textCol} font-bold block">🔮 ${isEn ? 'Native Chart School Portrait:' : '当前命造流派判词全相：'}</span>
+                  <p class="text-gray-200 leading-relaxed">${isEn ? sc.nativePortraitEn : sc.nativePortraitZh}</p>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-black/40 rounded-lg border border-gray-700/60 text-xs mt-2">
+                <span class="text-amber-300 font-bold block mb-0.5">⚡ ${isEn ? 'School Strategic Action Rule:' : '流派实战定策微动作：'}</span>
+                <p class="text-gray-300 leading-relaxed">${isEn ? sc.strategicAdviceEn : sc.strategicAdviceZh}</p>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
     }
   }
 
@@ -10311,7 +10572,129 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   renderLiXuZhongChapters();
 
-  // Universal Search across all 8 databases
+  // 《兰台妙选》 Patterns List
+  function renderLanTaiPatterns() {
+    const ltContainer = document.getElementById('lantaiPatternsList');
+    if (!ltContainer || typeof LanTaiDB === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    ltContainer.innerHTML = '';
+    const patterns = LanTaiDB.getAllPatterns();
+    patterns.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'p-4 bg-black/20 rounded-xl border border-indigo-900/40 text-xs space-y-2 shadow-md flex flex-col justify-between';
+      div.innerHTML = `
+        <div class="space-y-1.5">
+          <div class="flex justify-between items-center pb-1.5 border-b border-gray-800">
+            <h5 class="font-bold text-indigo-300 text-sm font-serif-sc">${isEn ? p.nameEn : p.nameZh}</h5>
+            <span class="chinese-seal text-[10px] py-0 border-indigo-400 text-indigo-300">${isEn ? 'Lan Tai Pattern' : '兰台妙选'}</span>
+          </div>
+          <p class="text-indigo-200/90 font-serif-sc font-medium leading-relaxed">“${isEn ? p.quoteEn : p.quoteZh}”</p>
+          <div class="p-2 bg-black/30 rounded border border-gray-800">
+            <span class="text-amber-300 font-bold block mb-0.5">✨ ${isEn ? 'Configuration & Imagery:' : '象数神机与大格精解：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? p.meaningEn : p.meaningZh}</p>
+          </div>
+        </div>
+        <div class="p-2 bg-black/30 rounded border border-emerald-950/40 mt-1">
+          <span class="text-emerald-400 font-bold block mb-0.5">🚀 ${isEn ? 'Modern Strategic Archetype:' : '现代心智与社会画像：'}</span>
+          <p class="text-gray-300 leading-relaxed">${isEn ? p.modernInterpretationEn : p.modernInterpretationZh}</p>
+        </div>
+      `;
+      ltContainer.appendChild(div);
+    });
+  }
+  renderLanTaiPatterns();
+
+  // 《五行精纪》 Chapters List
+  function renderWuXingChapters() {
+    const wxContainer = document.getElementById('wuxingChaptersList');
+    if (!wxContainer || typeof WuXingJingJiDB === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    wxContainer.innerHTML = '';
+    const chapters = WuXingJingJiDB.getAllChapters();
+    chapters.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'p-4 bg-black/20 rounded-xl border border-emerald-900/40 text-xs space-y-2 shadow-md';
+      div.innerHTML = `
+        <div class="flex justify-between items-center pb-1.5 border-b border-gray-800">
+          <h5 class="font-bold text-emerald-300 text-sm font-serif-sc">${isEn ? c.titleEn : c.titleZh}</h5>
+          <span class="chinese-seal text-[10px] py-0 border-emerald-400 text-emerald-300">${isEn ? 'Wu Xing Treatise' : '五行精纪'}</span>
+        </div>
+        <p class="text-emerald-200/90 font-serif-sc font-medium leading-relaxed">“${isEn ? c.quoteEn : c.quoteZh}”</p>
+        <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800">
+          <span class="text-amber-300 font-bold block mb-1">💡 ${isEn ? 'Song Dynasty Lu-Ming Exegesis:' : '宋代古法大集通释：'}</span>
+          <p class="text-gray-300 leading-relaxed">${isEn ? c.vernacularEn : c.vernacularZh}</p>
+        </div>
+        <div class="p-2.5 bg-black/30 rounded-lg border border-teal-950/40">
+          <span class="text-teal-300 font-bold block mb-1">⚡ ${isEn ? 'Modern Strategic Archetype:' : '现代心智与社会画像：'}</span>
+          <p class="text-gray-300 leading-relaxed">${isEn ? c.modernInterpretationEn : c.modernInterpretationZh}</p>
+        </div>
+      `;
+      wxContainer.appendChild(div);
+    });
+  }
+  renderWuXingChapters();
+
+  // 《千里命稿》 Protocols & Case Studies
+  function renderQianLiProtocols() {
+    const qlProtocolsContainer = document.getElementById('qianliProtocolsList');
+    const qlCasesContainer = document.getElementById('qianliCaseStudiesList');
+    if (typeof QianLiDB === 'undefined') return;
+    const isEn = (currentLang === 'en');
+
+    if (qlProtocolsContainer) {
+      qlProtocolsContainer.innerHTML = '';
+      const protocols = QianLiDB.getAllProtocols();
+      protocols.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'p-4 bg-black/20 rounded-xl border border-blue-900/40 text-xs space-y-2 shadow-md flex flex-col justify-between';
+        div.innerHTML = `
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center pb-1.5 border-b border-gray-800">
+              <h5 class="font-bold text-blue-300 text-sm font-serif-sc">${isEn ? p.nameEn : p.nameZh}</h5>
+              <span class="chinese-seal text-[10px] py-0 border-blue-400 text-blue-300">${isEn ? 'Qian Li Protocol' : '千里命稿'}</span>
+            </div>
+            <p class="text-blue-200/90 font-serif-sc font-medium leading-relaxed">“${isEn ? p.quoteEn : p.quoteZh}”</p>
+            <div class="p-2 bg-black/30 rounded border border-gray-800">
+              <span class="text-amber-300 font-bold block mb-0.5">💡 ${isEn ? 'Modern Vernacular Exegesis:' : '现代通俗原理解析：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? p.vernacularEn : p.vernacularZh}</p>
+            </div>
+          </div>
+          <div class="p-2 bg-black/30 rounded border border-cyan-950/40 mt-1">
+            <span class="text-cyan-300 font-bold block mb-0.5">🎯 ${isEn ? 'Modern Operational Rule:' : '现代实操准则与落地定式：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? p.modernInterpretationEn : p.modernInterpretationZh}</p>
+          </div>
+        `;
+        qlProtocolsContainer.appendChild(div);
+      });
+    }
+
+    if (qlCasesContainer) {
+      qlCasesContainer.innerHTML = '';
+      const cases = QianLiDB.getCaseStudies();
+      cases.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'p-3.5 bg-black/25 rounded-xl border border-gray-800 text-xs space-y-1.5 shadow-md';
+        div.innerHTML = `
+          <div class="flex flex-wrap justify-between items-center gap-2 pb-1 border-b border-gray-800">
+            <div class="flex items-center space-x-2">
+              <span class="text-amber-300 font-bold font-serif-sc">${isEn ? c.titleEn : c.titleZh}</span>
+              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-[11px]">${c.pillars}</span>
+            </div>
+            <span class="text-[10px] text-gray-500">${isEn ? 'Republican Case Law' : '民国实务断案'}</span>
+          </div>
+          <p class="text-gray-300 leading-relaxed">${isEn ? c.summaryEn : c.summaryZh}</p>
+          <div class="pt-1 text-emerald-300 font-medium">
+            <span class="text-emerald-400">⚖️ ${isEn ? 'Master Qianli Verdict: ' : '韦千里案断：'}</span>
+            <span>${isEn ? c.insightEn : c.insightZh}</span>
+          </div>
+        `;
+        qlCasesContainer.appendChild(div);
+      });
+    }
+  }
+  renderQianLiProtocols();
+
+  // Universal Search across all 12 canonical & commentary databases
   const searchInput = document.getElementById('dbSearchInput');
   const searchBtn = document.getElementById('dbSearchBtn');
   const searchResultsContainer = document.getElementById('dbSearchResults');
@@ -10321,8 +10704,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const query = searchInput.value.trim();
     if (!query) {
       searchResultsContainer.innerHTML = isEn
-        ? '<p class="text-xs text-gray-500 text-center">Please enter keywords to search across the eight classics.</p>'
-        : '<p class="text-xs text-gray-500 text-center">请输入关键词进行联合检索，如“病药”、“夫妻”、“纳音”、“桃花流水”、“伤官吐秀”、“金白水清”、“丙火”、“调候”、“救应”等。</p>';
+        ? '<p class="text-xs text-gray-500 text-center">Please enter keywords to search across the eleven master classics and commentaries.</p>'
+        : '<p class="text-xs text-gray-500 text-center">请输入关键词进行联合检索，如“病药”、“苍龙驾海”、“年本”、“通关”、“徐乐吾”、“玉照”、“三元禄”、“伤官吐秀”、“丙火”、“调候”等。</p>';
       return;
     }
 
@@ -10334,18 +10717,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const sfResults = (typeof ShenFengDB !== 'undefined') ? ShenFengDB.search(query) : [];
     const yzResults = (typeof YuZhaoDB !== 'undefined') ? YuZhaoDB.search(query) : [];
     const lxzResults = (typeof LiXuZhongDB !== 'undefined') ? LiXuZhongDB.search(query) : [];
+    const ltResults = (typeof LanTaiDB !== 'undefined') ? LanTaiDB.search(query) : [];
+    const wxResults = (typeof WuXingJingJiDB !== 'undefined') ? WuXingJingJiDB.search(query) : [];
+    const qlResults = (typeof QianLiDB !== 'undefined') ? QianLiDB.search(query) : [];
+    const xuResults = (typeof XuLewuDB !== 'undefined') ? XuLewuDB.search(query) : [];
     const tgResults = (typeof TenGodsDB !== 'undefined') ? TenGodsDB.search(query) : [];
-    const all = [...dtsResults, ...smResults, ...qtResults, ...zpResults, ...yhResults, ...sfResults, ...yzResults, ...lxzResults, ...tgResults];
+    const all = [
+      ...dtsResults, ...smResults, ...qtResults, ...zpResults, ...yhResults,
+      ...sfResults, ...yzResults, ...lxzResults, ...ltResults, ...wxResults,
+      ...qlResults, ...xuResults, ...tgResults
+    ];
 
     if (all.length === 0) {
       searchResultsContainer.innerHTML = isEn
-        ? `<p class="text-xs text-gray-400 text-center">No relevant entries containing "${query}" found across the eight classics.</p>`
-        : `<p class="text-xs text-gray-400 text-center">八大典籍中未找到包含 “${query}” 的相关条目。</p>`;
+        ? `<p class="text-xs text-gray-400 text-center">No relevant entries containing "${query}" found across the eleven master classics and commentaries.</p>`
+        : `<p class="text-xs text-gray-400 text-center">十一大大典籍与评注全库中未找到包含 “${query}” 的相关条目。</p>`;
       return;
     }
 
     searchResultsContainer.innerHTML = `
-      <div class="text-xs text-gray-400 mb-2 font-medium">${isEn ? `Found ${all.length} results across the eight classics:` : `在八大典籍全库中检索到 ${all.length} 条结果：`}</div>
+      <div class="text-xs text-gray-400 mb-2 font-medium">${isEn ? `Found ${all.length} results across the eleven master classics and commentaries:` : `在十一大典籍与评注全库中检索到 ${all.length} 条结果：`}</div>
       <div class="space-y-3">
         ${all.map(item => `
           <div class="p-3.5 bg-black/30 rounded-lg border border-gray-700/50 hover:border-amber-500/50 transition">
