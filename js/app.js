@@ -1039,6 +1039,9 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSolarDetailDisplay(result);
 
       currentBaziResult = result;
+      if (typeof window !== 'undefined') {
+        window.currentBaziResult = currentBaziResult;
+      }
       cachedIChingCycleData = null;
       window._lastRenderedHexRes = null;
       const ichingContainerEl = document.getElementById('ichingCycleContainer');
@@ -1062,15 +1065,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }));
       }
 
-      // Calculate Fortune & Luck Cycles (大运、流年、流月、流日)
+      // Initialize default Luck & Decade state before rendering views
       if (typeof LuckEngine !== 'undefined') {
-        const now = new Date();
-        const currentCalYear = now.getFullYear();
+        const currentCalYear = new Date().getFullYear();
         selectedAnnualYear = currentCalYear;
-        if (!selectedDailyDate) selectedDailyDate = now.toISOString().split('T')[0];
-
-        const userBYear = (result.input && result.input.year) || result.birthYear || result.year || 1990;
-        const realCurrentAge = Math.max(1, Math.abs(currentCalYear - userBYear));
+        const userBYear = (result.input && result.input.year) || result.birthYear || result.year || currentCalYear;
+        const realCurrentAge = Math.max(1, Math.min(100, currentCalYear - userBYear + 1));
         const curChronItem = (result._timelineCache && result._timelineCache.length > 0)
           ? result._timelineCache.find(d => d.year === currentCalYear)
           : null;
@@ -1080,6 +1080,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         currentLuckResult = LuckEngine.calculateLuck(result, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+        if (typeof window !== 'undefined') {
+          window.currentLuckResult = currentLuckResult;
+        }
         if (currentLuckResult && currentLuckResult.decades && currentLuckResult.decades.length > 0) {
           const matchedDecadeIdx = currentLuckResult.decades.findIndex(d => 
             selectedAnnualYear >= d.yearStart && selectedAnnualYear <= d.yearEnd
@@ -12123,6 +12126,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateChronoDisplay(activeChronoAge, currentLang === 'en');
     drawChronoTimelineChart(chronoTimelineData, activeChronoAge);
   }
+  if (typeof window !== 'undefined') {
+    window.jumpToAge = jumpToAge;
+  }
 
   function startChronoPlay() {
     if (isChronoPlaying) return;
@@ -12262,7 +12268,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const baziObj = (typeof currentBaziResult !== 'undefined' && currentBaziResult) ? currentBaziResult : null;
         if (baziObj) {
-          LifelongSynthesisEngine.updateSpotlight(age, baziObj, isEn);
+          LifelongSynthesisEngine.updateSpotlight(age, baziObj, isEn, (typeof currentLuckResult !== 'undefined' ? currentLuckResult : null));
         }
       } catch (err) {
         console.warn('LifelongSynthesisEngine updateSpotlight error:', err);

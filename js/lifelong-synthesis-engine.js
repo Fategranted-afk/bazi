@@ -10,6 +10,9 @@
  */
 
 class LifelongSynthesisEngine {
+  static _cachedBazi = null;
+  static _cachedLuck = null;
+
   static get STEM_PINYIN() {
     return {
       '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu',
@@ -399,7 +402,17 @@ class LifelongSynthesisEngine {
 
     if (bazi.vigor) {
       vigorStatusZh = bazi.vigor.status || '身旺';
-      vigorStatusEn = bazi.vigor.statusEn || (bazi.vigor.status === '身旺' ? 'Vigorous' : 'Delicate');
+      if (bazi.vigor.statusEn && !/[\u4e00-\u9fa5]/.test(bazi.vigor.statusEn)) {
+        vigorStatusEn = bazi.vigor.statusEn;
+      } else if (/专旺|极旺/.test(vigorStatusZh)) {
+        vigorStatusEn = 'Dominant Pure (Extremely Vigorous)';
+      } else if (/从弱|从格|极弱/.test(vigorStatusZh)) {
+        vigorStatusEn = 'Follow Flow (Yielding)';
+      } else if (/弱/.test(vigorStatusZh)) {
+        vigorStatusEn = 'Delicate';
+      } else {
+        vigorStatusEn = 'Vigorous';
+      }
       vigorScore = bazi.vigor.score || bazi.vigorScore || 62;
     } else if (typeof bazi.isStrong === 'boolean') {
       vigorStatusZh = bazi.isStrong ? '身旺' : '身弱';
@@ -448,6 +461,9 @@ class LifelongSynthesisEngine {
       xiYongZh = Array.isArray(bazi.climate.favorable) ? bazi.climate.favorable.join('、') : String(bazi.climate.favorable);
       xiYongEn = xiYongZh.replace(/木/g, 'Wood').replace(/火/g, 'Fire').replace(/土/g, 'Earth').replace(/金/g, 'Metal').replace(/水/g, 'Water').replace(/、/g, ', ');
     }
+    if (/[\u4e00-\u9fa5]/.test(xiYongEn)) {
+      xiYongEn = xiYongEn.replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Wood, Fire';
+    }
 
     return {
       dayMaster: dm,
@@ -468,12 +484,21 @@ class LifelongSynthesisEngine {
    */
   static synthesizeLifelong(bazi, luck, isEn = false) {
     if (!bazi) return null;
+    if (bazi) this._cachedBazi = bazi;
+    if (luck) this._cachedLuck = luck;
 
-    const timeline = (luck && luck.timeline) ? luck.timeline : [];
-    const hexTrajectory = (luck && luck.hexTrajectory) ? luck.hexTrajectory : (
-      (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
-        ? IChingEngine.calculateLifelongCycle(bazi)
-        : []
+    const safeLuck = luck || this._cachedLuck || (typeof currentLuckResult !== 'undefined' ? currentLuckResult : null) || (typeof window !== 'undefined' ? window.currentLuckResult : null) || (bazi && bazi.luck) || {};
+    const timeline = (safeLuck && safeLuck.timeline) ? safeLuck.timeline : (
+      (this._cachedLuck && this._cachedLuck.timeline) ? this._cachedLuck.timeline : []
+    );
+    const hexTrajectory = (safeLuck && safeLuck.hexTrajectory) ? safeLuck.hexTrajectory : (
+      (this._cachedLuck && this._cachedLuck.hexTrajectory) ? this._cachedLuck.hexTrajectory : (
+        (bazi && bazi.hexTrajectory) ? bazi.hexTrajectory : (
+          (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
+            ? IChingEngine.calculateLifelongCycle(bazi)
+            : []
+        )
+      )
     );
 
     const natalSelf = this.extractNatalSelf(bazi, isEn);
@@ -549,8 +574,10 @@ class LifelongSynthesisEngine {
     // 4. Current spotlight (active year evaluation)
     const currentYear = new Date().getFullYear();
     const birthYear = (bazi.input && bazi.input.year) || bazi.birthYear || bazi.year || 1990;
-    const defaultActiveAge = Math.max(1, Math.min(100, currentYear - birthYear + 1));
-    const currentSpotlight = this.evaluateYearSpotlight(defaultActiveAge, bazi, luck, isEn);
+    const defaultActiveAge = (typeof activeChronoAge !== 'undefined' && activeChronoAge)
+      ? activeChronoAge
+      : Math.max(1, Math.min(100, currentYear - birthYear + 1));
+    const currentSpotlight = this.evaluateYearSpotlight(defaultActiveAge, bazi, safeLuck, isEn);
 
     return {
       bazi,
@@ -720,8 +747,22 @@ class LifelongSynthesisEngine {
     const birthYear = (bazi.input && bazi.input.year) || bazi.birthYear || bazi.year || 1990;
     const year = birthYear + targetAge - 1;
 
-    const timeline = (luck && luck.timeline) ? luck.timeline : [];
-    const hexTrajectory = (luck && luck.hexTrajectory) ? luck.hexTrajectory : [];
+    if (bazi) this._cachedBazi = bazi;
+    if (luck) this._cachedLuck = luck;
+    const safeLuck = luck || this._cachedLuck || (typeof currentLuckResult !== 'undefined' ? currentLuckResult : null) || (typeof window !== 'undefined' ? window.currentLuckResult : null) || (bazi && bazi.luck) || {};
+
+    const timeline = (safeLuck && safeLuck.timeline) ? safeLuck.timeline : (
+      (this._cachedLuck && this._cachedLuck.timeline) ? this._cachedLuck.timeline : []
+    );
+    const hexTrajectory = (safeLuck && safeLuck.hexTrajectory) ? safeLuck.hexTrajectory : (
+      (this._cachedLuck && this._cachedLuck.hexTrajectory) ? this._cachedLuck.hexTrajectory : (
+        (bazi && bazi.hexTrajectory) ? bazi.hexTrajectory : (
+          (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
+            ? IChingEngine.calculateLifelongCycle(bazi)
+            : []
+        )
+      )
+    );
 
     const timeItem = timeline.find(item => item.age === targetAge) || timeline[targetAge - 1] || {};
     const hexItem = hexTrajectory.find(item => item.age === targetAge) || hexTrajectory[targetAge - 1] || {};
@@ -729,10 +770,10 @@ class LifelongSynthesisEngine {
     const natal = this.extractNatalSelf(bazi, isEn);
 
     // 1. Dimension 1: Chrono Compass
-    const energyScore = timeItem.energyScore || 60;
-    const wealthScore = timeItem.wealthScore || 60;
+    const energyScore = (typeof timeItem.energyScore === 'number') ? timeItem.energyScore : ((targetAge >= 28 && targetAge <= 55) ? 82 : 65);
+    const wealthScore = (typeof timeItem.wealthScore === 'number') ? timeItem.wealthScore : ((targetAge >= 28 && targetAge <= 55) ? 80 : 62);
     const isGoldenPrime = (targetAge >= 28 && targetAge <= 55);
-    const decadeTextZh = timeItem.decade ? `${timeItem.decade}大运 (${timeItem.decadeSpanZh || ''})` : '大运统摄';
+    const decadeTextZh = timeItem.decade ? `${timeItem.decade}大运 (${timeItem.decadeSpanZh || ''})` : (timeItem.decadeSpanZh || '大运统摄');
     const decadeTextEn = timeItem.decadeSpanEn || (timeItem.decade ? `${timeItem.decade} Decade` : 'Major Decade');
     const naYinZh = timeItem.naYin || '海中金';
     const naYinEn = timeItem.naYinEn || 'Sound Element';
@@ -742,15 +783,25 @@ class LifelongSynthesisEngine {
     const pat1 = natal.top3Patterns[0] || { nameZh: '主导格局', nameEn: 'Dominant Pattern' };
 
     // 3. Dimension 3: Hexagram Dynamic & Lines
-    const annualHex = hexItem.annualHex || (hexItem.governingHex || { name: '乾为天', nameEn: 'The Creative', number: 1 });
+    let annualHex = hexItem.annualHex || timeItem.annualHex || hexItem.governingHex || null;
+    if (!annualHex && typeof IChingDB !== 'undefined' && typeof IChingDB.getByNumber === 'function') {
+      annualHex = IChingDB.getByNumber(1);
+    } else if (!annualHex) {
+      annualHex = { name: '乾为天', nameZh: '乾为天', nameEn: 'The Creative Heaven', number: 1 };
+    }
+    if ((!annualHex.lines || !annualHex.lines.length) && typeof IChingDB !== 'undefined' && typeof IChingDB.getByNumber === 'function') {
+      const full = IChingDB.getByNumber(annualHex.number || 1);
+      if (full) annualHex = Object.assign({}, full, annualHex);
+    }
+
     const hexNum = annualHex.number || 1;
-    const hexNameZh = annualHex.name || '乾为天';
+    const hexNameZh = annualHex.nameZh || annualHex.name || '乾为天';
     let hexNameEn = annualHex.nameEn || annualHex.pinyin || 'Qian (The Creative)';
     if (/[\u4e00-\u9fa5]/.test(hexNameEn)) {
       hexNameEn = hexNameEn.replace(/[\u4e00-\u9fa5（）·]/g, '').trim() || 'Cosmic Hexagram';
     }
-    const hexSymbol = annualHex.symbol || '☰☰';
-    const activeLinePos = hexItem.activeLinePos || 1;
+    const hexSymbol = annualHex.symbol || (typeof IChingEngine !== 'undefined' && typeof IChingEngine.getHexagramSymbol === 'function' ? IChingEngine.getHexagramSymbol(hexNum) : '☰☰');
+    const activeLinePos = hexItem.activeLinePos || ((targetAge % 6) || 6);
     const lineStmtZh = (annualHex.lines && annualHex.lines[activeLinePos - 1]) ? annualHex.lines[activeLinePos - 1].statementZh : '君子终日乾乾，夕惕若厉，无咎。';
     let lineStmtEn = (annualHex.lines && annualHex.lines[activeLinePos - 1]) ? annualHex.lines[activeLinePos - 1].statementEn : '';
     if (!lineStmtEn || /[\u4e00-\u9fa5\u3000-\u303f\uff01-\uff5e]/.test(lineStmtEn)) {
@@ -763,8 +814,14 @@ class LifelongSynthesisEngine {
     const loQi = this.getTrigramQi(loTrigram, isEn);
 
     // 4. Dimension 4: Stars & Ten Gods
-    const annualStem = hexItem.annualStem || timeItem.annualStem || '丙';
-    const annualBranch = hexItem.annualBranch || timeItem.annualBranch || '午';
+    const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const cycleOffset = ((year - 4) % 60 + 60) % 60;
+    const calcStem = STEMS[cycleOffset % 10];
+    const calcBranch = BRANCHES[cycleOffset % 12];
+
+    const annualStem = hexItem.annualStem || timeItem.stem || timeItem.annualStem || calcStem;
+    const annualBranch = hexItem.annualBranch || timeItem.branch || timeItem.annualBranch || calcBranch;
     const stemEn = this.STEM_PINYIN[annualStem] || 'Jia';
     const branchEn = this.BRANCH_PINYIN[annualBranch] || 'Zi';
 
@@ -863,30 +920,90 @@ class LifelongSynthesisEngine {
   }
 
   /**
+   * Jump helper: supports jumpToAge, window.jumpToAge, or dispatching input on slider
+   */
+  static jump(age) {
+    const a = parseInt(age, 10);
+    if (!a) return;
+    if (typeof jumpToAge === 'function') {
+      jumpToAge(a);
+      return;
+    }
+    if (typeof window !== 'undefined' && typeof window.jumpToAge === 'function') {
+      window.jumpToAge(a);
+      return;
+    }
+    if (typeof document !== 'undefined') {
+      const slider = document.getElementById('chronoAgeSlider');
+      if (slider) {
+        slider.value = a;
+        slider.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }
+  }
+
+  /**
+   * Dynamically update highlighting of Five Grand Phases cards
+   */
+  static updatePhaseCardsHighlight(targetAge) {
+    if (typeof document === 'undefined') return;
+    const phasesEl = document.getElementById('lifelongPhasesContainer');
+    if (!phasesEl) return;
+    const cards = phasesEl.querySelectorAll('.lifelong-phase-card');
+    cards.forEach(card => {
+      const start = parseInt(card.getAttribute('data-phase-start'), 10);
+      const end = parseInt(card.getAttribute('data-phase-end'), 10);
+      if (isNaN(start) || isNaN(end)) return;
+      const isCurrent = (targetAge >= start && targetAge <= end);
+      const spanBadge = card.querySelector('.phase-span-badge');
+      if (isCurrent) {
+        card.classList.remove('border-gray-800/80', 'bg-black/30');
+        card.classList.add('border-2', 'border-amber-400/80', 'bg-amber-950/20', 'ring-2', 'ring-amber-400/30');
+        if (spanBadge) {
+          spanBadge.className = 'phase-span-badge text-[10px] px-1.5 py-0.5 rounded font-mono bg-amber-500 text-black font-bold';
+        }
+      } else {
+        card.classList.remove('border-2', 'border-amber-400/80', 'bg-amber-950/20', 'ring-2', 'ring-amber-400/30');
+        card.classList.add('border-gray-800/80', 'bg-black/30');
+        if (spanBadge) {
+          spanBadge.className = 'phase-span-badge text-[10px] px-1.5 py-0.5 rounded font-mono bg-gray-800 text-gray-300';
+        }
+      }
+    });
+  }
+
+  /**
    * DOM Renderer: Renders both Spotlight Card and Five Phases Panorama
    */
   static renderLifelongSynthesis(bazi, luck, isEn = false) {
+    if (typeof document === 'undefined') return;
     const container = document.getElementById('lifelongSynthesisSection');
     if (!container) return;
+
+    if (bazi) this._cachedBazi = bazi;
+    if (luck) this._cachedLuck = luck;
 
     const synth = this.synthesizeLifelong(bazi, luck, isEn);
     if (!synth) return;
 
+    const activeAge = (typeof activeChronoAge !== 'undefined' && activeChronoAge)
+      ? activeChronoAge
+      : synth.currentSpotlight.age;
+
     // Update active age badge
     const badge = document.getElementById('lifelongActiveAgeBadge');
     if (badge) {
-      const activeAge = (typeof activeChronoAge !== 'undefined') ? activeChronoAge : synth.currentSpotlight.age;
       badge.textContent = isEn ? `Age ${activeAge}` : `${activeAge} 岁`;
     }
 
     // 1. Render Spotlight Card
-    this.updateSpotlight(synth.currentSpotlight.age, bazi, isEn);
+    this.updateSpotlight(activeAge, bazi, isEn, luck);
 
     // 2. Render Five Phases Panorama
     const phasesEl = document.getElementById('lifelongPhasesContainer');
     if (phasesEl) {
       phasesEl.innerHTML = synth.fivePhases.map((phase) => {
-        const isCurrentPhase = (synth.currentSpotlight.age >= phase.ageStart && synth.currentSpotlight.age <= phase.ageEnd);
+        const isCurrentPhase = (activeAge >= phase.ageStart && activeAge <= phase.ageEnd);
         const borderCls = isCurrentPhase
           ? 'border-2 border-amber-400/80 bg-amber-950/20 ring-2 ring-amber-400/30'
           : 'border border-gray-800/80 bg-black/30 hover:border-gray-700';
@@ -901,14 +1018,14 @@ class LifelongSynthesisEngine {
         const mandate = isEn ? phase.strategicMandateEn : phase.strategicMandateZh;
 
         return `
-          <div class="lifelong-phase-card p-4 rounded-xl ${borderCls} flex flex-col justify-between space-y-3 cursor-pointer transition transform hover:-translate-y-0.5" data-phase-age="${phase.bestAge}">
+          <div class="lifelong-phase-card p-4 rounded-xl ${borderCls} flex flex-col justify-between space-y-3 cursor-pointer transition transform hover:-translate-y-0.5" data-phase-age="${phase.bestAge}" data-phase-start="${phase.ageStart}" data-phase-end="${phase.ageEnd}">
             <div class="space-y-2">
               <div class="flex items-center justify-between border-b border-gray-800 pb-2">
                 <span class="text-xs font-bold text-amber-300 font-serif-sc flex items-center gap-1">
                   <span>${phase.icon}</span>
                   <span>${name}</span>
                 </span>
-                <span class="text-[10px] px-1.5 py-0.2 rounded font-mono ${isCurrentPhase ? 'bg-amber-500 text-black font-bold' : 'bg-gray-800 text-gray-300'}">
+                <span class="phase-span-badge text-[10px] px-1.5 py-0.5 rounded font-mono ${isCurrentPhase ? 'bg-amber-500 text-black font-bold' : 'bg-gray-800 text-gray-300'}">
                   ${span}
                 </span>
               </div>
@@ -946,10 +1063,7 @@ class LifelongSynthesisEngine {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           const target = btn.getAttribute('data-phase-jump') || btn.getAttribute('data-phase-age');
-          const a = parseInt(target, 10);
-          if (a && typeof jumpToAge === 'function') {
-            jumpToAge(a);
-          }
+          LifelongSynthesisEngine.jump(target);
         });
       });
     }
@@ -958,12 +1072,17 @@ class LifelongSynthesisEngine {
   /**
    * Update Spotlight Card for active age
    */
-  static updateSpotlight(age, bazi, isEn = false) {
+  static updateSpotlight(age, bazi, isEn = false, luck = null) {
+    if (typeof document === 'undefined') return;
     const cardEl = document.getElementById('lifelongSpotlightCard');
-    if (!cardEl || !bazi) return;
+    const safeBazi = bazi || this._cachedBazi || (typeof currentBaziResult !== 'undefined' ? currentBaziResult : null) || (typeof window !== 'undefined' ? window.currentBaziResult : null);
+    if (!cardEl || !safeBazi) return;
 
-    const luck = (typeof currentLuckResult !== 'undefined') ? currentLuckResult : (bazi.luck || {});
-    const spot = this.evaluateYearSpotlight(age, bazi, luck, isEn);
+    if (safeBazi) this._cachedBazi = safeBazi;
+    if (luck) this._cachedLuck = luck;
+
+    const safeLuck = luck || this._cachedLuck || (typeof currentLuckResult !== 'undefined' ? currentLuckResult : null) || (typeof window !== 'undefined' ? window.currentLuckResult : null) || (safeBazi && safeBazi.luck) || {};
+    const spot = this.evaluateYearSpotlight(age, safeBazi, safeLuck, isEn);
     if (!spot) return;
 
     const ageTag = document.getElementById('lifelongSpotlightAgeTag');
@@ -977,6 +1096,9 @@ class LifelongSynthesisEngine {
     if (badge) {
       badge.textContent = isEn ? `Age ${spot.age}` : `${spot.age} 岁`;
     }
+
+    // Update active highlight on Five Phases cards
+    this.updatePhaseCardsHighlight(spot.age);
 
     const d1 = spot.dim1_chrono;
     const d2 = spot.dim2_natal;

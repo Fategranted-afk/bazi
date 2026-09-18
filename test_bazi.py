@@ -13915,21 +13915,104 @@ jsc_check114_cmd = [
 
     // Test Spotlight across all 100 ages
     for (var a = 1; a <= 100; a++) {
-      LifelongSynthesisEngine.updateSpotlight(a, dummyBazi, true);
+      LifelongSynthesisEngine.updateSpotlight(a, dummyBazi, true, dummyLuck);
       var leak = cardEl.innerHTML.match(/[\\u4e00-\\u9fa5]/g);
       if (leak && leak.length > 0) {
         throw new Error("CJK leak in updateSpotlight HTML at age " + a + ": " + leak.join(""));
       }
     }
 
-    // Test multiple Day Masters for robust Ten Gods & Shen Sha evaluation
+    // Deep Verification: Test real dynamic data variation between ages (prevent static fallback bug)
+    LifelongSynthesisEngine.updateSpotlight(10, dummyBazi, false, dummyLuck);
+    if (cardEl.innerHTML.indexOf("地天泰") === -1) {
+      throw new Error("Spotlight at age 10 must contain 地天泰");
+    }
+    if (cardEl.innerHTML.indexOf("88/100") === -1 && cardEl.innerHTML.indexOf("65/100") === -1) {
+      throw new Error("Spotlight at age 10 missing energy score from dummyTimeline");
+    }
+
+    // Test Jump mechanism (via window.jumpToAge and slider fallback)
+    var jumpedAge = null;
+    globalThis.window = {
+      jumpToAge: function(target) { jumpedAge = target; }
+    };
+    LifelongSynthesisEngine.jump(35);
+    if (jumpedAge !== 35) throw new Error("LifelongSynthesisEngine.jump failed to invoke window.jumpToAge");
+
+    // Test dynamic phase highlighting across all 5 macro phases
+    function makePhaseMock(start, end) {
+      var cls = ["lifelong-phase-card", "p-4", "border", "border-gray-800/80", "bg-black/30"];
+      var sp = { className: "phase-span-badge text-[10px]" };
+      return {
+        getAttribute: function(a) {
+          if (a === "data-phase-start") return String(start);
+          if (a === "data-phase-end") return String(end);
+          return null;
+        },
+        classList: {
+          remove: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              var idx = cls.indexOf(arguments[i]);
+              if (idx !== -1) cls.splice(idx, 1);
+            }
+          },
+          add: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              if (cls.indexOf(arguments[i]) === -1) cls.push(arguments[i]);
+            }
+          },
+          contains: function(c) { return cls.indexOf(c) !== -1; }
+        },
+        querySelector: function(s) {
+          if (s === ".phase-span-badge") return sp;
+          return null;
+        }
+      };
+    }
+    var mockP1 = makePhaseMock(1, 18);
+    var mockP2 = makePhaseMock(19, 35);
+    var mockP3 = makePhaseMock(36, 55);
+    var mockP4 = makePhaseMock(56, 70);
+    var mockP5 = makePhaseMock(71, 100);
+    mockDoc.getElementById = function(id) {
+      if (id === "lifelongSpotlightCard") return cardEl;
+      if (id === "lifelongPhasesContainer") {
+        return {
+          innerHTML: "",
+          querySelectorAll: function(sel) {
+            if (sel === ".lifelong-phase-card") return [mockP1, mockP2, mockP3, mockP4, mockP5];
+            return [];
+          }
+        };
+      }
+      if (id === "lifelongActiveAgeBadge") return ageBadgeEl;
+      if (id === "lifelongSpotlightAgeTag") return ageTagEl;
+      if (id === "lifelongSynthesisSection") return {};
+      return null;
+    };
+
+    LifelongSynthesisEngine.updatePhaseCardsHighlight(15);
+    if (!mockP1.classList.contains("border-amber-400/80") || mockP3.classList.contains("border-amber-400/80")) {
+      throw new Error("Phase 1 highlight failure at age 15");
+    }
+
+    LifelongSynthesisEngine.updatePhaseCardsHighlight(45);
+    if (!mockP3.classList.contains("border-amber-400/80") || mockP1.classList.contains("border-amber-400/80")) {
+      throw new Error("Phase 3 highlight failure at age 45");
+    }
+
+    LifelongSynthesisEngine.updatePhaseCardsHighlight(85);
+    if (!mockP5.classList.contains("border-amber-400/80") || mockP3.classList.contains("border-amber-400/80")) {
+      throw new Error("Phase 5 highlight failure at age 85");
+    }
+
+    // Test multiple Day Masters and Vigor statuses (including 专旺 and 从弱) for robust Ten Gods & Shen Sha evaluation
     var testStems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
     testStems.forEach(function(s) {
       var bz = {
         dayMaster: s,
         dayMasterElement: "Wood",
-        isStrong: false,
-        vigorScore: 40,
+        vigor: { status: "专旺", score: 95 },
         pillars: {
           year: { stem: s, branch: "辰" },
           month: { stem: s, branch: "巳" },
@@ -13937,7 +14020,7 @@ jsc_check114_cmd = [
           hour: { stem: s, branch: "未" }
         }
       };
-      LifelongSynthesisEngine.updateSpotlight(30, bz, true);
+      LifelongSynthesisEngine.updateSpotlight(30, bz, true, dummyLuck);
       var lk = cardEl.innerHTML.match(/[\\u4e00-\\u9fa5]/g);
       if (lk && lk.length > 0) {
         throw new Error("CJK leak for Day Master " + s + ": " + lk.join(""));
