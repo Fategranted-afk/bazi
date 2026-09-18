@@ -421,20 +421,20 @@ class SocialCardEngine {
     const isYoungPrince = (figId === 'xiao_tong');
 
     // 1. Outer antique imperial double gold medallion frame
-    ctx.strokeStyle = '#f59e0b';
+    ctx.strokeStyle = '#b45309';
     ctx.lineWidth = 3.2;
     safeBeginPath();
     safeArc(cx, cy, r, 0, Math.PI * 2);
     safeStroke();
 
-    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeStyle = '#d97706';
     ctx.lineWidth = 1.6;
     safeBeginPath();
     safeArc(cx, cy, r - 3.5, 0, Math.PI * 2);
     safeStroke();
 
     // 8 Classical cardinal / trigram ticks in lustrous amber-gold
-    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeStyle = '#d97706';
     ctx.lineWidth = 1.6;
     for (let i = 0; i < 8; i++) {
       const ang = (i * Math.PI) / 4;
@@ -1009,44 +1009,43 @@ class SocialCardEngine {
     canvas.width = W;
     canvas.height = H;
 
-    // 1. Prestigious Imperial Celestial Palette: Royal Midnight Lapis to Imperial Amethyst Gradient
+    // 1. Exquisite Imperial Parchment / Bright White Canvas Background (#ffffff / #fcfbf7)
     const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, '#0d1430');
-    bgGrad.addColorStop(0.24, '#18204e');
-    bgGrad.addColorStop(0.54, '#251c4a');
-    bgGrad.addColorStop(0.80, '#161e40');
-    bgGrad.addColorStop(1, '#0d1228');
+    bgGrad.addColorStop(0, '#ffffff');
+    bgGrad.addColorStop(0.28, '#fdfcf9');
+    bgGrad.addColorStop(0.65, '#faf7f0');
+    bgGrad.addColorStop(1, '#f6f3eb');
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // Radiant warm golden stardust / celestial backlighting pools
+    // Subtle imperial parchment warm amber & emerald radiant glows
     if (ctx.createRadialGradient) {
       try {
         const radGlowTop = ctx.createRadialGradient(W / 2, 140, 20, W / 2, 140, 420);
-        radGlowTop.addColorStop(0, 'rgba(245, 158, 11, 0.30)');
-        radGlowTop.addColorStop(0.5, 'rgba(251, 191, 36, 0.14)');
-        radGlowTop.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        radGlowTop.addColorStop(0, 'rgba(245, 158, 11, 0.08)');
+        radGlowTop.addColorStop(0.55, 'rgba(251, 191, 36, 0.03)');
+        radGlowTop.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = radGlowTop;
         ctx.fillRect(0, 0, W, H);
 
         const radGlowMid = ctx.createRadialGradient(W / 2, 530, 20, W / 2, 530, 420);
-        radGlowMid.addColorStop(0, 'rgba(129, 140, 248, 0.22)');
-        radGlowMid.addColorStop(0.55, 'rgba(236, 72, 153, 0.12)');
-        radGlowMid.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        radGlowMid.addColorStop(0, 'rgba(180, 83, 9, 0.05)');
+        radGlowMid.addColorStop(0.6, 'rgba(217, 119, 6, 0.02)');
+        radGlowMid.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = radGlowMid;
         ctx.fillRect(0, 0, W, H);
 
         const radGlowBot = ctx.createRadialGradient(W / 2, 940, 20, W / 2, 940, 380);
-        radGlowBot.addColorStop(0, 'rgba(16, 185, 129, 0.24)');
-        radGlowBot.addColorStop(0.55, 'rgba(245, 158, 11, 0.15)');
-        radGlowBot.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        radGlowBot.addColorStop(0, 'rgba(5, 150, 105, 0.06)');
+        radGlowBot.addColorStop(0.6, 'rgba(245, 158, 11, 0.03)');
+        radGlowBot.addColorStop(1, 'rgba(255, 255, 255, 0)');
         ctx.fillStyle = radGlowBot;
         ctx.fillRect(0, 0, W, H);
       } catch (e) {}
     }
 
-    // Radiant celestial stardust speckles & twinkling diamond flares
-    ctx.fillStyle = 'rgba(251, 191, 36, 0.85)';
+    // Antique golden stardust speckles & diamond flares
+    ctx.fillStyle = 'rgba(180, 83, 9, 0.35)';
     const stardustSeeds = [
       [90, 80], [180, 120], [670, 95], [620, 160], [110, 320], [650, 310],
       [75, 520], [665, 540], [100, 860], [640, 880], [130, 1030], [620, 1040],
@@ -1060,17 +1059,17 @@ class SocialCardEngine {
       if (ctx.fill) ctx.fill();
     });
 
-    // 6 prominent twinkling celestial stars with 4-point light diffraction flares
+    // 6 prominent antique amber-gold celestial stars with 4-point light diffraction flares
     const starFlares = [
       [130, 100], [620, 110], [85, 480], [655, 470], [110, 910], [635, 920]
     ];
     starFlares.forEach(([fx, fy]) => {
-      ctx.fillStyle = '#fef08a';
+      ctx.fillStyle = '#b45309';
       if (ctx.beginPath) ctx.beginPath();
       if (ctx.arc) ctx.arc(fx, fy, 2.2, 0, Math.PI * 2);
       if (ctx.fill) ctx.fill();
 
-      ctx.strokeStyle = 'rgba(254, 240, 138, 0.65)';
+      ctx.strokeStyle = 'rgba(180, 83, 9, 0.50)';
       ctx.lineWidth = 1;
       if (ctx.beginPath) ctx.beginPath();
       if (ctx.moveTo) ctx.moveTo(fx - 7, fy);
@@ -1080,26 +1079,26 @@ class SocialCardEngine {
       if (ctx.stroke) ctx.stroke();
     });
 
-    // Decorative antique double frame in lustrous imperial gold with corner filigree florets
-    ctx.strokeStyle = '#f59e0b';
+    // Decorative antique double frame in elegant imperial antique gold (#b45309 & #d97706)
+    ctx.strokeStyle = '#b45309';
     ctx.lineWidth = 2.8;
     ctx.strokeRect(26, 26, W - 52, H - 52);
 
-    ctx.strokeStyle = 'rgba(251, 191, 36, 0.75)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.75)';
     ctx.lineWidth = 1.3;
     ctx.strokeRect(34, 34, W - 68, H - 68);
 
-    // Corner filigree florets & edge diamond accents (imperial cloud florets)
+    // Corner filigree florets & edge diamond accents
     const corners = [
       [34, 34], [W - 34, 34], [34, H - 34], [W - 34, H - 34]
     ];
     corners.forEach(([cx, cy]) => {
-      ctx.fillStyle = '#fbbf24';
+      ctx.fillStyle = '#b45309';
       if (ctx.beginPath) ctx.beginPath();
       if (ctx.arc) cx === 34 ? ctx.arc(cx, cy, 5.2, 0, Math.PI * 2) : ctx.arc(cx, cy, 5.2, 0, Math.PI * 2);
       if (ctx.fill) ctx.fill();
 
-      ctx.strokeStyle = '#fbbf24';
+      ctx.strokeStyle = '#d97706';
       ctx.lineWidth = 1.4;
       if (ctx.beginPath) ctx.beginPath();
       if (ctx.moveTo) ctx.moveTo(cx - 10, cy);
@@ -1109,8 +1108,8 @@ class SocialCardEngine {
       if (ctx.stroke) ctx.stroke();
     });
 
-    // 2. Top Imperial Brand & Seal Stamp
-    ctx.fillStyle = '#fbbf24';
+    // 2. Top Imperial Brand & Seal Stamp (High-contrast antique bronze & cinnabar)
+    ctx.fillStyle = '#78350f';
     ctx.font = 'bold 21px serif';
     ctx.textAlign = 'center';
     ctx.fillText(data.isEn ? '✦ IMPERIAL ARCHIVE · METAPHYSICS ENGINE ✦' : '✦ 钦 天 监 · 御 制 天 机 战 报 ✦', W / 2, 70);
@@ -1120,72 +1119,72 @@ class SocialCardEngine {
     const sealBoxH = 30;
     const sealBoxX = W / 2 - sealBoxW / 2;
     const sealBoxY = 86;
-    ctx.fillStyle = '#dc2626';
+    ctx.fillStyle = '#b91c1c';
     SocialCardEngine.drawRoundedRect(ctx, sealBoxX, sealBoxY, sealBoxW, sealBoxH, 6);
     if (ctx.fill) ctx.fill();
-    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeStyle = '#d97706';
     ctx.lineWidth = 1.4;
     SocialCardEngine.drawRoundedRect(ctx, sealBoxX, sealBoxY, sealBoxW, sealBoxH, 6);
     if (ctx.stroke) ctx.stroke();
 
-    ctx.fillStyle = '#fef08a';
+    ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 14.5px serif';
     ctx.fillText(data.isEn ? 'SEAL OF FATE' : '钦天御览', W / 2, 107);
 
     // Delicate decorative golden divider hairline
-    ctx.strokeStyle = 'rgba(245, 158, 11, 0.40)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
     ctx.lineWidth = 1;
     if (ctx.beginPath) ctx.beginPath();
     if (ctx.moveTo) ctx.moveTo(80, 126);
     if (ctx.lineTo) ctx.lineTo(W - 80, 126);
     if (ctx.stroke) ctx.stroke();
 
-    // 3. Unified Destiny Foundation & Calling Dais (Soft Luminous Floating Dais - No Cold Wireframe)
+    // 3. Unified Destiny Foundation & Calling Dais (Warm ivory parchment fill, crisp gold border)
     const dais1X = 56;
     const dais1Y = 136;
     const dais1W = W - 112;
     const dais1H = 194;
     const daisR = 14;
 
-    ctx.fillStyle = 'rgba(26, 32, 70, 0.68)';
+    ctx.fillStyle = '#fdfbf7';
     SocialCardEngine.drawRoundedRect(ctx, dais1X, dais1Y, dais1W, dais1H, daisR);
     if (ctx.fill) ctx.fill();
 
-    ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.45)';
+    ctx.lineWidth = 1.2;
     SocialCardEngine.drawRoundedRect(ctx, dais1X, dais1Y, dais1W, dais1H, daisR);
     if (ctx.stroke) ctx.stroke();
 
-    // Part A: Four Pillars GanZhi
-    ctx.fillStyle = '#fef08a';
+    // Part A: Four Pillars GanZhi (High-contrast deep ink charcoal)
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 31px serif';
     ctx.textAlign = 'center';
     ctx.fillText(data.pillarsStr, W / 2, dais1Y + 44);
 
-    ctx.fillStyle = '#f1f5f9';
+    ctx.fillStyle = '#78350f';
     ctx.font = '13.5px sans-serif';
     ctx.fillText(data.isEn ? 'Four Pillars GanZhi Matrix · Day Master: ' + data.dayMaster : '命造四柱干支统揽 · 日元统摄：' + data.dayMaster, W / 2, dais1Y + 70);
 
     // Mid Dais Golden Separator Hairline
-    ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
     ctx.lineWidth = 1;
     if (ctx.beginPath) ctx.beginPath();
     if (ctx.moveTo) ctx.moveTo(80, dais1Y + 86);
     if (ctx.lineTo) ctx.lineTo(W - 80, dais1Y + 86);
     if (ctx.stroke) ctx.stroke();
 
-    // Part B: Archetype Calling & Vitality
-    ctx.fillStyle = '#fde047';
+    // Part B: Archetype Calling & Vitality (Imperial cinnabar & slate charcoal)
+    ctx.fillStyle = '#b91c1c';
     ctx.font = 'bold 22px sans-serif';
     this.drawWrappedText(ctx, data.archetypeTitle, W / 2, dais1Y + 120, 590, 26, 1, 'center');
 
     if (data.archetypeTag) {
-      ctx.fillStyle = '#fde68a';
+      ctx.fillStyle = '#475569';
       ctx.font = '13px sans-serif';
       this.drawWrappedText(ctx, data.archetypeTag, W / 2, dais1Y + 148, 590, 18, 1, 'center');
     }
 
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#18181b';
     ctx.font = '13.5px sans-serif';
     const subText = data.isEn
       ? `ZiPing Vigor Score: ${data.score}/100 (${data.tier})`
@@ -1193,24 +1192,24 @@ class SocialCardEngine {
     ctx.fillText(subText, W / 2, dais1Y + 178);
 
     // 4. Grand Centerpiece: Historical Soul Mirror with Classical Stylized Portrait
-    // Dignified, spacious, prestigious imperial celestial sanctuary (Soft luminous dais - No harsh wireframe)
+    // Pristine white ivory parchment sanctuary with warm gold borders
     const dais2X = 56;
     const dais2Y = 344;
     const dais2W = W - 112;
     const dais2H = 488;
     const dais2R = 16;
 
-    ctx.fillStyle = 'rgba(24, 28, 66, 0.72)';
+    ctx.fillStyle = '#ffffff';
     SocialCardEngine.drawRoundedRect(ctx, dais2X, dais2Y, dais2W, dais2H, dais2R);
     if (ctx.fill) ctx.fill();
 
-    ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(180, 83, 9, 0.45)';
+    ctx.lineWidth = 1.2;
     SocialCardEngine.drawRoundedRect(ctx, dais2X, dais2Y, dais2W, dais2H, dais2R);
     if (ctx.stroke) ctx.stroke();
 
-    // Centerpiece Header
-    ctx.fillStyle = '#e0e7ff';
+    // Centerpiece Header (Rich antique bronze)
+    ctx.fillStyle = '#78350f';
     ctx.font = 'bold 15.5px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(data.isEn ? '✦ SOUL MIRROR HISTORICAL PERSONA ✦' : '✦ 天 命 照 命 镜 像 · 先 贤 同 频 ✦', W / 2, dais2Y + 28);
@@ -1226,15 +1225,15 @@ class SocialCardEngine {
     const eraPillH = 22;
     const eraPillX = portraitCx - eraPillW / 2;
     const eraPillY = portraitCy + portraitR + 6;
-    ctx.fillStyle = 'rgba(30, 36, 72, 0.95)';
+    ctx.fillStyle = '#fefce8';
     SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 6);
     if (ctx.fill) ctx.fill();
-    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeStyle = '#b45309';
     ctx.lineWidth = 1.2;
     SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 6);
     if (ctx.stroke) ctx.stroke();
 
-    ctx.fillStyle = '#fef08a';
+    ctx.fillStyle = '#78350f';
     ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'center';
     const eraStr = data.figureDynasty || (data.isEn ? 'Sage Era' : '先贤纪元');
@@ -1246,7 +1245,7 @@ class SocialCardEngine {
 
     // Line 1: Figure Name & Affinity Resonance Score
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#0f172a';
     ctx.font = 'bold 27px serif';
 
     const rawFigName = data.figureName || (data.isEn ? 'Historical Sage' : '先贤宗师');
@@ -1256,27 +1255,27 @@ class SocialCardEngine {
     }
     ctx.fillText(displayFigName, profileX, dais2Y + 70);
 
-    // Affinity Score Badge (soft rounded pill)
+    // Affinity Score Badge (warm amber pill)
     const affW = 115;
     const affH = 26;
     const affX = W - 195;
     const affY = dais2Y + 50;
-    ctx.fillStyle = 'rgba(32, 28, 76, 0.90)';
+    ctx.fillStyle = '#fff7ed';
     SocialCardEngine.drawRoundedRect(ctx, affX, affY, affW, affH, 6);
     if (ctx.fill) ctx.fill();
-    ctx.strokeStyle = '#fbbf24';
+    ctx.strokeStyle = '#d97706';
     ctx.lineWidth = 1.2;
     SocialCardEngine.drawRoundedRect(ctx, affX, affY, affW, affH, 6);
     if (ctx.stroke) ctx.stroke();
 
-    ctx.fillStyle = '#fbbf24';
+    ctx.fillStyle = '#b45309';
     ctx.font = 'bold 13.5px monospace';
     ctx.textAlign = 'center';
     ctx.fillText(data.isEn ? `${data.figureSim} Match` : `⚡ ${data.figureSim} 同频`, affX + affW / 2, affY + 18);
 
     // Line 2: Historical Official Position & Credentials
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#f1f5f9';
+    ctx.fillStyle = '#334155';
     ctx.font = '13.5px sans-serif';
     this.drawWrappedText(ctx, data.figurePosition, profileX, dais2Y + 98, profileW, 19, 2, 'left');
 
@@ -1284,21 +1283,21 @@ class SocialCardEngine {
     const archPillY = dais2Y + 150;
     const archPillW = 220;
     const archPillH = 24;
-    ctx.fillStyle = 'rgba(56, 189, 248, 0.18)';
+    ctx.fillStyle = '#eff6ff';
     SocialCardEngine.drawRoundedRect(ctx, profileX, archPillY - 14, archPillW, archPillH, 6);
     if (ctx.fill) ctx.fill();
-    ctx.strokeStyle = '#38bdf8';
+    ctx.strokeStyle = '#2563eb';
     ctx.lineWidth = 1.2;
     SocialCardEngine.drawRoundedRect(ctx, profileX, archPillY - 14, archPillW, archPillH, 6);
     if (ctx.stroke) ctx.stroke();
 
-    ctx.fillStyle = '#38bdf8';
+    ctx.fillStyle = '#1d4ed8';
     ctx.font = 'bold 12px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText(data.figureArchetypeLabel, profileX + archPillW / 2, archPillY + 3);
 
     // Delicate Golden Separator Hairline
-    ctx.strokeStyle = 'rgba(245, 158, 11, 0.40)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
     ctx.lineWidth = 1;
     if (ctx.beginPath) ctx.beginPath();
     if (ctx.moveTo) ctx.moveTo(80, dais2Y + 186);
@@ -1306,51 +1305,58 @@ class SocialCardEngine {
     if (ctx.stroke) ctx.stroke();
 
     // Soul Resonance Quote - Fluid, Centered Poetry
-    ctx.fillStyle = '#f8fafc';
+    ctx.fillStyle = '#1e293b';
     ctx.font = 'italic 14px serif';
     this.drawWrappedText(ctx, data.figureQuote, W / 2, dais2Y + 212, 590, 22, 2, 'center');
 
     // Natural Wisdom Sections (Key Legacy & Karmic Lesson)
-    // De-boxed, soft, organic, luminous layout without cold wireframe boxes
-    // Panel 1: Key Legacy (立身功业)
+    // Panel 1: Key Legacy (立身功业) - Warm amber-tinted parchment fill, solid bronze bar
     const legY = dais2Y + 250;
     const cardH = 96;
     const legW = W - 152;
-    ctx.fillStyle = 'rgba(245, 158, 11, 0.12)';
+    ctx.fillStyle = '#fefce8';
     SocialCardEngine.drawRoundedRect(ctx, 76, legY, legW, cardH, 10);
     if (ctx.fill) ctx.fill();
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
+    ctx.lineWidth = 1;
+    SocialCardEngine.drawRoundedRect(ctx, 76, legY, legW, cardH, 10);
+    if (ctx.stroke) ctx.stroke();
 
     // Left Imperial Golden Accent Bar
-    ctx.fillStyle = '#fbbf24';
+    ctx.fillStyle = '#d97706';
     SocialCardEngine.drawRoundedRect(ctx, 76, legY, 4, cardH, 2);
     if (ctx.fill) ctx.fill();
 
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#fbbf24';
+    ctx.fillStyle = '#78350f';
     ctx.font = 'bold 13px sans-serif';
     ctx.fillText(data.isEn ? '✦ KEY LEGACY ✦' : '✦ 立身功业 ✦', 94, legY + 22);
 
-    ctx.fillStyle = '#f8fafc';
+    ctx.fillStyle = '#18181b';
     ctx.font = '13px sans-serif';
     this.drawWrappedText(ctx, data.figureLegacy, 94, legY + 44, 560, 21, 3, 'left');
 
-    // Panel 2: Karmic Lesson (天机诫勉)
+    // Panel 2: Karmic Lesson (天机诫勉) - Warm cinnabar/rose-tinted parchment fill, solid cinnabar bar
     const advY = dais2Y + 362;
-    ctx.fillStyle = 'rgba(239, 68, 68, 0.12)';
+    ctx.fillStyle = '#fff1f2';
     SocialCardEngine.drawRoundedRect(ctx, 76, advY, legW, cardH, 10);
     if (ctx.fill) ctx.fill();
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
+    ctx.lineWidth = 1;
+    SocialCardEngine.drawRoundedRect(ctx, 76, advY, legW, cardH, 10);
+    if (ctx.stroke) ctx.stroke();
 
     // Left Cinnabar Accent Bar
-    ctx.fillStyle = '#ef4444';
+    ctx.fillStyle = '#dc2626';
     SocialCardEngine.drawRoundedRect(ctx, 76, advY, 4, cardH, 2);
     if (ctx.fill) ctx.fill();
 
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#f87171';
+    ctx.fillStyle = '#b91c1c';
     ctx.font = 'bold 13px sans-serif';
     ctx.fillText(data.isEn ? '⚡ KARMIC LESSON ✦' : '✦ 天机诫勉 ✦', 94, advY + 22);
 
-    ctx.fillStyle = '#fecdd3';
+    ctx.fillStyle = '#18181b';
     ctx.font = '13px sans-serif';
     this.drawWrappedText(ctx, data.figureAdvice, 94, advY + 44, 560, 21, 3, 'left');
 
@@ -1361,16 +1367,16 @@ class SocialCardEngine {
     const dais3H = 194;
     const dais3R = 16;
 
-    ctx.fillStyle = 'rgba(26, 28, 64, 0.65)';
+    ctx.fillStyle = '#f8fafc';
     SocialCardEngine.drawRoundedRect(ctx, dais3X, dais3Y, dais3W, dais3H, dais3R);
     if (ctx.fill) ctx.fill();
 
-    ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.40)';
+    ctx.lineWidth = 1.2;
     SocialCardEngine.drawRoundedRect(ctx, dais3X, dais3Y, dais3W, dais3H, dais3R);
     if (ctx.stroke) ctx.stroke();
 
-    ctx.fillStyle = '#fbbf24';
+    ctx.fillStyle = '#78350f';
     ctx.font = 'bold 21px serif';
     ctx.textAlign = 'center';
     const hexTitle = data.isEn
@@ -1379,11 +1385,11 @@ class SocialCardEngine {
     ctx.fillText(hexTitle, W / 2, dais3Y + 34);
 
     // Directive wrapped
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#18181b';
     ctx.font = '14.5px sans-serif';
     this.drawWrappedText(ctx, data.hexDirective, W / 2, dais3Y + 70, 570, 23, 2, 'center');
 
-    // Action banner - Vibrant Emerald-Gold Gradient with Luminous Glow
+    // Action banner - Vibrant Emerald-Gold Gradient with High-Contrast White Text
     const bannerW = 580;
     const bannerH = 42;
     const bannerX = W / 2 - bannerW / 2;
@@ -1396,18 +1402,18 @@ class SocialCardEngine {
       } catch (e) {}
     }
     if (bannerGrad) {
-      bannerGrad.addColorStop(0, '#047857');
-      bannerGrad.addColorStop(0.35, '#059669');
-      bannerGrad.addColorStop(0.7, '#0d9488');
-      bannerGrad.addColorStop(1, '#059669');
+      bannerGrad.addColorStop(0, '#065f46');
+      bannerGrad.addColorStop(0.35, '#047857');
+      bannerGrad.addColorStop(0.7, '#059669');
+      bannerGrad.addColorStop(1, '#065f46');
       ctx.fillStyle = bannerGrad;
     } else {
-      ctx.fillStyle = '#059669';
+      ctx.fillStyle = '#047857';
     }
     SocialCardEngine.drawRoundedRect(ctx, bannerX, bannerY, bannerW, bannerH, 10);
     if (ctx.fill) ctx.fill();
 
-    ctx.strokeStyle = '#34d399';
+    ctx.strokeStyle = '#059669';
     ctx.lineWidth = 1.5;
     SocialCardEngine.drawRoundedRect(ctx, bannerX, bannerY, bannerW, bannerH, 10);
     if (ctx.stroke) ctx.stroke();
@@ -1421,12 +1427,12 @@ class SocialCardEngine {
     ctx.fillText(actionText, W / 2, bannerY + 26);
 
     // 6. Footer Brand & Link
-    ctx.fillStyle = '#94a3b8';
+    ctx.fillStyle = '#475569';
     ctx.font = '13px monospace';
     ctx.textAlign = 'center';
     ctx.fillText('bazi-git-main-fategranted-afk.vercel.app', W / 2, 1072);
 
-    ctx.fillStyle = '#e2e8f0';
+    ctx.fillStyle = '#18181b';
     ctx.font = '12px sans-serif';
     ctx.fillText(data.isEn ? 'BaZi-AI · Agentic Metaphysics & Decision Engine' : '八字排盘与现代战略决策引擎 · 东方数理全息', W / 2, 1096);
   }

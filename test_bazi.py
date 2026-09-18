@@ -12105,8 +12105,7 @@ assert 'data-preset="van_vs_gz"' in sim_content
 with open("/Users/nickzhu/.gemini/antigravity/scratch/bazi-web/index.html", "r", encoding="utf-8") as f:
     index_content = f.read()
 
-assert 'id="btnOpenSimulatorPage"' in index_content, "index.html missing btnOpenSimulatorPage"
-assert 'hidden' in re.search(r'<a[^>]*id="btnOpenSimulatorPage"[^>]*>', index_content).group(0), "btnOpenSimulatorPage must have initial hidden class"
+assert 'id="btnOpenSimulatorPage"' not in index_content, "btnOpenSimulatorPage must be removed from top bar per user instruction"
 assert 'id="navBtnSimulator"' in index_content, "index.html missing navBtnSimulator"
 assert 'data-view="view-simulator"' in index_content, "index.html missing data-view='view-simulator'"
 assert 'id="view-simulator"' in index_content, "index.html missing view-simulator element"
@@ -12704,10 +12703,10 @@ with open('index.html', 'r', encoding='utf-8') as f:
 
 assert 'id="fourAuspiciousDeitiesSection"' in idx_content, "Missing #fourAuspiciousDeitiesSection in index.html"
 assert 'id="fourDeitiesCardsContainer"' in idx_content, "Missing #fourDeitiesCardsContainer in index.html"
-assert 'id="btnHeaderOpenAdvisor"' in idx_content, "Missing #btnHeaderOpenAdvisor in index.html"
-assert 'id="btnRibbonOpenAdvisor"' in idx_content, "Missing #btnRibbonOpenAdvisor in index.html"
-assert 'id="portalCardAdvisor"' in idx_content, "Missing #portalCardAdvisor in index.html"
-assert 'id="btnDeitiesAskAdvisor"' in idx_content, "Missing #btnDeitiesAskAdvisor in index.html"
+assert 'id="btnHeaderOpenAdvisor"' not in idx_content, "#btnHeaderOpenAdvisor must be removed per user instruction"
+assert 'id="btnRibbonOpenAdvisor"' not in idx_content, "#btnRibbonOpenAdvisor must be removed per user instruction"
+assert 'id="portalCardAdvisor"' not in idx_content, "#portalCardAdvisor must be removed per user instruction"
+assert 'id="btnDeitiesAskAdvisor"' not in idx_content, "#btnDeitiesAskAdvisor must be removed per user instruction"
 
 jsc_check108_cmd = [
     "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",

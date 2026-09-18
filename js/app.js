@@ -1290,27 +1290,8 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
         </div>
-
-        <!-- Quick Ask Advisor Button -->
-        <div class="pt-2 border-t border-gray-800/60">
-          <button type="button" class="btn-ask-deity-advisor w-full py-1.5 px-2.5 rounded-lg bg-gradient-to-r from-amber-700/60 to-amber-800/60 hover:from-amber-600 hover:to-amber-700 text-amber-100 text-xs font-medium transition border border-amber-500/30 flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer" data-deity-query="${encodeURIComponent(isEn ? d.advisorQueryEn : d.advisorQueryZh)}">
-            <span>🧙</span>
-            <span>${typeof I18N !== 'undefined' ? I18N.t('deity_ask_advisor_btn', currentLang) : (isEn ? 'Ask Advisor About This Star ➔' : '问军师此吉神引动时机 ➔')}</span>
-          </button>
-        </div>
       </div>
     `).join('');
-
-    // Bind ask buttons
-    container.querySelectorAll('.btn-ask-deity-advisor').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const query = decodeURIComponent(btn.getAttribute('data-deity-query') || '');
-        if (query) {
-          openAdvisorModal();
-          handleAdvisorQuery(query);
-        }
-      });
-    });
   }
 
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
@@ -6872,10 +6853,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="p-3 rounded-xl bg-black/50 border border-gray-800 text-xs space-y-1.5">
               <div class="flex items-center space-x-1.5 ${zn.isMutated ? 'text-amber-400' : 'text-emerald-400'} font-bold font-serif-sc">
                 <span>⚡</span>
-                <span>${isEn ? 'Ni Haisha 《Tian Ji》 Annual Transit Oracle' : '倪海厦《天纪》流年卦断'}</span>
+                <span>${isEn ? 'Ni Haisha 《Tian Ji》 Action Directive' : '倪海厦《天纪》流年实操行持'}</span>
               </div>
               <p class="text-gray-300 leading-relaxed text-[11px]">
-                ${isEn ? (znTj.liuNianEn || 'Auspicious achievements with disciplined execution; avoid impulsive risks.') : (znTj.liuNianZh || '吉庆临门，加官进禄，文书有喜；防刚愎自用，宜守正求稳。')}
+                ${isEn 
+                  ? ('Core Directive: ' + (znTj.liuNianEn || 'Build undeniable craft with disciplined vigilance, align with heaven, and let works speak.')) 
+                  : ('核心行持：' + (znTj.liuNianZh || '吉庆临门，以作品立世，防刚愎自用，游刃有余。'))}
               </p>
             </div>
             <div class="p-3 rounded-xl bg-emerald-950/20 border border-emerald-800/40 text-xs space-y-1.5">
