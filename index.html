@@ -16,6 +16,16 @@
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <!-- Custom Metaphysics CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('bazi_theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.add('light');
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body class="min-h-screen">
   <!-- Header -->

@@ -15152,7 +15152,47 @@ assert run_check119.returncode == 0, f"Check 119 JSC test failed: stdout={run_ch
 
 print("✓ 119. 全球代表都市群扩充（五大方位世界枢纽、双语100%零中文残留）、隋末名将宇文成都入库（449位历史名人大典/隋末崩塌33位）、地理方位与组织生态匹配仪独立专页（view-georesonance与双向一键跳转）及界面零卡顿性能重构（按需渲染/分批加载/150ms防抖/画布防重绘）全量验证通过！")
 
-print("\n🎉 ALL 119 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 120. Validating Light Theme Adaptation (浅昼模式暗角全面消除与全端持久化同步)
+# ==============================================================================
+print("\n=== 120. Validating Light Theme Adaptation (浅昼模式暗角全面消除与全端持久化同步) ===")
+
+with open("css/style.css", "r", encoding="utf-8") as f:
+    css_content = f.read()
+
+# 1. Verify style.css wildcard badge rules
+assert '[class*="bg-amber-950"]' in css_content, "Missing wildcard badge selector for amber-950 in style.css"
+assert '[class*="bg-emerald-950"]' in css_content, "Missing wildcard badge selector for emerald-950 in style.css"
+assert '[class*="bg-rose-950"]' in css_content, "Missing wildcard badge selector for rose-950 in style.css"
+assert '[class*="bg-purple-950"]' in css_content, "Missing wildcard badge selector for purple-950 in style.css"
+assert '[class*="bg-blue-950"]' in css_content, "Missing wildcard badge selector for blue-950 in style.css"
+
+# 2. Verify style.css hex card background overrides & modal backdrops
+assert '[class*="bg-[#0"]' in css_content, "Missing wildcard hex selector bg-[#0] in style.css"
+assert '[class*="bg-[#1"]' in css_content, "Missing wildcard hex selector bg-[#1] in style.css"
+assert '#calcProgressBarTrack' in css_content, "Missing #calcProgressBarTrack light styling in style.css"
+assert 'rgba(45, 35, 25, 0.45)' in css_content, "Missing warm translucent modal backdrop in style.css"
+
+# 3. Verify js/app.js theme persistence and canvas dynamic adaptation
+with open("js/app.js", "r", encoding="utf-8") as f:
+    app_js_content = f.read()
+
+assert "localStorage.getItem('bazi_theme')" in app_js_content, "Missing theme restore from localStorage in app.js"
+assert "localStorage.setItem('bazi_theme'" in app_js_content, "Missing theme persistence to localStorage in app.js"
+assert "isLight" in app_js_content, "Missing isLight check in app.js"
+assert "b45309" in app_js_content, "Missing warm amber scrubber line in drawChronoTimelineChart in app.js"
+
+# 4. Verify all HTML files have inline head theme script and theme toggle button
+html_files = ["index.html", "history.html", "simulator.html", "career.html", "fengshui.html"]
+for hf in html_files:
+    with open(hf, "r", encoding="utf-8") as f:
+        hcontent = f.read()
+    assert "localStorage.getItem('bazi_theme')" in hcontent, f"Missing head theme restore script in {hf}"
+    assert "themeToggle" in hcontent, f"Missing theme toggle element/handler in {hf}"
+
+print("✓ 120. 浅昼模式暗角全面消除（卡片容器渐变覆写/标签徽章通配/模态遮罩柔化/百岁画布色调适配）、LocalStorage 全域主题记忆与多端子页同步验证通过！")
+
+print("\n🎉 ALL 120 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

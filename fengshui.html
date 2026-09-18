@@ -15,6 +15,16 @@
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <!-- Custom Metaphysics CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('bazi_theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.add('light');
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body class="min-h-screen bg-[#0B0F19] text-gray-200">
   <!-- Header -->
@@ -41,6 +51,12 @@
           <span>🏛️</span>
           <span id="fsBtnReturn">返回全相总盘</span>
         </a>
+
+        <!-- Theme Toggle Button in fengshui.html -->
+        <button id="themeToggleBtnFs" type="button" class="px-3 py-1.5 text-xs rounded-xl border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-200 font-bold shadow-md transition flex items-center gap-1.5 cursor-pointer">
+          <span id="themeToggleIconFs">🌙</span>
+          <span id="themeToggleTextFs">暗夜</span>
+        </button>
 
         <!-- Language Switcher Toggle Group -->
         <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/80 p-0.5 shadow-sm" role="group">
@@ -463,12 +479,58 @@
         }
       }
 
+      // Theme Toggle Logic for fengshui.html
+      const themeBtn = document.getElementById("themeToggleBtnFs");
+      const themeIcon = document.getElementById("themeToggleIconFs");
+      const themeText = document.getElementById("themeToggleTextFs");
+
+      function updateThemeBtnUI(th) {
+        if (!themeBtn) return;
+        const isEn = (currentLang === "en");
+        if (th === 'light') {
+          if (themeIcon) themeIcon.textContent = '🌙';
+          if (themeText) themeText.textContent = isEn ? 'Dark' : '暗夜';
+        } else {
+          if (themeIcon) themeIcon.textContent = '☀️';
+          if (themeText) themeText.textContent = isEn ? 'Light' : '浅昼';
+        }
+      }
+
+      const initialTheme = localStorage.getItem('bazi_theme') || 'dark';
+      if (initialTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.classList.add('light');
+        if (document.body) document.body.classList.add('light-theme');
+      }
+      updateThemeBtnUI(initialTheme);
+
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+          const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+          const next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          if (next === 'light') {
+            document.documentElement.classList.add('light');
+            if (document.body) document.body.classList.add('light-theme');
+          } else {
+            document.documentElement.classList.remove('light');
+            if (document.body) document.body.classList.remove('light-theme');
+          }
+          try {
+            localStorage.setItem('bazi_theme', next);
+          } catch(e) {}
+          updateThemeBtnUI(next);
+        });
+      }
+
       document.getElementById("fsLangZhBtn").addEventListener("click", () => {
         currentLang = "zh";
+        updateThemeBtnUI(document.documentElement.getAttribute('data-theme') || 'dark');
         render();
       });
       document.getElementById("fsLangEnBtn").addEventListener("click", () => {
         currentLang = "en";
+        updateThemeBtnUI(document.documentElement.getAttribute('data-theme') || 'dark');
         render();
       });
 

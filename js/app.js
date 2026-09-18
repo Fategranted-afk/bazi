@@ -502,23 +502,61 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Theme Toggle
-  themeToggle.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', newTheme);
-    if (newTheme === 'light') {
-      document.documentElement.classList.add('light');
-      if (document.body) document.body.classList.add('light-theme');
-    } else {
-      document.documentElement.classList.remove('light');
-      if (document.body) document.body.classList.remove('light-theme');
+  // Theme Toggle & Persistence
+  try {
+    const savedTheme = (typeof localStorage !== 'undefined') ? localStorage.getItem('bazi_theme') : null;
+    if (savedTheme === 'light') {
+      if (document.documentElement && typeof document.documentElement.setAttribute === 'function') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      if (document.documentElement && document.documentElement.classList && typeof document.documentElement.classList.add === 'function') {
+        document.documentElement.classList.add('light');
+      }
+      if (document.body && document.body.classList && typeof document.body.classList.add === 'function') {
+        document.body.classList.add('light-theme');
+      }
+      if (themeToggle) {
+        themeToggle.textContent = '☀️ 浅昼';
+      }
     }
-    themeToggle.textContent = newTheme === 'dark' ? '🌙 暗夜' : '☀️ 浅昼';
-    if (currentBaziResult) {
-      ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
-    }
-  });
+  } catch (e) {}
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = (document.documentElement && typeof document.documentElement.getAttribute === 'function') ? (document.documentElement.getAttribute('data-theme') || 'dark') : 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      if (document.documentElement && typeof document.documentElement.setAttribute === 'function') {
+        document.documentElement.setAttribute('data-theme', newTheme);
+      }
+      if (newTheme === 'light') {
+        if (document.documentElement && document.documentElement.classList && typeof document.documentElement.classList.add === 'function') {
+          document.documentElement.classList.add('light');
+        }
+        if (document.body && document.body.classList && typeof document.body.classList.add === 'function') {
+          document.body.classList.add('light-theme');
+        }
+      } else {
+        if (document.documentElement && document.documentElement.classList && typeof document.documentElement.classList.remove === 'function') {
+          document.documentElement.classList.remove('light');
+        }
+        if (document.body && document.body.classList && typeof document.body.classList.remove === 'function') {
+          document.body.classList.remove('light-theme');
+        }
+      }
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('bazi_theme', newTheme);
+        }
+      } catch (e) {}
+      themeToggle.textContent = newTheme === 'dark' ? '🌙 暗夜' : '☀️ 浅昼';
+      if (currentBaziResult) {
+        ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
+      }
+      if (typeof currentLuckResult !== 'undefined' && currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
+        drawChronoTimelineChart(currentLuckResult.timeline, typeof activeChronoAge !== 'undefined' ? activeChronoAge : 1);
+      }
+    });
+  }
 
   // Set Default Time to Current Local Time
   function setCurrentTime() {
@@ -12543,7 +12581,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartW = w - padL - padR;
     const chartH = h - padT - padB;
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    const isLight = (document.documentElement && typeof document.documentElement.getAttribute === 'function' && document.documentElement.getAttribute('data-theme') === 'light') || 
+                    (document.documentElement && document.documentElement.classList && typeof document.documentElement.classList.contains === 'function' && document.documentElement.classList.contains('light')) || 
+                    (document.body && document.body.classList && typeof document.body.classList.contains === 'function' && document.body.classList.contains('light-theme'));
+
+    ctx.strokeStyle = isLight ? 'rgba(120, 80, 40, 0.15)' : 'rgba(255, 255, 255, 0.05)';
     ctx.lineWidth = 1;
     [0, 25, 50, 75, 100].forEach(val => {
       const y = padT + chartH - (val / 100) * chartH;
@@ -12552,7 +12594,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.lineTo(w - padR, y);
       ctx.stroke();
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+      ctx.fillStyle = isLight ? 'rgba(80, 50, 20, 0.75)' : 'rgba(255, 255, 255, 0.25)';
       ctx.font = '9px monospace';
       ctx.textAlign = 'right';
       ctx.textBaseline = 'middle';
@@ -12582,7 +12624,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     });
-    ctx.strokeStyle = '#f59e0b';
+    ctx.strokeStyle = isLight ? '#d97706' : '#f59e0b';
     ctx.lineWidth = 2.2;
     ctx.stroke();
 
@@ -12611,7 +12653,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.setLineDash([3, 3]);
     ctx.moveTo(ax, padT);
     ctx.lineTo(ax, h - padB);
-    ctx.strokeStyle = '#fef08a';
+    ctx.strokeStyle = isLight ? '#b45309' : '#fef08a';
     ctx.lineWidth = 1.8;
     ctx.stroke();
     ctx.setLineDash([]);
@@ -12621,8 +12663,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     ctx.beginPath();
     ctx.arc(ax, ey, 4.5, 0, Math.PI * 2);
-    ctx.fillStyle = '#f59e0b';
-    ctx.strokeStyle = '#ffffff';
+    ctx.fillStyle = isLight ? '#d97706' : '#f59e0b';
+    ctx.strokeStyle = isLight ? '#f5f0e4' : '#ffffff';
     ctx.lineWidth = 1.5;
     ctx.fill();
     ctx.stroke();
@@ -12630,12 +12672,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.beginPath();
     ctx.arc(ax, wy, 4.5, 0, Math.PI * 2);
     ctx.fillStyle = '#10b981';
-    ctx.strokeStyle = '#ffffff';
+    ctx.strokeStyle = isLight ? '#f5f0e4' : '#ffffff';
     ctx.lineWidth = 1.5;
     ctx.fill();
     ctx.stroke();
 
-    ctx.fillStyle = '#fef08a';
+    ctx.fillStyle = isLight ? '#78350f' : '#fef08a';
     ctx.font = 'bold 10px monospace';
     ctx.textAlign = 'center';
     const chartRealAge = (item.realAge !== undefined) ? item.realAge : (item.age - 1);

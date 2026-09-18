@@ -15,6 +15,16 @@
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <!-- Custom Metaphysics CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      try {
+        if (localStorage.getItem('bazi_theme') === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.add('light');
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body class="min-h-screen bg-[#0B0F19] text-gray-200">
   <!-- Header -->
@@ -47,6 +57,12 @@
           <span>🏛️</span>
           <span id="historyBtnReturnText">返回全相总盘</span>
         </a>
+
+        <!-- Theme Toggle Button in history.html -->
+        <button id="themeToggleBtnHistory" type="button" class="px-3 py-1.5 text-xs rounded-xl border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-200 font-bold shadow-md transition flex items-center gap-1.5 cursor-pointer">
+          <span id="themeToggleIconHistory">🌙</span>
+          <span id="themeToggleTextHistory">暗夜</span>
+        </button>
 
         <!-- Language Switcher Toggle Group -->
         <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/80 p-0.5 shadow-sm" role="group">
@@ -887,15 +903,61 @@
         renderFilteredFiguresGrid();
       });
 
+      // Theme Toggle Logic for history.html
+      const themeBtn = document.getElementById("themeToggleBtnHistory");
+      const themeIcon = document.getElementById("themeToggleIconHistory");
+      const themeText = document.getElementById("themeToggleTextHistory");
+
+      function updateThemeBtnUI(th) {
+        if (!themeBtn) return;
+        const isEn = (currentLang === "en");
+        if (th === 'light') {
+          if (themeIcon) themeIcon.textContent = '🌙';
+          if (themeText) themeText.textContent = isEn ? 'Dark' : '暗夜';
+        } else {
+          if (themeIcon) themeIcon.textContent = '☀️';
+          if (themeText) themeText.textContent = isEn ? 'Light' : '浅昼';
+        }
+      }
+
+      const initialTheme = localStorage.getItem('bazi_theme') || 'dark';
+      if (initialTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.classList.add('light');
+        if (document.body) document.body.classList.add('light-theme');
+      }
+      updateThemeBtnUI(initialTheme);
+
+      if (themeBtn) {
+        themeBtn.addEventListener('click', function() {
+          const cur = document.documentElement.getAttribute('data-theme') || 'dark';
+          const next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          if (next === 'light') {
+            document.documentElement.classList.add('light');
+            if (document.body) document.body.classList.add('light-theme');
+          } else {
+            document.documentElement.classList.remove('light');
+            if (document.body) document.body.classList.remove('light-theme');
+          }
+          try {
+            localStorage.setItem('bazi_theme', next);
+          } catch(e) {}
+          updateThemeBtnUI(next);
+        });
+      }
+
       // Language toggles
       document.getElementById("historyLangZhBtn").addEventListener("click", () => {
         currentLang = "zh";
         try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "zh"); } catch(e){}
+        updateThemeBtnUI(document.documentElement.getAttribute('data-theme') || 'dark');
         render();
       });
       document.getElementById("historyLangEnBtn").addEventListener("click", () => {
         currentLang = "en";
         try { if (typeof localStorage !== "undefined") localStorage.setItem("bazi_lang", "en"); } catch(e){}
+        updateThemeBtnUI(document.documentElement.getAttribute('data-theme') || 'dark');
         render();
       });
 

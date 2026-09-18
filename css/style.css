@@ -203,19 +203,58 @@ body.light-theme .archetype-preset-card {
 [data-theme="light"] [class*="bg-slate-950"],
 [data-theme="light"] [class*="bg-zinc-800"],
 [data-theme="light"] [class*="bg-zinc-900"],
-[data-theme="light"] [class*="bg-zinc-950"] {
+[data-theme="light"] [class*="bg-zinc-950"],
+[data-theme="light"] [class*="bg-[#0"]:not([class*="bg-[#fcfbf7]"]),
+[data-theme="light"] [class*="bg-[#1"]:not([class*="bg-[#fcfbf7]"]),
+html.light [class*="bg-[#0"]:not([class*="bg-[#fcfbf7]"]),
+html.light [class*="bg-[#1"]:not([class*="bg-[#fcfbf7]"]),
+body.light-theme [class*="bg-[#0"]:not([class*="bg-[#fcfbf7]"]),
+body.light-theme [class*="bg-[#1"]:not([class*="bg-[#fcfbf7]"]) {
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+}
+
+/* Modals Translucent Soft Backdrop in Light Mode */
+[data-theme="light"] #advisorModal,
+[data-theme="light"] #calculationProgressModal,
+[data-theme="light"] #historyFigureDetailModalDashboard,
+[data-theme="light"] #socialCardModal,
+[data-theme="light"] #imperialDossierModal,
+html.light #advisorModal,
+html.light #calculationProgressModal,
+html.light #historyFigureDetailModalDashboard,
+html.light #socialCardModal,
+html.light #imperialDossierModal,
+body.light-theme #advisorModal,
+body.light-theme #calculationProgressModal,
+body.light-theme #historyFigureDetailModalDashboard,
+body.light-theme #socialCardModal,
+body.light-theme #imperialDossierModal {
+  background-color: rgba(45, 35, 25, 0.45) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
 }
 
 [data-theme="light"] #advisorModal > div,
 [data-theme="light"] #socialCardModal > div,
 [data-theme="light"] #imperialDossierModal > div,
 [data-theme="light"] #historyFigureDetailModalDashboard > div,
-[data-theme="light"] #calculationProgressModal > div {
+[data-theme="light"] #calculationProgressModal > div,
+html.light #advisorModal > div,
+html.light #socialCardModal > div,
+html.light #imperialDossierModal > div,
+html.light #historyFigureDetailModalDashboard > div,
+html.light #calculationProgressModal > div,
+body.light-theme #advisorModal > div,
+body.light-theme #socialCardModal > div,
+body.light-theme #imperialDossierModal > div,
+body.light-theme #historyFigureDetailModalDashboard > div,
+body.light-theme #calculationProgressModal > div {
+  background-image: none !important;
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
   color: var(--text-main) !important;
+  box-shadow: 0 10px 40px rgba(100, 80, 50, 0.15) !important;
 }
 
 [data-theme="light"] #socialCardModal .bg-black\/60,
@@ -224,7 +263,21 @@ body.light-theme .archetype-preset-card {
 [data-theme="light"] #advisorModal .bg-black\/50,
 [data-theme="light"] #advisorModal .bg-gray-900\/40,
 [data-theme="light"] #advisorModal .bg-gray-900,
-[data-theme="light"] #advisorModal #advisorContextBadges {
+[data-theme="light"] #advisorModal #advisorContextBadges,
+html.light #socialCardModal .bg-black\/60,
+html.light #socialCardModal .bg-\[\#0d0f17\],
+html.light #advisorModal .bg-\[\#0d0f17\],
+html.light #advisorModal .bg-black\/50,
+html.light #advisorModal .bg-gray-900\/40,
+html.light #advisorModal .bg-gray-900,
+html.light #advisorModal #advisorContextBadges,
+body.light-theme #socialCardModal .bg-black\/60,
+body.light-theme #socialCardModal .bg-\[\#0d0f17\],
+body.light-theme #advisorModal .bg-\[\#0d0f17\],
+body.light-theme #advisorModal .bg-black\/50,
+body.light-theme #advisorModal .bg-gray-900\/40,
+body.light-theme #advisorModal .bg-gray-900,
+body.light-theme #advisorModal #advisorContextBadges {
   background-color: #fdfaf3 !important;
   border-color: #ded7c7 !important;
 }
@@ -396,43 +449,135 @@ body.light-theme .from-sky-950\/25 {
   border-color: #a5f3fc !important;
 }
 
-/* Major Dark Card Containers with Hex Gradients */
+/* Major Dark Card Containers with Hex Gradients & Stops */
+[data-theme="light"] #chronoNavigatorSection,
+[data-theme="light"] #lifelongSynthesisSection,
+[data-theme="light"] #transitFortuneDetailCard,
+[data-theme="light"] #luckInteractionsContainer,
 [data-theme="light"] #fourteenCharEnergySection,
 [data-theme="light"] #timeDynamicsSection,
 [data-theme="light"] #operationalPlaybookSection,
 [data-theme="light"] #ecologicalResonanceSection,
-[data-theme="light"] #transitFortuneDetailCard,
+[data-theme="light"] #scenarioSimulatorSection,
 [data-theme="light"] #originalHexagramCard,
 [data-theme="light"] #resultingHexagramCard,
 [data-theme="light"] #portalBtnStrategy,
 [data-theme="light"] #portalBtnFriction,
 [data-theme="light"] #portalBtnFengShui,
 [data-theme="light"] #portalBtnCareer,
+[data-theme="light"] #portalCardAdvisor,
+[data-theme="light"] #calculationProgressModal > div,
+[data-theme="light"] #advisorModal > div,
+[data-theme="light"] #socialCardModal > div,
+[data-theme="light"] #imperialDossierModal > div,
+[data-theme="light"] #historyFigureDetailModalDashboard > div,
+[data-theme="light"] .sim-preset-card,
+[data-theme="light"] .deity-card,
+[data-theme="light"] [class*="bg-gradient-to"][class*="from-[#1"],
+[data-theme="light"] [class*="bg-gradient-to"][class*="from-[#0"],
+[data-theme="light"] [class*="bg-gradient-to"][class*="to-black"],
+[data-theme="light"] [class*="bg-gradient-to"][class*="via-black"],
+[data-theme="light"] [class*="bg-gradient-to"][class*="to-[#0"],
+[data-theme="light"] [class*="bg-gradient-to"][class*="to-[#1"],
+html.light #chronoNavigatorSection,
+html.light #lifelongSynthesisSection,
+html.light #transitFortuneDetailCard,
+html.light #luckInteractionsContainer,
 html.light #fourteenCharEnergySection,
 html.light #timeDynamicsSection,
 html.light #operationalPlaybookSection,
 html.light #ecologicalResonanceSection,
-html.light #transitFortuneDetailCard,
+html.light #scenarioSimulatorSection,
 html.light #originalHexagramCard,
 html.light #resultingHexagramCard,
 html.light #portalBtnStrategy,
 html.light #portalBtnFriction,
 html.light #portalBtnFengShui,
 html.light #portalBtnCareer,
+html.light #portalCardAdvisor,
+html.light #calculationProgressModal > div,
+html.light #advisorModal > div,
+html.light #socialCardModal > div,
+html.light #imperialDossierModal > div,
+html.light #historyFigureDetailModalDashboard > div,
+html.light .sim-preset-card,
+html.light .deity-card,
+html.light [class*="bg-gradient-to"][class*="from-[#1"],
+html.light [class*="bg-gradient-to"][class*="from-[#0"],
+html.light [class*="bg-gradient-to"][class*="to-black"],
+html.light [class*="bg-gradient-to"][class*="via-black"],
+html.light [class*="bg-gradient-to"][class*="to-[#0"],
+html.light [class*="bg-gradient-to"][class*="to-[#1"],
+body.light-theme #chronoNavigatorSection,
+body.light-theme #lifelongSynthesisSection,
+body.light-theme #transitFortuneDetailCard,
+body.light-theme #luckInteractionsContainer,
 body.light-theme #fourteenCharEnergySection,
 body.light-theme #timeDynamicsSection,
 body.light-theme #operationalPlaybookSection,
 body.light-theme #ecologicalResonanceSection,
-body.light-theme #transitFortuneDetailCard,
+body.light-theme #scenarioSimulatorSection,
 body.light-theme #originalHexagramCard,
 body.light-theme #resultingHexagramCard,
 body.light-theme #portalBtnStrategy,
 body.light-theme #portalBtnFriction,
 body.light-theme #portalBtnFengShui,
-body.light-theme #portalBtnCareer {
+body.light-theme #portalBtnCareer,
+body.light-theme #portalCardAdvisor,
+body.light-theme #calculationProgressModal > div,
+body.light-theme #advisorModal > div,
+body.light-theme #socialCardModal > div,
+body.light-theme #imperialDossierModal > div,
+body.light-theme #historyFigureDetailModalDashboard > div,
+body.light-theme .sim-preset-card,
+body.light-theme .deity-card,
+body.light-theme [class*="bg-gradient-to"][class*="from-[#1"],
+body.light-theme [class*="bg-gradient-to"][class*="from-[#0"],
+body.light-theme [class*="bg-gradient-to"][class*="to-black"],
+body.light-theme [class*="bg-gradient-to"][class*="via-black"],
+body.light-theme [class*="bg-gradient-to"][class*="to-[#0"],
+body.light-theme [class*="bg-gradient-to"][class*="to-[#1"] {
   background-image: none !important;
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+/* Warm Parchment Banners (Canons, FengShui, Career, Geo, Simulator, Advisor, Social Card, Top Match) */
+[data-theme="light"] #view-canons > div:first-child,
+[data-theme="light"] #view-georesonance > div:first-child,
+[data-theme="light"] #view-history > div:first-child,
+[data-theme="light"] #advisorModal > div > div:first-child,
+html.light #view-canons > div:first-child,
+html.light #view-georesonance > div:first-child,
+html.light #view-history > div:first-child,
+html.light #advisorModal > div > div:first-child,
+body.light-theme #view-canons > div:first-child,
+body.light-theme #view-georesonance > div:first-child,
+body.light-theme #view-history > div:first-child,
+body.light-theme #advisorModal > div > div:first-child {
+  background-image: linear-gradient(135deg, #fef3c7 0%, #fef9c3 50%, #fef3c7 100%) !important;
+  background-color: #fef3c7 !important;
+  border-color: #e5d5b5 !important;
+}
+
+[data-theme="light"] #view-fengshui > div:first-child,
+html.light #view-fengshui > div:first-child,
+body.light-theme #view-fengshui > div:first-child {
+  background-image: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 50%, #fef9c3 100%) !important;
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+[data-theme="light"] #view-career > div:first-child,
+[data-theme="light"] #socialCardModal > div > div:first-child,
+html.light #view-career > div:first-child,
+html.light #socialCardModal > div > div:first-child,
+body.light-theme #view-career > div:first-child,
+body.light-theme #socialCardModal > div > div:first-child {
+  background-image: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 50%, #fef3c7 100%) !important;
+  background-color: #eef2ff !important;
+  border-color: #c7d2fe !important;
 }
 
 /* Neutralize Black Gradient Stops in Light Mode */
@@ -488,143 +633,313 @@ body.light-theme .to-stone-950\/90 {
   --tw-gradient-to: rgba(255, 255, 255, 0.92) !important;
 }
 
-/* Delicate Light Mode Borders */
+/* Delicate Light Mode Universal Borders */
 [data-theme="light"] .border-gray-800,
-[data-theme="light"] .border-gray-800\/80,
-[data-theme="light"] .border-gray-800\/60,
-[data-theme="light"] .border-gray-800\/50,
 [data-theme="light"] .border-gray-700,
-[data-theme="light"] .border-gray-700\/50,
 [data-theme="light"] .border-gray-600,
+[data-theme="light"] [class*="border-gray-9"],
+[data-theme="light"] [class*="border-gray-8"],
+[data-theme="light"] [class*="border-gray-7"],
+[data-theme="light"] [class*="border-slate-9"],
+[data-theme="light"] [class*="border-slate-8"],
+[data-theme="light"] [class*="border-zinc-9"],
+[data-theme="light"] [class*="border-zinc-8"],
+[data-theme="light"] [class*="border-stone-9"],
+[data-theme="light"] [class*="border-stone-8"],
 html.light .border-gray-800,
-html.light .border-gray-800\/80,
-html.light .border-gray-800\/60,
-html.light .border-gray-800\/50,
 html.light .border-gray-700,
-html.light .border-gray-700\/50,
 html.light .border-gray-600,
+html.light [class*="border-gray-9"],
+html.light [class*="border-gray-8"],
+html.light [class*="border-gray-7"],
+html.light [class*="border-slate-9"],
+html.light [class*="border-slate-8"],
+html.light [class*="border-zinc-9"],
+html.light [class*="border-zinc-8"],
+html.light [class*="border-stone-9"],
+html.light [class*="border-stone-8"],
 body.light-theme .border-gray-800,
-body.light-theme .border-gray-800\/80,
-body.light-theme .border-gray-800\/60,
-body.light-theme .border-gray-800\/50,
 body.light-theme .border-gray-700,
-body.light-theme .border-gray-700\/50,
-body.light-theme .border-gray-600 {
-  border-color: #ded7c7 !important;
+body.light-theme .border-gray-600,
+body.light-theme [class*="border-gray-9"],
+body.light-theme [class*="border-gray-8"],
+body.light-theme [class*="border-gray-7"],
+body.light-theme [class*="border-slate-9"],
+body.light-theme [class*="border-slate-8"],
+body.light-theme [class*="border-zinc-9"],
+body.light-theme [class*="border-zinc-8"],
+body.light-theme [class*="border-stone-9"],
+body.light-theme [class*="border-stone-8"] {
+  border-color: #cbbeaa !important;
 }
 
-[data-theme="light"] .border-rose-900\/40,
-[data-theme="light"] .border-rose-900\/50,
-[data-theme="light"] .border-rose-900\/60,
-[data-theme="light"] .border-rose-800\/40,
-[data-theme="light"] .border-rose-800\/50,
-[data-theme="light"] .border-rose-800\/60,
-html.light .border-rose-900\/40,
-html.light .border-rose-900\/50,
-html.light .border-rose-900\/60,
-html.light .border-rose-800\/40,
-html.light .border-rose-800\/50,
-html.light .border-rose-800\/60,
-body.light-theme .border-rose-900\/40,
-body.light-theme .border-rose-900\/50,
-body.light-theme .border-rose-900\/60,
-body.light-theme .border-rose-800\/40,
-body.light-theme .border-rose-800\/50,
-body.light-theme .border-rose-800\/60 {
+[data-theme="light"] [class*="border-rose-9"],
+[data-theme="light"] [class*="border-rose-8"],
+html.light [class*="border-rose-9"],
+html.light [class*="border-rose-8"],
+body.light-theme [class*="border-rose-9"],
+body.light-theme [class*="border-rose-8"] {
   border-color: #fecdd3 !important;
 }
 
-[data-theme="light"] .border-emerald-900\/40,
-[data-theme="light"] .border-emerald-900\/50,
-[data-theme="light"] .border-emerald-900\/60,
-[data-theme="light"] .border-emerald-800\/40,
-[data-theme="light"] .border-emerald-800\/50,
-[data-theme="light"] .border-emerald-800\/60,
-html.light .border-emerald-900\/40,
-html.light .border-emerald-900\/50,
-html.light .border-emerald-900\/60,
-html.light .border-emerald-800\/40,
-html.light .border-emerald-800\/50,
-html.light .border-emerald-800\/60,
-body.light-theme .border-emerald-900\/40,
-body.light-theme .border-emerald-900\/50,
-body.light-theme .border-emerald-900\/60,
-body.light-theme .border-emerald-800\/40,
-body.light-theme .border-emerald-800\/50,
-body.light-theme .border-emerald-800\/60 {
+[data-theme="light"] [class*="border-emerald-9"],
+[data-theme="light"] [class*="border-emerald-8"],
+html.light [class*="border-emerald-9"],
+html.light [class*="border-emerald-8"],
+body.light-theme [class*="border-emerald-9"],
+body.light-theme [class*="border-emerald-8"] {
   border-color: #a7f3d0 !important;
 }
 
-[data-theme="light"] .border-amber-900\/40,
-[data-theme="light"] .border-amber-900\/50,
-[data-theme="light"] .border-amber-800\/40,
-[data-theme="light"] .border-amber-800\/50,
-[data-theme="light"] .border-amber-800\/60,
-[data-theme="light"] .border-amber-600\/30,
-[data-theme="light"] .border-amber-600\/40,
-html.light .border-amber-900\/40,
-html.light .border-amber-900\/50,
-html.light .border-amber-800\/40,
-html.light .border-amber-800\/50,
-html.light .border-amber-800\/60,
-html.light .border-amber-600\/30,
-html.light .border-amber-600\/40,
-body.light-theme .border-amber-900\/40,
-body.light-theme .border-amber-900\/50,
-body.light-theme .border-amber-800\/40,
-body.light-theme .border-amber-800\/50,
-body.light-theme .border-amber-800\/60,
-body.light-theme .border-amber-600\/30,
-body.light-theme .border-amber-600\/40 {
+[data-theme="light"] [class*="border-amber-9"],
+[data-theme="light"] [class*="border-amber-8"],
+[data-theme="light"] [class*="border-amber-6"],
+html.light [class*="border-amber-9"],
+html.light [class*="border-amber-8"],
+html.light [class*="border-amber-6"],
+body.light-theme [class*="border-amber-9"],
+body.light-theme [class*="border-amber-8"],
+body.light-theme [class*="border-amber-6"] {
   border-color: #fde68a !important;
 }
 
-[data-theme="light"] .border-purple-900\/40,
-[data-theme="light"] .border-purple-900\/50,
-[data-theme="light"] .border-purple-800\/40,
-[data-theme="light"] .border-purple-800\/50,
-[data-theme="light"] .border-purple-800\/60,
-[data-theme="light"] .border-violet-900\/40,
-[data-theme="light"] .border-indigo-900\/40,
-[data-theme="light"] .border-indigo-900\/50,
-[data-theme="light"] .border-indigo-800\/40,
-html.light .border-purple-900\/40,
-html.light .border-purple-900\/50,
-html.light .border-purple-800\/40,
-html.light .border-purple-800\/50,
-html.light .border-purple-800\/60,
-html.light .border-violet-900\/40,
-html.light .border-indigo-900\/40,
-html.light .border-indigo-900\/50,
-html.light .border-indigo-800\/40,
-body.light-theme .border-purple-900\/40,
-body.light-theme .border-purple-900\/50,
-body.light-theme .border-purple-800\/40,
-body.light-theme .border-purple-800\/50,
-body.light-theme .border-purple-800\/60,
-body.light-theme .border-violet-900\/40,
-body.light-theme .border-indigo-900\/40,
-body.light-theme .border-indigo-900\/50,
-body.light-theme .border-indigo-800\/40 {
+[data-theme="light"] [class*="border-purple-9"],
+[data-theme="light"] [class*="border-purple-8"],
+[data-theme="light"] [class*="border-violet-9"],
+html.light [class*="border-purple-9"],
+html.light [class*="border-purple-8"],
+html.light [class*="border-violet-9"],
+body.light-theme [class*="border-purple-9"],
+body.light-theme [class*="border-purple-8"],
+body.light-theme [class*="border-violet-9"] {
   border-color: #e9d5ff !important;
 }
 
-[data-theme="light"] .border-cyan-900\/40,
-[data-theme="light"] .border-cyan-900\/50,
-[data-theme="light"] .border-teal-900\/40,
-[data-theme="light"] .border-teal-900\/50,
-[data-theme="light"] .border-sky-900\/40,
-html.light .border-cyan-900\/40,
-html.light .border-cyan-900\/50,
-html.light .border-teal-900\/40,
-html.light .border-teal-900\/50,
-html.light .border-sky-900\/40,
-body.light-theme .border-cyan-900\/40,
-body.light-theme .border-cyan-900\/50,
-body.light-theme .border-teal-900\/40,
-body.light-theme .border-teal-900\/50,
-body.light-theme .border-sky-900\/40 {
+[data-theme="light"] [class*="border-blue-9"],
+[data-theme="light"] [class*="border-blue-8"],
+[data-theme="light"] [class*="border-indigo-9"],
+[data-theme="light"] [class*="border-indigo-8"],
+html.light [class*="border-blue-9"],
+html.light [class*="border-blue-8"],
+html.light [class*="border-indigo-9"],
+html.light [class*="border-indigo-8"],
+body.light-theme [class*="border-blue-9"],
+body.light-theme [class*="border-blue-8"],
+body.light-theme [class*="border-indigo-9"],
+body.light-theme [class*="border-indigo-8"] {
+  border-color: #c7d2fe !important;
+}
+
+[data-theme="light"] [class*="border-cyan-9"],
+[data-theme="light"] [class*="border-cyan-8"],
+[data-theme="light"] [class*="border-teal-9"],
+[data-theme="light"] [class*="border-teal-8"],
+[data-theme="light"] [class*="border-sky-9"],
+html.light [class*="border-cyan-9"],
+html.light [class*="border-cyan-8"],
+html.light [class*="border-teal-9"],
+html.light [class*="border-teal-8"],
+html.light [class*="border-sky-9"],
+body.light-theme [class*="border-cyan-9"],
+body.light-theme [class*="border-cyan-8"],
+body.light-theme [class*="border-teal-9"],
+body.light-theme [class*="border-teal-8"],
+body.light-theme [class*="border-sky-9"] {
   border-color: #a5f3fc !important;
+}
+
+/* Progress Bar Tracks & Sliders */
+[data-theme="light"] #calcProgressBarTrack,
+[data-theme="light"] .w-full.bg-gray-900.rounded-full,
+[data-theme="light"] [class*="rounded-full"][class*="bg-gray-9"],
+[data-theme="light"] [class*="rounded-full"][class*="bg-gray-8"],
+html.light #calcProgressBarTrack,
+html.light .w-full.bg-gray-900.rounded-full,
+html.light [class*="rounded-full"][class*="bg-gray-9"],
+html.light [class*="rounded-full"][class*="bg-gray-8"],
+body.light-theme #calcProgressBarTrack,
+body.light-theme .w-full.bg-gray-900.rounded-full,
+body.light-theme [class*="rounded-full"][class*="bg-gray-9"],
+body.light-theme [class*="rounded-full"][class*="bg-gray-8"] {
+  background-color: #e2d9c8 !important;
+  border-color: #cbbeaa !important;
+}
+
+[data-theme="light"] #progressStep1,
+[data-theme="light"] #progressStep2,
+[data-theme="light"] #progressStep3,
+[data-theme="light"] #progressStep4,
+[data-theme="light"] #progressStep5,
+html.light #progressStep1,
+html.light #progressStep2,
+html.light #progressStep3,
+html.light #progressStep4,
+html.light #progressStep5,
+body.light-theme #progressStep1,
+body.light-theme #progressStep2,
+body.light-theme #progressStep3,
+body.light-theme #progressStep4,
+body.light-theme #progressStep5 {
+  background-color: #ffffff !important;
+  border-color: #cbbeaa !important;
+  color: #78350f !important;
+}
+
+[data-theme="light"] input[type="range"]::-webkit-slider-runnable-track,
+html.light input[type="range"]::-webkit-slider-runnable-track,
+body.light-theme input[type="range"]::-webkit-slider-runnable-track {
+  background: #cbbeaa !important;
+}
+
+/* Jump, Return & Navigation Action Buttons */
+[data-theme="light"] [id^="btnJumpTo"],
+[data-theme="light"] [id$="BtnReturn"],
+[data-theme="light"] [id$="CloseBtn"],
+[data-theme="light"] [id$="ClearBtn"],
+[data-theme="light"] .fric-anchor-btn,
+[data-theme="light"] .btn-dash-history-detail,
+[data-theme="light"] .btn-dash-history-card-detail,
+[data-theme="light"] button.bg-gray-800,
+[data-theme="light"] button.bg-gray-900,
+[data-theme="light"] a.bg-gray-800,
+[data-theme="light"] a.bg-gray-900,
+html.light [id^="btnJumpTo"],
+html.light [id$="BtnReturn"],
+html.light [id$="CloseBtn"],
+html.light [id$="ClearBtn"],
+html.light .fric-anchor-btn,
+html.light .btn-dash-history-detail,
+html.light .btn-dash-history-card-detail,
+html.light button.bg-gray-800,
+html.light button.bg-gray-900,
+html.light a.bg-gray-800,
+html.light a.bg-gray-900,
+body.light-theme [id^="btnJumpTo"],
+body.light-theme [id$="BtnReturn"],
+body.light-theme [id$="CloseBtn"],
+body.light-theme [id$="ClearBtn"],
+body.light-theme .fric-anchor-btn,
+body.light-theme .btn-dash-history-detail,
+body.light-theme .btn-dash-history-card-detail,
+body.light-theme button.bg-gray-800,
+body.light-theme button.bg-gray-900,
+body.light-theme a.bg-gray-800,
+body.light-theme a.bg-gray-900 {
+  background-color: #f5f0e4 !important;
+  color: #78350f !important;
+  border-color: #cbbeaa !important;
+  box-shadow: 0 1px 3px rgba(100, 80, 50, 0.08) !important;
+}
+
+[data-theme="light"] [id^="btnJumpTo"]:hover,
+[data-theme="light"] [id$="BtnReturn"]:hover,
+[data-theme="light"] [id$="CloseBtn"]:hover,
+[data-theme="light"] [id$="ClearBtn"]:hover,
+[data-theme="light"] .fric-anchor-btn:hover,
+[data-theme="light"] button.bg-gray-800:hover,
+[data-theme="light"] button.bg-gray-900:hover,
+[data-theme="light"] a.bg-gray-800:hover,
+[data-theme="light"] a.bg-gray-900:hover,
+html.light [id^="btnJumpTo"]:hover,
+html.light [id$="BtnReturn"]:hover,
+html.light [id$="CloseBtn"]:hover,
+html.light [id$="ClearBtn"]:hover,
+html.light .fric-anchor-btn:hover,
+html.light button.bg-gray-800:hover,
+html.light button.bg-gray-900:hover,
+html.light a.bg-gray-800:hover,
+html.light a.bg-gray-900:hover,
+body.light-theme [id^="btnJumpTo"]:hover,
+body.light-theme [id$="BtnReturn"]:hover,
+body.light-theme [id$="CloseBtn"]:hover,
+body.light-theme [id$="ClearBtn"]:hover,
+body.light-theme .fric-anchor-btn:hover,
+body.light-theme button.bg-gray-800:hover,
+body.light-theme button.bg-gray-900:hover,
+body.light-theme a.bg-gray-800:hover,
+body.light-theme a.bg-gray-900:hover {
+  background-color: #eae3d3 !important;
+  color: #92400e !important;
+  border-color: #b45309 !important;
+}
+
+[data-theme="light"] #btnJumpToLuckFromGeo,
+html.light #btnJumpToLuckFromGeo,
+body.light-theme #btnJumpToLuckFromGeo {
+  background-color: #f3e8ff !important;
+  border-color: #c084fc !important;
+  color: #6b21a8 !important;
+}
+[data-theme="light"] #btnJumpToFengShuiFromGeo,
+html.light #btnJumpToFengShuiFromGeo,
+body.light-theme #btnJumpToFengShuiFromGeo {
+  background-color: #ecfdf5 !important;
+  border-color: #6ee7b7 !important;
+  color: #047857 !important;
+}
+[data-theme="light"] #btnJumpToGeoFromHome,
+html.light #btnJumpToGeoFromHome,
+body.light-theme #btnJumpToGeoFromHome {
+  background-color: #eff6ff !important;
+  border-color: #93c5fd !important;
+  color: #1d4ed8 !important;
+}
+
+/* Advisor Stream Dynamic Cards in Light Mode */
+[data-theme="light"] #advisorChatStream .bg-\[\#181b28\],
+html.light #advisorChatStream .bg-\[\#181b28\],
+body.light-theme #advisorChatStream .bg-\[\#181b28\] {
+  background-color: #fdfaf3 !important;
+  border-color: #cbbeaa !important;
+  color: #18181b !important;
+}
+[data-theme="light"] .advisor-followup-pill,
+html.light .advisor-followup-pill,
+body.light-theme .advisor-followup-pill {
+  background-color: #f5f0e4 !important;
+  border-color: #cbbeaa !important;
+  color: #78350f !important;
+}
+[data-theme="light"] .advisor-followup-pill:hover,
+html.light .advisor-followup-pill:hover,
+body.light-theme .advisor-followup-pill:hover {
+  background-color: #eae3d3 !important;
+  border-color: #b45309 !important;
+  color: #92400e !important;
+}
+[data-theme="light"] .advisor-action-btn,
+html.light .advisor-action-btn,
+body.light-theme .advisor-action-btn {
+  background-color: #fef3c7 !important;
+  border-color: #d97706 !important;
+  color: #92400e !important;
+}
+[data-theme="light"] .advisor-action-btn:hover,
+html.light .advisor-action-btn:hover,
+body.light-theme .advisor-action-btn:hover {
+  background-color: #fde68a !important;
+  color: #78350f !important;
+}
+[data-theme="light"] .advisor-diag-node,
+html.light .advisor-diag-node,
+body.light-theme .advisor-diag-node {
+  background-color: #ffffff !important;
+  border-color: #a5f3fc !important;
+}
+[data-theme="light"] .advisor-diag-node:hover,
+html.light .advisor-diag-node:hover,
+body.light-theme .advisor-diag-node:hover {
+  background-color: #ecfeff !important;
+  border-color: #0891b2 !important;
+}
+[data-theme="light"] .sticky.bg-\[\#0c0e14\]\/90,
+[data-theme="light"] [class*="bg-[#0c0e14]"],
+html.light .sticky.bg-\[\#0c0e14\]\/90,
+html.light [class*="bg-[#0c0e14]"],
+body.light-theme .sticky.bg-\[\#0c0e14\]\/90,
+body.light-theme [class*="bg-[#0c0e14]"] {
+  background-color: rgba(235, 229, 216, 0.95) !important;
+  border-color: #cbbeaa !important;
 }
 
 /* Text Colors: Invert Pale Hues into Crisp Dark Ink / Rich Bronze */
@@ -1578,173 +1893,98 @@ body.light-theme #primaryViewNav button[data-active="true"] {
 }
 
 /* Pill Badges & Chips */
-[data-theme="light"] .bg-amber-950\/60,
-[data-theme="light"] .bg-amber-950\/50,
-[data-theme="light"] .bg-amber-950\/40,
-[data-theme="light"] .bg-amber-950\/30,
-[data-theme="light"] .bg-amber-950\/25,
-[data-theme="light"] .bg-amber-950\/20,
-[data-theme="light"] .bg-amber-950\/15,
-[data-theme="light"] .bg-amber-950\/10,
-[data-theme="light"] .bg-amber-900\/50,
-[data-theme="light"] .bg-amber-900\/40,
-[data-theme="light"] .bg-amber-900\/30,
-[data-theme="light"] .bg-amber-900\/20,
-html.light .bg-amber-950\/60,
-html.light .bg-amber-950\/50,
-html.light .bg-amber-950\/40,
-html.light .bg-amber-950\/30,
-html.light .bg-amber-950\/25,
-html.light .bg-amber-950\/20,
-html.light .bg-amber-950\/15,
-html.light .bg-amber-950\/10,
-html.light .bg-amber-900\/50,
-html.light .bg-amber-900\/40,
-html.light .bg-amber-900\/30,
-html.light .bg-amber-900\/20,
-body.light-theme .bg-amber-950\/60,
-body.light-theme .bg-amber-950\/50,
-body.light-theme .bg-amber-950\/40,
-body.light-theme .bg-amber-950\/30,
-body.light-theme .bg-amber-950\/25,
-body.light-theme .bg-amber-950\/20,
-body.light-theme .bg-amber-950\/15,
-body.light-theme .bg-amber-950\/10,
-body.light-theme .bg-amber-900\/50,
-body.light-theme .bg-amber-900\/40,
-body.light-theme .bg-amber-900\/30,
-body.light-theme .bg-amber-900\/20 {
+[data-theme="light"] [class*="bg-amber-950"],
+[data-theme="light"] [class*="bg-amber-900"],
+[data-theme="light"] [class*="bg-yellow-950"],
+[data-theme="light"] [class*="bg-yellow-900"],
+html.light [class*="bg-amber-950"],
+html.light [class*="bg-amber-900"],
+html.light [class*="bg-yellow-950"],
+html.light [class*="bg-yellow-900"],
+body.light-theme [class*="bg-amber-950"],
+body.light-theme [class*="bg-amber-900"],
+body.light-theme [class*="bg-yellow-950"],
+body.light-theme [class*="bg-yellow-900"] {
   background-color: rgba(217, 119, 6, 0.15) !important;
   color: #78350f !important;
   border-color: rgba(180, 83, 9, 0.35) !important;
 }
 
-[data-theme="light"] .bg-emerald-950\/60,
-[data-theme="light"] .bg-emerald-950\/50,
-[data-theme="light"] .bg-emerald-950\/40,
-[data-theme="light"] .bg-emerald-950\/30,
-[data-theme="light"] .bg-emerald-950\/25,
-[data-theme="light"] .bg-emerald-950\/20,
-[data-theme="light"] .bg-emerald-950\/15,
-[data-theme="light"] .bg-emerald-950\/10,
-html.light .bg-emerald-950\/60,
-html.light .bg-emerald-950\/50,
-html.light .bg-emerald-950\/40,
-html.light .bg-emerald-950\/30,
-html.light .bg-emerald-950\/25,
-html.light .bg-emerald-950\/20,
-html.light .bg-emerald-950\/15,
-html.light .bg-emerald-950\/10,
-body.light-theme .bg-emerald-950\/60,
-body.light-theme .bg-emerald-950\/50,
-body.light-theme .bg-emerald-950\/40,
-body.light-theme .bg-emerald-950\/30,
-body.light-theme .bg-emerald-950\/25,
-body.light-theme .bg-emerald-950\/20,
-body.light-theme .bg-emerald-950\/15,
-body.light-theme .bg-emerald-950\/10 {
+[data-theme="light"] [class*="bg-emerald-950"],
+[data-theme="light"] [class*="bg-emerald-900"],
+[data-theme="light"] [class*="bg-green-950"],
+[data-theme="light"] [class*="bg-green-900"],
+html.light [class*="bg-emerald-950"],
+html.light [class*="bg-emerald-900"],
+html.light [class*="bg-green-950"],
+html.light [class*="bg-green-900"],
+body.light-theme [class*="bg-emerald-950"],
+body.light-theme [class*="bg-emerald-900"],
+body.light-theme [class*="bg-green-950"],
+body.light-theme [class*="bg-green-900"] {
   background-color: rgba(16, 185, 129, 0.15) !important;
   color: #065f46 !important;
   border-color: rgba(5, 150, 105, 0.35) !important;
 }
 
-[data-theme="light"] .bg-rose-950\/60,
-[data-theme="light"] .bg-rose-950\/50,
-[data-theme="light"] .bg-rose-950\/40,
-[data-theme="light"] .bg-rose-950\/30,
-[data-theme="light"] .bg-rose-950\/25,
-[data-theme="light"] .bg-rose-950\/20,
-[data-theme="light"] .bg-rose-950\/15,
-[data-theme="light"] .bg-rose-950\/10,
-html.light .bg-rose-950\/60,
-html.light .bg-rose-950\/50,
-html.light .bg-rose-950\/40,
-html.light .bg-rose-950\/30,
-html.light .bg-rose-950\/25,
-html.light .bg-rose-950\/20,
-html.light .bg-rose-950\/15,
-html.light .bg-rose-950\/10,
-body.light-theme .bg-rose-950\/60,
-body.light-theme .bg-rose-950\/50,
-body.light-theme .bg-rose-950\/40,
-body.light-theme .bg-rose-950\/30,
-body.light-theme .bg-rose-950\/25,
-body.light-theme .bg-rose-950\/20,
-body.light-theme .bg-rose-950\/15,
-body.light-theme .bg-rose-950\/10 {
+[data-theme="light"] [class*="bg-rose-950"],
+[data-theme="light"] [class*="bg-rose-900"],
+[data-theme="light"] [class*="bg-red-950"],
+[data-theme="light"] [class*="bg-red-900"],
+html.light [class*="bg-rose-950"],
+html.light [class*="bg-rose-900"],
+html.light [class*="bg-red-950"],
+html.light [class*="bg-red-900"],
+body.light-theme [class*="bg-rose-950"],
+body.light-theme [class*="bg-rose-900"],
+body.light-theme [class*="bg-red-950"],
+body.light-theme [class*="bg-red-900"] {
   background-color: rgba(244, 63, 94, 0.15) !important;
   color: #9f1239 !important;
   border-color: rgba(225, 29, 72, 0.35) !important;
 }
 
-[data-theme="light"] .bg-purple-950\/60,
-[data-theme="light"] .bg-purple-950\/50,
-[data-theme="light"] .bg-purple-950\/40,
-[data-theme="light"] .bg-purple-950\/30,
-[data-theme="light"] .bg-purple-950\/25,
-[data-theme="light"] .bg-purple-950\/20,
-[data-theme="light"] .bg-purple-950\/15,
-[data-theme="light"] .bg-purple-950\/10,
-html.light .bg-purple-950\/60,
-html.light .bg-purple-950\/50,
-html.light .bg-purple-950\/40,
-html.light .bg-purple-950\/30,
-html.light .bg-purple-950\/25,
-html.light .bg-purple-950\/20,
-html.light .bg-purple-950\/15,
-html.light .bg-purple-950\/10,
-body.light-theme .bg-purple-950\/60,
-body.light-theme .bg-purple-950\/50,
-body.light-theme .bg-purple-950\/40,
-body.light-theme .bg-purple-950\/30,
-body.light-theme .bg-purple-950\/25,
-body.light-theme .bg-purple-950\/20,
-body.light-theme .bg-purple-950\/15,
-body.light-theme .bg-purple-950\/10 {
+[data-theme="light"] [class*="bg-purple-950"],
+[data-theme="light"] [class*="bg-purple-900"],
+[data-theme="light"] [class*="bg-violet-950"],
+[data-theme="light"] [class*="bg-violet-900"],
+html.light [class*="bg-purple-950"],
+html.light [class*="bg-purple-900"],
+html.light [class*="bg-violet-950"],
+html.light [class*="bg-violet-900"],
+body.light-theme [class*="bg-purple-950"],
+body.light-theme [class*="bg-purple-900"],
+body.light-theme [class*="bg-violet-950"],
+body.light-theme [class*="bg-violet-900"] {
   background-color: rgba(168, 85, 247, 0.15) !important;
   color: #581c87 !important;
   border-color: rgba(147, 51, 234, 0.35) !important;
 }
 
-[data-theme="light"] .bg-blue-950\/60,
-[data-theme="light"] .bg-blue-950\/50,
-[data-theme="light"] .bg-blue-950\/40,
-[data-theme="light"] .bg-blue-950\/30,
-[data-theme="light"] .bg-blue-950\/25,
-[data-theme="light"] .bg-blue-950\/20,
-[data-theme="light"] .bg-blue-950\/15,
-[data-theme="light"] .bg-blue-950\/10,
-html.light .bg-blue-950\/60,
-html.light .bg-blue-950\/50,
-html.light .bg-blue-950\/40,
-html.light .bg-blue-950\/30,
-html.light .bg-blue-950\/25,
-html.light .bg-blue-950\/20,
-html.light .bg-blue-950\/15,
-html.light .bg-blue-950\/10,
-body.light-theme .bg-blue-950\/60,
-body.light-theme .bg-blue-950\/50,
-body.light-theme .bg-blue-950\/40,
-body.light-theme .bg-blue-950\/30,
-body.light-theme .bg-blue-950\/25,
-body.light-theme .bg-blue-950\/20,
-body.light-theme .bg-blue-950\/15,
-body.light-theme .bg-blue-950\/10,
-[data-theme="light"] .bg-indigo-950\/60,
-[data-theme="light"] .bg-indigo-950\/50,
-[data-theme="light"] .bg-indigo-950\/40,
-[data-theme="light"] .bg-indigo-950\/30,
-[data-theme="light"] .bg-indigo-950\/20,
-html.light .bg-indigo-950\/60,
-html.light .bg-indigo-950\/50,
-html.light .bg-indigo-950\/40,
-html.light .bg-indigo-950\/30,
-html.light .bg-indigo-950\/20,
-body.light-theme .bg-indigo-950\/60,
-body.light-theme .bg-indigo-950\/50,
-body.light-theme .bg-indigo-950\/40,
-body.light-theme .bg-indigo-950\/30,
-body.light-theme .bg-indigo-950\/20 {
+[data-theme="light"] [class*="bg-blue-950"],
+[data-theme="light"] [class*="bg-blue-900"],
+[data-theme="light"] [class*="bg-indigo-950"],
+[data-theme="light"] [class*="bg-indigo-900"],
+[data-theme="light"] [class*="bg-cyan-950"],
+[data-theme="light"] [class*="bg-cyan-900"],
+[data-theme="light"] [class*="bg-teal-950"],
+[data-theme="light"] [class*="bg-teal-900"],
+html.light [class*="bg-blue-950"],
+html.light [class*="bg-blue-900"],
+html.light [class*="bg-indigo-950"],
+html.light [class*="bg-indigo-900"],
+html.light [class*="bg-cyan-950"],
+html.light [class*="bg-cyan-900"],
+html.light [class*="bg-teal-950"],
+html.light [class*="bg-teal-900"],
+body.light-theme [class*="bg-blue-950"],
+body.light-theme [class*="bg-blue-900"],
+body.light-theme [class*="bg-indigo-950"],
+body.light-theme [class*="bg-indigo-900"],
+body.light-theme [class*="bg-cyan-950"],
+body.light-theme [class*="bg-cyan-900"],
+body.light-theme [class*="bg-teal-950"],
+body.light-theme [class*="bg-teal-900"] {
   background-color: rgba(59, 130, 246, 0.15) !important;
   color: #1e40af !important;
   border-color: rgba(37, 99, 235, 0.35) !important;
