@@ -2693,6 +2693,15 @@ const I18N = (function() {
           .replace(/【.+?】/g, `[${transPatName}]`);
       }
 
+      if (pc.tabooSummaryEn) {
+        pc.tabooSummary = pc.tabooSummaryEn;
+        pc.tabooSummaryZh = pc.tabooSummaryEn;
+      }
+      if (pc.tabooSummaryTitleEn) {
+        pc.tabooSummaryTitle = pc.tabooSummaryTitleEn;
+        pc.tabooSummaryTitleZh = pc.tabooSummaryTitleEn;
+      }
+
       if (pc.grandPicture) {
         const gp = pc.grandPicture;
         gp.title = gp.titleEn;
@@ -2703,6 +2712,14 @@ const I18N = (function() {
         gp.era = gp.eraEn;
         gp.highlights = gp.highlightsEn;
         gp.rules = gp.rulesEn;
+        if (gp.tabooSummaryEn) {
+          gp.tabooSummary = gp.tabooSummaryEn;
+          gp.tabooSummaryZh = gp.tabooSummaryEn;
+        }
+        if (gp.tabooSummaryTitleEn) {
+          gp.tabooSummaryTitle = gp.tabooSummaryTitleEn;
+          gp.tabooSummaryTitleZh = gp.tabooSummaryTitleEn;
+        }
         if (gp.patternAnalysis) {
           gp.patternAnalysis.name = gp.patternAnalysis.nameEn;
           gp.patternAnalysis.summary = gp.patternAnalysis.summaryEn;
@@ -2711,6 +2728,14 @@ const I18N = (function() {
           gp.patternAnalysis.paretoConclusion = gp.patternAnalysis.paretoConclusionEn;
           gp.patternAnalysis.synthesis = gp.patternAnalysis.synthesisEn;
           gp.patternAnalysis.synthesisTitle = gp.patternAnalysis.synthesisTitleEn;
+          if (gp.patternAnalysis.tabooSummaryEn) {
+            gp.patternAnalysis.tabooSummary = gp.patternAnalysis.tabooSummaryEn;
+            gp.patternAnalysis.tabooSummaryZh = gp.patternAnalysis.tabooSummaryEn;
+          }
+          if (gp.patternAnalysis.tabooSummaryTitleEn) {
+            gp.patternAnalysis.tabooSummaryTitle = gp.patternAnalysis.tabooSummaryTitleEn;
+            gp.patternAnalysis.tabooSummaryTitleZh = gp.patternAnalysis.tabooSummaryTitleEn;
+          }
           if (Array.isArray(gp.patternAnalysis.topPatterns)) {
             gp.patternAnalysis.topPatterns.forEach(p => {
               p.rank = p.rankEn;

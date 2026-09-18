@@ -1778,6 +1778,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pc.primaryPatternNameZh) {
         const topBanner = document.createElement('div');
         topBanner.className = 'p-4 rounded-xl bg-gradient-to-r from-amber-950/50 via-amber-900/25 to-black/60 border-2 border-amber-500/60 shadow-xl space-y-2';
+        
+        const topTabooSummaryText = isEn
+          ? (pc.tabooSummaryEn || pc.tabooSummary || (pc.grandPicture && (pc.grandPicture.tabooSummaryEn || pc.grandPicture.tabooSummary)) || (pc.grandPicture && pc.grandPicture.patternAnalysis && (pc.grandPicture.patternAnalysis.tabooSummaryEn || pc.grandPicture.patternAnalysis.tabooEn)))
+          : (pc.tabooSummaryZh || pc.tabooSummary || (pc.grandPicture && (pc.grandPicture.tabooSummaryZh || pc.grandPicture.tabooSummary)) || (pc.grandPicture && pc.grandPicture.patternAnalysis && (pc.grandPicture.patternAnalysis.tabooSummaryZh || pc.grandPicture.patternAnalysis.tabooZh)));
+
         topBanner.innerHTML = `
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center space-x-2">
@@ -1793,6 +1798,24 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">
             ${isEn ? pc.primaryPatternDescEn : pc.primaryPatternDescZh}
           </p>
+          ${topTabooSummaryText ? `
+            <div class="mt-2.5 p-3 rounded-xl bg-gradient-to-r from-rose-950/40 via-red-950/20 to-black/60 border border-rose-500/50 shadow-md space-y-1.5">
+              <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-rose-500/20">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-sm">🛑</span>
+                  <span class="text-xs sm:text-sm font-bold text-rose-300 font-serif-sc">
+                    ${isEn ? 'Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}
+                  </span>
+                </div>
+                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold border border-rose-500/40 font-mono">
+                  ${isEn ? '80% Taboo Summary' : '80% 避险总纲'}
+                </span>
+              </div>
+              <p class="text-xs text-rose-100/95 leading-relaxed font-sans font-medium">
+                ${topTabooSummaryText}
+              </p>
+            </div>
+          ` : ''}
         `;
         paretoContainer.appendChild(topBanner);
       }
@@ -2007,13 +2030,33 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
 
+          <!-- 4. 需要避讳的地方 · 80% 损耗暗礁 (所当避者) -->
+          ${(gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh))) ? `
+          <div class="p-4 rounded-xl bg-black/40 border border-rose-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
+                <span>🛑</span>
+                <span>${isEn ? '4. Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)' : '四、需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono font-bold">
+                ${isEn ? '80% Taboo Summary' : '80% 避险总纲'}
+              </span>
+            </div>
+            <p class="text-xs text-rose-100/95 leading-relaxed font-sans font-medium">
+              ${isEn
+                ? (gp.tabooSummaryEn || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryEn || gp.patternAnalysis.tabooEn)))
+                : (gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh)))}
+            </p>
+          </div>
+          ` : ''}
+
           <!-- High-Density Executive Summary of Kinship, Era & Golden Directives -->
           <div class="p-4 rounded-xl bg-gradient-to-br from-black/50 via-stone-900/30 to-black/60 border border-gray-800/80 space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800/70">
               <div class="flex items-center space-x-2">
                 <span class="text-base">🛡️</span>
                 <h5 class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc">
-                  ${isEn ? 'Executive Overview: Kinship Ballast, Macro Era & Lifetime Directives' : '六亲防线 · 时代借势 · 终身不败立身三则统览'}
+                  ${isEn ? '5. Executive Overview: Kinship Ballast, Macro Era & Lifetime Directives' : '五、六亲防线 · 时代借势 · 终身不败立身三则统览'}
                 </h5>
               </div>
               <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
@@ -3284,12 +3327,32 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 4. 六亲后方与家庭压舱石 -->
+        <!-- 4. 需要避讳的地方 · 80% 损耗暗礁 (所当避者) -->
+        ${(gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh))) ? `
+        <div class="p-4 rounded-xl bg-black/45 border border-rose-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
+              <span>🛑</span>
+              <span>${isEn ? '4. Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)' : '四、需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+            </h4>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono font-bold">
+              ${isEn ? '80% Taboo Summary' : '80% 避险总纲'}
+            </span>
+          </div>
+          <p class="text-xs sm:text-sm text-rose-100/95 leading-relaxed font-medium">
+            ${isEn
+              ? (gp.tabooSummaryEn || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryEn || gp.patternAnalysis.tabooEn)))
+              : (gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh)))}
+          </p>
+        </div>
+        ` : ''}
+
+        <!-- 5. 六亲后方与家庭压舱石 -->
         <div class="p-4 rounded-xl bg-black/45 border border-emerald-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
               <span>🛡️</span>
-              <span>${isEn ? '4. Domestic Sanctuary & Kinship Ballast' : '四、六亲后方与家庭压舱石'}</span>
+              <span>${isEn ? '5. Domestic Sanctuary & Kinship Ballast' : '五、六亲后方与家庭压舱石'}</span>
             </h4>
             <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
               ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
@@ -3300,12 +3363,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 5. 时代跃迁与宏观时空场能共振 -->
+        <!-- 6. 时代跃迁与宏观时空场能共振 -->
         <div class="p-4 rounded-xl bg-black/45 border border-teal-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
               <span>🚀</span>
-              <span>${isEn ? '5. Macro Era Supercycle & Spatial Trajectory' : '五、时代跃迁与宏观时空场能共振'}</span>
+              <span>${isEn ? '6. Macro Era Supercycle & Spatial Trajectory' : '六、时代跃迁与宏观时空场能共振'}</span>
             </h4>
             <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
               ${isEn ? 'Period 9 AI Era & Geographic Leverage' : '离九运AI浪潮 · 地理借势'}
@@ -3316,12 +3379,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 6. 终身立身不败之黄金三则 -->
+        <!-- 7. 终身立身不败之黄金三则 -->
         <div class="p-4 sm:p-5 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
               <span>🎯</span>
-              <span>${isEn ? '6. Sovereign Grand Directives (Lifetime Golden Rules)' : '六、终身立身不败之黄金三则'}</span>
+              <span>${isEn ? '7. Sovereign Grand Directives (Lifetime Golden Rules)' : '七、终身立身不败之黄金三则'}</span>
             </h4>
             <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30 font-bold">
               ${isEn ? 'Supreme Life Guidelines' : '守正不败总纲'}

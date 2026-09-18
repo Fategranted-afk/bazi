@@ -3675,6 +3675,10 @@ class PortraitEngine {
       primaryPatternWeightPct: primaryPatternPct,
       primaryPatternDescZh: `全盘五大格局中，【${primaryPatternName}】以 ${primaryPatternPct}% 绝对能量占比位居第一核心主导，统摄命主一生之骨相气魄与成败枢纽。《子平真诠》《三命通会》《渊海子平》诸经法度皆以此格为全相定盘针。`,
       primaryPatternDescEn: `Among natal patterns, [${primaryPatEn}] leads with ${primaryPatternPct}% dominant energy weight, steering character, decisive breakthroughs, and career trajectory across classical canons.`,
+      tabooSummaryZh: grandPicture.tabooSummaryZh,
+      tabooSummaryEn: grandPicture.tabooSummaryEn,
+      tabooSummaryTitleZh: grandPicture.tabooSummaryTitleZh,
+      tabooSummaryTitleEn: grandPicture.tabooSummaryTitleEn,
       grandPicture,
       schoolsPortrait,
       canons,
@@ -4129,7 +4133,11 @@ class PortraitEngine {
       synthesisZh,
       synthesisEn,
       synthesisTitleZh: '前三主导格局通融 · 综合全相破局总论',
-      synthesisTitleEn: 'Top 3 Patterns Synergy · Unified Executive Action Directive'
+      synthesisTitleEn: 'Top 3 Patterns Synergy · Unified Executive Action Directive',
+      tabooSummaryZh: p1.tabooZh,
+      tabooSummaryEn: p1.tabooEn,
+      tabooSummaryTitleZh: '需要避讳的地方 · 80% 损耗暗礁 (所当避者)',
+      tabooSummaryTitleEn: 'Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)'
     };
   }
 
@@ -4285,6 +4293,10 @@ return {
       rulesZh,
       rulesEn,
       patternAnalysis,
+      tabooSummaryZh: patternAnalysis.tabooSummaryZh || patternAnalysis.tabooZh,
+      tabooSummaryEn: patternAnalysis.tabooSummaryEn || patternAnalysis.tabooEn,
+      tabooSummaryTitleZh: patternAnalysis.tabooSummaryTitleZh || '需要避讳的地方 · 80% 损耗暗礁 (所当避者)',
+      tabooSummaryTitleEn: patternAnalysis.tabooSummaryTitleEn || 'Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)',
       highlightsZh: [
         `${dmM.zh}`,
         `${patNameZh.split(' ')[0]} 统摄`,

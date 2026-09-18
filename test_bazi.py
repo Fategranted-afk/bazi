@@ -9370,6 +9370,9 @@ jsc_check90_cmd = [
     });
 
     // 2. DOM Rendering Verification (Main Dashboard & Strategy View)
+    elementStore['birthDate'].value = '1990-06-20';
+    elementStore['birthTime'].value = '14:30';
+    elementStore['gender'].value = 'male';
     elementStore['calcBtn'].trigger('click');
 
     var paretoZh = elementStore['paretoCoreContainer'].innerHTML;
@@ -9378,6 +9381,12 @@ jsc_check90_cmd = [
     }
     if (paretoZh.indexOf("格之可取") === -1 || paretoZh.indexOf("需要避讳的地方") === -1) {
       throw new Error("Missing 格之可取 or 需要避讳的地方 in paretoCoreContainer (ZH)");
+    }
+    if (paretoZh.indexOf("需要避讳的地方 · 80% 损耗暗礁 (所当避者)") === -1) {
+      throw new Error("Missing 需要避讳的地方 · 80% 损耗暗礁 (所当避者) summary in paretoCoreContainer (ZH)");
+    }
+    if (paretoZh.indexOf("最忌盲目逞强斗狠、急躁暴戾与意气用事。切忌在非原则小事上孤注一掷与对手恶性互耗；严防刚愎自用听不进反对意见，在人生高光顺境期因极度自满而遭致断崖式倾覆。") === -1) {
+      throw new Error("Missing exact blade taboo text in paretoCoreContainer (ZH)");
     }
     if (paretoZh.indexOf("二八法则 · 白话实战定论") === -1) {
       throw new Error("Missing 二八法则 · 白话实战定论 in paretoCoreContainer (ZH)");
@@ -9388,6 +9397,9 @@ jsc_check90_cmd = [
     var stratZh = elementStore['strategyContentContainer'].innerHTML;
     if (stratZh.indexOf("主导格局深度解析") === -1) {
       throw new Error("Missing 主导格局深度解析 in strategyContentContainer (ZH)");
+    }
+    if (stratZh.indexOf("需要避讳的地方 · 80% 损耗暗礁 (所当避者)") === -1) {
+      throw new Error("Missing 需要避讳的地方 · 80% 损耗暗礁 (所当避者) summary in strategyContentContainer (ZH)");
     }
     if (stratZh.indexOf("二八法则 · 白话实战定论") === -1) {
       throw new Error("Missing 二八法则 · 白话实战定论 in strategyContentContainer (ZH)");
@@ -9404,6 +9416,12 @@ jsc_check90_cmd = [
     if (paretoEn.indexOf("Core Strengths to Harness") === -1 || paretoEn.indexOf("Fatal Taboos to Avoid") === -1) {
       throw new Error("Missing Core Strengths or Fatal Taboos in paretoCoreContainer (EN)");
     }
+    if (paretoEn.indexOf("Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)") === -1) {
+      throw new Error("Missing Taboos to Avoid · 80% Waste & Hazards summary in paretoCoreContainer (EN)");
+    }
+    if (paretoEn.indexOf("Impulsive combativeness, reckless brinkmanship, and tyrannical stubbornness") === -1) {
+      throw new Error("Missing exact blade taboo text in paretoCoreContainer (EN)");
+    }
     if (paretoEn.indexOf("Pareto Bottom-Line Direct Vernacular Takeaway") === -1) {
       throw new Error("Missing Pareto Bottom-Line Direct Vernacular Takeaway in paretoCoreContainer (EN)");
     }
@@ -9413,6 +9431,9 @@ jsc_check90_cmd = [
     var stratEn = elementStore['strategyContentContainer'].innerHTML;
     if (stratEn.indexOf("Dominant Pattern Analysis") === -1) {
       throw new Error("Missing Dominant Pattern Analysis in strategyContentContainer (EN)");
+    }
+    if (stratEn.indexOf("Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)") === -1) {
+      throw new Error("Missing Taboos to Avoid · 80% Waste & Hazards summary in strategyContentContainer (EN)");
     }
     if (stratEn.indexOf("Pareto Bottom-Line Direct Vernacular Takeaway") === -1) {
       throw new Error("Missing Pareto Bottom-Line Direct Vernacular Takeaway in strategyContentContainer (EN)");
@@ -14497,7 +14518,254 @@ assert run_check116.returncode == 0, f"Check 116 JSC test failed: stdout={run_ch
 
 print("✓ 配偶与夫妻宫深度侧写三相全息扩充（颜值品相/漂不漂亮/帅不帅、才智学识/聪不聪明、原生门楣家境、乾坤男女命差异、十二地支与壬戌定制、双语100%零中文残留）及问答军师四大多端入口完整验证通过！")
 
-print("\n🎉 ALL 116 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 117. Validating 80% Taboo Summary Card in Core Chart & Strategy View (需要避讳的地方 · 80% 损耗暗礁)
+# ==============================================================================
+print("\n=== 117. Validating 80% Taboo Summary Card in Core Chart & Strategy View ===")
+
+jsc_check117_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    var window = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+    var global = this;
+    var console = {
+      log: function() {},
+      warn: function() {},
+      error: function(msg, e) { print("CONSOLE_ERROR: " + msg + " " + (e ? (e.stack || e) : "")); }
+    };
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+
+    var allIds = [
+      'landingPortalView', 'dashboardView', 'btnPortalTopNav', 'btnReturnToPortal', 'dashboardTopSummaryBar',
+      'dashboardSummaryBadges', 'portalPresetsContainer', 'portalFeaturesGrid',
+      'langZhBtn', 'langEnBtn', 'btnExportDossier', 'nowBtn',
+      'birthDate', 'birthTime', 'gender', 'citySelect', 'currentCountrySelect', 'currentCitySelect', 'currentCustomCityInput', 'calcBtn', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay',
+      'solarCalcDetail', 'calcPerfBadge', 'solarTermTag', 'primaryViewNav', 'navBtnHome', 'navBtnStrategy',
+      'navBtnFriction', 'navBtnLuck', 'navBtnCanons', 'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui',
+      'navBtnCareer', 'navBtnHistory', 'view-home', 'view-strategy', 'pillarsContainer', 'dmTitle', 'dmElementDesc',
+      'elementRadarCanvas', 'elementsBarContainer', 'paretoCoreContainer', 'strategyContentContainer'
+    ];
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      var navMap = {
+        'navBtnHome': 'view-home',
+        'navBtnStrategy': 'view-strategy',
+        'navBtnFriction': 'view-friction',
+        'navBtnLuck': 'view-luck',
+        'navBtnCanons': 'view-canons',
+        'navBtnIChing': 'view-iching',
+        'navBtnSynastry': 'view-synastry',
+        'navBtnFengShui': 'view-fengshui',
+        'navBtnCareer': 'view-career',
+        'navBtnHistory': 'view-history'
+      };
+      return {
+        id: id,
+        'data-view': navMap[id] || null,
+        tagName: (tag || 'DIV').toUpperCase(),
+        value: (id === 'birthDate' ? '1990-06-20' : (id === 'birthTime' ? '14:30' : '')),
+        checked: false,
+        _rawInnerHTML: '',
+        _children: [],
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        className: '',
+        style: {},
+        get innerHTML() {
+          var ch = (this._children || []).map(function(c) { return c.innerHTML || ''; }).join('');
+          return this._rawInnerHTML + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this._children = [];
+        },
+        appendChild: function(ch) { (this._children = this._children || []).push(ch); },
+        textContent: '',
+        classList: {
+          _classes: [],
+          add: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              if (this._classes.indexOf(arguments[i]) === -1) this._classes.push(arguments[i]);
+            }
+          },
+          remove: function() {
+            for (var i = 0; i < arguments.length; i++) {
+              var idx = this._classes.indexOf(arguments[i]);
+              if (idx !== -1) this._classes.splice(idx, 1);
+            }
+          },
+          contains: function(c) { return this._classes.indexOf(c) !== -1; }
+        },
+        _listeners: {},
+        addEventListener: function(evt, fn) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        },
+        trigger: function(evt) {
+          var list = this._listeners[evt] || [];
+          for (var i = 0; i < list.length; i++) list[i].call(this, { target: this, preventDefault: function() {}, stopPropagation: function() {} });
+          if (this['on' + evt]) this['on' + evt].call(this, { target: this, preventDefault: function() {}, stopPropagation: function() {} });
+        },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {}, beginPath: function() {}, moveTo: function() {}, lineTo: function() {},
+            closePath: function() {}, stroke: function() {}, fill: function() {}, fillText: function() {}, arc: function() {},
+            setLineDash: function() {}, scale: function() {}, createLinearGradient: function() { return { addColorStop: function() {} }; }
+          };
+        },
+        appendChild: function(c) { this._children = this._children || []; this._children.push(c); },
+        querySelector: function(sel) { return null; },
+        querySelectorAll: function(sel) { return []; }
+      };
+    }
+
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      body: { style: {} },
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function(sel) {
+        if (sel === '.view-nav-btn') {
+          return Object.keys(elementStore).filter(function(k) { return k.startsWith('navBtn'); }).map(function(k) { return elementStore[k]; });
+        }
+        return [];
+      },
+      querySelector: function(sel) { return null; },
+      createElement: function(tag) { return makeEl('elem-' + Math.random(), tag); },
+      addEventListener: function(evt, fn) { if (evt === 'DOMContentLoaded') this._domReady = fn; }
+    };
+
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/ditiansui.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/lantaimiaoxuan.js');
+    load('data/wuxingjingji.js');
+    load('data/qianliminggao.js');
+    load('data/xulewu_commentary.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('js/i18n.js');
+    load('js/bazi-engine.js');
+    load('js/fengshui-engine.js');
+    load('js/portrait-engine.js');
+    load('js/luck-engine.js');
+    load('js/iching-engine.js');
+    load('js/synastry-engine.js');
+    load('js/chart.js');
+    load('js/career-engine.js');
+    load('data/historical_figures.js');
+    load('js/history-engine.js');
+    load('js/app.js');
+
+    if (document._domReady) document._domReady();
+
+    // 1. Verify all 7 pattern archetypes produce correct tabooSummary
+    var patternKeys = ['wealth', 'officer', 'seal', 'output', 'blade', 'prosperity', 'special'];
+    patternKeys.forEach(function(k) {
+      var patEx = PortraitEngine.generatePatternExegesis(k, '甲', { totalScore: 60, isStrong: true }, null, 1, 30);
+      if (!patEx.tabooZh || !patEx.tabooZh.startsWith('【需要避讳的地方 · 80% 损耗暗礁】')) {
+        throw new Error('Pattern ' + k + ' tabooZh missing required prefix');
+      }
+      if (!patEx.tabooEn || !patEx.tabooEn.startsWith('Fatal Taboos to Avoid')) {
+        throw new Error('Pattern ' + k + ' tabooEn missing required prefix');
+      }
+    });
+
+    // 2. Test blade (Yang Blade) chart specifically (1990-06-20 14:30 male)
+    elementStore['birthDate'].value = '1990-06-20';
+    elementStore['birthTime'].value = '14:30';
+    elementStore['gender'].value = 'male';
+    elementStore['calcBtn'].trigger('click');
+
+    var paretoHtmlZh = elementStore['paretoCoreContainer'].innerHTML;
+    var exactBladeTabooZh = '【需要避讳的地方 · 80% 损耗暗礁】最忌盲目逞强斗狠、急躁暴戾与意气用事。切忌在非原则小事上孤注一掷与对手恶性互耗；严防刚愎自用听不进反对意见，在人生高光顺境期因极度自满而遭致断崖式倾覆。';
+    
+    if (paretoHtmlZh.indexOf('需要避讳的地方 · 80% 损耗暗礁 (所当避者)') === -1) {
+      throw new Error('paretoCoreContainer missing taboo summary title in ZH');
+    }
+    if (paretoHtmlZh.indexOf('80% 避险总纲') === -1) {
+      throw new Error('paretoCoreContainer missing 80% 避险总纲 badge in ZH');
+    }
+    if (paretoHtmlZh.indexOf(exactBladeTabooZh) === -1) {
+      throw new Error('paretoCoreContainer missing exact blade taboo summary text in ZH');
+    }
+
+    // Verify Strategy View
+    elementStore['navBtnStrategy'].trigger('click');
+    var stratHtmlZh = elementStore['strategyContentContainer'].innerHTML;
+    if (stratHtmlZh.indexOf('四、需要避讳的地方 · 80% 损耗暗礁 (所当避者)') === -1) {
+      throw new Error('strategyContentContainer missing Section 4 taboo title in ZH');
+    }
+    if (stratHtmlZh.indexOf(exactBladeTabooZh) === -1) {
+      throw new Error('strategyContentContainer missing exact blade taboo text in ZH');
+    }
+
+    // 3. Switch to English and verify 100% zero residual Chinese
+    elementStore['langEnBtn'].trigger('click');
+    elementStore['calcBtn'].trigger('click');
+
+    var paretoHtmlEn = elementStore['paretoCoreContainer'].innerHTML;
+    if (paretoHtmlEn.indexOf('Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)') === -1) {
+      throw new Error('paretoCoreContainer missing taboo summary title in EN');
+    }
+    if (paretoHtmlEn.indexOf('Impulsive combativeness, reckless brinkmanship, and tyrannical stubbornness') === -1) {
+      throw new Error('paretoCoreContainer missing exact blade taboo text in EN');
+    }
+
+    elementStore['navBtnStrategy'].trigger('click');
+    var stratHtmlEn = elementStore['strategyContentContainer'].innerHTML;
+    if (stratHtmlEn.indexOf('4. Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)') === -1) {
+      throw new Error('strategyContentContainer missing Section 4 taboo title in EN');
+    }
+
+    // Check for residual Chinese in English mode inside the taboo summary blocks
+    var zhReg = /[\\u4e00-\\u9fa5]/;
+    var paretoTabooSectionEn = paretoHtmlEn.substring(paretoHtmlEn.indexOf('Taboos to Avoid · 80% Waste & Hazards'));
+    paretoTabooSectionEn = paretoTabooSectionEn.substring(0, paretoTabooSectionEn.indexOf('</p>'));
+    if (zhReg.test(paretoTabooSectionEn)) {
+      var leaked = paretoTabooSectionEn.match(/[\\u4e00-\\u9fa5]/g).join('');
+      throw new Error('Residual Chinese found in EN pareto taboo section: ' + leaked);
+    }
+
+    var stratTabooSectionEn = stratHtmlEn.substring(stratHtmlEn.indexOf('4. Taboos to Avoid · 80% Waste & Hazards'));
+    stratTabooSectionEn = stratTabooSectionEn.substring(0, stratTabooSectionEn.indexOf('</p>'));
+    if (zhReg.test(stratTabooSectionEn)) {
+      var leakedStrat = stratTabooSectionEn.match(/[\\u4e00-\\u9fa5]/g).join('');
+      throw new Error('Residual Chinese found in EN strategy taboo section: ' + leakedStrat);
+    }
+    """
+]
+run_check117 = subprocess.run(jsc_check117_cmd, capture_output=True, text=True)
+assert run_check117.returncode == 0, f"Check 117 JSC test failed: stdout={run_check117.stdout} stderr={run_check117.stderr}"
+
+print("✓ 核心主盘帕累托枢纽与大局破局战报80%损耗暗礁避讳总纲卡片（双语100%零中文残留/二八胜负手配对）验证通过！")
+
+print("\n🎉 ALL 117 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
