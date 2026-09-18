@@ -1,9 +1,9 @@
 /**
  * 历史人物参考与相似度测算引擎 (Historical Figures Reference & Similarity Engine)
- * Grounded in 300 Years of Northern and Southern Division (265 AD - 589 AD):
- * Western Jin, Sixteen Kingdoms, Eastern Jin, Southern Dynasties, Northern Wei, Eastern/Western Wei, Northern Qi/Zhou, and Sui.
+ * Grounded in 450+ Years from Eastern Han, Three Kingdoms, Jin, Northern & Southern Dynasties, Sui to Early Tang Zhenguan:
+ * Eastern Han & Three Kingdoms, Western Jin, Sixteen Kingdoms, Eastern Jin, Southern Dynasties, Northern Wei, Northern Zhou/Qi, Sui, and Sui-Tang Zhenguan.
  * Compares Native's BaZi (Day Master, 100-pt Score, Patterns, Ten Gods, Archetypes)
- * against 208 Historical Figures to calculate multi-dimensional correlation:
+ * against 416 Historical Figures to calculate multi-dimensional correlation:
  * [Personality Resonance + Historical Deeds Reflection + Strengths Leverage + Weakness Circuit-Breakers].
  * Generates natural wide score distributions and bespoke evaluations with 100% bilingual parity.
  */
@@ -389,7 +389,7 @@ class HistoricalEngine {
   }
 
   /**
-   * Calculates similarity between native BaZi and 208 historical figures
+   * Calculates similarity between native BaZi and 416 historical figures
    * @param {Object} bazi - BaZi calculated result from BaZiEngine
    * @param {Object} luck - LuckEngine result (optional)
    * @param {Object} careerReport - CareerEngine result (optional)
@@ -404,7 +404,7 @@ class HistoricalEngine {
     // 1. Infer user multi-dimensional character profile
     const profile = this.inferUserCharacter(bazi, careerReport);
 
-    // 2. Score raw correlation across all 208 figures
+    // 2. Score raw correlation across all 416 figures
     const scoredFigures = dataset.map((fig) => {
       const corr = this.calculateFigureCorrelation(fig, profile, bazi);
       return {
@@ -486,13 +486,15 @@ class HistoricalEngine {
 
     // Group by Era for easy filtering
     const erasMap = {
+      'eastern_han_three_kingdoms': { zh: '东汉末年与三国鼎立', en: 'Eastern Han & Three Kingdoms', figures: [] },
       'western_jin': { zh: '西晋风云与八王之乱', en: 'Western Jin & Eight Princes', figures: [] },
       'sixteen_kingdoms': { zh: '五胡十六国与北方争霸', en: 'Sixteen Kingdoms Northern Hegemony', figures: [] },
       'eastern_jin': { zh: '东晋门阀与江左风度', en: 'Eastern Jin Dynastic Era', figures: [] },
       'southern_dynasties': { zh: '南朝宋齐梁陈四代更迭', en: 'Southern Dynasties (Song, Qi, Liang, Chen)', figures: [] },
       'northern_wei': { zh: '北魏拓土与孝文汉化', en: 'Northern Wei Expansion & Sinicization', figures: [] },
       'northern_zhou_qi': { zh: '东西二魏与周齐对峙', en: 'Eastern/Western Wei, Northern Qi & Zhou', figures: [] },
-      'sui': { zh: '乱世终局与大隋统一', en: 'Reunification by Great Sui', figures: [] }
+      'sui': { zh: '乱世终局与大隋统一', en: 'Reunification by Great Sui', figures: [] },
+      'sui_tang_zhenguan': { zh: '隋唐鼎革与贞观盛世', en: 'Sui-Tang & Zhenguan Era', figures: [] }
     };
 
     scoredFigures.forEach(fig => {

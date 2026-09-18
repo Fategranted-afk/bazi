@@ -7630,8 +7630,8 @@ jsc_check83_cmd = [
     if (typeof HISTORICAL_FIGURES === "undefined" || !Array.isArray(HISTORICAL_FIGURES)) {
       throw new Error("HISTORICAL_FIGURES database is not defined or not an array");
     }
-    if (HISTORICAL_FIGURES.length !== 208) {
-      throw new Error("Expected exactly 208 historical figures, got: " + HISTORICAL_FIGURES.length);
+    if (HISTORICAL_FIGURES.length !== 416) {
+      throw new Error("Expected exactly 416 historical figures, got: " + HISTORICAL_FIGURES.length);
     }
 
     var requiredFields = [
@@ -7643,13 +7643,15 @@ jsc_check83_cmd = [
     ];
 
     var eraCounts = {
+      "eastern_han_three_kingdoms": 0,
       "western_jin": 0,
       "sixteen_kingdoms": 0,
       "eastern_jin": 0,
       "southern_dynasties": 0,
       "northern_wei": 0,
       "northern_zhou_qi": 0,
-      "sui": 0
+      "sui": 0,
+      "sui_tang_zhenguan": 0
     };
 
     var validArchetypes = ["executive", "military", "civil", "specialist"];
@@ -7681,12 +7683,13 @@ jsc_check83_cmd = [
         "strengthAdviceEn", "weaknessAdviceEn", "historicalQuoteEn"
       ];
       enFields.forEach(function(ef) {
-        if (/[\\u4e00-\\u9fa5]/.test(fig[ef])) {
+        if (/[\u4e00-\u9fa5]/.test(fig[ef])) {
           throw new Error("Figure " + fig.id + " field " + ef + " contains residual Chinese: " + fig[ef]);
         }
       });
     });
 
+    if (eraCounts["eastern_han_three_kingdoms"] !== 104) throw new Error("eastern_han_three_kingdoms count expected 104, got " + eraCounts["eastern_han_three_kingdoms"]);
     if (eraCounts["western_jin"] !== 32) throw new Error("western_jin count expected 32, got " + eraCounts["western_jin"]);
     if (eraCounts["sixteen_kingdoms"] !== 50) throw new Error("sixteen_kingdoms count expected 50, got " + eraCounts["sixteen_kingdoms"]);
     if (eraCounts["eastern_jin"] !== 34) throw new Error("eastern_jin count expected 34, got " + eraCounts["eastern_jin"]);
@@ -7694,6 +7697,7 @@ jsc_check83_cmd = [
     if (eraCounts["northern_wei"] !== 30) throw new Error("northern_wei count expected 30, got " + eraCounts["northern_wei"]);
     if (eraCounts["northern_zhou_qi"] !== 20) throw new Error("northern_zhou_qi count expected 20, got " + eraCounts["northern_zhou_qi"]);
     if (eraCounts["sui"] !== 10) throw new Error("sui count expected 10, got " + eraCounts["sui"]);
+    if (eraCounts["sui_tang_zhenguan"] !== 104) throw new Error("sui_tang_zhenguan count expected 104, got " + eraCounts["sui_tang_zhenguan"]);
 
     // 2. Validate HistoricalEngine calculations across diverse charts
     var testCharts = [
@@ -7724,8 +7728,8 @@ jsc_check83_cmd = [
       if (!res.topMatch || !res.topMatches || !res.allFiguresRanked || !res.synthesis) {
         throw new Error(tc.name + " missing core result structure");
       }
-      if (res.allFiguresRanked.length !== 208) {
-        throw new Error(tc.name + " expected 208 ranked figures, got: " + res.allFiguresRanked.length);
+      if (res.allFiguresRanked.length !== 416) {
+        throw new Error(tc.name + " expected 416 ranked figures, got: " + res.allFiguresRanked.length);
       }
       if (res.topMatches.length !== 5) {
         throw new Error(tc.name + " expected 5 topMatches, got: " + res.topMatches.length);
@@ -8013,18 +8017,18 @@ jsc_check83_dom_cmd = [
     if (histHtmlEn.indexOf("Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)") === -1) {
       throw new Error("Missing Avoid Weaknesses in EN");
     }
-    if (histHtmlEn.indexOf("208 Historical Figures Catalog") === -1) {
-      throw new Error("Missing 208 Historical Figures Catalog title in EN");
+    if (histHtmlEn.indexOf("416 Historical Figures Catalog") === -1) {
+      throw new Error("Missing 416 Historical Figures Catalog title in EN");
     }
     '''
 ]
 run_check83_dom = subprocess.run(jsc_check83_dom_cmd, capture_output=True, text=True)
 assert run_check83_dom.returncode == 0, f"Check 83 DOM simulation test failed: stdout={run_check83_dom.stdout} stderr={run_check83_dom.stderr}"
 
-print("✓ 历史人物参考引擎（208位风云人物全集、七大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
+print("✓ 历史人物参考引擎（416位风云人物全集、九大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
 
-# 84. Validate 208 Historical Figures Expansion, Stabilized Card-Draw Modal, Page 2 Soul Mirror in Imperial Dossier & Quick 1-Page PDF
-print("\n=== 84. Validating 208 Figures Expansion, Card-Draw Modal, Page 2 Soul Mirror & Quick 1-Page PDF ===")
+# 84. Validate 416 Historical Figures Expansion, Stabilized Card-Draw Modal, Page 2 Soul Mirror in Imperial Dossier & Quick 1-Page PDF
+print("\n=== 84. Validating 416 Figures Expansion, Card-Draw Modal, Page 2 Soul Mirror & Quick 1-Page PDF ===")
 jsc_check84_cmd = [
     '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
     '-e',
@@ -8086,10 +8090,38 @@ jsc_check84_cmd = [
     load("data/historical_figures.js");
     load("js/history-engine.js");
 
-    // 1. Verify exact 208 figures count and prominent titans
-    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 208) {
-      throw new Error("Expected exactly 208 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
+    // 1. Verify exact 416 figures count and prominent titans
+    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 416) {
+      throw new Error("Expected exactly 416 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
     }
+
+    // Explicitly verify Cao Cao (Eastern Han / Three Kingdoms titan)
+    var caoCao = HISTORICAL_FIGURES.find(function(f) { return f.id === 'cao_cao'; });
+    if (!caoCao) throw new Error("Missing Cao Cao (曹操) in historical figures database!");
+    if (caoCao.nameZh !== '曹操' || !caoCao.nameEn.startsWith('Cao Cao')) throw new Error("Cao Cao names invalid");
+    if (!caoCao.strengthAdviceZh || !caoCao.strengthAdviceEn || !caoCao.weaknessAdviceZh || !caoCao.weaknessAdviceEn) {
+      throw new Error("Cao Cao advice fields missing");
+    }
+    if (caoCao.eraTag !== 'eastern_han_three_kingdoms') throw new Error("Cao Cao eraTag invalid");
+
+    // Explicitly verify Zhuge Liang (Three Kingdoms titan)
+    var zhugeLiang = HISTORICAL_FIGURES.find(function(f) { return f.id === 'zhuge_liang'; });
+    if (!zhugeLiang) throw new Error("Missing Zhuge Liang (诸葛亮) in historical figures database!");
+    if (zhugeLiang.nameZh !== '诸葛亮' || !zhugeLiang.nameEn.startsWith('Zhuge Liang')) throw new Error("Zhuge Liang names invalid");
+
+    // Explicitly verify Li Shimin (Sui-Tang Zhenguan titan)
+    var liShimin = HISTORICAL_FIGURES.find(function(f) { return f.id === 'li_shimin'; });
+    if (!liShimin) throw new Error("Missing Li Shimin (李世民) in historical figures database!");
+    if (liShimin.nameZh !== '李世民' || !liShimin.nameEn.startsWith('Li Shimin')) throw new Error("Li Shimin names invalid");
+    if (!liShimin.strengthAdviceZh || !liShimin.strengthAdviceEn || !liShimin.weaknessAdviceZh || !liShimin.weaknessAdviceEn) {
+      throw new Error("Li Shimin advice fields missing");
+    }
+    if (liShimin.eraTag !== 'sui_tang_zhenguan') throw new Error("Li Shimin eraTag invalid");
+
+    // Explicitly verify Wei Zheng (Zhenguan mirror of governance)
+    var weiZheng = HISTORICAL_FIGURES.find(function(f) { return f.id === 'wei_zheng'; });
+    if (!weiZheng) throw new Error("Missing Wei Zheng (魏征) in historical figures database!");
+    if (weiZheng.nameZh !== '魏征' || !weiZheng.nameEn.startsWith('Wei Zheng')) throw new Error("Wei Zheng names invalid");
 
     // Explicitly verify Li Hu (progenitor of Tang) and Yuwen Tai (Eight Pillars leader)
     var liHu = HISTORICAL_FIGURES.find(function(f) { return f.id === 'li_hu'; });
@@ -8239,6 +8271,9 @@ jsc_check84_cmd = [
     if (!dossierZh.includes("乱世三百年至高天命历史镜像")) throw new Error("ZH Dossier missing Page 2 Soul Mirror Title");
     if (!dossierZh.includes("学优点 · 破局战法")) throw new Error("ZH Dossier missing Strengths column");
     if (!dossierZh.includes("戒缺点 · 避险熔断")) throw new Error("ZH Dossier missing Pitfalls column");
+    if (!dossierZh.includes("#1") || !dossierZh.includes("#2") || !dossierZh.includes("#3")) {
+      throw new Error("ZH Dossier Page 2 missing Top 3 rank badges (#1, #2, #3)");
+    }
     if (dossierZh.includes("undefined")) throw new Error("ZH Dossier contains 'undefined'");
 
     // Test EN Dossier
@@ -8250,6 +8285,9 @@ jsc_check84_cmd = [
     if (!dossierEn.includes("Supreme Historical Soul Mirror")) throw new Error("EN Dossier missing Page 2 Soul Mirror Title");
     if (!dossierEn.includes("Strengths to Absorb")) throw new Error("EN Dossier missing Strengths column in EN");
     if (!dossierEn.includes("Pitfalls to Avoid")) throw new Error("EN Dossier missing Pitfalls column in EN");
+    if (!dossierEn.includes("#1") || !dossierEn.includes("#2") || !dossierEn.includes("#3")) {
+      throw new Error("EN Dossier Page 2 missing Top 3 rank badges (#1, #2, #3)");
+    }
     if (dossierEn.includes("undefined")) throw new Error("EN Dossier contains 'undefined'");
 
     // Zero residual Chinese check on entire 8-page EN Dossier
@@ -8297,7 +8335,7 @@ jsc_check84_cmd = [
 ]
 run_check84 = subprocess.run(jsc_check84_cmd, capture_output=True, text=True)
 assert run_check84.returncode == 0, f"Check 84 test failed: stdout={run_check84.stdout} stderr={run_check84.stderr}"
-print("✓ 208位历史人物大典扩充、卡牌调阅窗口永久锁定、皇家战报第二页天命照命镜像注入与卷首单页PDF极速导出验证通过！")
+print("✓ 416位历史人物大典扩充、卡牌调阅窗口永久锁定、皇家战报第二页天命照命镜像注入（Top 3 深度战法双列呈现）与卷首单页PDF极速导出验证通过！")
 
 # 85. Validate Single-Page Executive Blueprint PDF Blank Page Defense
 print("\n=== 85. Validating Single-Page Executive Blueprint PDF Blank Page Defense ===")
@@ -9042,7 +9080,7 @@ jsc_check89_cmd = [
       var res = HistoricalEngine.calculateSimilarity(tc.bazi, luck, career);
 
       var topScore = res.topMatch.similarityScore;
-      var bottomScore = res.allFiguresRanked[207].similarityScore;
+      var bottomScore = res.allFiguresRanked[res.allFiguresRanked.length - 1].similarityScore;
       var spread = topScore - bottomScore;
 
       if (topScore < 93.0 || topScore > 96.5) {

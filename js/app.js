@@ -9545,17 +9545,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Section 4: 208 Figures Panorama & Gallery -->
+      <!-- Section 4: 416 Figures Panorama & Gallery -->
       <div class="space-y-4">
         <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
           <div class="flex items-center space-x-2">
             <span class="text-2xl">🌌</span>
             <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300">
-              ${isEn ? '4. 300-Year Historical Panorama (208 Historical Figures Catalog)' : '四、乱世三百年全景历史人物长卷（208位历史人物名录）'}
+              ${isEn ? '4. Historical Panorama (416 Historical Figures Catalog)' : '四、全景历史人物长卷（416位历史人物名录）'}
             </h3>
           </div>
           <div class="text-xs text-gray-400 font-mono">
-            ${isEn ? '208 Historical Titans Curated' : '共收录 208 位风云人物'}
+            ${isEn ? '416 Historical Titans Curated' : '共收录 416 位风云人物'}
           </div>
         </div>
 
@@ -9578,7 +9578,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Era Tabs -->
           <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="dashEraTabsContainer">
             <button class="dash-era-tab-btn ${historyActiveEra === 'all' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="all">
-              ${isEn ? 'All Eras (208)' : '全部时代 (208)'}
+              ${isEn ? 'All Eras (416)' : '全部时代 (416)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'eastern_han_three_kingdoms' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="eastern_han_three_kingdoms">
+              ${isEn ? 'Three Kingdoms (104)' : '东汉三国 (104)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'western_jin' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="western_jin">
               ${isEn ? 'Western Jin (32)' : '西晋风云 (32)'}
@@ -9600,6 +9603,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'sui' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui">
               ${isEn ? 'Sui Dynasty (10)' : '大隋统一 (10)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'sui_tang_zhenguan' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui_tang_zhenguan">
+              ${isEn ? 'Tang Zhenguan (104)' : '大唐贞观 (104)'}
             </button>
           </div>
 
@@ -15377,8 +15383,15 @@ document.addEventListener('DOMContentLoaded', () => {
       weaknessAdviceEn: 'Overly rapid institutional enforcement risks backlash; secure succession safeguards against over-centralization.',
       historicalQuoteZh: '《周书》评：“太祖沈毅有大度，潜济之谋，非人所测。”',
       historicalQuoteEn: 'Book of Zhou: "Taizu was resolute and magnanimous; his grand strategies were beyond common comprehension."',
+      auxiliaryStrengthsZh: ['善于发挥核心立身之本，稳扎稳打', '精准把握关键破局胜手，攻坚克难'],
+      auxiliaryStrengthsEn: ['Master the core foundation with steady execution', 'Seize critical turning points to break stalemates'],
+      auxiliaryWeaknessesZh: ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'],
+      auxiliaryWeaknessesEn: ['Guard against overconfidence and short-sighted moves', 'Establish rigid protective fallbacks and defense lines'],
       rank: 1
     };
+    const topMatches3 = (histData && histData.topMatches && histData.topMatches.length > 0)
+      ? histData.topMatches.slice(0, 3)
+      : [topMatch];
     const topSyn = (histData && histData.synthesis) || (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.generateSynthesisAdvice === 'function' ? HistoricalEngine.generateSynthesisAdvice(bazi, topMatch, dmState.natalStrength) : {
       summaryZh: `命主元神【${bazi.dayMaster || '甲'}】，与【${topMatch.dynastyZh} · ${topMatch.nameZh}】形成高达 ${topMatch.similarityScore}% 的至高天命共鸣。`,
       summaryEn: `The native's Day Master exhibits an extraordinary ${topMatch.similarityScore}% celestial resonance with [${topMatch.nameEn}] of ${topMatch.dynastyEn}.`,
@@ -15698,30 +15711,80 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="leading-snug"><b>${isEn ? 'Historical Feats: ' : '生平关键立功事迹：'}</b>${isEn ? topMatch.deedsEn : topMatch.deedsZh}</p>
           </div>
 
-          <!-- Section 2: Dual Strategic Columns -->
+          <!-- Section 2: Dual Strategic Columns (Top 3 Figures Expanded) -->
           <div class="grid grid-cols-2 gap-2 text-xs font-serif-sc">
-            <div class="imperial-card imperial-card-emerald p-2 space-y-1">
+            <div class="imperial-card imperial-card-emerald p-2 space-y-1.5">
               <div class="flex items-center justify-between border-b border-emerald-800/20 pb-0.5">
                 <span class="font-bold text-emerald-950 text-[11px] flex items-center gap-1"><span>⚔️</span><span>${isEn ? 'I. Strengths to Absorb' : '一、学优点 · 破局战法'}</span></span>
                 <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-emerald-800 text-emerald-900">${isEn ? 'STRATEGY' : '胜局'}</span>
               </div>
-              <p class="text-[10px] text-emerald-950 leading-relaxed font-sans">${isEn ? topMatch.strengthAdviceEn : topMatch.strengthAdviceZh}</p>
-              <div class="pt-1 border-t border-emerald-800/20 text-[9.5px] text-emerald-900 leading-snug space-y-0.5 font-sans">
-                <div><b>①</b> ${topAux.strengths[0]}</div>
-                <div><b>②</b> ${topAux.strengths[1]}</div>
-              </div>
+              ${topMatches3.map((mFig, mIdx) => {
+                const mAux = (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.getAuxiliaryPoints === 'function')
+                  ? HistoricalEngine.getAuxiliaryPoints(mFig, isEn)
+                  : {
+                      strengths: isEn
+                        ? ((mFig.auxiliaryStrengthsEn && mFig.auxiliaryStrengthsEn.length === 2) ? mFig.auxiliaryStrengthsEn : ['Disciplined strategic execution', 'Tactical resourcefulness'])
+                        : ((mFig.auxiliaryStrengthsZh && mFig.auxiliaryStrengthsZh.length === 2) ? mFig.auxiliaryStrengthsZh : ['善于发挥核心立身之本', '精准把握关键破局胜手']),
+                      weaknesses: isEn
+                        ? ((mFig.auxiliaryWeaknessesEn && mFig.auxiliaryWeaknessesEn.length === 2) ? mFig.auxiliaryWeaknessesEn : ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards'])
+                        : ((mFig.auxiliaryWeaknessesZh && mFig.auxiliaryWeaknessesZh.length === 2) ? mFig.auxiliaryWeaknessesZh : ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
+                    };
+                const mRank = mFig.rank || (mIdx + 1);
+                return `
+                  <div class="${mIdx > 0 ? 'pt-1.5 border-t border-emerald-800/20' : ''} space-y-0.5">
+                    <div class="flex items-center justify-between text-[10px] font-bold text-emerald-950">
+                      <span class="flex items-center gap-1">
+                        <span class="font-mono text-emerald-800 font-black">#${mRank}</span>
+                        <span>${isEn ? mFig.nameEn : mFig.nameZh}</span>
+                        <span class="text-[9px] font-normal text-emerald-800/80">(${isEn ? mFig.dynastyEn : mFig.dynastyZh})</span>
+                      </span>
+                      <span class="font-mono text-[9px] text-emerald-900 font-bold">${mFig.similarityScore}%</span>
+                    </div>
+                    <p class="text-[9.5px] text-emerald-950 leading-tight font-sans">${isEn ? mFig.strengthAdviceEn : mFig.strengthAdviceZh}</p>
+                    <div class="text-[9px] text-emerald-900 leading-snug space-y-0.5 font-sans pt-0.5">
+                      <div><b>①</b> ${mAux.strengths[0]}</div>
+                      <div><b>②</b> ${mAux.strengths[1]}</div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
 
-            <div class="imperial-card imperial-card-rose p-2 space-y-1">
+            <div class="imperial-card imperial-card-rose p-2 space-y-1.5">
               <div class="flex items-center justify-between border-b border-rose-800/20 pb-0.5">
                 <span class="font-bold text-rose-950 text-[11px] flex items-center gap-1"><span>🛡️</span><span>${isEn ? 'II. Pitfalls to Avoid' : '二、戒缺点 · 避险熔断'}</span></span>
                 <span class="imperial-seal-stamp text-[8.5px] py-0 px-1 border-rose-800 text-rose-900">${isEn ? 'CIRCUIT-BREAKER' : '熔断'}</span>
               </div>
-              <p class="text-[10px] text-rose-950 leading-relaxed font-sans">${isEn ? topMatch.weaknessAdviceEn : topMatch.weaknessAdviceZh}</p>
-              <div class="pt-1 border-t border-rose-800/20 text-[9.5px] text-rose-900 leading-snug space-y-0.5 font-sans">
-                <div><b>①</b> ${topAux.weaknesses[0]}</div>
-                <div><b>②</b> ${topAux.weaknesses[1]}</div>
-              </div>
+              ${topMatches3.map((mFig, mIdx) => {
+                const mAux = (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.getAuxiliaryPoints === 'function')
+                  ? HistoricalEngine.getAuxiliaryPoints(mFig, isEn)
+                  : {
+                      strengths: isEn
+                        ? ((mFig.auxiliaryStrengthsEn && mFig.auxiliaryStrengthsEn.length === 2) ? mFig.auxiliaryStrengthsEn : ['Disciplined strategic execution', 'Tactical resourcefulness'])
+                        : ((mFig.auxiliaryStrengthsZh && mFig.auxiliaryStrengthsZh.length === 2) ? mFig.auxiliaryStrengthsZh : ['善于发挥核心立身之本', '精准把握关键破局胜手']),
+                      weaknesses: isEn
+                        ? ((mFig.auxiliaryWeaknessesEn && mFig.auxiliaryWeaknessesEn.length === 2) ? mFig.auxiliaryWeaknessesEn : ['Risk of strategic blindspots', 'Need for rigid behavioral safeguards'])
+                        : ((mFig.auxiliaryWeaknessesZh && mFig.auxiliaryWeaknessesZh.length === 2) ? mFig.auxiliaryWeaknessesZh : ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'])
+                    };
+                const mRank = mFig.rank || (mIdx + 1);
+                return `
+                  <div class="${mIdx > 0 ? 'pt-1.5 border-t border-rose-800/20' : ''} space-y-0.5">
+                    <div class="flex items-center justify-between text-[10px] font-bold text-rose-950">
+                      <span class="flex items-center gap-1">
+                        <span class="font-mono text-rose-800 font-black">#${mRank}</span>
+                        <span>${isEn ? mFig.nameEn : mFig.nameZh}</span>
+                        <span class="text-[9px] font-normal text-rose-800/80">(${isEn ? mFig.dynastyEn : mFig.dynastyZh})</span>
+                      </span>
+                      <span class="font-mono text-[9px] text-rose-900 font-bold">${mFig.similarityScore}%</span>
+                    </div>
+                    <p class="text-[9.5px] text-rose-950 leading-tight font-sans">${isEn ? mFig.weaknessAdviceEn : mFig.weaknessAdviceZh}</p>
+                    <div class="text-[9px] text-rose-900 leading-snug space-y-0.5 font-sans pt-0.5">
+                      <div><b>①</b> ${mAux.weaknesses[0]}</div>
+                      <div><b>②</b> ${mAux.weaknesses[1]}</div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
             </div>
           </div>
 

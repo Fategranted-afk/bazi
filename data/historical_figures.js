@@ -1,10 +1,5106 @@
 /**
- * 历史人物参考 208位历史名人数据库 (南北乱世三百年：西晋至隋朝)
- * Historical Figures Mirror & Reference Database (265 AD - 589 AD)
- * 涵盖：西晋八王之乱、五胡十六国、东晋门阀风度、南朝宋齐梁陈、北魏拓土汉化、东西二魏、周齐对峙、大隋一统
+ * 历史人物参考 416位历史名人数据库 (东汉末年至唐初贞观：公元184年 - 公元649年)
+ * Historical Figures Mirror & Reference Database (184 AD - 649 AD)
+ * 涵盖：东汉末年群雄逐鹿、三国鼎立、西晋风云、五胡十六国、东晋门阀风度、南朝宋齐梁陈、北魏拓土汉化、周齐对峙、大隋一统、隋唐鼎革与贞观盛世
  */
 
 const HISTORICAL_FIGURES = [
+  {
+    "id": "cao_cao",
+    "nameZh": "曹操",
+    "nameEn": "Cao Cao (Emperor Wu of Wei)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "魏王 · 东汉丞相 · 曹魏奠基领袖",
+    "positionEn": "King of Wei · Imperial Chancellor of Han · Core Founder of Cao Wei",
+    "personalityZh": "雄才大略、唯才是举、机变权谋、多疑果决、文韬武略兼备",
+    "personalityEn": "Strategic visionary, pragmatic talent-seeker, highly adaptive and decisive, yet suspicious and fiercely pragmatic",
+    "deedsZh": "挟天子以令诸侯，官渡之战以弱胜强破袁绍；平定中原与北方游牧，推行屯田制恢复生产；奠定曹魏统一北方的基业。",
+    "deedsEn": "Held the imperial court to summon warlords, triumphed against immense odds at Battle of Guandu against Yuan Shao. United Northern China and enacted agricultural military colonies.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以大格局整合稀缺资源，用人唯才不拘一格；善在危机混沌中打破陈规，果断开创新制度与主导权。",
+    "strengthAdviceEn": "Integrate scarce resources with expansive vision, recruit talents without pedigree bias, and break conventions decisively in chaotic crises.",
+    "weaknessAdviceZh": "切戒猜忌心过重与轻敌冒进！决策不可受偏执多疑操弄，赤壁之失警示后人切忌在胜利连战后忽视地理与天时隐患。",
+    "weaknessAdviceEn": "Guard against deep paranoia and premature overconfidence! Never let suspicious instincts erode alliances, and heed the hard lessons of Chibi before launching hasty campaigns.",
+    "historicalQuoteZh": "《三国志》评：太祖运筹演谋，鞭挞宇内，揽申、商之法术，该韩、白之奇策，可谓非常之人，超世之杰矣。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Taizu deployed grand strategies to subdue the realm, harmonizing rigorous legal discipline with tactical genius, truly an extraordinary titan.",
+    "auxiliaryStrengthsZh": [
+      "以宏大格局打破陈规，唯才是举整合天下英豪",
+      "在逆境危局中长于机变权谋，以极高执行力锁定胜局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Breaks archaic conventions with macro vision to recruit top talent",
+      "Master of pragmatic maneuvering in crises with decisive execution"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "多疑猜忌容易损耗组织内部核心信任与协同纽带",
+      "连胜之后易生傲慢轻敌之念，必须设立客观风险熔断"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive suspicion erodes internal trust and cohesive team morale",
+      "Complacency after consecutive victories demands rigid risk circuit-breakers"
+    ]
+  },
+  {
+    "id": "cao_pi",
+    "nameZh": "曹丕",
+    "nameEn": "Cao Pi (Emperor Wen of Wei)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏开国皇帝 · 文学批评奠基人",
+    "positionEn": "Founding Emperor of Cao Wei · Literary Theorist",
+    "personalityZh": "沉潜深稳、善于博弈、严谨克己、器局偏狭",
+    "personalityEn": "Calculating, patient political survivor, academically profound, yet occasionally petty in personal vengeance",
+    "deedsZh": "代汉立魏开创曹魏帝国；确立九品中正制奠定选官法度；著《典论·论文》开中国文学批评先河。",
+    "deedsEn": "Received the abdication of Han to establish Cao Wei, instituted the Nine-Rank system for bureaucracy, and wrote Dianlun, pioneering Chinese literary criticism.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "沉着应对存量博弈，善于通过制度设计巩固权柄；文治法度兼修，以长期主义锁定终极名位。",
+    "strengthAdviceEn": "Navigate high-stakes succession patiently, consolidate power through robust institutional frameworks, and balance statecraft with cultural legacies.",
+    "weaknessAdviceZh": "克服器量狭隘与记恨旧怨！切不可因早年恩怨排挤同僚或手足，过度提防宗室反而会导致旁落大权于门阀权臣。",
+    "weaknessAdviceEn": "Overcome vengefulness and narrow-mindedness! Never let past grievances alienate kinship alliances, lest sidelining your inner circle allows rival clans to usurp power.",
+    "historicalQuoteZh": "《三国志》评：文帝天资文藻，兼以武略，若加之旷大之度，弘以公平之诚，何远之不至哉。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Emperor Wen possessed brilliant literary talent and military acumen; had he embraced magnanimity and fairness, his achievements would be boundless.",
+    "auxiliaryStrengthsZh": [
+      "善于隐忍蛰伏，在长期权力角逐中保持精准克制",
+      "注重制度与文教建设，奠定帝国选拔与法度骨架"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Patient endurance and calculated composure in protracted rivalries",
+      "Builds lasting institutional frameworks and literary governance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "睚眦必报、心胸欠阔，容易导致同道离心离德",
+      "严防同姓宗室而削弱屏障，为后世权臣倾覆埋下祸根"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Harboring petty grudges alienates capable and loyal colleagues",
+      "Excessively curbing core royal kin strips essential security shields"
+    ]
+  },
+  {
+    "id": "cao_zhi",
+    "nameZh": "曹植",
+    "nameEn": "Cao Zhi (Prince of Chen)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "陈思王 · 建安文学领军文宗",
+    "positionEn": "Prince Si of Chen · Leading Figure of Jian'an Poetry",
+    "personalityZh": "才高八斗、放达不羁、至情至性、不拘法度、缺乏政治韬略",
+    "personalityEn": "Extraordinarily gifted poet, uninhibited and passionate, yet lacking political discipline and tactical pragmatism",
+    "deedsZh": "建安风骨集大成者，创作《洛神赋》《白马篇》《七步诗》等传世名篇，以绝代文采开创五言古诗艺术高峰。",
+    "deedsEn": "Epitomized the spirited Jian'an poetic style, composing Ode to the Goddess of the Luo River and Seven Steps Verse, elevating classical five-character poetry.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "食神",
+      "偏印"
+    ],
+    "patternType": "伤官泄秀格",
+    "strengthAdviceZh": "专注于自身无与伦比的创造力与专业审美，将情感与灵感化为传世杰作；在纯粹的精神领域开辟巅峰坐标。",
+    "strengthAdviceEn": "Channel transcendent creativity and aesthetic genius into monumental masterworks, building an immortal domain of artistic influence.",
+    "weaknessAdviceZh": "远离复杂的权力绞杀场！任性酗酒、逾越法度是招致灾难的死穴，切忌在缺乏硬核权谋实力时空谈政治野心。",
+    "weaknessAdviceEn": "Stay clear of cutthroat political arenas! Indiscipline and reckless indulgence invite destruction; never boast political ambitions without ruthless operational acumen.",
+    "historicalQuoteZh": "钟嵘《诗品》评：陈思之于文章也，譬人伦之有周、孔，鳞羽之有龙、凤，其源出于国风。",
+    "historicalQuoteEn": "Zhong Rong in Shi Pin: Cao Zhi in literature is like the Duke of Zhou and Confucius among men, or the dragon and phoenix among beasts.",
+    "auxiliaryStrengthsZh": [
+      "才思泉涌，具有极其敏锐的审美感知与语言穿透力",
+      "性情真挚深沉，能以赤诚笔触凝聚旷世文化共鸣"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Boundless poetic inspiration with acute aesthetic and emotional depth",
+      "Authentic, heartfelt expression creating timeless cultural resonance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "任性嗜饮、不拘礼法，极易在关键权力关口失分",
+      "缺乏现实政治防卫本能，容易沦为权力博弈的牺牲品"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Impulsive lifestyle and disregard for rules cause catastrophic career slips",
+      "Lacks realistic defense instincts, falling vulnerable to ruthless rivals"
+    ]
+  },
+  {
+    "id": "cao_rui",
+    "nameZh": "曹叡",
+    "nameEn": "Cao Rui (Emperor Ming of Wei)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏明帝 · 统筹全局善制强敌之君",
+    "positionEn": "Emperor Ming of Wei · Masterful Sovereign and Strategist",
+    "personalityZh": "沉稳深邃、沉毅决断、明察秋毫、晚年骄奢兴土木",
+    "personalityEn": "Deeply perceptive, highly composed commander, sharp-eyed, though extravagant in architecture late in reign",
+    "deedsZh": "御驾亲征击退诸葛亮与孙权多线北伐；任用司马懿平定辽东公孙渊；制定《魏律》，巩固曹魏北方统治鼎盛。",
+    "deedsEn": "Commanded state defenses that repelled multiple Northern Expeditions by Zhuge Liang and Wu forces; commissioned Sima Yi to conquer Liaodong, and revised the Wei Code.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "保持宏观统筹与用兵御将的大度魄力，在多线作战时精准抓取战略重心，善用能臣并驾驭复杂利益关系。",
+    "strengthAdviceEn": "Maintain macro operational command when facing multi-front challenges, empower specialized leaders prudently, and keep core balances in check.",
+    "weaknessAdviceZh": "必须设立托孤权力的刚性制衡！切忌晚年大兴土木耗尽国库，托孤失策导致曹氏孤儿落入强悍权臣股掌之中。",
+    "weaknessAdviceEn": "Install rigid succession circuit-breakers! Never waste organizational reserves on vanity projects, and prevent power concentration that leaves successors vulnerable.",
+    "historicalQuoteZh": "《三国志》评：明帝沈毅大略，临机审决，山涛称其见事多悟。惜乎晚年盛兴土木，民生受困，托孤非人。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Emperor Ming was resolute and perceptive in judgment. Regrettably, his lavish late expenditures and flawed regency appointments caused dynasty ruin.",
+    "auxiliaryStrengthsZh": [
+      "临机审决，具备极强的战场态势感知与知人善任决断力",
+      "善于在强敌环伺下稳固防线，推行法律法度体系建设"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Decisive crisis judgment with sharp intuition for operational priorities",
+      "Fortifies solid strategic defenses while codifying institutional laws"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "中后期贪图宫室器物享受，极大损耗组织基本盘活力",
+      "托孤机制设计失衡，未能构筑抵御野心家的制度防火墙"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive extravagance depletes organizational reserves and stamina",
+      "Flawed regency succession planning leaves crown open to usurpation"
+    ]
+  },
+  {
+    "id": "cao_zhen",
+    "nameZh": "曹真",
+    "nameEn": "Cao Zhen (Grand Marshal of Wei)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏大将军 · 大司马 · 抵御蜀伐主帅",
+    "positionEn": "Grand General and Grand Marshal of Cao Wei · Western Defense Pillar",
+    "personalityZh": "忠勇敦厚、善抚士卒、战术精熟、临机深稳",
+    "personalityEn": "Fiercely loyal, respected commander who shared hardships with soldiers, sound battlefield instincts",
+    "deedsZh": "料敌先机，精准预测诸葛亮二次北伐出兵陈仓并提前命郝昭筑城设防；平定河西叛乱打通丝路，为曹魏宗室定海神针。",
+    "deedsEn": "Accurately anticipated Zhuge Liang's second offensive at Chencang, garrisoning Hao Zhao in advance; secured the Hexi corridor and guarded Cao Wei borders.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "长于前瞻性风险防御与战术预判，在团队中以同甘共苦凝聚军心；筑牢坚固阵地，稳健化解对手攻势。",
+    "strengthAdviceEn": "Excel at proactive risk prevention and terrain garrisoning; share hardships with frontline teams to build unshakable operational defense.",
+    "weaknessAdviceZh": "对恶劣自然天候与后勤极限须有极度敬畏！遇大雨泥泞切忌强行冒进，同时对家族接班人必须严格管教防止纨绔败家。",
+    "weaknessAdviceEn": "Respect physical and environmental limitations; never press forward blindly in adverse climates, and rigorously discipline family heirs.",
+    "historicalQuoteZh": "《三国志》评：曹真少与文帝游，有勇力，临敌常同士卒甘苦，赏不逾时，诸将争为用命。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Cao Zhen was brave and resolute, sharing soldiers' hardships; bountiful and timely rewards inspired fierce loyalty.",
+    "auxiliaryStrengthsZh": [
+      "料敌先机，长于前瞻预判敌方战略突破点并严加布防",
+      "宽厚爱兵，以同甘共苦之德行打造坚不可摧的执行团队"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Anticipates opponent breakthroughs early and deploys rigid defense",
+      "Benevolent military leader who builds high camaraderie through fairness"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对家族后辈溺爱放任，未能培养合格接班团队",
+      "战术受困于自然恶劣条件时易生郁结与体力透支"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly lenient parenting produces incompetent heirs prone to disaster",
+      "Vulnerable to emotional fatigue when weather and terrain stymie campaigns"
+    ]
+  },
+  {
+    "id": "cao_shuang",
+    "nameZh": "曹爽",
+    "nameEn": "Cao Shuang (Regent of Wei)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏大将军 · 顾命托孤权臣",
+    "positionEn": "Grand General and Regent of Cao Wei",
+    "personalityZh": "好大喜功、虚骄少谋、专横跋扈、临危怯懦断送身家",
+    "personalityEn": "Arrogant and fond of grand displays, politically shallow, yet indecisive and cowardly when facing existential crises",
+    "deedsZh": "辅政曹芳大权独揽，排挤司马懿；盲目发起骆谷伐蜀大败而归；高平陵之变中拥有天子大义却优柔寡断束手就擒，全族被诛。",
+    "deedsEn": "Dominated court affairs as regent, launched disastrous Luogu campaign against Shu; during the Gaoping Tomb coup, surrendered imperial leverage out of cowardice and lost his entire clan.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "劫财",
+      "伤官",
+      "偏财"
+    ],
+    "patternType": "建禄格",
+    "strengthAdviceZh": "善于借助时代家族背景与血统势能迅速聚拢政经资源，敢于推行干部年轻化与新锐智囊重组。",
+    "strengthAdviceEn": "Leverage institutional family capital to gather resources quickly and promote youthful, ambitious thinkers in dynamic reorganizations.",
+    "weaknessAdviceZh": "千万戒绝侥幸心理与丧失抵抗意志！在生死存亡的核心较量中，交出底牌换取所谓“做富家翁”的幻想必定身首异处。",
+    "weaknessAdviceEn": "Never surrender leverage based on naive illusions of clemency! In ruthless survival battles, surrendering authority guarantees total annihilation.",
+    "historicalQuoteZh": "桓范哭之曰：“曹子丹佳人，乃生汝兄弟，犊子耳！何图今日焦灭也！”",
+    "historicalQuoteEn": "Huan Fan lamented in tears: 'Cao Zidan was a splendid hero, yet his sons are mere cattle! Who could imagine our entire cause doomed by your cowardice today!'",
+    "auxiliaryStrengthsZh": [
+      "能迅速集结年轻激进智囊，敢于向旧门阀势力发起体制挑战",
+      "善于利用体制合法性与法定职权推行大刀阔斧的改革"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Quickly rallies energetic intellectuals to challenge entrenched elites",
+      "Utilizes statutory authority to attempt structural administration shifts"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "重大危机面前毫无决断胆魄，轻信对手伪誓而束手就擒",
+      "好大喜功轻启战端，缺乏对复杂地缘后勤的推演能力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Total paralysis of will in existential crises, naive belief in enemy mercy",
+      "Launches costly campaigns without understanding terrain and logistics"
+    ]
+  },
+  {
+    "id": "sima_yi",
+    "nameZh": "司马懿",
+    "nameEn": "Sima Yi (Grand Tutor of Wei)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏太傅 · 大都督 · 晋朝实际开山奠基人",
+    "positionEn": "Grand Tutor and Supreme Commander of Wei · Foundational Architect of Jin",
+    "personalityZh": "深谋远虑、坚忍绝伦、鹰视狼顾、隐忍待时、雷霆一击",
+    "personalityEn": "Supremely patient strategist, profound endurance, hawkish vision, capable of years of dormancy before striking fatal blow",
+    "deedsZh": "数次阻击诸葛亮北伐，坚壁清野耗尽蜀汉国力；远征辽东速战速决；伪装病笃麻痹曹爽，发动高平陵政变夺取曹魏军政大权。",
+    "deedsEn": "Defended Wei against Zhuge Liang's campaigns through iron patience and attrition; conquered Liaodong; feigned senility to launch the Gaoping Tomb coup and seize power.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "正官"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "把“忍耐”修炼成最高维度的战略武器。在敌强我弱或局势不明时绝不轻易亮剑，待对手破绽百出之时施展致命斩击。",
+    "strengthAdviceEn": "Master tactical endurance as supreme competitive leverage. Never expose cards prematurely; wait patiently until opponents overextend, then strike decisively.",
+    "weaknessAdviceZh": "警惕过度运用伪誓与绝户手段对组织长远公信力的毁灭性透支！洛水之誓的失信虽赢得一时政权，却为后世子孙埋下合法性诅咒。",
+    "weaknessAdviceEn": "Beware destroying foundational credibility through treachery! Violating solemn oaths secures immediate victory but poisons systemic legitimacy for posterity.",
+    "historicalQuoteZh": "《晋书》评：宣帝内忌而外宽，猜忌多权变。蓄道以待时，贻谋以济业，终成鼎祚之基。",
+    "historicalQuoteEn": "Book of Jin: Emperor Xuan was guarded inside yet courteous outside, full of foresight and adaptability, biding his time to establish imperial foundations.",
+    "auxiliaryStrengthsZh": [
+      "天下第一流的战略定力，能在长达数年的高压消耗战中稳如泰山",
+      "极具伪装与等待时机的智慧，出手如鹰隼击兔，不留半点余地"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peerless strategic patience, remaining unshakeable in prolonged attrition",
+      "Flawless tactical disguise, striking with predatory swiftness when timing is ripe"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "背弃誓言狠辣灭族，彻底毁弃了封建法度最底层的伦理信义",
+      "多疑与深重的自卫本能导致晚年杀戮过重，透支后代福祚"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Ruthless betrayal of solemn oaths destroys institutional moral authority",
+      "Overwhelming suspicion and cold cruelty invite severe long-term retribution"
+    ]
+  },
+  {
+    "id": "xun_yu",
+    "nameZh": "荀彧",
+    "nameEn": "Xun Yu (Chief Advisor of Cao Cao)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "尚书令 · 汉相大略 · 曹操第一谋主",
+    "positionEn": "Prefect of the Masters of Writing · Chief Strategist and Pillar of Cao Cao",
+    "personalityZh": "清秀通雅、算无遗策、端肃忠纯、守道殉节",
+    "personalityEn": "Noble, extraordinarily insightful planner, morally upright, steadfast devotion to constitutional legitimacy",
+    "deedsZh": "为曹操规划“奉天子以令不臣”总纲领；官渡之战画策前线定曹操胜心；举荐荀攸、郭嘉、钟繇、陈群等无数名臣，居中持重数十年。",
+    "deedsEn": "Formulated the grand strategy of hosting the Han Emperor; anchored Cao Cao's will at Guandu; recommended prime talents including Guo Jia and Xun You, anchoring logistics for decades.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "以极高的战略前瞻性设计组织顶层架构，善当“首席人才官”与稳固大后方；守持正道，以道德威望为组织赋能。",
+    "strengthAdviceEn": "Design institutional frameworks with elite strategic vision; serve as supreme talent curator and administrative anchor while upholding ethical integrity.",
+    "weaknessAdviceZh": "当合伙人核心诉求与最初理想发生根本裂变时，必须提前设立心理断点与退出机制，切勿在理想与强权中陷入悲剧式殉葬。",
+    "weaknessAdviceEn": "When core institutional missions diverge irreversibly from founders' raw ambition, establish clear exit boundaries rather than succumbing to tragic martyrdom.",
+    "historicalQuoteZh": "曹操叹曰：“吾之子房也。”《三国志》评：“荀彧清秀通雅，有几神之鉴，可谓中兴之佐。”",
+    "historicalQuoteEn": "Cao Cao praised: 'He is my Zhang Liang.' Chen Shou wrote: 'Xun Yu was pure, noble, and blessed with prophetic discernment, truly an empire-restoring pillar.'",
+    "auxiliaryStrengthsZh": [
+      "顶级战略顶层规划师，能为大势开局奠定数十年不可动摇的法统基础",
+      "无与伦比的人才发掘与组织选拔眼光，为阵营构建全明星智囊团"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architect of grand strategy, establishing decades of institutional legitimacy",
+      "Peerless talent acquisition eye, building an elite executive talent corps"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "道德理想主义过强，与现实政治强权野心不可调和时难免走向悲剧",
+      "在权力根本转向节点缺乏自我保全与变通脱身的冷酷算计"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Rigid ethical idealism clashes fatally with raw warlord ambitions",
+      "Lacks selfish self-preservation cunning during systemic power transitions"
+    ]
+  },
+  {
+    "id": "guo_jia",
+    "nameZh": "郭嘉",
+    "nameEn": "Guo Jia (Fengxiao)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "军师祭酒 · 曹操首席随军奇谋统帅",
+    "positionEn": "Military Libationer · Supreme Tactical Consultant of Cao Cao",
+    "personalityZh": "奇计百出、料敌如神、通达放浪、直击本质、洞察人性深渊",
+    "personalityEn": "Genius tactician, prophetic reader of rival psychology, unconstrained by petty decorum, piercing to core strategic realities",
+    "deedsZh": "论“十胜十败”坚定抗袁信心；力主兵贵神速急行军突袭乌桓斩踏顿；精准预言孙策死于刺客之手；屡出奇谋无一不应验。",
+    "deedsEn": "Delivered the Ten Victories, Ten Defeats doctrine; led lightning blitzkrieg across the desert to crush the Wuhuan; accurately predicted Sun Ce's assassination by private foes.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏印",
+      "七杀"
+    ],
+    "patternType": "伤官制杀格",
+    "strengthAdviceZh": "善于在不确定性极高的人性心理博弈中直切要害。敢于力排众议做极限决策，利用“速度与出其不意”穿透任何防御。",
+    "strengthAdviceEn": "Pierce through battlefield ambiguity by reading human psychology accurately. Champion bold, high-speed maneuvers that catch rivals utterly unprepared.",
+    "weaknessAdviceZh": "身体底子与健康管理是天才最大的破局短板！切不可过度透支体能与放浪形骸，在恶劣环境中必须提前做好生命安全护城河。",
+    "weaknessAdviceEn": "Physical health is the supreme bottleneck of genius! Never burn the candle at both ends; erect strict health and rest safeguards when operating in harsh conditions.",
+    "historicalQuoteZh": "曹操哭曰：“天下事竟，使我孤弱，唯奉孝耳！唯奉孝为能知孤意！”",
+    "historicalQuoteEn": "Cao Cao wept bitterly: 'Only Fengxiao truly understood my inner thoughts; his premature death leaves my imperial enterprise desperately bereft!'",
+    "auxiliaryStrengthsZh": [
+      "通透至极的人性心理测算能力，对敌方主帅心态与动作如神推断",
+      "兵贵神速的极端决断者，善于利用闪电战迅速终结战场拉锯"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Extraordinary predictive insight into adversary psychology and hidden weaknesses",
+      "Relentless advocate of rapid surprise strikes that obliterate stalled stalemates"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过度劳神熬夜与轻忽日常体能保养，导致天妒英才英年早逝",
+      "日常行为放浪不拘小节，容易招致法度派同僚的弹劾与排挤"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Severe overwork and physical neglect lead to tragic early mortality",
+      "Disregard for conventional etiquette draws friction from bureaucratic purists"
+    ]
+  },
+  {
+    "id": "xun_you",
+    "nameZh": "荀攸",
+    "nameEn": "Xun You (Gongda)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "中军师 · 曹操随军谋主 · 算无遗策谋略泰斗",
+    "positionEn": "Military Director · Prime War Strategist of Cao Cao",
+    "personalityZh": "深密渊涵、大智若愚、外愚内智、外怯内勇、外弱内强",
+    "personalityEn": "Profoundly discrete, seemingly humble yet fiercely courageous within, master of tactical deception and quiet excellence",
+    "deedsZh": "曹操随军征战前后出十二奇策；官渡之战画策声东击西斩颜良诛文丑；力主火烧乌巢与水淹下邳生擒吕布。",
+    "deedsEn": "Devised twelve master stratagems during active campaigns; planned feints that defeated Yan Liang and Wen Chou; engineered water flooding of Xiapi to capture Lü Bu.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "正财",
+      "七杀"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "践行“大智若愚”的职场长青哲学。在专业决策上精准凌厉，在个人做人上谦抑低调、绝不居功自傲，能避开一切明枪暗箭。",
+    "strengthAdviceEn": "Embrace quiet mastery: deliver flawless professional execution while staying impeccably modest, deflecting jealousy and political arrows effortlessly.",
+    "weaknessAdviceZh": "过度深藏不露容易让自身思想与著作失传。在高度内卷的组织中，也应适度留下传承法门，避免绝学随生命一同湮灭。",
+    "weaknessAdviceEn": "Excessive secrecy risks the total loss of your methods and wisdom. Document and train disciples so your masterwork outlives transient politics.",
+    "historicalQuoteZh": "曹操赞曰：“公达，非常人也，吾得与之同游，大幸也！公达外愚内智，外怯内勇，虽颜子、宁武不能及也。”",
+    "historicalQuoteEn": "Cao Cao marveled: 'Gongda appears foolish outside but possesses divine wisdom within; even ancient sages could not surpass his humility and bravery.'",
+    "auxiliaryStrengthsZh": [
+      "实战现场十二奇谋，专长于战术对决中的声东击西与精准打击",
+      "极其高明的为人处世护城河，大智若愚不争锋芒，数十载立于不败之地"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of active combat deception, deploying stratagems with surgical precision",
+      "Supreme self-effacing diplomat, avoiding court friction and staying invincible"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "秘不外传导致十二奇策未及整理便失传，战略成果传承不足",
+      "性格过于内敛谨慎，在需要挺身力挽狂澜的政治风暴中偏向静默"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Extreme discretion caused his legendary twelve stratagems to be lost to history",
+      "Excessive reserve makes him quiet when urgent political resistance is needed"
+    ]
+  },
+  {
+    "id": "jia_xu",
+    "nameZh": "贾诩",
+    "nameEn": "Jia Xu (Wenhe)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太尉 · 乱世毒士与保身哲人",
+    "positionEn": "Grand Commandant · Master Survivalist and Realist Strategist",
+    "personalityZh": "洞悉人性、算无虚发、深谋远遁、明哲保身、极度现实",
+    "personalityEn": "Unrivaled student of human self-interest, pragmatic realist, flawless calculator of survival, master of political self-preservation",
+    "deedsZh": "画策反攻长安颠覆王允；宛城之战大败曹操后劝张绣归降曹操；官渡力排众议促曹操决战；魏嗣之争一语定曹丕大位。",
+    "deedsEn": "Advised Li Jue to retake Chang'an; orchestrated Zhang Xiu's victories and subsequent surrender to Cao; secured Cao Pi's succession with a single whisper.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "伤官",
+      "七杀"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "精通人性的自私与恐惧，善于在极端凶险的死局中找到唯一生路。闭门谢客、不结私党，以极致的专业性成就乱世善终。",
+    "strengthAdviceEn": "Master human vulnerabilities to find the sole escape in lethal stalemates. Shun factional cliques and anchor security strictly on indispensable expertise.",
+    "weaknessAdviceZh": "毒谋乱世虽可保全己身，但缺乏对万民苍生的慈悲底线。行事不可为了自保而轻易引爆全局性混乱，以免青史留下苛刻骂名。",
+    "weaknessAdviceEn": "Ruthless gambits secure personal survival but risk catastrophic collateral damage. Never trigger macro instability purely for self-preservation.",
+    "historicalQuoteZh": "《三国志》评：贾诩虑无不当，达于机变，拟之房、闼，殆无愧矣。自知非曹氏旧臣，阖门自守，天下称其智。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Jia Xu never made a flawed calculation; knowing he was not a veteran retainer, he lived privately and preserved his lineage.",
+    "auxiliaryStrengthsZh": [
+      "深谙人性弱点与恐惧心理，战术推演百发百中，从无半步踏空",
+      "明哲保身艺术登峰造极，在数个暴虐主公与权力更迭中安然享年七十七"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Mastery of human psychological levers ensures zero missteps in volatile crises",
+      "Supreme exponent of personal survival, navigating bloody dynastic shifts safely"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早期长安之谋引兵祸乱中原，战略行事缺乏对苍生仁爱底线",
+      "过于独善其身与冷酷算计，难以成为凝聚理想主义队伍的精神图腾"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Early advice to sack Chang'an plunged the realm into protracted civilian turmoil",
+      "Cold detachment and self-interest prevent him from inspiring passionate moral followers"
+    ]
+  },
+  {
+    "id": "cheng_yu",
+    "nameZh": "程昱",
+    "nameEn": "Cheng Yu (Zhongde)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "卫尉 · 刚戾果决之谋主",
+    "positionEn": "Commandant of the Guards · Fierce Resolute War Advisor",
+    "personalityZh": "刚戾勇鸷、敢作敢当、铁血果断、不顾毁誉",
+    "personalityEn": "Stern, fearless, ruthless under existential duress, indifferent to personal criticism when executing vital defense",
+    "deedsZh": "兖州叛乱时与荀彧共守鄄城等三城保住曹操根基；缺粮时以极端手段筹措军粮；精准预判刘备必不甘居人下。",
+    "deedsEn": "Held the last three cities in Yanzhou alongside Xun Yu during Lü Bu's rebellion; secured supplies under extreme famine; predicted Liu Bei's relentless ambition.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "在危难时刻敢于承担极端责任，拥有钢铁般的心理承受力与战术压迫感；善于为团队稳住最脆弱的最后防线。",
+    "strengthAdviceEn": "Bear extreme burdens during systemic breakdowns with nerves of steel; anchor the final defensive citadel when all others panic.",
+    "weaknessAdviceZh": "性情刚戾、行事手段过于酷烈，极易树敌招谤并引发道德反噬。在常态化运营中切忌使用战时非常手段，防微杜渐。",
+    "weaknessAdviceEn": "Harsh temperament and severe wartime measures draw bitter resentment; strictly abandon ruthless emergency tactics during peacetime stability.",
+    "historicalQuoteZh": "《三国志》评：程昱性刚戾，与人多迕。有重名而不得三公，以其性强也。然其筹画奇策，勇冠当时。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Cheng Yu was fierce and abrasive, clashing with peers. Though famous, his harsh demeanor barred him from the highest chancellorship.",
+    "auxiliaryStrengthsZh": [
+      "泰山崩于前而色不变的强悍心理素质，危急关头能力挽狂澜",
+      "料敌知人极准，对潜伏对手的政治野心有鹰隼般的洞察"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unshakeable nerve during catastrophic collapse, anchoring rear defense",
+      "Keen discernment of covert rival ambitions with uncompromising realism"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格刚直暴烈不与人妥协，在官僚同僚体系中人际关系极度紧张",
+      "非常时期之极端手段留下了难以洗刷的道德瑕疵与民间非议"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Abrasive temper creates chronic diplomatic friction among bureaucratic peers",
+      "Brutal emergency requisition tactics left indelible stains on his historical reputation"
+    ]
+  },
+  {
+    "id": "cui_yan",
+    "nameZh": "崔琰",
+    "nameEn": "Cui Yan (Jigui)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "中尉 · 尚书 · 清正凛然魏室名臣",
+    "positionEn": "Imperial Commandant · Secretary of Affairs · Exemplar of Integrity",
+    "personalityZh": "声姿高畅、眉目疏朗、凛然威重、公正清明、宁折不弯",
+    "personalityEn": "Stately in stature and voice, radiating moral authority, impeccably righteous, unyielding in ethical principles",
+    "deedsZh": "主管曹魏官吏选拔，天下望风向善；直言劝谏曹操立长子曹丕为嗣；面对曹操逼问以死守志，气节照耀魏晋。",
+    "deedsEn": "Supervised official selection with incorruptible standards, elevating administrative morality; championed primogeniture succession, facing martyrdom with dignified grace.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以堂堂之阵、凛然正气树立不可动摇的公信力；善于在团队制度与纪律上制定极高标准，令众人心悦诚服。",
+    "strengthAdviceEn": "Build unassailable organizational authority through moral stature and transparency; set elite institutional standards that inspire widespread compliance.",
+    "weaknessAdviceZh": "刚直不阿在专制强权前极易招致杀身之祸。必须懂得适度迂回与战略晦暗，不可因文字或言语细节被上位者罗织构陷。",
+    "weaknessAdviceEn": "Rigid moral rectitude under authoritarian power invites political martyrdom. Master strategic ambiguity to prevent malicious misinterpretation of your words.",
+    "historicalQuoteZh": "《三国志》评：崔琰高风峻节，誉称当时。然太祖性猜忌，琰以言语获罪，四海士人莫不痛惜。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Cui Yan's towering integrity was admired across the realm. Tragically, Cao Cao's paranoid wrath felled him over alleged subtle satire.",
+    "auxiliaryStrengthsZh": [
+      "品行如冰壶秋月，具备统摄全局、感召世风的顶级道德领袖魅力",
+      "在干部选任上公正无私，彻底扫清裙带关系与钻营腐败风气"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Transcendent moral gravitas that purifies institutional culture and public faith",
+      "Impartial talent evaluation that eradicates nepotism and meritless sycophancy"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过分刚硬宁折不弯，在君权猜忌的暗黑阴影下缺乏柔性自保回路",
+      "文字表达过于直率孤傲，容易被心胸狭隘之人穿凿附会成为罪证"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Rigid unbending pride lacks diplomatic elasticity when facing despotic suspicion",
+      "Uncompromising rhetoric provides ready ammunition for jealous rivals to fabricate treason"
+    ]
+  },
+  {
+    "id": "mao_jie",
+    "nameZh": "毛玠",
+    "nameEn": "Mao Jie (Xiaoxian)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "尚书仆射 · 东曹掾 · 廉洁治吏总督",
+    "positionEn": "Assistant Director of the Department of State Affairs · Purifier of Bureaucracy",
+    "personalityZh": "清廉公允、以身作则、俭朴节操、崇尚实效",
+    "personalityEn": "Fiercely honest, frugal role model, immune to bribery, dedicated to practical administrative efficiency",
+    "deedsZh": "最早提出“奉天子以令不臣，修耕植以畜军资”大计；主持曹魏选官，以清正廉洁选拔寒门实干人才，官场风气为之一肃。",
+    "deedsEn": "Jointly conceived the strategy to support the Emperor and prioritize agricultural buildup; revolutionized civil service appointments by promoting austere meritocracy.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正财",
+      "正官",
+      "正印"
+    ],
+    "patternType": "正财格",
+    "strengthAdviceZh": "以身作则树立廉洁文化，用极低的生活成本与极高的业务标准建立团队壁垒；善抓基本盘生产与物资储备。",
+    "strengthAdviceEn": "Lead by personal austerity and operational diligence; establish cultural barriers against extravagance and anchor logistics on reliable fundamentals.",
+    "weaknessAdviceZh": "在风气转变时过于苛求同僚的生活细节，容易引发权贵集团的嫉恨与反扑；必须兼顾水至清则无鱼的现实平衡。",
+    "weaknessAdviceEn": "Overly aggressive enforcement of personal austerity alienates aristocratic peers; balance uncompromising integrity with realistic interpersonal tolerance.",
+    "historicalQuoteZh": "《三国志》评：毛玠清公律己，辅翼太祖，吏治肃然。及其见毁，士民叹伤，诚古之遗直也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Mao Jie lived with spotless integrity, instilling purity across bureaucracy; his persecution by false accusers mourned by all honest men.",
+    "auxiliaryStrengthsZh": [
+      "提出立足农业生产与政治大义的双轮驱动战略，构筑帝国原始积累",
+      "廉洁奉公、不畏强梁，彻底扭转了汉末门阀豪强的浮华靡费之风"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pioneered dual engines of agricultural self-reliance and imperial legitimacy",
+      "Spartan personal discipline that revolutionized administrative governance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对官僚团队的生活方式过于吹毛求疵，激起整个既得利益集团的阴暗报复",
+      "面对莫须有的谗言中伤缺乏有效抗辩机制，晚年抑郁而终"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive puritanical surveillance stirred backlash from entrenched vested interests",
+      "Defenseless against coordinated court slanders, dying in heartbroken obscurity"
+    ]
+  },
+  {
+    "id": "zhong_yao",
+    "nameZh": "钟繇",
+    "nameEn": "Zhong Yao (Yuanchang)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏太傅 · 楷书鼻祖 · 关中镇抚大帅",
+    "positionEn": "Grand Tutor of Wei · Forefather of Regular Calligraphy · Viceroy of Guanzhong",
+    "personalityZh": "沉敏多谋、书法绝伦、善抚军民、德高望重",
+    "personalityEn": "Astute and diplomatically agile, epochal master calligrapher, respected regional governor with massive civil prestige",
+    "deedsZh": "长期坐镇关中招抚流亡平定叛乱，为曹操官渡前线输送源源不断的战马与粮饷；开创正楷书法，被誉为“楷书鼻祖”。",
+    "deedsEn": "Governed Guanzhong for decades, winning nomadic loyalties and feeding horses and food to Guandu; pioneered standard regular script calligraphy.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "食神"
+    ],
+    "patternType": "食神制杀格",
+    "strengthAdviceZh": "以高超的专业修养（艺术/文化）与成熟的行政协调力双轮驱动。善于在复杂的边缘战区平衡各方势力，成为大后方的压舱石。",
+    "strengthAdviceEn": "Combine supreme artistic mastery with shrewd administrative diplomacy; anchor turbulent frontier jurisdictions through cultural gravitas and balance.",
+    "weaknessAdviceZh": "晚年溺爱子嗣、防范意识松懈，未能洞悉儿子钟会野心勃勃的弑逆反骨，导致全族险遭倾覆。",
+    "weaknessAdviceEn": "Blind indulgence toward gifted offspring can breed destructive megalomania; failed to detect Zhong Hui's treasonous hubris, endangering his entire clan.",
+    "historicalQuoteZh": "《三国志》评：关中平定，朝廷无西顾之忧，繇之勋也。繇博学多才，兼善草隶，天然第一。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Pacifying Guanzhong so the court had no western anxiety was Zhong Yao's triumph. His erudition and calligraphy were unmatched under heaven.",
+    "auxiliaryStrengthsZh": [
+      "坐镇战区大后方二十载，以极高政治外交手腕整合西凉杂牌武装",
+      "在书法史上开宗立派，以传世楷书规范筑牢中华汉字的美学脊梁"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Governed frontier borderlands for twenty years, pacifying warlords and nomadic clans",
+      "Foundational calligraphic pioneer whose regular script framed imperial aesthetics"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对晚年幼子溺爱逾常，缺乏对其膨胀政治野心的约束机制",
+      "刑法主张有时偏向严苛复古（力倡恢复肉刑），脱离时代温情"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overindulged his youngest son whose unchecked vanity caused a bloodbath",
+      "Advocated reviving archaic corporal punishments, showing occasional legalistic rigidity"
+    ]
+  },
+  {
+    "id": "zhong_hui",
+    "nameZh": "钟会",
+    "nameEn": "Zhong Hui (Shiji)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏司徒 · 灭蜀主帅 · 奇才反骨野心家",
+    "positionEn": "Minister over the Masses · Conqueror of Shu · Brilliant Megalomaniac",
+    "personalityZh": "才捷深博、智谋过人、心怀异志、虚骄狂妄、冒险弄权",
+    "personalityEn": "Incisively brilliant intellectual, master strategic planner, consumed by runaway megalomania and reckless gambling",
+    "deedsZh": "作为司马昭首席智囊筹画密谋；统领十万魏军进兵汉中，与邓艾协同灭亡蜀汉；随后密谋自立反叛曹魏与司马氏，兵变身死。",
+    "deedsEn": "Chief confidant of Sima Zhao; conquered Hanzhong with 100,000 troops, collaborating with Deng Ai to extinguish Shu; then rebelled for kingship, dying in chaos.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏财",
+      "七杀"
+    ],
+    "patternType": "伤官生财格",
+    "strengthAdviceZh": "才智极高、学习与推演速度天下少有，善于在重大战略项目中捕捉战机，迅速建立震动天下的功勋。",
+    "strengthAdviceEn": "Possesses razor-sharp intellect and predictive speed; capable of seizing complex tactical opportunities to achieve monumental breakthroughs.",
+    "weaknessAdviceZh": "千万戒除盲目自大与背叛合伙人的野心狂念！功高震主时若再行叛乱冒险，脱离基本盘支持的自立必定招致兵变粉身碎骨。",
+    "weaknessAdviceEn": "Beware reckless megalomania and betraying foundational sponsors! Launching a solo rebellion without grassroots army loyalty invites mutiny and total slaughter.",
+    "historicalQuoteZh": "《三国志》评：钟会才数巧捷，文辞辨赡，然好自伐，怀反噬之志，临大节而不能自全，自取屠灭，理之然也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Zhong Hui was agile and brilliant, yet vain and treacherous; his reckless treason without soldiers' hearts brought inevitable ruin.",
+    "auxiliaryStrengthsZh": [
+      "战术筹谋与公文推演天下无双，灭蜀战役中展现出极高参谋统帅素养",
+      "长于借力打力除掉竞争对手（构陷嵇康、诬告邓艾），权谋极其凌厉"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme tactical staff coordinator whose logistical campaigns swiftly crushed Shu",
+      "Ruthless political maneuverer adept at framing rivals to monopolize triumph"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过度迷信个人智谋，对底层将士思乡之情与军队组织心理全然无知",
+      "自视过高试图在刀刃上跳舞，盲目豪赌导致身死兵乱、祸及宗族"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Blinded by intellect, utterly ignorant of grassroots soldiers' longing for home",
+      "Fatal gambler whose desperate grab for kingship triggered instant military mutiny"
+    ]
+  },
+  {
+    "id": "deng_ai",
+    "nameZh": "邓艾",
+    "nameEn": "Deng Ai (Shizai)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太尉 · 灭蜀头功 · 偷渡阴平军事天才",
+    "positionEn": "Grand Commandant · Conqueror of Shu · Military Genius of Yinping Passage",
+    "personalityZh": "深沉刚毅、战术绝伦、长于屯田、不善自保、言行招忌",
+    "personalityEn": "Steadfast, audacious combat visionary, genius in agricultural economics, yet politically naive and oblivious to court suspicion",
+    "deedsZh": "主持淮南淮北水利大屯田，蓄粮百万；力排众议自阴平绝险七百里奇袭江油直插成都，逼降刘禅灭亡蜀汉；功成后被害。",
+    "deedsEn": "Engineered vast waterworks and grain colonies across the Huai River; executed the miraculous 700-li trek across the cliffs of Yinping to take Chengdu.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "偏财"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "善于发现别人视作绝境的“非对称突破口”。注重后勤水利基础建设，在实战中敢于孤注一掷、以奇绝战法穿透敌人重重防御。",
+    "strengthAdviceEn": "Discover asymmetric breakthroughs where rivals see only impassable cliffs; build deep logistics, then deploy bold surprise maneuvers to shatter stalemates.",
+    "weaknessAdviceZh": "功成名就之时必须保持极度的政治敬畏与言行克制！切不可擅自更替体制或擅封官职，忽视中央猜忌必引来杀身之祸。",
+    "weaknessAdviceEn": "Exercise intense political modesty after historic triumphs! Never exceed statutory authority or grant unilateral appointments that terrify superiors.",
+    "historicalQuoteZh": "《三国志》评：邓艾沉毅有虑，潜谋大义，出其不意，克灭强敌。然矫命妄行，不知防微杜渐，以致身死名裂，悲夫！",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Deng Ai was resolute and ingenious, conquering Shu via miraculous paths. Yet unauthorized decrees stirred court paranoia, bringing tragic death.",
+    "auxiliaryStrengthsZh": [
+      "水利与屯田大师，从基层做起，以扎实的经济粮饷打造战役基石",
+      "战争史上最伟大的山地奇袭大师之一，以超越常人胆识偷渡阴平立盖世奇功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Economic and logistical genius whose agricultural reservoirs sustained decades of war",
+      "Legendary alpine strike commander who bypassed impassable fortresses to end an empire"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治情商与自卫直觉极度匮乏，攻克敌国后擅自封官发号施令触怒朝廷",
+      "性格孤僻执拗，不懂得在功高震主时低调交权避险"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero political survival acumen, issuing unilateral imperial pardons that terrified regents",
+      "Stubborn isolationist who failed to surrender authority gracefully after victory"
+    ]
+  },
+  {
+    "id": "zhang_liao",
+    "nameZh": "张辽",
+    "nameEn": "Zhang Liao (Wenyuan)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "前将军 · 征东将军 · 威震逍遥津五子良将之首",
+    "positionEn": "General of the Front · Supreme Commander of East · Hero of Xiaoyaojin",
+    "personalityZh": "沉着勇武、临危不乱、以少胜多、公忠体国、治军极严",
+    "personalityEn": "Composed, daring frontline commander, unflinching in catastrophic odds, selfless loyalty overriding personal feuds",
+    "deedsZh": "白狼山之战斩杀乌桓单于蹋顿；逍遥津之战率八百勇士大破孙权十万大军，威震江东，“张辽止啼”名扬千古。",
+    "deedsEn": "Beheaded Wuhuan Chanyu Tadun at White Wolf Mountain; routed Sun Quan's 100,000 army with 800 elite cavalry at Xiaoyaojin, terrorizing Eastern Wu for decades.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "在泰山压顶的绝境中展现超强心理素质与带头冲锋气概。善于放下个人恩怨与同僚紧密合作，以精确斩首撕碎敌阵。",
+    "strengthAdviceEn": "Exhibit iron nerves when outnumbered 100 to 1; lead the vanguard personally, reconcile with quarrelsome peers, and strike critical weak points.",
+    "weaknessAdviceZh": "长年拼杀于生死第一线导致体内暗伤累累。在功成名就后应建立替补指挥机制，切不可在重病沉疴中过度硬撑而折损寿元。",
+    "weaknessAdviceEn": "Decades of brutal hand-to-hand combat inflict severe physical tolls; establish succession leadership rather than fighting through terminal illnesses.",
+    "historicalQuoteZh": "曹操叹曰：“城黑山贼，斩蹋顿，皆辽之功。”孙权戒部下曰：“张辽虽病，不可当也，慎之！”",
+    "historicalQuoteEn": "Cao Cao praised his unparalleled frontier feats. Even when Zhang Liao lay critically ill, Sun Quan warned his generals: 'Zhang Liao is fierce even in sickness; beware!'",
+    "auxiliaryStrengthsZh": [
+      "五子良将之首，逍遥津八百破十万，以绝对魄力与战术精确度创造军事神话",
+      "在合肥守卫战中大度化解与李典的私仇，以国家大局为重同心协力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Top of Five Elite Generals; achieved the tactical miracle of routing 100,000 with 800",
+      "Magnanimously extinguished personal feuds with Li Dian to secure unified defense"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格过于刚烈忠勇，遇敌必身先士卒，容易将主帅置于极高肉体风险之中",
+      "对朝堂政治博弈缺乏兴趣，长期驻防边陲使得政治话语权相对有限"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Reckless disregard for personal safety places overall command at physical hazard",
+      "Disinterest in central politics leaves his influence confined strictly to the battlefield"
+    ]
+  },
+  {
+    "id": "xu_huang",
+    "nameZh": "徐晃",
+    "nameEn": "Xu Huang (Gongming)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "右将军 · 阳平侯 · 长驱直入周亚夫之风",
+    "positionEn": "General of the Right · Breaker of Guan Yu's Siege at Fancheng",
+    "personalityZh": "治军严整、沉稳果断、长驱直入、谦逊慎密、公而忘私",
+    "personalityEn": "Impeccably disciplined tactician, humble, highly methodical, relentless when pursuing breakthroughs, praised as modern Zhou Yafu",
+    "deedsZh": "官渡之战劫烧袁绍粮车；樊城之战面对威震华夏的关羽，长驱直入连破十重大营解樊城之围；曹操赞其有“周亚夫之风”。",
+    "deedsEn": "Raid burnt Yuan Shao's grain wagons at Guandu; broke Guan Yu's impregnable trenches to lift the siege of Fancheng, earning comparison to Han general Zhou Yafu.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "七杀"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "严格的纪律性与沉着专注是克敌制胜法宝。在进攻时不盲目冒进，步步为营；待侦察清晰后以泰山压顶之势长驱直入。",
+    "strengthAdviceEn": "Ironclad discipline and patient scouting guarantee tactical triumph; advance step by step, striking with overwhelming momentum once weaknesses appear.",
+    "weaknessAdviceZh": "为人过于低调谨慎、公而忘私，在需要为部属与自身争取权益时往往不愿发声，容易在功赏分配上被边缘化。",
+    "weaknessAdviceEn": "Excessive personal modesty and reluctance to petition court superiors can leave your unit under-rewarded in post-victory compensation.",
+    "historicalQuoteZh": "曹操赞曰：“贼围堑鹿角十重，将军致战全胜，遂陷贼围，多斩首虏。吾用兵三十余年，未见古人有长驱直入敌围者也。”",
+    "historicalQuoteEn": "Cao Cao praised: 'Guan Yu's trenches were layered ten deep, yet the General struck through completely. In thirty years of war, I have never seen such tactical breakthrough.'",
+    "auxiliaryStrengthsZh": [
+      "治军纪律极严，曹操巡营时诸军皆哗，唯徐晃军营肃然整齐，深得大将风范",
+      "长于战役层面的精确突破，樊城解围打破关羽威震华夏之神话"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary military discipline where troops remained silent and stationed under inspection",
+      "Master of operational breakthroughs, shattering Guan Yu's siege at Fancheng"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "极度谦退不争功，日常社交圈子封闭，缺乏政治派系庇护",
+      "行事过于拘泥法度条令，灵活性与政治权变能力偏弱"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly reticent, shunning social alliances and lacking political factional backing",
+      "Strict adherence to statutory commands limits fluid political improvisation"
+    ]
+  },
+  {
+    "id": "zhang_he",
+    "nameZh": "张郃",
+    "nameEn": "Zhang He (Junyi)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "征西车骑将军 · 街亭克蜀算无遗策名将",
+    "positionEn": "General of Chariots and Cavalry · Breaker of Jieting",
+    "personalityZh": "巧变善战、精通地形、料敌知机、善安营垒、儒将风范",
+    "personalityEn": "Tactically versatile, master of topography and mountain defense, skilled camp-builder with scholarly refinement",
+    "deedsZh": "官渡降曹后屡立战功；汉中之战刘备极度忌惮；街亭之战断马谡水源大获全胜，粉碎诸葛亮首次北伐全盘计划；死于木门道伏击。",
+    "deedsEn": "Defected to Cao at Guandu, becoming a pillar general; feared by Liu Bei; crushed Ma Su at Jieting to shatter Zhuge Liang's First Expedition; ambushed at Mumen.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "七杀",
+      "食神"
+    ],
+    "patternType": "食神制杀格",
+    "strengthAdviceZh": "精研地形与敌军心理弱点，长于根据战场态势实施“巧变”。在防御战中卡死咽喉要道，不战而屈人之兵。",
+    "strengthAdviceEn": "Master topography and psychological vulnerabilities; exploit battlefield geometry to seize vital choke points and paralyze enemy momentum.",
+    "weaknessAdviceZh": "服从军令与战术直觉发生剧烈冲突时，必须建立抗辩护身符！明知前方有伏兵仍因统帅严令强行追击，最终饮恨木门道。",
+    "weaknessAdviceEn": "Establish clear protocols when military orders clash with proven tactical instincts; blindly pursuing a retreating genius like Zhuge Liang brings ambush.",
+    "historicalQuoteZh": "刘备叹曰：“当得夏侯渊，未能得张郃也！”陈寿评：“张郃识变数，善处营陈，料战势地形，无不如计。”",
+    "historicalQuoteEn": "Liu Bei sighed upon killing Xiahou Yuan: 'I only eliminated the deputy; the real dangerous titan is Zhang He!' Chen Shou praised his mastery of shifting conditions.",
+    "auxiliaryStrengthsZh": [
+      "深明兵法机变，在街亭精准抓住马谡扎营山顶的致命漏洞一击必杀",
+      "精通地理与后勤，曹魏后期西北战线最令蜀汉君臣敬畏的第一宿将"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme opportunist who exploited Ma Su's isolated mountain camp at Jieting",
+      "Unrivaled master of northwestern terrain whose presence paralyzed Shu offensives"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在司马懿强令追击时未能坚持专业判断，被迫执行错误命令中伏殒命",
+      "阵营转换（袁曹更替）的历史背景使其在中央决策核心层始终保持过度恭顺"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Yielded professional judgment to Sima Yi's reckless pursuit order, dying in ambush",
+      "Defector background forced an overly subservient posture before supreme commanders"
+    ]
+  },
+  {
+    "id": "yu_jin_wei",
+    "nameZh": "于禁",
+    "nameEn": "Yu Jin (Wenze)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "左将军 · 假节钺 · 曹操最倚重晚节失陷宿将",
+    "positionEn": "General of the Left · Holder of Imperial Axe · Strict Veteran Commander",
+    "personalityZh": "刚毅严整、治军如铁、奉法不阿、晚节不终、心防崩溃",
+    "personalityEn": "Iron-willed, rigid disciplinarian, enforcing law without fear, yet suffered psychological collapse upon sudden disaster",
+    "deedsZh": "早期平定黄巾屡立战功；官渡稳固后方；昌豨叛乱含泪依军法处死故友；樊城遇汉水大溢全军覆没降关羽，归魏后羞愧病逝。",
+    "deedsEn": "Crucial veteran who enforced military law ruthlessly, executing an old friend under strict discipline; overwhelmed by floodwaters at Fancheng, surrendering to Guan Yu.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "正印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以铁一般的纪律与法律准绳治军，能打造执行力顶级的铁血战队。在大规模战役中执行力坚决，深得上级信任。",
+    "strengthAdviceEn": "Forge supreme operational execution through unbending discipline and legal rigor; lead frontline troops with dependable obedience.",
+    "weaknessAdviceZh": "一生清誉毁于一瞬！警惕在不可抗力天灾面前心防彻底瓦解。三十年忠直若因一次妥协屈膝，将承受世人最残酷的诛心羞辱。",
+    "weaknessAdviceEn": "A lifetime of unblemished honor can perish in a single moment! Never surrender mental fortitude during catastrophic natural disasters; compromise erases decades of glory.",
+    "historicalQuoteZh": "曹操闻其降叹曰：“吾知于禁三十年，何意临危处难，反不如庞德邪！”",
+    "historicalQuoteEn": "Cao Cao sighed in disbelief: 'I knew Yu Jin for thirty years; how could he prove less steadfast in mortal peril than newcomer Pang De!'",
+    "auxiliaryStrengthsZh": [
+      "曹魏唯一假节钺的外姓大将，以绝对奉公法度与铁血治军著称",
+      "逆境中能抵挡强敌，治军整肃，即便败退也能迅速重整军阵"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Only non-royal general granted supreme execution authority due to spotless loyalty",
+      "Steel-like composure in orderly retreat, reorganizing shattered lines under fire"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对滔天洪水与全军覆没的突发绝境心理承受力崩溃，晚节投降受尽耻辱",
+      "对待部下与故友过于严酷无情，缺乏温情，导致自身受难时无人出言营救"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Total psychological collapse in the face of sudden floods, surrendering his honor",
+      "Merciless disciplinary rigidity alienated peers, leaving no allies to defend him"
+    ]
+  },
+  {
+    "id": "yue_jin",
+    "nameZh": "乐进",
+    "nameEn": "Yue Jin (Wenqian)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "右将军 · 广昌亭侯 · 每战先登陷阵猛将",
+    "positionEn": "General of the Right · Vanguard Breaker of Cities",
+    "personalityZh": "容貌短小、胆气绝伦、每战必先、勇冠三军、果毅善战",
+    "personalityEn": "Short in stature but immense in spirit, first to climb enemy walls in every siege, fearless frontline vanguard",
+    "deedsZh": "从曹操起兵，凡破吕布、击刘备、平袁绍、征乌桓皆为先登破阵；与张辽、李典共守合肥，以勇烈击退孙权。",
+    "deedsEn": "Joined Cao from the start, first to breach enemy ramparts against Lü Bu, Liu Bei, Yuan Shao, and Wuhuan; co-defended Hefei alongside Zhang Liao.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以身先士卒的原始魄力撕开一切僵局。不靠口舌辩白，以无可争议的现场战功赢得团队的最高信任与敬畏。",
+    "strengthAdviceEn": "Shatter deadlocks through fearless personal vanguard action; let undeniable results on the frontline speak louder than any rhetorical excuses.",
+    "weaknessAdviceZh": "勇猛有余而谋略纵深偏弱。随着战争规模扩大，必须从“先登陷阵”的战术打手升维为统揽全局的战役统帅，防暗箭偷袭。",
+    "weaknessAdviceEn": "Raw valor must evolve into strategic vision; as projects scale, transcend frontline execution to master macro command and prevent fatal ambushes.",
+    "historicalQuoteZh": "《三国志》评：乐进以骁勇随从，每战先登，有烈士之风，为世良将。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Yue Jin followed with ferocious bravery, always first to scale walls; his fierce heroism marked him as an elite general.",
+    "auxiliaryStrengthsZh": [
+      "天下第一等先锋陷阵大将，每遇险隘必身先士卒率先登城",
+      "战功扎实毫无水分，以一次次硬碰硬的攻坚战铸就五子良将勋位"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Premier assault vanguard of his era, personally scaling city walls under fire",
+      "Built legendary military status strictly through verifiable battlefield conquests"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏独立指挥大型战略兵团的宏观战略谋划，依赖主帅统筹",
+      "战斗中负伤极多，体能耗损过甚，相对较早退出核心军事舞台"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked macro strategic planning for autonomous army groups, requiring high command guidance",
+      "Sustained countless combat wounds, exhausting stamina and shortening active career"
+    ]
+  },
+  {
+    "id": "xiahou_dun",
+    "nameZh": "夏侯惇",
+    "nameEn": "Xiahou Dun (Yuanrang)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 高安乡侯 · 曹魏宗室第一柱石",
+    "positionEn": "Grand General · Duke of Gao'an · Supreme Pillar of the Imperial Clan",
+    "personalityZh": "忠勇纯朴、敦厚爱才、治军清俭、拔矢啖睛、人品如玉",
+    "personalityEn": "Fiercely loyal, humble and generous, incorruptible, famed for swallowing his arrowed eyeball, universally revered gentleman",
+    "deedsZh": "曹操起兵最早期亲族大将；征伐吕布被射瞎左目，拔矢啖睛威震敌胆；长期主持民政屯田抗旱阻蝗；位极人臣却清廉如水，散尽家财抚恤军民。",
+    "deedsEn": "Cao Cao's closest kinsman general; swallowed his blinded eye during battle; led massive agricultural irrigation and disaster relief; lived in spartan poverty.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "比肩",
+      "正官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "以无懈可击的人格魅力与无私胸怀凝聚人心。在组织内部充当定海神针与最高润滑剂，不争名利却享有至高无上的威望。",
+    "strengthAdviceEn": "Unite organizations through unblemished moral character and generous benevolence; serve as the unshakeable bedrock and ethical mediator.",
+    "weaknessAdviceZh": "临阵战术指挥并非长项，屡次遭遇伏击甚至曾被敌军伪降俘虏。必须深知自身短板，将一线战术推演交给专业参谋团队。",
+    "weaknessAdviceEn": "Direct tactical combat was his weak spot, suffering ambushes and hostage capture; delegate battlefield tactics to specialized operational advisors.",
+    "historicalQuoteZh": "《三国志》评：夏侯惇为人虽在军旅，亲迎师受业。性清俭，有余财辄以分施，不足资奉，殁之日家无余财。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Xiahou Dun lived simply despite high military rank, studying under teachers; he gave away all excess wealth, leaving no estate upon death.",
+    "auxiliaryStrengthsZh": [
+      "人格魅力极高，深得军民曹氏宗室与异姓将领共同爱戴，为阵营内部第一压舱石",
+      "在后方大兴水利屯田，旱灾时亲负泥土截水筑陂，挽救数万饥民"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Beloved by royal kin, rank-and-file troops, and peer generals as supreme ethical anchor",
+      "Led waterworks and famine relief personally, carrying dirt to dam rivers during drought"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "野战临机应变能力偏弱，曾遭遇诱敌深入中伏甚至被劫为人质",
+      "个人勇烈重于战术计算，容易被狡黠对手以诈降或偷袭所乘"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Vulnerable to operational deception, suffering ambushes and humiliating hostage capture",
+      "Fierce personal courage overshadowed tactical calculation, vulnerable to trickery"
+    ]
+  },
+  {
+    "id": "xiahou_yuan",
+    "nameZh": "夏侯渊",
+    "nameEn": "Xiahou Yuan (Miaocai)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "征西将军 · 博昌亭侯 · 虎步关右神行主帅",
+    "positionEn": "General Who Conquers the West · Tiger of the West · Master of Lightning Maneuvers",
+    "personalityZh": "雷厉风行、神速用兵、勇猛果决、轻视自保、勇夫之见",
+    "personalityEn": "Lightning-fast blitzkrieg commander, aggressive and decisive, yet recklessly hands-on in minor combat tasks",
+    "deedsZh": "平定关中凉州诸羌叛乱，“虎步关右，所向无前”；兵贵神速，常行军千里出敌不意；定军山之战亲率兵修鹿角，被黄忠突袭斩杀。",
+    "deedsEn": "Conquered western rebellious tribes, celebrated as 'Tiger Marching West'; famed for 1,000-li rapid deployments; killed at Mt. Dingjun while repairing wooden palisades.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "将“速度与动量”发挥到极致。善于长途奔袭打乱对手部署，在荒野与险要地形中打出摧枯拉朽的闪电战。",
+    "strengthAdviceEn": "Maximize speed and momentum to supreme heights; conduct long-range forced marches to disorient enemy lines and execute decisive blitzkriegs.",
+    "weaknessAdviceZh": "为将者切忌亲临一线干杂役险事！曹操屡戒其“为将当受怯，不可但逞勇”，堂堂方面大帅亲修鹿角遭斩，是战略主帅的奇耻大辱。",
+    "weaknessAdviceEn": "A supreme commander must never risk his life on minor field repairs! Heed Cao Cao's warning against reckless machismo; dying while fixing fences is a fatal failure of command.",
+    "historicalQuoteZh": "曹操戒之曰：“为将当有怯弱时，不可但恃勇也。将当以勇为本，行之以智计；但知任勇，一匹夫敌耳。”",
+    "historicalQuoteEn": "Cao Cao warned him: 'A general must know caution, not rely solely on raw courage. Courage is the foundation, but strategy must guide it; blind bravery makes one a mere brawler.'",
+    "auxiliaryStrengthsZh": [
+      "神速行军天下无双，“三日五百，六日一千”，打得西凉强悍游牧联军望风瓦解",
+      "平定河西打通丝路，在关右建立起极具威慑力的军事防御走廊"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peerless forced march maestro ('500 li in three days'), overwhelming western nomads",
+      "Secured the Hexi corridor and built a formidable strategic bastion in western China"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "骨子里脱不掉匹夫之勇，身为全军统帅却亲自修补鹿角防御，丧命于突袭",
+      "轻视对手战术布置，定军山分兵防守导致主帅阵地空虚被斩首"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal addiction to hands-on manual soldiering, repairing fences until felled by Huang Zhong",
+      "Dispersed his forces imprudently at Mt. Dingjun, leaving his headquarters vulnerable"
+    ]
+  },
+  {
+    "id": "cao_ren",
+    "nameZh": "曹仁",
+    "nameEn": "Cao Ren (Zixiao)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大司马 · 陈侯 · 守城天下第一铁壁名将",
+    "positionEn": "Grand Marshal · Marquis of Chen · Peerless Citadel Fortress Commander",
+    "personalityZh": "沉勇坚毅、严整法度、处变不惊、铁壁铜墙、勇冠贲育",
+    "personalityEn": "Immovable defender, strict enforcer of military law, unflappable under catastrophic siege, warrior of unmatched resolve",
+    "deedsZh": "江陵之战孤身冲入周瑜重围救出部将牛金；樊城之战面对关羽水淹七军、城墙崩塌，誓死坚守激励全军不退，终保樊城不失。",
+    "deedsEn": "Rescued deputy Niu Jin by charging alone into Zhou Yu's encirclement; held Fancheng against Guan Yu despite catastrophic floods that submerged ramparts.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "七杀"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "防御战与阵地战的世界级大师。在极度恶劣、外援断绝的绝境中，以不可动摇的决死信念与严明法纪筑牢最后防线。",
+    "strengthAdviceEn": "Supreme master of defensive citadel warfare; anchor unshakeable lines under hopeless sieges through personal courage and iron discipline.",
+    "weaknessAdviceZh": "早年行事放纵不修边幅。必须深知制度与纪律是后天修炼的产物，唯有时刻以法度约束自身本能，才能由猛将蜕变为大帅。",
+    "weaknessAdviceEn": "Unchecked youth was reckless and unruly; cultivate disciplined restraint consciously, transforming raw aggressive instincts into polished grand command.",
+    "historicalQuoteZh": "《三国志》评：曹仁少时不修行检，及长为将，严整奉法，常置科律于左右。文帝褒曰：“曹子孝勇冠贲育，真大将也。”",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Cao Ren was unruly in youth, but as commander kept legal codes by his seat. Emperor Wen praised: 'His courage exceeds ancient heroes.'",
+    "auxiliaryStrengthsZh": [
+      "守城战神，江陵抗周瑜、樊城逆滔滔洪水拒关羽，两次拯救曹魏于倾覆边缘",
+      "单骑冲阵救出部属，展现出顶级主帅在战术危急时刻惊人的个人决断与武力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary citadel defender whose resistance at Jiangling and Fancheng saved the empire",
+      "Charged solo into enemy encirclement to rescue trapped comrades with terrifying valor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "野战进攻战役策划相对守城逊色，早期曾遭遇关羽、周瑜的战术压制",
+      "严厉苛法有时过于沉重，团队底层心理压力极大"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Offensive campaign planning was less distinguished than his fortress defense",
+      "Severe disciplinary demands placed immense sustained psychological strain on troops"
+    ]
+  },
+  {
+    "id": "cao_hong",
+    "nameZh": "曹洪",
+    "nameEn": "Cao Hong (Zilian)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "骠骑将军 · 野王侯 · 舍命救主家财万贯宿将",
+    "positionEn": "General of Agile Cavalry · Lifesaver of Cao Cao · Wealthy Veteran Warrior",
+    "personalityZh": "骁勇善战、舍生忘死、重义轻命、生性吝啬、贪财招祸",
+    "personalityEn": "Fearless frontline fighter, traded his horse to save Cao Cao, yet notoriously miserly and obsessed with private wealth",
+    "deedsZh": "荥阳之战曹操失马被围，曹洪让马曰“天下可无洪，不可无公”；汉中下辩之战大破蜀将吴兰、张飞；家财万贯却吝啬拒借曹丕，几遭处死。",
+    "deedsEn": "Gave his horse to Cao Cao at Xingyang declaring 'The world can lack Hong, but never you'; smashed Wu Lan at Han Zhong; nearly executed by Cao Pi over unpaid loans.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "比肩",
+      "七杀"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "在重大生死关头具有极强的决断力与舍己救人牺牲精神。战阵之上凶悍果决，敢打硬仗恶仗。",
+    "strengthAdviceEn": "Possesses heroic self-sacrifice in fatal emergencies; fierce and unyielding on the battlefield, capable of crushing tough adversaries.",
+    "weaknessAdviceZh": "必须彻底戒除贪财吝啬与锱铢必较的致命死穴！在位高权重时若还对金钱斤斤计较、得罪新任掌权者，险些用黄金换取断头台。",
+    "weaknessAdviceEn": "Eradicate petty greed and miserliness! Hoarding wealth while denying support to rising leaders nearly sent him to the executioner's block.",
+    "historicalQuoteZh": "曹洪让马曰：“天下可无洪，不可无公！”曹操常叹其忠。然文帝以其吝啬恨之，幸得卞太后力保方免死。",
+    "historicalQuoteEn": "Cao Hong offered his steed: 'The world can do without Hong, but not without my lord!' Cao Cao wept in gratitude, though Cao Pi nearly executed him for miserly grudges.",
+    "auxiliaryStrengthsZh": [
+      "荥阳舍命献马，奠定了曹魏政权最核心的生死患难政治资本",
+      "下辩破张飞吴兰，展现出极强的战场冲击力与指挥硬度"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sacrificed his own steed to save Cao Cao, securing eternal political credit",
+      "Crushed Shu forces at Xiabian, demonstrating brutal battlefield impact"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "贪恋财富且为人极其吝啬，在权力代际交接中得罪储君曹丕险遭屠灭",
+      "性格骄横好奢，缺乏政治远见与退让大度"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Miserly obsession with wealth offended successor Cao Pi, almost costing his head",
+      "Ostentatious arrogance coupled with political short-sightedness caused severe vulnerability"
+    ]
+  },
+  {
+    "id": "xu_chu",
+    "nameZh": "许褚",
+    "nameEn": "Xu Chu (Zhongkang)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "武卫将军 · 牟乡侯 · 虎痴禁军统领",
+    "positionEn": "General of Martial Might · Chief of Imperial Guard · The Tiger Fool",
+    "personalityZh": "忠勇纯挚、勇力绝伦、目如铜铃、谨言慎行、铁壁护主",
+    "personalityEn": "Fiercely loyal bodyguard commander, colossal physical strength, watchful hawk-like protection, zero political interference",
+    "deedsZh": "渭南之战单手撑鞍掩护曹操渡河，身中数箭不退；裸衣倒拖双牛；怒目喝退马超图谋行刺曹操；掌管禁军数十年滴水不漏。",
+    "deedsEn": "Shielded Cao Cao during the Wei River crossing with an arrow-ridden saddle; stared down Ma Chao to foil an assassination; guarded high command for decades.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "比肩",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "把“忠诚与专注”做到极致。绝不涉足政治权谋，将所有注意力聚焦于守护核心首脑与团队中枢的安全防线。",
+    "strengthAdviceEn": "Elevate loyalty and specialized security to absolute perfection; shun political entanglements and focus solely on defending core leadership.",
+    "weaknessAdviceZh": "行事过于刚硬不通人情世故，对宗室亲贵（如曹仁私下拜访）冷拒门外虽保公心，但在人际圆融上需防私仇暗生。",
+    "weaknessAdviceEn": "Uncompromising adherence to duty risks offending elite peers; balance incorruptible vigilance with minimal diplomatic warmth.",
+    "historicalQuoteZh": "曹操称赞曰：“此吾之樊哙也！”马超闻其威名，见其按剑顾盼，不敢动作。",
+    "historicalQuoteEn": "Cao Cao proclaimed: 'He is my Fan Kuai!' Even the terrifying Ma Chao dared not strike when meeting Xu Chu's fierce watchful stare.",
+    "auxiliaryStrengthsZh": [
+      "天下第一等绝对忠诚护卫，在生死瞬间数次以血肉之躯挽救主帅生命",
+      "深明职守界限，数十年禁卫从未结交外臣、从未违规泄密"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme bodyguard whose physical shield saved his supreme lord multiple times",
+      "Maintained immaculate boundaries, never entertaining private court factions"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏独立战略兵团作战经验，才能仅限于近身肉搏与内廷警卫",
+      "性格质朴少谋，离开严密体制庇护后缺乏自主谋生变通力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked experience commanding strategic army groups, confined to elite security",
+      "Simple and straightforward, vulnerable without institutional protection"
+    ]
+  },
+  {
+    "id": "dian_wei",
+    "nameZh": "典韦",
+    "nameEn": "Dian Wei (The Ancient Elai)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "司马 · 古之恶来 · 舍身死战第一烈士",
+    "positionEn": "Major of the Army · The Ancient Elai · Legendary Martyr of Wancheng",
+    "personalityZh": "膂力过人、勇狂善战、义薄云天、嗜好酒食、死战不旋踵",
+    "personalityEn": "Unmatched physical might, wielding twin eighty-pound halberds, fearless devotion to supreme command unto the last drop of blood",
+    "deedsZh": "单手立起巨型牙门旗；濮阳之战冒箭雨手持双戟连杀数十人救曹操；宛城之战武器被盗，身无片甲手提二贼迎战数百人，死战掩护曹操脱险。",
+    "deedsEn": "Held up the colossal military standard alone; rescued Cao at Puyang with twin halberds; fought unarmed at Wancheng against hundreds to shield Cao's flight.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以压倒性的勇烈气魄在绝境中粉碎敌军胆气。关键攻坚时刻，敢于以超常战力撕裂防线，为全局赢得生死转机。",
+    "strengthAdviceEn": "Shatter adversary morale through overwhelming frontline ferocity; pierce deadly encirclements to secure survival windows for the organization.",
+    "weaknessAdviceZh": "为上位者的风流荒唐与战略麻痹充当肉盾代价惨重！团队警卫必须时刻核查兵刃与后路，切不可在大醉或武器失落时陷入死局。",
+    "weaknessAdviceEn": "Paying the ultimate price for leadership's self-indulgence is tragic; security teams must never let guard down or weapon access be compromised.",
+    "historicalQuoteZh": "曹操哭之恸曰：“吾折长子、爱侄，俱无深痛；独号泣典韦也！”",
+    "historicalQuoteEn": "Cao Cao wept inconsolably: 'Losing my eldest son and nephew pains me not so deeply; my bitter tears are shed solely for Dian Wei!'",
+    "auxiliaryStrengthsZh": [
+      "古之恶来，冷兵器时代个人肉搏武力的绝对巅峰代表",
+      "宛城血战以一人之力堵住寨门，重创百敌，以绝对牺牲成就千古忠烈"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Epitome of raw ancient warrior combat strength, wielding 80-pound iron halberds",
+      "Stood alone at Wancheng fortress gates, slaying dozens bare-handed to save his lord"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "嗜好大饮大食，警惕性在非战时容易被暗中盗走核心武器装备",
+      "完全绑定于主帅个人行止，在不义之战与荒唐危机中沦为悲剧牺牲品"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Vulnerable to security lapses during camp feasts, allowing theft of weapons",
+      "Bound to superior's personal whims, sacrificed in a needless diplomatic crisis"
+    ]
+  },
+  {
+    "id": "pang_de",
+    "nameZh": "庞德",
+    "nameEn": "Pang De (Lingming)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "立义将军 · 关门亭侯 · 抬棺决战忠烈猛将",
+    "positionEn": "General of Established Righteousness · The Coffin-Bearing Challenger of Guan Yu",
+    "personalityZh": "刚毅果烈、视死如归、勇冠凉州、忠贞不贰、宁死不屈",
+    "personalityEn": "Steadfast and fearless, bringing his own coffin to the front to prove loyalty, refusing surrender unto decapitation",
+    "deedsZh": "原马超麾下头号骁将，屡立奇功；归曹操后战樊城，抬棺与关羽决战，一箭射中关羽前额；汉水泛滥水淹七军，被俘后怒骂刘备誓死不降被斩。",
+    "deedsEn": "Formerly Ma Chao's premier champion; joined Cao Cao, challenged Guan Yu while carrying his coffin, shooting Guan in the forehead; executed after refusing surrender.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以绝不妥协的决死信念自证清白与忠诚。在被同僚猜忌的环境中，用无可挑剔的英勇战绩与人格尊严回击一切流言蜚语。",
+    "strengthAdviceEn": "Demonstrate loyalty through unwavering bravery when targeted by peer gossip; silence suspicion with supreme valor and moral dignity.",
+    "weaknessAdviceZh": "过刚者易折。面对滔天洪水等极端自然灾变，若一味以匹夫之勇硬拼而不懂得暂时战略周旋，终难免英勇殉难的悲剧命运。",
+    "weaknessAdviceEn": "Extreme rigidity breaks under insurmountable environmental collapse; raw martial courage cannot stop flooding waters, requiring tactical retreat.",
+    "historicalQuoteZh": "关羽谓曰：“卿兄在汉中，我欲以卿为将，何不早降？”德骂曰：“竖子，何谓降也！吾宁为国家鬼，不为贼将也！”",
+    "historicalQuoteEn": "Guan Yu offered him generalship citing his brother in Shu; Pang De roared back: 'Paltry rebel, how dare you! I would rather be a ghost of my state than your general!'",
+    "auxiliaryStrengthsZh": [
+      "抬棺出征震慑敌胆，以箭中关羽前额打破“武圣”不可战胜的心理神话",
+      "誓死不屈，在全军覆没的绝境中展现出超越生死的崇高气节"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Terrified adversaries by marching with his coffin, wounding Guan Yu in combat",
+      "Unyielding defiance under execution, choosing death over shameful defection"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "地缘战术研判不足，未能及时警惕暴雨汉水漫溢的灾难性地貌风险",
+      "性格刚烈至极缺乏周旋转圜空间，在不可抗力面前过早折损有用之躯"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Ignored regional meteorological risks, trapped when the Han River burst banks",
+      "Inflexible fatalism prevented tactical preservation of life for future service"
+    ]
+  },
+  {
+    "id": "man_chong",
+    "nameZh": "满宠",
+    "nameEn": "Man Chong (Boning)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太尉 · 昌邑侯 · 铁面执法御吴名帅",
+    "positionEn": "Grand Commandant · Iron-Faced Judge · Grand Commander of Huainan Defense",
+    "personalityZh": "立平刚正、铁面无私、精研兵法、审时度势、长于坚守",
+    "personalityEn": "Incorruptible magistrate, brilliant strategist of defensive terrain, constructing fortresses to stymie massive maritime invasions",
+    "deedsZh": "早期执法严酷不避权贵；关羽围樊城力劝曹仁坚守；晚年主持淮南防务，力主退修合肥新城远离水网，屡挫孙权十万大军数十载。",
+    "deedsEn": "Enforced law without fear of royal kin; anchored Fancheng with Cao Ren; built the new fortress of Hefei away from waterways, frustrating Wu fleets for decades.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "善于结合法律法度与军事工程学。在战略防御中敢于力排众议做“战术后撤并修筑新核心阵地”，将敌军优势彻底化解。",
+    "strengthAdviceEn": "Synthesize legal discipline with military engineering; execute planned tactical withdrawals to positions of strength, neutralizing enemy advantages.",
+    "weaknessAdviceZh": "性情过于威严峻拔，在同僚体系中易遭忌恨与掣肘；必须学会在维护核心法度的同时留有柔性缓冲空间。",
+    "weaknessAdviceEn": "Excessive severity and unbending legal enforcement breed peer friction; maintain essential institutional boundaries while preserving diplomatic buffers.",
+    "historicalQuoteZh": "《三国志》评：满宠政法严明，勇而有谋。进筑新城，权不能克。内治外御，皆有卓策。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Man Chong was stern and brave; constructing the New Citadel neutralized Sun Quan's navy. An extraordinary statesman-general.",
+    "auxiliaryStrengthsZh": [
+      "铁面执法树立曹魏早期法治威信，哪怕曹操宠信的亲戚犯法也绝不徇私",
+      "战略前瞻性极高，敏锐洞悉东吴水军长处，筑合肥新城打破东吴北伐国运"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Incorruptible magistrate who executed aristocratic felons without fear of favors",
+      "Visionary military engineer who relocated Hefei inland, blinding Wu's naval edge"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格刚直峻急，曾遭扬州刺史王凌等人屡次谗言攻讦，官场险象环生",
+      "刑法手段偏重严酷，缺乏化民以德的宽厚底色"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Severe demeanor triggered persistent slander and political sabotage from rival governors",
+      "Legalistic methods leaned toward harsh deterrence rather than rehabilitative grace"
+    ]
+  },
+  {
+    "id": "tian_yu",
+    "nameZh": "田豫",
+    "nameEn": "Tian Yu (Guorang)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "征南将军 · 襄国侯 · 北疆定海神针",
+    "positionEn": "General Who Conquers the South · Guardian of the Northern Frontier",
+    "personalityZh": "清俭公允、威震朔漠、计略绝伦、长于抚绥、不事逢迎",
+    "personalityEn": "Spartan, impartial, legendary frontier pacifier of northern nomadic tribes, aloof from court flattery, master of regional defense",
+    "deedsZh": "早期曾令刘备叹惋不能共事；镇守北疆数十年，击溃鲜卑柯比能与乌桓诸部落，四夷宾服；马邑之战以车阵破胡骑；清贫自守无私财。",
+    "deedsEn": "Sighed over by Liu Bei for departing early; governed the northern frontier for decades, crushing Kebineng; defeated steppe cavalry with wagon forts; lived in poverty.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "深耕特定战略领域（边疆/冷门方向），以过硬的专业能力与清廉公信力化解复杂地缘冲突；用智慧与车阵非对称制胜。",
+    "strengthAdviceEn": "Dominate specialized, demanding operational theatres; master complex tribal diplomacy with unquestioned integrity and innovative asymmetric tactics.",
+    "weaknessAdviceZh": "不事逢迎、性格孤高，导致在朝廷中枢缺乏利益代言人，战功卓著却常被朝廷权贵压制官阶与实权。",
+    "weaknessAdviceEn": "Disdain for sycophancy leaves you without central court patrons; dazzling field achievements risk being downplayed by jealous bureaucrats.",
+    "historicalQuoteZh": "刘备泣曰：“恨不与君共成大事也！”陈寿评：“田豫居身清白，规略明练。拥据疆场，威震沙漠，古之名将，无以过也。”",
+    "historicalQuoteEn": "Liu Bei wept upon parting: 'I lament that I cannot build an empire with you!' Chen Shou praised: 'Tian Yu was spotless and brilliant, matching ancient masters.'",
+    "auxiliaryStrengthsZh": [
+      "北方游牧民族的克星，以离间计与车阵战术保卫北疆数十年安宁",
+      "一生所受赏赐全部分予将士，家中常无余粮，人品清白照耀青史"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of nomadic diplomacy and wagon-fort tactics, ensuring decades of frontier peace",
+      "Distributed all imperial rewards to frontline soldiers, keeping zero private wealth"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于淡泊名利且不涉权贵人情，中枢有功不赏，长期被安排在艰苦一线",
+      "缺乏在中央争夺最高军权政治手腕，功大而位不副"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Total indifference to court networking resulted in chronic promotion ceilings",
+      "Lacked appetite for central power struggles, remaining stationed on harsh borders"
+    ]
+  },
+  {
+    "id": "qian_zhao",
+    "nameZh": "牵招",
+    "nameEn": "Qian Zhao (Zijing)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "雁门太守 · 威振北狄边塞名将",
+    "positionEn": "Governor of Yanmen · Terror of the Steppe Tribes · Frontier Shield",
+    "personalityZh": "沉毅果敢、善抚夷狄、清正廉洁、威信素著、深得军心",
+    "personalityEn": "Resolute, deeply trusted by barbarian tribes for uncompromising fairness and military deterrence, unblemished administrative probity",
+    "deedsZh": "出镇雁门，开辟屯田、兴修水利、建立边防学校教化胡汉子弟；诱杀鲜卑叛乱首领，诸胡望风归附；使边塞民安物阜数十年。",
+    "deedsEn": "Governed Yanmen, constructing agricultural canals and mixed frontier academies; pacified hostile Xianbei clans, maintaining decades of border tranquility.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以“恩威并重”治理复杂多元社群。在硬实力震慑的同时注入教育与经济赋能，建立长治久安的生态护城河。",
+    "strengthAdviceEn": "Govern diverse, volatile environments through calibrated deterrence and genuine empowerment; invest in education and infrastructure for lasting stability.",
+    "weaknessAdviceZh": "扎根偏远一线往往容易被中央决策中枢遗忘。必须适度建立跨区域沟通机制，防止地方卓越政绩因距离中枢过远而被稀释。",
+    "weaknessAdviceEn": "Prolonged frontier service risks isolation from corporate headquarters; maintain communication bridges so regional successes are properly integrated.",
+    "historicalQuoteZh": "《三国志》评：“牵招威振内外，治边有方。教化流布，边境以安。名亚田豫，亦一代之良将也。”",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Qian Zhao projected awe within and without; by fostering education and defense, borderlands flourished under his watch.",
+    "auxiliaryStrengthsZh": [
+      "在边疆推行胡汉合校与农垦水利，展现出卓越的社会治理与民族融合智慧",
+      "军事出击雷厉风行，战术侦察精准，数战扫平边陲强虏"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pioneered joint border academies and irrigation, excelling in ethnic integration",
+      "Decisive tactical combat strikes that pacified frontier raiders swiftly"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "长期受困于地方官职缺乏全局战略调令，才能被局限在雁门一隅",
+      "性情严毅、疾恶如仇，对官场潜规则缺乏妥协包容度"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Confined to regional governance, limiting his macro strategic theatre",
+      "Unbending hostility toward corruption made him aloof from mainstream bureaucracy"
+    ]
+  },
+  {
+    "id": "hua_xin",
+    "nameZh": "华歆",
+    "nameEn": "Hua Xin (Ziyu)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太尉 · 安乐乡侯 · 严谨端肃汉魏老臣",
+    "positionEn": "Grand Commandant · Marquis of Anle · Venerable Legalistic Elder Statesman",
+    "personalityZh": "沉稳庄重、清廉高洁、谨守法度、识鉴过人",
+    "personalityEn": "Grave, dignified, austere personal life, meticulously observing legal protocol, perceptive judge of political reality",
+    "deedsZh": "早年与管宁齐名，割席分坐自守其志；孙策、孙权皆深敬重；入魏辅佐三代，力主安民息兵反对急于伐吴；位至三公家无担石之储。",
+    "deedsEn": "Studied with Guan Ning; revered by Sun Ce and Sun Quan; served three Wei emperors, advocating peace and agricultural rest; died leaving almost no wealth.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "正财"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "恪守专业流程与法律边界，在时代剧变中做平稳过渡的制度粘合剂。克己奉公、生活简朴，以清白家风抵御一切是非。",
+    "strengthAdviceEn": "Act as institutional mortar during volatile regime transitions through procedural rigor; live with immaculate personal austerity.",
+    "weaknessAdviceZh": "在政权禅代（逼汉献帝退位）的历史漩涡中被迫充当急先锋，留下了“欺凌弱主”的历史非议。在法统变革关口须防背负骂名。",
+    "weaknessAdviceEn": "Serving as the formal spearhead in dynastic usurpation leaves enduring historical controversies; guard against bearing the moral blame of ruthless shifts.",
+    "historicalQuoteZh": "《三国志》评：华歆清纯德素，文帝甚敬重之。每朝会，百官莫敢失仪。及平生禄赐，分施九族，家无余财。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Hua Xin lived with pure virtue; court officials dared not breach decorum in his presence; he gifted all stipends to relatives.",
+    "auxiliaryStrengthsZh": [
+      "制度平稳交接的顶层设计师，辅政三代维持了曹魏官僚体系的法度威严",
+      "个人私德极其清白，地位极高却毫无奢靡之气，资助亲族无数"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Administrative anchor ensuring orderly continuity across three imperial transitions",
+      "Spotless personal integrity, giving away vast state gifts to support needy clans"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "代汉立魏的过程中充当仪式前台推手，成为儒家道统千年来抨击的靶子",
+      "治国战略偏于保守守成，缺乏在顺境中开疆拓土的大魄力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Became the public face of dynastic usurpation, drawing harsh Confucian critique",
+      "Overly cautious statecraft lacked the audacity for macro expansive breakthroughs"
+    ]
+  },
+  {
+    "id": "wang_lang",
+    "nameZh": "王朗",
+    "nameEn": "Wang Lang (Jingshing)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "司徒 · 兰陵侯 · 经学大儒与治世文宗",
+    "positionEn": "Minister over the Masses · Master Confucian Classical Scholar",
+    "personalityZh": "通达经史、博学渊深、慈爱宽厚、崇尚节俭",
+    "personalityEn": "Encyclopedic scholar of classical rites, benevolent magistrate, champion of social moderation and merciful jurisprudence",
+    "deedsZh": "早年治会稽政绩卓著，抗击孙策兵败犹全节义；入魏官至司徒，屡次上疏劝谏休养生息、减刑缓狱、重农抑商；著述儒家经典传世。",
+    "deedsEn": "Governed Kuaiji with distinction, resisting Sun Ce with chivalric dignity; served as Minister over the Masses, pleading for merciful laws and agrarian peace.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "偏财",
+      "正官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "将深厚的学术文化积淀转化为现实治理政策。在立法司法上主张宽刑恤狱、以人为本，以宽厚仁德筑牢社会基层根基。",
+    "strengthAdviceEn": "Translate deep scholarly wisdom into compassionate state policy; advocate for legal mercy, agricultural protection, and social rehabilitation.",
+    "weaknessAdviceZh": "文人论政易陷于空谈道德与引经据典，缺乏战场一线的血火淬炼。在军事决策与硬核对抗中应退让于一线专业将领。",
+    "weaknessAdviceEn": "Scholarly governance risks rhetorical moralizing detached from harsh military realities; defer frontline operational decisions to combat commanders.",
+    "historicalQuoteZh": "《三国志》评：王朗博洽多闻，学究天人。其裁制法度，好济人于厄，古之宽厚长者也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Wang Lang was erudite and insightful; his judicial reforms saved countless lives, embodying ancient benevolent wisdom.",
+    "auxiliaryStrengthsZh": [
+      "经学巨擘，注释《周易》《春秋》等儒家经典，学术底蕴深厚天下景仰",
+      "司法审判中极力主张宽简仁恕，废除残酷苛法，挽救无数无辜生命"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immense Confucian scholarship whose commentaries anchored imperial state academies",
+      "Merciful judicial reformer who humanized criminal codes and spared thousands"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对乱世军事强人缺乏硬碰硬的实力筹码，会稽防御战被孙策迅速瓦解",
+      "言辞奏章过于引经据典，在雷厉风行的战时体制下有时显出文人迂腐"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked iron martial leverage against warlords, easily ousted from Kuaiji by Sun Ce",
+      "Legal memos leaned heavily on academic scripture, showing occasional pedantry in crisis"
+    ]
+  },
+  {
+    "id": "chen_qun",
+    "nameZh": "陈群",
+    "nameEn": "Chen Qun (Changwen)",
+    "dynastyZh": "东汉 / 曹魏",
+    "dynastyEn": "Eastern Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "司空 · 颍阴侯 · 九品中正制与曹魏法典宗师",
+    "positionEn": "Minister of Works · Creator of Nine-Rank System and Wei Legal Code",
+    "personalityZh": "清雅严整、精通律法、博览群书、执规守矩、制度巨擘",
+    "personalityEn": "Noble, systematic jurist, meticulous architect of bureaucratic selection and statutory governance, bedrock of civil institutions",
+    "deedsZh": "创立“九品中正制”，奠定中国魏晋南北朝四百年选官基本法度；主持编撰《魏律》，合并刑名律为总则，开中国法制史新纪元；受命托孤辅政曹叡。",
+    "deedsEn": "Created the Nine-Rank official selection system that framed Chinese bureaucracy for 400 years; compiled the Wei Legal Code; co-regent of Emperor Ming.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正财",
+      "正印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "制度架构的顶级总设计师。善于在混乱失序的旧体系中建立高度标准化、规范化的新选拔与考核规则，锁定长期制度红利。",
+    "strengthAdviceEn": "Premier architect of civil institutional frameworks; establish standardized meritocratic metrics to bring enduring order out of chaotic vacuums.",
+    "weaknessAdviceZh": "制度初衷虽善，但若缺乏对“门阀垄断与阶层固化”的自我纠偏机制，九品中正制后世沦为“上品无寒门”的阶级壁垒，需警惕制度异化。",
+    "weaknessAdviceEn": "Even great designs can ossify into monopolies; install dynamic anti-monopoly circuit-breakers lest talent screening degenerate into aristocratic entrenchment.",
+    "historicalQuoteZh": "《三国志》评：陈群弘雅严整，制度明断。其所创制之规，垂范百代，魏之良相也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Chen Qun was dignified and methodically rigorous; the administrative statutes he drafted became models for centuries.",
+    "auxiliaryStrengthsZh": [
+      "中国法制与选官制度史上的超级巨擘，以一己之力搭建曹魏官僚帝国骨架",
+      "为人正直敢谏，明帝大兴土木时屡次面折廷争，深受曹氏三代敬重托孤"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Monumental institutional founder whose Nine-Rank system and legal code shaped centuries",
+      "Fearless in remonstrance against court extravagance, chosen as prime imperial regent"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "未能预见九品中正制日后被世家门阀彻底架空与垄断的系统性副作用",
+      "性格过于严谨方正缺乏政治手腕，高平陵之变中被司马懿借势架空"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to anticipate aristocratic capture of his Nine-Rank system in later eras",
+      "Overly procedural posture left him politically outmaneuvered by Sima Yi"
+    ]
+  },
+  {
+    "id": "wang_jun_jin",
+    "nameZh": "王濬",
+    "nameEn": "Wang Jun (Shizhi)",
+    "dynastyZh": "曹魏 / 西晋",
+    "dynastyEn": "Cao Wei / Western Jin",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "抚军大将军 · 襄阳侯 · 顺流东下灭吴功首",
+    "positionEn": "Grand General of Army Pacification · Master of Naval Warfare · Conqueror of Eastern Wu",
+    "personalityZh": "雄豪奇谋、水战无双、果断勇决、行事跋扈、战功盖世",
+    "personalityEn": "Daring naval architect and admiral, supreme riverine combat commander, bold in battle yet contentious in post-victory protocol",
+    "deedsZh": "在蜀地建造巨型楼船“飞云”长百余步，训练水师；灭吴之役率水军顺江直下，以火炬溶化铁锁连克丹阳、石头城，受降孙皓一统天下。",
+    "deedsEn": "Built gargantuan multi-story warships in Sichuan; led the grand naval armada down the Yangtze, melting iron river chains to seize Jianye and conquer Wu.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "七杀",
+      "伤官"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "在大规模战略破局中善于开辟“非对称工程与新载体”。敢于建造前所未见的巨型工具，在广阔空间中打出摧枯拉朽的立体攻势。",
+    "strengthAdviceEn": "Pioneer asymmetric physical engineering in macro breakthroughs; construct unprecedented operational tools to launch unstoppable blitzkriegs.",
+    "weaknessAdviceZh": "功成之后必须懂得低调敛翼！战胜归来时因争功与诸将争执不下、言辞激烈险遭诬陷下狱。切莫让性格跋扈遮蔽了盖世功勋。",
+    "weaknessAdviceEn": "Restrain aggressive pride after monumental conquests! Bitter public arguments over credit with peer generals nearly landed him in prison for treason.",
+    "historicalQuoteZh": "《晋书》评：王濬善制舟楫，泛楼船于万里之流，金陵解甲，混一六合，勋冠诸将。然居功矜伐，亦其短也。",
+    "historicalQuoteEn": "Book of Jin: Wang Jun built magnificent river armadas, sailing down the Yangtze to unify China. His feats stood supreme, though boastful pride was his flaw.",
+    "auxiliaryStrengthsZh": [
+      "中国古代水军历史上最伟大的工程战术大师之一，巨舰铁索连环开创大江决战奇迹",
+      "临机决断毫不犹豫，当进则进，违抗缓进敕令一鼓作气攻克建业受降"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Epochal naval engineer whose colossal floating castles and chain-burners made history",
+      "Decisive theater admiral who ignored timid delay orders to seize the enemy capital"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "平吴后恃功自傲，与王浑等人公开打口水战，政治情商极差险遭法办",
+      "性格骄横不驯，缺乏与同僚平级分享胜利果实的心胸"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Boastful vanity after victory sparked vicious turf wars, nearly bringing treason trials",
+      "Abrasive arrogance made it difficult to share triumph harmoniously with peers"
+    ]
+  },
+  {
+    "id": "guo_huai",
+    "nameZh": "郭淮",
+    "nameEn": "Guo Huai (Boji)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "车骑将军 · 阳曲侯 · 西陲御蜀不败长城",
+    "positionEn": "General of Chariots and Cavalry · Marquis of Yangqu · Unbreakable Western Shield",
+    "personalityZh": "方策精审、料敌在先、善抚羌胡、深谙地理、老辣沉稳",
+    "personalityEn": "Master of tactical terrain, anticipated Shu offensive vectors, respected by tribal alliances, seasoned defensive commander",
+    "deedsZh": "汉中失夏侯渊时收拢残军推举张郃稳住局势；数十年间多次击破诸葛亮与姜维北伐；拉拢羌氐各部稳固陇右，魏之西陲擎天玉柱。",
+    "deedsEn": "Rallied shattered troops at Mt. Dingjun after Xiahou Yuan's death; repelled repeated northern expeditions by Zhuge Liang and Jiang Wei across decades.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "正印"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "在危难时刻展现出非凡的危机重组能力。深耕西北地理与民情，长于以逸待劳、梯次布防，让再凶悍的进攻者无功而返。",
+    "strengthAdviceEn": "Master crisis reorganizations when headquarters falls; leverage deep local terrain and tribal intelligence to exhaust hostile offensives.",
+    "weaknessAdviceZh": "家族政治捆绑过深导致被动卷入司马氏诛戮漩涡；为了保全妻子不得不向司马昭叩头流血求情，晚年深受政治站位困扰。",
+    "weaknessAdviceEn": "Deep kinship ties to fallen dynastic loyalists caused severe political crossfire; forced to kowtow until bleeding to save his wife from Sima purges.",
+    "historicalQuoteZh": "《三国志》评：郭淮方策精详，垂问秦、雍。姜维屡出，淮每摧其锋。诚西陲之良将，国家之藩辅也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Guo Huai's strategies were meticulous and effective; every time Jiang Wei launched an offensive, Huai broke his spearhead.",
+    "auxiliaryStrengthsZh": [
+      "定军山大败之时临危不乱，迅速整肃残部拥立张郃为主帅，力挽狂澜稳住曹魏西线",
+      "深谙胡汉人心与陇右粮道，在长期防御战中让诸葛亮与姜维始终无法越雷池一步"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Rallied panic-stricken armies at Mt. Dingjun, installing Zhang He to save the western front",
+      "Deep mastery of northwestern logistical defiles, frustrating Shu's best offensive minds"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治站位在曹魏皇室与司马氏权臣之间摇摆，晚年不得不委曲求全自保",
+      "战役风格过于稳重保守，缺乏主动出击彻底围歼敌军战役决断力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Caught between loyalist relatives and Sima usurpers, forced into humiliating appeals",
+      "Excessively cautious operational style rarely attempted decisive counter-encirclements"
+    ]
+  },
+  {
+    "id": "chen_tai",
+    "nameZh": "陈泰",
+    "nameEn": "Chen Tai (Xuanbo)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "尚书令 · 司空 · 智勇双全社稷元勋",
+    "positionEn": "Prefect of the Masters of Writing · Minister of Works · High Moral Pillar",
+    "personalityZh": "弘济简素、智勇兼备、料敌如神、忠义两全、正气凛然",
+    "personalityEn": "Virtuous, intellectually brilliant and militarily courageous, predicted Jiang Wei's troop movements, incorruptible patriot",
+    "deedsZh": "陈群之子；都督雍凉，数次以奇谋大破姜维，解洮水之围救王经；高贵乡公曹髦被弑，陈泰抱尸痛哭，怒对司马昭要求诛杀司马望与成济。",
+    "deedsEn": "Son of Chen Qun; smashed Jiang Wei's siege at the Battle of Didao; when Emperor Cao Mao was assassinated, wept publicly and demanded execution of the killers.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "将顶级名门的深厚家学与前线统兵的实战胆魄完美融合。在战场上算无遗策破强敌，在朝堂上坚守政治伦理与做人底线。",
+    "strengthAdviceEn": "Harmonize elite administrative heritage with frontline martial daring; master battlefield maneuvers while upholding spotless constitutional integrity.",
+    "weaknessAdviceZh": "在权臣篡逆、礼崩乐坏的极端乱局中，过于强烈的道统负罪感与悲愤易伤心神。面对不可挽回的时代悲剧需学会心理释怀。",
+    "weaknessAdviceEn": "Overwhelming moral grief in the face of brutal regicide can break health; balance principled outrage with psychological detachment.",
+    "historicalQuoteZh": "《三国志》评：陈泰文武兼资，慷慨有大节。高贵乡公之变，其悲恸动容，抗论不挠，诚有烈祖遗风矣。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Chen Tai possessed civil and martial genius with towering integrity; his fearless grief during the regicide recalled ancient heroes.",
+    "auxiliaryStrengthsZh": [
+      "洮水救王经之役，以极高战术眼光穿透姜维围点打援计策，分兵直插要害大获全胜",
+      "在司马氏弑君的万马齐喑时刻，敢于当面斥责司马昭，展现绝代忠直骨气"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Rescued Didao by seeing through Jiang Wei's trap, striking the rear to save 10,000 men",
+      "Confronted usurper Sima Zhao openly during the regicide, weeping for the slain sovereign"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "悲愤过甚导致英年猝逝（一说呕血而亡），过重的道德心理包袱损耗了生命长度",
+      "未能阻挡司马氏对曹魏权柄的最终侵蚀，大势已去非人力所能挽回"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overwhelming grief and outrage broke his physical stamina, leading to early demise",
+      "Could not reverse the systemic usurpation of the dynasty despite towering stature"
+    ]
+  },
+  {
+    "id": "hao_zhao",
+    "nameZh": "郝昭",
+    "nameEn": "Hao Zhao (Bodao)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "镇西将军 · 关内侯 · 陈仓二十日神级铁壁",
+    "positionEn": "General Who Pacifies the West · Indomitable Defender of Chencang",
+    "personalityZh": "雄壮勇毅、深明工事、见招拆招、临危不惧、防守天花板",
+    "personalityEn": "Stout, fearless, tactical genius in siege defense, countering every siege engine with brilliant improvisation, unyielding hero",
+    "deedsZh": "奉曹真之命驻守陈仓要塞；诸葛亮率数万蜀军二次北伐包围陈仓，昼夜攻城二十日；郝昭以千余将士巧用火矢、转石、地道击退蜀军，名震天下。",
+    "deedsEn": "Stationed at Chencang with only 1,000 men; resisted Zhuge Liang's 30,000 army for 20 days, countering scaling ladders, battering rams, and mines until Shu retreated.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "正官"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "在资源极度悬殊（1千对数万）的守城逆境中，展现出神入化的“对抗式创新”。兵来将挡水来土掩，以极高的专业技术击碎强敌攻势。",
+    "strengthAdviceEn": "Execute miraculous counter-innovations under extreme resource deficits (1,000 vs. 30,000); answer every assault vector with bespoke technical counters.",
+    "weaknessAdviceZh": "严酷战事与高压对峙对生理健康摧残极大。在创造了奇迹防御战后不久即因劳累病故；必须在极限突击后立即强制修养与减压。",
+    "weaknessAdviceEn": "Extreme siege warfare exerts lethal tolls on physical stamina; died of exhaustion shortly after his victory. Enforce mandatory recovery after intense sprints.",
+    "historicalQuoteZh": "诸葛亮叹其难拔，退兵回蜀。魏明帝大喜引见曰：“卿乡里乃有如此豪杰，吾复何忧！”",
+    "historicalQuoteEn": "Zhuge Liang lamented the fortress was unbreachable and retreated. Emperor Ming beamed: 'With such indomitable champions defending our frontier, what have I to fear!'",
+    "auxiliaryStrengthsZh": [
+      "中国古代攻防战的巅峰奇迹，以千人微弱兵力完全遏制三国第一智将的倾国大军",
+      "临场应变极强，云梯以火箭焚之、冲车以巨石断之、地道以横堑截之，堪称防守宗师"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Achieved the historic miracle of repelling Zhuge Liang's grand army with a tiny garrison",
+      "Master improviser: countered ladders with fire arrows, rams with rolling boulders, mines with trenches"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "陈仓之战消耗了他全部的生命元气，功成未及大用即英年病逝",
+      "战略眼光受限于战术防御城垒，缺乏大兵团平原开阔地决战经验"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The 20-day super-human defense burned his life force completely, dying shortly after",
+      "Tactical mastery was specialized in citadel defense rather than wide field campaigns"
+    ]
+  },
+  {
+    "id": "wen_pin",
+    "nameZh": "文聘",
+    "nameEn": "Wen Pin (Zhongye)",
+    "dynastyZh": "曹魏",
+    "dynastyEn": "Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "后将军 · 新野侯 · 镇守江夏数十年定海神针",
+    "positionEn": "General of the Rear · Marquis of Xinye · Guardian of Jiangxia",
+    "personalityZh": "忠信沉毅、治边严整、坚忍不拔、长于空城退敌",
+    "personalityEn": "Loyal, steadfast, defensive pillar along the Yangtze border, respected by friend and foe, famed for his fearless sleeping bluff",
+    "deedsZh": "原刘表大将，投降曹操时泣下沾襟自愧未能保全荆州，曹操深重其忠；镇守江夏数十年抗击关羽与孙权；曾在大雨城崩时高卧不动，吓退孙权大军。",
+    "deedsEn": "Formerly Liu Biao's stalwart; wept when surrendering to Cao Cao over failing his master; guarded Jiangxia for decades against Guan Yu and Sun Quan.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "以忠信大节与长期坚守赢得无上信任。善于在边境前沿构筑稳固防线，关键时刻以超常胆魄施展“心理战与空城计”不战屈敌。",
+    "strengthAdviceEn": "Anchor vulnerable frontiers through decades of steadfast reliability; deploy audacious psychological bluffs during structural breakdowns to deter invaders.",
+    "weaknessAdviceZh": "行事过于低调朴实、偏安一隅，在曹魏中央的权力架构中缺乏核心存在感，一生功业局限在江夏江汉走廊。",
+    "weaknessAdviceEn": "Unassuming posture keeps your profile confined strictly to regional borderlands, lacking voice in supreme corporate capital governance.",
+    "historicalQuoteZh": "《三国志》评：文聘在江夏数十年，有威恩，名震敌国，贼不敢犯。其诚义之节，太祖所嘉赏也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Wen Pin garrisoned Jiangxia for decades with kindness and awe; enemies dared not cross. Cao Cao deeply cherished his spotless fidelity.",
+    "auxiliaryStrengthsZh": [
+      "降魏时真情流露表达失土之耻，以高尚人格反而赢得曹操至高信任并委以重兵",
+      "江夏面对孙权数万大军大雨围城，命城中百姓潜藏，自卧府中不起，心理战直接退敌"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Won Cao Cao's supreme trust through emotional honesty about the shame of lost territory",
+      "Rattled Sun Quan's grand army by feigning total calm and sleeping in his quarters under siege"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对荆州故旧的依恋使其性格带有浓重的守成色彩，缺乏向外扩张的进取欲望",
+      "政治声望局限在江夏防区，未能在魏国中央决策层发挥更大战略影响"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Regional sentimentality anchored him to defensive preservation rather than aggressive expansion",
+      "Influence remained local to the Jiangxia front, absent from supreme imperial policymaking"
+    ]
+  },
+  {
+    "id": "liu_bei",
+    "nameZh": "刘备",
+    "nameEn": "Liu Bei (Emperor Zhaolie of Shu)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "蜀汉昭烈帝 · 汉昭烈皇帝 · 坚忍不拔创业领袖",
+    "positionEn": "Emperor Zhaolie of Shu Han · Founding Sovereign · Master of Resilience",
+    "personalityZh": "弘毅宽厚、知人待士、折而不挠、坚忍求成、仁义昭彰",
+    "personalityEn": "Magnanimous, indomitable resilience through endless defeats, peerless talent recruiter, embodying classical benevolent kingship",
+    "deedsZh": "织席贩履起家，历经数十次惨败而不坠青云之志；三顾茅庐得诸葛亮；赤壁破曹、夺取荆益、汉中称王建立蜀汉；晚年夷陵遭挫托孤白帝城。",
+    "deedsEn": "Rose from weaving straw shoes, surviving dozens of devastating defeats without losing resolve; recruited Zhuge Liang; took Jing-Yi, founded Shu Han.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "比肩",
+      "正印"
+    ],
+    "patternType": "建禄格",
+    "strengthAdviceZh": "将“情商、坚忍与仁义品牌”打造成最强大的创业护城河。在遭遇灭顶之灾时绝不言弃，善于以至诚之心吸引最顶尖的天才为之死节。",
+    "strengthAdviceEn": "Leverage relentless emotional resilience and moral branding as supreme competitive moat; inspire genius titans to sacrifice everything for your vision.",
+    "weaknessAdviceZh": "极度重感情既是凝聚人心的大杀器，也是战略毁灭的致命毒药！夷陵之战因兄弟义气丧失冷静理智，倾国出征大败损耗蜀汉半壁国力。",
+    "weaknessAdviceEn": "Emotional passion is a double-edged sword; avenging brothers at Yiling overrode rational strategic calculus, costing Shu its prime veterans and wealth.",
+    "historicalQuoteZh": "《三国志》评：先主之弘毅宽厚，知人待士，盖有高祖之风，英雄之器焉。及其折而不挠，终成大业，非偶然也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: The First Sovereign was magnanimous and steadfast, recalling Liu Bang. His indomitable endurance in adversity made triumph inevitable.",
+    "auxiliaryStrengthsZh": [
+      "天下第一等创业坚忍力，半生颠沛流离投靠无数诸侯却始终保持团队灵魂不散",
+      "知人善任天下无双，三顾茅庐定大计、白帝城托孤展大胸襟，识人甚至胜过诸葛亮"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Greatest startup resilience in history, surviving countless catastrophes with core cadre intact",
+      "Unrivaled talent identifier; his recruitment of Zhuge Liang and deathbed warnings showed genius"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年因义气用事打破隆中对既定国策，感情用事盲目伐吴招致夷陵惨败",
+      "战略进攻时有时低估对手年轻将领（如陆逊），未能保持早期如履薄冰的谨慎"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Allowed grief to override the Longzhong Grand Strategy, suffering disaster at Yiling",
+      "Underestimated youthful opponents late in life, discarding his trademark caution"
+    ]
+  },
+  {
+    "id": "zhuge_liang",
+    "nameZh": "诸葛亮",
+    "nameEn": "Zhuge Liang (Kongming)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "蜀汉丞相 · 武乡侯 · 鞠躬尽瘁忠智楷模",
+    "positionEn": "Imperial Chancellor of Shu Han · Marquis of Wuxiang · Paragon of Wisdom",
+    "personalityZh": "淡泊明志、宁静致远、经世济民、治戎治蜀、鞠躬尽瘁",
+    "personalityEn": "Pure-hearted, serene visionary, transcendent institutional statesman, military innovator, selfless servant of state unto death",
+    "deedsZh": "隆中对三分天下；联吴抗曹赤壁破敌；治蜀严明法度夜不闭户；七擒孟获平南中；六出祁山北伐中原，发明木牛流马与连弩；五丈原秋风星落。",
+    "deedsEn": "Devised the Longzhong tripartite strategy; united with Wu to win Chibi; governed Sichuan with impeccable justice; pacified the south; led Northern Expeditions.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "顶层战略构想、微观法度治理与工业工程创新的全能大师。以淡泊心境抵御物欲诱惑，以绝对制度严明建立清廉高效组织。",
+    "strengthAdviceEn": "Supreme master across macro strategy, institutional law, and engineering logistics; govern with unblemished integrity to build invincible efficiency.",
+    "weaknessAdviceZh": "过度亲力亲为（罚二十以上皆亲览）是对组织接班机制与个人寿命的严重透支！在长期高压战略攻坚中，必须学会放权与保护核心体能。",
+    "weaknessAdviceEn": "Excessive micromanagement ('personally reviewing lashings over twenty') exhausts health and stymies subordinate growth; delegate authority to survive.",
+    "historicalQuoteZh": "《三国志》评：诸葛亮之为相也，抚百姓，示仪轨，约官职，从权制，开诚心，布公道。鞠躬尽瘁，死而后已，可谓识治之良才，管、萧之亚匹矣。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Zhuge Liang governed with absolute justice and radiant truth, serving unto death; equal to Guan Zhong and Xiao He.",
+    "auxiliaryStrengthsZh": [
+      "全能型治国与战略泰斗，《隆中对》超越时代，法治蜀国成为乱世中最公平高效的典范",
+      "后勤与机械发明大师，木牛流马、八阵图、元戎弩将战役后勤提升至工业化水准"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Universal statesman whose Longzhong blueprint was prophetic, governing Shu with flawless justice",
+      "Pioneered automated transport (wooden oxen) and repeating crossbows to solve supply bottlenecks"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "事必躬亲心力交瘁，未能建立成熟的二线指挥分权机制，导致五丈原后人才断档",
+      "北伐战略战术偏于稳健奇谋不足，错失魏延子午谷等险峻突破可能性"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal micromanagement burned out his vital organs prematurely, leaving a leadership vacuum",
+      "Operational strategy was excessively cautious, rejecting high-risk, game-changing gambits"
+    ]
+  },
+  {
+    "id": "guan_yu",
+    "nameZh": "关羽",
+    "nameEn": "Guan Yu (Yunchang)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "前将军 · 汉寿亭侯 · 威震华夏武圣",
+    "positionEn": "General of the Front · Marquis of Hanshou · The God of War",
+    "personalityZh": "万人之敌、忠义冲天、威震华夏、刚而自矜、骄于士大夫",
+    "personalityEn": "Peerless warrior, unmatched chivalric fidelity, terrifying battlefield presence, yet excessively arrogant toward aristocratic peers",
+    "deedsZh": "斩颜良诛文丑解白马之围，挂印封金千里走单骑寻刘备；镇守荆州单刀赴会；襄樊之战水淹七军擒于禁斩庞德，威震华夏促曹操欲迁都；大意失荆州败走麦城。",
+    "deedsEn": "Slew Yan Liang at Baima; rode 1,000 li to rejoin Liu Bei; flooded seven armies at Fancheng, capturing Yu Jin; lost Jingzhou through overextension.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "具备以一己战力撕开大局走向的英雄气概。在战略攻坚中能打出雷霆万钧的歼灭战，以忠义人格赢得跨敌我阵营的千秋敬仰。",
+    "strengthAdviceEn": "Possess transcendent frontline authority capable of rewriting theater balances; strike with apocalyptic impact and chivalric loyalty revered across millennia.",
+    "weaknessAdviceZh": "“刚而自矜，骄于士大夫”是毁灭一切功业的阿喀琉斯之踵！绝不可因轻视同僚与盟友（辱骂孙权求婚、轻慢糜芳士仁）而腹背受敌。",
+    "weaknessAdviceEn": "Arrogance toward elite colleagues and allies is lethal; insulting Sun Quan and mocking subordinates provoked backstabbing that extinguished his cause.",
+    "historicalQuoteZh": "《三国志》评：关羽、张飞皆称万人之敌，为世虎臣。羽报效曹公，飞义释严颜，并有国士之风。然羽刚而自矜，飞暴而无恩，以短取败，理数之常也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Guan Yu and Zhang Fei were titans of 10,000 foes. Yet Guan Yu was proud and conceited; these flaws caused inevitable ruin.",
+    "auxiliaryStrengthsZh": [
+      "三国武力与忠义天花板，樊城水淹七军威震华夏逼得曹操险些迁都以避其锋芒",
+      "善抚士卒深受基层将士爱戴，单刀赴会展现出绝顶大将胆色"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peak martial titan whose flood victory at Fancheng shook all China and panicked Cao Cao",
+      "Deeply loved by rank-and-file soldiers; attended diplomatic talks alone with fearless calm"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对同僚官僚与士大夫傲慢鄙夷，逼反南郡守将糜芳、士仁导致荆州大后方瞬崩",
+      "外交上狂妄自大辱骂东吴使者，亲手将盟友推向死敌曹操，造成两线受敌绝境"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Contempt for administrative peers alienated supply generals who opened city gates to enemies",
+      "Hubristic insults toward Sun Quan shattered the alliance, triggering an encirclement trap"
+    ]
+  },
+  {
+    "id": "zhang_fei",
+    "nameZh": "张飞",
+    "nameEn": "Zhang Fei (Yide)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "车骑将军 · 西乡侯 · 当阳横矛万人敌",
+    "positionEn": "General of Chariots and Cavalry · Marquis of Xixiang · Titan of the Longban Bridge",
+    "personalityZh": "雄壮威猛、勇冠三军、义释严颜、敬爱君子、暴而无恩",
+    "personalityEn": "Mighty and fearless battlefield berserker, surprisingly chivalrous in winning over Yan Yan, revered scholars, yet brutal to his troops",
+    "deedsZh": "当阳长坂坡断桥倒竖虎须，一喝吓退曹操数万追兵；入蜀之战义释严颜赢得川中民心；巴西之战大破魏名将张郃；出兵伐吴前被部下张达范强刺杀。",
+    "deedsEn": "Stood atop the Longban Bridge with lance leveled, roaring to halt Cao's army; won over Yan Yan with chivalry; crushed Zhang He at Baxi; murdered by mistreated guards.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "兼具雷霆万钧的勇武声威与出其不意的战术智谋。在敌众我寡时善于利用心理威慑与地形伏击实现反杀。",
+    "strengthAdviceEn": "Combine terrifying psychological intimidation with unexpected tactical cunning; exploit terrain bottlenecks to turn catastrophic retreats into victories.",
+    "weaknessAdviceZh": "“爱敬君子而暴而无恩”是致命祸根！刘备屡次警告“卿刑杀既过差，又日鞭挝健儿而令在左右，此取祸之道也”，不改暴脾气终死于榻上。",
+    "weaknessAdviceEn": "Cruelty toward subordinates is suicidal; heed Liu Bei's warning that flogging bodyguards daily while keeping them close invites certain assassination.",
+    "historicalQuoteZh": "刘备常戒之曰：“卿刑杀既过差，又日鞭挝健儿，而令在左右，此取祸之道也。”飞犹不悛，卒以此取毙。",
+    "historicalQuoteEn": "Liu Bei repeatedly cautioned him: 'You execute excessively and lash your men daily, yet keep them at your bedside; this invites your own doom.'",
+    "auxiliaryStrengthsZh": [
+      "当阳桥一吼退千军、巴西智破张郃，证明其绝非单纯鲁莽之徒，实为智勇双全大将",
+      "义释严颜展现出卓越的胸襟与政治感召力，为刘备进军成都立下头功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Halted an army at Longban and outmaneuvered Zhang He, proving tactical brilliance",
+      "Winning over Yan Yan with chivalric respect unlocked western Sichuan without bloodshed"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "酗酒后性情暴躁虐待基层卫士，且狂暴之后毫无防范之心将性命交付左右",
+      "情绪管理极差，关羽死后日夜号哭酗酒，暴躁升级直接引爆刺杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Flogged personal bodyguards when drunk, leaving himself completely unprotected in bed",
+      "Disastrous emotional regulation; unhinged grief over Guan Yu escalated his fatal abuse"
+    ]
+  },
+  {
+    "id": "zhao_yun",
+    "nameZh": "赵云",
+    "nameEn": "Zhao Yun (Zilong)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "镇东将军 · 顺平侯 · 身是胆常胜名将",
+    "positionEn": "General Who Pacifies the East · The Marquis of Constant Victory · Heart of Pure Courage",
+    "personalityZh": "沉鸷沉着、忠勇无双、大公无私、大局观极强、一身是胆",
+    "personalityEn": "Calm, peerless in selfless devotion, incorruptible, impeccable macro-political judgment, celebrated as 'a body made of pure courage'",
+    "deedsZh": "长坂坡单骑救幼主阿斗；截江夺阿斗粉碎孙吴图谋；汉水之战大开营门偃旗息鼓施空营计破曹操，刘备赞曰“子龙一身都是胆也”；谏刘备分田于民勿伐东吴。",
+    "deedsEn": "Rescued baby Liu Shan at Changban alone; intercepted Sun Shangxiang to safeguard the heir; won the Han River battle via open-gate bluff; remonstrated against land grabs.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "拥有大将中最完美的大局观与道德自律。在战术上胆大心细、百战不殆；在政治上公忠体国，敢于在全员狂热时泼冷水劝谏。",
+    "strengthAdviceEn": "Flawless combination of battlefield bravery and macro-political sanity; deliver tactical miracles while speaking unpalatable truths against groupthink.",
+    "weaknessAdviceZh": "过于谨慎低调与谦抑自守，在蜀汉政权内部论资排辈与地缘博弈中，官阶晋升往往落后于关、张、马、黄，善守而不争锋芒。",
+    "weaknessAdviceEn": "Extreme personal modesty and lack of personal factional patronage kept his titular rank lower than peers despite spotless contributions.",
+    "historicalQuoteZh": "刘备赞曰：“子龙一身都是胆也！”《三国志》评：“赵云关统，劳绩清白，有大将之略。”",
+    "historicalQuoteEn": "Liu Bei praised: 'Zilong is a man carved of pure courage!' Chen Shou noted his spotless record and magnificent grand general statecraft.",
+    "auxiliaryStrengthsZh": [
+      "单骑救主与汉水空营计展现出天下无双的孤胆魄力与微观战术掌控力",
+      "政治视野极为宽广，劝刘备把房产田产归还老百姓，反对伐吴以国贼曹魏为先"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Solo heroics at Changban and tactical river bluffs reflect supreme battlefield mastery",
+      "Extraordinary political wisdom: urged returning land to peasants and prioritizing Wei over Wu"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在派系林立的政治体系中过于清正中立，导致终其一生未能真正统领方面野战大兵团",
+      "行事稳健过甚，缺乏如魏延般铤而走险撕开历史转折的冒险气魄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Spotless neutrality left him without factional leverage to command massive autonomous armies",
+      "Impeccable prudence made him averse to radical asymmetric tactical gambles"
+    ]
+  },
+  {
+    "id": "ma_chao",
+    "nameZh": "马超",
+    "nameEn": "Ma Chao (Mengqi)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "骠骑将军 · 斄乡侯 · 威震西陲神威天将军",
+    "positionEn": "General of Agile Cavalry · The Splendid General · Terror of Western China",
+    "personalityZh": "骁勇善战、勇冠西凉、容貌甚伟、孤注一掷、不顾宗族",
+    "personalityEn": "Terrifying equestrian warrior, magnificent in armor, feared by nomadic tribes as divine general, yet politically reckless with his clan's lives",
+    "deedsZh": "潼关之战杀得曹操割须弃袍，几夺曹操性命；冀城攻坚战威震陇右；归附刘备后兵临成都，刘璋望风出降；威震西陲受封骠骑将军，郁郁早逝。",
+    "deedsEn": "Forced Cao Cao to cut his beard and discard his robe at Tong Pass; terrorized northwestern borders; his march on Chengdu forced Liu Zhang's surrender.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "具备极强的个人威慑力与战场破阵能量。善于利用骑兵机动性实施穿插突击，在特定地缘族群中拥有神话般的号召力。",
+    "strengthAdviceEn": "Project immense personal deterrence and combat momentum; leverage cavalry speed and regional prestige to collapse enemy will before battle.",
+    "weaknessAdviceZh": "千万不可因个人野心轻率起兵而弃至亲骨肉于不顾！马腾及全族二百余口被曹操诛杀成为其一生无法洗刷的心灵梦魇与道德硬伤。",
+    "weaknessAdviceEn": "Never sacrifice family and foundational alliances for reckless gambles; his rebellion provoked the slaughter of 200 clan members, haunting him to his grave.",
+    "historicalQuoteZh": "曹操叹曰：“马儿不死，吾无葬地也！”陈寿评：“马超阻戎负勇，以覆其宗，惜哉！能去此而全，岂不美乎！”",
+    "historicalQuoteEn": "Cao Cao sighed in terror: 'If this young Ma survives, I will have no place to be buried!' Chen Shou lamented his reckless rebellion destroying his lineage.",
+    "auxiliaryStrengthsZh": [
+      "西凉铁骑统帅，个人战力强悍绝伦，潼关渭水之役险些改写汉末历史总进程",
+      "在西羌各部中享有神灵般的威望，归附刘备仅凭名号即吓降益州刘璋"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fierce commander of western heavy cavalry whose blitz at Tong Pass nearly felled Cao Cao",
+      "Divine status among Qiang tribes; his arrival outside Chengdu caused instant surrender"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏政治远见与亲情责任感，在父亲与弟弟尚在许昌为质时盲目起兵断送全族",
+      "归蜀后因出身诸侯遭蜀汉朝廷上下暗中忌惮防范，终日抑郁寡欢英年早逝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Reckless rebellion while his father and brothers were hostages doomed 200 kin to the sword",
+      "Viewed with silent suspicion by Shu court elites due to former warlord status, dying early in sorrow"
+    ]
+  },
+  {
+    "id": "huang_zhong",
+    "nameZh": "黄忠",
+    "nameEn": "Huang Zhong (Hansheng)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "后将军 · 刚侯 · 定军山阵斩主帅老将",
+    "positionEn": "General of the Rear · Veteran Champion · Decapitating Strike at Mt. Dingjun",
+    "personalityZh": "老当益壮、勇毅冠绝、每战必先、百步穿杨、摧锋陷阵",
+    "personalityEn": "Valiant veteran, displaying youthful ferocity in advanced age, peerless archer, master of uphill charging and decisive decapitation",
+    "deedsZh": "入蜀之战勇猛无匹，常先登破阵；定军山之役乘高居险，鼓噪而进，一举斩杀曹魏征西大帅夏侯渊，扭转汉中战局奠定刘备称王基石。",
+    "deedsEn": "Fought with terrifying vigor in Sichuan; at Mt. Dingjun charged down high terrain amid thunderous drums to slay Wei supreme commander Xiahou Yuan, securing Hanzhong.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "“老当益壮”的最佳践行者。年龄与资历从不是限制突破的借口，善于在最高强度的决战中抓取核心敌首实施致命斩首打击。",
+    "strengthAdviceEn": "Age is zero barrier to revolutionary impact; charge from high vantage points with overwhelming psychological noise to eliminate the enemy's apex leader.",
+    "weaknessAdviceZh": "勇武有余而偏爱争强好胜。在胜利面前容易受激将法操弄而深入险境，对自身生理极限与退路防备需有清晰认知。",
+    "weaknessAdviceEn": "Fierce competitive pride makes one susceptible to reverse psychology; maintain objective awareness of physical limits and secure withdrawal paths.",
+    "historicalQuoteZh": "诸葛亮称赞其勇；《三国志》评：“黄忠、赵云强挚壮猛，并作爪牙，其灌、滕之徒欤？”",
+    "historicalQuoteEn": "Zhuge Liang celebrated his valor. Chen Shou wrote: 'Huang Zhong and Zhao Yun were fierce and stalwart claws of the state, true successors to ancient champions.'",
+    "auxiliaryStrengthsZh": [
+      "定军山阵斩夏侯渊，创造了三国历史上罕见的主帅直接斩杀敌方最高大将的神话战例",
+      "老骥伏枥志在千里，以花甲之年每战先登，极大激发全军将士拼杀斗志"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Mt. Dingjun decapitation of Xiahou Yuan remains one of the greatest tactical strikes in war",
+      "Fought on the frontline in his sixties, electrifying army morale with unyielding stamina"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格好强容易受同僚言辞相激，常常不顾年迈强行领衔高危任务",
+      "除定军山奇袭外，缺乏独立主持大型跨区域战役的综合后勤规划记录"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Intense personal pride made him easily manipulated into high-risk assignments by peers",
+      "Relied on overarching staff planners rather than designing macro campaigns himself"
+    ]
+  },
+  {
+    "id": "pang_tong",
+    "nameZh": "庞统",
+    "nameEn": "Pang Tong (Shiyuan)",
+    "dynastyZh": "东汉 / 蜀汉",
+    "dynastyEn": "Eastern Han / Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "军师中郎将 · 关内侯 · 凤雏大谋进取奇才",
+    "positionEn": "Military Advisor General · The Fledgling Phoenix · Daring Master of Stratagems",
+    "personalityZh": "雅好人伦、高瞻远瞩、奇策百出、决断果敢、冒险激进",
+    "personalityEn": "Daring strategic genius, talent evaluator, bold architect of decisive land grabs, prioritizing rapid victory over tedious patience",
+    "deedsZh": "与诸葛亮并称“卧龙凤雏”；为刘备献上中下三条取益州之策，力主以雷霆手段夺取同宗刘璋基业；进军雒城时身先士卒中流矢阵亡，年仅三十六。",
+    "deedsEn": "Celebrated alongside Zhuge Liang as phoenix and dragon; designed Upper, Middle, and Lower plans to seize Sichuan; killed by stray arrow at Luocheng at 36.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "伤官生财格",
+    "strengthAdviceZh": "善于打破儒家虚伪道德枷锁，在历史重大转折关口为组织指明“兼弱攻昧、逆取顺守”的现实主义战略捷径。",
+    "strengthAdviceEn": "Shatter sanctimonious hypocrisy to pursue pragmatic historical shortcuts; seize vital territorial assets aggressively, then govern with benevolence.",
+    "weaknessAdviceZh": "顶级智囊千万不可身临一线充当攻城炮灰！急躁冒进与求胜心切导致在小城堡下丧命，让整个蜀汉政权痛失左右平衡的智谋之翼。",
+    "weaknessAdviceEn": "A supreme strategist must never act as frontline siege cannon fodder; dying under an insignificant fortress crippled Shu's long-term dual-wing strategic planning.",
+    "historicalQuoteZh": "刘备闻其死痛哭流涕，每言及辄流涕。陈寿评：“庞统雅好人伦，勤于德方，拟之魏臣，逮荀彧之栋石、荀攸之奇策。”",
+    "historicalQuoteEn": "Liu Bei wept bitterly whenever Pang Tong's name was mentioned. Chen Shou ranked him alongside Xun Yu and Xun You as empire-founding pillars.",
+    "auxiliaryStrengthsZh": [
+      "取益州上中下三策展现出绝顶战略实用主义，彻底打破刘备妇人之仁的心理桎梏",
+      "识人品评极具远见，早年在江东即广结英豪，名震荆楚"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pioneered the pragmatic takeover of Sichuan, breaking Liu Bei's paralyzing moral hesitation",
+      "Superb talent evaluator whose intellectual network bridged southern China"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "急功近利求胜心切，在雒城战役中置自身安全于不顾亲自攻城中箭身亡",
+      "英年早逝打乱了“亮留守荆州、统随军入蜀”的战略大盘，逼诸葛亮入川埋下荆州失陷祸根"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Impatience and frontline thrill-seeking led to fatal arrow wounds in a minor siege",
+      "Premature death forced Zhuge Liang to abandon Jingzhou, triggering the ultimate loss of southern bases"
+    ]
+  },
+  {
+    "id": "fa_zheng",
+    "nameZh": "法正",
+    "nameEn": "Fa Zheng (Xiaozhi)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "尚书令 · 护军将军 · 翼侯 · 谋主奇算无双奇才",
+    "positionEn": "Prefect of the Masters of Writing · Chief War Counselor of Liu Bei",
+    "personalityZh": "深谋远虑、料敌如神、奇策迭出、恩怨分明、睚眦必报",
+    "personalityEn": "Ruthless tactical war master, sole advisor who could alter Liu Bei's stubborn decisions, vengeful in settling personal scores",
+    "deedsZh": "力主刘备夺取益州；定军山画策夏侯渊斩首行动；汉中之战击败曹操第一谋主；刘备称王以其为尚书令；夷陵之战诸葛亮叹“法孝直若在必能制主上”。",
+    "deedsEn": "Orchestrated the conquest of Sichuan; masterminded Mt. Dingjun ambush that slew Xiahou Yuan; Zhuge Liang lamented: 'Had Fa Zheng lived, he could have stopped the Yiling campaign.'",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "伤官"
+    ],
+    "patternType": "伤官制杀格",
+    "strengthAdviceZh": "实战前线战役战术推演的第一杀手。能够与最高统帅建立极深的互信默契，在战场上精准抓取敌军破绽实施致命一击。",
+    "strengthAdviceEn": "Ultimate frontline campaign tactician; forge deep trust with supreme leadership to strike fatal blows against rival commanders on the spot.",
+    "weaknessAdviceZh": "私德有亏与睚眦必报是重大政治隐患。掌权后借公权力报复旧怨、杀戮政敌，若非诸葛亮压制与刘备偏爱，极易在体制内引爆众怒。",
+    "weaknessAdviceEn": "Settling petty personal scores through judicial execution creates immense vulnerability; left uncurbed by sober peers, it triggers violent factional revenge.",
+    "historicalQuoteZh": "诸葛亮叹曰：“法孝直若在，则能制主上，令不东行；就复东行，必不倾危矣。”陈寿称其“拟之魏臣，统其荀彧之仲伯，正其程、郭之俦俪邪？”",
+    "historicalQuoteEn": "Zhuge Liang sighed: 'Had Fa Xiaozhi lived, he could have restrained our Lord from marching east; even if marching, we would not have suffered total disaster.'",
+    "auxiliaryStrengthsZh": [
+      "汉中战役首席战略操盘手，算无遗策策动斩杀夏侯渊，正面击退曹操毕生用兵巅峰",
+      "唯一能够以个人魅力与战术权威改变刘备非理性决策的顶级参谋"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architect of the Hanzhong victory, outsmarting Cao Cao and engineering Xiahou Yuan's death",
+      "The only advisor with the personal standing and tactical genius to overrule Liu Bei's stubborn will"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "小人得志便猖狂，掌权后对早年得罪自己之人擅自逮捕杀戮，缺乏宰相容人雅量",
+      "行事偏执阴沉，长于权谋破坏而疏于长治久安的制度法理建设"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Vindictive misuse of magistrate authority to execute personal enemies once promoted",
+      "Dark, cynical demeanor suited for destruction rather than peaceful institutional design"
+    ]
+  },
+  {
+    "id": "jiang_wei",
+    "nameZh": "姜维",
+    "nameEn": "Jiang Wei (Boyue)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 凉州刺史 · 九伐中原死而后已悲剧名将",
+    "positionEn": "Grand General of Shu Han · Tenacity of the Northern Expeditions",
+    "personalityZh": "文武双全、忠烈孤愤、坚韧不屈、穷兵黩武、智谋深广",
+    "personalityEn": "Multi-talented polymath, tragic heroic loyalty, unyielding endurance, yet exhausting state reserves through repeated campaigns",
+    "deedsZh": "原曹魏降将，受诸葛亮衣钵传承；十一出祁山北伐，洮西大捷歼魏数万；剑阁阻击钟会十万魏军；蜀降后假投降钟会密谋复国，事败壮烈殉国剖腹见胆。",
+    "deedsEn": "Inherited Zhuge Liang's mantle; launched eleven northern campaigns, winning massive victory at Taoxi; held Jiange against 100,000; plotted restoration before dying.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "偏印"
+    ],
+    "patternType": "伤官驾杀格",
+    "strengthAdviceZh": "拥有惊天地泣鬼神的逆境复原力与忠贞信念。在全线崩溃、国破家亡的绝境中，依然能以超凡智计试图假手敌人翻盘复国。",
+    "strengthAdviceEn": "Possess apocalyptic resilience and undying fidelity; in the face of total state collapse, weaponize the enemy's own internal divisions to attempt a miracle.",
+    "weaknessAdviceZh": "忽视后方民生经济极限的持续进攻是战略自杀！在后主昏庸、宦官弄权的大后方环境下盲目北伐，掏空国力导致防线一触即溃。",
+    "weaknessAdviceEn": "Relentless offensive campaigns without economic stamina is systemic suicide; draining state wealth while the rear court rot invites fatal collapse.",
+    "historicalQuoteZh": "《三国志》评：姜维粗有文武，志立功名，而好动伯旅，穷兵黩武。及蜀之亡，绝境图存，剖胆如斗，其忠烈亦可悲矣！",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Jiang Wei was gifted in civil and military arts, yet over-militarized his weak state. His deathbed plot showed a gall as large as a bowl, tragically noble.",
+    "auxiliaryStrengthsZh": [
+      "剑阁天险一夫当关万夫莫开，十万魏军不能越雷池半步，展现顶级山地防御功力",
+      "乱世史上最悲壮的复国密谋，在亡国绝境中几乎凭舌辩挑动钟会反叛成功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Held Jiange against 100,000 Wei invaders with a masterclass in alpine bottleneck defense",
+      "Engineered the most audacious restoration conspiracy in history, nearly destroying his conquerors"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "连年北伐严重超载了益州有限的农税与兵源基本盘，造成国内经济严重凋敝",
+      "对成都朝廷宦官黄皓专权缺乏政治反制手腕，被迫沓中屯田避祸造成前线脱节"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Relentless campaigns shattered Sichuan's fragile agrarian economy and manpower reserves",
+      "Powerless against palace eunuchs, forced into self-imposed exile that fractured national defense"
+    ]
+  },
+  {
+    "id": "wei_yan",
+    "nameZh": "魏延",
+    "nameEn": "Wei Yan (Wenchang)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "前军师 · 征西大将军 · 南郑侯 · 奇谋勇烈狂傲孤臣",
+    "positionEn": "Senior Military Advisor · Grand General of the West · Master of the Ziwu Valley Plan",
+    "personalityZh": "勇猛过人、善养士卒、长于行阵、性格孤狂、不睦同僚",
+    "personalityEn": "Ferocious combat general, beloved by troops, daring master of ambush, yet fiercely arrogant, abrasive, and isolated from peers",
+    "deedsZh": "刘备破格拔擢为汉中太守，镇守十年金汤不失；提出“子午谷奇谋”欲效韩信出奇制胜；多次随诸葛亮北伐斩将立功；诸葛亮死后与杨仪争权兵败被杀灭三族。",
+    "deedsEn": "Promoted by Liu Bei to govern Hanzhong for a decade; proposed the bold Ziwu Valley surprise march; fought valiantly in expeditions; ruined in lethal power feud with Yang Yi.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "敢于跳出既定思维框架，提出颠覆性的“高风险高回报”战略奇袭构想。在实战指挥中具有极其强悍的突击力与士卒动员力。",
+    "strengthAdviceEn": "Champion disruptive, high-risk asymmetric blueprints that bypass orthodox stalemates; lead frontline charges with magnetic battlefield authority.",
+    "weaknessAdviceZh": "狂妄自大与极度恶劣的同僚人际关系是致命死穴！在核心统帅去世后不懂妥协与程序正义，被政敌抓住“反叛”把柄惨遭诛族。",
+    "weaknessAdviceEn": "Abrasive arrogance and toxic workplace feuds guarantee destruction; defying protocol in power vacuums allows bitter rivals to frame and slaughter your clan.",
+    "historicalQuoteZh": "《三国志》评：魏延以勇略受任，镇御关中，战功卓著。然原其本意，但欲除杨仪等，规代诸葛亮，非叛也。以愎戾致败，自取屠灭。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Wei Yan was brave and brilliant in guarding Hanzhong. His aim was to eliminate Yang Yi, not defect. His stubborn hubris brought his clan's destruction.",
+    "auxiliaryStrengthsZh": [
+      "汉中镇守十年独当一面，构筑错守诸围体系，使得曹魏大军十余年不敢正视汉中",
+      "子午谷奇谋成为军事史上最令人神往的战略构想之一，展现顶级的战术冒险家胆魄"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Guarded Hanzhong for ten years with an unbreachable multi-fortress defense network",
+      "His Ziwu Valley Plan remains one of the most celebrated asymmetric gambits in military history"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情极度狂傲自负，与朝中文武几乎全部交恶，在同僚体系中陷入绝对孤立",
+      "在权力过渡的关键时刻丧失理智擅自带兵堵截友军，将内部路线争端升级为叛乱死局"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Towering arrogance alienated civil ministers, leaving him friendless in high court",
+      "Blocked friendly retreats in a childish rage, turning internal feuds into accusations of treason"
+    ]
+  },
+  {
+    "id": "jiang_wan",
+    "nameZh": "蒋琬",
+    "nameEn": "Jiang Wan (Gongyan)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 录尚书事 · 安阳侯 · 蜀汉四相之首稳健宰辅",
+    "positionEn": "Grand General · Chief Minister of State · Chief of the Four Chancellors",
+    "personalityZh": "器量弘深、沉着深穆、安邦定国、统筹全局、宽仁纳谏",
+    "personalityEn": "Vast capacity for tolerance, tranquil and unflappable under disaster, logistical genius, unruffled by personal criticism",
+    "deedsZh": "诸葛亮密表推荐“社稷之器”；诸葛亮病逝五丈原后主持蜀汉军政大权，人心大定；力改诸葛亮陆路北伐为汉水水路顺流东下攻魏；宽容杨敏辱骂不予治罪。",
+    "deedsEn": "Secretly recommended by Zhuge Liang; assumed supreme command after Wuzhang Plains, stabilizing panicking armies; pivoted strategy to naval river routes.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "具备泰山崩于前而色不变的非凡心理容量。在超级领袖逝世的至暗时刻稳住全盘基本盘；海纳百川，对下属的批评甚至辱骂一笑置之。",
+    "strengthAdviceEn": "Possess monumental emotional capacity; anchor organizational stability during catastrophic leadership transitions while shrugging off insubordinate insults.",
+    "weaknessAdviceZh": "因常年患病导致战略构想（沿汉水伐魏）因体力不支而未能全面推行。在宏观战略推进中，健康衰竭往往成为最大的制约瓶颈。",
+    "weaknessAdviceEn": "Severe chronic illness paralyzed his innovative naval offensive plans; health breakdown remains the ultimate roadblock to long-term visionary campaigns.",
+    "historicalQuoteZh": "《三国志》评：蒋琬方整有威重，优游能够绥辑中外。亮自以琬有社稷之器，委以大事，实蜀之栋梁。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Jiang Wan was composed and dignified, soothing internal panic effortlessly; Zhuge Liang trusted him as an irreplaceable pillar of state.",
+    "auxiliaryStrengthsZh": [
+      "五丈原诸葛亮猝逝后，全蜀震恐，蒋琬受命于危难之际，神色自若从容调度，数日内大局安定",
+      "气度恢宏如汪洋大海，部下杨敏背地骂其“作事愦愦不如前人”，蒋琬反躬自省绝不治罪"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Stabilized a terrified nation when Zhuge Liang died, displaying godlike composure",
+      "Monumental magnanimity: refused to punish subordinates who publicly slandered his competence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年受困于严重疾病，长期驻扎涪县导致中央政务部分旁落于费祎与宦官之手",
+      "提出的由水路顺江进攻曹魏魏兴、上庸之战略因群臣疑虑未能坚决付诸实践"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Chronic illness confined him to regional barracks, loosening his grip on court politics",
+      "Innovative amphibious campaign down the Han River was abandoned due to timid court objections"
+    ]
+  },
+  {
+    "id": "fei_yi",
+    "nameZh": "费祎",
+    "nameEn": "Fei Yi (Wenwei)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 录尚书事 · 成乡侯 · 蜀汉四相之敏政名臣",
+    "positionEn": "Grand General · Chief Minister of State · Master of Agile Governance",
+    "personalityZh": "雅量谦素、思维敏捷、处变自若、长于调和、防范松懈",
+    "personalityEn": "Astonishingly agile administrative mind, balancing intense workloads with leisure, peerless diplomatic mediator, yet fatally lax in security",
+    "deedsZh": "出使东吴舌战群儒孙权深敬之；接替蒋琬执掌大权，一日之内尽阅百司文书犹能博弈饮宴；约束姜维北伐限兵万名休养民生；被降将郭脩刺杀身亡。",
+    "deedsEn": "Silenced Sun Quan's ministers on diplomatic missions; governed Shu effortlessly, clearing backlogs in hours; curbed Jiang Wei's troop levies; assassinated at a banquet.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "食神",
+      "正官",
+      "偏印"
+    ],
+    "patternType": "食神制杀格",
+    "strengthAdviceZh": "极高的事务处理效率与心智敏捷度。善于在一线文武争斗中做高超的平衡仲裁，既保护民生经济基本盘，又维持国防威慑。",
+    "strengthAdviceEn": "Master of lightning administrative throughput; mediate bitter executive disputes with wit and poise, preserving economic reserves while maintaining defense.",
+    "weaknessAdviceZh": "切戒在欢庆宴饮与日常安保中丧失警惕！张嶷曾密信警告其“过信任降人，宜防不测”，费祎浑不在意，终被曹魏刺客一刀刺毙在岁首大宴上。",
+    "weaknessAdviceEn": "Never let personal security lapse during celebratory banquets; ignoring warnings about hostile defectors led directly to assassination by a Wei turncoat.",
+    "historicalQuoteZh": "《三国志》评：费祎宽济蒙众，敏以机略。识悟过人，每筹算军政，事无遗策。然以刺客见害，岂非防虞之阙欤！",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Fei Yi was brilliant and agile in statecraft; his multitasking mind made decisions flawlessly. Yet falling to an assassin was a fatal security lapse.",
+    "auxiliaryStrengthsZh": [
+      "天才般的行政处理速度，半日之内批完所有国家机密公文，下午下棋宴饮毫无疲态",
+      "善于在魏延与杨仪等水火不容的强人之间周旋调解，成为诸葛亮麾下第一政治粘合剂"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Genius multitasking administrative speed, clearing imperial dockets in hours with ease",
+      "Master mediator who kept mortal rivals Wei Yan and Yang Yi collaborating peacefully"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "安保意识极度松懈，对投降的敌国将领毫不设防甚至同席共饮，招致当胸刺杀",
+      "过度压制姜维军事进攻主张，虽然保全了财政，但也彻底丧失了趁曹魏内乱翻盘的时机"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lethal lack of bodyguard protection, drinking alongside enemy defectors who stabbed him",
+      "Overly constrained military offensives, missing windows during Wei internal turmoil"
+    ]
+  },
+  {
+    "id": "dong_yun",
+    "nameZh": "董允",
+    "nameEn": "Dong Yun (Xiuzhao)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "侍中 · 尚书令 · 蜀汉四相之定宫柱石",
+    "positionEn": "Palace Attendant · Prefect of the Masters of Writing · Fortress Against Eunuchs",
+    "personalityZh": "恪尽职守、刚正不阿、匡主济民、防微杜渐、凛然内廷",
+    "personalityEn": "Incorruptible imperial steward, fearless moral guardian of the court, unyielding barrier against corrupt eunuch influence",
+    "deedsZh": "诸葛亮《出师表》点名托付“志虑忠纯”；掌管宫闱内廷，多次严辞驳斥后主刘禅逾矩纳妾之请；压制大宦官黄皓不敢擅权违纪十余年；允亡而蜀乱。",
+    "deedsEn": "Praised in Zhuge Liang's Memorial on Leading the Troops; guarded the inner palace, denying Emperor Liu Shan's extravagant concubines and neutralizing eunuch Huang Hao.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以无欲则刚的道德定力把守最高权力核心中枢。敢于直面最高领导者的非分欲望予以制度阻击，充当团队纪律的刚性防火墙。",
+    "strengthAdviceEn": "Guard the apex command center with uncorrupted moral resolve; veto extravagant indulgences by top leadership and install strict corporate hygiene.",
+    "weaknessAdviceZh": "过度依赖个人道德权威的单兵防守，缺乏在制度层面彻底斩断宦官弄权的法理机制。董允去世后，黄皓迅速死灰复燃倾覆蜀汉。",
+    "weaknessAdviceEn": "Relying solely on personal intimidation without institutional eradication allows toxic actors to instantly resurface once the watchdog departs.",
+    "historicalQuoteZh": "诸葛亮《出师表》称：“侍中、侍郎郭攸之、费祎、董允等，此皆良实，志虑忠纯，是以先帝简拔以遗陛下。”",
+    "historicalQuoteEn": "Zhuge Liang wrote: 'Guo Youzhi, Fei Yi, and Dong Yun are honest and pure in thought; the Late Emperor selected them to serve Your Majesty with distinction.'",
+    "auxiliaryStrengthsZh": [
+      "内廷纪律第一门神，以凛然正气使贪婪宦官黄皓十余年间只能潜伏不敢妄动",
+      "敢于直折君主私欲，多次退回后主刘禅扩充后宫的诏书，守住国家政治底线"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Iron gatekeeper against palace corruption, freezing predatory eunuchs in their tracks",
+      "Fearlessly rejected sovereign Liu Shan's lavish decrees to preserve imperial funds"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "治国思路局限在内廷防守与道德规劝，缺乏经济与军事层面的大开拓能力",
+      "未能建立长期制衡内廷宦官的刚性法律制度，身死之后防线全面崩塌"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Focus remained confined to palace discipline, lacking macro economic vision",
+      "Failed to codify permanent legal anti-eunuch checks, leaving the palace open to ruin"
+    ]
+  },
+  {
+    "id": "ma_liang",
+    "nameZh": "马良",
+    "nameEn": "Ma Liang (Jishan)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "侍中 · 龙佑侯 · 白眉最良外交儒雅之宗",
+    "positionEn": "Imperial Attendant · The Best of the Five White-Browed Brothers · Diplomatic Envoy",
+    "personalityZh": "清纯温润、学识渊深、外交敏达、深受爱戴",
+    "personalityEn": "Cultured, gentle and beloved scholar-diplomat, famed for his white brows, trusted mediator between Liu Bei and tribal allies",
+    "deedsZh": "“马氏五常，白眉最良”；随刘备治理荆州，深得诸葛亮器重；出使东吴深受孙权礼遇；夷陵之战奉命出抚五溪蛮夷部落，部落皆从其调遣；战死于夷陵军中。",
+    "deedsEn": "Best of the renowned Ma brothers; revered by Zhuge Liang; respected by Sun Quan on embassy; unified Wuxi tribal warriors behind Liu Bei; fell at Yiling.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "以温润如玉的人格魅力与极高的跨文化沟通能力，在不同阵营与少数族群之间建立深厚互信；以柔克刚完成复杂的统战整合。",
+    "strengthAdviceEn": "Build deep mutual trust across rival factions and disparate cultures through gentle moral grace and diplomatic empathy; unite disparate alliances.",
+    "weaknessAdviceZh": "文弱外交智囊缺乏战场野战自保与突围能力。在战役走向全面崩溃大败时（夷陵大火），缺乏保命手段不幸遇害，英华早谢。",
+    "weaknessAdviceEn": "Diplomatic brilliance offers zero defense against catastrophic field routs; plan personal extraction paths when joining chaotic frontline offensives.",
+    "historicalQuoteZh": "《三国志》评：马良贞实，称为名士。出抚五溪，蛮夷向化。然遭夷陵之败，身蹈矢石，惜哉！",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Ma Liang was upright and famed; pacifying the Wuxi tribes won their absolute devotion. His death at Yiling was a tragedy.",
+    "auxiliaryStrengthsZh": [
+      "荆楚名门之翘楚，跨族群外交大师，在短短数月内以诚意争取到武陵蛮夷全力支援蜀军",
+      "诸葛亮之莫逆挚交，为人忠厚宽仁，在朝中享有极佳的君子清誉"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Premier diplomat who persuaded volatile tribal chieftains to back Shu with total fidelity",
+      "Closest confidant of Zhuge Liang whose immaculate moral reputation united court peers"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "临阵战术防御意识不强，盲目追随刘备深入险地导致大溃败时难以自脱",
+      "才学偏重文教与使节沟通，对大规模战役后勤破绽缺乏警惕"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked battlefield survival instinct, trapped in the chaos of the Yiling wildfire",
+      "Expertise was in soft diplomacy rather than detecting critical military supply risks"
+    ]
+  },
+  {
+    "id": "ma_su",
+    "nameZh": "马谡",
+    "nameEn": "Ma Su (Youchang)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "参军 · 越巂太守 · 街亭纸上谈兵千古遗恨",
+    "positionEn": "Army Counselor · The Blunder at Jieting · Tragic Theoretical Genius",
+    "personalityZh": "才器过人、好论军计、博览兵书、虚骄轻敌、纸上谈兵",
+    "personalityEn": "Brilliant theoretical strategist, encyclopedic reader of war manuals, beloved by Zhuge Liang, yet disastrously divorced from battlefield reality",
+    "deedsZh": "诸葛亮南征献“攻心为上，攻城为下”大计获全胜；首次北伐受命守战略要地街亭，违背诸葛亮部署舍水上山扎营，被张郃切断水源大败失街亭；诸葛亮挥泪斩马谡。",
+    "deedsEn": "Conceived the 'conquer hearts, not walls' doctrine for the Southern Campaign; tasked with defending Jieting, abandoned waterways to camp on a hill, routed by Zhang He.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏财",
+      "偏印"
+    ],
+    "patternType": "伤官生财格",
+    "strengthAdviceZh": "卓越的战略顾问与思想智囊。在战略顶层设计与“心理攻心”维度具备超前洞察，善于为统帅提供高维度的决策参考。",
+    "strengthAdviceEn": "Superb conceptual consultant; offers visionary insights on psychological persuasion and macro strategy from the command tent.",
+    "weaknessAdviceZh": "千万不可将纯理论专家推上独立操盘的一线实战核心位！“纸上得来终觉浅”，在生死存亡的实战执行中抛弃教条是避免身首异处的铁律。",
+    "weaknessAdviceEn": "Never deploy pure theoretical thinkers to autonomous frontline command! Substituting textbook dogmas for physical battlefield realities causes total ruin.",
+    "historicalQuoteZh": "刘备临终告亮曰：“马谡言过其实，不可大用，君其察之！”亮犹谓不然，以谡为先锋，统军大败，亮流涕斩之。",
+    "historicalQuoteEn": "Liu Bei warned on his deathbed: 'Ma Su's words exceed his reality; do not entrust him with great command!' Zhuge ignored this, weeping as he ordered his execution.",
+    "auxiliaryStrengthsZh": [
+      "南征攻心战术提出者，奠定了蜀汉对南方少数民族长达数十年的和平羁縻统治格局",
+      "思维极其敏锐跳跃，熟读兵书战策，能为统帅提供富有启发性的战略推演素材"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Author of the famous 'win the hearts' doctrine that pacified southern tribes for decades",
+      "Deep student of ancient warfare whose sharp theoretical concepts inspired superiors"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "脱离实际教条主义严重，在街亭生搬硬套“置之死地而后生”，置全军水源于不顾",
+      "虚骄自大蔑视副将王平的苦劝，在关键战役决断中表现出致命的傲慢与盲目"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Dogmatic theorist who stubbornly camped on a waterless hilltop, misapplying scripture",
+      "Arrogantly dismissed practical warnings from deputy Wang Ping, dooming the empire's hopes"
+    ]
+  },
+  {
+    "id": "jian_yong",
+    "nameZh": "简雍",
+    "nameEn": "Jian Yong (Xianhe)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "昭德将军 · 诙谐放达幽默名士",
+    "positionEn": "General of Radiant Virtue · Witty Court Diplomat · Humorist Statesman",
+    "personalityZh": "优游风议、简傲跌宕、性情滑稽、不拘礼节、善巧化解",
+    "personalityEn": "Relaxed, delightfully eccentric, unceremonious, diffusing lethal tension and despotic edicts through peerless wit and humor",
+    "deedsZh": "刘备自幼故交；随从刘备半生奔波；入蜀劝降刘璋同车入城；言语幽默不拘礼法，在刘备面前斜倚而坐无拘无束；以巧辨讽谏刘备废除旱灾酿酒重刑禁令。",
+    "deedsEn": "Lifelong friend of Liu Bei; rode alongside Liu Zhang to secure Chengdu's surrender; sat sprawled before Liu Bei; satirized draconian alcohol prohibition laws.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "食神",
+      "偏印",
+      "比肩"
+    ],
+    "patternType": "食神格",
+    "strengthAdviceZh": "掌握用幽默感与非对抗性沟通化解重大政治危机的艺术。在严酷高压的组织环境中充当不可或缺的减压阀，巧妙扭转领导错误决策。",
+    "strengthAdviceEn": "Master the high art of defusing lethal executive crises through wit and humor; serve as an indispensable pressure-release valve to reverse flawed decrees gently.",
+    "weaknessAdviceZh": "行事过于不羁散漫，容易给正统官僚留下“轻佻不庄”的负面印象。在需要严肃建章立制的制度场合，需适度收敛滑稽之风。",
+    "weaknessAdviceEn": "Eccentric informality alienates strict legalistic bureaucrats; dial back comedic antics when serious statutory codification is demanded.",
+    "historicalQuoteZh": "《三国志》评：简雍优游风议，性度简傲，从容调谑，善巧谏诤。每从先主席坐，占床卧卧，威仪自若。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Jian Yong was easygoing and witty, speaking uncomfortable truths gently. He lounged casually beside Liu Bei without pretension.",
+    "auxiliaryStrengthsZh": [
+      "劝降刘璋立下奇功，与刘璋同车入城化解全城流血，展现顶级的柔性沟通艺术",
+      "以男女并行讽刺禁酒令滥杀无辜，用高级幽默挽救数千无辜百姓生命"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Negotiated Liu Zhang's surrender peacefully, riding in his carriage to calm the public",
+      "Subtly ridiculed absurd alcohol bans using street metaphors, saving innocent lives"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "放浪形骸缺乏官僚威仪，甚至在诸葛亮严肃场合也箕踞而坐，缺乏制度表率作用",
+      "缺乏硬核行政与军事治理能力，功业主要依赖与最高领袖的童年私人交情"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lounged irreverently even during serious state meetings, setting a lax institutional example",
+      "Lacked administrative command skills, reliant primarily on boyhood friendship with the sovereign"
+    ]
+  },
+  {
+    "id": "sun_qian",
+    "nameZh": "孙乾",
+    "nameEn": "Sun Qian (Gongyou)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "秉忠将军 · 坚韧穿梭外交重臣",
+    "positionEn": "General Who Upholds Loyalty · Master Diplomatic Emissary of Shu",
+    "personalityZh": "容止优雅、辞令敦厚、尽忠竭力、奔波四海、坚韧使臣",
+    "personalityEn": "Gentle in bearing, eloquent in diction, devoted envoy who endured decades of hazardous travel to negotiate sanctuaries for Liu Bei",
+    "deedsZh": "早年随刘备颠沛流离；奉命出使袁绍、刘表、曹操各路枭雄，皆能完成借地屯兵与联盟重任；入蜀后受封秉忠将军，与简雍、糜竺同受最高礼遇。",
+    "deedsEn": "Served Liu Bei from the start; represented him as chief envoy to Yuan Shao, Liu Biao, and Cao Cao; secured vital havens and negotiated high-stakes treaties.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "在企业最艰难的“原始积累与求生存”阶段，充当穿梭外交的破冰者。以诚恳谦和的外交辞令为团队在各大巨头夹缝中争取宝贵生存空间。",
+    "strengthAdviceEn": "Act as dynamic icebreaker during a startup's desperate survival stage; secure essential havens and resource loans through humble, persuasive diplomacy.",
+    "weaknessAdviceZh": "专精于穿梭外交与人际连横，缺乏独立的方面军政主政经验。在组织进入成熟扩张期后，容易从权力核心自然退居礼遇席位。",
+    "weaknessAdviceEn": "Specialized strictly in early-stage diplomatic missions; naturally drifted into honorary ranks once the empire established stable regional governance.",
+    "historicalQuoteZh": "《三国志》评：孙乾涉世周旋，尽忠竭力，从先主播越，进退有礼，可谓邦交之良使也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Sun Qian navigated turbulent alliances with spotless devotion and courteous protocol, a true model of interstate diplomacy.",
+    "auxiliaryStrengthsZh": [
+      "蜀汉首席穿梭使节，数十年间在袁绍、刘表、曹操三大巨头间斡旋为刘备争取落脚点",
+      "进退得体从未在重大外交博弈中辱没主上声名，执行力忠诚纯粹"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Chief roaming ambassador securing survival havens across decades of defeats",
+      "Impeccable diplomatic decorum, shielding his fugitive master's dignity across China"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "才能定格于使节联络，在蜀汉建国后缺乏主持宏观法制或经济建设的专业深度",
+      "终年奔波劳碌耗尽体能，蜀汉建国不久即病逝退出历史舞台"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Skillset was confined to negotiation rather than systemic judicial or financial statecraft",
+      "Decades of exhausting frontier travel shattered his physical stamina, dying shortly after success"
+    ]
+  },
+  {
+    "id": "mi_zhu",
+    "nameZh": "糜竺",
+    "nameEn": "Mi Zhu (Zizhong)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "安汉将军 · 家财万贯天使投资国舅",
+    "positionEn": "General of Han Pacification · Peerless Angel Investor of Shu Han",
+    "personalityZh": "敦厚文雅、富甲一方、散尽家财、忠贞不贰、抱愧而终",
+    "personalityEn": "Wealthy merchant-nobleman, cultured and modest, sacrificed entire fortune to finance Liu Bei's bankrupt startup, died in grief over family treason",
+    "deedsZh": "徐州巨富家奴万人家资巨亿；徐州大败时将亲妹嫁刘备，并倾尽家资万金资助刘备军费，助其绝处逢生；拒绝曹操拜官封侯；弟弟糜芳降吴害死关羽，糜竺惭恨病逝。",
+    "deedsEn": "Magnate of Xuzhou; funded Liu Bei's shattered army with his sister and total fortune; rejected Cao Cao's gifts; died in heartbroken shame when brother Mi Fang defected.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正财",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正财格",
+    "strengthAdviceZh": "历史上最成功的“超级天使投资人”。善于在最具潜力的创业领袖最低谷时倾囊押注，以无可比拟的财务支持与家族联姻锁定最高政治红利。",
+    "strengthAdviceEn": "History's ultimate angel investor; finance exceptional founders at their absolute nadir, cementing highest status through early capital and kinship alliances.",
+    "weaknessAdviceZh": "亲族管理不善是毁灭晚节的最大死穴！即便自身忠贞不二，弟弟糜芳在关键前线投敌害死关羽导致国运断送，使自身承受巨大的心理内疚而死。",
+    "weaknessAdviceEn": "Kinship blindspots wreck unblemished legacies; your own spotless fidelity cannot shield you from the mortal guilt caused by a sibling's catastrophic betrayal.",
+    "historicalQuoteZh": "刘备深感其德，文臣位居诸葛亮之上。陈寿评：“糜竺纯谨，雍容大度，出财助业，诚义士也。以弟芳叛，惭恨病卒，哀哉！”",
+    "historicalQuoteEn": "Liu Bei honored him above even Zhuge Liang. Chen Shou wrote: 'Mi Zhu was noble, financing the imperial cause with spotless fidelity. Dying of shame over his brother was heartbreaking.'",
+    "auxiliaryStrengthsZh": [
+      "三国第一眼光天使投资人，海西之危倾尽全族财宝拯救刘备于冻馁溃散边缘",
+      "拒绝曹操太守之职的高官厚禄诱惑，誓死追随颠沛流离的刘备，义重泰山"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Ultimate financial savior of Shu, pouring his immense commercial fortune into a broken army",
+      "Spurned Cao Cao's titles and wealth to share cold, hungry wanderings with Liu Bei"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对同胞亲弟糜芳的心理动向与贪生怕死毫无防范监控，酿成荆州倾覆之千古奇祸",
+      "过度重义导致心理免疫力偏弱，在弟弟背叛后内耗至深、惭愧发病殒命"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to monitor his brother Mi Fang's wavering resolve, triggering the loss of Jingzhou",
+      "Crushed by intense family guilt after his brother's treason, dying of grief"
+    ]
+  },
+  {
+    "id": "huang_quan",
+    "nameZh": "黄权",
+    "nameEn": "Huang Quan (Gongheng)",
+    "dynastyZh": "蜀汉 / 曹魏",
+    "dynastyEn": "Shu Han / Cao Wei",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "曹魏车骑将军 · 开府仪同三司 · 忠信两全通达重臣",
+    "positionEn": "General of Chariots and Cavalry · Venerable Statesman of Integrity Across Two Empires",
+    "personalityZh": "深谋远虑、忠诚竭智、从容大义、通达法理、不负故主",
+    "personalityEn": "Far-sighted grand strategist, dignified and legally upright, preserved flawless honor while trapped into defecting to Wei",
+    "deedsZh": "曾谏刘璋勿迎刘备；汉中之战力主刘备夺取汉中“若失汉中则三巴不振”；夷陵之战自请为先锋刘备不听使领江北水军；败后退路断绝不降吴而降魏，两朝皆重之。",
+    "deedsEn": "Warned Liu Zhang against Liu Bei; planned the Hanzhong offensive; commanded northern fleet at Yiling; cut off after the defeat, surrendered to Wei rather than Wu.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "正印"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "具备极高的地缘战略前瞻眼光。在遭遇极端不可抗力背腹受敌时，秉持最高道德底线与政治智慧行事，在两个敌对阵营中均赢得至高尊重。",
+    "strengthAdviceEn": "Master of macro-geographic campaign foresight; when trapped by fatal battlefield collapse, navigate capitulation with such moral dignity that both sides revere you.",
+    "weaknessAdviceZh": "忠谏往往不合于主上的狂热冒险本能。在最高领袖执意弄险时，虽竭力进谏却难改大局，终被历史大潮卷入被迫异邦的无奈宿命。",
+    "weaknessAdviceEn": "Sober counsel cannot always halt a sovereign's reckless gambling; despite prophetic warnings, he was swept away by disasters he foresaw.",
+    "historicalQuoteZh": "刘备闻其降曰：“孤负黄权，权不负孤也。”魏文帝曹丕见其曰：“君得无欲效陈平、韩信乎？”权曰：“臣过蒙刘主殊遇，降吴不可，归蜀无路，故来受死！”",
+    "historicalQuoteEn": "Liu Bei lamented: 'I failed Huang Quan; he did not fail me.' When Cao Pi questioned his intent, Quan answered proudly: 'I could not surrender to Wu, nor return to Shu; I came to die!'",
+    "auxiliaryStrengthsZh": [
+      "汉中战略第一首功，精准提出夺取汉中以巩固巴蜀的不可逆地缘战法",
+      "降魏时义正词严不降吴仇，刘备在蜀善待其家属，曹丕在魏封其高官，两代天子共敬其人格"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Primary architect of the Hanzhong campaign, proving Sichuan could not stand without the northern gateway",
+      "Maintained such immaculate chivalry that Liu Bei protected his family while Cao Pi granted him dukedoms"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "虽有战略远见却无法彻底改变刘备一意孤行的伐吴决心，被迫卷入败局",
+      "投魏后虽受高官厚禄，但因避嫌始终保持谨慎缄默，无法再展早期吞吐天下的进攻才略"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Could not dissuade Liu Bei from Yiling, suffering the fate of watching a disaster unfold",
+      "Maintained defensive silence in Wei to avoid court suspicion, mothballing his strategic genius"
+    ]
+  },
+  {
+    "id": "yan_yan",
+    "nameZh": "严颜",
+    "nameEn": "Yan Yan",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "前将军 · 巴郡太守 · 断头将军千秋气节",
+    "positionEn": "General of the Front · Governor of Bajun · The Indomitable Beheaded General",
+    "personalityZh": "刚烈忠勇、视死如归、老当益壮、义薄云天、守节不回",
+    "personalityEn": "Fierce, unyielding frontier governor, defying execution with the roar 'Only beheaded generals in my city, never surrendered ones!'",
+    "deedsZh": "刘备入蜀时据江州死守拒降；被张飞设奇谋生擒，喝叱张飞“我州但有断头将军，无降将军也！”张飞壮其节，亲释其缚待为上宾，严颜感佩率部归附。",
+    "deedsEn": "Held Jiangzhou against Liu Bei; captured by Zhang Fei, roared defiance against execution; Zhang Fei revered his valor, untying him personally and winning his allegiance.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以绝不屈膝的尊严与傲骨赢得死敌的最高敬仰。在面对强暴威逼时敢于以命相搏，往往能化被动受辱为反客为主的政治传奇。",
+    "strengthAdviceEn": "Win supreme reverence from adversaries through fearless defiance under execution; convert hopeless capture into lasting respect through pure chivalric dignity.",
+    "weaknessAdviceZh": "忠勇有余而缺乏大兵团野战机变。在巴郡隘口死守虽彰显气节，但战术受制于张飞的假道伏击计策，临阵侦察需加倍细密。",
+    "weaknessAdviceEn": "Steadfast loyalty does not compensate for tactical vulnerability; fell into Zhang Fei's feigned withdrawal trap, showing the need for rigorous field reconnaissance.",
+    "historicalQuoteZh": "张飞怒喝：“何以不降而敢拒战？”颜答曰：“卿等无状，侵夺我州，我州但有断头将军，无降将军也！”飞壮之，引为宾客。",
+    "historicalQuoteEn": "Zhang Fei roared: 'Why fight rather than surrender?' Yan replied calmly: 'You invaded our state; we have only beheaded generals, never kneeling ones!'",
+    "auxiliaryStrengthsZh": [
+      "千古气节名言“只有断头将军，没有下跪将军”开创了中华武士绝不受辱的尊严丰碑",
+      "降蜀后积极招抚巴蜀沿江关隘，为张飞大军迅速会师成都立下不可磨灭的引路之功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immortal rallying cry of defiant honor that defined Chinese warrior dignity",
+      "Facilitated peaceful surrender of river defiles across Sichuan after joining Shu"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "侦察不力中了张飞声东击西诱敌出城的伏击战术，在战术交锋层面稍逊一筹",
+      "归附后主要充当道德象征与地方绥靖角色，缺乏主导国家级战役的历史舞台"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fell for tactical feints and ambushes due to inadequate frontline scouting",
+      "Remained a moral symbol of pacification rather than commanding grand strategic campaigns"
+    ]
+  },
+  {
+    "id": "wang_ping",
+    "nameZh": "王平",
+    "nameEn": "Wang Ping (Zijun)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "前监军 · 镇北大将军 · 安汉侯 · 街亭独醒无字良将",
+    "positionEn": "Senior Military Inspector · Grand General Who Pacifies the North · Steadfast Pillar of Shu",
+    "personalityZh": "沉审端整、谨言慎行、通晓兵法、目不识丁、实战大师",
+    "personalityEn": "Illiterate yet profoundly wise in terrain and tactics, cautious, steady, fearless in speaking truth against flawed high command",
+    "deedsZh": "街亭之役苦劝马谡不可上山扎营，兵败后独以千人擂鼓虚张声势吓退张郃，收拢残兵；诸葛亮死后掌无当飞军；兴势之战以少胜多击溃曹爽十万大军。",
+    "deedsEn": "Pled in vain with Ma Su at Jieting; saved the broken army with an open bluff against Zhang He; commanded the elite Wudang Infantry; routed Cao Shuang's 100,000 at Xingshi.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "七杀"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "实战派与常识主义的最高典范。虽不识十数汉字，却熟读地形、严谨布防；敢于在专家迷信权威时坚守物理现实与常识底线。",
+    "strengthAdviceEn": "Ultimate exemplar of physical common sense over academic theory; illiterate yet infallible in battlefield geometry, crushing flawed textbook theories.",
+    "weaknessAdviceZh": "生长于行伍之间性格过于方整严肃，不苟言笑、缺乏幽默感与官场社交辞令，在复杂官僚体制内部缺乏人缘润滑度。",
+    "weaknessAdviceEn": "Stern and socially unpolished demeanor lacks political humor; avoiding informal socializing makes you admired for efficiency but distant to peers.",
+    "historicalQuoteZh": "《三国志》评：王平忠勇而严整，军政修明。手不能书，口授为文，皆有法度。街亭之战，独以平全，兴势破爽，名震当世。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Wang Ping was loyal and strict; though unable to write, his dictated orders were legally flawless. His defense of Xingshi was miraculous.",
+    "auxiliaryStrengthsZh": [
+      "街亭大败中唯一清醒者，以千人断后鸣鼓设伏逼退魏国名将张郃，保全蜀汉精锐骨干",
+      "兴势之战以不足三万人死扼骆谷隘口，彻底击溃曹爽十万攻蜀魏军，立盖世奇功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sole sober mind at Jieting, bluffing Zhang He's army to rescue shattered remnants",
+      "Crushed Cao Shuang's 100,000 invasion with under 30,000 men at Xingshi Pass"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "文化水平极低不识数十字，在撰写长篇战略规划奏折时受制于书吏代笔",
+      "性格古板方正不苟言笑，日常生活中过于严肃戒备，缺乏亲和力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Illiterate, entirely dependent on scribes to document his profound operational thoughts",
+      "Humorless austerity kept his personal circle rigid and aloof from court politics"
+    ]
+  },
+  {
+    "id": "zhang_ni",
+    "nameZh": "张嶷",
+    "nameEn": "Zhang Ni (Boyi)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "荡寇将军 · 关内侯 · 抚戎平蛮死战断后烈士",
+    "positionEn": "General Who Sweeps Away Bandits · Pacifier of Southern Tribes · Heroic Martyr",
+    "personalityZh": "豁达慷慨、果烈勇猛、善抚异族、明察秋毫、重病捐躯",
+    "personalityEn": "Generous, charismatic pacifier of southern minority clans, sharp evaluator of political trends, fighting on crutches unto glorious death",
+    "deedsZh": "镇守越巂十五年，开辟盐铁、修通千里程途，深得夷民爱戴；预言费祎必遭刺客行刺、姜维必遭反噬；随姜维北伐虽身患严重风湿不能立，死战断后斩魏数千身亡。",
+    "deedsEn": "Governed Yuexi for 15 years, opening highways and winning barbarian worship; predicted Fei Yi's assassination; fought on crutches during northern expedition, dying in combat.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "兼具极高的跨文化治理智慧与前瞻性的政治预警洞察力。在生命的最后关头，明知必死仍以残废之躯为全军死战断后，气贯长虹。",
+    "strengthAdviceEn": "Combine visionary tribal administration with prophetic foresight into peer vulnerability; charge into combat on crutches to buy survival for friendly forces.",
+    "weaknessAdviceZh": "对自身生理极限缺乏必要的自保退避。风湿重症导致不能骑马行走，仍执意披甲上阵参加残酷的高强度平原歼灭战，过早陨落战阵。",
+    "weaknessAdviceEn": "Total disregard for crippling bodily illness; entering intense cavalry combat while unable to walk guarantees tactical encirclement and physical doom.",
+    "historicalQuoteZh": "越巂夷人闻其死，无不号泣，立庙岁时祭之。陈寿评：“张嶷慷慨果烈，用抚蛮夷，有武侯之遗风。身死王事，义烈照人。”",
+    "historicalQuoteEn": "Southern tribes wept inconsolably upon his death, erecting shrines to worship him. Chen Shou wrote: 'Zhang Ni possessed Kongming's spirit, dying heroically for the realm.'",
+    "auxiliaryStrengthsZh": [
+      "治理南中十五年恩威并施，蛮夷部落视其如生父，创造了少数民族地区长治久安的典范",
+      "拥有罕见的战略洞察力，准确预言了费祎在宴会上遇刺身亡的悲剧结局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Governed southern borderlands with such benevolence that tribal clans erected temples to him",
+      "Prophetic strategic mind: accurately forecasted Fei Yi's fatal assassination at banquets"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "明知双腿已残不能行走，仍抱定必死之心强行参加姜维北伐，终因无法机动被魏军围歼",
+      "性格过于慷慨刚毅，在战役不可为时缺乏战略隐忍与退守意识"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Refused medical retirement, riding into cavalry slaughter despite total leg paralysis",
+      "Excessive martyr mindset rejected prudent strategic withdrawal when battles turned hopeless"
+    ]
+  },
+  {
+    "id": "zhang_yi_shuhan",
+    "nameZh": "张翼",
+    "nameEn": "Zhang Yi (Bogong)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "左车骑将军 · 领冀州刺史 · 亢直敢谏稳健宿将",
+    "positionEn": "General of the Left Chariots and Cavalry · Outspoken Critic of Over-Militarization",
+    "personalityZh": "亢直忠诚、奉法谨饬、实事求是、敢于直谏、死战殉国",
+    "personalityEn": "Blunt, upright, legalistic military commander, fearlessly speaking truth against relentless over-militarization, dying alongside Jiang Wei",
+    "deedsZh": "治军严整依法办事；随诸葛亮北伐；数次在朝廷和前线公开抗颜直陈姜维不宜劳师远征“小国用兵国力耗竭”；剑阁并力抗魏，后在成都兵乱中壮烈殉国。",
+    "deedsEn": "Strict disciplinarian; opposed Jiang Wei's endless campaigns to his face, warning that small states exhaust themselves; defended Jiange, killed in the Chengdu mutiny.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "组织内部宝贵的“理性制衡者”。在所有人被军事狂热或狂妄目标裹挟时，敢于在统帅面前直言利弊，充当系统性的刹车皮与减速器。",
+    "strengthAdviceEn": "Act as indispensable rational circuit-breaker; fearlessly challenge reckless executive overexpansion to his face, protecting fragile baseline reserves.",
+    "weaknessAdviceZh": "早年治边过于严苛死板，曾因不通融直接激反南中少数民族；必须吸取教训，在法律制度与现实民情之间保留弹性空间。",
+    "weaknessAdviceEn": "Rigid administrative pedantry in youth provoked tribal rebellions; balance legal statutes with cultural flexibility when governing frontier populations.",
+    "historicalQuoteZh": "《三国志》评：张翼亢亮抗直，姜维好内移，翼常抗争，然维常将翼行，翼亦进止不渝。死于兵难，诚忠烈之士也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Zhang Yi was blunt and honest, constantly disputing Jiang Wei's campaigns; yet Jiang Wei relied on him, and Yi served loyally unto death.",
+    "auxiliaryStrengthsZh": [
+      "蜀汉后期最具勇气的敢谏之臣，前线当面力争反对姜维穷兵黩武，忠于国家而非盲从主帅",
+      "战役执行力坚决，虽与姜维政见不合，但一旦军令下达依然死战攻坚，毫无私心阻挠"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Bravery to speak truth to power, warning Jiang Wei on the front that endless war invites ruin",
+      "Absolute professional integrity: despite tactical disputes, executed combat orders flawlessly"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早期任庲降都督时执法过于僵硬不通人情，直接激起南中夷人大规模叛乱",
+      "政治话语权终究不及大将军姜维，未能从根本上扭转蜀汉晚期被掏空的国运大势"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Bureaucratic rigidity in his early governorship provoked violent indigenous revolts",
+      "Lacked ultimate executive authority to halt the exhausting campaigns draining the state"
+    ]
+  },
+  {
+    "id": "liao_hua",
+    "nameZh": "廖化",
+    "nameEn": "Liao Hua (Yuanjian)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "右车骑将军 · 中乡侯 · 跨越三国全史百战宿将",
+    "positionEn": "General of the Right Chariots and Cavalry · Century-Spanning Veteran Survivor",
+    "personalityZh": "果毅沉潜、忠贞不移、诈死归主、见证兴衰、洞若观火",
+    "personalityEn": "Tough, veteran survivor spanning the entire Three Kingdoms era, feigned death to escape Wu back to Liu Bei, acute observer of imperial decay",
+    "deedsZh": "早年随关羽守荆州；败后伪装自杀骗过东吴，昼夜兼程携老母千里归蜀；随诸葛亮与姜维征战数十载；叹姜维“智不出敌而力少于寇，何以能存”；见证蜀汉始终。",
+    "deedsEn": "Garrisoned Jingzhou under Guan Yu; feigned death to escape Wu custody carrying his mother back to Shu; served in all campaigns; lived past the fall of Shu.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "超强的生命坚韧度与生存逃逸智慧。在沦陷敌手的极端逆境中善于用伪装逃出生天；跨越风云半个世纪，以无尽耐力熬过无数狂澜。",
+    "strengthAdviceEn": "Supreme survival resilience; feign surrender or demise to escape captivity, leveraging unyielding endurance to outlive decades of volatile political storms.",
+    "weaknessAdviceZh": "在蜀汉后期人才极度凋零时发出“蜀中无大将廖化作先锋”的无奈叹息。当全局大势衰竭时，个人虽洞察真理却无力回天。",
+    "weaknessAdviceEn": "Witnessing national decline produces bitter resignation ('When Shu lacks generals, old Liao Hua is vanguard'); individual insight cannot reverse macro entropy.",
+    "historicalQuoteZh": "廖化评姜维曰：“兵不戢，必自焚，伯约之谓也。智不出敌，而力少于寇，用之无厌，何以能立？诗云‘不自我先，不自我后’，今日之事也！”",
+    "historicalQuoteEn": "Liao Hua warned: 'He who does not sheath the sword perishes by it. When wit does not exceed the foe and strength is less, how can endless war sustain a state?'",
+    "auxiliaryStrengthsZh": [
+      "“诈死归蜀”展现出超常的意志坚定与逃脱智谋，忠义之心历经数国策反未尝动摇",
+      "蜀汉历史的活化石与清醒观察者，对姜维北伐必败的历史宿命有着透彻骨髓的认知"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Feigned death to escape Wu with his elderly mother, trekking 1,000 li back to his rightful lord",
+      "Living archive of Three Kingdoms history who foresaw the catastrophic failure of late campaigns"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年受困于国力衰微与将星凋零，虽位极车骑大将军却难有震撼战局的进攻斩获",
+      "见证蜀汉从崛起到灭亡全过程，心态难免带有浓重的宿命论与苍凉感"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Promoted to supreme general late in life due to talent extinction rather than youthful conquest",
+      "Burdened by tragic fatalism as he watched the empire crumble beyond salvation"
+    ]
+  },
+  {
+    "id": "qiao_zhou",
+    "nameZh": "谯周",
+    "nameEn": "Qiao Zhou (Yunnan)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "光禄大夫 · 阳城亭侯 · 儒学泰斗劝降存民智者",
+    "positionEn": "Imperial Grandee · Master Confucian Polymath · Advocate of Merciful Capitulation",
+    "personalityZh": "精研六经、通晓天文、清淡寡欲、直言切谏、以民为本",
+    "personalityEn": "Deeply learned in the classics and astrology, detached from wealth, prioritized civilian preservation over meaningless dynastic slaughter",
+    "deedsZh": "蜀中大儒，弟子成群包括陈寿等；写《仇国论》极力劝阻姜维轻率北伐；邓艾兵临成都大兵压境之际，力排众议劝刘禅投降魏国避免全城生灵涂炭，全蜀得免屠戮。",
+    "deedsEn": "Master Confucian scholar who taught Chen Shou; authored Discourse on Rival States against war; persuaded Liu Shan to surrender to Deng Ai, sparing Chengdu from slaughter.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以极其理性的现实主义与人道主义对抗虚妄的意识形态狂热。在不可挽回的灭顶绝境中，敢于承担历史骂名换取全城百万生灵的存活。",
+    "strengthAdviceEn": "Combat ideological fanaticism with sober humanitarian realism; take upon yourself historical scorn to save hundreds of thousands of civilians from massacre.",
+    "weaknessAdviceZh": "劝降决策在传统儒家忠君道统中承受了巨大的“失节卖国”历史道德抨击。在做出类似止损妥协时，必须做好承受千古毁誉的心理准备。",
+    "weaknessAdviceEn": "Advocating capitulation draws merciless moral condemnation from dynastic loyalists; prepare to bear brutal historical censure when executing damage control.",
+    "historicalQuoteZh": "《三国志》评：谯周抗论玄远，知命识存。及其劝降，免阖城之涂炭，救蜀民于刀俎，功莫大焉。然世以其失臣节讥之，非笃论也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Qiao Zhou was wise and perceptive; by counseling surrender, he spared the capital from massacre, achieving immense humanitarian salvation.",
+    "auxiliaryStrengthsZh": [
+      "著《仇国论》以天下第一等清醒笔触揭露以弱敌强的消耗战本质，展现顶级战略经济理性",
+      "成都被围之际孤身力排死战到底狂热言论，以一人之言免除全蜀军民灭顶血光之灾"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Authored Discourse on Rival States, a masterpiece of economic realism against futile wars",
+      "Single-handedly defied warmongers to engineer peaceful surrender, sparing Sichuan a bloodbath"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治抉择过于理性务实，彻底斩断了蜀汉四十年汉室法统与壮烈殉国精神",
+      "被后世纯粹宋明理学家打上“背叛君王、怯懦误国”的道德耻辱烙印"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Extinguished the sacred ideological mission of the Han restoration with cold surrender",
+      "Branded a treasonous coward by later Neo-Confucian moral purists for millennia"
+    ]
+  },
+  {
+    "id": "zhuge_zhan",
+    "nameZh": "诸葛瞻",
+    "nameEn": "Zhuge Zhan (Siyuan)",
+    "dynastyZh": "蜀汉",
+    "dynastyEn": "Shu Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "卫将军 · 录尚书事 · 武乡侯 · 绵竹血战烈祖孤忠",
+    "positionEn": "General of the Guards · Chief of the Imperial Secretariat · Martyr of Mianzhu",
+    "personalityZh": "忠勇慷慨、清名过誉、承父遗德、临阵少谋、壮烈殉节",
+    "personalityEn": "Bore the immense shadow of his father Zhuge Liang, noble and patriotic, adored by citizens beyond his operational skill, died heroically in battle",
+    "deedsZh": "诸葛亮之子；少有才名，全蜀盼其能如父一般力挽狂澜；主持中央政务未能压制黄皓与姜维；邓艾突袭江油兵临绵竹，拒绝邓艾封王劝降，父子同死沙场壮烈殉国。",
+    "deedsEn": "Son of Zhuge Liang; carried immense public hopes; failed to check Huang Hao; resisted Deng Ai at Mianzhu, rejected princely bribes, dying heroically beside his son.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "伤官"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "背负家族最高精神资产与荣耀。在国家大势已去的终局关口，严词拒绝敌军一切荣华富贵的利诱，用壮烈殉节捍卫家族千秋清誉。",
+    "strengthAdviceEn": "Uphold illustrious family heritage with unyielding moral sacrifice; reject all enemy bribes to seal your lineage's honor with heroic martyrdom.",
+    "weaknessAdviceZh": "名气远大于实战硬核能力！诸葛亮早年观其“聪慧早熟，恐难成大器”；在战略决策上拒守险隘、在野战中被邓艾包抄，暴露出实战指挥短板。",
+    "weaknessAdviceEn": "Public reputation inflated far beyond actual tactical command ability; leaving mountain bottlenecks to fight in the plains exposed disastrous battlefield inexperience.",
+    "historicalQuoteZh": "邓艾遗瞻书诱降许封琅邪王，瞻怒斩艾使，遂战大败。临终叹曰：“内不能除黄皓，外不能制姜维，进不能守江油，吾有何面目苟活！”",
+    "historicalQuoteEn": "Deng Ai offered him a Wei princedom; Zhan beheaded the messenger in fury. Dying, he wept: 'Unable to purge Huang Hao within or hold the passes without, how can I live!'",
+    "auxiliaryStrengthsZh": [
+      "绵竹血战父子双双死节殉国，以满门忠烈用鲜血践行了“鞠躬尽瘁死而后已”的武侯家风",
+      "拒绝敌军封王利诱斩杀敌使，展现出三国晚期最光彩夺目的民族节操"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Died in glorious combat alongside his son, fulfilling the selfless creed of his father",
+      "Beheaded enemy surrender heralds, demonstrating awe-inspiring dynastic loyalty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "军事指挥严重失误，不听黄崇占领剑阁江油险要地势之谏，弃险出战遭邓艾全歼",
+      "身居辅政中枢却对后主昏庸、宦官黄皓误国毫无作为，政治领导力严重不足"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Disastrous tactical error: abandoned mountain choke points to fight pitched battles on flat ground",
+      "Paralyzed within palace politics, completely unable to check eunuch corruption in high office"
+    ]
+  },
+  {
+    "id": "sun_ce",
+    "nameZh": "孙策",
+    "nameEn": "Sun Ce (Bofu)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "讨逆将军 · 吴侯 · 江东小霸王奠基霸主",
+    "positionEn": "General Who Attacks Rebels · The Little Conqueror of Jiangdong",
+    "personalityZh": "勇冠一世、雄姿英发、善于用人、横扫江东、轻率易怒",
+    "personalityEn": "Peerless martial conqueror, charismatic military genius, romantic youthful conqueror, reckless personal security leading to early death",
+    "deedsZh": "以传国玉玺向袁术借兵数千南渡长江；数年间横扫刘繇、王朗、严白虎等，席卷江东六郡开拓东吴孙氏江山；遇许贡门客暗算中箭身亡，临终托孤孙权。",
+    "deedsEn": "Pawned the Imperial Jade Seal for 3,000 troops; swept across Jiangdong in lightning campaigns to lay Wu's foundations; assassinated by vengeance stalkers at 26.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "历史上罕见的“超高速创业征服者”。以摧枯拉朽的军事统帅魄力与知人善任的领袖魅力，在极短时间内扫平所有竞争者，开创崭新地缘帝国。",
+    "strengthAdviceEn": "Unstoppable blitzkrieg conqueror; combine lightning tactical warfare with magnetic personal charisma to build an entire geographic empire from scratch.",
+    "weaknessAdviceZh": "千万不可轻出不备、忽视私人安保！郭嘉早断其“轻而无备，必死于匹夫之手”；位极一方霸主却喜欢单骑狩猎，终遭刺客毒箭夺命断送霸业。",
+    "weaknessAdviceEn": "Never roam without elite bodyguards! Guo Jia famously predicted: 'Careless and unguarded, he will die by common scoundrels'; assassinated while hunting alone at 26.",
+    "historicalQuoteZh": "曹操闻其下江东叹曰：“狮儿难与争锋也！”《三国志》评：“策勇冠一世，猛气英断。然轻而无备，自取颠覆，惜哉！”",
+    "historicalQuoteEn": "Cao Cao gasped: 'This young lion is impossible to challenge!' Chen Shou lamented: 'Sun Ce possessed unparalleled ferocity, yet carelessness brought his early death.'",
+    "auxiliaryStrengthsZh": [
+      "二十岁白手起家，数年之内平定江东六郡，创造了三国历史上进攻节奏最快、战果最辉煌的创业奇迹",
+      "知人善任，得周瑜若同生，提拔张昭、吕蒙、太史慈，打造东吴建国全明星核心班底"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Conquered southeastern China in his twenties, the fastest expansion in Three Kingdoms history",
+      "Superb talent aggregator: allied with Zhou Yu and recruited elite generals to anchor his dynasty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "嗜好孤身单骑外出打猎，安保意识形同虚设，最终在荒郊野外遭遇刺客伏击中剧毒箭身亡",
+      "杀伐过重、诛杀名士（如高岱、许贡），导致江东本土豪强阶层仇恨埋伏极深"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fatal addiction to solitary hunting without bodyguards allowed assassins to ambush him",
+      "Ruthless purges of local aristocrats sowed deep blood feuds that materialized in his murder"
+    ]
+  },
+  {
+    "id": "sun_quan",
+    "nameZh": "孙权",
+    "nameEn": "Sun Quan (Emperor Da of Wu)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "东吴大帝 · 孙吴开国皇帝 · 能屈能伸坐断东南",
+    "positionEn": "Emperor Da of Eastern Wu · Founding Sovereign · Master of Diplomatic Realism",
+    "personalityZh": "能屈能伸、审时度势、善于用人、坐断东南、晚年昏乱",
+    "personalityEn": "Master of pragmatic strategic compromise, supreme patience, genius in picking military admirals, yet tyrannical and paranoid in dotage",
+    "deedsZh": "承父兄基业十九岁坐领江东；赤壁之战重用周瑜抗曹；夷陵之战拔擢陆逊大破刘备；夺荆州杀关羽称帝建东吴；晚年二宫之争废立太子滥杀名臣。",
+    "deedsEn": "Inherited Jiangdong at 19; empowered Zhou Yu at Chibi and Lu Xun at Yiling; seized Jingzhou; founded Wu; descended into deadly palace succession purges late in reign.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏财",
+      "偏印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "“能屈能伸”的地缘博弈大师。在面临超强敌手时敢于向曹操或刘备称臣退让，待时机成熟时果断反戈一击，在复杂大国对抗中永远游刃有余。",
+    "strengthAdviceEn": "Supreme master of elastic realpolitik; yield and flatter stronger empires when outmatched, waiting patiently until rivals stumble before launching lethal counter-offensives.",
+    "weaknessAdviceZh": "晚年猜忌狂躁、深陷接班人内耗（南鲁党争）是王朝最大的悲剧！切忌在衰老时被权术与耳语挑动，诛杀忠良元老（陆逊），导致国家元气大伤。",
+    "weaknessAdviceEn": "Avoid paranoid succession bloodbaths in old age; falling prey to court gossip and persecuting your most loyal pillar ministers (Lu Xun) fractures dynasty stamina.",
+    "historicalQuoteZh": "曹操赞曰：“生子当如孙仲谋！刘景升儿子若豚犬耳！”《三国志》评：“孙权屈身忍辱，任才尚计，有勾践之奇，英人之杰矣。晚年苛虐，废立发乱，岂其令终！”",
+    "historicalQuoteEn": "Cao Cao sighed: 'If one has a son, he should be like Sun Quan!' Chen Shou marveled at his endurance like Goujian, yet condemned his murderous late palace purges.",
+    "auxiliaryStrengthsZh": [
+      "知人善任天下第一等，赤壁敢信周瑜、濡须敢信吕蒙、夷陵敢信陆逊，三度于国运倾覆之际挽救狂澜",
+      "地缘政治博弈天才，以极度务实的态度在魏蜀两大强邻之间走钢丝，坐断东南五十年"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme talent delegator: backed Zhou Yu, Lu Meng, and Lu Xun to win three existential wars",
+      "Geopolitical survival genius, playing Wei and Shu against each other to rule for 50 years"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年深陷“二宫之争”，残酷逼死陆逊等无数辅政元勋，摧毁了孙吴政权内部最宝贵的政治互信",
+      "进攻端战术素养奇差（合肥十万被张辽八百破），缺乏平原野战大兵团攻坚能力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Late-life paranoia drove him to persecute Lu Xun and execute family heirs over court gossip",
+      "Abysmal frontline combat skills, repeatedly humiliated by Zhang Liao at Hefei campaigns"
+    ]
+  },
+  {
+    "id": "sun_jian",
+    "nameZh": "孙坚",
+    "nameEn": "Sun Jian (Wentai)",
+    "dynastyZh": "东汉 / 东吴",
+    "dynastyEn": "Eastern Han / Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "破虏将军 · 豫州刺史 · 关东联军讨董第一先锋",
+    "positionEn": "General Who Crushes Rebels · Tiger of Jiangdong · Forefather of Wu",
+    "personalityZh": "勇挚刚毅、孤胆英雄、斩将夺旗、所向披靡、轻率中伏",
+    "personalityEn": "Fierce frontline warrior, unmatched courage among the coalition against Dong Zhuo, terrifying assault general, felled by concealed arrows",
+    "deedsZh": "平定黄巾屡立奇功；关东诸侯讨董卓唯孙坚一路猛进，斩华雄、破吕布、收复洛阳火海祭扫汉陵；私得传国玉玺；征伐刘表时在岘山追击中埋伏被乱箭射死。",
+    "deedsEn": "Vanguard hero who crushed Yellow Turbans; sole coalition general who aggressively routed Dong Zhuo, slaying Hua Xiong and liberating Luoyang; felled in ambush.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "展现一往无前的冲锋气概与英雄本色。在全联盟普遍畏敌裹足不前、争权夺利时，敢于孤军深入痛击逆贼，以无可置疑的战绩树立天下威望。",
+    "strengthAdviceEn": "Lead from the absolute front when cowardly allies dither; charge into enemy citadels to establish legendary prestige while others bicker over petty turf.",
+    "weaknessAdviceZh": "切莫贪功冒进、单骑追击敌军溃兵！在缺乏护卫与侦察的山林狭道中轻率追穷寇，被隐蔽伏兵巨石暗箭偷袭陨命，使霸业在最辉煌时刻骤然断崖。",
+    "weaknessAdviceEn": "Never pursue retreating scouts alone into forested defiles! Falling to concealed crossfire and falling stones cut short his empire in its absolute prime.",
+    "historicalQuoteZh": "董卓惮其勇曰：“关东诸将皆不足虑，唯孙坚小戆，颇能用人，当深备之。”陈寿称：“孙坚勇挚刚毅，孤微发迹，殆亦烈士矣！”",
+    "historicalQuoteEn": "Dong Zhuo admitted in terror: 'All Guandong generals are harmless except Sun Jian, whose fierce ferocity requires supreme caution.'",
+    "auxiliaryStrengthsZh": [
+      "诸侯讨董战役中真正敢打硬仗并收复洛阳废墟的唯一英雄，连破董卓吕布，威震天下",
+      "草莽出身凭一刀一枪杀出天下威名，为孙氏家族奠定了开辟江东最根本的军事政治资产"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sole coalition hero who assaulted Dong Zhuo directly, slaying generals and retaking Luoyang",
+      "Rose from rural obscurity to build the indomitable martial reputation of the Sun clan"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战略定力受制于个人冲动，在岘山战役大胜之后轻骑单身追击残寇中伏身亡",
+      "私藏传国玉玺激化与袁绍、刘表等其他军阀矛盾，政治谋略远逊于其军事战力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Recklessly chased routing enemies alone into wooded cliffs, felled by hidden archers",
+      "Hoarded the Imperial Seal, creating unnecessary diplomatic antagonisms with rival warlords"
+    ]
+  },
+  {
+    "id": "zhou_yu",
+    "nameZh": "周瑜",
+    "nameEn": "Zhou Yu (Gongjin)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "偏将军 · 南郡太守 · 赤壁火攻儒将雅量天花板",
+    "positionEn": "General of the Household · Grand Commander of Wu Navy · Hero of Chibi",
+    "personalityZh": "雄姿英发、年少得志、雅量高致、精通音律、火攻破曹",
+    "personalityEn": "Radiant, dashing military commander, master of naval doctrine and musical refinement, magnanimous, architect of the Chibi firestorm",
+    "deedsZh": "助孙策平定江东；孙权登基总揽水陆兵马；面对曹操八十万大军南下力排众议主战；联合刘备于赤壁以火攻大破曹操锁定三国鼎立；英年早逝于出征巴蜀道中。",
+    "deedsEn": "Co-founded Jiangdong with Sun Ce; supreme commander of Wu forces; championed resistance against Cao Cao; destroyed Cao's fleet at Chibi via fire attack; died at 36.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "正官",
+      "偏财"
+    ],
+    "patternType": "伤官生财格",
+    "strengthAdviceZh": "军事统帅才能与艺术文化修养的绝代巅峰（“曲有误，周郎顾”）。在决定组织生死存亡的终极大决战中，以绝对定力整合资源、施展火攻奇策反杀巨无霸。",
+    "strengthAdviceEn": "Harmonize supreme naval operational command with elite artistic culture; in existential showdowns, deploy audacious asymmetrical fire tactics to crush massive rivals.",
+    "weaknessAdviceZh": "高负荷的战役统筹与实战箭伤对身体健康造成不可逆毁灭。在攻占江陵时肋部中箭，随后仍抱病制定“取蜀兼张鲁”大战略，终因创伤感染英年早逝。",
+    "weaknessAdviceEn": "Ignore severe combat trauma at mortal peril; wounded by a crossbow bolt at Jiangling, he drove himself through exhausting campaigns until fatal infection claimed him at 36.",
+    "historicalQuoteZh": "孙权称曰：“公瑾有王佐之资，今忽短命，孤何赖哉！”苏轼词云：“遥想公瑾当年，小乔初嫁了，雄姿英发。羽扇纶巾，谈笑间，樯橹灰飞烟灭。”",
+    "historicalQuoteEn": "Sun Quan wept: 'Gongjin possessed king-maker talent; dying early leaves me bereft!' Su Shi celebrated him: 'Talking and laughing while mighty enemy fleets turned to ash.'",
+    "auxiliaryStrengthsZh": [
+      "赤壁之战最高总指挥，以数万人逆风火攻彻底粉碎曹操统一全国神话，确立数百年分裂对峙格局",
+      "雅量高致深得人心，程普自恃年长屡次凌辱周瑜，周瑜始终折节容忍，终令程普叹服认错"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme architect of Chibi, orchestrating the allied fleet that crushed Cao Cao's navy",
+      "Vast magnanimity: softened elderly rival Cheng Pu's insults with unflinching courtesy"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "为攻克江陵亲临一线中箭伤及内脏，在重伤未愈时仍极度透支推演伐蜀，导致生命过早折断",
+      "提出“吞并益州汉中、二分天下”战略过于宏大激进，超出当时东吴实际远征承载力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Drove his feverish body through endless marches after a severe chest wound, dying at 36",
+      "His grand two-part empire plan to march into western Sichuan was logistically overextended"
+    ]
+  },
+  {
+    "id": "lu_su",
+    "nameZh": "鲁肃",
+    "nameEn": "Lu Su (Zijing)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "横江将军 · 汉昌太守 · 榻上策奠定联刘抗曹战略总师",
+    "positionEn": "General Who Crosses the River · Master Strategist of Sun-Liu Alliance",
+    "personalityZh": "大智若愚、高瞻远瞩、敦厚信义、仗义疏财、战略定海神针",
+    "personalityEn": "Broad-minded macro strategist, honest and reliable, generous with family wealth, architect of the Southern Alliance against Northern dominance",
+    "deedsZh": "倾尽家产以粮米周济周瑜；向孙权提出“榻上策”规划三分天下蓝图；赤壁战前力排众议促成孙刘联盟；周瑜死后接掌都督，单刀会面关羽维护联盟大局。",
+    "deedsEn": "Financed Zhou Yu with grain storehouses; delivered the 'Couch Strategy' long-term roadmap; forged the Sun-Liu alliance; succeeded Zhou Yu, maintaining peace with Guan Yu.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正财",
+      "正官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "顶级宏观战略家与首席外交架构师。善于在狂风暴雨中把握“谁是主要矛盾、谁是次要矛盾”，以极大的胸襟维护核心战略联盟，绝不因眼前小利失大局。",
+    "strengthAdviceEn": "Elite geopolitical architect; focus ruthlessly on the primary strategic contradiction, tolerating friction with allies to keep the united front intact.",
+    "weaknessAdviceZh": "在精明利己的现实政治博弈中，过度注重信义与长远联盟有时会被盟友（如关羽、刘备）视为软弱可欺，在具体利益切割（荆州借还）时必须搭配刚性威慑。",
+    "weaknessAdviceEn": "Excessive faith in diplomatic gentlemen's agreements invites exploitation by opportunistic allies; back diplomatic patience with iron military deterrence.",
+    "historicalQuoteZh": "孙权登基追忆曰：“昔鲁子敬尝说此，可谓明于事势矣。”陈寿评：“鲁肃建独断之明，出众人之表，实奇才也！”",
+    "historicalQuoteEn": "Sun Quan recollected on coronation: 'Lu Su predicted this long ago; he understood the grand sweep of history.' Chen Shou praised his unique clarity of strategic vision.",
+    "auxiliaryStrengthsZh": [
+      "东吴第一宏观战略大师，“榻上策”比诸葛亮《隆中对》更早提出鼎足江东战略规划",
+      "赤壁战前全东吴文臣劝降孙权，唯鲁肃清醒力谏抵抗，为东吴立国保住唯一的生存血脉"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Preceded Longzhong with his Couch Strategy, mapping out southern empire independence",
+      "Sole civilian minister who fiercely opposed surrender before Chibi, saving Wu's sovereignty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在具体地缘争端谈判中过于隐忍顾全大局，在荆州三郡借调问题上缺乏刚性约束条款",
+      "过早逝世使东吴失去唯一能强力维系孙刘联盟的定海神针，随后引发吴蜀大火拼"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly trusting in alliance goodwill, failing to secure enforceable boundaries for Jingzhou",
+      "Early death removed the sole statesman capable of restraining Sun Quan from attacking Guan Yu"
+    ]
+  },
+  {
+    "id": "lu_meng",
+    "nameZh": "吕蒙",
+    "nameEn": "Lu Meng (Ziming)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "南郡太守 · 孱陵侯 · 白衣渡江吴下阿蒙逆袭典范",
+    "positionEn": "Governor of Nanjun · Mastermind of the White-Robe River Crossing",
+    "personalityZh": "勇猛精进、折节好学、胆气过人、白衣渡江、夺荆斩将",
+    "personalityEn": "Illiterate combat brawler turned brilliant strategic scholar ('Scholarly Lu Meng'), architect of deception and surgical territorial conquest",
+    "deedsZh": "早期勇猛善战吴下阿蒙；受孙权劝学奋发苦读，鲁肃叹曰“非复吴下阿蒙”；设计白衣渡江、伪装商贾奇袭荆州各隘口，擒杀关羽全取荆州；功成后突发疾病去世。",
+    "deedsEn": "Evolved from illiterate fighter into profound scholar; engineered the disguised merchant fleet crossing that conquered Jingzhou and trapped Guan Yu; died shortly after.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "历史上最励志的“认知升维与逆袭范本”。从一介武夫苦读兵书蜕变为一代统帅；善于实施极具欺骗性的隐蔽伪装，在对手防线盲区发动致命一击。",
+    "strengthAdviceEn": "The ultimate model of cognitive upskilling; evolve from a blunt frontline fighter into an elite grand commander, using deceptive camouflage to strike rival blindspots.",
+    "weaknessAdviceZh": "彻底打破了吴蜀联盟的地缘平衡，引发刘备倾国伐吴的灭顶危机；在战役斩首关羽之后突发恶疾早逝，在重大地缘胜利后必须防范身心能量的大透支。",
+    "weaknessAdviceEn": "Shattering the alliance balance provoked Liu Bei's catastrophic Yiling offensive; dying of illness directly after triumph warns against physical exhaustion.",
+    "historicalQuoteZh": "孙权赞曰：“人长而益进，如吕蒙、蒋钦者，过人之意，不可及也。图取关羽，胜于子敬。”陈寿评：“吕蒙勇而有谋断，识拔奇才，诱擒关羽，最为精密。”",
+    "historicalQuoteEn": "Sun Quan marveled: 'Lu Meng's self-transformation is beyond all peers; his capture of Guan Yu surpassed Lu Su.' Chen Shou praised his surgical operational planning.",
+    "auxiliaryStrengthsZh": [
+      "“士别三日当刮目相看”，中国历史上通过后天自我重塑完成阶层与认知跃迁的无上楷模",
+      "“白衣渡江”偷袭荆州是世界特种作战史上的经典杰作，以几乎零伤亡全取千里战略要地"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme historical role model of relentless self-education and intellectual transformation",
+      "The White-Robe River Crossing stands as a masterpiece of special infiltration warfare"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "斩杀关羽虽全盘收割荆州地利，却亲手引爆了吴蜀长达数年的生死仇杀与全面战争危机",
+      "攻占南郡后身体迅速垮台病死，高负荷的战术推演消耗了他本已脆弱的健康"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Executing Guan Yu ignited bloody retaliatory warfare with Shu, nearly costing Wu its existence",
+      "Collapsed and died immediately after conquest, his body consumed by intense operational stress"
+    ]
+  },
+  {
+    "id": "lu_xun",
+    "nameZh": "陆逊",
+    "nameEn": "Lu Xun (Boyan)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "丞相 · 荆州牧 · 江陵侯 · 夷陵火攻书生都督",
+    "positionEn": "Imperial Chancellor · Grand Defender of Wu · Hero of the Yiling Wildfire",
+    "personalityZh": "沉稳深晦、深藏不露、后发制人、火攻连营、晚年见疑",
+    "personalityEn": "Scholarly, supremely patient commander, deceptively humble to lull opponents into fatal traps, master of counter-offensive wildfire, tragic late purges",
+    "deedsZh": "韬光养晦写卑辞迷惑关羽促吕蒙奇袭；夷陵之战坚壁清野半年，火烧刘备连营七百里大获全胜；石亭之战击溃曹休；晚年卷入孙权太子党争被孙权严责忧愤而死。",
+    "deedsEn": "Flattered Guan Yu with humble letters to enable the Jingzhou raid; defeated Liu Bei at Yiling by burning his 700-li line; broke Cao Xiu; ruined by Sun Quan's court purges.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "正财"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "“后发制人”与战略耐心的最高统帅。在全军叫嚣进攻与强敌狂攻面前，拥有如磐石般的心理定力；待对手疲惫暴露破绽，以火攻一战定乾坤。",
+    "strengthAdviceEn": "Supreme avatar of strategic patience; hold lines calmly while rivals overextend, then strike with concentrated wildfire to annihilate the enemy in a single blow.",
+    "weaknessAdviceZh": "军功盖世的大帅千万不可深度介入最高权力的“立嗣皇统争端”！身居相位的陆逊因卷入太子与鲁王党争，屡遭孙权责难，忧愤呕血而死是千古警钟。",
+    "weaknessAdviceEn": "A grand marshal must never plunge into dynastic succession civil wars; becoming embroiled in crown prince rivalries invited Sun Quan's fury, dying of heartbreak.",
+    "historicalQuoteZh": "《三国志》评：陆逊见识渊深，智勇兼备。火烧连营，破蜀军七十万，江东赖以奠安。然晚年被谗见斥，忧愤致卒，古之良将莫不以此为鉴。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Lu Xun possessed boundless depth and courage; his fire assault at Yiling secured Wu for decades. Tragically, royal suspicion broke his heart.",
+    "auxiliaryStrengthsZh": [
+      "夷陵之战以少胜多火烧连营七百里，正面粉碎刘备终生征伐经验，为东吴赢得数十年国祚稳定",
+      "石亭之战算死魏国大司马曹休，展现出野战歼灭战的超高统御水准与全局调度能力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Defeated Liu Bei at Yiling by incinerating 700 li of camps, anchoring Wu's sovereignty",
+      "Smashed Wei grand marshal Cao Xiu at Shiting, executing a textbook field encirclement"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于恪守江东大族儒生士大夫的道德理想，深度卷入孙权立嗣内耗触怒龙颜",
+      "在君主晚年性情暴虐猜忌时缺乏张昭般的隐退自保手段，忧愤自戗，结局极其凄凉"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Involved his immense prestige in palace succession factionalism, infuriating the aging emperor",
+      "Lacked self-preserving retirement agility under a despotic master, dying of heartbroken grief"
+    ]
+  },
+  {
+    "id": "lu_kang",
+    "nameZh": "陆抗",
+    "nameEn": "Lu Kang (Youjie)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大司马 · 荆州牧 · 江陵侯 · 东吴最后名将双壁",
+    "positionEn": "Grand Marshal · Governor of Jingzhou · The Final Shield of Eastern Wu",
+    "personalityZh": "清雅深沉、智谋双全、长于防守、羊陆之交、国运挽歌",
+    "personalityEn": "Noble, tactical genius of riverine and fortress defense, exchanged medicines with Jin rival Yang Hu, the final titan preserving Eastern Wu",
+    "deedsZh": "陆逊次子；都督西陵大破晋将杨肇，平定叛将步阐；筑牢长江防线力阻西晋入侵数十年；与晋名将羊祜互释善意“羊陆之交”；抗亡而吴亡。",
+    "deedsEn": "Son of Lu Xun; recaptured Xiling, crushing Yang Zhao; held Jin forces at bay for decades; shared famous gentlemanly truce with Yang Hu; his death heralded Wu's fall.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "在王朝末世与组织衰亡期，以极高的专业能力与人格魅力独立撑起半壁江山。在战场上用兵如神，在外交上与敌方统帅建立君子般的相互尊重。",
+    "strengthAdviceEn": "Serve as the solitary heroic pillar during an empire's irreversible decline; defend frontiers flawlessly while maintaining chivalrous respect with enemy commanders.",
+    "weaknessAdviceZh": "明知暴君孙皓荒淫误国却无力回天。在最高统治者腐朽狂乱的大环境下，虽屡上治国强兵表章却皆被束之高阁，个人悲剧深嵌于历史大势之中。",
+    "weaknessAdviceEn": "Powerless against the madness of tyrant Sun Hao; all brilliant defense reforms fell on deaf court ears, leaving him to watch the coming apocalypse in sorrow.",
+    "historicalQuoteZh": "晋武帝叹曰：“陆抗若在，朕未易平吴也。”陈寿评：“抗贞亮暗练，踵武前规，实吴之柱石。抗卒而国随亡，天之所废，非抗之过也。”",
+    "historicalQuoteEn": "Emperor Wu of Jin admitted: 'Had Lu Kang lived, conquering Wu would not have been easy.' Chen Shou mourned: 'With Kang's death, the state collapsed; heaven decreed it.'",
+    "auxiliaryStrengthsZh": [
+      "西陵战役以一敌三，同时完成围攻叛将、阻击晋军、修筑双重防御工事，展现顶级工程战术大师素养",
+      "“羊陆之交”展现出中国古代战争史上罕见的高尚君子风度与跨阵营专业互敬"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Masterclass at Xiling: held inner siege while repelling foreign relief armies simultaneously",
+      "Shared the legendary gentleman's truce with Yang Hu, exemplifying chivalric professional honor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "未能改变孙皓荒淫暴虐导致的国内政治腐烂，奏折虽切中时弊却无法推行半分",
+      "长期重压防御战耗尽心力，年仅四十九岁病逝，死后数年东吴彻底覆亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Unable to reform Emperor Sun Hao's despotic palace rot, watching defense funds squandered",
+      "Extreme command pressure broke his health, dying at 49 shortly before the final collapse"
+    ]
+  },
+  {
+    "id": "zhang_zhao",
+    "nameZh": "张昭",
+    "nameEn": "Zhang Zhao (Zibu)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "辅吴将军 · 娄侯 · 江东内政文臣第一领袖",
+    "positionEn": "General Who Assists Wu · Chief Minister of Domestic Affairs",
+    "personalityZh": "骨鲠方正、严谨肃穆、学问渊博、敢于面折、内政定鼎",
+    "personalityEn": "Stern, fiercely outspoken, pillar of civil stability, guardian of the treasury, feared and revered for unrelenting candor",
+    "deedsZh": "孙策托孤孙权曰“内事不决问张昭”；孙权初立协助稳定江东内政与豪强人心；赤壁战前主张降曹留存基业遭孙权冷落；晚年多次抗颜直谏，孙权至其宅前焚门请见。",
+    "deedsEn": "Entrusted by Sun Ce ('Consult Zhang Zhao on domestic affairs'); stabilized early administration; advocated surrender at Chibi; spoke blistering truths that made Sun Quan burn his gate to apologize.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "卓越的大后方行政总管与内政基石。在领袖幼弱、人心惶惶时以深厚资望与制度严整稳定全盘；敢于做直言不讳的批评者。",
+    "strengthAdviceEn": "Bedrock administrator and domestic stabilizer; anchor governance during young leadership transitions through sheer institutional stature and procedural rigor.",
+    "weaknessAdviceZh": "在重大国运对决的历史关口（赤壁之战）过于迷信纸面实力对比而主张妥协投降，成为一生政治声誉的最大污点，失去了担任最高丞相的资格。",
+    "weaknessAdviceEn": "Coldly calculating paper strength led him to urge capitulation before Chibi, leaving a permanent stain that barred him from the supreme chancellorship.",
+    "historicalQuoteZh": "孙权尝称：“孤与张公言，不敢妄也。”陈寿评：“张昭受遗辅佐，功勋克举，忠謇方直，动有表式。然赤壁之谋，几至倾败，此其失也。”",
+    "historicalQuoteEn": "Sun Quan admitted: 'When speaking with Master Zhang, I dare not speak flippantly.' Chen Shou praised his administrative loyalty while critiquing his Chibi appeasement.",
+    "auxiliaryStrengthsZh": [
+      "江东立国第一内政总管，“外事不决问周瑜，内事不决问张昭”，一手稳固东吴经济基本盘",
+      "骨鲠敢谏天下少有，孙权酗酒狂欢时当面怒斥，乃至孙权烧门请罪，威望卓绝"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Chief civilian administrator of Wu, stabilizing taxation, law, and aristocratic clans",
+      "Fearless truth-teller who publicly rebuked Sun Quan's drunken excesses until the emperor apologized"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "赤壁战役前夕率领全体文官主张投降曹操，缺乏在绝境中誓死一搏的战略血性",
+      "性格过于刚直固执不懂妥协退让，与孙权君臣关系长期处于剧烈冲突与别扭状态"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Led civilian bureaucrats in urging surrender to Cao Cao at Chibi, lacking martial defiance",
+      "Abrasive stubbornness created chronic, exhausting palace feuds with Emperor Sun Quan"
+    ]
+  },
+  {
+    "id": "zhang_hong",
+    "nameZh": "张纮",
+    "nameEn": "Zhang Hong (Zigang)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "长史 · 迁都建业定鼎第一文臣",
+    "positionEn": "Chief Clerk · Architect of Capital Relocation to Jianye",
+    "personalityZh": "辞气慷慨、见识高远、善作辞赋、敦厚谦抑、定鼎金陵",
+    "personalityEn": "Eloquent, high-minded literary statesman, humble diplomat, visionary urban geographer who persuaded Sun Quan to make Nanjing the capital",
+    "deedsZh": "与张昭并称“江东二张”；劝进孙策开辟霸业；出使许昌结好朝廷；临终前极力劝说孙权迁都秣陵（建业/今南京），奠定六朝古都建业帝王之基。",
+    "deedsEn": "Celebrated alongside Zhang Zhao as the 'Two Zhangs'; drafted founding manifests for Sun Ce; persuaded Sun Quan on his deathbed to relocate the capital to Nanjing.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "具备极高宏观地缘战略与政治文化格局。善于在关键时刻提出奠定数百年国运的顶层建议（如迁都定鼎）；为人谦和内敛，人际关系圆融。",
+    "strengthAdviceEn": "Master of macroscopic geopolitical urbanization; formulate generational decisions like imperial capital selection; balance vision with diplomatic elegance.",
+    "weaknessAdviceZh": "长于文采华章与使节连横，面对内部军头与外部战争缺乏直接的强硬手腕，在实际权力角逐中往往让位于军权统帅。",
+    "weaknessAdviceEn": "Literary grace and civil diplomacy take a back seat to raw warlord command during violent succession crises, limiting direct military executive power.",
+    "historicalQuoteZh": "孙权每称：“张子纲言事，无不中理。其定都秣陵，万世之利也。”陈寿赞其“文辞赡富，意气高远，吴之良佐也”。",
+    "historicalQuoteEn": "Sun Quan praised: 'Zhang Zigang never gave flawed counsel; his vision to crown Jianye as our capital serves our state for ten thousand generations.'",
+    "auxiliaryStrengthsZh": [
+      "定都建业（南京）的真正奠基人，以无与伦比的地缘风水眼光为东吴及后世六朝奠定帝王之轴",
+      "文采绝伦，起草曹操朝廷往来公文天下称赞，陈琳叹其文笔远胜己身"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architect of Nanjing as imperial capital, choosing the geopolitical anchor for six southern dynasties",
+      "Brilliant court scribe whose diplomatic missives won praise across rival dynasties"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行事偏于书生雅致，在赤壁等决战关头战略决断力稍逊于鲁肃、周瑜等铁血派",
+      "长期驻留许昌为质使他在江东本土权势网络的深耕不如张昭深厚"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Scholarly refinement lacked the battlefield ferocity of warlords in existential crises",
+      "Years spent in northern courts detached him somewhat from Jiangdong's local power base"
+    ]
+  },
+  {
+    "id": "zhuge_jin",
+    "nameZh": "诸葛瑾",
+    "nameEn": "Zhuge Jin (Ziyu)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 左都护 · 宣城侯 · 绝代忠恕润滑名臣",
+    "positionEn": "Grand General · Protector of the Left · Paragon of Sincere Loyalty and Trust",
+    "personalityZh": "温良敦厚、容貌长面、至诚无私、善于讽谏、深得天子信任",
+    "personalityEn": "Benevolent, sincere, possessing unshakeable trust from Sun Quan, master of gentle diplomatic arbitration between rival states and warring factions",
+    "deedsZh": "诸葛亮之兄，诸葛恪之父；出仕东吴，深受孙权至高无上的信任，孙权称其“孤与子瑜，有死生不易之誓”；夷陵之战写信劝刘备息兵；长期充当吴蜀联盟最稳固的情感纽带。",
+    "deedsEn": "Elder brother of Zhuge Liang; Sun Quan swore eternal fidelity to him; pleaded with Liu Bei to halt the Yiling war; anchored the Wu-Shu alliance through kinship diplomacy.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "以“无可挑剔的至诚与忠信”建立最高领导者的绝顶信任。哪怕亲弟诸葛亮为蜀汉丞相、外部风言风语不断，依然稳如泰山，善用温和劝谏扭转大局。",
+    "strengthAdviceEn": "Forge absolute, unshakeable trust with paranoid monarchs through transparent sincerity; deflect treason slanders effortlessly while gently softening executive fury.",
+    "weaknessAdviceZh": "治家不严是其晚年最大的隐患。深知儿子诸葛恪才高气傲、自作聪明，屡次哀叹“此儿非保家之主也，必引大祸”，却未能坚决遏止，终致满门抄斩。",
+    "weaknessAdviceEn": "Flawed domestic discipline ruins clans; saw clearly that his son Zhuge Ke's arrogance would destroy the family, yet failed to suppress it, leading to extermination.",
+    "historicalQuoteZh": "孙权叹曰：“孤与子瑜，可以说是腹心之友矣。外人言子瑜有贰心，孤以白刃断之！”陈寿评：“诸葛瑾敦厚忠信，以纯粹事君，古之良臣也。”",
+    "historicalQuoteEn": "Sun Quan proclaimed: 'Ziyu and I share one heart. If anyone slanders him, I shall strike them down!' Chen Shou praised his flawless, spotless integrity.",
+    "auxiliaryStrengthsZh": [
+      "深得孙权终身不可动摇的至高信任，哪怕亲弟弟在敌国当丞相也从未遭到半分猜疑",
+      "极高情商的委婉谏诤艺术，善于以春风化雨的方式平息孙权的暴怒，挽救无数获罪同僚"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Enjoyed total trust from paranoid Sun Quan, unmarred even with his brother ruling Shu",
+      "Master of gentle diplomatic persuasion, saving many doomed colleagues from imperial wrath"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "军事统帅战绩平平，襄阳、江陵多次出击战术平庸，缺乏野战制胜的凌厉霸气",
+      "对其长子诸葛恪的狂妄刚愎虽有预见却无力约束，最终全族被诛断绝血食"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Mediocre battlefield record, lacking offensive tactical sharpness in land campaigns",
+      "Foresaw his son Zhuge Ke's fatal arrogance but failed to avert his clan's total slaughter"
+    ]
+  },
+  {
+    "id": "gu_yong",
+    "nameZh": "顾雍",
+    "nameEn": "Gu Yong (Yuantan)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "丞相 · 醴陵侯 · 沉默寡言十九载宰辅",
+    "positionEn": "Imperial Chancellor · Marquis of Liling · Taciturn Anchor of Wu Governance",
+    "personalityZh": "沉静威重、不苟言笑、居安思危、秘而不泄、内敛大德",
+    "personalityEn": "Grave, silent, never laughing flippantly, retaining supreme executive secrets, nineteenth-year chancellor praised for quiet stability",
+    "deedsZh": "师从蔡邕，精通琴法书法；为相十九年，朝廷无论巨细皆平稳推进，孙权对其敬畏有加；推选人才不以私情，退朝不言公事家属不知其政。",
+    "deedsEn": "Studied under Cai Yong; served as chancellor for 19 years with calm dignity; Sun Quan treated him with awe; recommended talent strictly on merit.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "将“沉默与慎独”化作最高管理艺术。不拉帮结派，在最高决策层做深不可测的制度定海神针；推举贤能只看客观功绩，永保组织公正清明。",
+    "strengthAdviceEn": "Master the high art of executive silence; shun cliques and anchor organizational equilibrium with unreadable discretion and incorruptible appointments.",
+    "weaknessAdviceZh": "过于沉静寡言与顺从君主，在孙权晚年滥杀无辜、朝局滑向残酷内耗时，缺乏强力抵制与面折廷争的抗争魄力。",
+    "weaknessAdviceEn": "Excessive silence and deferential discretion limited his ability to curb Sun Quan's violent excesses late in reign; balance silence with heroic moral protest.",
+    "historicalQuoteZh": "孙权每称：“顾公在坐，使孤不自安。”陈寿评：“顾雍方整，内秉纯粹，退朝不谈公事，不汲汲于荣利，江东之长相也。”",
+    "historicalQuoteEn": "Sun Quan admitted: 'When Chancellor Gu is present, I dare not act frivolously.' Chen Shou praised his nineteen years of quiet, steady imperial stewardship.",
+    "auxiliaryStrengthsZh": [
+      "东吴在位时间最长丞相（十九载），以超凡的沉稳威严维系了东吴官僚体系平稳运转",
+      "推贤举能毫无私心，不结党不营私，离朝之后绝口不谈公事，保密意识天花板"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Longest-serving chancellor (19 years), preserving administrative continuity through silent gravity",
+      "Pristine meritocracy: promoted talents without factional favor, keeping absolute state secrecy"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "面对孙权晚年日益滋长的暴虐与苛政偏向沉默顺从，缺乏周瑜张昭的刚烈抗颜之力",
+      "性格过于严谨拘束，官场作风偏向守成，缺乏制度开拓性重构气魄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive reticence allowed Sun Quan's late cruelties to grow unchecked without public dissent",
+      "Hyper-cautious bureaucratic mindset favored preservation over bold institutional innovation"
+    ]
+  },
+  {
+    "id": "bu_zhi",
+    "nameZh": "步骘",
+    "nameEn": "Bu Zhi (Zishan)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "丞相 · 临湘侯 · 镇抚交州开辟南疆名相",
+    "positionEn": "Imperial Chancellor · Marquis of Linxiang · Pacifier of Southern Borderlands",
+    "personalityZh": "宽弘雅量、治乱抚夷、精通文武、敦厚清俭、喜怒不形于色",
+    "personalityEn": "Magnanimous, master of southern pacification, unruffled by insult, balancing scholarly statecraft with decisive frontier military command",
+    "deedsZh": "早年种瓜自给不以为耻；出任交州刺史，诱斩叛乱头领吴巨，威服南岭各部平定交广；西陵驻防二十载恩信大著；代陆逊为相，性情俭素无华。",
+    "deedsEn": "Cultivated melons in poverty without shame; pacified Jiaozhou by outwitting rebel Wu Ju; governed southern borders for twenty years; succeeded Lu Xun as chancellor.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "食神"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "兼备宏观战略定力与微观地缘治理智慧。在恶劣偏远的边陲环境中，以极高的个人忍耐力与精准决断力整合异族部落实权，为帝国拓展南部屏障。",
+    "strengthAdviceEn": "Combine strategic patience with frontier mastery; pacify lawless regions through personal endurance and surgical force, expanding national borders.",
+    "weaknessAdviceZh": "在东吴晚年恶性党争中，一度偏向鲁王孙霸，卷入二宫之争泥潭，为其一生清白声誉抹上了一层政治投机的阴影。",
+    "weaknessAdviceEn": "Tangled his influence in the toxic succession struggle by backing Prince Sun Ba, staining an otherwise unblemished reputation with partisan factionalism.",
+    "historicalQuoteZh": "《三国志》评：步骘宽弘得众，喜怒不形于色，虽在戎旅，手不释卷。南抚交阯，内赞朝纲，允文允武，一代贤相也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Bu Zhi was magnanimous, unruffled in temper, reading constantly in camp; he pacified the south and governed the state with distinction.",
+    "auxiliaryStrengthsZh": [
+      "单骑入交州平定割据巨寇，为东吴彻底拿下交广两州广大疆域，奠定帝国南疆版图",
+      "身兼文武、手不释卷，西陵驻守二十年间军民爱戴，敌国西晋名将羊祜亦敬其威信"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pacified southern warlords single-handedly, incorporating modern Guangdong and Vietnam into Wu",
+      "Cultured frontier marshal beloved for 20 years at Xiling, earning respect even from rival Jin generals"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年卷入孙和与孙霸的立嗣夺嫡内耗，站队鲁王派系，损害了辅政重臣的中立超然地位",
+      "对家族门阀的利益维护意识较重，步氏家族在东吴中后期逐渐演化为割据藩镇"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Compromised neutral chancellorship by taking sides in the bitter imperial succession civil war",
+      "Fostered family clan interests that later rebelled against the imperial throne at Xiling"
+    ]
+  },
+  {
+    "id": "taishi_ci",
+    "nameZh": "太史慈",
+    "nameEn": "Taishi Ci (Ziyi)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "建昌都尉 · 折冲将军 · 笃烈重义信义名将",
+    "positionEn": "Chief Commandant of Jianchang · Champion of Chivalric Fidelity · Peerless Marksman",
+    "personalityZh": "信义笃烈、猿臂善射、弦不虚发、胆气过人、壮志未酬",
+    "personalityEn": "Chivalric, peerless marksman who pinned enemies' hands to ramparts with arrows, fiercely devoted to sworn word, dying with unfulfilled ambitions at 41.",
+    "deedsZh": "单骑突围孔融北海之围求援刘备；神亭岭与孙策单挑大战难分胜负；降策后受命招抚刘繇残部数千人如期归附信义动天地；镇守海昏遏制刘磐；壮志未酬早逝。",
+    "deedsEn": "Broke through Beihai siege alone to summon Liu Bei; fought Sun Ce in epic duel; recruited thousands of defeated troops on his word of honor; died at 41 lamenting uncarried swords.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以“无可动摇的信义名声”赢得天下枭雄的至高托付。言出必行，敢于以命作保招抚散兵游勇；临阵神准射术与无前胆气足以震慑万军。",
+    "strengthAdviceEn": "Leverage immaculate fidelity to win supreme executive trust; honor promises unconditionally while deploying peerless combat marksmanship.",
+    "weaknessAdviceZh": "壮志难酬的叹息警示后人必须爱惜身心！临终叹曰“丈夫生世，当带七尺之剑，以升天子之阶；今所志未从，奈何而死！”莫让过度激愤与郁结损耗寿命。",
+    "weaknessAdviceEn": "Unfulfilled ambition can breed lethal emotional exhaustion; died at 41 weeping over unrealized imperial goals, warning against dying of frustrated pride.",
+    "historicalQuoteZh": "孙策叹曰：“太史子义，青州名士，吾得之，胜得十万军也！”临终叹曰：“大丈夫生于乱世，当带七尺之剑以升天子之阶。今所志未从，奈何而死！”",
+    "historicalQuoteEn": "Sun Ce exclaimed: 'Winning Taishi Ci is worth 100,000 troops!' On his deathbed at 41, he wept: 'A real man should wield a sword to the imperial steps; why must I die so soon!'",
+    "auxiliaryStrengthsZh": [
+      "信义无双，受孙策委托招抚刘繇败兵数千，众人皆谓必去不反，太史慈如期率全军归附，名震天下",
+      "三国箭术天花板之一，神亭岭单挑孙策、城楼一箭射穿敌将反手钉死在护梁上"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Spotless fidelity: rallied 10,000 defeated troops on his word of honor when peers predicted betrayal",
+      "Peak archer: pinned a defending general's hand to the city rampart with a single arrow"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "功业主要体现于战役级冲锋与边陲羁縻，未能主导决定国家战略命运的顶级方面战役",
+      "性情孤傲激昂，在功业未竟时郁结难舒，年仅四十一岁英年早逝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Feats were confined to regional border skirmishes rather than commanding macro theater wars",
+      "Consumed by unfulfilled ambition and burning frustration, dying prematurely in his prime"
+    ]
+  },
+  {
+    "id": "gan_ning",
+    "nameZh": "甘宁",
+    "nameEn": "Gan Ning (Xingba)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "折冲将军 · 西陵太守 · 锦帆百骑劫魏营虎臣",
+    "positionEn": "General Who Breaks Enemy Lines · The Brocade Corsair · Hundred-Rider Camp Raider",
+    "personalityZh": "勇悍果烈、游侠意气、锦帆水匪、身先士卒、百骑劫营",
+    "personalityEn": "Fearless corsair turned peerless naval stormtrooper, sporting brocade sails, legendary night raid with 100 riders without losing a single man",
+    "deedsZh": "早年江面游侠号“锦帆贼”；投东吴后屡出奇计破黄祖；濡须口之战率百名敢死队夜袭曹操四十万大营，全身而退，孙权赞“孟德有张辽，孤有甘兴霸”。",
+    "deedsEn": "Former pirate captain; captured Jiangxia for Wu; staged the historic night raid on Cao Cao's camp with 100 riders, killing dozens and returning with zero casualties.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "特种突击与心理震慑战的世界级大师。善于组织小规模特种死士在至暗时刻穿透敌方庞大系统，以压倒性的野性胆魄粉碎对手士气。",
+    "strengthAdviceEn": "Supreme master of asymmetric night raids and special operations; deploy small elite units into the belly of massive corporate rivals to shatter their confidence.",
+    "weaknessAdviceZh": "匪气未除与性格狂暴是重大短板。曾因小事射杀厨房小童并违背吕蒙承诺；性格冲动、好杀任侠，容易在非战时激化组织内部恶性冲突。",
+    "weaknessAdviceEn": "Pirate wildness and short temper court fatal backlash; murdered a servant boy in rage, nearly sparking internal firefights with colleagues like Lu Meng.",
+    "historicalQuoteZh": "孙权大喜曰：“孟德有张辽，孤有甘兴霸，足相敌也！”陈寿评：“甘宁勇而有谋，断而能济，粗猛好杀，然仗义疏财，深得士卒心。”",
+    "historicalQuoteEn": "Sun Quan beamed: 'Cao Cao has Zhang Liao, but I have Gan Xingba; we are perfectly matched!' Chen Shou praised his daring generosity despite his rough cruelty.",
+    "auxiliaryStrengthsZh": [
+      "百骑夜劫曹营不损一人一骑，创造了中国古代军事特种夜战奇袭的无上神话",
+      "仗义疏财与士卒同甘共苦，每次抢夺或朝廷赏赐全部分予部下，麾下死士争相效死"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary raid of Cao Cao's 400,000-man camp with 100 cavalry, returning without a single casualty",
+      "Generous pirate chieftain who shared all plunder and rewards, inspiring fanatical soldier loyalty"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年水匪习气深入骨髓，性情暴躁滥杀无辜，曾因怒杀童仆与大都督吕蒙险些火拼",
+      "不耐烦受常规官僚体制条框约束，缺乏宏观政治谋略视野"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Brutal temper nearly ignited armed mutiny when he killed a servant against Lu Meng's word",
+      "Impatient with civil governance protocols, unfit for peacetime bureaucratic administration"
+    ]
+  },
+  {
+    "id": "zhou_tai",
+    "nameZh": "周泰",
+    "nameEn": "Zhou Tai (Youping)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "平虏将军 · 汉中太守 · 陵阳侯 · 伤痕如刻铁血死士",
+    "positionEn": "General Who Pacifies Bandits · The Iron Shield of Sun Quan · Body of Scarred Bronze",
+    "personalityZh": "沉勇纯毅、舍生护主、肉体铁壁、忠诚若石、满身创痍",
+    "personalityEn": "Quiet, indestructible combat veteran, shielded Sun Quan with his own body during pirate uprisings, skin carved with dozens of scars like wood",
+    "deedsZh": "宣城之乱面对数千山贼赤身死战护孙权，身中数十创皮肉剥落几乎丧命；濡须口之战再立战功；孙权大会诸将，令周泰解衣裸身指其伤疤痛哭赐青绢盖。",
+    "deedsEn": "Shielded Sun Quan against thousands of bandits at Xuancheng, sustaining dozens of spear wounds; Sun Quan wept while tracing each scar at a state banquet.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "比肩",
+      "正印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以肉身抗下所有毁灭性打击的“终极守护者”。在团队核心面临灭顶之灾时毫不犹豫充当人盾，用血肉长城换取领袖绝对生机，铸就无可撼动的信任。",
+    "strengthAdviceEn": "The ultimate physical shield; absorb mortal punishment for the enterprise during catastrophic ambushes, forging eternal, unshakeable executive bonds.",
+    "weaknessAdviceZh": "专精于近身搏杀与肉盾护卫，兵团指挥才能主要依赖猛冲猛打。在面对复杂大兵团阵地拉锯时，需由智谋型大帅（如陆逊）提供战役规划指导。",
+    "weaknessAdviceEn": "Specialized in ferocious close-quarters guard combat; relies on intellectual commanders like Lu Xun to manage broad operational campaign movements.",
+    "historicalQuoteZh": "孙权指其创痕涕泣曰：“幼平，卿为孤兄弟战如熊虎，不惜躯命，被创数十，肤如刻画，孤亦安得不待卿以骨肉之恩乎！”",
+    "historicalQuoteEn": "Sun Quan wept, tracing his scars: 'You fought like a tiger for my brother and me, skin engraved like wood; how could I treat you as anything less than my own blood!'",
+    "auxiliaryStrengthsZh": [
+      "宣城死战身受几十处穿透性重伤几至昏死，以无可超越的忠烈用肉身托举孙权逃出生天",
+      "满身创痕成为最荣耀的功勋勋章，孙权宴请诸将解衣示创，令全军宿将肃然拜服"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Sustained dozens of spear wounds to shield young Sun Quan, pulled from the brink of death",
+      "His scar-carved body became the ultimate emblem of military honor, silencing envious peers"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "长年血战导致身体机能严重受创摧残，在三国后期较早淡出前线指挥",
+      "行事沉默寡言缺乏大战略谋划，才能严格局限在猛将陷阵维度"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Countless battlefield wounds degraded his physical longevity and stamina in later years",
+      "Taciturn and lacking strategic vision, strictly confined to tactical bodyguard assault"
+    ]
+  },
+  {
+    "id": "huang_gai",
+    "nameZh": "黄盖",
+    "nameEn": "Huang Gai (Gongfu)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "偏将军 · 武陵太守 · 苦肉诈降火烧赤壁老将",
+    "positionEn": "General of the Household · Mastermind of the Chibi Fire Deception",
+    "personalityZh": "忠勇严肃、善于抚民、老谋深算、身先士卒、舍身苦肉",
+    "personalityEn": "Venerable, tough pioneer general, firm administrator, architect of the decisive fire-ship deception that destroyed Cao Cao's navy",
+    "deedsZh": "孙坚起兵最早宿将；赤壁之战向周瑜密献火攻诈降大计，亲率十艘蒙冲斗舰载满薪柴膏油冲入曹军水寨引发滔天烈火；平定武陵少数民族叛乱清廉高效。",
+    "deedsEn": "Earliest veteran of Sun Jian; suggested the fire attack to Zhou Yu at Chibi, leading the ten decoy fire-ships into Cao Cao's fleet to ignite the historic inferno.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "“苦肉计与精准欺骗”的最高操盘手。为了全局战略的终极破局，敢于牺牲个人皮肉与尊严充当诱饵，在最后一击中释放毁天灭地的爆发力。",
+    "strengthAdviceEn": "Execute lethal strategic deception; sacrifice personal vanity and physical comfort to deceive massive competitors, delivering a catastrophic knockout blow.",
+    "weaknessAdviceZh": "在实战进攻中冲锋过于深入。赤壁火起之后身中流箭堕入冰冷江水，若非老将韩当在厕所遗漏处及早认出并施救，一代奇功之臣险些溺死泥淖。",
+    "weaknessAdviceEn": "Frontline assault carried him too far; wounded by an arrow and thrown into freezing water, he nearly died unnoticed in a latrine tent until Han Dang recognized him.",
+    "historicalQuoteZh": "曹操赤壁败走叹中黄盖之谋。《三国志》评：“黄盖姿貌严毅，善于抚众。及破曹公于赤壁，皆盖策也。”",
+    "historicalQuoteEn": "Cao Cao lamented falling to Huang Gai's fire trick. Chen Shou wrote: 'Huang Gai was austere and beloved; destroying Cao Cao's armada at Chibi was his masterstroke.'",
+    "auxiliaryStrengthsZh": [
+      "赤壁火攻的首倡者与一线敢死队指挥官，以十艘火船终结了曹操一统中原的千秋大梦",
+      "主政武陵、山越边陲之地时严明法度，以极其干练的霹雳手段迅速肃清叛乱恢复生产"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Primary instigator and spearhead commander of the Chibi fire fleet that changed Chinese history",
+      "Governed rebellious southern borderlands with iron efficiency, restoring peace rapidly"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战斗中过于冒进险些丧命，赤壁决战落水受冻后被置于战壕厕所旁无人照料险些横死",
+      "治民行政风格偏于严刑峻法，缺乏儒学柔性教化的长远文化建设"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Nearly froze to death unnoticed after falling into the river at Chibi, saved only by luck",
+      "Administrative methods leaned heavily on draconian military law rather than moral education"
+    ]
+  },
+  {
+    "id": "cheng_pu",
+    "nameZh": "程普",
+    "nameEn": "Cheng Pu (Demou)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "荡寇将军 · 江夏太守 · 程公饮醇东吴第一长勋",
+    "positionEn": "General Who Sweeps Away Bandits · Most Venerable Founding Veteran of Wu",
+    "personalityZh": "容貌英特、有智谋、爱士卒、居功矜傲、折节敬贤",
+    "personalityEn": "Stately in bearing, tactical pillar since Sun Jian's uprising, initially proud of seniority yet humbled by Zhou Yu's magnanimity",
+    "deedsZh": "孙坚起兵第一大将，救孙坚于重围；辅佐孙策转战江东立功最多；自恃三朝元老屡次轻慢周瑜，周瑜始终折节相待，程普深感愧服赞“与周公瑾交若饮醇醪”。",
+    "deedsEn": "Top general under Sun Jian, rescued him at Liangdong; served three generations; initially bullied young Zhou Yu, but won over by his grace, praising him as 'fine wine.'",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "拥有无可争议的“资历与战功压舱石”。在团队代际交替中，善于从自恃元老转化为折节敬佩后起之秀，成为新老权力过渡的稳定桥梁。",
+    "strengthAdviceEn": "Leverage immense seniority to stabilize generational succession; transcend archaic tenure arrogance to embrace younger genius, bridging old and new cohorts.",
+    "weaknessAdviceZh": "自恃资历深厚容易对新锐统帅（周瑜）产生倚老卖老的嫉恨与排挤心理；若非对方雅量惊人，极易引爆高层指挥体系的分裂与瘫痪。",
+    "weaknessAdviceEn": "Seniority arrogance invites toxic turf warfare against young leaders; unless met with saintly patience, it fractures joint command structures.",
+    "historicalQuoteZh": "程普感服周瑜叹曰：“与周公瑾交，若饮醇醪，不觉自醉！”陈寿评：“程普最长，诸将皆呼程公。以老自矜，终归谦德，一代名臣也。”",
+    "historicalQuoteEn": "Cheng Pu proclaimed in awe: 'Associating with Zhou Gongjin is like drinking fine mellow wine; you become intoxicated without realizing it!'",
+    "auxiliaryStrengthsZh": [
+      "历仕孙坚、孙策、孙权三代元勋之首，平定江东数十场大战无不身先士卒斩将夺旗",
+      "能克服人性的傲慢心理，主动向晚辈周瑜低头认错同心抗曹，成全了千古君臣佳话"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Venerable pillar across three imperial generations, pivotal in dozens of founding campaigns",
+      "Overcame toxic senior arrogance to apologize to young Zhou Yu, unifying command at Chibi"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "赤壁战前因资历压制年轻都督，险些造成东吴指挥中枢内讧分裂",
+      "性格深处带有传统北方武将的豪粗自负，对南方文官士大夫有轻视心理"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pre-Chibi rivalry with Zhou Yu nearly paralyzed high command on the eve of invasion",
+      "Rough northern warrior vanity occasionally sneered at southern civilian administrators"
+    ]
+  },
+  {
+    "id": "han_dang",
+    "nameZh": "韩当",
+    "nameEn": "Han Dang (Yigong)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "昭武将军 · 益阳侯 · 弓马娴熟三代宿将",
+    "positionEn": "General of Martial Glory · Veteran of Bow and Steed Across Three Reigns",
+    "personalityZh": "便习弓马、膂力过人、爱抚士卒、坚韧善战、老成持重",
+    "personalityEn": "Superb equestrian archer, immense physical strength, beloved by his men, seasoned anchor across thirty years of warfare",
+    "deedsZh": "从孙坚征伐四方，历经百战；赤壁之战随周瑜破曹，在污秽中救起重伤的黄盖；夷陵之战随陆逊破刘备；临阵勇猛善于死战，平定山越屡有大功。",
+    "deedsEn": "Fought beside Sun Jian, Ce, and Quan; saved wounded Huang Gai at Chibi; commanded frontline wings under Lu Xun at Yiling; pacified mountain tribes.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "七杀",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "三十年如一日的“高稳定性实战输出者”。在复杂政治风暴与军事危机中不抢戏、不出格，默默履行每一项作战指令，充当战役防线基石。",
+    "strengthAdviceEn": "The consummate steady producer over thirty years; execute assignments without drama or vanity, serving as an immovable defensive anchor across eras.",
+    "weaknessAdviceZh": "对后代教育与子嗣管理存在重大盲区。韩当死后，其子韩综骄奢淫逸、叛吴降魏，率魏军残害东吴百姓，致使父祖一世清名蒙羞被斩首剖棺。",
+    "weaknessAdviceEn": "Catastrophic failure in parenting; his spoiled son Han Zong defected to Wei after his death, raiding Wu civilians until his severed head was offered at ancestral shrines.",
+    "historicalQuoteZh": "《三国志》评：韩当便弓马，有勇力，随世祖拔涉险阻。赤壁、夷陵，皆立重勋。惜其子韩综叛逆残民，覆其宗祀，悲夫！",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Han Dang was a master of bow and steed, anchoring Chibi and Yiling. Sadly, his treasonous son Han Zong ruined his lineage.",
+    "auxiliaryStrengthsZh": [
+      "东吴四朝元老中军功极稳的常青树，从孙坚讨董到陆逊夷陵破蜀，贯穿东吴全部军史",
+      "赤壁火海乱军之中一眼认出落水受难的黄盖并亲手救起，保全了一代赤壁首功大将"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Evergreen warrior spanning four decades from anti-Dong coalition to the victory at Yiling",
+      "Spotted and rescued the wounded Huang Gai from a freezing latrine trench at Chibi"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "未能管教好独子韩综，死后儿子骄横违法叛投曹魏充当带路党，全族被诛剖棺戮尸",
+      "战略思维受限于具体战术配合，一生处于副帅与偏师从属地位"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Utter failure in raising his son Han Zong, whose bloody treason brought desecration to his tomb",
+      "Operational perspective remained confined to tactical support rather than theater command"
+    ]
+  },
+  {
+    "id": "ling_tong",
+    "nameZh": "凌统",
+    "nameEn": "Ling Tong (Gongji)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "偏将军 · 江夏太守 · 濡须浴血国士断后虎臣",
+    "positionEn": "General of the Household · Champion of Filial Valor · Rearguard Hero of Ruxu",
+    "personalityZh": "英气绝伦、轻财重义、国士之风、渡尽劫波、一笑泯恩仇",
+    "personalityEn": "Gallant, generous with wealth, chivalric peer, traded mortal blood feud with Gan Ning for unbreakable brotherhood in combat",
+    "deedsZh": "继承战死之父凌操兵马，年仅十五岁身先士卒破黄祖；逍遥津惨败拼死掩护孙权登桥脱险，左右亲兵全灭，身负重伤独自伏水潜逃；与杀父仇人甘宁和解成生死莫逆。",
+    "deedsEn": "Inherited father's command at 15; took lethal spear wounds at Xiaoyaojin to ensure Sun Quan leaped the bridge; reconciled mortal blood feud with Gan Ning.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "正印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "具有极高的道德自省与“一笑泯恩仇”的大局观。在生死关头能放下杀父私仇与死敌并肩死战；在惨败绝境中以血肉之躯为统帅换取生路。",
+    "strengthAdviceEn": "Exhibit transcendent moral maturity by extinguishing personal blood feuds to fight side-by-side with rivals; buy escape windows for leaders through raw sacrifice.",
+    "weaknessAdviceZh": "临阵冲杀过于惨烈，频繁身负数十处重创。在合肥之战后身体元气消耗过甚，年仅二十九岁即英年早逝，令人扼腕叹息。",
+    "weaknessAdviceEn": "Excessive physical sacrifice in frontline combat destroys health; taking catastrophic wounds at Xiaoyaojin burned his life force, dying at 29.",
+    "historicalQuoteZh": "孙权痛哭曰：“公绩已死，孤复何赖！”陈寿评：“凌统轻财贵士，亲礼贤能，有国士之风。合肥之难，奋命蔽主，真虎臣也。”",
+    "historicalQuoteEn": "Sun Quan wept inconsolably: 'Gongji is dead; on whom can I rely!' Chen Shou praised: 'Ling Tong shared wealth and respected scholars like an ancient knight.'",
+    "auxiliaryStrengthsZh": [
+      "逍遥津之役全军溃败之际孤身率三百勇士反向冲杀，血战至全员战死掩护孙权跃马过桥",
+      "与射杀生父的甘宁化解私仇，濡须口甘宁一箭救其性命后二人结为莫逆，展现盖世胸襟"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fought backwards against 1,000 elite riders at Xiaoyaojin, buying time for Sun Quan to escape",
+      "Magnanimously extinguished blood feud with his father's killer Gan Ning after shared combat"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战斗中完全不顾个人死活，多次受致命创伤导致脏腑衰竭，二十九岁便英年病逝",
+      "对士卒极为仁爱但有时过于感情用事，麾下三百亲兵全部阵亡令其悲恸欲绝伤及心神"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Brutal wounds broke his physical stamina, cutting short his magnificent career at age 29",
+      "Overwhelming grief over the total annihilation of his beloved 300 guards scarred his heart"
+    ]
+  },
+  {
+    "id": "ding_feng",
+    "nameZh": "丁奉",
+    "nameEn": "Ding Feng (Chengyuan)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 左都护 · 安丰侯 · 雪夜短兵东吴最后名将",
+    "positionEn": "Grand General · Protector of the Left · Hero of the Snowstorm Knife Raid",
+    "personalityZh": "骁勇善战、长于机变、雪中短兵、诛除权逆、国之坚城",
+    "personalityEn": "Fierce, cunning, fighting with stripped torso and throwing knives in snowstorms, master of internal palace decapitation of corrupt regents",
+    "deedsZh": "从基层士卒起步，随甘宁、陆逊转战百胜；东兴之战漫天大雪中命将士脱去重甲手持短刀赤膊冲阵大破魏军；密谋诛杀权臣孙綝迎立景帝；东吴晚期最后台柱。",
+    "deedsEn": "Rose from common foot-soldier; orchestrated the famous bare-chested snowstorm raid at Dongxing to rout Wei; executed the palace coup that eliminated tyrant Sun Chen.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "从底层摸爬滚打成长起来的“全天候全能实战家”。在暴风雪极端天候下善于反常理用兵（赤膊短刃冲锋）；在朝廷政变中雷厉风行斩杀权奸。",
+    "strengthAdviceEn": "The ultimate all-weather veteran rising from the ranks; deploy counter-intuitive blitzkriegs in blizzards (stripping armor for speed); purge tyrants decisively.",
+    "weaknessAdviceZh": "晚年倚仗老臣功勋渐生骄纵之气，与朝中部分新贵关系紧张；死后因孙皓暴虐被翻旧账，家属被流放，需警惕晚期政治软着陆防线。",
+    "weaknessAdviceEn": "Seniority pride late in life alienated rising court elites; Emperor Sun Hao exiled his family after his death, warning of the need for smooth succession insulation.",
+    "historicalQuoteZh": "《三国志》评：丁奉奋武行间，以骁勇自显。东兴之捷，雪中奋刀，其断果可比古之良将。诛除孙綝，社稷奠安，立功两朝，吴之名将也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Ding Feng rose from common ranks by raw bravery. His bare-chested knife charge in the snow at Dongxing rivaled ancient legends.",
+    "auxiliaryStrengthsZh": [
+      "东兴大捷“雪中奋短兵”，在零下风雪中脱甲卸胄奇袭魏军大营，创造了三国最著名的风雪奇袭战",
+      "朝堂政变中临危受命，在宴会上以雷霆手段当场擒杀专横权臣孙綝，拯救东吴皇室于危难"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Orchestrated the miraculous snow raid at Dongxing, stripping armor to catch Wei forces drunk",
+      "Executed the decisive palace coup during a state banquet to eliminate the murderous regent Sun Chen"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年自恃开国宿将威望渐显刚愎骄横，对后进青年将领缺乏包容",
+      "未能建立稳固的家族政治保护伞，去世后家族遭孙皓清算流放"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Grew arrogant and intolerant of junior officers in his advanced old age",
+      "Failed to insulate his family from tyrant Sun Hao, who exiled his clan posthumously"
+    ]
+  },
+  {
+    "id": "xu_sheng",
+    "nameZh": "徐盛",
+    "nameEn": "Xu Sheng (Wenxiang)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "安东将军 · 芜湖侯 · 疑城百里吓退魏帝名将",
+    "positionEn": "General Who Pacifies the East · Mastermind of the Hundred-Li Fake Citadel",
+    "personalityZh": "勇武沉毅、深通兵机、坚壁奇谋、严整军纪、智退十万",
+    "personalityEn": "Daring, brilliant defense engineer, constructed a hundred-li fake wooden fortress overnight to terrify Emperor Cao Pi into retreat",
+    "deedsZh": "赤壁、合肥屡立战功；夷陵之战随陆逊攻破刘备大营；曹丕亲率大军伐吴，徐盛力排众议在数百里江岸连夜扎结假城楼树立假稻草人守军，曹丕叹“魏虽武千群无所用之”退兵。",
+    "deedsEn": "Veteran of Chibi and Yiling; when Cao Pi invaded Wu with a massive army, built hundreds of li of fake wooden battlements overnight, forcing Cao Pi to retreat in despair.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "战略欺诈与防御工程学的旷世天才。善于利用宏大的“心理视错觉与信息不对称”，以极低成本筑起假城防线，不战而屈敌国之兵。",
+    "strengthAdviceEn": "Genius in grand strategic deception and structural camouflage; manufacture massive psychological illusions that convince superior invaders to abort without a fight.",
+    "weaknessAdviceZh": "早期性情过于刚烈，曾因受同僚张昭等人严厉批评而当面顶撞出走。必须学会将刚硬的战术执行力与柔性的官僚沟通有效结合。",
+    "weaknessAdviceEn": "Abrasive temper in youth led to bitter disputes with civilian superiors like Zhang Zhao; temper frontline combat rigidity with political diplomacy.",
+    "historicalQuoteZh": "魏文帝曹丕见百里疑城临江叹曰：“魏虽有武骑千群，无所用也，徒自穷耳！”遂引军退走。陈寿评：“徐盛忠勇沉毅，以谋致胜，有古将之风。”",
+    "historicalQuoteEn": "Cao Pi gazed at the hundred-li fake citadel and sighed: 'Though Wei possesses myriad cavalry, they are useless here!' Chen Shou praised his cunning defense.",
+    "auxiliaryStrengthsZh": [
+      "百里疑城妙计名垂千古，以芦苇木材筑起假城墙直接逼退曹丕数万精锐，展现顶级心理战功力",
+      "夷陵之战抓取战机极其敏锐，率先突破蜀军多处据点，战术进攻执行力极强"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Built a 100-li fake fortress overnight along the Yangtze, bluffing Cao Pi into abandoning invasion",
+      "Sharp eye for tactical openings at Yiling, spearheading breaches through Shu's fortified camps"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情耿直容易得罪东吴朝廷中的江东本土士族派系，早期升迁之路历经波折",
+      "军事才能偏重于防御工程与阵地心理对抗，缺乏大纵深长途奔袭的野战记录"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Blunt demeanor alienated entrenched Jiangdong aristocrats, slowing his early promotions",
+      "Specialized heavily in static fortress engineering and psychological bluffs over mobile cavalry wars"
+    ]
+  },
+  {
+    "id": "zhuge_ke",
+    "nameZh": "诸葛恪",
+    "nameEn": "Zhuge Ke (Yuanxun)",
+    "dynastyZh": "东吴",
+    "dynastyEn": "Eastern Wu",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太傅 · 阳都侯 · 才高震主狂妄断宗权臣",
+    "positionEn": "Grand Tutor · Marquis of Yangdu · Tragic Genius Destroyed by Megalomania",
+    "personalityZh": "辩才无双、才高八斗、刚愎自负、轻敌冒进、满门诛灭",
+    "personalityEn": "Peerlessly witty intellectual, brilliant young reformer, yet blinded by monstrous megalomania and reckless vanity, bringing total clan slaughter",
+    "deedsZh": "诸葛瑾之长子；自幼以机智骑驴讽刺孙权名震朝野；平定山越获精兵四万；东兴之战大破司马师魏军声威达到顶峰；随后狂妄盲目伐淮南攻新城大败；遭孙峻兵变诛灭三族。",
+    "deedsEn": "Son of Zhuge Jin; famed for childhood wit; pacified mountain tribes; won massive victory against Wei at Dongxing; intoxicated by success, routed at Hefei and murdered.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "劫财",
+      "偏财"
+    ],
+    "patternType": "伤官见官格",
+    "strengthAdviceZh": "智商与辩才的绝顶天才。在少年与初入职场时能以极高的创造力与魄力迅速打破沉闷死局，平定山越展现出惊人的治理整合力。",
+    "strengthAdviceEn": "Blazing cognitive intellect and razor-sharp wit; capable of solving administrative bottlenecks and pacifying tribal populations with youthful brilliance.",
+    "weaknessAdviceZh": "狂妄自大是全盘自毁的毒药！东兴小胜后误判天下大势，无视全军疫病强攻坚城大败；归国后残杀谏诤同僚，终在殿上被同僚刺杀并连累全族被斩。",
+    "weaknessAdviceEn": "Unchecked narcissism is fatal; intoxicated by early victories, he launched a disastrous siege, disregarded mass disease, and was butchered in a palace coup.",
+    "historicalQuoteZh": "其父诸葛瑾常叹曰：“恪不大兴吾家，必大破吾家！”陈寿评：“诸葛恪才高一世，而矜伐自毁。以盛衰之机，未能审度，自取夷灭，悲夫！”",
+    "historicalQuoteEn": "His father Zhuge Jin wept: 'If Ke does not elevate our clan, he will surely exterminate it!' Chen Shou lamented his tragic vanity and bloody destruction.",
+    "auxiliaryStrengthsZh": [
+      "自幼才思机敏天下第一流，得孙权万千宠爱，东兴大捷更是一战封神将个人威望推向顶点",
+      "平定山越方案极其高明，不用大兵征剿而用经济围困与粮食诱降，数年得精兵四万"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peerless childhood wit and debater whose massive victory at Dongxing elevated him to regent",
+      "Masterful economic strategy to pacify mountain tribes using grain trade, gaining 40,000 troops"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "极度虚荣狂妄听不得半点批评意见，合肥新城失利后恼羞成怒对全国内部大搞白色恐怖",
+      "政治敏感度极差，在全军怨声载道、权臣孙峻磨刀霍霍时竟毫无安保防备入宫赴宴被杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Monstrous vanity made him slaughter critics after military blunders, alienating the state",
+      "Abysmal security instincts, walking into a blatant palace banquet ambush to be hacked to pieces"
+    ]
+  },
+  {
+    "id": "yuan_shao",
+    "nameZh": "袁绍",
+    "nameEn": "Yuan Shao (Benchu)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "大将军 · 邺侯 · 四世三公河北霸主",
+    "positionEn": "Grand General · Marquis of Ye · Hegemon of the North · Patriarch of Four Generations of Chancellors",
+    "personalityZh": "外宽内忌、色厉胆薄、好谋无断、宽宏爱士、刚愎自用",
+    "personalityEn": "Charismatic patriarch of immense pedigree, courteous to talents, yet indecisive in crises, suspicious of brilliant advisors, ruined by hubris",
+    "deedsZh": "四世三公名门领袖，讨董联军盟主；消灭公孙瓒全据河北四州带甲数十万；官渡之战兵力粮草占尽绝对优势，却屡拒田丰、沮授良策，被曹操火烧乌巢全军崩溃。",
+    "deedsEn": "Supreme leader of the coalition against Dong Zhuo; united northern China with hundreds of thousands of troops; squandered overwhelming odds at Guandu against Cao Cao.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "劫财",
+      "正官"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "拥有极高的品牌名门背书与资源虹吸效应。在顺境与开局阶段能迅速网罗天下最优秀的顶尖人才与海量资本，迅速形成行业巨无霸。",
+    "strengthAdviceEn": "Possess immense brand pedigree and resource-siphoning power; attract top talent and capital easily to construct an overwhelming market monopoly.",
+    "weaknessAdviceZh": "“好谋无断、多端寡要”是决定战略生死的大忌！在关键决战关口犹豫不决、被亲疏好恶左右，听不进诤臣良言反将智囊下狱，必将大好江山拱手送人。",
+    "weaknessAdviceEn": "Indecisive vacillation in existential crises is fatal; listening to petty flatterers while jailing prophetic advisors turns absolute market dominance into total ruin.",
+    "historicalQuoteZh": "曹操评曰：“袁绍志大而智小，色厉而胆薄，忌克而少威，兵多而分画不明，将骄而政令不一，势虽强，不足虑也！”",
+    "historicalQuoteEn": "Cao Cao assessed him: 'Yuan Shao has vast ambitions but small wit; he is fierce outside but timid inside, jealous of ability and paralyzed by indecision.'",
+    "auxiliaryStrengthsZh": [
+      "四世三公顶级领袖魅力，关东诸侯共推盟主，横扫北方四州建立汉末第一庞大势力集团",
+      "宽仁待士前期深得人心，河北百姓在其病逝时皆号泣如丧考妣，具备极强的人格凝聚力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Preeminent political pedigree, uniting northern China into the largest empire of the era",
+      "Benevolent and charismatic early on, with northern civilians weeping bitterly upon his death"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "核心战略决策关口优柔寡断，曹操东征刘备许昌空虚的绝佳战机因幼子生病而轻易错失",
+      "心胸狭隘忌贤妒能，官渡大败后不仅不认错反省反而恼羞成怒处死忠臣田丰，全盘溃烂"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Indecisive paralysis: missed the supreme golden opportunity to strike Cao Cao because his son was ill",
+      "Petty jealousy executed prophetic advisor Tian Feng after Guandu to cover his own shame"
+    ]
+  },
+  {
+    "id": "yuan_shu",
+    "nameZh": "袁术",
+    "nameEn": "Yuan Shu (Gonglu)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "后将军 · 阳翟侯 · 冢中枯骨妄自称帝枭雄",
+    "positionEn": "General of the Rear · The Hubristic False Emperor of Zhong",
+    "personalityZh": "出身名门、狂妄自恋、奢侈荒淫、盲目僭越、众叛亲离",
+    "personalityEn": "Arrogant aristocrat blinded by megalomania, extravagant and cruel, declaring himself Emperor with the stolen Jade Seal, dying in isolated squalor",
+    "deedsZh": "袁绍之弟；割据南阳、淮南富庶之地；夺得传国玉玺后公然称帝建立“仲氏”政权；大肆征税大兴宫室导致淮南千里人相食；遭曹操、刘备、孙策合击覆灭，呕血死索蜜水不得。",
+    "deedsEn": "Brother of Yuan Shao; governed wealthy Huainan; declared himself Emperor of Zhong; bled the region dry in famine; crushed by allied warlords, dying begging for honey water.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "劫财",
+      "偏财"
+    ],
+    "patternType": "伤官格",
+    "strengthAdviceZh": "善于利用家族遗泽与天下大乱的历史空窗期迅速占领最富庶的地理经济基本盘（南阳、淮南），具备早期的地盘吸纳能量。",
+    "strengthAdviceEn": "Exploit aristocratic dynasty heritage to seize the richest economic territories early on; mobilize resources rapidly in turbulent transitions.",
+    "weaknessAdviceZh": "“虚妄狂妄、缺乏自知之明”是自取灭亡的死路！手握一枚玉玺就以为天命在身公然称帝，成为天下公敌遭群起围歼，临死想喝口蜜水都不可得。",
+    "weaknessAdviceEn": "Delusional narcissism detached from reality is suicide; declaring oneself Emperor over a trinket jade seal made him the common enemy of China, dying begging for honey water.",
+    "historicalQuoteZh": "曹操蔑之曰：“冢中枯骨，何足介意！”《三国志》评：“袁术奢淫放肆，极暴虐之行，背叛皇统，自取破灭，天理之常也。”",
+    "historicalQuoteEn": "Cao Cao sneered: 'He is mere dry bones in a tomb!' Chen Shou wrote: 'Yuan Shu was extravagant and tyrannical, declaring false majesty and reaping righteous annihilation.'",
+    "auxiliaryStrengthsZh": [
+      "汉末名门正统嫡子，凭借家族光环早期迅速聚拢大量军政资源与富庶淮南地盘",
+      "敢于打破常规支持孙策过江开辟江东，间接促成了东吴政权的萌芽诞生"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legitimate heir of the illustrious Yuan house, easily consolidating the richest breadbasket of China",
+      "Backed young Sun Ce with troops across the Yangtze, inadvertently seeding Eastern Wu"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治智商为负数，在天下大势未定之时盲目称帝沦为众矢之的，引来天下诸侯群殴",
+      "统治极端残暴贪婪，穷奢极欲掏空淮南民脂民膏，导致千里赤地甚至出现人相食惨剧"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Abysmal political IQ: declared himself Emperor prematurely, uniting all warlords against him",
+      "Extravagant cruelty drained his territories into catastrophic famine and cannibalism"
+    ]
+  },
+  {
+    "id": "lv_bu",
+    "nameZh": "吕布",
+    "nameEn": "Lü Bu (Fengxian)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "温侯 · 左将军 · 飞将天下无双三姓家奴",
+    "positionEn": "Marquis of Wen · The Flying General · Peerless Martial Prowess and Fatal Treachery",
+    "personalityZh": "勇武冠绝、辕门射戟、唯利是图、朝秦暮楚、妇人之仁",
+    "personalityEn": "The undisputed god of individual combat ('Among men Lü Bu, among horses Red Hare'), yet chronically treacherous and politically infantile",
+    "deedsZh": "诛杀义父丁原投董卓；受王允连环计诛杀董卓；被李傕逐出长安转战中原；袭取刘备徐州；辕门射戟调解刘纪争端；下邳被曹操水淹被俘，因不可信任被缢杀白门楼。",
+    "deedsEn": "Slew foster father Ding Yuan for Dong Zhuo; slew Dong Zhuo for Wang Yun; seized Xuzhou; reconciled wars via archery; besieged at Xiapi and executed at White Gate Tower.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "劫财",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "个人硬核武力与单兵战斗威慑力的天下绝对天花板（“人中吕布，马中赤兔”）。辕门射戟展现出神入化的技巧与调解大局的舞台掌控力。",
+    "strengthAdviceEn": "The absolute pinnacle of personal physical combat dominance in Chinese history; capable of halting entire wars through theatrical demonstrations of peerless skill.",
+    "weaknessAdviceZh": "“唯利是图、背信弃义”是对个人职业信用的彻底毁灭！屡杀义父主公使自己在所有阵营眼中沦为不可信任的毒蛇，绝境求降时无人敢保必定被斩。",
+    "weaknessAdviceEn": "Chronic betrayal destroys foundational credibility; slaughtering multiple foster fathers branded him an untrustworthy viper, ensuring execution when captured.",
+    "historicalQuoteZh": "刘备在白门楼提醒曹操曰：“明公不见丁建阳、董太师之事乎？”布目视玄德曰：“是儿最叵信者！”陈寿评：“吕布有虓虎之勇，而无英奇之略，轻狡反复，唯利是视。自古及今，未有若此不终者也。”",
+    "historicalQuoteEn": "Liu Bei whispered to Cao Cao at the gallows: 'Do you not remember Ding Yuan and Dong Zhuo?' Chen Shou wrote: 'Lü Bu had a tiger's fury but a traitor's faith, dooming himself.'",
+    "auxiliaryStrengthsZh": [
+      "天下第一单兵战力，虎牢关战三英、濮阳城险杀曹操，其武力威慑力在三国历史上无人能及",
+      "辕门射戟于百五十步外一箭中戟小字，展现出超凡入圣的神级箭术与战术威慑力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The undisputed supreme martial titan in Chinese history, terrifying warlords in direct combat",
+      "Pierced the halberd's tiny tassel from 150 paces to halt a war through peerless archery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治信义与道德底线完全为零，有奶便是娘，接连诛杀两任义父成为千古唾弃的道德反面典型",
+      "临大事优柔寡断听信妇人之言，下邳被围关键时刻不听陈宫奇谋，痛失自救胜机"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero ethical credibility: murdered multiple patrons for horses and gold, despised across eras",
+      "Paralyzed by indecision in crises, ignoring Chen Gong's master plans until strangled at the gallows"
+    ]
+  },
+  {
+    "id": "dong_zhuo",
+    "nameZh": "董卓",
+    "nameEn": "Dong Zhuo (Zhongying)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太师 · 郿侯 · 乱世开门人西凉强梁暴君",
+    "positionEn": "Grand Preceptor · Tyrant of Xiliang · The Demonic Destroyer of Imperial Order",
+    "personalityZh": "残暴嗜杀、贪婪暴虐、粗猛善战、倒行逆施、身死点脐灯",
+    "personalityEn": "Ferocious frontier warlord, brutal conqueror of the capital, depraved and despotic, setting imperial palaces ablaze, assassinated by Lü Bu",
+    "deedsZh": "借大将军何进之召引西凉虎狼之师进京；废少帝立献帝专权暴虐；火烧洛阳迁都长安发掘汉陵；筑郿坞聚天下财宝美女；遭司徒王允与吕布诛杀，暴尸弃市燃脐点灯。",
+    "deedsEn": "Marched his barbarian army into Luoyang; deposed the Emperor; burned the ancient capital to ashes; hoarded stolen wealth at Mei Citadel; murdered by Lü Bu and Wang Yun.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "劫财",
+      "伤官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "在天下中枢权力真空的瞬间，展现出极其凶狠的野蛮撕扯力与行动决断。善于用原始的暴力与铁血震慑迅速控制核心要地。",
+    "strengthAdviceEn": "Seize power with ferocious predatory speed during governance vacuums; deploy raw intimidation to dominate paralyzed imperial centers.",
+    "weaknessAdviceZh": "倒行逆施与践踏一切文明伦理底线必遭天诛地灭！焚烧千年都城、发掘皇陵、残杀黎民，最终将天下所有势力逼成死敌，死后尸体被点天灯受尽唾弃。",
+    "weaknessAdviceEn": "Barbaric tyranny that destroys civilizational heritage triggers cosmic retribution; burning ancient capitals and butchering civilians unites the world in your destruction.",
+    "historicalQuoteZh": "《三国志》评：董卓狼戾贼忍，暴虐不仁，自书契已来，殆未之有也。郿坞之聚，身膏涂野，自取屠灭，理固然矣。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Dong Zhuo was a wolf in cruelty and depravity, unmatched in historical records. His rotting corpse fed street fires, a fitting end.",
+    "auxiliaryStrengthsZh": [
+      "深耕西凉边陲数十载，麾下西凉铁骑战斗力极度强悍，在乱世初起时拥有绝对暴力垄断权",
+      "对战局混乱具有极其敏锐的掠食者直觉，抓住何进被杀时机一举入主洛阳掌控中央"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of ferocious western border cavalry, holding an absolute monopoly on early violence",
+      "Predatory political instincts: seized control of the central empire the instant court eunuchs fell"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "彻底丧失人性道德底线，火烧洛阳、盗掘帝陵、滥杀无辜，摧毁了四百年汉帝国的文明根基",
+      "内部权力结构完全建立在恐惧与利益捆绑上，最终被最亲信的贴身干儿子吕布一戟刺死"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Sack and burning of Luoyang destroyed 400 years of civilization, creating universal hatred",
+      "Ruled strictly through terror and greed, murdered by his own adopted champion Lü Bu"
+    ]
+  },
+  {
+    "id": "gongsun_zan",
+    "nameZh": "公孙瓒",
+    "nameEn": "Gongsun Zan (Bogui)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "前将军 · 易侯 · 白马义从威震朔漠强梁",
+    "positionEn": "General of the Front · Marquis of Yi · Commander of White Horse Volunteers",
+    "personalityZh": "容貌俊美、声音洪亮、勇猛凶悍、尽杀胡虏、易京筑楼自焚",
+    "personalityEn": "Handsome, commanding voice, ferocious cavalry conqueror terrorizing northern nomads ('White Horse Volunteers'), yet paranoid and suicidal under siege",
+    "deedsZh": "组建精锐“白马义从”骑兵威震乌桓鲜卑；诛杀大司马刘虞独霸幽州；与袁绍争雄河北大败于界桥；晚年筑易京高楼数十丈储存十年粮食与世隔绝，城破引火自焚。",
+    "deedsEn": "Trained the elite White Horse cavalry; murdered beloved governor Liu Yu; lost to Yuan Shao at Jieqiao; built the multi-story fortress of Yijing, burning himself in defeat.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "伤官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "善于打造特色鲜明、战斗力顶级的“专业单点突破战队”（白马义从）。在战术冲锋与对外族威慑上具备极高号召力。",
+    "strengthAdviceEn": "Forge a world-class specialized strike unit with unforgettable branding (White Horse Volunteers); project devastating shock cavalry power against invaders.",
+    "weaknessAdviceZh": "杀戮仁者自毁人和！残杀深得胡汉民心的大司马刘虞使自身尽失道德合法性；遭遇挫折后走向极端消极闭门造车，建高楼企图与世隔绝终遭火葬。",
+    "weaknessAdviceEn": "Murdering beloved moral leaders destroys political legitimacy; retreating into isolated ivory towers with hoarded grain guarantees fiery destruction when besieged.",
+    "historicalQuoteZh": "《三国志》评：公孙瓒矜愎陵上，诛害良善。始以白马义从摧破鲜卑，名震北疆；终以易京之重，甘居自闭，妻子俱焚，诚匹夫之勇而无远图也。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Gongsun Zan was proud and cruel; slaying the benevolent Liu Yu cost him the north. His self-immolation in Yijing was the fate of a petty warlord.",
+    "auxiliaryStrengthsZh": [
+      "白马义从骑兵部队的战术开创者，在冷兵器骑射交锋中对北方游牧民族形成了长达十年的战略压制",
+      "嗓音洪亮仪容雄伟，早年在边陲以身先士卒的悍勇铸就威名"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pioneered the White Horse horse-archer corps, maintaining total tactical dominance over nomads",
+      "Majestic voice and towering battlefield bravery made him a mythical frontier general"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "残杀深得幽州军民与各族爱戴的大司马刘虞，彻底丧失幽州本土士人与百姓的人心归附",
+      "心理承受力脆弱，界桥失败后彻底丧失进取雄心，在易京修筑摩天城堡苟安自毙"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Murdered beloved elder statesman Liu Yu, completely forfeiting northern civilian and tribal loyalty",
+      "Fragile psychological endurance: retreated into fortified bunkers, abandoning active command"
+    ]
+  },
+  {
+    "id": "liu_biao",
+    "nameZh": "刘表",
+    "nameEn": "Liu Biao (Jingsheng)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "镇南将军 · 荆州牧 · 八俊坐保江南自守老农",
+    "positionEn": "General Who Pacifies the South · Governor of Jingzhou · The Passive Ruler of Jingzhou",
+    "personalityZh": "温和儒雅、容貌伟岸、开办学校、保境安民、好谋无断",
+    "personalityEn": "Cultured Confucian prince, tall and handsome, patron of academies and refugee scholars, peace-seeking, yet indecisive and devoid of expansive drive",
+    "deedsZh": "单骑入宜城平定荆州豪强；开办学堂接纳中原流亡名士数千人，荆州成为乱世文化绿洲；然无四方之志，曹操袁绍争雄时坐山观虎斗；死后幼子刘琮举州降曹。",
+    "deedsEn": "Rode alone into Jingzhou to co-opt local oligarchs; built academies sheltering thousands of intellectuals; sat idle during the Cao-Yuan wars; realm fell at his death.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "极其出色的“乱世避难所与文化绿洲运营者”。善于用柔性怀柔政策安抚本土寡头，在天下大乱时建立低税负、重文教的局部世外桃源。",
+    "strengthAdviceEn": "Superb custodian of civilizational sanctuaries; leverage gentle diplomacy to soothe local oligarchs, creating a peaceful, low-tax haven for culture and talent.",
+    "weaknessAdviceZh": "在生死存亡的大变局中“偏安自守、坐失良机”等同于慢性自杀！手握十万重兵却无进取雄心，在官渡之战的关键窗口期摇摆不定，最终家业拱手送人。",
+    "weaknessAdviceEn": "Passive regionalism during total war is slow suicide; holding 100,000 troops yet sitting on the fence during the Guandu showdown doomed his lineage to surrender.",
+    "historicalQuoteZh": "贾诩评曰：“刘表，平世三公才也；不见事变，多疑无决，无能为也。”陈寿评：“刘表有威仪，能养士民，而不能用良策，守常之主，非拨乱之才。”",
+    "historicalQuoteEn": "Jia Xu dismissed him: 'Liu Biao has talent for peacetime ministry; but in chaos he is suspicious and indecisive.' Chen Shou noted his lack of imperial drive.",
+    "auxiliaryStrengthsZh": [
+      "单骑入荆州平定宗贼，展现出极高的政治谈判艺术与区域治理手腕",
+      "在天下残破兵戈遍地的汉末，使荆州维持了近二十年的和平繁荣，保存了中华文化元气"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Rode solo into warlord-infested Jingzhou, pacifying regional clans through masterful negotiation",
+      "Preserved twenty years of peace in Jingzhou while northern China burned, saving classical culture"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "极度缺乏进取雄心，诸葛亮刘备多次劝其出兵许昌皆置若罔闻，坐视历史窗口期溜走",
+      "立嗣问题上废长立幼引发内部严重分裂，死后直接导致荆州政权不战而降"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero expansive ambition: ignored repeated pleas by Liu Bei to strike the northern capital",
+      "Succession vacillation divided court factions, causing his heirs to surrender without a fight"
+    ]
+  },
+  {
+    "id": "chen_gong",
+    "nameZh": "陈宫",
+    "nameEn": "Chen Gong (Gongtai)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "东郡太守 · 吕布第一谋主 · 刚烈殉节赴死谋士",
+    "positionEn": "Governor of Dongjun · Chief Strategist to Lü Bu · Tragic Martyr of White Gate Tower",
+    "personalityZh": "足智多谋、性情刚烈、宁折不弯、从容赴死、弃曹从吕",
+    "personalityEn": "Astute, unyielding moral rebel, initially empowered Cao Cao then rebelled against his cruelty, devoted genius to flawed champion Lü Bu, embraced death with pride",
+    "deedsZh": "早期助曹操领兖州；因曹操滥杀名士及屠徐州反叛曹操迎吕布；多次献奇谋夹击曹操；下邳之战提出犄角互保大计遭吕布妇人之见拒绝；白门楼从容赴死拒不降曹。",
+    "deedsEn": "Helped Cao Cao take Yanzhou; rebelled in outrage over Cao's massacres to back Lü Bu; devised the pincer strategy at Xiapi; refused Cao Cao's mercy, marching proudly to the gallows.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "伤官见官格",
+    "strengthAdviceZh": "拥有极高的战术破局灵感与颠覆性战略破坏力。具有不向强权低头的独立人格与刚烈傲骨，在危难关头坦然面对死亡，气节惊天地泣鬼神。",
+    "strengthAdviceEn": "Uncompromising moral rebel with devastating disruptive tactics; defied authoritarian bloodshed, serving his chosen flawed partner and embracing martyrdom with dignity.",
+    "weaknessAdviceZh": "选择不可救药的弱智合伙人（吕布）是其一生最大的战略悲剧！明知吕布刚愎短视、听信妇言，仍将毕生才智绑定于沉船之上，徒留白门楼断头遗恨。",
+    "weaknessAdviceEn": "Binding genius to an incompetent partner is tragic suicide; chaining his destiny to erratic, untrustworthy Lü Bu wasted his brilliant stratagems.",
+    "historicalQuoteZh": "曹操欲活之，陈宫大呼曰：“今日之事，唯有一死！”遂昂首就戮，操为之流涕。陈寿评：“陈宫刚直壮烈，惜其附托非人，身膏草野，悲夫！”",
+    "historicalQuoteEn": "Cao Cao wished to spare his old friend; Chen Gong strode straight to the gallows: 'Today there is only death!' Cao Cao wept bitterly as Gong was beheaded.",
+    "auxiliaryStrengthsZh": [
+      "策动张邈叛曹迎吕布，一举切断曹操大后方，险些彻底终结曹操政治生命，展现惊人策划力",
+      "下邳被围提出的互为犄角内外夹击战略若被采纳，曹操极难在徐州全身而退"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Masterminded the massive Yanzhou rebellion, cutting Cao Cao's throat and nearly extinguishing him",
+      "His pincer defense plan at Xiapi would have broken Cao Cao's siege had Lü Bu possessed courage"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "道德洁癖过重，因曹操杀边让便愤而倒戈，缺乏政治妥协的深邃眼光",
+      "知人不明，把拯救天下的赌注押在缺乏基本信义与战略智商的吕布身上，终致殉葬"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Moral purism drove him to defect impulsively, lacking cold pragmatic elasticity",
+      "Flawed talent judgment: hitched his star to a treacherous, infantile brawler in Lü Bu"
+    ]
+  },
+  {
+    "id": "tian_feng",
+    "nameZh": "田丰",
+    "nameEn": "Tian Feng (Yuanhao)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "冀州别驾 · 权略多奇刚而犯上死节诤臣",
+    "positionEn": "Assistant Officer of Jizhou · Chief Strategist of Yuan Shao · Prophetic Martyr",
+    "personalityZh": "博览多识、权略多奇、刚直不屈、料事如神、遭忌见害",
+    "personalityEn": "Erudite, brilliant grand strategist, unbending in moral truth, prophesying every battlefield outcome, executed by Yuan Shao out of wounded vanity",
+    "deedsZh": "袁绍首席大谋主；劝袁绍趁曹操东征刘备突袭许昌袁绍不从；劝袁绍官渡不可决战当打持久消耗战，袁绍怒将其下狱；官渡大败袁绍羞愧，遂将其处死。",
+    "deedsEn": "Urged Yuan Shao to blitz the capital while Cao Cao fought Liu Bei; urged protracted economic attrition over risky decisive battle at Guandu; jailed and murdered by Yuan.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "正官"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "具有一眼看穿数年战局演变的“顶级战略大局观”。善于提出利用基本盘体量打消耗战的必胜策略，反对一切侥幸与狂热冒险。",
+    "strengthAdviceEn": "Possess transcendent strategic foresight; design unshakeable attrition blueprints leveraging macro economic superiority while vetoing reckless gambles.",
+    "weaknessAdviceZh": "“刚而犯上、言辞不留情面”是技术专家的致命死穴！在愚蠢虚荣的上级面前把话挑得太明白、算得太准，在预言应验之时往往就是自身被杀灭口之日。",
+    "weaknessAdviceEn": "Abrasive candor before a vain superior is lethal; being proven right after predicting an executive's catastrophic failure ensures execution to silence his shame.",
+    "historicalQuoteZh": "官渡败归，军士皆哭曰：“向使田丰在此，不至于是也！”袁绍谓左右曰：“吾不用田丰言，果为所笑。”遂斩之。",
+    "historicalQuoteEn": "Fleeing Guandu, soldiers wept: 'Had Tian Feng been here, this disaster would never have occurred!' Yuan Shao sneered in humiliation: 'Tian Feng will laugh at me,' and killed him.",
+    "auxiliaryStrengthsZh": [
+      "官渡战役推演的真正预言家，提出的三年持久疲曹战略是唯一能稳操胜券的天下大策",
+      "趁曹操攻徐州刘备时突袭许昌的建议，抓住了汉末历史上最致命的战略窗口期"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Prophetic war planner whose three-year attrition blueprint was the sole foolproof path to victory",
+      "Advised raiding Cao Cao's empty capital during the Xuzhou campaign, seizing the golden window"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "说话直戳上位者痛处，性格刚硬绝不委曲求全，缺乏迂回进谏的情商技巧",
+      "明知袁绍心胸狭隘睚眦必报，在预言应验之后未能设法逃脱或自保，坐以待毙"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Blunt, confrontational rhetoric wounded Yuan Shao's fragile ego, courting disaster",
+      "Underestimated superior's murderous vanity; awaited execution in prison instead of escaping"
+    ]
+  },
+  {
+    "id": "ju_shou",
+    "nameZh": "沮授",
+    "nameEn": "Ju Shou",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "奋武将军 · 监军 · 奉迎天子三年疲曹宏略统帅",
+    "positionEn": "General Who Stirs Martial Might · Supervisor of Armies · Grand Architect of Northern Hegemony",
+    "personalityZh": "少有大志、深谋远虑、威严崇整、战略宗师、忠义殉节",
+    "personalityEn": "Strategic master of northern China, advised taking the Emperor early and waging protracted attrition, incorruptible martyr captured at Guandu",
+    "deedsZh": "最早提出“迎大驾于西京，复宗庙于洛邑”；平定公孙瓒灭黑山；官渡反对决战主张分兵持久疲曹；主张分派诸子防兄弟争权；官渡败被俘，誓死不降曹操，图谋逃脱被杀。",
+    "deedsEn": "Earliest to propose hosting the Han Emperor; designed the campaign that crushed Gongsun Zan; opposed Guandu showdown; captured by Cao Cao, refusing surrender unto death.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "正印"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "顶层国家法统规划与大战役运筹的宗师级人物。早于荀彧提出迎奉汉帝大纲领；在战役层面上擅长用绝对资源优势磨死对手，稳扎稳打。",
+    "strengthAdviceEn": "Master of supreme statecraft and operational campaign logistics; conceived imperial restoration blueprints before Xun Yu; grind down rivals through calculated attrition.",
+    "weaknessAdviceZh": "当庞大组织陷入诸子夺嫡的权力分化漩涡时，即便看穿一切制度隐患却无法逆转领袖的偏袒昏庸。在组织决策链彻底坏死时应及早脱身自保。",
+    "weaknessAdviceEn": "When a massive corporation divides authority among squabbling heirs, the clearest vision cannot stop entropy; decouple your survival before structural paralysis.",
+    "historicalQuoteZh": "曹操得沮授叹曰：“孤早相得，天下不足虑也！”沮授誓死不降，操厚遇之，后授密谋归河北被杀，操为之流涕。",
+    "historicalQuoteEn": "Cao Cao captured him and sighed: 'Had I gained you earlier, ruling all under heaven would be effortless!' When Ju Shou plotted escape, Cao wept as he executed him.",
+    "auxiliaryStrengthsZh": [
+      "迎天子与分兵疲曹战略的原创者，其战略眼光与荀彧诸葛亮并驾齐驱，是河北真正的智囊灵魂",
+      "忠贞不贰，在袁绍猜忌分其兵权、下狱受辱之后依然誓死报效，被俘后宁死不仕曹魏"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Original author of the 'Host the Emperor' doctrine, equal in vision to Xun Yu and Zhuge Liang",
+      "Spotless chivalric devotion: stripped of power by suspicious Yuan Shao, yet refused defection unto death"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "分权制衡方案被袁绍肢解（监军一分为三），面对领导层拆分兵权缺乏强力抗辩手腕",
+      "宗族全数押注于袁氏集团，在袁氏倾覆后缺乏保全核心火种的后路设计"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Powerlessly watched his unified supreme military command fragmented into three by court rivals",
+      "Tied his entire clan irreversibly to the collapsing Yuan dynasty with zero contingency plan"
+    ]
+  },
+  {
+    "id": "huangfu_song",
+    "nameZh": "皇甫嵩",
+    "nameEn": "Huangfu Song (Yizhen)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "太尉 · 槐里侯 · 平定黄巾汉室最后长城",
+    "positionEn": "Grand Commandant · Marquis of Huaili · The Final Bulwark of the Eastern Han",
+    "personalityZh": "忠勇仁慈、沉毅有大略、威震天下、功盖天下、洁身自好",
+    "personalityEn": "Magnificent, merciful imperial field marshal, crushed the Yellow Turban Rebellion, revered by millions, choosing spotless constitutional obedience over usurpation",
+    "deedsZh": "长社之战火攻大破黄巾军张梁张宝主力，平定汉末巨变；爱惜士卒，将士不饱不食；威震天下阎忠劝其趁势南面称孤颠覆汉室，严词拒绝恪守臣节；晚年在董卓淫威下保全。",
+    "deedsEn": "Crushed the core Yellow Turban armies via fire attack; lived spartanly beside troops; rejected calls to seize the imperial throne; survived Dong Zhuo through humble obedience.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "体制内最高道德楷模与平叛战神。在王朝面临灭顶之灾时以惊人战术力挽狂澜；在功高震主、手握数十万雄兵时坚决拒绝野心诱惑，守住臣子清白底线。",
+    "strengthAdviceEn": "The ultimate constitutional savior and field marshal; crush apocalyptic rebellions through brilliant tactics while steadfastly rejecting temptations to usurp supreme power.",
+    "weaknessAdviceZh": "过于迷信对腐朽朝廷的绝对盲从。手握天下兵权却对宦官妥协、受制于董卓等权暴，使得平叛赢得的军事红利迅速被军阀强梁篡夺，未能从根本上阻挡汉末大乱。",
+    "weaknessAdviceEn": "Excessive submissiveness to a rotting court paralyzed his leverage; surrendering armies to eunuchs and warlords allowed brutal tyrants to extinguish the empire he saved.",
+    "historicalQuoteZh": "阎忠说之曰：“天与不取，反受其咎。今将军兼二难之威，据四冲之会，高枕即号令天下，何为拱手奉死！”嵩曰：“夙夜在公，心如铁石，虽粉身碎骨，不敢变也。”",
+    "historicalQuoteEn": "Yan Zhong urged him to take the throne; Song replied firmly: 'I serve the state day and night; though my bones be ground to dust, I shall never betray my sacred oath.'",
+    "auxiliaryStrengthsZh": [
+      "平定黄巾起义的头号军事功臣，长社之战火攻创造了汉末战争史上最光辉的歼灭战典范",
+      "军纪严明深得士兵爱戴，行军所过对平民秋毫无犯，每次领赏全部分予部下"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Primary savior of the empire, crushing the Yellow Turban rebellion through masterclass fire assaults",
+      "Beloved by soldiers for spartan humility; distributed all rewards and enforced flawless discipline"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏改天换地的政治大魄力，在拥有绝对兵权的历史关口拒绝自立，致使天下沦入董卓魔掌",
+      "晚年对暴虐董卓曲意逢迎以求自保，一代战神低眉顺眼晚节显出英雄末路的悲凉"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked revolutionary audacity to replace the rotting dynasty, letting power fall to Dong Zhuo",
+      "Forced to bow subserviently to brutal tyrant Dong Zhuo in dotage to preserve his family"
+    ]
+  },
+  {
+    "id": "lu_zhi",
+    "nameZh": "卢植",
+    "nameEn": "Lu Zhi (Zigan)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "尚书 · 儒将文宗 · 刘备公孙瓒之师天下楷模",
+    "positionEn": "Imperial Secretary · Master Polymath and Field Marshal · Teacher of Heroes",
+    "personalityZh": "文武全才、学冠天下、风霜之节、抗颜直陈、名高海内",
+    "personalityEn": "Towering scholar and resolute field commander, master of classical rites, mentor to Liu Bei and Gongsun Zan, sole minister defying Dong Zhuo to his face",
+    "deedsZh": "经学宗师，教授刘备、公孙瓒；领军平定黄巾屡战屡胜，因拒向太监行贿遭诬陷被囚；董卓欲废帝百官震恐唯卢植一人抗颜严词抗争；脱险后隐居上谷编纂经史。",
+    "deedsEn": "Classical master who taught Liu Bei; crushed rebels but jailed for refusing to bribe eunuchs; sole minister who dared confront Dong Zhuo over deposing the Emperor.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "偏印"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "中国古典“儒将”的最高化身。文能开宗立派注经著书、教书育人桃李满天下；武能披甲挂帅平定天下大乱；在暴政降临之际独木撑天、凛然不惧。",
+    "strengthAdviceEn": "The supreme embodiment of the Confucian scholar-general; author seminal commentaries, teach future emperors, lead armies in battle, and defy tyrants alone in court.",
+    "weaknessAdviceZh": "不屑于同体制内阴暗腐败势力（如宦官集团）做任何妥协，导致在前线屡建战功却因一枚行贿银钱而遭构陷下狱，几乎身首异处。需警惕阴小构陷。",
+    "weaknessAdviceEn": "Refusing minimal transactional lubrication with corrupt bureaucrats led to imprisonment mid-campaign; guard against backstabbing by entrenched petty leeches.",
+    "historicalQuoteZh": "曹操北征路过其墓叹曰：“卢尚书乎！学为儒宗，士之楷模，国之桢干也。古人有言，见贤思齐，吾甚慕之！”",
+    "historicalQuoteEn": "Cao Cao paid homage at his tomb: 'Master Lu! Scholar of scholars, exemplar of knights, pillar of state! I revere his towering memory!'",
+    "auxiliaryStrengthsZh": [
+      "汉末经学泰斗与教育家，培养出刘备、公孙瓒等一代枭雄，学术著作奠定后世经学基础",
+      "董卓废少帝大会百官皆战栗伏地，唯卢植挺身抗颜痛斥董卓大逆不道，一身浩然正气震动朝堂"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master Confucian pedagogue whose academy produced Liu Bei, writing foundational classical texts",
+      "Stood alone in court to roar defiance against Dong Zhuo's regicide while hundreds cowered"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在前线指挥大战时不肯贿赂太监左丰导致被诬告下狱，在官场暗黑博弈中防卫本能不足",
+      "政治理想脱胎于东汉正统制度，面对帝国不可逆转的军阀割据大盘缺乏力挽狂澜的实体筹码"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Jailed mid-campaign for refusing petty bribes to court eunuchs, lacking bureaucratic self-defense",
+      "Loyal to an imperial system that was already historically obsolete, possessing no private army"
+    ]
+  },
+  {
+    "id": "hua_tuo",
+    "nameZh": "华佗",
+    "nameEn": "Hua Tuo (Yuanhua)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "外科鼻祖 · 麻沸散与五禽戏一代神医",
+    "positionEn": "Father of Chinese Surgery · Inventor of Anesthesia (Mafeisan) and Five Animals Qigong",
+    "personalityZh": "医术通神、精研外科、创五禽戏、济世救人、士人自许",
+    "personalityEn": "Legendary physician, pioneer of general anesthesia and abdominal surgery, founder of health qigong, tragic victim of political despotism",
+    "deedsZh": "发明世界上最早的全身麻醉药“麻沸散”进行开腹手术；创编“五禽戏”强身健体；为关羽刮骨疗毒；因曹操头风病不愿充当御用医官羁留许昌，借故请假遭曹操拷打下狱杀害。",
+    "deedsEn": "Pioneered Mafeisan anesthesia centuries before the West; operated on Guan Yu's poisoned arm; executed by paranoid Cao Cao after refusing to serve as private court doctor.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "食神",
+      "伤官"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "专业技术领域的旷世开拓者。打破千年传统思维禁区，开创麻醉、外科手术与主动身心锻炼法门，将技术做到通神境界，造福万世苍生。",
+    "strengthAdviceEn": "A world-historic pioneer in specialized medicine; break conceptual boundaries to invent surgical anesthesia and holistic exercise, building an eternal legacy.",
+    "weaknessAdviceZh": "传统知识分子的“清高与文人自许”在残暴专制强权面前极其脆弱！切莫对独裁统治者的猜忌与控制狂抱有侥幸心理，不懂政治脱身之术必招杀身之祸。",
+    "weaknessAdviceEn": "Intellectual aloofness is fragile against despotic warlords; treating Cao Cao's chronic brain disease with casual evasions cost him his life and his medical books.",
+    "historicalQuoteZh": "《三国志》评：华佗之治病也，精妙绝伦，其所览者广，兼通数经。然其以医见业，意常自悔，遂遭戮没，千古痛惜！其《青囊书》焚毁，后世莫不哀伤。",
+    "historicalQuoteEn": "Records of the Three Kingdoms: Hua Tuo's medical brilliance was divine. Yet he disdained medicine as a petty craft, bringing death and the burning of his priceless texts.",
+    "auxiliaryStrengthsZh": [
+      "世界医学史上最早发明全身麻醉与开胸剖腹外科手术的一代宗师，超越西方千余年",
+      "创编“五禽戏”开辟了中国古代养生导引与运动医学的先河，弟子吴普遵行活逾九十岁"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pioneered general anesthesia and abdominal surgery more than a millennium ahead of global medicine",
+      "Created the Five Animals Qigong, pioneering preventive movement therapy and longevity science"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "士大夫虚荣心作祟，深以“行医”为贱业而渴望求官，心态矛盾导致其在曹操身边屡次请假推脱",
+      "缺乏政治脱身智慧，明知曹操残暴多疑仍企图以此作为要挟求官的筹码，惨遭拷死狱中"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Trapped by elitist vanity, despising medicine as low status and seeking bureaucratic office",
+      "Grossly misjudged Cao Cao's paranoid temper, attempting evasions that got him tortured to death"
+    ]
+  },
+  {
+    "id": "zhang_zhongjing",
+    "nameZh": "张仲景",
+    "nameEn": "Zhang Zhongjing",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "长沙太守 · 医圣 · 《伤寒杂病论》中医辨证论治宗师",
+    "positionEn": "Governor of Changsha · The Sage of Medicine · Author of Shanghan Lun",
+    "personalityZh": "博采众方、医道仁心、坐堂行医、辨证论治、万世师表",
+    "personalityEn": "Saintly physician, Governor who held clinic inside his administrative palace ('sitting in the hall'), codifier of traditional clinical herbal medicine",
+    "deedsZh": "汉末大疫宗族死亡过半，感伤时艰“勤求古训博采众方”撰写《伤寒杂病论》，创立六经辨证体系；任长沙太守时在公堂之上为平民百姓看病，开“坐堂医”先河。",
+    "deedsEn": "Watched his clan decimated by plagues; authored Treatise on Febrile and Miscellaneous Diseases, codifying Six-Stage Diagnosis; treated peasants directly from his court bench.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "将深厚的慈悲仁爱之心与严密的系统化科学归纳法完美结合。在重大系统性灾难面前，以扎实的数据与案例总结出可代代复用的底层经典法则。",
+    "strengthAdviceEn": "Synthesize profound humanitarian compassion with rigorous empirical methodology; formulate codified, repeatable diagnostic frameworks that survive millennia.",
+    "weaknessAdviceZh": "专注于天下苍生治病救人，主动退避于军阀杀戮与官场争权夺利。虽官居长沙太守，但在朝堂重大政治决断上处于边缘观察者地位。",
+    "weaknessAdviceEn": "Devoted entirely to healing rather than participating in warlord civil wars; his political footprint remained modest compared to his monumental medical legacy.",
+    "historicalQuoteZh": "后世尊为“医圣”，其方剂被称为“经方之祖”。清代医家赞曰：“仲景之论，字字如金玉；其方也，神效不可思议，万世医学之鼻祖也。”",
+    "historicalQuoteEn": "Revered as the Sage of Medicine; his formulas celebrated as divine gold. Qing scholars praised him as the eternal master whose diagnostic blueprints save millions.",
+    "auxiliaryStrengthsZh": [
+      "中医临床医学真正的集大成者，《伤寒杂病论》确立辨证论治原则，千百年来拯救亿万生灵",
+      "开创“公堂坐堂行医”先河，不畏流俗放下长官架子为平民诊脉，彰显医者仁心天下典范"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Epochal codifier of clinical medicine whose Six-Stage Diagnostic system anchors herbal science",
+      "Pioneered clinical office consultations from his magistrate bench, serving peasants with total humility"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治志向完全被医学光芒掩盖，作为长沙太守对汉末江南动荡局势未能形成实质政治干预",
+      "著作在汉末战乱中散佚，若非王叔和日后拼死搜集编纂，几乎面临失传危机"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Administrative governorship overshadowed by medical genius, exerting zero warlord leverage",
+      "His masterwork was scattered during civil wars, saved only by later disciples' restorations"
+    ]
+  },
+  {
+    "id": "cai_wenji",
+    "nameZh": "蔡文姬",
+    "nameEn": "Cai Wenji (Cai Yan)",
+    "dynastyZh": "东汉",
+    "dynastyEn": "Eastern Han",
+    "eraTag": "eastern_han_three_kingdoms",
+    "eraNameZh": "汉末三国",
+    "eraNameEn": "Eastern Han & Three Kingdoms",
+    "positionZh": "天下才女 · 《胡笳十八拍》与书法记忆传世奇才",
+    "positionEn": "Immortal Poetic Prodigy · Author of Eighteen Songs of a Nomad Flute · Mnemonic Genius",
+    "personalityZh": "博学有才辩、妙通音律、苦难坚韧、记忆绝伦、悲慨千古",
+    "personalityEn": "Peerless intellectual prodigy, master of lute harmonics and calligraphy, survived twelve years in northern steppe captivity, recited 400 lost classics from memory",
+    "deedsZh": "蔡邕之女；汉末乱世被匈奴掳走居北方十二年，生二子；曹操以金璧重金赎回；凭惊人记忆默写父亲遗失的四百余篇珍贵古代典籍无一错漏；作《胡笳十八拍》《悲愤诗》。",
+    "deedsEn": "Captured by Xiongnu for twelve years; ransomed by Cao Cao; restored over 400 lost ancient imperial classics entirely from memory; composed immortal elegies.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "伤官",
+      "食神"
+    ],
+    "patternType": "伤官泄秀格",
+    "strengthAdviceZh": "极其强大的逆境苦难生命韧性与超凡的文化记忆力。在遭遇时代最残酷的蹂躏践踏后，依然能以绝代才情将血泪化作永恒的艺术经典，挽救文明火种。",
+    "strengthAdviceEn": "Monumental spiritual resilience under historical tragedy; transform personal trauma into sublime art while resurrecting lost civilizational classics from memory.",
+    "weaknessAdviceZh": "作为乱世弱女子，个人命运完全被强权军阀与时代风暴随意摆布，身不由己三度改嫁，在冷酷的历史暴力面前缺乏现实自卫与自主选择筹码。",
+    "weaknessAdviceEn": "A tragic individual buffeted by merciless warlord tides; forced into steppe captivity and repeated arranged marriages without personal autonomy in a brutal patriarchal era.",
+    "historicalQuoteZh": "曹操惊叹其才曰：“文姬默书四百篇，文无遗误，真奇女也！”清代学者评：“《悲愤诗》字字滴血，胡笳一曲，千秋涕下，才情冠绝古今。”",
+    "historicalQuoteEn": "Cao Cao marveled: 'Wenji recited 400 lost scrolls without a single error, an extraordinary genius!' Her elegies remain the most heartbreaking poetry in classical history.",
+    "auxiliaryStrengthsZh": [
+      "惊世骇俗的超级大脑记忆力，凭借惊人默写凭借一己之力为中华民族保全了四百余篇失传经典",
+      "《胡笳十八拍》与《悲愤诗》开创中国女性文学叙事悲壮宏伟的巅峰，字字啼血千秋垂范"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Miraculous mnemonic memory, reconstructing 400 lost classical texts from memory to save heritage",
+      "Composed Eighteen Songs of a Nomad Flute, the apex of classical tragic female epic literature"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "命运多舛一生历经掳掠颠沛，个人家庭幸福在乱世战火中被彻底碾碎",
+      "对政治局势毫无自保与反抗能力，完全依赖曹操个人的强人恩赐方得以回归中原"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Powerless against historical violence, watching her youth and children stolen by nomadic raiders",
+      "Totally reliant on Cao Cao's unilateral imperial patronage to escape desolate frontier captivity"
+    ]
+  },
   {
     "id": "sima_yan",
     "nameZh": "司马炎",
@@ -10194,6 +15290,5102 @@ const HISTORICAL_FIGURES = [
     "auxiliaryWeaknessesEn": [
       "Deep entanglement in royal succession struggles and supreme overshadowing prestige will ignite fatal sovereign paranoia.",
       "Erects rigid ethical and behavioral safeguards against blindspots."
+    ]
+  },
+  {
+    "id": "li_yuan",
+    "nameZh": "李渊",
+    "nameEn": "Li Yuan (Emperor Gaozu of Tang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "唐高祖 · 大唐开国皇帝",
+    "positionEn": "Founding Emperor of Tang Dynasty",
+    "personalityZh": "宽仁容众、老谋深算、顺势而为、优柔寡断、晚年失控",
+    "personalityEn": "Astute political patriarch, magnanimous to aristocratic clans, opportunistic strategist, yet hesitant in crown succession feuds",
+    "deedsZh": "太原起兵反隋，结好突厥进军关中夺取长安；称帝建立唐朝，平定薛仁杲、刘武周、王世充、窦建德等各路群雄；奠定大唐一统基石；玄武门之变后禅位退居太上皇。",
+    "deedsEn": "Rebelled at Taiyuan, pacified nomadic Turks and marched into Chang'an to found the Tang Dynasty; subdued rival warlords; abdicated after Xuanwu Gate.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "善于顺应时代大势做资源整合。在天下大乱时果断举旗，联合一切可以联合的力量（包括异族与门阀），以低阻力迅速占领战略制高点。",
+    "strengthAdviceEn": "Master of macroscopic coalition building; seize strategic windows decisively, forging pragmatic pacts with rivals and nomads to secure the imperial capital.",
+    "weaknessAdviceZh": "在接班人权力博弈中优柔寡断是引爆骨肉相残的根本祸根！摇摆于太子建成与秦王世民之间，放任双方形成势均力敌的武装派系，终酿玄武门惨变。",
+    "weaknessAdviceEn": "Vacillating between rival heirs breeds bloody civil fratricide; allowing two armed court camps to metastasize inevitably triggers fatal coups.",
+    "historicalQuoteZh": "《旧唐书》评：高祖性温仁，多容众。宽裕通达，能顺天应人。及定祸乱，平海内，虽借太宗之谋，亦高祖宽弘之度有以致之也。",
+    "historicalQuoteEn": "Old Book of Tang: Gaozu was generous and adaptable, winning hearts; while Qin Wang provided military genius, Gaozu's magnanimity framed the imperial victory.",
+    "auxiliaryStrengthsZh": [
+      "太原起义时机把握极为精准，以闪电战直扑关中抢先奠定天下根本",
+      "极高的统战手腕，对隋朝旧官僚与各地降将宽大为怀迅速消化存量矛盾"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Flawless timing in the Taiyuan uprising, blitzing Chang'an to secure the imperial core",
+      "Superb coalition diplomat who integrated surrendered Sui elites and warlords rapidly"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "立储与分权机制极其混乱，诱发李建成与李世民长期武装对峙终致政变夺权",
+      "性情偏于优柔放纵，晚年深陷后宫嫔妃吹枕边风的狭隘利益操弄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Disastrously botched succession, allowing two sons to build rival military factions",
+      "Indecisive and manipulated by palace concubines late in his reign"
+    ]
+  },
+  {
+    "id": "li_shimin",
+    "nameZh": "李世民",
+    "nameEn": "Li Shimin (Emperor Taizong of Tang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "唐太宗 · 天可汗 · 贞观之治千古一帝",
+    "positionEn": "Emperor Taizong of Tang · Heavenly Qaghan · The Architect of Zhenguan Governance",
+    "personalityZh": "雄才伟略、兼听则明、从谏如流、文治武功冠绝古今、英武开明",
+    "personalityEn": "Epochal emperor, unmatched military battlefield genius, champion of fearless court remonstrance, universal ruler revered as Heavenly Qaghan",
+    "deedsZh": "浅水原破薛仁杲，柏壁逐宋金刚，虎牢关一战生擒窦建德逼降王世充奠定大唐天下；玄武门之变登基；开创“贞观之治”；击灭东突厥被尊为“天可汗”。",
+    "deedsEn": "Won Tiger Cage Pass, capturing Dou Jiande and Wang Shichong in one stroke; launched the Xuanwu Gate coup; pioneered the Zhenguan Reign and defeated Eastern Turks.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "正官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "千古帝王的最高标杆。战场上具备天下第一等骑兵战术与歼灭战决断；执政中把“兼听则明、以人为镜”化作最高管理哲学，以博大胸襟包容魏征直谏。",
+    "strengthAdviceEn": "Supreme avatar of strategic excellence; combine unmatched shock battlefield instincts with institutional humility, weaponizing honest criticism to eliminate blindspots.",
+    "weaknessAdviceZh": "必须警惕晚年好大喜功与用兵执念。东征高句丽遇挫打破了百战百胜神话；晚年服食丹药追求长生，暴露出即便千古一帝亦难免凡人欲望漏洞。",
+    "weaknessAdviceEn": "Guard against imperial hubris in advanced age; his costly Goguryeo campaign proved even legends face geographic limits, and consuming alchemical elixirs shortened his life.",
+    "historicalQuoteZh": "《新唐书》评：太宗自幼从戎，百战百胜，神武盖代。及临天下，从谏如流，千载之下，求其比俦，未之有也。真千古一帝！",
+    "historicalQuoteEn": "New Book of Tang: Taizong was victorious in a hundred wars; upon ascending the throne, his eager acceptance of criticism created an unmatchable golden age.",
+    "auxiliaryStrengthsZh": [
+      "虎牢关战役一举消灭两大枭雄（窦建德、王世充），创造了世界战争史上最辉煌的野战歼灭战范本",
+      "从谏如流海纳百川，将魏征作为一面明镜，打造了中国历史上政治最清明包容的贞观盛世"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Battle of Hulao Pass: captured two rival empires in a single afternoon of shock tactics",
+      "Institutionalized truth-telling, embracing Wei Zheng's biting rebukes to govern wisely"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "玄武门兵变弑兄屠弟，留下了无法洗刷的伦理道德瑕疵与历史原罪",
+      "晚年征高句丽偏执冒进导致将士伤亡惨重，破产了毕生无敌的军事神话"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "The bloody fratricide at Xuanwu Gate left an indelible ethical stain on his reign",
+      "Late-life obsession with invading Goguryeo resulted in harsh military setbacks and frostbite"
+    ]
+  },
+  {
+    "id": "empress_zhangsun",
+    "nameZh": "长孙皇后",
+    "nameEn": "Empress Zhangsun (Wende)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "文德皇后 · 母仪天下千古第一贤后",
+    "positionEn": "Empress Wende · Mother of the Empire · Paragon of Regal Virtue and Restraint",
+    "personalityZh": "雍容温润、博览群书、克制外戚、借古讽谏、贤良绝代",
+    "personalityEn": "Noble, deeply learned, champion of curbing aristocratic nepotism, master of gentle allegorical remonstrance, moral compass of the throne",
+    "deedsZh": "玄武门之变亲勉将士；为后厉行节俭不蓄奇宝；极力劝阻太宗重用长孙家族防止外戚专权；魏征被太宗欲斩时，盛服朝贺“君明臣直”，巧妙保全魏征；著《女则》。",
+    "deedsEn": "Rallied troops at Xuanwu Gate; lived in austere elegance; curbed her own brother's political promotion to prevent nepotism; saved Wei Zheng by congratulating Taizong on having honest critics.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "最高权力中枢中最完美的“温柔护城河与刹车皮”。不干涉政事却能以高超的情商在关键时刻化解帝王暴怒，主动克制家族膨胀以保全满门平安。",
+    "strengthAdviceEn": "The ultimate ethical conscience of supreme leadership; defuse despotic executive rages through impeccable timing while curbing family nepotism to preserve long-term security.",
+    "weaknessAdviceZh": "体质素弱患有严重气疾，高负荷的宫廷协调与生育耗尽了生命元气，年仅三十六岁病逝。在承担重大家族责任时必须高度警惕身体健康的透支。",
+    "weaknessAdviceEn": "Fragile constitution and chronic asthma exacerbated by heavy palace management cut short her life at 36; enforce strict medical pacing amid high administrative pressure.",
+    "historicalQuoteZh": "太宗哭之恸曰：“皇后内助之功，莫能言尽。今忽失之，虚空怅恨，何以为治！”《旧唐书》赞其“坤厚载物，德合无疆”。",
+    "historicalQuoteEn": "Taizong wept inconsolably: 'The Empress was my supreme domestic guide; losing her leaves the world hollow!' Historical annals praise her boundless wisdom.",
+    "auxiliaryStrengthsZh": [
+      "盛装朝贺化解李世民诛杀魏征之怒，以极高政治智慧保护了唐代最核心的谏臣制度",
+      "坚决压制亲兄长孙无忌拜相，深谙外戚专权必取灭亡之历史铁律，展现顶级政治远见"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Donned ceremonial robes to praise the Emperor for tolerating Wei Zheng, saving the Empire's mirror",
+      "Resolutely blocked her brother's appointment to prime minister to prevent fatal nepotism purges"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "常年受困于严重气喘宿疾，三十六岁英年早逝，使太宗晚年失去最重要的情感减压阀",
+      "对长子李承乾的叛逆心性未能彻底纠偏，死后李承乾谋反险些引发宫廷大震荡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Chronic respiratory illness brought premature death at 36, removing Taizong's vital moral anchor",
+      "Could not prevent crown prince Li Chengqian's rebellion after her restraining hand was gone"
+    ]
+  },
+  {
+    "id": "princess_pingyang",
+    "nameZh": "平阳昭公主",
+    "nameEn": "Princess Pingyang",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "娘子军统帅 · 昭公主 · 军礼下葬唯一巾帼名将",
+    "positionEn": "Princess Zhao · Supreme Commander of the Women's Army · Sole Woman Honored with Military Rites",
+    "personalityZh": "胆识过人、深得民心、统御万军、阵纪严明、巾帼英烈",
+    "personalityEn": "Daring, brilliant military leader who assembled an 70,000 army of peasant rebels ('Army of the Lady'), enforced flawless discipline, sole woman buried with military battle honors",
+    "deedsZh": "太原起兵时独留在关中散尽家财招募数万人义军，号“娘子军”；连克周至、户县等要塞与李世民会师围攻长安；扼守苇泽关（娘子关）保卫关中大后方；病逝以军礼加军乐出葬。",
+    "deedsEn": "Raised 70,000 troops alone in Shaanxi during the Taiyuan uprising, enforcing strict anti-looting laws; guarded Niangzi Pass; buried with imperial military brass bands.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "打破性别与传统阶层壁垒的超级领袖。在极端危险的敌后孤岛中，以极高的号召力与严明军纪迅速聚拢数万之众，成为帝国开国大业的破局先锋。",
+    "strengthAdviceEn": "Shatter archaic demographic ceilings through personal magnetism and iron discipline; assemble a massive autonomous army behind enemy lines to capture pivotal gateways.",
+    "weaknessAdviceZh": "英年早逝于唐朝初定之时，高强度的戎马征战与长年艰苦环境严重损耗了身体。在取得阶段性战略胜利后，未能及时回归调养与享受胜利成果。",
+    "weaknessAdviceEn": "Fell in the prime of youth after years of exhausting combat; intense frontier hardship wore down physical resilience before enjoying the fruits of victory.",
+    "historicalQuoteZh": "礼官以妇人无军乐为谏，高祖怒驳曰：“鼓吹，军乐也。往者公主亲执金鼓，身先士卒，周旋草昧，致成帝业，古何有之？何得无军礼！”",
+    "historicalQuoteEn": "When ritualists objected to military horns for a woman's burial, Emperor Gaozu barked: 'The Princess beat war drums in battle to found this dynasty; she deserves full military honors!'",
+    "auxiliaryStrengthsZh": [
+      "以女子之身孤身在关中数月内招募整编七万“娘子军”，军纪严明秋毫无犯，百姓歌颂争投麾下",
+      "扼守天下要塞苇泽关（娘子关），以极强的战略定力确保了大唐关中基地的东面绝对安全"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Built a disciplined 70,000-strong army alone behind enemy lines with spotless protection of civilians",
+      "Defended Niangzi Pass, locking the eastern gateway into Shaanxi against hostile warlords"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "二十余岁即因长年劳顿暴卒军中，过早告别历史舞台，未能见证大唐一统之全貌",
+      "事迹多被后世正统史官因男尊女卑观念刻意简略，许多重大战术指挥细节失传"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Died in her twenties of battle exhaustion, robbed of seeing the empire's ultimate peace",
+      "Her brilliant tactical campaigns were curtailed by patriarchal court historians"
+    ]
+  },
+  {
+    "id": "li_jiancheng",
+    "nameZh": "李建成",
+    "nameEn": "Li Jiancheng (Crown Prince Yin)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "隐太子 · 唐初皇太子 · 关中内政与平叛柱石",
+    "positionEn": "Crown Prince Yin · Legal Heir of Tang · Architect of Rear Logistics and Northern Pacification",
+    "personalityZh": "仁厚宽和、长于内政、治军严整、结好宗室、棋差一着",
+    "personalityEn": "Dignified, capable administrative anchor of early Tang, fair to subordinates, crushed Liu Heita's rebellion, outmaneuvered in the final bloody coup",
+    "deedsZh": "太原起兵首倡功臣之一；长期留守关中主持中央内政输送粮草兵饷；挂帅亲征平定刘黑闼残部彻底稳定河北；面对秦王李世民军功做大极力联合李元吉制衡；玄武门遇伏身亡。",
+    "deedsEn": "Founding prince who spearheaded the march south; administered the capital's grain and recruitment; crushed Liu Heita; killed in the Xuanwu Gate ambush by Qin Wang.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "传统合法性与体制内政治博弈的卓越运营者。在后方治理、赋税调配与多方利益协调上表现出极其扎实稳健的执政功底，深得天子与世家拥戴。",
+    "strengthAdviceEn": "Master of administrative legitimacy and logistical statecraft; coordinate rear taxation and civil bureaucracy effortlessly, winning broad aristocratic institutional backing.",
+    "weaknessAdviceZh": "在面对你死我活的生死摊牌时刻缺乏雷霆斩杀的狼性魄力！过分依赖常规行政制衡与鸩毒小计，对握有绝对精锐兵权的对手心存侥幸，终在玄武门惨遭反杀。",
+    "weaknessAdviceEn": "Hesitation in existential showdowns is fatal; relying on bureaucratic sanctions against ruthless combat veterans guarantees defeat when swords are drawn.",
+    "historicalQuoteZh": "《旧唐书》原评虽有曲笔，然陈寅恪考证：建成才能绝不减于世民。平刘黑闼、镇河北，皆有实功，以嫡长承统，大局所归，卒以不忍受害。",
+    "historicalQuoteEn": "Modern historians note: Li Jiancheng possessed top-tier administrative genius and pacified northern revolts; relying on legal protocol cost him his life against an armed coup.",
+    "auxiliaryStrengthsZh": [
+      "长年坐镇长安大后方统筹关中赋税粮草，保障李世民数次大战无后顾之忧，内政功勋卓著",
+      "亲征河北一战全歼枭雄刘黑闼，展现出高超的剿抚并用手腕，彻底平定北方最后动荡"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Anchored logistics in Chang'an for years, funding Li Shimin's frontline campaigns without failure",
+      "Crushed rebel Liu Heita in Hebei through calibrated clemency, pacifying the volatile north"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对武装夺权的残酷性缺乏根本预估，在秦王府将领磨刀霍霍之际依然大意轻骑入宫赴死",
+      "在与李世民争夺权力的过程中手段不够果决彻底，反受其乱株连五子尽皆被诛"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Grossly underestimated the ruthless desperation of veteran warriors, riding into the ambush",
+      "Failed to strike decisively when holding legal advantage, costing his life and his sons' heads"
+    ]
+  },
+  {
+    "id": "li_yuanji",
+    "nameZh": "李元吉",
+    "nameEn": "Li Yuanji (Prince of Qi)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "齐王 · 巢剌王 · 勇悍残忍暴烈骁将",
+    "positionEn": "Prince of Qi · Martial Champion of the Imperial Court",
+    "personalityZh": "骁勇善战、长于用槊、性格暴戾、残忍嗜杀、弄权夺嗣",
+    "personalityEn": "Fierce equestrian spear fighter, hot-tempered and ruthless, addicted to violent combat games, ally of Crown Prince Jiancheng, killed at Xuanwu Gate",
+    "deedsZh": "太原留守；因暴虐弃太原失陷关东；随太宗征王世充有战功，槊法天下无双；坚定联合太子李建成力图除掉李世民；玄武门之变中欲射李世民不谐，被尉迟恭一箭射死。",
+    "deedsEn": "Held Taiyuan but abandoned it after civilian abuse; distinguished himself in siege combat, master of the heavy lance; allied with Jiancheng, shot dead at Xuanwu Gate.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "劫财",
+      "伤官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "战场单兵骑战与器械厮杀的绝对好手（马槊天下莫能匹）。在阵营对抗中站位极其凶狠坚决，充当最锋利的肉体打手与进攻急先锋。",
+    "strengthAdviceEn": "Dominant heavy lance equestrian champion; fiercely partisan in factional struggles, acting as an aggressive, uncompromising vanguard.",
+    "weaknessAdviceZh": "残暴嗜杀与轻浮无度是自取灭亡的催化剂！太原留守时以百姓为活靶射杀、纵兵抢掠，丧失民心；在最高博弈中狂躁冲动，缺乏大政治家的深谋远虑。",
+    "weaknessAdviceEn": "Cruelty and impulsiveness ensure destruction; shooting civilians for sport in Taiyuan lost the realm's heart; fiery temper ruined coordinated political strategies.",
+    "historicalQuoteZh": "《旧唐书》评：元吉凶顽，自弃太原，罪无可赦。然其武力骁绝，便弓马，善用槊。以恶相济，终致覆亡。",
+    "historicalQuoteEn": "Old Book of Tang: Yuanji was brutal and recklessly abandoned Taiyuan; yet his skill with lance and horse was unmatched. His cruelty brought total annihilation.",
+    "auxiliaryStrengthsZh": [
+      "马槊武艺冠绝当代，曾与尉迟恭单挑比试夺槊，展现出极高的冷兵器近身搏击造诣",
+      "在太子阵营中充当最坚定的铁血死党，政治决断坚决主张尽早除掉秦王"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary master of the heavy cavalry lance, sparring against champions like Yuchi Gong",
+      "Unyielding partisan who urged immediate physical elimination of rivals before the coup"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情极其残忍嗜暴，在太原以弓箭射杀无辜行人取乐，导致民怨沸腾弃城而逃",
+      "缺乏宏观战略耐心，在玄武门事变中惊慌失措弓弦三度未能拉满，被反击射杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Depraved cruelty: shot innocent pedestrians from city walls for entertainment, losing cities",
+      "Panicked under pressure at Xuanwu Gate, fumbling his bow three times before being shot down"
+    ]
+  },
+  {
+    "id": "li_zhi",
+    "nameZh": "李治",
+    "nameEn": "Li Zhi (Emperor Gaozong of Tang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "唐高宗 · 永徽之治 · 拓土最大被低估帝王",
+    "positionEn": "Emperor Gaozong of Tang · The Underrated Conqueror · Peak Borders of the Empire",
+    "personalityZh": "宽仁温和、内藏城府、果决隐忍、灭高句丽、开疆拓土",
+    "personalityEn": "Outwardly gentle and dutiful, possessing steely inner resolve, annihilated Goguryeo and Western Turks to achieve Tang's greatest territorial extent",
+    "deedsZh": "贞观晚年以仁孝得立储君；开创“永徽之治”；力排群臣拥立武则天为后，借机彻底铲除长孙无忌、褚遂良等关陇元老门阀；灭西突厥、灭百济、灭高句丽，大唐版图达到历史最鼎盛。",
+    "deedsEn": "Succeeded Taizong through filial mildness; dismantled the Guanlong aristocracy by purging Zhangsun Wuji; conquered Western Turks and Goguryeo, expanding Tang to peak size.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "偏财"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "“外柔内刚与厚积薄发”的帝王典范。善于以温和人设麻痹元老权贵，在关键历史关口借力打力，以雷霆手段完成对传统门阀集团的系统性洗牌。",
+    "strengthAdviceEn": "Master of soft power masking steely resolve; disarm entrenched corporate elders through modesty, then execute radical restructuring to seize absolute control.",
+    "weaknessAdviceZh": "健康极度恶化（风疾失明）导致晚年权力全面旁落于武则天之手！在权力交接机制上未能构筑刚性防火墙，间接引发了后世李唐宗室惨遭屠戮的血腥灾难。",
+    "weaknessAdviceEn": "Physical deterioration (cerebral blindness) caused total power cession to Wu Zetian; failing to install succession firewalls exposed imperial princes to wholesale purges.",
+    "historicalQuoteZh": "《新唐书》评：高宗外宽内忌，优柔寡断。然灭百济，平高丽，开疆万里，太宗所未及者，高宗成之，亦一代之英主也。",
+    "historicalQuoteEn": "New Book of Tang: Gaozong was deemed soft, yet conquered Goguryeo and Western Turks, stretching imperial borders far beyond Taizong's reach.",
+    "auxiliaryStrengthsZh": [
+      "彻底终结辽东百年战患，完成了炀帝太宗未能完成之灭高句丽壮举，大唐疆域东临大海西逾中亚咸海",
+      "以绝顶政治城府借“废王立武”一举瓦解把持朝政数十年的关陇军事贵族门阀集团"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Conquered Goguryeo and Western Turks, stretching imperial borders to Central Asia's Aral Sea",
+      "Outmaneuvered the entrenched Guanlong oligarchy to centralize imperial authority entirely"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "患严重家族遗传性风眩症（脑血管病），晚年双目失明头痛欲裂，丧失直接执政能力",
+      "对武则天的政治野心失去平衡制约手段，身后险些致使大唐李氏江山彻底断绝国祚"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Crippled by hereditary cerebral vertigo that blinded him, forfeiting executive capacity",
+      "Failed to restrain Wu Zetian's imperial ambitions, nearly causing the total eradication of his clan"
+    ]
+  },
+  {
+    "id": "li_ke",
+    "nameZh": "李恪",
+    "nameEn": "Li Ke (Prince of Wu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "吴王 · 司空 · 太宗赞“类己”悲剧宗室",
+    "positionEn": "Prince of Wu · Grand Minister of Works · The Tragic Prince Who Mirrored Taizong",
+    "personalityZh": "才兼文武、英果类己、人望所归、才高见忌、含冤陨命",
+    "personalityEn": "Brilliant in civil and martial arts, celebrated by Taizong as mirroring his own qualities, adored by the empire, framed and murdered by jealous regents",
+    "deedsZh": "太宗第三子，母为隋炀帝之女杨妃；才华横溢武艺出众，太宗屡称其“英物，类我”欲立为太子遭长孙无忌坚决阻击；房遗爱谋反案中遭长孙无忌公报私仇构陷处死。",
+    "deedsEn": "Third son of Taizong and Sui imperial princess; widely admired for brilliance; framed for treason by jealous regent Zhangsun Wuji and executed, cursing his murderers.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "顶级天赋与文武兼资的皇族翘楚。在专业才干、个人魅力与治理声望上皆达到时代顶峰，拥有天然的领袖气场与群众号召力。",
+    "strengthAdviceEn": "Possess radiant natural charisma, intellectual brilliance, and executive competence; command spontaneous public adoration as an exemplary corporate heir.",
+    "weaknessAdviceZh": "“才高震主、锋芒过盛”在宫廷权阀眼中是灭顶之罪！在缺乏自身嫡系军事武装保护下，过高的民间威望直接成为权臣长孙无忌必欲除之而后快的催命符。",
+    "weaknessAdviceEn": "Towering prestige without armed leverage makes you a prime target for paranoid regents; failing to adopt low-profile self-defense invited fatal judicial murder.",
+    "historicalQuoteZh": "李恪临刑前大呼曰：“长孙无忌窃弄威权，构害良善！若宗社有灵，当见其族灭！”陈寿式史评叹曰：“恪有英才，为无忌所害，海内冤之。”",
+    "historicalQuoteEn": "Before execution, Li Ke roared: 'Zhangsun Wuji abuses power to butcher innocents! If imperial spirits exist, his clan will be eradicated!' The realm wept for him.",
+    "auxiliaryStrengthsZh": [
+      "太宗诸子中最具太宗雄风之皇子，“英果类己”的官方赞誉使其在民间与朝野享有极高声望",
+      "治理封地清正威严，在江淮湖广一带深得士民爱戴，政绩卓著"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Celebrated by Taizong as his true spiritual heir, embodying the founding sovereign's brilliance",
+      "Governed southern provinces with incorruptible justice, earning immense grassroots devotion"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在血统上兼具李唐与隋杨两朝皇室血脉，政治身份过于敏感招致关陇贵族极度恐慌",
+      "在权力斗争中缺乏反侦察与先发制人的政治手段，被长孙无忌罗织罪名冤杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Dual Tang-Sui imperial heritage terrified Guanlong oligarchs, marking him for early elimination",
+      "Lacked ruthless counter-conspiracy instincts, easily framed by seasoned power-brokers"
+    ]
+  },
+  {
+    "id": "fang_xuanling",
+    "nameZh": "房玄龄",
+    "nameEn": "Fang Xuanling (Duke of Liang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司空 · 梁国公 · 房谋杜断贞观第一相",
+    "positionEn": "Grand Minister of Works · Duke of Liang · Architect of the Zhenguan Administration",
+    "personalityZh": "博览经史、善于谋略、知人善任、谦抑自守、公忠体国",
+    "personalityEn": "Encyclopedic scholar, master strategist of administrative design, peerless talent curator, humble and cautious, chief chancellor of Zhenguan",
+    "deedsZh": "早年投李世民入幕府，网罗天下英才入秦王府；玄武门之变首席谋划者；任宰相十五年，主持制定大唐律令法典，统揽朝政夙夜在公，被誉为大唐第一贤相。",
+    "deedsEn": "Joined Li Shimin early, gathering the Qin Wang talent corps; planned Xuanwu Gate; chancellor for 15 years, codifying Tang legal statutes and building imperial institutions.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "食神"
+    ],
+    "patternType": "官印相生格",
+    "strengthAdviceZh": "“房谋杜断”中的宏观战略谋划大师。善于发现人才、包容异见，为企业架构建立极度严谨高效的规章法度体系，以绝对谦和的做人姿态守住宰辅重位。",
+    "strengthAdviceEn": "Premier architect of institutional design; excel at discovering diverse geniuses, drafting comprehensive organizational statutes, and leading through humble collaboration.",
+    "weaknessAdviceZh": "在家族内部管教不严，长子房遗爱狂妄骄横娶高阳公主，最终卷入谋反大案导致房氏全族被诛剖棺毁墓；治国者不可不察修身齐家之戒。",
+    "weaknessAdviceEn": "Failure in domestic governance ruins dynastic clans; his son Fang Yi'ai's reckless rebellion with Princess Gaoyang brought total slaughter to his descendants.",
+    "historicalQuoteZh": "太宗叹曰：“筹画局谟，克定祸乱，玄龄之功第一！”《旧唐书》评：“玄龄佐命立极，治致升平，虽萧何、张良，何以加兹！”",
+    "historicalQuoteEn": "Taizong praised: 'In grand strategizing and pacifying chaos, Xuanling's feats stand supreme!' Historical annals equate his statecraft to Xiao He and Zhang Liang.",
+    "auxiliaryStrengthsZh": [
+      "贞观之治制度与法典的实际总设计师，主持编纂《唐律疏议》前身律令，垂范后世千年",
+      "天下第一等“首席人才官”，为李世民发掘招揽了几乎整个大唐开国文武精英智囊团"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Primary architect of Tang statutes and administrative law, framing Chinese civil governance",
+      "Supreme talent aggregator whose discerning eye assembled the founding imperial cabinet"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "畏妻如虎的小节成为世人笑谈，反映出其在私家庭院管理上的妥协与软弱",
+      "未能管教好次子房遗爱，死后不久家族因高阳公主谋反案惨遭连根拔起抄灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Dominated domestically by his fierce wife, reflecting blindspots in family governance",
+      "Failed to curb his reckless son Fang Yi'ai, whose treason erased the family fortune posthumously"
+    ]
+  },
+  {
+    "id": "du_ruhui",
+    "nameZh": "杜如晦",
+    "nameEn": "Du Ruhui (Duke of Lai)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "尚书右仆射 · 莱国公 · 房谋杜断英敏决断名相",
+    "positionEn": "Right Executive Director of State Affairs · Duke of Lai · Master of Decisive Execution",
+    "personalityZh": "通达机变、断事如神、雷厉风行、见识高卓、英年早逝",
+    "personalityEn": "Acute tactical judge, making lightning-fast policy resolutions, stripping ambiguity from complex debates, legendary partner of Fang Xuanling",
+    "deedsZh": "秦王府十八学士之首；李世民起兵每有大难必问如晦，断决如流；玄武门之变决断定策功臣；与房玄龄共掌朝政，精简官僚核定法度；贞观四年病逝太宗哭之痛极。",
+    "deedsEn": "Chief of the Eighteen Scholars; solved intractable political crises instantly; engineered Xuanwu Gate; streamlined bureaucracy with Fang Xuanling; died early in 630.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正印",
+      "伤官"
+    ],
+    "patternType": "伤官制杀格",
+    "strengthAdviceZh": "“房谋杜断”中的终极决断者。在各种复杂纷繁的意见分歧中，具备一眼洞穿核心症结的决断魄力，以雷厉风行的执行力迅速斩断拖延。",
+    "strengthAdviceEn": "The ultimate decisive executioner; slice through bureaucratic dithering to deliver clear, actionable verdicts in high-stakes corporate deadlocks.",
+    "weaknessAdviceZh": "长期处于高强度的脑力决断与突击办案状态，严重透支了生理健康，贞观四年仅四十六岁即英年猝逝。在组织攻坚期必须设立精力熔断保护机制。",
+    "weaknessAdviceEn": "Severe intellectual burnout and sleepless command sessions wrecked his cardiovascular health, dying at 46; enforce mandatory cognitive resting cycles.",
+    "historicalQuoteZh": "太宗每得佳物，辄流涕叹曰：“如晦已亡，不见此物矣！”《新唐书》赞：“玄龄善谋，如晦善断，二人同心佐治，天下称其贤。”",
+    "historicalQuoteEn": "Whenever receiving prized delicacies, Taizong wept: 'Ruhui is gone, he cannot share this!' Ancient texts praise their harmonious dual-engine governance.",
+    "auxiliaryStrengthsZh": [
+      "极高维度的临机决断力，房玄龄提出数种策略，杜如晦总能一秒选中唯一最优解并坚决执行",
+      "精简官僚体制与官规厘定，使大唐中央政府以极低的人员编制爆发出最高办事效率"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Unrivaled decision-making speed: effortlessly selected the single optimal path from options",
+      "Streamlined imperial bureaucracy, allowing a tiny cabinet to govern an empire efficiently"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "极度透支体能日夜办案，年仅四十六岁英年早逝，成为李世民一生的心头至痛",
+      "子嗣管教不严，其子杜荷参与太子谋反案被斩，连累杜氏名门家道中落"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Intense overwork burned his life force, dying prematurely at 46 to Taizong's endless grief",
+      "Son Du He joined crown prince treason, dragging the illustrious lineage into disgrace"
+    ]
+  },
+  {
+    "id": "wei_zheng",
+    "nameZh": "魏征",
+    "nameEn": "Wei Zheng (Duke of Zheng)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司空 · 郑国公 · 千古第一诤臣以人为镜",
+    "positionEn": "Grand Minister of Works · Duke of Zheng · The Eternal Mirror of Imperial Remonstrance",
+    "personalityZh": "犯颜直谏、铁骨铮铮、以民为本、居安思危、千古人镜",
+    "personalityEn": "Fearless moral critic, presenting over 200 biting memorials against imperial excess, guardian of truth who made the Son of Heaven tremble",
+    "deedsZh": "原李密智囊，后为李建成洗马，曾劝建成早除李世民；玄武门后太宗不计前嫌重用；一生上奏疏二百余次，面折廷争力阻太宗骄奢兴土木；太宗叹“以人为镜可以明得失”。",
+    "deedsEn": "Former advisor to rival Li Jiancheng; embraced by Taizong after Xuanwu Gate; presented 200 blunt memorials halting luxury; immortalized as Taizong's 'Human Mirror.'",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "做组织内部最纯粹的“刚性监督镜子”。敢于当面指出最高领袖的错误与私欲，以极高的公心与道义威望制衡绝对权力，避免巨轮触礁沉没。",
+    "strengthAdviceEn": "Act as an unbending moral mirror; fearlessly confront executive vanity and wasteful indulgences, protecting the organization from catastrophic derailment.",
+    "weaknessAdviceZh": "直言不讳在独裁体制下如履薄冰。魏征死后因曾推荐之人谋反，太宗恼怒推倒其墓碑（后重立），说明死谏者必须防范死后政治翻案风险。",
+    "weaknessAdviceEn": "Uncompromising critique carries delayed political retribution; Taizong briefly overturned his tombstone after his death over factional suspicions, warning of legacy perils.",
+    "historicalQuoteZh": "太宗罢朝叹曰：“以铜为镜，可以正衣冠；以古为镜，可以知兴替；以人为镜，可以明得失。朕尝宝此三镜，魏征没，朕亡一镜矣！”",
+    "historicalQuoteEn": "Taizong proclaimed: 'With bronze as a mirror, one dresses right; with history, one knows rises and falls; with a man, one knows errors. In losing Wei Zheng, I lost my mirror!'",
+    "auxiliaryStrengthsZh": [
+      "千古第一谏臣，以超人胆魄面折廷争二百余次，迫使一代天子低头反省，成全了“贞观之治”的清明盛景",
+      "著《十渐不克终疏》，对封建帝王后期懈怠骄奢的病灶进行了入木三分的历史解剖"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immortal truth-teller who checked imperial power 200 times, anchoring the golden age",
+      "Authored Memorial on Ten Slipping Virtues, dissecting the decay that strikes aging regimes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "说话直率至极从不留情面，多次在群臣面前令太宗下不来台，若非长孙皇后多次营救险遭处死",
+      "推荐的侯君集、杜正伦后来卷入谋反大案，死后遭太宗怀疑推倒其墓碑"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Harsh candor humiliated the Emperor in court, surviving solely due to Empress Zhangsun's grace",
+      "Recommended proteges who later rebelled, provoking Taizong to desecrate his tombstone in fury"
+    ]
+  },
+  {
+    "id": "zhangsun_wuji",
+    "nameZh": "长孙无忌",
+    "nameEn": "Zhangsun Wuji (Duke of Zhao)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "太尉 · 赵国公 · 凌烟阁第一功臣兼两朝托孤元勋",
+    "positionEn": "Grand Commandant · Duke of Zhao · Premier Meritorious Statesman of Lingyan Pavilion",
+    "personalityZh": "深谋远虑、机变权诈、忠贞拥主、专权弄法、终遭反噬",
+    "personalityEn": "Supreme imperial strategist, brother of the Empress, orchestrator of Xuanwu Gate, yet intoxicated by absolute regency power late in life, purged by Wu Zetian",
+    "deedsZh": "玄武门之变首席策划与执行者；受封凌烟阁二十四功臣第一名；辅政太宗高宗两代；极力排挤非嫡出皇子（吴王李恪）；反对立武则天为后，遭许敬宗构陷逼令自缢于黔州。",
+    "deedsEn": "Chief architect of Xuanwu Gate; #1 at Lingyan Pavilion; co-regent across two reigns; framed Prince Li Ke; opposed Empress Wu, framed and hanged in exile.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正官",
+      "偏印"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "擅长大集团顶层政治重组与战略对决。在生死攸关的路线斗争中杀伐果断、毫不手软；在辅政期间稳固法统，推行《唐律疏议》奠定法治基础。",
+    "strengthAdviceEn": "Master of apex political restructuring and regime survival; strike with chilling decisiveness during succession crises while anchoring legal codification.",
+    "weaknessAdviceZh": "千万警惕权倾朝野时的“过度专断与滥杀政敌”！借司法大案构陷处死深得人心的吴王李恪，不仅透支了个人道义资产，最终被更加心狠手辣的武则天彻底诛灭。",
+    "weaknessAdviceEn": "Beware monopolizing power and framing political rivals; executing the innocent Prince Li Ke destroyed his moral armor, leaving him helpless when Wu Zetian struck.",
+    "historicalQuoteZh": "《旧唐书》评：无忌勋冠台阶，任当栋石。受遗辅政，专断国柄，罗织良善。及遭谗见逐，身死黔中，其亦自取之咎欤！",
+    "historicalQuoteEn": "Old Book of Tang: Wuji ranked first among founding titans; yet abusing regency authority to frame innocents left him friendless when purges struck, dying in desolate exile.",
+    "auxiliaryStrengthsZh": [
+      "玄武门之变核心操盘手，在李世民犹豫不决的生死关口力排众议促成起兵，奠定大唐三百年基石",
+      "主持编纂《唐律疏议》三十卷，成为中华法系最成熟完备的传世典范"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Decisive mastermind of Xuanwu Gate, forcing Li Shimin to act when hesitating on the brink",
+      "Oversaw the compilation of the Tang Code with Commentaries, the pinnacle of Asian jurisprudence"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "辅政时期专权跋扈，借房遗爱案株连杀害吴王李恪等宗室重臣，种下深重政治罪孽",
+      "在“废王立武”的皇权再造博弈中严重低估了高宗李治与武则天的政治狠辣，一朝落败满门尽灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Monopolized court power to slaughter rivals like Prince Li Ke, forfeiting moral standing",
+      "Underestimated Emperor Gaozong and Wu Zetian's ruthlessness, outmaneuvered and exiled to die"
+    ]
+  },
+  {
+    "id": "feng_deyi",
+    "nameZh": "封德彝",
+    "nameEn": "Feng Deyi (Duke of Mi)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司空 · 密国公 · 历仕四朝两面三刀官场老狐",
+    "positionEn": "Grand Minister of Works · Duke of Mi · The Two-Faced Political Fox of Four Dynasties",
+    "personalityZh": "辩捷多智、深沉巧谄、两面下注、逢迎权贵、死后追夺",
+    "personalityEn": "Silky-tongued court survivor, serving four dynasties, flattering rival princes simultaneously while taking zero personal risk",
+    "deedsZh": "隋朝随杨素出谋划策；宇文化及弑君后随行；归唐深受李渊李世民两代器重拜相；在李建成与李世民夺嫡斗争中暗中“脚踏两只船”，两边讨好；死后阴谋泄露被追夺封爵。",
+    "deedsEn": "Served Sui, Yuwen Huaji, and Tang; chancellor under Gaozu and Taizong; double-dealt secretly between crown prince Jiancheng and Qin Wang; stripped of honors posthumously.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正财",
+      "偏印",
+      "伤官"
+    ],
+    "patternType": "正财格",
+    "strengthAdviceZh": "在风云激荡的乱世更迭中具有天下第一等的“嗅觉与生存柔术”。善于迎合最高决策者的隐秘心理，以极高的文书策划才华在各派势力中左右逢源。",
+    "strengthAdviceEn": "Supreme master of ideological survival across volatile regime collapses; decipher executive desires instantly and deliver polished bureaucratic solutions.",
+    "weaknessAdviceZh": "“两面下注、缺乏基本诚信与底线”是对终身声誉的定时炸弹！机关算尽太聪明，自以为两边讨好万无一失，死后丑行被彻底曝光、爵位追夺、遗臭万年。",
+    "weaknessAdviceEn": "Double-dealing across rival camps is a ticking reputational bomb; calculated deceit leaves you exposed to posthumous disgrace and total family ruin.",
+    "historicalQuoteZh": "《旧唐书》评：德彝辩给多谋，历涉数代。然伺候主颜，阿附苟容。玄武之计，潜怀两端。死后情发，削夺爵邑，实小人之雄者也。",
+    "historicalQuoteEn": "Old Book of Tang: Feng Deyi was silver-tongued and survived four regimes; yet flattering rulers and secretly hedging both sides in civil coups brought posthumous disgrace.",
+    "auxiliaryStrengthsZh": [
+      "四朝元老不倒翁，在极端血腥的朝代更替中始终稳居宰辅核心层，展现顶级的官场生存技艺",
+      "文书辞令精妙绝伦，对复杂政务制度的梳理执行具备极高的行政业务水准"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Venerable bureaucratic chameleon who retained prime minister status across four regimes",
+      "Brilliant drafting skills and administrative agility that made him indispensable to monarchs"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治人品极其卑劣，在建成与世民生死对决中暗中首鼠两端，毫无士大夫节操底线",
+      "一味逢迎皇帝喜好行事，明知政策有误却绝不谏阻，是典型的弄权佞幸"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Vile duplicity: secretly advised both rival princes while pledging sole allegiance to each",
+      "Sycophantic courtier who refused to remonstrate against flawed royal whims to preserve rank"
+    ]
+  },
+  {
+    "id": "xiao_yu",
+    "nameZh": "萧瑀",
+    "nameEn": "Xiao Yu (Duke of Song)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "特进 · 宋国公 · 板荡识诚臣耿直老相",
+    "positionEn": "Special Grandee · Duke of Song · The Upright Pillar Proven in Turmoil",
+    "personalityZh": "刚正严厉、骨鲠清廉、疾恶如仇、屡遭罢免、六度起落",
+    "personalityEn": "Fiercely upright, incorruptible, unyielding in ethical integrity, abrasive in court debate, dismissed and reinstated six times",
+    "deedsZh": "梁武帝后裔，隋炀帝萧后之弟；归唐受李渊李世民重用，参与平定四方；为相严厉执法疾恶如仇，多次与房玄龄魏征廷争面折；太宗赐诗“板荡识诚臣”；六次拜相六次被贬。",
+    "deedsEn": "Imperial Liang scion and brother of Sui Empress; six-time chancellor under Tang; clashed violently with peers over moral purity; praised in famous poem 'Loyalty Proven in Turmoil.'",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "正印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "在大风大浪中展现“岁寒知松柏”的绝对忠贞信义。不贪钱财、不屈从权贵私情，在国家动荡时刻是最高统帅最值得以身家性命托付的忠诚底牌。",
+    "strengthAdviceEn": "An unshakeable ethical pillar in systemic turmoil ('pines stand green in winter'); immune to bribes and personal vanity, offering rock-solid crisis dependability.",
+    "weaknessAdviceZh": "性情过于偏狭严苛、孤僻易怒。容不得同僚有半点差池，在朝堂上动辄发怒拂袖而去，导致人际关系极其恶劣，屡次拜相又屡次因脾气被贬官。",
+    "weaknessAdviceEn": "Abrasive intolerance and explosive temper alienate peers; walking out of cabinet debates in rage resulted in being dismissed and demoted six separate times.",
+    "historicalQuoteZh": "太宗赐诗曰：“疾风知劲草，板荡识诚臣。勇夫安识义，智者必怀仁。”《旧唐书》评：“萧瑀孤特峭厉，有古烈士之风，然其偏隘，亦难与同事。”",
+    "historicalQuoteEn": "Taizong gifted him the immortal verse: 'Fierce winds reveal resilient grass; turmoil proves a faithful minister.' Yet annals note his abrasive rigidity made teamwork painful.",
+    "auxiliaryStrengthsZh": [
+      "“疾风知劲草，板荡识诚臣”的历史原型，在玄武门前夜毫无保留坚定支持李世民，忠节照人",
+      "一生六次拜相、六次被罢，起落浮沉中从未改变清廉正直的君子本色，私德无可挑剔"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Subject of the legendary verse 'Turbulent times prove faithful ministers', unflinching under fire",
+      "Dismissed and reinstated six times without once compromising his incorruptible principles"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "心胸过于狭隘猜忌，自恃皇室贵胄看不起布衣出身的房玄龄杜如晦，朝堂吵架口不择言",
+      "晚年笃信佛教甚至欲出家为僧，执拗任性缺乏宰相统摄全局的从容雅量"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Arrogant imperial lineage made him disdain non-noble chancellors like Fang Xuanling",
+      "Stubborn petulance led him to threaten becoming a monk when frustrated by policy debates"
+    ]
+  },
+  {
+    "id": "chen_shuda",
+    "nameZh": "陈叔达",
+    "nameEn": "Chen Shuda (Duke of Jiang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "礼部尚书 · 江国公 · 南朝帝胄持重元勋",
+    "positionEn": "Minister of Rites · Duke of Jiang · Imperial Scion of Southern Chen",
+    "personalityZh": "博学能文、风度闲雅、临危不乱、立排众议、深明大义",
+    "personalityEn": "Erudite aristocratic scholar, dignified and unflappable, preserved Tang dynasty funds at critical hours, persuaded Gaozu to accept Xuanwu Gate reality",
+    "deedsZh": "陈宣帝之子；入隋官至绛郡通守；降唐深受李渊信任拜相，玄武门之变当天，李渊泛舟海池惊恐万状，陈叔达挺身而出劝高祖“事已至此，立秦王可安社稷”，大局遂定。",
+    "deedsEn": "Son of Emperor Xuan of Chen; chancellor under Gaozu; during Xuanwu Gate, stepped forward on the lake boat to persuade terrified Gaozu to empower Qin Wang, averting civil war.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "偏财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "在最高权力核心突发血腥剧变的瞬间，展现出极其精准的“态势判断与止损谏诤力”。一言定乾坤，避免了国家陷入更大规模的内战血光。",
+    "strengthAdviceEn": "Deliver decisive political arbitration during sudden bloody coups; step forward to persuade paralyzed patriarchs to accept reality and prevent wider civil war.",
+    "weaknessAdviceZh": "晚年在朝堂争辩中因性格冲动失态，与宰相萧瑀当着皇帝面大吵大闹、有失大臣体统，双双被免职下狱；必须在任何争辩中保持情绪管理底线。",
+    "weaknessAdviceEn": "Uncontrolled emotional outbursts in executive boardrooms destroy careers; screaming obscenities at Chancellor Xiao Yu before the Emperor led to immediate arrest.",
+    "historicalQuoteZh": "《旧唐书》评：陈叔达奕叶重光，早擅文雅。海池之决，力定皇基。虽忿争失容，亦瑕不掩瑜矣。",
+    "historicalQuoteEn": "Old Book of Tang: Chen Shuda bore illustrious imperial lineage; his decisive advice on the lake boat stabilized the throne, though court quarrels temporarily dimmed his luster.",
+    "auxiliaryStrengthsZh": [
+      "玄武门之变海池劝进第一功臣，在李渊惊恐欲拔剑时刻以大义从容陈述，促成和平权力交接",
+      "南朝帝王宗室文化大儒，掌管国家礼仪法度数十年，文教功勋卓著"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Decisive mediator during Xuanwu Gate, persuading Gaozu on the boat to transfer power smoothly",
+      "Preserved the grand ritual and literary traditions of the Southern Dynasties for the Tang court"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年与萧瑀在朝廷御前剧烈争吵、言辞失控辱骂同僚，被李世民盛怒之下双双罢相下狱",
+      "缺乏长远经济军事擘画，政治定位主要依附于皇室秘书与礼仪典章"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lost emotional control in imperial presence, engaged in shouting matches that led to prison",
+      "Focus confined to ritual and scribal administration rather than military economics"
+    ]
+  },
+  {
+    "id": "wen_yanbo",
+    "nameZh": "温彦博",
+    "nameEn": "Wen Yanbo (Duke of Yu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "尚书右仆射 · 虞国公 · 怀柔突厥鞠躬尽瘁名相",
+    "positionEn": "Right Executive Director of State Affairs · Mastermind of Nomadic Integration",
+    "personalityZh": "博达多识、聪敏强记、宽宏仁恕、主张怀柔、死而后已",
+    "personalityEn": "Encyclopedic memory, compassionate and generous, champion of assimilating defeated nomadic tribes into northern China, died at his desk of exhaustion",
+    "deedsZh": "太原温氏望族；随高祖太宗平天下；太宗击灭东突厥后，力排众议主张将数万突厥降众安置于幽州至灵州边塞“全其部落顺其土俗”，奠定天可汗羁縻大格局；积劳成疾卒于任上。",
+    "deedsEn": "Scion of Taiyuan aristocracy; championed assimilating Eastern Turkic tribes along northern borders, pioneering the Heavenly Qaghan model; died of overwork in office.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "跨文明跨民族统战与宏观包容格局的典范。善于以海纳百川的博大胸襟接纳归降势力，将其转化为帝国北方的防护长城与骑兵先锋。",
+    "strengthAdviceEn": "Pioneer multi-ethnic geopolitical integration; embrace defeated competitors with generous autonomy, converting former enemies into elite frontier shields.",
+    "weaknessAdviceZh": "对突厥降众的怀柔安置方案虽然开辟了天可汗的盛世，但也为日后安史之乱及北方异族骑兵做大埋下了不可控的地缘隐患，战略包容必须搭配防范机制。",
+    "weaknessAdviceEn": "Generous assimilation of nomadic tribes without long-term demographic dilution planted the seeds for later military governor rebellions (An Lushan).",
+    "historicalQuoteZh": "太宗闻其死号恸曰：“彦博在职尽心，辅朕致理，今忽长逝，国失贤相也！”《新唐书》赞其“通达敏劭，宽厚爱人，一代良辅”。",
+    "historicalQuoteEn": "Taizong wept bitterly: 'Yanbo served with spotless devotion; his sudden death robs the empire of a magnificent pillar!' Ancient annals praise his boundless mercy.",
+    "auxiliaryStrengthsZh": [
+      "东突厥内附安置政策的首倡者与落实者，以“全其部落、顺其土俗”奠定了大唐“天可汗”全球帝国的理论基石",
+      "博闻强记公文如流，与房玄龄同心协力处理大唐初年庞杂内政，口碑极佳"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architect of the Heavenly Qaghan doctrine, integrating steppe nomads into imperial defense",
+      "Photographic memory and spotless administrative diligence, anchoring post-war recovery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "日夜操劳不知节制，在繁重的国务公文中活活累死在宰相公堂之上，未能享年长久",
+      "对北方游牧民族骨子里的反复无常缺乏足够的警惕防备，政策有时偏于理想化"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Worked himself to death at his desk in high office, burning out his physical stamina",
+      "Idealistic faith in nomadic fidelity underestimated tribal volatility, breeding future unrest"
+    ]
+  },
+  {
+    "id": "cen_wenben",
+    "nameZh": "岑文本",
+    "nameEn": "Cen Wenben (Duke of Jiangling)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "中书令 · 江陵县伯 · 操劳中枢谦退早夭文胆",
+    "positionEn": "Director of the Chancellery · Chief Imperial Scribe and Strategic Draftsman",
+    "personalityZh": "沉静敏悟、才华横溢、文笔如神、极度谦抑、受宠若惊",
+    "personalityEn": "Deeply observant, brilliant prose stylist, humble and terrified of excessive imperial favors, master of wartime logistical mobilization, died of stress at 51",
+    "deedsZh": "原萧铣中书侍郎，降唐深受李世民赏识；起草诏书千言倚马可待，文辞华赡；主持贞观机要十余年；太宗赐其高位与巨款，惊恐曰“非我福也”；随征高句丽掌管全军后勤，操劳猝逝。",
+    "deedsEn": "Formerly Xiao Xian's chancellor; drafted imperial edicts instantly without revision; directed wartime logistics for the Goguryeo expedition, dying of stress at 51.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "正官",
+      "正印"
+    ],
+    "patternType": "伤官佩印格",
+    "strengthAdviceZh": "顶级智库文胆与微观战时后勤调度大师。才思敏捷如泉涌，能把最高统帅的战略意图迅速转化为无可挑剔的行政公文；保持深刻的敬畏与自律。",
+    "strengthAdviceEn": "The ultimate imperial chief of staff and logistical dispatcher; translate executive visions into impeccable operational edicts while living with spartan modesty.",
+    "weaknessAdviceZh": "“忧思过度、心理压力过载”是致命杀手！对皇恩浩荡常怀受宠若惊的恐惧感，在征高句丽的高压前线事必躬亲，终于心力交瘁暴病身亡。",
+    "weaknessAdviceEn": "Chronic anxiety and inability to decompress under command pressure are lethal; terrified of imperial favor and micromanaging supplies during war brought fatal heart collapse.",
+    "historicalQuoteZh": "太宗抚尸痛哭曰：“文本与我同行，今忽长逝，何痛如之！”《旧唐书》评：“岑文本博学敏思，文冠一时。自居相位，小心克己，然才不副力，早世可惜。”",
+    "historicalQuoteEn": "Taizong embraced his body weeping: 'Wenben marched with me, and now is dead; what grief matches this!' Annals praise his literary genius and tragic early exhaustion.",
+    "auxiliaryStrengthsZh": [
+      "唐太宗御用第一文胆，起草军国大政文书从不起草草稿，一挥而就文不加点，天下士人奉为典范",
+      "清廉自守绝不聚敛私财，每次受到重赏必分与亲朋，居室简陋仅容膝席，人品如玉"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Chief imperial scribe who drafted complex war edicts in minutes without preliminary drafts",
+      "Spotless integrity, giving away all imperial gold and living in an unadorned thatched home"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "心理承受力与焦虑管理极差，被封中书令当夜失眠叹“非吉兆”，内心过度恐惧功高招祸",
+      "在辽东前线独自承担庞大后勤调度重压，不懂得向下分权分压，导致年仅五十一岁暴卒行军中"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Paralyzed by psychological anxiety over imperial promotion, terrified of bad fortune",
+      "Refused to delegate logistical burdens in the grueling northern war, dying of physical stress"
+    ]
+  },
+  {
+    "id": "gao_shilian",
+    "nameZh": "高士廉",
+    "nameEn": "Gao Shilian (Duke of Shen)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司徒 · 申国公 · 长孙舅父修定氏族谱牒宗师",
+    "positionEn": "Grand Minister of Works · Duke of Shen · Master of Dynastic Genealogy and Clan Records",
+    "personalityZh": "才识过人、深识机变、敦厚严整、清敏慎密、门第泰斗",
+    "personalityEn": "Perceptive, aristocratic patriarch, uncle of Empress Zhangsun, compiler of the monumental Clan Records to break archaic pedigree monopolies",
+    "deedsZh": "长孙无忌与长孙皇后之亲舅父，抚育二人成人；玄武门之变亲率囚徒发甲兵助太宗；贞观为相主持编撰《氏族志》，打破山东旧门阀垄断，确立按官爵定名门新秩序；享年七十二善终。",
+    "deedsEn": "Uncle of Empress Zhangsun; armed prisoners to aid Xuanwu Gate; chancellor who compiled the Clan Records, shattering ancient aristocratic monopolies by pegging rank to merit.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "顶层家族资源整合与社会阶层秩序重构的超级大师。善于在历史关键关口押注正确阵营；主持重定社会等级评价标准，建立符合新政权利益的阶层流动机制。",
+    "strengthAdviceEn": "Master of dynastic lineage strategy; restructure entrenched class monopolies through standardized merit-based metrics (Clan Records), aligning social mobility with state power.",
+    "weaknessAdviceZh": "作为顶级外戚皇亲国戚，一生虽持身谨慎得以善终，但在打破世家大族垄断的过程中也曾招致山东旧士族的深度怨恨，需时刻维护中立公允形象。",
+    "weaknessAdviceEn": "Reforming aristocratic caste structures provoked bitter resentment from legacy clans; preserve absolute institutional fairness to insulate oneself from class retaliation.",
+    "historicalQuoteZh": "太宗欲亲临其丧，房玄龄泣谏劝阻。太宗登城遥望其灵车痛哭。《旧唐书》评：“高士廉才识弘博，有识人之鉴。佐命立功，位冠司徒，德福两全，古之完人也。”",
+    "historicalQuoteEn": "Taizong climbed the palace towers to weep as Shilian's funeral cart passed. Annals celebrate him as that rare historic figure who enjoyed supreme merit, status, and longevity.",
+    "auxiliaryStrengthsZh": [
+      "玄武门兵变最关键的偏师奇谋者，以戴罪之身释放大理寺囚徒武装上阵守卫芳林门，展现惊人决断力",
+      "主持修定《氏族志》，以国家行政力量彻底击碎崔卢李郑数百年高门垄断，奠定科举士族崛起基石"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Daring coup tactic: armed judicial prisoners to hold the palace gates during Xuanwu Gate",
+      "Authored the Clan Records, breaking hereditary oligopoly to empower meritocratic scholars"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在家族政治保护上过于倚重外甥长孙无忌的权势，为长孙家族日后的急剧膨胀埋下了伏笔",
+      "治国战略整体偏于稳健保守，缺乏李靖般的开疆拓土进攻性破局作为"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Anchored his house too closely to nephew Zhangsun Wuji, whose hubris later doomed the clan",
+      "Administrative style was heavily conservative, focusing on protocol rather than explosive expansion"
+    ]
+  },
+  {
+    "id": "tang_jian",
+    "nameZh": "唐俭",
+    "nameEn": "Tang Jian (Duke of Ju)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "民部尚书 · 莒国公 · 虎口脱险和亲突厥乐天名士",
+    "positionEn": "Minister of Revenue · Duke of Ju · Master Diplomat and Hedonistic Bon Vivant",
+    "personalityZh": "通达放诞、风趣幽默、大智若愚、临危不惧、乐天知命",
+    "personalityEn": "Witty, delightfully irreverent, unflappable hostage envoy who survived nomadic captivity, enjoying high food and wine until dying peacefully at 78.",
+    "deedsZh": "太原首谋功臣之一；出使突厥单刀赴会麻痹颉利可汗，李靖趁机突袭破突厥，唐俭从乱军中只身脱险；性情放达不拘礼法，曾与太宗下棋争道掷棋子；位列凌烟阁功臣。",
+    "deedsEn": "Early conspirator at Taiyuan; envoy to Eastern Turks who distracted the Qaghan while Li Jing attacked, miraculously escaping the crossfire; argued casually with Taizong over chess.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "食神",
+      "偏印"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "具有天下第一等“举重若轻与乐天知命”的心理素质。敢于深入最危险的蛮夷虎穴充当战略诱饵，在枪林弹雨乱军中奇迹般保全性命；为人豁达幽默，善终七十八载。",
+    "strengthAdviceEn": "Supreme avatar of lighthearted resilience; enter hostile lion's dens as diplomatic decoy, surviving crossfires with humor and living in joyful luxury until 78.",
+    "weaknessAdviceZh": "日常言行过于放达不羁、不拘小节。与皇帝下围棋争道被太宗怒斥欲杀，因生活奢靡曾遭御史弹劾；在严肃政治场合需适度收敛纨绔名士做派。",
+    "weaknessAdviceEn": "Irreverent, flippant lifestyle alienated moral purists; threw chess pieces at Taizong in competitive rage and faced impeachment for lavish banqueting.",
+    "historicalQuoteZh": "太宗尝怒其下棋不逊，意欲治罪，尉迟恭力保曰：“唐俭预谋草创，有安社稷之功，不可因戏小过诛功臣。”太宗乃释。陈寿式评赞其“雅达从容，老而全节”。",
+    "historicalQuoteEn": "Taizong once raged over a chess insult, but Yuchi Gong pleaded: 'Tang Jian risked his life founding the dynasty; do not execute an empire-builder over a board game!'",
+    "auxiliaryStrengthsZh": [
+      "出使东突厥以超凡胆色与辩才彻底麻痹颉利可汗，为李靖铁骑暴风雪奇袭创造了千载难逢的战役空窗期",
+      "性格通达至极，在严酷伴君如伴虎的岁月里以幽默和玩世不恭化解所有政治杀机，安享高寿"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Distracted the Turkic Qaghan with wine and treaties, enabling Li Jing's miraculous surprise attack",
+      "Effortless humor and hedonism defused imperial paranoia, navigating court terrors safely"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "生活极度讲究吃喝享乐，晚年屡次因贪图口腹之欲与官款不清遭到监察官弹劾",
+      "政治进取心较弱，大唐立国后彻底躺平享受荣华富贵，缺乏深层的制度建树"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Addicted to luxury and feasting, frequently investigated for embezzlement of household grain",
+      "Zero ambition after the founding, completely retiring into comfortable aristocratic decadence"
+    ]
+  },
+  {
+    "id": "yuwen_shiji",
+    "nameZh": "宇文士及",
+    "nameEn": "Yuwen Shiji (Duke of Ying)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "中书令 · 郢国公 · 历仕隋唐圆融保身世家权贵",
+    "positionEn": "Director of the Chancellery · Duke of Ying · Master Diplomatic Aristocrat Across Empires",
+    "personalityZh": "文雅通达、善于辞令、恭谨圆融、明哲保身、巧言避祸",
+    "personalityEn": "Cultured, elegant, master of conversational flattery and personal safety, brother of Sui regicide Yuwen Huaji, yet rising to supreme chancellor in Tang",
+    "deedsZh": "隋炀帝驸马；哥哥宇文化及弑君称帝，士及苦劝不听；降唐后以战功与忠诚深得李渊李世民两代信任，官至中书令；位列凌烟阁；生活讲究奢华，善处君臣之间。",
+    "deedsEn": "Son-in-law of Emperor Yang of Sui; brother of regicide Yuwen Huaji; defected to Tang, winning complete trust through battlefield bravery and polished court diplomacy.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正财",
+      "正官",
+      "偏印"
+    ],
+    "patternType": "正财格",
+    "strengthAdviceZh": "在极度凶险的家族叛逆背景下实现“绝地翻盘”的生存大师。善于用无可挑剔的恭敬、礼仪与专业战功洗刷家族罪责，与最高领袖建立亲密和谐的私人情谊。",
+    "strengthAdviceEn": "Master of shedding toxic family treason luggage; erase inherited political guilt through frontline bravery, polished decorum, and warm emotional intelligence with monarchs.",
+    "weaknessAdviceZh": "行事过于圆滑逢迎，有时流于阿谀奉承。曾因盛赞宫中树木之美遭到唐太宗当面训斥“魏征常劝我远佞人，我不识何人，今果见之”，险些因马屁过头栽跟头。",
+    "weaknessAdviceEn": "Flattery occasionally slips into shameless sycophancy; publicly rebuked by Taizong for gushing over garden trees ('Wei Zheng warned me against flatterers, and now I see one!').",
+    "historicalQuoteZh": "《旧唐书》评：宇文士及折节附凤，勋著凌烟。恭谨周密，自保名位。虽有时谀佞之讥，然保家全族，其智亦足称矣。",
+    "historicalQuoteEn": "Old Book of Tang: Yuwen Shiji navigated bloody dynastic falls to reach Lingyan Pavilion. His courteous discretion preserved his house safely across four chaotic reigns.",
+    "auxiliaryStrengthsZh": [
+      "在哥哥宇文化及弑君诛灭全族的灭顶风暴中精准跳船，以战功和个人品格在李唐王朝重新登顶为宰相",
+      "恭谨周密，在李世民身边充当最懂帝王心思的润滑剂，君臣相处极其融洽融洽"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Escaped the total execution of the treacherous Yuwen clan to rise as prime minister in Tang",
+      "Impeccable psychological antenna: catered to monarchs' moods with masterly emotional finesse"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "阿谀奉承习气较浓，太宗赏花木时谄媚过分当面遭李世民厉斥，留下历史佞幸微瑕",
+      "过于讲究衣食起居奢华享受，在贞观崇尚节俭的官场大势中略显格格不入"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Shameless flattery provoked public royal scolding when praising palace trees excessively",
+      "Lavish private lifestyle contrasted awkwardly with early Zhenguan's spartan ethos"
+    ]
+  },
+  {
+    "id": "pei_ji",
+    "nameZh": "裴寂",
+    "nameEn": "Pei Ji (Duke of Pei)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司空 · 魏国公 · 太原起兵第一功臣太上皇挚友",
+    "positionEn": "Grand Minister of Works · Duke of Wei · Supreme Confidant of Emperor Gaozu",
+    "personalityZh": "机敏圆熟、善理宫闱、高祖莫逆、军事昏聩、晚年见逐",
+    "personalityEn": "Urbane, charming, closest personal friend of Emperor Gaozu, orchestrating the imperial concubine trap, yet incompetent in military command",
+    "deedsZh": "晋阳宫副监，私引隋帝宫女侍奉李渊，迫其起兵；唐初第一宰相，高祖言听计从，“见则同榻，食则同席”；然数次领兵征伐皆大败亏输（度索原被刘武周打崩）；太宗登基后被贬流放静州。",
+    "deedsEn": "Complicit in trapping Li Yuan into rebellion with imperial palace concubines; Gaozu's closest intimate, eating and sleeping in the same pavilion; exiled by Taizong.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "顶尖的“情感依附与早期创业催化剂”。善于利用私密人际关系与非常手段将领袖推上不可逆的开创之路；在开国初期的行政草创中充当最高领袖的情感支柱。",
+    "strengthAdviceEn": "Master of private psychological leverage; push tentative founders past the point of no return through audacious personal gambits, serving as emotional bedrock.",
+    "weaknessAdviceZh": "军事与战略硬核实力严重缺失！在没有将帅之才时盲目领兵迎击刘武周等悍将，导致全军覆没丧师失地；与最高权力捆绑过紧，一旦老皇帝退位，立即沦为新权力的清洗对象。",
+    "weaknessAdviceEn": "Zero battlefield command competence; routed by warlords when playing general. Excessive codependency with the old monarch makes you the first target of purge by his successor.",
+    "historicalQuoteZh": "高祖叹曰：“使我成帝业者，裴寂也！”及度索原大败，高祖怒下其狱，寻复其官。陈寿式史评叹其“以恩泽进，非拨乱才，终遭谴谪，理固宜然”。",
+    "historicalQuoteEn": "Gaozu praised: 'The man who crowned me Emperor is Pei Ji!' Yet after disastrous military defeats, Gaozu jailed then pardoned him; exiled immediately once Taizong ruled.",
+    "auxiliaryStrengthsZh": [
+      "太原起义真正的幕后第一策划推手，巧用晋阳行宫宫女逼李渊下定反隋决心，开启李唐大业",
+      "大唐立国初期典章制度与后勤粮草的实际调度者，深得唐高祖无条件的至高信任与宠信"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Key catalyst of the Taiyuan rebellion, forcing Li Yuan's hand through an ingenious palace trap",
+      "Logistical anchor during early foundation years, enjoying absolute personal trust from Gaozu"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "毫无军事指挥常识却屡次贪功带兵，介休、度索原接连大溃败几乎断送李唐河东基业",
+      "深度卷入李建成与李世民的夺嫡争端力保太子，新皇登基后必然面临被清算削爵的悲惨下场"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Catastrophic general: lost two massive armies against Liu Wuzhou, nearly losing Shaanxi",
+      "Tied his fortune blindly to Prince Jiancheng, guaranteeing his instant exile by Taizong"
+    ]
+  },
+  {
+    "id": "liu_wenjing",
+    "nameZh": "刘文静",
+    "nameEn": "Liu Wenjing (Duke of Lu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "纳言 · 鲁国公 · 太原首谋绝代奇策悲剧功臣",
+    "positionEn": "Director of Chancellery · Mastermind of the Turkic Alliance · First Tragic Purge of Tang",
+    "personalityZh": "才略过人、见识超卓、联突制胜、居功自矜、冤死屠刀",
+    "personalityEn": "Audacious strategic genius, co-conspirator of the Taiyuan uprising, negotiated the vital Turkic cavalry alliance, executed over drunken treason banter",
+    "deedsZh": "最早看中李世民并力促起兵；亲赴突厥见始毕可汗，以超凡辩才争取突厥战马兵马支援；出任纳言辅政；因与裴寂争权不合，醉后发泄狂言，遭妾侍诬告谋反，被李渊处死。",
+    "deedsEn": "Formulated the Taiyuan uprising with Li Shimin; traveled alone to the Turks to secure war steeds and alliances; executed on fabricated treason charges by jealous rival Pei Ji.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "偏印"
+    ],
+    "patternType": "伤官见官格",
+    "strengthAdviceZh": "开国战略顶层策划与特种跨国谈判的大师。具备极其敏锐的英雄识别人格，敢于孤身涉险出使异族换取核心战力，在逆境中为新政权打破僵局。",
+    "strengthAdviceEn": "Mastermind of grand founding strategy and frontier diplomacy; identify rising titans early and travel into barbarian courts alone to secure pivotal military leverage.",
+    "weaknessAdviceZh": "功高自矜、酒后狂言是自取灭亡的催化剂！在与嫉妒心强的同僚（裴寂）发生权力冲突时，不懂收敛锋芒反在酒后拔刀砍星辰发泄，被小妾抓作罪证告密斩首。",
+    "weaknessAdviceEn": "Drunken boastful rages before domestic rivals are suicidal; swinging swords at pillars while drunk gave bitter rival Pei Ji the pretext to execute him for treason.",
+    "historicalQuoteZh": "李世民苦求其免死，高祖不听斩之。太宗即位追复其官爵，叹曰：“文静起兵首谋，功冠一时，以谗见害，冤哉！”《旧唐书》评其“才高位重，矜伐自毁”。",
+    "historicalQuoteEn": "Li Shimin pled desperately for his life in vain. Upon ascending the throne, Taizong restored his honors, mourning the tragic murder of his greatest founding strategist.",
+    "auxiliaryStrengthsZh": [
+      "太原起义真正的第一战略发动机，李世民最早的莫逆战略智囊，一手促成李渊反隋大计",
+      "单骑出使东突厥借得数千精骑与万匹战马，为大唐夺取长安奠定了决定性的军事胜负手"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Primary strategic engine of the Taiyuan uprising, partnering with young Li Shimin to birth an empire",
+      "Secured thousands of elite cavalry from the Turks, providing the decisive strike power to take Chang'an"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "自恃才干远胜裴寂却位居其下，怨气冲天公开对抗，在体制内部树立了致命死敌",
+      "家庭后院管理极差，休弃小妾引发疯狂报复，酒后拔刀狂言被抓把柄惨遭冤杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Openly mocked and fought rival Chancellor Pei Ji, creating an unyielding enemy at court",
+      "Domestic chaos: an abused concubine reported his drunken venting as treason, leading to his execution"
+    ]
+  },
+  {
+    "id": "dai_zhou",
+    "nameZh": "戴胄",
+    "nameEn": "Dai Zhou (Duke of Wuchang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "大理寺少卿 · 民部尚书 · 武昌县男 · 贞观法治铁面护法",
+    "positionEn": "Vice Minister of Court of Judicature and Revision · Iron Shield of Zhenguan Rule of Law",
+    "personalityZh": "铁面执法、守法不移、敢抗君命、清廉公允、法治基石",
+    "personalityEn": "Incorruptible chief justice, defying Emperor Taizong's angry execution demands to uphold exact statutory law, architect of Zhenguan legal fairness",
+    "deedsZh": "掌大理寺司法审判；太宗盛怒下数次欲斩杀违令官员，戴胄据法力争“法者国家之大信，陛下安得自违之”，太宗叹服收回成命；改任民部尚书掌赋税，清廉如水卒于任。",
+    "deedsEn": "Chief justice who refused Taizong's royal execution decrees: 'The law is the sacred covenant of the state; even the Emperor cannot breach it!' Revered by Taizong.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以生命护卫“法治信用”的现代型专业法官。敢于在最高统治者盛怒之下，用神圣的法理准绳与契约精神直谏天子，为组织树立不可逾越的制度红线。",
+    "strengthAdviceEn": "The supreme guardian of procedural justice; confront royal executive fury with unyielding constitutional law ('The law belongs to the state, not the Emperor's whims').",
+    "weaknessAdviceZh": "日夜伏案于海量繁琐的刑狱卷宗与赋税报表之中，积劳成疾英年早逝。在捍卫社会公平正义的同时，必须注重自身健康管理与工作减压。",
+    "weaknessAdviceEn": "Relentless judicial and financial overwork destroyed his stamina, dying young; balance heroic procedural crusades with physical pacing.",
+    "historicalQuoteZh": "太宗叹曰：“朕要杀人，戴胄执意不从，守法自固，朕复何忧！”《旧唐书》赞：“戴胄守法无阿，干局贞白，大信立于天下，贞观刑政之良臣也。”",
+    "historicalQuoteEn": "Taizong marveled: 'When I rage to kill, Dai Zhou steadfastly denies me, holding the law firm; what fear have I!' Annals praise his role in establishing imperial rule of law.",
+    "auxiliaryStrengthsZh": [
+      "中国古代司法史上最卓越的法治卫士，“法者国家之大信，死者不可复生”，数次阻击皇帝滥用死刑",
+      "任民部尚书掌管天下钱粮，账目严密毫厘不差，使贞观初年财政在废墟中迅速重现生机"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Supreme judicial hero who blocked despotic royal executions, establishing legal sanctity",
+      "Restructured imperial taxation and treasury records with zero corruption, fueling post-war recovery"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格过于刚正方直，缺乏政治周旋的弹性，终生依靠唐太宗的开明护持才能幸存",
+      "常年高压办案耗尽心血，在贞观七年英年病逝，未能陪伴贞观盛世走向最鼎盛巅峰"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Absolute rigidity relied entirely on Taizong's unique open-mindedness to avoid the block",
+      "Died early in 633, burned out by thousands of complex judicial and financial dockets"
+    ]
+  },
+  {
+    "id": "ma_zhou",
+    "nameZh": "马周",
+    "nameEn": "Ma Zhou (Duke of Jianghe)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "中书令 · 降侯 · 布衣入相一代治国奇才",
+    "positionEn": "Director of the Chancellery · Peasant to Prime Minister · Voice of the Common People",
+    "personalityZh": "深识大体、见微知著、笔扫千军、切中时弊、关怀苍生",
+    "personalityEn": "Brilliant self-taught peasant scholar, drafted memorials that dazzled Taizong, champion of reducing peasant labor and checking imperial vanity, died at 48",
+    "deedsZh": "早年落魄借住武将中郎将常何家中；代常何起草二十条治国策折震惊太宗，太宗连召四次破格拔擢；任宰相深察民间疾苦，上疏戒太宗不可大修宫室；积劳消渴病逝，太宗亲调汤药。",
+    "deedsEn": "Impoverished scholar who ghostwrote a 20-point state memorial for general Chang He; Taizong summoned him four times in a single day, elevating him to chancellor.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "伤官",
+      "正财"
+    ],
+    "patternType": "伤官生财格",
+    "strengthAdviceZh": "“底层洞察与顶级智库”的奇迹结合体。具备一眼看穿社会微观病灶并开出宏观药方的神级才华；以真挚的人民情怀为大厦纠偏，深得领袖破格宠信。",
+    "strengthAdviceEn": "The ultimate peasant-to-premier prodigy; diagnose microscopic social rot and formulate generational reforms, earning rapid royal promotion through pure merit.",
+    "weaknessAdviceZh": "患有严重的消渴症（糖尿病）仍拼命熬夜撰写长篇治国奏折，临终前将所有奏章草稿全部焚毁，叹“莫使后人以此求名”。过度透支导致四十八岁早亡。",
+    "weaknessAdviceEn": "Severe chronic diabetes coupled with relentless overwork caused fatal early demise at 48; burned all his drafts before death, warning against vanity.",
+    "historicalQuoteZh": "太宗尝叹曰：“我暂不见马周，便觉意闷！”及疾笃，太宗亲为调和汤药。《旧唐书》评：“马周见微知著，奏疏切直，帝之心膂，一代伟人也。”",
+    "historicalQuoteEn": "Taizong sighed: 'If I do not see Ma Zhou for a single day, my heart feels empty!' When ill, the Emperor brewed his herbal medicine personally.",
+    "auxiliaryStrengthsZh": [
+      "中国历史上最传奇的破格提拔奇迹，布衣一日四召直入中枢拜相，展现无可辩驳的治国天才",
+      "临终前命家人将毕生所有向皇帝进谏的奏章草稿一把火烧光，坦言“无使后世见吾所言以买名”，气节令人动容"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary rise from penniless lodger to prime minister in hours based purely on written genius",
+      "Burned all his royal memorials on his deathbed, refusing to let posterity praise his candor"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年落魄时酗酒放诞甚至遭地方官吏侮辱，在逆境阶段情绪管理与自律度有所欠缺",
+      "身患严重消渴症（糖尿病）依然夜以继日熬夜批阅军国机要，四十八岁英年早逝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Alcoholic and erratic during his impoverished youth before meeting his patron",
+      "Worked through end-stage diabetes, burning out his brilliant mind before age 50"
+    ]
+  },
+  {
+    "id": "chu_suiliang",
+    "nameZh": "褚遂良",
+    "nameEn": "Chu Suiliang (Duke of Henan)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "尚书右仆射 · 河南郡公 · 贞观托孤书法大家折笏死谏",
+    "positionEn": "Right Executive Director of State Affairs · Master Calligrapher · Martyr Against Empress Wu",
+    "personalityZh": "刚烈耿直、博学精审、书法一绝、托孤受命、血染丹墀",
+    "personalityEn": "Master calligrapher of radiant regular script, co-regent of Emperor Gaozong, smashed his jade court tablet in bloody defiance against Wu Zetian",
+    "deedsZh": "精通楷书，太宗得王羲之《兰亭序》命其鉴定真伪；受太宗顾命托孤辅佐高宗；高宗欲立武则天，褚遂良在朝堂上摘下乌纱帽叩头流血，折断玉笏死谏；被贬爱州蛮荒之地绝食而亡。",
+    "deedsEn": "Supreme authenticator of Wang Xizhi's calligraphy; co-regent to Emperor Gaozong; smashed his jade tablet and bled on palace steps opposing Wu Zetian; died in exile.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "将艺术美学宗师境界与儒家铁血大节融为一体。在书法上创立开创性的“褚体”；在政治上恪守老皇帝托孤遗命，敢于在皇帝暴怒时以血肉之躯死磕抗争。",
+    "strengthAdviceEn": "Fuse transcendent calligraphic mastery with unyielding constitutional martyrdom; defend deathbed succession trusts through terrifying physical resolve.",
+    "weaknessAdviceZh": "在面对皇权与野心家（高宗与武则天）的生死较量中，政治斗争策略过于悲壮刚硬、缺乏变通与后手布局，最终沦为政治绞肉机的殉葬品，死后子女皆遭流放。",
+    "weaknessAdviceEn": "Lacked tactical flexibility against ruthless autocratic alliances; raw moral theater failed to halt Wu Zetian, resulting in the exile and destruction of his family.",
+    "historicalQuoteZh": "高宗废王立武，遂良叩头流血曰：“往者先帝临终执陛下手谓臣曰：‘朕佳儿佳妇，今以付卿。’陛下今日何忍废之！”武后在帘后怒喝：“何不扑杀此獠！”",
+    "historicalQuoteEn": "Smashed his tablet crying: 'The Late Emperor placed your hands in mine to protect your virtue; how can you do this!' Wu Zetian screeched from behind the veil: 'Behead that beast!'",
+    "auxiliaryStrengthsZh": [
+      "书法史上的千古巨擘，创立秀美苍劲的“褚体”楷书，被后世尊为唐代楷书四大家之一",
+      "受唐太宗临终托孤重任，朝堂之上折断玉笏叩头流血死谏，展现出古代文人至高无上的骨气"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Monumental titan of calligraphy whose delicate, dynamic script founded the Tang golden style",
+      "Smashed his court tablet and bled on the throne steps in defense of constitutional succession"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治斗争手段过于单一与道义化，不懂得联合后宫与外朝更广泛力量进行制度制衡",
+      "在武则天已经彻底掌控权柄的大势下硬碰硬，导致晚年被贬岭南荒蛮瘴疠之地惨死"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Relied solely on moral outrage rather than building broad strategic coalitions against Empress Wu",
+      "Crushed in direct confrontation, banished to the malarial swamps of Vietnam to die"
+    ]
+  },
+  {
+    "id": "yu_shinan",
+    "nameZh": "虞世南",
+    "nameEn": "Yu Shinan (Duke of Yongxing)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "秘书监 · 永兴县子 · 五绝名臣君子之风",
+    "positionEn": "Director of Palace Library · The Five-Perfection Master · Paragon of Gentlemanly Virtue",
+    "personalityZh": "博学渊懿、风操高雅、德行纯备、书法绝伦、规谏得体",
+    "personalityEn": "Master of five perfections (virtue, fidelity, scholarship, poetry, calligraphy), gentle yet persistent in moral guidance, revered by Taizong as a living sage",
+    "deedsZh": "从智永禅师学书法，为初唐四大书法家之一；太宗称其有“五绝”（德行、忠直、博学、文词、书翰）；多次委婉劝谏太宗戒骄戒躁、勿大兴土木打猎；享年八十一高寿善终。",
+    "deedsEn": "Master calligrapher trained by monk Zhiyong; praised by Taizong for 'Five Perfections'; gently restrained royal hunting and construction projects; lived in grace to 81.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "集“道德、艺术、学问与谏诤”于一身的极高境界。以润物细无声的君子风度潜移默化影响最高领导者；书法与诗词流芳百世，成就真正的全人典范。",
+    "strengthAdviceEn": "Achieve the supreme balance of moral virtue, artistic genius, and tactful executive restraint; guide monarchs through effortless classical grace, living to 81.",
+    "weaknessAdviceZh": "行事极其温雅退让，在面对暴烈残酷的现实权力洗牌或军事大对决时，主要以道义劝诫为主，缺乏在血雨腥风中挥刀斩断乱局的铁血狠辣手段。",
+    "weaknessAdviceEn": "Gentle, retiring demeanor suited for peaceful cultural golden ages; lacked the ruthless combat instincts needed to navigate violent frontline purges.",
+    "historicalQuoteZh": "太宗称赞曰：“世南一人，有五绝：德行、忠直、博学、文词、书翰。朕有一事失，世南必谏，可谓天下良臣！”及卒，太宗赋诗痛悼。",
+    "historicalQuoteEn": "Taizong celebrated him: 'Shinan possesses five perfections: virtue, loyalty, erudition, poetry, and calligraphy. When I err, he gently corrects me, a true sage!'",
+    "auxiliaryStrengthsZh": [
+      "大唐初年文化与书法第一宗师，“五绝”美誉前无古人，其书法得王羲之真传，沉稳雍容",
+      "讽谏艺术天下无双，作《蝉》借物咏怀“居高声自远，非是藉秋风”，展现出绝尘脱俗的高贵品格"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Master of Wang Xizhi's direct calligraphic transmission, revered for five generational perfections",
+      "Immortal poet who symbolized integrity through the cicada ('My high voice travels far without wind')"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治性格过于纯儒温良，在面对残酷政治斗争或大清洗时偏向自保与沉默退让",
+      "身体较为单薄清癯，一生专注于文史图籍编纂，未曾主导过重大军事或经济实务改革"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pure Confucian gentleman who retreated into silence when savage court purges erupted",
+      "Fragile physical constitution, confining his life to imperial library curation rather than war"
+    ]
+  },
+  {
+    "id": "ouyang_xun",
+    "nameZh": "欧阳询",
+    "nameEn": "Ouyang Xun (Bohu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "给事中 · 银青光禄大夫 · 欧体楷书之祖",
+    "positionEn": "Imperial Attendant · Founder of Ouyang Regular Script · Grand Calligrapher",
+    "personalityZh": "貌寝神清、敏悟过人、严谨法度、骨气险劲、书法宗师",
+    "personalityEn": "Unattractive in visage but towering in mind, reading forty lines in a glance, architect of razor-sharp geometric calligraphy ('Ou Style')",
+    "deedsZh": "敏悟绝伦博通经史；奉敕主持编修大型类书《艺文类聚》百卷；创立严整险劲之“欧体”正楷，书《九成宫醴泉铭》《皇甫诞碑》被誉为“天下第一楷书”；享年八十五善终。",
+    "deedsEn": "Edited the monumental 100-volume encyclopedia Yiwen Leiju; founded the rigorous Ou-style calligraphy, authoring the Nine Worthies Palace Stele; died at 85.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "伤官"
+    ],
+    "patternType": "伤官配印格",
+    "strengthAdviceZh": "在专业技艺上追求“极致的严谨与骨气”。以数学般的严密构架与刚劲笔力打造行业标准，虽貌不惊人，却以无可替代的宗师技艺受万人景仰。",
+    "strengthAdviceEn": "Pursue surgical structural precision and unyielding technical mastery; build definitive industry benchmarks through geometric rigor, flourishing for 85 years.",
+    "weaknessAdviceZh": "容貌丑陋常遭宫廷小人嘲讽（长孙无忌曾作嘲戏诗）；一生醉心文史书法艺术，面对残酷的官场权谋争斗基本保持超然退避，不涉政争深水区。",
+    "weaknessAdviceEn": "Unconventional appearance invited cruel court mockery; insulated himself entirely in classical art and avoided murky executive power struggles.",
+    "historicalQuoteZh": "《旧唐书》评：询貌寝而聪悟绝伦，读书即知大义。其书法险劲丰润，冠绝古今，人得其尺牍，皆藏以为宝。真艺林之巨擘也。",
+    "historicalQuoteEn": "Old Book of Tang: Ouyang Xun was plain in face but divine in intellect; his sharp, dynamic regular script was unrivaled, scrolls prized as gold.",
+    "auxiliaryStrengthsZh": [
+      "“天下第一楷书”《九成宫醴泉铭》的书写者，将中国汉字楷书的法度美学推向了人类历史上不可超越的巅峰",
+      "主持编撰一百卷《艺文类聚》，以惊人的文献驾驭能力为唐代保存了海量魏晋珍贵典籍"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Authored the Nine Worthies Palace Stele, universally crowned the greatest regular script in history",
+      "Edited the 100-volume encyclopedia Yiwen Leiju, preserving vast classical literary heritage"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "长相奇丑曾遭宰相长孙无忌等群臣作诗嘲笑，内心难免留有自卑敏感阴影",
+      "终身以文翰学者居于从属地位，对国家经济与军事大政方针缺乏实质主导权"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Faced mocking court ridicule over his plain appearance, harboring sensitive private pride",
+      "Remained a court scholar, absent from macro military campaigns and economic policy decisions"
+    ]
+  },
+  {
+    "id": "xu_jingzong",
+    "nameZh": "许敬宗",
+    "nameEn": "Xu Jingzong (Duke of Gao)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "侍中 · 中书令 · 高阳郡公 · 助武登基文痞酷吏",
+    "positionEn": "Director of Chancellery · Master Propagandist and Executioner for Empress Wu",
+    "personalityZh": "博学宏辞、文笔极佳、贪财好色、见风使舵、构陷忠良",
+    "personalityEn": "Brilliant literary scholar of the Eighteen Academicians, shameless political opportunist, chief legal hatchetman who purged Tang founding ministers for Wu Zetian",
+    "deedsZh": "秦王府十八学士之一；高宗朝敏锐倒向武则天，极力罗织罪名扳倒长孙无忌、褚遂良等顾命重臣；篡改国史美化武后打击政敌；位极人臣富贵终老，享年八十一。",
+    "deedsEn": "Early member of Qin Wang's Eighteen Scholars; backed Wu Zetian's coronation, fabricating treason charges to execute Zhangsun Wuji and Chu Suiliang; died wealthy at 81.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏财",
+      "偏印"
+    ],
+    "patternType": "伤官见官格",
+    "strengthAdviceZh": "对政治风向具有鲨鱼般的灵敏嗅觉。文笔华丽善于包装权力意志，在最高权力发生结构性突变时果断充当开路急先锋，攫取滔天的现实荣华富贵。",
+    "strengthAdviceEn": "Possess predatory geopolitical radar; wield brilliant rhetorical prose to legitimize rising autocrats, seizing astronomical wealth and prime ministerial status.",
+    "weaknessAdviceZh": "出卖士大夫底线与罗织构陷忠良必遭万世唾骂！为了个人富贵逼死长孙无忌、李恪等一代贤臣，肆意窜改国史，死后谥号遭礼官痛贬，千载受人唾弃。",
+    "weaknessAdviceEn": "Sacrificing ethics to fabricate treason trials brings eternal historical infamy; doctoring imperial history to murder founding heroes leaves an indelible moral stench.",
+    "historicalQuoteZh": "《旧唐书》评：许敬宗才思华赡，学究天人。然希旨附会，贼害良善，破人宗族，以求富贵。死后议谥，太常争贬其恶，斯真奸人之雄也！",
+    "historicalQuoteEn": "Old Book of Tang: Xu Jingzong possessed brilliant literary talent, yet prostituted his pen to fabricate slanders and butcher loyal clans for gold; an arch-scoundrel.",
+    "auxiliaryStrengthsZh": [
+      "文学才华极为出众，秦王府起兵以来的核心大文胆，起草军政文书笔力万钧文采斐然",
+      "官场嗅觉天下第一等敏锐，在满朝文武抵制武则天之际独辟蹊径站队破局，权倾朝野二十载"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Formidable literary intellect, serving as primary scribal architect since Qin Wang's early wars",
+      "Uncanny political radar: lone elite who championed Wu Zetian, dominating high office for decades"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "道德节操荡然无存，嫁女索取巨额聘礼受世人耻笑，在长孙皇后丧礼上嬉笑失仪被贬",
+      "大搞文字狱与冤假错案，亲手构陷逼死长孙无忌褚遂良满门，成为唐代酷吏文化的发端者"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Zero moral scruples: sold daughters for bribes and laughed flippantly during imperial funerals",
+      "Pioneered judicial frame-ups, butchering founding titans to cement his personal fortunes"
+    ]
+  },
+  {
+    "id": "shangguan_yi",
+    "nameZh": "上官仪",
+    "nameEn": "Shangguan Yi (Duke of Chu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "中书侍郎 · 同三品 · 上官体诗坛领袖起草废后悲歌",
+    "positionEn": "Vice Director of Chancellery · Master of Shangguan Court Poetry · Tragic Imperial Scribe",
+    "personalityZh": "才华绮丽、精研对仗、开宗立派、懦弱无谋、血溅宫门",
+    "personalityEn": "Refined lyric poet who founded the ornate 'Shangguan Style' of court metrics, drafted Emperor Gaozong's secret decree to depose Wu Zetian, executed in the backlash",
+    "deedsZh": "进士及第深受太宗高宗器重；开创绮丽工整的“上官体”律诗，天下风从；高宗不堪武后专权，密令上官仪起草废后诏书；被武后发觉，反遭诬告与废太子谋反斩首抄家。",
+    "deedsEn": "Pioneered the ornate Shangguan poetic form; commissioned secretly by Gaozong to draft Wu Zetian's deposition edict; betrayed by the weak Emperor and executed with his sons.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "伤官泄秀格",
+    "strengthAdviceZh": "诗歌格律与文学艺术的开宗立派宗师。具备极高文字审美与形式对仗掌控力，引领时代文学审美风潮数十年，在文化领域享有极高声望。",
+    "strengthAdviceEn": "Epochal innovator in poetic metrics; master classical symmetry and aesthetic form, dictating elite imperial cultural standards for decades.",
+    "weaknessAdviceZh": "缺乏政治博弈手腕却盲目接下最高风险的“诛神密诏”！将身家性命押在懦弱动摇的皇帝身上，事情败露被天子瞬间出卖充当替罪羊，满门抄斩身首异处。",
+    "weaknessAdviceEn": "Never draft coup decrees for a spineless executive! Relying on a vacillating monarch who surrendered the secret edict the moment Wu Zetian glared cost his family their heads.",
+    "historicalQuoteZh": "高宗羞愧曰：“我初无此心，上官仪教我。”武后怒斩仪，籍没其家。陈寿式史评叹其“以文章致身，不图政争之险，身膏草野，痛哉文人！”",
+    "historicalQuoteEn": "Emperor Gaozong caved in terror: 'I had no such intent; Shangguan Yi forced me!' Wu Zetian had Yi executed instantly. The tragedy of a poet crushed in raw power games.",
+    "auxiliaryStrengthsZh": [
+      "“上官体”诗歌格律的开创者，推动中国古典诗歌从古体向成熟五言律诗迈出决定性一步",
+      "文笔雍容典雅，掌管朝廷机要诏书十余年，文字功底天下公认第一流"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Architect of the Shangguan metric style, laying the foundational bridge to High Tang poetry",
+      "Principal imperial draftsman whose polished court proclamations defined royal elegance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治斗争经验极其幼稚，明知高宗性格懦弱摇摆，竟在毫无外朝军队支援下起草废后诏书",
+      "危机来临缺乏任何预警和防卫反制机制，被武则天一网打尽满门遭难"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Naive in political warfare: drafted the deposition of a ruthless empress without armed backing",
+      "Betrayed instantly by the cowardly Emperor, lacking any contingency plan or physical escape"
+    ]
+  },
+  {
+    "id": "linghu_defen",
+    "nameZh": "令狐德棻",
+    "nameEn": "Linghu Defen (Duke of Pengyang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "国子祭酒 · 礼部尚书 · 彭阳县公 · 唐初修史总设计师",
+    "positionEn": "Director of the Imperial Academy · Minister of Rites · Master Architect of Tang Historiography",
+    "personalityZh": "温雅端肃、博览群籍、倡修前史、笃行君子、享寿八十四",
+    "personalityEn": "Venerable classical scholar, persuaded Emperor Gaozu to compile all preceding dynastic histories, architect of the monumental official historical canon, died at 84",
+    "deedsZh": "早年知名；唐初最早建议李渊抢救魏晋南北朝散佚史料，主持编撰《周书》《梁书》《陈书》《齐书》《隋书》等前代正史；历仕三朝掌管国子监与礼部；享年八十四无疾而终。",
+    "deedsEn": "Advised Emperor Gaozu to salvage and compile the histories of the Northern and Southern Dynasties, overseeing the Book of Zhou, Liang, Chen, Qi, and Sui; lived to 84.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "抢救文明遗存与国家官方修史的伟大总操盘手。在天下初定之时，以超凡的历史自觉主持整理前朝数百年风云信史，为中华文明筑牢正史传承之轴。",
+    "strengthAdviceEn": "Master of civilizational preservation; mobilize state authority to systematically rescue and codify centuries of scattered historical archives, anchoring cultural lineage.",
+    "weaknessAdviceZh": "毕生精力沉浸于典籍修撰与经学编纂，在剧烈动荡的现实政治斗争中偏向谨小慎微、随波自保，缺乏直接干预核心政务的铁血作为。",
+    "weaknessAdviceEn": "Immersed entirely in historical archives; adopted a cautious, self-effacing posture during bloody succession purges, avoiding hard political interventions.",
+    "historicalQuoteZh": "《旧唐书》评：令狐德棻淳谨博物，文雅老成。建请修史，以传信后代，千载之利也。寿登大耋，福禄具臻，古之修儒莫加焉。",
+    "historicalQuoteEn": "Old Book of Tang: Linghu Defen was upright and learned; his initiative to record the dynastic histories served posterity for thousands of years, enjoying longevity to 84.",
+    "auxiliaryStrengthsZh": [
+      "大唐修史制度的第一倡导者，以一己之力挽救了南北朝数百年几乎散佚的浩瀚历史文献",
+      "主编《周书》，参与修撰五代正史，奠定二十四史中隋唐修史的半壁江山，功在千秋"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Champion of imperial historical commissions, single-handedly saving centuries of chaotic records",
+      "Chief compiler of the Book of Zhou and editor of five official dynastic histories"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治性格过于谦恭随顺，面对唐初多次宫廷政变始终保持超然旁观，缺乏刚正谏诤的骨气",
+      "文笔偶有曲笔回护，受制于李唐皇室意识形态审查，未能完全还原部分前代帝王真相"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Retreated into passive observation during bloody coups, lacking sharp political resistance",
+      "Accepted dynastic censorship compromises that occasionally sanitized historical records"
+    ]
+  },
+  {
+    "id": "yan_shigu",
+    "nameZh": "颜师古",
+    "nameEn": "Yan Shigu (Duke of Langye)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "秘书少监 · 弘文馆学士 · 汉书注疏训诂宗师",
+    "positionEn": "Vice Director of Palace Library · Master Philologist and Annotator of Book of Han",
+    "personalityZh": "家学渊源、博涉群书、精研文字、音训泰斗、一代儒宗",
+    "personalityEn": "Scion of the illustrious Yan philological clan, master of classical exegesis, immortal annotator of the Book of Han, codifying classical pronunciations and texts",
+    "deedsZh": "颜之推之孙；奉太宗之命考定《五经》文字错误，编定《五经定本》颁行天下；为《汉书》作全套精绝注疏，至今仍为研读汉史不可逾越之经典；随征高句丽卒于军中。",
+    "deedsEn": "Grandson of Yan Zhitui; standardized the Five Classics text under Taizong; authored the definitive Commentary on the Book of Han; died during the Goguryeo campaign.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "学术考据与语言文字规范化的巅峰巨擘。以严密扎实的家学训诂功底，廓清数百年传抄遗留的经典谬误，确立国家级标准文本，泽被千秋学人。",
+    "strengthAdviceEn": "The supreme titan of philological standardization; eliminate centuries of corrupt textual errors to establish definitive imperial classics that anchor scholarship forever.",
+    "weaknessAdviceZh": "学问至深而生活做派偶尔奢靡，曾因纳妾蓄妓遭同僚微词；随征高句丽时年迈体弱，在极端艰苦的辽东行军中染病死于道中，缺乏老年野战自保意识。",
+    "weaknessAdviceEn": "Scholarly genius coupled with private vanity for lavish domestic luxuries; accompanying harsh military expeditions in advanced age caused fatal physical exhaustion.",
+    "historicalQuoteZh": "太宗闻其卒于军中，痛惜久之。《旧唐书》赞：“颜师古训诂精微，文字训释，古今独步。《汉书》之注，百代取则，儒林之泰山北斗也。”",
+    "historicalQuoteEn": "Taizong mourned his death on the northern march. Historical annals celebrate his Book of Han commentary as an unbreachable mountain peak of philological scholarship.",
+    "auxiliaryStrengthsZh": [
+      "《汉书注》作者，以惊人的古汉语训诂造诣为两汉四百年历史定音解字，成为中华学术史上不朽丰碑",
+      "考定《五经定本》，结束了南北朝数百年经文传抄错漏混乱的局面，统一全国儒学教材"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Immortal annotator of the Book of Han, solving thousands of linguistic enigmas in ancient history",
+      "Standardized the definitive imperial texts of the Five Classics, ending centuries of corrupt editions"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "日常生活颇好声色享乐，妻妾成群，在私德作风上略受传统清流儒臣的微词批评",
+      "年逾花甲仍随军远征辽东严寒之地，未能妥善评估恶劣自然环境对衰老机体的致命打击"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lavish private enjoyment and multiple concubines drew occasional gossip from puritan peers",
+      "Marched into freezing northern war zones in his late sixties, dying of exposure on campaign"
+    ]
+  },
+  {
+    "id": "kong_yingda",
+    "nameZh": "孔颖达",
+    "nameEn": "Kong Yingda (Duke of Qufu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "国子祭酒 · 曲阜县男 · 《五经正义》儒学大一统宗师",
+    "positionEn": "Chancellor of the Imperial Academy · Mastermind of the Five Classics Correct Meanings",
+    "personalityZh": "孔子三十二代孙、通达五经、兼收南北、儒宗领袖、温厚宽和",
+    "personalityEn": "32nd direct descendant of Confucius, universal scholar synthesizing Northern and Southern Confucian traditions into the monumental Wujing Zhengyi",
+    "deedsZh": "博通经史，隋唐两代经学领袖；奉敕主持编修《五经正义》一百七十余卷，彻底终结南北朝儒学门派门户之见，实现儒家经学大一统；任国子祭酒培育三千门徒。",
+    "deedsEn": "Chief imperial scholar who edited the 170-volume Five Classics Correct Meanings, unifying Northern and Southern Confucian philosophies into imperial state curriculum.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "正财"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "学术思想整合与国家意识形态大一统的旷世宗师。打破南北门阀数百年地域偏见，将各派经典注解熔铸成标准化国家教材，奠定千年科举思想骨架。",
+    "strengthAdviceEn": "Unify fragmented philosophical schools into a standardized imperial curriculum (Five Classics Correct Meanings); dissolve regional prejudices to build ideological cohesion.",
+    "weaknessAdviceZh": "性情宽厚温和，在面对太子李承乾日益荒唐叛逆的行径时，虽屡次进谏却缺乏霹雳手段遏止，险些在东宫谋反风暴中遭受无妄之灾。",
+    "weaknessAdviceEn": "Gentle, academic persuasion proved toothless against reckless young royalty; remonstrating politely against Crown Prince Chengqian's descent into madness nearly entangled him in treason.",
+    "historicalQuoteZh": "太宗称赞曰：“孔颖达博通经史，论辩纵横，朕甚重之！”《旧唐书》赞其“兼总南北，断以己见，融会百家，儒家经学大一统之祖也”。",
+    "historicalQuoteEn": "Taizong marveled at his universal erudition. Annals praise his synthesis of northern and southern commentaries as the foundational unification of imperial Confucian thought.",
+    "auxiliaryStrengthsZh": [
+      "主持撰成《五经正义》一百七十卷，彻底统一全国科举与官方学术标准，其学术统治力延绵千载",
+      "天下儒学领袖，主掌国子监二十载，以极高的德行风范培养出盛唐第一代官僚学者精英"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Edited the 170-volume Correct Meanings of the Five Classics, framing imperial education for a millennium",
+      "Chancellor of the Imperial Academy for 20 years, nurturing the founding administrative elite"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对恶质学生缺乏有效心理干预手段，辅导太子李承乾时一味死板说教，反激起太子逆反心理",
+      "政治手腕偏于书生本色，在贞观中枢权力博弈中缺乏实质性制度防卫筹码"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pedantic lecturing failed to restrain rebellious crown prince Li Chengqian, driving him further astray",
+      "Academic detachment left him politically naive during high-stakes palace power struggles"
+    ]
+  },
+  {
+    "id": "li_baiyao",
+    "nameZh": "李百药",
+    "nameEn": "Li Baiyao (Duke of Anping)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "礼部侍郎 · 安平县男 · 北齐书作者兼两度死里逃生名士",
+    "positionEn": "Vice Minister of Rites · Author of Book of Northern Qi · Resilient Literary Phoenix",
+    "personalityZh": "才华超逸、文辞藻丽、经逢大难、死里逃生、著史垂范",
+    "personalityEn": "Gifted poet and historian, escaped execution multiple times under Sui and Tang, completed the official Book of Northern Qi begun by his father, lived to 84",
+    "deedsZh": "隋内史令李德林之子；才高遭隋炀帝忌恨流放；杜伏威起兵留为中书令，险遭连坐处死；太宗惜其才免罪重用；继承父业撰成《北齐书》五十卷传世；享年八十四善终。",
+    "deedsEn": "Son of Li Delin; exiled by jealous Sui Yangdi; survived Du Fuwei's rebellion; spared by Taizong, completing the Book of Northern Qi in 50 volumes; died peacefully at 84.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "伤官",
+      "食神"
+    ],
+    "patternType": "伤官配印格",
+    "strengthAdviceZh": "具有九死一生的惊人政治抗击打能力与文化传承坚守。在数次险遭斩首的灭顶乱局中安然脱险；继承父辈学术遗志，数十年磨一剑铸就传世信史。",
+    "strengthAdviceEn": "Display phenomenal political survival resilience across chaotic dynastic falls; escape execution blocks repeatedly and preserve ancestral scholarly missions to author immortal history.",
+    "weaknessAdviceZh": "才华横溢但早期卷入割据割据势力（杜伏威、辅公祏）过深，险些在中央军平叛时沦为政治刀下鬼，文人谋生切忌被割据军阀绑架上贼船。",
+    "weaknessAdviceEn": "Involvement with regional rebel warlords (Du Fuwei) nearly landed him on the executioner's block; keep clear of separatist rebellions when navigating chaotic vacuums.",
+    "historicalQuoteZh": "太宗读其《封建论》，叹赏不绝，赐彩数百段。《旧唐书》评：“李百药藻思清逸，文冠江淮。厄难数婴，终能全济，寿考令名，斯所谓才全德备者也。”",
+    "historicalQuoteEn": "Taizong showered him with silks upon reading his Memorial on Feudalism. Annals celebrate his poetic brilliance and phenomenal survival endurance to age 84.",
+    "auxiliaryStrengthsZh": [
+      "继承父亲李德林未竟遗志撰成《北齐书》五十卷，文笔华赡严密，成为二十四史中不可替代之信史",
+      "所作《封建论》直斥分封诸王之弊端，极力主张郡县制中央集权，成为唐代政治理论巅峰杰作"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Completed the 50-volume Book of Northern Qi, fulfilling his father's dream with flawless prose",
+      "Authored Discourse on Feudalism, brilliantly championing centralized prefectures over dangerous princely fiefs"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年在隋末乱世随波逐流身不由己，被迫接受江南叛将杜伏威官爵，留下政治失足污点",
+      "性格偏向传统文士随遇而安，缺乏在国家危局中主动担纲大兵团将帅的胆魄"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Coerced into serving rebel warlord Du Fuwei, leaving an uncomfortable blot on his early record",
+      "Gentle literary temperament lacked the martial ferocity needed to command troops in crises"
+    ]
+  },
+  {
+    "id": "yao_silian",
+    "nameZh": "姚思廉",
+    "nameEn": "Yao Silian (Duke of Fengling)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "散骑常侍 · 丰陵县男 · 梁陈二史作者守阁孤臣",
+    "positionEn": "Imperial In-Waiting Grandee · Author of Book of Liang and Book of Chen · Heroic Scribe of the Sui Palace",
+    "personalityZh": "刚直庄肃、恪尽职守、临危不惧、守阁殉节、一代良史",
+    "personalityEn": "Unyielding historical scholar, stood alone before rebel swords to bar soldiers from looting the Sui imperial palace, completed Book of Liang and Book of Chen",
+    "deedsZh": "隋亡长安被李渊大军攻破，文武百官逃散，唯姚思廉独守隋代王代府库阁前，手按剑怒斥乱兵“秦王秋毫不犯，安得无礼！”李世民深叹其节；撰成《梁书》《陈书》传世。",
+    "deedsEn": "When Tang troops entered Chang'an, while officials fled, Yao stood alone with sword drawn before the royal archives, daring soldiers to loot; authored Book of Liang and Book of Chen.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "以肉身捍卫职责与职业尊严的真正勇士。在全城溃败狂潮中，独守空阁按剑怒斥乱军，用无可动摇的职业操守与气节赢得征服者的崇高敬畏。",
+    "strengthAdviceEn": "Defend professional and institutional duty alone when all others panic and flee; bar rebel swords from corporate archives to win eternal reverence from conquerors.",
+    "weaknessAdviceZh": "性情过于庄肃严谨、不苟言笑，日常生活中对繁文缛节与历史细节锱铢必较，在讲求权谋机变的官僚博弈中缺乏柔韧变通。",
+    "weaknessAdviceEn": "Rigid, unsmiling pedantry and obsession with minute statutory decorum limit diplomatic fluidity in volatile political backrooms.",
+    "historicalQuoteZh": "高祖叹其忠曰：“忠于所事，古人何加！”《旧唐书》评：“姚思廉节概凛然，守阁之举，烈士之风。成父遗业，撰成梁陈二史，良史才也。”",
+    "historicalQuoteEn": "Emperor Gaozu marveled: 'Ancient heroes could not surpass his fidelity!' Annals celebrate his iron courage guarding the palace and compiling southern dynastic histories.",
+    "auxiliaryStrengthsZh": [
+      "大业十三年唐军破长安，百官遁逃，姚思廉独守隋皇孙代王身侧按剑叱兵，展现绝代忠臣风骨",
+      "父子相继独立修成《梁书》《陈书》两部正史，以极高史识保存了南朝最后两代的珍贵信史"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Stood alone before invading armies at the palace gate with drawn sword to shield the boy prince",
+      "Authored both the Book of Liang and Book of Chen, single-handedly preserving southern dynastic annals"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行事风格过于刻板拘谨，在朝堂会议上一板一眼锱铢必较，有时令同僚感到压抑沉闷",
+      "一生局限在文史馆修书之职，未能将强大的道德勇气转化为更高维度的国家顶层政治实践"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly rigid pedantry occasionally exasperated pragmatic colleagues during state debates",
+      "Confined his immense moral courage strictly to historical curation rather than executive statecraft"
+    ]
+  },
+  {
+    "id": "wei_ting",
+    "nameZh": "韦挺",
+    "nameEn": "Wei Ting (Duke of Fuyang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "象州刺史 · 扶阳县男 · 京兆韦氏夺嫡失足名臣",
+    "positionEn": "Governor of Xiangzhou · Scion of the Jingzhao Wei Clan · High Cabinet Logistics Chief",
+    "personalityZh": "才辨通敏、早涉名流、统御财赋、站队失足、晚景凄凉",
+    "personalityEn": "Cultured aristocrat of elite lineage, agile financial administrator, friend of Wei Zheng, ruined by shifting crown prince factional allegiances",
+    "deedsZh": "京兆韦氏名门；早年为李建成心腹，玄武门后李世民不计前嫌封御史大夫；贞观中掌管内政财赋屡立实功；随征高句丽负责陆路督运，因粮道受阻遭太宗盛怒贬官象州，忧愤病逝。",
+    "deedsEn": "Top confidant of Prince Jiancheng, pardoned by Taizong to become Censor-in-Chief; managed state treasuries; blamed for muddy supply delays during Goguryeo war, dying in exile.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "正官",
+      "偏印"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "大财阀与行政赋税调配的干练行家。善于利用庞大的世家望族人脉网络疏通物流与金融通道；在经历政变易主后能迅速展现不可替代的业务能力。",
+    "strengthAdviceEn": "Master of aristocratic financial logistics; mobilize expansive clan networks to clear capital and supply bottlenecks, proving indispensable after regime transitions.",
+    "weaknessAdviceZh": "千万警惕为上位者军事失利的“替罪羊”陷阱！征高句丽天寒泥泞粮道受阻本为天灾兵祸，却遭太宗借题发挥当众除名削职流放，晚年抑郁吐血而亡。",
+    "weaknessAdviceEn": "Beware becoming the fall-guy for an executive's military failure; blamed for mud-stalled supply carts during the failed northern blitz, he was stripped of rank and died in despair.",
+    "historicalQuoteZh": "《旧唐书》评：韦挺才辨通敏，早知名位。然涉历险难，数婴颠沛。东征之役，委以运粮，道阻见谴，窜谪荒裔，亦命之不偶矣。",
+    "historicalQuoteEn": "Old Book of Tang: Wei Ting was gifted and agile; yet navigating treacherous factions left him repeatedly displaced. Scapegoated for stalled grain carts in Liaodong, he died broken.",
+    "auxiliaryStrengthsZh": [
+      "曾与魏征、杜淹同为太子建成麾下重臣，玄武门后以无可挑剔的行政才能迅速赢得唐太宗绝对重用",
+      "掌管国家粮秣与监察御史台期间执法严明整肃贪渎，大唐初期财政体系建设功臣之一"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Key advisor to slain prince Jiancheng who won Taizong's total confidence through financial competence",
+      "Purged administrative corruption while overseeing national granaries, stabilizing state finance"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年与太子李承乾走得过近引发太宗警惕，在辽东战役后勤受阻时直接被太宗当作政治弃子严办",
+      "政治承压与抗击打心理素质较弱，被贬象州蛮荒之地后终日痛哭抑郁，数月内暴病身亡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Associated closely with rebellious crown prince Chengqian, making him a prime target for royal wrath",
+      "Fragile psychological resilience in disgrace, weeping continuously in exile until death took him"
+    ]
+  },
+  {
+    "id": "du_yan",
+    "nameZh": "杜淹",
+    "nameEn": "Du Yan (Duke of Anji)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "吏部尚书 · 参预朝政 · 安吉郡公 · 隋唐恩怨反侧名士",
+    "positionEn": "Minister of Civil Personnel · The Scheming Uncle of Du Ruhui",
+    "personalityZh": "辨捷多诈、才藻华美、心怀异志、恩将仇报、晚登卿相",
+    "personalityEn": "Eloquent, wily political survivor, uncle of Du Ruhui, treacherous in personal feuds, yet deeply effective in personnel screening",
+    "deedsZh": "杜如晦之叔父；在洛阳为王世充所用，劝王世充杀兄杜如晦之弟；洛阳破几乎被斩，赖杜如晦苦求免死；入唐后依附李世民，官至吏部尚书参知政事，掌选拔之权；贞观二年病卒。",
+    "deedsEn": "Uncle of Du Ruhui; served warlord Wang Shichong, orchestrating his own brother's murder; spared from execution by Du Ruhui; rose to Minister of Personnel in Tang.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏印",
+      "正财"
+    ],
+    "patternType": "伤官配印格",
+    "strengthAdviceZh": "在生死边缘具有极强的“死里逃生与快速翻盘”能力。文辞敏捷辩才惊人，在组织选拔与人才面试中具有鹰隼般的识别洞察力。",
+    "strengthAdviceEn": "Survive mortal execution blocks through lightning adaptation; deploy incisive interview intuition in human resources to screen elite talent.",
+    "weaknessAdviceZh": "残害骨肉至亲、恩将仇报是无法洗刷的道德死穴！在王世充麾下构陷害死自己亲侄儿，导致杜氏家族内部结下血海深仇，虽官至宰相却终生为世人侧目不齿。",
+    "weaknessAdviceEn": "Fratricidal cruelty toward one's own family stains a career forever; murdering his nephew under Wang Shichong earned universal contempt, surviving solely on his nephew's mercy.",
+    "historicalQuoteZh": "《旧唐书》评：杜淹辨捷多谋，利口巧辞。然陷害天伦，残忍骨肉。如晦全其性命，淹何面目以处世！虽位至宰相，士林鄙之。",
+    "historicalQuoteEn": "Old Book of Tang: Du Yan was clever and eloquent; yet butchering his own kin under Wang Shichong was depraved. Though chancellor, educated society despised his character.",
+    "auxiliaryStrengthsZh": [
+      "吏部选拔官吏极有成效，开创面试考核新机制，精于考辨文墨才干，为贞观初年选拔了大批实干官吏",
+      "文采风流辞藻华美，在隋唐文坛上自成一家，辩才滔滔令敌手难辩"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Revolutionized civil service interviews as Minister of Personnel, evaluating administrative talent with eagle eyes",
+      "Splendid literary prose and silken eloquence that outmaneuvered rivals in court debate"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "私德极其凶残冷血，曾亲手杀害亲侄杜如晦之兄并关押如晦之弟险些饿死，天理难容",
+      "性格反复无常缺乏忠诚定力，在王世充与李唐之间纯以个人富贵为唯一定盘星"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Cold-blooded brutality: murdered his own nephew under Wang Shichong out of factional rivalry",
+      "Treacherous chameleon whose allegiances shifted purely based on selfish survival"
+    ]
+  },
+  {
+    "id": "cui_dunli",
+    "nameZh": "崔敦礼",
+    "nameEn": "Cui Dunli (Duke of Bo)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "中书令 · 兵部尚书 · 博陵郡公 · 智勇安边名相",
+    "positionEn": "Director of Chancellery · Minister of War · Pacifier of Northern Frontiers",
+    "personalityZh": "容止严重、精明干练、沉密多智、治戎安疆、一代能臣",
+    "personalityEn": "Dignified, razor-sharp administrator, dispatched alone to negotiate with the Turks, managing imperial war councils with calm authority",
+    "deedsZh": "博陵崔氏甲族；精通军事后勤与外交辞令；出使突厥宣示国威深得颉利敬服；征高句丽掌管兵部总后勤调配；高宗即位拜中书令，领军平定薛延陀叛乱；享年六十一善终。",
+    "deedsEn": "Scion of Boling Cui clan; negotiated with the Turks as chief envoy; directed wartime logistics for the Goguryeo campaign; chancellor under Gaozong who crushed Xueyantuo.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "将士族门阀的高贵教养与国防军事物流管理完美结合。善于在敌前谈判中不卑不亢立下国威，在大规模对外远征中精准统筹全军粮械兵员调配。",
+    "strengthAdviceEn": "Combine elite aristocratic education with military logistical mastery; project state authority in tense border negotiations while directing massive supply lines.",
+    "weaknessAdviceZh": "常年处于国防边陲高压与行军奔波之中，积劳成疾，在平定漠北后不久突发疾病逝世。在处理高负荷国防政务时必须建立轮换调养机制。",
+    "weaknessAdviceEn": "Intense frontier campaign fatigue took a heavy bodily toll, dying suddenly after the northern pacification; install health recovery rotations in high-stress roles.",
+    "historicalQuoteZh": "《旧唐书》评：崔敦礼器量弘伟，动中规矩。出使蛮裔，不辱君命；参赞军谟，算无遗策。位极台铉，克保令名，真良相也。",
+    "historicalQuoteEn": "Old Book of Tang: Cui Dunli was dignified and methodical; fearless in foreign embassies and infallible in military councils, reaching supreme chancellorship.",
+    "auxiliaryStrengthsZh": [
+      "出使东突厥在刀枪环伺下神色自若宣扬大唐国威，迫使颉利可汗退兵求和，展现绝顶外交胆魄",
+      "执掌兵部十余年调兵遣将账目清晰无误，唐代初期军制与府兵后勤调拨体系的核心建设者"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Faced down hostile Turkic warlords alone with unflinching calm, compelling the Qaghan to negotiate",
+      "Directed the Ministry of War for over a decade, structuring the Fubing militia mobilization"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "行事过于严肃庄重甚至缺乏亲和力，在处理基层士卒微观情绪时有时显得冷峻严格",
+      "晚年为国事过度透支精力，六十一岁病逝在军政要职之上，未能安度晚年退休岁月"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Severe personal austerity made him seem distant and cold when handling troops' emotional morale",
+      "Burned out his physical stamina in late military campaigns, dying at his desk at age 61"
+    ]
+  },
+  {
+    "id": "yu_zhining",
+    "nameZh": "于志宁",
+    "nameEn": "Yu Zhining (Duke of Yan)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "太傅 · 燕国公 · 三朝保身东宫诤谏宿相",
+    "positionEn": "Grand Tutor · Duke of Yan · Veteran Crown Prince Mentor and Chancellor",
+    "personalityZh": "沉静温厚、博学多通、屡谏储君、随波避祸、享寿七十七",
+    "personalityEn": "Tranquil, erudite, persistent in remonstrating with rogue crown princes, highly adept at passive self-preservation during murderous purges, died at 77",
+    "deedsZh": "北周八柱国于谨之曾孙；太子李承乾作恶，志宁上书数十次切谏，承乾派刺客刺杀，见其孝养母亲不忍下手；高宗废王立武，志宁深知大势难违保持缄默，得以免死贬官善终。",
+    "deedsEn": "Great-grandson of Yu Jin; sent dozens of blunt warnings to rogue prince Li Chengqian, surviving hired assassins; stayed silent during the Wu Zetian succession debate to save his life.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "兼具“刚直进谏与终极避险”的政治智慧。在辅导储君时尽忠职守、屡屡死谏，连刺客都被其孝德感化；在面对毁灭性政治绞杀时懂得适度保持缄默保全宗族。",
+    "strengthAdviceEn": "Balance fearless moral duty with realistic survival instincts; remonstrate relentlessly with errant proteges, but embrace tactical silence when autocratic juggernauts crush all dissent.",
+    "weaknessAdviceZh": "在“废王立武”的千古大是大非面前，由于惧怕武则天淫威选择默不作声，虽然保全了性命得以善终，但也留下了“大臣唯唯诺诺未能死节”的历史微词。",
+    "weaknessAdviceEn": "Tactical silence during Wu Zetian's usurpation saved his neck from the block, but drew criticism from rigid Confucian historians for lack of heroic martyrdom.",
+    "historicalQuoteZh": "太宗称赞曰：“志宁谏承乾，有大臣之节！”《旧唐书》评：“于志宁沉雅老成，名世儒宗。切谏储闱，危而不覆。虽中道缄口，亦保身之智也。”",
+    "historicalQuoteEn": "Taizong praised: 'Zhining's remonstrance with the Crown Prince showed true ministerial greatness!' Annals celebrate his intellectual stature and wisdom in avoiding death.",
+    "auxiliaryStrengthsZh": [
+      "辅导东宫敢作敢当，先后上书数十篇痛陈太子过失，其孝母德行竟让前去刺杀他的杀手丢弃匕首折服而退",
+      "关陇八柱国顶级名门之后，历仕高祖、太宗、高宗三朝，主持编定《新礼》，享年七十七高寿"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Presented dozens of biting memorials against Prince Chengqian; his filial virtue made hired hitmen abort",
+      "Scion of Eight Pillar Generals, serving three emperors and drafting imperial state rituals to age 77"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在武则天废后杀长孙无忌的残酷政治绞杀战中吓破了胆，闭口不言随波逐流，失落宰相气节",
+      "性格过于明哲保身，晚年虽得善终但在朝野士林中威望远逊于宁死不屈的褚遂良"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Intimidated into passive silence during Wu Zetian's purges, watching his co-regent peers butchered",
+      "Calculated self-preservation compromised his public standing compared to unyielding martyrs"
+    ]
+  },
+  {
+    "id": "zhang_xingcheng",
+    "nameZh": "张行成",
+    "nameEn": "Zhang Xingcheng (Duke of Ding)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "尚书左仆射 · 定国公 · 贫寒崛起清正无私门下宰辅",
+    "positionEn": "Left Executive Director of State Affairs · Duke of Ding · Incorruptible Bureaucratic Anchor",
+    "personalityZh": "方直公允、守法不移、清廉俭素、断案神明、终身勤勉",
+    "personalityEn": "Upright, impartial, rising from rural poverty through pure administrative diligence, beloved by Taizong for tireless devotion to state dockets",
+    "deedsZh": "农家出身勤学及第；任殿中侍御史纠察百官无所避讳；太宗数次大宴群臣，行成从容引经据典谏太宗不可独宠魏王李泰；辅政高宗为左仆射兼门下省事，清廉病卒。",
+    "deedsEn": "Rose from poor peasant origins; fearless court inspector who publicly warned Taizong against excessive favoritism toward Prince Li Tai; premier chancellor of early Gaozong.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正财",
+      "正印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "寒门子弟凭借“极致的法度执行力与职业纪律”登顶相位的典范。在朝廷利益纠葛中不依附任何门阀派系，以绝对公心与铁面纠察赢得两代帝王的深厚信任。",
+    "strengthAdviceEn": "The consummate meritocratic self-made chancellor; build career security on impartial judicial enforcement, aloof from noble cliques, earning absolute royal trust.",
+    "weaknessAdviceZh": "行事过于严肃刻板，缺乏官场交际手腕与个人政治班底。一生高度依赖最高领袖个人的赏识保护，在后宫势力与新贵集团崛起时缺乏抵御外部冲击的派系根基。",
+    "weaknessAdviceEn": "Lacked personal political factions; relying entirely on royal imperial patronage leaves you vulnerable when new royal favorites and court cliques seize power.",
+    "historicalQuoteZh": "太宗指其叹曰：“古之所谓骨鲠之臣，其张行成之谓欤！”《旧唐书》赞：“张行成砥节奉公，声实俱美，当官尽瘁，真宰相之任也。”",
+    "historicalQuoteEn": "Taizong pointed to him, praising: 'When ancients spoke of upright unbending ministers, they meant Zhang Xingcheng!' Annals celebrate his selfless public devotion.",
+    "auxiliaryStrengthsZh": [
+      "底层农家子弟打破门阀壁垒登临宰相宝座的励志楷模，以无可挑剔的廉洁与业务能力征服朝野",
+      "敢于在全宫宴席高潮时当面指出唐太宗溺爱幼子李泰的储君越轨隐患，展现大公无私的胆识"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Heroic meritocrat rising from poverty to prime minister purely on incorruptible diligence",
+      "Fearlessly interrupted a royal banquet to rebuke Taizong's doting favoritism toward Prince Li Tai"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "终年伏案处理繁杂公文缺乏大开大合的宏观外交与军事大格局，长于治细而疏于谋大",
+      "性格孤傲清峻不通私交，在朝中几乎没有私人盟友，晚年处理复杂党争时形单影只"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overwhelmed by minutiae of civil dockets, lacking expansive foreign or military theater vision",
+      "Austere, friendless lifestyle left him isolated in court when ruthless succession struggles erupted"
+    ]
+  },
+  {
+    "id": "zhangsun_shunde",
+    "nameZh": "长孙顺德",
+    "nameEn": "Zhangsun Shunde (Duke of Pi)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "镇军大将军 · 邳国公 · 太原首谋勇猛贪财宿将",
+    "positionEn": "Grand General of the Garrison Army · Duke of Pi · Valiant Founder Tamed by Imperial Silk",
+    "personalityZh": "骁勇刚烈、善战敢攻、贪图财贿、愧悔自新、凌烟元勋",
+    "personalityEn": "Ferocious assault commander of early Tang, co-conspirator of the Taiyuan uprising, notoriously greedy for silk bribes, cleverly shamed into reform by Taizong",
+    "deedsZh": "太原起兵时为李渊招募精兵数千；平定霍邑、攻克长安皆为前锋头功；平定薛仁杲与刘武周；性贪受人绢帛贿赂，太宗不在朝堂惩处反赐绢数十匹使其满面羞愧；位列凌烟阁二十四功臣。",
+    "deedsEn": "Recruited early shock troops at Taiyuan; vanguard assault hero at Huoyi and Chang'an; accepted silk bribes, which Taizong famously shamed by awarding him mountains of silk in court.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "战场前线极其凶悍锋利的“破阵利刃”。在创业开局最困难时刻敢于豁出性命招募死士、攻坚克难，立下不可替代的开国血战功劳。",
+    "strengthAdviceEn": "Savage frontline shock warrior; recruit death-ground volunteers during an enterprise's earliest crisis, smashing enemy citadel gates through raw combat courage.",
+    "weaknessAdviceZh": "必须彻底斩断贪恋财物受贿的致命软肋！因贪收下属数十匹绢帛被太宗在朝堂上“赐绢羞辱”，虽免死刑但一世英雄名誉险遭物欲摧毁，晚年因思女成疾而亡。",
+    "weaknessAdviceEn": "Eradicate petty bribery and material greed; publicly shamed before all ministers when Taizong forced him to carry his own bribe silks home, nearly destroying his heroic glory.",
+    "historicalQuoteZh": "太宗曰：“顺德有勋，不可废也。若赐之绢，使其心自愧，胜于刑戮多矣！”《旧唐书》评：“顺德勇毅敢战，功冠草创。受贿之失，太宗以德化之，亦君臣之善也。”",
+    "historicalQuoteEn": "Taizong decreed: 'Shunde's battle feats are immense. Shaming him with gifts of silk to stir his conscience is far wiser than execution.'",
+    "auxiliaryStrengthsZh": [
+      "太原起义最核心的募兵前锋，在晋阳危局中数日之内拉起上千亡命之徒，打响反隋第一枪",
+      "霍邑之战一马当先阵斩隋军骁将，攻破长安城门立下头功，大唐开国首屈一指的铁血猛将"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Recruited early shock infantry in Taiyuan within days, firing the first shot of the Tang rebellion",
+      "Vanguard champion who shattered Sui defenses at Huoyi and breached the gates of Chang'an"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "贪恋金钱受贿成性，大理寺查实后唐太宗当众以“赐绢堆身”反讽羞辱，沦为朝堂千古笑柄",
+      "晚年心理承受力极脆弱，亲生女儿去世后竟然悲伤过度哀毁骨立暴病而死，缺乏大将定力"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Notoriously greedy: caught taking silk bribes, subjected to humiliating royal ridicule in court",
+      "Fragile emotional stamina in old age, weeping himself to physical death over the loss of a daughter"
+    ]
+  },
+  {
+    "id": "li_jing_tang",
+    "nameZh": "李靖",
+    "nameEn": "Li Jing (Duke of Wei)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "尚书右仆射 · 卫国公 · 军神灭突厥开疆万里",
+    "positionEn": "Right Executive Director of State Affairs · Duke of Wei · The God of War",
+    "personalityZh": "神机妙算、兵法如神、料敌如神、南平萧铣、北灭突厥、闭门自守",
+    "personalityEn": "Undisputed Military God of China, supreme strategist who authored classic art of war treatises, conquered the Yangtze, crushed Eastern Turks, and pacified Tuyuhun",
+    "deedsZh": "精研兵法，舅父韩擒虎叹其深通孙吴之妙；平定江南萧铣与辅公祏；率三千精骑冒暴风雪奇袭定襄，灭亡东突厥生擒颉利可汗，雪洗白马之盟大耻；西征吐谷浑；著《李卫公兵法》。",
+    "deedsEn": "Master of military strategy; conquered Xiao Xian; led 3,000 elite cavalry through blizzards to annihilate the Eastern Turks, capturing the Qaghan; conquered Tuyuhun; died at 79.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "偏财"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "中国军事战争史上“兵仙军神”的终极化身。善于实施超远距离、极端天候（暴风雪）下的特种战役奇袭，以极低代价达成歼灭敌国战略总目标的奇迹。",
+    "strengthAdviceEn": "The ultimate Military God of China; orchestrate continent-spanning blitzkriegs under severe blizzards, annihilating sovereign empires with surgical precision.",
+    "weaknessAdviceZh": "功高盖世时必须修炼“绝对的自抑与明哲保身”！两次大胜后遭御史诬陷谋反，李靖立即紧闭大门杜绝一切宾客往来，靠极端低调和交出兵权才在猜忌中安享晚年。",
+    "weaknessAdviceEn": "Extreme modesty is mandatory when military glory overshadows the throne; after destroying empires, lock your gates and refuse all visitors to survive imperial paranoia.",
+    "historicalQuoteZh": "太宗大喜曰：“汉之卫青、霍去病，不过破匈奴数万人，未有生擒其单于如卿者！卿乃雪朕白马之耻也！”《新唐书》赞：“李靖神谋武略，古之名将莫能及也！”",
+    "historicalQuoteEn": "Taizong rejoiced: 'Han generals Wei Qing and Huo Qubing never captured the Chanyu alive as you have! You wiped away my bitterest national humiliation!'",
+    "auxiliaryStrengthsZh": [
+      "世界战争史上的闪电战神话，三千铁骑风雪突袭定襄摧毁突厥大脑，直接将大唐北部边境推进数千里",
+      "著《六军镜》《李卫公兵法》，将先秦兵法提炼升华至现代级战役学高度，被封建时代奉为神明"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary 3,000-horse blitz through arctic snows, capturing the Turkic Qaghan and conquering an empire",
+      "Authored supreme military treatises, celebrated as the divine patron of Chinese operational warfare"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "过于卓越的军事才华引发李渊与李世民两代帝王长期的防范与猜忌，一生屡次遭人诬告谋反",
+      "晚年为求自保不得不完全自我封闭，甚至拒绝任何旧部亲友拜访，晚景显得孤寂凄凉"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Towering battlefield feats stirred chronic imperial paranoia, prompting repeated false treason charges",
+      "Forced into total self-imposed isolation in old age, barring all friends to preserve his head"
+    ]
+  },
+  {
+    "id": "li_ji_tang",
+    "nameZh": "李勣",
+    "nameEn": "Li Ji (Duke of British)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司空 · 太子太师 · 英国公 · 历仕三朝出将入相长青树",
+    "positionEn": "Grand Minister of Works · Duke of British · The Unshakeable Elder Statesman Across Three Reigns",
+    "personalityZh": "沉着深密、用兵多奇、忠厚信义、圆融保身、灭高句丽",
+    "personalityEn": "Cunning military master, fiercely loyal to old warlord patrons, surviving three imperial reigns with spotless discretion, conqueror of Goguryeo",
+    "deedsZh": "原瓦岗寨李密大将徐世勣；归唐赐姓李；从太宗击灭窦建德、王世充；与李靖并称军中双壁，灭东突厥、破薛延陀；高宗朝统兵彻底灭亡高句丽；享年七十六善终。",
+    "deedsEn": "Formerly Xu Shiji of Wagang; conquered eastern warlords with Taizong; paired with Li Jing as dual war gods; annihilated Goguryeo under Gaozong; died peacefully at 76.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "出将入相、跨越三朝不倒的“终极长青树”。实战指挥多谋善变善用奇兵；在皇权更迭的政治暴风雨中以极高的分寸感自保，绝不轻易卷入立储杀戮。",
+    "strengthAdviceEn": "The consummate evergreen survivor across three dynasties; deploy elusive battlefield genius while maintaining an impeccable neutral posture in palace succession civil wars.",
+    "weaknessAdviceZh": "在“废王立武”的千古大是大非关口，以一句“此陛下家事，何须问外人”间接助长武则天登顶，虽保全了个人富贵，但死后孙子徐敬业起兵被武则天剖棺戮尸。",
+    "weaknessAdviceEn": "His evasive phrase during the succession crisis ('This is Your Majesty's private family matter') enabled Wu Zetian's rise; after his death, his grandson rebelled and his tomb was desecrated.",
+    "historicalQuoteZh": "太宗称赞曰：“李靖、李勣二人，古之白起、韩信、卫青、霍去病，何以加也！”《旧唐书》评：“李勣用兵如神，善将将。历三朝居相位，始终全福，古今罕匹。”",
+    "historicalQuoteEn": "Taizong proclaimed: 'Li Jing and Li Ji match ancient legends Bai Qi, Han Xin, and Huo Qubing!' Annals praise his miraculous luck and statecraft in preserving his life to 76.",
+    "auxiliaryStrengthsZh": [
+      "与李靖并称大唐开国双子星，高宗朝以古稀之年挂帅出征，一战彻底灭亡盘踞辽东数百年的高句丽帝国",
+      "为人极重信义，李密被诛李勣为其收尸痛哭安葬；单雄信被斩李勣割股肉喂之，信义名满天下"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Conquered Goguryeo in his seventies, eradicating a 700-year northeastern rival empire forever",
+      "Legendary fidelity: buried former master Li Mi with royal honors and cut his own flesh to feed Shan Xiongxin"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在武则天废王立后的原则性历史关口狡黠自保，轻飘飘一句“此皇帝家事”亲手为武周革命打开大门",
+      "死后不到二十年孙子徐敬业在扬州起兵讨武失败，导致李勣惨遭武则天开棺戮尸削夺官爵"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Cynical neutrality during Wu Zetian's accession opened the floodgates for despotic terror",
+      "Grandson rebelled against Wu Zetian, leading to the posthumous desecration of Li Ji's tomb"
+    ]
+  },
+  {
+    "id": "qin_qiong",
+    "nameZh": "秦琼",
+    "nameEn": "Qin Qiong (Qin Shubao)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左武卫大将军 · 翼国公 · 门神之祖万军斩将第一勇将",
+    "positionEn": "Grand General of Left Martial Guard · Duke of Yi · Legendary Vanguard and Eternal Door God",
+    "personalityZh": "勇武冠世、万军斩将、忠肝义胆、马踏黄河、满身血战",
+    "personalityEn": "Unmatched frontline champion, tasked with charging enemy ranks solo to decapitate boasting champion generals, revered forever as China's Door God",
+    "deedsZh": "原张须陀、李密麾下猛将；归李世民后为马军总管，美良川击破尉迟恭；虎牢关冲锋陷阵破窦建德；太宗每见敌阵有名将耀武扬威，必令秦琼单骑斩之；晚年多病叹“流血数斛”。",
+    "deedsEn": "Frontline berserker; routed Yuchi Gong at Meiliangchuan; smashed Dou Jiande at Hulao; charged solo into enemy formations to decapitate rival champions; immortalized as Door God.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "伤官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "以无与伦比的单兵斩首战力击溃一切心理防线。在战况焦灼的大规模会战中，敢于单骑绝尘直插敌将中军斩首夺旗，以绝对的个人英雄主义逆转战局。",
+    "strengthAdviceEn": "Unmatched single-combat vanguard dominance; gallop solo into the heart of hostile formations to decapitate boasting rival champions, shattering enemy morale in seconds.",
+    "weaknessAdviceZh": "极度透支肉体导致晚年百病缠身。自述“吾少长戎马，所历二百余战，数重创，出血亦数斛矣，安得不病！”在年轻攻坚时切忌完全不惜命地挥霍生理资本。",
+    "weaknessAdviceEn": "Catastrophic physical attrition from 200 pitched battles ('I shed enough blood to fill several tubs'); avoid burning out bodily vitality with reckless disregard in early combat.",
+    "historicalQuoteZh": "太宗特令图其形于凌烟阁。民间奉为破煞门神。《旧唐书》赞：“秦叔宝勇绝一时，每单骑拔垒斩将，太宗倚为心膂。身经百战，伤创累累，勇士之冠也。”",
+    "historicalQuoteEn": "Immortalized at Lingyan Pavilion and worshipped as China's eternal Door God. Annals celebrate his terrifying bravery, charging solo through armies to slay champion warlords.",
+    "auxiliaryStrengthsZh": [
+      "冷兵器历史上单兵突击冲阵斩首能力的天花板，太宗军中第一破阵王牌，令天下敌军闻风丧胆",
+      "与尉迟恭共同演化为中华文明千家万户张贴的守护神（门神），文化图腾影响力历经千年不衰"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The apex frontline shock warrior in Chinese history, single-handedly decapitating enemy champions",
+      "Evolved alongside Yuchi Gong into China's eternal Door God, protecting millions of homes for a millennium"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "战斗中全凭血肉之躯硬顶，一生负伤无数失血斗量，导致贞观盛世开启后长期病卧在床无法出征",
+      "除了冲锋陷阵的战术勇猛外，缺乏独立指挥大型方面兵团进行战役谋划的记录"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Sustained hundreds of severe puncture wounds, spending his later Zhenguan years crippled in bed",
+      "Confined to devastating tactical shock vanguard roles rather than designing macro theater campaigns"
+    ]
+  },
+  {
+    "id": "yuchi_gong",
+    "nameZh": "尉迟恭",
+    "nameEn": "Yuchi Gong (Yuchi Jingde)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右武候大将军 · 鄂国公 · 玄武门救主铁血门神",
+    "positionEn": "Grand General of Right Martial Guards · Duke of E · Lifesaver of Taizong and Eternal Door God",
+    "personalityZh": "忠勇纯烈、夺槊无双、耿直不阿、玄武救主、晚年修道",
+    "personalityEn": "Fierce equestrian champion, master of disarming heavy lances, shot Prince Yuanji and forced Emperor Gaozu to yield power during Xuanwu Gate, Door God",
+    "deedsZh": "原刘武周骁将，降唐后深得李世民宠信，单手夺李元吉马槊；玄武门之变亲射杀李元吉，救下落马受困的李世民，并披甲持矛直闯李渊龙船迫其退位；晚年闭门谢客炼丹自保。",
+    "deedsEn": "Defected from Liu Wuzhou; disarmed Prince Yuanji's lances; shot Yuanji at Xuanwu Gate, saving Li Shimin; stormed Gaozu's boat in full armor to force abdication; retired to study Daoism.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "在生死存亡的致命拐点展现出无与伦比的“挽救与清场”魄力。在最高领导者受困濒死时，以雷霆万钧的绝对战力诛杀敌手，并敢于单刀直入控制中枢大局。",
+    "strengthAdviceEn": "The ultimate crisis savior and palace stormtrooper; eliminate mortal threats in seconds when leadership falls, then march into boardrooms armed to lock down systemic power.",
+    "weaknessAdviceZh": "功高自矜、性情刚直暴躁。曾因在御前国宴上争座，大醉之下重拳将劝架的宗室亲王李道宗几乎打瞎一只眼睛，遭太宗以汉高祖诛杀彭越严词警告，方知闭门修道。",
+    "weaknessAdviceEn": "Violent temper and boastful arrogance court disaster; punched Prince Li Daozong almost blind during a state banquet over seating rank, surviving only after a terrifying warning from Taizong.",
+    "historicalQuoteZh": "太宗叹曰：“国家安危，全赖敬德！”《旧唐书》赞：“尉迟敬德夺槊摧锋，勇冠三军。玄武之功，功在第一。晚年谢客闭门，亦善终之高识也。”",
+    "historicalQuoteEn": "Taizong proclaimed: 'The survival of this dynasty hung entirely on Jingde!' Annals praise his peerless combat valor and his wise late-life retirement into Daoist seclusion.",
+    "auxiliaryStrengthsZh": [
+      "玄武门兵变最关键的救命英雄，不仅射杀李元吉救了李世民的性命，更全副武装逼宫唐高祖锁定胜局",
+      "冷兵器单挑技巧天花板，不仅自己善用马槊，更能空手夺取天下顶尖骁将手中的长槊"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The decisive warrior of Xuanwu Gate: slew Prince Yuanji to save fallen Li Shimin, then stormed Gaozu's boat",
+      "Unmatched close-combat master who specialized in disarming enemy champions of their heavy lances bare-handed"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "脾气暴烈狂躁好争面子，庆功宴上醉酒殴打皇室宗亲江夏王李道宗险些致盲，触怒龙颜",
+      "早年性格偏狭自负多次公开嘲讽文官大臣，若非晚年果断闭门修道谢绝宾客十六年极难善终"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Violent drunken brawling at royal feasts nearly blinded Prince Li Daozong, drawing execution warnings",
+      "Arrogant mockery of civilian ministers would have brought fatal purges had he not retired to study alchemy"
+    ]
+  },
+  {
+    "id": "cheng_yaojin",
+    "nameZh": "程咬金",
+    "nameEn": "Cheng Yaojin (Cheng Zhijie)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左领军大将军 · 卢国公 · 三朝福将福寿双全宿勋",
+    "positionEn": "Grand General of Left Guards · Duke of Lu · Master of Battlefield Survival and Jovial Longevity",
+    "personalityZh": "骁勇善战、马槊绝伦、粗中有细、大智若愚、福寿延绵",
+    "personalityEn": "Fierce heavy cavalry commander, master of the horse lance, shrewd and jovial behind an unpolished exterior, surviving coups and purges to live to 77",
+    "deedsZh": "原瓦岗寨内军骠骑；降唐受李世民重用，随征四方百战破阵；玄武门之变参与定策冲杀；历仕高祖、太宗、高宗三朝；晚年西征葱岭因纵兵杀降遭贬，旋即退休安享福寿至七十七。",
+    "deedsEn": "Vanguard shock rider of Wagang; defected to Tang, charging frontlines for Li Shimin; key veteran at Xuanwu Gate; served three emperors; retired after Central Asian campaign, dying at 77.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "七杀",
+      "比肩"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "“大智若愚与粗中有细”的福将哲学典范。外表看似粗豪鲁莽，内心对政治危险与权力边界有极度通透的嗅觉；敢打硬仗，又能在大风暴中全身而退。",
+    "strengthAdviceEn": "The ultimate avatar of jovial survival and shrewd battlefield brilliance; mask acute political self-defense beneath a boisterous exterior, dodging fatal court traps.",
+    "weaknessAdviceZh": "晚年挂帅西征葱岭时受副将王文度蛊惑，纵容军队滥杀投降的胡人并私吞胡人大量黄金财宝，犯下重大军纪错误遭削职免官，说明晚年贪财必招晚节之玷。",
+    "weaknessAdviceEn": "Late-life greed for foreign loot brought disgrace; deceived by deputies into massacring surrendered nomads and embezzling gold, he was stripped of rank before retiring.",
+    "historicalQuoteZh": "《旧唐书》评：“程知节志气宏毅，勇冠戎行。拔萃草创，位登台辅。虽晚年葱岭之役有所挫衄，然福寿具全，功名始终，良将之全者也。”",
+    "historicalQuoteEn": "Old Book of Tang: Cheng Zhijie was stalwart and brave; reaching supreme generalship and navigating three reigns with prosperity and honor, a truly fortunate titan.",
+    "auxiliaryStrengthsZh": [
+      "大唐第一福将，在残酷血腥的隋唐更迭与多次宫廷政变中始终稳立不倒，历仕三朝安享七十七高寿",
+      "重装骑兵冲阵宗师，手中马槊威力惊人，在李世民麾下每临绝境必被派去带头破阵"
+    ],
+    "auxiliaryStrengthsEn": [
+      "The luckiest and shrewdest veteran of early Tang, navigating bloody coups unscathed to live to 77",
+      "Fierce heavy cavalry shock spearhead, deployed by Li Shimin to shatter enemy lines in critical moments"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "晚年征讨西突厥受副帅挑拨纵容屠杀降民并私分金帛，暴露出英雄迟暮时的贪念软肋",
+      "文化素养相对有限，一生功勋主要建立在猛将冲锋陷阵上，缺乏高维度的顶层制度设计才干"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Scandalous late-life embezzlement: slaughtered surrendered nomads to loot gold, sacked from command",
+      "Limited academic literacy, excelling in tactical shock combat rather than high institutional design"
+    ]
+  },
+  {
+    "id": "duan_zhixuan",
+    "nameZh": "段志玄",
+    "nameEn": "Duan Zhixuan (Duke of Fan)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "镇军大将军 · 褒国公 · 矢石贯股不顾忠勇铁将",
+    "positionEn": "Grand General of the Garrison Army · Duke of Fan · Indomitable Iron Commander",
+    "personalityZh": "勇武果烈、军纪森严、治军如神、忠贞不二、视死如归",
+    "personalityEn": "Fierce veteran, commanded cavalry vanguard with arrow-pierced thighs without retreating, enforced absolute camp discipline even against royal kin, Lingyan titan",
+    "deedsZh": "太原起义太宗最早亲信将领；美良川大破宋金刚，战斗中流矢射穿两股，志玄拔箭顾盼自若继续冲杀；玄武门之变坚定从太宗冲阵；任镇军大将军治军极严，连太宗亲信违令也一律依法论处。",
+    "deedsEn": "Early intimate of Li Shimin; charged at Meiliangchuan with both thighs pierced by arrows, fighting on calmly; key warrior at Xuanwu Gate; enforced ironclad military law.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "战场铁血抗击打与铁面治军的最高标杆。重创之下神色自若、战力不减；在军营内部严明纪律，哪怕皇帝的亲信贵戚犯法也坚决依律处置，打造无敌铁军。",
+    "strengthAdviceEn": "Ultimate battlefield physical pain tolerance and ironcamp discipline; fight through catastrophic injuries without flinching while enforcing ruthless rules on privileged elites.",
+    "weaknessAdviceZh": "治军行事过于刚硬严峻、毫不留情面，容易招致军中贵族子弟的非议与孤立。在非战时体系中应注意融入柔性沟通关怀。",
+    "weaknessAdviceEn": "Unyielding disciplinary severity alienates aristocratic subordinates; soften administrative edges during peacetime governance to prevent festering resentment.",
+    "historicalQuoteZh": "太宗登门抚其背叹曰：“志玄临难不顾其躯，真周亚夫之风也！”《旧唐书》评：“段志玄勇烈过人，临戎整肃，贯股不退，忠节照人，凌烟良将也。”",
+    "historicalQuoteEn": "Taizong embraced him, sighing: 'Zhixuan disregards his own flesh in mortal peril, possessing Zhou Yafu's iron spirit!' Annals praise his heroic discipline at Lingyan.",
+    "auxiliaryStrengthsZh": [
+      "美良川战役中双腿被敌军强弩贯穿，拔掉箭镞若无其事继续带兵冲锋数十里彻底击溃强敌",
+      "治军纪律天下第一，夜宿李世民大营，太宗密使驰至营门，段志玄依军法闭门不纳，太宗叹服"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fought on with both thighs impaled by heavy crossbow bolts, chasing enemy cavalry for miles",
+      "Barred Emperor Taizong's personal messengers from entering camp at night under strict military law"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情过于刚烈冷酷，日常缺乏人情味，在朝廷文官集团中人缘较为单薄冷清",
+      "年仅四十四岁即因早年征战重伤累积英年病逝，功勋未能完全贯穿整个贞观盛世"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Abrasive and emotionally detached, lacking warm political alliances among civilian peers",
+      "Died young at 44 due to accumulated combat trauma and massive battlefield blood loss"
+    ]
+  },
+  {
+    "id": "hou_junji",
+    "nameZh": "侯君集",
+    "nameEn": "Hou Junji (Duke of Chen)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "吏部尚书 · 陈国公 · 灭高昌开西域贪财谋反权臣",
+    "positionEn": "Minister of Personnel · Duke of Chen · Conqueror of Gaochang Turned Traitor",
+    "personalityZh": "弓马娴熟、智谋果断、灭国破虏、贪财自大、怨望谋反",
+    "personalityEn": "Brilliant student of Li Jing's military arts, conqueror of Xinjiang's Gaochang kingdom, blinded by greed and wounded vanity into catastrophic treason",
+    "deedsZh": "玄武门之变核心策划斩杀者之一；受太宗命从李靖学兵法；长途奔袭数千里翻越高山戈壁灭亡高昌国，收复西域开辟安西都护府；私吞高昌财宝下狱，心怀怨望教唆太子李承乾谋反，事败被诛。",
+    "deedsEn": "Mastermind of Xuanwu Gate; studied tactics under Li Jing; conquered the Kingdom of Gaochang across 2,000 miles of desert; embezzled gold, jailed, and executed for treason.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "偏财"
+    ],
+    "patternType": "伤官驾杀格",
+    "strengthAdviceZh": "极其强悍的大兵团超远程奔袭指挥家。善于克服极端自然环境（戈壁、缺水），跨越数千里实施跨区域灭国决战，为国家开拓庞大地缘空间。",
+    "strengthAdviceEn": "Master of super-long-range continental blitzkrieg across forbidding deserts; conquer hostile sovereign realms across thousands of miles to expand imperial boundaries.",
+    "weaknessAdviceZh": "“贪图战利财宝与受挫后的偏执怨恨”是自取灭亡的深渊！立下灭国大功却因私吞金银被查办，不仅不反躬自省，反而怨气冲天煽动太子造反，终遭灭门枭首。",
+    "weaknessAdviceEn": "Greed for plunder and paranoid bitterness after discipline are fatal; embezzling captured foreign gold led to prison, driving him to treason and the executioner's sword.",
+    "historicalQuoteZh": "太宗临斩涕泣谓曰：“吾不忍杀卿，然国法难废，今与卿决矣！”陈寿式史评叹其“以灭国大功，因贪黩生怨，煽乱东宫，族诛身死，千古贪愎之戒也！”",
+    "historicalQuoteEn": "Taizong wept before his execution: 'I cannot bear to kill you, but state law must stand; this is farewell!' An eternal warning against greed and treason.",
+    "auxiliaryStrengthsZh": [
+      "大兵团沙漠远征大师，率数万大军穿越两千里无人戈壁沙海突然降临高昌城下，一战迫降国王灭其国",
+      "深得军神李靖兵法真传，在西汉之后首度为大唐重新打通并牢牢控制丝绸之路核心走廊"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Conquered the desert kingdom of Gaochang across 2,000 miles of dunes, reopening the Silk Road",
+      "Premier student of Li Jing's operational treatises, executing continental strategic breakthroughs"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "贪婪成性，破高昌后擅自发掘王陵私吞珍宝，被御史弹劾下狱后不仅不思过反而疯狂怨恨朝廷",
+      "极度虚荣狂妄，狂言“若大势一变我必反”，暗中挑唆太子李承乾发动武装政变，惨遭抄家灭族"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Embezzled royal treasures and looted tombs after victory, nurturing venomous hatred when disciplined",
+      "Delusional vanity drove him to orchestrate crown prince Li Chengqian's treason, butchering his clan"
+    ]
+  },
+  {
+    "id": "zhang_gongjin",
+    "nameZh": "张公谨",
+    "nameEn": "Zhang Gongjin (Duke of Dingxiang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左武候将军 · 定襄郡公 · 玄武门独力关门关键功臣",
+    "positionEn": "General of Left Martial Guards · Duke of Dingxiang · Hero of the Xuanwu Gate Barrier",
+    "personalityZh": "膂力绝伦、深沉有谋、关键决断、力排众议、神行定襄",
+    "personalityEn": "Enormous physical strength and calm tactical vision, slammed the Xuanwu Gate shut solo against hundreds of assault troops, saving Taizong's cadre",
+    "deedsZh": "原王世充将领降唐；徐世勣李靖力荐入秦王府；玄武门之变卜卦不吉，公谨夺占卜龟甲掷地怒斥“天命在人”促定决心；兵变时独力闭门挡住太子数百亲兵猛攻；出任定襄都督早逝。",
+    "deedsEn": "Smashing superstitious divination shells to force the Xuanwu Gate decision; shut the colossal palace gates alone against hundreds of enemy troops; died young at 39.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "七杀"
+    ],
+    "patternType": "杀印相生格",
+    "strengthAdviceZh": "在命运转折的至暗瞬间打破迷信、做“破局决断者”。当团队因占卜凶卦犹豫时敢于怒摔龟壳强力推进行动；关键卡点以一己之力扛住反扑，守住胜果。",
+    "strengthAdviceEn": "Shatter superstitious paralysis in existential decisions; smash omens to the floor to demand action, then hold physical choke points alone against overwhelming counter-attacks.",
+    "weaknessAdviceZh": "长年处于最高机密暗战与边陲前线重压之中，年仅三十九岁即暴病英年早逝。在关键攻坚期过后，未能及时获得长期的心理疗愈与身心放松。",
+    "weaknessAdviceEn": "Immense stress of black-ops intelligence and frontier command wore down his health, dying at 39; secure long-term physical recovery after intense crisis sprints.",
+    "historicalQuoteZh": "太宗闻其死恸哭不止，礼官谏曰：“辰日哭泣，阴阳所忌。”太宗怒斥曰：“君臣同体，哀由心生，何忌之有！”《旧唐书》评其“有断大事之勇，凌烟之栋石”。",
+    "historicalQuoteEn": "Taizong wept inconsolably despite taboos against crying on astrological days: 'Ruler and minister share one body; my grief is real, what taboo matters!'",
+    "auxiliaryStrengthsZh": [
+      "玄武门兵变前夜怒摔占卜不吉之龟甲，大喝“卜以决疑，今日之事已无所疑，何卜为！”以无上魄力扫除团队畏难动摇心理",
+      "兵变当天太子齐王精锐数百人猛攻玄武门，张公谨以千钧神力独身关闭巨大城门下栓，彻底隔绝反扑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Smashed superstitious turtle shells on the coup's eve, roaring that destiny is forged by action",
+      "Slammed the massive Xuanwu palace gates shut solo against 1,000 royal guards, sealing victory"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "边疆恶劣气候适应力不足，出任定襄都督后在严寒塞外迅速垮下身体，三十九岁暴病早亡",
+      "功业偏于中枢政变执行与战役奇谋，未能充分展现其大兵团野战全局统帅才华"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Died young at 39 after harsh northern postings broke his physical constitution",
+      "Confined primarily to palace coup execution and tactical advice rather than wide theater wars"
+    ]
+  },
+  {
+    "id": "yin_kaishan",
+    "nameZh": "殷开山",
+    "nameEn": "Yin Kaishan (Duke of Xun)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "吏部尚书 · 郧国公 · 浅水原冒进失律开国骁将",
+    "positionEn": "Minister of Personnel · Duke of Xun · The Valiant Scribe Turned Fallen Field Commander",
+    "personalityZh": "博学能书、勇冠三军、性好任性、轻敌冒进、暴病军中",
+    "personalityEn": "Cultured aristocratic background, superb calligraphy and horsemanship, reckless battle pride that provoked the disaster at Qianshuiyuan, died on campaign",
+    "deedsZh": "太原起义核心骨干，统兵克长安；浅水原之战与刘文静同为主帅，不听李世民坚壁清野严令，轻敌出战被薛仁杲伏击全军覆没遭免职；后复职从征王世充立战功；征刘黑闼道中病逝。",
+    "deedsEn": "Founding vanguard at Taiyuan; violated Li Shimin's strict defense orders at Qianshuiyuan, suffering catastrophic ambush by Xue Rengao; redeemed himself at Luoyang; died on march.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "兼具文人笔墨才情与武将陷阵勇烈的全能开国干将。在太原起兵与关中争夺战中展现极高的冲锋陷阵爆发力与军政组织力。",
+    "strengthAdviceEn": "Possess rare dual talents in scribal administration and violent frontline combat; strike with intense operational energy during an enterprise's formative days.",
+    "weaknessAdviceZh": "“违抗总战略指令、轻敌冒进”是兵家大忌！在浅水原战役中被虚荣轻浮蒙蔽，擅自出击导致大唐开国第一场数万人全军覆没惨剧，险些动摇国家根本。",
+    "weaknessAdviceEn": "Violating supreme defense directives out of tactical impatience is fatal; attacking impulsively at Qianshuiyuan caused Tang's worst founding defeat with 30,000 dead.",
+    "historicalQuoteZh": "浅水原大败，太宗痛怒除其名。及随征洛阳有功复爵。陈寿式史评叹其“以文墨起家，勇毅敢战。然好胜矜夸，浅水原之衄，终为其累，早世亦可惜也”。",
+    "historicalQuoteEn": "Taizong stripped him of rank after the Qianshuiyuan disaster, but allowed him to redeem his honor at Luoyang before sudden illness felled him on campaign.",
+    "auxiliaryStrengthsZh": [
+      "能文能武的儒将典型，起草大唐开国讨隋檄文辞气壮烈，战场冲锋陷阵勇不可当",
+      "在洛阳城围困战中戴罪立功身先士卒，以血战重获李世民信任并重归凌烟阁功臣行列"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Rare combination of literary court drafting and raw frontline cavalry shock combat",
+      "Redeemed his reputation after disgrace through ferocious frontline charges at the siege of Luoyang"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "虚荣自满听不得反面意见，浅水原之战嘲弄刘文静“王以君少智耳”，盲目决战断送数万精锐",
+      "行军途中缺乏身体防护意识，征刘黑闼途中突染恶疾猝死于军营之中"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Arrogant contempt for defense protocols: mocked peers as cowards and charged into a bloody trap",
+      "Neglected health precautions during wet summer marches, dying of sudden fever on campaign"
+    ]
+  },
+  {
+    "id": "liu_zhenghui",
+    "nameZh": "刘政会",
+    "nameEn": "Liu Zhenghui (Duke of Xing)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "刑部尚书 · 邢国公 · 太原留守被俘绝不降忠臣",
+    "positionEn": "Minister of Justice · Duke of Xing · The Captured Anchor Who Kept Secret Faith",
+    "personalityZh": "沉稳严谨、清廉不苟、忠贞若金、陷敌不屈、密传敌情",
+    "personalityEn": "Grave, meticulous, incorruptible administrator, held hostage in chains by rebel warlords yet smuggled critical troop intelligence back to Tang courts",
+    "deedsZh": "太原起兵首谋元勋之一；李渊南下留其驻守太原大后方；刘武周突袭攻破太原，政会被俘下狱，面对严刑拷打誓死不屈，并设法暗中遣人向李渊密报刘武周军情虚实；平乱后获释拜刑部尚书。",
+    "deedsEn": "Left to govern Taiyuan core base; captured in chains by rebel Liu Wuzhou, endured brutal torture without defecting, secretly smuggling enemy troop strengths to Gaozu.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "极其罕见的“孤胆情报隐蔽守护者”。在领地沦陷、身陷敌营囹圄的绝境中，不仅以钢铁意志坚守忠诚底线，更冒着凌迟风险向组织秘密传递敌军核心军情。",
+    "strengthAdviceEn": "The ultimate undercover loyalist; endure chains and torture in enemy captivity while risking immediate execution to smuggle critical intelligence back to headquarters.",
+    "weaknessAdviceZh": "军事野战防御缺乏足够的机动反制手段，导致太原战略老巢在刘武周暴风雨突袭下一度全盘沦陷，自身沦为阶下囚。需强化战役前沿预警感知。",
+    "weaknessAdviceEn": "Lacked flexible field maneuvering, leading to the rapid loss of the Taiyuan base to warlord shock troops; reinforce frontier early-warning systems.",
+    "historicalQuoteZh": "高祖得其密表涕泣曰：“政会身陷贼庭，心不忘国，真烈士也！”平乱封邢国公。《旧唐书》赞：“刘政会受命草创，镇御晋阳。临难不屈，密达诚款，忠义之极也。”",
+    "historicalQuoteEn": "Emperor Gaozu wept holding his smuggled message: 'Zhenghui lies in enemy chains, yet his heart bleeds for our empire, a true hero!'",
+    "auxiliaryStrengthsZh": [
+      "身陷敌手宁死不屈，在刘武周严刑拷打下毫不动摇，成为唐初战乱中节操最完美的敌后楷模",
+      "冒死派遣密使向李渊传递刘武周军内部空虚与兵力部署机密，为李世民收复河东立下第一间谍情报功勋"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Endured brutal enemy torture without breaking, embodying immaculate chivalric steadfastness",
+      "Smuggled decisive intelligence on enemy troop vulnerabilities that enabled Taizong's reconquest"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "缺乏高强度的野战应变统帅才干，太原防守战中过早被敌军截断外围陷入重围",
+      "行事过于严肃拘谨缺乏官场柔通，晚年在刑部尚书任上积劳成疾较早去世"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked agile military reflexes, allowing enemy cavalry to sever his communications quickly",
+      "Austere, humorless legal rigor exhausted his health, passing away shortly after the wars"
+    ]
+  },
+  {
+    "id": "chai_shao",
+    "nameZh": "柴绍",
+    "nameEn": "Chai Shao (Duke of Huo)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左卫大将军 · 霍国公 · 琵琶退胡驸马名将",
+    "positionEn": "Grand General of Left Guards · Duke of Huo · Master of Musical Psychological Warfare",
+    "personalityZh": "雄健勇武、有矫捷之略、心理战宗师、平定四方、驸马功臣",
+    "personalityEn": "Athletic, daring cavalry commander, husband of Princess Pingyang, famed for baffling and annihilating nomadic horse-archers through musical theatrical ambushes",
+    "deedsZh": "娶平阳公主；随太宗征破薛举、宋金刚、王世充、窦建德；最著名战役：被吐谷浑骑兵围困于高山，柴绍令二美姬在阵前弹琵琶翩翩起舞，蛮夷驻马聚观，柴绍趁其不备铁骑绕后全歼敌军。",
+    "deedsEn": "Husband of Princess Pingyang; veteran of all founding wars; surrounded by nomads on a mountain, ordered two dancing girls to play lutes, ambushing the distracted horde.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "七杀",
+      "伤官"
+    ],
+    "patternType": "偏财格",
+    "strengthAdviceZh": "心理战与非对称战场破局的绝代鬼才。善于在敌众我寡、被重重包围的绝境中，运用极具戏剧性与反常理的奇谋（阵前歌舞）吸引敌军注意力，实施毁灭性侧翼斩首。",
+    "strengthAdviceEn": "Master of psychological warfare and asymmetric tactical deception; deploy bizarre theatrical diversions to paralyze enemy command before executing a crushing flank charge.",
+    "weaknessAdviceZh": "早期在长安起义前夜弃妻子只身逃奔太原，虽成就霸业但让平阳公主独处险境（幸公主巾帼英雄自立娘子军），暴露出在极端私利关头的自私逃逸本能。",
+    "weaknessAdviceEn": "Fled Chang'an alone on the eve of rebellion, abandoning his wife to enemy police; while she miraculously raised an army, it exposed a selfish survival reflex.",
+    "historicalQuoteZh": "太宗叹曰：“柴嗣昌临危设奇，有霍去病、卫青之风！”《旧唐书》评：“柴绍骁勇果烈，立功当时。琵琶之捷，神机莫测，真一代良将也。”",
+    "historicalQuoteEn": "Taizong praised: 'Chai Shao deploys bizarre genius in peril, matching ancient champions Huo and Wei!' Annals celebrate his psychological lute victory as tactical magic.",
+    "auxiliaryStrengthsZh": [
+      "中亚与西北游牧铁骑的克星，阵前“美姬琵琶舞”大破吐谷浑成为世界心理战史上最匪夷所思的经典奇谋",
+      "平定梁师都彻底终结隋末分裂割据全盘乱局，为大唐扫平中原塞北立下终极锁关大功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Legendary lute dance ambush that shattered nomad archers stands as a masterpiece of psychological warfare",
+      "Conquered the final warlord Liang Shidu, sealing the total reunification of China"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "太原起义前夕害怕被捕，丢下妻子平阳公主独自逃亡，在家庭担当层面上留下历史道德微瑕",
+      "晚年在朝廷中因外戚贵婿身份处处谨小慎微如履薄冰，未能进一步在顶层政务有所建树"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fled Chang'an alone, abandoning his wife to hostile arrest during the initial uprising",
+      "Maintained an overly anxious, subservient profile in peace to avoid imperial suspicion"
+    ]
+  },
+  {
+    "id": "qutu_tong",
+    "nameZh": "屈突通",
+    "nameEn": "Qutu Tong (Duke of Jiang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "陕东道大行台右仆射 · 蒋国公 · 尽忠隋室降唐铁汉老将",
+    "positionEn": "Right Executive of Shandao District · Duke of Jiang · Unshakeable Loyalty Proven Twice",
+    "personalityZh": "忠直严毅、奉公不阿、老成持重、力战拒唐、后效死忠",
+    "personalityEn": "Stern, fearless, incorruptible veteran of Sui; defended Tong Pass heroically against Tang armies, surrendering only when abandoned by his emperor, serving Tang with equal fidelity",
+    "deedsZh": "隋朝大将，镇守潼关死阻唐军数月；粮尽兵败被俘，李渊亲释其缚拜大将军；随李世民征王世充，因战功封蒋国公；玄武门之变留守洛阳稳固东方大局；享年七十二高寿善终。",
+    "deedsEn": "Sui general who held Tong Pass against Tang until his army dissolved; weeping as he surrendered, Gaozu released his bonds; held Luoyang during Xuanwu Gate; died at 72.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "比肩"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "具有极高职业伦理与“侍主必尽死节”的真正军人风骨。在故主未亡时死战到最后一兵一卒；在接受新使命后恪尽职守、毫无二心，赢得两朝统治者共同的至高敬重。",
+    "strengthAdviceEn": "Embody pristine professional military ethics; fight to the last bullet for your current employer, and once a contract transitions, deliver identical unswerving fidelity.",
+    "weaknessAdviceZh": "性格过于方正严整，对战场微观机变稍逊于李靖等顶级军神，主要依靠严密的阵法与死战意志打硬仗；在重大历史政治转折面前缺乏主动创造历史的霸气。",
+    "weaknessAdviceEn": "Rigid conventional tactics relied on stubborn attrition rather than agile operational genius; unsuited for forging new historical eras, but flawless in holding ground.",
+    "historicalQuoteZh": "高祖叹曰：“屈突通忠于所事，古人何加！吾得之，胜得十万众也！”《旧唐书》赞：“屈突通抗节危邦，临难不惑。归诚大圣，始终一心，名将之全者也。”",
+    "historicalQuoteEn": "Emperor Gaozu marveled: 'Qutu Tong served his master unto death; winning him is worth 100,000 troops!' Annals praise his lifelong integrity across two empires.",
+    "auxiliaryStrengthsZh": [
+      "潼关死战数月令李渊数十万起义大军顿兵险隘寸步难行，兵败被俘后面向长安号哭隋帝，忠肝义胆震撼全军",
+      "洛阳大战与薛仁杲会战中屡立奇功，以老成持重之才统领大行台掌管半个帝国的军民大权"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Held Tong Pass against Tang armies until his men dissolved, weeping toward his fallen emperor",
+      "Governed half the empire as regional viceroy with spotless integrity and unshakeable discipline"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年在隋朝执法过于严苛冷酷，连其胞弟触犯国法也坚决上奏请诛，人情味稍显淡薄寡恩",
+      "一生受困于正统道德忠君思想的枷锁，面对历史大势的剧烈洗牌往往处于被动痛苦承受地位"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Impeccable rigidity bordered on cruelty, petitioning the execution of his own brother for infractions",
+      "Chained to traditional dynastic loyalty, suffering immense guilt during historical regime shifts"
+    ]
+  },
+  {
+    "id": "zhang_liang_tang",
+    "nameZh": "张亮",
+    "nameEn": "Zhang Liang (Duke of Xun)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "刑部尚书 · 勋国公 · 凌烟阁功臣 · 谍报宿将",
+    "positionEn": "Minister of Justice · Duke of Xun · Lingyan Hero & Intelligence Master",
+    "personalityZh": "深沉有智、善治刑狱、情报暗线、信奉巫蛊、晚年失足",
+    "personalityEn": "Subtle, patient intelligence organizer, skilled in judicial administration, yet seduced by occult prophecies and executed for conspiracy",
+    "deedsZh": "早年投瓦岗，后随李世民，在洛阳暗结党羽招募死士，遭王世充严刑拷打誓不吐露唐军机密；贞观年间任刑部尚书、平壤道行军大总管；晚年笃信术士谶纬与干儿子五百人，被告谋反诛死。",
+    "deedsEn": "Wagang recruit who joined Li Shimin, built clandestine intelligence networks in Luoyang, and endured torture without betraying Tang; later executed for occult treason.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "正财"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "卓越的情报网络组织与秘密动员能力，严刑拷打面前展现出钢铁般的保密忠诚；在刑部与地方行政治理中明察秋毫、审案干练。",
+    "strengthAdviceEn": "Master of clandestine underground intelligence networks and unflinching operational secrecy; efficient judicial administrator with sharp analytical clarity.",
+    "weaknessAdviceZh": "心术不正且易受虚妄神异与迷信蛊惑，缺乏真正的大道哲学；暗中广收养子蓄谋非分之想，最终在权欲与妄念的交织中自取灭亡。",
+    "weaknessAdviceEn": "Vulnerable to mystic paranoia and grandiose occult prophecies; recruited hundreds of godchildren for shadowy ambitions, leading to self-destruction.",
+    "historicalQuoteZh": "太宗叹其保密之功，然其信巫蛊谋反，太宗曰：‘亮有五百养子，欲何为也？政公死耳。’《旧唐书》评：‘张亮功成名遂，晚节不终，信左道以自戕，哀哉！’",
+    "historicalQuoteEn": "Taizong praised his early stoic secrecy, but noted: 'What does a minister want with 500 godchildren? He invites death!' Annals lament his fall into superstitious ruin.",
+    "auxiliaryStrengthsZh": [
+      "在洛阳暗中联络数千豪杰死士遭王世充严捕拷掠，皮开肉绽始终未吐一字，保全了秦王李世民的整个东方暗桩网络",
+      "出任怀州刺史与刑部尚书期间抑强扶弱、判案如神，被治下百姓誉为神明降世"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Endured ruthless torture without uttering a word, preserving Li Shimin's entire Luoyang espionage network",
+      "Administered Huaizhou and Ministry of Justice with astonishing speed and forensic precision"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "功成名就后极度迷信巫卜谶纬，对相士‘当得大位’的虚妄占卜深信不疑，完全丧失了顶级政治家的客观理性",
+      "私收五百义子触犯封建皇权对宗派武装的最高禁忌，将一手好牌打得粉碎"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fell into pathological superstition, believing charlatans who predicted he would become emperor",
+      "Adopted 500 loyal combatant godchildren, triggering the ultimate imperial treason redline"
+    ]
+  },
+  {
+    "id": "su_dingfang",
+    "nameZh": "苏定方",
+    "nameEn": "Su Dingfang (Duke of Xing)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左武卫大将军 · 邢国公 · 灭三国擒三主的一代军神",
+    "positionEn": "Grand General of Left Martial Guard · Duke of Xing · Conqueror of Three Kingdoms",
+    "personalityZh": "骁勇绝伦、深谋远虑、老当益壮、所向披靡、开拓万里",
+    "personalityEn": "Legendary imperial conqueror; broke Eastern Turks, captured Western Turkic Khan and King of Baekje, expanding Tang borders across Central Asia and Korea",
+    "deedsZh": "早年随窦建德、刘黑闼征战勇冠三军；后归大唐，随李靖夜袭颉利可汗可汗帐立首功；显庆年间以大总管西征灭西突厥，擒沙钵罗可汗；东征渡海灭百济，擒百济王扶余义慈；晚年镇守吐蕃前线病逝于军中，为大唐开拓疆土万里。",
+    "deedsEn": "Veteran warrior who routed Eastern Turks with Li Jing, destroyed Western Turks and Baekje, capturing three enemy sovereigns; died on active campaign against Tibet at 76.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "中华军事史上顶尖的长途奔袭与战略决战大师。善于在狂风暴雪与极端地理环境下发动致命闪电战，以少胜多擒贼擒王，彻底改变欧亚大陆地缘政治格局。",
+    "strengthAdviceEn": "Supreme master of deep theater mobile warfare and lightning shock campaigns; defeated multiple empires across Central Asian steppes and Korean peninsulas.",
+    "weaknessAdviceZh": "前半生受隋末降将身份与出身所累，长期被朝廷闲置数十载；性格刚猛直前不喜拉帮结派，在民间戏曲演义中被严重丑化扭曲。",
+    "weaknessAdviceEn": "Suffered long mid-career career stagnation due to rebel origins; blunt, unvarnished personality made him vulnerable to theatrical villainization in folklore.",
+    "historicalQuoteZh": "高宗叹曰：‘定方于国有大功，停朝三日，命赠左骁卫大将军，谥曰庄！’《旧唐书》赞：‘苏定方威振夷狄，摧凶拓境，擒三王如拾芥，真汉卫霍之亚也！’",
+    "historicalQuoteEn": "Emperor Gaozong mourned deeply: 'Dingfang rendered supreme service to the empire!' Annals declare him equal to ancient titans Wei Qing and Huo Qubing.",
+    "auxiliaryStrengthsZh": [
+      "随李靖雪夜奔袭阴山，仅率二百骁骑如神兵天降撕碎颉利可汗牙帐，一举打垮称霸漠北数十年的东突厥汗国",
+      "以万余兵力横扫帕米尔高原灭西突厥沙钵罗可汗，水陆两路跨海闪击攻灭百济生擒国王扶余义慈"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Led 200 riders in a blinding snowstorm to shatter the Eastern Turkic supreme camp at Yinshan",
+      "Crossed the Pamir mountains to crush the Western Turks, and launched an amphibious strike to topple Baekje"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年转战河北各路割据政权，导致在贞观初年被戴上‘降将逆臣’标签，蹉跎黄金岁月二十年",
+      "行军作战雷霆万钧但攻灭百济后维稳政略稍显粗放，未能迅速根除地方复国反叛火种"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lost twenty prime years sidelined as a former rebel commander before his talents were finally unleashed",
+      "Tactical speed overshadowed post-conquest stabilization in Baekje, allowing short-lived insurgencies"
+    ]
+  },
+  {
+    "id": "xue_rengui",
+    "nameZh": "薛仁贵",
+    "nameEn": "Xue Rengui (Duke of Pingyang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右领军卫大将军 · 平阳郡公 · 三箭定天山白袍神将",
+    "positionEn": "Grand General of Right Guard · Duke of Pingyang · Peerless White-Robed Archer Champion",
+    "personalityZh": "神勇无双、白袍当先、治军严整、临危不乱、晚节复起",
+    "personalityEn": "Peerless white-robed field champion; famed for shooting three arrows to pacify Tianshan, shattering nomadic coalitions and repelling Tibetan invasions",
+    "deedsZh": "降安市城下身披白袍单骑冲锋所向披靡，太宗惊叹拜游击将军；征铁勒三箭定天山令敌军降服；破高句丽拔城四十；大非川之战因副将郭待聘抗命遭吐蕃围攻溃败除名；晚年起复大破突厥于云州，卒于军中享年七十。",
+    "deedsEn": "Charge in white robes at Anshi stunned Taizong; shot three arrows to subdue Tianshan nomads; conquered Goguryeo fortresses; redeemed Dafeichuan defeat with late victory at Yunzhou.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "万人敌级别的战役突击力与身先士卒的超强将帅感染力。善于以惊世骇俗的个人英雄主义与精准狙击直接从心理上彻底瓦解敌阵军心。",
+    "strengthAdviceEn": "Unmatched tactical shock leadership and personal combat heroism; capable of unraveling enemy morale through surgical sniper displays and frontline charges.",
+    "weaknessAdviceZh": "大兵团多兵种协同与复杂地形联合作战的顶层大局观稍逊，大非川之役对骄纵副将郭待聘弹压不力，导致辎重尽失大唐折戟青藏高原。",
+    "weaknessAdviceEn": "Struggled with subordinate coalition cohesion in vast logistical theaters; failure to discipline his rogue lieutenant caused the Dafeichuan mountain catastrophe.",
+    "historicalQuoteZh": "太宗曰：‘朕不喜得辽东，喜得卿也！’《旧唐书》赞：‘仁贵勇冠三军，勇而有谋。三箭天山之咏，自古所希，一代之良将也。’",
+    "historicalQuoteEn": "Taizong exclaimed: 'I care not for conquering Liaodong; I rejoice in winning you!' Annals praise his legend: three arrows pacified the heavens.",
+    "auxiliaryStrengthsZh": [
+      "安市城前身着白衣手执方天画戟腰悬双弓，万军丛中横冲直撞如入无人之境，一人之力扭转战局威震辽东",
+      "天山天门关前连发三箭连毙突厥三大骁将，铁勒十万大军吓破肝胆翻身下马当场跪降"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Charged into tens of thousands in striking white armor, turning the tide of the Liaodong campaign singlehandedly",
+      "Shot three arrows that slew three elite nomadic chieftains consecutively, prompting an entire army to surrender"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "大非川之战战略预案不够周密，未能妥善掌控副将郭待聘擅自行动，导致惨遭吐蕃四十万大军全歼粮草",
+      "行军打仗时杀降过多（天山杀降铁勒俘虏），在个人功业与道义伦理上招致历史非议"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to prevent his rebellious subordinate from breaking formations at Dafeichuan, causing historic disaster",
+      "Ordered harsh execution of surrendering nomadic captives at Tianshan, marring his moral standing"
+    ]
+  },
+  {
+    "id": "zhishi_sili",
+    "nameZh": "执失思力",
+    "nameEn": "Zhishi Sili (Duke of Guiyang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左领军卫大将军 · 归义王 · 尚九江公主 · 归顺大唐突厥名将",
+    "positionEn": "Grand General of Left Guard · Prince of Guiyi · Imperial Son-in-law & Loyal Turkic Champion",
+    "personalityZh": "忠勇果决、智勇双全、倾心归汉、浴血报国、始终如一",
+    "personalityEn": "Eastern Turkic noble who submitted to Tang, married Princess Jiujiang, and fought with ferocious courage against Tuyuhun and Xueyantuo",
+    "deedsZh": "突厥颉利可汗亲信，曾使长安威吓太宗，太宗囚之；东突厥灭亡后真心降唐，太宗以九江公主妻之；随李靖、薛万彻征吐谷浑、薛延陀屡立奇功；房遗爱谋反案因妻牵连流配巂州，后免罪召还。",
+    "deedsEn": "Turkic envoy who once threatened Taizong, later genuinely surrendered, received Princess Jiujiang in marriage, and fought faithfully in northern campaigns; spared in dynastic purge.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正官",
+      "正财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "超越族群藩篱的极致政治忠诚与超群野战突击战力。一旦认准文明归属与最高领袖，便能倾注全部热血，以胡将之躯守护帝国北大门。",
+    "strengthAdviceEn": "Transcended ethnic loyalties through ferocious military dedication to the Tang empire; proved that alien nobility could become the shield of the central realm.",
+    "weaknessAdviceZh": "深陷大唐皇室纷繁复杂的宗室裙带政治网络，因妻子九江公主的皇室血统，在宗室内斗政变中难以完全独善其身。",
+    "weaknessAdviceEn": "Entangled in volatile imperial court intrigue through royal marriage; collateral damage from imperial conspiracy purges nearly brought execution.",
+    "historicalQuoteZh": "太宗曰：‘思力番臣，而能忘躯报国，真忠臣也！’《旧唐书》赞：‘执失思力委质汉廷，战必前驱，荣名尚主，可渭克荷勋德者矣。’",
+    "historicalQuoteEn": "Taizong praised: 'Sili is a foreign subject, yet risks his life for the realm as a genuine patriot!' Annals commend his battle courage and royal favor.",
+    "auxiliaryStrengthsZh": [
+      "以胡人将领身份率唐军步骑数千大破薛延陀十万大军于塞北，生擒其首领震慑漠南各部",
+      "松州之战与吐蕃鏖战中舍生忘死冲锋破阵，为侯君集全歼敌军先锋赢得决定性战机"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Shattered a 100,000-strong Xueyantuo horde in the northern desert with a small elite force",
+      "Charged headlong into Tibetan formations at Songzhou, opening the path to imperial counteroffensive"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年出使长安时盲目为颉利可汗夸大军势耀武扬威，在太宗面前险遭诛杀，政治研判稍显浅薄",
+      "晚年受房遗爱反叛阴谋波及被流放岭外，在处理宗室皇亲敏感关系上欠缺政治自保智慧"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Arrogantly postured during early diplomacy in Chang'an, nearly executed for underestimating Taizong",
+      "Failed to insulate his family from aristocratic conspiracies, resulting in temporary exile"
+    ]
+  },
+  {
+    "id": "ashina_sheer",
+    "nameZh": "阿史那社尔",
+    "nameEn": "Ashina She'er (Prince of Bi Commandery)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "镇军大将军 · 毕国公 · 尚衡阳长公主 · 扫荡西域突厥王子",
+    "positionEn": "Supreme Military General · Prince of Bi · Conqueror of Tarim Basin & Desert Oasis Kingdoms",
+    "personalityZh": "清廉克己、忠诚勇悍、深谙韬略、秋毫无犯、愿为太宗殉葬",
+    "personalityEn": "Eastern Turkic royal who swore unwavering fealty to Tang; conquered Karasahr and Kucha, refusing all gold and plunder, begging to be buried alive with Taizong",
+    "deedsZh": "处罗可汗次子，原西突厥泥孰啜，后率部降唐拜左骁卫大将军；尚太宗妹衡阳长公主；远征高句丽身中多箭拔箭再战；贞观二十一年任昆丘道行军大总管攻克焉耆、龟兹，生擒其王；太宗驾崩请以身殉葬，高宗不许；陪葬昭陵。",
+    "deedsEn": "Turkic royal prince who surrendered to Tang, married Taizong's sister; conquered Karasahr and Kucha; seized zero gold from palace vaults; pleaded to die with Taizong in grief.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "正印",
+      "七杀"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "罕见的兼具游牧勇悍与儒家崇高节操的外族帅才。在平定西域诸国富庶城郭时秋毫无犯、纤毫不取，以无可挑剔的廉洁与勇武赢得天下敬仰。",
+    "strengthAdviceEn": "Rare synthesis of nomadic martial valor and flawless Confucian integrity; conquered wealthy Silk Road city-states without pocketing a single gold coin.",
+    "weaknessAdviceZh": "对太宗怀有超越常理的图腾式忠诚与依附心理，太宗死后痛不欲生决意殉节，缺乏在政局更迭中独立自足的政治生命力。",
+    "weaknessAdviceEn": "Suffered existential emotional dependence on Taizong, demanding human self-immolation upon his emperor's passing rather than guiding the next reign.",
+    "historicalQuoteZh": "太宗赞其清操：‘胡将之中，社尔之廉，万人莫及！’《旧唐书》评：‘社尔身临绝域，拔城俘馘，还师之日，箧无余资，真名将之楷模。’",
+    "historicalQuoteEn": "Taizong marveled at his spotless virtue: 'Among foreign commanders, She'er's incorruptibility has no equal!' Annals celebrate his spartan discipline.",
+    "auxiliaryStrengthsZh": [
+      "率大军翻越帕米尔群山与天山险道，一举荡平龟兹大军五万生擒龟兹王，安西都护府由此牢固树立于天山之南",
+      "破龟兹都城国库大开，诸将蜂拥争抢金银珠玉，社尔仅取两斗干麦自食，廉洁之风震慑西域百国"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Conquered Kucha across the soaring Tianshan mountains, securing the permanent foundation of Anxi Protectorate",
+      "Refused all palace treasures while subordinates pillaged gold, taking only dry wheat for his meals"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "辽东战役中个人突击过于凶悍多次身受重伤险些丧命，在保护最高统帅自身安全上略欠审慎",
+      "太宗病逝时因过度悲痛强求拔剑自刎殉葬，违背大唐国家礼制险些引发外交礼仪风波"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Risked reckless personal charges in Liaodong, sustaining severe injuries that endangered his army",
+      "Nearly caused imperial diplomatic embarrassment by attempting ritual suicide upon Taizong's death"
+    ]
+  },
+  {
+    "id": "qibi_heli",
+    "nameZh": "契苾何力",
+    "nameEn": "Qibi Heli (Duke of Liang)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "镇军大将军 · 凉国公 · 割耳明志誓死效忠大唐名将",
+    "positionEn": "Grand General of Liang · Duke of Liang · Legendary Tiele Chieftain Who Mutilated Ear for Fealty",
+    "personalityZh": "忠贞不二、割耳明节、骁勇善战、沉稳坚毅、威震辽海",
+    "personalityEn": "Tiele tribal leader who led his people to submit to Tang; captured by rebellious kin, cut off his own ear to reject rebellion; fought brilliantly in Korea and Central Asia",
+    "deedsZh": "铁勒契苾部可汗，率部千余家归附长安；探亲西域时被叛部劫持欲立为主，何力拔刀割左耳明志誓死效忠大唐；太宗闻之大受感动出赎之；后为先锋破吐谷浑、征龟兹、大破高句丽于鸭绿江，官至左卫大将军封凉国公；陪葬昭陵。",
+    "deedsEn": "Tiele chieftain who submitted to Tang; kidnapped by tribal rebels, mutilated his own left ear rather than betray Taizong; Taizong ransomed him; crushed Goguryeo forces at Yalu River.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "铁血铸就的极端政治忠诚与超强山地野战突破力。在生死存亡乃至部族背叛关头，以自残身体表达绝不叛唐的不可动摇意志，成为千古军心典范。",
+    "strengthAdviceEn": "Fierce tribal battlefield dominance coupled with breathtaking personal fealty; sliced his own flesh to display indestructible commitment to the imperial throne.",
+    "weaknessAdviceZh": "对叛徒与异端极为痛恨，性格中带有北亚游牧部族的烈性与偏执，在复杂的朝廷士大夫朋党斗争中难以施展政治协调智慧。",
+    "weaknessAdviceEn": "Harbored explosive steppe tribal temper toward disloyalty; rigid directness ill-suited for subtle bureaucratic political maneuvers.",
+    "historicalQuoteZh": "太宗叹曰：‘割耳明志，古烈士何以加焉！’《旧唐书》赞：‘何力出身蛮貊，竭诚王室。割耳示节，临难不拔，虽古之结缨绝缨，无以过也。’",
+    "historicalQuoteEn": "Taizong proclaimed: 'Mutilating one's ear to prove loyalty surpasses all ancient heroes!' Annals honor his unbreakable valor as surpassing classical legends.",
+    "auxiliaryStrengthsZh": [
+      "深陷叛军重围被刀架脖颈逼反时，厉声痛骂并亲手割裂自己左耳，以血洗面宣誓生为唐人死为唐鬼，极大震撼叛军不敢妄杀",
+      "辽东鸭绿江大战中率精骑涉险突击，生擒敌帅高侃，一举斩杀高句丽精锐三万众锁定胜局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Mutilated his left ear in defiance when threatened with death by mutineers, swearing eternal fealty to Tang",
+      "Shattered Goguryeo defenses across the Yalu River, capturing enemy commanders and eliminating 30,000 foes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早期回乡探亲时严重低估了部落内部降附突厥的分裂势力，防范不足遭人暗算绑架几乎送命",
+      "在朝堂之上遇有争执往往言辞激烈不留退路，多次与文官宰相发生尖锐摩擦"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Underestimated factional tribal intrigue during a home visit, resulting in his capture and near-execution",
+      "Clashed bluntly with civil chancellors in court debates, lacking diplomatic finesse"
+    ]
+  },
+  {
+    "id": "xue_wanche",
+    "nameZh": "薛万彻",
+    "nameEn": "Xue Wanche (Duke of Wuan)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右领军将军 · 武安郡公 · 尚丹阳公主 · 玄武门死战后归唐猛将",
+    "positionEn": "Right Guard General · Duke of Wuan · Imperial Son-in-law & Fearless Breaker of Armies",
+    "personalityZh": "勇猛无前、气吞山河、玄武死战、塞北摧坚、晚岁卷祸",
+    "personalityEn": "Fiercest shock vanguard of Sui-Tang; led Prince Jiancheng's counterattack at Xuanwu Gate, pardoned by Taizong, later smashed Xueyantuo and Goguryeo armies",
+    "deedsZh": "隋将薛世雄之子，初仕太子李建成，玄武门之变率东宫精兵猛攻秦府险遭破门；李世民即位赏其勇烈赦而用之；尚丹阳公主；大破突厥于阴山，再破吐谷浑、薛延陀；远征高句丽斩首万级；高宗即位因卷入房遗爱谋反案被杀。",
+    "deedsEn": "Fought like a lion for Prince Jiancheng at Xuanwu Gate; pardoned by Taizong for sheer bravery; married Princess Danyang; routed Xueyantuo and Koreans; executed in 653.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "天生的破阵突击战神，身披重甲陷阵杀敌如狂飙卷席。善于在战局最危急关头率敢死骑兵撕裂敌阵核心，以万夫不当之勇扭转整个战局。",
+    "strengthAdviceEn": "Unstoppable frontline shock juggernaut; possessed ferocious tactical bravery capable of tearing open hardened enemy formations in the thick of disaster.",
+    "weaknessAdviceZh": "空有绝世武勇而极度缺乏政治头脑与自保城府；私下常发怨言诽谤朝政，在敏感的立储与宗室风波中轻率附逆，终成刀下冤魂。",
+    "weaknessAdviceEn": "Monumental tactical bravery matched by acute political naivety; prone to grumbling against rulers and foolishly joined reckless palace conspiracies.",
+    "historicalQuoteZh": "太宗叹曰：‘当今名将，唯万彻与李勣、道宗三人而已！’临刑顾左右曰：‘万彻大健儿，留为国家破贼，不亦善乎！’《旧唐书》叹其勇而无谋。",
+    "historicalQuoteEn": "Taizong rated him: 'Today our greatest generals are only Li Shiji, Daozong, and Wanche!' Before his execution he shouted: 'A brave soldier dies, wasted!'",
+    "auxiliaryStrengthsZh": [
+      "玄武门兵变闻变，率东宫数千甲士死战反扑猛攻秦王府，斩杀秦府守军几乎破门，忠勇之气迫使尉迟恭提太子首级示众方罢",
+      "漠北之战率数百骑兵孤军深入力破薛延陀骑兵王牌，斩杀万余人并生擒敌军名王"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Launched a ferocious counterattack on Taizong's mansion during Xuanwu Gate, demonstrating terrifying martial loyalty",
+      "Crushed Xueyantuo heavy cavalry with a handful of elite riders, slaying thousands in the northern steppes"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "婚后因过于粗鲁愚讷，不知夫妻礼仪被丹阳公主耻笑数月不敢同席，后由太宗设宴说合才化解尴尬",
+      "居功自傲多次公开抱怨封赏不公，甚至对朝廷使者大放厥词，最终遭长孙无忌罗织处斩"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked social refinement, humiliated by his royal princess wife for months until Taizong mediated",
+      "Boasted insolently of his martial exploits and muttered treasonous complaints, inviting execution"
+    ]
+  },
+  {
+    "id": "xue_wanjun",
+    "nameZh": "薛万均",
+    "nameEn": "Xue Wanjun (Duke of Lu)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左领军卫将军 · 潞国公 · 突击朔方平灭吐谷浑名将",
+    "positionEn": "Left Guard General · Duke of Lu · Vanguard Victor of Liang Shidu and Tuyuhun",
+    "personalityZh": "沉鸷果敢、身先士卒、力挽狂澜、摧陷廓清、功勋彪炳",
+    "personalityEn": "Brave, resolute shock general; broke Liang Shidu's northern defenses, saved Tang vanguard from Tuyuhun ambush, and died early after glorious service",
+    "deedsZh": "与弟万彻齐名，早年随罗艺归唐；从平刘黑闼；贞观初任柴绍副帅攻灭梁师都；贞观九年随李靖出征吐谷浑，深陷赤水源重围，万均与弟步战力斩数十人杀出重围救全军；后因督造船只延误下狱忧愤暴毙。",
+    "deedsEn": "Brother of Wanche; allied with Luo Yi then joined Tang; shattered warlord Liang Shidu; saved Tang forces surrounded by Tuyuhun at Red Water; died in prison over logistics delay.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正官",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "绝境突围与死地反扑的顶级步战肉搏专家。在战线崩溃、粮道断绝的绝境中能够率敢死士徒步搏杀，以血肉之躯凿开生路。",
+    "strengthAdviceEn": "Specialist in desperate rearguard breakouts and close-quarters infantry survival; capable of slicing through hostile encirclements when all horses were slain.",
+    "weaknessAdviceZh": "行政管理与后勤组织统筹能力远弱于其临阵杀敌之勇；面对官僚体制的审计与文书弹劾缺乏抗压心理，因工期违限即忧惧而卒。",
+    "weaknessAdviceEn": "Incompetent in civilian bureaucratic administration and logistical deadlines; withered under legal scrutiny over construction delays, dying of anxiety in detention.",
+    "historicalQuoteZh": "太宗闻其卒，痛哭谓群臣曰：‘万均有勇有谋，屡破勍敌，朕方倚为柱石，何其遽逝！’《旧唐书》评：‘万均万彻，并以武略显名，勇烈无前。’",
+    "historicalQuoteEn": "Taizong wept bitterly upon his death: 'Wanjun had courage and resourcefulness, breaking mighty foes; why did he leave us so soon!' Annals honor his valor.",
+    "auxiliaryStrengthsZh": [
+      "赤水源之役被吐谷浑伏兵团团包围战马死尽，万均与万彻手持长槊步战狂呼斩杀敌将数十人，硬生生从死人堆里凿穿敌阵救出大军",
+      "平定梁师都战役中冒风雪奔袭数百里，先锋破城斩敌数千彻底拔除大唐北境最后割据毒瘤"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Hacked through hordes of Tuyuhun warriors on foot after horses were slain at Red Water, rescuing his command",
+      "Raced through howling blizzards to storm Liang Shidu's fortress, liquidating the final warlord domain"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "只知阵前杀伐不知军工流程，在泰州督造征高句丽海船时由于工程浩大违误工期，陷入严重被动",
+      "心胸不够豁达开朗，一旦遭遇大理寺弹劾审查便自暴自弃忧惧交加，乃至不食暴毙"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to manage complex shipbuilding schedules for the Korean expedition, falling into administrative delinquency",
+      "Lacked psychological resilience against legal inquests, collapsing and dying in prison from shame"
+    ]
+  },
+  {
+    "id": "feng_ang",
+    "nameZh": "冯盎",
+    "nameEn": "Feng Ang (Duke of Yue)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "高州总管 · 越国公 · 岭南百越共主 · 归诚大唐定海神针",
+    "positionEn": "Viceroy of Gaozhou · Duke of Yue · Supreme Lord of Lingnan Clans Who United the South",
+    "personalityZh": "深明大义、威震百越、审时度势、保境安民、克制权欲",
+    "personalityEn": "Legendary leader of Lingnan (Canton-Guangxi); grandson of Lady Xian; controlled vast southern realms yet unconditionally submitted to Tang, preserving empire's peace",
+    "deedsZh": "洗夫人之孙，隋亡百越群雄推盎为南越王，地跨数千里部众十万；高祖武德年间归附，太宗贞观初入朝朝觐，破除朝廷谋反猜忌；平定岭南獠人叛乱；累封越国公，治粤数十年百姓安居乐业，八子皆为诸州刺史。",
+    "deedsEn": "Grandson of Lady Xian; commanded thousands of miles in Lingnan; peacefully submitted to Gaozu and visited Taizong in Chang'an, proving loyalty; died honored with sons as governors.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正财",
+      "正官",
+      "正印"
+    ],
+    "patternType": "正财格",
+    "strengthAdviceZh": "宏大的大一统文明认同与极高的地缘政治自律。手握割据独立成为南越皇帝的全部资本，却能坚决抵制诱惑，为中华南方数千里沃土免去生灵涂炭。",
+    "strengthAdviceEn": "Superb geopolitical restraint and historic civilizational allegiance; commanded armies capable of founding a southern kingdom yet chose peaceful integration with Tang.",
+    "weaknessAdviceZh": "在家族与岭南本土利益上极为恋栈，对朝廷派驻岭南的流官保持着微妙的防备与地方宗族割据壁垒。",
+    "weaknessAdviceEn": "Protective of ancestral clan monopoly over southern governorships; maintained clannish tribal bastions that resisted outside centralizing reforms.",
+    "historicalQuoteZh": "太宗叹曰：‘冯盎不乘隋乱自立为王，万里归顺，此真有识之士，社稷之臣也！’《旧唐书》赞：‘冯盎世笃忠贞，保辑南裔，子孙繁昌，其福禄之全者欤！’",
+    "historicalQuoteEn": "Taizong lauded: 'Feng Ang refused to crown himself during chaos, marching ten thousand miles to submit; a true statesman!' Annals praise his blessed dynasty.",
+    "auxiliaryStrengthsZh": [
+      "拒绝百越各部首领劝进南越武帝的巨大诱惑，力排众议遣子入侍并将岭南二十府版籍悉数献于朝廷",
+      "单骑奔赴獠人叛军大营张弓搭箭，一箭射中头领发簪当场震慑数万蛮兵瓦解叛乱"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Refused proposals to declare himself Southern Emperor, surrendering registers of 20 prefectures to Tang",
+      "Rode alone toward indigenous rebels and shot a hair-pin off their chief's head, instantly pacifying the uprising"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年因岭南远离中原遭反叛谣言诬告时迟疑未决，未能第一天主动入京，险些招致朝廷兵戎相见",
+      "过度依赖岭南冯氏宗族血缘进行地方统治，在破除门阀壁垒推动法治均质化上步伐偏缓"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Hesitated to visit the imperial capital when framed by slanderers, nearly triggering a catastrophic invasion",
+      "Over-reliant on hereditary family nepotism to administer southern prefectures, slowing meritocratic reform"
+    ]
+  },
+  {
+    "id": "li_xiaogong",
+    "nameZh": "李孝恭",
+    "nameEn": "Li Xiaogong (Prince of Zhao)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司空 · 赵郡王 · 凌烟阁宗室第一名将 · 荡平江南不世奇才",
+    "positionEn": "Minister of Works · Prince of Zhao · Foremost Imperial Clan General of Lingyan · Conqueror of South",
+    "personalityZh": "英姿飒爽、宽厚奢华、沉着决断、懂得自污、功成身退",
+    "personalityEn": "Taizong's cousin and highest-ranking imperial general; built the Yangtze fleet to conquer Xiao Xian's Liang and crushed Fu Gongshi's rebellion; retired into lavish leisure",
+    "deedsZh": "唐高祖从子，拜山南道招慰大使；造战舰练水师，用李靖为行军总管出峡江灭萧铣；转战江南击灭辅公祏，平定长江以南万里半壁江山；因战功名位仅次于李世民；贞观年间深居简出，沉湎歌舞声色以避猜忌；贞观十四年暴疾卒。",
+    "deedsEn": "Imperial cousin who built the Yangtze river fleet; partnered with Li Jing to conquer Xiao Xian and Fu Gongshi, unifying southern China; feigned hedonism to escape jealousy; died 640.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "偏财",
+      "食神",
+      "比肩"
+    ],
+    "patternType": "食神生财格",
+    "strengthAdviceZh": "开阔的海纳百川帅才与洞悉人性的顶层政治生存智慧。知人善任彻底放权李靖，功盖江南后毫不恋权，以歌舞自娱化解皇权猜忌，保全富贵长寿。",
+    "strengthAdviceEn": "Masterful delegator who fully trusted Li Jing's military genius; strategically cultivated harmless hedonism after conquering the south to neutralize imperial jealousy.",
+    "weaknessAdviceZh": "生活极度奢华腐化，蓄养歌妓数百人，晚年在骄奢淫逸的生活方式中逐渐消磨了青年时期的雄心壮志。",
+    "weaknessAdviceEn": "Indulged in extravagant luxury and hundreds of concubines, eroding the fierce pioneering ambition of his youth in court leisure.",
+    "historicalQuoteZh": "高祖赞曰：‘孝恭平定荆襄，江淮底定，天下之半，皆其功也！’《旧唐书》赞：‘孝恭宗室英杰，推让李靖，任贤不贰，沉湎声色以全其躯，贤矣哉！’",
+    "historicalQuoteEn": "Gaozu praised: 'Xiaogong pacified Jingxiang and Jianghuai; half the empire is his conquest!' Annals honor his wisdom in stepping aside to protect his life.",
+    "auxiliaryStrengthsZh": [
+      "顺流东下水陆并进三月攻灭萧铣，严令禁止洗劫江陵城，将敌将尽数开释收为唐用，江南诸州望风归降",
+      "江南平定后李孝恭坐拥重兵威震天下，回京后立即辞去兵权，筑宏伟别馆日日笙歌痛饮，彻底打消高祖与太宗顾虑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Built river armadas to topple Xiao Xian and spared captured cities, securing immediate submission across Yangtze",
+      "Surrendered supreme command upon returning to Chang'an, hosting lavish banquets to disarm royal suspicion"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年用兵略显自负冒险，初期攻打辅公祏前哨时曾轻敌冒进导致先锋受损，幸李靖补台挽回局势",
+      "沉溺于极度享乐声色犬马，四十余岁英年暴疾暴毙，在身体保养与自律修养上严重缺失"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Underestimated rebel vanguard during early skirmishes with Fu Gongshi, requiring Li Jing to rectify the flank",
+      "Reckless physical debauchery and chronic alcoholism led to a sudden lethal stroke in his forties"
+    ]
+  },
+  {
+    "id": "li_daozong",
+    "nameZh": "李道宗",
+    "nameEn": "Li Daozong (Prince of Jiangxia)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "礼部尚书 · 江夏王 · 兼资文武一代宗室名将",
+    "positionEn": "Minister of Rites · Prince of Jiangxia · Imperial Pillar General of Military & Civil Eminence",
+    "personalityZh": "沉雅方正、文武兼备、算无遗策、克敌制胜、晚遭谗陷",
+    "personalityEn": "Distinguished imperial prince; pacified Eastern Turks, Tuyuhun, and Xueyantuo, and broke Goguryeo lines at Liaodong; framed by Zhangsun Wuji and died in exile",
+    "deedsZh": "高祖从子，十七岁随李世民击败刘武周；镇守灵州力拒梁师都与突厥；贞观四年随李靖灭颉利可汗；九年为先锋穷追吐谷浑千里深入无人区破伏允；辽东征伐夺盖牟城、破驻跸山；因与长孙无忌不和，房遗爱谋反案被诬流放象州途中卒。",
+    "deedsEn": "Joined Li Shimin at 17 against warlords; held Lingzhou frontier; hunted Tuyuhun Khan into frozen deserts; broke Goguryeo lines; framed by Zhangsun Wuji and died on road to exile.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "宗室将领中最为端庄优雅、文武双全的战略家。既能在战阵之上算无遗策破敌千里，又深谙朝廷典章礼仪，堪称大唐皇族典范。",
+    "strengthAdviceEn": "Epitome of cultured princely generalship; combined razor-sharp frontier strategic planning with refined Confucian statecraft and institutional decorum.",
+    "weaknessAdviceZh": "自视甚高且骨气刚直，不屑与专权长孙无忌等外戚权臣委蛇应酬，在权力重组的关键时刻缺乏阴柔苟合的防身手腕。",
+    "weaknessAdviceEn": "Uncompromising aristocratic pride refused to flatter prime minister Zhangsun Wuji, leaving him vulnerable to fatal conspiracy indictments.",
+    "historicalQuoteZh": "太宗曰：‘李道宗在灵州，威震塞北；征辽东，屡拔坚城，社稷名将，文武全才！’《旧唐书》叹其：‘道宗沉雅方正，善战多谋，惜乎横罹飞语，溘死蛮荒！’",
+    "historicalQuoteEn": "Taizong lauded: 'Daozong in Lingzhou terrified nomadic invaders; in Liaodong he stormed fortresses; a supreme imperial hero!' Annals weep for his wrongful exile.",
+    "auxiliaryStrengthsZh": [
+      "灵州独当一面，以筑城开渠、设伏奇兵大破突厥十万入寇，保全关中北面咽喉安如泰山",
+      "驻跸山战役中李道宗敏锐识破高句丽防线弱点，亲率敢死突击队横扫敌军肋翼斩首数千，奠定辽东大捷"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fortified Lingzhou and laid genius ambushes that destroyed massive nomad incursions, safeguarding Chang'an",
+      "Identified tactical weakness at Mount Zhubi, personally assaulting Goguryeo flanks to secure total victory"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "辽东大胜后在安市城堆筑土山作战，因将领擅离职守导致土山崩塌反被高句丽夺占，严重延误战役总进程",
+      "在宗室派系斗争中对长孙无忌的险恶用心警惕不足，过早卷入立储议论招致飞来横祸"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Oversaw construction of the siege earthworks at Anshi, which collapsed and fell into enemy hands through negligence",
+      "Underestimated political malice from Zhangsun Wuji, falling victim to fabricated treason purges"
+    ]
+  },
+  {
+    "id": "li_shentong",
+    "nameZh": "李神通",
+    "nameEn": "Li Shentong (Prince of Huai'an)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左武卫大将军 · 淮安王 · 太原起义李唐宗室元老",
+    "positionEn": "Grand General of Left Martial Guard · Prince of Huai'an · Elder Patriarch of Tang Imperial Clan",
+    "personalityZh": "忠厚敦和、矢志抗乱、勇于任事、战术平庸、深明大义",
+    "personalityEn": "Elder imperial clan uncle; raised armies at Chang'an during founding, fought northern warlords Dou Jiande and Liu Heita; protested awards but yielded graciously to reason",
+    "deedsZh": "李渊从弟，太原起兵时于京师聚众举事响应；后统帅山东道大军经略河北，与窦建德、刘黑闼鏖战，屡遭败绩被俘却大节不亏；玄武门之后在论功行赏时争功，太宗据理陈词其乃悦服；贞观四年病逝。",
+    "deedsEn": "Gaozu's cousin who raised revolts near Chang'an in 617; led armies against Dou Jiande and Liu Heita in Hebei; suffered defeats but kept loyalty; debated honors with Taizong.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "比肩",
+      "正印",
+      "正财"
+    ],
+    "patternType": "比肩格",
+    "strengthAdviceZh": "在开国大难面前勇于担当家族大义，无论兵败被囚受尽凌辱，始终保持对李唐王朝坚如磐石的政治忠心与宗族凝聚力。",
+    "strengthAdviceEn": "Unshakable clannish loyalty during the violent birth of the dynasty; withstood prison and enemy torture without ever betraying the imperial banner.",
+    "weaknessAdviceZh": "军事统帅才能极其平庸，缺乏微观临战变通与指挥战役决战的硬实力，在河北战场屡屡为敌所破折损重兵。",
+    "weaknessAdviceEn": "Hopelessly mediocre military tactical prowess; consistently outmaneuvered and routed by aggressive warlords Dou Jiande and Liu Heita.",
+    "historicalQuoteZh": "高祖赞其忠忱，太宗于庆功宴曰：‘叔父虽有劳，然未尝决胜，叔宝、敬德身经百战，功冠天下，不可私也！’神通惭悟谢罪。《旧唐书》赞其笃厚。",
+    "historicalQuoteEn": "Taizong reasoned with him on meritocracy: 'Uncle, you labored, but won no battles; warriors who bled must rank higher!' Shentong bowed in deep remorse.",
+    "auxiliaryStrengthsZh": [
+      "李渊起兵于太原八百里外，神通在长安孤悬敌后散尽家财结纳豪侠数万人起兵接应，为大唐定都长安铺平道路",
+      "太宗登基力排众议以功劳而非宗室血缘封赏勋臣，神通虽有争心但在大义面前主动叩头谢罪，树立了宗室顺从国法的标杆"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Raised thousands of rebels behind enemy lines in Chang'an to welcome Li Yuan, paving the road to dynastic capital",
+      "Bowed humbly when Taizong prioritized battlefield champions over royal bloodlines, cementing imperial rule of law"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "聊城攻伐宇文化及时进退失据，被窦建德大军黄雀在后杀得全军覆没只身被俘",
+      "论功行赏时一度倚老卖老以宗室长辈自居，与浴血沙场的百战降将争抢第一功勋"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Mishandled the siege of Liaocheng and fell into Dou Jiande's counter-trap, losing his entire army as a captive",
+      "Arrogantly demanded premier aristocratic rank over frontline heroes solely based on dynastic bloodlines"
+    ]
+  },
+  {
+    "id": "sheng_yanshi",
+    "nameZh": "盛彦师",
+    "nameEn": "Sheng Yanshi",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "武卫将军 · 葛国公 · 熊耳山设伏斩李密一代智将",
+    "positionEn": "Martial Guard General · Duke of Ge · Brilliant Ambush Strategist Who Felled Li Mi",
+    "personalityZh": "胆识过人、善设埋伏、机变如神、刚愎自用、骄狂致败",
+    "personalityEn": "Daring tactical commander famed for laying a brilliant ambush at Xiong'er Mountain that trapped and killed fleeing rebel leader Li Mi; fell victim to southern tribal traps",
+    "deedsZh": "初随李密，后降唐从李世民；武德元年李密叛唐欲往洛州，彦师料其必走熊耳山，设伏险隘以逸待劳，亲手阵斩李密，威震关中；后随征徐圆朗，又受命讨伐西南獠人，因贪功轻敌陷蛮谷被俘不屈遇害。",
+    "deedsEn": "Tang strategist who deduced Li Mi's escape route, ambushed and killed the legendary Wagang lord at Xiong'er pass; later captured and killed in southwest tribal jungles.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "对叛将心理与地形利用有着近乎先知般的战场嗅觉。善于在人迹罕至的死角布设绝杀口袋阵，一战定乾坤。",
+    "strengthAdviceEn": "Uncanny battlefield intuition for enemy psychology and rugged bottleneck terrain; executed flawless ambush operations that eliminated legendary commanders.",
+    "weaknessAdviceZh": "性格孤傲骄矜且严重低估西南复杂游击战争，轻敌冒进深入蛮荒不设防备，将自己送入敌人的圈套。",
+    "weaknessAdviceEn": "Consumed by arrogant overconfidence after felling Li Mi; recklessly marched into dense jungle valleys, suffering total destruction.",
+    "historicalQuoteZh": "李渊闻李密伏诛大喜曰：‘彦师奇谋，真当世韩信也！’《旧唐书》评：‘彦师智计过人，设奇制胜斩密于熊耳，威震一时，惜其矜功自伐，丧身蛮貊。’",
+    "historicalQuoteEn": "Gaozu rejoiced upon Li Mi's death: 'Yanshi's ambush matches ancient Han Xin!' Annals praise his sharp trap while lamenting his foolish end in wild jungles.",
+    "auxiliaryStrengthsZh": [
+      "准确研判李密假道南下必出熊耳山的隐秘企图，于狭谷绝壁布下滚石强弩，一击格杀李密父子彻底掐灭反唐风暴",
+      "随李世民攻打王世充期间，多次策应侧翼斩断敌军粮道，为围困洛阳立下奇功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Anticipated Li Mi's mountain flight path, executing a lethal cliff ambush that extinguished the dangerous uprising",
+      "Severed supply lines during the siege of Luoyang, starving Wang Shichong into inevitable surrender"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "平生以斩李密为傲，常公开扬言天下无敌，与朝廷诸将交恶，缺乏持盈保泰的大将度量",
+      "经略西南蛮獠时视蛮兵为乌合之众，盲目长驱直入狭长瘴疠河谷，被伏兵截断归路身死异乡"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fell into boastful narcissism after slaying Li Mi, alienating peers and losing defensive vigilance",
+      "Disdained southwest mountain guerrillas, blundering into malarial river gorges where his army was slaughtered"
+    ]
+  },
+  {
+    "id": "luo_shixin",
+    "nameZh": "罗士信",
+    "nameEn": "Luo Shixin (Duke of Shan)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "陕州道行军总管 · 郯国公 · 隋唐第一少年无双虎将",
+    "positionEn": "General of Shanzhou · Duke of Shan · Legendary Teenage Tiger Warrior of Sui-Tang",
+    "personalityZh": "十四从军、勇冠三军、斩将搴旗、宁死不屈、壮烈殉国",
+    "personalityEn": "Prodigious teenage shock warrior; joined Zhang Xutuo at 14, served Wagang and Tang with terrifying battlefield ferocity; defended Mingzhou in snowstorm and died at 20",
+    "deedsZh": "齐州历城人，十四岁随张须陀镇压农民起义，身穿两副铠甲手执长槊连斩敌将数人；后随裴仁基降李密，密败归唐拜陕州道总管；武德五年从李世民攻刘黑闼，自请代王君廓守洺水城，遭遇大雪突厥围攻城破被俘，严词拒降壮烈就义，年仅二十岁。",
+    "deedsEn": "Joined combat at 14 wearing double armor; surrendered to Tang; volunteered to replace Wang Junkuo to defend besieged Mingzhou in blizzards; refused surrender to Liu Heita, executed at 20.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "伤官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "纯粹到极致的武士精神与气吞山河的少年英武。十四岁即在万军丛中如砍瓜切菜，危难关头主动请缨替友赴死，其忠烈震动古今。",
+    "strengthAdviceEn": "Pure, unadulterated martial heroism and youthful fearlessness; volunteered to defend a doomed outpost to save a comrade, preferring martyrdom to betrayal.",
+    "weaknessAdviceZh": "血气方刚且防备心与自保机变偏弱，在明知绝境死地的情况下缺乏保存有生力量的战略变通，以致天妒英才过早夭折。",
+    "weaknessAdviceEn": "Excessively impulsive romantic valor lacked strategic flexibility to retreat and preserve strength, cutting short a peerless military career at twenty.",
+    "historicalQuoteZh": "太宗闻其遇害极度哀恸，重金赎其尸身厚葬并抚养其宗族，叹曰：‘若士信在，安得贼狂如此！’《旧唐书》赞：‘士信忠勇绝伦，捐躯赴节，一代豪烈之士也！’",
+    "historicalQuoteEn": "Taizong wept inconsolably and ransomed his body for gold, mourning: 'Had Shixin lived, rebels would never run rampant!' Annals mourn his supreme fidelity.",
+    "auxiliaryStrengthsZh": [
+      "十四岁初战突入敌阵连刺数人，将敌将首级割下抛掷于空再以长枪挑接，威震敌胆使敌全军溃退",
+      "洺水城暴雪连绵四面受敌陷入死地，率两百残兵血战八日斩敌数百，城破被俘面对刘黑闼屠刀破口大骂直至慷慨就义"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Slew multiple enemy champions at age 14, juggling a decapitated head on his spear tip to scatter opposing forces",
+      "Defended Mingzhou in blizzard with 200 warriors for eight brutal days, spitting defiance at his executioners"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "作战往往单枪匹马杀入重围脱离大部队掩护，数次身负十数处重伤险些丧命",
+      "在明知洺水城乃死地孤城的情况下意气用事自请入城，战略理性让位于一时之勇勇"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Addicted to reckless solo charges beyond tactical line support, regularly incurring grievous trauma",
+      "Volunteered into an unwinnable siege out of adolescent stubbornness instead of calculating operational survival"
+    ]
+  },
+  {
+    "id": "shi_danai",
+    "nameZh": "史大奈",
+    "nameEn": "Shi Danai (Duke of Feng)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右武卫大将军 · 丰国公 · 太原从龙突厥先锋悍将",
+    "positionEn": "Grand General of Right Martial Guard · Duke of Feng · Turkic Vanguard Champion of Taiyuan",
+    "personalityZh": "骁武精悍、弓马娴熟、身先士卒、随李破京、朴实忠勤",
+    "personalityEn": "Turkic warrior chieftain who joined Li Yuan at Taiyuan; led cavalry assaults that broke Sui defenders at the Yellow River and Chang'an gates; died honored in peace",
+    "deedsZh": "原西突厥处罗可汗部将，随可汗入隋居太原；李渊起兵大奈率部众誓死相随，为先锋渡黄河、破霍邑、首登破长安城；武德年间随李世民击薛举、破王世充、平窦建德，屡破敌阵以功封丰国公；贞观十二年卒。",
+    "deedsEn": "Western Turkic tribal general who rallied to Li Yuan in 617; spearheaded the crossing of Yellow River and storming of Chang'an; fought in all early Tang campaigns; died 638.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "忠实勇悍的异族骑兵突击尖刀。在李渊起兵最凶险匮乏的初期倾囊相助，以精湛的胡骑战法为大唐奠定夺取关中的铁血基石。",
+    "strengthAdviceEn": "Loyal, unshakeable cavalry shock ram; provided critical elite nomadic cavalry during Li Yuan's fragile initial uprising, breaching the gates of Chang'an.",
+    "weaknessAdviceZh": "文化素养与战略宏观视野受限，主要扮演阵前冲杀与执行命令的突击勇将角色，无法主导独立的大兵团战略决战。",
+    "weaknessAdviceEn": "Limited strategic horizon and civilian statecraft; functioned strictly as a tactical frontline bruiser rather than an independent theater commander.",
+    "historicalQuoteZh": "高祖赞曰：‘大奈突厥之秀，随朕起义，首登王城，勋劳居多！’《旧唐书》评：‘史大奈结发从军，临难自奋，建号初创，先登有功，诚大唐开国之骁将也。’",
+    "historicalQuoteEn": "Gaozu praised: 'Danai is the finest of Turks, following me into danger and scaling imperial walls first!' Annals record him as a foundational vanguard.",
+    "auxiliaryStrengthsZh": [
+      "霍邑之战率突厥精骑从侧翼突袭宋老生后方，断其退路并配合李世民正面夹击，一举全歼隋朝精锐",
+      "进军长安时单骑长槊斩杀守城悍将，率敢死队率先攀上长安城头大开城门"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Swept behind Sui lines at Huoyi with elite Turkic cavalry, cutting enemy retreat and securing founding victory",
+      "Mounted the battlements of Chang'an first, hacking down guards to open the capital's iron gates"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年在突厥内部政权争斗中屡遭驱逐，政治判断往往依赖本能反应而非长远规划",
+      "入关中后纵容麾下胡人部曲微有劫掠之举，幸得李渊及时管束才未酿成大乱"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Driven out during tribal power struggles before finding Tang, lacking refined geopolitical acumen",
+      "Permitted his nomadic riders minor plundering around Chang'an, requiring Gaozu's immediate discipline"
+    ]
+  },
+  {
+    "id": "pang_yu",
+    "nameZh": "庞玉",
+    "nameEn": "Pang Yu",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "梁州都督 · 追封工部尚书 · 浅水原反败为胜救主老将",
+    "positionEn": "Viceroy of Liangzhou · Minister of Works · Iron Veteran Who Saved Tang Lines at Qianshuiyuan",
+    "personalityZh": "老成持重、危局屹立、临危不乱、力挽狂澜、晚年沉抑",
+    "personalityEn": "Dependable veteran commander; saved Tang forces from annihilation at the disastrous first Battle of Qianshuiyuan and fought stalwartly in the final victory",
+    "deedsZh": "隋朝监门直长，后随屈突通降唐；武德元年第一次浅水原之战，刘文静、殷开山轻敌惨败，庞玉率麾下孤军背水列阵力战西秦薛仁杲，斩首数百掩护唐军主力撤退；后随李世民第二次浅水原大战大破薛氏封梁州都督；贞观初年卒。",
+    "deedsEn": "Sui officer who surrendered with Qutu Tong; held off Xue Rengao's fierce cavalry at Qianshuiyuan to save Tang remnants from annihilation; later governed Liangzhou.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "危局之中的定海神针与阵地防御泰斗。在主力全面崩溃、全军溃逃的绝境中能够独立背水结阵，以钢铁意志死死顶住敌军精锐骑兵的疯狂冲杀。",
+    "strengthAdviceEn": "Bedrock defensive bastion in total routing collapses; formed an impenetrable river rearguard when Tang chancellors fled, shielding the imperial army from extinction.",
+    "weaknessAdviceZh": "战役进攻主动性与战略野心稍显保守平庸，性格偏于求稳守成，在风云变幻的开国兼并战中难以成为独挡一面的破局统帅。",
+    "weaknessAdviceEn": "Passive and cautious strategic posture suited only for survival defense; incapable of pioneering daring offensive blitzkriegs.",
+    "historicalQuoteZh": "太宗叹其功曰：‘庞玉临危据水，救万全之倾，忠勇双全，老臣宿将之表率也！’《旧唐书》赞：‘庞玉严整持重，危邦不惑，浅水原之战，功在社稷。’",
+    "historicalQuoteEn": "Taizong praised him: 'Pang Yu held the water's edge in mortal peril, averting total doom; an exemplar of veteran courage!' Annals honor his defensive stand.",
+    "auxiliaryStrengthsZh": [
+      "浅水原血战中全线败退，庞玉面对数万嗜血西秦骑兵长矛列阵背水而战，激战大半日斩杀无数，让惊慌失措的唐军残部得以从容退回关中",
+      "洛阳围城战中负责镇守外围据点，多次击溃王世充突围精锐，滴水不漏"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Formed a desperate defensive riverbank square against Xue Rengao's cavalry, saving Tang forces from genocide",
+      "Anchored external siege fortifications at Luoyang, repelling Wang Shichong's desperate sortie charges flawlessly"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性格过于稳重甚至略显畏葸，在具备大举反击良机时往往选择固守待援，错失战役歼敌全功",
+      "晚年在梁州都督任上因循守旧，缺乏革新地方民生治理的进取精神"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overly cautious defensive reflexes missed golden opportunities to launch counteroffensives",
+      "Administered Liangzhou with rigid bureaucratic inertia, showing little interest in administrative innovation"
+    ]
+  },
+  {
+    "id": "liang_jianfang",
+    "nameZh": "梁建方",
+    "nameEn": "Liang Jianfang",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "左领军卫大将军 · 淮安郡公 · 威震西南生擒蛮酋一代猛将",
+    "positionEn": "Grand General of Left Guard · Duke of Huai'an · Conqueror of Southwest Barbarians and Western Turks",
+    "personalityZh": "勇武过人、善治蛮貊、深入不毛、身先士卒、军纪严明",
+    "personalityEn": "Dauntless desert and jungle campaign general; crushed southwest rebellious tribes, penetrated deep malarial valleys, and broke Western Turkic hordes",
+    "deedsZh": "早年从李世民征战；贞观末任剑南道行军总管讨伐西南松外蛮，深入不毛之地连破数十部斩首万级；高宗初任弓月道行军总管西征西突厥处月部，于牢山大破敌军斩首数千生擒其首领；累封淮安郡公。",
+    "deedsEn": "Veteran warrior who served Li Shimin; pacified turbulent southwest aboriginal kingdoms in jungle mountains; routed Western Turkic Chuyue tribes at Mount Laoshan; died honored.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "极强的极端复杂地理作战适应力与山地丛林平叛实战力。善于在深山密林与大漠绝境中长途跋涉，以严密军纪和勇猛突击摧毁蛮荒部落防御。",
+    "strengthAdviceEn": "Uncanny ability to conquer extreme terrain from steaming malarial jungles to frozen steppes; crushed elusive rebel hill tribes with iron discipline and swift assaults.",
+    "weaknessAdviceZh": "政治智慧与朝野大局观较为单纯，对复杂的中央士大夫朝堂政治不甚通晓，一生主要局限在边疆平叛的武职行伍之中。",
+    "weaknessAdviceEn": "Politically simple and unrefined in civil court etiquette; operated strictly within the narrow parameters of border policing and martial command.",
+    "historicalQuoteZh": "太宗曰：‘建方勇沉有谋，西南底定，其功非小！’《旧唐书》赞：‘建方威略震于裔夷，南平诸蛮，西殄逆虏，临难挺节，一代之名将也。’",
+    "historicalQuoteEn": "Taizong declared: 'Jianfang's bold courage pacified the southwest realm; his service is immense!' Annals celebrate his iron victories over border threats.",
+    "auxiliaryStrengthsZh": [
+      "率唐军翻越剑南崇山峻岭，生擒蛮酋，破除两百年未通中原政令的蛮荒险阻，将大唐版图切实推进至滇池边陲",
+      "牢山之战孤军面对数万西突厥铁骑合围，亲斩其先锋骁将，策动全军反冲锋斩杀数千人溃其全军"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Scaled sheer Himalayan ravines to capture barbarian chieftains, extending Tang governance into southwest jungles",
+      "Broke out of a massive Western Turkic encirclement at Mount Laoshan, personally beheading hostile champions"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在西南用兵时对顽抗部落实行无差别焦土惩戒，杀戮稍重在地方留下深重历史心理阴影",
+      "对待士卒操练过于严苛缺乏人情体恤，曾引发麾下下级军吏的不满怨言"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Employed scorched-earth tactics against recalcitrant hill tribes, leaving lingering scars in border pacification",
+      "Brutal discipline alienated junior officers during extended remote jungle deployments"
+    ]
+  },
+  {
+    "id": "niu_jinda",
+    "nameZh": "牛进达",
+    "nameEn": "Niu Jinda",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右武卫大将军 · 琅琊郡公 · 击退吐蕃横扫辽东铁血宿将",
+    "positionEn": "Grand General of Right Martial Guard · Duke of Langya · Steely Vanguard Who Halted Tibetan Surge",
+    "personalityZh": "沉毅刚烈、善使铁骑、临战敢死、击退松州、名贯海东",
+    "personalityEn": "Stalwart, fierce cavalry general; defected from Wang Shichong to Tang with Li Shiji; halted Tibet's first assault at Songzhou, and raided Goguryeo fortresses",
+    "deedsZh": "原瓦岗寨李密部将，后归王世充，与秦琼、程咬金于阵前下马拜别王世充降唐；贞观年间随李勣破突厥；松州之战任先锋夜袭吐蕃大营斩首千级，迫使松赞干布遣使谢罪求婚；远征高句丽任青丘道行军总管渡海拔石城斩万众。",
+    "deedsEn": "Wagang rebel who surrendered to Tang alongside Qin Qiong; broke Eastern Turks; led the decisive night ambush against Tibetan invaders at Songzhou; raided Goguryeo coast.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "正财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "卓越的夜间特种奔袭与步骑协同战力。在国家面临地缘强权新兴挑战（如吐蕃初起）的危急关头，敢于以少胜多实施致命夜袭，首战挫败强敌。",
+    "strengthAdviceEn": "Supreme master of daring nocturnal raids and lightning frontline ambushes; dealt Tibetan forces their first crushing psychological defeat at Songzhou.",
+    "weaknessAdviceZh": "战术风格偏向强攻硬撼，对外交战略配合与深层谋略谋篇布局涉猎不足，容易在局部胜仗后轻视敌军的战略韧性。",
+    "weaknessAdviceEn": "Relied heavily on blunt violent shock maneuvers; lacked patience for subtle multi-layered geopolitical de-escalation.",
+    "historicalQuoteZh": "太宗叹曰：‘进达忠勇，夜袭松州，挫其锐气，真国之猛士！’《旧唐书》赞：‘牛进达、秦叔宝等，皆当世之雄，身经百战，勇烈著闻。’",
+    "historicalQuoteEn": "Taizong praised: 'Jinda's nocturnal strike at Songzhou shattered Tibetan arrogance; a true imperial warrior!' Annals class him alongside Qin Qiong.",
+    "auxiliaryStrengthsZh": [
+      "松州城下趁夜色仅率数百精锐长矛步骑直插吐蕃中军大营，斩杀千人俘获万计，一举打破松赞干布不可战胜神话",
+      "跨海远征辽东石城，冒死率死士从绝壁攀爬首登城墙，全歼守军攻拔坚城"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Launched a daring night strike into the Tibetan main camp at Songzhou, forcing Songtsen Gampo to seek peace",
+      "Scaled sheer sea cliffs under heavy fire to seize Shicheng fortress in Goguryeo, wiping out its garrison"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早年转徙瓦岗与王世充之间，虽属乱世良禽择木而栖，但多次易主经历在早期政治信用上带来微瑕",
+      "夜战突袭虽精湛但对大兵团多道梯次进攻的协调协同缺乏耐性，更习惯于担任开路先锋"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Multiple warlord realignments early in career carried minor reputational blemishes in orthodox histories",
+      "Brilliant as an explosive vanguard spearhead but grew impatient when coordinating slow, methodical siege lines"
+    ]
+  },
+  {
+    "id": "guo_xiaoke",
+    "nameZh": "郭孝恪",
+    "nameEn": "Guo Xiaoke",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "安西都护 · 阳阳县公 · 开辟安西破龟兹一代雄才",
+    "positionEn": "Protector-General of Anxi · Duke of Yangyang · Architect of Central Asian Mastery Who Stormed Kucha",
+    "personalityZh": "雄略过人、奇计迭出、经略西域、豪奢自矜、轻敌殉职",
+    "personalityEn": "Brilliant, visionary military strategist; urged the decisive strike at Hulao Gate; founded Tang rule in Xinjiang as Anxi Protector, but died in a surprise revolt due to overconfidence",
+    "deedsZh": "少有大志，初投瓦岗，后随李密降唐；虎牢关大战郭孝恪力劝李世民据成皋之险一战歼灭窦建德，立策勋第一；贞观年间任安西都护统辖西域，设计生擒焉耆王；贞观二十二年与阿史那社尔破龟兹，因功成自傲不设营防，遭龟兹叛军反扑力战阵亡。",
+    "deedsEn": "Early Wagang rebel who advised Li Shimin to seize Hulao Pass and crush Dou Jiande; ruled Central Asia as Anxi Protector; stormed Kucha but slain in surprise counterattack.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "七杀",
+      "偏财"
+    ],
+    "patternType": "伤官配杀格",
+    "strengthAdviceZh": "具备超群宏观战略视野与先发制人战役推演天才。在虎牢关与西域开辟战役中屡发奇谋，能够从复杂的军事迷雾中一眼看穿决胜命门。",
+    "strengthAdviceEn": "Exceptional operational strategist who conceived the decisive Hulao Pass gambit; possessed brilliant geopolitical audacity that unlocked Tang dominion over Central Asia.",
+    "weaknessAdviceZh": "极度骄傲自大且生活腐化，轻视被征服异族的反抗意志；在大胜之后丧失军人最基本的警戒操典，在营帐中饮酒作乐致遭反杀殉职。",
+    "weaknessAdviceEn": "Fatal hubris and lavish decadence; disdained defeated foes and abandoned perimeter security to drink wine in tents, leading to his tragic ambush death.",
+    "historicalQuoteZh": "太宗痛惜其阵亡，削其赠官，后念其前功复之，曰：‘孝恪智谋有余，谨肃不足，败于所忽，哀哉！’《旧唐书》叹其：‘郭孝恪奇策屡建，经略安西，一朝疏虞，丧身敌手。’",
+    "historicalQuoteEn": "Taizong lamented: 'Xiaoke had immense genius but zero caution, ruined by careless arrogance!' Annals mourn his brilliant plans cut short by neglect.",
+    "auxiliaryStrengthsZh": [
+      "虎牢关前在李世民犹豫难决之际力排众议，提出‘出其不意据成皋、扼其咽喉、一战双擒’的惊天奇策，彻底奠定大唐一统乾坤",
+      "安西都护任上开辟铁门关险道，长驱数千里奔袭焉耆，一夜之间生擒焉耆王及其大臣"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Devised the audacious masterplan to seize Hulao Pass and trap Dou Jiande, deciding the fate of China",
+      "Launched a lightning strike through the Iron Gate gorge, capturing the King of Karasahr in a single night"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "平定龟兹都城后自视天下无敌，将营帐安扎在城外空地日日置酒高会，对叛军异动情报充耳不闻",
+      "部下多次提醒有伏兵反扑，孝恪竟叱骂部将胆怯，最终在敌军偷袭时猝不及防中流矢殉国"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Pitched luxury banqueting tents outside defeated Kucha, ignoring intelligence warnings of impending revolt",
+      "Berated subordinates as cowards for warning him of counterattacks, only to be overwhelmed and shot dead"
+    ]
+  },
+  {
+    "id": "xi_junmai",
+    "nameZh": "席君买",
+    "nameEn": "Xi Junmai",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "果毅都尉 · 破阵无双 · 乌海百骑破千军绝世勇将",
+    "positionEn": "Courageous Guard Commandant · Peerless Shock Champion Who Shattered a Thousand with 120 Men",
+    "personalityZh": "勇冠万夫、敢打硬仗、骑战巅峰、陷阵如狂、低调纯粹",
+    "personalityEn": "Incomparable tactical shock warrior; with merely 120 riders, attacked and completely routed 8,000 rebellious Tibetan and nomadic warriors at Lake Wuhai",
+    "deedsZh": "贞观年间唐军果毅都尉；随郭孝恪征讨西域吐谷浑残部，吐谷浑丞相宣王反叛引吐蕃及叛军万余围攻，君买仅率精骑一百二十人直扑敌阵，斩首三级如入无人之境，斩贼帅数人，叛军大溃四散；后破焉耆亦立殊勋，以武勇名动西陲。",
+    "deedsEn": "Tang combat officer in Central Asia; when 8,000 allied tribal insurgents besieged Tang lines, Xi charged headlong with 120 elite riders, butchering their vanguard and breaking the revolt.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "伤官"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "冷兵器战术骑兵冲锋的效率极限。以极其微弱的百人兵力敢于直接向近万敌军发动反冲锋，凭借无敌的个人胆识与冲锋动能彻底撕裂敌军心理防线。",
+    "strengthAdviceEn": "Pinnacle of battlefield shock courage; charged 120 riders into an 8,000-man army, shattering hostile enemy command through raw offensive momentum.",
+    "weaknessAdviceZh": "终其一生未能升任方面大员，仅作为高级冲锋军官活跃在局部战场；其战术勇烈缺乏体系化军事理论的提炼与传世。",
+    "weaknessAdviceEn": "Remained an elite battlefield strike commander without ascending to strategic political administration; deeds overshadowed by grand chancellors.",
+    "historicalQuoteZh": "西域诸国闻君买之名皆震恐，军中号为‘百骑神将’。《旧唐书》叹其勇：‘席君买以百二十骑破贼近万，古之张辽、甘宁何以加焉！’",
+    "historicalQuoteEn": "Central Asian kingdoms trembled at his name, crowning him 'The Divine Hundred Rider'. Annals liken his impossible charge to Zhang Liao and Gan Ning.",
+    "auxiliaryStrengthsZh": [
+      "乌海大战在敌众我寡数十倍的绝境下，单枪匹马率百二十骑如流星般贯穿吐蕃吐谷浑万人大阵，亲手斩杀敌方五名统兵大帅",
+      "攻焉耆之战担任突击前哨，首破外围坚固石垒，为郭孝恪大军开辟突击走廊"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Shattered an 8,000-man tribal host with only 120 riders at Lake Wuhai, personally executing five enemy commanders",
+      "Stormed the stone fortifications of Karasahr as shock vanguard, opening the gates for the main Tang army"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "纯粹的军旅冲杀武夫，对政治权力运作毫无概念，战功虽大却未能进入大唐顶级决策中枢",
+      "打法过于依赖个人极端冒险冲锋，若稍遇强弩密集覆盖则极易全军覆没"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Lacked all political ambition and administrative literacy, remaining confined to tactical military ranks",
+      "Tactics hinged on suicidal shock charges that would have suffered annihilation against heavy crossbow traps"
+    ]
+  },
+  {
+    "id": "qiu_xinggong",
+    "nameZh": "丘行恭",
+    "nameEn": "Qiu Xinggong (Duke of Guicheng)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右武侯大将军 · 鲁国公 · 昭陵拔箭救主铁血猛士",
+    "positionEn": "Grand Martial General · Duke of Lu · Iron Bodyguard Who Pulled the Arrow from Taizong's Steed",
+    "personalityZh": "勇武决绝、临难救主、严酷好杀、性情暴烈、晚年除名",
+    "personalityEn": "Fierce, ruthless warrior bodyguard; saved Taizong at Mount Mang by pulling an arrow from his dying steed Saluzi and hacking out a bloody path; prone to savage cruelty",
+    "deedsZh": "早年聚众保岐黄，后率部投李渊；邙山大战李世民坐骑‘飒露紫’中箭，行恭单骑杀入重围，回身手拔战马前胸巨箭，手执长刀徒步斩杀数人掩护秦王突围；因功名刻昭陵六骏石雕；后官至大将军；为人严酷，曾手剜刘兰成心肝生食，遭太宗训诫贬斥。",
+    "deedsEn": "Rescued Li Shimin at Mount Mang by pulling the arrow from his warhorse Saluzi and carving a bloody escape path on foot; immortalized in stone at Zhaoling; executed for cruel acts.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "羊刃"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "绝对生死关头的极限肉盾与忠犬护卫。在主帅身陷绝地、坐骑重创的千钧一发之际，能够以命相抵徒步肉搏，展现出无匹的保镖救主战斗力。",
+    "strengthAdviceEn": "Unrivaled battlefield personal loyalty and mortal combat defense; saved Taizong's life on foot amidst thousands of enemy troops while extracting an arrow from imperial steed.",
+    "weaknessAdviceZh": "性格残暴嗜杀、反人类道德底线，在政治清算中以生啖叛将心肝为乐，兽性未泯导致其在文明朝堂上饱受鄙夷孤立。",
+    "weaknessAdviceEn": "Sadistic savagery crossed all civilized human boundaries; cut out and ate the raw liver of an executed rebel, drawing imperial reprimand and ostracism.",
+    "historicalQuoteZh": "太宗立昭陵六骏石刻，特命将丘行恭拔箭英姿雕刻于飒露紫石雕之上，永垂不朽。太宗训其残忍曰：‘法者天下之公，何至啖人肝胆！非忠厚之道！’",
+    "historicalQuoteEn": "Taizong permanently carved Qiu's arrow-pulling image alongside his stone steed Saluzi. Yet Taizong scolded his cruelty: 'Eating human liver violates the law of Heaven!'",
+    "auxiliaryStrengthsZh": [
+      "邙山之战李世民与大队走失且战马中箭濒死，行恭单骑冲入数万敌军核心，拔箭后徒步手持环首刀狂砍，连劈数名敌骑杀出一条血路",
+      "平定陕甘各路贼寇战役中冲锋陷阵斩将搴旗无虚日，立下赫赫战功"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Charged into thousands of Luoyang cavalry on foot after imperial horse was pierced, hacking out an escape route",
+      "Spearheaded brutal pacification campaigns across northwest mountains, earning renown for relentless ferocity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "刘兰成谋反案中违规私刑将刘兰成开膛破肚手掏心肝吞食，残暴行径震骇朝野，引起文明社会公愤",
+      "性格乖戾暴躁，屡次当众殴打辱骂同僚文官，缺乏大将军应有的自制与政治风度"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Cannibalized the raw heart and liver of rebel Liu Lancheng, sparking widespread moral horror in court",
+      "Violent and abrasive temper alienated civil chancellors, resulting in periodic imperial demotions"
+    ]
+  },
+  {
+    "id": "dou_jiande",
+    "nameZh": "窦建德",
+    "nameEn": "Dou Jiande (King of Xia)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "夏王 · 隋末河北起义领袖 · 仁厚得众割据一代雄霸",
+    "positionEn": "King of Xia · Supreme Warlord of Hebei · Benevolent Peasant Emperor Loved by the People",
+    "personalityZh": "仁义宽厚、深得民心、崇俭抑暴、决断迟疑、虎牢折戟",
+    "personalityEn": "Beloved, benevolent warlord of northern China; founded the Xia Kingdom, ruled with spartan frugality and Confucian virtue; crushed at Hulao Pass while aiding Wang Shichong",
+    "deedsZh": "贝州漳南人，隋末聚众高鸡泊起义；建大夏政权称夏王，占有河北大部；轻徭薄赋不滥杀无辜，释放隋朝官吏，深得军民拥戴；武德四年王世充遭李世民围困求救，建德率十余万大军救援，于虎牢关被李世民奇兵包抄生擒，斩于长安，河北军民为之痛哭立祠。",
+    "deedsEn": "Founded Xia Kingdom across Hebei; practiced spartan simplicity and Confucian mercy; marched 100,000 troops to relieve Wang Shichong at Luoyang; captured at Hulao Pass and executed.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "食神",
+      "偏财"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "隋末群雄中绝无仅有的仁义爱民之君。崇尚节俭生活如农夫，攻占城邑秋毫无犯厚待士大夫，在河北民众心中建立了神明一般的极高历史威望。",
+    "strengthAdviceEn": "Unsurpassed benevolence and personal frugality among Sui-Tang warlords; lived like a spartan peasant and protected civilians, earning immortal popular love across northern China.",
+    "weaknessAdviceZh": "缺乏大兵团决战的顶层战略战术决断力；在虎牢关决战中明知利害却贪恋唇亡齿寒的道义虚名，放弃袭取关中的大好机会，最终身陷包围兵败身死。",
+    "weaknessAdviceEn": "Lacked the ruthless tactical genius of Li Shimin; fell into the strategic trap at Hulao Pass out of naive ideological obligation to Wang Shichong, ignoring Chang'an flank strikes.",
+    "historicalQuoteZh": "河北百姓闻建德死皆哭声震天，立‘窦王庙’百年血食不绝。《旧唐书》赞：‘建德性纯厚，少有大志。容纳降附，秋毫不犯。虎牢失机，非战之罪，天也！’",
+    "historicalQuoteEn": "Hebei wept bitterly upon his execution, building shrines that endured for centuries. Annals mourn: 'Jiande was gentle and noble; his fall at Hulao was destiny, not failure of virtue!'",
+    "auxiliaryStrengthsZh": [
+      "起兵数年间攻拔郡县数百，从不滥杀一人，俘虏隋朝官员及李神通等人皆以客礼相待，其仁义感召河北各郡不战而降",
+      "日常生活粗茶淡饭身穿布衣，王妃不着罗缎，全军上下一心敬爱如生父"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Refused to slaughter captured garrisons, treating imperial officials with deep Confucian hospitality",
+      "Ate simple barley and wore rough linen while ruling an empire, commanding passionate loyalty from his people"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "谋士凌敬力劝其渡黄河西进奇袭关中空虚夺取长安，建德因王世充部下贿赂与将领急躁，固执否决绝杀奇谋",
+      "虎牢关前顿兵坚城数月士气懈怠，列阵二十里竟无饮水与防备，被李世民数百玄甲铁骑一举冲垮"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Rejected chancellor Ling Jing's brilliant plan to strike empty Chang'an, fatally distracted by Luoyang bribes",
+      "Deployed a disjointed 20-mile battle formation at Hulao that collapsed under Li Shimin's cavalry charge"
+    ]
+  },
+  {
+    "id": "wang_shichong",
+    "nameZh": "王世充",
+    "nameEn": "Wang Shichong (Emperor of Zheng)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "郑帝 · 隋末洛阳枭雄 · 诡诈机变一代阴谋政治家",
+    "positionEn": "Emperor of Zheng · Sovereign of Luoyang · Crafty, Machiavellian Warlord Ruled by Deceit",
+    "personalityZh": "机辩敏捷、阴险诡诈、善用权谋、严刑峻法、身败名裂",
+    "personalityEn": "Resourceful, manipulative Luoyang warlord; deposed Sui puppet emperor to declare Zheng Dynasty; defeated Li Mi at Mangshan, but crushed by Tang at Luoyang and murdered in exile",
+    "deedsZh": "新安人，本西域胡人血统；通晓兵法律令，善谄媚隋炀帝；李密围攻洛阳，世充率江淮精兵增援，后通过政变独揽大权，废杨侗自立为郑帝；邙山之战击溃李密瓦岗军；武德四年被李世民围困洛阳数月，粮尽开城投降，流放蜀地途中被仇家独孤修德所杀。",
+    "deedsEn": "Sogdian heritage; manipulated Sui court to seize control of Luoyang; toppled Li Mi at Mangshan; declared himself Emperor of Zheng; surrendered to Li Shimin; assassinated while in exile.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "伤官",
+      "七杀"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "精通律令兵法与微观战役欺诈的政治生存高手。在洛阳危如累卵的四战之地，能以绝地反击战法大破不可一世的李密瓦岗主力，夺取天下半壁江山。",
+    "strengthAdviceEn": "Master of judicial bureaucracy, military deceit, and battlefield counter-punches; successfully shattered Li Mi's mighty Wagang army when cornered at Mangshan.",
+    "weaknessAdviceZh": "性情极度虚伪残忍且缺乏基本的政治互信；以周公旦显灵等荒诞巫蛊骗局愚弄士卒，严刑峻法导致人人自危，在遭遇李世民围城时军心民心彻底土崩瓦解。",
+    "weaknessAdviceEn": "Pathologically deceitful and sociopathic; staged ridiculous religious seances to manipulate soldiers, alienating subordinates with paranoid purges until his regime imploded.",
+    "historicalQuoteZh": "李世民数其罪曰：‘世充欺天灭理，残害无辜，罪不容诛！’《旧唐书》评：‘世充口辨如流，饰非拒谏。借周公之怪妄，欺下罔上，卒致覆亡，盗跖之徒也。’",
+    "historicalQuoteEn": "Li Shimin denounced him: 'Shi Chong betrayed Heaven, butchered innocents, and deceived all under the sun!' Annals condemn him as an eloquent charlatan who ruled by delusion.",
+    "auxiliaryStrengthsZh": [
+      "邙山之战假托周公托梦鼓舞全军死战，趁李密主力阵型未稳发动突然全线反击，一举全歼瓦岗精锐生擒裴仁基等数十员大将",
+      "洛阳保卫战中构筑严密的石炮与床弩立体防御阵地，令李世民数十万大军顿兵坚城数月伤亡惨重"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Exploited religious dreams to galvanize demoralized troops at Mangshan, routing Li Mi's superior army",
+      "Constructed devastating catapult defenses at Luoyang, repelling Tang assaults for months with iron tenacity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "掌权后猜忌群臣设立严酷特务告密体系，连平民三人聚语即行诛戮，导致洛阳城内人人自危、士大夫争相逃亡投唐",
+      "生平毫无信义可言，多次出卖盟友与部属，最终降唐后被宿仇仇家在驿站轻易刺杀斩首"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Instituted a paranoid terror police system where casual conversation brought death, driving officials to flee",
+      "Notorious for betraying every ally and promise, culminating in his assassination by an avenging orphan"
+    ]
+  },
+  {
+    "id": "li_mi",
+    "nameZh": "李密",
+    "nameEn": "Li Mi (Lord of Wei)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "魏公 · 瓦岗军领袖 · 算尽机关英名尽丧一代悲剧豪杰",
+    "positionEn": "Lord of Wei · Supreme Commander of Wagang Army · Brilliant Rebel Strategist Ruined by Hubris",
+    "personalityZh": "博览群书、志存高远、胸罗万象、刚愎自傲、虎头蛇尾",
+    "personalityEn": "Charismatic aristocrat and grand strategist; joined Yang Xuangan, built Wagang Army into the most formidable rebel force in China; destroyed by pride and executed in mountain flight",
+    "deedsZh": "西魏八柱国李弼之孙，曾策动杨玄感起义；起义失败后亡命江湖入瓦岗寨，设计袭杀张须陀夺取兴洛仓开仓放粮，受封魏公震动天下；后诛杀翟让引发内讧，与王世充鏖战邙山大败，降唐封邢国公；心怀不甘复叛谋出关中，被盛彦师伏诛于熊耳山。",
+    "deedsEn": "Aristocrat who led Wagang Army to zenith by seizing imperial granaries; killed founder Zhai Rang in paranoid coup; defeated by Wang Shichong; submitted to Tang then killed in rebel flight.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "伤官格",
+    "strengthAdviceZh": "隋末最具宏图霸业格局与民心动员力的超级战略智囊。开洛口大仓赈济数百万饥民，麾下猛将如云、威震关东，几乎将隋炀帝天下彻底撕得粉碎。",
+    "strengthAdviceEn": "Master of ideological mobilization and macro-logistics; opened imperial granaries to feed millions, building Wagang Army into China's premier juggernaut.",
+    "weaknessAdviceZh": "致命的心胸狭隘与贵族优越感；在最高权力面前狠下杀手诛杀盟友翟让，自毁长城冷透将士之心；面对王世充骄傲轻敌，终至全盘皆输、沦为刀下孤魂。",
+    "weaknessAdviceEn": "Lethal aristocratic arrogance and treachery; murdered his founding comrade Zhai Rang, fatally poisoning army morale; disdained Wang Shichong until shattered at Mangshan.",
+    "historicalQuoteZh": "太宗叹其才略，盛彦师斩其首，史家叹曰：‘李密天纵之才，王佐之略，而反覆无常，猜忍自戕。杀翟让而将士离心，走熊耳而宗祀绝灭，可不鉴乎！’",
+    "historicalQuoteEn": "Historians sigh: 'Li Mi possessed imperial talent and kingly vision, but was fickle, suspicious, and treacherous. Murdering Zhai Rang doomed his cause!'",
+    "auxiliaryStrengthsZh": [
+      "牛角挂书苦读汉书名动天下，策划夺取兴洛大仓开仓放粮三日，聚天下流民数十万，发檄文声讨杨广二十大罪名震动四海",
+      "阵斩隋朝无敌战神张须陀，在荥阳狭道布下十面埋伏，彻底打破官军神话"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Studied classics riding a water buffalo; seized Xingluo granary to feed 300,000 refugees, shaking imperial foundations",
+      "Orchestrated the brilliant Xingyang ambush that felled Sui's undefeated supreme commander Zhang Xutuo"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "设鸿门宴血腥伏杀推戴自己为首领的瓦岗创始人翟让，导致麾下徐茂公险遭砍死、单雄信寒心离心，军队凝聚力荡然无存",
+      "邙山之战严重低估王世充假死反扑的决绝，阵中不设预备队，数万人马在反击面前瞬间雪崩瓦解"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Assassinated founder Zhai Rang at a feast, alienating top lieutenants like Shan Xiongxin and Li Shiji forever",
+      "Left zero tactical reserves at Mangshan, resulting in catastrophic collapse against Wang Shichong's charge"
+    ]
+  },
+  {
+    "id": "zhai_rang",
+    "nameZh": "翟让",
+    "nameEn": "Zhai Rang",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "司徒 · 瓦岗军初祖 · 宽仁让贤身遭鸿门屠戮悲情英雄",
+    "positionEn": "Minister of Works · Founding Patriarch of Wagang Army · Generous Leader Slain by Traitor's Cup",
+    "personalityZh": "豪侠重义、勇力绝人、宽厚让贤、不察奸邪、死于非命",
+    "personalityEn": "Founding chieftain of Wagang rebel army; generous, brave, and humble; abdicated leadership to the aristocratic Li Mi, only to be butchered in cold blood at a banquet",
+    "deedsZh": "东郡韦城人，曾任东郡法曹，亡命瓦岗聚众起义，单雄信、徐世勣皆归之；李密来投，翟让推心置腹让出魏公领袖之位，自居下位领军；随着瓦岗军声势日盛，李密猜忌翟让夺权，于武德前夕大宴翟让，伏兵砍杀翟让于席前，瓦岗军自此元气大伤走向分裂。",
+    "deedsEn": "County jailer who founded Wagang rebels; attracted top champions; voluntarily ceded supreme leadership to Li Mi; murdered by Li Mi's hidden swordsmen at a feast in 617.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "劫财",
+      "正印",
+      "伤官"
+    ],
+    "patternType": "建禄格",
+    "strengthAdviceZh": "绿林好汉中最具草莽江湖道义与舍己让贤胸襟的真汉子。以无私胸怀推举更有文化战略韬略的李密上位，为反隋大业提供了最重要的起步熔炉。",
+    "strengthAdviceEn": "Embodiment of chivalrous bandit honor and selfless magnanimity; voluntarily handed supreme leadership to the educated Li Mi to advance the anti-Sui rebellion.",
+    "weaknessAdviceZh": "对政治斗争的极端残酷性与人性的卑劣贪婪严重缺乏防范戒心；在最高权力场域中依然信奉江湖结义义气，在毫无防备的酒席上断送身家性命。",
+    "weaknessAdviceEn": "Criminally naive regarding the cutthroat nature of imperial power politics; trusted sworn brotherhood at court banquets, walking unarmed into a fatal ambush.",
+    "historicalQuoteZh": "瓦岗诸将闻让死皆号哭寒心，军心遂散。《旧唐书》叹曰：‘翟让起自草莽，推让贤能，实豪杰之高义。密乃以枭獍之心诛之，人神同愤，其亡也忽焉！’",
+    "historicalQuoteEn": "Wagang champions wept in bitter disillusionment at his murder. Annals declare: 'Zhai Rang was a noble hero who ceded power; Li Mi murdered him with the heart of a beast!'",
+    "auxiliaryStrengthsZh": [
+      "在隋朝严刑峻法巅峰之际振臂一呼创立瓦岗寨，开辟天下反隋第一桥头堡，聚拢单雄信、徐世勣、秦琼、程咬金等一代将星",
+      "在瓦岗军威震天下之际毫无私心杂念，主动当众将帅印与最高统帅宝座拱手让与李密，展现惊人让贤气魄"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Founded the immortal Wagang mountain redoubt, rallying future titans like Qin Qiong, Cheng Yaojin, and Shan Xiongxin",
+      "Voluntarily surrendered supreme command to Li Mi at the height of fame, an act of rare revolutionary humility"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对李密的野心与阴险毫无政治警觉，在部下多次预警李密心怀不轨时依然毫无防备赴宴",
+      "在酒席之上对李密递来的良弓把玩入迷，双手受缚于弓弦之际惨遭刺客从背后砍杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Dismissed warnings of Li Mi's treacherous ambitions, arriving completely unprotected at the fatal banquet",
+      "Enthusiastically tested a fine bow handed by Li Mi, leaving his chest defenseless as assassins struck from behind"
+    ]
+  },
+  {
+    "id": "shan_xiongxin",
+    "nameZh": "单雄信",
+    "nameEn": "Shan Xiongxin",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "大将军 · 飞将 · 瓦岗旧部宁死不屈慷慨赴死名将",
+    "positionEn": "Grand General · The Flying General · Wagang Champion Who Chose Execution Over Surrender",
+    "personalityZh": "骁勇善战、马槊绝伦、义烈千秋、誓不事唐、断头自决",
+    "personalityEn": "Unmatched horse lance champion; known as the 'Flying General'; loyal to brother Zhai Rang; fought fiercely for Wang Shichong, refused all Tang pardons, executed with dignity",
+    "deedsZh": "曹州济阴人，随翟让起兵瓦岗，以马槊天下第一号称飞将；翟让遇害后被迫随李密，后降王世充封大将军；洛阳之战单骑突入唐军险刺李世民，为徐世勣所阻；王世充兵败投降，李世民下令斩雄信；徐世勣割股肉奉食痛哭送别，雄信从容就义。",
+    "deedsEn": "Supreme cavalry spear master; served Zhai Rang, Li Mi, and Wang Shichong; nearly speared Li Shimin in battle; refused Li Shimin's pardon after Luoyang fell; executed stoically.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "冷兵器单挑肉搏的极致化身。手中长槊出神入化，阵前冲锋无人敢撄其锋；至死坚守对故主的道德誓言，宁为玉碎不为瓦全，展现震撼千古的硬汉气节。",
+    "strengthAdviceEn": "Peak cavalry lancer duel champion; martial skill terrified opposing armies; chose unbending death over subservience to former enemies, displaying unbreakable tragic integrity.",
+    "weaknessAdviceZh": "个人江湖恩怨重于天下大势与宏观政治理性；被复仇与私义蒙蔽双眼，在历史大一统车轮滚滚向前之际未能顺应时代潮流，沦为旧势力的殉葬品。",
+    "weaknessAdviceEn": "Elevated personal blood vengeance and outlaw code over geopolitical reality; obstinately resisted the unified imperial tide until walking under the headsman's axe.",
+    "historicalQuoteZh": "临刑徐世勣割大腿肉进食曰：‘平生与兄相托，此肉化作兄骨肉，魂归有日！’雄信啖之大笑就戮。《旧唐书》叹其：‘雄信健儿，气盖关中，惜所托非人，死节于贼。’",
+    "historicalQuoteEn": "Before execution, Li Shiji cut flesh from his own thigh to feed him in tears; Shan laughed and died fearless. Annals sigh: 'A peerless hero who backed the wrong warlords!'",
+    "auxiliaryStrengthsZh": [
+      "马槊造诣出神入化冠绝隋唐，汜水之战单骑突击唐军指挥中枢，长槊直逼秦王李世民咽喉，险些一枪改写大唐国运",
+      "翟让惨遭李密杀害后忍辱负重保全部卒，投奔王世充后担任前线大将军屡挫李世民猛将突击"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Speared his way into Tang command post at Sishui, thrusting his lance inches from Li Shimin's throat",
+      "Preserved his men after Zhai Rang's slaughter, later commanding Luoyang forces with terrifying martial skill"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在翟让遇害的血海深仇面前政治立场摇摆不定，未能果断反抗李密，反在其麾下虚度数年",
+      "洛阳城破被俘面对李世民与昔日结拜兄弟徐世勣的苦劝坚决不降，以极端意气用事自绝于天下"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Paralyzed into awkward neutrality after Zhai Rang's death, serving Li Mi despite bitter hatred",
+      "Obstinately rejected all appeals for reconciliation from sworn brothers, choosing the executioner's block"
+    ]
+  },
+  {
+    "id": "xue_ju",
+    "nameZh": "薛举",
+    "nameEn": "Xue Ju (Overlord of Western Qin)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "西秦霸王 · 陇西枭雄 · 浅水原重创唐军西陲劲敌",
+    "positionEn": "Overlord of Western Qin · Hegemon of Longxi Who Shattered Tang Vanguard",
+    "personalityZh": "凶悍残暴、骁勇多力、狂飙突进、残虐嗜杀、天年不遂",
+    "personalityEn": "Ferocious, brutish cavalry warlord of northwest China; crushed Tang chancellors at first Qianshuiyuan, striking terror into Chang'an before sudden illness felled him",
+    "deedsZh": "河东汾阴人，隋大业末于金城起兵自称西秦霸王，据陇西之地兵强马壮；武德元年进逼关中，于第一次浅水原之战大破李世民副将刘文静、殷开山，俘斩唐军过半；正欲乘胜直取长安，突发急病暴毙，子薛仁杲继位旋即覆亡。",
+    "deedsEn": "Rose in Longxi to claim Overlord of Western Qin; crushed Tang armies at the first Battle of Qianshuiyuan in 618; died suddenly of lethal disease on the eve of assaulting Chang'an.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "劫财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "狂飙突进的游牧重骑闪电战大师。凭借西北陇右彪悍骑兵在开阔原野发动毁灭性突击，具备在局部战役中全歼帝国级主力集团军的骇人杀伤力。",
+    "strengthAdviceEn": "Master of sweeping northwest cavalry blitzkrieg maneuvers; capable of obliterating imperial armies in open field battles through ferocious momentum.",
+    "weaknessAdviceZh": "暴虐寡恩且极度残忍，好施刖足割舌严刑，视战俘与生灵为草芥；缺乏长治久安的战略定力与仁政格局，将割据政权建于恐怖统治沙滩之上。",
+    "weaknessAdviceEn": "Pathological cruelty and sadistic executions; butchered captives by severing tongues and limbs, building a regime doomed by popular loathing.",
+    "historicalQuoteZh": "高祖闻其胜大骇，欲割太行以西避之。史家叹曰：‘薛举勇悍雄杰，横行陇右，浅水原之役唐军几殆。然暴戾酷虐，卒受天谴，天命不在凶残之夫也。’",
+    "historicalQuoteEn": "Gaozu was terrified by his early victories. Annals record: 'Xue Ju was a terrifying warrior who nearly broke Tang, but Heaven detests cruelty and struck him down!'",
+    "auxiliaryStrengthsZh": [
+      "金城起兵仅数月席卷陇西十三郡，建立西秦帝国，兵锋所指威震关西，让大唐初创政权面临开国以来最凶险的西北军事危机",
+      "第一次浅水原之战诱敌深入，以铁骑两翼包抄彻底歼灭唐军主力数万人，生擒唐军大将慕容罗睺，迫使李世民抱病退守关中"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Swept 13 commanderies in months to forge the Western Qin empire, threatening Tang's fragile northern flank",
+      "Lured Tang chancellors into a canyon trap at Qianshuiyuan, annihilating tens of thousands of elite troops"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对俘虏实行极其残忍的肉刑与活埋屠杀，甚至纵容部众挖人祖坟，将西北豪族民心彻底推向对立面",
+      "在进军关中的关键节点上缺乏卫生防疫与身心节制，因暴饮暴食或急性恶疾猝死于军中，导致帝国顷刻崩塌"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Mutilated prisoners alive and desecrated tombs, completely forfeiting aristocratic and civilian goodwill",
+      "Succumbed to a sudden mortal fever amidst military advance, causing his brittle regime to disintegrate"
+    ]
+  },
+  {
+    "id": "liu_wuzhou",
+    "nameZh": "刘武周",
+    "nameEn": "Liu Wuzhou (Dingyang Khan)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "定阳可汗 · 马邑枭雄 · 席卷晋阳大唐龙兴之地劲敌",
+    "positionEn": "Dingyang Khan · Mayi Warlord Who Sacked Tang's Ancestral Cradle",
+    "personalityZh": "引狼入室、剽悍狡谲、善结突厥、席卷并州、败走身死",
+    "personalityEn": "Ruthless northern frontier warlord; allied with Eastern Turks to declare Dingyang Khan; conquered Taiyuan and swept Shanxi, but routed by Li Shimin and killed by nomads",
+    "deedsZh": "马邑鹰扬府校尉，隋末刺杀太守王仁恭起兵，臣服突厥受封定阳可汗；武德二年挥师南下，席卷并州陷太原，李元吉弃城逃归关中，唐河东失守；李世民率军坚壁清野于柏壁决战，武周大溃北奔突厥，不久为突厥所杀。",
+    "deedsEn": "Officer at Mayi who killed his governor and submitted to Turks as Khan; captured Taiyuan and overran Shanxi in 619; crushed by Li Shimin at Baibi; slain by Turks in flight.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "偏印"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "借助异族地缘杠杆撬动中原格局的冒险枭雄。善于利用突厥骑兵的机动优势实施狂风暴雨般的南下突袭，直接捣毁李唐起家的太原龙兴老巢。",
+    "strengthAdviceEn": "Opportunistic frontier warlord who leveraged Turkic nomadic horsepower to blitz central Shanxi, seizing Tang's royal ancestral bastion of Taiyuan.",
+    "weaknessAdviceZh": "甘为异族傀儡缺乏文明根基；面对李世民坚壁清野的消耗战缺乏后勤耐力与战役抗压韧性，一旦战败即丧失全部筹码，沦为胡人刀下羔羊。",
+    "weaknessAdviceEn": "Subservient puppet of nomadic overlords with zero administrative resilience; collapsed immediately once Li Shimin severed his food supply lines.",
+    "historicalQuoteZh": "高祖闻太原陷惊呼：‘贼势如此，恐须弃大河以东，谨守关西！’太宗劝阻出师破之。《旧唐书》评：‘武周资盗贼之勇，结羯胡之援，虽横行一时，终授首穹庐。’",
+    "historicalQuoteEn": "Gaozu despaired when Taiyuan fell: 'We must abandon the east and cower behind the passes!' Annals record: 'A reckless bandit pawn executed by nomads.'",
+    "auxiliaryStrengthsZh": [
+      "以数千边军起步结纳颉利可汗，挥师南下一月之内席卷晋中平原，逼退齐王李元吉攻克太原坚城，震动大唐最高统治层",
+      "麾下悍将宋金刚数度击溃唐朝裴寂、李孝基等主力大军，将战线推至黄河龙门天险"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Allied with Turkic steppe armies to conquer Taiyuan, driving Tang royals into panicked retreat to Chang'an",
+      "Overran Tang defenses across Shanxi, routing three consecutive imperial relief armies with shock tactics"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "引诱游牧突厥铁骑深入中原烧杀抢掠，认贼作父沦为异族走狗，在历史大义与民族尊严上留下洗不掉的污点",
+      "柏壁大战中缺乏战略后方储备，被李世民相持数月即陷入粮尽绝境，一战溃散后仓皇投敌遭突厥贵族斩首诛灭"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Invited foreign steppe hordes to plunder northern cities, forever staining his name as an unpatriotic warlord",
+      "Lacked strategic grain reserves, starving under Li Shimin's siege before fleeing to death among nomads"
+    ]
+  },
+  {
+    "id": "song_jingang",
+    "nameZh": "宋金刚",
+    "nameEn": "Song Jingang",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "西南道大行台 · 定阳第一名将 · 柏壁血战李世民宿敌",
+    "positionEn": "Grand Viceroy of Southwest · Foremost General of Liu Wuzhou · Iron Spear at Battle of Baibi",
+    "personalityZh": "勇悍绝伦、善统骁骑、横扫河东、势如破竹、粮尽力竭",
+    "personalityEn": "Fierce cavalry vanguard commander; overran central Shanxi for Liu Wuzhou, defeating multiple Tang chancellors before succumbing to starvation at Baibi and falling to Turks",
+    "deedsZh": "上谷起义首领，兵败投刘武周，受封西南道大行台；率精骑南侵连破唐军诸将，陷晋州、绛州、浍州，迫降唐皇叔李孝基；与李世民在柏壁对峙五月，因粮尽后撤，李世民一日八战穷追不舍，于雀鼠谷大破之，金刚逃往突厥被杀。",
+    "deedsEn": "Rebel general who led Liu Wuzhou's southern invasion; smashed Tang armies to capture southern Shanxi; starved out by Li Shimin at Baibi and hunted down in Bird-Mouse Valley.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "极为强悍的平原野战战术突击大师。指挥塞北骑兵如臂使指，在运动战中连挫大唐数员开国名帅，将闪电穿插战术发挥得淋漓尽致。",
+    "strengthAdviceEn": "Supreme battlefield mobile shock vanguard; commanded northern cavalry with terrifying momentum, repeatedly crushing imperial relief armies.",
+    "weaknessAdviceZh": "战略大局观完全依附于刘武周的浅薄规划，不懂得根据地建设与可持续后勤保障，在面对顶级战略大师李世民的消耗战面前束手无策。",
+    "weaknessAdviceEn": "Zero capacity for economic base administration or sustained logistical depth; paralyzed when confronted with Li Shimin's attrition warfare.",
+    "historicalQuoteZh": "李世民谓诸将曰：‘宋金刚深入孤军，兵精将悍，其锋未可当，宜坚壁以挫其锐。’《旧唐书》叹其：‘金刚骁勇过人，所向无前，然弃智任力，雀鼠一奔，遂成禽馘。’",
+    "historicalQuoteEn": "Li Shimin cautioned his generals: 'Song Jingang leads fierce, desperate elites; we must endure behind walls to break his razor edge!' Annals mourn his stubborn end.",
+    "auxiliaryStrengthsZh": [
+      "率万余骑兵长驱南下势如破竹，于夏县大破唐军生擒淮安王李神通、尚书右仆射裴寂，彻底打垮大唐在山西的防御中枢",
+      "在柏壁与李世民数十万精锐重兵集团坚韧对峙近半年之久，屡屡以精锐骑兵撕扯唐军警戒线"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Routed imperial chancellors and princes across Shanxi, capturing Tang army commanders in crushing victories",
+      "Held off Li Shimin's grand army at Baibi for five gruelling months with razor-sharp defensive skirmishing"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "不懂得以战养战与保护地方生产，将所过之县粮秣抢掠一空，导致数万军队在严冬到来之际陷入彻底断粮的人间地狱",
+      "雀鼠谷溃退之际军心涣散，未能组织起有效的梯次阻击掩护，在李世民一日八战的狂追下全军覆没"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Plundered Shanxi farmlands bare without planting reserves, leaving his army to freeze and starve in winter",
+      "Failed to stage organized rear-guard retreats through Bird-Mouse Gorge, destroyed by relentless Tang pursuit"
+    ]
+  },
+  {
+    "id": "liang_shidu",
+    "nameZh": "梁师都",
+    "nameEn": "Liang Shidu (Emperor of Liang)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "梁帝 · 大解事天子 · 隋末割据盘踞朔方最久顽凶",
+    "positionEn": "Emperor of Liang · Dajieshi Son of Heaven · Longest-Surviving Warlord of the Northern Frontier",
+    "personalityZh": "阴鸷狡黠、依附胡虏、据险顽抗、民穷财尽、终遭内诛",
+    "personalityEn": "Obstinate northern warlord of Shuofang (Ordos); crowned Emperor under Turkic sponsorship; resisted Tang for over a decade until assassinated by his cousin in 628",
+    "deedsZh": "朔方鹰扬府郎将，大业末杀郡丞起兵，降突厥受封大度毗伽可汗、俱卢儿可汗；僭称大梁皇帝，屡引突厥入寇关中；李渊建唐数度讨之不能下；贞观二年李世民命柴绍、薛万均大军合围朔方，突厥不敢救，其从弟梁洛仁杀师都降唐。",
+    "deedsEn": "Imperial officer who seized Ordos, declared himself Emperor of Liang with Turkic backing; survived a decade raiding Tang borders; assassinated by his own cousin as Tang besieged him in 628.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "偏官",
+      "偏印",
+      "比肩"
+    ],
+    "patternType": "偏官格",
+    "strengthAdviceZh": "极具地缘生存韧性与堡垒防御经验的边地老贼。深谙塞北地形与突厥政治心理，在李唐一统天下的狂飙浪潮中竟能割据朔方长达十二年之久。",
+    "strengthAdviceEn": "Uncanny frontier geopolitical survival instincts; exploited Turkic border tensions to sustain an independent kingdom for twelve years amidst unified Tang dominance.",
+    "weaknessAdviceZh": "彻底沦为突厥入侵中原的马前卒与带路党；对待治下百姓苛暴聚敛，在突厥势微大厦将倾之际依然执迷不悟拒不降唐，落得身死族灭。",
+    "weaknessAdviceEn": "Servile pawn of nomadic invaders who raided his own civilization; bled his populace dry through brutal taxation, meeting death at his cousin's blade.",
+    "historicalQuoteZh": "太宗谓侍臣曰：‘师都据朔方，十有余年，勾连虏骑，毒痛关中。今四海一家，独此残寇，命柴绍等往除之！’《旧唐书》评：‘师都狂狡自固，卒受天诛。’",
+    "historicalQuoteEn": "Taizong declared: 'Liang Shidu poisoned the northern borders for a decade with Turkic cavalry; today the empire is unified, he alone remains!' Annals condemn his treason.",
+    "auxiliaryStrengthsZh": [
+      "在陕北长城险隘构筑坚固防御体系，借助突厥控弦十万之威，多次击退唐朝开国初期的围剿大军",
+      "长达十二年成为大唐北方边境最顽固的心腹大患，迫使李渊在定都长安初期时刻在长安北面驻扎重兵防备"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Fortified the Great Wall passes in Shaanxi, utilizing nomad horsemen to repel Tang relief armies for a decade",
+      "Formed the most persistent northern menace to Chang'an, requiring Tang to maintain permanent defensive garrisons"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "为苟延残喘割据政权，将朔方汉族男女人口大量掠夺献给突厥为奴，在边疆汉民心中民怨沸腾",
+      "贞观二年大唐四海升平突厥内乱已无力南顾，师都依然盲目抗拒王化，最终被忍无可忍的部属割下首级献关降唐"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Enslaved northern civilians and sold them to nomadic chieftains to purchase military protection",
+      "Refused peaceful surrender when Turks collapsed, resulting in assassination by his starving officers"
+    ]
+  },
+  {
+    "id": "xiao_xian",
+    "nameZh": "萧铣",
+    "nameEn": "Xiao Xian (Emperor of Liang)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "梁帝 · 西梁后裔 · 坐拥南方四十万大军风雅帝王",
+    "positionEn": "Emperor of Liang · Scion of Southern Dynasties · Sovereign of 400,000 Troops Across Southern China",
+    "personalityZh": "宽仁爱民、风度翩翩、宗室正朔、制军无术、江陵纳降",
+    "personalityEn": "Cultured, refined grandson of Emperor Xuan of Western Liang; resurrected the Liang Empire across Hubei, Hunan, and Guangdong; overthrown by Li Xiaogong and executed in Chang'an",
+    "deedsZh": "西梁宣帝曾孙，隋罗川令；大业末岳州起兵，称梁帝定都江陵，南极交趾西跨汉水，胜兵四十万；因猜忌部将削减军力，致使部将离心；武德四年李孝恭、李靖水陆大军压境，江陵被围外援断绝，铣叹曰：‘当死者我一人，百姓无罪！’遂素服出降，斩于长安。",
+    "deedsEn": "Imperial scion who raised revolts at Yuezhou; declared Liang Emperor with 400,000 troops; curbed generals out of paranoia; besieged at Jiangling, surrendered to save civilians; executed in 621.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "食神",
+      "正印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "江南六朝余晖中最具正统贵族仁义风范的儒雅君王。占领荆襄江南秋毫无犯；在江陵危亡关头为了保全满城百姓性命，从容出城受缚，展现出悲天悯人的君王情怀。",
+    "strengthAdviceEn": "Epitome of Southern Dynasties aristocratic virtue and imperial decorum; surrendered to save his besieged city from slaughter, sacrificing himself for his subjects.",
+    "weaknessAdviceZh": "极端优柔寡断且治军驭将手腕极度软弱；疑忌手握重兵的草莽将领，在天下兼并大战前夕错误实行‘罢兵归农’削弱国防，被李靖顺流而下一举突破。",
+    "weaknessAdviceEn": "Hopelessly indecisive and politically soft; demobilized battle-tested troops out of fear of warlord insubordination on the eve of imperial Tang invasion.",
+    "historicalQuoteZh": "萧铣将死叹曰：‘铣死固当，但江南士民无罪，愿无杀掠！’李渊赞其仁而难免其诛。《旧唐书》评：‘萧铣宽仁自居，雅有帝王之风，然不能经纬雄武，终于囚戮。’",
+    "historicalQuoteEn": "Before his execution, Xian pleaded: 'Kill me alone, but spare the innocents of the South!' Annals praise his imperial elegance while lamenting his lack of martial iron.",
+    "auxiliaryStrengthsZh": [
+      "仅凭汉室南朝正统名号与儒雅德行，短短数月兵不血刃席卷荆襄岭南数百州县，聚兵四十万定都江陵，恢复萧梁正朔",
+      "面对李孝恭李靖围城数月粮尽援绝，毅然放弃巷战焚城的极端抵抗，独自素服开城出降换取江南军民全活"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Reconstructed the Liang Empire across the Yangtze and Canton with 400,000 men through sheer dynastic prestige",
+      "Surrendered voluntarily to spare his citizens the horrors of a brutal city sack, winning historical respect"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "政治手腕过于文弱书生化，不能驾驭董景珍、张绣等骄兵悍将，在政权内部激化宗室与功臣矛盾导致内讧火并",
+      "在大唐数十万大军水师压境的前夕，竟轻信承平日久而盲目罢遣数十万士卒务农，造成国门大开无兵可守"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to discipline fierce field commanders, provoking bloody fratricidal purges among his own marshals",
+      "Disbanded hundreds of thousands of combat veterans right before Tang armadas sailed down the Yangtze gorges"
+    ]
+  },
+  {
+    "id": "du_fuwei",
+    "nameZh": "杜伏威",
+    "nameEn": "Du Fuwei (Prince of Chu)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "吴王 · 东南道大行台尚书令 · 席卷江淮归顺大唐草莽英雄",
+    "positionEn": "Prince of Wu · Grand Viceroy of Southeast · Supreme Ruler of Huainan Who Submitted to Tang",
+    "personalityZh": "勇武仗义、轻生重友、审时度势、主动纳土、忧谗暴卒",
+    "personalityEn": "Legendary outlaw champion of Huainan; conquered the lower Yangtze; strategically submitted his entire domain to Tang; entered Chang'an as Prince, died suddenly of anxiety",
+    "deedsZh": "齐州章丘人，十六岁聚众起义转战江淮，身先士卒选敢死士三十人号‘养子’，破隋将陈棱占历阳；李渊起兵，伏威审时度势主动称臣归唐，封吴王、楚王；武德五年主动入朝长安，将江淮大军托付辅公祏；后辅公祏伪造其书叛乱，伏威忧愤暴卒于长安。",
+    "deedsEn": "Rebel hero who conquered Jianghuai at 16 with 30 devoted adopted sons; voluntarily ceded whole realm to Tang in 619; entered capital Chang'an; died suddenly when sworn brother mutinied.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏财",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "草莽枭雄中绝无仅有的地缘政治大智慧。在手握江南数十万重兵割据自雄时，能清醒识破历史大一统天命归唐，主动献土归顺，避免了东南大地重陷屠戮。",
+    "strengthAdviceEn": "Extraordinary geopolitical pragmatism among peasant rebel warlords; recognized Tang's imperial destiny and surrendered his wealthy southern realm without bloodshed.",
+    "weaknessAdviceZh": "对结义兄弟辅公祏的狼子野心缺乏雷霆决断的政治清洗手腕；明知公祏心怀不轨却未在入京前彻底解除其兵权，最终受其叛逆伪书牵连饮恨九泉。",
+    "weaknessAdviceEn": "Failed to neutralize the treasonous ambitions of his sworn brother Fu Gongshi before leaving for Chang'an, resulting in fatal political slander.",
+    "historicalQuoteZh": "高祖待之极厚，赐姓李氏，位列齐王之上。太宗贞观初为之平反昭雪并赠司徒。《旧唐书》赞：‘伏威起自细微，据有江淮，能顺天命万里归诚，一代之俊杰也！’",
+    "historicalQuoteEn": "Gaozu granted him imperial surname Li and ranked him above royal princes; Taizong fully cleared his name. Annals celebrate him as a peerless hero who submitted.",
+    "auxiliaryStrengthsZh": [
+      "十六岁亡命江湖创立江淮起义军，独创‘养子义军’死战战法，每战身先士卒冲锋陷阵，数年间横扫长江南北威震东南",
+      "在天下大势尚不明朗之际力排部下称帝之劝，断然将江淮数十州版图及水陆大军双手奉献大唐，加速全国大一统进程"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Founded the ferocious Jianghuai army at 16 with 30 elite adopted sons, sweeping the lower Yangtze in battle",
+      "Resisted calls to declare himself Southern Emperor, peacefully surrendering his territory to Tang"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "重江湖义气轻国家法度，结拜兄弟辅公祏数有异志伏威皆隐忍不除，终致骨肉相残引火烧身",
+      "入朝长安后未能彻底放下权力戒心，在长安声色犬马中沉湎自保，在抑郁与疑虑中英年早逝"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Protected traitorous sworn brother Fu Gongshi out of outlaw sentimentality, enabling a bloody rebellion",
+      "Withered under house arrest in Chang'an, dying prematurely of paranoid dread and political depression"
+    ]
+  },
+  {
+    "id": "fu_gongshi",
+    "nameZh": "辅公祏",
+    "nameEn": "Fu Gongshi (Emperor of Song)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "宋帝 · 江南叛乱首领 · 伪托杜命反唐割据覆亡野心家",
+    "positionEn": "Emperor of Song · Rebel Leader of Jiangnan · Treasonous Usurper Who Forged Imperial Edicts",
+    "personalityZh": "心怀叵测、诡诈多谋、善结朋党、利令智昏、身死国灭",
+    "personalityEn": "Sworn brother of Du Fuwei; feigned loyalty while plotting treason; forged Du's letter to declare Song Empire in Nanjing; crushed by Li Xiaogong and executed in 624",
+    "deedsZh": "齐州临济人，杜伏威刎颈之交，起义军二号人物主谋划后勤；伏威入朝长安留公祏守丹阳，公祏心怀异志，伪称伏威有密信命其起事，于丹阳称帝建大宋国；李渊命李孝恭、李靖大举东讨，公祏兵败弃丹阳南逃，于武康被乡民捕获送斩，江南全平。",
+    "deedsEn": "Du Fuwei's childhood friend and deputy; forged Du's mandate to declare Emperor of Song at Nanjing after Du left for Chang'an; routed by Li Xiaogong; captured and beheaded in 624.",
+    "archetype": "executive",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "劫财",
+      "七杀"
+    ],
+    "patternType": "伤官格",
+    "strengthAdviceZh": "具备极强的暗中组织策动与行政后勤动员能力。善于隐忍蛰伏在首领身后积聚势力，利用伪造文书与宗教蛊惑迅速拉起十万反唐叛军。",
+    "strengthAdviceEn": "Clandestine conspiratorial organizer with talent for administrative mobilization; exploited forged mandates to instantly ignite a 100,000-man rebellion across Nanjing.",
+    "weaknessAdviceZh": "利令智昏严重缺乏战略大局观；在天下大势已定李唐如日中天的巅峰时期，逆历史潮流而动铤而走险，自绝于天下军民。",
+    "weaknessAdviceEn": "Hopelessly blind to macroscopic historical inevitability; launched an unwinnable regional rebellion when Tang had already extinguished all other warlords.",
+    "historicalQuoteZh": "李孝恭数其伪托叛逆之罪斩于江东，史家叹曰：‘公祏以微贱之资，托伏威之援，得据名藩。不知天命，妄构祸乱，伪称帝号，旋即授首，愚劣之甚也！’",
+    "historicalQuoteEn": "Li Xiaogong executed him in Jiangdong. Annals condemn: 'Fu Gongshi rose on Du Fuwei's back, ignored Heaven, staged futile rebellion, and was swiftly butchered like a rat!'",
+    "auxiliaryStrengthsZh": [
+      "在杜伏威长期征战期间独自坐镇丹阳统理后勤与十万户租赋，将江南财税仓廪打理得井井有条",
+      "起事后迅速修筑博望山、青林山沿江铜墙铁壁防御线，以铁链横锁长江阻截唐军水师大舰数月"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Managed taxation and civilian logistics across lower Yangtze, filling granaries to supply the rebel army",
+      "Constructed iron chain river booms across the Yangtze gorges, holding off Tang armadas for months"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "伪造结拜兄长杜伏威密信煽动兵变，直接导致杜伏威在长安蒙冤受屈暴死，背信弃义至极",
+      "青林山防线一旦被李靖奇兵击破，公祏惊慌失措只身带数百骑潜逃南山，弃满城将士于不顾，被村民轻易绳捆索绑献俘"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Forged Du Fuwei's personal letter to incite mutiny, causing Du's tragic wrongful death in the capital",
+      "Abandoned his soldiers in panic after Li Jing breached his mountain lines, captured tied in cords by peasants"
+    ]
+  },
+  {
+    "id": "xu_yuanlang",
+    "nameZh": "徐圆朗",
+    "nameEn": "Xu Yuanlang (King of Lu)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "鲁王 · 兖州割据巨头 · 附逆黑闼反复无常反唐败亡豪强",
+    "positionEn": "King of Lu · Warlord of Yanzhou · Fickle Ally of Liu Heita Who Fell in Peasant Flight",
+    "personalityZh": "狡黠好斗、朝秦暮楚、割据鲁南、附叛谋乱、弃城身死",
+    "personalityEn": "Fickle warlord of Shandong (Yanzhou); allied with Wagang, Wang Shichong, Dou Jiande, Tang, and Liu Heita in succession; routed by Li Shimin, killed by peasants in flight",
+    "deedsZh": "兖州人，隋末聚众数千起兵东平，转徙于李密、王世充之间；降唐封鲁国公；武德四年刘黑闼起兵河北，圆朗复叛自称鲁王响应黑闼，破唐齐州；李世民挥师东下亲讨，圆朗屡战皆北被围兖州数月，粮尽单骑突围，为野外乡民截杀斩首。",
+    "deedsEn": "Rose in Shandong; allied with Wagang and Tang; rebelled as King of Lu to aid Liu Heita; encircled at Yanzhou by Li Shimin; escaped alone and murdered by farmers in 623.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "七杀",
+      "偏财"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "善于在夹缝中求生存的草莽游击战大师。熟悉鲁西南水网险隘，能凭借精悍部曲在强敌环伺的四战之地长期立足。",
+    "strengthAdviceEn": "Resourceful guerrilla survivalist across Shandong waterways and marshlands; adept at tactical opportunism to maintain local dominance amid warring empires.",
+    "weaknessAdviceZh": "毫无政治远见与道德信用；一生叛服无常，谁强依附谁、谁危背叛谁，彻底丧失士大夫阶层的政治信任，最终沦为亡命穷寇。",
+    "weaknessAdviceEn": "Notorious political weathervane who betrayed every master he served; squandered all political credibility, meeting a pitiful death at the hands of angry villagers.",
+    "historicalQuoteZh": "李世民平兖州，下令抄没其家。史家评曰：‘徐圆朗反复凶狡，无远大之图。乘黑闼之逆锋，妄窃大名，雀鼠窜亡，毙于佣保之手，亦其宜矣！’",
+    "historicalQuoteEn": "Li Shimin confiscated his estates. Annals record: 'Xu Yuanlang was a treacherous turncoat who joined Liu Heita's doomed cause, butchered in a ditch by common laborers!'",
+    "auxiliaryStrengthsZh": [
+      "凭借数千骁勇乡兵横行鲁南水泊，多次击退隋朝官军围捕，建立横跨泰山以南数郡的割据阵地",
+      "响应刘黑闼起兵时果断出击攻占河南山东大片州县，一度截断李唐通往江淮的大动脉粮道"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Dominated southern Shandong marshlands with veteran skirmishers, repelling early Sui imperial garrisons",
+      "Captured strategic towns during Liu Heita's revolt, temporarily severing Tang supply links to the south"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "平生先后投靠翟让、李密、王世充、李唐、刘黑闼五处势力，信誉尽失被各方势力视为唯利是图的政治流氓",
+      "兖州被围粮尽突围时抛弃妻儿与全体部将只身出逃，在荒野麦田被两名愤怒的农夫用锄头打死割首"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Switched sides five times across rival warlords, reviled across China as a dishonorable mercenary opportunist",
+      "Deserted his family and garrison during siege flight, bludgeoned to death in a wheat field by two farmers"
+    ]
+  },
+  {
+    "id": "gao_kaidao",
+    "nameZh": "高开道",
+    "nameEn": "Gao Kaidao (King of Yan)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "燕王 · 渔阳枭雄 · 控弦万骑反复降叛塞北悍匪",
+    "positionEn": "King of Yan · Hegemon of Yuyang · Fierce Northern Frontier Raider Betrayed in Feasting",
+    "personalityZh": "勇悍敏捷、煮盐起家、善骑射、残暴多疑、部将缢杀",
+    "personalityEn": "Brutish, athletic northern frontier warlord; rose from salt-boiling outlaw to declare King of Yan at Yuyang; allied with Turks and Koguryo; overthrown and hanged by his own general",
+    "deedsZh": "沧州人，早年煮盐为生，勇力绝伦能涉水奔马；隋末聚众占怀戎称燕王；武德三年降唐封北燕州总管；后突厥犯边复叛附突厥，勾连刘黑闼围攻幽州李艺；武德七年粮绝人心离散，部将张金树发动兵变引兵入府，开道自知不免，盛服引妻妾自缢死。",
+    "deedsEn": "Salt-boiler who could run alongside galloping horses; declared King of Yan at Yuyang; submitted to Tang then re-allied with Turks; hanged himself when general mutinied in 624.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "劫财",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "塞北边疆极限单兵格斗与骑射突击的化身。勇力能徒步涉水追赶奔马，善于在长城边陲组织敢死突击队劫掠后勤。",
+    "strengthAdviceEn": "Prodigious personal physical warrior; famed for outrunning galloping warhorses; orchestrated ruthless frontier border raids and deep-penetration horse strikes.",
+    "weaknessAdviceZh": "毫无长远政治建树与民政头脑，纯属啸聚山林的亡命悍匪；对部属猜忌残暴动辄诛杀，在内外交困之际被部下一夜哗变逼上绝路。",
+    "weaknessAdviceEn": "Pure bandit mentality devoid of governing intellect; ruled through paranoia and terror until his own elite officers hanged him in a mutiny.",
+    "historicalQuoteZh": "李艺叹其凶顽，高祖下令籍没其部。《旧唐书》评：‘高开道资狂贼之性，恃其悍勇，反复无常，狼顾塞垣，引绳自缢，自作之孽也。’",
+    "historicalQuoteEn": "Li Yi denounced his vicious savagery. Annals record: 'Gao Kaidao relied on wolf-like physical violence alone; treacherous to the end, he hanged himself when his men rebelled.'",
+    "auxiliaryStrengthsZh": [
+      "曾遭流矢射中面颊，命医师用铁钳硬拔箭头，骨碎有声而开道置酒高歌自若，展现震撼塞北的钢铁肉体意志",
+      "占领幽北重镇渔阳，聚众万人战马数千匹，在李唐、窦建德、突厥三大强权夹缝中游刃有余割据八年"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Ordered a physician to gouge an arrowhead from his jaw with iron pliers while drinking wine and singing aloud",
+      "Carved out an eight-year northern enclave at Yuyang, balancing precarious survival between Tang and Turks"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "性情暴戾多疑，建立‘修罗亲军’作为卫队，却在饥荒之年对士卒克扣口粮甚至残害异己",
+      "大难临头之际毫无反抗斗志，在心腹张金树发动兵变撞开府门后，只知穿戴整齐带着后妃自缢梁上"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Established brutal secret police battalions while starving his troops during famines, triggering mutinies",
+      "Collapsed mentally when cornered by mutineers, putting on royal robes to hang himself beside his concubines"
+    ]
+  },
+  {
+    "id": "liu_heita",
+    "nameZh": "刘黑闼",
+    "nameEn": "Liu Heita (Prince of Handong)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "汉东王 · 窦建德复仇猛将 · 旋风席卷河北两度重创唐军战神",
+    "positionEn": "Prince of Handong · Dou Jiande's Vengeance Hero · Whirlwind Conqueror Who Trounced Tang Armies Twice",
+    "personalityZh": "阴鸷善战、骁勇无敌、深得军心、快意复仇、身死名灭",
+    "personalityEn": "Dou Jiande's greatest general; raised Hebei in righteous revolt to avenge his executed master; routed multiple Tang imperial armies in months; crushed at Mingzhou by Taizong",
+    "deedsZh": "贝州漳南人，窦建德麾下猛将；建德被李渊斩于长安，黑闼归隐漳南；唐官吏搜捕逼反，黑闼感念旧主召集旧部起兵，半年尽复窦建德河北故地，阵斩薛万均、生擒李神通、逼降罗艺；武德五年李世民筑堰水淹黑闼军，黑闼奔突厥复借骑兵反扑，终为太子李建成生擒斩杀。",
+    "deedsEn": "Champion general of Dou Jiande; rose to avenge Jiande's execution; swept all Hebei in six months, crushing top Tang commanders; water-flooded at Mingzhou and beheaded in 623.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "偏印",
+      "偏财"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "隋唐乱世中顶级的复仇战神与闪电反击天才。凭借对窦建德的无上忠义凝聚河北义军，以鬼神莫测的穿插骑战半年内横扫黄河以北，险些彻底倾覆大唐江山。",
+    "strengthAdviceEn": "Genius of righteous vengeance and explosive counteroffensive lightning campaigns; swept all northern China in six months with unmatched tactical ferocity.",
+    "weaknessAdviceZh": "战略格局受限于仇恨驱使，缺乏长久建设政权的政治制度设计；过度依赖突厥外力借兵反扑，丧失了窦建德时期得民心的仁义底色。",
+    "weaknessAdviceEn": "Blinded by destructive vengeance with no capacity for stable civil governance; relied on foreign Turkic cavalry to ravage his own homeland upon return.",
+    "historicalQuoteZh": "太宗叹其用兵曰：‘黑闼深明用兵，剽悍不可当，诸将非其敌也，非朕亲出不可！’《旧唐书》赞：‘黑闼神略过人，复仇兴邦，虽败犹荣，烈士之风也！’",
+    "historicalQuoteEn": "Taizong marveled at his tactics: 'Heita commands with peerless brilliance; none of our generals can stand against him except myself!' Annals honor his fierce tragic valor.",
+    "auxiliaryStrengthsZh": [
+      "漳南振臂一呼，河北旧部数万人星夜来归，仅用半年时间全歼唐朝四大军团，连斩李唐开国名将数十人，将黄河以北大片江山完全收复",
+      "洺水之战击溃李世民外围警戒，全歼罗士信防守精锐，展现令李唐最高统帅部胆寒的战术爆发力"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Raised an army overnight to avenge his master, annihilating four imperial Tang armies and reclaiming Hebei",
+      "Crushed Tang defenses at Mingzhou in blinding blizzards, putting the fear of extinction into Chang'an"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "洺水大战中忽视了李世民在上游拦截水流筑堰设伏的致命阴谋，全军涉水被暴洪冲垮全军崩溃",
+      "兵败后引诱突厥重兵蹂躏河北父老，彻底玷污了此前‘为窦王复仇’的正义旗号，最终被部将诸葛德威出卖诛杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Failed to detect Li Shimin's upstream river dam trap at Ming River, leading his trapped troops into a drowning massacre",
+      "Brought plundering Turkic hordes into Hebei after his defeat, turning his own citizens into mortal enemies"
+    ]
+  },
+  {
+    "id": "pei_ju",
+    "nameZh": "裴矩",
+    "nameEn": "Pei Ju (Duke of Wen)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "民部尚书 · 闻喜公 · 经略西域丝路总设计师一代地缘泰斗",
+    "positionEn": "Minister of Revenue · Duke of Wen · Grand Architect of the Silk Road & Central Asian Mastery",
+    "personalityZh": "深谋远虑、经略万方、分裂突厥、老谋深算、顺风使舵",
+    "personalityEn": "Master grand strategist of Central Asia; authored 'Gazetteer of Western Regions', divided the Turks through diplomacy, opened Silk Road; served Sui then Tang as Chancellor",
+    "deedsZh": "河东闻喜人，历仕北齐、隋、唐三朝；隋炀帝时经略西域，招引胡商入张掖互市，著《西域图记》三卷摸清西域四十四国虚实；施‘远交近攻、以夷制夷’之策分化东西突厥；归唐后拜民部尚书，力纠武德弊政，直言进谏太宗；年八十高寿善终。",
+    "deedsEn": "Served Northern Qi, Sui, and Tang; mapped 44 Central Asian nations in his masterwork 'Gazetteer of Western Regions'; split the mighty Turkic Khaganate; Tang chancellor; died at 80.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "伤官",
+      "正财"
+    ],
+    "patternType": "伤官配印格",
+    "strengthAdviceZh": "中国古代绝顶的地缘政治总设计师与丝路经略宗师。仅凭三寸不烂之舌与超群情报网络，分化瓦解欧亚草原上最恐怖的突厥汗国，为大唐重开西域奠定全盘顶层蓝图。",
+    "strengthAdviceEn": "Supreme geopolitical architect of Silk Road strategy; dissected and split the terrifying Turkic nomad empire through brilliant intelligence networks and master diplomacy.",
+    "weaknessAdviceZh": "政治人格具有极强的顺风使舵与实用主义投机色彩；在隋炀帝朝谄媚阿谀导帝奢靡，在唐太宗朝却摇身一变成为直言骨鲠之臣，深谙官场变色龙生存术。",
+    "weaknessAdviceEn": "Political chameleon who flattered Emperor Yang's megalomania during Sui, then transformed into a righteous moral counselor under Taizong to survive regime changes.",
+    "historicalQuoteZh": "司马光在《资治通鉴》借其立论：‘裴矩奸于隋而忠于唐，非其性有变也。君好谄则谄，君好直则直。’《旧唐书》赞：‘矩宏达多智，经略西域，功冠当时。’",
+    "historicalQuoteEn": "Sima Guang famously judged: 'Pei Ju was corrupt under Sui yet righteous under Tang; a ruler gets the minister he desires!' Annals praise his peerless Silk Road statecraft.",
+    "auxiliaryStrengthsZh": [
+      "亲自坐镇河西走廊张掖互市，摸透西域四十四国山川地理风土人情，编撰成图文并茂的《西域图记》，成为中华经略中亚的千古绝代红宝书",
+      "运筹帷幄实施以夷制夷毒计，挑拨启民可汗与泥利可汗火并，一举将强盛不可一世的大突厥帝国撕裂为东西两部"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Mapped 44 Central Asian kingdoms in his 'Gazetteer of Western Regions', laying the foundation for Tang's mastery of the Silk Road",
+      "Orchestrated the grand diplomatic gambit that split the colossal Turkic Khaganate into hostile Eastern and Western halves"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在隋炀帝朝为了迎合帝王好大喜功虚荣心，大肆铺张在洛阳设百戏接待外番胡商，甚至用锦缎缠绕树木，严重透支隋朝国力",
+      "一生侍奉多个截然相反的政权（从北齐到隋唐），处世哲学过于圆滑保全，在纯粹儒家道德大节上受到争议"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Encouraged Emperor Yang's reckless vanity by wrapping Luoyang trees in silk to impress foreign merchants",
+      "Exemplified opportunistic bureaucratic flexibility across collapsing dynasties, lacking absolute moral convictions"
+    ]
+  },
+  {
+    "id": "yu_shiji",
+    "nameZh": "虞世基",
+    "nameEn": "Yu Shiji",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "内史侍郎 · 隋朝权相 · 虞世南之兄 · 报喜不报忧亡国弄臣",
+    "positionEn": "Vice Director of Imperial Chancellery · Chief Minister of Sui · Elder Brother of Yu Shinan",
+    "personalityZh": "博学典雅、辞赋双绝、谄谀误国、闭塞言路、江都同难",
+    "personalityEn": "Elder brother of Yu Shinan; famed literary master who became Emperor Yang's gatekeeper minister; suppressed all rebel warnings to flatter the throne; butchered in Jiangdu coup",
+    "deedsZh": "会稽余姚人，虞世南长兄，少有盛名以辞章著称；入隋历任内史侍郎独揽枢要；为取悦炀帝，凡各地告变求援文书一律扣押不报，粉饰天下太平；炀帝叹其温雅，言无不从；大业十四年宇文化及在江都发动兵变，世基与其子同遭缢杀。",
+    "deedsEn": "Brother of calligrapher Yu Shinan; famed scholar who controlled the Sui chancellery; suppressed all reports of peasant revolts to stroke Emperor Yang's ego; executed in 618.",
+    "archetype": "civil",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "食神",
+      "正财"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "六朝余韵中顶尖的台阁骈文与公文辞章大宗师。笔下千言倚马可待，深谙帝王喜怒哀乐与官僚体制行文规范，具有极高的行政文书修养。",
+    "strengthAdviceEn": "Supreme master of imperial rhetoric and ornate Confucian bureaucratic composition; understood the emotional psychology of monarchs with uncanny sensitivity.",
+    "weaknessAdviceZh": "极端懦弱自私的政治谄媚者；为了保全自身官位圣眷，在天下狼烟四起大难临头之际将各地报警告急文书全部销毁，以‘盛世太平’欺瞒皇帝致使帝国土崩瓦解。",
+    "weaknessAdviceEn": "Fatal sycophantic gatekeeper; buried desperate reports of collapsing provinces to maintain his comfortable court standing, sealing the suicide of the Sui empire.",
+    "historicalQuoteZh": "江都兵变宇文化及指其面曰：‘君谄谀阻乱，欺罔主上，使海内骚然，非君之罪而谁！’《隋书》评：‘世基以文翰进，居清要之位，谄谀阿附，坐视倾覆，宜哉其死！’",
+    "historicalQuoteEn": "During the Jiangdu coup, rebels cursed him: 'You hid reality from the throne and broke the realm; who else deserves death!' History records him as a tragic flatterer.",
+    "auxiliaryStrengthsZh": [
+      "文章词藻清绝当世，早年撰写帝王诏书字字珠玑名震江南，与弟世南并称‘二虞’，其书法辞赋深得陈隋两代君王极高礼赞",
+      "在隋炀帝巡行江都、远征高句丽期间，独自承办全国繁重繁复的官僚文书批转，展现出超群的文字行政效率"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Renowned across southern and northern courts for elegant literature alongside his brother Shinan as 'The Two Yus'",
+      "Drafted hundreds of state decrees with astonishing speed during Emperor Yang's massive imperial campaigns"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在起义军逼近江都几十里外时，仍将将领求救文书当场撕毁并痛斥军官妖言惑众，导致炀帝至死不知天下大乱真相",
+      "贪图私利大肆纳贿，公器私用卖官鬻爵，在江都兵变被俘时向叛军跪地乞怜却依然难逃绞杀厄运"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Tore up frantic battlefield distress letters and scolded officers as liars, blinding his emperor to the bitter end",
+      "Amassed illegal fortunes through corrupt promotions, kneeling in pitiful tears before mutineers who hanged him"
+    ]
+  },
+  {
+    "id": "lai_huer",
+    "nameZh": "来护儿",
+    "nameEn": "Lai Huer (Duke of Rong)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "荣国公 · 右翊卫大将军 · 隋代水陆远征高句丽铁血支柱",
+    "positionEn": "Duke of Rong · Grand General of Right Guard · Iron Veteran Who Commanded Sui Navies to Pyongyang",
+    "personalityZh": "勇略沉鸷、气量宏远、远征辽东、水师破敌、尽忠死难",
+    "personalityEn": "Peerless Sui naval admiral and ironclad loyalist general; broke southern rebels; sailed the Gulf of Bohai to storm Pyongyang in Korean wars; murdered defending Sui at Jiangdu",
+    "deedsZh": "江都人，早年从平陈战役立下首功；隋炀帝征高句丽，护儿任东莱道水军总管，率巨舰数百艘跨渤海直抵浿水，大破高句丽大军，直扑平壤城下；后讨平杨玄感谋反立首功；江都之变宇文化及弑逆，护儿临危不降破口大骂叛贼，与虞世基同被杀害。",
+    "deedsEn": "Sui naval commander who conquered Chen; sailed hundreds of battleships to smash Korean armies outside Pyongyang; quelled Yang Xuangan revolt; murdered during Jiangdu mutiny in 618.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "偏印",
+      "七杀"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "中国古代卓越的大兵团跨海两栖登陆与联合海战战略家。统帅数百艘巨舰在波涛汹涌的渤海纵横驰骋，以惊天动地的海上奇袭直接轰击敌国首都咽喉。",
+    "strengthAdviceEn": "Visionary grand admiral of amphibious naval warfare; commanded colossal fleets across storm-tossed seas, landing shock troops directly outside the enemy capital.",
+    "weaknessAdviceZh": "水陆协同作战中对陆军友邻部队的配合节奏掌握欠准，跨海突袭平壤后轻敌冒进陷入高句丽寺庙伏击，导致水兵先锋受挫折损。",
+    "weaknessAdviceEn": "Overconfidence in amphibious speed compromised tactical coordination with land armies, blundering into ambushes outside Pyongyang temples.",
+    "historicalQuoteZh": "临刑叹曰：‘吾蒙国厚恩，官至极品，不能除贼报国，死所甘心！’叛贼闻之变色。《隋书》赞：‘来护儿气概雄远，威震海东，江都之变，抗节见戮，真社稷之烈臣也！’",
+    "historicalQuoteEn": "Before his execution by mutineers, Lai shouted: 'I received the throne's favor; failing to butcher you rebels, I embrace death gladly!' Annals revere his unbending fidelity.",
+    "auxiliaryStrengthsZh": [
+      "率领大隋无敌水师舰队横渡渤海，在浿水出其不意大破高句丽名将阻截，一举俘获战舰百艘生擒其将，兵临平壤城下",
+      "在杨玄感起兵叛隋围攻东都洛阳之际，果断率水陆军团掉头星夜回援，在皇天寺一战击溃叛军主力解东都之围"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Led massive fleets across Bohai sea to crush Korean river defenses, mounting a lightning amphibious assault on Pyongyang",
+      "Turned his battle fleet around overnight to smash Yang Xuangan's rebel assault on the imperial capital Luoyang"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "东莱出海登岸后被初期战役胜利冲昏头脑，未等陆军罗艺宇文述兵团接应便孤军长驱直入平壤空城，惨遭伏击损失数千骁锐",
+      "江都兵变前夕已察觉宇文化及等人异动，但过于迷信宿卫军官阶纪律，未能抢先发动先发制人的武装清洗"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Overeager pursuit led his marines into traps inside Pyongyang before land legions could form siege lines",
+      "Detected early signs of the Jiangdu mutiny but hesitated to stage a preemptive purge, falling defenceless"
+    ]
+  },
+  {
+    "id": "mai_tiezhang",
+    "nameZh": "麦铁杖",
+    "nameEn": "Mai Tiezhang (Duke of Su)",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "右屯卫大将军 · 宿国公 · 涉水日行五百里大隋第一步战肉盾",
+    "positionEn": "Grand General of Right Guard · Duke of Su · Legendary Swift Vanguard Who Fell at Liao River",
+    "personalityZh": "日行五百、勇冠诸将、忠勇烈性、身先渡辽、慷慨殉国",
+    "personalityEn": "Legendary shock vanguard and endurance champion; could outrun galloping horses; charges at Liao River in the Goguryeo war stunned the realm, dying heroically in combat",
+    "deedsZh": "始兴人，早年以善跑日行五百里著称，曾夜行百里潜入南朝行宫被捕，隋文帝奇其勇释之；随杨素南征北战屡破强敌；炀帝征辽东，铁杖任先锋叹曰：‘丈夫死于边野，马革裹尸，何能坐死床上！’强渡辽水与高句丽大军殊死搏杀，壮烈阵亡。",
+    "deedsEn": "Legendary runner who could run 500 li a day; pardoned by Emperor Wen for pure speed; served Yang Su; spearheaded the crossing of Liao River in Korea, dying fearlessly in 612.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "伤官",
+      "比肩"
+    ],
+    "patternType": "七杀格",
+    "strengthAdviceZh": "纯粹的肉体战神与铁血先锋冲锋精神。具有常人不可企及的单兵体能极限，阵前敢于向十倍之敌发动自杀式强渡冲杀，以生命践行马革裹尸的武人终极诺言。",
+    "strengthAdviceEn": "Pinnacle of superhuman physical endurance and suicidal vanguard bravery; charged into wall of Korean spearmen at the Liao River crossing to open beachheads.",
+    "weaknessAdviceZh": "空有绝世悍勇与奔跑脚力，但极度缺乏大军团作战的战术避险机变；在桥梁未完工、后援断绝的绝境下意气冲杀，白白断送性命。",
+    "weaknessAdviceEn": "Lacked all tactical caution; charged across unfinished bridgeheads without covering fire, sacrificing his life in an avoidable meatgrinder.",
+    "historicalQuoteZh": "炀帝闻其阵亡痛哭流涕曰：‘铁杖忠勇，国之巨擘！’命厚葬并封其子为柱国。《隋书》赞曰：‘麦铁杖性雄鸷，善奔逐，身先士卒，奋勇辽津，虽古之烈士何以加焉！’",
+    "historicalQuoteEn": "Emperor Yang wept bitterly upon his death, granting nobility to his sons. Annals honor him: 'Fierce and unstoppable, charging first across the Liao River, an immortal martyr!'",
+    "auxiliaryStrengthsZh": [
+      "日行五百里奔马不及，曾单人持赤手空拳在江南崇山峻岭中日夜兼程送信，被南陈与隋文帝共叹为天地神异生人",
+      "大业八年辽水之战，在跨河浮桥短缺一丈未能合龙的危急绝境中，麦铁杖长啸跃入冰冷湍流，登岸单刀斩杀敌将数十人"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Superhuman runner who outpaced post horses across mountain trails, celebrated across dynasties as a living marvel",
+      "Leaped into freezing waters when the Liao River bridge fell short, storming enemy shorelines with naked blade"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在敌众我寡、己方后援未至的致命空当期拒绝将士回撤建议，怒吼‘战死方休’盲目突入敌军万人军阵，惨遭乱矛穿心",
+      "文化素养极低且脾气暴躁，日常行伍间常以体能粗暴惩戒下属军校，治军偏向粗鄙江湖气"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Refused to retreat from enemy spear formations when his bridge collapsed, resulting in his mortal impalement",
+      "Illiterate and violently abrasive toward subordinates, running his vanguard through raw physical intimidation"
+    ]
+  },
+  {
+    "id": "zhang_xutuo",
+    "nameZh": "张须陀",
+    "nameEn": "Zhang Xutuo",
+    "dynastyZh": "隋末唐初",
+    "dynastyEn": "Sui-Tang Transition",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "齐郡通守 · 河南道十二郡戡乱统帅 · 隋末瓦岗军最畏惧不败战神",
+    "positionEn": "Commandant of Qi · Commander of Twelve Commanderies · Undefeated Scourge of Early Wagang Rebels",
+    "personalityZh": "百战百胜、治军严整、身先士卒、威慑群盗、荥阳战死",
+    "personalityEn": "Undefeated Sui pillar general; crushed northern rebel armies for years, terrifying Wagang until trapped in Li Mi's multi-layered forest ambush at Xingyang; died fighting",
+    "deedsZh": "弘农阌乡人，隋末驻守齐郡；大业年间各路起义蜂起，须陀率万余精兵转战河南山东，以寡敌众连破王薄、孙轩、石子宪等数十路大军；每战必身先士卒突入敌阵，起义军闻其名望风逃窜；后率部进逼荥阳，中李密埋伏被重围，力战突围复返救部下，战死沙场。",
+    "deedsEn": "Supreme iron general of Sui; repeatedly broke rebel armies across Henan and Shandong; charged into battle first; ambushed by Li Mi at Xingyang; died rescuing his men in 616.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "正官格",
+    "strengthAdviceZh": "隋末帝国体系下军事指挥艺术最完备的野战战术大师。治军严整纪律如铁，善于在绝对兵力劣势下抓住敌军弱点发动凌厉反击，百战百胜威震河南。",
+    "strengthAdviceEn": "Tactical genius of conventional battlefield counteroffensives; repeatedly decimated rebel armies four times his size through disciplined iron formations.",
+    "weaknessAdviceZh": "对瓦岗军战略思维的升级换代（李密加入后的正规战法）缺乏前瞻预判；胜多骄怠轻视李密的战略诡诈，中伏突围后因顾念部属返身重陷死地，壮烈陨落。",
+    "weaknessAdviceEn": "Underestimated Li Mi's sophisticated multi-tier operational ambush traps; fatal chivalric loyalty compelled him to charge back into encirclement to rescue surrounded aides.",
+    "historicalQuoteZh": "起义军闻其死皆欢呼雀跃大喜过望，齐鲁百姓为之哭泣立祠。《隋书》赞曰：‘须陀勇冠三军，百战不折。临难蹈节，返棹救士，斯盖国之名将，忠烈之极者矣！’",
+    "historicalQuoteEn": "Rebels cheered with joy at his death, while northern civilians wept. Annals celebrate: 'Undefeated in a hundred battles, he died saving his men, the pinnacle of imperial martyrs!'",
+    "auxiliaryStrengthsZh": [
+      "以万余疲弱齐郡郡兵屡挫王薄十万大军于岱山，奇计频出长途追击斩杀万级，让当时汹涌反隋浪潮在河南山东一带遭遇断崖式遏制",
+      "荥阳被伏身中数创已单骑杀出重围，见麾下士卒陷于贼手，四度返身杀入数万人马阵中救出数十人，直至力竭殉国"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Shattered a 100,000-strong rebel army at Mount Daishan with a small garrison through brilliant ambush maneuvers",
+      "Broke out of Li Mi's encirclement alone, then charged back four times into tens of thousands to rescue his trapped men"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "对李密布设在荥阳山林深谷间的连环口袋阵失去战役警惕，轻信张公谨等前哨报告贸然深入密林",
+      "一味依靠军事强硬镇压手段压制民间反抗，在隋炀帝苛暴暴政导致社会全面撕裂的大势下注定沦为悲剧殉葬品"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Blundered into Li Mi's dense forest kill-zone due to overconfidence born of years of uninterrupted battlefield victories",
+      "Chose military suppression of starving peasants without addressing dynastic injustice, fighting an unwinnable historical tide"
+    ]
+  },
+  {
+    "id": "xuan_zang",
+    "nameZh": "玄奘",
+    "nameEn": "Master Xuanzang (Tripitaka)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "大慈恩寺三藏法师 · 世界翻译巨匠 · 万里孤征西行取经一代圣僧",
+    "positionEn": "Tripitaka Master Xuanzang · Monumental Cultural Translator · Pilgrim of the Silk Road & India",
+    "personalityZh": "宏愿通天、坚毅绝伦、万里孤征、求真务实、开宗立派",
+    "personalityEn": "Colossal Buddhist scholar and explorer; walked alone across Gobi desert and Himalayas to Nalanda, India; translated 1,335 volumes of scriptures; founded Yogacara East Asia",
+    "deedsZh": "洛州缑氏人，俗姓陈；为穷究佛法源流，贞观元年冒禁偷渡出关西行；历经莫贺延碛沙海、翻越葱岭帕米尔，历时十七载途经百余国抵天竺那烂陀寺，辩经击败全印高僧；贞观十九年载经六百余部返长安，太宗亲迎；主持译经十九年，撰《大唐西域记》，享誉世界。",
+    "deedsEn": "Traveled alone through Central Asian deserts and Himalayas to India; studied at Nalanda, winning debates across all India; returned with 657 texts; translated 1,335 fascicles; wrote Western Regions.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "木"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "食神",
+      "正官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "人类文明史上绝顶的求真意志与文化融合大师。具有不可思议的心灵力量，以‘宁可向西一步死，绝不后退半步生’的崇高精神穿越绝境，构筑欧亚文明对话永恒桥梁。",
+    "strengthAdviceEn": "Peerless spiritual titan and cross-cultural translator; survived impossible deserts with the vow 'Better die stepping west than live retreating east', unifying Asian thought.",
+    "weaknessAdviceZh": "倾尽毕生心血翻译印度唯识宗奥义，因学说过于繁复思辨、名相精密繁冗，在平民百姓与后世世俗化佛法浪潮中难以广泛普及，宗派日渐衰微。",
+    "weaknessAdviceEn": "His highly cerebral and complex Yogacara philosophical doctrines proved too dense for common folk, causing his specific school to fade relative to Chan Buddhism.",
+    "historicalQuoteZh": "唐太宗为《大唐三藏圣教序》叹曰：‘松风水月未足比其清华，仙露明珠讵能方其朗润！’季羡林赞其为‘中印文化交流第一人，中华民族之真正脊梁！’",
+    "historicalQuoteEn": "Taizong composed the famous preface: 'Pine breezes and moonlight cannot match his purity!' Ji Xianlin hailed him as the true immortal backbone of the Chinese civilization.",
+    "auxiliaryStrengthsZh": [
+      "独身一人无粮无水穿越八百里‘上无飞鸟下无走兽’的莫贺延碛荒漠，四夜五天滴水未进濒临死亡依然默诵经文向西前行，创造人类生存史奇迹",
+      "主持长安弘福寺与大慈恩寺译场十九载，翻译梵文佛经七十五部一千三百三十五卷，翻译精确度与文字体量冠绝人类翻译史"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Walked alone across 800 li of waterless desert for five days without drinking, surviving through transcendent mental focus",
+      "Supervised the translation of 1,335 fascicles of Sanskrit texts across 19 years with peerless linguistic precision"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早期出关取经违反大唐朝廷封关出境律法，属于涉险私渡关隘，给同行地方官吏带来极大政治风险",
+      "对宗派内部义理辨析过于坚持印度原版经院繁琐哲学，排斥本土化世俗改良，导致唯识宗后继乏人"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Violated imperial border laws to smuggle himself out of China, placing frontier officers in severe jeopardy",
+      "Clung strictly to rigid Indian scholastic dogma, resisting pragmatic Sinicization and limiting his school's legacy"
+    ]
+  },
+  {
+    "id": "sun_simiao",
+    "nameZh": "孙思邈",
+    "nameEn": "Sun Simiao (Medicine King)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "药王 · 道医宗师 · 《千金要方》著述者 · 百岁养生济世神仙",
+    "positionEn": "King of Medicine · Grand Daoist Physician · Author of 'Invaluable Prescriptions' · Century-Old Sage",
+    "personalityZh": "大医精诚、博极医源、济世活人、淡泊名利、德寿双全",
+    "personalityEn": "Immortal Daoist physician and herbal master; authored 'Qianjin Fang'; lived to 141 (or over 100); pioneered medical ethics ('On the Absolute Sincerity of Great Physicians') and diet therapy",
+    "deedsZh": "京兆华原人，精通经史道家佛典，七岁日诵千言；青年通晓诸子百家潜心岐黄之术；隋唐数代帝王征辟其为国子博士、谏议大夫，皆坚辞不就隐居太白山；总结唐以前全部医学经验，著《千金要方》《千金翼方》共六十卷；首倡‘大医精诚’医德准则；享年百岁以上仙逝。",
+    "deedsEn": "Polymath who declined imperial chancellorships under Sui and Tang to practice mountain medicine; wrote 60 volumes of 'Qianjin Fang'; established China's Hippocratic Oath; lived past 100.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "偏印",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "中华医学史上绝顶的医德圣人与药学百科全书编纂大师。确立了天下医者‘先发大慈恻隐之心、普救含灵之苦’的至高伦理圣碑，将医药学推向空前成熟巅峰。",
+    "strengthAdviceEn": "Father of Chinese medical ethics and pharmacopeia synthesis; penned the immortal code of the Great Physician, prioritizing universal compassion above profit.",
+    "weaknessAdviceZh": "一生追求避世隐修与道家飞升丹术，早期著作中微有涉及矿石金石炼丹等长生求仙成分，带有中古时代道教神秘主义色彩。",
+    "weaknessAdviceEn": "Early writings retained traces of Daoist alchemical elixir obsession and cinnabar consumption characteristic of medieval hermits.",
+    "historicalQuoteZh": "太宗召见叹曰：‘有道者诚可尊也！’高宗拜其为谏议大夫固辞。卢照邻拜其为师赞曰：‘思邈道参天地，德冠生民，真古之神仙也！’百姓世尊为‘药王’。",
+    "historicalQuoteEn": "Taizong praised him: 'A man of the True Dao commands universal reverence!' Lu Zhaolin revered him as a living immortal, and Chinese people revere him as King of Medicine.",
+    "auxiliaryStrengthsZh": [
+      "撰写传世巨著《备急千金要方》三十卷，收录药方五千三百余首，开创妇科、儿科、针灸经络与食疗养生学先河，成为中华医学百科全书",
+      "在《大医精诚》中树立崇高医德准则，要求行医者视患者如至亲，‘无欲无求，誓愿普救含灵之苦’，成为中国古代医德最高灯塔"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Compiled 5,300 herbal formulas in 'Qianjin Fang', pioneering holistic gynecology, pediatrics, and dietetics",
+      "Penned 'On the Absolute Sincerity of Great Physicians', enshrining unconditional compassion as the sacred code of healing"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "坚守避世太白山中修道炼丹，多次谢绝朝廷入仕建立国家太医院体系的邀请，未能借助国家公权力更广泛推广全民卫生防疫",
+      "药方中部分涉及硫磺、水银、朱砂等古老金石炼丹服食方剂，给后世盲目服丹者带来一定重金属隐患"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Declined repeated imperial invitations to structure a national public health academy, preferring hermit seclusion",
+      "Included archaic mineral and cinnabar formulas from Daoist alchemy that posed heavy metal risks to later students"
+    ]
+  },
+  {
+    "id": "li_chunfeng",
+    "nameZh": "李淳风",
+    "nameEn": "Li Chunfeng",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "太史令 · 司天监 · 《推背图》合著者 · 历算易学天文学泰斗",
+    "positionEn": "Imperial Astronomer · Astrologer Royal · Co-Author of Tuibei Tu · Titan of Chinese Mathematics",
+    "personalityZh": "究天人之际、通晓象纬、神机妙算、历算精审、刚正不阿",
+    "personalityEn": "Genius astronomer, mathematician, and Daoist prophet; invented the Triple Sphere Armillary; wrote 'Linde Calendar'; annotated Ten Computational Canons; co-authored Tuibei Tu",
+    "deedsZh": "岐州雍人，自幼博览群书尤明天文历算；太宗时任将仕郎，改进浑天仪制成三重浑仪；撰成《麟德历》废除旧历误差；注释《九章算术》《周髀算经》等‘算经十书’定为国子监教材；与袁天罡合著中华第一预言奇书《推背图》；准确预言武后代唐，卒于官。",
+    "deedsEn": "Invented the advanced triple-sphere armillary sphere; authored the Linde Calendar; standardized the Ten Mathematical Classics; co-wrote the legendary prophecy book Tuibei Tu; died 670.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "食神",
+      "正官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "中国古代绝顶的天文数学巨匠与宿命数理推演大师。既有极其严密科学的球体观测仪器与公历算法创造力，又具参透历史演化密码的超常先知远见。",
+    "strengthAdviceEn": "Rare synthesis of rigorous empirical astronomy and mystical prophetic foresight; standardized the mathematical canon while creating the world's most sophisticated armillary spheres.",
+    "weaknessAdviceZh": "在天人感应与谶纬推演上深陷宿命论泥潭；虽准确推算出‘武氏代唐’的天机，但在太宗欲除武氏时以‘天命不可违’力阻，在政治博弈上过于顺从宿命天道。",
+    "weaknessAdviceEn": "Fatalistic philosophy discouraged direct preventative action; accurately predicted Wu Zetian's rise but urged Taizong to surrender to cosmic destiny rather than intervene.",
+    "historicalQuoteZh": "太宗叹其推步神验：‘淳风精究象纬，言无不中，真当代之邹衍、京房也！’《旧唐书》赞：‘淳风博极群书，尤精历算，制浑仪、注算经，功在千载。’",
+    "historicalQuoteEn": "Taizong praised his astrological forecasts: 'Chunfeng's calculations never miss the mark; a modern Zou Yan!' Annals honor his calendar and mathematical commentaries.",
+    "auxiliaryStrengthsZh": [
+      "发明前所未有的‘三重浑天仪’（六合仪、三辰仪、四游仪），将人类天体测量精度推向全新高度，领先世界天文学数百年",
+      "整理考订汉魏以来《九章算术》《海岛算经》等十部数学巨著并作注，使中华算学体系化确立为封建国子监太学教科书"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Invented the triple-ring armillary sphere, elevating celestial measurement accuracy centuries ahead of world science",
+      "Edited and standardized the Ten Computational Canons, creating the core mathematical curriculum of the Tang empire"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "与袁天罡推演《推背图》推演至千百年后历史，因涉及极多元首更迭秘辛被历代王朝列为禁书，在民间引发大量谶纬附会乱象",
+      "当太宗就‘武氏诛唐’征询其意见时，力劝太宗顺应天命不加诛杀，间接导致大唐李唐宗室随后遭遇血洗屠杀"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Co-authored the prophetic Tuibei Tu which was banned by later dynasties for inciting apocalyptic rebellions",
+      "Dissuaded Taizong from eliminating Wu Zetian on astrological grounds, facilitating the future purge of Tang royals"
+    ]
+  },
+  {
+    "id": "yuan_tiangang",
+    "nameZh": "袁天罡",
+    "nameEn": "Yuan Tiangang",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "火井令 · 天象相术宗师 · 准确相中武后天命一代神机国手",
+    "positionEn": "Magistrate of Huojing · Master Astrologer & Physiognomist · Legendary Seer of Wu Zetian's Destiny",
+    "personalityZh": "玄机莫测、洞悉天机、神相通灵、知止不殆、飘然出尘",
+    "personalityEn": "Legendary master physiognomist and Daoist seer; famously examined infant Wu Zetian dressed as a boy and prophesied she would become Son of Heaven; co-authored Tuibei Tu",
+    "deedsZh": "益州成都人，隋末唐初著名相士与道家易学家；太宗闻其名召入长安，赞其相术绝伦；初过利州见武士彟幼女（武则天），误以为男婴，惊叹曰：‘日角龙颜，若是女，当为天下主！’准确预言杜淹、王珪、韦挺等人官运吉凶；后自知天命辞官归蜀，无疾而终。",
+    "deedsEn": "Examined infant Wu Zetian and uttered the chilling prediction: 'If female, she shall rule as Son of Heaven!' Predicted fates of Tang chancellors; retired to Sichuan and died peacefully.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "水",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "偏官",
+      "食神"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "中华相术与易学推演的神级宗师。能够从骨相神采与微观面相中洞穿一个人乃至一个帝国的兴衰宿命，其预言准确度跨越千年震撼青史。",
+    "strengthAdviceEn": "Supreme seer of human physiognomy and dynastic fortune; decoded individual destiny and imperial succession from facial bone structure and celestial movements.",
+    "weaknessAdviceZh": "其玄学理论与相术技艺过于依附神秘主义与直觉顿悟，缺乏像李淳风那样的实证科学仪器与数学演算支撑，难以被现代科学体系完全量化阐发。",
+    "weaknessAdviceEn": "Grounded heavily in occult intuition and esoteric mysticism, lacking the quantifiable empirical mathematics of his peer Li Chunfeng.",
+    "historicalQuoteZh": "太宗召见喜曰：‘巴蜀古多神仙，卿即当代严君平也！’《旧唐书》叹其神异：‘天罡善相人，语其休咎，无不立验，盖通于神明者欤！’",
+    "historicalQuoteEn": "Taizong rejoiced upon meeting him: 'Sichuan produces immortals; you are our modern Yan Junping!' Annals record: 'His predictions never failed, communing with the divine.'",
+    "auxiliaryStrengthsZh": [
+      "仅凭一眼襁褓中女婴武则天之容貌步态，便断言其‘必登天子宝座’，成为中国古代政治预言史上最惊世骇俗的精准神话",
+      "准确推算杜淹必先遭贬黜后登高官、王珪必以文章致相，其所断之人吉凶寿夭分毫不差，天下公认‘神相国手’"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Identified baby Wu Zetian as the future female Emperor of China, executing the most famous accurate prophecy in history",
+      "Correctly predicted the rise, disgrace, and lifespans of Tang chancellors Du Yan, Wang Gui, and Wei Ting to the exact month"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "因相术过于通灵神异被统治阶层视为通神之物，一生多为皇室权贵卜测吉凶，在普惠下层黎民疾苦上用力较少",
+      "其学术精髓多随其仙逝而成为不传之秘，留存后世的相书多被江湖术士附会伪作，良莠不齐"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Focused esoteric talents primarily on aristocratic palace elites rather than alleviating common civilian miseries",
+      "Kept diagnostic techniques strictly oral and secret, allowing later charlatans to exploit forged manuals"
+    ]
+  },
+  {
+    "id": "wang_ji",
+    "nameZh": "王绩",
+    "nameEn": "Wang Ji (Master Donggao)",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "秘书省正字 · 东皋子 · 五言律诗开山祖师初唐隐逸诗仙",
+    "positionEn": "Proofreader of Chancellery · Master Donggao · Pioneer Patriarch of Tang Five-Character Regulated Poetry",
+    "personalityZh": "嗜酒放达、清狂不羁、隐逸田园、开创诗风、笑傲王侯",
+    "personalityEn": "Hermit poet, drinker, and literary pioneer; brother of philosopher Wang Tong; wrote 'Looking Out Over the Wilds', founding Tang five-character regulated verse; died in peaceful leisure",
+    "deedsZh": "绛州龙门人，文中子王通之弟；隋末举孝廉，入唐任秘书省正字，因好酒自请出任太乐丞，时人号为‘斗酒学士’；弃官归隐东皋，弹琴植杖自乐，撰《五斗先生传》；其《野望》‘树树皆秋色，山山唯落晖’开启唐诗五言律诗新纪元；贞观十八年卒。",
+    "deedsEn": "Brother of philosopher Wang Tong; served briefly in imperial library; resigned to brew wine and farm at Donggao; his pastoral poem 'Looking Out Over the Wilds' inaugurated Tang poetic golden age.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "食神",
+      "偏印",
+      "比肩"
+    ],
+    "patternType": "食神格",
+    "strengthAdviceZh": "打破隋代绮靡浮华宫体诗风的一代诗歌拓荒巨匠。以清真自然的笔触开启五言律诗格律化与田园自然美学，为盛唐李杜诗歌繁华播撒了第一批火种。",
+    "strengthAdviceEn": "Pioneer of Tang poetic renaissance; shattered ornate Southern Dynasties court verse with clean, rustic pastoral naturalism, laying the foundation for High Tang poetry.",
+    "weaknessAdviceZh": "性格过于放诞嗜酒逃避世俗责任；将满腹经纶与济世才学全部寄托于杯中之物与东皋农耕，缺乏士大夫以天下为己任的实干担当。",
+    "weaknessAdviceEn": "Pathologically detached from civic responsibility; sought refuge in chronic alcoholism and rustic escapism, abandoning statecraft entirely to wine bottles.",
+    "historicalQuoteZh": "杜甫诗叹曰：‘王绩隐处士，诗名垂千古！’闻一多赞其：‘初唐诗人第一位从六朝绮靡中猛醒过来、将诗歌带回大自然的伟大拓荒者！’",
+    "historicalQuoteEn": "Du Fu honored him in verse. Literary scholar Wen Yiduo praised: 'Wang Ji was the first poet of Tang to shake off decadent southern flattery and return verse to living nature!'",
+    "auxiliaryStrengthsZh": [
+      "创作传世名篇《野望》，以‘树树皆秋色，山山唯落晖。牧人驱犊返，猎马带禽归’一扫六朝陈腐雕琢之气，被公认为唐代五言律诗第一首成熟经典",
+      "嗜酒如命精通酿造，撰写《酒经》《酒谱》，将美酒与魏晋风骨融入诗歌，塑造了唐代第一位狂放诗仙形象"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Penned the immortal masterpiece 'Looking Out Over the Wilds', universally acclaimed as the very first mature Tang regulated poem",
+      "Authored brewing treaties 'Classic of Wine', marrying rustic wine culture to sublime literary romanticism"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "因嗜酒误事屡次旷工缺席朝廷秘书省差使，上司问其何故求官，竟答‘为官府有好酒二升’，视国家公职如儿戏",
+      "终其一生沉湎于醉乡隐遁避世，在盛世初唐百废待兴之际未能为国家制度建设献出一策一计"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Openly admitted he only took an imperial library job for its daily wine rations, scandalizing court discipline",
+      "Spent his entire adult life in drunken pastoral withdrawal, contributing nothing to institutional statecraft"
+    ]
+  },
+  {
+    "id": "yan_lide",
+    "nameZh": "阎立德",
+    "nameEn": "Yan Lide",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "工部尚书 · 营缮营建大宗师 · 规划昭陵翠微宫大国工匠",
+    "positionEn": "Minister of Works · Grand Imperial Architect of Tang · Builder of Zhaoling Mausoleum and Fleets",
+    "personalityZh": "巧夺天工、精通营造、擘画山河、大匠运斤、慎密忠肃",
+    "personalityEn": "Supreme architectural master and civil engineer; designed imperial palaces (Cuiwei, Yuhua), engineered Taizong's vast Zhaoling Mausoleum, and built maritime invasion armadas",
+    "deedsZh": "雍州万年人，阎毗之子，阎立本之兄；历任将作大匠、工部尚书；主持营建太宗昭陵陵园，依山为陵气势雄浑，开后世帝陵范式；规划修造翠微宫、玉华宫等宏伟行宫；太宗征高句丽，立德于泰州督造海船五百艘；治黄河桥梁、改制舆服典章，功在当代。",
+    "deedsEn": "Son of engineer Yan Pi; Minister of Works; designed Taizong's colossal mountain tomb Zhaoling; built Cuiwei Palace; constructed 500 oceanic battleships for Korean campaign; died 656.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "伤官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "大唐帝国物质文明与国家级土木水利总工程师。拥有化腐朽为神奇的立体空间规划与巨型工程组织能力，将自然山川与盛唐皇家气度完美熔铸于一体。",
+    "strengthAdviceEn": "Supreme civil architect and infrastructural genius of Tang; pioneered the 'tomb integrated into the living mountain' design at Zhaoling, harmonizing imperial grandeur with geography.",
+    "weaknessAdviceZh": "工程组织中为了追求帝王宫殿的极致华美与工期速度，多次超额征调民夫劳役，对下层工匠与民力耗损缺乏人文体恤。",
+    "weaknessAdviceEn": "Driven by architectural perfectionism and ruthless construction deadlines, imposing crushing corvee labor demands on thousands of common builders.",
+    "historicalQuoteZh": "太宗赞其工程技艺：‘立德所规画，皆合朕意，国家之良匠也！’《旧唐书》赞：‘立德器用精巧，善图构造。昭陵依山，百代取法，工部之功，莫之与京。’",
+    "historicalQuoteEn": "Taizong praised his mastery: 'Everything Lide designs matches my imperial soul; an unmatched state craftsman!' Annals honor his Zhaoling layout as an eternal model.",
+    "auxiliaryStrengthsZh": [
+      "突破汉魏积土为陵旧制，首创‘因山为陵’将太宗昭陵直接依九嵕山凿岩修筑，陵园周长一百二十里，成为人类历史上规模最宏大的帝王陵寝工程",
+      "受命于泰州监造五百艘跨海平壤巨型楼船，在极短时间内完成世界级大型海舰队建造，为大唐远征辽东提供坚不可摧的水上支撑"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Pioneered the colossal mountain mausoleum concept at Zhaoling along Mount Jiuzong, creating the largest royal tomb park in history",
+      "Constructed 500 oceanic warships in record time, providing the indispensable naval fleet for the eastern wars"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "督造翠微宫行宫期间严令民工冒酷暑日夜赶工，导致大量工匠劳役中暑倒毙，遭到御史台弹劾劳民伤财",
+      "专注于技术工程营造与帝王声色审美，在朝廷重大政治立储与民生法度辩论中表现平庸沉默"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Imposed brutal work shifts in scorching summer heat to finish Cuiwei Palace, provoking impeachments for wasting human life",
+      "Confined his genius exclusively to royal aesthetic construction, remaining mute on grand national governance"
+    ]
+  },
+  {
+    "id": "yan_liben",
+    "nameZh": "阎立本",
+    "nameEn": "Yan Liben",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "中书令 · 凌烟阁图画宗师 · 《步辇图》《历代帝王图》千古丹青圣手",
+    "positionEn": "Chancellor of Chancellery · Master Painter of Lingyan Pavilion · Creator of 'Emperor Taizong Receiving Tibetan Envoy'",
+    "personalityZh": "丹青神化、形神兼备、出将入相、耻为画师、温厚端正",
+    "personalityEn": "Immortal court painter and later Chancellor (Prime Minister); painted the 24 Lingyan Heroes and iconic 'Bu Nian Tu'; wept in shame when called to sketch ducks like a servant",
+    "deedsZh": "雍州万年人，工部尚书阎立德之弟；擅长人物肖像与历史巨画；奉太宗命于凌烟阁图绘二十四功臣等身肖像，名垂千古；绘制《步辇图》《历代帝王图》成为国宝圣品；高宗朝官至右相、中书令，时人号为‘立德善造立本善画’；总章年间耻以画技进位，戒子勿学画。",
+    "deedsEn": "Grand court painter and Chancellor under Gaozong; painted the immortal portraits of the 24 Meritorious Heroes in Lingyan Pavilion and the world-famous 'Bu Nian Tu'; died in 673.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "伤官"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "中华美术史上绝顶的人物肖像画圣与视觉国家历史记录者。笔下线条遒劲有力，不仅精准再现英雄面相，更能直击历史人物灵魂深处的气质风华。",
+    "strengthAdviceEn": "Supreme portrait painter in Chinese art history; immortalized the founding fathers of the Tang empire at Lingyan Pavilion with psychological depth and transcendent brushwork.",
+    "weaknessAdviceZh": "深陷中国传统官僚士大夫对‘技术匠人’的严重身份鄙视与自卑心理；被皇帝唤作‘画师’即深以为奇耻大辱，晚年临终戒子‘绝不可学画’，格局受到时代禁锢。",
+    "weaknessAdviceEn": "Chained to aristocratic contempt for mechanical craftsmanship; felt humiliated whenever treated as an artisan, forbidding his sons from picking up brushes on his deathbed.",
+    "historicalQuoteZh": "唐高宗拜其为相，时人有戏语：‘左相宣威沙漠，右相驰誉丹青。’《旧唐书》赞其：‘立本丹青神化，冠绝古今。然以画技取位宰相，非古之儒者所望也。’",
+    "historicalQuoteEn": "Folklore joked: 'Left Chancellor commands the desert; Right Chancellor excels at ink paintings.' Annals acclaim: 'Divine brushwork that transcended history!'",
+    "auxiliaryStrengthsZh": [
+      "奉敕绘制大唐《凌烟阁二十四功臣图》，为长孙无忌、李靖、魏征等国家柱石留下等身真人神韵，奠定了中华帝国英雄圣殿的至高视觉图腾",
+      "创绘《步辇图》生动记录唐太宗接见吐蕃使者禄东赞的历史瞬间，成为见证汉藏民族血脉交融的千古传世国宝"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Painted the immortal 24 Meritorious Officials of Lingyan Pavilion, creating the visual pantheon of Tang golden age",
+      "Authored 'Bu Nian Tu' documenting Taizong receiving Tibetan envoys, one of the most treasured national paintings in Asia"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在御苑被太宗随口召呼‘画师阎立本速画怪鸟’，当场趴伏池畔研墨作画，回家后向儿子痛哭痛悔‘少年读书万卷，今沦为厮役画工！’",
+      "出任宰相（中书令）期间政治政绩极其平庸，缺乏统摄百官经略军国大政的宰相魄力，时人讥为‘伴食宰相’"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Fell into tearful self-loathing when summoned to sketch a duck by the imperial pond, weeping that he was treated like a servant",
+      "Proved a mediocre prime minister, lacking the political statecraft required to balance court factions under Empress Wu"
+    ]
+  },
+  {
+    "id": "bian_ji",
+    "nameZh": "辩机",
+    "nameEn": "Bian Ji",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "大慈恩寺沙门 · 《大唐西域记》执笔者 · 涉高阳公主案腰斩悲情才僧",
+    "positionEn": "Monk of Da Ci'en Monastery · Scribe of 'Great Tang Records on the Western Regions' · Slain Scholar",
+    "personalityZh": "才情卓绝、梵汉贯通、文辞雅丽、情执难断、惨遭腰斩",
+    "personalityEn": "Brilliant young monk and linguist; Xuanzang's chosen editor who penned 'The Great Tang Records on the Western Regions'; executed by waist-chopping over scandal with Princess Gaoyang",
+    "deedsZh": "大总持寺高僧，十五岁出家，容貌俊秀才华横溢；贞观十九年玄奘归国，辩机以博学选入弘福寺译场任缀文大德，助玄奘笔录完成《大唐西域记》十二卷，文辞雅赡震惊朝野；后与太宗女高阳公主相恋并获赠金宝玉枕；宝枕失窃案发，太宗震怒腰斩辩机于市。",
+    "deedsEn": "Xuanzang's star disciple who translated and edited the 12 volumes of 'Western Regions'; had a romantic entanglement with Princess Gaoyang; executed by waist-chopping in 649.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "偏印",
+      "食神",
+      "七杀"
+    ],
+    "patternType": "偏印格",
+    "strengthAdviceZh": "初唐僧侣阶层中极罕见的文字文学巨匠与梵汉翻译天才。以极富美感与严密地理学逻辑的辞章，将玄奘口述的西域万里见闻化为人类传世地理圣典。",
+    "strengthAdviceEn": "Brilliant linguistic stylus and literary stylist of world geography; transformed Xuanzang's raw travel notes into the sublime classical prose of the 'Western Regions'.",
+    "weaknessAdviceZh": "佛门戒律与世俗情感边界失控；卷入大唐最骄纵任性的高阳公主政治与情感泥潭，在皇权盛怒之下沦为刀下牺牲品。",
+    "weaknessAdviceEn": "Lacked ascetic discipline against court temptation; entangled in a forbidden romance with Princess Gaoyang, incurring horrific imperial execution.",
+    "historicalQuoteZh": "玄奘失辩机如失一臂，痛惜其英年横死。史家叹曰：‘辩机才高八斗，执笔西域，实千秋之文章。然溺于情欲，犯天家大忌，腰斩于市，文人之大不幸也！’",
+    "historicalQuoteEn": "Master Xuanzang wept bitter tears over losing his most gifted editor. Annals mourn: 'A dazzling intellect cut in half at the chopping block for romantic folly!'",
+    "auxiliaryStrengthsZh": [
+      "以一人之神笔将玄奘游历西域百余国的口述纪要整理润色为《大唐西域记》十二卷，文笔洗练雄浑，成为近现代考古发掘印度佛迹的唯一世界级指南",
+      "二十六岁即入选大唐国家级译经道场九大缀文大德之一，梵汉翻译造诣在初唐三千沙门中首屈一指"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Penned all 12 volumes of 'Great Tang Records on the Western Regions', which unlocked modern archaeological rediscovery of ancient India",
+      "Selected at age 26 as the youngest translation master under Xuanzang, revered for peerless Sanskrit prose"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "身为佛门受戒高僧未能坚守清规戒律，私受高阳公主皇家金宝玉枕等巨额馈赠，在私德修持上留下不可挽回的破绽",
+      "缺乏在皇家政治风暴中的危机预警意识，在玉枕失窃被捕后未能有效辩护，横遭腰斩酷刑惨死长安市井"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Violated sacred monastic vows by engaging in courtly romance, accepting royal golden pillow gifts that doomed him",
+      "Completely naive regarding imperial security police, dragged to the executioner's block without imperial mercy"
+    ]
+  },
+  {
+    "id": "dao_xuan",
+    "nameZh": "道宣",
+    "nameEn": "Dao Xuan",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "终南山律宗初祖 · 《续高僧传》著者 · 中华佛教戒律史第一圣僧",
+    "positionEn": "Founder of Nanshan Vinaya School · Author of 'Continued Biographies of Eminent Monks' · Master of Precepts",
+    "personalityZh": "持戒如冰、著述等身、博古通今、终南隐修、万代宗师",
+    "personalityEn": "Founding patriarch of the Chinese Nanshan Vinaya (Buddhist Law) School; lived spartan life on Mount Zhongnan; wrote 'Continued Biographies of Eminent Monks', shaping Chinese Buddhism",
+    "deedsZh": "京兆吴兴人，十六岁出家，苦读经律；隐居终南山仿掌谷，深研《四分律》创立南山律宗，成为后世中华汉传佛教唯一正统受戒法门；参预玄奘译场任缀文；著述达二百余卷，其《续高僧传》《广弘明集》为研究中古佛教史第一手巨著；高宗乾封二年圆寂。",
+    "deedsEn": "Apostle of Buddhist monastic discipline; founded Nanshan Vinaya School; served on Xuanzang's board; compiled 200+ volumes including 'Continued Biographies of Eminent Monks'; died 667.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "土",
+      "secondary": "水"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正官",
+      "比肩"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "中华佛教制度化与戒律法典化的一代宗师。以冰雪般纯洁的自律精神规范三宝行止，同时兼具卓越的历史学视野，为中古中华文明留存了最翔实的思想档案。",
+    "strengthAdviceEn": "Grand legislator of Chinese Buddhist monastic law and master historian; standardized the Vinaya precepts while preserving centuries of intellectual history.",
+    "weaknessAdviceZh": "治学与宗教主张偏于极其严苛的禁欲主义与教条戒律，对世俗人情世故的多元包容度相对偏窄。",
+    "weaknessAdviceEn": "Rigidly austere asceticism and uncompromising legalism left little room for worldly human complexity or flexible adaptation.",
+    "historicalQuoteZh": "高宗为之停朝致哀，赞其：‘戒德冰霜，万夫领袖！’后世佛教尊为‘南山律祖’。《旧唐书》赞：‘道宣守戒清严，著述富赡，释门之栋梁也。’",
+    "historicalQuoteEn": "Emperor Gaozong mourned him as 'a pillar of frozen pure virtue!' Chinese Buddhism honors him eternally as the Patriarch of the Nanshan School.",
+    "auxiliaryStrengthsZh": [
+      "创立汉传佛教‘南山律宗’，集大成注释《四分律》，将印度散乱的佛教戒律体系化本土化，确立了随后千余年中国僧侣受戒登坛的至高法典规范",
+      "撰写《续高僧传》三十卷与《广弘明集》三十卷，抢救性记录了魏晋南北朝隋唐数百位高僧学者的生平论著，成为世界级东方文明史料库"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Founded the Nanshan Vinaya School, establishing the standardized monastic ordination code followed across East Asia for 1,400 years",
+      "Authored 'Continued Biographies of Eminent Monks' in 30 volumes, preserving the intellectual biographies of medieval scholars"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "因极度专注于终南山苦修与著述，对唐太宗、高宗朝政治权势对佛教的法难压制多采取隐忍避世态度，缺乏强硬抗辩的政治斗争锐气",
+      "其制定的戒律细则过于繁琐严苛（衣食住行皆有数千禁条），在一定程度上增加了佛教吸收世俗信徒的门槛"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Retreated into mountain isolation during court regulatory crackdowns, lacking public political combativeness",
+      "Imposed hyper-complex ascetic rules that raised intimidating barriers for common lay followers"
+    ]
+  },
+  {
+    "id": "fa_lin",
+    "nameZh": "法琳",
+    "nameEn": "Master Falin",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "济法寺沙门 · 护法论辩宗师 · 舌战道佛两教太宗朝第一诤僧",
+    "positionEn": "Master Falin · Fearless Buddhist Polemicist · Great Orator Who Defended Buddhism Before Taizong",
+    "personalityZh": "辩才无碍、舌灿莲花、刚正不阿、视死如归、护法砥柱",
+    "personalityEn": "Fiery, brilliant Buddhist polemicist; debated court Daoist Fu Yi; defended Buddhism fearlessly before Taizong; survived execution challenge and died in exile with immortal renown",
+    "deedsZh": "颍川颍阳人，俗姓陈；少游荆襄博通儒道佛三教；唐初太史令傅奕上疏请废佛法，法琳作《破邪论》《辩正论》力排异说，舌战群儒道士；贞观十三年道士诬其谤毁皇族李氏先祖老子，太宗怒其抗言欲斩之，令其念观音七日受死；法琳神色自若从容对答，太宗叹其胆识免死流放益州，途中圆寂。",
+    "deedsEn": "Master of Confucianism, Daoism, and Buddhism; wrote 'Treatise on Breaking Heresy' against Fu Yi; survived Taizong's death challenge with witty courage; died on exile road in 640.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "火",
+      "secondary": "金"
+    },
+    "tenGodsAffinity": [
+      "伤官",
+      "七杀",
+      "偏印"
+    ],
+    "patternType": "伤官格",
+    "strengthAdviceZh": "中华辩论史上绝顶的逻辑风暴与护法战神。面对朝廷打压与死刑威胁毫无惧色，以无可辩驳的典籍考据和狂飙般的口才捍卫信仰自由，展现不畏强权的学者风骨。",
+    "strengthAdviceEn": "Unsurpassed theological polemicist and master debater; stood unflinching before imperial death threats, wielding razor-sharp philology to defend intellectual freedom.",
+    "weaknessAdviceZh": "言辞锋芒过于尖刻刻毒，好以人身攻击与家族谱系隐秘揭人伤疤（公开考证李唐皇室并非老子后裔），在封建皇权核心痛处狂踩红线。",
+    "weaknessAdviceEn": "Aggressively combative and sarcastic; publicly proved the Tang imperial house was not descended from Laozi, needlessly provoking imperial vengeance.",
+    "historicalQuoteZh": "太宗免其死罪叹曰：‘法琳论难宏辩，实一代奇才，惜其言过激切耳！’《旧唐书》赞：‘法琳辩博无碍，临危不惧，释子之豪杰也！’",
+    "historicalQuoteEn": "Taizong spared his life in awe: 'Falin's debating genius is monstrous; pity his tongue was too sharp!' Annals revere him as a fearless giant among monks.",
+    "auxiliaryStrengthsZh": [
+      "面对大唐朝廷全盘废佛灭僧的政治狂澜，一人一笔撰写《破邪论》，在朝堂御前辩论中将太史令傅奕等满朝道士大臣辩得哑口无言狼狈不堪",
+      "太宗以死相逼命其入狱七天求观音显灵受刑，法琳在断头台上从容应对‘臣不念观音，唯念太宗陛下之圣德！’以惊人机智化解死局"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Single-handedly defeated the anti-Buddhist movement led by Fu Yi in open imperial court debate through 'Treatise on Breaking Heresy'",
+      "Faced a 7-day death trial before Taizong, replying on the scaffold with brilliant flattery that forced Taizong to commute his execution"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "在《辩正论》中公开考据揭露李唐李渊家族出自鲜卑拓跋而非陇西李耳老子，触犯封建皇族神圣不可侵犯的‘认祖归宗’最高政治禁忌",
+      "性格偏于好勇斗狠好胜心切，往往把学术辩论升华为你死我活的政治死斗，给自己树敌过多"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Provoked Taizong's wrath by proving the imperial family had Xianbei rather than noble Han ancestry",
+      "Fierce combative temperament escalated academic debates into existential death matches, making deadly enemies"
+    ]
+  },
+  {
+    "id": "zhen_quan",
+    "nameZh": "甄权",
+    "nameEn": "Zhen Quan",
+    "dynastyZh": "唐朝",
+    "dynastyEn": "Tang Dynasty",
+    "eraTag": "sui_tang_zhenguan",
+    "eraNameZh": "大唐贞观",
+    "eraNameEn": "Sui-Tang & Zhenguan Era",
+    "positionZh": "朝散大夫 · 针灸经络大宗师 · 医治太宗百岁寿考神医",
+    "positionEn": "Grand Court Physician · Grand Master of Acupuncture & Meridians · Centenarian Healer of Taizong",
+    "personalityZh": "神针通玄、脉理精微、仁心仁术、期颐颐养、德高望重",
+    "personalityEn": "Legendary centenarian physician and acupuncture pioneer; lived to 102; cured chancellors and imperial family; authored pioneering charts on meridians and pulse diagnosis",
+    "deedsZh": "许州扶沟人，隋唐著名医家；初因母病与弟甄立言齐心学医，尽通医道；尤精针灸经脉之学，撰《脉经》《针经抄》《明堂人形图》；太宗即位闻其名，亲临其宅访之；权年已百岁，视听不衰、步履轻健，太宗赐寿杖衣物拜朝散大夫；卒于贞观十七年，享年一百零三岁。",
+    "deedsEn": "Pioneered acupuncture meridian charts; treated imperial chancellors; visited by Taizong at age 102 who marveled at his keen hearing and vigor; died in 643 aged 103.",
+    "archetype": "specialist",
+    "fiveElements": {
+      "dominant": "木",
+      "secondary": "土"
+    },
+    "tenGodsAffinity": [
+      "正印",
+      "正财",
+      "食神"
+    ],
+    "patternType": "正印格",
+    "strengthAdviceZh": "中华针灸经络图谱化的开山宗师与微观针刺治疗大师。精通奇经八脉与脉理，一针下穴立起沉疴；百岁高龄仍耳聪目明步履如飞，活出健康长寿的极致样板。",
+    "strengthAdviceEn": "Father of visual meridian mapping and clinical acupuncture intervention; cured intractable illnesses with single needle strikes; lived with vibrant lucidity past 100.",
+    "weaknessAdviceZh": "一生精研微观临床针灸疗法与脉诊个案，在宏观药物方剂学体系化与药理学理论综合创新上相对少于同侪孙思邈。",
+    "weaknessAdviceEn": "Focused primarily on specialized acupuncture needle points rather than broad herbal pharmacology synthesis compared to Sun Simiao.",
+    "historicalQuoteZh": "太宗亲临其第，叹其高年壮健曰：‘甄权调和阴阳，摄生有道，真寿考之标杆也！’《旧唐书》赞：‘甄权甄立言兄弟并精医术，针灸脉理，名冠一时，天命寿终，福禄之全者。’",
+    "historicalQuoteEn": "Taizong personally visited his cottage, marveling: 'Zhen Quan harmonized Yin and Yang; a true living monument of longevity!' Annals honor the brothers as medical titans.",
+    "auxiliaryStrengthsZh": [
+      "创绘《明堂人形图》，首次将人体十二经脉与数百个针灸穴位以彩绘人体图形式直观确立，成为后世太医院针灸教学的标准蓝本",
+      "为贞观名臣长孙顺德诊治多年顽固臂风剧痛，仅在其肘后下一针即刻拔除病根使其屈伸自如，针法通神震动京华"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Created the 'Illustrated Human Meridian Charts', pioneering the visual anatomical mapping of acupuncture meridians",
+      "Cured Duke Zhangsun Shunde's chronic paralyzed arm pain with a single needle strike, stunning Chang'an"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "早期在隋朝战乱频仍年代偏居许州乡村，主要以行医养母为主，未能力挽狂澜投身战场战伤救治体系建设",
+      "部分珍贵针经秘要因年代久远战乱散佚，未能全部完整流传至明清两代"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Maintained a quiet rural family practice in youth, contributing little to national trauma surgery in war",
+      "Several of his most intricate manuscript volumes were lost during subsequent dynastic conflagrations"
     ]
   }
 ];
