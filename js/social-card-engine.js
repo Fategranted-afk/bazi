@@ -671,9 +671,54 @@ class SocialCardEngine {
   }
 
   /**
+   * Determine Classical Physiognomic Face Shape (相术五形脸格)
+   * 1. guo (国字方脸): Square, resolute, defined jaw - warriors, founding emperors
+   * 2. shen (申字清隽长圆脸): Elongated elegant oval - scholars, poets, refined princes (Xiao Tong)
+   * 3. you (由字阔颌重臣脸): Broad lower jaw - prime ministers, chancellors, elder statesmen
+   * 4. jia (甲字清奇心形脸): Broad intellectual forehead, slender chin - strategists, Daoist philosophers
+   * 5. yuan (圆字雍容福相脸): Full rounded benevolent countenance - prosperous rulers, merchants
+   */
+  static getFigureFaceShape(data, maybeArch) {
+    if (!data) return 'shen';
+    const figId = (typeof data === 'string' ? data : (data.figureId || '')).toLowerCase();
+    const arch = (typeof data === 'string' ? (maybeArch || 'specialist') : (data.figureArchetype || 'specialist'));
+    const name = (typeof data === 'object' && data.figureName) ? data.figureName : '';
+
+    // 1. Explicit historical sage mappings
+    if (figId === 'xiao_tong' || figId.includes('prince') || figId === 'tao_yuanming' || figId === 'xie_lingyun' || figId === 'gu_kaizhi' || figId === 'wang_xizhi') {
+      return 'shen';
+    }
+    if (figId === 'wang_yangming' || figId === 'guo_pu' || figId === 'tao_hongjing' || figId === 'kumarajiva' || figId === 'ge_hong' || figId === 'fan_zhen') {
+      return 'jia';
+    }
+    if (figId === 'haba_yue' || figId === 'yuwen_tai' || figId === 'gao_huan' || figId === 'liu_yu' || figId === 'guan_yu' || figId === 'yue_fei' || figId === 'tuoba_gui' || figId === 'murong_chui' || figId === 'yang_jian') {
+      return 'guo';
+    }
+    if (figId === 'sima_yan' || figId === 'fan_li' || figId === 'liu_shan') {
+      return 'yuan';
+    }
+    if (figId === 'xie_an' || figId === 'wang_dao' || figId === 'cui_hao' || figId === 'su_chuo' || figId === 'fang_xuanling') {
+      return 'you';
+    }
+
+    // 2. Archetype defaults
+    if (arch === 'military' || arch === '统帅') return 'guo';
+    if (arch === 'civil' || arch === '宰辅') return 'you';
+    if (arch === 'executive') return 'guo';
+    if (arch === 'specialist') {
+      const sum = (figId + name).split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+      const shapes = ['shen', 'jia', 'yuan'];
+      return shapes[sum % shapes.length];
+    }
+    return 'shen';
+  }
+
+  /**
    * Procedural Classical Stylized Portrait Renderer
-   * Upgraded with: Beaded Pearl Outer Ring, 3-Layer Embroidered Collar,
-   * Lifelike Phoenix Eyes with Dual Specular Glints, and Cinnabar Seal Stamp.
+   * Upgraded with: Five Physiognomic Face Shapes (五形脸格),
+   * Warm Porcelain-Silk Gradient Skin with 3D Contouring,
+   * Beaded Pearl Outer Ring, 3-Layer Embroidered Collar,
+   * Lifelike Phoenix & Tiger Eyes with Dual Specular Glints, and Cinnabar Seal Stamp.
    */
   static drawClassicalPortrait(ctx, data, cx, cy, r) {
     if (!ctx) return;
@@ -706,6 +751,7 @@ class SocialCardEngine {
     const arch = data.figureArchetype || 'specialist';
     const figId = data.figureId || '';
     const isYoungPrince = (figId === 'xiao_tong');
+    const faceShape = SocialCardEngine.getFigureFaceShape(data);
 
     // 1. Outer antique imperial double gold medallion frame
     ctx.strokeStyle = '#b45309';
@@ -821,7 +867,7 @@ class SocialCardEngine {
     safeFill();
 
     // 4. Base Anatomy: Neck & Shoulders
-    ctx.fillStyle = '#fef08a';
+    ctx.fillStyle = '#fef3c7';
     safeBeginPath();
     safeMoveTo(cx - r * 0.16, cy + r * 0.10);
     safeLineTo(cx - r * 0.18, cy + r * 0.34);
@@ -831,7 +877,7 @@ class SocialCardEngine {
     safeFill();
 
     // Subtle warm neck contour shadow
-    ctx.fillStyle = 'rgba(217, 119, 6, 0.22)';
+    ctx.fillStyle = 'rgba(180, 83, 9, 0.16)';
     safeBeginPath();
     safeMoveTo(cx - r * 0.14, cy + r * 0.12);
     safeQuad(cx, cy + r * 0.22, cx + r * 0.14, cy + r * 0.12);
@@ -935,78 +981,185 @@ class SocialCardEngine {
       safeFill();
     }
 
-    // 6. Classical Face Contour & Features (Radiant skin tone & 3D shading)
-    ctx.fillStyle = '#fef08a';
-    ctx.strokeStyle = '#b45309';
-    ctx.lineWidth = 1.1;
+    // 6. Classical Face Contour & Features (五形相法多元脸型与工笔瓷玉晕染)
+    let faceW = r * 0.38;
+    let faceTopY = cy - r * 0.32;
+    let faceBotY = cy + r * 0.20;
 
-    const faceW = r * 0.38;
-    const faceTopY = cy - r * 0.32;
-    const faceBotY = cy + r * 0.20;
+    if (faceShape === 'guo') {
+      // 国字方脸 (Square / Resolute Martial & Sovereign)
+      faceW = r * 0.41;
+      faceTopY = cy - r * 0.30;
+      faceBotY = cy + r * 0.22;
+      safeBeginPath();
+      safeMoveTo(cx, faceTopY);
+      safeLineTo(cx + faceW * 0.88, faceTopY);
+      safeQuad(cx + faceW * 0.96, cy - r * 0.08, cx + faceW * 0.90, cy + r * 0.06);
+      safeQuad(cx + faceW * 0.82, cy + r * 0.16, cx + faceW * 0.40, faceBotY);
+      safeLineTo(cx - faceW * 0.40, faceBotY);
+      safeQuad(cx - faceW * 0.82, cy + r * 0.16, cx - faceW * 0.90, cy + r * 0.06);
+      safeQuad(cx - faceW * 0.96, cy - r * 0.08, cx - faceW * 0.88, faceTopY);
+      safeClosePath();
+    } else if (faceShape === 'shen') {
+      // 申字清隽鹅蛋脸 (Elongated Elegant Oval / Jade Scholar & Prince)
+      faceW = r * 0.35;
+      faceTopY = cy - r * 0.35;
+      faceBotY = cy + r * 0.22;
+      safeBeginPath();
+      safeMoveTo(cx, faceTopY);
+      safeQuad(cx + faceW * 0.82, cy - r * 0.16, cx + faceW * 0.92, cy - r * 0.02);
+      safeQuad(cx + faceW * 0.88, cy + r * 0.12, cx + faceW * 0.26, faceBotY);
+      safeQuad(cx, faceBotY + r * 0.015, cx - faceW * 0.26, faceBotY);
+      safeQuad(cx - faceW * 0.88, cy + r * 0.12, cx - faceW * 0.92, cy - r * 0.02);
+      safeQuad(cx - faceW * 0.82, cy - r * 0.16, cx, faceTopY);
+      safeClosePath();
+    } else if (faceShape === 'you') {
+      // 由字阔颌重臣脸 (Trapezoidal / Broad Lower Jaw Chancellor)
+      faceW = r * 0.38;
+      faceTopY = cy - r * 0.33;
+      faceBotY = cy + r * 0.23;
+      safeBeginPath();
+      safeMoveTo(cx, faceTopY);
+      safeQuad(cx + faceW * 0.72, cy - r * 0.14, cx + faceW * 0.84, cy - r * 0.02);
+      safeQuad(cx + faceW * 1.02, cy + r * 0.12, cx + faceW * 0.48, faceBotY);
+      safeQuad(cx, faceBotY + r * 0.01, cx - faceW * 0.48, faceBotY);
+      safeQuad(cx - faceW * 1.02, cy + r * 0.12, cx - faceW * 0.84, cy - r * 0.02);
+      safeQuad(cx - faceW * 0.72, cy - r * 0.14, cx, faceTopY);
+      safeClosePath();
+    } else if (faceShape === 'jia') {
+      // 甲字清奇仙风脸 (Inverted Triangle / High Forehead Sage & Strategist)
+      faceW = r * 0.42;
+      faceTopY = cy - r * 0.35;
+      faceBotY = cy + r * 0.22;
+      safeBeginPath();
+      safeMoveTo(cx, faceTopY);
+      safeQuad(cx + faceW * 0.96, cy - r * 0.18, cx + faceW * 0.90, cy - r * 0.04);
+      safeQuad(cx + faceW * 0.58, cy + r * 0.10, cx + faceW * 0.18, faceBotY);
+      safeQuad(cx, faceBotY + r * 0.02, cx - faceW * 0.18, faceBotY);
+      safeQuad(cx - faceW * 0.58, cy + r * 0.10, cx - faceW * 0.90, cy - r * 0.04);
+      safeQuad(cx - faceW * 0.96, cy - r * 0.18, cx, faceTopY);
+      safeClosePath();
+    } else {
+      // 圆字雍容福相脸 (Full Round Auspicious)
+      faceW = r * 0.39;
+      faceTopY = cy - r * 0.30;
+      faceBotY = cy + r * 0.20;
+      safeBeginPath();
+      safeMoveTo(cx, faceTopY);
+      safeQuad(cx + faceW * 0.95, cy - r * 0.12, cx + faceW * 0.96, cy + r * 0.02);
+      safeQuad(cx + faceW * 0.85, cy + r * 0.15, cx + faceW * 0.38, faceBotY);
+      safeQuad(cx, faceBotY + r * 0.015, cx - faceW * 0.38, faceBotY);
+      safeQuad(cx - faceW * 0.85, cy + r * 0.15, cx - faceW * 0.96, cy + r * 0.02);
+      safeQuad(cx - faceW * 0.95, cy - r * 0.12, cx, faceTopY);
+      safeClosePath();
+    }
 
-    safeBeginPath();
-    safeMoveTo(cx, faceTopY);
-    safeQuad(cx + faceW, cy - r * 0.10, cx + faceW * 0.82, cy + r * 0.08);
-    safeQuad(cx + faceW * 0.52, faceBotY, cx, faceBotY);
-    safeQuad(cx - faceW * 0.52, faceBotY, cx - faceW * 0.82, cy + r * 0.08);
-    safeQuad(cx - faceW, cy - r * 0.10, cx, faceTopY);
-    safeClosePath();
+    // Silk Porcelain Skin Gradient (绢本暖玉肤色晕染)
+    const skinGrad = safeRadialGrad(cx, cy - r * 0.05, r * 0.08, cx, cy, r * 0.5);
+    if (skinGrad) {
+      skinGrad.addColorStop(0, '#fffbeb');   // luminous warm porcelain center
+      skinGrad.addColorStop(0.55, '#fef3c7'); // warm silk amber midtone
+      skinGrad.addColorStop(1, '#fde68a');   // delicate ochre silk contour
+      ctx.fillStyle = skinGrad;
+    } else {
+      ctx.fillStyle = '#fef3c7';
+    }
     safeFill();
+    ctx.strokeStyle = '#b45309';
+    ctx.lineWidth = 1.0;
     safeStroke();
 
-    // 3D Facial Shading: Cheekbones & Chin Contours
-    ctx.fillStyle = 'rgba(217, 119, 6, 0.12)';
+    // 3D Soft Shading: Cheekbones & Chin Contours (工笔重彩朱赭微晕)
+    ctx.fillStyle = 'rgba(180, 83, 9, 0.10)';
     safeBeginPath();
     safeMoveTo(cx - faceW * 0.70, cy);
-    safeQuad(cx - faceW * 0.40, cy + r * 0.16, cx, faceBotY);
-    safeQuad(cx + faceW * 0.40, cy + r * 0.16, cx + faceW * 0.70, cy);
-    safeQuad(cx, cy + r * 0.18, cx - faceW * 0.70, cy);
+    safeQuad(cx - faceW * 0.35, cy + r * 0.16, cx, faceBotY);
+    safeQuad(cx + faceW * 0.35, cy + r * 0.16, cx + faceW * 0.70, cy);
+    safeQuad(cx, cy + r * 0.17, cx - faceW * 0.70, cy);
     safeClosePath();
     safeFill();
 
-    // Soft healthy peach blush on cheeks
-    ctx.fillStyle = 'rgba(244, 63, 94, 0.18)';
+    // Soft healthy peach blush on cheeks (桃花微润)
+    ctx.fillStyle = 'rgba(244, 63, 94, 0.15)';
     safeBeginPath();
-    safeArc(cx - faceW * 0.45, cy + r * 0.04, r * 0.10, 0, Math.PI * 2);
-    safeArc(cx + faceW * 0.45, cy + r * 0.04, r * 0.10, 0, Math.PI * 2);
+    safeArc(cx - faceW * 0.44, cy + r * 0.03, r * 0.085, 0, Math.PI * 2);
+    safeArc(cx + faceW * 0.44, cy + r * 0.03, r * 0.085, 0, Math.PI * 2);
     safeFill();
 
     // Ears
     ctx.fillStyle = '#fde68a';
     safeBeginPath();
-    safeArc(cx - faceW * 0.84, cy - r * 0.04, r * 0.075, 0, Math.PI * 2);
-    safeArc(cx + faceW * 0.84, cy - r * 0.04, r * 0.075, 0, Math.PI * 2);
+    safeArc(cx - faceW * 0.86, cy - r * 0.04, r * 0.075, 0, Math.PI * 2);
+    safeArc(cx + faceW * 0.86, cy - r * 0.04, r * 0.075, 0, Math.PI * 2);
+    safeFill();
+    ctx.strokeStyle = '#b45309';
+    ctx.lineWidth = 0.8;
+    safeBeginPath();
+    safeArc(cx - faceW * 0.86, cy - r * 0.04, r * 0.075, 0, Math.PI * 2);
+    safeArc(cx + faceW * 0.86, cy - r * 0.04, r * 0.075, 0, Math.PI * 2);
+    safeStroke();
+
+    // Hairline & Sideburns (乌黑发际与鬓角青丝)
+    ctx.fillStyle = '#0f172a';
+    safeBeginPath();
+    safeMoveTo(cx - faceW * 0.88, cy - r * 0.04);
+    safeQuad(cx - faceW * 0.84, cy - r * 0.24, cx, faceTopY);
+    safeQuad(cx + faceW * 0.84, cy - r * 0.24, cx + faceW * 0.88, cy - r * 0.04);
+    safeQuad(cx + faceW * 0.72, cy - r * 0.20, cx, faceTopY + r * 0.06);
+    safeQuad(cx - faceW * 0.72, cy - r * 0.20, cx - faceW * 0.88, cy - r * 0.04);
+    safeClosePath();
     safeFill();
 
-    // Eyebrows (Traditional Ink & Brushwork)
+    // Eyebrows tailored to face shape / archetype
     ctx.strokeStyle = '#0f172a';
     ctx.fillStyle = '#0f172a';
-    ctx.lineWidth = arch === 'military' ? 2.0 : 1.4;
+    ctx.lineWidth = (faceShape === 'guo' || arch === 'military') ? 2.0 : 1.3;
 
     safeBeginPath();
-    if (arch === 'military') {
-      safeMoveTo(cx - faceW * 0.68, cy - r * 0.16);
-      safeLineTo(cx - faceW * 0.14, cy - r * 0.10);
+    if (faceShape === 'guo' || arch === 'military') {
+      // Resolute sword eyebrows
+      safeMoveTo(cx - faceW * 0.70, cy - r * 0.16);
+      safeLineTo(cx - faceW * 0.14, cy - r * 0.09);
+    } else if (faceShape === 'shen') {
+      // Graceful willow leaf eyebrows
+      safeMoveTo(cx - faceW * 0.65, cy - r * 0.10);
+      safeQuad(cx - faceW * 0.42, cy - r * 0.16, cx - faceW * 0.14, cy - r * 0.11);
     } else {
       safeMoveTo(cx - faceW * 0.64, cy - r * 0.10);
-      safeQuad(cx - faceW * 0.40, cy - r * 0.16, cx - faceW * 0.14, cy - r * 0.11);
+      safeQuad(cx - faceW * 0.40, cy - r * 0.15, cx - faceW * 0.14, cy - r * 0.11);
     }
     safeStroke();
 
     safeBeginPath();
-    if (arch === 'military') {
-      safeMoveTo(cx + faceW * 0.14, cy - r * 0.10);
-      safeLineTo(cx + faceW * 0.68, cy - r * 0.16);
+    if (faceShape === 'guo' || arch === 'military') {
+      safeMoveTo(cx + faceW * 0.14, cy - r * 0.09);
+      safeLineTo(cx + faceW * 0.70, cy - r * 0.16);
+    } else if (faceShape === 'shen') {
+      safeMoveTo(cx + faceW * 0.14, cy - r * 0.11);
+      safeQuad(cx + faceW * 0.42, cy - r * 0.16, cx + faceW * 0.65, cy - r * 0.10);
     } else {
       safeMoveTo(cx + faceW * 0.14, cy - r * 0.11);
-      safeQuad(cx + faceW * 0.40, cy - r * 0.16, cx + faceW * 0.64, cy - r * 0.10);
+      safeQuad(cx + faceW * 0.40, cy - r * 0.15, cx + faceW * 0.64, cy - r * 0.10);
     }
     safeStroke();
 
-    // Classical Phoenix Eyes (丹凤眼) with Dual Specular White Glints
+    // Eyes: Classical Phoenix Eyes with Double Eyelid Crease & Dual Specular Glints
+    // Eyelid crease
+    ctx.strokeStyle = 'rgba(180, 83, 9, 0.45)';
+    ctx.lineWidth = 0.8;
+    safeBeginPath();
+    safeMoveTo(cx - faceW * 0.58, cy - r * 0.08);
+    safeQuad(cx - faceW * 0.38, cy - r * 0.11, cx - faceW * 0.18, cy - r * 0.07);
+    safeStroke();
+    safeBeginPath();
+    safeMoveTo(cx + faceW * 0.18, cy - r * 0.07);
+    safeQuad(cx + faceW * 0.38, cy - r * 0.11, cx + faceW * 0.58, cy - r * 0.08);
+    safeStroke();
+
+    // Eye outline & pupils
     ctx.fillStyle = '#0f172a';
     ctx.strokeStyle = '#0f172a';
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 1.3;
 
     // Left eye
     safeBeginPath();
@@ -1047,7 +1200,7 @@ class SocialCardEngine {
     safeArc(cx + faceW * 0.38, cy - r * 0.044, r * 0.007, 0, Math.PI * 2);
     safeFill();
 
-    // Nose bridge & subtle highlight
+    // Nose bridge & subtle highlight (玉柱悬胆鼻)
     ctx.strokeStyle = '#b45309';
     ctx.lineWidth = 1.1;
     safeBeginPath();
@@ -1056,12 +1209,12 @@ class SocialCardEngine {
     safeLineTo(cx + r * 0.02, cy + r * 0.06);
     safeStroke();
 
-    // Mouth / Lips (Vibrant Vermilion)
+    // Mouth / Lips (朱唇微润)
     ctx.strokeStyle = '#dc2626';
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 1.3;
     safeBeginPath();
-    safeMoveTo(cx - r * 0.08, cy + r * 0.12);
-    safeQuad(cx, cy + r * 0.135, cx + r * 0.08, cy + r * 0.12);
+    safeMoveTo(cx - r * 0.075, cy + r * 0.12);
+    safeQuad(cx, cy + r * 0.135, cx + r * 0.075, cy + r * 0.12);
     safeStroke();
 
     // Classical Facial Hair / Scholar Beard
@@ -1085,12 +1238,12 @@ class SocialCardEngine {
       safeClosePath();
       safeFill();
     } else {
-      // Young Prince Xiao Tong: refined youth
-      ctx.strokeStyle = 'rgba(28, 25, 23, 0.45)';
+      // Young Prince Xiao Tong: refined youth without facial hair
+      ctx.strokeStyle = 'rgba(28, 25, 23, 0.35)';
       ctx.lineWidth = 0.8;
       safeBeginPath();
-      safeMoveTo(cx - r * 0.06, cy + r * 0.10);
-      safeQuad(cx, cy + r * 0.095, cx + r * 0.06, cy + r * 0.10);
+      safeMoveTo(cx - r * 0.05, cy + r * 0.10);
+      safeQuad(cx, cy + r * 0.095, cx + r * 0.05, cy + r * 0.10);
       safeStroke();
     }
 
@@ -1213,59 +1366,114 @@ class SocialCardEngine {
       safeFill();
 
     } else {
-      // Specialist (Sage Topknot or Scholar Cowl · 逍遥巾 / 儒巾)
+      // Specialist (Prince Crown, Sage Topknot or Scholar Cowl · 东宫储君冠 / 冲虚冠 / 逍遥巾)
       if (isYoungPrince) {
+        // Eastern Palace Prince Crown (东宫金镶碧玉储君冠)
         ctx.fillStyle = '#1e1b4b';
         ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 1.3;
+        ctx.lineWidth = 1.4;
         safeBeginPath();
-        safeMoveTo(cx - r * 0.24, cy - r * 0.24);
-        safeQuad(cx - r * 0.26, cy - r * 0.48, cx, cy - r * 0.52);
-        safeQuad(cx + r * 0.26, cy - r * 0.48, cx + r * 0.24, cy - r * 0.24);
+        safeMoveTo(cx - r * 0.26, cy - r * 0.24);
+        safeQuad(cx - r * 0.28, cy - r * 0.48, cx, cy - r * 0.54);
+        safeQuad(cx + r * 0.28, cy - r * 0.48, cx + r * 0.26, cy - r * 0.24);
         safeClosePath();
         safeFill();
         safeStroke();
 
-        // Golden Hairpin
-        ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 2.2;
+        // Crown Front Gold Arch & Filigree
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 1.1;
         safeBeginPath();
-        safeMoveTo(cx - r * 0.34, cy - r * 0.34);
-        safeLineTo(cx + r * 0.34, cy - r * 0.34);
+        safeMoveTo(cx - r * 0.24, cy - r * 0.28);
+        safeQuad(cx, cy - r * 0.38, cx + r * 0.24, cy - r * 0.28);
         safeStroke();
 
-        // Flowing Ribbon Tails
+        // Central Jade Jewel (东宫温润翡翠嵌宝)
+        ctx.fillStyle = '#10b981';
+        safeBeginPath();
+        safeArc(cx, cy - r * 0.38, r * 0.048, 0, Math.PI * 2);
+        safeFill();
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 1.0;
+        safeStroke();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        safeBeginPath();
+        safeArc(cx - r * 0.015, cy - r * 0.39, r * 0.014, 0, Math.PI * 2);
+        safeFill();
+
+        // Golden Hairpin (贯簪) with filigree ends
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 2.4;
+        safeBeginPath();
+        safeMoveTo(cx - r * 0.36, cy - r * 0.34);
+        safeLineTo(cx + r * 0.36, cy - r * 0.34);
+        safeStroke();
+        ctx.fillStyle = '#d97706';
+        safeBeginPath();
+        safeArc(cx - r * 0.36, cy - r * 0.34, r * 0.028, 0, Math.PI * 2);
+        safeArc(cx + r * 0.36, cy - r * 0.34, r * 0.028, 0, Math.PI * 2);
+        safeFill();
+
+        // Flowing Double Silk Ribbon Streamers (青紫金纹储君罗缨)
         ctx.strokeStyle = '#818cf8';
-        ctx.lineWidth = 1.6;
+        ctx.lineWidth = 1.8;
         safeBeginPath();
-        safeMoveTo(cx - r * 0.22, cy - r * 0.28);
-        safeQuad(cx - r * 0.42, cy, cx - r * 0.32, cy + r * 0.32);
+        safeMoveTo(cx - r * 0.22, cy - r * 0.26);
+        safeQuad(cx - r * 0.44, cy, cx - r * 0.34, cy + r * 0.34);
         safeStroke();
         safeBeginPath();
-        safeMoveTo(cx + r * 0.22, cy - r * 0.28);
-        safeQuad(cx + r * 0.42, cy, cx + r * 0.32, cy + r * 0.32);
+        safeMoveTo(cx + r * 0.22, cy - r * 0.26);
+        safeQuad(cx + r * 0.44, cy, cx + r * 0.34, cy + r * 0.34);
         safeStroke();
-      } else {
-        // Sage topknot with jade hairpin
+      } else if (faceShape === 'jia') {
+        // Sage / Philosopher Daoist Lotus Crown (冲虚芙蓉莲花冠 / 白玉簪)
         ctx.fillStyle = '#0f172a';
         safeBeginPath();
         safeArc(cx, cy - r * 0.40, r * 0.16, 0, Math.PI * 2);
         safeFill();
 
-        // Hairpin
-        ctx.strokeStyle = '#34d399';
-        ctx.lineWidth = 2.2;
+        // White jade hairpin
+        ctx.strokeStyle = '#ecfdf5';
+        ctx.lineWidth = 2.4;
         safeBeginPath();
-        safeMoveTo(cx - r * 0.30, cy - r * 0.40);
-        safeLineTo(cx + r * 0.30, cy - r * 0.40);
+        safeMoveTo(cx - r * 0.32, cy - r * 0.40);
+        safeLineTo(cx + r * 0.32, cy - r * 0.40);
         safeStroke();
 
+        // Gold lotus petal crest
+        ctx.fillStyle = '#fbbf24';
+        safeBeginPath();
+        safeMoveTo(cx - r * 0.12, cy - r * 0.40);
+        safeQuad(cx, cy - r * 0.55, cx + r * 0.12, cy - r * 0.40);
+        safeClosePath();
+        safeFill();
+
         // Hairband
-        ctx.strokeStyle = '#fbbf24';
+        ctx.strokeStyle = '#d97706';
         ctx.lineWidth = 1.3;
         safeBeginPath();
         safeMoveTo(cx - r * 0.26, cy - r * 0.22);
         safeQuad(cx, cy - r * 0.32, cx + r * 0.26, cy - r * 0.22);
+        safeStroke();
+      } else {
+        // Scholar Cowl / Topknot (儒巾 / 逍遥巾)
+        ctx.fillStyle = '#1e293b';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.lineWidth = 1.2;
+        safeBeginPath();
+        safeMoveTo(cx - r * 0.25, cy - r * 0.24);
+        safeQuad(cx - r * 0.28, cy - r * 0.46, cx, cy - r * 0.50);
+        safeQuad(cx + r * 0.28, cy - r * 0.46, cx + r * 0.25, cy - r * 0.24);
+        safeClosePath();
+        safeFill();
+        safeStroke();
+
+        // Jade hairpin
+        ctx.strokeStyle = '#34d399';
+        ctx.lineWidth = 2.2;
+        safeBeginPath();
+        safeMoveTo(cx - r * 0.30, cy - r * 0.38);
+        safeLineTo(cx + r * 0.30, cy - r * 0.38);
         safeStroke();
       }
     }
@@ -1312,7 +1520,7 @@ class SocialCardEngine {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const data = this.extractCardData(bazi, luck, lang);
+    const data = (bazi && (bazi.pillarsDetailed || bazi.figureName || bazi.figureId)) ? bazi : this.extractCardData(bazi, luck, lang);
     const W = 750;
     const H = 1180;
     canvas.width = W;
@@ -1458,7 +1666,13 @@ class SocialCardEngine {
     const colW = (dais1W - colPad * 5) / 4;
     const colY = dais1Y + 14;
     const colH = 100;
-    const pillarsList = [data.pillarsDetailed.year, data.pillarsDetailed.month, data.pillarsDetailed.day, data.pillarsDetailed.hour];
+    const pd = data.pillarsDetailed || {
+      year: { text: '甲子', stem: '甲', branch: '子', stemGod: '比肩', naYin: '海中金' },
+      month: { text: '丙寅', stem: '丙', branch: '寅', stemGod: '食神', naYin: '炉中火' },
+      day: { text: '戊辰', stem: '戊', branch: '辰', stemGod: '日主', naYin: '大林木' },
+      hour: { text: '庚申', stem: '庚', branch: '申', stemGod: '偏印', naYin: '石榴木' }
+    };
+    const pillarsList = [pd.year, pd.month, pd.day, pd.hour];
 
     pillarsList.forEach((col, idx) => {
       const cx = dais1X + colPad + idx * (colW + colPad);
@@ -1531,9 +1745,9 @@ class SocialCardEngine {
 
     // 4. Dais 2: Grand Historical Soul Mirror & Sage Moat Centerpiece
     const dais2X = 56;
-    const dais2Y = 344;
+    const dais2Y = 340;
     const dais2W = W - 112;
-    const dais2H = 494;
+    const dais2H = 496;
     const dais2R = 16;
 
     ctx.fillStyle = '#ffffff';
@@ -1552,16 +1766,16 @@ class SocialCardEngine {
     ctx.fillText(data.isEn ? '✦ SOUL MIRROR HISTORICAL PERSONA ✦' : '✦ 天 命 照 命 镜 像 · 先 贤 同 频 ✦', W / 2, dais2Y + 26);
 
     // Render Atmospheric Classical Stylized Portrait Medallion
-    const portraitCx = 152;
-    const portraitCy = dais2Y + 106;
-    const portraitR = 64;
+    const portraitCx = 148;
+    const portraitCy = dais2Y + 95;
+    const portraitR = 56;
     this.drawClassicalPortrait(ctx, data, portraitCx, portraitCy, portraitR);
 
     // Under-Portrait Dynasty Era Tablet
-    const eraPillW = 118;
-    const eraPillH = 22;
+    const eraPillW = 96;
+    const eraPillH = 20;
     const eraPillX = portraitCx - eraPillW / 2;
-    const eraPillY = portraitCy + portraitR + 8;
+    const eraPillY = portraitCy + portraitR + 6;
     ctx.fillStyle = '#fefce8';
     SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 6);
     if (ctx.fill) ctx.fill();
@@ -1574,29 +1788,29 @@ class SocialCardEngine {
     ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'center';
     const eraStr = data.figureDynasty || (data.isEn ? 'Sage Era' : '先贤纪元');
-    ctx.fillText(eraStr, portraitCx, eraPillY + 15);
+    ctx.fillText(eraStr, portraitCx, eraPillY + 14);
 
     // Right of Portrait: Historical Persona Profile Panel
-    const profileX = 238;
-    const profileW = 432;
+    const profileX = 226;
+    const profileW = dais2W - 190;
 
     // Line 1: Figure Name & Affinity Resonance Score
     ctx.textAlign = 'left';
     ctx.fillStyle = '#0f172a';
-    ctx.font = 'bold 27px serif';
+    ctx.font = 'bold 25px serif';
 
     const rawFigName = data.figureName || (data.isEn ? 'Historical Sage' : '先贤宗师');
     let displayFigName = rawFigName;
     if (data.isEn && rawFigName.includes('(')) {
       displayFigName = rawFigName.split('(')[0].trim();
     }
-    ctx.fillText(displayFigName, profileX, dais2Y + 68);
+    ctx.fillText(displayFigName, profileX, dais2Y + 62);
 
     // Affinity Score Badge (warm amber pill)
-    const affW = 115;
-    const affH = 26;
-    const affX = W - 195;
-    const affY = dais2Y + 48;
+    const affW = 112;
+    const affH = 24;
+    const affX = W - 188;
+    const affY = dais2Y + 44;
     ctx.fillStyle = '#fff7ed';
     SocialCardEngine.drawRoundedRect(ctx, affX, affY, affW, affH, 6);
     if (ctx.fill) ctx.fill();
@@ -1606,20 +1820,25 @@ class SocialCardEngine {
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#b45309';
-    ctx.font = 'bold 13.5px monospace';
+    ctx.font = 'bold 13px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(data.isEn ? `${data.figureSim} Match` : `⚡ ${data.figureSim} 同频`, affX + affW / 2, affY + 18);
+    ctx.fillText(data.isEn ? `${data.figureSim} Match` : `⚡ ${data.figureSim} 同频`, affX + affW / 2, affY + 17);
 
     // Line 2: Historical Official Position & Credentials
     ctx.textAlign = 'left';
     ctx.fillStyle = '#334155';
-    ctx.font = '13.5px sans-serif';
-    this.drawWrappedText(ctx, data.figurePosition, profileX, dais2Y + 96, profileW, 19, 2, 'left');
+    ctx.font = '13px sans-serif';
+    this.drawWrappedText(ctx, data.figurePosition, profileX, dais2Y + 90, profileW, 18, 2, 'left');
 
-    // Line 3: Archetype Vocation Pill
-    const archPillY = dais2Y + 148;
-    const archPillW = 220;
-    const archPillH = 24;
+    // Line 3: Archetype Vocation Pill (Dynamic Text-Adaptive Width)
+    ctx.font = 'bold 11.5px sans-serif';
+    let archTextW = 120;
+    if (ctx.measureText) {
+      try { archTextW = ctx.measureText(data.figureArchetypeLabel).width; } catch(e) {}
+    }
+    const archPillW = Math.max(Math.min(archTextW + 24, profileW), 130);
+    const archPillH = 22;
+    const archPillY = dais2Y + 138;
     ctx.fillStyle = '#eff6ff';
     SocialCardEngine.drawRoundedRect(ctx, profileX, archPillY - 14, archPillW, archPillH, 6);
     if (ctx.fill) ctx.fill();
@@ -1629,27 +1848,27 @@ class SocialCardEngine {
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#1d4ed8';
-    ctx.font = 'bold 12px sans-serif';
+    ctx.font = 'bold 11.5px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(data.figureArchetypeLabel, profileX + archPillW / 2, archPillY + 3);
+    ctx.fillText(data.figureArchetypeLabel, profileX + archPillW / 2, archPillY + 2);
 
-    // Delicate Golden Separator Hairline
+    // Delicate Golden Separator Hairline (Cleanly below Dynasty pill)
     ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
     ctx.lineWidth = 1;
     if (ctx.beginPath) ctx.beginPath();
-    if (ctx.moveTo) ctx.moveTo(80, dais2Y + 182);
-    if (ctx.lineTo) ctx.lineTo(W - 80, dais2Y + 182);
+    if (ctx.moveTo) ctx.moveTo(80, dais2Y + 188);
+    if (ctx.lineTo) ctx.lineTo(W - 80, dais2Y + 188);
     if (ctx.stroke) ctx.stroke();
 
-    // Soul Resonance Quote
+    // Soul Resonance Quote (Airy, elegant serif)
     ctx.fillStyle = '#1e293b';
-    ctx.font = 'italic 13.5px serif';
-    this.drawWrappedText(ctx, data.figureQuote, W / 2, dais2Y + 208, 590, 20, 2, 'center');
+    ctx.font = 'italic 12.5px serif';
+    this.drawWrappedText(ctx, data.figureQuote, W / 2, dais2Y + 204, 580, 18, 2, 'center');
 
     // Two Substantive Parchment Panels (Key Legacy & Karmic Lesson)
     // Panel 1: Key Legacy & Strategic Moat (立身功业)
-    const legY = dais2Y + 246;
-    const cardH = 98;
+    const legY = dais2Y + 248;
+    const cardH = 104;
     const legW = W - 152;
     ctx.fillStyle = '#fefce8';
     SocialCardEngine.drawRoundedRect(ctx, 76, legY, legW, cardH, 10);
@@ -1670,11 +1889,11 @@ class SocialCardEngine {
     ctx.fillText(data.isEn ? '✦ KEY LEGACY & STRATEGIC MOAT ✦' : '✦ 立身功业 · 传世绝学壁垒 ✦', 94, legY + 22);
 
     ctx.fillStyle = '#18181b';
-    ctx.font = '13px sans-serif';
-    this.drawWrappedText(ctx, data.figureLegacy, 94, legY + 44, 560, 20, 3, 'left');
+    ctx.font = '12.5px sans-serif';
+    this.drawWrappedText(ctx, data.figureLegacy, 94, legY + 44, 560, 18, 3, 'left');
 
     // Panel 2: Karmic Lesson & Strategic Safeguards (天机诫勉)
-    const advY = dais2Y + 360;
+    const advY = dais2Y + 362;
     ctx.fillStyle = '#fff1f2';
     SocialCardEngine.drawRoundedRect(ctx, 76, advY, legW, cardH, 10);
     if (ctx.fill) ctx.fill();
@@ -1694,8 +1913,8 @@ class SocialCardEngine {
     ctx.fillText(data.isEn ? '✦ KARMIC LESSON & STRATEGIC SAFEGUARDS ✦' : '✦ 天机诫勉 · 避坑破局心法 ✦', 94, advY + 22);
 
     ctx.fillStyle = '#18181b';
-    ctx.font = '13px sans-serif';
-    this.drawWrappedText(ctx, data.figureAdvice, 94, advY + 44, 560, 20, 3, 'left');
+    ctx.font = '12.5px sans-serif';
+    this.drawWrappedText(ctx, data.figureAdvice, 94, advY + 44, 560, 18, 3, 'left');
 
     // 5. Dais 3: Annual Transit Hexagram & Strategic Guidance
     const dais3X = 56;
@@ -1728,14 +1947,14 @@ class SocialCardEngine {
 
     // Directive wrapped
     ctx.fillStyle = '#18181b';
-    ctx.font = '14px sans-serif';
-    this.drawWrappedText(ctx, data.hexDirective, W / 2, dais3Y + 80, 570, 22, 2, 'center');
+    ctx.font = '13.5px sans-serif';
+    this.drawWrappedText(ctx, data.hexDirective, W / 2, dais3Y + 78, 570, 20, 2, 'center');
 
     // Action banner - Vibrant Emerald-Gold Gradient with High-Contrast White Text
-    const bannerW = 580;
-    const bannerH = 42;
+    const bannerW = 590;
+    const bannerH = 46;
     const bannerX = W / 2 - bannerW / 2;
-    const bannerY = dais3Y + 138;
+    const bannerY = dais3Y + 134;
 
     let bannerGrad = null;
     if (ctx.createLinearGradient) {
@@ -1761,18 +1980,18 @@ class SocialCardEngine {
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 13.5px sans-serif';
+    ctx.font = 'bold 12.5px sans-serif';
     const actionPrefix = data.isEn ? 'Direct Action: ' : '年度行持：';
     const rawActionText = data.annualAction || (data.isEn ? 'Build undeniable craft & let works speak.' : '以硬核作品立世，顺应天理，游刃有余。');
     let displayAction = rawActionText;
-    if (data.isEn && displayAction.length > 56) {
-      displayAction = displayAction.slice(0, 53) + '...';
-    } else if (!data.isEn && displayAction.length > 34) {
-      displayAction = displayAction.slice(0, 32) + '...';
+    if (data.isEn && displayAction.length > 76) {
+      displayAction = displayAction.slice(0, 73) + '...';
+    } else if (!data.isEn && displayAction.length > 46) {
+      displayAction = displayAction.slice(0, 44) + '...';
     }
     const actionText = `${actionPrefix}${displayAction}`;
     ctx.textAlign = 'center';
-    ctx.fillText(actionText, W / 2, bannerY + 26);
+    ctx.fillText(actionText, W / 2, bannerY + 28);
 
     // 6. Footer Brand & Link
     ctx.fillStyle = '#475569';

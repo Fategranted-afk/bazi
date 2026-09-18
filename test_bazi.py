@@ -14033,7 +14033,300 @@ assert run_check114.returncode == 0, f"Check 114 JSC test failed: stdout={run_ch
 
 print("✓ 80强名校QS 2026官方最新排名校准、岁运推演人生整体推演四维全息时空大观（罗盘/原局/卦数/星煞/五大阶段全景/即时透镜/中英双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 114 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 115. Validating Social Card Five Face Shapes, Refined Layout & Imperial Dossier Page 4/8 Enrichment
+# ==============================================================================
+print("\n=== 115. Validating Social Card Five Face Shapes, Refined Layout & Imperial Dossier Page 4/8 Enrichment ===")
+
+with open("js/social-card-engine.js", "r", encoding="utf-8") as f:
+    sc_code = f.read()
+
+assert "getFigureFaceShape" in sc_code, "getFigureFaceShape method missing in SocialCardEngine!"
+assert "drawClassicalPortrait" in sc_code, "drawClassicalPortrait method missing in SocialCardEngine!"
+assert "guo" in sc_code and "shen" in sc_code and "you" in sc_code and "jia" in sc_code and "yuan" in sc_code, "Missing 5 face shapes in SocialCardEngine!"
+
+with open("js/app.js", "r", encoding="utf-8") as f:
+    app_code_115 = f.read()
+
+assert "Xu Lewu Canonical Decision Middleware" in app_code_115, "Page 4 Xu Lewu middleware EN title missing in app.js!"
+assert "徐乐吾《子平真诠评注》《造化元钥评注》具象取用决策中间件" in app_code_115, "Page 4 Xu Lewu middleware ZH title missing in app.js!"
+assert "IV. Lifelong Five Grand Macro Phases Trajectory" in app_code_115, "Page 8 Five Macro Phases EN title missing in app.js!"
+assert "四、百岁人生宏图五大阶段全景统览" in app_code_115, "Page 8 Five Macro Phases ZH title missing in app.js!"
+assert "V. Four Major Auspicious Deities Natal Matrix" in app_code_115, "Page 8 Four Auspicious Deities EN title missing in app.js!"
+assert "五、本命四大吉神神煞照命矩阵" in app_code_115, "Page 8 Four Auspicious Deities ZH title missing in app.js!"
+
+jsc_check115_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("data/xulewu_commentary.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/lifelong-synthesis-engine.js");
+    load("js/social-card-engine.js");
+
+    // 1. Validate Five Face Shapes Algorithm
+    if (typeof SocialCardEngine.getFigureFaceShape !== 'function') {
+      throw new Error("SocialCardEngine.getFigureFaceShape is not a function");
+    }
+    var faceXiaoTong = SocialCardEngine.getFigureFaceShape("xiao_tong", "文宗");
+    if (faceXiaoTong !== "shen") {
+      throw new Error("Expected 'shen' (申字清隽脸) for Xiao Tong, got: " + faceXiaoTong);
+    }
+    var faceHabaYue = SocialCardEngine.getFigureFaceShape("haba_yue", "统帅");
+    if (faceHabaYue !== "guo") {
+      throw new Error("Expected 'guo' (国字方脸) for Haba Yue, got: " + faceHabaYue);
+    }
+    var faceWangYangming = SocialCardEngine.getFigureFaceShape("wang_yangming", "哲人");
+    if (faceWangYangming !== "jia") {
+      throw new Error("Expected 'jia' (甲字清奇脸) for Wang Yangming, got: " + faceWangYangming);
+    }
+    var faceXieAn = SocialCardEngine.getFigureFaceShape("xie_an", "宰辅");
+    if (faceXieAn !== "you") {
+      throw new Error("Expected 'you' (由字阔颌脸) for Xie An, got: " + faceXieAn);
+    }
+    var faceSimaYan = SocialCardEngine.getFigureFaceShape("sima_yan", "仁君");
+    if (faceSimaYan !== "yuan") {
+      throw new Error("Expected 'yuan' (圆字福相脸) for Sima Yan, got: " + faceSimaYan);
+    }
+
+    // 2. Validate Social Card Canvas Rendering (750x1180)
+    var dummyCanvas = {
+      width: 750,
+      height: 1180,
+      getContext: function() {
+        return {
+          save: function(){}, restore: function(){},
+          clearRect: function(){}, fillRect: function(){}, strokeRect: function(){},
+          beginPath: function(){}, closePath: function(){},
+          moveTo: function(){}, lineTo: function(){}, arc: function(){}, arcTo: function(){},
+          stroke: function(){}, fill: function(){}, clip: function(){},
+          fillText: function(){}, strokeText: function(){},
+          measureText: function(t){ return { width: (t || '').length * 8 }; },
+          createLinearGradient: function(){ return { addColorStop: function(){} }; },
+          createRadialGradient: function(){ return { addColorStop: function(){} }; },
+          setLineDash: function(){}
+        };
+      }
+    };
+
+    var cardDataZh = {
+      isEn: false,
+      figureId: "xiao_tong",
+      figureName: "萧统 (昭明太子)",
+      figureDynasty: "南梁",
+      figurePosition: "南梁昭明太子 · 东宫储君 · 《文选》编纂领袖",
+      figureSim: "96%",
+      figureArchetypeLabel: "🏛️ 经世文宗 · 深度专家",
+      figureQuote: "言之无文，行而不远。博采群言，缀缀成章。",
+      figureLegacy: "编纂三十卷《昭明文选》，奠定千年中原文脉根柢。",
+      figureAdvice: "仁厚宽和而不失原则防线，文韬治国尤须警惕权藩跋扈。",
+      pillarsText: "庚午 壬午 甲申 庚午",
+      annualHexName: "地天泰",
+      annualHexNumber: "11",
+      hexDirective: "天地交泰，内阳而外阴，利建侯行师。",
+      annualAction: "以硬核作品立世，顺应天理，游刃有余。"
+    };
+    SocialCardEngine.renderToCanvas(dummyCanvas, cardDataZh);
+
+    var cardDataEn = {
+      isEn: true,
+      figureId: "xiao_tong",
+      figureName: "Xiao Tong (Crown Prince Zhaoming)",
+      figureDynasty: "Southern Liang",
+      figurePosition: "Crown Prince Zhaoming of Southern Liang",
+      figureSim: "96%",
+      figureArchetypeLabel: "Universal Sage & Scholar",
+      figureQuote: "Cultivate authentic craft; let timeless works endure.",
+      figureLegacy: "Compiled the 30-volume Selections of Refined Literature.",
+      figureAdvice: "Combine benevolent wisdom with unyielding structural boundaries.",
+      pillarsText: "Geng-Wu Ren-Wu Jia-Shen Geng-Wu",
+      annualHexName: "Tai (Peace & Harmony)",
+      annualHexNumber: "11",
+      hexDirective: "Heaven and Earth unite in reciprocal harmony.",
+      annualAction: "Build undeniable craft & let works speak."
+    };
+    SocialCardEngine.renderToCanvas(dummyCanvas, cardDataEn);
+
+    // 3. Headless DOM simulation for Imperial Dossier Page 4 and Page 8
+    var elementStore = {};
+    function makeElement(id) {
+      return {
+        id: id,
+        innerHTML: "",
+        textContent: "",
+        value: "",
+        attributes: {},
+        getAttribute: function(a) { return this.attributes[a] || ""; },
+        setAttribute: function(a, v) { this.attributes[a] = v; },
+        options: [{ textContent: '乾造', value: '乾造' }, { textContent: '坤造', value: '坤造' }],
+        selectedIndex: 0,
+        classList: {
+          add: function() {},
+          remove: function() {},
+          contains: function() { return false; }
+        },
+        style: {},
+        getContext: function() {
+          return {
+            clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){},
+            closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){},
+            arc: function(){}, setLineDash: function(){}, scale: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; }
+          };
+        },
+        appendChild: function() {},
+        addEventListener: function() {},
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; }
+      };
+    }
+
+    var requiredDomIds = [
+      "careerQuickBadgesDashboard", "careerContentContainer", "careerBannerTitle", "careerBannerDesc",
+      "archetypesContainer", "managingUpContainer", "peerDynamicsContainer", "timingContainer",
+      "imperialDossierContainer", "dossierLangZh", "dossierLangEn", "calcBtn", "btnExportDossier",
+      "birthDate", "birthTime", "gender", "useTrueSolarTime", "citySelect", "currentResidenceCountrySelect",
+      "currentResidenceCitySelect"
+    ];
+    requiredDomIds.forEach(function(id) { elementStore[id] = makeElement(id); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeElement("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeElement(id);
+        return elementStore[id];
+      },
+      querySelector: function() { return makeElement("query"); },
+      querySelectorAll: function() { return []; },
+      createElement: function(tag) { return makeElement(tag); },
+      addEventListener: function(evt, handler) {
+        if (evt === "DOMContentLoaded") {
+          try { handler(); } catch(e) {}
+        }
+      }
+    };
+    var window = {
+      document: document,
+      addEventListener: function() {},
+      location: { search: "" },
+      currentLang: "zh",
+      currentDossierLang: "zh"
+    };
+
+    load("js/app.js");
+
+    var testBazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(testBazi);
+
+    // Test Chinese Dossier
+    window.renderImperialDossierPages(testBazi, luck, "zh");
+    var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
+    var zhPages = zhHtml.split('class="imperial-page');
+    if (zhPages.length !== 9) {
+      throw new Error("Imperial Dossier must have exactly 8 pages in ZH, got: " + (zhPages.length - 1));
+    }
+
+    // Page 4 checks
+    if (!zhPages[4].includes("徐乐吾《子平真诠评注》《造化元钥评注》具象取用决策中间件")) {
+      throw new Error("Imperial Dossier Page 4 in ZH missing Xu Lewu middleware card");
+    }
+    if (!zhPages[4].includes("二、生杀破局与战略胜负手")) {
+      throw new Error("Imperial Dossier Page 4 in ZH missing strategic breakthrough section");
+    }
+
+    // Page 8 checks
+    if (!zhPages[8].includes("四、百岁人生宏图五大阶段全景统览")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing 5 Macro Phases section");
+    }
+    if (!zhPages[8].includes("少年启蒙立基期") || !zhPages[8].includes("青年展翼破局期") || !zhPages[8].includes("壮年建功鼎盛期")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing phase names");
+    }
+    if (!zhPages[8].includes("五、本命四大吉神神煞照命矩阵")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing Four Auspicious Deities section");
+    }
+    if (!zhPages[8].includes("天乙贵人") || !zhPages[8].includes("文昌贵人") || !zhPages[8].includes("红鸾天喜") || !zhPages[8].includes("驿马星动")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing auspicious deity names");
+    }
+    if (!zhPages[8].includes("五代权相冯道《荣枯鉴》处世保全法旨")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing Feng Dao directive");
+    }
+    if (!zhPages[8].includes("核心产出：")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing '核心产出：'");
+    }
+    if (!zhPages[8].includes("Page 8 / 8 · Complete Dossier")) {
+      throw new Error("Imperial Dossier Page 8 in ZH missing footer");
+    }
+
+    // Test English Dossier & Zero Chinese Residuals
+    window.renderImperialDossierPages(testBazi, luck, "en");
+    var enHtml = elementStore["imperialDossierContainer"].innerHTML;
+    var enPages = enHtml.split('class="imperial-page');
+    if (enPages.length !== 9) {
+      throw new Error("Imperial Dossier must have exactly 8 pages in EN, got: " + (enPages.length - 1));
+    }
+
+    // Page 4 EN checks
+    if (!enPages[4].includes("Xu Lewu Canonical Decision Middleware")) {
+      throw new Error("Imperial Dossier Page 4 in EN missing Xu Lewu middleware");
+    }
+
+    // Page 8 EN checks
+    if (!enPages[8].includes("IV. Lifelong Five Grand Macro Phases Trajectory")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing Five Macro Phases section");
+    }
+    if (!enPages[8].includes("V. Four Major Auspicious Deities Natal Matrix")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing Four Auspicious Deities section");
+    }
+    if (!enPages[8].includes("VII. Feng Dao Rong Ku Jian Workplace Directive")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing Feng Dao directive in EN");
+    }
+    if (!enPages[8].includes("Outputs:")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing 'Outputs:'");
+    }
+    if (!enPages[8].includes("Certification Authority:")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing Certification Authority");
+    }
+    if (!enPages[8].includes("IMPERIAL SEAL OF ASTRONOMY")) {
+      throw new Error("Imperial Dossier Page 8 in EN missing IMPERIAL SEAL OF ASTRONOMY");
+    }
+
+    // Full English residual Chinese check
+    var enLeaks = enHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (enLeaks && enLeaks.length > 0) {
+      throw new Error("Residual Chinese detected in English Imperial Dossier: " + enLeaks.slice(0, 30).join(""));
+    }
+    """
+]
+run_check115 = subprocess.run(jsc_check115_cmd, capture_output=True, text=True)
+assert run_check115.returncode == 0, f"Check 115 JSC test failed: stdout={run_check115.stdout} stderr={run_check115.stderr}"
+
+print("✓ 社交名片五形相法多脸型肖像重构、版面排布修缮与皇家战报第4/8页五大宏图阶段/四大吉神/徐乐吾决策中间件（中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 115 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
