@@ -60,8 +60,11 @@ class SpatialFengShuiEngine {
     const gender = bazi.gender || '乾造';
     const kuaInfo = this.calculatePersonalKua(birthYear, gender);
 
-    // Detect Water overload and dam pressure (蓄满水的大坝)
-    const waterPct = parseFloat((bazi.fiveElements && bazi.fiveElements.percentages && bazi.fiveElements.percentages['水']) || '0');
+    const waterPct = parseFloat(
+      (bazi.fiveElements && bazi.fiveElements.percentages && bazi.fiveElements.percentages['水']) ||
+      (bazi.elements && bazi.elements.percentages && bazi.elements.percentages['水']) ||
+      '0'
+    );
     const isWaterOverloaded = (waterPct >= 38.0) || (dmEl === '水' && ziping && (ziping.categoryKey === 'extreme_strong' || ziping.categoryKey === 'strong' || (ziping.totalScore && ziping.totalScore >= 50)));
 
     // 3. Item 1: 延年位四方聚财阵 (4貔貅 + 1鼎)

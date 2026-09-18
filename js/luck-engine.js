@@ -2410,7 +2410,7 @@ const LuckEngine = (function() {
     const isStrong = isDayMasterStrong(bazi);
 
     // Calculate five-element distribution and check for element overload / excessive energy
-    const elPercentages = (bazi.fiveElements && bazi.fiveElements.percentages) || {};
+    const elPercentages = (bazi.fiveElements && bazi.fiveElements.percentages) || (bazi.elements && bazi.elements.percentages) || {};
     const elemPercentages = {
       '木': parseFloat(elPercentages['木'] || 0),
       '火': parseFloat(elPercentages['火'] || 0),
@@ -2761,40 +2761,40 @@ const LuckEngine = (function() {
         directionEn: 'East (Wood Field)',
         element: '木',
         elementEn: 'Wood',
-        citiesZh: '上海、杭州、苏州、南京、青岛、江浙沿海、东京等',
-        citiesEn: 'Shanghai, Hangzhou, Suzhou, Nanjing, East Coast, Tokyo'
+        citiesZh: '东京、首尔、上海/杭州/长三角、波士顿/剑桥科研走廊、纽约、斯德哥尔摩、悉尼/墨尔本等',
+        citiesEn: 'Tokyo, Seoul, Shanghai/Hangzhou, Boston/Cambridge R&D Corridor, New York, Stockholm, Sydney, Melbourne'
       },
       {
         directionZh: '南方 (火气场)',
         directionEn: 'South (Fire Field)',
         element: '火',
         elementEn: 'Fire',
-        citiesZh: '深圳、广州、香港、珠三角、海口、新加坡、东南亚等',
-        citiesEn: 'Shenzhen, Guangzhou, Hong Kong, Pearl River Delta, Singapore, Southeast Asia'
+        citiesZh: '新加坡、迪拜、阿布扎比、硅谷/圣何塞、奥斯汀、洛杉矶、迈阿密、深圳/大湾区、巴塞罗那等',
+        citiesEn: 'Singapore, Dubai, Abu Dhabi, Silicon Valley (San Jose), Austin, Los Angeles, Miami, Shenzhen/Greater Bay, Barcelona'
       },
       {
         directionZh: '中原 / 枢纽 (土气场)',
         directionEn: 'Central / Continental Hub (Earth Field)',
         element: '土',
         elementEn: 'Earth',
-        citiesZh: '北京、西安、郑州、武汉、成都、重庆等中西部枢纽',
-        citiesEn: 'Beijing, Xi\'an, Zhengzhou, Wuhan, Chengdu, Chongqing'
+        citiesZh: '法兰克福、苏黎世、维也纳、芝加哥、达拉斯/沃斯堡、丹佛、北京/西安/成渝中枢等',
+        citiesEn: 'Frankfurt, Zurich, Vienna, Chicago, Dallas-Fort Worth, Denver, Beijing/Xi\'an Continental Hub'
       },
       {
         directionZh: '西方 (金气场)',
         directionEn: 'West (Metal Field)',
         element: '金',
         elementEn: 'Metal',
-        citiesZh: '成渝高新、西安科技圈、西欧(伦敦/巴黎)、北美西海岸等',
-        citiesEn: 'Chengdu-Chongqing tech hubs, Western Europe, North American West'
+        citiesZh: '伦敦、巴黎、阿姆斯特丹、日内瓦、西雅图、旧金山湾区、温哥华、成渝硬科技圈等',
+        citiesEn: 'London, Paris, Amsterdam, Geneva, Seattle, San Francisco Bay Area, Vancouver, High-Tech Hubs'
       },
       {
         directionZh: '北方 (水气场)',
         directionEn: 'North (Water Field)',
         element: '水',
         elementEn: 'Water',
-        citiesZh: '北京、天津、沈阳、大连、北欧、加拿大等北方重镇',
-        citiesEn: 'Beijing, Tianjin, Northern coastal cities, Northern Europe, Canada'
+        citiesZh: '赫尔辛基、奥斯陆、都柏林、多伦多/滑铁卢、蒙特利尔、爱丁堡、北京海淀/中关村等',
+        citiesEn: 'Helsinki, Oslo, Dublin, Toronto/Waterloo, Montreal, Edinburgh, Beijing Haidian Tech Hub'
       }
     ];
 

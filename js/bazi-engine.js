@@ -380,6 +380,10 @@ class BaZiEngine {
       elements: {
         scores: elementScores,
         percentages: elementPercentages
+      },
+      fiveElements: {
+        scores: elementScores,
+        percentages: elementPercentages
       }
     };
   }

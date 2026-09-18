@@ -3,7 +3,7 @@
  * Grounded in 520+ Years from Eastern Han, Three Kingdoms, Jin, Northern & Southern Dynasties, Sui, Late Sui Collapse to Early Tang Zhenguan:
  * Eastern Han & Three Kingdoms, Western Jin, Sixteen Kingdoms, Eastern Jin, Southern Dynasties, Northern Wei, Northern Zhou/Qi, Sui, Sui Collapse, and Sui-Tang Zhenguan.
  * Compares Native's BaZi (Day Master, 100-pt Score, Patterns, Ten Gods, Archetypes)
- * against 448 Historical Figures to calculate multi-dimensional correlation:
+ * against 449 Historical Figures to calculate multi-dimensional correlation:
  * [Personality Resonance + Historical Deeds Reflection + Strengths Leverage + Weakness Circuit-Breakers].
  * Generates natural wide score distributions and bespoke evaluations with 100% bilingual parity.
  */
@@ -389,7 +389,7 @@ class HistoricalEngine {
   }
 
   /**
-   * Calculates similarity between native BaZi and 448 historical figures
+   * Calculates similarity between native BaZi and 449 historical figures
    * @param {Object} bazi - BaZi calculated result from BaZiEngine
    * @param {Object} luck - LuckEngine result (optional)
    * @param {Object} careerReport - CareerEngine result (optional)
@@ -404,7 +404,7 @@ class HistoricalEngine {
     // 1. Infer user multi-dimensional character profile
     const profile = this.inferUserCharacter(bazi, careerReport);
 
-    // 2. Score raw correlation across all 448 figures
+    // 2. Score raw correlation across all 449 figures
     const scoredFigures = dataset.map((fig) => {
       const corr = this.calculateFigureCorrelation(fig, profile, bazi);
       return {

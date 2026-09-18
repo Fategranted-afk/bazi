@@ -1265,7 +1265,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof VisualAlchemy !== 'undefined') {
       VisualAlchemy.setActiveElement(res.dayMasterElement || '木');
     }
-    if (typeof renderImperialDossierPages === 'function') {
+    const dossierModal = document.getElementById('imperialDossierModal');
+    if (typeof renderImperialDossierPages === 'function' && dossierModal && !dossierModal.classList.contains('hidden')) {
       renderImperialDossierPages(currentLang);
     }
     renderFourAuspiciousDeities(res, shenShaData);
@@ -5903,20 +5904,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 🗺️ Geographic & Workplace Ecological Resonance Renderer (地理方位与组织生态匹配仪)
   function renderEcologicalResonance(res, luckRes, isEn) {
-    const container = document.getElementById('ecologicalResonanceContainer');
-    if (!container) return;
+    const containers = [
+      document.getElementById('ecologicalResonanceContainer'),
+      document.getElementById('ecologicalResonanceContainerSubpage')
+    ].filter(Boolean);
+    if (containers.length === 0) return;
     if (!luckRes || !luckRes.ecologicalResonance) {
-      container.innerHTML = `
-        <div class="p-6 text-center text-gray-400">
-          <span class="text-2xl block mb-2">🗺️</span>
-          <p>${isEn ? 'Please calculate luck cycles to evaluate Ecological Resonance.' : '请先进行岁运推演，以生成地理方位与组织生态匹配仪。'}</p>
-        </div>
-      `;
+      containers.forEach(container => {
+        container.innerHTML = `
+          <div class="p-6 text-center text-gray-400">
+            <span class="text-2xl block mb-2">🗺️</span>
+            <p>${isEn ? 'Please calculate luck cycles to evaluate Ecological Resonance.' : '请先进行岁运推演，以生成地理方位与组织生态匹配仪。'}</p>
+          </div>
+        `;
+      });
       return;
     }
 
     const eco = luckRes.ecologicalResonance;
-    container.innerHTML = '';
+    containers.forEach(container => {
+      container.innerHTML = '';
 
     // Sub-tab Navigation
     const tabsWrapper = document.createElement('div');
@@ -6113,6 +6120,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       container.appendChild(ecoSysWrapper);
     }
+    });
   }
 
   // ⚡ Time Dynamics & Macro-Energy 5-Tier Master Report Renderer (时间动力学与宏观能量五阶递进战报)
@@ -9670,17 +9678,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Section 4: 448 Figures Panorama & Gallery -->
+      <!-- Section 4: 449 Figures Panorama & Gallery -->
       <div class="space-y-4">
         <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
           <div class="flex items-center space-x-2">
             <span class="text-2xl">🌌</span>
             <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300">
-              ${isEn ? '4. Historical Panorama (448 Historical Figures Catalog)' : '四、全景历史人物长卷（448位历史人物名录）'}
+              ${isEn ? '4. Historical Panorama (449 Historical Figures Catalog)' : '四、全景历史人物长卷（449位历史人物名录）'}
             </h3>
           </div>
           <div class="text-xs text-gray-400 font-mono">
-            ${isEn ? '448 Historical Titans Curated' : '共收录 448 位风云人物'}
+            ${isEn ? '449 Historical Titans Curated' : '共收录 449 位风云人物'}
           </div>
         </div>
 
@@ -9703,7 +9711,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Era Tabs -->
           <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="dashEraTabsContainer">
             <button class="dash-era-tab-btn ${historyActiveEra === 'all' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="all">
-              ${isEn ? 'All Eras (448)' : '全部时代 (448)'}
+              ${isEn ? 'All Eras (449)' : '全部时代 (449)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'eastern_han_three_kingdoms' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="eastern_han_three_kingdoms">
               ${isEn ? 'Three Kingdoms (104)' : '东汉三国 (104)'}
@@ -9730,7 +9738,7 @@ document.addEventListener('DOMContentLoaded', () => {
               ${isEn ? 'Sui Dynasty (10)' : '大隋统一 (10)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'sui_collapse' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui_collapse">
-              ${isEn ? 'Sui Collapse (32)' : '隋末崩塌 (32)'}
+              ${isEn ? 'Sui Collapse (33)' : '隋末崩塌 (33)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'sui_tang_zhenguan' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui_tang_zhenguan">
               ${isEn ? 'Tang Zhenguan (104)' : '大唐贞观 (104)'}
@@ -9770,9 +9778,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Attach search and filter events
     const searchInp = document.getElementById('dashHistorySearchInput');
     if (searchInp) {
+      let dashSearchDebounceTimer = null;
       searchInp.addEventListener('input', (e) => {
-        historySearchQuery = e.target.value;
-        renderDashHistoryCatalog();
+        if (dashSearchDebounceTimer) clearTimeout(dashSearchDebounceTimer);
+        const val = e.target.value;
+        dashSearchDebounceTimer = setTimeout(() => {
+          historySearchQuery = val;
+          renderDashHistoryCatalog();
+        }, 150);
       });
     }
 
@@ -9871,40 +9884,71 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    container.innerHTML = list.map(f => `
-      <div class="bg-card p-4 sm:p-5 rounded-xl border border-gray-800/90 shadow-lg space-y-3 flex flex-col justify-between hover:border-amber-500/40 transition">
-        <div class="space-y-2">
-          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
-            <div class="flex items-center space-x-2">
-              <span class="text-xs font-bold font-mono text-gray-400">#${f.rank}</span>
-              <h4 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? f.nameEn : f.nameZh}</h4>
-            </div>
-            <span class="text-xs px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold font-mono">
-              ${f.similarityScore}%
-            </span>
-          </div>
-          <div class="flex flex-wrap gap-1 text-[10px]">
-            <span class="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
-            <span class="px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300">${isEn ? f.eraNameEn : f.eraNameZh}</span>
-            <span class="px-1.5 py-0.5 rounded bg-indigo-950/60 text-indigo-300">${isEn ? (HISTORY_EL_MAP_EN[f.fiveElements.dominant] || 'Element') + ' / ' + (HISTORY_PATTERN_MAP_EN[f.patternType] || f.patternType) : (f.fiveElements.dominant + '行 / ' + f.patternType)}</span>
-          </div>
-          <p class="text-xs text-amber-400/90 font-serif-sc line-clamp-1">${isEn ? f.positionEn : f.positionZh}</p>
-          <p class="text-[11px] text-gray-300 leading-relaxed font-sans line-clamp-2">${isEn ? f.personalityEn : f.personalityZh}</p>
-        </div>
-        <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between">
-          <button class="btn-dash-history-card-detail text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer" data-id="${f.id}">
-            <span>${isEn ? 'Full Profile' : '深度剖析'}</span> <span>→</span>
-          </button>
-        </div>
-      </div>
-    `).join('');
+    const BATCH_SIZE = 36;
+    let displayedCount = BATCH_SIZE;
 
-    container.querySelectorAll('.btn-dash-history-card-detail').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const id = this.getAttribute('data-id');
-        openHistoryDetailModal(id);
+    function renderCards() {
+      const visibleList = list.slice(0, displayedCount);
+      const hasMore = list.length > displayedCount;
+
+      let html = visibleList.map(f => `
+        <div class="bg-card p-4 sm:p-5 rounded-xl border border-gray-800/90 shadow-lg space-y-3 flex flex-col justify-between hover:border-amber-500/40 transition">
+          <div class="space-y-2">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold font-mono text-gray-400">#${f.rank}</span>
+                <h4 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? f.nameEn : f.nameZh}</h4>
+              </div>
+              <span class="text-xs px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold font-mono">
+                ${f.similarityScore}%
+              </span>
+            </div>
+            <div class="flex flex-wrap gap-1 text-[10px]">
+              <span class="px-1.5 py-0.5 rounded bg-gray-800 text-gray-300">${isEn ? f.dynastyEn : f.dynastyZh}</span>
+              <span class="px-1.5 py-0.5 rounded bg-purple-950/60 text-purple-300">${isEn ? f.eraNameEn : f.eraNameZh}</span>
+              <span class="px-1.5 py-0.5 rounded bg-indigo-950/60 text-indigo-300">${isEn ? (HISTORY_EL_MAP_EN[f.fiveElements.dominant] || 'Element') + ' / ' + (HISTORY_PATTERN_MAP_EN[f.patternType] || f.patternType) : (f.fiveElements.dominant + '行 / ' + f.patternType)}</span>
+            </div>
+            <p class="text-xs text-amber-400/90 font-serif-sc line-clamp-1">${isEn ? f.positionEn : f.positionZh}</p>
+            <p class="text-[11px] text-gray-300 leading-relaxed font-sans line-clamp-2">${isEn ? f.personalityEn : f.personalityZh}</p>
+          </div>
+          <div class="pt-2 border-t border-gray-800/80 flex items-center justify-between">
+            <button class="btn-dash-history-card-detail text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-semibold cursor-pointer" data-id="${f.id}">
+              <span>${isEn ? 'Full Profile' : '深度剖析'}</span> <span>→</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      if (hasMore) {
+        const remaining = list.length - displayedCount;
+        html += `
+          <div class="col-span-full pt-4 pb-2 text-center">
+            <button id="btnDashLoadMoreFigures" type="button" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-600/30 to-amber-700/30 hover:from-amber-600/50 hover:to-amber-700/50 border border-amber-500/50 text-amber-200 text-xs sm:text-sm font-bold shadow-lg transition cursor-pointer active:scale-95">
+              ${isEn ? `Load More Historical Figures (Remaining: ${remaining})` : `加载更多历史人物（剩余 ${remaining} 位）`}
+            </button>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+
+      container.querySelectorAll('.btn-dash-history-card-detail').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          openHistoryDetailModal(id);
+        });
       });
-    });
+
+      const loadMoreBtn = document.getElementById('btnDashLoadMoreFigures');
+      if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+          displayedCount += BATCH_SIZE;
+          renderCards();
+        });
+      }
+    }
+
+    renderCards();
   }
 
   function openHistoryDetailModal(id) {
@@ -10081,7 +10125,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'view-fengshui': document.getElementById('view-fengshui'),
     'view-career': document.getElementById('view-career'),
     'view-simulator': document.getElementById('view-simulator'),
-    'view-history': document.getElementById('view-history')
+    'view-history': document.getElementById('view-history'),
+    'view-georesonance': document.getElementById('view-georesonance')
   };
 
   function switchPrimaryView(targetViewId) {
@@ -10170,6 +10215,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, 50);
     }
+
+    // If switching to georesonance view, render if chart exists
+    if (targetViewId === 'view-georesonance' && currentBaziResult && typeof renderEcologicalResonance === 'function') {
+      renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
+    }
   }
 
   viewNavBtns.forEach(btn => {
@@ -10243,6 +10293,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnJumpToHomeFromSimulator = document.getElementById('btnJumpToHomeFromSimulator');
   if (btnJumpToHomeFromSimulator) {
     btnJumpToHomeFromSimulator.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+
+  // Geographic & Workplace Resonance Jump Buttons
+  const btnJumpToHomeFromGeo = document.getElementById('btnJumpToHomeFromGeo');
+  if (btnJumpToHomeFromGeo) {
+    btnJumpToHomeFromGeo.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+  const btnJumpToLuckFromGeo = document.getElementById('btnJumpToLuckFromGeo');
+  if (btnJumpToLuckFromGeo) {
+    btnJumpToLuckFromGeo.addEventListener('click', () => switchPrimaryView('view-luck'));
+  }
+  const btnJumpToFengShuiFromGeo = document.getElementById('btnJumpToFengShuiFromGeo');
+  if (btnJumpToFengShuiFromGeo) {
+    btnJumpToFengShuiFromGeo.addEventListener('click', () => switchPrimaryView('view-fengshui'));
+  }
+  const btnJumpToGeoFromHome = document.getElementById('btnJumpToGeoFromHome');
+  if (btnJumpToGeoFromHome) {
+    btnJumpToGeoFromHome.addEventListener('click', () => switchPrimaryView('view-georesonance'));
+  }
+  const btnOpenGeoSubpageFromLuck = document.getElementById('btnOpenGeoSubpageFromLuck');
+  if (btnOpenGeoSubpageFromLuck) {
+    btnOpenGeoSubpageFromLuck.addEventListener('click', () => switchPrimaryView('view-georesonance'));
   }
 
   // Career Fullscreen Mode Controller (Seamlessly Enter / Exit Fullscreen without losing BaZi data)
@@ -12450,9 +12522,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const w = rect.width || 700;
     const h = rect.height || 128;
 
-    canvas.width = w * dpr;
-    canvas.height = h * dpr;
-    ctx.scale(dpr, dpr);
+    const targetW = Math.round(w * dpr);
+    const targetH = Math.round(h * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+    if (typeof ctx.setTransform === 'function') {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    } else if (typeof ctx.scale === 'function') {
+      ctx.scale(dpr, dpr);
+    }
 
     ctx.clearRect(0, 0, w, h);
 

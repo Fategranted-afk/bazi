@@ -445,7 +445,7 @@
               <span data-i18n="portal_card10_title">历史人物参考 (东汉至唐初)</span>
             </div>
             <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card10_desc">
-              东汉末年至唐初贞观 · 448位风云人物 · 性格位置生平胜负手 · 相似度测算与学戒大略
+              东汉末年至唐初贞观 · 449位风云人物 · 性格位置生平胜负手 · 相似度测算与学戒大略
             </p>
           </div>
 
@@ -537,6 +537,11 @@
           <span class="text-base">⏳</span>
           <span data-i18n="nav_view_luck">岁运推演 (大运 / 流年 / 流月 / 流日)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-purple-950/60 text-purple-300 border border-purple-800/30 font-normal" data-i18n="seal_view_luck">动态时空</span>
+        </button>
+        <button id="navBtnGeo" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-georesonance">
+          <span class="text-base">🗺️</span>
+          <span data-i18n="nav_view_georesonance">地理方位与组织生态匹配</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_georesonance">生态定位</span>
         </button>
         <button id="navBtnCanons" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
           <span class="text-base">📜</span>
@@ -908,6 +913,26 @@
         <div id="remedyContainer" class="space-y-4 text-xs">
           <!-- Injected dynamically via JavaScript -->
         </div>
+      </div>
+
+      <!-- Cross-View Portal Bridge to Geo Resonance (地理方位与组织生态匹配仪独立专页传送门) -->
+      <div class="mt-4 p-4 rounded-xl bg-gradient-to-r from-blue-950/40 via-black/60 to-indigo-950/40 border border-blue-500/40 flex flex-wrap items-center justify-between gap-3 shadow-lg">
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl">🗺️</span>
+          <div>
+            <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-blue-300 flex items-center gap-2">
+              <span data-i18n="geo_banner_title">地理方位与组织生态匹配仪 · 专属研解专页</span>
+              <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-blue-900/60 text-blue-300 border border-blue-600/40 font-mono" data-i18n="seal_view_georesonance">生态定位</span>
+            </h5>
+            <p class="text-[11px] text-gray-400 mt-0.5" data-i18n="geo_banner_desc">
+              融合五行地气方位场能共振、全球代表都市群战略契合度评估，以及体制内/创业/合伙/独立四大组织生态位诊断与反内耗归因。
+            </p>
+          </div>
+        </div>
+        <button type="button" id="btnJumpToGeoFromHome" class="px-3.5 py-1.5 rounded-xl bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 border border-blue-500/50 text-xs font-serif-sc font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+          <span>🗺️</span>
+          <span data-i18n="btn_open_geo_subpage">进入独立专页研解 →</span>
+        </button>
       </div>
     </section>
   </div>
@@ -1368,6 +1393,10 @@
             </p>
           </div>
         </div>
+        <button id="btnOpenGeoSubpageFromLuck" type="button" class="px-3.5 py-1.5 rounded-xl bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 border border-blue-500/50 text-xs font-serif-sc font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+          <span>🗺️</span>
+          <span data-i18n="btn_open_geo_subpage">进入独立专页研解 →</span>
+        </button>
       </div>
       <div id="ecologicalResonanceContainer" class="space-y-4">
         <!-- Injected dynamically via JavaScript -->
@@ -1375,6 +1404,47 @@
     </section>
   </div>
   <!-- End of view-luck -->
+
+  <!-- View: Dedicated Geographic & Workplace Ecological Resonance Subpage (地理方位与组织生态匹配仪独立专页) -->
+  <div id="view-georesonance" class="space-y-6 hidden">
+    <!-- Top Breadcrumb Navigation & Jump Toolbar -->
+    <div class="bg-card p-4 rounded-2xl border border-gray-800 shadow-xl flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-2.5">
+        <span class="text-2xl">🗺️</span>
+        <div>
+          <h3 class="text-sm sm:text-base font-bold text-blue-300 font-serif-sc flex items-center gap-2">
+            <span data-i18n="geo_banner_title">地理方位与组织生态匹配仪 · 专属研解专页</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-600/40 font-mono" data-i18n="seal_view_georesonance">生态定位</span>
+          </h3>
+          <p class="text-xs text-gray-400 mt-0.5" data-i18n="geo_banner_desc">
+            融合五行地气方位场能共振、全球代表都市群战略契合度评估，以及体制内/创业/合伙/独立四大组织生态位诊断与反内耗归因。
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="btnJumpToHomeFromGeo" type="button" class="px-3 py-1.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 border border-gray-700 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+          <span>🏛️</span>
+          <span data-i18n="btn_jump_home_from_geo">返回核心主盘</span>
+        </button>
+        <button id="btnJumpToLuckFromGeo" type="button" class="px-3 py-1.5 rounded-xl bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 border border-purple-700/50 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+          <span>⏳</span>
+          <span data-i18n="btn_jump_luck_from_geo">岁运推演全盘</span>
+        </button>
+        <button id="btnJumpToFengShuiFromGeo" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+          <span>🏡</span>
+          <span data-i18n="btn_jump_fengshui_from_geo">空间风水指南</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Container -->
+    <section class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-4 bg-gradient-to-br from-[#12151d] via-[#0f1118] to-black">
+      <div id="ecologicalResonanceContainerSubpage" class="space-y-4">
+        <!-- Injected dynamically via JavaScript -->
+      </div>
+    </section>
+  </div>
+  <!-- End of view-georesonance -->
 
   <!-- View 3: Twelve Classical Canons & Commentaries (十二大典与经文细注) -->
   <div id="view-canons" class="space-y-6 hidden">

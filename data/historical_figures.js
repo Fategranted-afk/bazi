@@ -1,5 +1,5 @@
 /**
- * 历史人物参考 448位历史名人数据库 (东汉末年至唐初贞观：公元184年 - 公元705年)
+ * 历史人物参考 449位历史名人数据库 (东汉末年至唐初贞观：公元184年 - 公元705年)
  * Historical Figures Mirror & Reference Database (184 AD - 705 AD)
  * 涵盖：东汉末年群雄逐鹿、三国鼎立、西晋风云、五胡十六国、东晋门阀风度、南朝宋齐梁陈、北魏拓土汉化、周齐对峙、大隋一统、隋末崩塌与群雄割据、隋唐鼎革与贞观盛世
  */
@@ -15437,6 +15437,55 @@ const HISTORICAL_FIGURES = [
     "auxiliaryWeaknessesEn": [
       "Utterly devoid of governance stamina and constructive diplomatic coalition building",
       "Narcissistic gambler pathology guaranteeing swift downfall surrounded by enemies"
+    ]
+  },
+  {
+    "id": "yuwen_chengdu",
+    "nameZh": "宇文成都",
+    "nameEn": "Yuwen Chengdu",
+    "dynastyZh": "隋朝",
+    "dynastyEn": "Sui Dynasty",
+    "eraTag": "sui_collapse",
+    "eraNameZh": "隋末崩塌与群雄割据",
+    "eraNameEn": "Late Sui Collapse & Warlords",
+    "positionZh": "大隋天宝大将军 · 隋唐第二条好汉 · 凤翅镏金镋 · 孤勇护国天下无敌名将",
+    "positionEn": "Supreme Tianbao General of Sui · Second Peerless Warrior · Wielding the Gilded Phoenix Halberd",
+    "personalityZh": "忠勇刚烈、威震万夫、傲骨嶙峋、悲壮孤臣、勇冠三军、死战不屈",
+    "personalityEn": "Fiercely loyal, peerlessly mighty, unbending pride, tragic sovereign defender fighting to the last breath",
+    "deedsZh": "宇文化及之子，天下第二条好汉，大隋天宝大将军；身长一丈，使四百斤凤翅镏金镋，威震天下。四平山独战雄阔海、伍云召、伍天锡三大顶尖反王并占上风；大业末年随炀帝巡江都，虽明知炀帝失道大隋气数已尽，其父宇文化及兵变弑君，仍坚守武人忠魂死守宫门，最终与天下第一李元霸决战，力竭悲壮阵亡。为隋唐演义中最具悲剧宿命感之绝世猛将。",
+    "deedsEn": "Son of Yuwen Huaji, the celebrated #2 warrior of the Sui-Tang era and Supreme Tianbao General. Wielded the 400-catty Phoenix Halberd. Dominated the Three Heroes (Xiong Kuohai, Wu Yunzhao, Wu Tianxi) at Siping Mountain. When his father plotted regicide at Jiangdu, Chengdu refused treachery and chose to die upholding martial loyalty, slain in a cataclysmic final duel against Li Yuanba.",
+    "archetype": "military",
+    "fiveElements": {
+      "dominant": "金",
+      "secondary": "火"
+    },
+    "tenGodsAffinity": [
+      "七杀",
+      "比肩",
+      "偏印"
+    ],
+    "patternType": "杀刃两停",
+    "strengthAdviceZh": "硬核战力冠绝万夫，敢于在组织危亡与逆境风暴中独挑重担，以无畏魄力正面硬撼强敌。",
+    "strengthAdviceEn": "Harness unyielding frontline tenacity to tackle high-stakes crises, spearheading formidable obstacles with resolute leadership.",
+    "weaknessAdviceZh": "戒除孤臣悲剧宿命与盲目殉葬死局，明察天下大势演化，及时建立自保退路与弹性策略。",
+    "weaknessAdviceEn": "Guard against rigid tragic loyalty to doomed causes; discern macroscopic paradigm shifts and maintain strategic exit ramps.",
+    "historicalQuoteZh": "《说唐》论曰：‘金甲凤翅镋，天宝第一名。一人独敌三王胆，力尽方知李霸鸣。’赞其忠勇绝伦、万夫莫当之悲剧英雄气象。",
+    "historicalQuoteEn": "Historical Chronicles: 'Gilded Phoenix Halberd shaking the heavens; one warrior vanquishing three kings, falling only to the destined champion.' A tribute to sublime martial valor and tragic grandeur.",
+    "auxiliaryStrengthsZh": [
+      "硬核战力冠绝万夫，敢于逆风扛旗决战",
+      "严守武将道义底线，绝不同流合污屈服"
+    ],
+    "auxiliaryStrengthsEn": [
+      "Peerless frontline execution, courage to lead against devastating odds",
+      "Rigid adherence to personal honor and uncompromising ethical integrity"
+    ],
+    "auxiliaryWeaknessesZh": [
+      "明知山有虎偏向虎山行，执念过深缺乏战略退步",
+      "受困于家族宗族羁绊，难以挣脱既定悲剧锁链"
+    ],
+    "auxiliaryWeaknessesEn": [
+      "Excessive obstinacy and refusal to make strategic concessions",
+      "Entrapment within toxic kinship structures and fatalistic loyalty"
     ]
   },
   {
