@@ -19,10 +19,10 @@
 </head>
 <body class="min-h-screen">
   <!-- Header -->
-  <header class="border-b border-gray-800 bg-[#16181f]/80 backdrop-blur sticky top-0 z-50 relative">
-    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 py-2.5 relative flex items-center justify-between gap-3 min-h-[58px]">
+  <header class="border-b border-gray-800 bg-[#16181f]/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3 min-h-[58px]">
       <!-- Left: Logo & Brand Title -->
-      <div class="flex items-center space-x-3 flex-shrink-0 z-10 max-w-[calc(50%-85px)] min-w-0">
+      <div class="flex items-center space-x-3 flex-shrink-0 min-w-0">
         <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-600 to-rose-700 flex items-center justify-center shadow-lg shadow-rose-900/30 flex-shrink-0">
           <span class="text-white font-bold text-xl font-serif-sc">八</span>
         </div>
@@ -31,58 +31,58 @@
             <span data-i18n="app_title" class="truncate">八字排盘与典籍研索系统</span>
             <span class="chinese-seal text-[11px] py-0.5 flex-shrink-0" data-i18n="seal_canons">双典集成</span>
           </h1>
-          <p class="text-xs text-gray-400 hidden 2xl:block truncate max-w-sm" data-i18n="app_subtitle">精确天文节气 · 内置《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》五大经典原著库</p>
+          <p class="text-xs text-gray-400 hidden sm:block" data-i18n="app_subtitle">精确天文节气 · 内置《滴天髓》《三命通会》《穷通宝鉴》《子平真诠》《渊海子平》五大经典原著库</p>
         </div>
       </div>
 
-      <!-- Center: 命理门庭 Navigation (Strict Central Axis Symmetrical Positioning) -->
-      <button id="btnPortalTopNav" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 px-4 py-1.5 text-xs rounded-xl border border-amber-600/50 bg-amber-950/70 hover:bg-amber-900/90 text-amber-300 font-bold transition flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-md shadow-amber-950/50 whitespace-nowrap" data-i18n="btn_portal_nav">
-        ⛩️ 命理门庭
-      </button>
-
-      <!-- Right: Action Controls -->
-      <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0 z-10 ml-auto max-w-[calc(50%-85px)] justify-end overflow-x-auto no-scrollbar py-0.5">
+      <!-- Right: Action Controls (All aligned on the same horizontal line) -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2 flex-wrap gap-y-2 flex-shrink-0">
         <!-- Language Switcher Toggle Group -->
         <div class="flex items-center rounded-lg border border-gray-700 bg-gray-800/80 p-0.5 shadow-sm flex-shrink-0" role="group">
-          <button id="langZhBtn" class="px-2 sm:px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow whitespace-nowrap">
+          <button id="langZhBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition bg-amber-600 text-white shadow whitespace-nowrap">
             中文
           </button>
-          <button id="langEnBtn" class="px-2 sm:px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200 whitespace-nowrap">
+          <button id="langEnBtn" class="px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200 whitespace-nowrap">
             English
           </button>
         </div>
 
         <!-- Imperial Dossier A4 Print Button -->
-        <button id="btnExportDossier" class="hidden px-2 sm:px-2.5 xl:px-3 py-1.5 text-xs rounded-lg border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 whitespace-nowrap flex-shrink-0" data-i18n="btn_export_dossier">
+        <button id="btnExportDossier" class="hidden px-2.5 sm:px-3 py-1.5 text-xs rounded-lg border border-amber-600/50 bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 whitespace-nowrap" data-i18n="btn_export_dossier">
           👑 皇家线装战报 (A4 PDF)
         </button>
 
         <!-- Quick 1-Page PDF Export Button -->
-        <button id="btnQuickExportSinglePdf" class="hidden px-2 sm:px-2.5 xl:px-3 py-1.5 text-xs rounded-lg border border-teal-600/50 bg-gradient-to-r from-teal-700/80 to-emerald-800/80 hover:from-teal-600 hover:to-emerald-700 text-teal-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap flex-shrink-0" data-i18n="btn_quick_export_single" title="快速导出皇家战报第一页（卷首三要终身统览）单页 PDF">
+        <button id="btnQuickExportSinglePdf" class="hidden px-2.5 sm:px-3 py-1.5 text-xs rounded-lg border border-teal-600/50 bg-gradient-to-r from-teal-700/80 to-emerald-800/80 hover:from-teal-600 hover:to-emerald-700 text-teal-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap" data-i18n="btn_quick_export_single" title="快速导出皇家战报第一页（卷首三要终身统览）单页 PDF">
           <span>📄</span>
           <span data-i18n="btn_quick_export_single_text">快速生成首页 PDF</span>
         </button>
 
         <!-- Social Card Export Button -->
-        <button id="btnOpenSocialCard" class="hidden px-2 sm:px-2.5 xl:px-3 py-1.5 text-xs rounded-lg border border-purple-600/50 bg-gradient-to-r from-purple-700/80 to-indigo-800/80 hover:from-purple-600 hover:to-indigo-700 text-purple-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap flex-shrink-0" data-i18n="btn_open_social_card" title="生成专属竖屏国风社交名片战报">
+        <button id="btnOpenSocialCard" class="hidden px-2.5 sm:px-3 py-1.5 text-xs rounded-lg border border-purple-600/50 bg-gradient-to-r from-purple-700/80 to-indigo-800/80 hover:from-purple-600 hover:to-indigo-700 text-purple-100 font-bold shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer whitespace-nowrap" data-i18n="btn_open_social_card" title="生成专属竖屏国风社交名片战报">
           <span>🎴</span>
           <span data-i18n="btn_open_social_card_text">社交名片</span>
         </button>
 
-        <!-- Dynamic Ambient Flux Toggle (Hidden per user request) -->
-        <button id="btnToggleFlux" class="hidden px-2.5 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-amber-300/90 transition flex items-center gap-1 flex-shrink-0" title="切换东方动态气机" data-i18n="alchemy_toggle_label">
+        <!-- Dynamic Ambient Flux Toggle -->
+        <button id="btnToggleFlux" class="px-2.5 sm:px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-amber-300/90 transition flex items-center gap-1 whitespace-nowrap" title="切换东方动态气机" data-i18n="alchemy_toggle_label">
           ✨ 东方气机流光
         </button>
 
+        <!-- Portal Navigation Button (Reopen Landing Portal from Dashboard · Same Horizontal Line) -->
+        <button id="btnPortalTopNav" class="hidden px-3 py-1.5 text-xs rounded-xl border border-amber-600/50 bg-amber-950/70 hover:bg-amber-900/90 text-amber-300 font-bold transition flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm whitespace-nowrap" data-i18n="btn_portal_nav">
+          ⛩️ 命理门庭
+        </button>
+
         <!-- PWA Install Button (Shown when prompt is available) -->
-        <button id="btnInstallPwa" class="hidden px-2.5 py-1.5 text-xs rounded-lg border border-emerald-600/50 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 font-medium transition flex items-center gap-1 shadow-sm flex-shrink-0" data-i18n="btn_install_pwa">
+        <button id="btnInstallPwa" class="hidden px-2.5 py-1.5 text-xs rounded-lg border border-emerald-600/50 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 font-medium transition flex items-center gap-1 shadow-sm whitespace-nowrap" data-i18n="btn_install_pwa">
           📲 安装离线应用
         </button>
 
-        <button id="nowBtn" class="px-2 sm:px-2.5 xl:px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition whitespace-nowrap flex-shrink-0" data-i18n="btn_now">
+        <button id="nowBtn" class="px-2.5 sm:px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition whitespace-nowrap" data-i18n="btn_now">
           ⏱ 此时时刻
         </button>
-        <button id="themeToggle" class="px-2 sm:px-2.5 xl:px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition whitespace-nowrap flex-shrink-0" data-i18n="btn_theme_dark">
+        <button id="themeToggle" class="px-2.5 sm:px-3 py-1.5 text-xs rounded-lg border border-gray-700 bg-gray-800/80 hover:bg-gray-700 text-gray-300 transition whitespace-nowrap" data-i18n="btn_theme_dark">
           🌙 暗夜
         </button>
       </div>

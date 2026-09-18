@@ -2613,16 +2613,8 @@ body.light-theme .history-fullscreen-mode {
 }
 
 /* ==========================================================================
-   Header Portal Top Nav Central Axis Symmetrical Alignment (命理门庭绝对居中)
+   Header Portal Top Nav Button (命理门庭 · 与其余功能处于同一水平线)
    ========================================================================== */
-#btnPortalTopNav {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 30;
-}
-
 #btnPortalTopNav.hidden {
   display: none !important;
 }

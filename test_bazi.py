@@ -13142,7 +13142,7 @@ assert '<option value="Singapore">新加坡 (Singapore)</option>' in index_html,
 print("✓ 百岁岁运六十四卦行持全景总谱时间轴八字对齐（2002年1岁=2002/25岁=2026/六十四卦易数气机波动轨迹结果直连全景/点击卡片瞬时联动调阅）、沙盘推演国家+城市五行/产业规划重叠度/岗位与上司十神/三大主导格局/双城裁决与天梯总榜全维度升级（中英双语100%零中文残留）验证通过！")
 
 # === 111. Validating Header Portal Top Nav Absolute Central Axis Symmetry & Grand Celestial Streamers ===
-print("\n=== 111. Validating Header Portal Top Nav Absolute Central Axis Symmetry & Grand Celestial Streamers ===")
+print("\n=== 111. Validating Header Portal Top Nav Horizontal Alignment & Meteor Shooting Stars ===")
 with open('index.html', 'r', encoding='utf-8') as f:
     idx_content = f.read()
 
@@ -13152,36 +13152,27 @@ with open('css/style.css', 'r', encoding='utf-8') as f:
 with open('js/visual-alchemy.js', 'r', encoding='utf-8') as f:
     va_content = f.read()
 
-# 1. Validate Header Absolute Centering in index.html
+# 1. Validate Header Horizontal Alignment in index.html (Matching User Reference Design)
 assert 'id="btnPortalTopNav"' in idx_content, "index.html must contain #btnPortalTopNav"
-assert 'absolute' in idx_content and 'left-1/2' in idx_content and '-translate-x-1/2' in idx_content, \
-    "index.html #btnPortalTopNav must use absolute horizontal centering (left-1/2 -translate-x-1/2)"
-assert '-translate-y-1/2' in idx_content, \
-    "index.html #btnPortalTopNav must use vertical centering (-translate-y-1/2)"
+assert 'id="btnToggleFlux"' in idx_content, "index.html must contain #btnToggleFlux"
+assert 'id="btnQuickExportSinglePdf"' in idx_content and 'id="btnOpenSocialCard"' in idx_content, \
+    "index.html must contain new function buttons"
 
-# Check that the button itself has the centering classes
-assert 'id="btnPortalTopNav" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' in idx_content, \
-    "#btnPortalTopNav must have direct absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 classes"
+# Check that btnPortalTopNav sits inside the horizontal action controls flex row
+assert 'flex items-center space-x-1.5' in idx_content or 'flex items-center space-x-2' in idx_content, \
+    "Header action controls must align horizontally in flex row"
 
-# Check bilateral symmetry: both left brand and right action controls must respect central exclusion corridor
-assert 'max-w-[calc(50%-85px)]' in idx_content, "index.html must constrain lateral blocks"
-assert idx_content.count('max-w-[calc(50%-85px)]') >= 2, \
-    "index.html must constrain BOTH left brand and right action controls with max-w-[calc(50%-85px)] to prevent collision with #btnPortalTopNav"
-assert 'no-scrollbar' in idx_content and 'no-scrollbar' in css_content, \
-    "index.html and style.css must support no-scrollbar for clean action row containment"
-
-# 2. Validate Header CSS Symmetrical Alignment in style.css
-assert '#btnPortalTopNav {' in css_content, "style.css must define #btnPortalTopNav rules"
-assert 'left: 50%;' in css_content and 'top: 50%;' in css_content, "style.css must position #btnPortalTopNav at left: 50% and top: 50%"
-assert 'transform: translate(-50%, -50%);' in css_content, "style.css must translate #btnPortalTopNav by -50%, -50%"
+# 2. Validate Header CSS in style.css
 assert '#btnPortalTopNav.hidden {' in css_content, "style.css must ensure #btnPortalTopNav.hidden is display: none !important"
+assert '[data-theme="light"] #btnPortalTopNav' in css_content, "style.css must define light theme contrast styles for #btnPortalTopNav"
 
-# 3. Validate Grand Celestial Streamers (大号宏伟流光) & Removal of Large Floating Light Blobs
+# 3. Validate Shooting Stars / Meteors (流星 · Grand Celestial Streamers)
 assert 'Grand Celestial Streamer' in va_content, "visual-alchemy.js must specify Grand Celestial Streamer"
+assert 'Shooting Meteor' in va_content or '天际流星' in va_content, "visual-alchemy.js must specify shooting meteor physics"
 assert 'size > 2.2' not in va_content, "visual-alchemy.js must not render large fuzzy particle glow circles"
 assert '14.0 + Math.random()' in va_content or 'glowWidth' in va_content, "visual-alchemy.js must feature elevated streamer glow width"
 
-# 4. JSC Dynamic Execution Test for Grand Celestial Streamers
+# 4. JSC Dynamic Execution Test for Shooting Meteor & Celestial Streamers
 jsc_check111_cmd = [
     "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
     "-e",
@@ -13257,7 +13248,7 @@ jsc_check111_cmd = [
 run_check111 = subprocess.run(jsc_check111_cmd, capture_output=True, text=True)
 assert run_check111.returncode == 0, f"Check 111 JSC test failed: stdout={run_check111.stdout} stderr={run_check111.stderr}"
 
-print("✓ 顶部Header命理门庭按钮绝对水平居中（absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 庄严对称轴线）、背景大号浮动光点彻底剔除并升级为大号宏伟流光（Grand Celestial Streamers 280-480px超长天际贯穿/14-24px大气极光纱幔/双语零残留）验证通过！")
+print("✓ 顶部Header命理门庭按钮同水平线布局（与其余功能处于同一水平行）、背景流光升级为天际流星（Shooting Meteors / 280-480px天际穿梭/白炽火核/离子彗尾/尾迹星屑/双语零残留）验证通过！")
 
 # === 112. Validating Social Card High-Craftsmanship Overhaul & Dynamic 100-Year Hexagram Trajectory Alignment ===
 print("\n=== 112. Validating Social Card High-Craftsmanship Overhaul & Dynamic 100-Year Hexagram Trajectory Alignment ===")

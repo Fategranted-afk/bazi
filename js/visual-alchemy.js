@@ -100,20 +100,22 @@ const VisualAlchemy = (function() {
   }
 
   /**
-   * Grand Celestial Streamer (大号宏伟流光 · 转瞬即逝的灵动流光 · 极光掠影 / 流星 / 宏伟光丝)
+   * Grand Celestial Streamer & Shooting Meteor (大号宏伟流光 · 天际流星 · 灵动划过夜空 · 纯净流星质感)
    * Behavior:
-   * - Elevated to Grand Celestial Streamers per user specification.
+   * - Realistic shooting star physics per user specification (流光跟流星一样).
    * - Sweeping majestic length across the celestial expanse (280px ~ 480px).
-   * - Brilliant luminous core with broad atmospheric ethereal celestial veil aura (14px ~ 24px).
-   * - Spawns with serene staggered intervals (2.5~6.5s) from peripheral or upper celestial expanse.
-   * - Glides gracefully: Radiant spark ignition -> Grand streamer elongation -> Majestic glide -> Ethereal dissolution into void.
-   * - 100% Non-intrusive backdrop, zero foreground text distraction.
+   * - Incandescent diamond-spark head (white nucleus + five-element corona).
+   * - Swift diagonal glide across the sky (720 ~ 1000 px/sec) taking ~0.9s to 1.4s.
+   * - Tapered ion tail with stardust wake sparks that twinkle and fade into the void.
+   * - Serene staggered intervals between meteors (2.2s ~ 5.5s), 100% non-intrusive backdrop.
    */
   class FleetingStreak {
     constructor(w, h, initialDelayMs = 0) {
       this.state = 'waiting'; // 'waiting' | 'active'
       this.waitDuration = initialDelayMs || (1200 + Math.random() * 3200);
       this.timer = 0;
+      this.sparks = [];
+      this.sparkTimer = 0;
       this.reset(w, h);
     }
 
@@ -121,57 +123,54 @@ const VisualAlchemy = (function() {
       const screenW = (w && w > 0) ? w : ((typeof window !== 'undefined' && window.innerWidth) || 800);
       const screenH = (h && h > 0) ? h : ((typeof window !== 'undefined' && window.innerHeight) || 600);
 
-      // Celestial glide angle: gentle downward diagonal (22° to 38° downward-right)
-      // or occasional downward-left (142° to 158°)
+      // Shooting Meteor angle: gentle downward diagonal across celestial sky
+      // Primary: downward-right (28° to 42°), Secondary: downward-left (138° to 152°)
       const isLeftToRight = Math.random() > 0.18;
-      const angleDeg = isLeftToRight ? (22 + Math.random() * 16) : (142 + Math.random() * 16);
+      const angleDeg = isLeftToRight ? (28 + Math.random() * 14) : (138 + Math.random() * 14);
       const angleRad = (angleDeg * Math.PI) / 180;
 
-      // Grand Streamer Length: 280px to 480px (proportional on smaller viewports)
-      this.length = Math.min(screenW * 0.52, 280 + Math.random() * 200);
+      // Grand Streamer & Meteor Trail Length: 280px to 480px (proportional on smaller screens)
+      this.length = Math.min(screenW * 0.52, 280 + Math.random() * 180);
 
-      // Spawn origin: from upper celestial horizon or peripheral margin,
-      // avoiding dead-center reading area so foreground text remains completely peaceful
+      // Spawn origin: from upper celestial horizon or upper margins
       if (isLeftToRight) {
         if (Math.random() > 0.35) {
-          // Upper celestial horizon
-          this.startX = -40 + Math.random() * (screenW * 0.75);
-          this.startY = -30 + Math.random() * Math.min(screenH * 0.25, 160);
+          this.startX = -40 + Math.random() * (screenW * 0.65);
+          this.startY = -30 + Math.random() * Math.min(screenH * 0.28, 180);
         } else {
-          // Left peripheral margin
           this.startX = -50 - Math.random() * 20;
-          this.startY = Math.random() * Math.min(screenH * 0.45, 320);
+          this.startY = Math.random() * Math.min(screenH * 0.40, 260);
         }
       } else {
         if (Math.random() > 0.35) {
-          // Upper right celestial horizon
-          this.startX = screenW * 0.25 + Math.random() * (screenW * 0.75);
-          this.startY = -30 + Math.random() * Math.min(screenH * 0.25, 160);
+          this.startX = screenW * 0.35 + Math.random() * (screenW * 0.65);
+          this.startY = -30 + Math.random() * Math.min(screenH * 0.28, 180);
         } else {
-          // Right peripheral margin
           this.startX = screenW + 30 + Math.random() * 20;
-          this.startY = Math.random() * Math.min(screenH * 0.45, 320);
+          this.startY = Math.random() * Math.min(screenH * 0.40, 260);
         }
       }
 
       this.currentX = this.startX;
       this.currentY = this.startY;
 
-      // Speed: 230px to 340px per second -> per millisecond
-      const speedPxPerSec = 230 + Math.random() * 110;
+      // Speed: Swift meteor speed 720px ~ 1000px per second -> per millisecond
+      const speedPxPerSec = 720 + Math.random() * 280;
       this.vx = (Math.cos(angleRad) * speedPxPerSec) / 1000;
       this.vy = (Math.sin(angleRad) * speedPxPerSec) / 1000;
       this.angleRad = angleRad;
 
-      // Life duration: 2000ms ~ 2800ms
-      this.duration = 2000 + Math.random() * 800;
+      // Duration of active meteor streak: 900ms ~ 1400ms
+      this.duration = 900 + Math.random() * 500;
       this.elapsed = 0;
+      this.sparks = [];
+      this.sparkTimer = 0;
 
       // Peak alpha: luminous yet ethereal
-      this.peakAlphaDark = 0.42 + Math.random() * 0.12; // 0.42 ~ 0.54
-      this.peakAlphaLight = 0.20 + Math.random() * 0.08; // 0.20 ~ 0.28
+      this.peakAlphaDark = 0.45 + Math.random() * 0.12; // 0.45 ~ 0.57
+      this.peakAlphaLight = 0.22 + Math.random() * 0.08; // 0.22 ~ 0.30
 
-      // Grand Luminous Filament: Core (2.6px ~ 3.6px) & Majestic Celestial Veil (14px ~ 24px)
+      // Grand Luminous Filament: Core (2.6px ~ 3.6px) & Broad Atmospheric Veil (14px ~ 24px)
       this.coreWidth = 2.6 + Math.random() * 1.0;
       this.glowWidth = 14.0 + Math.random() * 10.0;
 
@@ -185,6 +184,17 @@ const VisualAlchemy = (function() {
     }
 
     update(deltaMs, w, h) {
+      // Update lingering stardust wake sparks
+      if (this.sparks && this.sparks.length > 0) {
+        for (let i = this.sparks.length - 1; i >= 0; i--) {
+          const sp = this.sparks[i];
+          sp.alpha -= sp.decay * deltaMs;
+          if (sp.alpha <= 0.02) {
+            this.sparks.splice(i, 1);
+          }
+        }
+      }
+
       if (this.state === 'waiting') {
         this.timer += deltaMs;
         if (this.timer >= this.waitDuration) {
@@ -200,10 +210,23 @@ const VisualAlchemy = (function() {
         this.currentX += this.vx * deltaMs;
         this.currentY += this.vy * deltaMs;
 
+        // Shed trailing stardust sparks in the meteor wake
+        this.sparkTimer = (this.sparkTimer || 0) + deltaMs;
+        if (this.sparkTimer >= 75 && this.sparks.length < 10) {
+          this.sparkTimer = 0;
+          this.sparks.push({
+            x: this.currentX + (Math.random() - 0.5) * 4,
+            y: this.currentY + (Math.random() - 0.5) * 4,
+            size: 0.8 + Math.random() * 0.8,
+            alpha: 0.55,
+            decay: 0.0022 + Math.random() * 0.0018
+          });
+        }
+
         if (this.elapsed >= this.duration) {
-          // Flight concluded: enter serene intermission pause (2.5s ~ 6.5s)
+          // Flight concluded: enter serene intermission pause (2.2s ~ 5.5s)
           this.state = 'waiting';
-          this.waitDuration = 2500 + Math.random() * 4000;
+          this.waitDuration = 2200 + Math.random() * 3300;
           this.timer = 0;
           this.reset(w, h);
         }
@@ -211,93 +234,115 @@ const VisualAlchemy = (function() {
     }
 
     draw(ctx, isLight) {
-      if (!ctx || this.state !== 'active') return;
+      if (!ctx) return;
 
-      const progress = Math.min(1, Math.max(0, this.elapsed / this.duration));
-
-      // Fade envelope: Soft fade-in (0 -> 0.20), sustain (0.20 -> 0.70), smooth fade-out (0.70 -> 1.0)
-      let fade = 1.0;
-      if (progress < 0.20) {
-        fade = progress / 0.20;
-      } else if (progress > 0.70) {
-        fade = (1.0 - progress) / 0.30;
-      }
-      fade = Math.max(0, Math.min(1, fade));
-
-      const peakAlpha = isLight ? this.peakAlphaLight : this.peakAlphaDark;
-      const alpha = peakAlpha * fade;
-      if (alpha <= 0.005) return;
-
-      // Dynamic tail elongation & dissolution:
-      let lengthFactor = 1.0;
-      if (progress < 0.20) {
-        lengthFactor = Math.sin((progress / 0.20) * (Math.PI / 2));
-      } else if (progress > 0.70) {
-        lengthFactor = Math.max(0.15, 1.0 - ((progress - 0.70) / 0.30) * 0.85);
-      }
-      const curLength = Math.max(3, this.length * lengthFactor);
-
-      const headX = this.currentX;
-      const headY = this.currentY;
-      const tailX = headX - Math.cos(this.angleRad) * curLength;
-      const tailY = headY - Math.sin(this.angleRad) * curLength;
-
-      const rgb = isLight ? (this.element.lightRgb || '180, 83, 9') : (this.element.rgb || '251, 191, 36');
-
-      // Create linear gradient from head to tail with distance guard
-      let grad = null;
-      if (typeof ctx.createLinearGradient === 'function') {
-        try {
-          const dx = headX - tailX;
-          const dy = headY - tailY;
-          if (dx * dx + dy * dy >= 4) {
-            grad = ctx.createLinearGradient(headX, headY, tailX, tailY);
-            grad.addColorStop(0, `rgba(${rgb}, ${alpha.toFixed(3)})`);
-            grad.addColorStop(0.18, `rgba(${rgb}, ${(alpha * 0.80).toFixed(3)})`);
-            grad.addColorStop(0.55, `rgba(${rgb}, ${(alpha * 0.35).toFixed(3)})`);
-            grad.addColorStop(0.85, `rgba(${rgb}, ${(alpha * 0.10).toFixed(3)})`);
-            grad.addColorStop(1, `rgba(${rgb}, 0)`);
-          }
-        } catch (e) {
-          grad = null;
-        }
-      }
-
-      // Defensive state isolation to prevent canvas property leakage
       const canSave = (typeof ctx.save === 'function' && typeof ctx.restore === 'function');
       if (canSave) ctx.save();
       try {
-        // 1. Grand Outer Celestial Aura Streamer (Atmospheric celestial veil)
+        const rgb = isLight ? (this.element.lightRgb || '180, 83, 9') : (this.element.rgb || '251, 191, 36');
+
+        // 1. Draw lingering stardust wake sparks
+        if (this.sparks && this.sparks.length > 0) {
+          for (let i = 0; i < this.sparks.length; i++) {
+            const sp = this.sparks[i];
+            if (sp.alpha > 0.02) {
+              if (typeof ctx.beginPath === 'function') ctx.beginPath();
+              if (typeof ctx.arc === 'function') ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
+              ctx.fillStyle = isLight ? `rgba(${rgb}, ${sp.alpha.toFixed(3)})` : `rgba(255, 255, 255, ${sp.alpha.toFixed(3)})`;
+              if (typeof ctx.fill === 'function') ctx.fill();
+            }
+          }
+        }
+
+        if (this.state !== 'active') return;
+
+        const progress = Math.min(1, Math.max(0, this.elapsed / this.duration));
+
+        // Meteor flash envelope: swift ignition (0 -> 0.15), peak flight (0.15 -> 0.65), smooth burnout (0.65 -> 1.0)
+        let fade = 1.0;
+        if (progress < 0.15) {
+          fade = progress / 0.15;
+        } else if (progress > 0.65) {
+          fade = (1.0 - progress) / 0.35;
+        }
+        fade = Math.max(0, Math.min(1, fade));
+
+        const peakAlpha = isLight ? this.peakAlphaLight : this.peakAlphaDark;
+        const alpha = peakAlpha * fade;
+        if (alpha <= 0.005) return;
+
+        // Dynamic tail elongation:
+        let lengthFactor = 1.0;
+        if (progress < 0.18) {
+          lengthFactor = Math.sin((progress / 0.18) * (Math.PI / 2));
+        } else if (progress > 0.65) {
+          lengthFactor = Math.max(0.15, 1.0 - ((progress - 0.65) / 0.35) * 0.85);
+        }
+        const curLength = Math.max(4, this.length * lengthFactor);
+
+        const headX = this.currentX;
+        const headY = this.currentY;
+        const tailX = headX - Math.cos(this.angleRad) * curLength;
+        const tailY = headY - Math.sin(this.angleRad) * curLength;
+
+        // Linear gradient along meteor trail: brilliant incandescent head -> elemental ion tail -> transparent void
+        let grad = null;
+        if (typeof ctx.createLinearGradient === 'function') {
+          try {
+            const dx = headX - tailX;
+            const dy = headY - tailY;
+            if (dx * dx + dy * dy >= 4) {
+              grad = ctx.createLinearGradient(headX, headY, tailX, tailY);
+              const headColor = isLight ? `rgba(${rgb}, ${alpha.toFixed(3)})` : `rgba(255, 255, 255, ${Math.min(1, alpha * 1.5).toFixed(3)})`;
+              grad.addColorStop(0, headColor);
+              grad.addColorStop(0.12, `rgba(${rgb}, ${(alpha * 0.88).toFixed(3)})`);
+              grad.addColorStop(0.45, `rgba(${rgb}, ${(alpha * 0.38).toFixed(3)})`);
+              grad.addColorStop(0.80, `rgba(${rgb}, ${(alpha * 0.10).toFixed(3)})`);
+              grad.addColorStop(1, `rgba(${rgb}, 0)`);
+            }
+          } catch (e) {
+            grad = null;
+          }
+        }
+
+        // 2. Outer Atmospheric Ionization Veil
         if (typeof ctx.beginPath === 'function') ctx.beginPath();
         if (typeof ctx.moveTo === 'function') ctx.moveTo(headX, headY);
         if (typeof ctx.lineTo === 'function') ctx.lineTo(tailX, tailY);
         ctx.strokeStyle = grad || (isLight ? this.element.lightGlow : this.element.glow);
         ctx.lineWidth = this.glowWidth;
         ctx.lineCap = 'round';
-        ctx.globalAlpha = 0.40;
+        ctx.globalAlpha = 0.38;
         if (typeof ctx.stroke === 'function') ctx.stroke();
 
-        // 2. Radiant Inner Core Filament (Majestic celestial streamer thread)
+        // 3. Radiant Inner Meteor Core Filament
         if (typeof ctx.beginPath === 'function') ctx.beginPath();
         if (typeof ctx.moveTo === 'function') ctx.moveTo(headX, headY);
         if (typeof ctx.lineTo === 'function') ctx.lineTo(tailX, tailY);
         ctx.strokeStyle = grad || (isLight ? this.element.lightColor : this.element.color);
         ctx.lineWidth = this.coreWidth;
         ctx.lineCap = 'round';
-        ctx.globalAlpha = 0.92;
+        ctx.globalAlpha = 0.95;
         if (typeof ctx.stroke === 'function') ctx.stroke();
 
-        // 3. Ethereal Leading Head Glow (Celestial Streamer Sparkle & Corona)
+        // 4. Brilliant Incandescent Meteor Nucleus & Head Flare
+        // A. Pure White Diamond Spark at the front tip
         if (typeof ctx.beginPath === 'function') ctx.beginPath();
-        if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 2.6, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rgb}, ${Math.min(1, alpha * 1.4).toFixed(3)})`;
+        if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = isLight ? `rgba(255, 255, 255, ${Math.min(1, alpha * 1.5).toFixed(3)})` : `rgba(255, 255, 255, ${Math.min(1, alpha * 1.8).toFixed(3)})`;
         ctx.globalAlpha = 1.0;
         if (typeof ctx.fill === 'function') ctx.fill();
 
-        // Soft halo around the leading head
+        // B. Inner Corona
         if (typeof ctx.beginPath === 'function') ctx.beginPath();
-        if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 5.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${rgb}, ${(alpha * 0.45).toFixed(3)})`;
+        if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 4.5, 0, Math.PI * 2);
+        ctx.fillStyle = isLight ? `rgba(${rgb}, ${(alpha * 0.70).toFixed(3)})` : `rgba(255, 255, 255, ${(alpha * 0.65).toFixed(3)})`;
+        if (typeof ctx.fill === 'function') ctx.fill();
+
+        // C. Soft Celestial Halo around the leading head
+        if (typeof ctx.beginPath === 'function') ctx.beginPath();
+        if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 9.0, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb}, ${(alpha * 0.30).toFixed(3)})`;
         if (typeof ctx.fill === 'function') ctx.fill();
       } finally {
         if (canSave) ctx.restore();
