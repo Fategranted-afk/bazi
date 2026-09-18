@@ -3724,7 +3724,16 @@ class PortraitEngine {
           demeanour: `【有可能的气质仪态】：${aura.zh}`,
           relationshipZh: `【相处关系与互动机制】：${spouse.adviceZh} ${spouse.clashRiskZh}`,
           relationshipEn: `[Relationship Dynamics]: ${spouse.adviceEn} ${spouse.clashRiskEn}`,
-          relationship: `【相处关系与互动机制】：${spouse.adviceZh} ${spouse.clashRiskZh}`
+          relationship: `【相处关系与互动机制】：${spouse.adviceZh} ${spouse.clashRiskZh}`,
+          appearanceZh: spouse.appearanceZh || '',
+          appearanceEn: spouse.appearanceEn || '',
+          appearance: spouse.appearance || spouse.appearanceZh || '',
+          intellectZh: spouse.intellectZh || '',
+          intellectEn: spouse.intellectEn || '',
+          intellect: spouse.intellect || spouse.intellectZh || '',
+          familyBgZh: spouse.familyBgZh || '',
+          familyBgEn: spouse.familyBgEn || '',
+          familyBg: spouse.familyBg || spouse.familyBgZh || ''
         };
       })() : null,
       children: children ? {

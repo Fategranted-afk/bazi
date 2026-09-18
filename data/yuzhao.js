@@ -66,6 +66,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Insightful, Agile & Intuitive Strategist',
       traitsZh: '配偶聪颖机敏，情感细腻且极具洞察力。善于在关键时刻出谋划策，对生活品位要求高；外表多清秀典雅，但内心偶有敏感多疑与情绪暗潮。',
       traitsEn: 'Consort is sharp-witted, perceptive, and emotionally nuanced. Excels at providing strategic counsel; elegant aesthetic taste, though occasionally prone to sensitive mood undercurrents.',
+      appearanceMaleZh: '【容貌品相】：五官精致清丽，肤白水灵，眉目秀美含情，气质清冷而睿智，回头率极高，属公认的清秀高颜值美人。',
+      appearanceMaleEn: '[Appearance & Allure]: Finely sculpted, radiant features with fair luminous skin and graceful posture; striking, photogenic, and naturally magnetic.',
+      appearanceFemaleZh: '【夫君容貌】：眉清目秀，五官俊朗文雅，身形修长挺拔，举止儒雅风流，极富书卷气与异性缘的斯文美男。',
+      appearanceFemaleEn: '[Husband Appearance]: Handsome and articulate with clear soulful eyes and tall, slender elegance; radiates cultured charm and intellectual appeal.',
+      intellectZh: '【才智与学识】：天资聪颖过人，思维敏捷透彻，善于审时度势；受过良好高等教育，多在策略咨询、金融学术或前沿技术领域见解透辟。',
+      intellectEn: '[Intellect & Education]: Exceptionally quick-witted, intuitive, and analytical; possesses strong academic pedigree and high-level conceptual problem-solving skills.',
+      familyBgZh: '【原生家境】：多出自文化书香、体制文教或知性开明的殷实中产之家，父母涵养深厚，注重子女眼界教养，门楣清正体面。',
+      familyBgEn: '[Family Background]: Hails from an educated, cultured, or respectable middle-class household; family values intellectual depth, integrity, and ethical standing.',
       clashRiskZh: '遇午年冲（子午相冲）：谨防因异地分离、沟通冷战或外界异性诱惑引发信任危机；水火激荡易伴有心神不宁。',
       clashRiskEn: 'Clashing with Wu (Horse): Beware of emotional estrangement during long distances or sharp verbal confrontations; cardiovascular and emotional volatility.',
       adviceZh: '【婚姻护持锦囊】：给予配偶充分的安全感与深度倾听，多进行心灵层面的精神交流，切忌敷衍冷暴力。',
@@ -77,6 +85,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Grounded, Diligent & Pragmatic Realist',
       traitsZh: '配偶务实本分，任劳任怨，极具家庭责任感与理财观念。不善甜言蜜语，但做事脚踏实地，是风雨同舟的坚实后盾；性格偶有固执较真。',
       traitsEn: 'Consort is deeply reliable, frugal, hard-working, and family-oriented. Expresses love through quiet service rather than flattery; firm domestic pillar, though at times unyielding.',
+      appearanceMaleZh: '【容貌品相】：体态端正稳重，面相沉静质朴，神情端庄安详，不事浮华张扬却极其耐品，极具持家贤淑之温厚福相。',
+      appearanceMaleEn: '[Appearance & Allure]: Grounded, dignified demeanor with harmonious, soothing features; honest, serene presence that grows increasingly captivating over time.',
+      appearanceFemaleZh: '【夫君容貌】：身形硬实健硕，五官轮廓刚毅敦厚，目光沉稳笃实，自带老干部般可靠踏实的成熟男人硬朗之美。',
+      appearanceFemaleEn: '[Husband Appearance]: Sturdy, dependable build with steady gaze and resolute masculine contours; projects unshakeable security and mature reliability.',
+      intellectZh: '【才智与学识】：大智若愚，思维极其缜密务实，执行耐力与专注度极高；学识求真笃实，多在工程、财会金融、专业技术等实体硬核领域深耕出众。',
+      intellectEn: '[Intellect & Education]: Methodical, rigorous, and practically brilliant; masters structured technical, financial, or engineering disciplines with formidable focus.',
+      familyBgZh: '【原生家境】：多属本分勤勉、家风严谨的工薪中坚或实业小康家庭，长辈讲规矩守诚信，拥有稳当房产与不动产储蓄积累，底子扎实。',
+      familyBgEn: '[Family Background]: Rooted in a conscientious, prudent, and asset-stable family; elders are hardworking with solid unencumbered property and disciplined savings.',
       clashRiskZh: '遇未年冲（丑未相冲）：易因房产、理财投资理念或双方家族长辈赡养问题产生顽固分歧。',
       clashRiskEn: 'Clashing with Wei (Goat): Property disputes, divergent savings habits, or friction over in-law family responsibilities.',
       adviceZh: '【婚姻护持锦囊】：多肯定对方默默付出的汗水，重大财务共同商议，用温和态度化解对方骨子里的倔强。',
@@ -88,6 +104,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Ambitious, Generous & Pioneering Leader',
       traitsZh: '配偶胸怀开阔，事业心强烈，为人豪爽仗义。做事有冲劲有魄力，乐于在外打拼开拓；但自尊心极强，不喜被过度管束指责。',
       traitsEn: 'Consort is bold, charismatic, fiercely ambitious, and generous. Possesses formidable entrepreneurial drive; highly honorable, with great sensitivity to personal dignity.',
+      appearanceMaleZh: '【容貌品相】：身材高挑挺拔，神采飞扬，骨相清奇大气，举手投足落落大方，素颜英姿蓬勃，充满健康向上的飒爽活力美。',
+      appearanceMaleEn: '[Appearance & Allure]: Tall, athletic, and spirited with striking bone structure; exudes radiant, healthy vitality and charismatic, confident charm.',
+      appearanceFemaleZh: '【夫君容貌】：体魄健朗魁梧，面部轮廓分明，剑眉朗目，步伐坚毅昂扬，自带开拓者霸气与阳刚帅气之气魄。',
+      appearanceFemaleEn: '[Husband Appearance]: Muscular, imposing build with chiseled jawline and piercing eyes; carries bold entrepreneurial leadership and commanding masculine vigor.',
+      intellectZh: '【才智与学识】：胸怀大局，视野宏阔，决断力与魄力兼备；学识多偏向战略管理、法学商业或开创性领域，善于整合资源破局立功。',
+      intellectEn: '[Intellect & Education]: Visionary, decisive macro-strategist with bold leadership courage; excels in complex managerial, legal, or commercial frontiers.',
+      familyBgZh: '【原生家境】：多出自敢闯敢拼的创业实业或自立自强的传统大家庭，长辈有魄力有主见，人脉资源广泛，崇尚拼搏立身。',
+      familyBgEn: '[Family Background]: Descends from an enterprising, self-reliant lineage or family business; elders are bold, respected community leaders with expansive connections.',
       clashRiskZh: '遇申年冲（寅申相冲）：职场聚少离多，差旅频繁；金木相战易因说话冲撞脾气爆发而互不相让。',
       clashRiskEn: 'Clashing with Shen (Monkey): Frequent business travel causing physical separation; sharp clashing tempers when provoked.',
       adviceZh: '【婚姻护持锦囊】：在外人面前给予配偶足够的面子与赞美，私下以柔克刚，支持其事业梦想并做好大后方温情港湾。',
@@ -99,6 +123,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Gentle, Benevolent & Cultured Empath',
       traitsZh: '配偶性情温和，举止文雅，富有同理心与审美情趣。为人善良体贴，重视生活仪式感；但心性偶显脆弱柔弱，遇重大风浪易显优柔寡断。',
       traitsEn: 'Consort is graceful, empathetic, artistically inclined, and considerate. Cherishes domestic aesthetics and romantic rituals; may struggle with indecision under high stress.',
+      appearanceMaleZh: '【容貌品相】：五官秀美柔和，眉目如画，体态轻盈曼妙，皮肤细腻温润，自带古典闺秀之清雅秀丽，属公认的温柔漂亮美人。',
+      appearanceMaleEn: '[Appearance & Allure]: Delicate, classical beauty with soft expressive eyes and graceful silhouette; radiates timeless romantic elegance and sweet charm.',
+      appearanceFemaleZh: '【夫君容貌】：面如冠玉，气质儒雅温润，五官清秀斯文，身形修长挺拔，举止从容，自带谦谦君子的如玉书卷帅感。',
+      appearanceFemaleEn: '[Husband Appearance]: Refined, scholar-gentleman demeanor with fair noble features and poised bearing; effortlessly suave, gentle, and handsome.',
+      intellectZh: '【才智与学识】：悟性极高，才思敏捷，极富人文情怀与审美洞察力；学识丰富，在文创设计、教育传媒或专业咨询上造诣斐然。',
+      intellectEn: '[Intellect & Education]: Highly intuitive, imaginative, and culturally sophisticated; demonstrates deep linguistic flair, aesthetic mastery, and refined analytical nuance.',
+      familyBgZh: '【原生家境】：多出自书香文墨、文教艺术或体面温和的清贵家庭，家规温厚文明，父母受教育程度高，重精神涵养。',
+      familyBgEn: '[Family Background]: Nurtured in a cultured, scholarly, or artistic household; family emphasizes emotional empathy, literary refinement, and dignified manners.',
       clashRiskZh: '遇酉年冲（卯酉相冲）：金克木之战，极易因外界挑拨、家庭边界受侵犯或突然的搬迁变动而引发情感震荡。',
       clashRiskEn: 'Clashing with You (Rooster): External gossip undermining marital boundaries, or sudden relocation stress destabilizing affection.',
       adviceZh: '【婚姻护持锦囊】：成为配偶遮风挡雨的心理依靠，在生活小事上营造浪漫仪式感，鼓励其建立独立决断力。',
@@ -110,6 +142,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Magnanimous, Astute & Protective Nurturer',
       traitsZh: '辰为水库，配偶宽宏大量，兼具商业头脑与持家智慧。擅长资源整合与资产打理，喜怒不形于色；但内心城府较深，不易轻易吐露真实心事。',
       traitsEn: 'Chen is the Water Reservoir: Consort is generous, commercially astute, and strategically patient. Outstanding asset allocator; retains quiet internal depths.',
+      appearanceMaleZh: '【容貌品相】：面相天庭开阔饱满，五官端正大气，体态丰润端庄，神态和善包容，自带大家闺秀、正室大妇之持重贵相与福泽。',
+      appearanceMaleEn: '[Appearance & Allure]: Broad-featured, stately, and serene with natural nobility; projects dignified, comforting, and magnetic matriarchal grace.',
+      appearanceFemaleZh: '【夫君容貌】：体魄宽厚稳健，天庭开阔，五官轮廓深邃有威严感，举手投足沉着从容，自带大将风范与令人信赖的成熟帅劲。',
+      appearanceFemaleEn: '[Husband Appearance]: Commanding, broad-shouldered physique with steady, commanding gaze; emanates trustworthy authority, strength, and calm composure.',
+      intellectZh: '【才智与学识】：兼具高智商与高情商，善于运筹帷幄与统合资源；学识兼顾理论与实操，深谙商业规矩与组织管理，大局统摄力极佳。',
+      intellectEn: '[Intellect & Education]: Superb dual high IQ and EQ; exceptionally gifted at resource allocation, systemic negotiation, and long-term organizational stewardship.',
+      familyBgZh: '【原生家境】：多出自根基稳厚、底蕴充实的工商实业或体制中坚家庭，有固定祖业田产或长辈资本积累庇护，家底较厚。',
+      familyBgEn: '[Family Background]: Originates from an established, asset-backed household with tangible commercial or property foundations; financially comfortable and resilient.',
       clashRiskZh: '遇戌年冲（辰戌相冲）：土气动荡，易因家族隐性债务、投资项目转型或亲戚借贷问题引发家庭争吵。',
       clashRiskEn: 'Clashing with Xu (Dog): Volatile earth clashes over undisclosed investments, family business reallocations, or relative loan demands.',
       adviceZh: '【婚姻护持锦囊】：主动分担家庭重压，建立高度透明的家庭财务账目，定期创造二人独处走心交流的契机。',
@@ -121,6 +161,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Vibrant, Perceptive & Charming Catalyst',
       traitsZh: '配偶聪明伶俐，谈吐风趣幽默，人脉广泛善于交际。做事雷厉风行，能给家庭带来生机与活力；但性格偶显急躁，防三分钟热度。',
       traitsEn: 'Consort is witty, socially brilliant, energetic, and magnetic. Brings endless vitality to domestic life; requires steady grounding against impatient volatility.',
+      appearanceMaleZh: '【容貌品相】：面容明艳出挑，双目明亮灵动，穿衣搭配极具时尚品位，五官鲜明立体，仪态轻快自信，属都市吸睛的时髦俏佳人。',
+      appearanceMaleEn: '[Appearance & Allure]: Chic, radiant, and impeccably presented with expressive, bright eyes and sharp fashion sense; magnetic, vibrant, and head-turning.',
+      appearanceFemaleZh: '【夫君容貌】：神采飞扬，目光明锐，穿搭干练考究，五官轮廓鲜明挺拔，谈吐风趣幽默，极具现代都市精英帅哥气质。',
+      appearanceFemaleEn: '[Husband Appearance]: Dapper, sharply groomed executive styling with keen eyes and athletic posture; articulate, charming, and thoroughly modern.',
+      intellectZh: '【才智与学识】：思维极其敏捷，商业嗅觉与社交公关本能过人；学识开阔广博，自驱迭代能力极强，在商贸金融或前沿业务上游刃有余。',
+      intellectEn: '[Intellect & Education]: Lightning-fast situational reflexes and astute commercial intellect; excels in dynamic market environments, tech trends, and negotiations.',
+      familyBgZh: '【原生家境】：多出自经商办企、现代专业服务或人脉活跃的进取型家庭，长辈思想开放前沿，注重视野开拓，家境充裕活络。',
+      familyBgEn: '[Family Background]: Raised in an entrepreneurial, socially connected, or progressive urban family; elders encourage adventurous horizons and financial dynamism.',
       clashRiskZh: '遇亥年冲（巳亥相冲）：水火相激，容易因双方社交圈界限不清、异性交往分寸或工作调动引发争端。',
       clashRiskEn: 'Clashing with Hai (Pig): Fire-water conflict over boundary ambiguity in social networks or disruptive career reassignments.',
       adviceZh: '【婚姻护持锦囊】：尊重配偶社交自由的同时树立明确原则底线，遇急躁事“缓三秒再开口”，以幽默消融火气。',
@@ -132,6 +180,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Radiant, Passionate & Forthright Sovereign',
       traitsZh: '配偶性格开朗大方，敢爱敢恨，极富感染力与个人魅力。凡事光明磊落，重情重义；但脾气来得快去得快，受不得冷落与委屈。',
       traitsEn: 'Consort is vivacious, warmhearted, candid, and dynamic. Loves wholeheartedly and values transparency; impatient with ambiguities or emotional neglect.',
+      appearanceMaleZh: '【容貌品相】：容光焕发，面色白里透红，笑容明艳动人，双目顾盼生辉，五官明朗大气，属于让人眼前一亮的高颜值大美女。',
+      appearanceMaleEn: '[Appearance & Allure]: Radiant complexion with sparkling eyes and a captivating, warm smile; strikingly beautiful, lively, and impossible to overlook.',
+      appearanceFemaleZh: '【夫君容貌】：阳光俊朗，剑眉星目，笑容灿烂治愈，体魄矫健有力，神态坦荡自信，十分英俊耀眼、男人味十足。',
+      appearanceFemaleEn: '[Husband Appearance]: Dashing, sunny, and athletic with bold classic features and an infectious smile; effortlessly charismatic, vigorous, and handsome.',
+      intellectZh: '【才智与学识】：思维敏锐透彻，富有洞见与开创性灵感，表达极具说服力；学识出众，常在公共表达、高端科技、文化传媒或领导岗位脱颖而出。',
+      intellectEn: '[Intellect & Education]: Highly articulate, visionary, and intellectually radiant; grasps core essences instantly with extraordinary conceptual and leadership eloquence.',
+      familyBgZh: '【原生家境】：多出自名门正派、讲求信义或有一定社会知名度的体面家庭，长辈作风坦荡正气，人际口碑极佳，家族福泽深厚。',
+      familyBgEn: '[Family Background]: Traces to an honorable, respected, and socially reputable lineage; elders command wide esteem, high ethical reputation, and generational goodwill.',
       clashRiskZh: '遇子年冲（子午相冲）：极烈之冲，防情绪失控爆发剧烈争吵，或因子女观念、经济分配瞬间掀起风暴。',
       clashRiskEn: 'Clashing with Zi (Rat): Fierce confrontation triggered by sudden emotional outbursts, child-rearing debates, or abrupt spending differences.',
       adviceZh: '【婚姻护持锦囊】：在对方情绪上头时切勿针锋相对，多用拥抱与真诚夸赞肯定其付出，待火气消退再理智沟通。',
@@ -143,6 +199,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Gentle, Dutiful & Patient Guardian',
       traitsZh: '配偶性格温厚纯良，任劳任怨，对家庭照料无微不至。兼具艺术修养与生活巧思；但容易把委屈憋在心里，长期隐忍后偶有爆发。',
       traitsEn: 'Consort is sweet-tempered, devoted, highly domestic, and artistic. Patiently bears household burdens; prone to repressing silent grievances until sudden saturation.',
+      appearanceMaleZh: '【容貌品相】：五官温润柔和，眼神温情真诚，气色柔和红润，身姿匀称圆润，自带贤惠温婉之美，让人感到极其放松亲近，非常耐看。',
+      appearanceMaleEn: '[Appearance & Allure]: Soft, soothing facial balance with warm, affectionate eyes; possesses a classic, comforting, and deeply endearing domestic beauty.',
+      appearanceFemaleZh: '【夫君容貌】：容貌斯文厚道，面容平和沉稳，神情包容宽厚，身形端正，自带谦逊温和的暖男帅气，给人踏实温暖。',
+      appearanceFemaleEn: '[Husband Appearance]: Gentle, composed countenance with kind demeanor and solid posture; radiates patient empathy, noble warmth, and quiet strength.',
+      intellectZh: '【才智与学识】：心思细腻周密，情商极高，善解人意且长于深度耐性积累；学识深厚稳健，在教育医疗、财务管理、社科或行政协调上功底扎实。',
+      intellectEn: '[Intellect & Education]: Deeply empathetic, meticulous, and patient; masters complex organizational coordination, healthcare, or financial analysis with high emotional intelligence.',
+      familyBgZh: '【原生家境】：多出自体制教育、医疗卫生或稳固踏实的平实小康人家，家庭氛围其乐融融，重亲情关怀与家道和睦，底蕴平顺安稳。',
+      familyBgEn: '[Family Background]: Raised in a nurturing, balanced family (often education, healthcare, or public administration); blessed with tight-knit domestic harmony.',
       clashRiskZh: '遇丑年冲（丑未相冲）：土气相冲，易因婆媳长辈关系复杂或家庭重大开支出现隐性冷战与心理隔阂。',
       clashRiskEn: 'Clashing with Chou (Ox): Simmering domestic cold wars over extended in-law dynamics or unbudgeted major expenditures.',
       adviceZh: '【婚姻护持锦囊】：敏锐觉察配偶未说出口的委屈与疲惫，主动替其分担家务与心理压力，营造松弛有爱的倾诉空间。',
@@ -154,6 +218,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Astute, Resolute & Strategic Realist',
       traitsZh: '配偶头脑极其清醒，办事效率极高，兼具法律规则意识与商业判断力。能独当一面解决复杂棘手问题；但有时言辞略显犀利理智过头。',
       traitsEn: 'Consort is exceptionally sharp, efficient, contractually minded, and pragmatic. A master troubleshooter, though at times overly analytical in emotional spheres.',
+      appearanceMaleZh: '【容貌品相】：骨相优越，五官立体清秀，下颌线利落干净，眼神坚毅果决，体态修长精干，自带清冷独立的现代飒爽大女主美貌。',
+      appearanceMaleEn: '[Appearance & Allure]: Chiseled facial lines with clean-cut jawline and piercing, intelligent gaze; projects modern, independent, executive chic.',
+      appearanceFemaleZh: '【夫君容貌】：面部轮廓棱角分明，目光深邃如炬，身形挺拔精壮，行事干脆利落，自带冷峻硬朗的霸道精英帅气。',
+      appearanceFemaleEn: '[Husband Appearance]: Angular masculine contours with sharp, focused eyes and lean, powerful build; exudes crisp, commanding, no-nonsense appeal.',
+      intellectZh: '【才智与学识】：逻辑推理极强，思维清晰严密，处事理智清醒且杀伐决断；学识硬核，多具备理工法商或高级工程技术背景，擅长攻坚克难。',
+      intellectEn: '[Intellect & Education]: Razor-sharp logical acumen and analytical discipline; excels in structured quantitative, legal, or high-stakes engineering domains.',
+      familyBgZh: '【原生家境】：多出身于管理干部、军警司法、专业工程或严谨体制家庭，长辈做事有纪律有章法，家境体面规整，重视原则规矩。',
+      familyBgEn: '[Family Background]: Descends from a disciplined, institutional, or technical-executive household; upright, orderly, and financially self-sufficient.',
       clashRiskZh: '遇寅年冲（寅申相冲）：驿马相逢，差旅两地分居增加，防因各忙各的事业而导致情感浓度降温疏离。',
       clashRiskEn: 'Clashing with Yin (Tiger): Dual traveling horses causing frequent career separations; risk of emotional cooling amid frantic professional sprints.',
       adviceZh: '【婚姻护持锦囊】：家是讲爱而不是讲理的地方；多展现脆弱与温情一面，共同设立“无手机/无工作”的家庭温情日。',
@@ -165,6 +237,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Refined, Meticulous & Aesthetic Connoisseur',
       traitsZh: '配偶容貌多端庄清秀，审美眼光挑剔，极度重视生活品质与个人仪态。做事追求完美细节，守时重诺；但骨子里清高自负，容不得粗鄙。',
       traitsEn: 'Consort is graceful, aesthetically impeccable, punctual, and highly organized. Seeks absolute perfection in domestic details; highly sensitive to vulgarity or carelessness.',
+      appearanceMaleZh: '【容貌品相】：肤白胜雪，五官精致如雕刻，眉目清丽高雅，体态挺拔优美，审美衣品出神入化，气质高贵绝伦，是回头率极高的精致漂亮相貌。',
+      appearanceMaleEn: '[Appearance & Allure]: Immaculate porcelain skin and exquisitely sculpted symmetry; dazzling, head-turning elegance with flawless aesthetic taste.',
+      appearanceFemaleZh: '【夫君容貌】：鼻梁高挺，剑眉星目，五官精致立体，贵气逼人，举止讲究有风度，属于人群中一眼瞩目的天生大帅哥。',
+      appearanceFemaleEn: '[Husband Appearance]: Striking aristocrat features with prominent bridge, piercing eyes, and poised posture; naturally handsome, sophisticated, and polished.',
+      intellectZh: '【才智与学识】：心思机敏细致，追求极致品质，对数字、规则与艺术极度敏感；学识渊博，在金融精算、精密设计、高端法务或运营上造诣极高。',
+      intellectEn: '[Intellect & Education]: Meticulous, analytical perfectionist with elite conceptual taste; excels in quantitative finance, legal precision, or luxury curation.',
+      familyBgZh: '【原生家境】：多出自富庶工商业家庭、金融世家或文化清贵阶层，长辈注重生活格调与资本积累，家族经济基础宽裕体面。',
+      familyBgEn: '[Family Background]: Rooted in an affluent, commercial, or culturally prestigious family; values fine lifestyle standards and substantial asset preservation.',
       clashRiskZh: '遇卯年冲（卯酉相冲）：门户相战，防因生活琐事挑剔、审美生活习惯分歧或外部异性人际引发猜忌口角。',
       clashRiskEn: 'Clashing with Mao (Rabbit): Intense disputes over aesthetic details, micro-habits, or external social jealousy.',
       adviceZh: '【婚姻护持锦囊】：注重个人外在形象管理与生活细节品位，用仪式感与尊重呵护配偶，学会对不完美多一份从容包容。',
@@ -176,6 +256,14 @@ const YU_ZHAO_DATA = {
       archetypeEn: 'Loyal, Steadfast & Protective Stalwart',
       traitsZh: '配偶忠诚耿直，极具大局观与家庭保护欲，对外护短对内负责。是危难关头最值得托付后背的生死伴侣；但脾气偶有固执急躁。',
       traitsEn: 'Consort is intensely loyal, fiercely protective, honorable, and unshakeable. The ultimate life ally in adversity, though occasionally stubborn and dogmatic.',
+      appearanceMaleZh: '【容貌品相】：五官端正端庄，眉目英挺沉实，骨肉停匀极度耐看耐品，不以妖媚取巧，自带正室大娘子之雍容厚重福相与沉静气度。',
+      appearanceMaleEn: '[Appearance & Allure]: Dignified, well-proportioned facial symmetry with calm, noble composure; radiates authentic classical domestic grace and unshakeable poise.',
+      appearanceFemaleZh: '【夫君容貌】：面部轮廓方正硬朗，眼神深沉坚定，身形魁梧结实，自带铁血硬汉、忠厚砥柱的刚毅帅气，给人十足托付感与安全感。',
+      appearanceFemaleEn: '[Husband Appearance]: Strong, chiseled masculine jawline with deep, resolute eyes and robust physique; embodies rugged, trustworthy, protective strength.',
+      intellectZh: '【才智与学识】：大智若愚，大局观极强，不屑浮夸小聪明但逢大事有定海神针般的从容谋略；多受过正规高等教育，在实务管理、制度规矩、工程技术或风控实战中积累有硬核学识与专业智慧。',
+      intellectEn: '[Intellect & Education]: Deep strategic vision and pragmatic crisis intelligence; highly educated with systemic training in administration, technical engineering, or risk governance.',
+      familyBgZh: '【原生家境】：原生家境稳扎稳打，多拥有固定的不动产田宅、实业或稳健资产积累；长辈为人本分信实靠勤勉自立，家风忠厚纯良，底蕴殷实而不事张扬。',
+      familyBgEn: '[Family Background]: Grounded in stable real estate, solid family enterprise, or tangible asset foundations; elders are honest, industrious pillars with comfortable unencumbered wealth.',
       clashRiskZh: '遇辰年冲（辰戌相冲）：天罗地网，防因亲朋好友经济纠纷、借贷作保或房产置业引发家庭风波。',
       clashRiskEn: 'Clashing with Chen (Dragon): Strains caused by relative financial entanglements, debt guarantees, or property disputes.',
       adviceZh: '【婚姻护持锦囊】：坚决划定小家庭与原生亲朋的财务边界，遇事不瞒不欺，以诚意换取配偶百分百的信任支持。',
@@ -186,7 +274,15 @@ const YU_ZHAO_DATA = {
       archetypeZh: '豁达乐天智慧型',
       archetypeEn: 'Magnanimous, Affectionate & Wise Free-Spirit',
       traitsZh: '亥为天门，配偶心胸宽广豁达，幽默风趣，富有极高的生活智慧与包容心。能轻松化解家庭焦虑，但有时生活习惯略显随性松散。',
-      traitsEn: 'Hai is the Heavenly Gate: Consort is magnanimous, optimistic, witty, and spiritually grounded. Effortlessly diffuses domestic anxiety, though occasionally unstructured.',
+      traitsEn: 'Consort is magnanimous, optimistic, witty, and spiritually grounded. Effortlessly diffuses domestic anxiety, though occasionally unstructured.',
+      appearanceMaleZh: '【容貌品相】：脸庞丰润饱满，天庭开阔，皮肤水润光洁，神态和善从容，眼神深邃含情，自带温和富态与亲和力，极富福泽之相。',
+      appearanceMaleEn: '[Appearance & Allure]: Plump, glowing contours with broad forehead and soulful, tender eyes; radiates comforting, bountiful, and deeply endearing blessings.',
+      appearanceFemaleZh: '【夫君容貌】：面相开阔慈和，目光深邃温厚，体态宽阔从容，自带一种学者哲人般的超然气度与成熟儒雅帅感。',
+      appearanceFemaleEn: '[Husband Appearance]: Broad, serene countenance with philosophical depth and kindly, reassuring gaze; projects mature, erudite, and gentlemanly charm.',
+      intellectZh: '【才智与学识】：悟性极高，博古通今，记忆力与抽象思维超群，深具哲学智慧与远见；多具备高学历背景，在学术研究、战略规划、文化教育等领域造诣深厚。',
+      intellectEn: '[Intellect & Education]: Boundless intellectual bandwidth with profound philosophical foresight; highly educated, thriving in conceptual synthesis and scholarly wisdom.',
+      familyBgZh: '【原生家境】：多出身于文化学术、和睦宽厚的知识分子或行善积德之家，长辈知书达理、开明包容，重精神熏陶与德行福荫。',
+      familyBgEn: '[Family Background]: Descends from an open-minded, scholarly, or philanthropic household; blessed with generational wisdom and warm emotional abundance.',
       clashRiskZh: '遇巳年冲（巳亥相冲）：易因差旅频繁奔波导致聚少离多，或因消费理财习惯过于随性而引发矛盾。',
       clashRiskEn: 'Clashing with Si (Snake): Heavy business travels disrupting family routines, or overly casual spending triggering domestic friction.',
       adviceZh: '【婚姻护持锦囊】：共同培养高雅爱好与旅行探索，互相督促健康作息，在松弛与自律之间找到家庭最佳平衡点。',
@@ -666,6 +762,14 @@ const YU_ZHAO_DATA = {
     "archetypeEn": "Ren Xu Archetype (Ren on Xu) · Officer Star Dynamic",
     "traitsZh": "日柱【壬戌】：日元壬（阳水）坐戌（土）。配偶具备大局深稳，威权统摄之特质，做事有主见且极具家庭责任感。双方性格优势互补，在生活中既能同享富贵，亦能在关键时刻共克时艰。",
     "traitsEn": "Day Pillar [Ren Xu]: Native Ren sits on Xu (Earth). Consort embodies deep reliability, strategic competence, and mutual loyalty, balancing personal ambition with affectionate domestic stability.",
+    "appearanceMaleZh": "【容貌品相】：五官端庄方正，神情沉静典雅，骨肉匀停耐看，自带大宅名门正室之雍容气场，不媚不浮，属于越品越有深韵的端雅气质美女。",
+    "appearanceMaleEn": "[Appearance & Allure]: Dignified, classically structured countenance with noble poise and quiet elegance; an enduring, regal beauty commanding effortless respect.",
+    "appearanceFemaleZh": "【夫君容貌】：面部轮廓方正阳刚，剑眉虎目，眼神深邃坚毅，身姿挺拔魁伟，自带统帅大局之硬汉将相威仪与踏实帅感。",
+    "appearanceFemaleEn": "[Husband Appearance]: Chiseled, commanding masculine bone structure with deep, resolute gaze and robust posture; projects dependable, executive gravitas.",
+    "intellectZh": "【才智与学识】：天资聪颖沉潜，大局筹谋与危机决断力极强；多毕业于知名学府或接受过正统高等教育，兼具管理、工程技术、金融风控或实务统筹之深厚专业造诣。",
+    "intellectEn": "[Intellect & Education]: Deep crisis acumen and macro-strategic intellect; highly educated with systemic professional mastery in management, engineering, or risk governance.",
+    "familyBgZh": "【原生家境】：原生门楣厚实本分，多有稳定的固定资产、实业家底或书香底蕴；父母双亲勤勉立家，家规森严端正，虽不张扬但底子十分扎实殷实。",
+    "familyBgEn": "[Family Background]: Rooted in a solid, unshakeable household with tangible properties or established family enterprise; traditional, honourable, and financially secure.",
     "adviceZh": "【壬戌日柱婚姻指南】：珍惜配偶的付出，多进行高质量的情感沟通与共同理财规划；遇意见相左时以柔克刚，切忌因固执硬顶而生嫌隙。",
     "adviceEn": "[Matrimonial Advice for Ren Xu]: Value consort contributions through proactive praise; cultivate transparent mutual financial governance; replace dogmatic arguments with gentle compromise."
   },
@@ -687,6 +791,7 @@ class YuZhaoDB {
    * 1. The 60 JiaZi Day Pillar (六十甲子日柱) Matrimonial Archetype
    * 2. Celestial & Terrestrial Branch Interactions (六合、六冲、六害、三刑)
    * 3. Consort Star (财星为妻/官星为夫) Status
+   * 4. Appearance (漂不漂亮/帅不帅), Intellect (聪不聪明/学识如何) and Family Background (原生家境)
    */
   static getSpousePalaceReading(arg1, arg2) {
     let dayBranch = '子';
@@ -696,19 +801,34 @@ class YuZhaoDB {
     let interactions = null;
 
     if (typeof arg1 === 'string') {
-      dayBranch = arg1[1] || arg1[0] || '子';
-      dayStem = arg1[0] || '甲';
-      dayPillar = (arg1.length >= 2) ? arg1.substring(0, 2) : (dayStem + dayBranch);
+      if (arg1.length >= 2) {
+        dayStem = arg1[0];
+        dayBranch = arg1[1];
+        dayPillar = arg1.substring(0, 2);
+      } else {
+        dayBranch = arg1[0] || '子';
+        dayStem = '甲';
+        dayPillar = dayStem + dayBranch;
+      }
       if (arg2 && typeof arg2 === 'object') {
-        const gender = arg2.gender || (arg2.input && arg2.input.gender);
+        if (arg2.pillars && arg2.pillars.day) {
+          dayStem = arg2.pillars.day.stem || dayStem;
+          dayBranch = arg2.pillars.day.branch || dayBranch;
+          dayPillar = arg2.pillars.day.text || (dayStem + dayBranch);
+        } else if (arg2.dayPillar) {
+          dayPillar = arg2.dayPillar;
+        }
+        const gender = (typeof arg2 === 'string' ? arg2 : null) || arg2.gender || (arg2.input && arg2.input.gender);
         if (gender) isMale = (gender === 'male' || gender === '乾造' || gender === '男' || gender === '男命');
         interactions = arg2.interactions;
+      } else if (typeof arg2 === 'string') {
+        isMale = (arg2 === 'male' || arg2 === '乾造' || arg2 === '男' || arg2 === '男命');
       }
     } else if (arg1 && typeof arg1 === 'object') {
       dayBranch = (arg1.pillars && arg1.pillars.day && arg1.pillars.day.branch) || arg1.dayBranch || '子';
       dayStem = (arg1.pillars && arg1.pillars.day && arg1.pillars.day.stem) || arg1.dayMaster || '甲';
       dayPillar = (arg1.pillars && arg1.pillars.day && arg1.pillars.day.text) || (dayStem + dayBranch);
-      const gender = (arg1.input && arg1.input.gender) || arg1.gender || 'male';
+      const gender = (typeof arg2 === 'string' ? arg2 : null) || (arg1.input && arg1.input.gender) || arg1.gender || (arg2 && arg2.gender) || 'male';
       isMale = (gender === 'male' || gender === '乾造' || gender === '男' || gender === '男命');
       interactions = arg1.interactions || (arg1.pillars && (typeof BaZiEngine !== 'undefined') && BaZiEngine.calculatePillarInteractions(arg1.pillars));
     }
@@ -720,6 +840,22 @@ class YuZhaoDB {
     const archetypeEn = pProfile ? pProfile.archetypeEn : baseProfile.archetypeEn;
     const traitsZh = (pProfile ? pProfile.traitsZh + ' ' : '') + baseProfile.traitsZh;
     const traitsEn = (pProfile ? pProfile.traitsEn + ' ' : '') + baseProfile.traitsEn;
+
+    const appearanceZh = isMale
+      ? ((pProfile && pProfile.appearanceMaleZh) || baseProfile.appearanceMaleZh || '')
+      : ((pProfile && pProfile.appearanceFemaleZh) || baseProfile.appearanceFemaleZh || '');
+    const appearanceEn = isMale
+      ? ((pProfile && pProfile.appearanceMaleEn) || baseProfile.appearanceMaleEn || '')
+      : ((pProfile && pProfile.appearanceFemaleEn) || baseProfile.appearanceFemaleEn || '');
+    const appearance = appearanceZh;
+
+    const intellectZh = (pProfile && pProfile.intellectZh) || baseProfile.intellectZh || '';
+    const intellectEn = (pProfile && pProfile.intellectEn) || baseProfile.intellectEn || '';
+    const intellect = intellectZh;
+
+    const familyBgZh = (pProfile && pProfile.familyBgZh) || baseProfile.familyBgZh || '';
+    const familyBgEn = (pProfile && pProfile.familyBgEn) || baseProfile.familyBgEn || '';
+    const familyBg = familyBgZh;
 
     let clashRiskZh = baseProfile.clashRiskZh;
     let clashRiskEn = baseProfile.clashRiskEn;
@@ -767,6 +903,15 @@ class YuZhaoDB {
       archetypeEn,
       traitsZh,
       traitsEn,
+      appearanceZh,
+      appearanceEn,
+      appearance,
+      intellectZh,
+      intellectEn,
+      intellect,
+      familyBgZh,
+      familyBgEn,
+      familyBg,
       clashRiskZh,
       clashRiskEn,
       adviceZh,

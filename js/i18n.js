@@ -2679,8 +2679,8 @@ const I18N = (function() {
     }
 
     // 👑 Pareto 80/20 Core Synthesis Deep Translation
-    if (p.paretoCore) {
-      const pc = p.paretoCore;
+    if (p.paretoCore || p.spouse) {
+      const pc = p.paretoCore || p;
       pc.title = pc.titleEn;
       pc.description = pc.descriptionEn;
 
@@ -2789,6 +2789,9 @@ const I18N = (function() {
         if (sp.personalityEn) sp.personality = sp.personalityEn;
         if (sp.demeanourEn) sp.demeanour = sp.demeanourEn;
         if (sp.relationshipEn) sp.relationship = sp.relationshipEn;
+        if (sp.appearanceEn) sp.appearance = sp.appearanceEn;
+        if (sp.intellectEn) sp.intellect = sp.intellectEn;
+        if (sp.familyBgEn) sp.familyBg = sp.familyBgEn;
       }
 
       if (pc.children) {

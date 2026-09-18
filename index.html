@@ -459,6 +459,18 @@
               并排对比两套方案 · 五行生克与十神场能测算 · 综合胜率与能耗比量化 · 独立沙盘大页
             </p>
           </div>
+
+          <!-- Card 12: Live Advisor Agent (问答顾问) -->
+          <div class="feature-showcase-card cursor-pointer group border-amber-500/40 bg-gradient-to-br from-amber-950/40 via-[#161822] to-amber-950/30 hover:border-amber-400/80 shadow-md" id="portalCardAdvisor">
+            <div class="flex items-center space-x-2 text-amber-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">🧙</span>
+              <span data-i18n="portal_card12_title">钦天监随身军师 · 军师问对</span>
+              <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-600/40 font-mono">LIVE AGENT</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card12_desc">
+              正缘流月应期测算 · 四大吉神贵人 · 写入系统日历 (.ICS) · 落地微动作清单 · 朱批手令长图。
+            </p>
+          </div>
         </div>
       </section>
 
@@ -485,8 +497,13 @@
           </div>
         </div>
 
-        <!-- Edit / Re-enter Action Button -->
+        <!-- Edit / Re-enter Action Button & Advisor Trigger -->
         <div class="flex items-center space-x-2">
+          <button id="btnRibbonOpenAdvisor" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs shadow-lg transition flex items-center gap-1.5 border border-amber-400/50 active:scale-95 cursor-pointer" data-i18n="btn_ribbon_advisor" title="呼出钦天监随身军师 · 交互式天机问对">
+            <span>🧙</span>
+            <span data-i18n="btn_ribbon_advisor_text">呼出军师问对</span>
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          </button>
           <button id="btnReturnToPortal" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold text-xs shadow-md transition flex items-center gap-1.5 border border-amber-500/40 active:scale-95 cursor-pointer" data-i18n="btn_edit_natal">
             ✏️ 重新排盘 / 修改八字
           </button>
@@ -589,6 +606,10 @@
               </p>
             </div>
           </div>
+          <button id="btnDeitiesAskAdvisor" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 active:scale-95 cursor-pointer border border-amber-400/40" data-i18n="btn_deities_ask_advisor">
+            <span>🧙</span>
+            <span data-i18n="btn_deities_ask_advisor_text">问军师今年吉神何时当值</span>
+          </button>
         </div>
 
         <!-- 4 Deities Grid Cards -->
@@ -2679,6 +2700,13 @@
       <!-- Injected via JavaScript -->
     </div>
   </div>
+
+  <!-- Floating Advisor Trigger Button (Always Accessible) -->
+  <button id="btnOpenAdvisorFloating" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-600 text-white font-bold shadow-2xl border border-amber-400/50 flex items-center gap-2 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer shadow-amber-950/60 ring-2 ring-amber-500/40" title="呼出钦天监随身军师 · 交互式天机问对">
+    <span class="text-xl">🧙</span>
+    <span class="text-xs sm:text-sm font-serif-sc font-bold" data-i18n="floating_advisor_btn">军师问对</span>
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+  </button>
 
   <!-- Interactive Advisor Agent Modal (天机军师 · 钦天监随身参谋) -->
   <div id="advisorModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">

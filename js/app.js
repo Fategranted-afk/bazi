@@ -2446,6 +2446,21 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.relationshipEn || sp.relationship) : (sp.relationshipZh || sp.relationship)}</p>
               <p class="text-rose-300 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Friction Reefs: ' : '潜在暗礁：'}</b>${isEn ? (sp.clashRiskEn || sp.clashRisk) : (sp.clashRiskZh || sp.clashRisk)}</p>
             </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-pink-300 font-bold block">🌺 5. ${isEn ? 'Appearance, Allure & Physical Traits:' : '容貌品相与颜值相貌：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.appearanceEn || sp.appearance) : (sp.appearanceZh || sp.appearance)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-cyan-300 font-bold block">💡 6. ${isEn ? 'Intellect, Cognitive Depth & Academic Caliber:' : '才智心智与学历学识：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.intellectEn || sp.intellect) : (sp.intellectZh || sp.intellect)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5 md:col-span-2">
+              <span class="text-amber-300 font-bold block">🏡 7. ${isEn ? 'Family Pedigree & Household Foundations:' : '原生门楣与家庭家境：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.familyBgEn || sp.familyBg) : (sp.familyBgZh || sp.familyBg)}</p>
+            </div>
           </div>
 
           <div class="p-3 bg-rose-950/20 rounded-lg border border-rose-500/30 text-xs space-y-1.5">
@@ -3380,6 +3395,18 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Relationship Dynamics & Interaction Mechanics:' : '相处关系与互动机制：'}</span>
             <p class="text-gray-300 leading-relaxed">${isEn ? (sp.relationshipEn || sp.relationship) : (sp.relationshipZh || sp.relationship)}</p>
             <p class="text-rose-300 text-[11px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Clashing Reefs: ' : '潜在暗礁：'}</b>${isEn ? (sp.clashRiskEn || sp.clashRisk) : (sp.clashRiskZh || sp.clashRisk)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-pink-300 font-bold block">🌺 5. ${isEn ? 'Appearance, Allure & Physical Traits:' : '容貌品相与颜值相貌：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.appearanceEn || sp.appearance) : (sp.appearanceZh || sp.appearance)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5">
+            <span class="text-cyan-300 font-bold block">💡 6. ${isEn ? 'Intellect, Cognitive Depth & Academic Caliber:' : '才智心智与学历学识：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.intellectEn || sp.intellect) : (sp.intellectZh || sp.intellect)}</p>
+          </div>
+          <div class="p-3 bg-black/40 rounded-xl border border-gray-800 space-y-1.5 md:col-span-2">
+            <span class="text-amber-300 font-bold block">🏡 7. ${isEn ? 'Family Pedigree & Household Foundations:' : '原生门楣与家庭家境：'}</span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? (sp.familyBgEn || sp.familyBg) : (sp.familyBgZh || sp.familyBg)}</p>
           </div>
         </div>
 
@@ -4579,6 +4606,9 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/10 text-rose-300 font-mono">${isEn ? 'Day Branch' : '日支配偶'}</span>
             </div>
             <p class="text-gray-300 leading-relaxed"><b class="text-gray-200">${isEn ? 'Partner Traits: ' : '伴侣特质：'}</b>${isEn ? spouseReading.traitsEn : spouseReading.traitsZh}</p>
+            <p class="text-pink-200/90 leading-relaxed"><b class="text-pink-400">${isEn ? 'Appearance & Allure: ' : '容貌品相：'}</b>${isEn ? (spouseReading.appearanceEn || spouseReading.appearance) : (spouseReading.appearanceZh || spouseReading.appearance)}</p>
+            <p class="text-cyan-200/90 leading-relaxed"><b class="text-cyan-400">${isEn ? 'Intellect & Education: ' : '才智学识：'}</b>${isEn ? (spouseReading.intellectEn || spouseReading.intellect) : (spouseReading.intellectZh || spouseReading.intellect)}</p>
+            <p class="text-amber-200/90 leading-relaxed"><b class="text-amber-300">${isEn ? 'Family Background: ' : '原生家境：'}</b>${isEn ? (spouseReading.familyBgEn || spouseReading.familyBg) : (spouseReading.familyBgZh || spouseReading.familyBg)}</p>
             <p class="text-amber-200/90 leading-relaxed"><b class="text-amber-400">${isEn ? 'Clash Friction Caution: ' : '刑冲防范：'}</b>${isEn ? spouseReading.clashRiskEn : spouseReading.clashRiskZh}</p>
             <p class="text-emerald-300 leading-relaxed"><b class="text-emerald-400">${isEn ? 'Matrimonial Advice: ' : '护持锦囊：'}</b>${isEn ? spouseReading.adviceEn : spouseReading.adviceZh}</p>
             ${(spouseReading.genderDiffZh || spouseReading.genderDiff) ? `
@@ -15925,6 +15955,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <p><b>${isEn ? 'Energy Baseline:' : '能量基石:'}</b> ${isEn ? pc.spouse.energy : pc.spouse.energyZh}</p>
             <p><b>${isEn ? 'Temperament & Demeanour:' : '性格与气质:'}</b> ${isEn ? pc.spouse.demeanour : pc.spouse.demeanourZh}</p>
+            <p><b>${isEn ? 'Appearance & Allure:' : '容貌品相与颜值:'}</b> ${isEn ? (pc.spouse.appearanceEn || pc.spouse.appearance) : (pc.spouse.appearanceZh || pc.spouse.appearance)}</p>
+            <p><b>${isEn ? 'Intellect & Academic Caliber:' : '才智心智与学识:'}</b> ${isEn ? (pc.spouse.intellectEn || pc.spouse.intellect) : (pc.spouse.intellectZh || pc.spouse.intellect)}</p>
+            <p><b>${isEn ? 'Family Heritage & Background:' : '原生门楣与家境:'}</b> ${isEn ? (pc.spouse.familyBgEn || pc.spouse.familyBg) : (pc.spouse.familyBgZh || pc.spouse.familyBg)}</p>
             <p><b>${isEn ? 'Relationship Dynamics:' : '相处共融:'}</b> ${isEn ? pc.spouse.relationship : pc.spouse.relationshipZh}</p>
             <p><b>${isEn ? 'Encounter Timing & Setting:' : '应期时限与场景方位:'}</b> ${isEn ? spEncounterSummaryEn : spEncounterSummaryZh}</p>
           </div>

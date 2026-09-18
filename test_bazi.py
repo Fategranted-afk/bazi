@@ -12710,10 +12710,9 @@ with open('index.html', 'r', encoding='utf-8') as f:
 
 assert 'id="fourAuspiciousDeitiesSection"' in idx_content, "Missing #fourAuspiciousDeitiesSection in index.html"
 assert 'id="fourDeitiesCardsContainer"' in idx_content, "Missing #fourDeitiesCardsContainer in index.html"
-assert 'id="btnHeaderOpenAdvisor"' not in idx_content, "#btnHeaderOpenAdvisor must be removed per user instruction"
-assert 'id="btnRibbonOpenAdvisor"' not in idx_content, "#btnRibbonOpenAdvisor must be removed per user instruction"
-assert 'id="portalCardAdvisor"' not in idx_content, "#portalCardAdvisor must be removed per user instruction"
-assert 'id="btnDeitiesAskAdvisor"' not in idx_content, "#btnDeitiesAskAdvisor must be removed per user instruction"
+assert 'id="btnRibbonOpenAdvisor"' in idx_content, "#btnRibbonOpenAdvisor restored per user instruction"
+assert 'id="portalCardAdvisor"' in idx_content, "#portalCardAdvisor restored per user instruction"
+assert 'id="btnDeitiesAskAdvisor"' in idx_content, "#btnDeitiesAskAdvisor restored per user instruction"
 
 jsc_check108_cmd = [
     "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
@@ -12900,8 +12899,8 @@ with open('index.html', 'r', encoding='utf-8') as f:
 
 assert 'id="landingPortalView"' in html_check, "index.html missing #landingPortalView"
 assert 'items-center justify-center' in html_check, "landingPortalView must be visually centered"
-assert 'btnOpenAdvisorFloating' not in html_check, "Floating advisor button must be removed"
-assert 'btnDeitiesAskAdvisor' not in html_check, "Deities ask advisor button must be removed"
+assert 'btnOpenAdvisorFloating' in html_check, "Floating advisor button restored per user instruction"
+assert 'btnDeitiesAskAdvisor' in html_check, "Deities ask advisor button restored per user instruction"
 
 print("✓ 东方气机流光全面升级为转瞬即逝的灵动流光（废弃持续晃动正弦线/优雅渐显掠过淡出/白底社交名片/门庭居中/军师与沙盘入口清理与去重）验证通过！")
 
@@ -14349,9 +14348,119 @@ jsc_check115_cmd = [
 run_check115 = subprocess.run(jsc_check115_cmd, capture_output=True, text=True)
 assert run_check115.returncode == 0, f"Check 115 JSC test failed: stdout={run_check115.stdout} stderr={run_check115.stderr}"
 
-print("✓ 社交名片五形相法多脸型肖像重构、版面排布修缮与皇家战报第4/8页五大宏图阶段/四大吉神/徐乐吾决策中间件（中英双语100%零中文残留）验证通过！")
+# 116. Validating Enriched Spouse Profile Hologram (Appearance, Intellect, Family Background) & Restored QA Advisor Entrypoints
+print("\n=== 116. Validating Enriched Spouse Profile Hologram (Appearance, Intellect, Family Background) & Restored QA Advisor Entrypoints ===")
 
-print("\n🎉 ALL 115 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# A. Verify HTML entries for QA Advisor
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_content = f.read()
+
+assert 'id="portalCardAdvisor"' in html_content, "index.html missing restored #portalCardAdvisor feature showcase card"
+assert 'id="btnRibbonOpenAdvisor"' in html_content, "index.html missing restored #btnRibbonOpenAdvisor ribbon button"
+assert 'id="btnDeitiesAskAdvisor"' in html_content, "index.html missing restored #btnDeitiesAskAdvisor button in deities section"
+assert 'id="btnOpenAdvisorFloating"' in html_content, "index.html missing restored #btnOpenAdvisorFloating floating action button"
+
+# B. Verify app.js renders appearance, intellect, and family background across all views
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_js = f.read()
+
+assert '容貌品相与颜值:' in app_js and 'Appearance & Allure:' in app_js, "Imperial Dossier Page 5 missing Appearance field"
+assert '才智心智与学识:' in app_js and 'Intellect & Academic Caliber:' in app_js, "Imperial Dossier Page 5 missing Intellect field"
+assert '原生门楣与家境:' in app_js and 'Family Heritage & Background:' in app_js, "Imperial Dossier Page 5 missing Family Background field"
+
+assert '容貌品相与颜值相貌：' in app_js and 'Appearance, Allure & Physical Traits:' in app_js, "Pareto Core / Kinship Strategy missing Appearance card"
+assert '才智心智与学历学识：' in app_js and 'Intellect, Cognitive Depth & Academic Caliber:' in app_js, "Pareto Core / Kinship Strategy missing Intellect card"
+assert '原生门楣与家庭家境：' in app_js and 'Family Pedigree & Household Foundations:' in app_js, "Pareto Core / Kinship Strategy missing Family Background card"
+
+assert '容貌品相：' in app_js and 'Appearance & Allure: ' in app_js, "Canons tab spouse reading missing Appearance field"
+assert '才智学识：' in app_js and 'Intellect & Education: ' in app_js, "Canons tab spouse reading missing Intellect field"
+assert '原生家境：' in app_js and 'Family Background: ' in app_js, "Canons tab spouse reading missing Family Background field"
+
+# C. JSC Deep Verification for Data, Engine, and I18n
+jsc_check116_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/portrait-engine.js");
+
+    // 1. Verify all 12 branches have complete 3-dimension profiles (appearance male/female, intellect, familyBg)
+    var branches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    branches.forEach(function(b) {
+      var prof = YU_ZHAO_DATA.spousePalaceProfiles[b];
+      if (!prof) throw new Error("Missing spouse profile for branch: " + b);
+      if (!prof.appearanceMaleZh || !prof.appearanceMaleEn) throw new Error("Branch " + b + " missing male appearance");
+      if (!prof.appearanceFemaleZh || !prof.appearanceFemaleEn) throw new Error("Branch " + b + " missing female appearance");
+      if (!prof.intellectZh || !prof.intellectEn) throw new Error("Branch " + b + " missing intellect");
+      if (!prof.familyBgZh || !prof.familyBgEn) throw new Error("Branch " + b + " missing familyBg");
+    });
+
+    // 2. Verify 壬戌 day pillar has customized enriched profile
+    var rx = YU_ZHAO_DATA.dayPillarProfiles['壬戌'];
+    if (!rx) throw new Error("Missing dayPillarProfiles['壬戌']");
+    if (!rx.appearanceMaleZh || !rx.appearanceFemaleZh) throw new Error("壬戌 missing custom appearance");
+    if (!rx.intellectZh || !rx.familyBgZh) throw new Error("壬戌 missing custom intellect or familyBg");
+
+    // 3. Verify YuZhaoDB.getSpousePalaceReading gender differentiation & 壬戌 resolution
+    var spMale = YuZhaoDB.getSpousePalaceReading('壬戌', { gender: '乾造' });
+    if (!spMale.appearanceZh.includes('端庄方正') && !spMale.appearanceZh.includes('耐看耐品')) {
+      throw new Error("Male 壬戌 reading should return male consort appearance, got: " + spMale.appearanceZh);
+    }
+    if (!spMale.intellectZh.includes('学识') || !spMale.familyBgZh.includes('家境')) {
+      throw new Error("Male 壬戌 reading missing intellect or familyBg content");
+    }
+
+    var spFemale = YuZhaoDB.getSpousePalaceReading('壬戌', { gender: '坤造' });
+    if (!spFemale.appearanceZh.includes('夫君') && !spFemale.appearanceZh.includes('阳刚')) {
+      throw new Error("Female 壬戌 reading should return husband appearance, got: " + spFemale.appearanceZh);
+    }
+
+    // 4. Verify PortraitEngine Pareto Core integration for 壬戌
+    var baziRenXu = {
+      pillars: {
+        year: { stem: '丙', branch: '午', text: '丙午' },
+        month: { stem: '戊', branch: '戌', text: '戊戌' },
+        day: { stem: '壬', branch: '戌', text: '壬戌' },
+        hour: { stem: '庚', branch: '子', text: '庚子' }
+      },
+      dayMaster: '壬',
+      input: { gender: '乾造' }
+    };
+    var pcMale = PortraitEngine.generateParetoCoreSynthesis(baziRenXu, '乾造');
+    if (!pcMale.spouse) throw new Error("PortraitEngine missing pc.spouse");
+    if (!pcMale.spouse.appearanceZh || !pcMale.spouse.intellectZh || !pcMale.spouse.familyBgZh) {
+      throw new Error("PortraitEngine pc.spouse missing appearance, intellect, or familyBg");
+    }
+
+    // 5. Verify I18N translation and Zero Residual Chinese
+    var translated = I18N.translatePortrait(pcMale, 'en');
+    if (!translated.spouse.appearance || !translated.spouse.intellect || !translated.spouse.familyBg) {
+      throw new Error("Translated spouse missing appearance, intellect, or familyBg");
+    }
+    var leakApp = translated.spouse.appearance.match(/[\\u4e00-\\u9fa5]/g);
+    var leakInt = translated.spouse.intellect.match(/[\\u4e00-\\u9fa5]/g);
+    var leakFam = translated.spouse.familyBg.match(/[\\u4e00-\\u9fa5]/g);
+    if (leakApp && leakApp.length > 0) throw new Error("Residual Chinese in translated appearance: " + leakApp.join(''));
+    if (leakInt && leakInt.length > 0) throw new Error("Residual Chinese in translated intellect: " + leakInt.join(''));
+    if (leakFam && leakFam.length > 0) throw new Error("Residual Chinese in translated familyBg: " + leakFam.join(''));
+    """
+]
+run_check116 = subprocess.run(jsc_check116_cmd, capture_output=True, text=True)
+assert run_check116.returncode == 0, f"Check 116 JSC test failed: stdout={run_check116.stdout} stderr={run_check116.stderr}"
+
+print("✓ 配偶与夫妻宫深度侧写三相全息扩充（颜值品相/漂不漂亮/帅不帅、才智学识/聪不聪明、原生门楣家境、乾坤男女命差异、十二地支与壬戌定制、双语100%零中文残留）及问答军师四大多端入口完整验证通过！")
+
+print("\n🎉 ALL 116 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
