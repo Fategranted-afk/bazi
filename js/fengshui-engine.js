@@ -60,8 +60,12 @@ class SpatialFengShuiEngine {
     const gender = bazi.gender || '乾造';
     const kuaInfo = this.calculatePersonalKua(birthYear, gender);
 
+    // Detect Water overload and dam pressure (蓄满水的大坝)
+    const waterPct = parseFloat((bazi.fiveElements && bazi.fiveElements.percentages && bazi.fiveElements.percentages['水']) || '0');
+    const isWaterOverloaded = (waterPct >= 38.0) || (dmEl === '水' && ziping && (ziping.categoryKey === 'extreme_strong' || ziping.categoryKey === 'strong' || (ziping.totalScore && ziping.totalScore >= 50)));
+
     // 3. Item 1: 延年位四方聚财阵 (4貔貅 + 1鼎)
-    const yanNianItem = this.buildYanNianArray(kuaInfo, primaryFavEl);
+    const yanNianItem = this.buildYanNianArray(kuaInfo, primaryFavEl, isWaterOverloaded);
 
     // 4. Item 2: 对门大龙龟与随身用神小龙龟
     const dragonTurtleItem = this.buildDragonTurtleGuide(primaryFavEl, primaryFavElObj.en);
@@ -79,16 +83,19 @@ class SpatialFengShuiEngine {
     const sanHeArrayItem = this.buildSanHeCosmicArray(primaryFavEl, interactions);
 
     // 9. Item 7: 催贵人、催文昌、催桃花
-    const trioBoostItem = this.buildTrioBoostGuide(dm, bazi);
+    const trioBoostItem = this.buildTrioBoostGuide(dm, bazi, isWaterOverloaded);
 
     // 10. Item 8: 河图洛书吉数与选楼层、车牌尾数、手机号、衣服与车辆颜色、商业拓客方位
-    const hetuLuoshuItem = this.buildHetuLuoshuGuide(primaryFavEl);
+    const hetuLuoshuItem = this.buildHetuLuoshuGuide(primaryFavEl, isWaterOverloaded);
 
     // 11. Item 9: 积德行善指南 (献血、布施、修身)
     const meritItem = this.buildMeritCultivationGuide(ziping);
 
     // 12. Item 10: 户型气场综合调理评级与风水总诀
-    const holisticRatingItem = this.buildHolisticRating(ziping, interactions, kuaInfo);
+    const holisticRatingItem = this.buildHolisticRating(ziping, interactions, kuaInfo, isWaterOverloaded);
+
+    // 13. Specialized Codex: 防范「水多木漂」与五行物性实战指南
+    const waterDriftRemedyItem = this.buildDriftingWoodRemedy(bazi, primaryFavEl, isWaterOverloaded, waterPct);
 
     return {
       timestamp: new Date().toISOString(),
@@ -97,6 +104,8 @@ class SpatialFengShuiEngine {
       primaryFavElZh: primaryFavElObj.zh,
       primaryFavElEn: primaryFavElObj.en,
       favorableElements,
+      isWaterOverloaded,
+      waterDriftRemedyItem,
       currentCityEvaluation,
       yanNianItem,
       dragonTurtleItem,
@@ -160,14 +169,23 @@ class SpatialFengShuiEngine {
   /**
    * 1. 延年位四方聚财阵 (4貔貅 + 1鼎)
    */
-  static buildYanNianArray(kuaInfo, favEl) {
+  static buildYanNianArray(kuaInfo, favEl, isWaterOverloaded = false) {
     const tripodMaterials = {
-      '木': { zh: '青铜三足宝鼎 (内蕴松柏香木)', en: 'Bronze tripod infused with fragrant cedar' },
+      '木': (isWaterOverloaded)
+        ? { zh: '厚土青铜三足宝鼎 (内蕴深山沉香重木、五谷厚土与朱砂暖符)', en: 'Heavy bronze tripod infused with dense sinking agarwood, fertile soil, and cinnabar' }
+        : { zh: '青铜三足宝鼎 (内蕴松柏香木)', en: 'Bronze tripod infused with fragrant cedar' },
       '火': { zh: '朱砂赤陶双耳神鼎', en: 'Cinnabar red terracotta ceremonial tripod' },
       '土': { zh: '紫砂汉白玉厚土尊鼎', en: 'Purple clay and white jade heavy tripod' },
       '金': { zh: '纯黄铜鎏金万象宝鼎', en: 'Gilded solid brass treasure tripod' },
       '水': { zh: '黑曜石墨玉聚财宝鼎', en: 'Obsidian and black jade prosperity tripod' }
     }[favEl] || { zh: '纯黄铜鎏金宝鼎', en: 'Gilded solid brass tripod' };
+
+    const layoutExtraZh = (isWaterOverloaded && favEl === '木')
+      ? '针对水旺大坝之命，依据风水典籍‘水多木漂，赖土培根’之法：鼎内重用五谷厚土深培重木，借厚土固根纳水，将浮泛水势稳稳沉降为延年不动产基石。'
+      : '';
+    const layoutExtraEn = (isWaterOverloaded && favEl === '木')
+      ? ' Specifically engineered against Drifting Wood by packing the tripod with mineral soil and dense sinking wood to anchor liquid surplus into permanent foundations.'
+      : '';
 
     return {
       titleZh: '延年位四方聚财貔貅大阵 (4貔貅 + 1鼎)',
@@ -176,8 +194,8 @@ class SpatialFengShuiEngine {
       locationEn: `Prime Yan Nian Sector: [${kuaInfo.yanNianEn}]`,
       coreItemZh: `中枢定位：1座【${tripodMaterials.zh}】；四维拱卫：4尊开光纯铜/玉石【吞财双翼貔貅】`,
       coreItemEn: `Center: 1 [${tripodMaterials.en}]; Periphery: 4 consecrated Pixiu guardians`,
-      layoutZh: `在房屋或办公室的【${kuaInfo.yanNianZh}】，以宝鼎居于正中央稳镇财库，鼎内安置五谷、五帝钱与天然水晶碎石；四尊貔貅头部呈45度角朝向东、南、西、北四方，象征‘广纳四方之财、吞吐天地资粮’，聚而不散，长保万全。`,
-      layoutEn: `Place the treasure tripod at the center of your [${kuaInfo.yanNianEn}] sector, filled with five sacred grains, ancestral coins, and natural crystal shards. Position the 4 Pixiu facing outward into the cardinal quadrants to inhale wealth from all horizons.`,
+      layoutZh: `在房屋或办公室的【${kuaInfo.yanNianZh}】，以宝鼎居于正中央稳镇财库，鼎内安置五谷、五帝钱与天然水晶碎石；四尊貔貅头部呈45度角朝向东、南、西、北四方，象征‘广纳四方之财、吞吐天地资粮’，聚而不散，长保万全。${layoutExtraZh}`,
+      layoutEn: `Place the treasure tripod at the center of your [${kuaInfo.yanNianEn}] sector, filled with five sacred grains, ancestral coins, and natural crystal shards. Position the 4 Pixiu facing outward into the cardinal quadrants to inhale wealth from all horizons.${layoutExtraEn}`,
       benefitsZh: '延年位主和合、长寿、资财稳固与贵人庇佑。此阵能牢固锁住流动资金敞口，化浮财为不动产长久基业。',
       benefitsEn: 'Yan Nian governs lasting harmony, longevity, asset consolidation, and mentor sponsorship. Anchors liquid volatility into enduring institutional wealth.'
     };
@@ -382,7 +400,7 @@ class SpatialFengShuiEngine {
   /**
    * 7. 催贵人、催文昌、催桃花
    */
-  static buildTrioBoostGuide(dm, bazi) {
+  static buildTrioBoostGuide(dm, bazi, isWaterOverloaded = false) {
     // 1. Tian Yi Nobleman
     const tianYiMap = {
       '甲': { zh: '东北丑牛位 / 西南未羊位', en: 'Northeast (Ox) / Southwest (Goat)' },
@@ -431,13 +449,28 @@ class SpatialFengShuiEngine {
     };
     const peachLoc = peachBlossomMap[dayBranch] || { zh: '正南午马位', en: 'South (Horse)' };
 
+    const wenChangPlantZh = isWaterOverloaded
+      ? '大号紫砂厚陶盆深培土栽4枝富贵竹/罗汉松（借厚土固根纳水、防范水多木漂，切忌玻璃瓶水培）并配一盏暖光护眼灯照暖'
+      : '水养4枝直立富贵竹';
+    const wenChangPlantEn = isWaterOverloaded
+      ? '4 stems of lucky bamboo planted in deep soil within a heavy purple clay pot with warm lighting (anchored in soil against drifting wood; strictly avoid water vases)'
+      : '4 stems of lucky bamboo in clean water';
+
+    const wenChangDescZh = isWaterOverloaded
+      ? `【催文昌】（风水典籍·培土固根防木漂专属）：本命文昌文曲位在【${wenChangLoc.zh}】。布置【九层纯铜文昌塔 + 文房四宝 + ${wenChangPlantZh}】（以土固根、以火温木），将浩瀚智谋深深扎根为硬核立世之作。`
+      : `【催文昌】：本命文昌文曲位在【${wenChangLoc.zh}】。布置【九层纯铜文昌塔 + 文房四宝 + ${wenChangPlantZh}】（以四绿文曲星水木相生之气），大幅提升深度专注力、大考通过率与重大战略决策精准度。`;
+
+    const wenChangDescEn = isWaterOverloaded
+      ? `[Wisdom & Intellect] (Rooted Earth Remedy against Drifting Wood): Wen Chang sits at [${wenChangLoc.en}]. Deploy a 9-tier bronze Wen Chang Pagoda, calligraphy set, and ${wenChangPlantEn} to anchor boundless intellect into grounded masterpieces.`
+      : `[Wisdom & Intellect]: Wen Chang sits at [${wenChangLoc.en}]. Arrange a 9-tier bronze Wen Chang Pagoda, calligraphy set, and ${wenChangPlantEn} to sharpen strategic precision.`;
+
     return {
       titleZh: '催旺三宝：催贵人、催文昌与催真桃花辨识',
       titleEn: 'Trio Enhancements: Noble Mentors, Wisdom & True Charisma',
       noblemanZh: `【催贵人】：天乙贵人方位在【${nobleLoc.zh}】。在此位置安放一方精雕【羊脂白玉/黄铜九龙玉玺】（官印象征）。能瞬间链接行业顶级领袖与投资人庇佑，逢凶化吉。`,
       noblemanEn: `[Noble Mentors]: Tian Yi Nobleman resides at [${nobleLoc.en}]. Place an Imperial Jade or Brass Seal here to magnetize high-level patronage and decisive sponsorship.`,
-      wenChangZh: `【催文昌】：本命文昌文曲位在【${wenChangLoc.zh}】。布置【九层纯铜文昌塔 + 文房四宝 + 水养4枝直立富贵竹】（以四绿文曲星水木相生之气），大幅提升深度专注力、大考通过率与重大战略决策精准度。`,
-      wenChangEn: `[Wisdom & Intellect]: Wen Chang sits at [${wenChangLoc.en}]. Arrange a 9-tier bronze Wen Chang Pagoda, calligraphy set, and 4 stems of lucky bamboo in clean water to sharpen strategic precision.`,
+      wenChangZh: wenChangDescZh,
+      wenChangEn: wenChangDescEn,
       peachBlossomZh: `【催桃花与斩烂桃花】：个人真桃花位在【${peachLoc.zh}】。未婚者可摆放圆润【粉水晶狐狸球】配一尊白瓷花瓶插双数新鲜百合或玫瑰；已婚者切忌在此处放假花或空花瓶（防虚情假意与烂桃花侵扰，若逢烂桃花可挂桃木剑斩断纠葛）。`,
       peachBlossomEn: `[True Peach Blossom]: Charisma & romance locate at [${peachLoc.en}]. Singles can place Rose Quartz and fresh blooming lilies; couples should avoid empty vases or artificial flowers to prevent superficial entanglements.`
     };
@@ -446,7 +479,7 @@ class SpatialFengShuiEngine {
   /**
    * 8. 河图洛书吉数与选楼层、车牌尾数、手机号、衣服与车辆颜色、商业拓客方位
    */
-  static buildHetuLuoshuGuide(favEl) {
+  static buildHetuLuoshuGuide(favEl, isWaterOverloaded = false) {
     const matrix = {
       '木': {
         numbersZh: '3、8 (天三生木，地八成之)',
@@ -530,7 +563,13 @@ class SpatialFengShuiEngine {
       }
     };
 
-    const guide = matrix[favEl] || matrix['木'];
+    const guide = { ...matrix[favEl] || matrix['木'] };
+    if (isWaterOverloaded && favEl === '木') {
+      guide.directionsZh = '正东方 (震木，须借厚土与阳火固根以防木漂)、东南方 (巽宫，木火向阳温润大吉)';
+      guide.directionsEn = 'East (Zhen, requiring soil and solar warmth against drifting wood) and Southeast (Xun, sun-warmed Wood-Fire)';
+      guide.clientOutreachZh = `商业拓客首选【正东方、东南方】。因水旺大坝最忌‘水多木漂、思虑浮泛不实’，拓展战略务必依托扎实实体或硬核业务闭环，切忌轻浮投机；办公朝向东方时，桌上宜置厚泥紫砂绿植或暖色射灯，培土固根、温木成林！`;
+      guide.clientOutreachEn = `Target strategic expansions toward [East and Southeast]. Since overflowing charts risk Drifting Wood and superficial speculation, anchor expansions in tangible, grounded business deliverables; align desks with soil-potted greenery and warm lighting to compound steady growth.`;
+    }
 
     return {
       titleZh: '河图洛书吉数、选楼层、车牌号与商业拓客大吉全览',
@@ -549,8 +588,8 @@ class SpatialFengShuiEngine {
       carColorEn: guide.carColorEn,
       directionsZh: guide.directionsZh,
       directionsEn: guide.directionsEn,
-      clientOutreachZh: `商业拓客与战略出海最优方位首选【${guide.directionsZh}】。商务洽谈将办公桌朝向该方，或将主要拓客资源倾斜至该区域城市，必得天地气场生助，成交率大幅翻倍。`,
-      clientOutreachEn: `Target client acquisition and market expansions toward [${guide.directionsEn}]. Aligning your office desk toward these sectors dramatically amplifies conversion velocity.`
+      clientOutreachZh: guide.clientOutreachZh || `商业拓客与战略出海最优方位首选【${guide.directionsZh}】。商务洽谈将办公桌朝向该方，或将主要拓客资源倾斜至该区域城市，必得天地气场生助，成交率大幅翻倍。`,
+      clientOutreachEn: guide.clientOutreachEn || `Target client acquisition and market expansions toward [${guide.directionsEn}]. Aligning your office desk toward these sectors dramatically amplifies conversion velocity.`
     };
   }
 
@@ -575,7 +614,7 @@ class SpatialFengShuiEngine {
   /**
    * 10. 户型气场综合调理评级与风水总诀
    */
-  static buildHolisticRating(ziping, interactions, kuaInfo) {
+  static buildHolisticRating(ziping, interactions, kuaInfo, isWaterOverloaded = false) {
     let score = 88;
     let badgeZh = '🌟 大吉 · 生生不息';
     let badgeEn = '🌟 Auspicious · Flourishing Flow';
@@ -590,6 +629,11 @@ class SpatialFengShuiEngine {
       verdictEn = 'Multiple chart clashes require disciplined deployment of Six-Harmony talismans and central tripods to calm spatial friction.';
     }
 
+    if (isWaterOverloaded) {
+      verdictZh += '（特别警示：盘面水势高涨浩荡，风水重在培土固根、以真火照暖，严防水多木漂之患）。';
+      verdictEn += ' (Key Note: Natal water density is surging; ground spatial energy in deep soil and solar warmth to neutralize rootless drifting wood).';
+    }
+
     return {
       titleZh: '户型气场综合调理评级与风水总诀',
       titleEn: 'Comprehensive Spatial Field Harmonization Rating & Master Principles',
@@ -600,6 +644,53 @@ class SpatialFengShuiEngine {
       verdictEn,
       masterMottoZh: '心正意诚，天道佑之；器以载道，吉无不利。',
       masterMottoEn: 'Right intent commands cosmic support; sacred spatial alignment unlocks limitless fortune.'
+    };
+  }
+
+  /**
+   * Classical Feng Shui Codex: Utilizing Five-Element Physics to Overcome "Drifting Wood on Violent Waters" (水多木漂)
+   */
+  static buildDriftingWoodRemedy(bazi, primaryFavEl, isWaterOverloaded, waterPct) {
+    if (!isWaterOverloaded || primaryFavEl !== '木') {
+      return { isTriggered: false };
+    }
+
+    const pctDisplay = waterPct > 0 ? waterPct.toFixed(1) + '%' : '极高';
+
+    return {
+      isTriggered: true,
+      titleZh: '风水典籍秘旨：利用五行本性彻底化解「水多木漂」实操全案',
+      titleEn: 'Classical Feng Shui Codex: Utilizing Five-Element Physics to Overcome Drifting Wood',
+      quoteZh: '《滴天髓》真传：“强水得木，方泄其势。水生木，水多木漂；强水得木，方泄其势；但若水盛而木浮，须赖土培其根、火暖其局！”',
+      quoteEn: 'Di Tian Sui Maxim: "Strong water requires wood to drain its fury; but excessive water causes wood to drift rootless. It must rely on heavy soil to anchor its roots, and solar fire to warm its climate."',
+      warningZh: `命局盘面水势占比高达 ${pctDisplay}（如同蓄满水的大坝），虽以东方木（食伤）泄秀疏浚为第一用神，但风水典籍断言‘水多木漂’：若用木不当（如选用轻浮细枝或水培植物），水大木浮，反致思虑泛滥无根、灵感极多却无法落地交付、行动随波逐流！必须利用五行本身的物理特性进行对症调理。`,
+      warningEn: `Your natal water density reaches an overwhelming ${pctDisplay} (like a dam at critical capacity). While Wood drains the spillway as primary remedy, classical texts warn that excessive water without soil and fire triggers Drifting Wood: chronic cognitive restlessness, lack of execution follow-through, and aimless drift. You must master the physical properties of the elements to ground your vitality.`,
+      pillars: [
+        {
+          elementZh: '木之本性',
+          elementEn: 'Wood Physics',
+          titleZh: '沉水重木与深根乔木 · 严禁无根水培',
+          titleEn: 'Dense Sinking Timber & Deep-Rooted Arboreals · Strict Ban on Hydroponics',
+          descZh: '普通轻木遇狂澜则浮漂腐烂，唯有密度大于水、入水即沉的“沉水重木”（沉香木、黑檀木、金丝楠乌木、小叶紫檀、铁力木）重逾千钧，入水不浮反而镇定狂波。书房办公案几首选实心重木大案，作为空间“定海神针”；室内绿植坚决杜绝水养插瓶（水培即漂且生阴湿），必须选用粗干深根之乔木厚叶植物（如发财树、琴叶榕、橡皮树）。',
+          descEn: 'Light wood drifts, but dense sinking hardwoods (agarwood, ebony, bogwood) sink to anchor raging waves. Use solid hardwood desks as anchors. Ban hydroponic/water vases; deploy heavy, deep-rooted indoor trees.'
+        },
+        {
+          elementZh: '土之本性',
+          elementEn: 'Earth Physics',
+          titleZh: '培土固根 · 紫砂厚陶深盆纳水',
+          titleEn: 'Earth Anchoring · Heavy Ceramic Soil Reservoir',
+          descZh: '木无土不立，水无土不蓄。风水典籍断定：“水盛木浮，全凭厚土以培基”。所有绿植必须使用大号沉重紫砂盆、粗厚陶土花盆，深埋肥沃泥土。以土培木，让树根深深扎进厚土之中，利用“土克水、土培木、木纳水”的连环生态链，使浩荡水能转化为大树深扎大地的稳固生命力！',
+          descEn: 'Wood cannot stand without soil. Classical texts affirm: "When water swells and wood floats, rely entirely on heavy earth to anchor the foundation." House all greenery in massive purple clay or ceramic pots packed with mineral-rich soil to lock down the flood.'
+        },
+        {
+          elementZh: '火之本性',
+          elementEn: 'Fire Physics',
+          titleZh: '阳和照暖 · 木火通明驱散水湿阴寒',
+          titleEn: 'Solar Warmth · Radiant Wood-Fire Banishing Damp Chill',
+          descZh: '满盘大水必兼阴寒湿冷，水冷则木僵不生。必须在东方、东南方绿植区或办公工位配置3000K-3500K暖白/暖黄光长明射灯（人工丙火），朝向向阳采光。借真火温润木气、驱散水寒，形成“水生木、木得土而扎根、木得火而通明”的生生不息大循环，彻底破除水多木漂！',
+          descEn: 'Excessive water creates damp, icy cold where unheated wood freezes. Install warm 3000K-3500K spotlights (synthetic solar Fire) over greenery to warm the wood, achieving vibrant Water-Wood-Fire circular harmony.'
+        }
+      ]
     };
   }
 

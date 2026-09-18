@@ -8485,6 +8485,11 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="px-2.5 py-1 rounded-full border border-purple-500/40 bg-purple-950/60 text-purple-300 font-bold">
           ${isEn ? guide.holisticRatingItem.badgeEn : guide.holisticRatingItem.badgeZh}
         </span>
+        ${(guide.waterDriftRemedyItem && guide.waterDriftRemedyItem.isTriggered) ? `
+          <span class="px-2.5 py-1 rounded-full border border-emerald-400/50 bg-emerald-950/70 text-emerald-200 font-bold">
+            ${isEn ? 'Remedy: Rooted Earth & Sun Fire' : '物性破局: 培土固根 · 火照其暖'}
+          </span>
+        ` : ''}
       `;
     }
 
@@ -8503,7 +8508,64 @@ document.addEventListener('DOMContentLoaded', () => {
       ? SpatialFengShuiEngine.renderCityEvaluationCard(guide.currentCityEvaluation, isEn)
       : '';
 
-    container.innerHTML = cityCardHtml + `
+    const driftItem = guide.waterDriftRemedyItem;
+    let driftCardHtml = '';
+    if (driftItem && driftItem.isTriggered && Array.isArray(driftItem.pillars) && driftItem.pillars.length >= 3) {
+      const p1 = driftItem.pillars[0];
+      const p2 = driftItem.pillars[1];
+      const p3 = driftItem.pillars[2];
+      driftCardHtml = `
+        <div class="mb-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-amber-950/20 to-black/60 border-2 border-emerald-500/50 shadow-2xl space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/30 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🪵</span>
+              <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300">
+                ${isEn ? driftItem.titleEn : driftItem.titleZh}
+              </h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold">
+                ${isEn ? 'Di Tian Sui Principle' : '《滴天髓》正统'}
+              </span>
+              <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold">
+                ${isEn ? 'Rooted Earth & Solar Fire' : '培土固根 · 火照其暖'}
+              </span>
+            </div>
+          </div>
+          <blockquote class="text-xs sm:text-sm text-amber-200/90 italic border-l-2 border-amber-500/60 pl-3 py-1 bg-amber-950/20 rounded-r-lg">
+            ${isEn ? driftItem.quoteEn : driftItem.quoteZh}
+          </blockquote>
+          <p class="text-xs text-rose-200/90 bg-rose-950/30 border border-rose-800/40 p-2.5 rounded-xl">
+            <strong>${isEn ? 'Vulnerability Alert: ' : '特别警示：'}</strong>${isEn ? driftItem.warningEn : driftItem.warningZh}
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
+            <div class="p-3.5 rounded-xl bg-black/40 border border-emerald-800/40 space-y-1.5">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
+                <span>🌲</span>
+                <span>${isEn ? p1.elementEn : p1.elementZh} · ${isEn ? p1.titleEn : p1.titleZh}</span>
+              </div>
+              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? p1.descEn : p1.descZh}</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-black/40 border border-amber-800/40 space-y-1.5">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-amber-400">
+                <span>🏺</span>
+                <span>${isEn ? p2.elementEn : p2.elementZh} · ${isEn ? p2.titleEn : p2.titleZh}</span>
+              </div>
+              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? p2.descEn : p2.descZh}</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-black/40 border border-rose-800/40 space-y-1.5">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-rose-400">
+                <span>☀️</span>
+                <span>${isEn ? p3.elementEn : p3.elementZh} · ${isEn ? p3.titleEn : p3.titleZh}</span>
+              </div>
+              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? p3.descEn : p3.descZh}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = cityCardHtml + driftCardHtml + `
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-card p-5 sm:p-6 rounded-2xl border border-border-color shadow-xl space-y-3.5 flex flex-col justify-between">
           <div class="space-y-2.5">

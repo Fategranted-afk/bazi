@@ -2450,51 +2450,69 @@ const LuckEngine = (function() {
         // 1. Output of the flood: supreme spillway / drainage conduit ("把能量梳理出去，user 才会好")
         if (dirEl === generates[floodElem]) {
           const titlesZh = {
-            '木': '水木清华 · 泄秀疏浚 · 导流赋能',
+            '木': (floodElem === '水') ? '水木清华 · 泄秀疏浚 · 培土固根防木漂' : '水木清华 · 泄秀疏浚 · 导流赋能',
             '火': '木火通明 · 吐秀发越 · 才华绽放',
             '土': '火土相生 · 吐秀落地 · 敛火归元',
             '金': '土金吐秀 · 精英研创 · 萃取锋芒',
             '水': '金白水清 · 淬炼吐秀 · 灵动通达'
           };
           const titlesEn = {
-            '木': 'Clear Water & Flowering Wood · Fluid Drainage & Creative Blooming',
+            '木': (floodElem === '水') ? 'Clear Water & Flowering Wood · Fluid Drainage & Rooted Earth Protection' : 'Clear Water & Flowering Wood · Fluid Drainage & Creative Blooming',
             '火': 'Radiant Wood & Luminous Fire · Creative Apex',
             '土': 'Fire Generates Earth · Grounded Output Haven',
             '金': 'Earth Bares Gold · Elite Analytical R&D',
             '水': 'Pure Metal & Clear Water · Fluent Vision'
           };
+          const resonanceZh = (floodElem === '水')
+            ? `命局中【水】气场占比高达 ${floodPct.toFixed(1)}%（浩荡大坝）。天道贵在流通，首喜本地方位【木】气场泄秀疏浚、导流赋能（契合度 95%）！打开泄洪闸门灌溉沃野，将庞大积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品。\n【特别考量·防范水多木漂】：风水与五行典籍极重‘强水得木，方泄其势；水多木漂，须赖土培其根、火暖其局’。满盘狂澜若遇轻木浮草，水大木浮，反致思虑泛滥无根、行动随波逐流、项目有头无尾。因此在东方主场，必须深刻利用五行物性本身：①【以厚土培根】：依托实体产业高地、深耕长线重型系统基建（取甲木栋梁之质，借厚土深深扎根，切忌投机浮漂）；②【以真火照暖】：大水必带阴寒湿冷，宜配合东南木火向阳之地或在空间中引入暖阳朱色，温润木气，形成“水生木、木生火、水火既济”的生发大局！`
+            : `命局中【${floodElem}】气场占比高达 ${floodPct.toFixed(1)}%（如蓄满大水的大坝）。天道贵在流通，最喜本地方位【${dirEl}】气场泄秀疏浚、导流赋能！打开泄洪闸门灌溉沃野，将庞大积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品，全盘五行因疏导而全盘生辉。`;
+          const resonanceEn = (floodElem === '水')
+            ? `Your natal chart carries an overwhelming ${floodPct.toFixed(1)}% density of [Water] (like a dam at maximum capacity). Vital elemental flow dictates channeling surplus pressure outward. This [Wood] field acts as the supreme spillway (Fit Score: 95%), smoothly converting latent power into creative brilliance and technical breakthroughs. [Classical Codex Caution · Countering Drifting Wood]: Metaphysical physics strictly cautions that excessive water causes unanchored wood to drift (Drifting Wood on Violent Waters), provoking cognitive restlessness and lack of follow-through. To master this energy, deploy elemental physics: (1) Anchor with Earth: root into heavy tangible infrastructure rather than speculative bubbles; (2) Warm with Fire: integrate solar illumination and commercialization to transform icy torrents into lush, grounded flourishing!`
+            : `Your natal chart carries an overwhelming ${floodPct.toFixed(1)}% density of [${floodElemEn}] (like a dam at maximum capacity). Vital elemental flow dictates channeling surplus pressure outward. This [${dirElEn}] field acts as the supreme spillway, safely dissipating latent floodwaters into brilliant creative works, intellectual breakthroughs, and sustainable enterprise.`;
+          const careerSynergyZh = (floodElem === '水')
+            ? '首席天命主场与核心创作高地；宜深耕硬核代码基建、长线实体工程与系统性交付，以厚土固根、以真火生财，切忌浅尝辄止与浮泛投机。'
+            : '首席天命主场与核心创作高地，极利技术研发、内容创业、出海立世与核心事业长青。';
+          const careerSynergyEn = (floodElem === '水')
+            ? 'Prime strategic headquarters and creative epicenter; prioritize deep system architecture and long-term infrastructure over speculative trends, anchoring vitality in grounded execution.'
+            : 'Prime strategic headquarters and creative epicenter; optimal for R&D, innovation, and long-term sovereignty.';
           return {
             score: 95,
             ratingZh: titlesZh[dirEl] || '泄秀疏浚 · 导流赋能',
             ratingEn: titlesEn[dirEl] || 'Fluid Drainage & Creative Blooming',
-            resonanceZh: `命局中【${floodElem}】气场占比高达 ${floodPct.toFixed(1)}%（如蓄满大水的大坝）。天道贵在流通，最喜本地方位【${dirEl}】气场泄秀疏浚、导流赋能！打开泄洪闸门灌溉沃野，将庞大积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品，全盘五行因疏导而全盘生辉。`,
-            resonanceEn: `Your natal chart carries an overwhelming ${floodPct.toFixed(1)}% density of [${floodElemEn}] (like a dam at maximum capacity). Vital elemental flow dictates channeling surplus pressure outward. This [${dirElEn}] field acts as the supreme spillway, safely dissipating latent floodwaters into brilliant creative works, intellectual breakthroughs, and sustainable enterprise.`,
-            careerSynergyZh: '首席天命主场与核心创作高地，极利技术研发、内容创业、出海立世与核心事业长青。',
-            careerSynergyEn: 'Prime strategic headquarters and creative epicenter; optimal for R&D, innovation, and long-term sovereignty.'
+            resonanceZh,
+            resonanceEn,
+            careerSynergyZh,
+            careerSynergyEn
           };
         }
         // 2. Wealth of the flood: commercial dissipation ("能量过多压身，需要耗散出去")
         if (dirEl === wealthMap[floodElem]) {
           const titlesZh = {
             '木': '金木求财 · 披荆斩棘 · 商业攻伐',
-            '火': '水火既济 · 耗散生财 · 商业开拓',
+            '火': (floodElem === '水') ? '水火既济 · 耗散生财 · 暖水温木' : '水火既济 · 耗散生财 · 商业开拓',
             '土': '培土扎根 · 广辟商道 · 财富筑基',
             '金': '火炼真金 · 掌控资财 · 豪迈开拓',
             '水': '润土生财 · 聚水为库 · 财源广纳'
           };
           const titlesEn = {
             '木': 'Harvesting Timber · Dynamic Commercial Enterprise',
-            '火': 'Water-Fire Harmonious Wealth · Energy Dissipation & Expansion',
+            '火': (floodElem === '水') ? 'Water-Fire Harmonious Wealth · Energy Dissipation & Solar Warming' : 'Water-Fire Harmonious Wealth · Energy Dissipation & Expansion',
             '土': 'Deep Rooting & Commercial Foundation',
             '金': 'Refining Gold · Executive Capital Mastery',
             '水': 'Nourishing Soil & Capital Reservoir'
           };
+          const resonanceZh = (floodElem === '水')
+            ? `本方位承载旺盛财星气场。以命局充沛磅礴之【水】势开拓南方火地，不仅能高效耗散体内过剩能量转化为商业财富，火之阳和更能温水暖木，彻底驱散大水带来的阴寒湿冷，破除‘水多木漂’之患，达成‘水火既济、万物化生’之盛景。`
+            : `本方位承载旺盛财星气场。以命局充沛磅礴之【${floodElem}】势能开拓财星，能高效耗散体内蓄积的过剩能量，转化为丰厚商业回报与现实资产，形成“既济”之盛景，避免能量郁闭于内。`;
+          const resonanceEn = (floodElem === '水')
+            ? `This direction carries vibrant Wealth energy. Deploying your surging [Water] capacity to harness southern fire not only dissipates surplus pressure into financial assets, but its solar warmth also tempers the icy flood, dispelling the risk of drifting wood and achieving classical Fire-Water Equilibrium.`
+            : `This direction carries vibrant Wealth energy. Deploying your robust natal capacity to harness this field safely dissipates surplus pressure into tangible commercial assets and financial sovereignty.`;
           return {
             score: 92,
             ratingZh: titlesZh[dirEl] || '耗散生财 · 商业开拓',
             ratingEn: titlesEn[dirEl] || 'Harmonious Wealth & Energy Dissipation',
-            resonanceZh: `本方位承载旺盛财星气场。以命局充沛磅礴之【${floodElem}】势能开拓财星，能高效耗散体内蓄积的过剩能量，转化为丰厚商业回报与现实资产，形成“既济”之盛景，避免能量郁闭于内。`,
-            resonanceEn: `This direction carries vibrant Wealth energy. Deploying your robust natal capacity to harness this field safely dissipates surplus pressure into tangible commercial assets and financial sovereignty.`,
+            resonanceZh,
+            resonanceEn,
             careerSynergyZh: '商业拓展、财富变现、项目攻坚与资本运作的高效主场。',
             careerSynergyEn: 'High-leverage launchpad for commercial expansion, monetization, and strategic asset building.'
           };
@@ -2556,51 +2574,69 @@ const LuckEngine = (function() {
         // 1. Output Star (泄秀疏浚 / 导流赋能) -> 95分 (首选主场)
         if (dirEl === generates[dmEl]) {
           const titlesZh = {
-            '木': '水木清华 · 泄秀疏浚 · 导流赋能',
+            '木': (dmEl === '水') ? '水木清华 · 泄秀疏浚 · 培土固根防木漂' : '水木清华 · 泄秀疏浚 · 导流赋能',
             '火': '木火通明 · 吐秀发越 · 才华绽放',
             '土': '火土相生 · 吐秀落地 · 敛火归元',
             '金': '土金吐秀 · 精英研创 · 萃取锋芒',
             '水': '金白水清 · 淬炼吐秀 · 灵动通达'
           };
           const titlesEn = {
-            '木': 'Clear Water & Flowering Wood · Fluid Drainage & Creative Blooming',
+            '木': (dmEl === '水') ? 'Clear Water & Flowering Wood · Fluid Drainage & Rooted Earth Protection' : 'Clear Water & Flowering Wood · Fluid Drainage & Creative Blooming',
             '火': 'Radiant Wood & Luminous Fire · Creative Apex',
             '土': 'Fire Generates Earth · Grounded Output Haven',
             '金': 'Earth Bares Gold · Elite Analytical R&D',
             '水': 'Pure Metal & Clear Water · Fluent Vision'
           };
+          const resonanceZh = (dmEl === '水')
+            ? `命局本元充沛健旺（犹如蓄满水库），天道贵在疏导，最喜本地方位【木】气场泄秀疏浚、导流赋能（契合度 95%）！在此方天地气机引领下，能将浩瀚积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品。\n【防范水多木漂】：风水典籍断言‘水多木漂，须赖土培其根、火暖其局’。若用木不当则浮泛无根，故在东方主场宜依托实体产业深耕硬核系统工程（以厚土扎根），并辅以暖阳生发（木火通明），方能稳如磐石、开阖自如。`
+            : `命局本元充沛健旺（犹如蓄满水库），天道贵在疏导，最喜本地方位【${dirEl}】气场泄秀疏浚、导流赋能！在此方天地气机引领下，能将浩瀚积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品，全盘五行因疏导而全盘活化。`;
+          const resonanceEn = (dmEl === '水')
+            ? `Your natal core is remarkably robust and energetic (like a reservoir at capacity). Natural wisdom mandates outward channelization via [Wood] (Fit Score: 95%). [Drifting Wood Countermeasure]: Metaphysical texts warn that excessive water without soil and fire causes rootless drifting. Anchor your intellectual output in deep system engineering (rooted in earth) and solar warmth to achieve enduring, grounded breakthroughs.`
+            : `Your natal core is remarkably robust and energetic (like a reservoir at capacity). Natural wisdom mandates outward channelization. This [${dirElEn}] field acts as the prime spillway, smoothly transforming surplus latent power into brilliant intellectual breakthroughs and enduring creations.`;
+          const careerSynergyZh = (dmEl === '水')
+            ? '首席天命主场与核心创作高地；深耕实体与系统工程，以厚土固根，防范心神浮移与浅尝辄止。'
+            : '首席天命主场与核心创作高地，极利技术研发、内容创业、出海立世与核心事业长青。';
+          const careerSynergyEn = (dmEl === '水')
+            ? 'Prime strategic headquarters and creative epicenter; ground output in enduring system architecture to eliminate drifting.'
+            : 'Prime strategic headquarters and creative epicenter; optimal for R&D, innovation, and long-term enterprise building.';
           return {
             score: 95,
             ratingZh: titlesZh[dirEl] || '泄秀疏浚 · 导流赋能',
             ratingEn: titlesEn[dirEl] || 'Fluid Drainage & Creative Blooming',
-            resonanceZh: `命局本元充沛健旺（犹如蓄满水库），天道贵在疏导，最喜本地方位【${dirEl}】气场泄秀疏浚、导流赋能！在此方天地气机引领下，能将浩瀚积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品，全盘五行因疏导而全盘活化。`,
-            resonanceEn: `Your natal core is remarkably robust and energetic (like a reservoir at capacity). Natural wisdom mandates outward channelization. This [${dirElEn}] field acts as the prime spillway, smoothly transforming surplus latent power into brilliant intellectual breakthroughs and enduring creations.`,
-            careerSynergyZh: '首席天命主场与核心创作高地，极利技术研发、内容创业、出海立世与核心事业长青。',
-            careerSynergyEn: 'Prime strategic headquarters and creative epicenter; optimal for R&D, innovation, and long-term enterprise building.'
+            resonanceZh,
+            resonanceEn,
+            careerSynergyZh,
+            careerSynergyEn
           };
         }
         // 2. Wealth Star (耗散生财 / 商业开拓) -> 92分 (次选主场)
         if (dirEl === wealthMap[dmEl]) {
           const titlesZh = {
             '木': '金木求财 · 披荆斩棘 · 商业开拓',
-            '火': '水火既济 · 耗散生财 · 商业变现',
+            '火': (dmEl === '水') ? '水火既济 · 耗散生财 · 暖水温木' : '水火既济 · 耗散生财 · 商业变现',
             '土': '培土扎根 · 广辟商道 · 财富筑基',
             '金': '火炼真金 · 掌控资财 · 豪迈开拓',
             '水': '润土生财 · 聚水为库 · 财源广纳'
           };
           const titlesEn = {
             '木': 'Harvesting Timber · Commercial Enterprise',
-            '火': 'Water-Fire Harmonious Wealth · Energy Dissipation',
+            '火': (dmEl === '水') ? 'Water-Fire Harmonious Wealth · Energy Dissipation & Solar Warming' : 'Water-Fire Harmonious Wealth · Energy Dissipation',
             '土': 'Deep Rooting & Commercial Foundation',
             '金': 'Refining Gold · Executive Capital Mastery',
             '水': 'Nourishing Soil & Capital Reservoir'
           };
+          const resonanceZh = (dmEl === '水')
+            ? `本地方位承载旺盛火性财星气场。以水克火不仅高效耗散体内过剩能量转化为丰厚商业回报，火之阳和更可温木暖水，彻底化解‘水多木漂’之弊，促成水火既济之盛境。`
+            : `本地方位承载旺盛财星气场。以命局充沛本元制控财星，能高效耗散体内蓄积的过剩能量，转化为丰厚商业回报与现实资产，形成良性循环、避免能量郁闭于内。`;
+          const resonanceEn = (dmEl === '水')
+            ? `This direction carries dynamic Fire Wealth energy. Harnessing this field safely dissipates surplus liquid pressure into commercial returns while its solar heat warms the cold water, preventing drifting wood.`
+            : `This direction carries dynamic Wealth energy. Deploying your robust natal capacity to harness this field safely dissipates surplus pressure into substantial commercial returns and capital assets.`;
           return {
             score: 92,
             ratingZh: titlesZh[dirEl] || '耗散生财 · 商业开拓',
             ratingEn: titlesEn[dirEl] || 'Harmonious Wealth & Energy Dissipation',
-            resonanceZh: `本地方位承载旺盛财星气场。以命局充沛本元制控财星，能高效耗散体内蓄积的过剩能量，转化为丰厚商业回报与现实资产，形成良性循环、避免能量郁闭于内。`,
-            resonanceEn: `This direction carries dynamic Wealth energy. Deploying your robust natal capacity to harness this field safely dissipates surplus pressure into substantial commercial returns and capital assets.`,
+            resonanceZh,
+            resonanceEn,
             careerSynergyZh: '商业拓展、财富变现、项目攻坚与资本运作的高效主场。',
             careerSynergyEn: 'High-leverage launchpad for commercial expansion, monetization, and strategic asset building.'
           };

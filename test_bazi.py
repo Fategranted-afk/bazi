@@ -14891,6 +14891,44 @@ jsc_check118_cmd = [
     if (!fsGuide.hetuLuoshuItem || !fsGuide.hetuLuoshuItem.clientOutreachZh.includes('东')) {
       throw new Error("Hetu Luoshu client outreach must recommend East direction, got: " + (fsGuide.hetuLuoshuItem && fsGuide.hetuLuoshuItem.clientOutreachZh));
     }
+    if (!fsGuide.isWaterOverloaded) {
+      throw new Error("Expected isWaterOverloaded to be true for 62.5% Water chart");
+    }
+    var driftRemedy = fsGuide.waterDriftRemedyItem;
+    if (!driftRemedy || !driftRemedy.isTriggered) {
+      throw new Error("Expected waterDriftRemedyItem to be triggered for Water-heavy chart");
+    }
+    if (!driftRemedy.quoteZh.includes('滴天髓') || !driftRemedy.quoteZh.includes('水多木漂')) {
+      throw new Error("Expected quoteZh to cite Di Tian Sui and Drifting Wood, got: " + driftRemedy.quoteZh);
+    }
+    if (driftRemedy.pillars.length !== 3) {
+      throw new Error("Expected 3 pillars for elemental physics remedy, got: " + driftRemedy.pillars.length);
+    }
+    // Verify 100% zero Chinese in driftRemedy EN fields
+    var driftEnFields = [driftRemedy.titleEn, driftRemedy.quoteEn, driftRemedy.warningEn];
+    driftRemedy.pillars.forEach(function(p) {
+      driftEnFields.push(p.elementEn, p.titleEn, p.descEn);
+    });
+    driftEnFields.forEach(function(f, idx) {
+      if (!f || f.length === 0) throw new Error("Empty driftRemedy EN field at index " + idx);
+      if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in driftRemedy EN field at index " + idx + ": " + f);
+    });
+
+    // Check Wen Chang adaptation against drifting wood
+    if (!fsGuide.trioBoostItem.wenChangZh.includes('培土固根') && !fsGuide.trioBoostItem.wenChangZh.includes('防木漂')) {
+      throw new Error("Wen Chang setup for water overload must incorporate rooted earth anti-drift remedy, got: " + fsGuide.trioBoostItem.wenChangZh);
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(fsGuide.trioBoostItem.wenChangEn)) {
+      throw new Error("Residual Chinese in wenChangEn: " + fsGuide.trioBoostItem.wenChangEn);
+    }
+
+    // Check Yan Nian tripod adaptation
+    if (!fsGuide.yanNianItem.layoutZh.includes('水多木漂')) {
+      throw new Error("Yan Nian layout for water overload must mention water drifting wood cure, got: " + fsGuide.yanNianItem.layoutZh);
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(fsGuide.yanNianItem.layoutEn)) {
+      throw new Error("Residual Chinese in yanNianItem.layoutEn: " + fsGuide.yanNianItem.layoutEn);
+    }
 
     // 3. Weak Day Master chart (e.g. weak Xin Metal needing Earth resource)
     var baziWeakMetal = {
@@ -14930,7 +14968,7 @@ jsc_check118_cmd = [
 run_check118 = subprocess.run(jsc_check118_cmd, capture_output=True, text=True)
 assert run_check118.returncode == 0, f"Check 118 JSC test failed: stdout={run_check118.stdout} stderr={run_check118.stderr}"
 
-print("✓ 能量过多压身疏导机制、水旺大坝泄秀疏浚（东方木95%首选/南方火92%次选/西方金64%过载警示）、空间风水与五行生克校准（中英双语100%零中文残留）验证通过！")
+print("✓ 能量过多压身疏导机制、水旺大坝泄秀疏浚（东方木95%首选/南方火92%次选/西方金64%过载警示）、防范水多木漂与五行物性实操空间全域校准（中英双语100%零中文残留）验证通过！")
 
 print("\n🎉 ALL 118 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
