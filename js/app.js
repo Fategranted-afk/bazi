@@ -11974,6 +11974,14 @@ document.addEventListener('DOMContentLoaded', () => {
     updateChronoDisplay(activeChronoAge, isEn);
     drawChronoTimelineChart(chronoTimelineData, activeChronoAge);
 
+    if (typeof LifelongSynthesisEngine !== 'undefined' && typeof LifelongSynthesisEngine.renderLifelongSynthesis === 'function') {
+      try {
+        LifelongSynthesisEngine.renderLifelongSynthesis(bazi, (typeof currentLuckResult !== 'undefined' ? currentLuckResult : { timeline }), isEn);
+      } catch (err) {
+        console.warn('LifelongSynthesisEngine render error:', err);
+      }
+    }
+
     if (slider && !slider._hasListener) {
       slider._hasListener = true;
       slider.addEventListener('input', (e) => {
@@ -12248,6 +12256,17 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
       `;
+    }
+
+    if (typeof LifelongSynthesisEngine !== 'undefined' && typeof LifelongSynthesisEngine.updateSpotlight === 'function') {
+      try {
+        const baziObj = (typeof currentBaziResult !== 'undefined' && currentBaziResult) ? currentBaziResult : null;
+        if (baziObj) {
+          LifelongSynthesisEngine.updateSpotlight(age, baziObj, isEn);
+        }
+      } catch (err) {
+        console.warn('LifelongSynthesisEngine updateSpotlight error:', err);
+      }
     }
   }
 

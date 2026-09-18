@@ -1044,6 +1044,113 @@
         </div>
       </div>
 
+      <!-- Lifelong Trajectory Synthesis: 4D Holographic Grand Canvas (人生整体推演 · 四维全息时空大观) -->
+      <section id="lifelongSynthesisSection" class="p-5 md:p-6 rounded-2xl bg-gradient-to-br from-[#161824] via-[#10121a] to-[#0c0e15] border border-amber-500/40 shadow-2xl space-y-6">
+        <!-- Section Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800/80 pb-4">
+          <div class="flex items-center space-x-3">
+            <span class="text-3xl">🌌</span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300" data-i18n="lifelong_seal">时空大观</span>
+                <h3 class="text-base sm:text-lg md:text-xl font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+                  <span data-i18n="lifelong_title">人生整体推演 · 四维全息时空大观</span>
+                </h3>
+              </div>
+              <p class="text-xs text-gray-400 mt-1" data-i18n="lifelong_subtitle">
+                百岁运势时空罗盘 × User自身格局元神 × 周易六十四卦易数波动 × 十神星曜吉凶神煞
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="lifelongActiveAgeBadge" class="px-3 py-1.5 rounded-xl bg-amber-950/60 text-amber-300 font-mono text-xs font-bold border border-amber-500/40">
+              -- 岁
+            </span>
+          </div>
+        </div>
+
+        <!-- 4-Dimensional Core Architecture Grid (四维底座导引) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-xs">
+          <!-- Dim 1 -->
+          <div class="p-3 rounded-xl bg-black/40 border border-amber-500/20 space-y-1">
+            <div class="flex items-center gap-1.5 text-amber-400 font-bold font-serif-sc">
+              <span>⏳</span>
+              <span data-i18n="lifelong_dim1_title">百岁时空罗盘</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-snug" data-i18n="lifelong_dim1_desc">
+              1~100岁连续活力曲线、财富潮汐均值、黄金壮年巅峰(28~55岁)与大运交接拐点
+            </p>
+          </div>
+          <!-- Dim 2 -->
+          <div class="p-3 rounded-xl bg-black/40 border border-blue-500/20 space-y-1">
+            <div class="flex items-center gap-1.5 text-blue-400 font-bold font-serif-sc">
+              <span>👤</span>
+              <span data-i18n="lifelong_dim2_title">User自身格局</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-snug" data-i18n="lifelong_dim2_desc">
+              日主五行阴阳、子平量化强弱评分（身旺/身弱/专旺）、原局三大主导格局与喜用调候
+            </p>
+          </div>
+          <!-- Dim 3 -->
+          <div class="p-3 rounded-xl bg-black/40 border border-emerald-500/20 space-y-1">
+            <div class="flex items-center gap-1.5 text-emerald-400 font-bold font-serif-sc">
+              <span>☯️</span>
+              <span data-i18n="lifelong_dim3_title">六十四卦气机</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-snug" data-i18n="lifelong_dim3_desc">
+              先天卦立命本原、后天卦成就归宿、值年卦六爻演化与八卦气机交感（乾健/坤顺/坎险/离明）
+            </p>
+          </div>
+          <!-- Dim 4 -->
+          <div class="p-3 rounded-xl bg-black/40 border border-purple-500/20 space-y-1">
+            <div class="flex items-center gap-1.5 text-purple-400 font-bold font-serif-sc">
+              <span>⭐</span>
+              <span data-i18n="lifelong_dim4_title">星曜十神神煞</span>
+            </div>
+            <p class="text-[11px] text-gray-400 leading-snug" data-i18n="lifelong_dim4_desc">
+              十神场能转换（财官印食伤比劫）与核心吉神凶煞（天乙、文昌、红鸾天喜、驿马、将星、羊刃、华盖、空亡）
+            </p>
+          </div>
+        </div>
+
+        <!-- Part A: 当值年份四维即时透镜 (Active Year 4D Instant Focus Lens) -->
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-amber-400 font-bold text-xs sm:text-sm font-serif-sc" data-i18n="lifelong_spotlight_heading">
+                ✦ 当值年份四维即时透镜 (Active Year 4D Focus Lens)
+              </span>
+              <span class="text-[10px] text-gray-500" data-i18n="lifelong_spotlight_hint">
+                (随上方罗盘滑块拖动或快捷键即时响应)
+              </span>
+            </div>
+            <div id="lifelongSpotlightAgeTag" class="text-xs font-mono text-amber-300"></div>
+          </div>
+          
+          <div id="lifelongSpotlightCard" class="p-4 rounded-xl bg-black/40 border border-amber-600/30">
+            <!-- Dynamically populated via LifelongSynthesisEngine -->
+          </div>
+        </div>
+
+        <!-- Part B: 人生五大宏图阶段全景统揽 (1~100岁) -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <span class="text-amber-400 font-bold text-xs sm:text-sm font-serif-sc" data-i18n="lifelong_phases_heading">
+                ✦ 人生五大宏图阶段全景统揽 (Five Grand Life Phases Panorama · 1~100岁)
+              </span>
+              <span class="text-[10px] text-gray-500" data-i18n="lifelong_phases_hint">
+                (点击任意阶段，滑块瞬间跳转至该黄金节点)
+              </span>
+            </div>
+          </div>
+
+          <div id="lifelongPhasesContainer" class="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <!-- Dynamically populated via LifelongSynthesisEngine -->
+          </div>
+        </div>
+      </section>
+
       <!-- Level 1: 10-Year Major Decades (大运) -->
       <div class="space-y-2.5">
         <div class="flex items-center justify-between">
@@ -2709,6 +2816,7 @@
   <script src="js/portrait-engine.js?v=2026091404"></script>
   <script src="js/luck-engine.js?v=2026091404"></script>
   <script src="js/iching-engine.js?v=2026091404"></script>
+  <script src="js/lifelong-synthesis-engine.js"></script>
   <script src="js/synastry-engine.js?v=2026091404"></script>
   <script src="js/visual-alchemy.js?v=2026091404"></script>
   <script src="js/chart.js?v=2026091404"></script>

@@ -105,6 +105,23 @@ const I18N = (function() {
       chrono_slider_hint: "滑动上方滑块或点击趋势图自由探索任意年份",
       chrono_directive_title: "流年战略锦囊与行持准则",
 
+      // Lifelong Trajectory Synthesis (人生整体推演 · 四维全息时空大观)
+      lifelong_seal: "时空大观",
+      lifelong_title: "人生整体推演 · 四维全息时空大观",
+      lifelong_subtitle: "百岁运势时空罗盘 × User自身格局元神 × 周易六十四卦易数波动 × 十神星曜吉凶神煞",
+      lifelong_dim1_title: "百岁时空罗盘",
+      lifelong_dim1_desc: "1~100岁连续活力曲线、财富潮汐均值、黄金壮年巅峰(28~55岁)与大运交接拐点",
+      lifelong_dim2_title: "User自身格局",
+      lifelong_dim2_desc: "日主五行阴阳、子平量化强弱评分（身旺/身弱/专旺）、原局三大主导格局与喜用调候",
+      lifelong_dim3_title: "六十四卦气机",
+      lifelong_dim3_desc: "先天卦立命本原、后天卦成就归宿、值年卦六爻演化与八卦气机交感（乾健/坤顺/坎险/离明）",
+      lifelong_dim4_title: "星曜十神神煞",
+      lifelong_dim4_desc: "十神场能转换（财官印食伤比劫）与核心吉神凶煞（天乙、文昌、红鸾天喜、驿马、将星、羊刃、华盖、空亡）",
+      lifelong_spotlight_heading: "✦ 当值年份四维即时透镜 (Active Year 4D Focus Lens)",
+      lifelong_spotlight_hint: "(随上方罗盘滑块拖动或快捷键即时响应)",
+      lifelong_phases_heading: "✦ 人生五大宏图阶段全景统揽 (Five Grand Life Phases Panorama · 1~100岁)",
+      lifelong_phases_hint: "(点击任意阶段，滑块瞬间跳转至该黄金节点)",
+
       // Synastry
       synastry_title: "双人合盘 · 婚恋合婚与商业合伙博弈战报",
       synastry_subtitle: "五行能量互补 · 灵魂共鸣 · 潜在刑冲雷区 · 财富合力与化解之道",
@@ -819,6 +836,23 @@ const I18N = (function() {
       chrono_panorama_badge: "Age 1-100 Panorama",
       chrono_slider_hint: "Drag the slider above or click the trendline to explore any year",
       chrono_directive_title: "Actionable Yearly Directive & Strategic Guidance",
+
+      // Lifelong Trajectory Synthesis
+      lifelong_seal: "4D SYNTHESIS",
+      lifelong_title: "Comprehensive Lifelong Trajectory Synthesis (4D Holographic Grand Canvas)",
+      lifelong_subtitle: "Lifelong Chrono-Navigator × Natal Architecture × 64 Hexagram Trajectory × Astrological Stars & Ten Gods",
+      lifelong_dim1_title: "Chrono Compass",
+      lifelong_dim1_desc: "Continuous vitality curve, wealth tide averages, golden prime apex (age 28-55) & transit nodes",
+      lifelong_dim2_title: "Natal Architecture",
+      lifelong_dim2_desc: "Day Master polarity, ZiPing vigor rating, top 3 dominant patterns & climate favorable elements",
+      lifelong_dim3_title: "64 Hexagram Dynamic",
+      lifelong_dim3_desc: "Early Heaven root, Later Heaven ascension, annual hexagram lines & eight trigram qi interactions",
+      lifelong_dim4_title: "Stars & Ten Gods",
+      lifelong_dim4_desc: "Ten Gods field transformations & core deities (Tian Yi, Wen Chang, Hong Luan, Yi Ma, Jiang Xing, Blade, Canopy, Void)",
+      lifelong_spotlight_heading: "✦ Active Year 4D Instant Focus Lens",
+      lifelong_spotlight_hint: "(Dynamically synced with the Chrono slider and quick age keys)",
+      lifelong_phases_heading: "✦ Five Grand Life Phases Panorama (Age 1-100)",
+      lifelong_phases_hint: "(Click any phase card to jump the Chrono slider directly to its prime apex)",
 
       // Synastry
       synastry_title: "Synastry & Partner Compatibility Dossier",

@@ -13702,7 +13702,256 @@ assert run_check113.returncode == 0, f"Check 113 JSC test failed: stdout={run_ch
 
 print("✓ 扩充五经经典数据库（《兰台妙选》《五行精纪》《千里命稿》）、徐乐吾评注实操中间件系统与四大学派古典画像统揽（中英双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 113 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 114. Validating 80 Top Universities QS 2026 Calibration & LifelongSynthesisEngine
+# ==============================================================================
+print("\n=== 114. Validating 80 Top Universities QS 2026 Calibration & LifelongSynthesisEngine ===")
+
+# 1. Python-level validation of institutions.js
+with open("data/institutions.js", "r", encoding="utf-8") as f:
+    inst_code = f.read()
+
+expected_calibrations = {
+    "China": {
+        "pku": 14, "tsinghua": 20, "fudan": 39, "sjtu": 45, "zju": 47,
+        "nju": 90, "ustc": 133, "tongji": 146, "whu": 165, "hit": 190,
+        "tju": 269, "bnu": 271, "sustech": 284, "xjtu": 295, "hust": 300,
+        "sysu": 331, "scu": 336, "sdu": 339, "ruc": 566, "nankai": 377
+    },
+    "Canada": {
+        "utoronto": 25, "mcgill": 29, "ubc": 38, "ualberta": 96, "waterloo": 113,
+        "western": 142, "umontreal": 162, "mcmaster": 174, "queens": 179, "ucalgary": 211,
+        "uottawa": 228, "dalhousie": 275, "uvic": 301, "sfu": 319, "york": 362,
+        "concordia": 415, "laval": 423, "guelph": 456, "usask": 470, "umanitoba": 661
+    },
+    "UK": {
+        "imperial": 2, "oxford": 3, "cambridge": 5, "ucl": 9, "edinburgh": 27,
+        "manchester": 34, "kcl": 40, "lse": 50, "bristol": 54, "warwick": 69,
+        "glasgow": 78, "birmingham": 80, "southampton": 80, "leeds": 82, "durham": 89,
+        "standrews": 104, "sheffield": 105, "nottingham": 108, "qmul": 120, "bath": 150
+    },
+    "USA": {
+        "mit": 1, "harvard": 4, "stanford": 6, "caltech": 10, "upenn": 11,
+        "berkeley": 12, "cornell": 16, "chicago": 21, "princeton": 22, "yale": 23,
+        "jhu": 32, "columbia": 34, "ucla": 42, "nyu": 43, "umich": 44,
+        "northwestern": 50, "cmu": 58, "duke": 61, "ucsd": 72, "washington": 76
+    }
+}
+
+for country, u_map in expected_calibrations.items():
+    for uid, expected_qs in u_map.items():
+        pat = r'\"id\":\s*\"' + uid + r'\"[\s\S]*?\"qsRank\":\s*([0-9]+)'
+        m = re.search(pat, inst_code)
+        assert m is not None, f"University {uid} in {country} missing in data/institutions.js"
+        actual_qs = int(m.group(1))
+        assert actual_qs == expected_qs, f"University {uid} QS rank mismatch: expected {expected_qs}, got {actual_qs}"
+
+# 2. Verify HTML presence
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_html = f.read()
+
+assert 'id="lifelongSynthesisSection"' in idx_html, "Missing #lifelongSynthesisSection in index.html"
+assert 'id="lifelongSpotlightCard"' in idx_html, "Missing #lifelongSpotlightCard in index.html"
+assert 'id="lifelongPhasesContainer"' in idx_html, "Missing #lifelongPhasesContainer in index.html"
+assert 'id="lifelongActiveAgeBadge"' in idx_html, "Missing #lifelongActiveAgeBadge in index.html"
+assert 'id="lifelongSpotlightAgeTag"' in idx_html, "Missing #lifelongSpotlightAgeTag in index.html"
+assert '<script src="js/lifelong-synthesis-engine.js"></script>' in idx_html, "Missing lifelong-synthesis-engine.js script tag in index.html"
+
+# Verify header portal top nav horizontal alignment remains untouched
+assert 'btnPortalTopNav' in idx_html, "btnPortalTopNav missing in index.html"
+
+# 3. JSC-level validation of LifelongSynthesisEngine & ScenarioSimulator
+jsc_check114_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    '''
+    load("data/institutions.js");
+    load("data/enterprises.js");
+    load("data/iching.js");
+    load("js/simulator-engine.js");
+    load("js/lifelong-synthesis-engine.js");
+
+    // 1. Verify institutions in ScenarioSimulatorEngine
+    var nju = ScenarioSimulatorEngine.findInstitution("nju");
+    if (!nju || nju.qsRank !== 90) throw new Error("NJU QS rank must be 90, got " + (nju ? nju.qsRank : "null"));
+    var waterloo = ScenarioSimulatorEngine.findInstitution("waterloo");
+    if (!waterloo || waterloo.qsRank !== 113) throw new Error("Waterloo QS rank must be 113, got " + (waterloo ? waterloo.qsRank : "null"));
+    var imperial = ScenarioSimulatorEngine.findInstitution("imperial");
+    if (!imperial || imperial.qsRank !== 2) throw new Error("Imperial QS rank must be 2, got " + (imperial ? imperial.qsRank : "null"));
+    var mit = ScenarioSimulatorEngine.findInstitution("mit");
+    if (!mit || mit.qsRank !== 1) throw new Error("MIT QS rank must be 1, got " + (mit ? mit.qsRank : "null"));
+
+    // 2. Verify LifelongSynthesisEngine
+    if (typeof LifelongSynthesisEngine === "undefined") throw new Error("LifelongSynthesisEngine undefined");
+
+    var dummyBazi = {
+      dayMaster: "甲",
+      dayMasterElement: "Wood",
+      isStrong: true,
+      vigorScore: 72,
+      favorable: ["Wood", "Fire"],
+      pillars: {
+        year: { stem: "壬", branch: "申" },
+        month: { stem: "戊", branch: "申" },
+        day: { stem: "甲", branch: "子" },
+        hour: { stem: "甲", branch: "子" }
+      },
+      top3Patterns: [
+        { rank: 1, nameZh: "七杀格 (偏官统帅 · 战将突围)", nameEn: "Seven Killings Pattern (Vanguard Commander)", weightPct: 38 },
+        { rank: 2, nameZh: "食神格 (技艺深研 · 秀气吐秀)", nameEn: "Eating God Pattern (Deep Craft & Creative Output)", weightPct: 28 },
+        { rank: 3, nameZh: "偏财格 (商业变现 · 跨界操盘)", nameEn: "Indirect Wealth Pattern (Commercial Dealmaker)", weightPct: 18 }
+      ]
+    };
+
+    var dummyTimeline = [];
+    var dummyHex = [];
+    for (var i = 1; i <= 100; i++) {
+      dummyTimeline.push({
+        age: i,
+        nominalAge: i,
+        year: 1990 + i - 1,
+        energyScore: (i >= 28 && i <= 55) ? 88 : 65,
+        wealthScore: (i >= 28 && i <= 55) ? 90 : 62,
+        tenGod: "偏财",
+        tenGodEn: "Indirect Wealth",
+        naYin: "海中金",
+        naYinEn: "Sea Gold",
+        decade: "甲午",
+        decadeSpanZh: "20-29岁",
+        decadeSpanEn: "Age 20-29"
+      });
+      dummyHex.push({
+        age: i,
+        year: 1990 + i - 1,
+        isXianTian: (i <= 30),
+        governingHex: { name: "乾为天", nameEn: "The Creative", number: 1 },
+        annualHex: { name: "地天泰", nameEn: "Peace", number: 11, lines: [
+          { statementZh: "初九：拔茅茹，以其汇，征吉。", statementEn: "Line 1: Pulling up thatched grass; with its kind. Expedition brings good fortune." },
+          { statementZh: "九二：包荒，用冯河，不遐遗，朋亡，得尚于中行。", statementEn: "Line 2: Embracing the desolate; crossing rivers without boats; not neglecting the distant." }
+        ] },
+        activeLinePos: 2,
+        annualStem: "丙",
+        annualBranch: "申"
+      });
+    }
+
+    var dummyLuck = {
+      timeline: dummyTimeline,
+      hexTrajectory: dummyHex
+    };
+
+    // Chinese synthesis
+    var synthZh = LifelongSynthesisEngine.synthesizeLifelong(dummyBazi, dummyLuck, false);
+    if (!synthZh.natalSelf || !synthZh.chronoMetrics || !synthZh.hexMetrics || !synthZh.fivePhases || !synthZh.currentSpotlight) {
+      throw new Error("LifelongSynthesisEngine Chinese synthesis missing core dimensions");
+    }
+    if (synthZh.fivePhases.length !== 5) {
+      throw new Error("Five phases must contain exactly 5 stages, got " + synthZh.fivePhases.length);
+    }
+    if (synthZh.chronoMetrics.goldenPrimeAvgEnergy < 80) {
+      throw new Error("Golden prime energy calculation mismatch");
+    }
+
+    // English synthesis & Zero CJK check
+    var synthEn = LifelongSynthesisEngine.synthesizeLifelong(dummyBazi, dummyLuck, true);
+    if (synthEn.fivePhases.length !== 5) {
+      throw new Error("Five phases EN must contain exactly 5 stages");
+    }
+
+    function checkEnFields(obj, path) {
+      if (!obj) return;
+      if (typeof obj === "string") {
+        if (path.endsWith("En") || path.endsWith("en") || path.indexOf("summaryEn") !== -1 || path.indexOf("En.") !== -1) {
+          var m = obj.match(/[\\u4e00-\\u9fa5]/g);
+          if (m && m.length > 0) {
+            throw new Error("CJK leak at " + path + ": " + obj);
+          }
+        }
+      } else if (typeof obj === "object") {
+        for (var k in obj) {
+          checkEnFields(obj[k], path + "." + k);
+        }
+      }
+    }
+    checkEnFields(synthEn, "root");
+
+    // DOM Rendering & Slider Linkage Simulation
+    var cardEl = { innerHTML: "" };
+    var phasesEl = {
+      innerHTML: "",
+      querySelectorAll: function() { return []; }
+    };
+    var ageBadgeEl = { textContent: "" };
+    var ageTagEl = { textContent: "" };
+
+    var mockDoc = {
+      getElementById: function(id) {
+        if (id === "lifelongSpotlightCard") return cardEl;
+        if (id === "lifelongPhasesContainer") return phasesEl;
+        if (id === "lifelongActiveAgeBadge") return ageBadgeEl;
+        if (id === "lifelongSpotlightAgeTag") return ageTagEl;
+        if (id === "lifelongSynthesisSection") return {};
+        return null;
+      }
+    };
+    globalThis.document = mockDoc;
+
+    // Render in Chinese
+    LifelongSynthesisEngine.renderLifelongSynthesis(dummyBazi, dummyLuck, false);
+    if (!cardEl.innerHTML || !phasesEl.innerHTML) {
+      throw new Error("renderLifelongSynthesis failed to populate DOM in ZH");
+    }
+
+    // Render in English & check zero CJK in generated HTML
+    LifelongSynthesisEngine.renderLifelongSynthesis(dummyBazi, dummyLuck, true);
+    var zhInCard = cardEl.innerHTML.match(/[\\u4e00-\\u9fa5]/g);
+    if (zhInCard && zhInCard.length > 0) {
+      throw new Error("CJK leak in rendered Spotlight Card HTML: " + zhInCard.join(""));
+    }
+    var zhInPhases = phasesEl.innerHTML.match(/[\\u4e00-\\u9fa5]/g);
+    if (zhInPhases && zhInPhases.length > 0) {
+      throw new Error("CJK leak in rendered Five Phases HTML: " + zhInPhases.join(""));
+    }
+
+    // Test Spotlight across all 100 ages
+    for (var a = 1; a <= 100; a++) {
+      LifelongSynthesisEngine.updateSpotlight(a, dummyBazi, true);
+      var leak = cardEl.innerHTML.match(/[\\u4e00-\\u9fa5]/g);
+      if (leak && leak.length > 0) {
+        throw new Error("CJK leak in updateSpotlight HTML at age " + a + ": " + leak.join(""));
+      }
+    }
+
+    // Test multiple Day Masters for robust Ten Gods & Shen Sha evaluation
+    var testStems = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"];
+    testStems.forEach(function(s) {
+      var bz = {
+        dayMaster: s,
+        dayMasterElement: "Wood",
+        isStrong: false,
+        vigorScore: 40,
+        pillars: {
+          year: { stem: s, branch: "辰" },
+          month: { stem: s, branch: "巳" },
+          day: { stem: s, branch: "午" },
+          hour: { stem: s, branch: "未" }
+        }
+      };
+      LifelongSynthesisEngine.updateSpotlight(30, bz, true);
+      var lk = cardEl.innerHTML.match(/[\\u4e00-\\u9fa5]/g);
+      if (lk && lk.length > 0) {
+        throw new Error("CJK leak for Day Master " + s + ": " + lk.join(""));
+      }
+    });
+    '''
+]
+run_check114 = subprocess.run(jsc_check114_cmd, capture_output=True, text=True)
+assert run_check114.returncode == 0, f"Check 114 JSC test failed: stdout={run_check114.stdout} stderr={run_check114.stderr}"
+
+print("✓ 80强名校QS 2026官方最新排名校准、岁运推演人生整体推演四维全息时空大观（罗盘/原局/卦数/星煞/五大阶段全景/即时透镜/中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 114 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

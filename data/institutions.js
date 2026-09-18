@@ -1381,7 +1381,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "University of Waterloo",
       "country": "Canada",
       "city": "Waterloo",
-      "qsRank": 115,
+      "qsRank": 113,
       "theRank": 158,
       "top5SubjectsZh": [
         "计算机科学与软件工程",
@@ -1412,7 +1412,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Western University",
       "country": "Canada",
       "city": "London",
-      "qsRank": 120,
+      "qsRank": 142,
       "theRank": 201,
       "top5SubjectsZh": [
         "商业管理与案例教学 (Ivey)",
@@ -1443,7 +1443,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "University of Montreal",
       "country": "Canada",
       "city": "Montreal",
-      "qsRank": 159,
+      "qsRank": 162,
       "theRank": 111,
       "top5SubjectsZh": [
         "深度学习与人工智能 (Mila)",
@@ -1474,7 +1474,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "McMaster University",
       "country": "Canada",
       "city": "Hamilton",
-      "qsRank": 176,
+      "qsRank": 174,
       "theRank": 103,
       "top5SubjectsZh": [
         "循证医学与临床流行病学",
@@ -1505,7 +1505,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "University of Ottawa",
       "country": "Canada",
       "city": "Ottawa",
-      "qsRank": 189,
+      "qsRank": 228,
       "theRank": 177,
       "top5SubjectsZh": [
         "公共政策与联邦治理",
@@ -1536,7 +1536,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Queen's University",
       "country": "Canada",
       "city": "Kingston",
-      "qsRank": 193,
+      "qsRank": 179,
       "theRank": 251,
       "top5SubjectsZh": [
         "矿业与矿产工程",
@@ -1567,7 +1567,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "University of Calgary",
       "country": "Canada",
       "city": "Calgary",
-      "qsRank": 198,
+      "qsRank": 211,
       "theRank": 201,
       "top5SubjectsZh": [
         "能源地质与石油工程",
@@ -1660,7 +1660,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "University of Victoria",
       "country": "Canada",
       "city": "Victoria",
-      "qsRank": 349,
+      "qsRank": 301,
       "theRank": 351,
       "top5SubjectsZh": [
         "地球与海洋科学 (NEPTUNE)",
@@ -2065,7 +2065,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Nanjing University",
       "country": "China",
       "city": "Nanjing",
-      "qsRank": 145,
+      "qsRank": 90,
       "theRank": 73,
       "top5SubjectsZh": [
         "物理学与超导材料",
@@ -2096,7 +2096,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Tongji University",
       "country": "China",
       "city": "Shanghai",
-      "qsRank": 192,
+      "qsRank": 146,
       "theRank": 185,
       "top5SubjectsZh": [
         "土木与结构工程",
@@ -2127,7 +2127,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Wuhan University",
       "country": "China",
       "city": "Wuhan",
-      "qsRank": 194,
+      "qsRank": 165,
       "theRank": 150,
       "top5SubjectsZh": [
         "测绘遥感与地理信息",
@@ -2158,7 +2158,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Harbin Institute of Technology",
       "country": "China",
       "city": "Harbin",
-      "qsRank": 252,
+      "qsRank": 190,
       "theRank": 168,
       "top5SubjectsZh": [
         "航天宇航与深空探测",
@@ -2344,7 +2344,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Sun Yat-sen University",
       "country": "China",
       "city": "Guangzhou",
-      "qsRank": 315,
+      "qsRank": 331,
       "theRank": 251,
       "top5SubjectsZh": [
         "临床医学与肿瘤防治",
@@ -2375,7 +2375,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Shandong University",
       "country": "China",
       "city": "Jinan",
-      "qsRank": 316,
+      "qsRank": 339,
       "theRank": 301,
       "top5SubjectsZh": [
         "密码学与网络空间安全",
@@ -2406,7 +2406,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Sichuan University",
       "country": "China",
       "city": "Chengdu",
-      "qsRank": 351,
+      "qsRank": 336,
       "theRank": 301,
       "top5SubjectsZh": [
         "口腔医学 (华西口腔世界顶尖)",
@@ -2437,7 +2437,7 @@ const INSTITUTIONS_DB = {
       "nameEn": "Renmin University of China",
       "country": "China",
       "city": "Beijing",
-      "qsRank": 356,
+      "qsRank": 566,
       "theRank": 251,
       "top5SubjectsZh": [
         "理论经济学与应用经济学",
