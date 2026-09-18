@@ -119,6 +119,7 @@ class SocialCardEngine {
       while (measure(lastLine + '...') > maxWidth && lastLine.length > 1) {
         lastLine = lastLine.slice(0, -1);
       }
+      lastLine = lastLine.replace(/[,\s.;:!?，。！？]+$/, '');
       lines[lines.length - 1] = lastLine + '...';
     }
 
@@ -290,13 +291,7 @@ class SocialCardEngine {
           }
 
           // Legacy (立身功业) - Rich multi-sentence strategic moat exegesis
-          if (fig.auxiliaryStrengthsZh && fig.auxiliaryStrengthsZh.length > 0) {
-            const raw = fig.auxiliaryStrengthsZh[1] || fig.auxiliaryStrengthsZh[0];
-            let s = raw.trim();
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureLegacyZh = s;
-          } else if (fig.strengthAdviceZh) {
+          if (fig.strengthAdviceZh) {
             let s = fig.strengthAdviceZh.trim();
             if (s.length > 120) s = s.slice(0, 116) + '。';
             if (!/[。！？]$/.test(s)) s += '。';
@@ -306,15 +301,17 @@ class SocialCardEngine {
             if (s.length > 120) s = s.slice(0, 116) + '。';
             if (!/[。！？]$/.test(s)) s += '。';
             figureLegacyZh = s;
+          } else if (fig.auxiliaryStrengthsZh && fig.auxiliaryStrengthsZh.length > 0) {
+            let s = (fig.auxiliaryStrengthsZh[1] || fig.auxiliaryStrengthsZh[0]).trim();
+            if (s.length < 30 && fig.auxiliaryStrengthsZh.length > 1) {
+              s = fig.auxiliaryStrengthsZh.join('；').trim();
+            }
+            if (s.length > 120) s = s.slice(0, 116) + '。';
+            if (!/[。！？]$/.test(s)) s += '。';
+            figureLegacyZh = s;
           }
 
-          if (fig.auxiliaryStrengthsEn && fig.auxiliaryStrengthsEn.length > 0) {
-            const raw = fig.auxiliaryStrengthsEn[0];
-            let s = raw.trim();
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureLegacyEn = s;
-          } else if (fig.strengthAdviceEn) {
+          if (fig.strengthAdviceEn) {
             let s = fig.strengthAdviceEn.trim();
             if (s.length > 200) s = s.slice(0, 196) + '.';
             if (!/[.!?]$/.test(s)) s += '.';
@@ -324,33 +321,65 @@ class SocialCardEngine {
             if (s.length > 200) s = s.slice(0, 196) + '.';
             if (!/[.!?]$/.test(s)) s += '.';
             figureLegacyEn = s;
+          } else if (fig.auxiliaryStrengthsEn && fig.auxiliaryStrengthsEn.length > 0) {
+            let s = fig.auxiliaryStrengthsEn[0].trim();
+            if (s.length < 30 && fig.auxiliaryStrengthsEn.length > 1) {
+              s = fig.auxiliaryStrengthsEn.join('; ').trim();
+            }
+            if (s.length > 200) s = s.slice(0, 196) + '.';
+            if (!/[.!?]$/.test(s)) s += '.';
+            figureLegacyEn = s;
           }
 
           // Advice (天机诫勉) - Substantive cautionary advice
-          if (fig.auxiliaryWeaknessesZh && fig.auxiliaryWeaknessesZh.length > 0) {
-            const raw = fig.auxiliaryWeaknessesZh[0];
-            let s = raw.trim();
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureAdviceZh = s;
-          } else if (fig.weaknessAdviceZh) {
+          if (fig.weaknessAdviceZh) {
             let s = fig.weaknessAdviceZh.trim();
             if (s.length > 120) s = s.slice(0, 116) + '。';
             if (!/[。！？]$/.test(s)) s += '。';
             figureAdviceZh = s;
+          } else if (fig.auxiliaryWeaknessesZh && fig.auxiliaryWeaknessesZh.length > 0) {
+            let s = fig.auxiliaryWeaknessesZh[0].trim();
+            if (s.length < 30 && fig.auxiliaryWeaknessesZh.length > 1) {
+              s = fig.auxiliaryWeaknessesZh.join('；').trim();
+            }
+            if (s.length > 120) s = s.slice(0, 116) + '。';
+            if (!/[。！？]$/.test(s)) s += '。';
+            figureAdviceZh = s;
           }
 
-          if (fig.auxiliaryWeaknessesEn && fig.auxiliaryWeaknessesEn.length > 0) {
-            const raw = fig.auxiliaryWeaknessesEn[0];
-            let s = raw.trim();
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureAdviceEn = s;
-          } else if (fig.weaknessAdviceEn) {
+          if (fig.weaknessAdviceEn) {
             let s = fig.weaknessAdviceEn.trim();
             if (s.length > 200) s = s.slice(0, 196) + '.';
             if (!/[.!?]$/.test(s)) s += '.';
             figureAdviceEn = s;
+          } else if (fig.auxiliaryWeaknessesEn && fig.auxiliaryWeaknessesEn.length > 0) {
+            let s = fig.auxiliaryWeaknessesEn[0].trim();
+            if (s.length < 30 && fig.auxiliaryWeaknessesEn.length > 1) {
+              s = fig.auxiliaryWeaknessesEn.join('; ').trim();
+            }
+            if (s.length > 200) s = s.slice(0, 196) + '.';
+            if (!/[.!?]$/.test(s)) s += '.';
+            figureAdviceEn = s;
+          }
+
+          // Robust length safety guards ensuring >= 30 characters
+          if (figureLegacyZh.length < 30 && fig.deedsZh) {
+            let s = fig.deedsZh.trim();
+            if (s.length > 120) s = s.slice(0, 116) + '。';
+            if (!/[。！？]$/.test(s)) s += '。';
+            figureLegacyZh = s;
+          }
+          if (figureLegacyEn.length < 30 && fig.deedsEn) {
+            let s = fig.deedsEn.trim();
+            if (s.length > 200) s = s.slice(0, 196) + '.';
+            if (!/[.!?]$/.test(s)) s += '.';
+            figureLegacyEn = s;
+          }
+          if (figureAdviceZh.length < 30 && fig.personalityZh) {
+            figureAdviceZh = `为人${fig.personalityZh}，须设立刚性避险防线，严防盲动冒进。`;
+          }
+          if (figureAdviceEn.length < 30 && fig.personalityEn) {
+            figureAdviceEn = `Characterized by ${fig.personalityEn}; erect rigid circuit-breakers to safeguard against fatal blindspots.`;
           }
 
           // Archetype Label
@@ -380,11 +409,50 @@ class SocialCardEngine {
     let hexDirectiveEn = 'Dragon appearing in the field · Build undeniable craft and let works speak.';
     let hexStructureZh = '乾天纯阳 · 自强不息';
     let hexStructureEn = 'Heaven over Heaven · Supreme Yang';
+    let annualActionZh = '以硬核作品立世，顺应天理，游刃有余。';
+    let annualActionEn = 'Build undeniable craft & let works speak.';
+    let annualActionBadgeZh = '【当年最宜】';
+    let annualActionBadgeEn = '[Prime Strategy]';
 
     const userBYear = (safeBazi.input && safeBazi.input.year) || safeBazi.birthYear || 1990;
     const targetAge2026 = Math.max(1, 2026 - userBYear + 1);
 
-    if (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
+    // 1. Prioritize pre-calculated lifelong hexTrajectory for 100% strict trajectory synchronization
+    const hexTraj = (luck && luck.hexTrajectory && Array.isArray(luck.hexTrajectory))
+      ? luck.hexTrajectory
+      : ((safeBazi.luck && safeBazi.luck.hexTrajectory && Array.isArray(safeBazi.luck.hexTrajectory))
+        ? safeBazi.luck.hexTrajectory
+        : (safeBazi.hexTrajectory && Array.isArray(safeBazi.hexTrajectory) ? safeBazi.hexTrajectory : null));
+
+    const traj2026 = hexTraj ? hexTraj.find(p => p.year === 2026) : null;
+
+    if (traj2026) {
+      if (traj2026.annualHex) {
+        hexNameZh = traj2026.annualHex.nameZh || hexNameZh;
+        hexNameEn = traj2026.annualHex.nameEn || hexNameEn;
+        const upN = traj2026.annualHex.upperTrigramNature || '';
+        const loN = traj2026.annualHex.lowerTrigramNature || '';
+        const upEn = traj2026.annualHex.upperTrigramEn || 'Upper';
+        const loEn = traj2026.annualHex.lowerTrigramEn || 'Lower';
+        if (upN && loN) {
+          hexStructureZh = `${upN}上${loN}下 · 第${traj2026.annualHex.number}卦`;
+          hexStructureEn = `Hexagram ${traj2026.annualHex.number} · ${upEn} over ${loEn}`;
+        }
+      }
+      if (traj2026.annualGanzhiZh && traj2026.annualGanzhiEn) {
+        annualGanzhi = isEn ? traj2026.annualGanzhiEn : traj2026.annualGanzhiZh;
+      }
+      if (traj2026.annualTJ) {
+        hexDirectiveZh = traj2026.annualTJ.liuNianZh || hexDirectiveZh;
+        hexDirectiveEn = traj2026.annualTJ.liuNianEn || hexDirectiveEn;
+      }
+      if (traj2026.optimalAction) {
+        annualActionZh = traj2026.optimalAction.actionZh || annualActionZh;
+        annualActionEn = traj2026.optimalAction.actionEn || annualActionEn;
+        annualActionBadgeZh = traj2026.optimalAction.shortBadgeZh || annualActionBadgeZh;
+        annualActionBadgeEn = traj2026.optimalAction.shortBadgeEn || annualActionBadgeEn;
+      }
+    } else if (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
       try {
         const hRes = IChingEngine.calculateFourPillarsHexagrams(safeBazi, targetAge2026, 2026);
         if (hRes && hRes.zhiNian && hRes.zhiNian.hexagram) {
@@ -398,9 +466,18 @@ class SocialCardEngine {
             hexStructureZh = `${upN}上${loN}下 · 第${hRes.zhiNian.hexagram.number}卦`;
             hexStructureEn = `Hexagram ${hRes.zhiNian.hexagram.number} · ${upEn} over ${loEn}`;
           }
+          if (hRes.zhiNian.annualGanzhiZh && hRes.zhiNian.annualGanzhiEn) {
+            annualGanzhi = isEn ? hRes.zhiNian.annualGanzhiEn : hRes.zhiNian.annualGanzhiZh;
+          }
           if (hRes.zhiNian.tianJi) {
             hexDirectiveZh = hRes.zhiNian.tianJi.liuNianZh || hexDirectiveZh;
             hexDirectiveEn = hRes.zhiNian.tianJi.liuNianEn || hexDirectiveEn;
+          }
+          if (hRes.zhiNian.optimalAction) {
+            annualActionZh = hRes.zhiNian.optimalAction.actionZh || annualActionZh;
+            annualActionEn = hRes.zhiNian.optimalAction.actionEn || annualActionEn;
+            annualActionBadgeZh = hRes.zhiNian.optimalAction.shortBadgeZh || annualActionBadgeZh;
+            annualActionBadgeEn = hRes.zhiNian.optimalAction.shortBadgeEn || annualActionBadgeEn;
           }
         }
       } catch (e) {}
@@ -431,7 +508,9 @@ class SocialCardEngine {
       annualGanzhi: annualGanzhi,
       hexName: isEn ? hexNameEn : hexNameZh,
       hexDirective: isEn ? hexDirectiveEn : hexDirectiveZh,
-      hexStructure: isEn ? hexStructureEn : hexStructureZh
+      hexStructure: isEn ? hexStructureEn : hexStructureZh,
+      annualAction: isEn ? annualActionEn : annualActionZh,
+      annualActionBadge: isEn ? annualActionBadgeEn : annualActionBadgeZh
     };
   }
 
@@ -1682,10 +1761,16 @@ class SocialCardEngine {
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 14.5px sans-serif';
-    const actionText = data.isEn
-      ? 'Direct Action: Build undeniable craft & let works speak.'
-      : '年度行持：以硬核作品立世，顺应天理，游刃有余。';
+    ctx.font = 'bold 13.5px sans-serif';
+    const actionPrefix = data.isEn ? 'Direct Action: ' : '年度行持：';
+    const rawActionText = data.annualAction || (data.isEn ? 'Build undeniable craft & let works speak.' : '以硬核作品立世，顺应天理，游刃有余。');
+    let displayAction = rawActionText;
+    if (data.isEn && displayAction.length > 56) {
+      displayAction = displayAction.slice(0, 53) + '...';
+    } else if (!data.isEn && displayAction.length > 34) {
+      displayAction = displayAction.slice(0, 32) + '...';
+    }
+    const actionText = `${actionPrefix}${displayAction}`;
     ctx.textAlign = 'center';
     ctx.fillText(actionText, W / 2, bannerY + 26);
 
@@ -1715,6 +1800,7 @@ class SocialCardEngine {
 💡 Karmic Wisdom: ${data.figureAdvice}
 ☯️ 2026 Transit Hexagram: [${data.hexName}]
 🎯 Annual Directive: "${data.hexDirective}"
+⚔️ Strategic Action: "${data.annualAction}"
 🔗 Explore your destiny blueprint: https://bazi-git-main-fategranted-afk.vercel.app`;
     }
 
@@ -1726,6 +1812,7 @@ class SocialCardEngine {
 💡 天机诫勉：${data.figureAdvice}
 ☯️ 2026值年卦：【${data.hexName}】
 🎯 年度行持密卷：“${data.hexDirective}”
+⚔️ 年度核心战策：“${data.annualAction}”
 🔗 测算你的天命决策蓝图：https://bazi-git-main-fategranted-afk.vercel.app`;
   }
 }

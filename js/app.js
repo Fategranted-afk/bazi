@@ -7240,7 +7240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardAge = parseInt(card.getAttribute('data-age'), 10);
             const isSelected = (cardAge === item.age);
             if (isSelected) {
-              card.className = 'iching-roster-card flex-shrink-0 w-36 sm:w-40 p-2.5 rounded-xl border transition cursor-pointer text-left border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg';
+              card.className = 'iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg';
               const titleEl = card.querySelector('.font-serif-sc');
               if (titleEl) {
                 titleEl.classList.remove('text-gray-200');
@@ -7259,7 +7259,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               }
             } else {
-              card.className = 'iching-roster-card flex-shrink-0 w-36 sm:w-40 p-2.5 rounded-xl border transition cursor-pointer text-left border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60';
+              card.className = 'iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60';
               const titleEl = card.querySelector('.font-serif-sc');
               if (titleEl) {
                 titleEl.classList.remove('text-amber-200');

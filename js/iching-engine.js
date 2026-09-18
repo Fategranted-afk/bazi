@@ -904,6 +904,7 @@ class IChingEngine {
       : `Opposite Polarities Attract · Resilient Stability -> Retain Base Hexagram [${baseHexNameEn}] (${stepEn})`;
 
     const zhiNianActiveLine = (activePhase.stage === 'xianTian' ? xianTianLines : houTianLines).find(l => l.position === activePhase.linePos) || xianTianLines[0];
+    const zhiNianOptAction = this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated);
 
     return {
       currentAge,
@@ -997,11 +998,11 @@ class IChingEngine {
         hexagram: zhiNianHex,
         tianJi: zhiNianTJ,
         binary: zhiNianBinary,
-        optimalAction: this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated),
-        optimalActionZh: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).shortBadgeZh || '',
-        optimalActionEn: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).shortBadgeEn || '',
-        optimalDirectiveZh: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).actionZh || '',
-        optimalDirectiveEn: (this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated) || {}).actionEn || ''
+        optimalAction: zhiNianOptAction,
+        optimalActionZh: (zhiNianOptAction || {}).shortBadgeZh || '',
+        optimalActionEn: (zhiNianOptAction || {}).shortBadgeEn || '',
+        optimalDirectiveZh: (zhiNianOptAction || {}).actionZh || '',
+        optimalDirectiveEn: (zhiNianOptAction || {}).actionEn || ''
       }
     };
   }

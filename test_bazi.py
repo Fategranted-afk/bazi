@@ -13279,6 +13279,8 @@ assert '✦ KEY LEGACY & STRATEGIC MOAT ✦' in sc_code, "SocialCardEngine missi
 assert '✦ KARMIC LESSON & STRATEGIC SAFEGUARDS ✦' in sc_code, "SocialCardEngine missing upgraded Karmic Lesson heading in EN"
 assert 'upperTrigramEn' in sc_code and 'lowerTrigramEn' in sc_code, "SocialCardEngine must use English trigram names to prevent leaks"
 assert 'pillarsDetailed' in sc_code, "SocialCardEngine must structure detailed 4-pillar architectural columns"
+assert 'annualAction' in sc_code, "SocialCardEngine must extract dynamic annualAction for 2026 transit"
+assert 'w-36 sm:w-40' not in app_code, "app.js roster cards must use unified w-40 sm:w-44 without shrinking"
 
 # Hexagram Trajectory & Roster Dynamic Alignment Assertions
 assert 'data-chart-key' in app_code, "app.js must use data-chart-key to prevent stale hexagram roster card retention"
@@ -13313,36 +13315,26 @@ jsc_check112_cmd = [
     load("js/iching-engine.js");
     load("js/social-card-engine.js");
 
-    // Test Case 1: 1990 Male (庚午 壬午 甲申 辛未)
-    var bazi1990 = BaZiEngine.calculate({
-      year: 1990, month: 6, day: 20, hour: 14, gender: "乾造",
-      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
-    });
-    var luck1990 = LuckEngine.calculateLuck(bazi1990, 2026);
+    var bazi1990 = BaZiEngine.calculate({ year: 1990, month: 5, day: 15, hour: 12, minute: 0, gender: "male" });
+    var luck1990 = LuckEngine.calculateLuck(bazi1990);
 
-    // Test Case 2: 1988 Female (戊辰 乙卯 癸亥 癸亥)
-    var bazi1988 = BaZiEngine.calculate({
-      year: 1988, month: 3, day: 12, hour: 10, gender: "坤造",
-      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
-    });
-    var luck1988 = LuckEngine.calculateLuck(bazi1988, 2026);
+    var bazi1988 = BaZiEngine.calculate({ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "female" });
+    var luck1988 = LuckEngine.calculateLuck(bazi1988);
 
-    // Test Case 3: 2002 Male (壬午 乙巳 戊寅 丁巳)
-    var bazi2002 = BaZiEngine.calculate({
-      year: 2002, month: 5, day: 15, hour: 10, minute: 30, gender: "乾造",
-      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
-    });
-    var luck2002 = LuckEngine.calculateLuck(bazi2002, 2026);
+    var bazi2002 = BaZiEngine.calculate({ year: 2002, month: 5, day: 15, hour: 10, minute: 30, gender: "male" });
+    var luck2002 = LuckEngine.calculateLuck(bazi2002);
 
-    // Trajectory Points Consistency Verification
-    [
+    // 1. Validate Lifelong Trajectory Structure across charts
+    var testCharts = [
       { name: "1990 Male", bazi: bazi1990, luck: luck1990, birthYear: 1990 },
       { name: "1988 Female", bazi: bazi1988, luck: luck1988, birthYear: 1988 },
       { name: "2002 Male", bazi: bazi2002, luck: luck2002, birthYear: 2002 }
-    ].forEach(function(tc) {
+    ];
+
+    testCharts.forEach(function(tc) {
       var traj = tc.luck.hexTrajectory;
       if (!traj || traj.length !== 100) {
-        throw new Error(tc.name + " hexTrajectory must have 100 points, got: " + (traj ? traj.length : 'null'));
+        throw new Error(tc.name + " trajectory must have 100 points, got " + (traj ? traj.length : 'null'));
       }
       if (traj[0].age !== 1 || traj[0].year !== tc.birthYear) {
         throw new Error(tc.name + " age 1 year mismatch: expected " + tc.birthYear + ", got " + traj[0].year);
@@ -13380,6 +13372,13 @@ jsc_check112_cmd = [
     }
     if (cardEn.figureLegacy.length < 30 || cardEn.figureAdvice.length < 30) {
       throw new Error("SocialCardEngine legacy or advice too brief: legacy=" + cardEn.figureLegacy.length + ", advice=" + cardEn.figureAdvice.length);
+    }
+    if (!cardEn.annualAction || !cardEn.annualActionBadge) {
+      throw new Error("SocialCardEngine extractCardData missing annualAction or annualActionBadge");
+    }
+    var cardZh2002 = SocialCardEngine.extractCardData(bazi2002, luck2002, "zh");
+    if (!cardZh2002.annualAction || cardZh2002.annualAction.length < 10) {
+      throw new Error("SocialCardEngine missing dynamic annualAction for 2002 chart");
     }
     var cardEnJson = JSON.stringify(cardEn);
     var cardEnLeaks = cardEnJson.match(/[\\u4e00-\\u9fa5]/g);
