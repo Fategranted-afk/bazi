@@ -1030,6 +1030,18 @@ document.addEventListener('DOMContentLoaded', () => {
       updateSolarDetailDisplay(result);
 
       currentBaziResult = result;
+      cachedIChingCycleData = null;
+      window._lastRenderedHexRes = null;
+      const ichingContainerEl = document.getElementById('ichingCycleContainer');
+      if (ichingContainerEl) {
+        if (typeof ichingContainerEl.removeAttribute === 'function') {
+          ichingContainerEl.removeAttribute('data-active-tab');
+          ichingContainerEl.removeAttribute('data-chart-key');
+        } else {
+          ichingContainerEl['data-active-tab'] = null;
+          ichingContainerEl['data-chart-key'] = null;
+        }
+      }
 
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem('lastBaziParams', JSON.stringify({
@@ -6930,14 +6942,30 @@ document.addEventListener('DOMContentLoaded', () => {
       ageBadge.textContent = isEn ? `Age ${fourPillarsActiveAge}` : `${fourPillarsActiveAge}岁`;
     }
 
-    // Compute or retrieve 100-year cycle dataset
-    const points = (res && (res.hexTrajectory || res.hundredYearsTrajectory || (res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory))))
-      ? (res.hexTrajectory || res.hundredYearsTrajectory || (res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory)))
-      : ((typeof currentLuckResult !== 'undefined' && currentLuckResult && (currentLuckResult.hexTrajectory || currentLuckResult.hundredYearsTrajectory))
-        ? (currentLuckResult.hexTrajectory || currentLuckResult.hundredYearsTrajectory)
-        : ((typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
-          ? IChingEngine.calculateLifelongCycle(res)
-          : []));
+    // Compute or retrieve 100-year cycle dataset directly from hexTrajectory (100% unified source of truth)
+    const activeRes = currentBaziResult || res;
+    let points = (res && (res.hexTrajectory || res.hundredYearsTrajectory || (res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory)))) ||
+                 (activeRes && activeRes.luck && (activeRes.luck.hexTrajectory || activeRes.luck.hundredYearsTrajectory)) ||
+                 (activeRes && (activeRes.hexTrajectory || activeRes.hundredYearsTrajectory)) ||
+                 (typeof currentLuckResult !== 'undefined' && currentLuckResult && (currentLuckResult.hexTrajectory || currentLuckResult.hundredYearsTrajectory)) ||
+                 null;
+
+    if (!points || points.length === 0) {
+      if (typeof LuckEngine !== 'undefined' && typeof LuckEngine.calculateLuck === 'function' && activeRes) {
+        try {
+          const lk = LuckEngine.calculateLuck(activeRes);
+          if (lk && lk.hexTrajectory) points = lk.hexTrajectory;
+        } catch (e) {}
+      }
+    }
+    if (!points || points.length === 0) {
+      if (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function' && activeRes) {
+        try {
+          points = IChingEngine.calculateLifelongCycle(activeRes);
+        } catch (e) {}
+      }
+    }
+    if (!points) points = [];
 
     cachedIChingCycleData = points;
 
@@ -7134,8 +7162,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const gHex = item.governingHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
     const currentLangCode = isEn ? 'en' : 'zh';
 
+    // Dynamic chart key strictly computed from trajectory points and lang
+    const firstHexName = points && points[0] && points[0].annualHex ? (points[0].annualHex.nameZh || points[0].annualHex.nameEn || '') : '';
+    const lastHexName = points && points[points.length - 1] && points[points.length - 1].annualHex ? (points[points.length - 1].annualHex.nameZh || points[points.length - 1].annualHex.nameEn || '') : '';
+    const chartKey = `${item.year - item.age + 1}_${firstHexName}_${lastHexName}_${currentLangCode}`;
+
     if (container.getAttribute('data-active-tab') === 'timeline' &&
         container.getAttribute('data-lang') === currentLangCode &&
+        container.getAttribute('data-chart-key') === chartKey &&
         document.getElementById('ichingCycleCanvas') &&
         document.getElementById('ichingTelemetryEpochTitle')) {
 
@@ -7246,6 +7280,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (container.setAttribute) {
       container.setAttribute('data-active-tab', 'timeline');
       container.setAttribute('data-lang', currentLangCode);
+      container.setAttribute('data-chart-key', chartKey);
     }
 
     container.innerHTML = `
@@ -7394,13 +7429,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const ptHex = pt.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
             const ptOpt = pt.optimalAction || {};
             return `
-              <div class="iching-roster-card flex-shrink-0 w-36 sm:w-40 p-2.5 rounded-xl border transition cursor-pointer text-left ${isSelected ? 'border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg' : 'border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60'}" data-age="${pt.age}">
+              <div class="iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left ${isSelected ? 'border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg' : 'border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60'}" data-age="${pt.age}">
                 <div class="flex items-center justify-between text-[10.5px] font-mono text-gray-400 border-b border-gray-800/60 pb-1">
                   <span class="font-bold ${isSelected ? 'text-amber-300' : 'text-gray-300'}">${pt.age}${isEn ? 'y' : '岁'} · ${pt.year}</span>
-                  <span class="text-[9px] px-1 py-0.2 rounded ${pt.isMutated ? 'bg-amber-500/20 text-amber-300' : 'bg-emerald-500/20 text-emerald-300'}">${pt.isMutated ? (isEn ? 'Mut' : '变') : (isEn ? 'Base' : '本')}</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded font-mono ${pt.isMutated ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'}">${pt.isMutated ? (isEn ? 'Mut' : '变') : (isEn ? 'Base' : '本')}</span>
                 </div>
                 <div class="pt-1.5 font-serif-sc font-bold text-xs truncate ${isSelected ? 'text-amber-200' : 'text-gray-200'}">
-                  ${isEn ? ptHex.nameEn : ptHex.nameZh}
+                  ${isEn ? `Hexagram ${ptHex.number} · ${ptHex.nameEn}` : `第${ptHex.number}卦 · ${ptHex.nameZh}`}
                 </div>
                 <div class="pt-1">
                   <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-bold font-mono ${ptOpt.badgeClass || 'bg-amber-500/20 text-amber-300'}">
@@ -7410,6 +7445,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="text-[9.5px] text-gray-400 line-clamp-1 pt-1 font-sans">
                   ${isEn ? (ptOpt.actionEn || '') : (ptOpt.actionZh || '')}
                 </p>
+                <div class="mt-1.5 pt-1 border-t border-gray-800/50 text-[9px] font-mono flex items-center gap-1 ${pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) ? 'text-rose-400' : 'text-emerald-400'}">
+                  <span class="w-1.5 h-1.5 rounded-full ${pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) ? 'bg-rose-500' : 'bg-emerald-500'}"></span>
+                  <span class="truncate">${isEn ? (pt.score < 50 || (ptOpt.shortBadgeEn && ptOpt.shortBadgeEn.includes('Risk')) ? 'Risk Alert: Defense & Capital' : 'Safeguard: Compounding Growth') : (pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) ? '防险：守正固本，杜绝盲进' : '护身：蓄势深耕，守中得正')}</span>
+                </div>
               </div>
             `;
           }).join('')}

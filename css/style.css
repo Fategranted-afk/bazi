@@ -2644,5 +2644,14 @@ body.light-theme #btnPortalTopNav:hover {
   color: #78350f !important;
 }
 
+/* Scrollbar isolation for header action row on compact viewports */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 
 

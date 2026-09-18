@@ -13163,6 +13163,13 @@ assert '-translate-y-1/2' in idx_content, \
 assert 'id="btnPortalTopNav" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' in idx_content, \
     "#btnPortalTopNav must have direct absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 classes"
 
+# Check bilateral symmetry: both left brand and right action controls must respect central exclusion corridor
+assert 'max-w-[calc(50%-85px)]' in idx_content, "index.html must constrain lateral blocks"
+assert idx_content.count('max-w-[calc(50%-85px)]') >= 2, \
+    "index.html must constrain BOTH left brand and right action controls with max-w-[calc(50%-85px)] to prevent collision with #btnPortalTopNav"
+assert 'no-scrollbar' in idx_content and 'no-scrollbar' in css_content, \
+    "index.html and style.css must support no-scrollbar for clean action row containment"
+
 # 2. Validate Header CSS Symmetrical Alignment in style.css
 assert '#btnPortalTopNav {' in css_content, "style.css must define #btnPortalTopNav rules"
 assert 'left: 50%;' in css_content and 'top: 50%;' in css_content, "style.css must position #btnPortalTopNav at left: 50% and top: 50%"
@@ -13252,7 +13259,220 @@ assert run_check111.returncode == 0, f"Check 111 JSC test failed: stdout={run_ch
 
 print("✓ 顶部Header命理门庭按钮绝对水平居中（absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 庄严对称轴线）、背景大号浮动光点彻底剔除并升级为大号宏伟流光（Grand Celestial Streamers 280-480px超长天际贯穿/14-24px大气极光纱幔/双语零残留）验证通过！")
 
-print("\n🎉 ALL 111 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 112. Validating Social Card High-Craftsmanship Overhaul & Dynamic 100-Year Hexagram Trajectory Alignment ===
+print("\n=== 112. Validating Social Card High-Craftsmanship Overhaul & Dynamic 100-Year Hexagram Trajectory Alignment ===")
+
+# 1. Static Code Analysis on js/social-card-engine.js and js/app.js
+with open('js/social-card-engine.js', 'r', encoding='utf-8') as f:
+    sc_code = f.read()
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_code = f.read()
+
+# Social Card Craftsmanship Assertions
+assert 'drawLeiwenBorder' in sc_code, "SocialCardEngine must define drawLeiwenBorder for Cloud-Thunder meanders"
+assert 'drawCornerSilkWrap' in sc_code, "SocialCardEngine must define drawCornerSilkWrap for traditional bookbinding silk corners"
+assert 'pearlCount = 32' in sc_code, "SocialCardEngine must render 32 golden pearl beads around portrait medallion"
+assert '✦ 立身功业 · 传世绝学壁垒 ✦' in sc_code, "SocialCardEngine missing upgraded Key Legacy heading in ZH"
+assert '✦ 天机诫勉 · 避坑破局心法 ✦' in sc_code, "SocialCardEngine missing upgraded Karmic Lesson heading in ZH"
+assert '✦ KEY LEGACY & STRATEGIC MOAT ✦' in sc_code, "SocialCardEngine missing upgraded Key Legacy heading in EN"
+assert '✦ KARMIC LESSON & STRATEGIC SAFEGUARDS ✦' in sc_code, "SocialCardEngine missing upgraded Karmic Lesson heading in EN"
+assert 'upperTrigramEn' in sc_code and 'lowerTrigramEn' in sc_code, "SocialCardEngine must use English trigram names to prevent leaks"
+assert 'pillarsDetailed' in sc_code, "SocialCardEngine must structure detailed 4-pillar architectural columns"
+
+# Hexagram Trajectory & Roster Dynamic Alignment Assertions
+assert 'data-chart-key' in app_code, "app.js must use data-chart-key to prevent stale hexagram roster card retention"
+assert 'Hexagram ${ptHex.number} · ${ptHex.nameEn}' in app_code, "app.js must render English hexagram title cleanly without residual Chinese"
+assert 'Risk Alert: Defense & Capital' in app_code, "app.js must provide bilingual risk prevention / cautionary safeguard in EN"
+assert '防险：守正固本，杜绝盲进' in app_code, "app.js must provide risk prevention / cautionary safeguard in ZH"
+assert 'cachedIChingCycleData = null' in app_code, "app.js must invalidate iching cycle cache on new calculation"
+
+# 2. Dynamic JSC Execution Test: Hexagram Trajectory Non-Hardcoding & Full Lifecycle Parity
+jsc_check112_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+    load("js/iching-engine.js");
+    load("js/social-card-engine.js");
+
+    // Test Case 1: 1990 Male (庚午 壬午 甲申 辛未)
+    var bazi1990 = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck1990 = LuckEngine.calculateLuck(bazi1990, 2026);
+
+    // Test Case 2: 1988 Female (戊辰 乙卯 癸亥 癸亥)
+    var bazi1988 = BaZiEngine.calculate({
+      year: 1988, month: 3, day: 12, hour: 10, gender: "坤造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck1988 = LuckEngine.calculateLuck(bazi1988, 2026);
+
+    // Test Case 3: 2002 Male (壬午 乙巳 戊寅 丁巳)
+    var bazi2002 = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 15, hour: 10, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var luck2002 = LuckEngine.calculateLuck(bazi2002, 2026);
+
+    // Trajectory Points Consistency Verification
+    [
+      { name: "1990 Male", bazi: bazi1990, luck: luck1990, birthYear: 1990 },
+      { name: "1988 Female", bazi: bazi1988, luck: luck1988, birthYear: 1988 },
+      { name: "2002 Male", bazi: bazi2002, luck: luck2002, birthYear: 2002 }
+    ].forEach(function(tc) {
+      var traj = tc.luck.hexTrajectory;
+      if (!traj || traj.length !== 100) {
+        throw new Error(tc.name + " hexTrajectory must have 100 points, got: " + (traj ? traj.length : 'null'));
+      }
+      if (traj[0].age !== 1 || traj[0].year !== tc.birthYear) {
+        throw new Error(tc.name + " age 1 year mismatch: expected " + tc.birthYear + ", got " + traj[0].year);
+      }
+      if (traj[99].age !== 100 || traj[99].year !== tc.birthYear + 99) {
+        throw new Error(tc.name + " age 100 year mismatch");
+      }
+
+      // Assert that every year point has annualHex with valid number and name
+      traj.forEach(function(pt) {
+        if (!pt.annualHex || !pt.annualHex.number || !pt.annualHex.nameZh || !pt.annualHex.nameEn) {
+          throw new Error(tc.name + " invalid annualHex at age " + pt.age);
+        }
+        if (!pt.optimalAction || !pt.optimalAction.actionZh || !pt.optimalAction.actionEn) {
+          throw new Error(tc.name + " missing optimalAction at age " + pt.age);
+        }
+        if (/[\\u4e00-\\u9fa5]/.test(pt.optimalAction.actionEn) || /[\\u4e00-\\u9fa5]/.test(pt.optimalAction.shortBadgeEn)) {
+          throw new Error(tc.name + " residual Chinese in English optimalAction at age " + pt.age);
+        }
+      });
+    });
+
+    // Dynamic derivation check: Age 1 hexagram must not be statically hardcoded
+    var hex1_1990 = luck1990.hexTrajectory[0].annualHex.nameZh;
+    var hex1_1988 = luck1988.hexTrajectory[0].annualHex.nameZh;
+    var hex1_2002 = luck2002.hexTrajectory[0].annualHex.nameZh;
+    if (hex1_1990 === "地水师" && hex1_1988 === "地水师" && hex1_2002 === "地水师") {
+      throw new Error("Age 1 hexagram must be dynamically derived, not hardcoded to 地水师");
+    }
+
+    // 3. SocialCardEngine Upgraded Craftsmanship & Bilingual Integrity
+    var cardEn = SocialCardEngine.extractCardData(bazi1990, luck1990, "en");
+    if (!cardEn.pillarsDetailed || !cardEn.pillarsDetailed.year || !cardEn.pillarsDetailed.day) {
+      throw new Error("SocialCardEngine extractCardData missing pillarsDetailed columns");
+    }
+    if (cardEn.figureLegacy.length < 30 || cardEn.figureAdvice.length < 30) {
+      throw new Error("SocialCardEngine legacy or advice too brief: legacy=" + cardEn.figureLegacy.length + ", advice=" + cardEn.figureAdvice.length);
+    }
+    var cardEnJson = JSON.stringify(cardEn);
+    var cardEnLeaks = cardEnJson.match(/[\\u4e00-\\u9fa5]/g);
+    if (cardEnLeaks && cardEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in English SocialCardEngine data: " + cardEnLeaks.join(""));
+    }
+
+    // Canvas Render Mock in English
+    var enTexts = [];
+    var mockCtxEn = {
+      createLinearGradient: function() { return { addColorStop: function(){} }; },
+      createRadialGradient: function() { return { addColorStop: function(){} }; },
+      fillRect: function(){}, strokeRect: function(){},
+      beginPath: function(){}, closePath: function(){},
+      arc: function(){}, fill: function(){}, stroke: function(){},
+      fillText: function(t){ enTexts.push(t); },
+      measureText: function(t){ return { width: t.length * 8 }; },
+      save: function(){}, restore: function(){}, clip: function(){},
+      moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
+    };
+    var mockCanvasEn = {
+      width: 0, height: 0,
+      getContext: function() { return mockCtxEn; }
+    };
+    SocialCardEngine.renderToCanvas(mockCanvasEn, bazi1990, luck1990, "en");
+
+    var allEnStr = enTexts.join(" ");
+    if (!allEnStr.includes("KEY LEGACY & STRATEGIC MOAT")) {
+      throw new Error("Canvas EN missing 'KEY LEGACY & STRATEGIC MOAT'");
+    }
+    if (!allEnStr.includes("KARMIC LESSON & STRATEGIC SAFEGUARDS")) {
+      throw new Error("Canvas EN missing 'KARMIC LESSON & STRATEGIC SAFEGUARDS'");
+    }
+    if (!allEnStr.includes("SEAL OF FATE")) {
+      throw new Error("Canvas EN missing 'SEAL OF FATE'");
+    }
+    if (!allEnStr.includes("2026 Annual Transit")) {
+      throw new Error("Canvas EN missing '2026 Annual Transit'");
+    }
+    var canvasEnLeaks = allEnStr.match(/[\\u4e00-\\u9fa5]/g);
+    if (canvasEnLeaks && canvasEnLeaks.length > 0) {
+      throw new Error("Residual Chinese on English Social Card Canvas: " + canvasEnLeaks.join(""));
+    }
+
+    // Canvas Render Mock in Chinese
+    var zhTexts = [];
+    var mockCtxZh = {
+      createLinearGradient: function() { return { addColorStop: function(){} }; },
+      createRadialGradient: function() { return { addColorStop: function(){} }; },
+      fillRect: function(){}, strokeRect: function(){},
+      beginPath: function(){}, closePath: function(){},
+      arc: function(){}, fill: function(){}, stroke: function(){},
+      fillText: function(t){ zhTexts.push(t); },
+      measureText: function(t){ return { width: t.length * 13 }; },
+      save: function(){}, restore: function(){}, clip: function(){},
+      moveTo: function(){}, lineTo: function(){}, quadraticCurveTo: function(){}
+    };
+    var mockCanvasZh = {
+      width: 0, height: 0,
+      getContext: function() { return mockCtxZh; }
+    };
+    SocialCardEngine.renderToCanvas(mockCanvasZh, bazi1990, luck1990, "zh");
+    var allZhStr = zhTexts.join(" ");
+    if (!allZhStr.includes("立身功业 · 传世绝学壁垒")) {
+      throw new Error("Canvas ZH missing '立身功业 · 传世绝学壁垒'");
+    }
+    if (!allZhStr.includes("天机诫勉 · 避坑破局心法")) {
+      throw new Error("Canvas ZH missing '天机诫勉 · 避坑破局心法'");
+    }
+    if (!allZhStr.includes("钦天御览")) {
+      throw new Error("Canvas ZH missing '钦天御览'");
+    }
+
+    // Test Leiwen Border and Corner Silk Wrap execution directly
+    SocialCardEngine.drawLeiwenBorder(mockCtxZh, 18, 18, 700, 1100, 14);
+    ['tl', 'tr', 'bl', 'br'].forEach(function(c) {
+      SocialCardEngine.drawCornerSilkWrap(mockCtxZh, 50, 50, 36, c);
+    });
+
+    // Test Social Copy Text
+    var copyEn = SocialCardEngine.generateSocialCopyText(bazi1990, luck1990, "en");
+    var copyLeaks = copyEn.match(/[\\u4e00-\\u9fa5]/g);
+    if (copyLeaks && copyLeaks.length > 0) {
+      throw new Error("Residual Chinese in English social copy text: " + copyLeaks.join(""));
+    }
+    """
+]
+run_check112 = subprocess.run(jsc_check112_cmd, capture_output=True, text=True)
+assert run_check112.returncode == 0, f"Check 112 JSC test failed: stdout={run_check112.stdout} stderr={run_check112.stderr}"
+
+print("✓ 社交名片高阶工艺重构（云雷纹回纹边框/四角绫绢包角/32颗金珠项圈肖像/立身功业与天机诫勉双护城河/四柱建筑式阵列）与百岁六十四卦总谱全景动态直连（100%绑定气机轨迹/非硬编码地水师/防险护身标定/双语零中文残留）验证通过！")
+
+print("\n🎉 ALL 112 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
