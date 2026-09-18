@@ -2612,4 +2612,37 @@ body.light-theme .history-fullscreen-mode {
   background-color: var(--bg-primary) !important;
 }
 
+/* ==========================================================================
+   Header Portal Top Nav Central Axis Symmetrical Alignment (命理门庭绝对居中)
+   ========================================================================== */
+#btnPortalTopNav {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+}
+
+#btnPortalTopNav.hidden {
+  display: none !important;
+}
+
+[data-theme="light"] #btnPortalTopNav,
+html.light #btnPortalTopNav,
+body.light-theme #btnPortalTopNav {
+  background: rgba(254, 243, 199, 0.92) !important;
+  border-color: #d97706 !important;
+  color: #92400e !important;
+  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.2) !important;
+}
+
+[data-theme="light"] #btnPortalTopNav:hover,
+html.light #btnPortalTopNav:hover,
+body.light-theme #btnPortalTopNav:hover {
+  background: rgba(253, 230, 138, 0.98) !important;
+  border-color: #b45309 !important;
+  color: #78350f !important;
+}
+
+
 

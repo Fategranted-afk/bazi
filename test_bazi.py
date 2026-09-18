@@ -13141,7 +13141,118 @@ assert '<option value="Singapore">新加坡 (Singapore)</option>' in index_html,
 
 print("✓ 百岁岁运六十四卦行持全景总谱时间轴八字对齐（2002年1岁=2002/25岁=2026/六十四卦易数气机波动轨迹结果直连全景/点击卡片瞬时联动调阅）、沙盘推演国家+城市五行/产业规划重叠度/岗位与上司十神/三大主导格局/双城裁决与天梯总榜全维度升级（中英双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 110 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 111. Validating Header Portal Top Nav Absolute Central Axis Symmetry & Grand Celestial Streamers ===
+print("\n=== 111. Validating Header Portal Top Nav Absolute Central Axis Symmetry & Grand Celestial Streamers ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_content = f.read()
+
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+with open('js/visual-alchemy.js', 'r', encoding='utf-8') as f:
+    va_content = f.read()
+
+# 1. Validate Header Absolute Centering in index.html
+assert 'id="btnPortalTopNav"' in idx_content, "index.html must contain #btnPortalTopNav"
+assert 'absolute' in idx_content and 'left-1/2' in idx_content and '-translate-x-1/2' in idx_content, \
+    "index.html #btnPortalTopNav must use absolute horizontal centering (left-1/2 -translate-x-1/2)"
+assert '-translate-y-1/2' in idx_content, \
+    "index.html #btnPortalTopNav must use vertical centering (-translate-y-1/2)"
+
+# Check that the button itself has the centering classes
+assert 'id="btnPortalTopNav" class="hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2' in idx_content, \
+    "#btnPortalTopNav must have direct absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 classes"
+
+# 2. Validate Header CSS Symmetrical Alignment in style.css
+assert '#btnPortalTopNav {' in css_content, "style.css must define #btnPortalTopNav rules"
+assert 'left: 50%;' in css_content and 'top: 50%;' in css_content, "style.css must position #btnPortalTopNav at left: 50% and top: 50%"
+assert 'transform: translate(-50%, -50%);' in css_content, "style.css must translate #btnPortalTopNav by -50%, -50%"
+assert '#btnPortalTopNav.hidden {' in css_content, "style.css must ensure #btnPortalTopNav.hidden is display: none !important"
+
+# 3. Validate Grand Celestial Streamers (大号宏伟流光) & Removal of Large Floating Light Blobs
+assert 'Grand Celestial Streamer' in va_content, "visual-alchemy.js must specify Grand Celestial Streamer"
+assert 'size > 2.2' not in va_content, "visual-alchemy.js must not render large fuzzy particle glow circles"
+assert '14.0 + Math.random()' in va_content or 'glowWidth' in va_content, "visual-alchemy.js must feature elevated streamer glow width"
+
+# 4. JSC Dynamic Execution Test for Grand Celestial Streamers
+jsc_check111_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("js/visual-alchemy.js");
+    if (typeof VisualAlchemy === 'undefined') throw new Error("VisualAlchemy not loaded");
+
+    var mockCtx = {
+      clearRect: function() {},
+      beginPath: function() {},
+      moveTo: function() {},
+      lineTo: function() {},
+      stroke: function() {},
+      arc: function() {},
+      fill: function() {},
+      setTransform: function() {},
+      scale: function() {},
+      save: function() {},
+      restore: function() {},
+      createLinearGradient: function() {
+        return { addColorStop: function() {} };
+      }
+    };
+    var mockCanvas = {
+      getContext: function() { return mockCtx; },
+      clientWidth: 1440,
+      clientHeight: 900,
+      width: 1440,
+      height: 900,
+      style: {}
+    };
+    var document = {
+      getElementById: function(id) { return mockCanvas; },
+      documentElement: { getAttribute: function() { return 'dark'; }, classList: { contains: function() { return false; } } },
+      addEventListener: function() {}
+    };
+    var window = {
+      innerWidth: 1440,
+      innerHeight: 900,
+      devicePixelRatio: 1,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { return 1; },
+      cancelAnimationFrame: function(id) {}
+    };
+
+    VisualAlchemy.initFlux('elementFluxCanvas', '火');
+    var streaks = VisualAlchemy.getStreaks();
+    if (!streaks || streaks.length !== 2) throw new Error("Streaks must have length 2");
+
+    var s = streaks[0];
+    // Check grand dimensions
+    if (s.length < 250) {
+      throw new Error("Grand Celestial Streamer length must be grand (>= 250px on 1440w), got: " + s.length);
+    }
+    if (s.glowWidth < 12) {
+      throw new Error("Grand Celestial Streamer glowWidth must be >= 12px, got: " + s.glowWidth);
+    }
+    if (s.coreWidth < 2.2) {
+      throw new Error("Grand Celestial Streamer coreWidth must be >= 2.2px, got: " + s.coreWidth);
+    }
+
+    // Test transition to active and drawing
+    s.update(1600, 1440, 900);
+    if (s.state !== 'active') throw new Error("Streamer should be active");
+    s.draw(mockCtx, false);
+    s.draw(mockCtx, true);
+
+    // Test completion back to waiting
+    s.update(4000, 1440, 900);
+    if (s.state !== 'waiting') throw new Error("Streamer should return to waiting");
+    """
+]
+run_check111 = subprocess.run(jsc_check111_cmd, capture_output=True, text=True)
+assert run_check111.returncode == 0, f"Check 111 JSC test failed: stdout={run_check111.stdout} stderr={run_check111.stderr}"
+
+print("✓ 顶部Header命理门庭按钮绝对水平居中（absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 庄严对称轴线）、背景大号浮动光点彻底剔除并升级为大号宏伟流光（Grand Celestial Streamers 280-480px超长天际贯穿/14-24px大气极光纱幔/双语零残留）验证通过！")
+
+print("\n🎉 ALL 111 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
