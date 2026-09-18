@@ -1701,7 +1701,7 @@ const LuckEngine = (function() {
     const ecologicalResonance = generateGeographicEcologicalResonance(bazi);
     const synthesis14Char = calculate14CharEnergySynthesis(bazi, activeDecade, activeAnnual, activeMonth);
 
-    return {
+    const luckObj = {
       decadeMeta,
       decades,
       activeDecade,
@@ -1718,11 +1718,27 @@ const LuckEngine = (function() {
       ecologicalResonance,
       synthesis14Char
     };
+    bazi.luck = luckObj;
+
+    return luckObj;
   }
 
   function calculateLifelongTimeline(bazi, luckData) {
     if (!bazi || !bazi.pillars) return [];
-    const birthYear = (bazi.input && bazi.input.year) || bazi.birthYear || 1990;
+    let birthYear = 1990;
+    if (bazi.input && typeof bazi.input.year === 'number' && !isNaN(bazi.input.year) && bazi.input.year > 0) {
+      birthYear = bazi.input.year;
+    } else if (bazi.input && typeof bazi.input.adjustedYear === 'number' && !isNaN(bazi.input.adjustedYear) && bazi.input.adjustedYear > 0) {
+      birthYear = bazi.input.adjustedYear;
+    } else if (typeof bazi.birthYear === 'number' && !isNaN(bazi.birthYear) && bazi.birthYear > 0) {
+      birthYear = bazi.birthYear;
+    } else if (bazi.solar && typeof bazi.solar.year === 'number' && !isNaN(bazi.solar.year) && bazi.solar.year > 0) {
+      birthYear = bazi.solar.year;
+    } else if (bazi.solarInfo && typeof bazi.solarInfo.solarYear === 'number' && !isNaN(bazi.solarInfo.solarYear) && bazi.solarInfo.solarYear > 0) {
+      birthYear = bazi.solarInfo.solarYear;
+    } else if (typeof bazi.year === 'number' && !isNaN(bazi.year) && bazi.year > 0) {
+      birthYear = bazi.year;
+    }
     const dm = bazi.dayMaster;
     const isStrong = isDayMasterStrong(bazi);
     const dayBranch = bazi.pillars.day.branch;

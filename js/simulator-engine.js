@@ -110,6 +110,28 @@ class ScenarioSimulatorEngine {
               desc: '多伦多湾街由加拿大五大行与全球顶级养老金（CPPIB/OTPP）为主导，秉持正印正官稳健之风，注重资产安全性与长线年化稳健收益。'
             };
       }
+      if (ct.includes('shanghai') || ct.includes('上海') || ct.includes('lujiazui')) {
+        return isEn
+          ? {
+              tag: 'Shanghai Financial Hub: Institutional Asset Management & Systematic Quant',
+              desc: 'Lujiazui commands the highest density of mutual funds, institutional brokerages, and algorithmic quant managers, blending Eastern Wood vitality with deep regulatory infrastructure.'
+            }
+          : {
+              tag: '上海金融微生态：陆家嘴全牌照资产管理与机构量化',
+              desc: '陆家嘴汇聚全国最高密度外资公募、券商总部与顶尖量化私募，兼具东方甲木生发与金融厚重印星场能，注重系统化投研框架与长线资管。'
+            };
+      }
+      if (ct.includes('singapore') || ct.includes('新加坡')) {
+        return isEn
+          ? {
+              tag: 'Singapore Wealth Management: Offshore Family Offices & Global Capital Nexus',
+              desc: 'Singapore finance is propelled by vibrant Equatorial Fire, commanding global family offices, hedge funds, and multi-currency trusts with premier fiduciary governance.'
+            }
+          : {
+              tag: '新加坡金融微生态：全球离岸信托与合规免税护城河',
+              desc: '新加坡金融坐落于纯阳离火之位，汇聚全球离岸私人银行、家族办公室与对冲基金，重在长线财富保全、全球配置与普通法程序合规。'
+            };
+      }
     }
 
     // Tech / AI
@@ -147,6 +169,76 @@ class ScenarioSimulatorEngine {
               desc: '以OpenAI、Anthropic等先锋为代表，聚集全球最密集的风险资本与前沿大模型算力，崇尚颠覆式创新。'
             };
       }
+      if (ct.includes('hangzhou') || ct.includes('杭州')) {
+        return isEn
+          ? {
+              tag: 'Hangzhou AI Hub: Cloud-Native Infrastructure & Platform Algorithms',
+              desc: 'Anchored by Alibaba and leading cloud platforms, the ecosystem excels in recommendation algorithms, enterprise cloud infrastructure, and rapid monetization.'
+            }
+          : {
+              tag: '杭州数字AI微生态：平台算法中台与云原生极速迭代',
+              desc: '依托阿里巴巴未来科技城与云计算基础设施，算法极度聚焦电商推荐、企业服务与生成式内容变现，商业转化效率极高。'
+            };
+      }
+      if (ct.includes('shanghai') || ct.includes('上海')) {
+        return isEn
+          ? {
+              tag: 'Shanghai Zhangjiang AI Hub: Semiconductor Integration & Hardcore AI for Science',
+              desc: 'Anchored by Zhangjiang High-Tech Park, algorithmic innovation deeply integrates with semiconductor fabrication, computational biology, and industrial AI.'
+            }
+          : {
+              tag: '上海张江AI微生态：集成电路微电子与硬核科学智能',
+              desc: '依托张江高科技园区，算法深度渗透高端晶圆半导体、生物医药计算与工业大模型，强调产学研一体化硬核工程壁垒。'
+            };
+      }
+      if (ct.includes('singapore') || ct.includes('新加坡')) {
+        return isEn
+          ? {
+              tag: 'Singapore AI Hub: Regional Tech Headquarters & ASEAN Gateway',
+              desc: 'Driven by the National AI Strategy 2.0, Singapore leverages low jurisdictional risk and premier bilingual commercial infrastructure as the launchpad for enterprise AI across Southeast Asia.'
+            }
+          : {
+              tag: '新加坡AI微生态：跨国科技区域总部与东盟出海跳板',
+              desc: '以国家AI战略2.0为引领，依托极低地缘风险与顶尖英文商业环境，成为前沿AI模型与企业级软件在东南亚商业落地的中枢。'
+            };
+      }
+    }
+
+    // Creative Media & Digital Content
+    if (ind === 'creative_media') {
+      if (ct.includes('hangzhou') || ct.includes('杭州')) {
+        return isEn
+          ? {
+              tag: 'Hangzhou Digital Media Hub: Livestreaming E-Commerce & Creator Networks',
+              desc: 'The global epicenter of livestreaming commerce and creator monetization, translating digital traffic into compounding commercial cashflow.'
+            }
+          : {
+              tag: '杭州文创电商微生态：全域内容直播与超级MCN矩阵',
+              desc: '全球第一电商直播策源地，文创内容、短视频算法与供应链高度闭环，崇尚偏财变现与敏捷流量捕获。'
+            };
+      }
+      if (ct.includes('guangzhou') || ct.includes('广州')) {
+        return isEn
+          ? {
+              tag: 'Guangzhou Gaming & Media: Vanguard Gaming & Global Publishing',
+              desc: 'Anchored by NetEase Games and Southern Media Group, the ecosystem leads in video game engineering, overseas publishing, and profitable cultural IP monetization.'
+            }
+          : {
+              tag: '广州传媒游戏微生态：老牌泛娱乐旗舰与海外游戏发行',
+              desc: '以网易互娱、南方报业为基座，在网络游戏研发、全球泛娱乐发行与动漫IP变现上具备极深积累，务实低调且现金流充沛。'
+            };
+      }
+      if (ct.includes('vancouver') || ct.includes('温哥华')) {
+        return isEn
+          ? {
+              tag: 'Vancouver VFX Hub: Hollywood North Digital Arts & Balanced Living',
+              desc: 'World-class cluster for cinematic visual effects and game development (Sony Imageworks, EA), offering supreme work-life balance and creative autonomy.'
+            }
+          : {
+              tag: '温哥华数码特效微生态：好莱坞北方视觉工业与宽和生活底色',
+              desc: '全球最密集影视特效与AAA游戏工作室聚集地（索尼图形图像/EA），兼具北美最高WLB（工作生活平衡）与太平洋西岸包容氛围。'
+            };
+      }
     }
 
     // Academia
@@ -182,6 +274,17 @@ class ScenarioSimulatorEngine {
           : {
               tag: '北京高校学术微生态：国家战略级实验室与顶层智库威权',
               desc: '清北领衔的高校集群承载国家核心攻关战略，聚集全国最充沛的科研基金与学者威权，正官正印声望极大。'
+            };
+      }
+      if (ct.includes('singapore') || ct.includes('新加坡')) {
+        return isEn
+          ? {
+              tag: 'Singapore Academic Hub: NUS-NTU Frontier Scholarly Primary',
+              desc: 'NUS and NTU represent global top-15 collegiate excellence with massive endowment capital, world-leading citations, and state-of-the-art laboratory infrastructure.'
+            }
+          : {
+              tag: '新加坡高校科研微生态：新国立南洋理工世界级学统',
+              desc: '新加坡国立大学与南洋理工大学高居全球前15强，科研经费极其充沛，高被引学者云集，具备极高国际学术声望。'
             };
       }
     }
@@ -317,6 +420,61 @@ class ScenarioSimulatorEngine {
     }
 
     return { elem: 'Earth', nameZh: '中和戊己土', nameEn: 'Balanced Earth' };
+  }
+
+  static formatCityName(city, isEn = false) {
+    if (!city) return isEn ? 'Target City' : '目标城市';
+    const cLow = city.toLowerCase();
+    const map = {
+      birmingham: { zh: '伯明翰', en: 'Birmingham' },
+      london: { zh: '伦敦', en: 'London' },
+      shenzhen: { zh: '深圳', en: 'Shenzhen' },
+      beijing: { zh: '北京', en: 'Beijing' },
+      shanghai: { zh: '上海', en: 'Shanghai' },
+      hangzhou: { zh: '杭州', en: 'Hangzhou' },
+      guangzhou: { zh: '广州', en: 'Guangzhou' },
+      san_francisco: { zh: '旧金山', en: 'San Francisco' },
+      sf: { zh: '旧金山', en: 'San Francisco' },
+      silicon: { zh: '硅谷', en: 'Silicon Valley' },
+      new_york: { zh: '纽约', en: 'New York' },
+      ny: { zh: '纽约', en: 'New York' },
+      toronto: { zh: '多伦多', en: 'Toronto' },
+      vancouver: { zh: '温哥华', en: 'Vancouver' },
+      singapore: { zh: '新加坡', en: 'Singapore' }
+    };
+    for (const k in map) {
+      if (cLow.includes(k) || (k === 'san_francisco' && (cLow.includes('旧金山') || cLow.includes('sf'))) ||
+          (k === 'shenzhen' && cLow.includes('深圳')) ||
+          (k === 'beijing' && cLow.includes('北京')) ||
+          (k === 'shanghai' && cLow.includes('上海')) ||
+          (k === 'hangzhou' && cLow.includes('杭州')) ||
+          (k === 'guangzhou' && cLow.includes('广州')) ||
+          (k === 'london' && cLow.includes('伦敦')) ||
+          (k === 'birmingham' && cLow.includes('伯明翰')) ||
+          (k === 'new_york' && cLow.includes('纽约')) ||
+          (k === 'toronto' && cLow.includes('多伦多')) ||
+          (k === 'vancouver' && cLow.includes('温哥华')) ||
+          (k === 'singapore' && cLow.includes('新加坡')) ||
+          (k === 'silicon' && cLow.includes('硅谷'))) {
+        return isEn ? map[k].en : map[k].zh;
+      }
+    }
+    if (isEn && /[\u4e00-\u9fa5]/.test(city)) {
+      return 'Target City';
+    }
+    return city;
+  }
+
+  static formatCountryName(country, isEn = false) {
+    if (!country) return isEn ? 'Target Country' : '目标国度';
+    const cLow = country.toLowerCase();
+    if (cLow.includes('uk') || cLow.includes('britain') || cLow.includes('英国')) return isEn ? 'United Kingdom' : '英国';
+    if (cLow.includes('china') || cLow.includes('中国')) return isEn ? 'China' : '中国';
+    if (cLow.includes('usa') || cLow.includes('america') || cLow.includes('美国')) return isEn ? 'United States' : '美国';
+    if (cLow.includes('canada') || cLow.includes('加拿大')) return isEn ? 'Canada' : '加拿大';
+    if (cLow.includes('singapore') || cLow.includes('新加坡')) return isEn ? 'Singapore' : '新加坡';
+    if (isEn && /[\u4e00-\u9fa5]/.test(country)) return 'Target Country';
+    return country;
   }
 
   /**
@@ -475,6 +633,66 @@ class ScenarioSimulatorEngine {
           'manufacturing': { overlap: 80, tierZh: '智能汽车与精密工程 (80% 重合)', tierEn: 'Advanced Automotive Engineering (80% Overlap)', reasonZh: '安大略省汽车制造走廊之核心支撑。', reasonEn: 'Key node in the Ontario-Michigan automotive and advanced parts supply corridor.' },
           'creative_media': { overlap: 85, tierZh: '北美重要影视多媒体中心 (85% 重合)', tierEn: 'TIFF & Major Film Production Hub (85% Overlap)', reasonZh: '多伦多国际电影节与北美第三大影视制作基地。', reasonEn: 'Third largest screen-based production industry in North America.' }
         }
+      },
+      singapore: {
+        clustersZh: '全球离岸财富管理、金融科技对冲、新一代AI亚太总部、普通法仲裁合规、先进半导体封装',
+        clustersEn: 'Offshore Wealth Management, Quant Fintech, Enterprise AI & APAC Headquarters, Fiduciary Legal, Advanced Semiconductors',
+        pillars: {
+          'finance_quant': { overlap: 98, tierZh: '全球顶尖离岸资本与对冲中枢 (98% 重合)', tierEn: 'Global Offshore Capital & Wealth Hub (98% Overlap)', reasonZh: '全球第三大金融中心与亚洲对冲基金之都，跨国资产信托与合规免税架构完备。', reasonEn: 'Premier global wealth management and hedge fund nexus commanding APAC cross-border capital.' },
+          'tech_ai': { overlap: 95, tierZh: '亚太科技战略出海总部 (95% 重合)', tierEn: 'APAC Tech & AI Headquarters (95% Overlap)', reasonZh: '国家AI战略2.0推进地，跨国科技巨头亚太总部首选，算法商业变现效率极高。', reasonEn: 'National AI Strategy 2.0 powerhouse and preferred APAC headquarters for frontier tech leaders.' },
+          'civil_admin': { overlap: 94, tierZh: '全球廉洁治理与仲裁标杆 (94% 重合)', tierEn: 'Global Clean Governance & Legal Citadel (94% Overlap)', reasonZh: '英美普通法程序正义、严密法治与世界一流高效公职治理。', reasonEn: 'Common Law fiduciary integrity and top-ranked public administration efficiency.' },
+          'academia_research': { overlap: 93, tierZh: '新国立南洋世界顶尖学统 (93% 重合)', tierEn: 'NUS-NTU Global Academic Pinnacle (93% Overlap)', reasonZh: 'NUS/NTU全球前十五强顶尖学府，战略科研基金极度丰沛。', reasonEn: 'World top-15 university cluster commanding massive research endowments.' },
+          'manufacturing': { overlap: 88, tierZh: '先进晶圆封装与精密半导体 (88% 重合)', tierEn: 'Advanced Packaging & Semiconductor Fab (88% Overlap)', reasonZh: '全球半导体晶圆制造与高端生物医药研发重镇。', reasonEn: 'Vital node in global semiconductor fabrication and high-value biomedical manufacturing.' },
+          'creative_media': { overlap: 86, tierZh: '东南亚泛娱乐与数字内容中枢 (86% 重合)', tierEn: 'Southeast Asian Digital Media Hub (86% Overlap)', reasonZh: '泛亚太内容创作者与数字多媒体版权流转枢纽。', reasonEn: 'Central hub for pan-Asian creative publishing and digital media IP distribution.' }
+        }
+      },
+      shanghai: {
+        clustersZh: '国际金融中心与多层次资本市场、集成电路微电子、人工智能高地、跨国企业总部与高端生物医药',
+        clustersEn: 'International Financial Center, Integrated Circuits, Artificial Intelligence & Biopharma',
+        pillars: {
+          'finance_quant': { overlap: 98, tierZh: '国家第一综合金融中心 (98% 重合)', tierEn: 'Premier National Financial Center (98% Overlap)', reasonZh: '陆家嘴集聚外资公募、券商总部与顶尖量化私募，金融基础设施完备。', reasonEn: 'Epicenter of banking, foreign capital, and quantitative investment funds.' },
+          'tech_ai': { overlap: 95, tierZh: '张江国家级AI与微电子高地 (95% 重合)', tierEn: 'Zhangjiang AI & Semiconductor Apex (95% Overlap)', reasonZh: '世界人工智能大会常驻地，算力网络与大模型工业应用深度融合。', reasonEn: 'National leading cluster for semiconductor architecture and enterprise AI integration.' },
+          'manufacturing': { overlap: 94, tierZh: '高端微电子装备与智能制造 (94% 重合)', tierEn: 'Semiconductor Fabrication & EV (94% Overlap)', reasonZh: '集成电路制造、特斯拉超级工厂与大飞机总装基地。', reasonEn: 'World-class semiconductor manufacturing and advanced automotive supply chains.' },
+          'academia_research': { overlap: 94, tierZh: '复旦交大顶尖教研网络 (94% 重合)', tierEn: 'Fudan-SJTU Elite Research Nexus (94% Overlap)', reasonZh: '全国最密集C9高校之一，基础医学与高能物理研究底蕴深厚。', reasonEn: 'Top-tier collegiate research corridor excelling in physics, medicine, and applied engineering.' },
+          'civil_admin': { overlap: 92, tierZh: '超大城市现代化治理与合规 (92% 重合)', tierEn: 'Modern Megacity Governance (92% Overlap)', reasonZh: '跨国公司地区总部法务与高水准涉外商事规制。', reasonEn: 'High-standard multinational corporate legal affairs and international commercial compliance.' },
+          'creative_media': { overlap: 90, tierZh: '国际文化大都市与广告传媒 (90% 重合)', tierEn: 'International Media & Cultural Metropolis (90% Overlap)', reasonZh: '跨国4A广告、时尚媒体与国际艺术策展中心。', reasonEn: 'National vanguard of commercial advertising, fashion media, and cultural arts.' }
+        }
+      },
+      hangzhou: {
+        clustersZh: '平台经济与电子商务出海、云计算与大数据算力、文创数字艺术、智能物联网',
+        clustersEn: 'Platform E-Commerce, Cloud Computing, Digital Creative Arts & Smart IoT',
+        pillars: {
+          'creative_media': { overlap: 97, tierZh: '全球电商直播与数字创意策源地 (97% 重合)', tierEn: 'Global E-Commerce & Media Epicenter (97% Overlap)', reasonZh: '中国第一直播电商之都，MCN与跨平台数字内容变现生态极密。', reasonEn: 'Undisputed capital of livestreaming e-commerce, digital video creators, and cultural IP monetization.' },
+          'tech_ai': { overlap: 96, tierZh: '全国数字经济与算力第一城 (96% 重合)', tierEn: 'National Digital Economy Leader (96% Overlap)', reasonZh: '阿里巴巴与海康大华所在地，云计算、算法中台与AI产业闭环极强。', reasonEn: 'Alibaba cloud headquarters, providing top infrastructure for platform algorithms and AI services.' },
+          'academia_research': { overlap: 92, tierZh: '浙江大学与西湖大学先锋 (92% 重合)', tierEn: 'ZJU & Westlake Pioneer Research (92% Overlap)', reasonZh: '浙大与西湖大学，基础生命科学与前沿物理交叉优势极大。', reasonEn: 'Zhejiang University and Westlake University driving cutting-edge biological and physical sciences.' },
+          'finance_quant': { overlap: 88, tierZh: '科技金融与新锐量化聚集区 (88% 重合)', tierEn: 'Fintech & Algorithmic Trading (88% Overlap)', reasonZh: '蚂蚁集团所在地，侧重支付金融、数字资产流转与量化技术。', reasonEn: 'Anchored by Ant Group, excelling in digital payments and algorithmic fintech.' },
+          'manufacturing': { overlap: 84, tierZh: '高端智能装备与安防硬件 (84% 重合)', tierEn: 'Smart Electronics & Vision Hardware (84% Overlap)', reasonZh: '机器视觉、安防硬件与精密传感器集聚。', reasonEn: 'Specializes in computer vision hardware and automated industrial electronics.' },
+          'civil_admin': { overlap: 82, tierZh: '数字政府与现代化公共管理 (82% 重合)', tierEn: 'Digital Governance & Public Sector (82% Overlap)', reasonZh: '数字政务与公权运行规范透明，办事效率极高。', reasonEn: 'National benchmark for paperless digital government and responsive civic governance.' }
+        }
+      },
+      guangzhou: {
+        clustersZh: '跨境贸易与供应链商贸、广交会全球出海展会、智能新能源汽车、新型显示与文创传媒',
+        clustersEn: 'Cross-Border Supply Chain, Canton Fair Global Trade, Automotive & Digital Media',
+        pillars: {
+          'creative_media': { overlap: 94, tierZh: '华南传媒旗舰与泛娱乐出海 (94% 重合)', tierEn: 'South China Media Flagship (94% Overlap)', reasonZh: '网易互娱与南方报业基石，网络游戏研发与全球泛娱乐发行极强。', reasonEn: 'Headquarters of NetEase Games and Southern Media Group, leading in gaming and publishing.' },
+          'manufacturing': { overlap: 92, tierZh: '千亿级汽车与高端装备制造 (92% 重合)', tierEn: 'Automotive & Heavy Equipment (92% Overlap)', reasonZh: '全国汽车制造产量第一，智能新能源产业链极盛。', reasonEn: 'Leading automotive manufacturing base producing electric and autonomous vehicle systems.' },
+          'academia_research': { overlap: 91, tierZh: '中山大学华南学术中心 (91% 重合)', tierEn: 'Sun Yat-sen University Scholarly Core (91% Overlap)', reasonZh: '中山大学与华南理工领衔，临床医学与工科研发名列前茅。', reasonEn: 'Sun Yat-sen University excellence in clinical medicine and engineering sciences.' },
+          'tech_ai': { overlap: 88, tierZh: '产业互联网与工业智能 (88% 重合)', tierEn: 'Industrial Internet & Enterprise Tech (88% Overlap)', reasonZh: '侧重传统制造业数智化转型与智慧城市应用。', reasonEn: 'Focuses on enterprise cloud migration and smart manufacturing automation.' },
+          'civil_admin': { overlap: 86, tierZh: '华南大区综合行政与枢纽保障 (86% 重合)', tierEn: 'South China Regional Administration (86% Overlap)', reasonZh: '广东省级机关与大湾区协调枢纽，综合保障健全。', reasonEn: 'Regional government powerhouse managing Guangdong-Hong Kong-Macao coordination.' },
+          'finance_quant': { overlap: 85, tierZh: '商贸金融与绿色资产交易 (85% 重合)', tierEn: 'Commercial & Trade Finance (85% Overlap)', reasonZh: '广期所特色期货与大宗商品贸易金融，服务实体供应链。', reasonEn: 'Anchored by Guangzhou Futures Exchange and physical supply chain financial liquidity.' }
+        }
+      },
+      vancouver: {
+        clustersZh: '数字视觉特效与游戏产业、清洁技术能源、跨国亚太贸易枢纽、UBC生命科学与计算机',
+        clustersEn: 'VFX & Gaming, Clean Tech Energy, Trans-Pacific Trade, UBC Life Sciences & AI',
+        pillars: {
+          'creative_media': { overlap: 96, tierZh: '好莱坞北方数码特效之都 (96% 重合)', tierEn: 'Hollywood North VFX & Gaming Capital (96% Overlap)', reasonZh: '全球顶尖影视特效公司与EA游戏研发大本营，产业集聚度极高。', reasonEn: 'World-leading cluster for cinematic visual effects (Sony Imageworks, ILM) and gaming.' },
+          'academia_research': { overlap: 92, tierZh: 'UBC世界顶尖研究型学府 (92% 重合)', tierEn: 'UBC Global Research Institution (92% Overlap)', reasonZh: 'UBC在生命医学、林业环境与量子计算享誉全球，治学氛围宽和。', reasonEn: 'University of British Columbia leadership in environmental sciences, medicine, and computing.' },
+          'tech_ai': { overlap: 90, tierZh: '加拿大西海岸高科技走廊 (90% 重合)', tierEn: 'Cascadia Innovation Tech Corridor (90% Overlap)', reasonZh: '亚马逊、微软等西雅图科技巨头研发分中心，移民包容度高。', reasonEn: 'Direct pipeline to Seattle tech ecosystem with massive corporate development hubs.' },
+          'civil_admin': { overlap: 88, tierZh: '高福利低压力公共管理体系 (88% 重合)', tierEn: 'High-Welfare Progressive Governance (88% Overlap)', reasonZh: '省市政府福利与法治环境优厚，工作生活平衡度极佳。', reasonEn: 'Top global work-life balance backed by stable progressive public sector governance.' },
+          'finance_quant': { overlap: 82, tierZh: '亚太财富管理与创业板资本 (82% 重合)', tierEn: 'Pacific Rim Wealth & Mining Finance (82% Overlap)', reasonZh: '多交所创业板矿业资本与亚太高净值家族信托。', reasonEn: 'Natural resource venture capital (TSX Venture) and Asian family office management.' },
+          'manufacturing': { overlap: 72, tierZh: '绿色清洁能源与海洋工程 (72% 重合)', tierEn: 'Clean Energy & Marine Tech (72% Overlap)', reasonZh: '氢能燃料电池与清洁造船海事技术研发。', reasonEn: 'Focuses on hydrogen fuel cells and clean maritime technology development.' }
+        }
       }
     };
 
@@ -487,7 +705,12 @@ class ScenarioSimulatorEngine {
           (k === 'london' && ct.includes('伦敦')) ||
           (k === 'birmingham' && ct.includes('伯明翰')) ||
           (k === 'new_york' && (ct.includes('ny') || ct.includes('纽约'))) ||
-          (k === 'toronto' && ct.includes('多伦多'))) {
+          (k === 'toronto' && ct.includes('多伦多')) ||
+          (k === 'singapore' && (ct.includes('singapore') || ct.includes('新加坡'))) ||
+          (k === 'shanghai' && (ct.includes('shanghai') || ct.includes('上海'))) ||
+          (k === 'hangzhou' && (ct.includes('hangzhou') || ct.includes('杭州'))) ||
+          (k === 'guangzhou' && (ct.includes('guangzhou') || ct.includes('广州'))) ||
+          (k === 'vancouver' && (ct.includes('vancouver') || ct.includes('温哥华')))) {
         matchedCityKey = k;
         break;
       }
@@ -530,26 +753,68 @@ class ScenarioSimulatorEngine {
     if (bazi && Array.isArray(bazi.top3Patterns) && bazi.top3Patterns.length >= 3) {
       return bazi.top3Patterns;
     }
+
+    const translatePatternEn = (zhName) => {
+      if (!zhName) return 'Dominant Pattern';
+      let en = null;
+      if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.getPatternEn === 'function') {
+        en = PortraitEngine.getPatternEn(zhName);
+      }
+      if (!en || en === 'Primary Dominant Pattern' || /[\u4e00-\u9fa5]/.test(en)) {
+        if (typeof I18N !== 'undefined' && typeof I18N.getPatternName === 'function') {
+          en = I18N.getPatternName(zhName, 'en');
+        }
+      }
+      if (!en || /[\u4e00-\u9fa5]/.test(en)) {
+        if (/七杀|偏官/.test(zhName)) en = 'Seven Killings Pattern (Vanguard Commander)';
+        else if (/食神/.test(zhName)) en = 'Eating God Pattern (Deep Craft & Creative Output)';
+        else if (/伤官/.test(zhName)) en = 'Hurting Officer Pattern (Dynamic Innovation)';
+        else if (/偏财/.test(zhName)) en = 'Indirect Wealth Pattern (Commercial Dealmaker)';
+        else if (/正财/.test(zhName)) en = 'Direct Wealth Pattern (Steady Asset Accumulation)';
+        else if (/正印|印绶/.test(zhName)) en = 'Direct Resource Pattern (Scholarly Prestige)';
+        else if (/偏印|枭/.test(zhName)) en = 'Indirect Resource Pattern (Insight & Strategy)';
+        else if (/羊刃|阳刃/.test(zhName)) en = 'Yang Blade Pattern (Sovereign General)';
+        else if (/比肩|建禄/.test(zhName)) en = 'Established Prosperity Pattern (Peer Mastery)';
+        else en = 'Direct Officer Pattern (Institutional Governance)';
+      }
+      return en;
+    };
+
     if (bazi && Array.isArray(bazi.patterns) && bazi.patterns.length > 0) {
       const sorted = [...bazi.patterns].sort((a, b) => (b.weightPct || 0) - (a.weightPct || 0));
-      return sorted.slice(0, 3).map((p, idx) => ({
-        rank: idx + 1,
-        nameZh: p.name || p.nameZh || '正官格',
-        nameEn: p.nameEn || (typeof PortraitEngine !== 'undefined' && PortraitEngine.getPatternEn ? PortraitEngine.getPatternEn(p.name) : 'Direct Officer Pattern'),
-        weightPct: p.weightPct || (idx === 0 ? 38 : (idx === 1 ? 28 : 18))
-      }));
+      return sorted.slice(0, 3).map((p, idx) => {
+        const zh = p.name || p.nameZh || '正官格';
+        return {
+          rank: idx + 1,
+          nameZh: zh,
+          nameEn: p.nameEn || translatePatternEn(zh),
+          weightPct: p.weightPct || (idx === 0 ? 38 : (idx === 1 ? 28 : 18))
+        };
+      });
     }
+
     if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.diagnosePatterns === 'function' && bazi) {
       try {
-        const pats = PortraitEngine.diagnosePatterns(bazi, bazi.vigor);
+        const vigor = bazi.vigor || (typeof PortraitEngine.evaluateVigor === 'function' ? PortraitEngine.evaluateVigor(bazi) : { status: bazi.isStrong ? '身旺' : '身弱', score: bazi.vigorScore || 50 });
+        const pats = PortraitEngine.diagnosePatterns(bazi, vigor);
         if (Array.isArray(pats) && pats.length > 0) {
           const sorted = [...pats].sort((a, b) => (b.weightPct || 0) - (a.weightPct || 0));
-          return sorted.slice(0, 3).map((p, idx) => ({
-            rank: idx + 1,
-            nameZh: p.name || p.nameZh || '正官格',
-            nameEn: p.nameEn || (typeof PortraitEngine.getPatternEn === 'function' ? PortraitEngine.getPatternEn(p.name) : 'Direct Officer Pattern'),
-            weightPct: p.weightPct || (idx === 0 ? 38 : (idx === 1 ? 28 : 18))
-          }));
+          return sorted.slice(0, 3).map((p, idx) => {
+            const zh = p.name || p.nameZh || '正官格';
+            let en = p.nameEn;
+            if (!en || /[\u4e00-\u9fa5]/.test(en)) {
+              en = translatePatternEn(zh);
+            }
+            if (/[\u4e00-\u9fa5]/.test(en)) {
+              en = en.replace(/[\u4e00-\u9fa5（）·]/g, '').trim() || 'Dominant Pattern';
+            }
+            return {
+              rank: idx + 1,
+              nameZh: zh,
+              nameEn: en,
+              weightPct: p.weightPct || (idx === 0 ? 38 : (idx === 1 ? 28 : 18))
+            };
+          });
         }
       } catch (e) {}
     }
@@ -630,10 +895,15 @@ class ScenarioSimulatorEngine {
       const statusZh = score >= 85 ? '极高激活 · 顺风破局' : score >= 70 ? '稳健承载 · 平稳运转' : '受制约束 · 潜能压制';
       const statusEn = score >= 85 ? 'Highly Activated · Momentum Surge' : score >= 70 ? 'Stable Support · Steady Execution' : 'Constrained · Latent Potential Suppressed';
 
+      let enName = pat.nameEn || translatePatternEn(pName);
+      if (/[\u4e00-\u9fa5]/.test(enName)) {
+        enName = enName.replace(/[\u4e00-\u9fa5（）·]/g, '').trim() || 'Dominant Pattern';
+      }
+
       const detailItem = {
         rank: pat.rank || (idx + 1),
-        name: isEn ? pat.nameEn : (pat.nameZh || pat.name),
-        nameEn: pat.nameEn,
+        name: isEn ? enName : (pat.nameZh || pat.name),
+        nameEn: enName,
         weightPct: pat.weightPct,
         score,
         status: isEn ? statusEn : statusZh,
@@ -797,8 +1067,11 @@ class ScenarioSimulatorEngine {
 
     // Micro-ecosystem note injection
     if (microEcosystem) {
-      notesZh.push(`【${microEcosystem.tag}】：${microEcosystem.desc}`);
-      notesEn.push(`[${microEcosystem.tag}]: ${microEcosystem.desc}`);
+      if (isEn) {
+        notesEn.push(`[${microEcosystem.tag}]: ${microEcosystem.desc}`);
+      } else {
+        notesZh.push(`【${microEcosystem.tag}】：${microEcosystem.desc}`);
+      }
     }
 
     // Institution details injection
@@ -817,18 +1090,21 @@ class ScenarioSimulatorEngine {
       notesEn.push(`[Fortune Global 500 Culture & Positions]: ${matchedEnt.nameEn} (${matchedEnt.fortune500RankEn}). Corporate Ten Gods Culture: ${matchedEnt.corporateCultureEn}. Representative Positions: ${rolesEn}.`);
     }
 
+    const displayCityName = this.formatCityName(opt.city, isEn);
+    const displayCountryName = this.formatCountryName(opt.country, isEn);
+
     let optionTitle = opt.title;
     if (!optionTitle || (isEn && /[\u4e00-\u9fa5]/.test(optionTitle))) {
-      optionTitle = isEn ? `${cityMeta.nameEn} · ${indMeta.nameEn}` : `${cityMeta.nameZh} · ${indMeta.nameZh}`;
+      optionTitle = isEn ? `${displayCityName} · ${indMeta.nameEn}` : `${displayCityName} · ${indMeta.nameZh}`;
     }
 
     const resOption = {
       title: optionTitle,
       country: opt.country,
-      countryName: isEn ? countryMeta.nameEn : countryMeta.nameZh,
+      countryName: displayCountryName,
       countryElement: isEn ? countryMeta.nameEn : countryMeta.nameZh,
       city: opt.city,
-      cityName: isEn ? cityMeta.nameEn : cityMeta.nameZh,
+      cityName: displayCityName,
       cityElement: isEn ? cityMeta.nameEn : cityMeta.nameZh,
       industry: opt.industry,
       industryName: isEn ? indMeta.nameEn : indMeta.nameZh,
@@ -899,23 +1175,37 @@ class ScenarioSimulatorEngine {
     const p1NameZh = top3Patterns[0]?.nameZh || '主导命格';
     const p1NameEn = top3Patterns[0]?.nameEn || 'Dominant Pattern';
 
+    const isSameCity = (resA.cityName === resB.cityName);
+
     if (winner === 'A') {
-      verdictTitleZh = `综合研判：前往【${resA.cityName}】显著优于【${resB.cityName}】（胜出 ${delta} 分）`;
-      verdictTitleEn = `Strategic Verdict: Relocating to [${resA.cityName}] Decisively Outperforms [${resB.cityName}] (+${delta} pts)`;
+      verdictTitleZh = isSameCity
+        ? `综合研判：在【${resA.cityName}】选择【${resA.title}】显著优于【${resB.title}】（胜出 ${delta} 分）`
+        : `综合研判：前往【${resA.cityName}】显著优于【${resB.cityName}】（胜出 ${delta} 分）`;
+      verdictTitleEn = isSameCity
+        ? `Strategic Verdict: In [${resA.cityName}], [${resA.title}] Decisively Outperforms [${resB.title}] (+${delta} pts)`
+        : `Strategic Verdict: Relocating to [${resA.cityName}] Decisively Outperforms [${resB.cityName}] (+${delta} pts)`;
 
       summaryZh = `【双城终局裁决】：综合考察“国家+城市五行能量、行业与城市产业规划重叠度、目标岗位与直属上司生态、以及本命三大格局（${p1NameZh}）深度承载”，方案 A【${resA.title}】（综合得分：${resA.score} 分）明显优于方案 B【${resB.title}】（${resB.score} 分）。${resA.cityName}在产业战略规划重叠度（${resA.industryCityOverlapScore}% vs ${resB.industryCityOverlapScore}%）与三大主导格局契合度（${resA.patternAlignmentScore}分 vs ${resB.patternAlignmentScore}分）上具备压倒性优势，地缘五行更能形成正向生扶，建议坚定以此城为主阵地。`;
 
       summaryEn = `[Dual-City Comparative Verdict]: Auditing across Country + City Five-Element Energy, Strategic Industry Cluster Overlap, Job Role & Supervisor Synergy, and Natal Top 3 Dominant Patterns (${p1NameEn}), Option A [${resA.title}] (Score: ${resA.score}) clearly triumphs over Option B [${resB.title}] (Score: ${resB.score}) by +${delta} points. ${resA.cityName} delivers superior industrial planning alignment (${resA.industryCityOverlapScore}% vs ${resB.industryCityOverlapScore}%) and pattern resonance (${resA.patternAlignmentScore} vs ${resB.patternAlignmentScore}), providing the most auspicious growth momentum.`;
     } else if (winner === 'B') {
-      verdictTitleZh = `综合研判：前往【${resB.cityName}】显著优于【${resA.cityName}】（胜出 ${delta} 分）`;
-      verdictTitleEn = `Strategic Verdict: Relocating to [${resB.cityName}] Decisively Outperforms [${resA.cityName}] (+${delta} pts)`;
+      verdictTitleZh = isSameCity
+        ? `综合研判：在【${resB.cityName}】选择【${resB.title}】显著优于【${resA.title}】（胜出 ${delta} 分）`
+        : `综合研判：前往【${resB.cityName}】显著优于【${resA.cityName}】（胜出 ${delta} 分）`;
+      verdictTitleEn = isSameCity
+        ? `Strategic Verdict: In [${resB.cityName}], [${resB.title}] Decisively Outperforms [${resA.title}] (+${delta} pts)`
+        : `Strategic Verdict: Relocating to [${resB.cityName}] Decisively Outperforms [${resA.cityName}] (+${delta} pts)`;
 
       summaryZh = `【双城终局裁决】：综合考察“国家+城市五行能量、行业与城市产业规划重叠度、目标岗位与直属上司生态、以及本命三大格局（${p1NameZh}）深度承载”，方案 B【${resB.title}】（综合得分：${resB.score} 分）明显优于方案 A【${resA.title}】（${resA.score} 分）。${resB.cityName}在产业战略规划重叠度（${resB.industryCityOverlapScore}% vs ${resA.industryCityOverlapScore}%）与三大主导格局契合度（${resB.patternAlignmentScore}分 vs ${resB.patternAlignmentScore}分）上展现出更强乘数效应，能够以更小内耗兑现最大长远胜率。`;
 
       summaryEn = `[Dual-City Comparative Verdict]: Auditing across Country + City Five-Element Energy, Strategic Industry Cluster Overlap, Job Role & Supervisor Synergy, and Natal Top 3 Dominant Patterns (${p1NameEn}), Option B [${resB.title}] (Score: ${resB.score}) decisively surpasses Option A [${resA.title}] (Score: ${resA.score}) by +${delta} points. ${resB.cityName} offers superior strategic industry planning overlap (${resB.industryCityOverlapScore}% vs ${resA.industryCityOverlapScore}%) and pattern empowerment (${resB.patternAlignmentScore} vs ${resA.patternAlignmentScore}), minimizing cognitive friction while maximizing career upside.`;
     } else {
-      verdictTitleZh = `综合研判：【${resA.cityName}】与【${resB.cityName}】势均力敌（均为 ${resA.score} 分）`;
-      verdictTitleEn = `Strategic Verdict: Balanced Parity Between [${resA.cityName}] and [${resB.cityName}] (Both ${resA.score} pts)`;
+      verdictTitleZh = isSameCity
+        ? `综合研判：在【${resA.cityName}】两项方案势均力敌（均为 ${resA.score} 分）`
+        : `综合研判：【${resA.cityName}】与【${resB.cityName}】势均力敌（均为 ${resA.score} 分）`;
+      verdictTitleEn = isSameCity
+        ? `Strategic Verdict: Balanced Parity in [${resA.cityName}] (Both ${resA.score} pts)`
+        : `Strategic Verdict: Balanced Parity Between [${resA.cityName}] and [${resB.cityName}] (Both ${resA.score} pts)`;
 
       summaryZh = `【双城终局裁决】：两座城市在五行地缘共振与主导格局（${p1NameZh}）承载上旗鼓相当（均为 ${resA.score} 分）。若当前更注重产业规划红利与高爆发潜力，建议优先选择【${resA.industryCityOverlapScore >= resB.industryCityOverlapScore ? resA.cityName : resB.cityName}】；若当前重在防内耗与学术稳健深耕，建议选择另一方作为对冲底盘。`;
 
@@ -961,8 +1251,8 @@ class ScenarioSimulatorEngine {
         scoreB: resB.roleSupervisorSynergyScore,
         winner: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? 'A' : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? 'B' : 'tie'),
         delta: Math.abs(resA.roleSupervisorSynergyScore - resB.roleSupervisorSynergyScore),
-        verdictZh: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? `方案A 权能协同更顺` : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? `方案B 权能协同更顺` : '协同均衡'),
-        verdictEn: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? `Option A Superior Synergy` : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? `Option B Superior Synergy` : 'Equal Synergy')
+        verdictZh: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? `方案A 权能协同更顺 (+${resA.roleSupervisorSynergyScore - resB.roleSupervisorSynergyScore}分)` : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? `方案B 权能协同更顺 (+${resB.roleSupervisorSynergyScore - resA.roleSupervisorSynergyScore}分)` : '协同均衡'),
+        verdictEn: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? `Option A Superior Synergy (+${resA.roleSupervisorSynergyScore - resB.roleSupervisorSynergyScore} pts)` : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? `Option B Superior Synergy (+${resB.roleSupervisorSynergyScore - resA.roleSupervisorSynergyScore} pts)` : 'Equal Synergy')
       },
       {
         dimensionZh: '心智能耗与抗内耗比',
@@ -977,6 +1267,8 @@ class ScenarioSimulatorEngine {
     ];
 
     const cleanLeaderboard = rawLeaderboard.map(row => {
+      const isPercent = row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') || row.dimensionZh.includes('耗') || row.dimensionEn.includes('Friction');
+      const unit = isPercent ? '%' : (isEn ? ' pts' : '分');
       const item = {
         dimension: isEn ? row.dimensionEn : row.dimensionZh,
         dimensionEn: row.dimensionEn,
@@ -984,6 +1276,7 @@ class ScenarioSimulatorEngine {
         scoreB: row.scoreB,
         winner: row.winner,
         delta: row.delta,
+        unit: unit,
         verdict: isEn ? row.verdictEn : row.verdictZh,
         verdictEn: row.verdictEn
       };
@@ -995,10 +1288,14 @@ class ScenarioSimulatorEngine {
     });
 
     const cleanTop3 = top3Patterns.map(p => {
+      let nEn = p.nameEn || 'Dominant Pattern';
+      if (/[\u4e00-\u9fa5]/.test(nEn)) {
+        nEn = nEn.replace(/[\u4e00-\u9fa5（）·]/g, '').trim() || 'Dominant Pattern';
+      }
       const item = {
         rank: p.rank,
-        name: isEn ? p.nameEn : (p.nameZh || p.name),
-        nameEn: p.nameEn,
+        name: isEn ? nEn : (p.nameZh || p.name),
+        nameEn: nEn,
         weight: p.weightPct || p.weight || 30
       };
       if (!isEn) {

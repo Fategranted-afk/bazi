@@ -6931,11 +6931,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Compute or retrieve 100-year cycle dataset
-    const points = (res && res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory))
-      ? (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory)
-      : ((typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
-        ? IChingEngine.calculateLifelongCycle(res)
-        : []);
+    const points = (res && (res.hexTrajectory || res.hundredYearsTrajectory || (res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory))))
+      ? (res.hexTrajectory || res.hundredYearsTrajectory || (res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory)))
+      : ((typeof currentLuckResult !== 'undefined' && currentLuckResult && (currentLuckResult.hexTrajectory || currentLuckResult.hundredYearsTrajectory))
+        ? (currentLuckResult.hexTrajectory || currentLuckResult.hundredYearsTrajectory)
+        : ((typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
+          ? IChingEngine.calculateLifelongCycle(res)
+          : []));
 
     cachedIChingCycleData = points;
 
@@ -13285,12 +13287,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <tbody class="divide-y divide-gray-800/60 font-mono text-[11.5px]">
               ${(simRes.leaderboard || []).map(row => `
                 <tr class="hover:bg-white/5 transition">
-                  <td class="py-2.5 px-3 font-sans text-gray-300 font-medium">${isEn ? row.dimensionEn : row.dimensionZh}</td>
-                  <td class="py-2.5 px-3 ${row.winner === 'A' ? 'text-indigo-300 font-bold' : 'text-gray-400'}">${row.scoreA}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
-                  <td class="py-2.5 px-3 ${row.winner === 'B' ? 'text-purple-300 font-bold' : 'text-gray-400'}">${row.scoreB}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
+                  <td class="py-2.5 px-3 font-sans text-gray-300 font-medium">${isEn ? (row.dimensionEn || row.dimension) : (row.dimensionZh || row.dimension)}</td>
+                  <td class="py-2.5 px-3 ${row.winner === 'A' ? 'text-indigo-300 font-bold' : 'text-gray-400'}">${row.scoreA}${row.unit || ((row.dimensionEn && row.dimensionEn.includes('Overlap')) || (row.dimensionZh && row.dimensionZh.includes('重叠')) ? '%' : (isEn ? ' pts' : '分'))}</td>
+                  <td class="py-2.5 px-3 ${row.winner === 'B' ? 'text-purple-300 font-bold' : 'text-gray-400'}">${row.scoreB}${row.unit || ((row.dimensionEn && row.dimensionEn.includes('Overlap')) || (row.dimensionZh && row.dimensionZh.includes('重叠')) ? '%' : (isEn ? ' pts' : '分'))}</td>
                   <td class="py-2.5 px-3 text-right">
                     <span class="px-2 py-0.5 rounded text-[10.5px] ${row.winner === 'A' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : row.winner === 'B' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'bg-gray-800 text-gray-400'}">
-                      ${isEn ? row.verdictEn : row.verdictZh}
+                      ${isEn ? (row.verdictEn || row.verdict) : (row.verdictZh || row.verdict)}
                     </span>
                   </td>
                 </tr>

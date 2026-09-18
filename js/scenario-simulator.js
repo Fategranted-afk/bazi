@@ -8,7 +8,12 @@
   } else if (typeof module === 'object' && module.exports) {
     module.exports = require('./simulator-engine');
   } else {
-    // Browser global
+    // Browser or JSC global
+    if (typeof ScenarioSimulatorEngine === 'undefined' && typeof load === 'function') {
+      try {
+        load('js/simulator-engine.js');
+      } catch (e) {}
+    }
     if (typeof ScenarioSimulatorEngine !== 'undefined') {
       root.ScenarioSimulatorEngine = ScenarioSimulatorEngine;
     }

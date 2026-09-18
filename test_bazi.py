@@ -13035,6 +13035,78 @@ jsc_check110_cmd = [
     if (leaks && leaks.length > 0) {
       throw new Error("Residual Chinese in Scenario Simulation EN: " + leaks.join(""));
     }
+
+    // 5. English Leaderboard Row Rendering Defense (assert no undefined.includes crash)
+    var renderedRows = simEn.leaderboard.map(function(row) {
+      var isEn = true;
+      var dim = isEn ? (row.dimensionEn || row.dimension) : (row.dimensionZh || row.dimension);
+      var scA = "" + row.scoreA + (row.unit || ((row.dimensionEn && row.dimensionEn.includes("Overlap")) || (row.dimensionZh && row.dimensionZh.includes("重叠")) ? "%" : (isEn ? " pts" : "分")));
+      var scB = "" + row.scoreB + (row.unit || ((row.dimensionEn && row.dimensionEn.includes("Overlap")) || (row.dimensionZh && row.dimensionZh.includes("重叠")) ? "%" : (isEn ? " pts" : "分")));
+      var verd = isEn ? (row.verdictEn || row.verdict) : (row.verdictZh || row.verdict);
+      return dim + " | " + scA + " | " + scB + " | " + verd;
+    });
+    if (renderedRows.length !== 5) {
+      throw new Error("Leaderboard render failed, got " + renderedRows.length + " rows");
+    }
+
+    // 6. Preset 3 (Hangzhou vs Shanghai) & Preset 4 (Vancouver vs Guangzhou) Strategic Planning Overlap
+    var optHZ = {
+      title: "中国杭州 · 电商核心系统开发", country: "China", city: "Hangzhou", industry: "tech_ai", role: "specialist", manager: "rob_wealth"
+    };
+    var optSH = {
+      title: "中国上海 · 外资投行法务风控", country: "China", city: "Shanghai", industry: "finance_quant", role: "civil", manager: "resource"
+    };
+    var simHZSH = ScenarioSimulatorEngine.simulateOptions(optHZ, optSH, bazi2002, luck2002, "zh");
+    if (simHZSH.optionA.industryCityOverlapScore < 90) {
+      throw new Error("Hangzhou tech_ai overlap score unexpectedly low: " + simHZSH.optionA.industryCityOverlapScore);
+    }
+    if (simHZSH.optionB.industryCityOverlapScore < 90) {
+      throw new Error("Shanghai finance_quant overlap score unexpectedly low: " + simHZSH.optionB.industryCityOverlapScore);
+    }
+
+    var optVAN = {
+      title: "加拿大温哥华 · 跨国贸易与移民深耕", country: "Canada", city: "Vancouver", industry: "manufacturing", role: "civil", manager: "resource"
+    };
+    var optGZ = {
+      title: "中国广州 · 跨境出海新锐品牌开拓", country: "China", city: "Guangzhou", industry: "creative_media", role: "martial", manager: "wealth"
+    };
+    var simVANGZ = ScenarioSimulatorEngine.simulateOptions(optVAN, optGZ, bazi2002, luck2002, "zh");
+    if (simVANGZ.optionA.industryCityOverlapScore < 70) {
+      throw new Error("Vancouver manufacturing overlap score unexpectedly low: " + simVANGZ.optionA.industryCityOverlapScore);
+    }
+    if (!simVANGZ.optionA.cityStrategicClusters.includes("数字视觉特效") && !simVANGZ.optionA.cityStrategicClusters.includes("VFX")) {
+      throw new Error("Vancouver did not match specific city strategic clusters: " + simVANGZ.optionA.cityStrategicClusters);
+    }
+    if (simVANGZ.optionB.industryCityOverlapScore < 90) {
+      throw new Error("Guangzhou creative_media overlap score unexpectedly low: " + simVANGZ.optionB.industryCityOverlapScore);
+    }
+
+    // 7. Singapore Country & City Evaluation with Intra-City Comparison
+    var optSG1 = {
+      title: "新加坡 · 亚太AI总部", country: "Singapore", city: "Singapore", industry: "tech_ai", role: "executive", manager: "officer"
+    };
+    var optSG2 = {
+      title: "新加坡 · 离岸对冲基金", country: "Singapore", city: "Singapore", industry: "finance_quant", role: "specialist", manager: "resource"
+    };
+    var simSG = ScenarioSimulatorEngine.simulateOptions(optSG1, optSG2, bazi2002, luck2002, "en");
+    if (simSG.optionA.industryCityOverlapScore < 90) {
+      throw new Error("Singapore tech_ai overlap score unexpectedly low: " + simSG.optionA.industryCityOverlapScore);
+    }
+    if (simSG.optionB.industryCityOverlapScore < 90) {
+      throw new Error("Singapore finance_quant overlap score unexpectedly low: " + simSG.optionB.industryCityOverlapScore);
+    }
+    if (!simSG.verdictTitle.includes("In [Singapore]")) {
+      throw new Error("Intra-city verdict title expected 'In [Singapore]', got: " + simSG.verdictTitle);
+    }
+    var sgLeaks = JSON.stringify(simSG).match(/[\\u4e00-\\u9fa5]/g);
+    if (sgLeaks && sgLeaks.length > 0) {
+      throw new Error("Residual Chinese in Singapore EN simulation: " + sgLeaks.join(""));
+    }
+
+    // 8. Verify bazi.luck is populated by LuckEngine
+    if (!bazi2002.luck || !bazi2002.luck.hexTrajectory || bazi2002.luck.hexTrajectory.length !== 100) {
+      throw new Error("bazi.luck.hexTrajectory must be populated by LuckEngine");
+    }
     """
 ]
 run_check110 = subprocess.run(jsc_check110_cmd, capture_output=True, text=True)
@@ -13050,6 +13122,7 @@ assert '双城五维全息对抗天梯总榜' in app_js, "app.js missing ZH lead
 assert 'Natal Top 3 Dominant Patterns:' in app_js, "app.js missing top 3 dominant patterns badge"
 assert '命局三大主导格局承载：' in app_js, "app.js missing ZH top 3 dominant patterns badge"
 assert 'res.luck.hexTrajectory || res.luck.hundredYearsTrajectory' in app_js, "app.js must reuse luck hexTrajectory"
+assert 'row.unit' in app_js, "app.js must use row.unit"
 
 with open('simulator.html', 'r', encoding='utf-8') as f:
     sim_html = f.read()
@@ -13058,6 +13131,13 @@ assert 'Dual-City Multi-Dimensional Comparative Leaderboard' in sim_html, "simul
 assert '双城五维全息对抗天梯总榜' in sim_html, "simulator.html missing ZH leaderboard header"
 assert 'Natal Top 3 Dominant Patterns:' in sim_html, "simulator.html missing top 3 dominant patterns badge"
 assert '命局三大主导格局承载：' in sim_html, "simulator.html missing ZH top 3 dominant patterns badge"
+assert '<option value="Singapore">新加坡 (Singapore)</option>' in sim_html, "simulator.html missing Singapore option"
+assert 'row.unit' in sim_html, "simulator.html must use row.unit"
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    index_html = f.read()
+
+assert '<option value="Singapore">新加坡 (Singapore)</option>' in index_html, "index.html missing Singapore option"
 
 print("✓ 百岁岁运六十四卦行持全景总谱时间轴八字对齐（2002年1岁=2002/25岁=2026/六十四卦易数气机波动轨迹结果直连全景/点击卡片瞬时联动调阅）、沙盘推演国家+城市五行/产业规划重叠度/岗位与上司十神/三大主导格局/双城裁决与天梯总榜全维度升级（中英双语100%零中文残留）验证通过！")
 

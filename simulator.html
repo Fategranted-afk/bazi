@@ -180,6 +180,7 @@
                 <option value="China">中国 (China)</option>
                 <option value="USA">美国 (USA)</option>
                 <option value="Canada">加拿大 (Canada)</option>
+                <option value="Singapore">新加坡 (Singapore)</option>
               </select>
             </div>
             <div>
@@ -273,6 +274,7 @@
                 <option value="UK">英国 (UK)</option>
                 <option value="USA">美国 (USA)</option>
                 <option value="Canada">加拿大 (Canada)</option>
+                <option value="Singapore">新加坡 (Singapore)</option>
               </select>
             </div>
             <div>
@@ -752,12 +754,12 @@
                 <tbody class="divide-y divide-gray-800/60 font-mono text-xs">
                   ${(simRes.leaderboard || []).map(row => `
                     <tr class="hover:bg-white/5 transition">
-                      <td class="py-3 px-3 font-sans text-gray-300 font-medium">${isEn ? row.dimensionEn : row.dimensionZh}</td>
-                      <td class="py-3 px-3 ${row.winner === 'A' ? 'text-indigo-300 font-bold' : 'text-gray-400'}">${row.scoreA}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
-                      <td class="py-3 px-3 ${row.winner === 'B' ? 'text-purple-300 font-bold' : 'text-gray-400'}">${row.scoreB}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
+                      <td class="py-3 px-3 font-sans text-gray-300 font-medium">${isEn ? (row.dimensionEn || row.dimension) : (row.dimensionZh || row.dimension)}</td>
+                      <td class="py-3 px-3 ${row.winner === 'A' ? 'text-indigo-300 font-bold' : 'text-gray-400'}">${row.scoreA}${row.unit || ((row.dimensionEn && row.dimensionEn.includes('Overlap')) || (row.dimensionZh && row.dimensionZh.includes('重叠')) ? '%' : (isEn ? ' pts' : '分'))}</td>
+                      <td class="py-3 px-3 ${row.winner === 'B' ? 'text-purple-300 font-bold' : 'text-gray-400'}">${row.scoreB}${row.unit || ((row.dimensionEn && row.dimensionEn.includes('Overlap')) || (row.dimensionZh && row.dimensionZh.includes('重叠')) ? '%' : (isEn ? ' pts' : '分'))}</td>
                       <td class="py-3 px-3 text-right">
                         <span class="px-2 py-0.5 rounded text-[11px] ${row.winner === 'A' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : row.winner === 'B' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'bg-gray-800 text-gray-400'}">
-                          ${isEn ? row.verdictEn : row.verdictZh}
+                          ${isEn ? (row.verdictEn || row.verdict) : (row.verdictZh || row.verdict)}
                         </span>
                       </td>
                     </tr>
@@ -936,20 +938,28 @@
       function setupPresets() {
         const presets = {
           uk_vs_sz: {
-            titleA: "英国伯明翰 · 高校学术科研", countryA: "UK", cityA: "Birmingham", industryA: "academia_research", roleA: "specialist", managerA: "resource", instA: "birmingham", entA: "",
-            titleB: "中国深圳 · 量化对冲基金", countryB: "China", cityB: "Shenzhen", industryB: "finance_quant", roleB: "specialist", managerB: "killings", instB: "", entB: "tencent"
+            titleA: "英国伯明翰 · 高校学术科研", titleAEn: "UK Birmingham · Academic Research",
+            countryA: "UK", cityA: "Birmingham", industryA: "academia_research", roleA: "specialist", managerA: "resource", instA: "birmingham", entA: "",
+            titleB: "中国深圳 · 量化对冲基金", titleBEn: "China Shenzhen · Quantitative Hedge Fund",
+            countryB: "China", cityB: "Shenzhen", industryB: "finance_quant", roleB: "specialist", managerB: "killings", instB: "", entB: "tencent"
           },
           bj_vs_sv: {
-            titleA: "中国北京 · 重点国企机关高管", countryA: "China", cityA: "Beijing", industryA: "civil_admin", roleA: "executive", managerA: "officer", instA: "peking", entA: "",
-            titleB: "美国硅谷 · 前沿大模型架构师", countryB: "USA", cityB: "San Francisco", industryB: "tech_ai", roleB: "specialist", managerB: "wealth", instB: "", entB: "nvidia"
+            titleA: "中国北京 · 重点国企机关高管", titleAEn: "China Beijing · State Enterprise Executive",
+            countryA: "China", cityA: "Beijing", industryA: "civil_admin", roleA: "executive", managerA: "officer", instA: "peking", entA: "",
+            titleB: "美国硅谷 · 前沿大模型架构师", titleBEn: "US Silicon Valley · Frontier AI Architect",
+            countryB: "USA", cityB: "San Francisco", industryB: "tech_ai", roleB: "specialist", managerB: "wealth", instB: "", entB: "nvidia"
           },
           hz_vs_sh: {
-            titleA: "中国杭州 · 电商核心系统开发", countryA: "China", cityA: "Hangzhou", industryA: "tech_ai", roleA: "specialist", managerA: "rob_wealth", instA: "zhejiang", entA: "alibaba",
-            titleB: "中国上海 · 外资投行法务风控", countryB: "China", cityB: "Shanghai", industryB: "finance_quant", roleB: "civil", managerB: "resource", instA: "", entB: "hsbc"
+            titleA: "中国杭州 · 电商核心系统开发", titleAEn: "China Hangzhou · E-Commerce Core Engineering",
+            countryA: "China", cityA: "Hangzhou", industryA: "tech_ai", roleA: "specialist", managerA: "rob_wealth", instA: "zhejiang", entA: "alibaba",
+            titleB: "中国上海 · 外资投行法务风控", titleBEn: "China Shanghai · Foreign IB Legal Risk",
+            countryB: "China", cityB: "Shanghai", industryB: "finance_quant", roleB: "civil", managerB: "resource", instB: "", entB: "hsbc"
           },
           van_vs_gz: {
-            titleA: "加拿大温哥华 · 跨国贸易与移民深耕", countryA: "Canada", cityA: "Vancouver", industryA: "manufacturing", roleA: "civil", managerA: "resource", instA: "ubc", entA: "",
-            titleB: "中国广州 · 跨境出海新锐品牌开拓", countryB: "China", cityB: "Guangzhou", industryB: "creative_media", roleB: "martial", managerB: "wealth", instB: "", entB: "byd"
+            titleA: "加拿大温哥华 · 跨国贸易与移民深耕", titleAEn: "Canada Vancouver · Global Trade & Settlement",
+            countryA: "Canada", cityA: "Vancouver", industryA: "manufacturing", roleA: "civil", managerA: "resource", instA: "ubc", entA: "",
+            titleB: "中国广州 · 跨境出海新锐品牌开拓", titleBEn: "China Guangzhou · Cross-Border Brand Pioneer",
+            countryB: "China", cityB: "Guangzhou", industryB: "creative_media", roleB: "martial", managerB: "wealth", instB: "", entB: "byd"
           }
         };
 
@@ -961,7 +971,7 @@
 
             document.getElementById("simCountryA").value = data.countryA;
             syncInstitutionsAndEnterprises("A");
-            document.getElementById("simTitleA").value = data.titleA;
+            document.getElementById("simTitleA").value = (currentLang === "en" && data.titleAEn) ? data.titleAEn : data.titleA;
             document.getElementById("simCityA").value = data.cityA;
             document.getElementById("simIndustryA").value = data.industryA;
             document.getElementById("simRoleA").value = data.roleA;
@@ -971,7 +981,7 @@
 
             document.getElementById("simCountryB").value = data.countryB;
             syncInstitutionsAndEnterprises("B");
-            document.getElementById("simTitleB").value = data.titleB;
+            document.getElementById("simTitleB").value = (currentLang === "en" && data.titleBEn) ? data.titleBEn : data.titleB;
             document.getElementById("simCityB").value = data.cityB;
             document.getElementById("simIndustryB").value = data.industryB;
             document.getElementById("simRoleB").value = data.roleB;
