@@ -12849,6 +12849,33 @@ jsc_check109_cmd = [
     // Test active element resonance
     VisualAlchemy.setActiveElement('水');
     if (s0.element.name !== '水') throw new Error("Streak element should adapt to active element");
+
+    // Test direct getter property
+    if (!VisualAlchemy.streaks || VisualAlchemy.streaks.length !== 2) {
+      throw new Error("VisualAlchemy.streaks property getter failed");
+    }
+
+    // Test context save/restore state isolation
+    var saveCalls = 0;
+    var restoreCalls = 0;
+    mockCtx.save = function() { saveCalls++; };
+    mockCtx.restore = function() { restoreCalls++; };
+
+    // Reset and trigger active state to test drawing with save/restore
+    s0.state = 'active';
+    s0.elapsed = 800;
+    s0.draw(mockCtx, false);
+    s0.draw(mockCtx, true);
+
+    if (saveCalls === 0 || restoreCalls === 0 || saveCalls !== restoreCalls) {
+      throw new Error("Context save/restore symmetry violated: save=" + saveCalls + ", restore=" + restoreCalls);
+    }
+
+    // Validate geometry bounds & non-NaN properties
+    s0.reset(1200, 800);
+    if (isNaN(s0.startX) || isNaN(s0.startY) || isNaN(s0.length) || isNaN(s0.vx) || isNaN(s0.vy)) {
+      throw new Error("Streak geometry produced NaN");
+    }
     """
 ]
 run_check109 = subprocess.run(jsc_check109_cmd, capture_output=True, text=True)

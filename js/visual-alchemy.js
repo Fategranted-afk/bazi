@@ -103,10 +103,10 @@ const VisualAlchemy = (function() {
    * Fleeting Ephemeral Light Streak (转瞬即逝的灵动流光 · 极光掠影 / 流星 / 灵动光丝)
    * Behavior:
    * - Streaks do NOT persist continuously wiggling on screen.
-   * - Spawns with gentle intervals (3~7s) from a celestial angle.
-   * - Glides gracefully across the sky: Fade-in -> Glide -> Fade-out.
-   * - Slender, ethereal luminous filament with delicate tapered tail and subtle aura.
-   * - Highly aesthetic, refined, calm, and zero distraction for foreground reading.
+   * - Spawns with gentle serene intervals (3.5~7.5s) from celestial upper or peripheral heavens.
+   * - Glides gracefully across the sky: Ethereal spark ignition -> Radiant streamer elongation -> Glide -> Graceful dissolution.
+   * - Slender, luminous filament with dynamic tapered tail and subtle celestial aura.
+   * - 100% Non-intrusive backdrop, zero foreground distraction for reading.
    */
   class FleetingStreak {
     constructor(w, h, initialDelayMs = 0) {
@@ -117,31 +117,46 @@ const VisualAlchemy = (function() {
     }
 
     reset(w, h) {
-      const screenW = w || (typeof window !== 'undefined' ? window.innerWidth : 800) || 800;
-      const screenH = h || (typeof window !== 'undefined' ? window.innerHeight : 600) || 600;
+      const screenW = (w && w > 0) ? w : ((typeof window !== 'undefined' && window.innerWidth) || 800);
+      const screenH = (h && h > 0) ? h : ((typeof window !== 'undefined' && window.innerHeight) || 600);
 
-      // Celestial glide angle: gentle downward diagonal (20° to 36° downward-right)
-      // or occasional downward-left (144° to 160°)
-      const isLeftToRight = Math.random() > 0.15;
-      const angleDeg = isLeftToRight ? (20 + Math.random() * 16) : (144 + Math.random() * 16);
+      // Celestial glide angle: gentle downward diagonal (22° to 38° downward-right)
+      // or occasional downward-left (142° to 158°)
+      const isLeftToRight = Math.random() > 0.18;
+      const angleDeg = isLeftToRight ? (22 + Math.random() * 16) : (142 + Math.random() * 16);
       const angleRad = (angleDeg * Math.PI) / 180;
 
       // Tail length: 140px to 260px (proportional on smaller viewports)
       this.length = Math.min(screenW * 0.38, 140 + Math.random() * 110);
 
-      // Spawn origin near top or left/right edge
+      // Spawn origin: from upper celestial horizon or peripheral margin,
+      // avoiding dead-center reading area so foreground text remains completely peaceful
       if (isLeftToRight) {
-        this.startX = -20 + Math.random() * (screenW * 0.7);
-        this.startY = -15 + Math.random() * (screenH * 0.4);
+        if (Math.random() > 0.35) {
+          // Upper celestial horizon
+          this.startX = -30 + Math.random() * (screenW * 0.7);
+          this.startY = -25 + Math.random() * Math.min(screenH * 0.22, 140);
+        } else {
+          // Left peripheral margin
+          this.startX = -40 - Math.random() * 20;
+          this.startY = Math.random() * Math.min(screenH * 0.45, 300);
+        }
       } else {
-        this.startX = screenW * 0.3 + Math.random() * (screenW * 0.7);
-        this.startY = -15 + Math.random() * (screenH * 0.4);
+        if (Math.random() > 0.35) {
+          // Upper right celestial horizon
+          this.startX = screenW * 0.3 + Math.random() * (screenW * 0.7);
+          this.startY = -25 + Math.random() * Math.min(screenH * 0.22, 140);
+        } else {
+          // Right peripheral margin
+          this.startX = screenW + 20 + Math.random() * 20;
+          this.startY = Math.random() * Math.min(screenH * 0.45, 300);
+        }
       }
 
       this.currentX = this.startX;
       this.currentY = this.startY;
 
-      // Speed: 210px to 330px per second -> per millisecond
+      // Speed: 210px to 320px per second -> per millisecond
       const speedPxPerSec = 210 + Math.random() * 110;
       this.vx = (Math.cos(angleRad) * speedPxPerSec) / 1000;
       this.vy = (Math.sin(angleRad) * speedPxPerSec) / 1000;
@@ -199,12 +214,12 @@ const VisualAlchemy = (function() {
 
       const progress = Math.min(1, Math.max(0, this.elapsed / this.duration));
 
-      // Fade envelope: Soft fade-in (0 -> 0.22), sustain (0.22 -> 0.65), smooth fade-out (0.65 -> 1.0)
+      // Fade envelope: Soft fade-in (0 -> 0.22), sustain (0.22 -> 0.68), smooth fade-out (0.68 -> 1.0)
       let fade = 1.0;
       if (progress < 0.22) {
         fade = progress / 0.22;
-      } else if (progress > 0.65) {
-        fade = (1.0 - progress) / 0.35;
+      } else if (progress > 0.68) {
+        fade = (1.0 - progress) / 0.32;
       }
       fade = Math.max(0, Math.min(1, fade));
 
@@ -212,54 +227,78 @@ const VisualAlchemy = (function() {
       const alpha = peakAlpha * fade;
       if (alpha <= 0.005) return;
 
+      // Dynamic tail elongation & dissolution:
+      // Ignites as a subtle spark and extends into full tail streamer, then dissolves smoothly
+      let lengthFactor = 1.0;
+      if (progress < 0.22) {
+        lengthFactor = Math.sin((progress / 0.22) * (Math.PI / 2));
+      } else if (progress > 0.68) {
+        lengthFactor = Math.max(0.15, 1.0 - ((progress - 0.68) / 0.32) * 0.85);
+      }
+      const curLength = Math.max(3, this.length * lengthFactor);
+
       const headX = this.currentX;
       const headY = this.currentY;
-      const tailX = headX - Math.cos(this.angleRad) * this.length;
-      const tailY = headY - Math.sin(this.angleRad) * this.length;
+      const tailX = headX - Math.cos(this.angleRad) * curLength;
+      const tailY = headY - Math.sin(this.angleRad) * curLength;
 
       const rgb = isLight ? (this.element.lightRgb || '180, 83, 9') : (this.element.rgb || '251, 191, 36');
 
-      // Create linear gradient from head to tail
+      // Create linear gradient from head to tail with distance guard
       let grad = null;
       if (typeof ctx.createLinearGradient === 'function') {
         try {
-          grad = ctx.createLinearGradient(headX, headY, tailX, tailY);
-          grad.addColorStop(0, `rgba(${rgb}, ${alpha.toFixed(3)})`);
-          grad.addColorStop(0.25, `rgba(${rgb}, ${(alpha * 0.65).toFixed(3)})`);
-          grad.addColorStop(0.65, `rgba(${rgb}, ${(alpha * 0.22).toFixed(3)})`);
-          grad.addColorStop(1, `rgba(${rgb}, 0)`);
+          const dx = headX - tailX;
+          const dy = headY - tailY;
+          if (dx * dx + dy * dy >= 4) {
+            grad = ctx.createLinearGradient(headX, headY, tailX, tailY);
+            grad.addColorStop(0, `rgba(${rgb}, ${alpha.toFixed(3)})`);
+            grad.addColorStop(0.22, `rgba(${rgb}, ${(alpha * 0.70).toFixed(3)})`);
+            grad.addColorStop(0.65, `rgba(${rgb}, ${(alpha * 0.22).toFixed(3)})`);
+            grad.addColorStop(1, `rgba(${rgb}, 0)`);
+          }
         } catch (e) {
           grad = null;
         }
       }
 
-      // 1. Soft Outer Glow Filament
-      if (typeof ctx.beginPath === 'function') ctx.beginPath();
-      if (typeof ctx.moveTo === 'function') ctx.moveTo(headX, headY);
-      if (typeof ctx.lineTo === 'function') ctx.lineTo(tailX, tailY);
-      ctx.strokeStyle = grad || (isLight ? this.element.lightGlow : this.element.glow);
-      ctx.lineWidth = this.glowWidth;
-      ctx.lineCap = 'round';
-      ctx.globalAlpha = 0.35;
-      if (typeof ctx.stroke === 'function') ctx.stroke();
+      // Defensive state isolation to prevent canvas property leakage
+      const canSave = (typeof ctx.save === 'function' && typeof ctx.restore === 'function');
+      if (canSave) ctx.save();
+      try {
+        // 1. Soft Outer Glow Filament (Atmospheric celestial haze)
+        if (typeof ctx.beginPath === 'function') ctx.beginPath();
+        if (typeof ctx.moveTo === 'function') ctx.moveTo(headX, headY);
+        if (typeof ctx.lineTo === 'function') ctx.lineTo(tailX, tailY);
+        ctx.strokeStyle = grad || (isLight ? this.element.lightGlow : this.element.glow);
+        ctx.lineWidth = this.glowWidth;
+        ctx.lineCap = 'round';
+        ctx.globalAlpha = 0.35;
+        if (typeof ctx.stroke === 'function') ctx.stroke();
 
-      // 2. Radiant Inner Core Filament
-      if (typeof ctx.beginPath === 'function') ctx.beginPath();
-      if (typeof ctx.moveTo === 'function') ctx.moveTo(headX, headY);
-      if (typeof ctx.lineTo === 'function') ctx.lineTo(tailX, tailY);
-      ctx.strokeStyle = grad || (isLight ? this.element.lightColor : this.element.color);
-      ctx.lineWidth = this.coreWidth;
-      ctx.lineCap = 'round';
-      ctx.globalAlpha = 0.9;
-      if (typeof ctx.stroke === 'function') ctx.stroke();
+        // 2. Radiant Inner Core Filament (Slender celestial light thread)
+        if (typeof ctx.beginPath === 'function') ctx.beginPath();
+        if (typeof ctx.moveTo === 'function') ctx.moveTo(headX, headY);
+        if (typeof ctx.lineTo === 'function') ctx.lineTo(tailX, tailY);
+        ctx.strokeStyle = grad || (isLight ? this.element.lightColor : this.element.color);
+        ctx.lineWidth = this.coreWidth;
+        ctx.lineCap = 'round';
+        ctx.globalAlpha = 0.90;
+        if (typeof ctx.stroke === 'function') ctx.stroke();
 
-      // 3. Ethereal Leading Head Glow (Micro Celestial Sparkle)
-      if (typeof ctx.beginPath === 'function') ctx.beginPath();
-      if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 1.8, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${rgb}, ${Math.min(1, alpha * 1.3).toFixed(3)})`;
-      if (typeof ctx.fill === 'function') ctx.fill();
+        // 3. Ethereal Leading Head Glow (Micro Celestial Sparkle)
+        if (typeof ctx.beginPath === 'function') ctx.beginPath();
+        if (typeof ctx.arc === 'function') ctx.arc(headX, headY, 1.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${rgb}, ${Math.min(1, alpha * 1.35).toFixed(3)})`;
+        ctx.globalAlpha = 1.0;
+        if (typeof ctx.fill === 'function') ctx.fill();
+      } finally {
+        if (canSave) ctx.restore();
+      }
     }
   }
+
+  let hasListenersAttached = false;
 
   function initParticleRings(canvasId, initialElement = '木') {
     fluxCanvas = (typeof document !== 'undefined' && typeof document.getElementById === 'function')
@@ -279,10 +318,11 @@ const VisualAlchemy = (function() {
     }
 
     // Initialize fleeting ephemeral light streaks (staggered initial delays: 1.2s and 5.5s)
-    streaks = [
+    streaks.length = 0;
+    streaks.push(
       new FleetingStreak(w, h, 1200),
       new FleetingStreak(w, h, 5500)
-    ];
+    );
 
     // Resize handling with DPR awareness for full-screen fixed canvas
     function resize() {
@@ -301,44 +341,42 @@ const VisualAlchemy = (function() {
       fluxCanvas.style.width = curW + 'px';
       fluxCanvas.style.height = curH + 'px';
     }
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', debounce(resize, 120));
+
+    if (!hasListenersAttached) {
+      if (typeof window !== 'undefined') {
+        window.addEventListener('resize', debounce(resize, 120));
+        window.addEventListener('mousemove', (e) => {
+          mousePos.x = e.clientX;
+          mousePos.y = e.clientY;
+          mousePos.isHover = true;
+        });
+      }
+      if (typeof document !== 'undefined') {
+        document.addEventListener('mouseleave', () => {
+          mousePos.isHover = false;
+        });
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            stopLoop();
+          } else if (isFluxEnabled) {
+            startLoop();
+          }
+        });
+      }
+      hasListenersAttached = true;
     }
+
     resize();
-
-    // Mouse interactivity
-    if (typeof window !== 'undefined') {
-      window.addEventListener('mousemove', (e) => {
-        mousePos.x = e.clientX;
-        mousePos.y = e.clientY;
-        mousePos.isHover = true;
-      });
-      document.addEventListener('mouseleave', () => {
-        mousePos.isHover = false;
-      });
-    }
-
-    // Page visibility to pause when inactive
-    if (typeof document !== 'undefined') {
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-          stopLoop();
-        } else if (isFluxEnabled) {
-          startLoop();
-        }
-      });
-    }
-
     startLoop();
   }
 
   let lastFrameTime = 0;
-  const FRAME_INTERVAL = 1000 / 30; // ~30 fps cap for ambient particle flux, saving GPU/CPU power
+  const FRAME_INTERVAL = 1000 / 60; // 60 fps pacing guard for silky smooth celestial glide
 
   function startLoop() {
     if (!isFluxEnabled || isRunning) return;
     isRunning = true;
-    lastFrameTime = (typeof performance !== 'undefined') ? performance.now() : Date.now();
+    lastFrameTime = (typeof performance !== 'undefined' && typeof performance.now === 'function') ? performance.now() : Date.now();
     loop(lastFrameTime);
   }
 
@@ -362,7 +400,7 @@ const VisualAlchemy = (function() {
       animationId = window.requestAnimationFrame(loop);
     }
     const deltaMs = now - lastFrameTime;
-    if (deltaMs < FRAME_INTERVAL) return;
+    if (deltaMs < 14) return; // Silky smooth 60fps pacing guard
     lastFrameTime = now;
     renderFlux(now, Math.min(deltaMs, 100));
   }
@@ -481,7 +519,7 @@ const VisualAlchemy = (function() {
     animateLineTransformation,
     renderHexagramLines: animateLineTransformation,
     getStreaks: () => streaks,
-    streaks,
+    get streaks() { return streaks; },
     fluxWaves
   };
 })();
