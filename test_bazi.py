@@ -5498,7 +5498,7 @@ jsc_cycle_cmd = [
 
     cyclePoints.forEach(function(pt, idx) {
       if (pt.age !== idx + 1) throw new Error("Mismatched age at index " + idx + ": expected " + (idx + 1) + ", got " + pt.age);
-      if (pt.year !== 1990 + pt.age) throw new Error("Mismatched year at age " + pt.age);
+      if (pt.year !== 1990 + pt.age - 1) throw new Error("Mismatched year at age " + pt.age);
       if (typeof pt.score !== 'number' || pt.score < 30 || pt.score > 98) {
         throw new Error("Point score out of bounds at age " + pt.age + ": " + pt.score);
       }
@@ -12898,7 +12898,170 @@ assert 'btnDeitiesAskAdvisor' not in html_check, "Deities ask advisor button mus
 
 print("✓ 东方气机流光全面升级为转瞬即逝的灵动流光（废弃持续晃动正弦线/优雅渐显掠过淡出/白底社交名片/门庭居中/军师与沙盘入口清理与去重）验证通过！")
 
-print("\n🎉 ALL 109 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 110. Validating 100-Year Hexagram Trajectory Roster Timeline & Scenario Simulator Overhaul ===
+print("\n=== 110. Validating 100-Year Hexagram Trajectory Roster Timeline & Scenario Simulator Overhaul ===")
+jsc_check110_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/ditiansui.js");
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/institutions.js");
+    load("data/enterprises.js");
+    load("js/bazi-engine.js");
+    load("js/i18n.js");
+    load("js/portrait-engine.js");
+    load("js/career-engine.js");
+    load("js/iching-engine.js");
+    load("js/luck-engine.js");
+    load("js/simulator-engine.js");
+    load("js/scenario-simulator.js");
+
+    // 1. Birth Year Timeline Calibration (2002 born user -> age 1 is 2002, age 2 is 2003, age 25 is 2026)
+    var bazi2002 = BaZiEngine.calculate({
+      year: 2002, month: 5, day: 15, hour: 10, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    var luck2002 = LuckEngine.calculateLuck(bazi2002);
+    if (!luck2002.hexTrajectory || luck2002.hexTrajectory.length !== 100) {
+      throw new Error("luck.hexTrajectory must contain exactly 100 points, got " + (luck2002.hexTrajectory ? luck2002.hexTrajectory.length : 'null'));
+    }
+    if (!luck2002.hundredYearsTrajectory || luck2002.hundredYearsTrajectory.length !== 100) {
+      throw new Error("luck.hundredYearsTrajectory must contain exactly 100 points");
+    }
+
+    var pt1 = luck2002.hexTrajectory[0];
+    if (pt1.age !== 1 || pt1.year !== 2002) {
+      throw new Error("Age 1 year mismatch: expected 2002, got " + pt1.year);
+    }
+    var pt2 = luck2002.hexTrajectory[1];
+    if (pt2.age !== 2 || pt2.year !== 2003) {
+      throw new Error("Age 2 year mismatch: expected 2003, got " + pt2.year);
+    }
+    var pt25 = luck2002.hexTrajectory[24];
+    if (pt25.age !== 25 || pt25.year !== 2026) {
+      throw new Error("Age 25 year mismatch: expected 2026, got " + pt25.year);
+    }
+
+    // Verify optimalAction structure on every point
+    luck2002.hexTrajectory.forEach(function(pt) {
+      if (!pt.optimalAction) throw new Error("Missing optimalAction at age " + pt.age);
+      if (!pt.optimalAction.actionZh || !pt.optimalAction.actionEn) {
+        throw new Error("Missing actionZh or actionEn in optimalAction at age " + pt.age);
+      }
+      if (!pt.optimalAction.shortBadgeZh || !pt.optimalAction.shortBadgeEn) {
+        throw new Error("Missing shortBadge in optimalAction at age " + pt.age);
+      }
+      if (/[\\u4e00-\\u9fa5]/.test(pt.optimalAction.actionEn) || /[\\u4e00-\\u9fa5]/.test(pt.optimalAction.shortBadgeEn)) {
+        throw new Error("Residual Chinese in optimalAction English text at age " + pt.age);
+      }
+    });
+
+    // 2. Interactive Year Query Alignment
+    var hexAge1 = IChingEngine.calculateFourPillarsHexagrams(bazi2002, 1, 2002);
+    if (!hexAge1 || hexAge1.targetAge !== 1 || hexAge1.selectedYear !== 2002) {
+      throw new Error("calculateFourPillarsHexagrams age 1 mismatch: targetAge=" + (hexAge1 ? hexAge1.targetAge : 'null') + ", selectedYear=" + (hexAge1 ? hexAge1.selectedYear : 'null'));
+    }
+    var hexAge25 = IChingEngine.calculateFourPillarsHexagrams(bazi2002, 25, 2026);
+    if (!hexAge25 || hexAge25.targetAge !== 25 || hexAge25.selectedYear !== 2026) {
+      throw new Error("calculateFourPillarsHexagrams age 25 mismatch: targetAge=" + (hexAge25 ? hexAge25.targetAge : 'null') + ", selectedYear=" + (hexAge25 ? hexAge25.selectedYear : 'null'));
+    }
+
+    // 3. ScenarioSimulatorEngine 5 Dimensions & Leaderboard
+    var optUK = {
+      title: "英国伯明翰 · 高校学术科研",
+      country: "UK",
+      city: "Birmingham",
+      industry: "academia_research",
+      role: "specialist",
+      manager: "resource"
+    };
+    var optSZ = {
+      title: "中国深圳 · 量化对冲基金",
+      country: "China",
+      city: "Shenzhen",
+      industry: "finance_quant",
+      role: "specialist",
+      manager: "killings"
+    };
+
+    var simZh = ScenarioSimulatorEngine.simulateOptions(optUK, optSZ, bazi2002, luck2002, "zh");
+    if (!simZh.leaderboard || simZh.leaderboard.length !== 5) {
+      throw new Error("Simulator leaderboard must contain exactly 5 dimensions, got " + (simZh.leaderboard ? simZh.leaderboard.length : 'null'));
+    }
+    if (!simZh.top3Patterns || simZh.top3Patterns.length < 3) {
+      throw new Error("Simulator must return at least 3 dominant patterns");
+    }
+    if (!simZh.verdictTitle || !simZh.summary) {
+      throw new Error("Missing comparative verdictTitle or summary in ZH simulation");
+    }
+    if (typeof simZh.delta !== "number") {
+      throw new Error("Missing numeric delta in simulation");
+    }
+
+    // Validate 5 Evaluation Dimensions
+    var dimNamesZh = simZh.leaderboard.map(function(r) { return r.dimension; });
+    if (!dimNamesZh.includes("国家+城市五行能量场") ||
+        !dimNamesZh.includes("行业适配与规划重叠度") ||
+        !dimNamesZh.includes("三大主导格局契合度") ||
+        !dimNamesZh.includes("目标岗位与上司十神协同") ||
+        !dimNamesZh.includes("心智能耗与抗内耗比")) {
+      throw new Error("Missing required dimension in ZH leaderboard: " + JSON.stringify(dimNamesZh));
+    }
+
+    // Validate Option details
+    if (typeof simZh.optionA.geoEnergyScore !== "number" || typeof simZh.optionA.industryCityOverlapScore !== "number" || typeof simZh.optionA.patternAlignmentScore !== "number") {
+      throw new Error("Missing numeric score dimensions on Option A");
+    }
+    if (simZh.optionA.industryCityOverlapScore < 50) {
+      throw new Error("Birmingham academic research overlap score unexpectedly low: " + simZh.optionA.industryCityOverlapScore);
+    }
+    if (simZh.optionB.industryCityOverlapScore < 80) {
+      throw new Error("Shenzhen quant finance overlap score unexpectedly low: " + simZh.optionB.industryCityOverlapScore);
+    }
+
+    // 4. English Mode Full Zero Residual Chinese Validation
+    var simEn = ScenarioSimulatorEngine.simulateOptions(optUK, optSZ, bazi2002, luck2002, "en");
+    if (!simEn.leaderboard || simEn.leaderboard.length !== 5) {
+      throw new Error("Simulator EN leaderboard must contain exactly 5 dimensions");
+    }
+    var simEnStr = JSON.stringify(simEn);
+    var leaks = simEnStr.match(/[\\u4e00-\\u9fa5]/g);
+    if (leaks && leaks.length > 0) {
+      throw new Error("Residual Chinese in Scenario Simulation EN: " + leaks.join(""));
+    }
+    """
+]
+run_check110 = subprocess.run(jsc_check110_cmd, capture_output=True, text=True)
+assert run_check110.returncode == 0, f"Check 110 JSC test failed: stdout={run_check110.stdout} stderr={run_check110.stderr}"
+
+# Static DOM assertions
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_js = f.read()
+
+assert 'scrollIntoView' in app_js, "app.js must contain scrollIntoView for roster cards"
+assert 'Dual-City Multi-Dimensional Comparative Leaderboard' in app_js, "app.js missing comparative leaderboard header"
+assert '双城五维全息对抗天梯总榜' in app_js, "app.js missing ZH leaderboard header"
+assert 'Natal Top 3 Dominant Patterns:' in app_js, "app.js missing top 3 dominant patterns badge"
+assert '命局三大主导格局承载：' in app_js, "app.js missing ZH top 3 dominant patterns badge"
+assert 'res.luck.hexTrajectory || res.luck.hundredYearsTrajectory' in app_js, "app.js must reuse luck hexTrajectory"
+
+with open('simulator.html', 'r', encoding='utf-8') as f:
+    sim_html = f.read()
+
+assert 'Dual-City Multi-Dimensional Comparative Leaderboard' in sim_html, "simulator.html missing comparative leaderboard header"
+assert '双城五维全息对抗天梯总榜' in sim_html, "simulator.html missing ZH leaderboard header"
+assert 'Natal Top 3 Dominant Patterns:' in sim_html, "simulator.html missing top 3 dominant patterns badge"
+assert '命局三大主导格局承载：' in sim_html, "simulator.html missing ZH top 3 dominant patterns badge"
+
+print("✓ 百岁岁运六十四卦行持全景总谱时间轴八字对齐（2002年1岁=2002/25岁=2026/六十四卦易数气机波动轨迹结果直连全景/点击卡片瞬时联动调阅）、沙盘推演国家+城市五行/产业规划重叠度/岗位与上司十神/三大主导格局/双城裁决与天梯总榜全维度升级（中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 110 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

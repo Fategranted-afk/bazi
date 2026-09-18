@@ -710,12 +710,60 @@
 
         container.innerHTML = `
           <!-- Verdict Summary Banner -->
-          <div class="p-5 rounded-2xl border ${simRes.winner === 'A' ? 'border-indigo-500/60 bg-indigo-950/40' : simRes.winner === 'B' ? 'border-purple-500/60 bg-purple-950/40' : 'border-amber-500/60 bg-amber-950/40'} shadow-2xl space-y-2">
+          <div class="p-5 rounded-2xl border ${simRes.winner === 'A' ? 'border-indigo-500/60 bg-indigo-950/40' : simRes.winner === 'B' ? 'border-purple-500/60 bg-purple-950/40' : 'border-amber-500/60 bg-amber-950/40'} shadow-2xl space-y-3">
             <div class="flex items-center space-x-2">
               <span class="text-2xl">⚖️</span>
               <h4 class="text-base sm:text-lg font-bold text-gray-100 font-serif-sc">
-                ${simRes.summary}
+                ${simRes.verdictTitle}
               </h4>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-sans">
+              ${simRes.summary}
+            </p>
+            <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-white/10 text-xs">
+              <span class="text-gray-400 font-mono text-[11px]">${isEn ? 'Natal Top 3 Dominant Patterns:' : '命局三大主导格局承载：'}</span>
+              ${(simRes.top3Patterns || []).map(p => `
+                <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-bold">
+                  ${isEn ? p.nameEn : p.nameZh} (${p.weight}%)
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- 5-Dimensional Side-by-Side Comparative Leaderboard Table -->
+          <div class="rounded-2xl border border-gray-800 bg-[#121422] p-5 space-y-3 shadow-2xl">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2.5">
+              <h4 class="text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+                <span>📊</span>
+                <span>${isEn ? 'Dual-City Multi-Dimensional Comparative Leaderboard' : '双城五维全息对抗天梯总榜'}</span>
+              </h4>
+              <span class="text-xs text-gray-400 font-mono">${isEn ? 'Side-by-Side Audit' : '横向并排裁量'}</span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse font-sans">
+                <thead>
+                  <tr class="border-b border-gray-800 text-gray-400 text-xs">
+                    <th class="py-2.5 px-3 font-semibold">${isEn ? 'Evaluation Dimension' : '核心考察维度'}</th>
+                    <th class="py-2.5 px-3 font-semibold text-indigo-400">🅰️ ${a.cityName}</th>
+                    <th class="py-2.5 px-3 font-semibold text-purple-400">🅱️ ${b.cityName}</th>
+                    <th class="py-2.5 px-3 font-semibold text-right">${isEn ? 'Advantage / Delta' : '对局优势裁定'}</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-800/60 font-mono text-xs">
+                  ${(simRes.leaderboard || []).map(row => `
+                    <tr class="hover:bg-white/5 transition">
+                      <td class="py-3 px-3 font-sans text-gray-300 font-medium">${isEn ? row.dimensionEn : row.dimensionZh}</td>
+                      <td class="py-3 px-3 ${row.winner === 'A' ? 'text-indigo-300 font-bold' : 'text-gray-400'}">${row.scoreA}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
+                      <td class="py-3 px-3 ${row.winner === 'B' ? 'text-purple-300 font-bold' : 'text-gray-400'}">${row.scoreB}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
+                      <td class="py-3 px-3 text-right">
+                        <span class="px-2 py-0.5 rounded text-[11px] ${row.winner === 'A' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : row.winner === 'B' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'bg-gray-800 text-gray-400'}">
+                          ${isEn ? row.verdictEn : row.verdictZh}
+                        </span>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
             </div>
           </div>
 
@@ -734,8 +782,35 @@
                 </div>
               </div>
 
+              <!-- Five-Element & Planning Overlap Highlights -->
+              <div class="space-y-2 text-xs">
+                <div class="p-3 rounded-xl bg-black/40 border border-gray-800/80 flex items-center justify-between">
+                  <div>
+                    <span class="text-gray-400 text-xs block">${isEn ? 'Country + City Five-Element Energy' : '国度与城市五行场能'}</span>
+                    <span class="text-gray-200 font-bold font-mono text-xs sm:text-sm">${a.countryName} · ${a.cityName}</span>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-lg text-xs bg-indigo-500/20 text-indigo-300 font-mono font-bold">${a.geoEnergyBadge} (${a.geoEnergyScore}${isEn ? ' pts' : '分'})</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/5 border border-gray-800/80 space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="text-gray-300 font-medium">${isEn ? 'Industry & City Strategic Overlap' : '行业与城市产业规划重叠度'}</span>
+                    <span class="font-bold text-amber-400 font-mono text-sm">${a.industryCityOverlapScore}% (${a.overlapLevel})</span>
+                  </div>
+                  <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                    <div class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: ${a.industryCityOverlapScore}%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 truncate pt-0.5 font-sans">${a.cityStrategicClusters}</div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs px-1 text-gray-300">
+                  <span>${isEn ? 'Top 3 Dominant Patterns Fit' : '三大主导格局契合度'}</span>
+                  <span class="font-bold text-indigo-400 font-mono">${a.patternAlignmentScore} <span class="text-xs text-gray-400 font-normal">/ 100 (${a.patternAlignmentBadge})</span></span>
+                </div>
+              </div>
+
               <!-- Metrics Bars -->
-              <div class="space-y-3.5 text-xs">
+              <div class="space-y-3.5 text-xs border-t border-gray-800 pt-3">
                 <div>
                   <div class="flex justify-between text-xs mb-1.5 text-gray-300">
                     <span>${isEn ? 'Five-Element Affinity Resonance' : '五行用神气数契合度'}</span>
@@ -787,8 +862,35 @@
                 </div>
               </div>
 
+              <!-- Five-Element & Planning Overlap Highlights -->
+              <div class="space-y-2 text-xs">
+                <div class="p-3 rounded-xl bg-black/40 border border-gray-800/80 flex items-center justify-between">
+                  <div>
+                    <span class="text-gray-400 text-xs block">${isEn ? 'Country + City Five-Element Energy' : '国度与城市五行场能'}</span>
+                    <span class="text-gray-200 font-bold font-mono text-xs sm:text-sm">${b.countryName} · ${b.cityName}</span>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-lg text-xs bg-purple-500/20 text-purple-300 font-mono font-bold">${b.geoEnergyBadge} (${b.geoEnergyScore}${isEn ? ' pts' : '分'})</span>
+                </div>
+
+                <div class="p-3 rounded-xl bg-white/5 border border-gray-800/80 space-y-1.5">
+                  <div class="flex justify-between items-center text-xs">
+                    <span class="text-gray-300 font-medium">${isEn ? 'Industry & City Strategic Overlap' : '行业与城市产业规划重叠度'}</span>
+                    <span class="font-bold text-amber-400 font-mono text-sm">${b.industryCityOverlapScore}% (${b.overlapLevel})</span>
+                  </div>
+                  <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                    <div class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: ${b.industryCityOverlapScore}%"></div>
+                  </div>
+                  <div class="text-[11px] text-gray-400 truncate pt-0.5 font-sans">${b.cityStrategicClusters}</div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs px-1 text-gray-300">
+                  <span>${isEn ? 'Top 3 Dominant Patterns Fit' : '三大主导格局契合度'}</span>
+                  <span class="font-bold text-purple-400 font-mono">${b.patternAlignmentScore} <span class="text-xs text-gray-400 font-normal">/ 100 (${b.patternAlignmentBadge})</span></span>
+                </div>
+              </div>
+
               <!-- Metrics Bars -->
-              <div class="space-y-3.5 text-xs">
+              <div class="space-y-3.5 text-xs border-t border-gray-800 pt-3">
                 <div>
                   <div class="flex justify-between text-xs mb-1.5 text-gray-300">
                     <span>${isEn ? 'Five-Element Affinity Resonance' : '五行用神气数契合度'}</span>

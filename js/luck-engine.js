@@ -1685,6 +1685,17 @@ const LuckEngine = (function() {
       bazi._timelineCache = calculateLifelongTimeline(bazi, { decades, activeDecade });
     }
     const timeline = bazi._timelineCache;
+    let hexTrajectory = null;
+    if (typeof IChingEngine !== "undefined" && typeof IChingEngine.calculateLifelongCycle === "function") {
+      try {
+        hexTrajectory = IChingEngine.calculateLifelongCycle(bazi);
+      } catch (e) {
+        hexTrajectory = null;
+      }
+    }
+    const hundredYearsTrajectory = hexTrajectory || timeline;
+    bazi.hexTrajectory = hundredYearsTrajectory;
+    bazi.hundredYearsTrajectory = hundredYearsTrajectory;
 
     const operationalPlaybook = generateOperationalPlaybook(bazi, { decades, activeDecade, annuals, activeAnnual, months, activeMonth }, activeAnnual, activeMonth);
     const ecologicalResonance = generateGeographicEcologicalResonance(bazi);
@@ -1701,6 +1712,8 @@ const LuckEngine = (function() {
       daily,
       interactions,
       timeline,
+      hexTrajectory: hundredYearsTrajectory,
+      hundredYearsTrajectory,
       operationalPlaybook,
       ecologicalResonance,
       synthesis14Char
@@ -1930,6 +1943,7 @@ const LuckEngine = (function() {
       }
 
       let annualHex = null;
+      let optimalAction = null;
       if (typeof IChingEngine !== "undefined" && typeof IChingEngine.calculateFourPillarsHexagrams === "function") {
         try {
           const fpHex = IChingEngine.calculateFourPillarsHexagrams(bazi, age, year);
@@ -1941,6 +1955,11 @@ const LuckEngine = (function() {
               tianJi: fpHex.zhiNian.tianJi || null,
               isMutated: fpHex.zhiNian.isMutated || false
             };
+            if (typeof IChingEngine.evaluateYearlyOptimalAction === "function") {
+              optimalAction = IChingEngine.evaluateYearlyOptimalAction(
+                bazi, fpHex.zhiNian.hexagram, stem, branch, age, year, { isFavorable: energyScore >= 60 }, energyScore, fpHex.zhiNian.isMutated
+              );
+            }
           }
         } catch (e) {}
       }
@@ -1970,7 +1989,8 @@ const LuckEngine = (function() {
         focusEn,
         directiveZh,
         directiveEn,
-        annualHex
+        annualHex,
+        optimalAction
       });
     }
 

@@ -190,7 +190,85 @@ class ScenarioSimulatorEngine {
   }
 
   /**
-   * Geographic five-element lookup helper
+   * Country five-element attribute lookup helper
+   */
+  static getCountryElement(countryKey) {
+    const c = (countryKey || 'UK').toUpperCase().trim();
+    if (c === 'CHINA' || c === '中国') {
+      return {
+        country: 'China',
+        primary: 'Wood',
+        secondary: 'Earth',
+        elem: 'Wood',
+        nameZh: '中国 · 东方青龙甲乙木与中央坤土',
+        nameEn: 'China · Eastern Wood & Central Earth',
+        descZh: '东方生发震木之气，兼具神州中央厚德坤土，长线厚积薄发，基建与实体生生不息。',
+        descEn: 'Vibrant Eastern Wood vitality anchored by resilient Central Earth stability, fostering expansive scale.'
+      };
+    }
+    if (c === 'UK' || c === 'UNITED KINGDOM' || c === '英国') {
+      return {
+        country: 'UK',
+        primary: 'Metal',
+        secondary: 'Water',
+        elem: 'Metal',
+        nameZh: '英国 · 西方庚辛金与大西洋坎水',
+        nameEn: 'UK · Western Metal & Atlantic Water',
+        descZh: '西方庚辛白金律法正义，融通大西洋坎水信义金融，制度沉淀极深，兼具智谋涵养。',
+        descEn: 'Western Metal institutional rule of law coupled with deep Atlantic Water financial stewardship.'
+      };
+    }
+    if (c === 'USA' || c === 'US' || c === '美国') {
+      return {
+        country: 'USA',
+        primary: 'Metal',
+        secondary: 'Fire',
+        elem: 'Metal',
+        nameZh: '美国 · 西方庚辛金与丙丁离火',
+        nameEn: 'USA · Western Metal & Southern Fire',
+        descZh: '西方金锐之气与现代商业开拓离火激荡，崇尚资本博弈与颠覆式技术突破。',
+        descEn: 'Western Metal sharpness coupled with dynamic commercial Fire, driving aggressive frontier breakthroughs.'
+      };
+    }
+    if (c === 'CANADA' || c === '加拿大') {
+      return {
+        country: 'Canada',
+        primary: 'Water',
+        secondary: 'Metal',
+        elem: 'Water',
+        nameZh: '加拿大 · 北方壬癸水与西风白金',
+        nameEn: 'Canada · Northern Water & Western Metal',
+        descZh: '北方浩瀚坎水之气，涵养自然资源与稳健养老金融，社会安全网宽厚，利于静心蓄力。',
+        descEn: 'Expansive Northern Water energy nurturing steady natural wealth, institutional pensions, and peaceful living.'
+      };
+    }
+    if (c === 'SINGAPORE' || c === '新加坡') {
+      return {
+        country: 'Singapore',
+        primary: 'Fire',
+        secondary: 'Wood',
+        elem: 'Fire',
+        nameZh: '新加坡 · 赤道纯阳离火与生发甲木',
+        nameEn: 'Singapore · Equatorial Fire & Vibrant Wood',
+        descZh: '赤道极盛离火之明，汇通东南亚雨林甲木生发之机，资本流转神速，规制井然。',
+        descEn: 'Equatorial radiant Fire coupled with Southeast Asian Wood growth, command high-velocity capital governance.'
+      };
+    }
+
+    return {
+      country: countryKey || 'Global',
+      primary: 'Earth',
+      secondary: 'Metal',
+      elem: 'Earth',
+      nameZh: '全球枢纽 · 中和戊己土',
+      nameEn: 'Global Nexus · Balanced Earth',
+      descZh: '中央中和戊己土之场能，稳健承载各方气机流转。',
+      descEn: 'Balanced Central Earth energy providing a grounded matrix for multi-regional mobility.'
+    };
+  }
+
+  /**
+   * Geographic five-element lookup helper (City)
    */
   static getCityElement(country, cityKey) {
     const c = (country || 'UK').toUpperCase();
@@ -218,9 +296,9 @@ class ScenarioSimulatorEngine {
     // USA
     if (c === 'USA' || c === 'US' || c === '美国') {
       if (city.includes('new york') || city.includes('boston') || city.includes('washington') || city.includes('philadelphia') || city.includes('纽约') || city.includes('波士顿')) return { elem: 'Wood', nameZh: '东方甲乙木', nameEn: 'Eastern Wood' };
-      if (city.includes('miami') || city.includes('houston') || city.includes('atlanta') || city.includes('迈阿密') || city.includes('休斯顿')) return { elem: 'Fire', nameZh: '南方丙丁火', nameEn: 'Southern Fire' };
+      if (city.includes('miami') || city.includes('houston') || city.includes('atlanta') || city.includes('austin') || city.includes('迈阿密') || city.includes('休斯顿') || city.includes('奥斯汀')) return { elem: 'Fire', nameZh: '南方丙丁火', nameEn: 'Southern Fire' };
       if (city.includes('los angeles') || city.includes('san francisco') || city.includes('seattle') || city.includes('旧金山') || city.includes('洛杉矶')) return { elem: 'Metal', nameZh: '西方庚辛金', nameEn: 'Western Metal' };
-      if (city.includes('minneapolis') || city.includes('detroit') || city.includes('chicago north') || city.includes('芝加哥北')) return { elem: 'Water', nameZh: '北方壬癸水', nameEn: 'Northern Water' };
+      if (city.includes('minneapolis') || city.includes('detroit') || city.includes('chicago north') || city.includes('芝加哥')) return { elem: 'Water', nameZh: '北方壬癸水', nameEn: 'Northern Water' };
       return { elem: 'Earth', nameZh: '中央戊己土', nameEn: 'Central Earth' };
     }
 
@@ -233,7 +311,47 @@ class ScenarioSimulatorEngine {
       return { elem: 'Wood', nameZh: '东方甲乙木', nameEn: 'Eastern Wood' };
     }
 
+    // SINGAPORE
+    if (c === 'SINGAPORE' || c === '新加坡') {
+      return { elem: 'Fire', nameZh: '南方丙丁火', nameEn: 'Southern Fire' };
+    }
+
     return { elem: 'Earth', nameZh: '中和戊己土', nameEn: 'Balanced Earth' };
+  }
+
+  /**
+   * Evaluates Combined Country + City Energy Synthesis against Day Master & Favorable/Unfavorable Elements
+   */
+  static evaluateCombinedGeoEnergy(countryKey, cityKey, dm, dmElem, favorableElems, unfavorableElems, isEn = false) {
+    const countryMeta = this.getCountryElement(countryKey);
+    const cityMeta = this.getCityElement(countryKey, cityKey);
+
+    let score = 60;
+    if (favorableElems.includes(cityMeta.elem)) score += 18;
+    else if (unfavorableElems.includes(cityMeta.elem)) score -= 12;
+
+    if (favorableElems.includes(countryMeta.primary)) score += 14;
+    else if (unfavorableElems.includes(countryMeta.primary)) score -= 8;
+
+    if (favorableElems.includes(countryMeta.secondary)) score += 8;
+
+    score = Math.max(30, Math.min(98, score));
+
+    const badgeZh = score >= 85 ? '极高共振 · 天乙贵地' : score >= 70 ? '良性生旺 · 磁场护持' : '耗损克抑 · 需设屏障';
+    const badgeEn = score >= 85 ? 'Prime Resonance · Vital Field' : score >= 70 ? 'Harmonious Growth · Supportive' : 'Frictional Strain · Protective Buffer Needed';
+
+    const descZh = `国度场能属【${countryMeta.nameZh}】，城市坐落于【${cityMeta.nameZh}】。此双重视角五行交感${score >= 75 ? '深度契合本命喜用神，磁场自带赋能催化效应。' : '对日主形成克泄之势，需结合环境布局补益平衡。'}`;
+    const descEn = `National field is [${countryMeta.nameEn}], urban sector aligns with [${cityMeta.nameEn}]. This dual-tier matrix ${score >= 75 ? 'resonates strongly with your favorable elements, acting as an energetic catalyst.' : 'induces friction on your Day Master, calling for deliberate boundary management.'}`;
+
+    return {
+      score,
+      badgeZh,
+      badgeEn,
+      descZh,
+      descEn,
+      countryMeta,
+      cityMeta
+    };
   }
 
   /**
@@ -266,27 +384,298 @@ class ScenarioSimulatorEngine {
   }
 
   /**
+   * 考察 行业适配度跟城市产业规划的重叠度 (Industry Fit & City Planning Overlap, the higher the overlap, the higher the score!)
+   */
+  static evaluateCityStrategicPlanning(countryKey, cityKey, industryKey, opt, isEn = false) {
+    const ct = (cityKey || '').toLowerCase();
+    const ind = industryKey || 'tech_ai';
+
+    // Official City Strategic Planning Clusters Database
+    const cityDatabase = {
+      shenzhen: {
+        clustersZh: '人工智能与具身智能、高频量化与科技金融、高端智能制造与微电子、数字创意出海',
+        clustersEn: 'Embodied AI, Quantitative Fintech, Advanced Microelectronics & Digital Creative',
+        pillars: {
+          'tech_ai': { overlap: 97, tierZh: '战略第一核心支柱 (97% 重合)', tierEn: 'Primary Strategic Pillar (97% Overlap)', reasonZh: '国家新一代人工智能创新发展试验区，珠三角全链条智能硬件与软硬件闭环首选地。', reasonEn: 'National AI testbed with comprehensive supply chain synergy and rapid commercial velocity.' },
+          'finance_quant': { overlap: 94, tierZh: '战略支柱金融核心 (94% 重合)', tierEn: 'Key Financial Pillar (94% Overlap)', reasonZh: '深交所金融科技创新高地与高频量化私募聚集区，资本周转速度极高。', reasonEn: 'Vibrant financial technology hub with intense capital velocity and algorithmic alpha.' },
+          'manufacturing': { overlap: 95, tierZh: '千亿级硬核基石 (95% 重合)', tierEn: 'Cornerstone Manufacturing Cluster (95% Overlap)', reasonZh: '全球最密集精密的智能硬件与先进制造产业链。', reasonEn: 'World-leading precision electronics and smart hardware supply cluster.' },
+          'creative_media': { overlap: 88, tierZh: '重点出海赛道 (88% 重合)', tierEn: 'High-Growth Global Media (88% Overlap)', reasonZh: '跨境数字文化与游戏出海战略集聚区。', reasonEn: 'Global digital entertainment and gaming export ecosystem.' },
+          'academia_research': { overlap: 68, tierZh: '加速追赶中 (68% 重合)', tierEn: 'Developing Research Sector (68% Overlap)', reasonZh: '新型研究型高校加速落地，但基础学术纯理论积淀较京沪仍处于成长期。', reasonEn: 'Emerging collegiate infrastructure, with heavier tilt toward immediate industry application.' },
+          'civil_admin': { overlap: 60, tierZh: '常规行政职能 (60% 重合)', tierEn: 'Standard Administrative Function (60% Overlap)', reasonZh: '民营经济与市场化主导，纯体制内行政资源密度非首位。', reasonEn: 'Market-dominated economy where civil bureaucracy holds lower relative leverage.' }
+        }
+      },
+      beijing: {
+        clustersZh: '国家级战略科技实验室、纯理论学术智库、新一代通用人工智能、大飞机与航天制造、体制机关管治',
+        clustersEn: 'National Laboratories, Theoretical Thinktanks, Sovereign AI, Aerospace & State Governance',
+        pillars: {
+          'academia_research': { overlap: 98, tierZh: '国家最高学统殿堂 (98% 重合)', tierEn: 'Supreme National Academic Apex (98% Overlap)', reasonZh: '清北中科院领衔，全国最密集战略级实验室与国家重点科研专项基金。', reasonEn: 'Top-tier university nexus commanding peak state funding and international prestige.' },
+          'tech_ai': { overlap: 96, tierZh: '国家大模型战略重镇 (96% 重合)', tierEn: 'National Sovereign AI Nexus (96% Overlap)', reasonZh: '智源研究院与海淀高校算法走廊，大模型基础理论创新全国首屈一指。', reasonEn: 'Unrivaled concentration of foundational AI researchers and theoretical algorithm talent.' },
+          'civil_admin': { overlap: 98, tierZh: '全国治理威权中枢 (98% 重合)', tierEn: 'National Governance Core (98% Overlap)', reasonZh: '中央国家机关部委、最高监管机构与央企总部聚集，正官正印权能极重。', reasonEn: 'Supreme governance capital commanding policy regulation and state enterprise direction.' },
+          'finance_quant': { overlap: 80, tierZh: '金融监管与主权投资 (80% 重合)', tierEn: 'Sovereign Regulatory Finance (80% Overlap)', reasonZh: '金融街以监管和主权基金为主，高频量化交易自由度受合规约束较高。', reasonEn: 'Focuses on state policy banking and regulatory compliance rather than speculative alpha.' },
+          'manufacturing': { overlap: 85, tierZh: '高端航天军工制造 (85% 重合)', tierEn: 'Strategic Aerospace & Defense (85% Overlap)', reasonZh: '航天军工与战略高端重型装备集聚。', reasonEn: 'Specializes in high-security aerospace and strategic defense hardware.' },
+          'creative_media': { overlap: 82, tierZh: '主流影视文化中心 (82% 重合)', tierEn: 'National Cultural Capital (82% Overlap)', reasonZh: '国家广播影视机构与主流舆论传媒源头。', reasonEn: 'National broadcasting and state-level cultural institution headquarters.' }
+        }
+      },
+      london: {
+        clustersZh: '全球宏观对冲基金、底层数理基础AI研发、英美普通法合规、国际艺术与创意出版',
+        clustersEn: 'Global Macro Hedge Funds, Foundational Mathematics/AI, Common Law Compliance & Media',
+        pillars: {
+          'finance_quant': { overlap: 98, tierZh: '全球宏观资本中枢 (98% 重合)', tierEn: 'Global Macro Capital Nexus (98% Overlap)', reasonZh: '全球第一大外汇交易中心与对冲基金之都，跨时区与普通法资产信托体系完备。', reasonEn: 'World-leading FX and macro hedge fund capital governed by English Common Law.' },
+          'tech_ai': { overlap: 96, tierZh: '底层前沿AI算法高地 (96% 重合)', tierEn: 'Foundational AI Theory Hub (96% Overlap)', reasonZh: '以 Google DeepMind、牛剑数理为依托，基础算法研究与科学智能居世界首位。', reasonEn: 'Global epicenter for fundamental algorithm research, anchored by DeepMind and top mathematics.' },
+          'academia_research': { overlap: 95, tierZh: '全球顶级学府集群 (95% 重合)', tierEn: 'Elite Academic Constellation (95% Overlap)', reasonZh: '帝国理工、UCL、LSE与伦敦大学联盟，高被引学者与跨国学术研究网络极密。', reasonEn: 'Dense network of world-class universities and multinational scholarly initiatives.' },
+          'creative_media': { overlap: 92, tierZh: '国际文化与媒介策源地 (92% 重合)', tierEn: 'Global Media & Cultural Source (92% Overlap)', reasonZh: 'BBC、全球顶尖出版集团与现代艺术策展核心。', reasonEn: 'Global media broadcasting, publishing, and vanguard contemporary cultural arts.' },
+          'civil_admin': { overlap: 88, tierZh: '国际仲裁与普通法合规 (88% 重合)', tierEn: 'International Arbitration & Legal (88% Overlap)', reasonZh: '全球商事仲裁第一胜地与严格合规机构。', reasonEn: 'Supreme global dispute arbitration and financial regulatory compliance center.' },
+          'manufacturing': { overlap: 58, tierZh: '轻工业与高端设计 (58% 重合)', tierEn: 'Niche Engineering & Design (58% Overlap)', reasonZh: '重度制造业已外移，侧重概念设计与定制工程。', reasonEn: 'Physical manufacturing largely deindustrialized; focuses on niche engineering.' }
+        }
+      },
+      birmingham: {
+        clustersZh: '先进精密工程制造、临床医学与生命健康、中央行政物流中枢、材料科学应用研发',
+        clustersEn: 'Advanced Precision Engineering, Clinical Medicine, Central Logistics & Applied Materials',
+        pillars: {
+          'manufacturing': { overlap: 96, tierZh: '英国工业与工程制造心脏 (96% 重合)', tierEn: 'UK Industrial & Engineering Heart (96% Overlap)', reasonZh: '英国工业革命发源地，捷豹路虎与先进材料制造的核心大本营。', reasonEn: 'Historic core of British manufacturing, advanced metallurgy, and automotive engineering.' },
+          'academia_research': { overlap: 92, tierZh: '罗素名校与临床治学高地 (92% 重合)', tierEn: 'Russell Group Research Citadel (92% Overlap)', reasonZh: '伯明翰大学医学与先进材料研发底蕴深厚，教职体制极其稳健扎实。', reasonEn: 'Distinguished university anchored by medical breakthroughs and material sciences.' },
+          'civil_admin': { overlap: 86, tierZh: '英格兰地理中枢行政 (86% 重合)', tierEn: 'Central Regional Administration (86% Overlap)', reasonZh: '众多国家机构第二总部迁入地，公职体系稳定，生活能耗比极佳。', reasonEn: 'Key secondary hub for government institutions offering high stability and low friction.' },
+          'tech_ai': { overlap: 74, tierZh: '工业AI与智能物流 (74% 重合)', tierEn: 'Industrial AI & Smart Supply (74% Overlap)', reasonZh: '偏重工业自动化、数字孪生与物流调度算法。', reasonEn: 'Focused on industrial automation, digital twins, and applied supply-chain tech.' },
+          'finance_quant': { overlap: 70, tierZh: '商业银行后台与合规 (70% 重合)', tierEn: 'Commercial Banking Operations (70% Overlap)', reasonZh: '汇丰英国总部所在地，侧重零售金融与中后台业务而非高频投机。', reasonEn: 'UK retail banking operational hub (HSBC UK), focusing on stability over speculation.' },
+          'creative_media': { overlap: 72, tierZh: '区域文化与数字艺术 (72% 重合)', tierEn: 'Regional Creative Arts (72% Overlap)', reasonZh: '中英格兰文化创意孵化基地。', reasonEn: 'Growing regional media ecosystem with active university incubators.' }
+        }
+      },
+      san_francisco: {
+        clustersZh: '生成式大模型前沿研发、全球颠覆性风险投资、脑机接口与前沿芯片设计',
+        clustersEn: 'Generative AI Frontiers, Global Disruptive VC, Neurotech & Semiconductor Design',
+        pillars: {
+          'tech_ai': { overlap: 99, tierZh: '全球AI第一主战场 (99% 重合)', tierEn: 'World Generative AI Epicenter (99% Overlap)', reasonZh: 'OpenAI、Anthropic、谷歌等全球最顶尖大模型算力与先锋工程师圣地。', reasonEn: 'Unrivaled global concentration of frontier AI models, GPUs, and venture capital.' },
+          'finance_quant': { overlap: 93, tierZh: '顶级风投与科技金融 (93% 重合)', tierEn: 'Venture Capital & Tech Banking (93% Overlap)', reasonZh: '沙丘路全球第一风险投资资本与科技并购交易场。', reasonEn: 'Sand Hill Road venture capital powerhouse powering tech equity windfalls.' },
+          'creative_media': { overlap: 90, tierZh: '数字创意与AI生成内容 (90% 重合)', tierEn: 'AI-Generated Content & Digital Media (90% Overlap)', reasonZh: 'AI驱动的生成式媒体、3D虚拟化与硅谷创意先锋。', reasonEn: 'Vanguard of AI-assisted media, digital entertainment, and creative tools.' },
+          'manufacturing': { overlap: 78, tierZh: '芯片架构设计与机器人原型 (78% 重合)', tierEn: 'Silicon Architecture & Robotics (78% Overlap)', reasonZh: '注重芯片架构研发与机器人软件闭环，实体生产多外包。', reasonEn: 'Focuses on fabless semiconductor design and robotics prototyping.' },
+          'academia_research': { overlap: 94, tierZh: '斯坦福伯克利学术双子星 (94% 重合)', tierEn: 'Stanford-Berkeley Academic Apex (94% Overlap)', reasonZh: '世界最高转化率的产学研学术走廊。', reasonEn: 'Unmatched technology transfer rate bridging elite labs to industry dominance.' },
+          'civil_admin': { overlap: 50, tierZh: '弱体制自由市场 (50% 重合)', tierEn: 'Market-Dominated / Low Bureaucracy (50% Overlap)', reasonZh: '高度自由竞争，体制内合规机会相对有限。', reasonEn: 'Hyper-competitive market culture where public administration offers limited leverage.' }
+        }
+      },
+      new_york: {
+        clustersZh: '全球顶级投资银行与二级交易、跨国商业传媒帝国、商业律所巨擘、金融科技量化',
+        clustersEn: 'Investment Banking, Global Media Conglomerates, White-Shoe Law & Quant Tech',
+        pillars: {
+          'finance_quant': { overlap: 99, tierZh: '全球资本第一交锋场 (99% 重合)', tierEn: 'Global Financial Apex (99% Overlap)', reasonZh: '华尔街集聚高盛、摩根大通、黑石与千亿级对冲基金，资本回报天花板极高。', reasonEn: 'Wall Street epicenter of global investment banking, private equity, and hedge funds.' },
+          'creative_media': { overlap: 95, tierZh: '世界传媒与广告出版总署 (95% 重合)', tierEn: 'Global Media & Advertising Empire (95% Overlap)', reasonZh: '麦迪逊大道广告业、时代华纳与顶级报业集团之核心。', reasonEn: 'World capital of advertising, global publishing houses, and television broadcast media.' },
+          'civil_admin': { overlap: 90, tierZh: '联合国与跨国法律规范 (90% 重合)', tierEn: 'UN & Global Legal Corporate Hub (90% Overlap)', reasonZh: '联合国总部、顶级白鞋律所与国际商业合规权威。', reasonEn: 'United Nations headquarters and prestigious international corporate law firms.' },
+          'tech_ai': { overlap: 92, tierZh: '金融科技与硅巷AI应用 (92% 重合)', tierEn: 'Fintech & Silicon Alley AI (92% Overlap)', reasonZh: '硅巷聚焦企业级AI、金融分析模型与高价值B端软件。', reasonEn: 'Silicon Alley focused on enterprise AI solutions and high-margin financial tech.' },
+          'academia_research': { overlap: 90, tierZh: '哥大纽大世界级学统 (90% 重合)', tierEn: 'Columbia & NYU Elite Scholarly Hub (90% Overlap)', reasonZh: '常春藤名校与顶尖医学法学教研网络。', reasonEn: 'Ivy League scholarly heritage commanding supreme professional school recognition.' },
+          'manufacturing': { overlap: 45, tierZh: '非实体生产型城市 (45% 重合)', tierEn: 'Deindustrialized Metropolis (45% Overlap)', reasonZh: '高度服务型与金融型经济，重度制造业基本缺席。', reasonEn: 'Post-industrial service-driven economy with negligible heavy hardware manufacturing.' }
+        }
+      },
+      toronto: {
+        clustersZh: '加拿大五大商业银行、北美AI先锋深度学习高地、全球顶级公共养老金管理',
+        clustersEn: 'Big Five Canadian Banks, North American AI Frontier & Sovereign Pension Portfolios',
+        pillars: {
+          'finance_quant': { overlap: 96, tierZh: '加拿大第一金融湾街 (96% 重合)', tierEn: 'Bay Street Financial Fortress (96% Overlap)', reasonZh: '加拿大五大行与全球最大的公共养老金管理集群，稳健与抗风险能力极强。', reasonEn: 'Anchored by the Big Five banks and massive institutional pensions (CPPIB, OTPP).' },
+          'tech_ai': { overlap: 94, tierZh: '图灵奖深度学习发源地 (94% 重合)', tierEn: 'Deep Learning Pioneer Nexus (94% Overlap)', reasonZh: 'Hinton教授与Vector Institute所在地，学术研究与技术落地高度融通。', reasonEn: 'Cradle of deep learning (Geoffrey Hinton, Vector Institute) with top research talent.' },
+          'academia_research': { overlap: 93, tierZh: '多伦多大学世界顶级科研 (93% 重合)', tierEn: 'University of Toronto Global Hub (93% Overlap)', reasonZh: '加拿大首屈一指研究型大学，生命医学与计算机学科享誉全球。', reasonEn: 'Canada\'s flagship research university excelling in biomedical sciences and computing.' },
+          'civil_admin': { overlap: 88, tierZh: '联邦与安省经济中枢 (88% 重合)', tierEn: 'Provincial & Federal Economic Hub (88% Overlap)', reasonZh: '合规治理稳健，公共机构运作高效。', reasonEn: 'Stable public sector employment backed by robust social safety nets.' },
+          'manufacturing': { overlap: 80, tierZh: '智能汽车与精密工程 (80% 重合)', tierEn: 'Advanced Automotive Engineering (80% Overlap)', reasonZh: '安大略省汽车制造走廊之核心支撑。', reasonEn: 'Key node in the Ontario-Michigan automotive and advanced parts supply corridor.' },
+          'creative_media': { overlap: 85, tierZh: '北美重要影视多媒体中心 (85% 重合)', tierEn: 'TIFF & Major Film Production Hub (85% Overlap)', reasonZh: '多伦多国际电影节与北美第三大影视制作基地。', reasonEn: 'Third largest screen-based production industry in North America.' }
+        }
+      }
+    };
+
+    // Find matched city configuration or fall back gracefully
+    let matchedCityKey = null;
+    for (const k in cityDatabase) {
+      if (ct.includes(k) || (k === 'san_francisco' && (ct.includes('sf') || ct.includes('silicon') || ct.includes('旧金山') || ct.includes('硅谷'))) ||
+          (k === 'beijing' && ct.includes('北京')) ||
+          (k === 'shenzhen' && ct.includes('深圳')) ||
+          (k === 'london' && ct.includes('伦敦')) ||
+          (k === 'birmingham' && ct.includes('伯明翰')) ||
+          (k === 'new_york' && (ct.includes('ny') || ct.includes('纽约'))) ||
+          (k === 'toronto' && ct.includes('多伦多'))) {
+        matchedCityKey = k;
+        break;
+      }
+    }
+
+    const cityEntry = matchedCityKey ? cityDatabase[matchedCityKey] : null;
+    const defaultClustersZh = '现代综合服务业、科技创新孵化、商业流通与城市保障';
+    const defaultClustersEn = 'Modern Integrated Services, Technology Incubators & Urban Commerce';
+
+    if (cityEntry && cityEntry.pillars[ind]) {
+      const p = cityEntry.pillars[ind];
+      return {
+        overlapScore: p.overlap,
+        levelZh: p.tierZh,
+        levelEn: p.tierEn,
+        reasonZh: p.reasonZh,
+        reasonEn: p.reasonEn,
+        clustersZh: cityEntry.clustersZh,
+        clustersEn: cityEntry.clustersEn
+      };
+    }
+
+    // Default heuristic for generalized cities
+    const genericOverlap = 72;
+    return {
+      overlapScore: genericOverlap,
+      levelZh: '常规支柱产业布局 (72% 战略重合)',
+      levelEn: 'Standard Strategic Industrial Alignment (72% Overlap)',
+      reasonZh: '行业符合该城市常规经济发展脉络，具备标准商业协同与人才供给支撑。',
+      reasonEn: 'Sector aligns with standard municipal economic growth and typical talent pool support.',
+      clustersZh: defaultClustersZh,
+      clustersEn: defaultClustersEn
+    };
+  }
+
+  /**
+   * Extract or Calculate User's Top 3 Dominant Patterns (三大主导格局)
+   */
+  static getTop3Patterns(bazi, isEn = false) {
+    if (bazi && Array.isArray(bazi.top3Patterns) && bazi.top3Patterns.length >= 3) {
+      return bazi.top3Patterns;
+    }
+    if (bazi && Array.isArray(bazi.patterns) && bazi.patterns.length > 0) {
+      const sorted = [...bazi.patterns].sort((a, b) => (b.weightPct || 0) - (a.weightPct || 0));
+      return sorted.slice(0, 3).map((p, idx) => ({
+        rank: idx + 1,
+        nameZh: p.name || p.nameZh || '正官格',
+        nameEn: p.nameEn || (typeof PortraitEngine !== 'undefined' && PortraitEngine.getPatternEn ? PortraitEngine.getPatternEn(p.name) : 'Direct Officer Pattern'),
+        weightPct: p.weightPct || (idx === 0 ? 38 : (idx === 1 ? 28 : 18))
+      }));
+    }
+    if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.diagnosePatterns === 'function' && bazi) {
+      try {
+        const pats = PortraitEngine.diagnosePatterns(bazi, bazi.vigor);
+        if (Array.isArray(pats) && pats.length > 0) {
+          const sorted = [...pats].sort((a, b) => (b.weightPct || 0) - (a.weightPct || 0));
+          return sorted.slice(0, 3).map((p, idx) => ({
+            rank: idx + 1,
+            nameZh: p.name || p.nameZh || '正官格',
+            nameEn: p.nameEn || (typeof PortraitEngine.getPatternEn === 'function' ? PortraitEngine.getPatternEn(p.name) : 'Direct Officer Pattern'),
+            weightPct: p.weightPct || (idx === 0 ? 38 : (idx === 1 ? 28 : 18))
+          }));
+        }
+      } catch (e) {}
+    }
+
+    // Default canonical pattern triad
+    return [
+      { rank: 1, nameZh: '七杀格 (偏官统帅 · 战将突围)', nameEn: 'Seven Killings Pattern (Vanguard Commander)', weightPct: 38 },
+      { rank: 2, nameZh: '食神格 (技艺深研 · 秀气吐秀)', nameEn: 'Eating God Pattern (Deep Craft & Creative Output)', weightPct: 28 },
+      { rank: 3, nameZh: '偏财格 (商业变现 · 跨界操盘)', nameEn: 'Indirect Wealth Pattern (Commercial Dealmaker)', weightPct: 18 }
+    ];
+  }
+
+  /**
+   * 与用户自身命局三大主导格局深度联动评量 (Calculate alignment scores against User's Top 3 Patterns)
+   */
+  static evaluateTop3PatternsAlignment(top3Patterns, opt, geoEnergy, planningOverlap, isEn = false) {
+    const role = opt.role || 'specialist';
+    const mgr = opt.manager || 'resource';
+    const ind = opt.industry || 'tech_ai';
+
+    const patternsDetail = top3Patterns.map((pat, idx) => {
+      const pName = pat.nameZh || pat.name || '';
+      let score = 65;
+      let noteZh = '';
+      let noteEn = '';
+
+      if (/七杀|偏官|羊刃|阳刃|武职/.test(pName)) {
+        if (role === 'martial' || role === 'executive') score += 18;
+        if (mgr === 'killings' || mgr === 'wealth') score += 14;
+        if (ind === 'finance_quant' || ind === 'tech_ai') score += 10;
+        if (mgr === 'resource') score -= 8;
+        if (role === 'civil') score -= 12;
+
+        noteZh = score >= 80 ? '杀伐果断，高压对抗场能深度契合，极利建功立业。' : '七杀锐气受平淡行政与过度温和环境压制，难以施展攻坚潜质。';
+        noteEn = score >= 80 ? 'Sharp assertiveness thrives under intense accountability, translating friction into leverage.' : 'Aggressive momentum diluted by passive routine, constraining breakthrough potential.';
+      } else if (/食神|伤官|秀气|吐秀/.test(pName)) {
+        if (role === 'specialist' || role === 'creative') score += 20;
+        if (mgr === 'resource' || mgr === 'officer') score += 10;
+        if (ind === 'academia_research' || ind === 'tech_ai' || ind === 'creative_media') score += 12;
+        if (mgr === 'killings') score -= 14;
+
+        noteZh = score >= 80 ? '独门技艺与心流深度沉浸，专业护城河不断筑牢。' : '微观细节被上级过度严苛问责打断，灵感易遭损耗。';
+        noteEn = score >= 80 ? 'Deep craft immersion and intellectual autonomy compound into an unassailable technical moat.' : 'Creative focus fragmented by authoritarian micromanagement, draining mental stamina.';
+      } else if (/偏财|正财|财格/.test(pName)) {
+        if (role === 'executive' || role === 'martial') score += 16;
+        if (mgr === 'wealth' || mgr === 'rob_wealth') score += 14;
+        if (ind === 'finance_quant' || ind === 'creative_media') score += 14;
+        if (role === 'civil' && ind === 'civil_admin') score -= 10;
+
+        noteZh = score >= 80 ? '商业变现敏锐度极高，资金与业绩杠杆催化财气丰盈。' : '商业变现通道狭窄，难以发挥资源调度与财富杠杆天赋。';
+        noteEn = score >= 80 ? 'Acute commercial instinct synergizes with deal velocity, maximizing capital compounding.' : 'Constrained commercial scope dampens resource leverage and financial upside.';
+      } else if (/正官|官印|合规|顺德/.test(pName)) {
+        if (role === 'civil' || role === 'executive') score += 18;
+        if (mgr === 'officer' || mgr === 'resource') score += 16;
+        if (ind === 'civil_admin' || ind === 'finance_quant') score += 12;
+        if (mgr === 'rob_wealth') score -= 12;
+
+        noteZh = score >= 80 ? '规制严明、名正言顺，阶梯式稳步晋升通道畅通。' : '缺乏严整阶梯与体制程序保障，同侪乱象易动摇秩序感。';
+        noteEn = score >= 80 ? 'Structured institutional clarity and fiduciary order provide frictionless ladder mobility.' : 'Disorderly competition erodes organizational stability, dampening steady compounding.';
+      } else if (/印绶|正印|偏印/.test(pName)) {
+        if (role === 'specialist' || role === 'civil') score += 18;
+        if (mgr === 'resource' || mgr === 'officer') score += 18;
+        if (ind === 'academia_research' || ind === 'civil_admin') score += 15;
+        if (mgr === 'killings' || mgr === 'rob_wealth') score -= 16;
+
+        noteZh = score >= 80 ? '温和护持、学术威权与治学安全感充裕，名望日隆。' : '狼性淘汰与高频问责重击心智，破坏学术与深耕专注度。';
+        noteEn = score >= 80 ? 'Nurturing safety and academic prestige safeguard deep contemplation, elevating scholarly standing.' : 'Cutthroat peer rivalry destabilizes inner peace, hindering scholarly depth.';
+      } else {
+        // Generic pattern
+        if (role === 'specialist') score += 10;
+        if (mgr === 'resource') score += 8;
+        noteZh = '气数平稳协同，依循既定轨道厚积薄发。';
+        noteEn = 'Evenly aligned trajectory compounding steadily along established lines.';
+      }
+
+      score = Math.max(30, Math.min(98, score));
+
+      const statusZh = score >= 85 ? '极高激活 · 顺风破局' : score >= 70 ? '稳健承载 · 平稳运转' : '受制约束 · 潜能压制';
+      const statusEn = score >= 85 ? 'Highly Activated · Momentum Surge' : score >= 70 ? 'Stable Support · Steady Execution' : 'Constrained · Latent Potential Suppressed';
+
+      const detailItem = {
+        rank: pat.rank || (idx + 1),
+        name: isEn ? pat.nameEn : (pat.nameZh || pat.name),
+        nameEn: pat.nameEn,
+        weightPct: pat.weightPct,
+        score,
+        status: isEn ? statusEn : statusZh,
+        statusEn,
+        comment: isEn ? noteEn : noteZh,
+        commentEn: noteEn
+      };
+      if (!isEn) {
+        detailItem.nameZh = pat.nameZh;
+        detailItem.statusZh = statusZh;
+        detailItem.commentZh = noteZh;
+      }
+      return detailItem;
+    });
+
+    // Weighted average: Pattern 1 (50%), Pattern 2 (30%), Pattern 3 (20%)
+    const p1 = patternsDetail[0] ? patternsDetail[0].score : 70;
+    const p2 = patternsDetail[1] ? patternsDetail[1].score : 70;
+    const p3 = patternsDetail[2] ? patternsDetail[2].score : 70;
+    const compositePatternScore = Math.round(p1 * 0.50 + p2 * 0.30 + p3 * 0.20);
+
+    const badgeZh = compositePatternScore >= 85 ? '三大格局全面共鸣' : compositePatternScore >= 72 ? '格局主辅基本承载' : '主导格局明显受阻';
+    const badgeEn = compositePatternScore >= 85 ? 'Triad Patterns Fully Activated' : compositePatternScore >= 72 ? 'Patterns Adequately Supported' : 'Governing Pattern Constrained';
+
+    return {
+      score: compositePatternScore,
+      badgeZh,
+      badgeEn,
+      patternsDetail
+    };
+  }
+
+  /**
    * Simulate a single option against native chart
    */
-  static evaluateSingleOption(opt, bazi, isEn = false) {
+  static evaluateSingleOption(opt, bazi, isEn = false, top3Patterns = null) {
     const dm = bazi.dayMaster || '甲';
     const dmElem = bazi.pillars?.day?.stemElement || 'Wood';
     const vigorScore = bazi.vigorScore || 50;
     const isWeak = (vigorScore < 50);
 
-    const cityMeta = this.getCityElement(opt.country, opt.city);
-    const indMeta = this.getIndustryElements(opt.industry);
-    const mgrMeta = this.getManagerDynamic(opt.manager);
-
-    // Look up Institution and Enterprise
-    const matchedInst = this.findInstitution(opt.institution || opt.institutionId || opt.title);
-    const matchedEnt = this.findEnterprise(opt.enterprise || opt.enterpriseId || opt.title);
-    const microEcosystem = this.getMicroEcosystemAnalysis(opt.country, opt.city, opt.industry, isEn);
-
-    // Calculate Elemental Affinity (用神共振)
-    let favorableElems = [];
-    let unfavorableElems = [];
-
+    // 1. Five elements cycles
     const elemCycle = {
       'Wood': { generates: 'Fire', generatedBy: 'Water', controls: 'Earth', controlledBy: 'Metal' },
       'Fire': { generates: 'Earth', generatedBy: 'Wood', controls: 'Metal', controlledBy: 'Water' },
@@ -294,9 +683,10 @@ class ScenarioSimulatorEngine {
       'Metal': { generates: 'Water', generatedBy: 'Earth', controls: 'Wood', controlledBy: 'Fire' },
       'Water': { generates: 'Wood', generatedBy: 'Metal', controls: 'Fire', controlledBy: 'Earth' }
     };
-
     const cycle = elemCycle[dmElem] || elemCycle['Wood'];
 
+    let favorableElems = [];
+    let unfavorableElems = [];
     if (isWeak) {
       favorableElems = [cycle.generatedBy, dmElem]; // Resource + Companion
       unfavorableElems = [cycle.controlledBy, cycle.controls, cycle.generates]; // Officer, Wealth, Output
@@ -305,47 +695,41 @@ class ScenarioSimulatorEngine {
       unfavorableElems = [cycle.generatedBy, dmElem]; // Resource + Companion
     }
 
-    let affinityBase = 55;
-    if (favorableElems.includes(cityMeta.elem)) affinityBase += 15;
-    if (unfavorableElems.includes(cityMeta.elem)) affinityBase -= 12;
+    // 2. Country + City Five-Element Energy
+    const geoEnergy = this.evaluateCombinedGeoEnergy(opt.country, opt.city, dm, dmElem, favorableElems, unfavorableElems, isEn);
+    const cityMeta = geoEnergy.cityMeta;
+    const countryMeta = geoEnergy.countryMeta;
 
-    if (favorableElems.includes(indMeta.primary)) affinityBase += 18;
-    else if (unfavorableElems.includes(indMeta.primary)) affinityBase -= 10;
+    // 3. Industry & Strategic Planning Overlap (the higher the overlap, the higher the score!)
+    const indMeta = this.getIndustryElements(opt.industry);
+    const planningOverlap = this.evaluateCityStrategicPlanning(opt.country, opt.city, opt.industry, opt, isEn);
 
-    if (favorableElems.includes(indMeta.secondary)) affinityBase += 8;
+    // 4. Job Role & Manager Leadership Dynamic
+    const mgrMeta = this.getManagerDynamic(opt.manager);
+    let roleSupervisorSynergy = 65;
+    if (opt.role === 'specialist' && opt.manager === 'resource') roleSupervisorSynergy = 94;
+    else if (opt.role === 'martial' && (opt.manager === 'killings' || opt.manager === 'wealth')) roleSupervisorSynergy = 92;
+    else if (opt.role === 'executive' && (opt.manager === 'officer' || opt.manager === 'wealth')) roleSupervisorSynergy = 88;
+    else if (opt.role === 'civil' && (opt.manager === 'officer' || opt.manager === 'resource')) roleSupervisorSynergy = 90;
+    else if (opt.role === 'specialist' && opt.manager === 'killings') roleSupervisorSynergy = 58;
 
-    // Institution affinity bonus
-    if (matchedInst) {
-      if (favorableElems.includes(matchedInst.elementalFocus.primary)) affinityBase += 8;
-      if (matchedInst.qsRank <= 10) affinityBase += 6;
-      else if (matchedInst.qsRank <= 50) affinityBase += 4;
-    }
+    // 5. Look up Institution and Enterprise
+    const matchedInst = this.findInstitution(opt.institution || opt.institutionId || opt.title);
+    const matchedEnt = this.findEnterprise(opt.enterprise || opt.enterpriseId || opt.title);
+    const microEcosystem = this.getMicroEcosystemAnalysis(opt.country, opt.city, opt.industry, isEn);
 
-    // Enterprise elemental field match
-    if (matchedEnt) {
-      if (favorableElems.includes(matchedEnt.elementalField.primary)) affinityBase += 7;
-      if (favorableElems.includes(matchedEnt.elementalField.secondary)) affinityBase += 4;
-    }
+    // 6. User's Top 3 Dominant Patterns Alignment
+    const patternsTriad = top3Patterns || this.getTop3Patterns(bazi, isEn);
+    const patternAlignment = this.evaluateTop3PatternsAlignment(patternsTriad, opt, geoEnergy, planningOverlap, isEn);
 
-    const affinityRate = Math.min(96, Math.max(25, affinityBase));
-
-    // Calculate Friction / Mental Drain Rate (心智能量损耗率)
-    let frictionBase = 40;
-    frictionBase += mgrMeta.pressure;
-
-    if (isWeak && (opt.manager === 'killings' || opt.manager === 'rob_wealth')) {
-      frictionBase += 20;
-    }
-    if (isWeak && unfavorableElems.includes(cityMeta.elem)) {
-      frictionBase += 12;
-    }
-    if (!isWeak && opt.manager === 'resource') {
-      frictionBase += 10;
-    }
+    // 7. Calculate Mental Friction Rate (心智能耗与内耗率)
+    let frictionBase = 40 + mgrMeta.pressure;
+    if (isWeak && (opt.manager === 'killings' || opt.manager === 'rob_wealth')) frictionBase += 20;
+    if (isWeak && unfavorableElems.includes(cityMeta.elem)) frictionBase += 10;
+    if (!isWeak && opt.manager === 'resource') frictionBase += 8;
     if (opt.role === 'martial' && isWeak) frictionBase += 15;
     if (opt.role === 'specialist' && isWeak) frictionBase -= 10;
 
-    // Enterprise culture impact on friction
     if (matchedEnt) {
       if (isWeak && (matchedEnt.corporateCultureZh.includes('七杀') || matchedEnt.corporateCultureZh.includes('赛马') || matchedEnt.corporateCultureZh.includes('高压'))) {
         frictionBase += 10;
@@ -353,56 +737,62 @@ class ScenarioSimulatorEngine {
         frictionBase -= 8;
       }
     }
-
     const frictionRate = Math.min(95, Math.max(15, frictionBase));
 
-    // Calculate 3-Year Potential Rate (三年爆发潜力)
-    let potentialBase = 50 + mgrMeta.breakthrough;
-    if (favorableElems.includes(indMeta.primary)) potentialBase += 15;
-    if (favorableElems.includes(cityMeta.elem)) potentialBase += 10;
-    if (frictionRate > 75) potentialBase -= 15;
+    // 8. Backward-compatible Affinity and Potential
+    let affinityBase = geoEnergy.score;
+    if (favorableElems.includes(indMeta.primary)) affinityBase += 10;
+    const affinityRate = Math.min(96, Math.max(25, affinityBase));
 
-    // Institution halo boost to potential
-    if (matchedInst) {
-      if (matchedInst.qsRank <= 20) potentialBase += 12;
-      else if (matchedInst.qsRank <= 100) potentialBase += 8;
-    }
+    let potentialBase = 50 + mgrMeta.breakthrough + (planningOverlap.overlapScore * 0.35);
+    if (frictionRate > 75) potentialBase -= 12;
+    if (matchedInst) potentialBase += 8;
+    if (matchedEnt) potentialBase += 8;
+    const potentialRate = Math.min(95, Math.max(25, Math.round(potentialBase)));
 
-    // Enterprise Fortune 500 standing boost
-    if (matchedEnt) {
-      potentialBase += 10;
-    }
+    // 9. Comprehensive Composite Score
+    // Weight breakdown:
+    // - 20% Country + City Five-Element Energy (geoEnergy.score)
+    // - 25% Industry Fit & City Strategic Planning Overlap (planningOverlap.overlapScore)
+    // - 30% User's Top 3 Dominant Patterns Alignment (patternAlignment.score)
+    // - 15% Job Role & Supervisor Synergy (roleSupervisorSynergy)
+    // - 10% Low Cognitive Friction (100 - frictionRate)
+    const compositeScore = Math.round(
+      (geoEnergy.score * 0.20) +
+      (planningOverlap.overlapScore * 0.25) +
+      (patternAlignment.score * 0.30) +
+      (roleSupervisorSynergy * 0.15) +
+      ((100 - frictionRate) * 0.10)
+    );
+    const finalScore = Math.min(98, Math.max(30, compositeScore));
 
-    const potentialRate = Math.min(95, Math.max(25, potentialBase));
-
-    // Composite Final Score (0 - 100)
-    const rawScore = (affinityRate * 0.40) + (potentialRate * 0.40) + ((100 - frictionRate) * 0.20);
-    const finalScore = Math.round(Math.min(98, Math.max(30, rawScore)));
-
-    // Verdict Tag & Strategic Notes
+    // Verdict Tag
     let verdictTagZh = '';
     let verdictTagEn = '';
-    if (finalScore >= 85) {
-      verdictTagZh = '🏆 强烈推荐 · 天命共振主场';
-      verdictTagEn = '🏆 Highly Recommended · Prime Resonance';
-    } else if (finalScore >= 72) {
-      verdictTagZh = '⚖️ 稳健备选 · 需设心理防火墙';
-      verdictTagEn = '⚖️ Viable Alternative · Guard Boundaries';
+    if (finalScore >= 86) {
+      verdictTagZh = '🏆 强烈推荐 · 天命与规划双重共振';
+      verdictTagEn = '🏆 Highly Recommended · Twin Resonance';
+    } else if (finalScore >= 74) {
+      verdictTagZh = '⚖️ 稳健备选 · 需护持核心边界';
+      verdictTagEn = '⚖️ Viable Choice · Protect Core Boundaries';
     } else {
-      verdictTagZh = '⚠️ 慎选赛道 · 易现能量过载透支';
-      verdictTagEn = '⚠️ Caution · High Energy Drain Risk';
+      verdictTagZh = '⚠️ 慎选路径 · 产业规划与命格错位';
+      verdictTagEn = '⚠️ Caution · Planning & Natal Mismatch';
     }
 
+    // Comprehensive Notes Breakdown
     const notesZh = [
-      `【地缘与赛道五行】：目标城市坐落于【${cityMeta.nameZh}】，行业依托【${indMeta.nameZh}】。此组合${favorableElems.includes(cityMeta.elem) ? '深度契合本命喜用神，地缘磁场自带赋能加速效应。' : '对日主形成克泄之势，需主动通过空间风水与作息进行补益平衡。'}`,
-      `【人际与领导力博弈】：直属上司呈现【${mgrMeta.nameZh}】风格。${isWeak ? '身弱之造需严防过度情绪消耗，务必依《荣枯鉴》建立“公事公办、延时拒绝”的人际心理隔离带。' : '身旺之造正宜借助严苛标准打磨心性，以攻坚硬仗奠定不可替代之核心威权。'}`,
-      `【生态位心流承载】：岗位定位于【${opt.roleTitle || (opt.role === 'specialist' ? '单一任务技术专家' : opt.role === 'executive' ? '全局操盘统帅' : opt.role === 'martial' ? '一线业务武职开拓' : '文职行政综合事务')}】。${opt.role === 'specialist' ? '深研技术细节可构筑最高防御护城河，心流闭环最稳。' : '务必注重团队协同与向上对齐，防范孤军深入。'}`
+      `【国度与城市五行场能】：${geoEnergy.descZh}`,
+      `【城市规划与产业重叠度】：目标赛道重叠度达 ${planningOverlap.overlapScore}%（${planningOverlap.levelZh}）。${planningOverlap.reasonZh}`,
+      `【三大主导格局联动评量】：${patternAlignment.badgeZh}（综合契合度 ${patternAlignment.score}分）。第一主格局【${patternsTriad[0]?.nameZh}】在当前路径下【${patternAlignment.patternsDetail[0]?.statusZh}】。`,
+      `【目标岗位与直属上司生态】：岗位定位于【${opt.roleTitle || (opt.role === 'specialist' ? '单一任务技术专家' : opt.role === 'executive' ? '全局操盘统帅' : opt.role === 'martial' ? '一线业务武职开拓' : '文职行政综合事务')}】，直属上司呈现【${mgrMeta.nameZh}】。${isWeak ? '身弱之造需依《荣枯鉴》建立“公事公办、延时拒绝”的心理防火墙。' : '身旺之造正可借严苛标准打磨心性，奠定不可替代之威权。'}`
     ];
 
     const notesEn = [
-      `[Geographic & Industry Vector]: Location resides in [${cityMeta.nameEn}], operating within [${indMeta.nameEn}]. This vector ${favorableElems.includes(cityMeta.elem) ? 'strongly harmonizes with your favorable elements, acting as an environmental accelerator.' : 'exerts friction against your Day Master, requiring deliberate boundary management and restorative habits.'}`,
-      `[Leadership Dynamics]: Supervisor reflects [${mgrMeta.nameEn}]. ${isWeak ? 'A sensitive Day Master must guard mental bandwidth vigilantly—apply the 24-hour delayed response protocol to neutralize emotional friction.' : 'A vigorous Day Master thrives here by translating demanding standards into undeniable organizational leverage.'}`,
-      `[Archetype Alignment]: Positioned as [${opt.roleTitleEn || (opt.role === 'specialist' ? 'Specialist / Deep Craft' : opt.role === 'executive' ? 'Executive Leadership' : opt.role === 'martial' ? 'Frontline Operations' : 'Civil / Operations')}]. ${opt.role === 'specialist' ? 'Deep single-task immersion establishes the most resilient psychological moat.' : 'Prioritize strategic alignment and transparent reporting to prevent overextension.'}`
+      `[Country & City Energy Field]: ${geoEnergy.descEn}`,
+      `[City Planning & Industry Overlap]: Strategic overlap stands at ${planningOverlap.overlapScore}% (${planningOverlap.levelEn}). ${planningOverlap.reasonEn}`,
+      `[Top 3 Dominant Patterns Fit]: ${patternAlignment.badgeEn} (Alignment Score: ${patternAlignment.score}/100). Primary Pattern [${patternsTriad[0]?.nameEn}] is evaluated as [${patternAlignment.patternsDetail[0]?.statusEn}].`,
+      `[Job Role & Supervisor Synergy]: Positioned as [${opt.roleTitleEn || (opt.role === 'specialist' ? 'Specialist / Deep Craft' : opt.role === 'executive' ? 'Executive Leadership' : opt.role === 'martial' ? 'Frontline Operations' : 'Civil / Operations')}], with supervisor style [${mgrMeta.nameEn}]. ${isWeak ? 'Sensitive Day Master must apply delayed-response protocols to guard mental energy.' : 'Vigorous Day Master can leverage high performance standards into institutional authority.'}`
     ];
 
     // Micro-ecosystem note injection
@@ -432,11 +822,14 @@ class ScenarioSimulatorEngine {
       optionTitle = isEn ? `${cityMeta.nameEn} · ${indMeta.nameEn}` : `${cityMeta.nameZh} · ${indMeta.nameZh}`;
     }
 
-    return {
+    const resOption = {
       title: optionTitle,
       country: opt.country,
+      countryName: isEn ? countryMeta.nameEn : countryMeta.nameZh,
+      countryElement: isEn ? countryMeta.nameEn : countryMeta.nameZh,
       city: opt.city,
       cityName: isEn ? cityMeta.nameEn : cityMeta.nameZh,
+      cityElement: isEn ? cityMeta.nameEn : cityMeta.nameZh,
       industry: opt.industry,
       industryName: isEn ? indMeta.nameEn : indMeta.nameZh,
       role: opt.role,
@@ -445,6 +838,19 @@ class ScenarioSimulatorEngine {
       managerName: isEn ? mgrMeta.nameEn : mgrMeta.nameZh,
       institution: matchedInst ? (isEn ? matchedInst.nameEn : matchedInst.nameZh) : null,
       enterprise: matchedEnt ? (isEn ? matchedEnt.nameEn : matchedEnt.nameZh) : null,
+      // Core Evaluated Dimensions
+      geoEnergyScore: geoEnergy.score,
+      geoEnergyBadge: isEn ? geoEnergy.badgeEn : geoEnergy.badgeZh,
+      geoEnergyDesc: isEn ? geoEnergy.descEn : geoEnergy.descZh,
+      industryCityOverlapScore: planningOverlap.overlapScore,
+      overlapLevel: isEn ? planningOverlap.levelEn : planningOverlap.levelZh,
+      overlapReason: isEn ? planningOverlap.reasonEn : planningOverlap.reasonZh,
+      cityStrategicClusters: isEn ? planningOverlap.clustersEn : planningOverlap.clustersZh,
+      patternAlignmentScore: patternAlignment.score,
+      patternAlignmentBadge: isEn ? patternAlignment.badgeEn : patternAlignment.badgeZh,
+      top3PatternsAlignment: patternAlignment.patternsDetail,
+      roleSupervisorSynergyScore: roleSupervisorSynergy,
+      // Backward-compatible rates & composite score
       score: finalScore,
       affinityRate: Math.round(affinityRate),
       frictionRate: Math.round(frictionRate),
@@ -452,6 +858,18 @@ class ScenarioSimulatorEngine {
       verdictTag: isEn ? verdictTagEn : verdictTagZh,
       notes: isEn ? notesEn : notesZh
     };
+
+    if (!isEn) {
+      resOption.countryElementZh = countryMeta.nameZh;
+      resOption.countryElementEn = countryMeta.nameEn;
+      resOption.cityElementZh = cityMeta.nameZh;
+      resOption.cityElementEn = cityMeta.nameEn;
+    } else {
+      resOption.countryElementEn = countryMeta.nameEn;
+      resOption.cityElementEn = cityMeta.nameEn;
+    }
+
+    return resOption;
   }
 
   /**
@@ -461,34 +879,143 @@ class ScenarioSimulatorEngine {
     const isEn = (lang === 'en');
     const safeBazi = bazi || { dayMaster: '甲', pillars: { day: { stemElement: 'Wood' } }, vigorScore: 50 };
 
-    const resA = this.evaluateSingleOption(optionA, safeBazi, isEn);
-    const resB = this.evaluateSingleOption(optionB, safeBazi, isEn);
+    // Extract user's Top 3 Dominant Patterns
+    const top3Patterns = this.getTop3Patterns(safeBazi, isEn);
+
+    const resA = this.evaluateSingleOption(optionA, safeBazi, isEn, top3Patterns);
+    const resB = this.evaluateSingleOption(optionB, safeBazi, isEn, top3Patterns);
 
     let winner = 'tie';
     let delta = Math.abs(resA.score - resB.score);
     if (resA.score > resB.score) winner = 'A';
     else if (resB.score > resA.score) winner = 'B';
 
+    // Formulate decisive comparative verdict
+    let verdictTitleZh = '';
+    let verdictTitleEn = '';
     let summaryZh = '';
     let summaryEn = '';
 
+    const p1NameZh = top3Patterns[0]?.nameZh || '主导命格';
+    const p1NameEn = top3Patterns[0]?.nameEn || 'Dominant Pattern';
+
     if (winner === 'A') {
-      summaryZh = `【推演结论】：双轨综合权衡下，【${resA.title}】以 ${resA.score} 分大幅优于【${resB.title}】（${resB.score} 分，胜出 ${delta} 分）。方案 A 在用神气数契合度（${resA.affinityRate}% vs ${resB.affinityRate}%）与心智能耗控制上优势显著，能够以更小的心理摩擦兑现长期价值。`;
-      summaryEn = `[Strategic Verdict]: In this dual-track simulation, [${resA.title}] (Score: ${resA.score}) clearly outperforms [${resB.title}] (Score: ${resB.score}) by a margin of +${delta} points. Option A delivers superior elemental resonance (${resA.affinityRate}% vs ${resB.affinityRate}%) and significantly reduced cognitive friction.`;
+      verdictTitleZh = `综合研判：前往【${resA.cityName}】显著优于【${resB.cityName}】（胜出 ${delta} 分）`;
+      verdictTitleEn = `Strategic Verdict: Relocating to [${resA.cityName}] Decisively Outperforms [${resB.cityName}] (+${delta} pts)`;
+
+      summaryZh = `【双城终局裁决】：综合考察“国家+城市五行能量、行业与城市产业规划重叠度、目标岗位与直属上司生态、以及本命三大格局（${p1NameZh}）深度承载”，方案 A【${resA.title}】（综合得分：${resA.score} 分）明显优于方案 B【${resB.title}】（${resB.score} 分）。${resA.cityName}在产业战略规划重叠度（${resA.industryCityOverlapScore}% vs ${resB.industryCityOverlapScore}%）与三大主导格局契合度（${resA.patternAlignmentScore}分 vs ${resB.patternAlignmentScore}分）上具备压倒性优势，地缘五行更能形成正向生扶，建议坚定以此城为主阵地。`;
+
+      summaryEn = `[Dual-City Comparative Verdict]: Auditing across Country + City Five-Element Energy, Strategic Industry Cluster Overlap, Job Role & Supervisor Synergy, and Natal Top 3 Dominant Patterns (${p1NameEn}), Option A [${resA.title}] (Score: ${resA.score}) clearly triumphs over Option B [${resB.title}] (Score: ${resB.score}) by +${delta} points. ${resA.cityName} delivers superior industrial planning alignment (${resA.industryCityOverlapScore}% vs ${resB.industryCityOverlapScore}%) and pattern resonance (${resA.patternAlignmentScore} vs ${resB.patternAlignmentScore}), providing the most auspicious growth momentum.`;
     } else if (winner === 'B') {
-      summaryZh = `【推演结论】：双轨综合权衡下，【${resB.title}】以 ${resB.score} 分大幅优于【${resA.title}】（${resA.score} 分，胜出 ${delta} 分）。方案 B 在三年爆发潜力（${resB.potentialRate}%）与气数承载上更契合命局发展主轴，建议重点布局推进。`;
-      summaryEn = `[Strategic Verdict]: In this dual-track simulation, [${resB.title}] (Score: ${resB.score}) decisively surpasses [${resA.title}] (Score: ${resA.score}) by +${delta} points. Option B commands superior multi-year momentum (${resB.potentialRate}%) and aligns closer with your dominant strategic trajectory.`;
+      verdictTitleZh = `综合研判：前往【${resB.cityName}】显著优于【${resA.cityName}】（胜出 ${delta} 分）`;
+      verdictTitleEn = `Strategic Verdict: Relocating to [${resB.cityName}] Decisively Outperforms [${resA.cityName}] (+${delta} pts)`;
+
+      summaryZh = `【双城终局裁决】：综合考察“国家+城市五行能量、行业与城市产业规划重叠度、目标岗位与直属上司生态、以及本命三大格局（${p1NameZh}）深度承载”，方案 B【${resB.title}】（综合得分：${resB.score} 分）明显优于方案 A【${resA.title}】（${resA.score} 分）。${resB.cityName}在产业战略规划重叠度（${resB.industryCityOverlapScore}% vs ${resA.industryCityOverlapScore}%）与三大主导格局契合度（${resB.patternAlignmentScore}分 vs ${resB.patternAlignmentScore}分）上展现出更强乘数效应，能够以更小内耗兑现最大长远胜率。`;
+
+      summaryEn = `[Dual-City Comparative Verdict]: Auditing across Country + City Five-Element Energy, Strategic Industry Cluster Overlap, Job Role & Supervisor Synergy, and Natal Top 3 Dominant Patterns (${p1NameEn}), Option B [${resB.title}] (Score: ${resB.score}) decisively surpasses Option A [${resA.title}] (Score: ${resA.score}) by +${delta} points. ${resB.cityName} offers superior strategic industry planning overlap (${resB.industryCityOverlapScore}% vs ${resA.industryCityOverlapScore}%) and pattern empowerment (${resB.patternAlignmentScore} vs ${resA.patternAlignmentScore}), minimizing cognitive friction while maximizing career upside.`;
     } else {
-      summaryZh = `【推演结论】：两套方案综合分值旗鼓相当（均为 ${resA.score} 分）。建议结合当期十年大运的干支偏好做微观对冲：若重在积蓄本领选低能耗方，若重在破局进阶选高潜力方。`;
-      summaryEn = `[Strategic Verdict]: Both pathways hold balanced parity (Score: ${resA.score}). Choose the lower-friction option for foundational consolidation, or the higher-potential option for ambitious breakthroughs.`;
+      verdictTitleZh = `综合研判：【${resA.cityName}】与【${resB.cityName}】势均力敌（均为 ${resA.score} 分）`;
+      verdictTitleEn = `Strategic Verdict: Balanced Parity Between [${resA.cityName}] and [${resB.cityName}] (Both ${resA.score} pts)`;
+
+      summaryZh = `【双城终局裁决】：两座城市在五行地缘共振与主导格局（${p1NameZh}）承载上旗鼓相当（均为 ${resA.score} 分）。若当前更注重产业规划红利与高爆发潜力，建议优先选择【${resA.industryCityOverlapScore >= resB.industryCityOverlapScore ? resA.cityName : resB.cityName}】；若当前重在防内耗与学术稳健深耕，建议选择另一方作为对冲底盘。`;
+
+      summaryEn = `[Dual-City Comparative Verdict]: Both pathways stand in balanced equilibrium (both scoring ${resA.score} pts). Choose [${resA.industryCityOverlapScore >= resB.industryCityOverlapScore ? resA.cityName : resB.cityName}] if prioritizing strategic industry overlap and momentum, or the alternative if seeking foundational stability and reduced cognitive friction.`;
     }
+
+    // Side-by-side comparative leaderboard matrix (5 dimensions)
+    const rawLeaderboard = [
+      {
+        dimensionZh: '国家+城市五行能量场',
+        dimensionEn: 'Country + City Five-Element Energy',
+        scoreA: resA.geoEnergyScore,
+        scoreB: resB.geoEnergyScore,
+        winner: resA.geoEnergyScore > resB.geoEnergyScore ? 'A' : (resB.geoEnergyScore > resA.geoEnergyScore ? 'B' : 'tie'),
+        delta: Math.abs(resA.geoEnergyScore - resB.geoEnergyScore),
+        verdictZh: resA.geoEnergyScore > resB.geoEnergyScore ? `${resA.cityName} 胜出 (+${resA.geoEnergyScore - resB.geoEnergyScore}分)` : (resB.geoEnergyScore > resA.geoEnergyScore ? `${resB.cityName} 胜出 (+${resB.geoEnergyScore - resA.geoEnergyScore}分)` : '能量均衡'),
+        verdictEn: resA.geoEnergyScore > resB.geoEnergyScore ? `${resA.cityName} Advantage (+${resA.geoEnergyScore - resB.geoEnergyScore} pts)` : (resB.geoEnergyScore > resA.geoEnergyScore ? `${resB.cityName} Advantage (+${resB.geoEnergyScore - resA.geoEnergyScore} pts)` : 'Balanced Energy')
+      },
+      {
+        dimensionZh: '行业适配与规划重叠度',
+        dimensionEn: 'Industry Fit & City Planning Overlap',
+        scoreA: resA.industryCityOverlapScore,
+        scoreB: resB.industryCityOverlapScore,
+        winner: resA.industryCityOverlapScore > resB.industryCityOverlapScore ? 'A' : (resB.industryCityOverlapScore > resA.industryCityOverlapScore ? 'B' : 'tie'),
+        delta: Math.abs(resA.industryCityOverlapScore - resB.industryCityOverlapScore),
+        verdictZh: resA.industryCityOverlapScore > resB.industryCityOverlapScore ? `${resA.cityName} 规划重叠更高 (+${resA.industryCityOverlapScore - resB.industryCityOverlapScore}%)` : (resB.industryCityOverlapScore > resA.industryCityOverlapScore ? `${resB.cityName} 规划重叠更高 (+${resB.industryCityOverlapScore - resA.industryCityOverlapScore}%)` : '重叠一致'),
+        verdictEn: resA.industryCityOverlapScore > resB.industryCityOverlapScore ? `${resA.cityName} Higher Overlap (+${resA.industryCityOverlapScore - resB.industryCityOverlapScore}%)` : (resB.industryCityOverlapScore > resA.industryCityOverlapScore ? `${resB.cityName} Higher Overlap (+${resB.industryCityOverlapScore - resA.industryCityOverlapScore}%)` : 'Equal Overlap')
+      },
+      {
+        dimensionZh: '三大主导格局契合度',
+        dimensionEn: 'Top 3 Dominant Patterns Fit',
+        scoreA: resA.patternAlignmentScore,
+        scoreB: resB.patternAlignmentScore,
+        winner: resA.patternAlignmentScore > resB.patternAlignmentScore ? 'A' : (resB.patternAlignmentScore > resA.patternAlignmentScore ? 'B' : 'tie'),
+        delta: Math.abs(resA.patternAlignmentScore - resB.patternAlignmentScore),
+        verdictZh: resA.patternAlignmentScore > resB.patternAlignmentScore ? `方案A 更契合格局 (+${resA.patternAlignmentScore - resB.patternAlignmentScore}分)` : (resB.patternAlignmentScore > resA.patternAlignmentScore ? `方案B 更契合格局 (+${resB.patternAlignmentScore - resA.patternAlignmentScore}分)` : '格局同频'),
+        verdictEn: resA.patternAlignmentScore > resB.patternAlignmentScore ? `Option A Better Aligned (+${resA.patternAlignmentScore - resB.patternAlignmentScore} pts)` : (resB.patternAlignmentScore > resA.patternAlignmentScore ? `Option B Better Aligned (+${resB.patternAlignmentScore - resA.patternAlignmentScore} pts)` : 'Equal Alignment')
+      },
+      {
+        dimensionZh: '目标岗位与上司十神协同',
+        dimensionEn: 'Job Role & Supervisor Synergy',
+        scoreA: resA.roleSupervisorSynergyScore,
+        scoreB: resB.roleSupervisorSynergyScore,
+        winner: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? 'A' : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? 'B' : 'tie'),
+        delta: Math.abs(resA.roleSupervisorSynergyScore - resB.roleSupervisorSynergyScore),
+        verdictZh: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? `方案A 权能协同更顺` : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? `方案B 权能协同更顺` : '协同均衡'),
+        verdictEn: resA.roleSupervisorSynergyScore > resB.roleSupervisorSynergyScore ? `Option A Superior Synergy` : (resB.roleSupervisorSynergyScore > resA.roleSupervisorSynergyScore ? `Option B Superior Synergy` : 'Equal Synergy')
+      },
+      {
+        dimensionZh: '心智能耗与抗内耗比',
+        dimensionEn: 'Cognitive Energy Retention / Low Friction',
+        scoreA: 100 - resA.frictionRate,
+        scoreB: 100 - resB.frictionRate,
+        winner: resA.frictionRate < resB.frictionRate ? 'A' : (resB.frictionRate < resA.frictionRate ? 'B' : 'tie'),
+        delta: Math.abs(resA.frictionRate - resB.frictionRate),
+        verdictZh: resA.frictionRate < resB.frictionRate ? `方案A 消耗更低 (-${resB.frictionRate - resA.frictionRate}%)` : (resB.frictionRate < resA.frictionRate ? `方案B 消耗更低 (-${resA.frictionRate - resB.frictionRate}%)` : '内耗相同'),
+        verdictEn: resA.frictionRate < resB.frictionRate ? `Option A Lower Friction (-${resB.frictionRate - resA.frictionRate}%)` : (resB.frictionRate < resA.frictionRate ? `Option B Lower Friction (-${resA.frictionRate - resB.frictionRate}%)` : 'Equal Friction')
+      }
+    ];
+
+    const cleanLeaderboard = rawLeaderboard.map(row => {
+      const item = {
+        dimension: isEn ? row.dimensionEn : row.dimensionZh,
+        dimensionEn: row.dimensionEn,
+        scoreA: row.scoreA,
+        scoreB: row.scoreB,
+        winner: row.winner,
+        delta: row.delta,
+        verdict: isEn ? row.verdictEn : row.verdictZh,
+        verdictEn: row.verdictEn
+      };
+      if (!isEn) {
+        item.dimensionZh = row.dimensionZh;
+        item.verdictZh = row.verdictZh;
+      }
+      return item;
+    });
+
+    const cleanTop3 = top3Patterns.map(p => {
+      const item = {
+        rank: p.rank,
+        name: isEn ? p.nameEn : (p.nameZh || p.name),
+        nameEn: p.nameEn,
+        weight: p.weightPct || p.weight || 30
+      };
+      if (!isEn) {
+        item.nameZh = p.nameZh || p.name;
+      }
+      return item;
+    });
 
     return {
       optionA: resA,
       optionB: resB,
-      winner: winner,
-      delta: delta,
-      summary: isEn ? summaryEn : summaryZh
+      winner,
+      delta,
+      verdictTitle: isEn ? verdictTitleEn : verdictTitleZh,
+      summary: isEn ? summaryEn : summaryZh,
+      leaderboard: cleanLeaderboard,
+      top3Patterns: cleanTop3
     };
   }
 }
@@ -498,4 +1025,7 @@ if (typeof window !== 'undefined') {
 }
 if (typeof globalThis !== 'undefined') {
   globalThis.ScenarioSimulatorEngine = ScenarioSimulatorEngine;
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = ScenarioSimulatorEngine;
 }

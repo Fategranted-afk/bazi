@@ -505,9 +505,19 @@ class IChingEngine {
     const rawDiShu = this.computeDiShu(sumEvens);
 
     let birthYear = 1990;
-    if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
-    else if (bazi.birthYear) birthYear = bazi.birthYear;
-    else if (bazi.year) birthYear = bazi.year;
+    if (bazi.input && typeof bazi.input.year === 'number' && !isNaN(bazi.input.year) && bazi.input.year > 0) {
+      birthYear = bazi.input.year;
+    } else if (bazi.input && typeof bazi.input.adjustedYear === 'number' && !isNaN(bazi.input.adjustedYear) && bazi.input.adjustedYear > 0) {
+      birthYear = bazi.input.adjustedYear;
+    } else if (typeof bazi.birthYear === 'number' && !isNaN(bazi.birthYear) && bazi.birthYear > 0) {
+      birthYear = bazi.birthYear;
+    } else if (bazi.solar && typeof bazi.solar.year === 'number' && !isNaN(bazi.solar.year) && bazi.solar.year > 0) {
+      birthYear = bazi.solar.year;
+    } else if (bazi.solarInfo && typeof bazi.solarInfo.solarYear === 'number' && !isNaN(bazi.solarInfo.solarYear) && bazi.solarInfo.solarYear > 0) {
+      birthYear = bazi.solarInfo.solarYear;
+    } else if (typeof bazi.year === 'number' && !isNaN(bazi.year) && bazi.year > 0) {
+      birthYear = bazi.year;
+    }
 
     const rawG = (bazi.input && bazi.input.gender) || bazi.gender || '乾造';
     const isMale = (rawG === '乾造' || rawG === '男' || rawG === 'male' || rawG === 'Yang Male');
@@ -667,13 +677,13 @@ class IChingEngine {
       effSelectedYear = selectedYear;
     } else if (currentAge !== undefined && currentAge !== null) {
       targetAge = Math.max(1, currentAge);
-      effSelectedYear = birthYear + targetAge;
+      effSelectedYear = birthYear + targetAge - 1;
     } else if (selectedYear !== undefined && selectedYear !== null) {
       effSelectedYear = selectedYear;
-      targetAge = Math.max(1, Math.abs(effSelectedYear - birthYear));
+      targetAge = Math.max(1, effSelectedYear - birthYear + 1);
     } else {
       effSelectedYear = new Date().getFullYear();
-      targetAge = Math.max(1, Math.abs(effSelectedYear - birthYear));
+      targetAge = Math.max(1, effSelectedYear - birthYear + 1);
     }
 
     const STEM_LIST = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
@@ -1004,11 +1014,21 @@ class IChingEngine {
   static calculateLifelongCycle(bazi) {
     if (!bazi || !bazi.pillars) return [];
     let birthYear = 1990;
-    if (bazi.input && bazi.input.year) birthYear = bazi.input.year;
-    else if (bazi.birthYear) birthYear = bazi.birthYear;
-    else if (bazi.year) birthYear = bazi.year;
+    if (bazi.input && typeof bazi.input.year === 'number' && !isNaN(bazi.input.year) && bazi.input.year > 0) {
+      birthYear = bazi.input.year;
+    } else if (bazi.input && typeof bazi.input.adjustedYear === 'number' && !isNaN(bazi.input.adjustedYear) && bazi.input.adjustedYear > 0) {
+      birthYear = bazi.input.adjustedYear;
+    } else if (typeof bazi.birthYear === 'number' && !isNaN(bazi.birthYear) && bazi.birthYear > 0) {
+      birthYear = bazi.birthYear;
+    } else if (bazi.solar && typeof bazi.solar.year === 'number' && !isNaN(bazi.solar.year) && bazi.solar.year > 0) {
+      birthYear = bazi.solar.year;
+    } else if (bazi.solarInfo && typeof bazi.solarInfo.solarYear === 'number' && !isNaN(bazi.solarInfo.solarYear) && bazi.solarInfo.solarYear > 0) {
+      birthYear = bazi.solarInfo.solarYear;
+    } else if (typeof bazi.year === 'number' && !isNaN(bazi.year) && bazi.year > 0) {
+      birthYear = bazi.year;
+    }
 
-    const baseFourHex = this.calculateFourPillarsHexagrams(bazi, 1, birthYear + 1);
+    const baseFourHex = this.calculateFourPillarsHexagrams(bazi, 1, birthYear);
     if (!baseFourHex) return [];
 
     const xtTotalYears = baseFourHex.xianTian.totalYears;
@@ -1033,7 +1053,7 @@ class IChingEngine {
 
     const points = [];
     for (let age = 1; age <= 100; age++) {
-      const yr = birthYear + age;
+      const yr = birthYear + age - 1;
       const itemHex = this.calculateFourPillarsHexagrams(bazi, age, yr);
       const zn = itemHex.zhiNian;
       const isXianTian = (age <= xtTotalYears);

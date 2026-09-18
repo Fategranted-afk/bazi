@@ -6480,9 +6480,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (res) currentBaziResult = currentBaziResult || res;
 
-    let birthYear = (res.input && res.input.year) || res.birthYear || 1990;
+    let birthYear = (res.input && (res.input.year || res.input.adjustedYear)) || res.birthYear || (res.solar && res.solar.year) || (res.solarInfo && res.solarInfo.solarYear) || 1990;
     const currentCalYear = new Date().getFullYear();
-    const calculatedAge = Math.max(1, Math.abs(currentCalYear - birthYear));
+    const calculatedAge = Math.max(1, currentCalYear - birthYear + 1);
     if (window._lastRenderedHexRes !== res) {
       window._lastRenderedHexRes = res;
       const lastBYear = window._lastHexBirthYear;
@@ -6529,7 +6529,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const hexData = (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function')
-      ? IChingEngine.calculateFourPillarsHexagrams(res, fourPillarsActiveAge, birthYear + fourPillarsActiveAge)
+      ? IChingEngine.calculateFourPillarsHexagrams(res, fourPillarsActiveAge, birthYear + fourPillarsActiveAge - 1)
       : null;
 
     if (!hexData) {
@@ -6931,9 +6931,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Compute or retrieve 100-year cycle dataset
-    const points = (typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
-      ? IChingEngine.calculateLifelongCycle(res)
-      : [];
+    const points = (res && res.luck && (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory))
+      ? (res.luck.hexTrajectory || res.luck.hundredYearsTrajectory)
+      : ((typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
+        ? IChingEngine.calculateLifelongCycle(res)
+        : []);
 
     cachedIChingCycleData = points;
 
@@ -7194,6 +7196,47 @@ document.addEventListener('DOMContentLoaded', () => {
         if (elDynamicInterp) elDynamicInterp.textContent = isEn ? (item.dynamicInterpretationEn || '') : (item.dynamicInterpretationZh || '');
         const elDynamicScore = document.getElementById('ichingTelemetryDynamicScore');
         if (elDynamicScore) elDynamicScore.textContent = `${item.score}% ${isEn ? 'Adjusted' : '校准能级'}`;
+
+        // Real-time synchronization of active selection state and auto-scroll on Roster Cards
+        const rosterCards = container.querySelectorAll('.iching-roster-card');
+        if (rosterCards && rosterCards.length > 0) {
+          rosterCards.forEach(card => {
+            const cardAge = parseInt(card.getAttribute('data-age'), 10);
+            const isSelected = (cardAge === item.age);
+            if (isSelected) {
+              card.className = 'iching-roster-card flex-shrink-0 w-36 sm:w-40 p-2.5 rounded-xl border transition cursor-pointer text-left border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg';
+              const titleEl = card.querySelector('.font-serif-sc');
+              if (titleEl) {
+                titleEl.classList.remove('text-gray-200');
+                titleEl.classList.add('text-amber-200');
+              }
+              const ageSpan = card.querySelector('.font-mono > span:first-child');
+              if (ageSpan) {
+                ageSpan.classList.remove('text-gray-300');
+                ageSpan.classList.add('text-amber-300');
+              }
+              if (typeof card.scrollIntoView === 'function') {
+                try {
+                  card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                } catch (e) {
+                  card.scrollIntoView(false);
+                }
+              }
+            } else {
+              card.className = 'iching-roster-card flex-shrink-0 w-36 sm:w-40 p-2.5 rounded-xl border transition cursor-pointer text-left border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60';
+              const titleEl = card.querySelector('.font-serif-sc');
+              if (titleEl) {
+                titleEl.classList.remove('text-amber-200');
+                titleEl.classList.add('text-gray-200');
+              }
+              const ageSpan = card.querySelector('.font-mono > span:first-child');
+              if (ageSpan) {
+                ageSpan.classList.remove('text-amber-300');
+                ageSpan.classList.add('text-gray-300');
+              }
+            }
+          });
+        }
         return;
       }
     }
@@ -7379,6 +7422,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (age) setIChingActiveAge(age);
       });
     });
+
+    // Auto-scroll initially selected card into view
+    const initialActiveCard = container.querySelector(`.iching-roster-card[data-age="${item.age}"]`);
+    if (initialActiveCard && typeof initialActiveCard.scrollIntoView === 'function') {
+      try {
+        initialActiveCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } catch (e) {
+        initialActiveCard.scrollIntoView(false);
+      }
+    }
 
     // Hook canvas click and drag safely (no multiple listeners on window)
     const canvas = document.getElementById('ichingCycleCanvas');
@@ -13190,12 +13243,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = `
       <!-- Verdict Summary Banner -->
-      <div class="p-4 rounded-xl border ${simRes.winner === 'A' ? 'border-indigo-500/60 bg-indigo-950/40' : simRes.winner === 'B' ? 'border-purple-500/60 bg-purple-950/40' : 'border-amber-500/60 bg-amber-950/40'} shadow-xl space-y-2">
+      <div class="p-4 sm:p-5 rounded-2xl border ${simRes.winner === 'A' ? 'border-indigo-500/60 bg-indigo-950/40' : simRes.winner === 'B' ? 'border-purple-500/60 bg-purple-950/40' : 'border-amber-500/60 bg-amber-950/40'} shadow-xl space-y-3">
         <div class="flex items-center space-x-2">
-          <span class="text-xl">⚖️</span>
+          <span class="text-xl sm:text-2xl">⚖️</span>
           <h4 class="text-sm sm:text-base font-bold text-gray-100 font-serif-sc">
-            ${simRes.summary}
+            ${simRes.verdictTitle}
           </h4>
+        </div>
+        <p class="text-xs sm:text-[13px] text-gray-200 leading-relaxed font-sans">
+          ${simRes.summary}
+        </p>
+        <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-white/10 text-xs">
+          <span class="text-gray-400 font-mono text-[11px]">${isEn ? 'Natal Top 3 Dominant Patterns:' : '命局三大主导格局承载：'}</span>
+          ${(simRes.top3Patterns || []).map(p => `
+            <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10.5px] font-bold">
+              ${isEn ? p.nameEn : p.nameZh} (${p.weight}%)
+            </span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 5-Dimensional Side-by-Side Comparative Leaderboard Table -->
+      <div class="rounded-xl border border-gray-800 bg-[#121422] p-4 space-y-3 shadow-xl">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <h4 class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
+            <span>📊</span>
+            <span>${isEn ? 'Dual-City Multi-Dimensional Comparative Leaderboard' : '双城五维全息对抗天梯总榜'}</span>
+          </h4>
+          <span class="text-[11px] text-gray-400 font-mono">${isEn ? 'Side-by-Side Audit' : '横向并排裁量'}</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse font-sans">
+            <thead>
+              <tr class="border-b border-gray-800 text-gray-400 text-[11px]">
+                <th class="py-2 px-3 font-semibold">${isEn ? 'Evaluation Dimension' : '核心考察维度'}</th>
+                <th class="py-2 px-3 font-semibold text-indigo-400">🅰️ ${a.cityName}</th>
+                <th class="py-2 px-3 font-semibold text-purple-400">🅱️ ${b.cityName}</th>
+                <th class="py-2 px-3 font-semibold text-right">${isEn ? 'Advantage / Delta' : '对局优势裁定'}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/60 font-mono text-[11.5px]">
+              ${(simRes.leaderboard || []).map(row => `
+                <tr class="hover:bg-white/5 transition">
+                  <td class="py-2.5 px-3 font-sans text-gray-300 font-medium">${isEn ? row.dimensionEn : row.dimensionZh}</td>
+                  <td class="py-2.5 px-3 ${row.winner === 'A' ? 'text-indigo-300 font-bold' : 'text-gray-400'}">${row.scoreA}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
+                  <td class="py-2.5 px-3 ${row.winner === 'B' ? 'text-purple-300 font-bold' : 'text-gray-400'}">${row.scoreB}${row.dimensionZh.includes('重叠') || row.dimensionEn.includes('Overlap') ? '%' : (isEn ? ' pts' : '分')}</td>
+                  <td class="py-2.5 px-3 text-right">
+                    <span class="px-2 py-0.5 rounded text-[10.5px] ${row.winner === 'A' ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' : row.winner === 'B' ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'bg-gray-800 text-gray-400'}">
+                      ${isEn ? row.verdictEn : row.verdictZh}
+                    </span>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -13214,8 +13315,35 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
+          <!-- Five-Element & Planning Overlap Highlights -->
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 flex items-center justify-between">
+              <div>
+                <span class="text-gray-400 text-[10.5px] block">${isEn ? 'Country + City Five-Element Energy' : '国度与城市五行场能'}</span>
+                <span class="text-gray-200 font-bold font-mono">${a.countryName} · ${a.cityName}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10.5px] bg-indigo-500/20 text-indigo-300 font-mono font-bold">${a.geoEnergyBadge} (${a.geoEnergyScore}${isEn ? ' pts' : '分'})</span>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-white/5 border border-gray-800/80 space-y-1">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-gray-300 font-medium">${isEn ? 'Industry & City Strategic Overlap' : '行业与城市产业规划重叠度'}</span>
+                <span class="font-bold text-amber-400 font-mono">${a.industryCityOverlapScore}% (${a.overlapLevel})</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: ${a.industryCityOverlapScore}%"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 truncate pt-0.5 font-sans">${a.cityStrategicClusters}</div>
+            </div>
+
+            <div class="flex justify-between items-center text-[11px] px-1 text-gray-300">
+              <span>${isEn ? 'Top 3 Dominant Patterns Fit' : '三大主导格局契合度'}</span>
+              <span class="font-bold text-indigo-400 font-mono">${a.patternAlignmentScore} <span class="text-[10px] text-gray-400 font-normal">/ 100 (${a.patternAlignmentBadge})</span></span>
+            </div>
+          </div>
+
           <!-- Metrics Bars -->
-          <div class="space-y-2.5 text-xs">
+          <div class="space-y-2.5 text-xs border-t border-gray-800 pt-2.5">
             <div>
               <div class="flex justify-between text-[11px] mb-1 text-gray-300">
                 <span>${isEn ? 'Five-Element Affinity' : '五行用神气数契合度'}</span>
@@ -13266,8 +13394,35 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
+          <!-- Five-Element & Planning Overlap Highlights -->
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 flex items-center justify-between">
+              <div>
+                <span class="text-gray-400 text-[10.5px] block">${isEn ? 'Country + City Five-Element Energy' : '国度与城市五行场能'}</span>
+                <span class="text-gray-200 font-bold font-mono">${b.countryName} · ${b.cityName}</span>
+              </div>
+              <span class="px-2 py-0.5 rounded text-[10.5px] bg-purple-500/20 text-purple-300 font-mono font-bold">${b.geoEnergyBadge} (${b.geoEnergyScore}${isEn ? ' pts' : '分'})</span>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-white/5 border border-gray-800/80 space-y-1">
+              <div class="flex justify-between items-center text-[11px]">
+                <span class="text-gray-300 font-medium">${isEn ? 'Industry & City Strategic Overlap' : '行业与城市产业规划重叠度'}</span>
+                <span class="font-bold text-amber-400 font-mono">${b.industryCityOverlapScore}% (${b.overlapLevel})</span>
+              </div>
+              <div class="h-1.5 rounded-full bg-gray-800 overflow-hidden">
+                <div class="h-full bg-amber-500 rounded-full" style="width: ${b.industryCityOverlapScore}%"></div>
+              </div>
+              <div class="text-[10px] text-gray-400 truncate pt-0.5 font-sans">${b.cityStrategicClusters}</div>
+            </div>
+
+            <div class="flex justify-between items-center text-[11px] px-1 text-gray-300">
+              <span>${isEn ? 'Top 3 Dominant Patterns Fit' : '三大主导格局契合度'}</span>
+              <span class="font-bold text-purple-400 font-mono">${b.patternAlignmentScore} <span class="text-[10px] text-gray-400 font-normal">/ 100 (${b.patternAlignmentBadge})</span></span>
+            </div>
+          </div>
+
           <!-- Metrics Bars -->
-          <div class="space-y-2.5 text-xs">
+          <div class="space-y-2.5 text-xs border-t border-gray-800 pt-2.5">
             <div>
               <div class="flex justify-between text-[11px] mb-1 text-gray-300">
                 <span>${isEn ? 'Five-Element Affinity' : '五行用神气数契合度'}</span>
