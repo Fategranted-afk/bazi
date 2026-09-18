@@ -7630,8 +7630,8 @@ jsc_check83_cmd = [
     if (typeof HISTORICAL_FIGURES === "undefined" || !Array.isArray(HISTORICAL_FIGURES)) {
       throw new Error("HISTORICAL_FIGURES database is not defined or not an array");
     }
-    if (HISTORICAL_FIGURES.length !== 416) {
-      throw new Error("Expected exactly 416 historical figures, got: " + HISTORICAL_FIGURES.length);
+    if (HISTORICAL_FIGURES.length !== 448) {
+      throw new Error("Expected exactly 448 historical figures, got: " + HISTORICAL_FIGURES.length);
     }
 
     var requiredFields = [
@@ -7651,6 +7651,7 @@ jsc_check83_cmd = [
       "northern_wei": 0,
       "northern_zhou_qi": 0,
       "sui": 0,
+      "sui_collapse": 0,
       "sui_tang_zhenguan": 0
     };
 
@@ -7697,6 +7698,7 @@ jsc_check83_cmd = [
     if (eraCounts["northern_wei"] !== 30) throw new Error("northern_wei count expected 30, got " + eraCounts["northern_wei"]);
     if (eraCounts["northern_zhou_qi"] !== 20) throw new Error("northern_zhou_qi count expected 20, got " + eraCounts["northern_zhou_qi"]);
     if (eraCounts["sui"] !== 10) throw new Error("sui count expected 10, got " + eraCounts["sui"]);
+    if (eraCounts["sui_collapse"] !== 32) throw new Error("sui_collapse count expected 32, got " + eraCounts["sui_collapse"]);
     if (eraCounts["sui_tang_zhenguan"] !== 104) throw new Error("sui_tang_zhenguan count expected 104, got " + eraCounts["sui_tang_zhenguan"]);
 
     // 2. Validate HistoricalEngine calculations across diverse charts
@@ -7728,8 +7730,8 @@ jsc_check83_cmd = [
       if (!res.topMatch || !res.topMatches || !res.allFiguresRanked || !res.synthesis) {
         throw new Error(tc.name + " missing core result structure");
       }
-      if (res.allFiguresRanked.length !== 416) {
-        throw new Error(tc.name + " expected 416 ranked figures, got: " + res.allFiguresRanked.length);
+      if (res.allFiguresRanked.length !== 448) {
+        throw new Error(tc.name + " expected 448 ranked figures, got: " + res.allFiguresRanked.length);
       }
       if (res.topMatches.length !== 5) {
         throw new Error(tc.name + " expected 5 topMatches, got: " + res.topMatches.length);
@@ -8017,18 +8019,18 @@ jsc_check83_dom_cmd = [
     if (histHtmlEn.indexOf("Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)") === -1) {
       throw new Error("Missing Avoid Weaknesses in EN");
     }
-    if (histHtmlEn.indexOf("416 Historical Figures Catalog") === -1) {
-      throw new Error("Missing 416 Historical Figures Catalog title in EN");
+    if (histHtmlEn.indexOf("448 Historical Figures Catalog") === -1) {
+      throw new Error("Missing 448 Historical Figures Catalog title in EN");
     }
     '''
 ]
 run_check83_dom = subprocess.run(jsc_check83_dom_cmd, capture_output=True, text=True)
 assert run_check83_dom.returncode == 0, f"Check 83 DOM simulation test failed: stdout={run_check83_dom.stdout} stderr={run_check83_dom.stderr}"
 
-print("✓ 历史人物参考引擎（416位风云人物全集、九大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
+print("✓ 历史人物参考引擎（448位风云人物全集、十大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
 
-# 84. Validate 416 Historical Figures Expansion, Stabilized Card-Draw Modal, Page 2 Soul Mirror in Imperial Dossier & Quick 1-Page PDF
-print("\n=== 84. Validating 416 Figures Expansion, Card-Draw Modal, Page 2 Soul Mirror & Quick 1-Page PDF ===")
+# 84. Validate 448 Historical Figures Expansion, Stabilized Card-Draw Modal, Page 2 Soul Mirror in Imperial Dossier & Quick 1-Page PDF
+print("\n=== 84. Validating 448 Figures Expansion (Including Sui Collapse), Card-Draw Modal, Page 2 Soul Mirror & Quick 1-Page PDF ===")
 jsc_check84_cmd = [
     '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
     '-e',
@@ -8090,9 +8092,9 @@ jsc_check84_cmd = [
     load("data/historical_figures.js");
     load("js/history-engine.js");
 
-    // 1. Verify exact 416 figures count and prominent titans
-    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 416) {
-      throw new Error("Expected exactly 416 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
+    // 1. Verify exact 448 figures count and prominent titans
+    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 448) {
+      throw new Error("Expected exactly 448 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
     }
 
     // Explicitly verify Cao Cao (Eastern Han / Three Kingdoms titan)
@@ -8109,6 +8111,25 @@ jsc_check84_cmd = [
     if (!zhugeLiang) throw new Error("Missing Zhuge Liang (诸葛亮) in historical figures database!");
     if (zhugeLiang.nameZh !== '诸葛亮' || !zhugeLiang.nameEn.startsWith('Zhuge Liang')) throw new Error("Zhuge Liang names invalid");
 
+    // Explicitly verify Yang Guang (Sui Collapse sovereign)
+    var yangGuang = HISTORICAL_FIGURES.find(function(f) { return f.id === 'yang_guang'; });
+    if (!yangGuang) throw new Error("Missing Yang Guang (杨广/隋炀帝) in historical figures database!");
+    if (!yangGuang.nameZh.startsWith('杨广') || !yangGuang.nameEn.startsWith('Yang Guang')) throw new Error("Yang Guang names invalid");
+    if (yangGuang.eraTag !== 'sui_collapse') throw new Error("Yang Guang eraTag invalid: " + yangGuang.eraTag);
+    if (yangGuang.eraNameZh !== '隋末崩塌与群雄割据') throw new Error("Yang Guang eraNameZh invalid: " + yangGuang.eraNameZh);
+
+    // Explicitly verify Yuwen Huaji (Sui Collapse regicide leader)
+    var yuwenHuaji = HISTORICAL_FIGURES.find(function(f) { return f.id === 'yuwen_huaji'; });
+    if (!yuwenHuaji) throw new Error("Missing Yuwen Huaji (宇文化及) in historical figures database!");
+    if (!yuwenHuaji.nameZh.startsWith('宇文化及')) throw new Error("Yuwen Huaji nameZh invalid");
+    if (yuwenHuaji.eraTag !== 'sui_collapse') throw new Error("Yuwen Huaji eraTag invalid");
+
+    // Explicitly verify Empress Xiao (Sui Collapse legendary consort)
+    var empressXiao = HISTORICAL_FIGURES.find(function(f) { return f.id === 'empress_xiao'; });
+    if (!empressXiao) throw new Error("Missing Empress Xiao (萧皇后) in historical figures database!");
+    if (!empressXiao.nameZh.startsWith('萧皇后')) throw new Error("Empress Xiao nameZh invalid");
+    if (empressXiao.eraTag !== 'sui_collapse') throw new Error("Empress Xiao eraTag invalid");
+
     // Explicitly verify Li Shimin (Sui-Tang Zhenguan titan)
     var liShimin = HISTORICAL_FIGURES.find(function(f) { return f.id === 'li_shimin'; });
     if (!liShimin) throw new Error("Missing Li Shimin (李世民) in historical figures database!");
@@ -8117,6 +8138,12 @@ jsc_check84_cmd = [
       throw new Error("Li Shimin advice fields missing");
     }
     if (liShimin.eraTag !== 'sui_tang_zhenguan') throw new Error("Li Shimin eraTag invalid");
+
+    // Explicitly verify Di Renjie (Tang pillar statesman)
+    var diRenjie = HISTORICAL_FIGURES.find(function(f) { return f.id === 'di_renjie'; });
+    if (!diRenjie) throw new Error("Missing Di Renjie (狄仁杰) in historical figures database!");
+    if (!diRenjie.nameZh.startsWith('狄仁杰')) throw new Error("Di Renjie nameZh invalid");
+    if (diRenjie.eraTag !== 'sui_tang_zhenguan') throw new Error("Di Renjie eraTag invalid");
 
     // Explicitly verify Wei Zheng (Zhenguan mirror of governance)
     var weiZheng = HISTORICAL_FIGURES.find(function(f) { return f.id === 'wei_zheng'; });
@@ -8335,7 +8362,7 @@ jsc_check84_cmd = [
 ]
 run_check84 = subprocess.run(jsc_check84_cmd, capture_output=True, text=True)
 assert run_check84.returncode == 0, f"Check 84 test failed: stdout={run_check84.stdout} stderr={run_check84.stderr}"
-print("✓ 416位历史人物大典扩充、卡牌调阅窗口永久锁定、皇家战报第二页天命照命镜像注入（Top 3 深度战法双列呈现）与卷首单页PDF极速导出验证通过！")
+print("✓ 448位历史人物大典扩充（含隋末崩塌32位风云人物与十大时代长卷）、卡牌调阅窗口永久锁定、皇家战报第二页天命照命镜像注入（Top 3 深度战法双列呈现）与卷首单页PDF极速导出验证通过！")
 
 # 85. Validate Single-Page Executive Blueprint PDF Blank Page Defense
 print("\n=== 85. Validating Single-Page Executive Blueprint PDF Blank Page Defense ===")

@@ -1,9 +1,9 @@
 /**
  * 历史人物参考与相似度测算引擎 (Historical Figures Reference & Similarity Engine)
- * Grounded in 450+ Years from Eastern Han, Three Kingdoms, Jin, Northern & Southern Dynasties, Sui to Early Tang Zhenguan:
- * Eastern Han & Three Kingdoms, Western Jin, Sixteen Kingdoms, Eastern Jin, Southern Dynasties, Northern Wei, Northern Zhou/Qi, Sui, and Sui-Tang Zhenguan.
+ * Grounded in 520+ Years from Eastern Han, Three Kingdoms, Jin, Northern & Southern Dynasties, Sui, Late Sui Collapse to Early Tang Zhenguan:
+ * Eastern Han & Three Kingdoms, Western Jin, Sixteen Kingdoms, Eastern Jin, Southern Dynasties, Northern Wei, Northern Zhou/Qi, Sui, Sui Collapse, and Sui-Tang Zhenguan.
  * Compares Native's BaZi (Day Master, 100-pt Score, Patterns, Ten Gods, Archetypes)
- * against 416 Historical Figures to calculate multi-dimensional correlation:
+ * against 448 Historical Figures to calculate multi-dimensional correlation:
  * [Personality Resonance + Historical Deeds Reflection + Strengths Leverage + Weakness Circuit-Breakers].
  * Generates natural wide score distributions and bespoke evaluations with 100% bilingual parity.
  */
@@ -389,7 +389,7 @@ class HistoricalEngine {
   }
 
   /**
-   * Calculates similarity between native BaZi and 416 historical figures
+   * Calculates similarity between native BaZi and 448 historical figures
    * @param {Object} bazi - BaZi calculated result from BaZiEngine
    * @param {Object} luck - LuckEngine result (optional)
    * @param {Object} careerReport - CareerEngine result (optional)
@@ -404,7 +404,7 @@ class HistoricalEngine {
     // 1. Infer user multi-dimensional character profile
     const profile = this.inferUserCharacter(bazi, careerReport);
 
-    // 2. Score raw correlation across all 416 figures
+    // 2. Score raw correlation across all 448 figures
     const scoredFigures = dataset.map((fig) => {
       const corr = this.calculateFigureCorrelation(fig, profile, bazi);
       return {
@@ -494,6 +494,7 @@ class HistoricalEngine {
       'northern_wei': { zh: '北魏拓土与孝文汉化', en: 'Northern Wei Expansion & Sinicization', figures: [] },
       'northern_zhou_qi': { zh: '东西二魏与周齐对峙', en: 'Eastern/Western Wei, Northern Qi & Zhou', figures: [] },
       'sui': { zh: '乱世终局与大隋统一', en: 'Reunification by Great Sui', figures: [] },
+      'sui_collapse': { zh: '隋末崩塌与群雄割据', en: 'Late Sui Collapse & Warlords', figures: [] },
       'sui_tang_zhenguan': { zh: '隋唐鼎革与贞观盛世', en: 'Sui-Tang & Zhenguan Era', figures: [] }
     };
 
