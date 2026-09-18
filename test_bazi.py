@@ -12770,7 +12770,108 @@ run_check108 = subprocess.run(jsc_check108_cmd, capture_output=True, text=True)
 assert run_check108.returncode == 0, f"Check 108 JSC test failed: stdout={run_check108.stdout} stderr={run_check108.stderr}"
 print("✓ 命造四大吉神全相鉴照（天乙贵人、文昌贵人、红鸾天喜、驿马星动柱位神煞与四大吉神卡片、多端入口与双语100%零中文残留）验证通过！")
 
-print("\n🎉 ALL 108 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 109. Validating Fleeting Ephemeral Light Streaks & Distraction-Free Ambient Flux ===
+print("\n=== 109. Validating Fleeting Ephemeral Light Streaks & Distraction-Free Ambient Flux ===")
+with open('js/visual-alchemy.js', 'r', encoding='utf-8') as f:
+    va_code = f.read()
+
+assert 'FleetingStreak' in va_code, "js/visual-alchemy.js must define FleetingStreak class"
+assert 'amplitude: 38' not in va_code, "Continuous 4-wave sinusoidal ribbons must be discarded"
+assert 'fluxWaves.forEach' not in va_code, "Persistent sine wave loop must be removed"
+assert 'getStreaks' in va_code, "VisualAlchemy must export getStreaks"
+
+jsc_check109_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("js/visual-alchemy.js");
+    if (typeof VisualAlchemy === 'undefined') throw new Error("VisualAlchemy not loaded");
+    if (typeof VisualAlchemy.initFlux !== 'function') throw new Error("initFlux not found");
+    if (typeof VisualAlchemy.getStreaks !== 'function') throw new Error("getStreaks not found");
+
+    var mockCtx = {
+      clearRect: function() {},
+      beginPath: function() {},
+      moveTo: function() {},
+      lineTo: function() {},
+      stroke: function() {},
+      arc: function() {},
+      fill: function() {},
+      setTransform: function() {},
+      scale: function() {},
+      createLinearGradient: function() {
+        return { addColorStop: function() {} };
+      }
+    };
+    var mockCanvas = {
+      getContext: function() { return mockCtx; },
+      clientWidth: 1200,
+      clientHeight: 800,
+      width: 1200,
+      height: 800,
+      style: {}
+    };
+    var document = {
+      getElementById: function(id) { return mockCanvas; },
+      documentElement: { getAttribute: function() { return 'dark'; }, classList: { contains: function() { return false; } } },
+      addEventListener: function() {}
+    };
+    var window = {
+      innerWidth: 1200,
+      innerHeight: 800,
+      devicePixelRatio: 1,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { return 1; },
+      cancelAnimationFrame: function(id) {}
+    };
+
+    VisualAlchemy.initFlux('elementFluxCanvas', '金');
+    var streaks = VisualAlchemy.getStreaks();
+    if (!streaks || streaks.length !== 2) {
+      throw new Error("Expected 2 fleeting streak runners, got " + (streaks ? streaks.length : 0));
+    }
+
+    var s0 = streaks[0];
+    if (s0.state !== 'waiting') throw new Error("Initial streak state should be waiting");
+    
+    // Simulate tick to activate streak
+    s0.update(1500, 1200, 800);
+    if (s0.state !== 'active') throw new Error("Streak should be active after wait duration");
+
+    // Draw in both dark and light modes
+    s0.draw(mockCtx, false);
+    s0.draw(mockCtx, true);
+
+    // Complete flight and verify state reset
+    s0.update(3000, 1200, 800);
+    if (s0.state !== 'waiting') throw new Error("Streak should return to waiting after flight duration");
+
+    // Test active element resonance
+    VisualAlchemy.setActiveElement('水');
+    if (s0.element.name !== '水') throw new Error("Streak element should adapt to active element");
+    """
+]
+run_check109 = subprocess.run(jsc_check109_cmd, capture_output=True, text=True)
+assert run_check109.returncode == 0, f"Check 109 JSC test failed: stdout={run_check109.stdout} stderr={run_check109.stderr}"
+
+# Validate social card white background and centered portal
+with open('js/social-card-engine.js', 'r', encoding='utf-8') as f:
+    sc_code = f.read()
+
+assert '#ffffff' in sc_code, "SocialCardEngine must use white parchment background"
+assert '#fcfbf7' in sc_code or '#fdfcf9' in sc_code, "SocialCardEngine must use high-luminosity ivory tones"
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_check = f.read()
+
+assert 'id="landingPortalView"' in html_check, "index.html missing #landingPortalView"
+assert 'items-center justify-center' in html_check, "landingPortalView must be visually centered"
+assert 'btnOpenAdvisorFloating' not in html_check, "Floating advisor button must be removed"
+assert 'btnDeitiesAskAdvisor' not in html_check, "Deities ask advisor button must be removed"
+
+print("✓ 东方气机流光全面升级为转瞬即逝的灵动流光（废弃持续晃动正弦线/优雅渐显掠过淡出/白底社交名片/门庭居中/军师与沙盘入口清理与去重）验证通过！")
+
+print("\n🎉 ALL 109 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
