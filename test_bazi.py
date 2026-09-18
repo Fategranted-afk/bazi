@@ -14108,23 +14108,30 @@ jsc_check115_cmd = [
       throw new Error("Expected 'yuan' (圆字福相脸) for Sima Yan, got: " + faceSimaYan);
     }
 
-    // 2. Validate Social Card Canvas Rendering (750x1180)
+    // 2. Validate Social Card Canvas Rendering (750x1180) & Left-Flush Archetype Pill
+    var recordedFills = [];
     var dummyCanvas = {
       width: 750,
       height: 1180,
       getContext: function() {
-        return {
+        var ctxObj = {
           save: function(){}, restore: function(){},
           clearRect: function(){}, fillRect: function(){}, strokeRect: function(){},
           beginPath: function(){}, closePath: function(){},
           moveTo: function(){}, lineTo: function(){}, arc: function(){}, arcTo: function(){},
           stroke: function(){}, fill: function(){}, clip: function(){},
-          fillText: function(){}, strokeText: function(){},
+          textAlign: "start",
+          textBaseline: "alphabetic",
+          fillText: function(t, x, y){
+            recordedFills.push({ text: t, x: x, y: y, align: this.textAlign, baseline: this.textBaseline });
+          },
+          strokeText: function(){},
           measureText: function(t){ return { width: (t || '').length * 8 }; },
           createLinearGradient: function(){ return { addColorStop: function(){} }; },
           createRadialGradient: function(){ return { addColorStop: function(){} }; },
           setLineDash: function(){}
         };
+        return ctxObj;
       }
     };
 
@@ -14147,6 +14154,17 @@ jsc_check115_cmd = [
     };
     SocialCardEngine.renderToCanvas(dummyCanvas, cardDataZh);
 
+    var archFillZh = recordedFills.find(function(f) { return f.text === "🏛️ 经世文宗 · 深度专家"; });
+    if (!archFillZh) {
+      throw new Error("Missing archetype label fillText call in ZH card render");
+    }
+    if (archFillZh.align !== "left") {
+      throw new Error("Archetype label must be left-aligned (got: " + archFillZh.align + ") to prevent midpoint drift");
+    }
+    if (archFillZh.x !== 236) {
+      throw new Error("Archetype label x coordinate must be profileX(226) + padX(10) = 236 (got: " + archFillZh.x + ")");
+    }
+
     var cardDataEn = {
       isEn: true,
       figureId: "xiao_tong",
@@ -14165,6 +14183,14 @@ jsc_check115_cmd = [
       annualAction: "Build undeniable craft & let works speak."
     };
     SocialCardEngine.renderToCanvas(dummyCanvas, cardDataEn);
+
+    var archFillEn = recordedFills.find(function(f) { return f.text === "Universal Sage & Scholar"; });
+    if (!archFillEn) {
+      throw new Error("Missing archetype label fillText call in EN card render");
+    }
+    if (archFillEn.align !== "left" || archFillEn.x !== 236) {
+      throw new Error("Archetype label EN must be left-aligned at x=236");
+    }
 
     // 3. Headless DOM simulation for Imperial Dossier Page 4 and Page 8
     var elementStore = {};

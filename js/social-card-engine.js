@@ -1830,27 +1830,45 @@ class SocialCardEngine {
     ctx.font = '13px sans-serif';
     this.drawWrappedText(ctx, data.figurePosition, profileX, dais2Y + 90, profileW, 18, 2, 'left');
 
-    // Line 3: Archetype Vocation Pill (Dynamic Text-Adaptive Width)
-    ctx.font = 'bold 11.5px sans-serif';
+    // Line 3: Archetype Vocation Pill (Bulletproof Left-Flush Architecture & Pixel-Perfect Symmetry)
+    const pillH = 22;
+    const pillY = dais2Y + 124;
+    const padX = 10;
+    const pillFont = 'bold 11.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
+    ctx.font = pillFont;
+
+    const archLabel = data.figureArchetypeLabel || '';
     let archTextW = 120;
     if (ctx.measureText) {
-      try { archTextW = ctx.measureText(data.figureArchetypeLabel).width; } catch(e) {}
+      try {
+        archTextW = ctx.measureText(archLabel).width;
+      } catch (e) {}
     }
-    const archPillW = Math.max(Math.min(archTextW + 24, profileW), 130);
-    const archPillH = 22;
-    const archPillY = dais2Y + 138;
+    if (!archTextW || archTextW < 50) {
+      let estimatedW = 0;
+      for (let i = 0; i < archLabel.length; i++) {
+        estimatedW += /[\u4e00-\u9fa5]/.test(archLabel[i]) ? 12 : 7;
+      }
+      archTextW = Math.max(estimatedW, 100);
+    }
+
+    const pillW = Math.min(Math.round(archTextW + padX * 2), profileW);
+    const pillX = profileX;
+
     ctx.fillStyle = '#eff6ff';
-    SocialCardEngine.drawRoundedRect(ctx, profileX, archPillY - 14, archPillW, archPillH, 6);
+    SocialCardEngine.drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 6);
     if (ctx.fill) ctx.fill();
     ctx.strokeStyle = '#2563eb';
     ctx.lineWidth = 1.2;
-    SocialCardEngine.drawRoundedRect(ctx, profileX, archPillY - 14, archPillW, archPillH, 6);
+    SocialCardEngine.drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 6);
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#1d4ed8';
-    ctx.font = 'bold 11.5px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(data.figureArchetypeLabel, profileX + archPillW / 2, archPillY + 2);
+    ctx.font = pillFont;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(archLabel, pillX + padX, pillY + pillH / 2);
+    ctx.textBaseline = 'alphabetic';
 
     // Delicate Golden Separator Hairline (Cleanly below Dynasty pill)
     ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
