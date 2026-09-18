@@ -1784,7 +1784,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </h3>
             </div>
             <span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40 font-mono">
-              ${isEn ? 'Governs 80% Destiny' : '八经融通 · 统领全盘80%命途大纲'}
+              ${isEn ? 'Governs 80% Destiny' : '十二典融通 · 统领全盘80%命途大纲'}
             </span>
           </div>
           <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">
@@ -1941,6 +1941,28 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${pCon}
                       </p>
                     </div>
+
+                    ${(pat.xuRuleZh || pat.xuCaseZh) ? `
+                      <div class="p-2.5 rounded-lg bg-blue-950/20 border border-blue-500/30 space-y-1.5 text-xs">
+                        <div class="flex items-center justify-between">
+                          <span class="font-bold text-blue-300 flex items-center gap-1 font-serif-sc text-[11px]">
+                            <span>📑</span>
+                            <span>${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '《子平真诠评注》《造化元钥评注》徐乐吾实操中间件'}</span>
+                          </span>
+                          <span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${isEn ? 'Decision Middleware' : '具象决策中间件'}</span>
+                        </div>
+                        ${(isEn ? pat.xuRuleEn : pat.xuRuleZh) ? `
+                          <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                            <b class="text-amber-300">${isEn ? 'Operational Rule: ' : '实操规则：'}</b>${isEn ? pat.xuRuleEn : pat.xuRuleZh}
+                          </p>
+                        ` : ''}
+                        ${(isEn ? pat.xuCaseEn : pat.xuCaseZh) ? `
+                          <p class="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-blue-900/30">
+                            <b class="text-indigo-300">${isEn ? 'Case Precedent: ' : '实证范例：'}</b>${isEn ? pat.xuCaseEn : pat.xuCaseZh}
+                          </p>
+                        ` : ''}
+                      </div>
+                    ` : ''}
                   </div>
                 `;
               }).join('')}
@@ -2030,14 +2052,14 @@ document.addEventListener('DOMContentLoaded', () => {
       detailsDivider.className = 'pt-4 pb-1 border-t border-gray-800/80 flex items-center justify-between gap-2';
       detailsDivider.innerHTML = `
         <div class="flex items-center space-x-2">
-          <span class="chinese-seal text-[10px] py-0">${isEn ? 'CANONICAL DETAILS' : '八经依据'}</span>
+          <span class="chinese-seal text-[10px] py-0">${isEn ? 'CANONICAL DETAILS' : '十二典依据'}</span>
           <h4 class="text-xs sm:text-sm font-bold text-gray-300 font-serif-sc">
-            ${isEn ? '🔍 Classical Canonical Textual Evidences & Palace Exegeses' : '🔍 深入查验八经细分依据与六亲全息'}
+            ${isEn ? '🔍 Classical Canonical Textual Evidences & Palace Exegeses' : '🔍 深入查验十二经典细分依据与六亲全息'}
           </h4>
         </div>
         <button id="toggleParetoDetailsBtn" type="button" class="px-3 py-1 text-xs rounded-lg bg-gray-800/90 hover:bg-gray-700 text-amber-300 border border-gray-700 transition flex items-center gap-1.5 shadow cursor-pointer">
           <span id="toggleParetoDetailsIcon">▼</span>
-          <span id="toggleParetoDetailsText">${isEn ? 'Show Canonical Breakdowns' : '展开八经细分卡片'}</span>
+          <span id="toggleParetoDetailsText">${isEn ? 'Show Canonical Breakdowns' : '展开十二大典细分卡片'}</span>
         </button>
       `;
       paretoContainer.appendChild(detailsDivider);
@@ -2056,16 +2078,16 @@ document.addEventListener('DOMContentLoaded', () => {
           if (isHidden) {
             paretoDetailsContainer.classList.remove('hidden');
             if (toggleIcon) toggleIcon.textContent = '▲';
-            if (toggleText) toggleText.textContent = isEn ? 'Collapse Canonical Breakdowns' : '收起八经细分卡片';
+            if (toggleText) toggleText.textContent = isEn ? 'Collapse Canonical Breakdowns' : '收起十二大典细分卡片';
           } else {
             paretoDetailsContainer.classList.add('hidden');
             if (toggleIcon) toggleIcon.textContent = '▼';
-            if (toggleText) toggleText.textContent = isEn ? 'Show Canonical Breakdowns' : '展开八经细分卡片';
+            if (toggleText) toggleText.textContent = isEn ? 'Show Canonical Breakdowns' : '展开十二大典细分卡片';
           }
         };
       }
 
-      // 1. 👑 八经 20/80 全相关键枢纽 (The Eight Classical Canons 20/80 Matrix)
+      // 1. 👑 十二大典 20/80 全相关键枢纽 (The Twelve Classical Canons 20/80 Matrix)
       if (pc.canons) {
         const canonList = [
           pc.canons.ditiansui,
@@ -2075,7 +2097,11 @@ document.addEventListener('DOMContentLoaded', () => {
           pc.canons.yuanhai,
           pc.canons.shenfeng,
           pc.canons.yuzhao,
-          pc.canons.lixuzhong
+          pc.canons.lixuzhong,
+          pc.canons.lantai,
+          pc.canons.wuxing,
+          pc.canons.qianli,
+          pc.canons.xulewu
         ].filter(Boolean);
 
         canonList.forEach(c => {
@@ -2116,6 +2142,22 @@ document.addEventListener('DOMContentLoaded', () => {
             borderTheme = 'border-teal-600/40 bg-gradient-to-br from-teal-950/25 via-black/40 to-black/60';
             tagColor = 'bg-teal-600/20 text-teal-300 border-teal-600/40';
             leftBorder = 'border-teal-500';
+          } else if (c.canonId === 'lantai') {
+            borderTheme = 'border-indigo-600/40 bg-gradient-to-br from-indigo-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-indigo-600/20 text-indigo-300 border-indigo-600/40';
+            leftBorder = 'border-indigo-500';
+          } else if (c.canonId === 'wuxing') {
+            borderTheme = 'border-emerald-600/40 bg-gradient-to-br from-emerald-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-emerald-600/20 text-emerald-300 border-emerald-600/40';
+            leftBorder = 'border-emerald-500';
+          } else if (c.canonId === 'qianli') {
+            borderTheme = 'border-blue-600/40 bg-gradient-to-br from-blue-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-blue-600/20 text-blue-300 border-blue-600/40';
+            leftBorder = 'border-blue-500';
+          } else if (c.canonId === 'xulewu') {
+            borderTheme = 'border-cyan-600/40 bg-gradient-to-br from-cyan-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-cyan-600/20 text-cyan-300 border-cyan-600/40';
+            leftBorder = 'border-cyan-500';
           }
 
           card.className = `p-4 rounded-xl border ${borderTheme} shadow-xl space-y-3`;
@@ -2217,6 +2259,58 @@ document.addEventListener('DOMContentLoaded', () => {
                   <div class="text-emerald-300 font-semibold mb-0.5">${isEn ? (c.idealGeographyEn || c.idealGeography) : (c.idealGeographyZh || c.idealGeography)}</div>
                   <p class="text-gray-300 text-[10.5px] leading-relaxed">${isEn ? (c.targetCitiesEn || c.targetCities) : (c.targetCitiesZh || c.targetCities)}</p>
                   <p class="text-teal-200 text-[10.5px] pt-1 border-t border-gray-800/60">${isEn ? (c.eraMacroTrendEn || c.eraMacroTrend) : (c.eraMacroTrendZh || c.eraMacroTrend)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'lantai') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
+                  <span class="text-indigo-300 font-bold block">${isEn ? 'NaYin Configuration & Acoustic Image:' : '纳音神机与象数大格判词：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Modern Strategic Archetype & Action:' : '现代心智与社会画像破局：'}</span>
+                  <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'wuxing') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Year Root Sovereignty (Nian Ben):' : '年本岁命根基全息：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <span class="text-amber-300 font-bold block">${isEn ? 'Lu-Ma Riding Vitality & Macro Leverage:' : '禄马乘旺借势宏观大计：'}</span>
+                  <p class="text-amber-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'qianli') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-blue-900/40 space-y-1.5">
+                  <span class="text-blue-300 font-bold block">${isEn ? 'Yong Shen Protocol & Balancing Rationale:' : '用神五法取用与推命依据：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-blue-900/40 space-y-1.5">
+                  <span class="text-cyan-300 font-bold block">${isEn ? 'Modern Action Rule & Decision Guide:' : '近代实战定式与行动指南：'}</span>
+                  <p class="text-cyan-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'xulewu') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-cyan-900/40 space-y-1.5">
+                  <span class="text-cyan-300 font-bold block">${isEn ? 'Decision Middleware (Operational Rule & Vigor Fine-tuning):' : '实操决策中间件（月令规则与身强身弱细化）：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed whitespace-pre-line">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
+                  <span class="text-indigo-300 font-bold block">${isEn ? 'Documented Historical Case Precedent:' : '民国实务断案实录范例：'}</span>
+                  <p class="text-indigo-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
                 </div>
               </div>
             `;
@@ -3109,6 +3203,28 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${pCon}
                       </p>
                     </div>
+
+                    ${(pat.xuRuleZh || pat.xuCaseZh) ? `
+                      <div class="p-2.5 rounded-lg bg-blue-950/20 border border-blue-500/30 space-y-1.5 text-xs">
+                        <div class="flex items-center justify-between">
+                          <span class="font-bold text-blue-300 flex items-center gap-1 font-serif-sc text-[11px]">
+                            <span>📑</span>
+                            <span>${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '《子平真诠评注》《造化元钥评注》徐乐吾实操中间件'}</span>
+                          </span>
+                          <span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${isEn ? 'Decision Middleware' : '具象决策中间件'}</span>
+                        </div>
+                        ${(isEn ? pat.xuRuleEn : pat.xuRuleZh) ? `
+                          <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                            <b class="text-amber-300">${isEn ? 'Operational Rule: ' : '实操规则：'}</b>${isEn ? pat.xuRuleEn : pat.xuRuleZh}
+                          </p>
+                        ` : ''}
+                        ${(isEn ? pat.xuCaseEn : pat.xuCaseZh) ? `
+                          <p class="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-blue-900/30">
+                            <b class="text-indigo-300">${isEn ? 'Case Precedent: ' : '实证范例：'}</b>${isEn ? pat.xuCaseEn : pat.xuCaseZh}
+                          </p>
+                        ` : ''}
+                      </div>
+                    ` : ''}
                   </div>
                 `;
               }).join('')}
@@ -4151,6 +4267,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const qtXuContainer = document.getElementById('qiongtongXuLewuContainer');
     if (qtXuContainer && typeof XuLewuDB !== 'undefined') {
       const ex = XuLewuDB.getMiddlewareExegesis(dayMaster, monthBranch, res.vigor);
+      const dmEn = (typeof PortraitEngine !== 'undefined') ? PortraitEngine.toStemEn(dayMaster) : dayMaster;
+      const mbEn = (typeof PortraitEngine !== 'undefined') ? PortraitEngine.toBranchEn(monthBranch) : monthBranch;
       qtXuContainer.innerHTML = `
         <div class="bg-card p-5 rounded-xl border border-blue-500/30 shadow-lg space-y-3 mt-4">
           <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-blue-500/20">
@@ -4159,7 +4277,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <h4 class="text-sm font-bold text-blue-300 font-serif-sc">${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '徐乐吾十干生于十二月令具象案例解析'}</h4>
             </div>
             <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-200">
-              ${isEn ? `${dayMaster} in ${monthBranch} Month` : `${dayMaster}生于${monthBranch}月`} · ${isEn ? 'Operational Middleware' : '实操中间件'}
+              ${isEn ? `${dmEn} in ${mbEn} Month` : `${dayMaster}生于${monthBranch}月`} · ${isEn ? 'Operational Middleware' : '实操中间件'}
             </span>
           </div>
 
@@ -4709,6 +4827,57 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
+    }
+
+    // 10b. 《徐乐吾评注》 (Xu Lewu Commentaries Middleware) Auto Matching
+    const xulewuContainer = document.getElementById('xulewuAutoResult');
+    const xulewuManifestoContainer = document.getElementById('xulewuManifestoContainer');
+    if (typeof XuLewuDB !== 'undefined') {
+      const ex = XuLewuDB.getMiddlewareExegesis(dayMaster, monthBranch, res.vigor);
+      const dmEn = (typeof PortraitEngine !== 'undefined') ? PortraitEngine.toStemEn(dayMaster) : dayMaster;
+      const mbEn = (typeof PortraitEngine !== 'undefined') ? PortraitEngine.toBranchEn(monthBranch) : monthBranch;
+      const manifesto = XuLewuDB.getManifesto();
+
+      if (xulewuContainer) {
+        xulewuContainer.innerHTML = `
+          <div class="bg-card p-5 rounded-xl border border-blue-500/30 shadow-lg space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-blue-500/20">
+              <div class="flex items-center space-x-2">
+                <span class="chinese-seal text-[10px] py-0 border-blue-400 text-blue-300">${isEn ? 'Xu Lewu Commentary' : '徐乐吾评注'}</span>
+                <h3 class="text-base font-bold text-blue-300 font-serif-sc">${isEn ? ex.titleEn : ex.titleZh}</h3>
+              </div>
+              <span class="text-[11px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-200 font-mono">
+                ${isEn ? `${dmEn} in ${mbEn} Month` : `${dayMaster}生于${monthBranch}月`} · ${isEn ? 'Operational Middleware' : '决策中间件'}
+              </span>
+            </div>
+
+            <div class="p-3 bg-black/30 rounded-lg border border-blue-900/30 text-xs space-y-1">
+              <span class="text-amber-300 font-bold block">💡 ${isEn ? '1. Operational Middleware Decision Tree (Concrete Rule):' : '1. 具象化实操判断规则（将抽象古意翻译为决策规则）：'}</span>
+              <p class="text-gray-200 leading-relaxed">${isEn ? ex.abstractRuleEn : ex.abstractRuleZh}</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="p-3 bg-black/30 rounded-lg border border-emerald-900/30 space-y-1">
+                <span class="text-emerald-400 font-bold block">⚖️ ${isEn ? '2. Vigor Calibration & Balance Heuristic:' : '2. 身强身弱细化微调准则：'}</span>
+                <p class="text-gray-300 leading-relaxed">${isEn ? ex.finetunedRuleEn : ex.finetunedRuleZh}</p>
+              </div>
+              <div class="p-3 bg-black/30 rounded-lg border border-indigo-900/30 space-y-1">
+                <span class="text-indigo-300 font-bold block">🏛️ ${isEn ? '3. Documented Historical Case Precedent:' : '3. 民国政商实务断案范例：'}</span>
+                <p class="text-gray-300 leading-relaxed">${isEn ? ex.concreteCaseEn : ex.concreteCaseZh}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (xulewuManifestoContainer) {
+        xulewuManifestoContainer.innerHTML = `
+          <div class="text-xs space-y-2 text-gray-300 leading-relaxed">
+            <p><b class="text-amber-300">${isEn ? 'Academic Positioning & Middleware Value:' : '学术定位与中间件功能：'}</b>${isEn ? manifesto.valueEn : manifesto.valueZh}</p>
+            <p class="text-gray-400 pt-1.5 border-t border-gray-800 text-[11px]"><b class="text-gray-300">${isEn ? 'Scholarly Controversy & Objective Appraisal:' : '学术争议与客观公评：'}</b>${isEn ? manifesto.controversyEn : manifesto.controversyZh}</p>
+          </div>
+        `;
+      }
     }
 
     // 11. Classical Schools Synthesis (四大学派全景画像)
@@ -10068,9 +10237,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Database Tab Switching Logic (6 Tabs)
+  // Database Tab Switching Logic (12 Classical Canons & Commentaries)
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabPanes = document.querySelectorAll('.tab-pane');
+  const canonCatBtns = document.querySelectorAll('.canon-cat-btn');
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -10083,6 +10253,46 @@ document.addEventListener('DOMContentLoaded', () => {
       if (activePane) activePane.classList.remove('hidden');
     });
   });
+
+  // Classical Schools Category Filter Toolbar Logic
+  if (canonCatBtns && canonCatBtns.length > 0) {
+    canonCatBtns.forEach(cBtn => {
+      cBtn.addEventListener('click', () => {
+        const school = cBtn.getAttribute('data-school') || 'all';
+
+        // Update active class on category buttons
+        canonCatBtns.forEach(b => {
+          b.classList.remove('active', 'border-amber-500/50', 'bg-amber-950/60', 'text-amber-200');
+          b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+        });
+        cBtn.classList.add('active', 'border-amber-500/50', 'bg-amber-950/60', 'text-amber-200');
+        cBtn.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+
+        // Filter tab buttons by data-school
+        let firstVisibleBtn = null;
+        let activeIsVisible = false;
+
+        tabBtns.forEach(tBtn => {
+          const btnSchool = tBtn.getAttribute('data-school');
+          const matches = (school === 'all' || btnSchool === school);
+          if (matches) {
+            tBtn.classList.remove('hidden');
+            tBtn.style.display = '';
+            if (!firstVisibleBtn) firstVisibleBtn = tBtn;
+            if (tBtn.classList.contains('active')) activeIsVisible = true;
+          } else {
+            tBtn.classList.add('hidden');
+            tBtn.style.display = 'none';
+          }
+        });
+
+        // If the currently active tab is hidden, switch to the first visible tab
+        if (!activeIsVisible && firstVisibleBtn) {
+          firstVisibleBtn.click();
+        }
+      });
+    });
+  }
 
   // Transit Fortune Cycle Sub-Tabs (Decade / Annual / Month / Day)
   const fortuneCycleTabs = document.getElementById('fortuneCycleTabs');
@@ -10678,7 +10888,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="flex flex-wrap justify-between items-center gap-2 pb-1 border-b border-gray-800">
             <div class="flex items-center space-x-2">
               <span class="text-amber-300 font-bold font-serif-sc">${isEn ? c.titleEn : c.titleZh}</span>
-              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-[11px]">${c.pillars}</span>
+              <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-[11px]">${isEn ? (c.pillarsEn || c.pillars) : c.pillars}</span>
             </div>
             <span class="text-[10px] text-gray-500">${isEn ? 'Republican Case Law' : '民国实务断案'}</span>
           </div>
@@ -10704,7 +10914,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const query = searchInput.value.trim();
     if (!query) {
       searchResultsContainer.innerHTML = isEn
-        ? '<p class="text-xs text-gray-500 text-center">Please enter keywords to search across the eleven master classics and commentaries.</p>'
+        ? '<p class="text-xs text-gray-500 text-center">Please enter keywords to search across the twelve master classics and commentaries.</p>'
         : '<p class="text-xs text-gray-500 text-center">请输入关键词进行联合检索，如“病药”、“苍龙驾海”、“年本”、“通关”、“徐乐吾”、“玉照”、“三元禄”、“伤官吐秀”、“丙火”、“调候”等。</p>';
       return;
     }
@@ -10730,13 +10940,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (all.length === 0) {
       searchResultsContainer.innerHTML = isEn
-        ? `<p class="text-xs text-gray-400 text-center">No relevant entries containing "${query}" found across the eleven master classics and commentaries.</p>`
-        : `<p class="text-xs text-gray-400 text-center">十一大大典籍与评注全库中未找到包含 “${query}” 的相关条目。</p>`;
+        ? `<p class="text-xs text-gray-400 text-center">No relevant entries containing "${query}" found across the twelve master classics and commentaries.</p>`
+        : `<p class="text-xs text-gray-400 text-center">十二大典籍与评注全库中未找到包含 “${query}” 的相关条目。</p>`;
       return;
     }
 
     searchResultsContainer.innerHTML = `
-      <div class="text-xs text-gray-400 mb-2 font-medium">${isEn ? `Found ${all.length} results across the eleven master classics and commentaries:` : `在十一大典籍与评注全库中检索到 ${all.length} 条结果：`}</div>
+      <div class="text-xs text-gray-400 mb-2 font-medium">${isEn ? `Found ${all.length} results across the twelve master classics and commentaries:` : `在十二大典籍与评注全库中检索到 ${all.length} 条结果：`}</div>
       <div class="space-y-3">
         ${all.map(item => `
           <div class="p-3.5 bg-black/30 rounded-lg border border-gray-700/50 hover:border-amber-500/50 transition">

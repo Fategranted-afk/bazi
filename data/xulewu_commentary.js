@@ -503,12 +503,31 @@ class XuLewuDB {
     const sRule = dmRules[season] || dmRules['spring'];
     const isVigorous = vigor && (vigor.isStrong || vigor.isExtreme || (vigor.totalScore >= 50));
 
+    const elementMap = {
+      '甲': '木', '乙': '木',
+      '丙': '火', '丁': '火',
+      '戊': '土', '己': '土',
+      '庚': '金', '辛': '金',
+      '壬': '水', '癸': '水'
+    };
+    const el = elementMap[dm] || '';
+    const stemMapEn = {
+      '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu',
+      '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui'
+    };
+    const branchMapEn = {
+      '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si',
+      '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai'
+    };
+    const stemEn = stemMapEn[dm] || dm;
+    const mbEn = branchMapEn[mb] || mb;
+
     return {
       dayMaster: dm,
       monthBranch: mb,
       season,
-      titleZh: `《子平真诠评注》《造化元钥评注》· 徐乐吾十干生于十二月令具象实操规则【${dm}木生于${mb}月】`.replace('木', dm === '甲' || dm === '乙' ? '木' : (dm === '丙' || dm === '丁' ? '火' : (dm === '戊' || dm === '己' ? '土' : (dm === '庚' || dm === '辛' ? '金' : '水')))),
-      titleEn: `Xu Lewu Commentary Decision Middleware: [${dm} Born in ${mb} Month]`,
+      titleZh: `《子平真诠评注》《造化元钥评注》· 徐乐吾十干生于十二月令具象实操规则【${dm}${el}生于${mb}月】`,
+      titleEn: `Xu Lewu Commentary Decision Middleware: [${stemEn} born in ${mbEn} Month]`,
       abstractRuleZh: sRule.ruleZh,
       abstractRuleEn: sRule.ruleEn,
       concreteCaseZh: sRule.caseZh,
@@ -545,6 +564,20 @@ class XuLewuDB {
       });
     }
 
+    const stemMapEn = {
+      '甲': 'Jia (Yang Wood)', '乙': 'Yi (Yin Wood)',
+      '丙': 'Bing (Yang Fire)', '丁': 'Ding (Yin Fire)',
+      '戊': 'Wu (Yang Earth)', '己': 'Ji (Yin Earth)',
+      '庚': 'Geng (Yang Metal)', '辛': 'Xin (Yin Metal)',
+      '壬': 'Ren (Yang Water)', '癸': 'Gui (Yin Water)'
+    };
+    const seasonMapEn = {
+      'spring': 'Spring',
+      'summer': 'Summer',
+      'autumn': 'Autumn',
+      'winter': 'Winter'
+    };
+
     // Search all stem/season rules & cases
     Object.keys(XU_LEWU_DATA.rules).forEach(stem => {
       const sObj = XU_LEWU_DATA.rules[stem];
@@ -561,11 +594,13 @@ class XuLewuDB {
           (item.weakFinetuneEn && item.weakFinetuneEn.toLowerCase().includes(q)) ||
           query.includes(stem)
         ) {
+          const stemEn = stemMapEn[stem] || stem;
+          const sNameEn = seasonMapEn[seasonKey] || seasonKey;
           results.push({
             source: '《徐乐吾评注·十干月令案例中间件》',
             sourceEn: 'Xu Lewu 10 Stems Monthly Case Middleware',
             title: `${stem}日元生于${seasonKey}月令实操案`,
-            titleEn: `${stem} Day Master born in ${seasonKey} Season Case Exegesis`,
+            titleEn: `${stemEn} Day Master born in ${sNameEn} Season Case Exegesis`,
             content: item.ruleZh,
             contentEn: item.ruleEn,
             detail: item.caseZh,

@@ -155,15 +155,37 @@ class LiXuZhongDB {
       naYinToneEn = 'Gong Earth Tone · Grounded Center';
     }
 
-    const dmNature = STEM_NATURES[dm] || { zh: `${dm}五行之气`, en: `${dm} Elemental Essence` };
-    const branchVit = BRANCH_VITALITIES[dayBranch] || { zh: `${dayBranch}地气所钟`, en: `${dayBranch} Earthly Resonance` };
+    const stemMapEn = {
+      '甲': 'Jia (Yang Wood)', '乙': 'Yi (Yin Wood)', '丙': 'Bing (Yang Fire)', '丁': 'Ding (Yin Fire)', '戊': 'Wu (Yang Earth)',
+      '己': 'Ji (Yin Earth)', '庚': 'Geng (Yang Metal)', '辛': 'Xin (Yin Metal)', '壬': 'Ren (Yang Water)', '癸': 'Gui (Yin Water)'
+    };
+    const branchMapEn = {
+      '子': 'Zi (Rat)', '丑': 'Chou (Ox)', '寅': 'Yin (Tiger)', '卯': 'Mao (Rabbit)', '辰': 'Chen (Dragon)', '巳': 'Si (Snake)',
+      '午': 'Wu (Horse)', '未': 'Wei (Goat)', '申': 'Shen (Monkey)', '酉': 'You (Rooster)', '戌': 'Xu (Dog)', '亥': 'Hai (Pig)'
+    };
+    const naYinMapEn = {
+      '海中金': 'Sea Metal', '炉中火': 'Furnace Fire', '大林木': 'Great Forest Wood', '路旁土': 'Roadside Earth',
+      '剑锋金': 'Sword Edge Metal', '山头火': 'Mountaintop Fire', '涧下水': 'Valley Stream Water', '城头土': 'City Rampart Earth',
+      '白蜡金': 'White Wax Metal', '杨柳木': 'Willow Wood', '泉中水': 'Spring Water', '屋上土': 'Rooftop Earth',
+      '霹雳火': 'Thunderbolt Fire', '松柏木': 'Pine and Cypress Wood', '长流水': 'Everflowing River Water', '沙中金': 'Sand Metal',
+      '山下火': 'Foot of Mountain Fire', '平地木': 'Flatland Wood', '壁上土': 'Wall Earth', '金箔金': 'Gold Foil Metal',
+      '佛灯火': 'Lamp Fire', '天河水': 'Celestial River Water', '大驿土': 'Post Station Earth', '钗钏金': 'Hairpin Metal',
+      '桑柘木': 'Mulberry Wood', '大溪水': 'Great Torrent Water', '沙中土': 'Sand Earth', '天上火': 'Heavenly Fire',
+      '石榴木': 'Pomegranate Wood', '大海水': 'Great Ocean Water'
+    };
+    const dmEn = stemMapEn[dm] || dm;
+    const dayBranchEn = branchMapEn[dayBranch] || dayBranch;
+    const dayNaYinEn = naYinMapEn[dayNaYin] || dayNaYin;
+
+    const dmNature = STEM_NATURES[dm] || { zh: `${dm}五行之气`, en: `${dmEn} Elemental Essence` };
+    const branchVit = BRANCH_VITALITIES[dayBranch] || { zh: `${dayBranch}地气所钟`, en: `${dayBranchEn} Earthly Resonance` };
 
     const heavenLuZh = `天元为禄【${dm}】：主外在名位、社会公信力与专业职权。代表命主在社会层面的立身之本，宜以清正德行与硬核专业护持，名实相称方能永固。`;
-    const heavenLuEn = `Heavenly Prime (Rank) [${dm}]: Governs societal reputation, public trust, and executive credentials. Must be anchored in professional excellence and unyielding integrity.`;
+    const heavenLuEn = `Heavenly Prime (Rank) [${dmEn}]: Governs societal reputation, public trust, and executive credentials. Must be anchored in professional excellence and unyielding integrity.`;
     const earthMingZh = `地元为命【${dayBranch}】：主形体根基、资产沉淀与寿夭休咎。代表命主承受压力的生理耐受度与不动产基业，需规律起居培护元神。`;
-    const earthMingEn = `Earthly Prime (Destiny) [${dayBranch}]: Governs somatic resilience, asset preservation, and longevity foundations. Demands balanced circadian rhythm to fortify deep vitality.`;
+    const earthMingEn = `Earthly Prime (Destiny) [${dayBranchEn}]: Governs somatic resilience, asset preservation, and longevity foundations. Demands balanced circadian rhythm to fortify deep vitality.`;
     const humanShenZh = `人元为身【纳音：${dayNaYin}】：主内在才干、灵性直觉与音律气象。象征命主独一无二的生命频段与精神追求，是超越世俗名利的灵魂底色。`;
-    const humanShenEn = `Human Prime (Body) [NaYin: ${dayNaYin}]: Governs internal genius, spiritual intuition, and creative temperament—the sovereign soul frequency beyond mundane metrics.`;
+    const humanShenEn = `Human Prime (Body) [NaYin: ${dayNaYinEn}]: Governs internal genius, spiritual intuition, and creative temperament—the sovereign soul frequency beyond mundane metrics.`;
 
     // Detailed Male vs Female Metaphysical Distinctions (男女命差异)
     const luGenderDiffZh = isMale
@@ -278,7 +300,7 @@ class LiXuZhongDB {
     const elInfo = elNames[favorableEl] || { zh: favorableEl, en: favorableEl };
 
     const macroTrendZh = `【时代周期交互】：在当下第四次工业革命与AI人工智能爆发大周期下，五行【${favorableEl}】所对应的赛道（科技向善、绿色生态、文化传承与数字化普惠）正迎来历史级红利期。命主应当将自身核心才干与时代浪潮深度锁合，顺水行舟。`;
-    const macroTrendEn = `【Macro Era Resonance】: In the 4th Industrial Revolution and sovereign AI paradigm shift, the [${favorableEl}] sector (ethical intelligence, green ecologies, cultural assets, and decentralized agility) enters a generational super-cycle. Align your sovereign craft with macro tides for compound momentum.`;
+    const macroTrendEn = `[Macro Era Resonance]: In the 4th Industrial Revolution and sovereign AI paradigm shift, the [${elInfo.en}] sector (ethical intelligence, green ecologies, cultural assets, and decentralized agility) enters a generational super-cycle. Align your sovereign craft with macro tides for compound momentum.`;
 
     return {
       favorableElement: favorableEl,

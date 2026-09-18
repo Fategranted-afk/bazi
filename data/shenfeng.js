@@ -268,9 +268,12 @@ class ShenFengDB {
       isRobust = score >= 50;
     }
 
+    const elMapEn = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
+    const dmElEn = elMapEn[dmElement] || dmElement;
+
     if (isRobust) {
       const textZh = `日元五行【${dmElement}】得令通根，气势雄浑。切忌散漫放任，需施以高标准的严苛专业打磨、严格的项目里程碑与纪律制度，百炼成钢，方显千古大器之风骨。`;
-      const textEn = `The Day Master element [${dmElement}] is densely rooted and commanding. Avoid indolence; submit to demanding technical milestones and disciplined governance to forge lasting greatness.`;
+      const textEn = `The Day Master element [${dmElEn}] is densely rooted and commanding. Avoid indolence; submit to demanding technical milestones and disciplined governance to forge lasting greatness.`;
       const typeZh = '旺气雕琢型 (成器栋梁)';
       const typeEn = 'Robust Sculpting Archetype (Architectural Mastery)';
       const genderDiffZh = '【男女命雕琢差异】：乾造男命宜置身严苛竞技赛道，以硬仗和硬核战绩立威；坤造女命宜在专业主权与技术领域建立标杆，避免无谓人情消耗。';
@@ -292,7 +295,7 @@ class ShenFengDB {
       };
     } else {
       const textZh = `日元五行【${dmElement}】质地清秀而形体娇弱。切忌好大喜功或超负荷硬刚高危项目；宜依托成熟平台长线积累，注重身心节律滋养与慢工出细活。`;
-      const textEn = `The Day Master element [${dmElement}] is refined yet delicate. Never overextend into hazardous leverage; compound quietly inside protective platforms and honor holistic biorhythms.`;
+      const textEn = `The Day Master element [${dmElEn}] is refined yet delicate. Never overextend into hazardous leverage; compound quietly inside protective platforms and honor holistic biorhythms.`;
       const typeZh = '温润培根型 (甘霖养秀)';
       const typeEn = 'Delicate Root-Nurturing Archetype (Organic Compounding)';
       const genderDiffZh = '【男女命培根差异】：乾造男命宜借力成熟大平台沉潜蓄势，勿盲目孤军冒进高杠杆创业；坤造女命宜重身心养护与情绪安和，以长线定力滋养深层福泽。';

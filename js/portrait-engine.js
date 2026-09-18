@@ -10,6 +10,60 @@
  */
 
 class PortraitEngine {
+  static stemMapEn = {
+    '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu',
+    '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui'
+  };
+  static branchMapEn = {
+    '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si',
+    '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai'
+  };
+  static naYinMapEn = {
+    '海中金': 'Sea Metal', '炉中火': 'Furnace Fire', '大林木': 'Great Forest Wood', '路旁土': 'Roadside Earth',
+    '剑锋金': 'Sword Edge Metal', '山头火': 'Mountaintop Fire', '涧下水': 'Valley Stream Water', '城头土': 'City Rampart Earth',
+    '白蜡金': 'White Wax Metal', '杨柳木': 'Willow Wood', '泉中水': 'Spring Water', '屋上土': 'Rooftop Earth',
+    '霹雳火': 'Thunderbolt Fire', '松柏木': 'Pine and Cypress Wood', '长流水': 'Everflowing River Water', '沙中金': 'Sand Metal',
+    '山下火': 'Foot of Mountain Fire', '平地木': 'Flatland Wood', '壁上土': 'Wall Earth', '金箔金': 'Gold Foil Metal',
+    '佛灯火': 'Lamp Fire', '天河水': 'Celestial River Water', '大驿土': 'Post Station Earth', '钗钏金': 'Hairpin Metal',
+    '桑柘木': 'Mulberry Wood', '大溪水': 'Great Torrent Water', '沙中土': 'Sand Earth', '天上火': 'Heavenly Fire',
+    '石榴木': 'Pomegranate Wood', '大海水': 'Great Ocean Water'
+  };
+  static tenGodMapEn = {
+    '正官': 'Direct Officer', '七杀': 'Seven Killings', '偏官': 'Indirect Officer',
+    '正印': 'Direct Resource', '偏印': 'Indirect Resource', '阳刃': 'Yang Blade', '羊刃': 'Yang Blade',
+    '食神': 'Eating God', '伤官': 'Hurting Officer',
+    '正财': 'Direct Wealth', '偏财': 'Indirect Wealth',
+    '比肩': 'Friend', '劫财': 'Rob Wealth', '建禄': 'Established Prosperity'
+  };
+
+  static toStemEn(s) {
+    if (!s) return 'Day Master';
+    return PortraitEngine.stemMapEn[s] || s;
+  }
+  static toBranchEn(b) {
+    if (!b) return 'Branch';
+    return PortraitEngine.branchMapEn[b] || b;
+  }
+  static toPillarEn(p) {
+    if (!p || typeof p !== 'string' || p.length < 2) return 'Pillar';
+    return `${PortraitEngine.toStemEn(p[0])}-${PortraitEngine.toBranchEn(p[1])}`;
+  }
+  static toNaYinEn(ny) {
+    if (!ny) return 'Acoustic NaYin';
+    if (PortraitEngine.naYinMapEn[ny]) return PortraitEngine.naYinMapEn[ny];
+    for (const [k, v] of Object.entries(PortraitEngine.naYinMapEn)) {
+      if (ny.includes(k)) return v;
+    }
+    return 'Harmonic Tone';
+  }
+  static toTenGodEn(tg) {
+    if (!tg) return 'Pattern';
+    for (const [k, v] of Object.entries(PortraitEngine.tenGodMapEn)) {
+      if (tg.includes(k)) return v;
+    }
+    return 'Ten God';
+  }
+
   /**
    * Main analysis method
    * @param {Object} bazi - The calculated BaZi object from BaZiEngine
@@ -3137,14 +3191,14 @@ class PortraitEngine {
           ? `命主【${dayMaster}】元神得局通根，理气旺盛。滴天髓指明：“旺极宜泄，见火为荣”；切忌困闭滞涩，须有克泄耗之神引通生机。`
           : `命主【${dayMaster}】元神气质虚和，理气待发。滴天髓指明：“衰而不穷，如有嫡母，可秋可冬”；须得印比通根生扶，筑牢生命底盘。`,
         summaryEn: isStrong
-          ? `Day Master [${dayMaster}] possesses dominant root vigor. Di Tian Sui dictates: "When Qi culminates, channel its brilliance outward through productive output; avoid stagnation."`
-          : `Day Master [${dayMaster}] carries delicate, receptive Qi. Di Tian Sui dictates: "Gentle Qi perseveres through resource roots; anchor core vitality with supportive mentorship."`,
+          ? `Day Master [${PortraitEngine.toStemEn(dayMaster)}] possesses dominant root vigor. Di Tian Sui dictates: "When Qi culminates, channel its brilliance outward through productive output; avoid stagnation."`
+          : `Day Master [${PortraitEngine.toStemEn(dayMaster)}] carries delicate, receptive Qi. Di Tian Sui dictates: "Gentle Qi perseveres through resource roots; anchor core vitality with supportive mentorship."`,
         favorableZh: (stemData.favorable && stemData.favorable.join('、')) || '得天时地利相和',
-        favorableEn: (stemData.favorable && stemData.favorable.join(', ')) || 'Harmonious elemental alignment',
+        favorableEn: (stemData.favorableEn && stemData.favorableEn.join(', ')) || (stemData.favorable && stemData.favorable.join(', ')) || 'Harmonious elemental alignment',
         taboosZh: (stemData.taboos && stemData.taboos.join('、')) || '过燥过湿、偏枯无制',
-        taboosEn: (stemData.taboos && stemData.taboos.join(', ')) || 'Excessive dryness or moisture',
+        taboosEn: (stemData.taboosEn && stemData.taboosEn.join(', ')) || (stemData.taboos && stemData.taboos.join(', ')) || 'Excessive dryness or moisture',
         modernStrategyZh: stemData.beneficial_lifestyle || '保持生活作息规律，晨间亲近自然阳光；工作中主动担当重要使命，以专业价值立足。',
-        modernStrategyEn: stemData.beneficial_lifestyle || 'Align daily rhythms with natural sunlight and deep focus; lead initiatives through verifiable craftsmanship.',
+        modernStrategyEn: stemData.beneficial_lifestyleEn || 'Align daily rhythms with natural sunlight and deep focus; lead initiatives through verifiable craftsmanship.',
         genderDiffZh: gender === 'female'
           ? '【坤造理气辨析】：女命重在理气柔顺中和，不宜过度纯刚刑克；得印绶食伤则秀外慧中、福寿绵长。'
           : '【乾造理气辨析】：男命贵在刚健笃实、勇于突破；逢杀刃制化则立功名垂青史，成就非凡基业。',
@@ -3152,7 +3206,7 @@ class PortraitEngine {
           ? '[Female Native Dynamics]: Values gentle, resilient Qi flow without abrasive clashes, radiating intellectual grace and domestic dignity.'
           : '[Male Native Dynamics]: Values sovereign fortitude and disciplined execution, converting adversity into enduring legacy.',
         personaDepictionZh: `命主受【${dayMaster}】天干本气滋养，骨相清奇，内力深敛蓄势，如汪洋深潭不露声色而暗藏千钧之力。`,
-        personaDepictionEn: `Endowed with Day Master [${dayMaster}] elemental depth; serene on the surface while harboring deep regenerative momentum.`,
+        personaDepictionEn: `Endowed with Day Master [${PortraitEngine.toStemEn(dayMaster)}] elemental depth; serene on the surface while harboring deep regenerative momentum.`,
         destinyTrajectoryZh: '顺天应时乘除引通；逢燥热蒸腾之大运激化才干为甘霖，逢生旺滋养岁运乘风破浪万里扬帆。',
         destinyTrajectoryEn: 'Harmonizes seasonal rhythms; transforms challenges into rainclouds and catches oceanic tailwinds in favorable transits.',
         actionableManeuverZh: '以静制动，涵养元神精神力，严禁在浮躁盲从的红海中消耗有限心智；守正出奇方成极品。',
@@ -3186,7 +3240,7 @@ class PortraitEngine {
         subtitleZh: '清·余春台《穷通宝鉴》：“终南捷径，先观提纲月令。调候为急，专执用神。”',
         subtitleEn: 'Qiong Tong Bao Jian: "The supreme shortcut lies in the Month Order. Climatic adjustment is paramount; sovereign focus governs destiny."',
         pivotNameZh: qt.isZipingCalibrated ? `【调候生克校准】${qt.primary}` : (qt.climateDesc || `${dayMaster}生于${monthBranch}月 · 气候调候`),
-        pivotNameEn: qt.isZipingCalibrated ? `[Calibrated Regulator] ${qt.primaryEn || qt.primary}` : (qt.climateDescEn || `${dayMaster} born in ${monthBranch} Month · Seasonal Balance`),
+        pivotNameEn: qt.isZipingCalibrated ? `[Calibrated Regulator] ${qt.primaryEn || qt.primary}` : (qt.climateDescEn || `${PortraitEngine.toStemEn(dayMaster)} born in ${PortraitEngine.toBranchEn(monthBranch)} Month · Seasonal Balance`),
         summaryZh: summZh,
         summaryEn: summEn,
         favorableZh: favStrZh,
@@ -3205,7 +3259,7 @@ class PortraitEngine {
           ? '[Female Native Dynamics]: Climatic harmony anchors somatic wellness and serene emotional intuition, elevating domestic warmth.'
           : '[Male Native Dynamics]: Seasonal adjustment empowers rapid market positioning and cross-industry breakthrough.',
         personaDepictionZh: `得月令【${monthBranch}】气象淬炼，心性耐得住长期苦寒冷板凳，在极端逆境高压中具备超常耐受力与战略定力。`,
-        personaDepictionEn: `Tempered by Month [${monthBranch}] seasonal climate; extraordinary tolerance for solitude and pressure under adversity.`,
+        personaDepictionEn: `Tempered by Month [${PortraitEngine.toBranchEn(monthBranch)}] seasonal climate; extraordinary tolerance for solitude and pressure under adversity.`,
         destinyTrajectoryZh: '早运历经寒暖洗礼淬砺筋骨，逢调候用神大运骤然破土开花，事业迎来火箭式质变爆发。',
         destinyTrajectoryEn: 'Early seasons temper resilience; entering favorable climatic transits triggers exponential career breakthroughs.',
         actionableManeuverZh: '日常起居办公多采光纳阳，业务聚焦朝阳温暖之科技创新赛道，以火热信念融化内心冰霜。',
@@ -3273,7 +3327,7 @@ class PortraitEngine {
         subtitleZh: `明·万民英《三命通会》：“夫日为身主，时为引从。日时相生相克，定一生富贵寿考之归宿。”（${smChapterZh}）`,
         subtitleEn: 'San Ming Tong Hui: "Day Pillar is the sovereign self; Hour Pillar is the guiding destiny. Their dynamic interaction seals lifetime legacy, wealth, and twilight fruition."',
         pivotNameZh: sm.pattern || `${dayPillar}日 ${hourPillar}时 取格`,
-        pivotNameEn: sm.patternEn || `${dayPillar} Day ${hourPillar} Hour Synthesis`,
+        pivotNameEn: sm.patternEn || `${PortraitEngine.toPillarEn(dayPillar)} Day ${PortraitEngine.toPillarEn(hourPillar)} Hour Synthesis`,
         summaryZh: sm.summary || sm.meaning || `日干与时支配合，定一生事业功名与晚年归宿之大势。吉神照应主晚景荣昌、后代光宗耀祖。`,
         summaryEn: sm.summaryEn || sm.meaningEn || `The Day-Hour synthesis anchors terminal legacy, intellectual output, and generational transition in the second half of life.`,
         verseZh: sm.verse || '日落青山时正隆，贵宿相生福自通。若得行运无刑克，晚岁安闲富寿翁。',
@@ -3325,11 +3379,11 @@ class PortraitEngine {
         canonNameZh: '渊海子平',
         canonNameEn: 'Yuan Hai Zi Ping',
         titleZh: `👑 《渊海子平》：20% 【${tenGod}】凶煞制化与骨相命脉`,
-        titleEn: `👑 Yuan Hai Zi Ping: 20% [${tenGod}] Star Transformation & Foundational Verses`,
+        titleEn: `👑 Yuan Hai Zi Ping: 20% [${PortraitEngine.toTenGodEn(tenGod)}] Star Transformation & Foundational Verses`,
         subtitleZh: `宋·徐升《渊海子平》：“造化先须审日干，更凭月令讨论看。有杀先论杀，无杀方论用。”（${yhCanonSource}）`,
         subtitleEn: 'Yuan Hai Zi Ping: "First scrutinize the Day Stem, then examine the Month order. Prioritize Killings if present; transform hazards into supreme nobility."',
         pivotNameZh: `${tgTreatise.name || tenGod} · 煞刃制化真机`,
-        pivotNameEn: `${tgTreatise.nameEn || tenGod} · Star Transformation`,
+        pivotNameEn: `${tgTreatise.nameEn || PortraitEngine.toTenGodEn(tenGod)} · Star Transformation`,
         summaryZh: isYangRen
           ? `【阳刃骨相 · 20%战力聚焦】：命主骨相铁骨铮铮、刚劲勇悍，具备开疆拓土与危机破局之胆魄。唯必须以七杀（法律合规、森严纪律）相制伏，方成帅将威权；大忌无制盲目冲撞。`
           : (tgTreatise.plain_text || `命主承袭${tenGod}本相，得时者吉，失时者凶。精修20%关键心性，转化煞气为权柄。`),
@@ -3416,7 +3470,7 @@ class PortraitEngine {
         subtitleZh: '晋·郭璞 / 宋·徐子平《玉照定真经》：“根在苗先，实从花后。年月为父母祖基，日时为妻儿归宿。”',
         subtitleEn: 'Yu Zhao Ding Zhen Jing: "Roots precede shoots, fruits follow blossoms. Year-Month anchors ancestral foundations; Day-Hour governs consort and offspring destiny."',
         pivotNameZh: `六亲宫位全息（配偶【${sp.palaceBranch}】· 子息【${ch.hourPillarText}】· 祖荫【${pa.typeZh}】）`,
-        pivotNameEn: `Kinship Hologram (Spouse [${sp.palaceBranch}], Child [${ch.hourPillarText}], Ancestral [${pa.typeEn}])`,
+        pivotNameEn: `Kinship Hologram (Spouse [${PortraitEngine.toBranchEn(sp.palaceBranch)}], Child [${PortraitEngine.toPillarEn(ch.hourPillarText)}], Ancestral [${pa.typeEn}])`,
         summaryZh: `玉照定真经专论四柱宫位感应与六亲吉凶。日支夫妻宫藏深沉心性，时柱子息宫系晚景才秀，年月祖基定早岁根基。三位一体，调和家庭能量场。`,
         summaryEn: `Yu Zhao Ding Zhen Jing deciphers palace energetic resonance. Day Branch anchors spousal psychology, Hour Pillar mirrors offspring talent, and Year-Month stabilizes ancestral root security.`,
         spouseSummaryZh: `配偶心性：【${sp.archetypeZh}】。${sp.traitsZh}`,
@@ -3520,7 +3574,7 @@ class PortraitEngine {
         subtitleZh: '宋·廖中《五行精纪》：“以年为本，以日为主，以月为门户，以时为引从。”',
         subtitleEn: 'Wu Xing Jing Ji: "Take the Year as sovereign Root, Day as self, Month as portal, Hour as guiding conclusion."',
         pivotNameZh: `年本太极根基【${bazi.pillars?.year?.text || '年柱'}】(${bazi.pillars?.year?.naYin || '纳音'})`,
-        pivotNameEn: `Year Root Foundation [${bazi.pillars?.year?.text || 'Year'}] (${bazi.pillars?.year?.naYin || 'NaYin'})`,
+        pivotNameEn: `Year Root Foundation [${PortraitEngine.toPillarEn(bazi.pillars?.year?.text)}] (${PortraitEngine.toNaYinEn(bazi.pillars?.year?.naYin)})`,
         summaryZh: ya.rootQualityZh + ' ' + ya.naYinResonanceZh,
         summaryEn: ya.rootQualityEn + ' ' + ya.naYinResonanceEn,
         modernStrategyZh: ya.lumaAdviceZh,
@@ -3567,7 +3621,7 @@ class PortraitEngine {
         subtitleZh: '民国·徐乐吾：“以评注为实操中间件，将抽象古意翻译为具象化案例与决策规则。”',
         subtitleEn: 'Xu Lewu: "Acting as an operational middleware, translating esoteric poetry into concrete, testable decision trees."',
         pivotNameZh: `月令喜忌中间件【${bazi.dayMaster}生于${mBranch}月】`,
-        pivotNameEn: `Monthly Decision Rule [${bazi.dayMaster} in ${mBranch} Month]`,
+        pivotNameEn: `Monthly Decision Rule [${PortraitEngine.toStemEn(bazi.dayMaster)} in ${PortraitEngine.toBranchEn(mBranch)} Month]`,
         summaryZh: `【徐乐吾实操规则】：${ex.abstractRuleZh}\n【身强身弱细化】：${ex.finetunedRuleZh}`,
         summaryEn: `[Xu Lewu Middleware Rule]: ${ex.abstractRuleEn}\n[Vigor Calibration]: ${ex.finetunedRuleEn}`,
         modernStrategyZh: `【实证案例解析】：${ex.concreteCaseZh}`,
@@ -3609,16 +3663,18 @@ class PortraitEngine {
       bazi, vigor, patterns, climate, canons, spouse, children, parents, environment
     );
 
+    const primaryPatEn = topPattern.nameEn || ((typeof this.getPatternEn === 'function') ? this.getPatternEn(primaryPatternName) : null) || PortraitEngine.toTenGodEn(primaryPatternName) || 'Dominant Pattern';
+
     return {
       titleZh: '👑 经典全盘核心画像 · 帕累托 20% 关键枢纽全相分析',
       titleEn: '👑 Classical Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis',
       descriptionZh: '四大流派古典名著全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，贯通夫妻、子女、父母六亲全息与宏观时代场能交互。',
       descriptionEn: 'Synthesizing the four classical schools and all master treatises to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.',
       primaryPatternNameZh: primaryPatternName,
-      primaryPatternNameEn: topPattern.nameEn || primaryPatternName,
+      primaryPatternNameEn: primaryPatEn,
       primaryPatternWeightPct: primaryPatternPct,
       primaryPatternDescZh: `全盘五大格局中，【${primaryPatternName}】以 ${primaryPatternPct}% 绝对能量占比位居第一核心主导，统摄命主一生之骨相气魄与成败枢纽。《子平真诠》《三命通会》《渊海子平》诸经法度皆以此格为全相定盘针。`,
-      primaryPatternDescEn: `Among natal patterns, [${topPattern.nameEn || primaryPatternName}] leads with ${primaryPatternPct}% dominant energy weight, steering character, decisive breakthroughs, and career trajectory across classical canons.`,
+      primaryPatternDescEn: `Among natal patterns, [${primaryPatEn}] leads with ${primaryPatternPct}% dominant energy weight, steering character, decisive breakthroughs, and career trajectory across classical canons.`,
       grandPicture,
       schoolsPortrait,
       canons,
@@ -3906,6 +3962,21 @@ class PortraitEngine {
       sEn = `[Rank 3: Tertiary Stabilizing Buffer${wtStrEn}] Supported by [${patEn}], this pattern acts as the defensive ballast and risk hedge, ensuring structural balance and checking excessive expansion. ` + res.summaryEn.replace(/^.*?[.]\s*/, '');
     }
 
+    let xuRuleZh = '';
+    let xuRuleEn = '';
+    let xuCaseZh = '';
+    let xuCaseEn = '';
+    if (bazi && typeof XuLewuDB !== 'undefined') {
+      const mb = (bazi.solarInfo && bazi.solarInfo.monthBranch) || (bazi.pillars && bazi.pillars.month && bazi.pillars.month.branch) || '寅';
+      const xuEx = XuLewuDB.getMiddlewareExegesis(dm, mb, vigor);
+      if (xuEx) {
+        xuRuleZh = xuEx.abstractRuleZh;
+        xuRuleEn = xuEx.abstractRuleEn;
+        xuCaseZh = xuEx.concreteCaseZh;
+        xuCaseEn = xuEx.concreteCaseEn;
+      }
+    }
+
     return {
       nameZh: res.nameZh,
       nameEn: res.nameEn,
@@ -3917,6 +3988,10 @@ class PortraitEngine {
       tabooEn: res.tabooEn,
       paretoConclusionZh: res.paretoConclusionZh,
       paretoConclusionEn: res.paretoConclusionEn,
+      xuRuleZh,
+      xuRuleEn,
+      xuCaseZh,
+      xuCaseEn,
       name: res.nameZh,
       summary: sZh,
       favorable: res.favorableZh,
@@ -3998,6 +4073,10 @@ class PortraitEngine {
         tabooEn: exe.tabooEn,
         paretoConclusionZh: exe.paretoConclusionZh,
         paretoConclusionEn: exe.paretoConclusionEn,
+        xuRuleZh: exe.xuRuleZh || '',
+        xuRuleEn: exe.xuRuleEn || '',
+        xuCaseZh: exe.xuCaseZh || '',
+        xuCaseEn: exe.xuCaseEn || '',
         name: exe.nameZh,
         summary: exe.summaryZh,
         favorable: exe.favorableZh,
@@ -4027,6 +4106,10 @@ class PortraitEngine {
       tabooEn: p1.tabooEn,
       paretoConclusionZh: p1.paretoConclusionZh,
       paretoConclusionEn: p1.paretoConclusionEn,
+      xuRuleZh: p1.xuRuleZh || '',
+      xuRuleEn: p1.xuRuleEn || '',
+      xuCaseZh: p1.xuCaseZh || '',
+      xuCaseEn: p1.xuCaseEn || '',
       name: p1.nameZh,
       summary: p1.summaryZh,
       favorable: p1.favorableZh,
@@ -4053,7 +4136,7 @@ class PortraitEngine {
     const dayPillar = (bazi.pillars && bazi.pillars.day && bazi.pillars.day.text) || bazi.dayPillar || `${dm}子`;
     const hourPillar = (bazi.pillars && bazi.pillars.hour && bazi.pillars.hour.text) || bazi.hourPillar || '甲子';
 
-    const dmEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en') : dm;
+    const dmEn = ((typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en') : null) || PortraitEngine.toStemEn(dm);
     const monthBranchEn = this.formatBranchEn(monthBranch);
     const dayPillarEn = this.formatPillarEn(dayPillar);
     const hourPillarEn = this.formatPillarEn(hourPillar);
@@ -4180,8 +4263,8 @@ class PortraitEngine {
 return {
       titleZh: '👑 全盘大局通融 · 综合全息画像',
       titleEn: '👑 Grand Holistic Synthesis · Master Destiny Portrait',
-      subtitleZh: '八典融通 · 过滤80%细枝末节噪声，提炼统摄全盘命途的宏观大局与关键破局总相',
-      subtitleEn: 'Eight Canons Unified · Filtering out 80% peripheral noise to distill the grand macro-picture and decisive strategic mandate',
+      subtitleZh: '传世经典全相融通 · 过滤80%细枝末节噪声，提炼统摄全盘命途的宏观大局与关键破局总相',
+      subtitleEn: 'Classical Canons Unified · Filtering out 80% peripheral noise to distill the grand macro-picture and decisive strategic mandate',
       thesisZh,
       thesisEn,
       campaignZh,
@@ -4250,18 +4333,18 @@ return {
       return 'Harmonic Tone';
     }
 
-    const dmEn = stemMapEn[dm] || 'Day Master';
-    const mbEn = branchMapEn[mb] || 'Month Branch';
+    const dmEn = PortraitEngine.toStemEn(dm);
+    const mbEn = PortraitEngine.toBranchEn(mb);
 
     // 1. 古法禄命纳音宗 (Ancient Lu-Ming & NaYin School)
     const yPillar = bazi && bazi.pillars?.year?.text || '甲子';
     const yNaYin = bazi && bazi.pillars?.year?.naYin || '海中金';
     const dNaYin = bazi && bazi.pillars?.day?.naYin || '海中金';
-    const yPillarEn = toPillarEn(yPillar);
-    const yNaYinEn = toNaYinEn(yNaYin);
-    const dNaYinEn = toNaYinEn(dNaYin);
+    const yPillarEn = PortraitEngine.toPillarEn(yPillar);
+    const yNaYinEn = PortraitEngine.toNaYinEn(yNaYin);
+    const dNaYinEn = PortraitEngine.toNaYinEn(dNaYin);
 
-    const lantaiPats = (canons && canons.lantai && canons.lantai.matchedPatterns) || [];
+    const lantaiPats = (canons && canons.lantai && canons.lantai.matchedPatterns) || ((typeof LanTaiDB !== 'undefined') ? LanTaiDB.getMatchingPatterns(bazi) : []);
     const topLantai = lantaiPats[0] ? lantaiPats[0].nameZh : '气象纯正格';
     const topLantaiEn = lantaiPats[0] ? (lantaiPats[0].nameEn || 'Pristine Energy Pattern') : 'Pristine Energy Pattern';
 
@@ -4281,7 +4364,7 @@ return {
 
     // 2. 子平正统格局理气宗 (Orthodox Ziping & Pattern School)
     const topPat = patterns && patterns[0] ? patterns[0].name : '正官格';
-    const topPatEn = patterns && patterns[0] ? (patterns[0].nameEn || 'Direct Officer Pattern') : 'Direct Officer Pattern';
+    const topPatEn = patterns && patterns[0] ? (patterns[0].nameEn || PortraitEngine.toTenGodEn(topPat)) : 'Direct Officer Pattern';
     const sfDisease = (canons && canons.shenfeng && canons.shenfeng.pivotNameZh) || '秀气郁滞';
     const sfDiseaseEn = (canons && canons.shenfeng && canons.shenfeng.pivotNameEn) || 'Stagnant Vitality';
     const sfMed = (canons && canons.shenfeng && canons.shenfeng.medicineZh) || '食伤泄秀';
@@ -4320,10 +4403,10 @@ return {
     };
 
     // 4. 近世民国通俗中间件宗 (Modern Practical & Case Law Middleware School)
-    const xuEx = (canons && canons.xulewu) || null;
-    const qlYs = (canons && canons.qianli) || null;
-    const protoName = (qlYs && qlYs.pivotNameZh) || '扶抑用神法';
-    const protoNameEn = (qlYs && qlYs.pivotNameEn) || 'Supporting & Restraining Protocol';
+    const xuEx = (canons && canons.xulewu) || ((typeof XuLewuDB !== 'undefined') ? XuLewuDB.getMiddlewareExegesis(dm, mb, vigor) : null);
+    const qlYs = (canons && canons.qianli) || ((typeof QianLiDB !== 'undefined') ? QianLiDB.evaluateNativeYongShen(bazi, vigor) : null);
+    const protoName = (qlYs && (qlYs.pivotNameZh || qlYs.nameZh)) || '扶抑用神法';
+    const protoNameEn = (qlYs && (qlYs.pivotNameEn || qlYs.nameEn)) || 'Supporting & Restraining Protocol';
 
     const modernPractical = {
       schoolId: 'modern_practical',

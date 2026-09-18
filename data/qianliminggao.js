@@ -74,6 +74,7 @@ const QIAN_LI_DATA = {
       titleZh: '民国名臣顾维钧造',
       titleEn: 'Republican Diplomat Wellington Koo Case',
       pillars: '戊子 乙丑 丁酉 戊申',
+      pillarsEn: 'Wu-Zi, Yi-Chou, Ding-You, Wu-Shen',
       summaryZh: '丁火生于季冬，财伤太旺，日元娇弱。取月干乙木偏印为通关用神与生身主药，化杀生身，文采风流，官拜外交总长。',
       summaryEn: 'Ding Fire born in late winter, overwhelmed by Wealth and Output. Employed Yi Wood Indirect Resource to bridge circulation, becoming China’s preeminent sovereign diplomat.',
       insightZh: '《千里命稿》案断：“财多身弱得印通关，文贵炳然，名扬欧亚。”',
@@ -84,6 +85,7 @@ const QIAN_LI_DATA = {
       titleZh: '近代纺织巨擘荣德生造',
       titleEn: 'Industrial Tycoon Rong Desheng Case',
       pillars: '乙亥 丁亥 丙子 己亥',
+      pillarsEn: 'Yi-Hai, Ding-Hai, Bing-Zi, Ji-Hai',
       summaryZh: '丙火生于亥月，三逢亥水七杀森严，全仗年透乙木正印化杀生身，成杀印相生之大格。实业兴邦，面粉纺织冠绝华夏。',
       summaryEn: 'Bing Fire born in Hai month surrounded by torrential Seven Killings Water. Rescued by Yi Wood Direct Resource in Year Pillar to forge Killings-Resource greatness, building a textile empire.',
       insightZh: '《千里命稿》案断：“杀重赖印化，置实业于惊涛骇浪之中，屹然不动。”',
@@ -193,7 +195,7 @@ class QianLiDB {
           title: c.titleZh,
           titleEn: c.titleEn,
           content: c.pillars,
-          contentEn: c.pillars,
+          contentEn: c.pillarsEn || c.pillars,
           detail: c.summaryZh,
           detailEn: c.summaryEn
         });

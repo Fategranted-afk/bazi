@@ -422,14 +422,14 @@ class BaZiEngine {
 
     // 2. 天干四冲 (Four Stem Clashes)
     const STEM_CLASHES = {
-      '甲庚': { name: '甲庚相冲', type: '金木交战', descZh: '果断刚决但防头颈筋骨劳损与人际摩擦', descEn: 'Metal-Wood collision: decisive action; guard against rigidity' },
-      '庚甲': { name: '甲庚相冲', type: '金木交战', descZh: '果断刚决但防头颈筋骨劳损与人际摩擦', descEn: 'Metal-Wood collision: decisive action; guard against rigidity' },
-      '乙辛': { name: '乙辛相冲', type: '金木相挫', descZh: '心智极其敏锐，纤巧多思，需防手足神经暗耗', descEn: 'Precision Metal clipping agile Wood: hyper-sensitive vigilance' },
-      '辛乙': { name: '乙辛相冲', type: '金木相挫', descZh: '心智极其敏锐，纤巧多思，需防手足神经暗耗', descEn: 'Precision Metal clipping agile Wood: hyper-sensitive vigilance' },
-      '丙壬': { name: '丙壬相冲', type: '水火相射', descZh: '思维碰撞极度剧烈，灵感澎湃如海，注意情绪大起大落', descEn: 'Water-Fire clash: intense inspiration and emotional dialectic' },
-      '壬丙': { name: '丙壬相冲', type: '水火相射', descZh: '思维碰撞极度剧烈，灵感澎湃如海，注意情绪大起大落', descEn: 'Water-Fire clash: intense inspiration and emotional dialectic' },
-      '丁癸': { name: '丁癸相冲', type: '水火不容', descZh: '深思熟虑、灵感幽微，需防心肾失调与精力暗耗', descEn: 'Candle vs rain: profound intuition; preserve cognitive stamina' },
-      '癸丁': { name: '丁癸相冲', type: '水火不容', descZh: '深思熟虑、灵感幽微，需防心肾失调与精力暗耗', descEn: 'Candle vs rain: profound intuition; preserve cognitive stamina' }
+      '甲庚': { name: '甲庚相冲', type: '金木交战', typeEn: 'Metal-Wood Clash', descZh: '果断刚决但防头颈筋骨劳损与人际摩擦', descEn: 'Metal-Wood collision: decisive action; guard against rigidity' },
+      '庚甲': { name: '甲庚相冲', type: '金木交战', typeEn: 'Metal-Wood Clash', descZh: '果断刚决但防头颈筋骨劳损与人际摩擦', descEn: 'Metal-Wood collision: decisive action; guard against rigidity' },
+      '乙辛': { name: '乙辛相冲', type: '金木相挫', typeEn: 'Metal-Wood Friction', descZh: '心智极其敏锐，纤巧多思，需防手足神经暗耗', descEn: 'Precision Metal clipping agile Wood: hyper-sensitive vigilance' },
+      '辛乙': { name: '乙辛相冲', type: '金木相挫', typeEn: 'Metal-Wood Friction', descZh: '心智极其敏锐，纤巧多思，需防手足神经暗耗', descEn: 'Precision Metal clipping agile Wood: hyper-sensitive vigilance' },
+      '丙壬': { name: '丙壬相冲', type: '水火相射', typeEn: 'Water-Fire Clash', descZh: '思维碰撞极度剧烈，灵感澎湃如海，注意情绪大起大落', descEn: 'Water-Fire clash: intense inspiration and emotional dialectic' },
+      '壬丙': { name: '丙壬相冲', type: '水火相射', typeEn: 'Water-Fire Clash', descZh: '思维碰撞极度剧烈，灵感澎湃如海，注意情绪大起大落', descEn: 'Water-Fire clash: intense inspiration and emotional dialectic' },
+      '丁癸': { name: '丁癸相冲', type: '水火不容', typeEn: 'Water-Fire Opposition', descZh: '深思熟虑、灵感幽微，需防心肾失调与精力暗耗', descEn: 'Candle vs rain: profound intuition; preserve cognitive stamina' },
+      '癸丁': { name: '丁癸相冲', type: '水火不容', typeEn: 'Water-Fire Opposition', descZh: '深思熟虑、灵感幽微，需防心肾失调与精力暗耗', descEn: 'Candle vs rain: profound intuition; preserve cognitive stamina' }
     };
 
     // 3. 地支六合 (Six Branch Combinations)
@@ -515,8 +515,9 @@ class BaZiEngine {
             p1: k1, p2: k2,
             stems: sPair,
             nameZh: `${pNamesZh[k1]}${pNamesZh[k2]}干【${sPair}】相冲`,
-            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Stems Clash (${item.type})`,
+            nameEn: `${pNamesEn[k1]}-${pNamesEn[k2]} Stems Clash (${item.typeEn || 'Clash'})`,
             type: item.type,
+            typeEn: item.typeEn || 'Clash',
             isAdjacent,
             descZh: item.descZh,
             descEn: item.descEn

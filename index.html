@@ -387,10 +387,10 @@
           <div class="feature-showcase-card cursor-pointer group" data-jump-view="view-canons">
             <div class="flex items-center space-x-2 text-blue-300 mb-1.5 font-bold font-serif-sc">
               <span class="text-base">📜</span>
-              <span data-i18n="portal_card5_title">八典全库经文细注</span>
+              <span data-i18n="portal_card5_title">十二大典与实操中间件</span>
             </div>
             <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card5_desc">
-              滴天髓、三命通会、穷通宝鉴、子平真诠等传世古籍联机研索。
+              滴天髓、三命通会、穷通宝鉴、子平真诠、渊海子平、神峰通考、玉照定真经、李虚中命书、兰台妙选、五行精纪、千里命稿与徐乐吾评注十二大典全库联机研索。
             </p>
           </div>
 
@@ -523,8 +523,8 @@
         </button>
         <button id="navBtnCanons" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
           <span class="text-base">📜</span>
-          <span data-i18n="nav_view_canons">八典全库与经文细注</span>
-          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_canons">八经汇通</span>
+          <span data-i18n="nav_view_canons">十二大典与经文细注</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_canons">十二典通</span>
         </button>
         <button id="navBtnIChing" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-iching">
           <span class="text-base">☯️</span>
@@ -775,15 +775,15 @@
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
-              <span data-i18n="sec_pareto_title">👑 八经全盘核心画像 · 帕累托 20% 关键枢纽全相分析</span>
-              <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_pareto">80/20八经全相</span>
+              <span data-i18n="sec_pareto_title">👑 十二大典核心画像 · 帕累托 20% 关键枢纽全相分析</span>
+              <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_pareto">80/20十二典全相</span>
             </h3>
             <p class="text-xs text-gray-400 mt-0.5" data-i18n="pareto_subnote">
-              八典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互
+              十二大典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互
             </p>
           </div>
           <div class="flex items-center gap-1.5 text-[10px] font-mono text-amber-400/90 bg-amber-950/30 px-2.5 py-1 rounded-lg border border-amber-800/40">
-            <span data-i18n="pareto_eight_canons_tag">《滴天髓》·《穷通》·《真诠》·《三命》·《渊海》·《神峰》·《玉照》·《李虚中》</span>
+            <span data-i18n="pareto_eight_canons_tag">《滴天髓》·《穷通》·《真诠》·《三命》·《渊海》·《神峰》·《玉照》·《李虚中》·《兰台》·《精纪》·《千里》·《徐乐吾》</span>
           </div>
         </div>
 
@@ -1248,65 +1248,86 @@
   </div>
   <!-- End of view-luck -->
 
-  <!-- View 3: Eight Classical Canons & Commentaries (八典全库与经文细注) -->
+  <!-- View 3: Twelve Classical Canons & Commentaries (十二大典与经文细注) -->
   <div id="view-canons" class="space-y-6 hidden">
-    <!-- Classical Canon Section (Five Canons of Chinese Metaphysics) -->
+    <!-- Classical Canon Section (Twelve Canons of Chinese Metaphysics & Xu Lewu Middleware) -->
     <section class="bg-card rounded-2xl border border-border-color shadow-2xl overflow-hidden">
+      <!-- Classical Schools & Categories Filter Toolbar (典籍流派门类导引) -->
+      <div class="px-5 py-3 border-b border-gray-800 bg-[#12141c] flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-xs font-bold text-amber-400 font-serif-sc" data-i18n="canon_cat_filter_label">🏛️ 典籍门类导引：</span>
+          <div id="canonCategoryBar" class="flex flex-wrap gap-1.5 text-xs">
+            <button type="button" class="canon-cat-btn active px-2.5 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition" data-school="all" data-i18n="canon_cat_all">全部典籍 (12)</button>
+            <button type="button" class="canon-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-school="ancient" data-i18n="canon_cat_ancient">📜 古法禄命宗 (4)</button>
+            <button type="button" class="canon-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-school="ziping" data-i18n="canon_cat_ziping">⚖️ 子平正统格局宗 (4)</button>
+            <button type="button" class="canon-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-school="climate" data-i18n="canon_cat_climate">❄️ 气象调候理气宗 (2)</button>
+            <button type="button" class="canon-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-school="modern" data-i18n="canon_cat_modern">⚙️ 近世评注中间件 (2)</button>
+            <button type="button" class="canon-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-school="synthesis" data-i18n="canon_cat_synthesis">🏛️ 四大学派全景</button>
+            <button type="button" class="canon-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-school="tools" data-i18n="canon_cat_tools">📚 术语与搜索</button>
+          </div>
+        </div>
+        <div class="text-[11px] text-gray-400 font-mono" data-i18n="canon_total_count">共收录 11 大传世经典与徐乐吾决策中间件（共 12 大典库）</div>
+      </div>
+
       <!-- Tabs Navigation -->
-      <div class="flex flex-wrap border-b border-gray-800 bg-[#171922]">
-        <button class="tab-btn active text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-sanming">
+      <div id="canonTabsContainer" class="flex flex-wrap border-b border-gray-800 bg-[#171922]">
+        <button class="tab-btn active text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-sanming" data-school="ziping">
           <span data-i18n="tab_sanming">📜 《三命通会》</span>
           <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_sanming_badge">日时四维精断</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-qiongtong">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-qiongtong" data-school="climate">
           <span data-i18n="tab_qiongtong">❄️ 《穷通宝鉴》</span>
           <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded" data-i18n="tab_qiongtong_badge">月令调候用神</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-ziping">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-ziping" data-school="ziping">
           <span data-i18n="tab_ziping">⚖️ 《子平真诠》</span>
           <span class="text-[10px] bg-purple-500/20 text-purple-300 px-1 py-0.2 rounded" data-i18n="tab_ziping_badge">格局成败救应</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-ditiansui">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-ditiansui" data-school="climate">
           <span data-i18n="tab_ditiansui">🌌 《滴天髓》</span>
           <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1 py-0.2 rounded" data-i18n="tab_ditiansui_badge">天干地支理气</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-yuanhai">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-yuanhai" data-school="ziping">
           <span data-i18n="tab_yuanhai">🏛️ 《渊海子平》</span>
           <span class="text-[10px] bg-rose-500/20 text-rose-300 px-1 py-0.2 rounded" data-i18n="tab_yuanhai_badge">继善喜忌赋文</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-shenfeng">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-shenfeng" data-school="ziping">
           <span data-i18n="tab_shenfeng">🏔️ 《神峰通考》</span>
           <span class="text-[10px] bg-orange-500/20 text-orange-300 px-1 py-0.2 rounded" data-i18n="tab_shenfeng_badge">病药雕枯绝学</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-yuzhao">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-yuzhao" data-school="ancient">
           <span data-i18n="tab_yuzhao">🪞 《玉照定真经》</span>
           <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-1 py-0.2 rounded" data-i18n="tab_yuzhao_badge">宫位六亲直断</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-lixuzhong">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-lixuzhong" data-school="ancient">
           <span data-i18n="tab_lixuzhong">🎵 《李虚中命书》</span>
           <span class="text-[10px] bg-teal-500/20 text-teal-300 px-1 py-0.2 rounded" data-i18n="tab_lixuzhong_badge">三元纳音音律</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-lantai">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-lantai" data-school="ancient">
           <span data-i18n="tab_lantai">🪷 《兰台妙选》</span>
           <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1 py-0.2 rounded" data-i18n="tab_lantai_badge">纳音神机奇格</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-wuxing">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-wuxing" data-school="ancient">
           <span data-i18n="tab_wuxing">📜 《五行精纪》</span>
           <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1 py-0.2 rounded" data-i18n="tab_wuxing_badge">宋代古法禄命</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-qianli">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-qianli" data-school="modern">
           <span data-i18n="tab_qianli">📑 《千里命稿》</span>
           <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded" data-i18n="tab_qianli_badge">民国实务断案</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-schools">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-xulewu" data-school="modern">
+          <span data-i18n="tab_xulewu">📑 《徐乐吾评注》</span>
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded" data-i18n="tab_xulewu_badge">实操中间件</span>
+        </button>
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-schools" data-school="synthesis">
           <span data-i18n="tab_schools">🏛️ 四大学派全景</span>
           <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_schools_badge">古典画像统揽</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-definitions">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-definitions" data-school="tools">
           <span data-i18n="tab_definitions">📚 常见定义</span>
           <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded" data-i18n="tab_definitions_badge">十神真诠</span>
         </button>
-        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-search">
+        <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-search" data-school="tools">
           <span data-i18n="tab_search">🔍 经典全库搜索</span>
         </button>
       </div>
@@ -1562,6 +1583,23 @@
         </div>
       </div>
 
+      <!-- Tab: 《徐乐吾评注》 (Xu Lewu Commentaries Middleware) -->
+      <div id="tab-xulewu" class="tab-pane hidden p-5 space-y-6">
+        <div>
+          <div class="text-xs text-gray-400 mb-2 font-medium" data-i18n="canon_xulewu_auto">当前命盘十干月令喜忌具象实操规则与近代断案 (《子平真诠评注》《造化元钥评注》)：</div>
+          <div id="xulewuAutoResult">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+
+        <div class="bg-[#1a1c24] p-4 rounded-xl border border-gray-800">
+          <h4 class="text-sm font-bold text-blue-300 mb-2" data-i18n="canon_xulewu_manifesto_title">⚖️ 徐乐吾命理评注核心学术定位与中间件价值</h4>
+          <div id="xulewuManifestoContainer" class="space-y-3">
+            <!-- Injected via JavaScript -->
+          </div>
+        </div>
+      </div>
+
       <!-- Tab: Classical Schools Holographic Synthesis (四大学派全景画像) -->
       <div id="tab-schools" class="tab-pane hidden p-5 space-y-6">
         <div>
@@ -1605,7 +1643,7 @@
       <div id="tab-search" class="tab-pane hidden p-5 space-y-4">
         <div class="max-w-2xl mx-auto space-y-3">
           <h3 class="text-base font-bold text-center text-amber-200 font-serif-sc" data-i18n="search_title">
-            十一大典籍万象全库联合检索系统
+            十二大典籍万象全库联合检索系统
           </h3>
           <p class="text-xs text-gray-400 text-center" data-i18n="search_desc">
             一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》《兰台妙选》《五行精纪》《千里命稿》名著及徐乐吾评注，输入术语、格局或断语即刻全文检索。
@@ -2634,8 +2672,8 @@
 
   <!-- Footer -->
   <footer class="mt-12 py-6 border-t border-gray-800 text-center text-xs text-gray-500">
-    <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理传世经典名著全相集成</p>
-    <p data-i18n="footer_citations">引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》·《兰台妙选》·《五行精纪》·《千里命稿》· 徐乐吾评注</p>
+    <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理十二大经典名著与评注中间件集成</p>
+    <p data-i18n="footer_citations">引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》·《兰台妙选》·《五行精纪》·《千里命稿》·《徐乐吾评注》</p>
   </footer>
 
   <!-- Scripts -->

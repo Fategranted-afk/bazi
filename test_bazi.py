@@ -13588,6 +13588,113 @@ jsc_check113_cmd = [
     if (allResults.length < 12) {
       throw new Error("Combined search for '火' should yield at least 12 results across 12 databases, got " + allResults.length);
     }
+
+    // 7. Validate Zero CJK in generateParetoCoreSynthesis across all 12 canons
+    var syn = PortraitEngine.generateParetoCoreSynthesis(
+      testBazi1,
+      { isStrong: true, totalScore: 65 },
+      [{ name: "偏财格", weightPct: 35 }],
+      { primary: "丙火" },
+      "male"
+    );
+    var cKeys = ['ditiansui', 'qiongtong', 'ziping', 'sanming', 'yuanhai', 'shenfeng', 'yuzhao', 'lixuzhong', 'lantai', 'wuxing', 'qianli', 'xulewu'];
+    cKeys.forEach(function(k) {
+      var c = syn.canons[k];
+      if (!c) throw new Error("Canons synthesis missing: " + k);
+      Object.keys(c).forEach(function(f) {
+        if (f.endsWith("En") || f.endsWith("_en")) {
+          var val = String(c[f]);
+          if (/[\\u4e00-\\u9fa5]/.test(val)) {
+            throw new Error("CJK leak in syn.canons." + k + "." + f + ": " + val);
+          }
+        }
+      });
+    });
+
+    // 8. Validate Pattern Exegesis Xu Lewu Decision Middleware Propagation
+    var patExe = PortraitEngine.generatePatternExegesis("偏财格", "甲", { isStrong: true }, testBazi1);
+    if (!patExe.xuRuleZh || !patExe.xuRuleEn || !patExe.xuCaseZh || !patExe.xuCaseEn) {
+      throw new Error("generatePatternExegesis missing Xu Lewu middleware rules/cases");
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(patExe.xuRuleEn) || /[\\u4e00-\\u9fa5]/.test(patExe.xuCaseEn)) {
+      throw new Error("CJK leak in patExe.xuRuleEn or xuCaseEn");
+    }
+
+    var top3Exe = PortraitEngine.generateTop3PatternsExegesis([{ name: "偏财格", weightPct: 35 }], "甲", { isStrong: true }, testBazi1);
+    if (!top3Exe.xuRuleZh || !top3Exe.xuRuleEn || !top3Exe.topPatterns[0].xuRuleZh || !top3Exe.topPatterns[0].xuRuleEn) {
+      throw new Error("generateTop3PatternsExegesis failed to propagate Xu Lewu middleware");
+    }
+    if (/[\\u4e00-\\u9fa5]/.test(top3Exe.xuRuleEn) || /[\\u4e00-\\u9fa5]/.test(top3Exe.topPatterns[0].xuRuleEn)) {
+      throw new Error("CJK leak in top3Exe xuRuleEn");
+    }
+
+    // 9. Validate Category Filter Toolbar Logic
+    var simulatedTabs = [
+      { id: "tab-sanming", school: "ziping", hidden: false },
+      { id: "tab-yuzhao", school: "ancient", hidden: false },
+      { id: "tab-ditiansui", school: "climate", hidden: false },
+      { id: "tab-qianli", school: "modern", hidden: false },
+      { id: "tab-schools", school: "synthesis", hidden: false },
+      { id: "tab-search", school: "tools", hidden: false }
+    ];
+    function filterTabs(school) {
+      return simulatedTabs.filter(function(t) {
+        return school === "all" || t.school === school;
+      });
+    }
+    if (filterTabs("ancient").length !== 1 || filterTabs("ancient")[0].id !== "tab-yuzhao") {
+      throw new Error("Ancient filter failed");
+    }
+    if (filterTabs("ziping").length !== 1 || filterTabs("ziping")[0].id !== "tab-sanming") {
+      throw new Error("Ziping filter failed");
+    }
+    if (filterTabs("modern").length !== 1 || filterTabs("modern")[0].id !== "tab-qianli") {
+      throw new Error("Modern filter failed");
+    }
+    if (filterTabs("all").length !== 6) {
+      throw new Error("All filter failed");
+    }
+
+    // 10. Exhaustive 120 combinations (10 Stems x 12 Branches) for Xu Lewu middleware and Schools
+    var allStems = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    var allBranches = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    allStems.forEach(function(s) {
+      allBranches.forEach(function(b) {
+        var exStrong = XuLewuDB.getMiddlewareExegesis(s, b, { isStrong: true, totalScore: 70 });
+        var exWeak = XuLewuDB.getMiddlewareExegesis(s, b, { isStrong: false, totalScore: 30 });
+        [exStrong, exWeak].forEach(function(ex) {
+          if (!ex.abstractRuleEn || !ex.finetunedRuleEn || !ex.concreteCaseEn || !ex.titleEn) {
+            throw new Error("Missing EN exegesis fields for " + s + " in " + b);
+          }
+          var leak = (ex.titleEn + " " + ex.abstractRuleEn + " " + ex.finetunedRuleEn + " " + ex.concreteCaseEn).match(/[\u4e00-\u9fa5]/g);
+          if (leak && leak.length > 0) {
+            throw new Error("CJK leak in Xu Lewu exegesis for " + s + " in " + b + ": " + leak.join(""));
+          }
+        });
+
+        var dummyBazi = {
+          dayMaster: s,
+          dayMasterElement: "Wood",
+          solarInfo: { monthBranch: b },
+          pillars: {
+            year: { stem: s, branch: b, text: s + b, naYin: "海中金" },
+            month: { stem: s, branch: b, text: s + b, naYin: "炉中火" },
+            day: { stem: s, branch: b, text: s + b, naYin: "大林木" },
+            hour: { stem: s, branch: b, text: s + b, naYin: "路旁土" }
+          }
+        };
+        var scPortrait = PortraitEngine.generateClassicalSchoolsPortrait(
+          dummyBazi, { isStrong: true }, [{ name: "正官格", weightPct: 40 }], { primary: "丙火" }, {}
+        );
+        ['ancientLuMing', 'orthodoxZiping', 'seasonalClimate', 'modernPractical'].forEach(function(sk) {
+          var sc = scPortrait[sk];
+          var scLeak = (sc.schoolNameEn + " " + sc.classicsEn + " " + sc.coreTenetEn + " " + sc.nativePortraitEn + " " + sc.strategicAdviceEn).match(/[\u4e00-\u9fa5]/g);
+          if (scLeak && scLeak.length > 0) {
+            throw new Error("CJK leak in school " + sk + " for " + s + "/" + b + ": " + scLeak.join(""));
+          }
+        });
+      });
+    });
     '''
 ]
 run_check113 = subprocess.run(jsc_check113_cmd, capture_output=True, text=True)

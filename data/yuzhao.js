@@ -1059,6 +1059,19 @@ class YuZhaoDB {
       }
     });
 
+    const branchMapEn = {
+      '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si',
+      '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai'
+    };
+    const stemMapEn = {
+      '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu',
+      '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui'
+    };
+    function toPillarEn(p) {
+      if (!p || p.length < 2) return p;
+      return `${stemMapEn[p[0]] || p[0]}-${branchMapEn[p[1]] || p[1]}`;
+    }
+
     // Search spouse profiles
     for (const [branch, p] of Object.entries(YU_ZHAO_DATA.spousePalaceProfiles)) {
       if (branch.includes(kw) || p.archetypeZh.toLowerCase().includes(kw) || p.traitsZh.toLowerCase().includes(kw) || p.adviceZh.toLowerCase().includes(kw) ||
@@ -1067,7 +1080,7 @@ class YuZhaoDB {
           source: '《玉照定真经》· 夫妻宫',
           sourceEn: 'Yu Zhao Ding Zhen Jing: Spouse Palace',
           title: '日坐【' + branch + '】配偶原型：' + p.archetypeZh,
-          titleEn: 'Day Branch [' + branch + '] Consort Archetype: ' + (p.archetypeEn || p.archetypeZh),
+          titleEn: 'Day Branch [' + (branchMapEn[branch] || branch) + '] Consort Archetype: ' + (p.archetypeEn || 'Consort Archetype'),
           content: p.traitsZh,
           contentEn: p.traitsEn || p.traitsZh,
           detail: p.adviceZh,
@@ -1085,7 +1098,7 @@ class YuZhaoDB {
             source: '《玉照定真经》· 六十甲子日柱',
             sourceEn: 'Yu Zhao Ding Zhen Jing: 60 JiaZi Day Pillar',
             title: '日柱【' + pillar + '】配偶：' + p.archetypeZh,
-            titleEn: 'Day Pillar [' + pillar + '] Consort: ' + (p.archetypeEn || p.archetypeZh),
+            titleEn: 'Day Pillar [' + toPillarEn(pillar) + '] Consort: ' + (p.archetypeEn || 'Consort Archetype'),
             content: p.traitsZh,
             contentEn: p.traitsEn || p.traitsZh,
             detail: p.adviceZh,

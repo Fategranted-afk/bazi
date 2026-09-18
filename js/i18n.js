@@ -19,14 +19,14 @@ const I18N = (function() {
       nav_view_strategy: "👑 战略大局与六亲全息",
       nav_view_friction: "🧘 精神内耗与禅道心智",
       nav_view_luck: "⏳ 岁运推演 (大运 / 流年 / 流月 / 流日)",
-      nav_view_canons: "📜 八典全库与经文细注",
+      nav_view_canons: "📜 十二大典与经文细注",
       nav_view_iching: "☯️ 周易六十四卦 · 蓍草/金钱起卦研解",
       nav_view_synastry: "💞 双人合盘 · 婚恋与合伙博弈",
       seal_view_home: "主干命基",
       seal_view_strategy: "大局破局",
       seal_view_friction: "禅道心智",
       seal_view_luck: "动态时空",
-      seal_view_canons: "八经汇通",
+      seal_view_canons: "十二典通",
       seal_view_iching: "易道神机",
       seal_view_synastry: "双人博弈",
       btn_export_dossier: "👑 皇家线装战报 (A4 PDF)",
@@ -407,8 +407,8 @@ const I18N = (function() {
       portal_card3_desc: "八大典籍出厂心法 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯",
       portal_card4_title: "百岁运势时空罗盘",
       portal_card4_desc: "1~100岁连续平滑推演，精力潮汐、财富高光与天克地冲提前防御。",
-      portal_card5_title: "八典全库经文细注",
-      portal_card5_desc: "滴天髓、三命通会、穷通宝鉴、子平真诠等传世古籍联机研索。",
+      portal_card5_title: "十二大典与实操中间件",
+      portal_card5_desc: "滴天髓、三命通会、穷通宝鉴、子平真诠、渊海子平、神峰通考、玉照定真经、李虚中命书、兰台妙选、五行精纪、千里命稿与徐乐吾评注十二大典全库联机研索。",
       portal_card6_title: "周易六十四卦筮法",
       portal_card6_desc: "大衍筮法、三铜钱六掷与梅花易数，朱熹正统断卦七法通幽洞微。",
       portal_card7_title: "双人合盘契合度博弈",
@@ -431,7 +431,7 @@ const I18N = (function() {
       iching_csprng_badge: "☯️ 大衍筮法 · CSPRNG",
       iching_select_placeholder: "📖 六十四卦速查全览...",
       coin_throw_initial: "掷出第 1 爻 (初爻)",
-      pareto_eight_canons_tag: "《滴天髓》·《穷通》·《真诠》·《三命》·《渊海》·《神峰》·《玉照》·《李虚中》",
+      pareto_eight_canons_tag: "《滴天髓》·《穷通》·《真诠》·《三命》·《渊海》·《神峰》·《玉照》·《李虚中》·《兰台》·《精纪》·《千里》·《徐乐吾》",
 
       // Form Inputs
       lbl_birth_date: "公历出生日期 (阳历)",
@@ -527,9 +527,9 @@ const I18N = (function() {
       persona_advice_title: "🧘 人生修身与行运锦囊 (Strategic Life Coaching)",
 
       // Pareto 80/20 Core Synthesis
-      sec_pareto_title: "👑 八经全盘核心画像 · 帕累托 20% 关键枢纽全相分析",
-      seal_pareto: "80/20八经全相",
-      pareto_subnote: "八典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互",
+      sec_pareto_title: "👑 十二大典核心画像 · 帕累托 20% 关键枢纽全相分析",
+      seal_pareto: "80/20十二典全相",
+      pareto_subnote: "十二大典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互",
 
       // Zhou Yi (I Ching) 64 Hexagrams
       iching_banner_title: "周易文王六十四卦 · 蓍草金钱起卦研解",
@@ -632,11 +632,26 @@ const I18N = (function() {
       tab_wuxing_badge: "宋代古法禄命",
       tab_qianli: "📑 《千里命稿》",
       tab_qianli_badge: "民国实务断案",
+      tab_xulewu: "📑 《徐乐吾评注》",
+      tab_xulewu_badge: "实操中间件",
       tab_schools: "🏛️ 四大学派全景",
       tab_schools_badge: "古典画像统揽",
       tab_search: "🔍 经典全库搜索",
 
+      // Canons Categories & Filters
+      canon_cat_filter_label: "🏛️ 典籍门类导引：",
+      canon_cat_all: "全部典籍 (12)",
+      canon_cat_ancient: "📜 古法禄命宗 (4)",
+      canon_cat_ziping: "⚖️ 子平正统格局宗 (4)",
+      canon_cat_climate: "❄️ 气象调候理气宗 (2)",
+      canon_cat_modern: "⚙️ 近世评注中间件 (2)",
+      canon_cat_synthesis: "🏛️ 四大学派全景",
+      canon_cat_tools: "📚 术语与搜索",
+      canon_total_count: "共收录 11 大传世经典与徐乐吾决策中间件（共 12 大典库）",
+
       // Canons Contents
+      canon_xulewu_auto: "当前命盘十干月令喜忌具象实操规则与近代断案 (《子平真诠评注》《造化元钥评注》)：",
+      canon_xulewu_manifesto_title: "⚖️ 徐乐吾命理评注核心学术定位与中间件价值",
       canon_lantai_auto: "当前命盘纳音奇格直配 (《兰台妙选》象数神机与大格详析)：",
       canon_lantai_patterns_title: "🪷 《兰台妙选》传世纳音奇格与贵征象数全库",
       canon_lantai_patterns_desc: "明·西山老人传，以纳音气象与象数神机论大格，如水火既济、苍龙驾海、蚌珠照月等千古名格：",
@@ -689,9 +704,9 @@ const I18N = (function() {
       canon_lixuzhong_chapters_title: "🎵 《李虚中命书》三元禄命与纳音音律气象",
       canon_lixuzhong_chapters_desc: "唐代命学开山宗师李虚中著，详析天元禄、地元命、人元身与现代地理时空交互：",
 
-      search_title: "八大典籍万象全库联合检索系统",
-      search_desc: "一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》八大名著，输入术语、格局或断语即刻全文检索。",
-      search_placeholder: "输入搜索词，如：病药说、玉照、三元禄、伤官吐秀、丙火、调候、救应...",
+      search_title: "十二大典籍万象全库联合检索系统",
+      search_desc: "一键通搜《三命通会》《滴天髓》《穷通宝鉴》《子平真诠》《渊海子平》《神峰通考》《玉照定真经》《李虚中命书》《兰台妙选》《五行精纪》《千里命稿》名著及徐乐吾评注，输入术语、格局或断语即刻全文检索。",
+      search_placeholder: "输入搜索词，如：病药说、苍龙驾海、年本、通关、徐乐吾、玉照、三元禄、伤官吐秀、丙火、调候...",
       btn_search: "联合检索",
       search_init_prompt: "请输入关键词进行联合检索。",
 
@@ -701,8 +716,8 @@ const I18N = (function() {
       gender_dynamics_female: "坤造 (女命)",
 
       // Footer
-      footer_title: "八字排盘与典籍研索系统 · 命理八大经典名著集成",
-      footer_citations: "引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》"
+      footer_title: "八字排盘与典籍研索系统 · 命理十二大经典名著与评注中间件集成",
+      footer_citations: "引用文献：《三命通会》·《滴天髓》·《穷通宝鉴》·《子平真诠》·《渊海子平》·《神峰通考》·《玉照定真经》·《李虚中命书》·《兰台妙选》·《五行精纪》·《千里命稿》·《徐乐吾评注》"
     },
 
     en: {
@@ -719,14 +734,14 @@ const I18N = (function() {
       nav_view_strategy: "👑 Grand Strategy & Kinship Hologram",
       nav_view_friction: "🧘 Mental Friction & Zen-Dao Mastery",
       nav_view_luck: "⏳ Transit Cycles (Decade / Year / Month / Day)",
-      nav_view_canons: "📜 Eight Classical Canons & Commentaries",
+      nav_view_canons: "📜 12 Classical Canons & Commentaries",
       nav_view_iching: "☯️ I Ching 64 Hexagrams Divination",
       nav_view_synastry: "💞 Synastry & Partner Compatibility",
       seal_view_home: "Core Base",
       seal_view_strategy: "Strategy",
       seal_view_friction: "Zen-Dao",
       seal_view_luck: "Transits",
-      seal_view_canons: "8 Canons",
+      seal_view_canons: "12 Canons",
       seal_view_iching: "I Ching Oracle",
       seal_view_synastry: "Synastry",
       btn_export_dossier: "👑 Imperial Dossier (A4 PDF)",
@@ -1107,8 +1122,8 @@ const I18N = (function() {
       portal_card3_desc: "Eight Classical Canons · Stress Triggers · 3-Level Emergency Reset · 5-Element Micro-Habits",
       portal_card4_title: "Lifelong Chrono-Navigator",
       portal_card4_desc: "Continuous age 1-100 trajectory, vitality tides, wealth peaks & transit alerts.",
-      portal_card5_title: "Eight Classical Canons",
-      portal_card5_desc: "Di Tian Sui, San Ming, Qiong Tong, Zi Ping Zhen Quan original scripture search.",
+      portal_card5_title: "12 Classical Canons & Middleware",
+      portal_card5_desc: "Di Tian Sui, San Ming, Qiong Tong, Zi Ping, Yuan Hai, Shen Feng, Yu Zhao, Li Xu Zhong, Lan Tai, Wu Xing Jing Ji, Qian Li Ming Gao, and Xu Lewu commentary database search.",
       portal_card6_title: "I Ching 64 Hexagrams Oracle",
       portal_card6_desc: "Da Yan oracle, 3-coin toss, Plum Blossom divination with Zhu Xi 7 exegesis rules.",
       portal_card7_title: "Synastry & Partner Compatibility",
@@ -1131,14 +1146,14 @@ const I18N = (function() {
       iching_csprng_badge: "☯️ Yarrow Oracle · CSPRNG",
       iching_select_placeholder: "📖 64 Hexagrams Quick Directory...",
       coin_throw_initial: "Toss Line 1 (Initial)",
-      pareto_eight_canons_tag: "Di Tian Sui · Qiong Tong · Zhen Quan · San Ming · Yuan Hai · Shen Feng · Yu Zhao · Li Xu Zhong",
+      pareto_eight_canons_tag: "Di Tian Sui · Qiong Tong · Zhen Quan · San Ming · Yuan Hai · Shen Feng · Yu Zhao · Li Xu Zhong · Lan Tai · Jing Ji · Qian Li · Xu Lewu",
 
       // Form Inputs
       lbl_birth_date: "Solar Birth Date (Gregorian)",
       lbl_birth_time: "Birth Time (Local Standard)",
       lbl_gender: "Destiny / Gender",
-      opt_qian: "Qian / Male (乾造)",
-      opt_kun: "Kun / Female (坤造)",
+      opt_qian: "Qian / Male (Qian Zao)",
+      opt_kun: "Kun / Female (Kun Zao)",
       lbl_city: "Global Birth City / Region",
       lbl_current_country: "Current Country / Region",
       lbl_current_city: "Current Residence City",
@@ -1227,9 +1242,9 @@ const I18N = (function() {
       persona_advice_title: "🧘 Strategic Life Coaching & Self-Cultivation",
 
       // Pareto 80/20 Core Synthesis
-      sec_pareto_title: "👑 Eight Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis",
-      seal_pareto: "80/20 Eight Canons",
-      pareto_subnote: "Synthesizing all 8 classical treatises to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.",
+      sec_pareto_title: "👑 Twelve Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis",
+      seal_pareto: "80/20 Twelve Canons",
+      pareto_subnote: "Synthesizing all 12 master treatises and commentaries to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.",
 
       // Zhou Yi (I Ching) 64 Hexagrams
       iching_banner_title: "Zhou Yi King Wen 64 Hexagrams Divination System",
@@ -1275,10 +1290,10 @@ const I18N = (function() {
       sec_luck_subtitle: "5-Pillar Synergy · Revealing 10-year major luck decades, annual transits, 12 solar months, and daily energetic alignments",
       lbl_luck_direction: "Progression Direction:",
       lbl_luck_start_age: "Start Age & Calendar Year:",
-      tab_decade_title: "1. 10-Year Major Luck Decades (大运)",
-      tab_annual_title: "2. Annual Transit Years (流年)",
-      tab_monthly_title: "3. 12 Solar Months (流月)",
-      tab_daily_title: "4. Daily Alignment & 5-Pillar Synergy (流日)",
+      tab_decade_title: "1. 10-Year Major Luck Decades (Da Yun)",
+      tab_annual_title: "2. Annual Transit Years (Liu Nian)",
+      tab_monthly_title: "3. 12 Solar Months (Liu Yue)",
+      tab_daily_title: "4. Daily Alignment & 5-Pillar Synergy (Liu Ri)",
       tab_decade_hint: "(Click any decade card to reveal its 10 annual transit years)",
       tab_annual_hint: "(Click any transit year to reveal its 12 solar months)",
       tab_monthly_hint: "(Click any solar month to inspect daily alignment)",
@@ -1333,11 +1348,26 @@ const I18N = (function() {
       tab_wuxing_badge: "Song Ancient Lu-Ming",
       tab_qianli: "📑 Qian Li Ming Gao",
       tab_qianli_badge: "Practical Case Law",
+      tab_xulewu: "📑 Xu Lewu Commentaries",
+      tab_xulewu_badge: "Decision Middleware",
       tab_schools: "🏛️ Four Schools Synthesis",
       tab_schools_badge: "Holographic Portrait",
       tab_search: "🔍 Universal Search",
 
+      // Canons Categories & Filters
+      canon_cat_filter_label: "🏛️ School Categories:",
+      canon_cat_all: "All Canons (12)",
+      canon_cat_ancient: "📜 Ancient Lu-Ming (4)",
+      canon_cat_ziping: "⚖️ Orthodox ZiPing (4)",
+      canon_cat_climate: "❄️ Climatic & Qi (2)",
+      canon_cat_modern: "⚙️ Modern Middleware (2)",
+      canon_cat_synthesis: "🏛️ Schools Hologram",
+      canon_cat_tools: "📚 Glossary & Search",
+      canon_total_count: "Comprising 11 Canonical Masterpieces & Xu Lewu Operational Middleware (12 Repositories)",
+
       // Canons Contents
+      canon_xulewu_auto: "Natal Monthly Decision Middleware & Case Law (Xu Lewu's Zi Ping & Zao Hua Yuan Yao Commentaries):",
+      canon_xulewu_manifesto_title: "⚖️ Xu Lewu Academic Positioning & Middleware Value",
       canon_lantai_auto: "Natal NaYin Pattern Reading (Lan Tai Miao Xuan Imagery & Grand Configurations):",
       canon_lantai_patterns_title: "🪷 Lan Tai Miao Xuan Great NaYin Configurations Database",
       canon_lantai_patterns_desc: "Ming dynasty classic deciphering sublime NaYin imagery: Water-Fire Equilibrium, Azure Dragon, Moon Pearl, and historic configurations:",
@@ -1390,11 +1420,11 @@ const I18N = (function() {
       canon_lixuzhong_chapters_title: "🎵 Three Primes & NaYin Acoustic Field Chapters of Li Xu Zhong Ming Shu",
       canon_lixuzhong_chapters_desc: "Authored by Tang Dynasty founder Li Xuzhong, detailing Heavenly Rank, Earthly Destiny, Human Body, and macro environmental adaptation:",
 
-      search_title: "Eight Classical Canons Universal Search Engine",
-      search_desc: "Unified search across San Ming Tong Hui, Di Tian Sui, Qiong Tong Bao Jian, Zi Ping Zhen Quan, Yuan Hai Zi Ping, Shen Feng Tong Kao, Yu Zhao Ding Zhen Jing, and Li Xu Zhong Ming Shu. Enter terms, patterns, or quotes for instant full-text search.",
-      search_placeholder: "Enter keywords, e.g., Disease & Medicine, Yu Zhao, Three Primes, Hurting Officer, Ding Fire...",
+      search_title: "Twelve Classical Canons & Commentaries Universal Search Engine",
+      search_desc: "Unified search across San Ming, Di Tian Sui, Qiong Tong, Zi Ping, Yuan Hai, Shen Feng, Yu Zhao, Li Xu Zhong, Lan Tai, Wu Xing Jing Ji, Qian Li Ming Gao, and Xu Lewu commentaries. Enter terms, patterns, or quotes for instant full-text search.",
+      search_placeholder: "Enter keywords, e.g., Disease & Medicine, Azure Dragon, Year Root, Bridging, Xu Lewu, Yu Zhao, Three Primes...",
       btn_search: "Search Canons",
-      search_init_prompt: "Please enter keywords to search across all eight canons.",
+      search_init_prompt: "Please enter keywords to search across all twelve canons.",
 
       // Gender Dynamics
       gender_dynamics_title: "Gender Dynamics: Male vs. Female",
@@ -1402,8 +1432,8 @@ const I18N = (function() {
       gender_dynamics_female: "Female Native (Kun Zao)",
 
       // Footer
-      footer_title: "BaZi Charting & Classical Canons System · Integrated Eight Classics of Chinese Metaphysics",
-      footer_citations: "Citations: San Ming Tong Hui · Di Tian Sui · Qiong Tong Bao Jian · Zi Ping Zhen Quan · Yuan Hai Zi Ping · Shen Feng Tong Kao · Yu Zhao Ding Zhen Jing · Li Xu Zhong Ming Shu"
+      footer_title: "BaZi Charting & Classical Canons System · Integrated Twelve Classics & Commentary Middleware",
+      footer_citations: "Citations: San Ming Tong Hui · Di Tian Sui · Qiong Tong Bao Jian · Zi Ping Zhen Quan · Yuan Hai Zi Ping · Shen Feng Tong Kao · Yu Zhao Ding Zhen Jing · Li Xu Zhong Ming Shu · Lan Tai Miao Xuan · Wu Xing Jing Ji · Qian Li Ming Gao · Xu Lewu Commentaries"
     }
   };
 

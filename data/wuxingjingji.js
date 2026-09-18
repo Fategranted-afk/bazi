@@ -81,6 +81,25 @@ class WuXingJingJiDB {
       };
     }
 
+    const stemMapEn = {
+      '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu',
+      '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui'
+    };
+    const branchMapEn = {
+      '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si',
+      '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai'
+    };
+    const naYinMapEn = {
+      '海中金': 'Sea Metal', '炉中火': 'Furnace Fire', '大林木': 'Great Forest Wood', '路旁土': 'Roadside Earth',
+      '剑锋金': 'Sword Edge Metal', '山头火': 'Mountaintop Fire', '涧下水': 'Valley Stream Water', '城头土': 'City Rampart Earth',
+      '白蜡金': 'White Wax Metal', '杨柳木': 'Willow Wood', '泉中水': 'Spring Water', '屋上土': 'Rooftop Earth',
+      '霹雳火': 'Thunderbolt Fire', '松柏木': 'Pine and Cypress Wood', '长流水': 'Everflowing River Water', '沙中金': 'Sand Metal',
+      '山下火': 'Foot of Mountain Fire', '平地木': 'Flatland Wood', '壁上土': 'Wall Earth', '金箔金': 'Gold Foil Metal',
+      '佛灯火': 'Lamp Fire', '天河水': 'Celestial River Water', '大驿土': 'Post Station Earth', '钗钏金': 'Hairpin Metal',
+      '桑柘木': 'Mulberry Wood', '大溪水': 'Great Torrent Water', '沙中土': 'Sand Earth', '天上火': 'Heavenly Fire',
+      '石榴木': 'Pomegranate Wood', '大海水': 'Great Ocean Water'
+    };
+
     const y = bazi.pillars.year;
     const m = bazi.pillars.month;
     const d = bazi.pillars.day;
@@ -90,8 +109,15 @@ class WuXingJingJiDB {
     const yBranch = y ? y.branch : '子';
     const yNaYin = y ? y.naYin : '海中金';
 
+    const yStemEn = stemMapEn[yStem] || yStem;
+    const yBranchEn = branchMapEn[yBranch] || yBranch;
+    const yNaYinEn = naYinMapEn[yNaYin] || 'Acoustic NaYin';
+
+    const dNaYin = d ? d.naYin : '纳音';
+    const dNaYinEn = naYinMapEn[dNaYin] || 'Harmonic Tone';
+
     let qualityZh = `年柱【${yStem}${yBranch}】(${yNaYin})为命局之万年根基。`;
-    let qualityEn = `Year Pillar [${yStem}${yBranch}] (${yNaYin}) serves as the enduring foundation.`;
+    let qualityEn = `Year Pillar [${yStemEn}-${yBranchEn}] (${yNaYinEn}) serves as the enduring foundation. `;
 
     if (['子', '午', '卯', '酉'].includes(yBranch)) {
       qualityZh += '年坐四正帝旺桃花之气，原生家庭门风卓异，具有鲜明风采与深厚名望底蕴。';
@@ -104,8 +130,8 @@ class WuXingJingJiDB {
       qualityEn += 'Year rests on Grave-Storage Earth ground, providing profound psychological anchoring and physical asset resilience.';
     }
 
-    const naYinResonanceZh = `年柱纳音【${yNaYin}】与日主【${d ? d.naYin : '纳音'}】交参互照，形成古法禄命“人元借年本之气”的深层互动。`;
-    const naYinResonanceEn = `Year NaYin [${yNaYin}] harmonizes with Day NaYin [${d ? d.naYin : 'NaYin'}], establishing deep ancestral-personal acoustic resonance.`;
+    const naYinResonanceZh = `年柱纳音【${yNaYin}】与日主【${dNaYin}】交参互照，形成古法禄命“人元借年本之气”的深层互动。`;
+    const naYinResonanceEn = `Year NaYin [${yNaYinEn}] harmonizes with Day NaYin [${dNaYinEn}], establishing deep ancestral-personal acoustic resonance.`;
 
     const lumaAdviceZh = '【五行精纪破局策】：欲成大器，首在依托时代趋势与宏观组织平台（借年根之风），不打无准备之仗。';
     const lumaAdviceEn = '【Wu Xing Jing Ji Strategic Rule】: Anchor into macro generational waves and institutional platforms before executing aggressive personal campaigns.';
