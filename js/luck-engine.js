@@ -2399,12 +2399,324 @@ const LuckEngine = (function() {
 
   /**
    * Geographic & Workplace Ecological Resonance (地理方位与组织生态匹配仪)
+   * Dynamically evaluates five cardinal directions based on energy overload and dissipation:
+   * When an element (e.g. Water) is overloaded (蓄满水的大坝), adding Resource (Metal) pours endless water into the dam,
+   * crushing the other three elements. Surplus energy MUST be drained (Output/Wood - 泄秀疏浚) or dissipated (Wealth/Fire - 耗散生财).
    */
   function generateGeographicEcologicalResonance(bazi) {
     if (!bazi || !bazi.pillars) return null;
     const dm = bazi.dayMaster || '甲';
     const dmEl = bazi.dayMasterElement || STEM_ELEMENTS[STEMS.indexOf(dm)] || '木';
     const isStrong = isDayMasterStrong(bazi);
+
+    // Calculate five-element distribution and check for element overload / excessive energy
+    const elPercentages = (bazi.fiveElements && bazi.fiveElements.percentages) || {};
+    const elemPercentages = {
+      '木': parseFloat(elPercentages['木'] || 0),
+      '火': parseFloat(elPercentages['火'] || 0),
+      '土': parseFloat(elPercentages['土'] || 0),
+      '金': parseFloat(elPercentages['金'] || 0),
+      '水': parseFloat(elPercentages['水'] || 0)
+    };
+    const ziping = bazi.zipingScore || (typeof BaZiEngine !== 'undefined' ? BaZiEngine.calculateZipingScore(bazi) : null);
+    const isExtremeStrong = ziping && ziping.categoryKey === 'extreme_strong';
+    const isWeak = (ziping && (ziping.categoryKey === 'moderate_weak' || ziping.categoryKey === 'extreme_weak')) ||
+                   (!isStrong && (!ziping || ziping.totalScore < 50));
+    const dmPct = elemPercentages[dmEl] || 0;
+
+    // Check if any specific element in the chart is in extreme excess (>= 38%, e.g., 62.5% Water!)
+    let floodElem = null;
+    let floodPct = 0;
+    for (const [el, pct] of Object.entries(elemPercentages)) {
+      if (pct >= 38.0 && pct > floodPct) {
+        floodElem = el;
+        floodPct = pct;
+      }
+    }
+
+    const elemEnMap = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
+    const floodElemEn = floodElem ? (elemEnMap[floodElem] || 'Water') : 'Water';
+
+    const isOverloaded = isExtremeStrong || isStrong || (ziping && ziping.totalScore >= 50) || dmPct >= 35.0 || (floodElem && floodElem === dmEl);
+
+    const generates = { '木': '火', '火': '土', '土': '金', '金': '水', '水': '木' };
+    const generatedBy = { '木': '水', '火': '木', '土': '火', '金': '土', '水': '金' };
+    const wealthMap = { '木': '土', '火': '金', '土': '水', '金': '木', '水': '火' };
+    const officerMap = { '木': '金', '火': '水', '土': '木', '金': '火', '水': '土' };
+
+    function evaluateDirection(dirEl, dirElEn) {
+      // Case A: A specific element is heavily flooded (>= 38%, e.g. 62.5% Water!)
+      if (floodElem && (floodElem === dmEl || floodPct >= 45.0)) {
+        // 1. Output of the flood: supreme spillway / drainage conduit ("把能量梳理出去，user 才会好")
+        if (dirEl === generates[floodElem]) {
+          const titlesZh = {
+            '木': '水木清华 · 泄秀疏浚 · 导流赋能',
+            '火': '木火通明 · 吐秀发越 · 才华绽放',
+            '土': '火土相生 · 吐秀落地 · 敛火归元',
+            '金': '土金吐秀 · 精英研创 · 萃取锋芒',
+            '水': '金白水清 · 淬炼吐秀 · 灵动通达'
+          };
+          const titlesEn = {
+            '木': 'Clear Water & Flowering Wood · Fluid Drainage & Creative Blooming',
+            '火': 'Radiant Wood & Luminous Fire · Creative Apex',
+            '土': 'Fire Generates Earth · Grounded Output Haven',
+            '金': 'Earth Bares Gold · Elite Analytical R&D',
+            '水': 'Pure Metal & Clear Water · Fluent Vision'
+          };
+          return {
+            score: 95,
+            ratingZh: titlesZh[dirEl] || '泄秀疏浚 · 导流赋能',
+            ratingEn: titlesEn[dirEl] || 'Fluid Drainage & Creative Blooming',
+            resonanceZh: `命局中【${floodElem}】气场占比高达 ${floodPct.toFixed(1)}%（如蓄满大水的大坝）。天道贵在流通，最喜本地方位【${dirEl}】气场泄秀疏浚、导流赋能！打开泄洪闸门灌溉沃野，将庞大积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品，全盘五行因疏导而全盘生辉。`,
+            resonanceEn: `Your natal chart carries an overwhelming ${floodPct.toFixed(1)}% density of [${floodElemEn}] (like a dam at maximum capacity). Vital elemental flow dictates channeling surplus pressure outward. This [${dirElEn}] field acts as the supreme spillway, safely dissipating latent floodwaters into brilliant creative works, intellectual breakthroughs, and sustainable enterprise.`,
+            careerSynergyZh: '首席天命主场与核心创作高地，极利技术研发、内容创业、出海立世与核心事业长青。',
+            careerSynergyEn: 'Prime strategic headquarters and creative epicenter; optimal for R&D, innovation, and long-term sovereignty.'
+          };
+        }
+        // 2. Wealth of the flood: commercial dissipation ("能量过多压身，需要耗散出去")
+        if (dirEl === wealthMap[floodElem]) {
+          const titlesZh = {
+            '木': '金木求财 · 披荆斩棘 · 商业攻伐',
+            '火': '水火既济 · 耗散生财 · 商业开拓',
+            '土': '培土扎根 · 广辟商道 · 财富筑基',
+            '金': '火炼真金 · 掌控资财 · 豪迈开拓',
+            '水': '润土生财 · 聚水为库 · 财源广纳'
+          };
+          const titlesEn = {
+            '木': 'Harvesting Timber · Dynamic Commercial Enterprise',
+            '火': 'Water-Fire Harmonious Wealth · Energy Dissipation & Expansion',
+            '土': 'Deep Rooting & Commercial Foundation',
+            '金': 'Refining Gold · Executive Capital Mastery',
+            '水': 'Nourishing Soil & Capital Reservoir'
+          };
+          return {
+            score: 92,
+            ratingZh: titlesZh[dirEl] || '耗散生财 · 商业开拓',
+            ratingEn: titlesEn[dirEl] || 'Harmonious Wealth & Energy Dissipation',
+            resonanceZh: `本方位承载旺盛财星气场。以命局充沛磅礴之【${floodElem}】势能开拓财星，能高效耗散体内蓄积的过剩能量，转化为丰厚商业回报与现实资产，形成“既济”之盛景，避免能量郁闭于内。`,
+            resonanceEn: `This direction carries vibrant Wealth energy. Deploying your robust natal capacity to harness this field safely dissipates surplus pressure into tangible commercial assets and financial sovereignty.`,
+            careerSynergyZh: '商业拓展、财富变现、项目攻坚与资本运作的高效主场。',
+            careerSynergyEn: 'High-leverage launchpad for commercial expansion, monetization, and strategic asset building.'
+          };
+        }
+        // 3. Officer of the flood: regulatory embankment
+        if (dirEl === officerMap[floodElem]) {
+          return {
+            score: 76,
+            ratingZh: (floodElem === '水') ? '堤防束水 · 循规立矩 · 谨防淤塞' : '规矩制衡 · 严立规约',
+            ratingEn: (floodElem === '水') ? 'Restraining Embankment · Disciplined Rules · Guard Siltation' : 'Disciplined Regulation & Formal Structure',
+            resonanceZh: `本地方位五行气场对过盛的【${floodElem}】起到制度约束与堤防规约作用；但水盛土弱时单凭堤防易遭冲刷淤塞，必须配合木气疏浚与火气温暖方可安澜。`,
+            resonanceEn: `This direction imposes disciplined structural boundaries upon the surging [${floodElemEn}] tide; however, an embankment alone requires Wood drainage to prevent siltation.`,
+            careerSynergyZh: '适合体制内深耕、规范化治理或合规攻坚。',
+            careerSynergyEn: 'Well-suited for institutional roles, governance, and compliance leadership.'
+          };
+        }
+        // 4. Peer of the flood: compounded flooding
+        if (dirEl === floodElem) {
+          return {
+            score: 68,
+            ratingZh: (floodElem === '水') ? '汪洋漫堤 · 同侪倾轧 · 需堤防洪' : '同侪汇聚 · 竞争激烈 · 慎防内耗',
+            ratingEn: (floodElem === '水') ? 'Vast Flood · Guard Dam Breach & Rivalry' : 'High Density Rivalry · Guard Energy Drain',
+            resonanceZh: `命局中【${floodElem}】已达 ${floodPct.toFixed(1)}% 之极端峰值，本地方位五行再度加剧其势，如同洪峰交汇漫堤，易导致同侪竞争激烈、利益分流争夺与现实阻滞。`,
+            resonanceEn: `With [${floodElemEn}] already commanding ${floodPct.toFixed(1)}% of your natal balance, this direction compounds the surging flood, creating severe peer competition, resource dilution, and structural friction.`,
+            careerSynergyZh: '适合短期协同交流，不宜作为长期扎根之主场。',
+            careerSynergyEn: 'Acceptable for short-term collaborative sprints, but unadvisable as a permanent sovereign base.'
+          };
+        }
+        // 5. Resource of the flood: overfilling dam caution ("蓄满水的大坝 + 源源不断的水源")
+        if (dirEl === generatedBy[floodElem]) {
+          const titlesZh = {
+            '金': '水多金沉 · 蓄水过载 · 警惕壅塞停滞',
+            '水': '水多木漂 · 浮泛无根 · 谨防沉溺空想',
+            '木': '火上浇油 · 燥烈伤神 · 谨防焦虑透支',
+            '火': '火多土焦 · 燥亢固执 · 谨防固步自封',
+            '土': '土多金埋 · 壅滞呆钝 · 谨防思维打结'
+          };
+          const titlesEn = {
+            '金': 'Water Flooding · Metal Sinking & Excessive Headwater Caution',
+            '水': 'Excessive Water · Drifting Wood Caution',
+            '木': 'Excessive Fuel · Burnout & Agitation Caution',
+            '火': 'Excessive Heat · Parched Earth Stagnation',
+            '土': 'Heavy Soil Burying Metal · Cognitive Block Caution'
+          };
+          return {
+            score: 64,
+            ratingZh: titlesZh[dirEl] || '源头过剩 · 蓄水过载 · 警惕壅塞停滞',
+            ratingEn: titlesEn[dirEl] || 'Dam Overload · Caution on Excessive Headwater',
+            resonanceZh: `命局中【${floodElem}】占比已高达 ${floodPct.toFixed(1)}%（犹如蓄满水的大坝）。本地方位【${dirEl}】气场正是生助【${floodElem}】之源头，在此无异于大坝满溢再遭持续暴雨注水。不仅无法受补，反而加剧气场失衡、彻底压制其余五行生机，极易引发思维反刍、犹豫不决、行动滞后与心理沉重感，绝非主场首选！`,
+            resonanceEn: `Your natal chart carries an extreme ${floodPct.toFixed(1)}% density of [${floodElemEn}], akin to an overflowing dam at critical capacity. This direction\'s [${dirElEn}] energy continuously feeds this dominant flood, smothering the other three elements. It creates severe mental stagnation, rumination, and behavioral paralysis—definitely not a viable primary headquarters.`,
+            careerSynergyZh: '非主场首选；若在此定居，必须重用木气（泄秀疏浚）或火气（耗散变现）进行空间风水调理化解。',
+            careerSynergyEn: 'Avoid as a long-term headquarters; if residing here, aggressively implement Output (drainage) and Wealth (dissipation) spatial remedies.'
+          };
+        }
+      }
+
+      // Case B: General Day Master Overloaded (isOverloaded)
+      if (isOverloaded) {
+        // 1. Output Star (泄秀疏浚 / 导流赋能) -> 95分 (首选主场)
+        if (dirEl === generates[dmEl]) {
+          const titlesZh = {
+            '木': '水木清华 · 泄秀疏浚 · 导流赋能',
+            '火': '木火通明 · 吐秀发越 · 才华绽放',
+            '土': '火土相生 · 吐秀落地 · 敛火归元',
+            '金': '土金吐秀 · 精英研创 · 萃取锋芒',
+            '水': '金白水清 · 淬炼吐秀 · 灵动通达'
+          };
+          const titlesEn = {
+            '木': 'Clear Water & Flowering Wood · Fluid Drainage & Creative Blooming',
+            '火': 'Radiant Wood & Luminous Fire · Creative Apex',
+            '土': 'Fire Generates Earth · Grounded Output Haven',
+            '金': 'Earth Bares Gold · Elite Analytical R&D',
+            '水': 'Pure Metal & Clear Water · Fluent Vision'
+          };
+          return {
+            score: 95,
+            ratingZh: titlesZh[dirEl] || '泄秀疏浚 · 导流赋能',
+            ratingEn: titlesEn[dirEl] || 'Fluid Drainage & Creative Blooming',
+            resonanceZh: `命局本元充沛健旺（犹如蓄满水库），天道贵在疏导，最喜本地方位【${dirEl}】气场泄秀疏浚、导流赋能！在此方天地气机引领下，能将浩瀚积聚的内在势能平顺梳理转化为顶级智识创作、技术突破与立世作品，全盘五行因疏导而全盘活化。`,
+            resonanceEn: `Your natal core is remarkably robust and energetic (like a reservoir at capacity). Natural wisdom mandates outward channelization. This [${dirElEn}] field acts as the prime spillway, smoothly transforming surplus latent power into brilliant intellectual breakthroughs and enduring creations.`,
+            careerSynergyZh: '首席天命主场与核心创作高地，极利技术研发、内容创业、出海立世与核心事业长青。',
+            careerSynergyEn: 'Prime strategic headquarters and creative epicenter; optimal for R&D, innovation, and long-term enterprise building.'
+          };
+        }
+        // 2. Wealth Star (耗散生财 / 商业开拓) -> 92分 (次选主场)
+        if (dirEl === wealthMap[dmEl]) {
+          const titlesZh = {
+            '木': '金木求财 · 披荆斩棘 · 商业开拓',
+            '火': '水火既济 · 耗散生财 · 商业变现',
+            '土': '培土扎根 · 广辟商道 · 财富筑基',
+            '金': '火炼真金 · 掌控资财 · 豪迈开拓',
+            '水': '润土生财 · 聚水为库 · 财源广纳'
+          };
+          const titlesEn = {
+            '木': 'Harvesting Timber · Commercial Enterprise',
+            '火': 'Water-Fire Harmonious Wealth · Energy Dissipation',
+            '土': 'Deep Rooting & Commercial Foundation',
+            '金': 'Refining Gold · Executive Capital Mastery',
+            '水': 'Nourishing Soil & Capital Reservoir'
+          };
+          return {
+            score: 92,
+            ratingZh: titlesZh[dirEl] || '耗散生财 · 商业开拓',
+            ratingEn: titlesEn[dirEl] || 'Harmonious Wealth & Energy Dissipation',
+            resonanceZh: `本地方位承载旺盛财星气场。以命局充沛本元制控财星，能高效耗散体内蓄积的过剩能量，转化为丰厚商业回报与现实资产，形成良性循环、避免能量郁闭于内。`,
+            resonanceEn: `This direction carries dynamic Wealth energy. Deploying your robust natal capacity to harness this field safely dissipates surplus pressure into substantial commercial returns and capital assets.`,
+            careerSynergyZh: '商业拓展、财富变现、项目攻坚与资本运作的高效主场。',
+            careerSynergyEn: 'High-leverage launchpad for commercial expansion, monetization, and strategic asset building.'
+          };
+        }
+        // 3. Officer Star (规矩制衡 / 纪律锻造) -> 78分
+        if (dirEl === officerMap[dmEl]) {
+          return {
+            score: 78,
+            ratingZh: (dmEl === '水') ? '堤防束水 · 循规立矩 · 谨防淤塞' : '规矩制衡 · 严立规约 · 锻造成器',
+            ratingEn: 'Disciplined Regulation & Formal Structure',
+            resonanceZh: `本地方位五行气场对充沛本元形成制度约束与纪律规制，利于磨炼心性与提升合规意识，但需注意防范过度刚硬带来的隐性摩擦。`,
+            resonanceEn: `This direction imposes disciplined structural boundaries upon strong natal qi, aiding executive maturity while requiring care against bureaucratic friction.`,
+            careerSynergyZh: '适合体制内深耕、规范化治理或合规攻坚。',
+            careerSynergyEn: 'Well-suited for institutional roles, governance, and compliance leadership.'
+          };
+        }
+        // 4. Peer (同类聚集 / 竞争内耗) -> 68分
+        if (dirEl === dmEl) {
+          return {
+            score: 68,
+            ratingZh: (dmEl === '水') ? '汪洋大海 · 漫堤防洪 · 同侪倾轧' : '同侪汇聚 · 竞争激烈 · 慎防内耗',
+            ratingEn: 'High Density Rivalry · Guard Energy Drain',
+            resonanceZh: `本地方位同类五行能量密集，如同本已充盈的大坝再汇入支流，易导致同侪竞争激烈、利益分流争夺与无谓的人际摩擦内耗。`,
+            resonanceEn: `This direction concentrates identical elemental qi. For an already overloaded chart, this intensifies peer rivalry, resource fragmentation, and interpersonal friction.`,
+            careerSynergyZh: '适合短期交流切磋，不宜作为长期扎根之独立主场。',
+            careerSynergyEn: 'Suitable for brief collaborative sprints, but unadvisable as a long-term sovereign base.'
+          };
+        }
+        // 5. Resource (印星生身 / 蓄水过载) -> 65分 (严控注水!)
+        if (dirEl === generatedBy[dmEl]) {
+          const titlesZh = {
+            '金': '水多金沉 · 蓄水过载 · 警惕壅塞停滞',
+            '水': '水多木漂 · 浮泛无根 · 谨防沉溺空想',
+            '木': '火上浇油 · 燥烈伤神 · 谨防焦虑透支',
+            '火': '火多土焦 · 燥亢固执 · 谨防固步自封',
+            '土': '土多金埋 · 壅滞呆钝 · 谨防思维打结'
+          };
+          const titlesEn = {
+            '金': 'Water Flooding · Metal Sinking & Excessive Headwater Caution',
+            '水': 'Excessive Water · Drifting Wood Caution',
+            '木': 'Excessive Fuel · Burnout & Agitation Caution',
+            '火': 'Excessive Heat · Parched Earth Stagnation',
+            '土': 'Heavy Soil Burying Metal · Cognitive Block Caution'
+          };
+          return {
+            score: 65,
+            ratingZh: titlesZh[dirEl] || '蓄水过载 · 警惕壅塞停滞',
+            ratingEn: titlesEn[dirEl] || 'Dam Overload · Caution on Excessive Headwater',
+            resonanceZh: `命局本元已然充沛充盈（如蓄满水的大坝），若再逢生身之母气注入，无异于大坝满溢再添源源水源。不仅无法受补，反而加剧气场偏枯失衡、彻底压制其他五行生机，易导致思维反刍、犹豫不决、行动滞后与心理沉重感。`,
+            resonanceEn: `Your natal energy is already at peak capacity. Introducing further generating resource is akin to pouring torrents into an overflowing dam—exacerbating systemic imbalance, smothering complementary elements, and causing mental paralysis, overthinking, and inertia.`,
+            careerSynergyZh: '非主场首选；在此地宜专注身心放空断舍离，务必引入食伤（泄秀）与财星（耗散）作为空间风水平衡。',
+            careerSynergyEn: 'Not recommended as a primary base; if residing here, strictly apply Output (drainage) and Wealth (consumption) spatial remedies to restore equilibrium.'
+          };
+        }
+      }
+
+      // Case C: Day Master Weak (isWeak / !isOverloaded)
+      // 1. Resource (生身滋养) -> 95分
+      if (dirEl === generatedBy[dmEl]) {
+        return {
+          score: 95,
+          ratingZh: '源头活水 · 培元固本 · 贵人滋养',
+          ratingEn: 'Enduring Source Intellect · Generative Spring',
+          resonanceZh: `本地方位【${dirEl}】生扶气脉与命元日主形成天作之合，源源不断注入滋养能量，稳固元神底气，迅速消除疲惫内耗并吸引长辈贵人庇佑。`,
+          resonanceEn: `This direction\'s [${dirElEn}] energy harmonizes perfectly with your natal core. Fluid elemental circulation unlocks deep potential, attracts mentors, and dissolves friction.`,
+          careerSynergyZh: '适合作为核心事业根据地、长期定居立足点或重大项目落地主场。',
+          careerSynergyEn: 'Prime destination for core career headquarters, permanent residency, or pivotal business deployments.'
+        };
+      }
+      // 2. Peer (帮身强根) -> 93分
+      if (dirEl === dmEl) {
+        return {
+          score: 93,
+          ratingZh: '本命强根 · 稳固基石 · 同道携行',
+          ratingEn: 'Supreme Natal Anchoring · Peer Alliance',
+          resonanceZh: `本地方位聚集同气相求之场能，强化自身抗风险根基，得同道伙伴相助，形成坚实护城河。`,
+          resonanceEn: `This direction provides peer alignment and mutual grounding, bolstering resilience against external headwinds.`,
+          careerSynergyZh: '适合开展常规商业运营、设立区域分支中心或技术研发基地。',
+          careerSynergyEn: 'Ideal for robust operational scaling, regional subsidiary hubs, or technical R&D centers.'
+        };
+      }
+      // 3. Output -> 70分
+      if (dirEl === generates[dmEl]) {
+        return {
+          score: 70,
+          ratingZh: '秀气耗泄 · 节奏舒缓 · 谨防透支',
+          ratingEn: 'Output Depletion · Conserve Vitality',
+          resonanceZh: `本地方位虽利于灵感表达，但自身元神相对偏弱，过盛的泄秀气场容易导致心力交瘁与气血透支，需注意劳逸结合、防范能量亏虚。`,
+          resonanceEn: `While inspiring creative expression, this direction depletes a delicate Day Master; balance mental output with restorative rest to prevent exhaustion.`,
+          careerSynergyZh: '适合短期创意采风，不建议作为高压攻坚的长期主阵地。',
+          careerSynergyEn: 'Suitable for brief creative retreats, but unadvisable as an intense high-pressure deployment zone.'
+        };
+      }
+      // 4. Wealth -> 66分
+      if (dirEl === wealthMap[dmEl]) {
+        return {
+          score: 66,
+          ratingZh: '财重身弱 · 步步为营 · 谨防负重',
+          ratingEn: 'Heavy Wealth Burden · Conservative Stance',
+          resonanceZh: `本地方位财星过盛，身弱不胜重财，容易面临重担压身或因财生累，宜守正求稳、避免激进加杠杆。`,
+          resonanceEn: `Wealth demand in this direction exerts heavy pressure on a delicate chart; prioritize liquidity preservation over aggressive expansion.`,
+          careerSynergyZh: '宜稳健守成，不宜盲目扩张重资产。',
+          careerSynergyEn: 'Favor steady asset conservation over high-leverage expansion.'
+        };
+      }
+      // 5. Officer -> 60分
+      return {
+        score: 60,
+        ratingZh: '官煞克伐 · 严苛逼迫 · 压力过载',
+        ratingEn: 'High Pressure Crucible · Regulatory Friction',
+        resonanceZh: `本地方位克身气场显著，规章约束与人际压力偏大，容易产生压抑感与内耗，需配合印星化解。`,
+        resonanceEn: `This direction generates regulatory and interpersonal friction against a vulnerable Day Master; apply supportive remedies.`,
+        careerSynergyZh: '适合短期历练磨砺，不宜久居耗神。',
+        careerSynergyEn: 'Valuable for short-term discipline, but unadvisable as a long-term sanctuary.'
+      };
+    }
 
     // Evaluate 5 Geographic Directions (East 木, South 火, Central 土, West 金, North 水)
     const directionConfigs = [
@@ -2414,12 +2726,7 @@ const LuckEngine = (function() {
         element: '木',
         elementEn: 'Wood',
         citiesZh: '上海、杭州、苏州、南京、青岛、江浙沿海、东京等',
-        citiesEn: 'Shanghai, Hangzhou, Suzhou, Nanjing, East Coast, Tokyo',
-        evalRule: (dmEl === '水') ? { score: 88, ratingZh: '生发吐秀 · 创意沃土', ratingEn: 'Creative Flowering Zone' }
-                : (dmEl === '木') ? (isStrong ? { score: 72, ratingZh: '同侪汇聚 · 竞争激烈', ratingEn: 'Peer Hub - Intense Rivalry' } : { score: 94, ratingZh: '本命强根 · 稳固基石', ratingEn: 'Supreme Natal Anchoring' })
-                : (dmEl === '火') ? { score: 92, ratingZh: '木火通明 · 贵人滋养', ratingEn: 'Nourishing Mentor Springboard' }
-                : (dmEl === '土') ? { score: 65, ratingZh: '官煞克伐 · 磨砺压制', ratingEn: 'High Pressure Crucible' }
-                : { score: 85, ratingZh: '金木生财 · 商业开拓', ratingEn: 'Commercial Exploitation Field' }
+        citiesEn: 'Shanghai, Hangzhou, Suzhou, Nanjing, East Coast, Tokyo'
       },
       {
         directionZh: '南方 (火气场)',
@@ -2427,12 +2734,7 @@ const LuckEngine = (function() {
         element: '火',
         elementEn: 'Fire',
         citiesZh: '深圳、广州、香港、珠三角、海口、新加坡、东南亚等',
-        citiesEn: 'Shenzhen, Guangzhou, Hong Kong, Pearl River Delta, Singapore, Southeast Asia',
-        evalRule: (dmEl === '木') ? { score: 92, ratingZh: '木火通明 · 锋芒绽放', ratingEn: 'Radiant Talent Apex' }
-                : (dmEl === '火') ? (isStrong ? { score: 70, ratingZh: '烈火烹油 · 防范浮躁', ratingEn: 'Hyper-Dynamic - Guard Overdrive' } : { score: 95, ratingZh: '暖阳融融 · 威权倍增', ratingEn: 'Vitality & Authority Surge' })
-                : (dmEl === '土') ? { score: 90, ratingZh: '印星生身 · 平台得力', ratingEn: 'Generative Platform Moat' }
-                : (dmEl === '金') ? { score: 68, ratingZh: '真金火炼 · 强压挑战', ratingEn: 'Refining Smelter - High Stress' }
-                : { score: 86, ratingZh: '水火既济 · 财富变现', ratingEn: 'Water-Fire Harmonious Wealth' }
+        citiesEn: 'Shenzhen, Guangzhou, Hong Kong, Pearl River Delta, Singapore, Southeast Asia'
       },
       {
         directionZh: '中原 / 枢纽 (土气场)',
@@ -2440,12 +2742,7 @@ const LuckEngine = (function() {
         element: '土',
         elementEn: 'Earth',
         citiesZh: '北京、西安、郑州、武汉、成都、重庆等中西部枢纽',
-        citiesEn: 'Beijing, Xi\'an, Zhengzhou, Wuhan, Chengdu, Chongqing',
-        evalRule: (dmEl === '火') ? { score: 86, ratingZh: '火土相生 · 稳实落地', ratingEn: 'Grounded Execution Zone' }
-                : (dmEl === '土') ? (isStrong ? { score: 74, ratingZh: '厚重沉稳 · 节奏趋缓', ratingEn: 'Stately Steady Pace' } : { score: 92, ratingZh: '厚德载物 · 滋养培补', ratingEn: 'Generous Nourishing Sanctuary' })
-                : (dmEl === '金') ? { score: 90, ratingZh: '土金相生 · 财库充盈', ratingEn: 'Generative Capital Vault' }
-                : (dmEl === '水') ? { score: 66, ratingZh: '堤岸围困 · 循规蹈矩', ratingEn: 'Rigid Boundaries & Rules' }
-                : { score: 84, ratingZh: '扎根深厚 · 稳步取财', ratingEn: 'Deep Rooting & Steady Wealth' }
+        citiesEn: 'Beijing, Xi\'an, Zhengzhou, Wuhan, Chengdu, Chongqing'
       },
       {
         directionZh: '西方 (金气场)',
@@ -2453,12 +2750,7 @@ const LuckEngine = (function() {
         element: '金',
         elementEn: 'Metal',
         citiesZh: '成渝高新、西安科技圈、西欧(伦敦/巴黎)、北美西海岸等',
-        citiesEn: 'Chengdu-Chongqing tech hubs, Western Europe, North American West',
-        evalRule: (dmEl === '土') ? { score: 88, ratingZh: '土金吐秀 · 精英研创', ratingEn: 'Elite Analytical R&D Haven' }
-                : (dmEl === '金') ? (isStrong ? { score: 70, ratingZh: '铁骑并进 · 需求差异', ratingEn: 'Fierce Analytical Competition' } : { score: 93, ratingZh: '金水相生 · 肃穆成器', ratingEn: 'Formidable Crafting Mastery' })
-                : (dmEl === '水') ? { score: 91, ratingZh: '源远流长 · 学术智库', ratingEn: 'Enduring Source Intellect' }
-                : (dmEl === '木') ? { score: 68, ratingZh: '修剪雕琢 · 规训打磨', ratingEn: 'Rigorous Pruning Crucible' }
-                : { score: 85, ratingZh: '火炼真金 · 掌控大权', ratingEn: 'Smelting Gold - Executive Authority' }
+        citiesEn: 'Chengdu-Chongqing tech hubs, Western Europe, North American West'
       },
       {
         directionZh: '北方 (水气场)',
@@ -2466,39 +2758,12 @@ const LuckEngine = (function() {
         element: '水',
         elementEn: 'Water',
         citiesZh: '北京、天津、沈阳、大连、北欧、加拿大等北方重镇',
-        citiesEn: 'Beijing, Tianjin, Northern coastal cities, Northern Europe, Canada',
-        evalRule: (dmEl === '金') ? { score: 90, ratingZh: '金白水清 · 灵性远见', ratingEn: 'Pure Intellect & Vision' }
-                : (dmEl === '水') ? (isStrong ? { score: 72, ratingZh: '汪洋大海 · 需堤防洪', ratingEn: 'Vast Ocean - Guard Flooding' } : { score: 94, ratingZh: '深流得助 · 潜龙出渊', ratingEn: 'Deep Fluid Powerhouse' })
-                : (dmEl === '木') ? { score: 91, ratingZh: '水木相涵 · 智慧长青', ratingEn: 'Spiritual Wisdom & Long-term Growth' }
-                : (dmEl === '火') ? { score: 65, ratingZh: '水火相激 · 寒凝冰封', ratingEn: 'Challenging Cold Damp Tension' }
-                : { score: 86, ratingZh: '润泽丰沃 · 积聚资粮', ratingEn: 'Nourishing Resource Abundance' }
+        citiesEn: 'Beijing, Tianjin, Northern coastal cities, Northern Europe, Canada'
       }
     ];
 
     const geographicDirections = directionConfigs.map(cfg => {
-      const res = cfg.evalRule;
-      let resonanceZh = '';
-      let resonanceEn = '';
-      let careerSynergyZh = '';
-      let careerSynergyEn = '';
-
-      if (res.score >= 90) {
-        resonanceZh = `本地方位【${cfg.element}】气场与命元日主形成天作之合，气机顺畅无阻。在此能激发深层潜能、得贵人相助、减少莫名的人际与现实阻力。`;
-        resonanceEn = `This direction\'s [${cfg.elementEn}] energy harmonizes perfectly with your natal core. Fluid elemental circulation unlocks deep potential, attracts mentors, and dissolves friction.`;
-        careerSynergyZh = '适合作为核心事业根据地、长期定居立足点或重大项目落地主场。';
-        careerSynergyEn = 'Prime destination for core career headquarters, permanent residency, or pivotal business deployments.';
-      } else if (res.score >= 80) {
-        resonanceZh = `本地方位气场偏向务实稳健，五行相生相化，能为你提供坚实的基础设施支撑与稳步积累的物质环境。`;
-        resonanceEn = `This direction provides steady pragmatic grounding and balanced circulation, offering reliable infrastructure and systematic capital accumulation.`;
-        careerSynergyZh = '适合开展常规商业运营、设立区域分支中心或技术研发基地。';
-        careerSynergyEn = 'Ideal for robust operational scaling, regional subsidiary hubs, or technical R&D centers.';
-      } else {
-        resonanceZh = `本地方位五行气场与命元存在明显的相克或过重耗泄，容易在人际文化、心理适应或生活习惯上感受到隐形阻力。`;
-        resonanceEn = `This direction exhibits significant elemental friction or exhausting tension with your Day Master, presenting subtle cultural and interpersonal headwinds.`;
-        careerSynergyZh = '适合短期攻坚或磨炼意志，不建议作为耗竭元神时期的长期避风港。';
-        careerSynergyEn = 'Valuable for short-term discipline or high-stakes sprints, but unadvisable as a long-term sanctuary during low vitality periods.';
-      }
-
+      const res = evaluateDirection(cfg.element, cfg.elementEn);
       return {
         directionZh: cfg.directionZh,
         directionEn: cfg.directionEn,
@@ -2509,10 +2774,10 @@ const LuckEngine = (function() {
         fitScore: res.score,
         ratingZh: res.ratingZh,
         ratingEn: res.ratingEn,
-        resonanceZh,
-        resonanceEn,
-        careerSynergyZh,
-        careerSynergyEn
+        resonanceZh: res.resonanceZh,
+        resonanceEn: res.resonanceEn,
+        careerSynergyZh: res.careerSynergyZh,
+        careerSynergyEn: res.careerSynergyEn
       };
     });
 

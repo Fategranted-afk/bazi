@@ -35,13 +35,13 @@ class SpatialFengShuiEngine {
 
     let favorableElements;
     if (ziping && ziping.categoryKey === 'extreme_strong') {
-      // 专旺格 (曲直/炎上/稼穑/从革/润下)：顺其专旺之势，喜同气比劫、生身印枭与泄秀食伤，最忌官杀克破
-      favorableElements = [dmEl, generatedBy[dmEl], generates[dmEl]];
+      // 专旺格 (曲直/炎上/稼穑/从革/润下)：顺其专旺之势，首重食伤泄秀疏浚（把能量梳理出去，大坝开闸灌溉），次取同气比劫顺势，最忌官杀克破与重厚生扶
+      favorableElements = [generates[dmEl], dmEl, wealthMap[dmEl]];
     } else if (ziping && (ziping.categoryKey === 'moderate_weak' || ziping.categoryKey === 'extreme_weak')) {
       // 较弱或极弱：喜印比同源生扶护身
       favorableElements = [dmEl, generatedBy[dmEl]];
     } else {
-      // 较旺格：喜克泄耗 (食伤泄秀、财星生发、官杀匡扶)
+      // 较旺格：首重食伤泄秀疏浚、次取财星耗散生发、复取官杀立规匡扶
       favorableElements = [generates[dmEl], wealthMap[dmEl], officerMap[dmEl]];
     }
     const primaryFavEl = favorableElements[0] || '木';
@@ -1131,18 +1131,18 @@ class SpatialFengShuiEngine {
                    (ziping ? (ziping.totalScore <= 50 || ziping.percentage < 48) : false);
 
     if (isExtremeStrong) {
-      // 专旺格：顺势相生，比劫、印星、食伤为喜用；官杀逆专旺为重忌，财星触怒旺神为仇
-      favorableElements = [dmEl, generatedBy[dmEl], generates[dmEl]];
-      unfavorableElements = [officerMap[dmEl], wealthMap[dmEl]];
-      neutralElements = [];
+      // 专旺格：顺势相生，首重食伤泄秀疏浚（把能量梳理出去，大坝开闸灌溉），次喜同气顺势；官杀逆专旺为重忌，印星过盛为塞滞
+      favorableElements = [generates[dmEl], dmEl];
+      unfavorableElements = [officerMap[dmEl]];
+      neutralElements = [generatedBy[dmEl], wealthMap[dmEl]];
     } else if (isWeak) {
       // 身弱格：喜印星生身、比劫帮身；忌官杀克身、食伤泄秀；财星耗身量力稳健为闲神
       favorableElements = [generatedBy[dmEl], dmEl];
       unfavorableElements = [officerMap[dmEl], generates[dmEl]];
       neutralElements = [wealthMap[dmEl]];
     } else {
-      // 身旺/普通格：喜官杀制身、财星发源、食伤吐秀；忌比劫争财
-      favorableElements = [wealthMap[dmEl], officerMap[dmEl], generates[dmEl]];
+      // 身旺/普通格：喜食伤泄秀疏导、财星耗散生发、官杀制身；忌比劫争财
+      favorableElements = [generates[dmEl], wealthMap[dmEl], officerMap[dmEl]];
       unfavorableElements = [dmEl];
       neutralElements = [generatedBy[dmEl]];
     }
@@ -1184,10 +1184,11 @@ class SpatialFengShuiEngine {
       gradeZh = '吉 / 大利';
       gradeEn = 'Auspicious / Highly Favorable';
       badgeType = 'emerald';
-      if (cEl === generatedBy[dmEl]) score = 96;
-      else if (cEl === generates[dmEl]) score = 94;
-      else if (cEl === wealthMap[dmEl]) score = 92;
+      if (isWeak && cEl === generatedBy[dmEl]) score = 96;
+      else if (cEl === generates[dmEl]) score = 96;
+      else if (cEl === wealthMap[dmEl]) score = 93;
       else if (cEl === officerMap[dmEl]) score = 90;
+      else if (cEl === generatedBy[dmEl]) score = 92;
       else score = 91;
     } else if (unfavorableElements.includes(cEl)) {
       gradeZh = '慎 / 气机对冲';

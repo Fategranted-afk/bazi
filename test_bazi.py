@@ -14791,7 +14791,149 @@ assert run_check117.returncode == 0, f"Check 117 JSC test failed: stdout={run_ch
 
 print("✓ 核心主盘帕累托枢纽与大局破局战报80%损耗暗礁避讳总纲卡片（双语100%零中文残留/二八胜负手配对）验证通过！")
 
-print("\n🎉 ALL 117 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+print("\n=== 118. Validating Energy Overload Dissipation, Water-Heavy Dam Spillway & Geographic Directional Calibration ===")
+
+jsc_check118_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    "-e",
+    """
+    var window = this;
+    window.addEventListener = function() {};
+    var global = this;
+    var console = { log: function() {}, warn: function() {}, error: function() {} };
+
+    load('js/bazi-engine.js');
+    load('js/portrait-engine.js');
+    load('js/fengshui-engine.js');
+    load('js/luck-engine.js');
+    load('js/career-engine.js');
+    load('js/i18n.js');
+
+    // 1. Water-heavy chart (e.g. 62.5% Water, overflowing dam: 蓄满水的大坝)
+    var baziWaterHeavy = {
+      dayMaster: '壬',
+      dayMasterElement: '水',
+      input: { year: 1992, month: 12, day: 28, hour: 22, minute: 0, gender: 'male' },
+      gender: '乾造',
+      pillars: {
+        year: { stem: '壬', stemElement: '水', branch: '子', branchElement: '水' },
+        month: { stem: '庚', stemElement: '金', branch: '子', branchElement: '水' },
+        day: { stem: '壬', stemElement: '水', branch: '申', branchElement: '金' },
+        hour: { stem: '癸', stemElement: '水', branch: '亥', branchElement: '水' }
+      },
+      fiveElements: {
+        percentages: {
+          '水': '62.5',
+          '木': '0.0',
+          '火': '0.0',
+          '土': '12.5',
+          '金': '25.0'
+        }
+      },
+      zipingScore: {
+        categoryKey: 'extreme_strong',
+        totalScore: 92,
+        percentage: 62.5
+      }
+    };
+
+    var luckRes = LuckEngine.calculateLuck(baziWaterHeavy, 2026, "午", "2026-06-15");
+    if (!luckRes || !luckRes.ecologicalResonance) {
+      throw new Error("Missing ecologicalResonance in luckRes for Water-heavy chart");
+    }
+    var er = luckRes.ecologicalResonance;
+
+    // Check prime direction: MUST be East (Wood, Output - 泄秀疏浚), NOT West (Metal, Resource - 暴雨注水)!
+    if (!er.bestDirectionZh.includes('东方 (木气场)')) {
+      throw new Error("Water-heavy chart prime direction must be East (Wood), got: " + er.bestDirectionZh);
+    }
+    if (er.bestDirectionZh.includes('西方 (金气场)')) {
+      throw new Error("Water-heavy chart MUST NOT recommend West (Metal) as prime direction: " + er.bestDirectionZh);
+    }
+
+    // Check rank 1 and rank 2 in geographicDirections
+    var dirs = er.geographicDirections;
+    if (dirs[0].element !== '木' || dirs[0].fitScore < 95) {
+      throw new Error("Rank 1 direction must be Wood with fitScore >= 95, got: " + dirs[0].element + " score=" + dirs[0].fitScore);
+    }
+    if (dirs[1].element !== '火' || dirs[1].fitScore < 90) {
+      throw new Error("Rank 2 direction must be Fire with fitScore >= 90, got: " + dirs[1].element + " score=" + dirs[1].fitScore);
+    }
+
+    // Check West (Metal) is penalized for dam overfilling
+    var westDir = dirs.find(function(d) { return d.element === '金'; });
+    if (!westDir) throw new Error("Missing West/Metal direction in geographic directions");
+    if (westDir.fitScore > 66) {
+      throw new Error("West/Metal must be penalized for 62.5% Water (got score " + westDir.fitScore + " > 66)");
+    }
+    if (!westDir.ratingZh.includes('蓄水过载') && !westDir.ratingZh.includes('水多金沉')) {
+      throw new Error("West/Metal ratingZh must reflect dam overload / water flooding caution, got: " + westDir.ratingZh);
+    }
+
+    // Check 100% zero Chinese residual in EN fields
+    dirs.forEach(function(d, idx) {
+      var enFields = [d.directionEn, d.elementEn, d.citiesEn, d.ratingEn, d.resonanceEn, d.careerSynergyEn];
+      enFields.forEach(function(f) {
+        if (!f || f.length === 0) throw new Error("Empty EN field at dir index " + idx);
+        if (/[\\u4e00-\\u9fa5]/.test(f)) throw new Error("Residual Chinese in dir EN field at index " + idx + ": " + f);
+      });
+    });
+    if (/[\\u4e00-\\u9fa5]/.test(er.bestDirectionEn)) {
+      throw new Error("Residual Chinese in bestDirectionEn: " + er.bestDirectionEn);
+    }
+
+    // 2. Spatial Feng Shui Engine verification
+    var fsGuide = SpatialFengShuiEngine.generateFengShuiGuide(baziWaterHeavy);
+    if (!fsGuide) throw new Error("SpatialFengShuiEngine returned null guide");
+    if (fsGuide.primaryFavEl !== '木') {
+      throw new Error("Spatial Feng Shui primary favorable element for Water-heavy chart must be Wood (木), got: " + fsGuide.primaryFavEl);
+    }
+    if (!fsGuide.hetuLuoshuItem || !fsGuide.hetuLuoshuItem.clientOutreachZh.includes('东')) {
+      throw new Error("Hetu Luoshu client outreach must recommend East direction, got: " + (fsGuide.hetuLuoshuItem && fsGuide.hetuLuoshuItem.clientOutreachZh));
+    }
+
+    // 3. Weak Day Master chart (e.g. weak Xin Metal needing Earth resource)
+    var baziWeakMetal = {
+      dayMaster: '辛',
+      dayMasterElement: '金',
+      input: { year: 1996, month: 6, day: 15, hour: 10, minute: 0, gender: 'female' },
+      gender: '坤造',
+      pillars: {
+        year: { stem: '丙', stemElement: '火', branch: '午', branchElement: '火' },
+        month: { stem: '甲', stemElement: '木', branch: '午', branchElement: '火' },
+        day: { stem: '辛', stemElement: '金', branch: '卯', branchElement: '木' },
+        hour: { stem: '丁', stemElement: '火', branch: '巳', branchElement: '火' }
+      },
+      fiveElements: {
+        percentages: {
+          '水': '0.0',
+          '木': '25.0',
+          '火': '62.5',
+          '土': '0.0',
+          '金': '12.5'
+        }
+      },
+      zipingScore: {
+        categoryKey: 'extreme_weak',
+        totalScore: 12.5,
+        percentage: 12.5
+      }
+    };
+    var luckWeak = LuckEngine.calculateLuck(baziWeakMetal, 2026, "午", "2026-06-15");
+    var erWeak = luckWeak.ecologicalResonance;
+    var topDirWeak = erWeak.geographicDirections[0];
+    if (topDirWeak.element !== '土' && topDirWeak.element !== '金') {
+      throw new Error("Weak Day Master must prioritize Resource (Earth) or Peer (Metal), got: " + topDirWeak.element);
+    }
+    """
+]
+run_check118 = subprocess.run(jsc_check118_cmd, capture_output=True, text=True)
+assert run_check118.returncode == 0, f"Check 118 JSC test failed: stdout={run_check118.stdout} stderr={run_check118.stderr}"
+
+print("✓ 能量过多压身疏导机制、水旺大坝泄秀疏浚（东方木95%首选/南方火92%次选/西方金64%过载警示）、空间风水与五行生克校准（中英双语100%零中文残留）验证通过！")
+
+print("\n🎉 ALL 118 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 
