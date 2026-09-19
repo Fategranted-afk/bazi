@@ -15675,7 +15675,129 @@ run_check125 = subprocess.run(jsc_check125_cmd, capture_output=True, text=True)
 assert run_check125.returncode == 0, f"Check 125 JSC test failed: stdout={run_check125.stdout} stderr={run_check125.stderr}"
 print("✓ 125. 动态订阅式天机进退节律历（全年18~24个高势能拐点/RFC 5545 VEVENT+VALARM标准日历流/webcal订阅/双语零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 125 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 126. 交互军师高阶格局辨析与卯戌合火暗财妻星辩证全量验证
+jsc_check126_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/sanming.js");
+    load("data/yuanhai.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/iching-engine.js");
+    load("js/simulator-engine.js");
+    load("js/vector-rag.js");
+    load("js/advisor-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 11, day: 5, hour: 6, minute: 30,
+      gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+    var luck = LuckEngine.calculateLuck(bazi, 2026);
+
+    // 1. Chinese Metaphysics Dialectics 5-case test
+    var questionsZh = [
+      { q: "伤官吐秀跟伤官驾杀有啥差别", sub: "pattern_diff", kw: "伤官吐秀" },
+      { q: "那如果水旺+ 戌土但是没有金， 这个还算伤官吐秀吗", sub: "water_xu_metal", kw: "水土混杂" },
+      { q: "那如果有卯木加持", sub: "mao_xu_fire", kw: "贪合忘克" },
+      { q: "这个就是为什么如果这个加上七杀， 你最后评价是杀刃带伤格是吗", sub: "killing_blade_officer", kw: "杀刃带伤" },
+      { q: "那么这个合成火， 算在妻财里面吗", sub: "wealth_wife_fire", kw: "妻财" }
+    ];
+
+    for (var i = 0; i < questionsZh.length; i++) {
+      var item = questionsZh[i];
+      var res = AdvisorEngine.generateAdvice(item.q, bazi, luck, 2026, "zh");
+      if (res.category !== "pattern_metaphysics") {
+        throw new Error("ZH Case " + i + " category mismatch: expected pattern_metaphysics, got " + res.category);
+      }
+      if (res.subcategory !== item.sub) {
+        throw new Error("ZH Case " + i + " subcategory mismatch: expected " + item.sub + ", got " + res.subcategory);
+      }
+      if (res.directAnswer.indexOf(item.kw) === -1) {
+        throw new Error("ZH Case " + i + " directAnswer missing keyword " + item.kw + ": " + res.directAnswer);
+      }
+      if (!res.diagnosticTree || !res.diagnosticTree.nodes || res.diagnosticTree.nodes.length !== 4) {
+        throw new Error("ZH Case " + i + " diagnosticTree invalid: " + JSON.stringify(res.diagnosticTree));
+      }
+      if (!res.timingCard || !res.timingCard.title) {
+        throw new Error("ZH Case " + i + " timingCard missing");
+      }
+    }
+
+    // 2. English Metaphysics Dialectics 5-case test with Zero Chinese Leaks
+    var questionsEn = [
+      { q: "What is the difference between Hurting Officer expressing talent vs harnessing Seven Killings?", sub: "pattern_diff", kw: "Hurting Officer Expressing Talent" },
+      { q: "If water is vigorous with Xu earth but lacks metal, does that still count as Hurting Officer expressing talent?", sub: "water_xu_metal", kw: "Water-Earth Combat" },
+      { q: "What if there is Mao wood blessing?", sub: "mao_xu_fire", kw: "Desiring Union and Forgetting Conflict" },
+      { q: "Is that why if you add Seven Killings to this, your final verdict is the Killing Blade and Hurting Officer pattern?", sub: "killing_blade_officer", kw: "Blade, Killing, and Hurting Officer Trinity Pattern" },
+      { q: "Does this combination into fire count as Wife and Wealth?", sub: "wealth_wife_fire", kw: "Wife and Wealth" }
+    ];
+
+    for (var j = 0; j < questionsEn.length; j++) {
+      var itemEn = questionsEn[j];
+      var resEn = AdvisorEngine.generateAdvice(itemEn.q, bazi, luck, 2026, "en");
+      if (resEn.category !== "pattern_metaphysics") {
+        throw new Error("EN Case " + j + " category mismatch: expected pattern_metaphysics, got " + resEn.category);
+      }
+      if (resEn.subcategory !== itemEn.sub) {
+        throw new Error("EN Case " + j + " subcategory mismatch: expected " + itemEn.sub + ", got " + resEn.subcategory);
+      }
+      if (resEn.directAnswer.indexOf(itemEn.kw) === -1) {
+        throw new Error("EN Case " + j + " directAnswer missing keyword " + itemEn.kw + ": " + resEn.directAnswer);
+      }
+      var enStr = JSON.stringify(resEn);
+      var leaks = enStr.match(/[\\u4e00-\\u9fa5]/g);
+      if (leaks && leaks.length > 0) {
+        throw new Error("EN Case " + j + " residual Chinese characters found: " + leaks.join(""));
+      }
+    }
+
+    // 3. Romance and Wealth synergy test
+    var romZh = AdvisorEngine.generateAdvice("2026年婚恋正缘桃花何时出现？", bazi, luck, 2026, "zh");
+    if (romZh.category !== "romance_timing") {
+      throw new Error("Romance ZH category mismatch: " + romZh.category);
+    }
+
+    var romEn = AdvisorEngine.generateAdvice("When will true marriage affinity appear in 2026?", bazi, luck, 2026, "en");
+    if (romEn.category !== "romance_timing") {
+      throw new Error("Romance EN category mismatch: " + romEn.category);
+    }
+    var romEnLeaks = JSON.stringify(romEn).match(/[\\u4e00-\\u9fa5]/g);
+    if (romEnLeaks && romEnLeaks.length > 0) {
+      throw new Error("Romance EN residual Chinese: " + romEnLeaks.join(""));
+    }
+
+    var wlthZh = AdvisorEngine.generateAdvice("今年求财与投资风口在哪个季度？", bazi, luck, 2026, "zh");
+    if (wlthZh.category !== "wealth_window") {
+      throw new Error("Wealth ZH category mismatch: " + wlthZh.category);
+    }
+
+    var wlthEn = AdvisorEngine.generateAdvice("Which quarter holds the primary wealth window in 2026?", bazi, luck, 2026, "en");
+    if (wlthEn.category !== "wealth_window") {
+      throw new Error("Wealth EN category mismatch: " + wlthEn.category);
+    }
+    var wlthEnLeaks = JSON.stringify(wlthEn).match(/[\\u4e00-\\u9fa5]/g);
+    if (wlthEnLeaks && wlthEnLeaks.length > 0) {
+      throw new Error("Wealth EN residual Chinese: " + wlthEnLeaks.join(""));
+    }
+    """
+]
+run_check126 = subprocess.run(jsc_check126_cmd, capture_output=True, text=True)
+assert run_check126.returncode == 0, f"Check 126 JSC test failed: stdout={run_check126.stdout} stderr={run_check126.stderr}"
+print("✓ 126. 交互军师高阶格局辨析与卯戌合火暗财妻星辩证（伤官吐秀vs驾杀/水旺戌土无金/卯戌合化火/杀刃带伤/暗财妻星/双语零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 126 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

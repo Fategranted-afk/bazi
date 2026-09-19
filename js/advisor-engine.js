@@ -162,6 +162,12 @@ class AdvisorEngine {
           icon: '💰',
           title: 'Wealth & Initiative Timing',
           query: 'Is the current temporal transit favorable for aggressive wealth expansion (side-projects/investments) or consolidation?'
+        },
+        {
+          id: 'pattern_metaphysics',
+          icon: '🔮',
+          title: 'Pattern Dialectics & Hidden Wealth/Wife',
+          query: 'What is the deep difference between Hurting Officer expressing talent vs harnessing Seven Killings, and does the Mao-Xu combination into fire count as Wife and Wealth?'
         }
       ];
     }
@@ -214,6 +220,12 @@ class AdvisorEngine {
         icon: '💰',
         title: '财运时机与投资攻守',
         query: '当下岁运流月逢何神司权？我适宜开拓副业与商业变现，还是当收拢现金流、以沉淀绝技为先？'
+      },
+      {
+        id: 'pattern_metaphysics',
+        icon: '🔮',
+        title: '格局辩证与暗财妻财推演',
+        query: '伤官吐秀与伤官驾杀有何本质差别？水旺加戌土遇卯木加持，卯戌六合化火算在妻财里面吗？'
       }
     ];
   }
@@ -346,6 +358,24 @@ class AdvisorEngine {
    */
   static detectSubcategory(userQuery) {
     const q = (userQuery || '').toLowerCase();
+
+    // High-order Pattern & Dialectics subcategories
+    if (/伤官吐秀.*(伤官驾杀|差别|区别)|伤官驾杀.*(伤官吐秀|差别|区别)|(伤官.*(差别|区别))|talent expression.*harness|difference.*hurting officer|compare.*hurting officer|hurting officer.*(vs|versus).*seven killing|hurting officer expressing talent.*(?:vs|versus|harnessing)/i.test(q)) {
+      return 'pattern_diff';
+    }
+    if (/妻财|暗财|合化火.*财|财星|暗合化财|hidden wealth|wife and wealth|count as wife|spouse star/i.test(q)) {
+      return 'wealth_wife_fire';
+    }
+    if (/杀刃带伤|羊刃驾杀|杀刃|blade killing|blade.*seven killing|killing.*blade|killing blade/i.test(q)) {
+      return 'killing_blade_officer';
+    }
+    if (/水旺.*戌土|没有金|无金|水土混杂|水土相战|water.*(?:heavy|vigorous|strong).*xu|water.*xu.*metal|lack(?:s)? metal|without metal|no metal|turbid clash|muddy water/i.test(q)) {
+      return 'water_xu_metal';
+    }
+    if (/卯木(?:加持)?|卯戌(?:合|六合|化火)?|化火|mao wood|mao[- ]?xu.*fire|combination into fire|desiring union/i.test(q)) {
+      return 'mao_xu_fire';
+    }
+
     if (/具体期限|期限|几月份?|具体哪个月|什么时候|具体时间|何时|何月|何年|哪天|应期|时间点|哪年|哪一?天|何时出现|何时显化|何时来|timing|deadline|which month|when exactly|what time|schedule|when will/i.test(q)) {
       return 'timing_precision';
     }
@@ -376,9 +406,11 @@ class AdvisorEngine {
     if (/买房方位|哪个城市买|首付|贷款|房产|property direction|mortgage/i.test(q)) {
       return 'property_timing';
     }
+
     if (/为什么|何故|原理|根据什么|怎么算出来|八字怎么看|why|reason|how to deduce/i.test(q)) {
       return 'general_why';
     }
+
     return 'comprehensive';
   }
 
@@ -412,6 +444,14 @@ class AdvisorEngine {
     // 0e. Legal Dispute / Lawsuit / Defense / Contract Breach / Layoff
     if (/小人|官非|打官司|起诉|纠纷|合同|诉讼|背刺|辞退|裁员|被坑|劳动仲裁|legal|lawsuit|dispute|contract|court|sue|layoff|betray/i.test(q)) {
       return 'legal_dispute';
+    }
+
+    // 0f. Pattern Metaphysics / Structure Dialectics / Ten Gods Transformation / Hidden Wealth & Spouse
+    if (/伤官(吐秀|驾杀|制杀|配印|生财|合杀)|杀刃(带伤)?|羊刃(驾杀|配杀)|卯戌(合|化)|暗合?化财|合化火|水土混杂|水土相战|食神制杀|从格|格局(辨析|判断|判定|分析|差别|区别)|七杀(配印|有制)|hurting officer|seven killing|yang blade|mao xu|combination into fire|hidden wealth|wife and wealth|talent expression|harnessing killing|subduing killing/i.test(q) ||
+        (/妻财/i.test(q) && /合|化|火|算|暗|局/i.test(q)) ||
+        (/卯木/i.test(q) && /加持|合|戌/i.test(q)) ||
+        (/水旺/i.test(q) && /戌土|金/i.test(q))) {
+      return 'pattern_metaphysics';
     }
 
     // 1. Romance / Marriage / Dating / Partner
@@ -451,12 +491,19 @@ class AdvisorEngine {
 
     // Contextual Inheritance for follow-up questions
     if (sessionContext && sessionContext.lastCategory) {
+      if (sessionContext.lastCategory === 'pattern_metaphysics' && (/那|具体|然后|还有|另外|怎么|如果|为什么|何时|哪|what about|then|when|how/i.test(q) || sub !== 'comprehensive')) {
+        return 'pattern_metaphysics';
+      }
       if (sub !== 'comprehensive' || /那|具体|然后|还有|另外|怎么|如果|为什么|何时|哪|what about|then|when|how/i.test(q)) {
         return sessionContext.lastCategory;
       }
     }
 
     // Fallbacks based on subcategory
+    if (['pattern_diff', 'water_xu_metal', 'mao_xu_fire', 'killing_blade_officer', 'wealth_wife_fire'].includes(sub)) {
+      return 'pattern_metaphysics';
+    }
+
     if (sub === 'timing_precision') {
       if (sessionContext && sessionContext.lastCategory) return sessionContext.lastCategory;
       return 'romance_timing';
@@ -501,7 +548,51 @@ class AdvisorEngine {
       return w;
     };
 
-    if (category === 'romance_timing') {
+    if (category === 'pattern_metaphysics') {
+      const p = enrichWin({
+        badge: isEn ? '🥇 Culmination & Manifestation Window' : '🥇 六合化火·暗财显化黄金期',
+        lunarMonth: isEn ? 'Lunar Month 9 (Wu-Xu)' : '农历九月（戊戌月）',
+        solarTerm: isEn ? 'Cold Dew to Frost Descent (Oct 8 ~ Nov 6)' : '寒露 至 霜降（公历 10月8日 ~ 11月6日）',
+        probability: 93,
+        mechanism: isEn ? 'Wu-Xu triggers the Mao-Xu combination into Fire; hidden assets and strategic alliances materialize into concrete reality' : '戊戌月岁君与原局触动【卯戌六合化火】与【寅午戌三合火局】，暗合化财由隐入显，战友型正缘与危机套利之第一高光期',
+        action: isEn ? 'Formalize joint commercial equity, seal strategic partnerships, and lock in milestone marital or financial commitments' : '落实深度商业合伙签约、敲定隐形权益分配、明确正缘盟约或启动重大危机并购'
+      }, '戌', '2026-10-08', '2026-11-06');
+
+      const s = enrichWin({
+        badge: isEn ? '🥈 Solar King Elevation Window' : '🥈 岁君坐镇·权威破局爆发期',
+        lunarMonth: isEn ? 'Lunar Month 5 (Jia-Wu)' : '农历五月（甲午月）',
+        solarTerm: isEn ? 'Grain in Ear to Summer Solstice (Jun 5 ~ Jul 6)' : '芒种 至 夏至（公历 6月5日 ~ 7月6日）',
+        probability: 89,
+        mechanism: isEn ? 'Bing-Wu annual king commands the field; fire tempers the Seven Killings and sharpens Hurting Officer ingenuity' : '丙午岁君本气坐镇，纯阳真火彻底暖局，七杀凶威被纯火淬砺为统帅权柄，伤官灵感与执行力处于周期极值',
+        action: isEn ? 'Take command of pivotal high-stakes turnaround initiatives; pitch bold, unconventional business innovations' : '主动承担最硬核高难度的危机破局业务，向管理层或市场亮出颠覆式创新战法'
+      }, '午', '2026-06-05', '2026-07-06');
+
+      const t = enrichWin({
+        badge: isEn ? '🥉 Output Genius Ignition Window' : '🥉 伤官得令·灵动机变生发期',
+        lunarMonth: isEn ? 'Lunar Month 2 (Xin-Mao)' : '农历二月（辛卯月）',
+        solarTerm: isEn ? 'Insects Awaken to Spring Equinox (Mar 5 ~ Apr 4)' : '惊蛰 至 春分（公历 3月5日 ~ 4月4日）',
+        probability: 84,
+        mechanism: isEn ? 'Mao Wood output star flourishes; intellect and asymmetric tactics unlock breakthrough opportunities' : '卯木伤官主事当令，秀气外发，机变谋略纵横，以智破死局，吸引同频顶尖盟友'
+      }, '卯', '2026-03-05', '2026-04-04');
+
+      const c = enrichWin({
+        badge: isEn ? '⚠️ Energy Clashing Caution Month' : '⚠️ 冲刑克泄·情绪波动预警月',
+        lunarMonth: isEn ? 'Lunar Month 11 (Geng-Zi)' : '农历十一月（庚子月）',
+        solarTerm: isEn ? 'Major Snow to Winter Solstice (Dec 7 ~ Jan 4)' : '大雪 至 冬至（公历 12月7日 ~ 次年1月4日）',
+        probability: 45,
+        mechanism: isEn ? 'Zi-Wu clash and Zi-Mao friction introduce cognitive tension; guard against impulsive confrontations or emotional fatigue' : '天克地冲，子水冲午火又刑卯木，气机震荡，易生口角是非或克泄交加之心神疲惫',
+        action: isEn ? 'Practice calm detachment; avoid uncalculated confrontations and protect sleep and physical vitality' : '戒骄戒躁，以静制动；绝不在心神激荡时做重大断绝决定，守固元神'
+      }, '子', '2026-12-07', '2027-01-04');
+
+      return {
+        title: isEn ? '2026 Pattern Fruition & Transformed Wealth Activation Windows' : '2026 丙午流年 · 格局大成与暗财妻财应期全相表',
+        category: category,
+        primaryWindow: p,
+        secondaryWindow: s,
+        tertiaryWindow: t,
+        cautionaryMonth: c
+      };
+    } else if (category === 'romance_timing') {
       const p = enrichWin({
         badge: isEn ? '🥇 Primary Peak Window' : '🥇 首席黄金应期',
         lunarMonth: isEn ? 'Lunar Month 6 (Yi-Wei)' : '农历六月（乙未月）',
@@ -903,6 +994,16 @@ class AdvisorEngine {
         { icon: '🧭', title: '利己安居方位', query: '依我八字喜用神，买房置业选在城市的什么方位对自身场能最有利？' },
         { icon: '🏠', title: '户型风水避坑', query: '看房选房时，有哪些房屋朝向或缺角煞气是必须坚决避开的？' }
       ];
+    } else if (category === 'pattern_metaphysics') {
+      return isEn ? [
+        { icon: '⚔️', title: 'Talent vs Harnessing Killing', query: 'What is the core difference between Hurting Officer expressing talent vs harnessing Seven Killings?' },
+        { icon: '🔥', title: 'Mao-Xu Fire Transformation', query: 'How does adding Mao Wood resolve the Water-Xu clash into Fire through desiring union?' },
+        { icon: '💰', title: 'Hidden Wealth & Spouse Star', query: 'Does the Mao-Xu fire count as Wife and Wealth? How does 2026 Bing-Wu trigger this hidden fortune?' }
+      ] : [
+        { icon: '⚔️', title: '伤官吐秀与驾杀差别', query: '伤官吐秀与伤官驾杀有何本质差别？对日主身旺身弱与根骨有何根本要求？' },
+        { icon: '🔥', title: '卯木加持化火玄机', query: '水旺见戌土遇卯木加持，为何能贪合忘克化火？这如何解开水土相战？' },
+        { icon: '💰', title: '暗财妻财与岁运引动', query: '卯戌六合化火算在妻财里面吗？男命暗财聚气与战友型正缘在2026丙午年如何爆发？' }
+      ];
     } else if (category === 'legal_dispute') {
       return isEn ? [
         { icon: '⚖️', title: 'Statutory Defense', query: 'How does Feng Daos Rong Ku Jian advise preserving evidence and statutory rights?' },
@@ -967,6 +1068,27 @@ class AdvisorEngine {
       });
     }
 
+    if (category === 'pattern_metaphysics') {
+      links.push({
+        id: 'open_simulator',
+        icon: '⚖️',
+        label: isEn ? 'Launch Decision Simulator' : '载入双轨沙盘推演',
+        action: 'open_simulator'
+      });
+      links.push({
+        id: 'open_dossier_spouse',
+        icon: '📜',
+        label: isEn ? 'Imperial Dossier: Spouse & Family' : '调阅皇家战报·配偶家庭',
+        action: 'open_dossier_spouse'
+      });
+      links.push({
+        id: 'open_fengshui',
+        icon: '🧭',
+        label: isEn ? 'Feng Shui & Residence Guidance' : '测算空间风水与五行调理',
+        action: 'open_fengshui'
+      });
+    }
+
     return links;
   }
 
@@ -1020,17 +1142,31 @@ class AdvisorEngine {
     const yb = ctx.yearBranch;
     const isMale = (!ctx.gender || ctx.gender.includes('乾') || ctx.gender.includes('男'));
 
+    // Branch & Elemental Synergy Analysis (Mao-Xu Six Harmony & Water Day Master)
+    const allBranches = [
+      ctx.dayBranch, ctx.yearBranch, ctx.monthBranch, ctx.hourBranch,
+      bazi?.pillars?.year?.branch, bazi?.pillars?.month?.branch, bazi?.pillars?.day?.branch, bazi?.pillars?.hour?.branch
+    ].filter(Boolean);
+    const hasMao = allBranches.includes('卯') || /卯/.test(query);
+    const hasXu = allBranches.includes('戌') || /戌/.test(query);
+    const isWaterDm = (dm === '壬' || dm === '癸') || /水旺|水日/.test(query);
+    const hasMaoXuSynergy = (hasMao && hasXu) || (isWaterDm && (hasMao || hasXu || /妻财|暗财|合化火/.test(query)));
+
     // Romance Specific Variables
     let spouseStarZh = isMale ? '正财/偏财' : '正官/七杀';
     let spouseArchetype = '独立自强、开创干练之良伴';
-    if (['子', '午', '卯', '酉'].includes(db)) {
+    if (hasMaoXuSynergy) {
+      spouseArchetype = '兼具才情灵犀与刚强风骨、能与命主并肩作战抗击风浪之战友型灵魂伴侣';
+    } else if (['子', '午', '卯', '酉'].includes(db)) {
       spouseArchetype = '相貌清雅秀丽、极具艺术情调、重视精神深度交流与仪式感之伴侣';
     } else if (['辰', '戌', '丑', '未'].includes(db)) {
       spouseArchetype = '忠厚稳健、朴实持家、能做家庭财富防波堤之靠谱伴侣';
     }
 
     let annualPalaceDynamic = '';
-    if (db === '寅' || db === '戌') {
+    if (hasMaoXuSynergy) {
+      annualPalaceDynamic = `原局暗藏【卯戌六合化火】之神妙玄机！伤官之才情灵犀（卯）与七杀之风骨名望（戌）相逢，贪合忘克，合化为真火妻星。命定正缘绝非依附弱质，而是并肩作战、同舟共济的【战友型灵魂伴侣】！更具造化的是，对于寒水命局而言，此火带来至关紧要的【调候暖局】，成家即立业，婚后财富与心智呈现阶梯式爆发！2026 丙午流年岁君丙火偏财天透、午火半合戌土火局，引爆原局卯戌暗火，暗财转明，正缘显化，正是战友正缘缔结长远盟约之极盛奇点！`;
+    } else if (db === '寅' || db === '戌') {
       annualPalaceDynamic = `2026 丙午岁君与日支配偶宫【${db}】形成【寅午戌三合火局】，合动配偶宫！这是命理正缘感召引动之第一等吉象，预示今年正缘磁场全面共振，极易在专业交流或共同追求中邂逅宿命感契合者！`;
     } else if (db === '未') {
       annualPalaceDynamic = `2026 丙午岁君与配偶宫【未】构成【午未六合】！岁君六合入夫妻宫，逢合主定，预示感情有尘埃落定、谈及婚嫁盟约之重大契机！`;
@@ -1192,13 +1328,20 @@ class AdvisorEngine {
       mentalAnchor = `《金刚经》云：“凡所有相，皆是虚妄。若见诸相非相，即见如来。应无所住，而生其心。”`;
     } else if (category === 'wealth_window') {
       title = '财富机缘与攻守平衡智策';
-      directAnswer = `【军师直陈】：回禀命主，当前岁运以“正财守底盘，偏财抓轻量机会”为大方针。今年农历六月与九月财运场能最旺，适宜验证第二曲线副业；但切忌大额加杠杆或与信用有亏之人合伙。`;
+      directAnswer = hasMaoXuSynergy
+        ? `【军师直陈】：回禀命主，您命盘暗藏【卯戌六合化火】之暗财神机！此非寻常死板劳作薪资，而是凭借绝顶智谋（伤官卯木）降服化解复杂危机（七杀戌土）而无中生有创造的“暗合化财”。2026 丙午流年岁君天透地藏引爆暗火，暗财由隐入显！今年农历五月、六月与九月为财富爆发极盛窗口，宜大展拳脚运作高附加值创新项目，严禁盲目参与高杠杆赌徒投机！`
+        : `【军师直陈】：回禀命主，当前岁运以“正财守底盘，偏财抓轻量机会”为大方针。今年农历六月与九月财运场能最旺，适宜验证第二曲线副业；但切忌大额加杠杆或与信用有亏之人合伙。`;
       timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'wealth_window', 'zh');
 
-      diagnosis = `命主年岁逢 ${ctx.activeAnnualYear} ${ctx.activeAnnualGanzhi}，岁君当道，六十四卦运势落于【${ctx.activeHexagram}】。当前子平量化活力 ${ctx.vigorScore} 分，处于【${ctx.vigorTier}】。在财富与事业推进中，首重“正财为基，偏财为机，稳中求进”。`;
+      diagnosis = `命主年岁逢 ${ctx.activeAnnualYear} ${ctx.activeAnnualGanzhi}，岁君当道，六十四卦运势落于【${ctx.activeHexagram}】。当前子平量化活力 ${ctx.vigorScore} 分，处于【${ctx.vigorTier}】。` +
+        (hasMaoXuSynergy
+          ? `局中暗藏“卯木伤官与戌土七杀六合化火”之暗财通道，对于${isWaterDm ? '水日元' : '命主'}而言，火即为正偏财星，主凭借智谋打破危机壁垒、无中生有创造巨额增量财富。岁逢 2026 丙午帝旺火运，暗火转为燎原之势！`
+          : `在财富与事业推进中，首重“正财为基，偏财为机，稳中求进”。`);
 
       tactics = [
-        `【深耕主业正财底盘】：确保本职基本盘稳如磐石，将 80% 的时间算力投入到核心本领的不可替代性打磨上。`,
+        hasMaoXuSynergy
+          ? `【激活卯戌暗合之高维资产】：将核心算力倾注于“用前沿创新模式（伤官）解决行业或企业最硬核危机与痛点（七杀）”，以此获取项目分红、隐形股权或超额咨询溢价，实现无中生有之暗财聚气。`
+          : `【深耕主业正财底盘】：确保本职基本盘稳如磐石，将 80% 的时间算力投入到核心本领的不可替代性打磨上。`,
         `【轻量化验证第二曲线】：欲求偏财破局，以极小资金成本测试副业或自媒体工具产品，跑通 0 到 1 最小闭环后再考虑追加资源。`,
         `【秉持《荣枯鉴》保全之道】：${ctx.firstScroll ? `谨记《${ctx.firstScroll}》所诫，低调求财，不显山不露水，蓄深水以行大舟。` : '戒骄戒躁，以广结善缘与利他之心凝聚财运。'}`
       ];
@@ -1208,7 +1351,9 @@ class AdvisorEngine {
         `严禁与命带严重刑冲克破、信誉有亏之人合伙谋事。`
       ];
 
-      mentalAnchor = `《滴天髓》云：“何知其人富？财气通门户。何知其人贵？官星有理会。财官相生，自致千钟。”`;
+      mentalAnchor = hasMaoXuSynergy
+        ? `《滴天髓》云：“何知其人富？财气通门户。暗会明化，火暖寒江，自致千钟。”`
+        : `《滴天髓》云：“何知其人富？财气通门户。何知其人贵？官星有理会。财官相生，自致千钟。”`;
     } else if (category === 'vague_confusion') {
       title = '心神定海与迷茫破局神策';
       directAnswer = `【军师直陈】：回禀命主，气数处于岁运交更之际，迷茫与算力空转乃能量重组常态。无靶之箭，空耗心神。请点击下方军师为您诊断的 4 大现实卡点，军师即刻为您调取相对应急兵法：`;
@@ -1293,6 +1438,100 @@ class AdvisorEngine {
         `严禁通过非正规或涉嫌违法的灰色手段报复对方，以防有理变成理亏。`
       ];
       mentalAnchor = `五代·冯道《荣枯鉴·法度卷》云：“法者，立国之本，保身之规。不可轻犯，不可忽失。顺法者存，逆法者亡。”`;
+    } else if (category === 'pattern_metaphysics') {
+      title = '高阶格局辩证与暗财妻财神策';
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'pattern_metaphysics', 'zh');
+
+      diagnosticTree = {
+        title: '高阶格局与暗财妻财推演罗盘 · 四维跃升路径',
+        prompt: '点击下方任一维度，军师即刻为您深度解析能量跃升机制：',
+        nodes: [
+          { id: 'diag_diff', label: '伤官吐秀 vs 伤官驾杀 · 本质差别', query: '伤官吐秀与伤官驾杀有何本质差别？对日主身旺身弱与根骨有何根本要求？' },
+          { id: 'diag_water_xu', label: '水旺遇戌土无金 · 水土相战病态', query: '水旺遇戌土无金会引发何种水土相战与精神内耗？为何不算吐秀？' },
+          { id: 'diag_mao_fire', label: '卯木加持 · 卯戌六合贪合忘克', query: '水旺见戌土遇卯木加持，为何能贪合忘克化火？这如何解开水土相战？' },
+          { id: 'diag_wife_wealth', label: '合化火为妻财 · 战友正缘与暗财', query: '卯戌六合化火算在妻财里面吗？男命暗财聚气与战友型正缘在2026丙午年如何爆发？' }
+        ]
+      };
+
+      if (subcategory === 'pattern_diff') {
+        directAnswer = `【军师直陈】：回禀命主，“伤官吐秀”与“伤官驾杀”是子平命理中两套截然不同的能量转化回路！\n①【伤官吐秀】：本质是“身强得泄、文贵清华”。日元能量充沛过盛（身旺有印比生扶），伤官作为向外泄放秀气的管道，转化为艺术创作、学术著述、顶尖设计或发明创造。其前提是身主底气充足；若身弱或水多无金无源，则不是吐秀，而是“盗泄元气”；\n②【伤官驾杀】：本质是“以奇胜正、化敌为权”。七杀是外部凶顽对手、极端压迫与生死危机，伤官是叛逆利刃与非常规奇谋。以智降虎，化外部危机为自身统帅权柄与执行力！其前提是身主有硬骨（如羊刃抗压），且伤与杀力量均衡，否则克泄交加反遭反噬。`;
+        diagnosis = `命主探问伤官吐秀与伤官驾杀之分。日元【${dm}】，子平活力评分为 ${ctx.vigorScore} 分（【${ctx.vigorTier}】）。《子平真诠》论格局首重身主能否任使凶神：吐秀重在“内力充盈自然发越”，驾杀重在“外敌压境以智降虎”。二者判若云泥，不可同日而语。`;
+        tactics = [
+          `【辨明身元根基，严禁身弱盗泄】：若原局身旺有印比护身，放胆以伤官作为先锋打破陈规，输出高维智力作品（伤官吐秀）；若身弱无援，首重补印生身，不可逞强强出头。`,
+          `【以智降虎，化危为权】：面临职场或商战重重危机（七杀）时，绝不以蛮力硬碰，而是运用伤官的不对称战术与逆向思维，将对手的杀伤力收编为己方权柄（伤官驾杀）。`,
+          `【平衡杀伤能量，严防克泄交加】：驾杀必须确保自身能量充沛（如带羊刃或得禄）。在七杀势大时，善用制度与团队协同分担冲击，防止心神过劳反噬。`
+        ];
+        redLines = [
+          `严禁在身主衰弱或元气未充时强行以伤官正面硬撼强权，以防引火烧身；`,
+          `严禁将伤官的机变谋略演变为轻浮狂妄或无端挑衅，伤官见官无印解救最为忌讳。`
+        ];
+        mentalAnchor = `《子平真诠》云：“伤官虽非吉神，实为秀气，故文人学士，多于伤官格求之……伤官合杀，武贵双全；伤官佩印，文贵清华。”`;
+      } else if (subcategory === 'water_xu_metal') {
+        directAnswer = `【军师直陈】：回禀命主，水旺遇戌土但全局无金，绝对不能论作“伤官吐秀”！\n水旺缺金（无正偏印），则水无源头且无法收敛澄清；戌土为燥土火库兼七杀，遇到汪洋水势，二者直接爆发激烈的【水土相战、水土混杂】！\n戌土非但无法有效制水，反而被激荡为浑浊泥浆，导致“泥沙俱下、浊水困龙”。在现实中对应心思重重、精神内耗、怀才不遇、遭严苛权威压制且难以理清破局路径，绝非秀气发越之吉相！`;
+        diagnosis = `命主研判水旺见戌土无金之局。水势浩荡而缺金生化收敛，戌为燥土七杀，水土互搏，导致“水浊土荡、神昏气乱”。此为典型的水土相战阻抗局，亟需木来疏土通关或金来澄清水源。`;
+        tactics = [
+          `【引入木神疏浚，打破水土死结】：不可再借蛮力堵截旺水，当借助木（食伤）之生发力量疏通戌土，使郁结之水土转化为生发之机。`,
+          `【补充金印澄源，清退混浊泥沙】：在日常思维与行动中强化“金”的理性法度与极简归纳，戒除思虑发散，以清晰的数据与事实锚定方向。`,
+          `【空间与行为化煞】：居住或工作环境多采用白色、金色饰品或水养绿植，以金木双向调和水土冲荡之戾气。`
+        ];
+        redLines = [
+          `严禁在水土混杂期盲目扩大投资或做多线决策，以防水质混浊陷入财务泥潭；`,
+          `严禁陷入对困局的自责与情绪内耗，水土交战易伤脾胃肾经，以身体调养为先。`
+        ];
+        mentalAnchor = `《滴天髓》云：“水不容土，汪洋并漫；土不受水，堤岸倾颓。水土相战，若无金木通关，终致混浊无成。”`;
+      } else if (subcategory === 'mao_xu_fire') {
+        directAnswer = `【军师直陈】：回禀命主，一旦引入卯木加持（乙木纯伤官），原局将迎来颠覆性的质变解盘！\n卯木遇戌土，触发命理至深奥秘——【卯戌六合化火】！\n命理最高法则是“贪合忘克”：卯木不再去克伐戌土，戌土也不再去阻遏冲荡旺水；二者阴阳交泰，在木火相激中化生出腾腾纯阳之【火】！\n一举化干戈为玉帛，既解开了水土相战的死结，又为原本寒水汪洋的命局注入了最宝贵的温暖纯阳能量，反败为胜！`;
+        diagnosis = `命局在卯木介入后，发生【卯戌六合化火】之神妙化学反应。木能克土，但逢六合则“贪合忘克”；戌为火库，卯为春木，木火相生化出丙丁真火，彻底暖局化煞，病树前头万木春。`;
+        tactics = [
+          `【借合化之力，化敌为友】：在博弈中不与对手死磕到底，而是寻找双方共同利益交集点，将潜在敌对力量（七杀）转化为深度合作同盟。`,
+          `【发挥伤官巧思，借木生火】：充分释放自身的洞察力与模式创新能力，用精妙的方案与沟通技巧撬动停滞已久的棘手难题。`,
+          `【迎候火局时令，乘势而上】：紧盯夏季农历四至六月及九月戌月，乘天时火旺之际将合化成果落地为现实交付物。`
+        ];
+        redLines = [
+          `严禁在合化成局的关键期横生猜忌破坏同盟，六合最重彼此信任交付；`,
+          `严禁因一时顺遂而骄矜跋扈，火势生发宜低调敛财。`
+        ];
+        mentalAnchor = `《渊海子平》云：“贪合忘克，化凶为吉。卯戌相逢化作火，暗藏玄机福自多。”`;
+      } else if (subcategory === 'killing_blade_officer') {
+        directAnswer = `【军师直陈】：回禀命主，这正是为何命局汇聚“羊刃、七杀与伤官”时，被千古命理公推为极贵的【杀刃带伤格】（羊刃驾杀兼伤官吐秀）！\n三大极烈凶星在命局中形成了无懈可击的三位一体：\n①【羊刃】：提供不屈不挠的钢铁意志、不死之身与极限制衡底盘；\n②【七杀】：提供宏大的野心战场、开疆拓土的统率权柄与危急局势；\n③【伤官】：提供天马行空的非常规谋略、破除陈规的奇谋与心理攻防术！\n羊刃抗压、七杀指疆、伤官出奇，凶煞悉化为至大之权柄，乃乱世挽狂澜于既倒之统帅奇格！`;
+        diagnosis = `杀刃带伤格（羊刃驾杀兼伤官吐秀）乃命理至强统帅大将格。羊刃刚烈护身任杀，七杀宏大威严开拓，伤官敏锐奇变破局。三者互制互化，如烈火炼真金，能在最复杂的危难与高风险战场中成就顶天立地之功业。`;
+        tactics = [
+          `【以羊刃为盾，抗击极端压强】：面对风浪不退缩，将高压环境视作淬炼意志的磨刀石，以极强钝感力与执行力支撑战略大盘。`,
+          `【以七杀为矛，锁定宏大战略目标】：不沉迷于琐碎小利，主动对标行业天花板与高壁垒难关，争夺关键主导权与统御地位。`,
+          `【以伤官为奇，行不对称降维打击】：在正面强攻受阻时，随时启动降维奇招，用前沿技术架构与非常规商业模式实现弯道超车。`
+        ];
+        redLines = [
+          `严禁将杀刃之刚性演变为暴躁专横或孤家寡人，务必以大度容纳团队贤能；`,
+          `严禁在法律与道德边界游走涉险，大格者必严守法度底线以保全基业。`
+        ];
+        mentalAnchor = `《三命通会·明通赋》云：“煞无刃不显，刃无煞不威。更逢伤官吐秀，杀刃化为权柄，威震边疆，功业传世。”`;
+      } else if (subcategory === 'wealth_wife_fire') {
+        directAnswer = `【军师直陈】：回禀命主，卯戌六合化火所成之火，百分之百算在【妻财】之中，且兼具财富与婚恋之双重奇功！\n①【暗财聚气（无中生有）】：对于水日主而言，火即为财。此火非固定死工资之明财，而是地支暗合所生之“暗财”——凭借顶级谋略（卯木伤官）降服复杂危机（七杀戌土）而创造的高额溢价、隐形股权与危机套利之财；\n②【战友型正缘（调候暖局）】：男命以财为妻，此妻星由卯之才情灵动与戌之刚毅名望合化而来，必是能与命主并肩作战、共历风浪的战友型灵魂伴侣！且对于寒水过旺之局，合化之火起到了至关紧要的【调候暖局】神效，婚后元神彻底舒展，呈现“成家即立业、婚后财富阶梯式爆发”的跃升奇观；\n③【2026 丙午引爆】：2026 丙午岁君天干透丙火（偏财）、地支午火与戌半合火局，全面引爆原局卯戌暗合之火，暗财转明，正缘显化，乃数十年一遇之极盛时机！`;
+        diagnosis = `卯戌六合化火在水日主命盘中，定为【妻财双美】之大吉象。伤官之智合杀化财，既创造了无中生有的暗合之财，又孕育了并肩携手的战友型妻子。全局得纯阳真火调候，驱散冰寒，婚后与岁运交汇必迎爆发式跃升。`;
+        tactics = [
+          `【捕获暗财商机，布局高附加值模式】：聚焦于“以智破难”的轻资产商业与咨询顾问模式，锁定非对称回报，将潜在危机变现为高额利润。`,
+          `【珍惜战友正缘，共同推演共谋大事】：在亲密关系中视伴侣为第一同盟与合伙人，重大事项开诚布公共同裁决，借对方之气场互补自身短板。`,
+          `【借 2026 丙午流年全面变现】：今年岁君丙午乃火星最旺之年，正是将多年暗中积蓄的才智、项目与人脉彻底推向市场变现的黄金窗口！`
+        ];
+        redLines = [
+          `严禁在暗财涌动时沾沾自喜、显摆炫耀，暗财最忌高调招致小人觊觎；`,
+          `严禁对战友型伴侣盛气凌人或掩盖真实财务状况，信任为同盟之本。`
+        ];
+        mentalAnchor = `《滴天髓》云：“何知其人富？财气通门户。暗会明化，火暖寒江，自致千钟。”`;
+      } else {
+        directAnswer = `【军师直陈】：回禀命主，您所探究的正是子平命理中最为精微深邃的“凶星协同转化”大典！从【伤官吐秀】（身旺泄秀生智）到【伤官驾杀】（以奇谋降服危机），再到【水旺+戌土无金】的水土混杂死局；而一旦【卯木加持】，即触发【卯戌六合化火、贪合忘克】，化干戈为玉帛！此化出之火，在水日主命盘中百分之百定为【妻财双美】：既是无中生有的“暗合化财”，又是并肩作战且能“调候暖局”的战友型正缘！若再配以羊刃，则大成千古统帅大格【杀刃带伤格】！2026 丙午岁君将此暗火全线引爆！`;
+        diagnosis = `命主通盘洞察伤官、七杀、羊刃与六合化火之高阶命理回路。日元坐【${dm}】，子平活力评分为 ${ctx.vigorScore} 分（【${ctx.vigorTier}】）。全局能量通过卯戌合化与水木火土相生相制，展现出极具深度的谋略与爆发潜能。`;
+        tactics = [
+          `【以智降虎，化危为机】：面对外界压力与高难度挑战，坚决以不对称策略与破局创新攻坚，将危机转化为至高权柄。`,
+          `【善用六合，广聚暗财】：深谙贪合忘克之机，在人际协作与商业项目中促成多方共赢，激活暗合化财的高额收益。`,
+          `【携手良伴，借火暖局】：在情感与事业中与战友型灵魂伴侣紧密协同，借家庭温暖与同盟之力激发元神最大潜能。`
+        ];
+        redLines = [
+          `严禁在能量未聚齐时单打独斗盲目逞强，大格者必善借天时与同道之势；`,
+          `严禁因急功近利而破坏长远契约，真火之聚重在持久纯正。`
+        ];
+        mentalAnchor = `《三命通会》云：“吉凶相互为用，凶神得制化为权，暗合格局有奇功。水火相济，文武兼资。”`;
+      }
     } else {
       // General Fallback
       title = '元神气机与宏观定调神策';
@@ -1369,6 +1608,12 @@ class AdvisorEngine {
         { id: 'tactical', badge: '现实推进', text: '在涉及利益或责任分工的关键节点，以书面备忘录形式友好确认边界' },
         { id: 'spatial', badge: '空间微调', text: '在共同所处空间摆放温润陶瓷或暖色灯光，中和水火对冲之戾气' }
       ];
+    } else if (category === 'pattern_metaphysics') {
+      microActions = [
+        { id: 'somatic', badge: '躯体动作', text: '执行 3 组 4-7-8 深度呼吸，静观体内水火气机交融，以平稳心率破除急躁' },
+        { id: 'tactical', badge: '现实推进', text: '梳理手头最棘手的一个高难度难题，提炼出 1 套用创新智谋化解危机的方案' },
+        { id: 'spatial', badge: '空间微调', text: '工位或书房摆放温润红木雕件或暖光台灯，以木火之气催旺卯戌暗合之暗财' }
+      ];
     } else {
       microActions = [
         { id: 'somatic', badge: '躯体动作', text: '站起身离开座椅快步走动 2 分钟，深呼吸 3 次恢复心智确定感' },
@@ -1401,7 +1646,7 @@ class AdvisorEngine {
         primary_scroll: ctx.firstScroll
       },
       direct_verdict: directAnswer,
-      strategic_tactics: tactics.slice(0, 3).map(t => (t.title || '') + ': ' + (t.desc || '')),
+      strategic_tactics: tactics.slice(0, 3).map(t => (typeof t === 'string' ? t : ((t.title || '') + ': ' + (t.desc || '')))),
       taboos_redlines: redLines.slice(0, 2),
       semantic_rag_citations: ragResults.map(r => `${r.canonName}: ${r.quote}`)
     };
@@ -1490,15 +1735,29 @@ class AdvisorEngine {
     let synastryCard = null;
     let diagnosticTree = null;
 
+    // Branch & Elemental Synergy Analysis (Mao-Xu Six Harmony & Water Day Master)
+    const allBranches = [
+      ctx.dayBranch, ctx.yearBranch, ctx.monthBranch, ctx.hourBranch,
+      bazi?.pillars?.year?.branch, bazi?.pillars?.month?.branch, bazi?.pillars?.day?.branch, bazi?.pillars?.hour?.branch
+    ].filter(Boolean);
+    const hasMao = allBranches.includes('卯') || /mao/i.test(query);
+    const hasXu = allBranches.includes('戌') || /xu/i.test(query);
+    const isWaterDm = (ctx.dayMaster === '壬' || ctx.dayMaster === '癸') || /water/i.test(query);
+    const hasMaoXuSynergy = (hasMao && hasXu) || (isWaterDm && (hasMao || hasXu || /wealth|fire|wife/i.test(query)));
+
     let spouseArchetypeEn = 'independent, enterprising, proactive, and resilient';
-    if (['子', '午', '卯', '酉'].includes(ctx.dayBranch)) {
+    if (hasMaoXuSynergy) {
+      spouseArchetypeEn = 'brilliant in intellect and resolute in fortitude, a formidable strategic ally and lifelong battle-companion';
+    } else if (['子', '午', '卯', '酉'].includes(ctx.dayBranch)) {
       spouseArchetypeEn = 'charismatic, aesthetically refined, values deep emotional and intellectual intimacy';
     } else if (['辰', '戌', '丑', '未'].includes(ctx.dayBranch)) {
       spouseArchetypeEn = 'dependable, grounded, prudent with assets, and deeply loyal to family stability';
     }
 
     let palaceTransitEn = '';
-    if (ctx.dayBranch === '寅' || ctx.dayBranch === '戌') {
+    if (hasMaoXuSynergy) {
+      palaceTransitEn = `Your natal chart harbors the profound [Mao-Xu Six-Harmony Transformation into Fire]! Hurting Officer elegance (Mao) fuses with Seven Killings fortitude (Xu), desiring union and forgetting conflict to birth your Spouse star. Your partner is not a passive dependent, but an extraordinary strategic ally and soulmate who stands shoulder-to-shoulder with you against worldly storms. Crucially, for a cold water chart, this transformed Fire brings indispensable Climate Warming Regulation, unlocking a catalytic post-marriage surge in wealth and strategic clarity! In 2026 Bing-Wu, the annual king penetrates Fire stems and branches, fully activating this hidden fire and bringing your destiny strategic soulmate into sharp focus!`;
+    } else if (ctx.dayBranch === '寅' || ctx.dayBranch === '戌') {
       palaceTransitEn = `The 2026 Bing-Wu transit combines with your Spouse Palace [${enDb}] in a Tri-Union harmony. In BaZi, this is the premier herald of matrimonial synchronicity, activating magnetic affinity for a deeply resonant soulmate!`;
     } else if (ctx.dayBranch === '未') {
       palaceTransitEn = `The 2026 Bing-Wu transit forms a Six-Harmony union with your Spouse Palace [${enDb}]. Harmony anchors commitment, opening a prime window for formal relationship milestones and marital decisions!`;
@@ -1647,13 +1906,20 @@ class AdvisorEngine {
       mentalAnchor = `Diamond Sutra: "All conditioned phenomena are like a dream, an illusion, a bubble, a shadow. When one perceives all appearances as non-appearances, one beholds reality. Let the mind abide nowhere, and so give rise to true awakening."`;
     } else if (category === 'wealth_window') {
       title = 'Wealth Horizon & Tactical Balance';
-      directAnswer = `Imperial Verdict: The core doctrine is Direct Wealth as unshakeable anchor, with lightweight auxiliary initiatives compounding in Lunar Months 6 and 9. Avoid speculative high-leverage gambles.`;
+      directAnswer = hasMaoXuSynergy
+        ? `Imperial Verdict: Your natal chart conceals the profound [Mao-Xu Six-Harmony Transformation into Fire] hidden wealth code! This is not static linear labor wages, but "Hidden Wealth" generated out of crisis: leveraging supreme strategic intellect (Mao Hurting Officer) to pacify and monetize high-stakes adversity (Xu Seven Killings). In 2026 Bing-Wu, the annual king penetrates Fire stems and branches to ignite this hidden fire, transmuting latent assets into manifest reality! Peak wealth compounding surges across Lunar Months 5, 6, and 9.`
+        : `Imperial Verdict: The core doctrine is Direct Wealth as unshakeable anchor, with lightweight auxiliary initiatives compounding in Lunar Months 6 and 9. Avoid speculative high-leverage gambles.`;
       timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'wealth_window', 'en');
 
-      diagnosis = `Transiting year ${ctx.activeAnnualYear} (${enGz}) governed by Hexagram [${cleanHex}]. Vigor sits at ${ctx.vigorScore}/100 (${cleanTier}). For wealth and career cultivation, the core protocol is "Direct Wealth as anchor, Indirect Wealth as opportune upside, compounding steadily."`;
+      diagnosis = `Transiting year ${ctx.activeAnnualYear} (${enGz}) governed by Hexagram [${cleanHex}]. Vigor sits at ${ctx.vigorScore}/100 (${cleanTier}). ` +
+        (hasMaoXuSynergy
+          ? `Your chart harbors an esoteric conduit where Mao Wood and Xu Earth combine into Fire. For a ${isWaterDm ? 'Water Day Master' : 'seeker'}, Fire constitutes Wealth stars, representing extraordinary gains created out of thin air by resolving complex enterprise dilemmas. Under the 2026 Bing-Wu fire transit, this hidden wealth sparks into blazing expansion!`
+          : `For wealth and career cultivation, the core protocol is "Direct Wealth as anchor, Indirect Wealth as opportune upside, compounding steadily."`);
 
       tactics = [
-        `[Consolidate the Core Base]: Keep your primary vocation completely unshakeable, allocating 80% of mental bandwidth to deepening irreplaceable technical depth.`,
+        hasMaoXuSynergy
+          ? `[Monetize Crisis Arbitrage via Mao-Xu]: Direct your primary cognitive bandwidth toward resolving the industry's most daunting bottlenecks (Seven Killings) using disruptive innovation (Hurting Officer), capturing asymmetric equity and consulting premiums.`
+          : `[Consolidate the Core Base]: Keep your primary vocation completely unshakeable, allocating 80% of mental bandwidth to deepening irreplaceable technical depth.`,
         `[Lightweight 0-to-1 Second Curves]: For auxiliary ventures, validate prototypes with minimal capital burn before deploying further resources.`,
         `[Prudent Discretion]: Heed the counsel of ${cleanScroll}—accumulate wealth with disciplined subtlety; deep waters carry mighty vessels with silence.`
       ];
@@ -1663,7 +1929,9 @@ class AdvisorEngine {
         `Never partner with individuals exhibiting broken integrity or turbulent astrological clash.`
       ];
 
-      mentalAnchor = `Di Tian Sui: "How is great wealth discerned? When the qi of wealth opens the gates. Direct and Indirect Wealth mutually generative establish enduring fortune."`;
+      mentalAnchor = hasMaoXuSynergy
+        ? `Di Tian Sui: "How is great wealth discerned? When the qi of wealth opens the gates. Secret combinations manifest visible radiance; warm fire dissolves the frozen rivers to unlock thousands of measures of grain."`
+        : `Di Tian Sui: "How is great wealth discerned? When the qi of wealth opens the gates. Direct and Indirect Wealth mutually generative establish enduring fortune."`;
     } else if (category === 'vague_confusion') {
       title = 'Macro Strategic Guidance & Compass Diagnostic';
       directAnswer = `Imperial Verdict: Ruminating in vacuum breeds anxiety; only structured classification brings clarity. Your Day Master [${enDm}] possesses sharp perception, but excess bandwidth requires targeted anchoring. Review the 4 strategic pathways below to illuminate your immediate priority.`;
@@ -1748,6 +2016,100 @@ class AdvisorEngine {
         `Never resort to questionable informal tactics that could jeopardize clean evidentiary standing.`
       ];
       mentalAnchor = `Rong Ku Jian (Scroll on Law & Conduct): "The law is the foundation of order and the shield of self-preservation. It must never be taken lightly. Those who align with due process endure."`;
+    } else if (category === 'pattern_metaphysics') {
+      title = 'High-Order Pattern Dialectics & Hidden Wealth-Spouse Oracle';
+      timingCard = this.calculateMonthlyTransitWindows(bazi, luck, ctx.activeAnnualYear, 'pattern_metaphysics', 'en');
+
+      diagnosticTree = {
+        title: 'High-Order Pattern & Transformed Wealth Compass: 4-Phase Escalation',
+        prompt: 'Tap any dimensional node below to inspect the dynamic energy transformation mechanism:',
+        nodes: [
+          { id: 'diag_diff', label: 'Talent Expression vs Harnessing Killings: Core Distinction', query: 'What is the core difference between Hurting Officer expressing talent vs harnessing Seven Killings?' },
+          { id: 'diag_water_xu', label: 'Water Heavy Xu Earth No Metal: Turbid Clash Pathology', query: 'Why does Water heavy with Xu Earth and no Metal cause turbid clash instead of talent expression?' },
+          { id: 'diag_mao_fire', label: 'Mao Wood Intervention: Six-Harmony Desiring Union into Fire', query: 'How does adding Mao Wood resolve the Water-Xu clash into Fire through desiring union?' },
+          { id: 'diag_wife_wealth', label: 'Transformed Fire as Wife & Wealth: Strategic Soulmate', query: 'Does the Mao-Xu fire count as Wife and Wealth? How does 2026 Bing-Wu trigger this hidden fortune?' }
+        ]
+      };
+
+      if (subcategory === 'pattern_diff') {
+        directAnswer = `Imperial Verdict: "Hurting Officer Expressing Talent" and "Hurting Officer Harnessing Seven Killings" represent two fundamentally distinct metaphysical energy conversion mechanisms!\n1. [Hurting Officer Expressing Talent]: The essence is "vigor channeled into intellectual radiance". When Day Master is robust with strong roots and resource support, the Hurting Officer acts as an outlet for excess vitality, transmuting it into artistic creation, academic literature, elite architecture, or scientific invention. The prerequisite is robust stamina; if Day Master is weak or water is torrential without metal, it is not talent expression, but an exhausting drain of vital essence.\n2. [Hurting Officer Harnessing Seven Killings]: The essence is "subduing brutality with tactical intellect to command authority". Seven Killings represents external crisis, cutthroat competition, and ruthless authority, while Hurting Officer is the rebellious sword and unconventional strategy. Taming the fierce tiger through tactical brilliance converts crisis into sovereign leadership and executive authority! The prerequisite is an iron constitution (such as Yang Blade), with balanced strength between Killing and Officer to prevent crossfire exhaustion.`;
+        diagnosis = `Seeker inquires into the classical distinction between Hurting Officer Expressing Talent versus Harnessing Killings. Day Master sits on [${enDm}] with a ZiPing vigor score of ${ctx.vigorScore}/100 (${cleanTier}). Master Chen Su'an's ZiPing ZhenQuan establishes that pattern mastery depends fundamentally upon whether the Day Master can command ferocious deities: Talent Expression relies upon abundant internal surplus pouring forth naturally, whereas Harnessing Killings demands taming formidable external threats through asymmetric tactical intellect.`;
+        tactics = [
+          `[Assess Root Vitality Before Aggressive Output]: If your Day Master possesses strong roots and resource backing, boldly deploy Hurting Officer disruption to create breakthrough intellectual innovations (Talent Expression). If stamina is depleted, prioritize grounding consolidation before taking the vanguard.`,
+          `[Tame Crises into Executive Leverage]: When confronting cutthroat corporate crises or aggressive adversaries (Seven Killings), avoid brute-force head-on friction; deploy asymmetric warfare and reverse-engineering to assimilate the adversary's power into your own institutional jurisdiction (Harnessing Killings).`,
+          `[Calibrate Force Equilibrium against Burnout]: Harnessing ferocious stars demands an indomitable stamina baseline. If adversary pressure peaks, distribute the impact through institutional structures and trusted alliances to prevent mental exhaustion.`
+        ];
+        redLines = [
+          `Strictly forbid launching direct ideological confrontations against entrenched authority while running low on personal physical vitality;`,
+          `Never degrade Hurting Officer ingenuity into arrogant vanity or superficial defiance—unbridled provocation without protective resource invites swift destruction.`
+        ];
+        mentalAnchor = `ZiPing ZhenQuan: "Though Hurting Officer is an ominous star, it embodies pristine radiance; scholars and literary masters frequently emerge from this structure. When Hurting Officer combines with Seven Killings, military and political nobility are both attained."`;
+      } else if (subcategory === 'water_xu_metal') {
+        directAnswer = `Imperial Verdict: Torrential Water meeting Xu Earth without Metal in the chart can NEVER be classified as Hurting Officer Expressing Talent!\nWithout Metal (Resource stars), Water lacks both continuous source and purifying containment. Xu Earth is dry scorched earth, a fire storehouse, and Seven Killings. When confronted with torrential water, they clash violently in a "Water-Earth Combat" and "Turbid Mud Contamination".\nXu Earth fails to dam the water, and water dissolves the earth into turbid mud. In daily reality, this manifests as heavy mental rumination, self-doubt, unrecognized genius, and authoritarian pressure without a clear exit path!`;
+        diagnosis = `Evaluating the pathology of torrential Water clashing against Xu Earth without Metal. The unanchored water torrent lacks mineral purification, colliding violently against the scorched earth of Seven Killings. This triggers the classical dead-end of "Muddy Waters and Shaken Embankments", requiring Wood to drain the stagnant soil or Metal to clarify the headwaters.`;
+        tactics = [
+          `[Introduce Wood Energy to Dissolve Deadlocks]: Abandon direct stubborn head-on collisions; introduce Wood (Output/Ingenuity) to naturally channel and aerate the compressed soil, transmuting deadlock into creative momentum.`,
+          `[Reinforce Metal Discipline to Purify Ambiguity]: Infuse daily workflows with the pristine discipline of Metal—clear analytical frameworks, strict data audit trails, and ruthless prioritization to filter out muddy speculation.`,
+          `[Spatial and Behavioral Cleansing]: Incorporate white, metallic, or lush living botanical accents in your workspace to harmonize the abrasive friction between water and earth.`
+        ];
+        redLines = [
+          `Never initiate multi-front speculative investments while navigating periods of mental confusion, lest capital drown in turbid stagnation;`,
+          `Never fall into self-blaming rumination—water-earth friction specifically strains gastrointestinal balance; prioritize somatic restoration.`
+        ];
+        mentalAnchor = `Di Tian Sui: "When water cannot tolerate earth, torrential floods inundate the plains; when earth cannot absorb water, the embankments crumble into dust. When water and earth clash without Metal or Wood to mediate, turbidity reigns without achievement."`;
+      } else if (subcategory === 'mao_xu_fire') {
+        directAnswer = `Imperial Verdict: The moment Mao Wood (pure Yin Wood, Hurting Officer for Water Day Master) intervenes, the chart undergoes a revolutionary qualitative transformation!\nWhen Mao encounters Xu, they trigger the esoteric Six-Harmony mystery: [Mao-Xu Combination Transforming into Fire]!\nThe supreme law of metaphysics is "Desiring Union and Forgetting Conflict": Mao Wood ceases attacking Xu Earth, and Xu Earth ceases muddying torrential water. Instead, their yin and yang fuse together, generating radiant, pure solar Fire!\nThis resolves the Water-Earth hostility in one stroke, infusing essential warmth and dynamic momentum into a cold chart!`;
+        diagnosis = `The entry of Mao Wood triggers the alchemical [Mao-Xu Combination Transforming into Fire]. While Wood typically clashes with Earth, the presence of Six-Harmony causes them to desire union and forget conflict. Xu as Fire Storehouse and Mao as Spring Wood merge into solar fire, illuminating the entire chart and turning previous adversity into fertile expansion.`;
+        tactics = [
+          `[Convert Adversaries into Allies via Shared Benefit]: In negotiations, cease zero-sum battles; identify mutual existential interests to transform potential adversarial blockers (Seven Killings) into devoted strategic partners.`,
+          `[Deploy Hurting Officer Ingenuity to Ignite Growth]: Unleash your distinctive strategic insight and business model disruption to dismantle long-standing institutional bottlenecks.`,
+          `[Ride the Solar Wave]: Align major deliverables and venture unveilings with the peak Fire cycles of summer and mid-autumn, capitalizing on maximum solar resonance.`
+        ];
+        redLines = [
+          `Strictly forbid introducing petty suspicion during the delicate formation of strategic alliances—Six-Harmony thrives exclusively upon uncompromising mutual trust;`,
+          `Never let initial breakthroughs devolve into arrogance; let expanding solar warmth express itself through calm generosity.`
+        ];
+        mentalAnchor = `Yuan Hai Zi Ping: "When desire for union forgets conflict, ominous forces dissolve into sovereign fortune. When Mao and Xu unite to birth solar fire, boundless blessings emerge from the concealed void."`;
+      } else if (subcategory === 'killing_blade_officer') {
+        directAnswer = `Imperial Verdict: This is precisely why a chart uniting "Yang Blade, Seven Killings, and Hurting Officer" is venerated throughout classical canons as the supreme [Blade, Killing, and Hurting Officer Trinity Pattern] (Yang Blade Harnessing Killings combined with Hurting Officer Expressing Talent)!\nThree ferocious stars unite in an indomitable trinity:\n1. [Yang Blade]: Provides unyielding physical fortitude, an immortal spirit, and baseline shock absorption;\n2. [Seven Killings]: Provides the vast enterprise battlefield, crisis magnitude, and commanding authority;\n3. [Hurting Officer]: Provides unconventional strategy, agile maneuverability, and psychological dexterity!\nBlade endures, Killings command, and Officer triumphs—transmuting lethal adversity into supreme executive authority!`;
+        diagnosis = `The Blade, Killing, and Hurting Officer Trinity Pattern represents the zenith of commanding martial structures. Yang Blade provides an unshakeable armor that absorbs punishing blows; Seven Killings commands ambitious territory and ruthless discipline; Hurting Officer executes asymmetric disruption. Mutual checks and balances forge an extraordinary general capable of turning the tide in extreme volatility.`;
+        tactics = [
+          `[Anchor Unyielding Resilience with Yang Blade]: View high-pressure environments as a crucible for personal mastery. Meet turbulence with calm emotional detachment and relentless daily execution.`,
+          `[Direct Uncompromising Ambition with Seven Killings]: Reject trivial distractions; direct your strategic sights toward the industry's highest hurdles and most coveted commanding heights.`,
+          `[Deliver Asymmetric Mastery with Hurting Officer]: When conventional frontal attacks stall, deploy unconventional architectures and bold business narratives to achieve decisive breakthroughs.`
+        ];
+        redLines = [
+          `Never allow martial intensity to degenerate into tyrannical isolation; true commanders govern through magnanimity and institutional loyalty;`,
+          `Strictly honor statutory and ethical boundaries—magnificent patterns preserve their longevity only through unshakeable adherence to the law.`
+        ];
+        mentalAnchor = `San Ming Tong Hui: "Seven Killings without the Blade lacks prestige; the Blade without Seven Killings lacks authority. When reinforced by Hurting Officer expressing radiant genius, the ferocious stars transform into supreme sovereignty, inspiring awe across frontiers."`;
+      } else if (subcategory === 'wealth_wife_fire') {
+        directAnswer = `Imperial Verdict: The Fire produced by the Mao-Xu Six-Harmony transformation counts 100% as [Wife and Wealth], conferring profound dual blessings!\n1. [Hidden Wealth Creation (Generating Fortune out of Crisis)]: For Water Day Masters, Fire is the Wealth star. This is not ordinary linear labor wage, but "Hidden Wealth" generated from resolving intense crisis (Xu Seven Killings) through intellectual brilliance (Mao Hurting Officer)—manifesting high-margin equity, crisis turnaround returns, and unprecedented leverage;\n2. [Strategic Ally Soulmate (Climate Warming Regulation)]: In male charts, Wealth represents the wife. This spouse is born from the fusion of Mao elegance and Xu fortitude, making her an extraordinary strategic co-pilot who battles worldly storms alongside you! Furthermore, for a cold water chart, this transformed Fire provides vital "Climate Warming Regulation", triggering a stepwise surge in prosperity and peace after marriage;\n3. [2026 Bing-Wu Activation]: The 2026 Bing-Wu transit penetrates Bing Fire on the stems and Wu-Xu fire alliance on the branches, fully igniting this hidden fire into manifest fortune and matrimonial fruition!`;
+        diagnosis = `The transformation of Mao-Xu Six-Harmony into Fire functions in a Water chart as the paramount omen of [Dual Fortune in Wealth and Matrimony]. Ingenuity subdues adversity into capital, generating hidden wealth while cultivating a loyal, formidable life partner. Radiant solar fire warms the frozen waterways, unlocking compounding prosperity post-marriage and across transits.`;
+        tactics = [
+          `[Capture High-Margin Crisis Arbitrage]: Center commercial ventures on solving high-complexity enterprise dilemmas through intellectual models, capturing non-linear returns and equity stakes.`,
+          `[Treasure Your Strategic Battle-Partner]: Approach your spouse as your primary confidante and strategic co-pilot; make major life and commercial deliberations collaboratively with full transparency.`,
+          `[Execute Decisive Monetization in 2026 Bing-Wu]: With 2026 reigning as the imperial Fire Horse transit, deploy projects and commercial ventures into the open market during this once-in-a-generation window.`
+        ];
+        redLines = [
+          `Never display ostentatious extravagance when hidden wealth begins flowing—hidden capital flourishes only in discreet privacy;`,
+          `Never conceal financial truths or adopt condescending attitudes toward your battle-companion spouse; shared trust is the bedrock of your fortune.`
+        ];
+        mentalAnchor = `Di Tian Sui: "How is great wealth discerned? When the qi of wealth opens the gates. Concealed harmonies ignite luminous fire, warming the winter waters to amass thousands of measures of grain."`;
+      } else {
+        directAnswer = `Imperial Verdict: You are exploring the pinnacle of BaZi transformation dialectics! From [Talent Expression] (channeling surplus vigor) to [Harnessing Killings] (taming crisis into authority), past the dead-end of [Water-Heavy Xu Earth without Metal]; the moment [Mao Wood Intervenes], [Mao-Xu Combines into Fire through Desiring Union]. For Water Day Masters, this transformed Fire is 100% [Wife and Wealth]: both hidden wealth created out of crisis leverage, and a strategic ally soulmate who provides climate warming and post-marriage catalytic compounding! Combined with Yang Blade, it forms the sovereign [Blade, Killing, and Hurting Officer Trinity], fully ignited by 2026 Bing-Wu!`;
+        diagnosis = `Comprehensive synthesis of Hurting Officer, Seven Killings, Yang Blade, and Six-Harmony transformation mechanics. Seated on Day Master [${enDm}] with vigor score ${ctx.vigorScore}/100 (${cleanTier}), the elemental forces harmonize through Mao-Xu fusion into radiant solar warmth, demonstrating extraordinary resilience and explosive strategic potential.`;
+        tactics = [
+          `[Tame Lethal Adversity into Executive Power]: Meet daunting obstacles with asymmetric ingenuity and systemic innovation, converting high crises into commanding authority.`,
+          `[Harness Six-Harmony for Non-Linear Capital]: Embody the wisdom of desiring union and forgetting conflict, forging win-win ecosystems that yield substantial hidden returns.`,
+          `[Partner with Strategic Allies to Warm the Field]: Collaborate intimately with trusted confidantes and your battle-partner spouse, drawing upon relational warmth to realize your grandest ambitions.`
+        ];
+        redLines = [
+          `Never attempt reckless solo heroics before all elemental pieces are aligned; true commanders leverage cosmic timing and trusted alliances;`,
+          `Never sacrifice long-term contractual integrity for immediate speculative advantage.`
+        ];
+        mentalAnchor = `San Ming Tong Hui: "Auspicious and inauspicious forces serve each other; ferocious stars subdued become sovereign authority; concealed combinations achieve extraordinary works. When Water and Fire attain harmony, civic and martial glory are both fulfilled."`;
+      }
     } else {
       title = 'Macro Elemental Alignment & Strategic Overview';
       directAnswer = `Imperial Verdict: Navigating under the 2026 Bing-Wu transit governed by Hexagram [${cleanHex}], the overarching mandate is internal consolidation and disciplined alignment. Tap any of the anticipated prompts below to explore deeper.`;
@@ -1823,6 +2185,12 @@ class AdvisorEngine {
         { id: 'tactical', badge: 'Real-World Action', text: 'Codify collaborative boundaries and deliverables in written memos rather than verbal assumptions' },
         { id: 'spatial', badge: 'Spatial Alignment', text: 'Introduce warm ceramic elements or ambient warm lighting in shared spaces to harmonize energy' }
       ];
+    } else if (category === 'pattern_metaphysics') {
+      microActions = [
+        { id: 'somatic', badge: 'Somatic Reset', text: 'Execute 3 cycles of 4-7-8 deep breathing to observe the inner harmony of Water and Fire' },
+        { id: 'tactical', badge: 'Real-World Action', text: 'Distill your most challenging dilemma into 1 strategic plan that subdues crisis through innovation' },
+        { id: 'spatial', badge: 'Spatial Alignment', text: 'Position warm red sandalwood or ambient lighting in your workspace to nurture the transformed solar warmth' }
+      ];
     } else {
       microActions = [
         { id: 'somatic', badge: 'Somatic Reset', text: 'Stand up, step outside for 2 minutes, and take 3 diaphragmatic breaths to restore clarity' },
@@ -1855,7 +2223,7 @@ class AdvisorEngine {
         primary_scroll: cleanScroll
       },
       direct_verdict: directAnswer,
-      strategic_tactics: tactics.slice(0, 3).map(t => (t.title || '') + ': ' + (t.desc || '')),
+      strategic_tactics: tactics.slice(0, 3).map(t => (typeof t === 'string' ? t : ((t.title || '') + ': ' + (t.desc || '')))),
       taboos_redlines: redLines.slice(0, 2),
       semantic_rag_citations: ragResults.map(r => `${r.canonName}: ${r.quote}`)
     };
