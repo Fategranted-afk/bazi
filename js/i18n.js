@@ -86,6 +86,25 @@ const I18N = (function() {
       social_download_btn: "📥 保存超清名片 (PNG)",
       social_copy_btn: "📋 复制分享文案",
       social_close_btn: "关闭",
+      btn_close: "关闭",
+
+      // Sensitivity Analysis & Rectification
+      sec_sensitivity_title: "生时临界微扰分析与结构稳定性 (Structural Stability)",
+      sub_sensitivity_desc: "在基准时间 ±15 分钟区间进行 31 点高精度离散微扰采样，监测日元旺衰方差与格局相变概率",
+      btn_rectify_birthtime: "以事推时",
+      btn_rectify_card: "以事校时 · 生时校准",
+      rectify_modal_title: "以事推时 · 贝叶斯生时校准中枢",
+      rectify_modal_sub: "针对出生时辰不确定或处于交界敏感区，以过去重大历史事件反推最大后验概率时辰",
+      rectify_step1_title: "基础出生信息确认 (Base Parameters)",
+      rectify_step2_title: "录入 2~3 个已发生的确定性重大历史事件",
+      rectify_lbl_approx_time: "记忆模糊区间 (选填)",
+      rectify_event_1: "事件一 (Event 1)",
+      rectify_event_1_hint: "主要影响大运与地支刑冲",
+      rectify_event_2: "事件二 (Event 2)",
+      rectify_event_2_hint: "校验时柱子女宫与门户位",
+      rectify_event_3: "事件三 (Event 3 - 选填，用于提升置信度)",
+      rectify_btn_run: "执行贝叶斯最大后验推演 (Compute MAP Rectification)",
+      rectify_btn_adopt: "采用此推荐时辰并排盘",
 
       // Chrono-Navigator
       chrono_title: "百岁运势时空罗盘 (Lifelong Chrono-Navigator)",
@@ -828,6 +847,25 @@ const I18N = (function() {
       social_download_btn: "📥 Download Card (PNG)",
       social_copy_btn: "📋 Copy Share Text",
       social_close_btn: "Close",
+      btn_close: "Close",
+
+      // Sensitivity Analysis & Rectification
+      sec_sensitivity_title: "Temporal Sensitivity & Structural Stability Analysis",
+      sub_sensitivity_desc: "High-precision 31-point discrete perturbation sampling within [t0 - 15m, t0 + 15m] to monitor Day Master variance and structural phase transition probability",
+      btn_rectify_birthtime: "Rectify Birth Time",
+      btn_rectify_card: "Event-Based Rectification",
+      rectify_modal_title: "Bayesian Birth Time Rectification Hub",
+      rectify_modal_sub: "Infer maximum a posteriori (MAP) birth hour from past deterministic major life events when birth time is uncertain or on cusp",
+      rectify_step1_title: "Base Birth Information Confirmation",
+      rectify_step2_title: "Enter 2-3 Deterministic Major Historical Life Events",
+      rectify_lbl_approx_time: "Vague Time Window (Optional)",
+      rectify_event_1: "Event 1",
+      rectify_event_1_hint: "Primarily evaluates major luck transits and clash/combination dynamics",
+      rectify_event_2: "Event 2",
+      rectify_event_2_hint: "Validates hour pillar, progeny palace, and gateway positions",
+      rectify_event_3: "Event 3 (Optional, enhances posterior confidence)",
+      rectify_btn_run: "Compute Bayesian MAP Rectification",
+      rectify_btn_adopt: "Apply Recommended Hour and Calculate",
 
       // Chrono-Navigator
       chrono_title: "Lifelong Chrono-Navigator (Age 1-100 Interactive Fortune Compass)",

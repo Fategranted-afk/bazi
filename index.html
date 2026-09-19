@@ -210,7 +210,13 @@
 
             <!-- Time Picker -->
             <div>
-              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_birth_time">出生时间 (当地钟表时)</label>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-medium text-gray-300" data-i18n="lbl_birth_time">出生时间 (当地钟表时)</label>
+                <button type="button" id="btnOpenRectificationModal" class="text-[11px] text-amber-400 hover:text-amber-300 transition flex items-center gap-1 cursor-pointer font-medium" title="时辰不确定？以历史大事件反推精确时辰">
+                  <span>🕰️</span>
+                  <span id="btnRectifyText" data-i18n="btn_rectify_birthtime">以事推时</span>
+                </button>
+              </div>
               <input type="time" id="birthTime" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
             </div>
 
@@ -603,6 +609,41 @@
         </div>
         <div id="pillarsContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4">
           <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- Birth Time Sensitivity & Structural Stability Section (生时临界微扰与结构稳定性) -->
+      <section id="sensitivityStatusSection" class="p-4 sm:p-5 rounded-2xl bg-card border border-amber-600/30 shadow-lg transition space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-xl" id="sensitivityIcon">🛡️</span>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc" data-i18n="sec_sensitivity_title">生时临界微扰分析与结构稳定性 (Structural Stability)</h3>
+                <span id="sensitivityBadge" class="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40">STABILITY 95%</span>
+              </div>
+              <p class="text-xs text-gray-400" id="sensitivitySub" data-i18n="sub_sensitivity_desc">在基准时间 ±15 分钟区间进行 31 点高精度离散微扰采样，监测日元旺衰方差与格局相变概率</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnTriggerRectificationFromCard" type="button" class="px-3 py-1.5 rounded-xl border border-amber-500/50 bg-amber-950/60 hover:bg-amber-900/80 text-amber-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95">
+              <span>🕰️</span>
+              <span data-i18n="btn_rectify_card">以事校时 · 生时校准</span>
+            </button>
+          </div>
+        </div>
+        <!-- Progress bar & metrics -->
+        <div class="space-y-1.5 pt-1">
+          <div class="flex justify-between text-xs text-gray-300 font-mono">
+            <span id="sensitivityScoreLabel">结构稳定性得分: 95%</span>
+            <span id="sensitivityVarianceLabel">旺衰方差: 0.00 | 极差: 0.0 分</span>
+          </div>
+          <div class="w-full bg-black/40 h-2 rounded-full overflow-hidden border border-gray-800">
+            <div id="sensitivityProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-amber-500 transition-all duration-500" style="width: 95%;"></div>
+          </div>
+        </div>
+        <div id="sensitivityDiagnosisText" class="text-xs text-amber-100/90 leading-relaxed font-sans bg-black/20 p-2.5 rounded-xl border border-amber-900/20">
+          命局结构极为刚健。在前后 15 分钟内时柱与格局高度锁定，微小出生时差不影响核心大运与格局推演。
         </div>
       </section>
 
@@ -2885,6 +2926,145 @@
     </div>
   </div>
 
+  <!-- Bayesian Birth Time Rectification Modal (以事推时 · 生时校准) -->
+  <div id="rectificationModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">
+    <div class="w-full max-w-2xl rounded-2xl border border-amber-600/50 bg-[#12141e]/98 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      <!-- Header -->
+      <div class="p-4 sm:p-5 border-b border-amber-700/40 bg-gradient-to-r from-amber-950/60 via-black/40 to-amber-950/60 flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🕰️</span>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+              <span data-i18n="rectify_modal_title">以事推时 · 贝叶斯生时校准中枢</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950/80 text-amber-300 border border-amber-600/40 font-mono">BAYESIAN MAP</span>
+            </h3>
+            <p class="text-xs text-gray-400" data-i18n="rectify_modal_sub">
+              针对出生时辰不确定或处于交界敏感区，以过去重大历史事件反推最大后验概率时辰
+            </p>
+          </div>
+        </div>
+        <button id="rectificationCloseBtn" type="button" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="btn_close">
+          关闭
+        </button>
+      </div>
+
+      <!-- Body Wizard -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
+        <!-- Step 1: Base Natal Confirmation -->
+        <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2">
+          <div class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+            <span>1️⃣</span>
+            <span data-i18n="rectify_step1_title">基础出生信息确认 (Base Parameters)</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="text-[11px] text-gray-400 block mb-1" data-i18n="lbl_birth_date">出生日期</label>
+              <input type="date" id="rectifyBirthDate" class="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-xs text-gray-100">
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-400 block mb-1" data-i18n="lbl_gender">性别</label>
+              <select id="rectifyGender" class="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-xs text-gray-100">
+                <option value="乾造">乾造 (男命)</option>
+                <option value="坤造">坤造 (女命)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-[11px] text-gray-400 block mb-1" data-i18n="rectify_lbl_approx_time">记忆模糊区间 (选填)</label>
+              <select id="rectifyApproxHour" class="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-xs text-gray-100">
+                <option value="-1">完全不知 / 全天13时辰遍历</option>
+                <option value="4">凌晨 (寅卯时 03:00 - 07:00)</option>
+                <option value="9">上午 (辰巳时 07:00 - 11:00)</option>
+                <option value="13">中午 (午未时 11:00 - 15:00)</option>
+                <option value="17">傍晚 (申酉时 15:00 - 19:00)</option>
+                <option value="21">夜间 (戌亥时 19:00 - 23:00)</option>
+                <option value="0">子时 (23:00 - 01:00)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Past Significant Life Events (2~3 Events) -->
+        <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+              <span>2️⃣</span>
+              <span data-i18n="rectify_step2_title">录入 2~3 个已发生的确定性重大历史事件</span>
+            </div>
+            <span class="text-[10px] text-gray-500 font-mono">2-3 EVENTS REQUIRED</span>
+          </div>
+
+          <!-- Event 1 -->
+          <div class="p-2.5 rounded-lg bg-gray-900/60 border border-gray-700/60 space-y-2">
+            <div class="flex items-center justify-between text-[11px] text-amber-200/80 font-bold">
+              <span data-i18n="rectify_event_1">事件一 (Event 1)</span>
+              <span class="text-[10px] text-gray-400" data-i18n="rectify_event_1_hint">主要影响大运与地支刑冲</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input type="number" id="rectifyEventYear1" min="1950" max="2035" placeholder="年份 (如 2018)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <select id="rectifyEventType1" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+                <option value="career_academic">学业登顶 / 职场重大跃迁</option>
+                <option value="trauma_accident">严重伤病 / 手术意外血光</option>
+                <option value="marriage_union">婚恋正缘 / 结婚领证</option>
+                <option value="childbirth">添丁生育 / 子嗣落地</option>
+                <option value="relocation_travel">跨国搬迁 / 远行移居</option>
+              </select>
+              <input type="text" id="rectifyEventDesc1" placeholder="事件备注 (如 考研上岸/骨折)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+            </div>
+          </div>
+
+          <!-- Event 2 -->
+          <div class="p-2.5 rounded-lg bg-gray-900/60 border border-gray-700/60 space-y-2">
+            <div class="flex items-center justify-between text-[11px] text-amber-200/80 font-bold">
+              <span data-i18n="rectify_event_2">事件二 (Event 2)</span>
+              <span class="text-[10px] text-gray-400" data-i18n="rectify_event_2_hint">校验时柱子女宫与门户位</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input type="number" id="rectifyEventYear2" min="1950" max="2035" placeholder="年份 (如 2020)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <select id="rectifyEventType2" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+                <option value="trauma_accident">严重伤病 / 手术意外血光</option>
+                <option value="career_academic">学业登顶 / 职场重大跃迁</option>
+                <option value="marriage_union">婚恋正缘 / 结婚领证</option>
+                <option value="childbirth">添丁生育 / 子嗣落地</option>
+                <option value="relocation_travel">跨国搬迁 / 远行移居</option>
+              </select>
+              <input type="text" id="rectifyEventDesc2" placeholder="事件备注 (如 创业破财/大手术)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+            </div>
+          </div>
+
+          <!-- Event 3 (Optional) -->
+          <div class="p-2.5 rounded-lg bg-gray-900/60 border border-gray-700/60 space-y-2">
+            <div class="flex items-center justify-between text-[11px] text-amber-200/80 font-bold">
+              <span data-i18n="rectify_event_3">事件三 (Event 3 - 选填，用于提升置信度)</span>
+              <span class="text-[10px] text-gray-500">OPTIONAL TIE-BREAKER</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <input type="number" id="rectifyEventYear3" min="1950" max="2035" placeholder="年份 (如 2023)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <select id="rectifyEventType3" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+                <option value="childbirth">添丁生育 / 子嗣落地</option>
+                <option value="marriage_union">婚恋正缘 / 结婚领证</option>
+                <option value="relocation_travel">跨国搬迁 / 远行移居</option>
+                <option value="career_academic">学业登顶 / 职场重大跃迁</option>
+                <option value="trauma_accident">严重伤病 / 手术意外血光</option>
+              </select>
+              <input type="text" id="rectifyEventDesc3" placeholder="事件备注 (如 顺利得子/出洋留学)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+            </div>
+          </div>
+
+          <!-- Run Button -->
+          <button id="btnRunRectification" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-600 via-amber-700 to-indigo-800 hover:from-amber-500 hover:to-indigo-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+            <span>⚡</span>
+            <span data-i18n="rectify_btn_run">执行贝叶斯最大后验推演 (Compute MAP Rectification)</span>
+          </button>
+        </div>
+
+        <!-- Step 3: Rectification Results & Rankings -->
+        <div id="rectificationResultsArea" class="hidden space-y-3">
+          <!-- Dynamically populated via RectificationEngine.rectifyBirthTime -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="mt-12 py-6 border-t border-gray-800 text-center text-xs text-gray-500">
     <p class="mb-1" data-i18n="footer_title">八字排盘与典籍研索系统 · 命理十二大经典名著与评注中间件集成</p>
@@ -2912,6 +3092,9 @@
   <script src="data/tengods.js"></script>
   <script src="data/rongkujian.js"></script>
   <script src="js/bazi-engine.js"></script>
+  <script src="js/sensitivity-engine.js"></script>
+  <script src="js/rectification-engine.js"></script>
+  <script src="js/vector-rag.js"></script>
   <script src="js/fengshui-engine.js"></script>
   <script src="js/career-engine.js"></script>
   <script src="data/historical_figures.js"></script>

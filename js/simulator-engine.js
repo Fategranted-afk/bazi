@@ -1125,7 +1125,19 @@ class ScenarioSimulatorEngine {
       patternAlignmentScore: patternAlignment.score,
       patternAlignmentBadge: isEn ? patternAlignment.badgeEn : patternAlignment.badgeZh,
       top3PatternsAlignment: patternAlignment.patternsDetail,
-      roleSupervisorSynergyScore: roleSupervisorSynergy,
+      // Counterfactual Dynamics & Burnout Index (Y_net = X_t ⊗ F_ext - Friction)
+      netKineticYield: Math.max(10, Math.min(98, Math.round(finalScore * 0.65 + (100 - frictionRate) * 0.35))),
+      burnoutIndex: Math.max(5, Math.min(95, Math.round(frictionRate * 0.8 + (100 - roleSupervisorSynergy) * 0.2))),
+      trajectoryDiagnosis: (Math.round(frictionRate * 0.8 + (100 - roleSupervisorSynergy) * 0.2) >= 65)
+        ? (isEn ? 'High Friction Dampening Trajectory: Significant environmental stress and energy dissipation' : '高内耗阻尼轨道：环境博弈与官杀克制偏强，心理损耗显著')
+        : ((Math.round(finalScore * 0.65 + (100 - frictionRate) * 0.35) >= 75)
+            ? (isEn ? 'Resonant High-Yield Trajectory: Smooth circulation, high conversion, and multiplied momentum' : '借势爆发闭环轨道：生化流通，天时地利契合，转化率极高')
+            : (isEn ? 'Steady Equilibrium Trajectory: Controlled friction, suited for incremental growth' : '稳健防守中和轨道：阻力可控，循序渐进，利于厚积薄发')),
+      trajectoryDiagnosisEn: (Math.round(frictionRate * 0.8 + (100 - roleSupervisorSynergy) * 0.2) >= 65)
+        ? 'High Friction Dampening Trajectory: Significant environmental stress and energy dissipation'
+        : ((Math.round(finalScore * 0.65 + (100 - frictionRate) * 0.35) >= 75)
+            ? 'Resonant High-Yield Trajectory: Smooth circulation, high conversion, and multiplied momentum'
+            : 'Steady Equilibrium Trajectory: Controlled friction, suited for incremental growth'),
       // Backward-compatible rates & composite score
       score: finalScore,
       affinityRate: Math.round(affinityRate),
@@ -1140,6 +1152,7 @@ class ScenarioSimulatorEngine {
       resOption.countryElementEn = countryMeta.nameEn;
       resOption.cityElementZh = cityMeta.nameZh;
       resOption.cityElementEn = cityMeta.nameEn;
+      resOption.trajectoryDiagnosisZh = resOption.trajectoryDiagnosis;
     } else {
       resOption.countryElementEn = countryMeta.nameEn;
       resOption.cityElementEn = cityMeta.nameEn;
@@ -1304,6 +1317,30 @@ class ScenarioSimulatorEngine {
       return item;
     });
 
+    const counterfactualDynamics = {
+      optionA: {
+        title: resA.title,
+        netKineticYield: resA.netKineticYield,
+        burnoutIndex: resA.burnoutIndex,
+        trajectory: isEn ? resA.trajectoryDiagnosisEn : (resA.trajectoryDiagnosisZh || resA.trajectoryDiagnosis),
+        trajectoryEn: resA.trajectoryDiagnosisEn
+      },
+      optionB: {
+        title: resB.title,
+        netKineticYield: resB.netKineticYield,
+        burnoutIndex: resB.burnoutIndex,
+        trajectory: isEn ? resB.trajectoryDiagnosisEn : (resB.trajectoryDiagnosisZh || resB.trajectoryDiagnosis),
+        trajectoryEn: resB.trajectoryDiagnosisEn
+      },
+      comparativeAdvice: isEn
+        ? (resA.burnoutIndex < resB.burnoutIndex
+            ? `[Counterfactual Insight]: While Option B [${resB.title}] carries superficial appeal, it operates in a high-burnout band (${resB.burnoutIndex}%). Option A [${resA.title}] achieves superior net kinetic yield (${resA.netKineticYield} pts) with significantly lower psychological exhaustion (${resA.burnoutIndex}%).`
+            : `[Counterfactual Insight]: Option B [${resB.title}] unlocks an auspicious closed loop with lower friction (${resB.burnoutIndex}% vs ${resA.burnoutIndex}%), converting day-to-day efforts into compounding career capital.`)
+        : (resA.burnoutIndex < resB.burnoutIndex
+            ? `【反事实动力学洞察】：方案B【${resB.title}】虽具表面诱惑，但落入高内耗阻尼带（能耗比 ${resB.burnoutIndex}%）；方案A【${resA.title}】以更低心智损耗（${resA.burnoutIndex}%）兑现了更高净动能（${resA.netKineticYield}分），属于可持续上升轨道。`
+            : `【反事实动力学洞察】：方案B【${resB.title}】与流年形成“借势闭环”，心理能耗显著更低（${resB.burnoutIndex}% vs ${resA.burnoutIndex}%），能够以更小内耗沉淀长期核心势能。`)
+    };
+
     return {
       optionA: resA,
       optionB: resB,
@@ -1312,7 +1349,8 @@ class ScenarioSimulatorEngine {
       verdictTitle: isEn ? verdictTitleEn : verdictTitleZh,
       summary: isEn ? summaryEn : summaryZh,
       leaderboard: cleanLeaderboard,
-      top3Patterns: cleanTop3
+      top3Patterns: cleanTop3,
+      counterfactualDynamics
     };
   }
 }

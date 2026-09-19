@@ -947,6 +947,75 @@
               </div>
             </div>
           </div>
+
+          <!-- Counterfactual Dynamics & Burnout Matrix (外场强迫与反事实动力学沙盘) -->
+          ${simRes.counterfactualDynamics ? `
+            <div class="rounded-2xl border border-amber-600/40 bg-gradient-to-r from-amber-950/30 via-slate-900/60 to-purple-950/30 p-5 space-y-4 shadow-2xl">
+              <div class="flex items-center justify-between border-b border-gray-800 pb-2.5">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xl">⚡</span>
+                  <h4 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc">
+                    ${isEn ? 'Counterfactual Dynamics: Net Kinetic Yield vs. Burnout Index' : '外场强迫与反事实动力学沙盘（动能净产出 vs 心理能耗）'}
+                  </h4>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950 border border-amber-700/40 text-amber-300 font-mono">
+                  ${isEn ? 'BURNOUT AUDIT' : '能耗动力学'}
+                </span>
+              </div>
+
+              <!-- Comparative Dynamics Cards -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <!-- Option A Dynamics -->
+                <div class="p-3.5 rounded-xl bg-black/40 border border-indigo-500/40 space-y-2">
+                  <div class="flex items-center justify-between font-bold">
+                    <span class="text-indigo-300 font-serif-sc">🅰️ ${simRes.counterfactualDynamics.optionA.title}</span>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-indigo-900/60 text-indigo-200">
+                      ${isEn ? 'Yield' : '净动能'}: ${simRes.counterfactualDynamics.optionA.netKineticYield} pts
+                    </span>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-[11px] text-gray-300">
+                      <span>${isEn ? 'Psychological Burnout Index' : '心智能耗率 (Burnout)'}</span>
+                      <span class="font-bold font-mono ${simRes.counterfactualDynamics.optionA.burnoutIndex > 65 ? 'text-rose-400' : 'text-emerald-400'}">${simRes.counterfactualDynamics.optionA.burnoutIndex}%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                      <div class="h-full ${simRes.counterfactualDynamics.optionA.burnoutIndex > 65 ? 'bg-rose-500' : 'bg-emerald-500'} rounded-full transition-all duration-500" style="width: ${simRes.counterfactualDynamics.optionA.burnoutIndex}%"></div>
+                    </div>
+                  </div>
+                  <div class="text-[11px] text-indigo-200/90 leading-relaxed font-sans pt-1 border-t border-gray-800/60">
+                    🧭 ${simRes.counterfactualDynamics.optionA.trajectory}
+                  </div>
+                </div>
+
+                <!-- Option B Dynamics -->
+                <div class="p-3.5 rounded-xl bg-black/40 border border-purple-500/40 space-y-2">
+                  <div class="flex items-center justify-between font-bold">
+                    <span class="text-purple-300 font-serif-sc">🅱️ ${simRes.counterfactualDynamics.optionB.title}</span>
+                    <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-900/60 text-purple-200">
+                      ${isEn ? 'Yield' : '净动能'}: ${simRes.counterfactualDynamics.optionB.netKineticYield} pts
+                    </span>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="flex justify-between text-[11px] text-gray-300">
+                      <span>${isEn ? 'Psychological Burnout Index' : '心智能耗率 (Burnout)'}</span>
+                      <span class="font-bold font-mono ${simRes.counterfactualDynamics.optionB.burnoutIndex > 65 ? 'text-rose-400' : 'text-emerald-400'}">${simRes.counterfactualDynamics.optionB.burnoutIndex}%</span>
+                    </div>
+                    <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                      <div class="h-full ${simRes.counterfactualDynamics.optionB.burnoutIndex > 65 ? 'bg-rose-500' : 'bg-emerald-500'} rounded-full transition-all duration-500" style="width: ${simRes.counterfactualDynamics.optionB.burnoutIndex}%"></div>
+                    </div>
+                  </div>
+                  <div class="text-[11px] text-purple-200/90 leading-relaxed font-sans pt-1 border-t border-gray-800/60">
+                    🧭 ${simRes.counterfactualDynamics.optionB.trajectory}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comparative Synthesis -->
+              <div class="p-3 rounded-xl bg-black/30 border border-amber-900/30 text-xs text-amber-100 font-serif-sc leading-relaxed">
+                ${simRes.counterfactualDynamics.comparativeAdvice}
+              </div>
+            </div>
+          ` : ''}
         `;
       }
 

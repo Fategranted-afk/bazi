@@ -1380,6 +1380,32 @@ class AdvisorEngine {
     const smartFollowUps = this.anticipateQuestions(category, subcategory, bazi, 'zh');
     const actionLinks = this.getActionLinks(category, subcategory, 'zh');
 
+    // Offline Semantic RAG retrieval across Canons, RongKuJian, and Historical Figures
+    let ragResults = [];
+    if (typeof VectorRAG !== 'undefined' && typeof VectorRAG.search === 'function') {
+      try {
+        ragResults = VectorRAG.search(query, { topK: 2, lang: 'zh' });
+      } catch (e) {}
+    }
+
+    const contextPayload = {
+      user_query: query,
+      category: category,
+      subcategory: subcategory,
+      natal_facts: {
+        day_master: ctx.dayMaster,
+        vigor_score: ctx.vigorScore,
+        pattern: ctx.vigorTier,
+        active_year: `${ctx.activeAnnualYear} ${ctx.activeAnnualGanzhi}`,
+        active_hexagram: ctx.activeHexagram,
+        primary_scroll: ctx.firstScroll
+      },
+      direct_verdict: directAnswer,
+      strategic_tactics: tactics.slice(0, 3).map(t => (t.title || '') + ': ' + (t.desc || '')),
+      taboos_redlines: redLines.slice(0, 2),
+      semantic_rag_citations: ragResults.map(r => `${r.canonName}: ${r.quote}`)
+    };
+
     return {
       category: category,
       subcategory: subcategory,
@@ -1390,6 +1416,8 @@ class AdvisorEngine {
       synastryCard: synastryCard,
       diagnosticTree: diagnosticTree,
       microActions: microActions,
+      ragResults: ragResults,
+      contextPayload: contextPayload,
       contextMeta: {
         dm: ctx.dayMaster,
         score: ctx.vigorScore,
@@ -1806,6 +1834,32 @@ class AdvisorEngine {
     const smartFollowUps = this.anticipateQuestions(category, subcategory, bazi, 'en');
     const actionLinks = this.getActionLinks(category, subcategory, 'en');
 
+    // Offline Semantic RAG retrieval across Canons, RongKuJian, and Historical Figures
+    let ragResults = [];
+    if (typeof VectorRAG !== 'undefined' && typeof VectorRAG.search === 'function') {
+      try {
+        ragResults = VectorRAG.search(query, { topK: 2, lang: 'en' });
+      } catch (e) {}
+    }
+
+    const contextPayload = {
+      user_query: query,
+      category: category,
+      subcategory: subcategory,
+      natal_facts: {
+        day_master: enDm,
+        vigor_score: ctx.vigorScore,
+        pattern: cleanTier,
+        active_year: `${ctx.activeAnnualYear} ${enGz}`,
+        active_hexagram: cleanHex,
+        primary_scroll: cleanScroll
+      },
+      direct_verdict: directAnswer,
+      strategic_tactics: tactics.slice(0, 3).map(t => (t.title || '') + ': ' + (t.desc || '')),
+      taboos_redlines: redLines.slice(0, 2),
+      semantic_rag_citations: ragResults.map(r => `${r.canonName}: ${r.quote}`)
+    };
+
     return {
       category: category,
       subcategory: subcategory,
@@ -1816,6 +1870,8 @@ class AdvisorEngine {
       synastryCard: synastryCard,
       diagnosticTree: diagnosticTree,
       microActions: microActions,
+      ragResults: ragResults,
+      contextPayload: contextPayload,
       contextMeta: {
         dm: enDm,
         score: ctx.vigorScore,
@@ -1833,6 +1889,62 @@ class AdvisorEngine {
       smartFollowUps: smartFollowUps,
       actionLinks: actionLinks
     };
+  }
+
+  /**
+   * Hybrid LLM Polish ("计算归算法，表达归模型")
+   * Takes the 100% deterministically computed advice object, attempts browser-native window.ai
+   * (Chrome Gemini Nano) to polish expression into warm, bespoke strategic prose within 200 words.
+   * If window.ai is absent or fails, seamlessly and gracefully retains the deterministic text.
+   */
+  static async polishWithLLM(adviceObj, userQuery, lang = 'zh') {
+    if (!adviceObj) return adviceObj;
+
+    const isEn = (lang === 'en');
+    adviceObj.llmEnhanced = false;
+    adviceObj.llmModel = isEn ? 'Deterministic Core Engine' : '确定性算法中枢';
+
+    // 1. Check browser-native window.ai (Chrome Built-in Gemini Nano)
+    if (typeof window !== 'undefined' && window.ai && window.ai.languageModel) {
+      try {
+        const capabilities = await window.ai.languageModel.capabilities();
+        if (capabilities && capabilities.available !== 'no') {
+          const systemPrompt = isEn
+            ? `You are Antigravity Imperial Metaphysical Strategic Advisor (钦天监随身军师).
+ROLE: Strictly constrained strategic narrator.
+RULES:
+1. You MUST NOT calculate, invent, or alter any astrology, bazi, element, or hexagram facts.
+2. Use ONLY the provided deterministic facts to formulate a sharp, empathetic, and decisive response under 200 words.
+3. Address the native directly with calm authority and clarity.`
+            : `你是由Google DeepMind团队架构的钦天监随身军师。
+角色定位：受限解说员与战略谋士。
+核心铁律：
+1. 严禁自行推算五行吉凶、篡改任何干支命理计算结果；
+2. 严格依据系统提供的确定性事实Payload，提炼为一段温和、决断、行云流水且富有东方智慧的策略解答，字数严格控制在200字以内；
+3. 直切痛点，杜绝模棱两可与公式化套话。`;
+
+          const session = await window.ai.languageModel.create({
+            systemPrompt: systemPrompt
+          });
+
+          const prompt = `[USER QUERY]: ${userQuery}\n[DETERMINISTIC FACTS PAYLOAD]: ${JSON.stringify(adviceObj.contextPayload)}`;
+          const response = await session.prompt(prompt);
+
+          if (response && response.trim().length > 20) {
+            adviceObj.llmEnhanced = true;
+            adviceObj.llmNarrative = response.trim();
+            adviceObj.llmModel = isEn ? 'Chrome Built-in Gemini Nano (window.ai)' : '端侧大模型 Gemini Nano (window.ai)';
+            session.destroy();
+            return adviceObj;
+          }
+        }
+      } catch (err) {
+        console.warn('window.ai polish error, falling back gracefully:', err);
+      }
+    }
+
+    // Graceful degradation: returns unchanged adviceObj with deterministic flag
+    return adviceObj;
   }
 }
 

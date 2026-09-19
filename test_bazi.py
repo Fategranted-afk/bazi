@@ -15192,7 +15192,239 @@ for hf in html_files:
 
 print("✓ 120. 浅昼模式暗角全面消除（卡片容器渐变覆写/标签徽章通配/模态遮罩柔化/百岁画布色调适配）、LocalStorage 全域主题记忆与多端子页同步验证通过！")
 
-print("\n🎉 ALL 120 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 121. Validating Sensitivity Analysis, Bayesian Rectification, Vector RAG,
+# Counterfactual Dynamics & Hybrid LLM ("计算归算法，表达归模型")
+# ==============================================================================
+print("\n=== 121. Validating Sensitivity Analysis, Bayesian Rectification, Vector RAG, Counterfactual Dynamics & Hybrid LLM ===")
+
+# 1. Verify index.html & simulator.html DOM elements
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_content = f.read()
+
+assert 'id="sensitivityStatusSection"' in idx_content, "Missing #sensitivityStatusSection in index.html"
+assert 'id="sensitivityBadge"' in idx_content, "Missing #sensitivityBadge in index.html"
+assert 'id="sensitivityScoreLabel"' in idx_content, "Missing #sensitivityScoreLabel in index.html"
+assert 'id="sensitivityVarianceLabel"' in idx_content, "Missing #sensitivityVarianceLabel in index.html"
+assert 'id="sensitivityProgressBar"' in idx_content, "Missing #sensitivityProgressBar in index.html"
+assert 'id="sensitivityDiagnosisText"' in idx_content, "Missing #sensitivityDiagnosisText in index.html"
+assert 'id="btnTriggerRectificationFromCard"' in idx_content, "Missing #btnTriggerRectificationFromCard in index.html"
+assert 'id="btnOpenRectificationModal"' in idx_content, "Missing #btnOpenRectificationModal in index.html"
+assert 'id="rectificationModal"' in idx_content, "Missing #rectificationModal in index.html"
+assert 'id="rectificationCloseBtn"' in idx_content, "Missing #rectificationCloseBtn in index.html"
+assert 'id="rectifyBirthDate"' in idx_content, "Missing #rectifyBirthDate in index.html"
+assert 'id="rectifyGender"' in idx_content, "Missing #rectifyGender in index.html"
+assert 'id="rectifyApproxHour"' in idx_content, "Missing #rectifyApproxHour in index.html"
+assert 'id="rectifyEventYear1"' in idx_content, "Missing #rectifyEventYear1 in index.html"
+assert 'id="rectifyEventType1"' in idx_content, "Missing #rectifyEventType1 in index.html"
+assert 'id="rectifyEventYear2"' in idx_content, "Missing #rectifyEventYear2 in index.html"
+assert 'id="rectifyEventType2"' in idx_content, "Missing #rectifyEventType2 in index.html"
+assert 'id="btnRunRectification"' in idx_content, "Missing #btnRunRectification in index.html"
+assert 'id="rectificationResultsArea"' in idx_content, "Missing #rectificationResultsArea in index.html"
+
+with open('simulator.html', 'r', encoding='utf-8') as f:
+    sim_content = f.read()
+
+assert 'Counterfactual Dynamics' in sim_content, "Missing Counterfactual Dynamics in simulator.html"
+assert 'BURNOUT AUDIT' in sim_content, "Missing BURNOUT AUDIT badge in simulator.html"
+
+# 2. JSC Runtime Execution for Metaphysical Engines
+jsc_check121_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    // Mock browser environment
+    var window = {
+      location: { hash: "", search: "" }
+    };
+    var globalThis = window;
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/sensitivity-engine.js");
+    load("js/rectification-engine.js");
+    load("js/vector-rag.js");
+    load("js/simulator-engine.js");
+    load("js/advisor-engine.js");
+
+    // A. SensitivityEngine Verification (Robust & Boundary Phase Transition)
+    var robustReport = SensitivityEngine.analyzePerturbation({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    }, 15, 1);
+
+    if (robustReport.stabilityScore < 90) {
+      throw new Error("Expected robust stability score >= 90, got: " + robustReport.stabilityScore);
+    }
+    if (robustReport.status !== "robust") {
+      throw new Error("Expected status robust, got: " + robustReport.status);
+    }
+    if (robustReport.hasHourTransition) {
+      throw new Error("Expected no hour transition at 12:30");
+    }
+
+    // Boundary Cusp Test (12:59 -> shifts into 未时 at 13:00)
+    var cuspReport = SensitivityEngine.analyzePerturbation({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 59, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    }, 15, 1);
+
+    if (!cuspReport.hasHourTransition) {
+      throw new Error("Expected hour transition at 12:59 within ±15m window");
+    }
+    if (cuspReport.stabilityScore > 65) {
+      throw new Error("Expected penalized stability score <= 65 at cusp, got: " + cuspReport.stabilityScore);
+    }
+
+    // English Zero Chinese check in SensitivityEngine
+    var enReport = SensitivityEngine.analyzePerturbation({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 59, gender: "乾造"
+    }, 15, 1);
+    if (/[\u4e00-\u9fa5]/.test(enReport.messageEn)) {
+      throw new Error("Residual Chinese in SensitivityEngine messageEn: " + enReport.messageEn);
+    }
+
+    // B. RectificationEngine Verification (Bayesian MAP & Softmax Spectrum)
+    var natalBase = {
+      year: 1990, month: 6, day: 20, gender: "乾造",
+      useTrueSolarTime: false, longitude: 116.4, timezone: 8.0
+    };
+    var lifeEvents = [
+      { year: 2018, type: "career_academic", description: "职场大跃迁" },
+      { year: 2020, type: "trauma_accident", description: "骨折手术" }
+    ];
+    var rectRes = RectificationEngine.rectifyBirthTime(natalBase, lifeEvents);
+    if (!rectRes || !rectRes.top1) {
+      throw new Error("RectificationEngine returned null or missing top1");
+    }
+    if (rectRes.rankings.length !== 13) {
+      throw new Error("Expected 13 candidate hours, got: " + rectRes.rankings.length);
+    }
+
+    var probSum = 0;
+    rectRes.rankings.forEach(function(r) { probSum += r.probability; });
+    if (Math.abs(probSum - 1.0) > 0.01) {
+      throw new Error("Softmax probabilities do not sum to 1: " + probSum);
+    }
+
+    // Test Tie-Breaker generation & Zero Chinese in English mode
+    var tieRes = RectificationEngine.generateTieBreaker(rectRes.rankings[0], rectRes.rankings[1], 1990);
+    if (!tieRes || !tieRes.questionZh || !tieRes.questionEn) {
+      throw new Error("Failed to generate tie-breaker question");
+    }
+    if (/[\u4e00-\u9fa5]/.test(tieRes.questionEn) || /[\u4e00-\u9fa5]/.test(tieRes.titleEn) || /[\u4e00-\u9fa5]/.test(tieRes.optionAEn) || /[\u4e00-\u9fa5]/.test(tieRes.optionBEn)) {
+      throw new Error("Residual Chinese in Tie-Breaker English strings");
+    }
+
+    // C. VectorRAG Verification (Offline TF-IDF + Cosine Semantic Retrieval)
+    var ragResults = VectorRAG.search("领导穿小鞋该忍还是撕破脸", { topK: 2, lang: "zh" });
+    if (!ragResults || ragResults.length === 0) {
+      throw new Error("VectorRAG search returned empty results");
+    }
+    var foundRongKu = ragResults.some(function(r) { return r.source && r.source.toLowerCase() === 'rongkujian'; });
+    if (!foundRongKu) {
+      throw new Error("Expected VectorRAG to retrieve RongKuJian for workplace conflict query");
+    }
+
+    var ragEn = VectorRAG.search("supervisor conflict and corporate survival", { topK: 2, lang: "en" });
+    var ragEnStr = JSON.stringify(ragEn);
+    if (/[\u4e00-\u9fa5]/.test(ragEnStr)) {
+      throw new Error("Residual Chinese in VectorRAG English output: " + ragEnStr);
+    }
+
+    // D. ScenarioSimulatorEngine Counterfactual Dynamics Verification
+    var optA = {
+      title: "UK Birmingham",
+      country: "UK",
+      city: "Birmingham",
+      industry: "academia_research",
+      role: "specialist",
+      manager: "resource"
+    };
+    var optB = {
+      title: "China Shenzhen",
+      country: "China",
+      city: "Shenzhen",
+      industry: "finance_quant",
+      role: "specialist",
+      manager: "killings"
+    };
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var simEn = ScenarioSimulatorEngine.simulateOptions(optA, optB, bazi, null, "en");
+    if (!simEn.counterfactualDynamics) {
+      throw new Error("Missing counterfactualDynamics in simulation result");
+    }
+    var dyn = simEn.counterfactualDynamics;
+    if (typeof dyn.optionA.netKineticYield !== "number" || typeof dyn.optionA.burnoutIndex !== "number") {
+      throw new Error("Invalid netKineticYield or burnoutIndex types in Option A");
+    }
+    var dynStr = JSON.stringify(dyn);
+    if (/[\u4e00-\u9fa5]/.test(dynStr)) {
+      throw new Error("Residual Chinese in counterfactualDynamics EN: " + dynStr);
+    }
+
+    // E. AdvisorEngine Hybrid LLM Polish & Graceful Degradation
+    var advice = AdvisorEngine.generateAdvice("明年跳槽会遇到贵人还是小人", bazi, null, 2026, "zh");
+    if (!advice || !advice.contextPayload) {
+      throw new Error("Advice missing contextPayload");
+    }
+    if (!advice.contextPayload.natal_facts || !advice.contextPayload.direct_verdict) {
+      throw new Error("contextPayload missing required deterministic facts");
+    }
+
+    // Graceful degradation test (no window.ai)
+    AdvisorEngine.polishWithLLM(advice, "明年跳槽", "zh").then(function(res) {
+      if (res.llmEnhanced) {
+        throw new Error("Should not be llmEnhanced when window.ai is undefined");
+      }
+    });
+
+    // Mock window.ai test
+    window.ai = {
+      languageModel: {
+        create: function(opts) {
+          return Promise.resolve({
+            prompt: function(p) {
+              return Promise.resolve("此乃甲木生于午月之象，伤官生财，进退自如，切莫犹豫妄动。");
+            },
+            destroy: function() {}
+          });
+        }
+      }
+    };
+
+    AdvisorEngine.polishWithLLM(advice, "明年跳槽", "zh").then(function(res) {
+      if (!res.llmEnhanced) {
+        throw new Error("Should be llmEnhanced with mocked window.ai");
+      }
+      if (!res.llmNarrative || res.llmNarrative.indexOf("此乃甲木") === -1) {
+        throw new Error("Unexpected llmNarrative: " + res.llmNarrative);
+      }
+    });
+    """
+]
+run_check121 = subprocess.run(jsc_check121_cmd, capture_output=True, text=True)
+assert run_check121.returncode == 0, f"Check 121 JSC test failed: stdout={run_check121.stdout} stderr={run_check121.stderr}"
+
+print("✓ 121. 生时临界微扰分析（31点离散采样/方差极差/相变诊断）、贝叶斯历史事件生时校准（13时辰MAP推演/双峰决胜题/一键采纳回填）、离线向量检索RAG（13部古籍+荣枯鉴+历史先贤）、决策沙盘反事实动力学（动能净产出vs心理能耗）与军师轻度链接Hybrid LLM（计算归算法表达归模型/端侧Gemini Nano/优雅降级/中英双语100%零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 121 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

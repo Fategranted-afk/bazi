@@ -1308,6 +1308,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderImperialDossierPages(currentLang);
     }
     renderFourAuspiciousDeities(res, shenShaData);
+    renderSensitivityAnalysis(res);
   }
 
   // Render Canonical Four Major Auspicious Deities Matrix (天乙贵人 · 文昌贵人 · 红鸾天喜 · 驿马星动)
@@ -1355,6 +1356,304 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `).join('');
+  }
+
+  // Render Birth Time Sensitivity & Structural Stability (生时临界微扰分析与结构稳定性)
+  function renderSensitivityAnalysis(res) {
+    const section = document.getElementById('sensitivityStatusSection');
+    if (!section || typeof SensitivityEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const bDate = document.getElementById('birthDate')?.value;
+    const bTime = document.getElementById('birthTime')?.value;
+    if (!bDate || !bTime) return;
+
+    const [year, month, day] = bDate.split('-').map(Number);
+    const [hour, minute] = bTime.split(':').map(Number);
+    const gender = document.getElementById('gender')?.value || '乾造';
+    const useTrueSolarTime = document.getElementById('useTrueSolarTime')?.checked || false;
+    const isLateRatNextDay = document.getElementById('lateRatNextDay')?.checked || false;
+    const longitude = parseFloat(document.getElementById('customLongitude')?.value) || 116.4;
+    const timezone = parseFloat(document.getElementById('timezoneSelect')?.value) || 8.0;
+
+    const report = SensitivityEngine.analyzePerturbation({
+      year, month, day, hour, minute, gender,
+      useTrueSolarTime, isLateRatNextDay, longitude, timezone
+    }, 15, 1);
+
+    if (!report) return;
+
+    const score = report.stabilityScore;
+    const status = report.status;
+    const badgeEl = document.getElementById('sensitivityBadge');
+    const iconEl = document.getElementById('sensitivityIcon');
+    const scoreLabel = document.getElementById('sensitivityScoreLabel');
+    const varianceLabel = document.getElementById('sensitivityVarianceLabel');
+    const progressBar = document.getElementById('sensitivityProgressBar');
+    const diagnosisText = document.getElementById('sensitivityDiagnosisText');
+
+    if (badgeEl) {
+      if (status === 'robust') {
+        badgeEl.className = 'text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40';
+        badgeEl.textContent = isEn ? `STABILITY ${score}% (ROBUST)` : `稳定性 ${score}% (刚健)`;
+      } else if (status === 'moderate') {
+        badgeEl.className = 'text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-amber-950/80 text-amber-300 border border-amber-500/40';
+        badgeEl.textContent = isEn ? `STABILITY ${score}% (MODERATE)` : `稳定性 ${score}% (稳固)`;
+      } else {
+        badgeEl.className = 'text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-rose-950/80 text-rose-300 border border-rose-500/40 animate-pulse';
+        badgeEl.textContent = isEn ? `STABILITY ${score}% (CRITICAL CUSP)` : `稳定性 ${score}% (临界相变区)`;
+      }
+    }
+
+    if (iconEl) {
+      iconEl.textContent = (status === 'robust') ? '🛡️' : (status === 'moderate' ? '⚖️' : '⚠️');
+    }
+
+    if (scoreLabel) {
+      scoreLabel.textContent = isEn
+        ? `Structural Stability Score: ${score}%`
+        : `结构稳定性得分: ${score}%`;
+    }
+
+    if (varianceLabel) {
+      varianceLabel.textContent = isEn
+        ? `Vigor Variance: ${report.variance.toFixed(2)} | Range: ${report.scoreRange.toFixed(1)} pts`
+        : `旺衰方差: ${report.variance.toFixed(2)} | 极差: ${report.scoreRange.toFixed(1)} 分`;
+    }
+
+    if (progressBar) {
+      progressBar.style.width = `${score}%`;
+      if (status === 'robust') {
+        progressBar.className = 'h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500';
+      } else if (status === 'moderate') {
+        progressBar.className = 'h-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-500';
+      } else {
+        progressBar.className = 'h-full bg-gradient-to-r from-rose-500 to-orange-500 transition-all duration-500';
+      }
+    }
+
+    if (diagnosisText) {
+      diagnosisText.textContent = isEn ? report.messageEn : report.messageZh;
+    }
+  }
+
+  // Initialize Rectification Modal Lifecycle & Event Listeners
+  function initRectificationModal() {
+    const modal = document.getElementById('rectificationModal');
+    const openBtn1 = document.getElementById('btnOpenRectificationModal');
+    const openBtn2 = document.getElementById('btnTriggerRectificationFromCard');
+    const closeBtn = document.getElementById('rectificationCloseBtn');
+    const runBtn = document.getElementById('btnRunRectification');
+
+    function openModal() {
+      if (!modal) return;
+      const bDate = document.getElementById('birthDate')?.value;
+      const bGender = document.getElementById('gender')?.value;
+      const rDate = document.getElementById('rectifyBirthDate');
+      const rGender = document.getElementById('rectifyGender');
+      if (rDate && bDate) rDate.value = bDate;
+      if (rGender && bGender) rGender.value = bGender;
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.add('hidden');
+    }
+
+    if (openBtn1) openBtn1.addEventListener('click', openModal);
+    if (openBtn2) openBtn2.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (runBtn) runBtn.addEventListener('click', handleRunRectification);
+  }
+
+  // Run Bayesian Birth Time Rectification
+  function handleRunRectification() {
+    if (typeof RectificationEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const rDate = document.getElementById('rectifyBirthDate')?.value || document.getElementById('birthDate')?.value;
+    if (!rDate) {
+      alert(isEn ? 'Please confirm birth date first.' : '请先确认出生日期。');
+      return;
+    }
+    const [year, month, day] = rDate.split('-').map(Number);
+    const gender = document.getElementById('rectifyGender')?.value || '乾造';
+    const approxVal = parseInt(document.getElementById('rectifyApproxHour')?.value, 10);
+
+    const events = [];
+    const y1 = parseInt(document.getElementById('rectifyEventYear1')?.value, 10);
+    const t1 = document.getElementById('rectifyEventType1')?.value;
+    const d1 = document.getElementById('rectifyEventDesc1')?.value || '';
+    if (y1 && t1) events.push({ year: y1, type: t1, description: d1 });
+
+    const y2 = parseInt(document.getElementById('rectifyEventYear2')?.value, 10);
+    const t2 = document.getElementById('rectifyEventType2')?.value;
+    const d2 = document.getElementById('rectifyEventDesc2')?.value || '';
+    if (y2 && t2) events.push({ year: y2, type: t2, description: d2 });
+
+    const y3 = parseInt(document.getElementById('rectifyEventYear3')?.value, 10);
+    const t3 = document.getElementById('rectifyEventType3')?.value;
+    const d3 = document.getElementById('rectifyEventDesc3')?.value || '';
+    if (y3 && t3) events.push({ year: y3, type: t3, description: d3 });
+
+    if (events.length === 0) {
+      alert(isEn ? 'Please enter at least 1 or 2 past major historical life events.' : '请至少录入 1~2 个已发生的确定性重大历史事件。');
+      return;
+    }
+
+    const useTrueSolarTime = document.getElementById('useTrueSolarTime')?.checked || false;
+    const longitude = parseFloat(document.getElementById('customLongitude')?.value) || 116.4;
+    const timezone = parseFloat(document.getElementById('timezoneSelect')?.value) || 8.0;
+
+    const natalBase = {
+      year, month, day, gender,
+      approximateHour: (!isNaN(approxVal) && approxVal >= 0) ? approxVal : null,
+      useTrueSolarTime, longitude, timezone
+    };
+
+    const res = RectificationEngine.rectifyBirthTime(natalBase, events);
+    if (!res || !res.top1) return;
+
+    renderRectificationResults(res, isEn);
+  }
+
+  // Render Bayesian MAP Rectification Results & Rankings
+  function renderRectificationResults(res, isEn) {
+    const resultsArea = document.getElementById('rectificationResultsArea');
+    if (!resultsArea) return;
+    resultsArea.classList.remove('hidden');
+
+    const top1 = res.top1;
+    const top2 = res.top2;
+    const tie = res.tieBreaker;
+
+    let tieBreakerHtml = '';
+    if (tie) {
+      tieBreakerHtml = `
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/60 to-purple-950/60 border border-amber-500/60 shadow-lg space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+              <span>⚖️</span>
+              <span>${isEn ? tie.titleEn : tie.titleZh}</span>
+            </span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-900 text-amber-200 font-mono">TIE-BREAKER</span>
+          </div>
+          <p class="text-xs text-amber-100/90 leading-relaxed font-sans">
+            ${isEn ? tie.questionEn : tie.questionZh}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <button type="button" class="btn-tiebreaker-choice text-left p-2.5 rounded-lg border border-amber-600/40 bg-black/40 hover:bg-amber-900/40 hover:border-amber-400 transition cursor-pointer active:scale-95" data-cand-idx="0">
+              <div class="text-xs font-bold text-amber-200 mb-0.5">${isEn ? tie.optionAEn : tie.optionAZh}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? top1.nameEn : top1.nameZh}</div>
+            </button>
+            <button type="button" class="btn-tiebreaker-choice text-left p-2.5 rounded-lg border border-purple-600/40 bg-black/40 hover:bg-purple-900/40 hover:border-purple-400 transition cursor-pointer active:scale-95" data-cand-idx="1">
+              <div class="text-xs font-bold text-purple-200 mb-0.5">${isEn ? tie.optionBEn : tie.optionBZh}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? (top2 ? (isEn ? top2.nameEn : top2.nameZh) : '') : ''}</div>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    const evidencesHtml = (top1.evidences || []).map(ev => `
+      <div class="flex items-start gap-1.5 text-[11px] text-emerald-200/90">
+        <span class="text-emerald-400 font-bold">✓</span>
+        <span>${isEn ? ev.textEn : ev.textZh}</span>
+      </div>
+    `).join('');
+
+    const rankingsHtml = (res.rankings || []).slice(0, 5).map((c, i) => `
+      <div class="flex items-center justify-between p-2 rounded-lg bg-black/30 border border-gray-800 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-5 text-center font-mono font-bold ${i === 0 ? 'text-amber-400' : 'text-gray-500'}">#${i + 1}</span>
+          <span class="font-medium text-gray-200">${isEn ? c.nameEn : c.nameZh}</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded bg-gray-800 text-gray-400 font-mono">${isEn ? c.hourPillarEn : c.hourPillarZh}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-20 sm:w-28 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-400" style="width: ${c.confidencePercent}%;"></div>
+          </div>
+          <span class="font-mono text-[11px] text-amber-300 w-10 text-right">${c.confidencePercent}%</span>
+        </div>
+      </div>
+    `).join('');
+
+    resultsArea.innerHTML = `
+      <!-- Winner Candidate Card -->
+      <div class="p-4 rounded-xl border border-emerald-500/60 bg-gradient-to-r from-emerald-950/40 via-black/40 to-emerald-950/40 shadow-xl space-y-3">
+        <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2">
+          <div>
+            <div class="text-[10px] font-bold text-emerald-400 font-mono tracking-wider">${isEn ? 'MAXIMUM A POSTERIORI (MAP) CANDIDATE' : '贝叶斯最大后验概率推荐时辰'}</div>
+            <h4 class="text-base font-bold text-gray-100 font-serif-sc mt-0.5">${isEn ? top1.nameEn : top1.nameZh} · ${isEn ? top1.hourPillarEn : top1.hourPillarZh}${isEn ? ' Pillar' : '柱'}</h4>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-black text-emerald-400 font-mono">${top1.confidencePercent}%</div>
+            <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confidence' : '后验置信度'}</div>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="text-[11px] font-bold text-gray-300 font-serif-sc">${isEn ? 'Deterministic Historical Evidence Alignment:' : '重大历史事件对数似然增益印证：'}</div>
+          <div class="space-y-1 bg-black/30 p-2 rounded-lg border border-emerald-900/30">
+            ${evidencesHtml || `<div class="text-gray-400 text-xs">${isEn ? 'Aligned with prior distribution and static structure.' : '与先验时空分布及静态格局高度吻合。'}</div>`}
+          </div>
+        </div>
+
+        <button id="btnAdoptRectifiedHour" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 hover:from-emerald-500 hover:to-teal-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+          <span>🎯</span>
+          <span>${isEn ? 'Apply Recommended Hour & Recalculate Chart' : '一键采纳此推荐时辰并排盘'}</span>
+        </button>
+      </div>
+
+      <!-- Tie-Breaker if bimodal -->
+      ${tieBreakerHtml}
+
+      <!-- Top Rankings -->
+      <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2">
+        <div class="flex items-center justify-between text-xs font-bold text-gray-300">
+          <span>${isEn ? 'Top Hypothesis Probability Spectrum' : '全时辰后验概率波谱排行榜'}</span>
+          <span class="text-[10px] text-gray-500 font-mono">SOFTMAX DISTRIBUTION</span>
+        </div>
+        <div class="space-y-1.5">
+          ${rankingsHtml}
+        </div>
+      </div>
+    `;
+
+    function applyHourAndRecalculate(cand) {
+      if (!cand) return;
+      const bTime = document.getElementById('birthTime');
+      const bDate = document.getElementById('birthDate');
+      const rDate = document.getElementById('rectifyBirthDate');
+      if (bTime) {
+        const hh = String(cand.hour).padStart(2, '0');
+        const mm = String(cand.minute).padStart(2, '0');
+        bTime.value = `${hh}:${mm}`;
+      }
+      if (bDate && rDate && rDate.value) {
+        bDate.value = rDate.value;
+      }
+      const modal = document.getElementById('rectificationModal');
+      if (modal) modal.classList.add('hidden');
+
+      if (typeof triggerCalculate === 'function') triggerCalculate();
+      const container = document.getElementById('pillarsContainer');
+      if (container && typeof container.scrollIntoView === 'function') {
+        container.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    const btnAdopt = document.getElementById('btnAdoptRectifiedHour');
+    if (btnAdopt) {
+      btnAdopt.addEventListener('click', () => applyHourAndRecalculate(top1));
+    }
+
+    resultsArea.querySelectorAll('.btn-tiebreaker-choice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cIdx = parseInt(btn.getAttribute('data-cand-idx'), 10);
+        const chosen = (cIdx === 1 && top2) ? top2 : top1;
+        applyHourAndRecalculate(chosen);
+      });
+    });
   }
 
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
@@ -13543,15 +13842,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!advisorSessionContext.history) advisorSessionContext.history = [];
         advisorSessionContext.history.push({ query, category: advice.category, subcategory: advice.subcategory });
       }
-      advisorChatHistory.push({
+      const advisorMsgObj = {
         sender: 'advisor',
         time: timeStr,
         advice: advice
-      });
-    }
+      };
+      advisorChatHistory.push(advisorMsgObj);
 
-    saveAdvisorChatToStorage();
-    renderAdvisorChatStream();
+      saveAdvisorChatToStorage();
+      renderAdvisorChatStream();
+
+      // Async Hybrid LLM Polish: "计算归算法，表达归模型"
+      if (typeof AdvisorEngine.polishWithLLM === 'function') {
+        AdvisorEngine.polishWithLLM(advice, query, currentLang).then(polished => {
+          if (polished && polished.llmEnhanced) {
+            advisorMsgObj.advice = polished;
+            saveAdvisorChatToStorage();
+            renderAdvisorChatStream();
+          }
+        }).catch(() => {});
+      }
+    } else {
+      saveAdvisorChatToStorage();
+      renderAdvisorChatStream();
+    }
   }
 
   function renderAdvisorChatStream() {
@@ -13593,6 +13907,20 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
 
+            <!-- Hybrid LLM Polished Presentation (端侧大模型演播润色) -->
+            ${a.llmEnhanced && a.llmNarrative ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-r from-indigo-950/70 via-purple-950/40 to-black/60 border border-indigo-500/60 shadow-lg space-y-1.5">
+                <div class="text-[11px] font-bold text-indigo-300 flex items-center justify-between font-serif-sc">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm">✨</span>
+                    <span>${isEn ? 'Hybrid AI Polished Delivery (Chrome Gemini Nano)' : '端侧大模型演播润色 (计算归算法，表达归模型)'}</span>
+                  </div>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-900/80 text-indigo-200 font-mono tracking-wider">${a.llmModel || 'GEMINI NANO'}</span>
+                </div>
+                <div class="text-xs sm:text-sm text-indigo-100 font-medium leading-relaxed">${(a.llmNarrative || '').replace(/\*\*(.*?)\*\*/g, '<strong class="text-indigo-200 font-bold">$1</strong>')}</div>
+              </div>
+            ` : ''}
+
             <!-- Direct Conversational Answer (军师直陈精要) -->
             ${a.directAnswer ? `
               <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/70 via-amber-900/40 to-black/60 border border-amber-500/60 shadow-lg space-y-1.5">
@@ -13604,6 +13932,31 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-800/80 text-amber-200 font-mono tracking-wider">QUICK VERDICT</span>
                 </div>
                 <div class="text-xs sm:text-sm text-amber-100 font-medium leading-relaxed">${(a.directAnswer || '').replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-200 font-bold">$1</strong>')}</div>
+              </div>
+            ` : ''}
+
+            <!-- Offline Vector RAG Codex Citations (离线向量检索典籍要义) -->
+            ${a.ragResults && a.ragResults.length ? `
+              <div class="p-3 rounded-xl bg-black/40 border border-amber-600/30 space-y-2 shadow-sm">
+                <div class="flex items-center justify-between text-[11px] font-bold text-amber-300/90 font-serif-sc">
+                  <div class="flex items-center gap-1.5">
+                    <span>📚</span>
+                    <span>${isEn ? 'Offline Vector Codex & Historical RAG Citations' : '离线向量检索 · 古籍要义与先贤诫勉'}</span>
+                  </div>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-700/40 font-mono">VECTOR RAG</span>
+                </div>
+                <div class="space-y-1.5">
+                  ${a.ragResults.map(r => `
+                    <div class="p-2 rounded bg-black/50 border border-gray-800 text-xs text-gray-300">
+                      <div class="flex items-center justify-between font-bold text-amber-200/90 text-[11px] mb-1">
+                        <span>${r.canonName || ''}</span>
+                        <span class="text-[10px] text-gray-500 font-mono">${Math.round((r.relevanceScore || 0.85) * 100)}% match</span>
+                      </div>
+                      <div class="italic text-amber-100/80 mb-1 leading-snug">“${r.quote || ''}”</div>
+                      <div class="text-[11px] text-gray-400 leading-snug">💡 ${isEn ? 'Strategy Note: ' : '战法启示：'}${r.actionAdvice || ''}</div>
+                    </div>
+                  `).join('')}
+                </div>
               </div>
             ` : ''}
 
@@ -16983,6 +17336,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPortalPresets();
   initPortalFeaturesShowcase();
   initAdvSolarToggle();
+  initRectificationModal();
 
   // Return to Portal & Edit Natal Buttons
   if (btnReturnToPortal) {
@@ -17205,6 +17559,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openSocialCardModal = openSocialCardModal;
   window.closeSocialCardModal = closeSocialCardModal;
   window.renderFourAuspiciousDeities = renderFourAuspiciousDeities;
+  window.renderSensitivityAnalysis = renderSensitivityAnalysis;
+  window.initRectificationModal = initRectificationModal;
+  window.handleRunRectification = handleRunRectification;
+  window.renderRectificationResults = renderRectificationResults;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';
