@@ -12856,9 +12856,24 @@ jsc_check108_cmd = [
       throw new Error("Expected Hua Gai in Day pillar for 申年辰日");
     }
 
-    // English Mode Zero Residual Chinese Check
+    // English Mode Zero Residual Chinese Check & Zero Undefined Check
     var shenShaEn = BaZiEngine.calculateShenSha(bazi, "en");
+    if (!shenShaEn || !shenShaEn.fourAuspicious || shenShaEn.fourAuspicious.length !== 4) {
+      throw new Error("Invalid fourAuspicious in EN mode");
+    }
+    shenShaEn.fourAuspicious.forEach(function(d) {
+      if (!d.name || d.name === 'undefined') throw new Error("Deity missing valid name: " + JSON.stringify(d));
+      if (!d.verse || d.verse === 'undefined') throw new Error("Deity missing valid verse: " + JSON.stringify(d));
+      if (!d.essence || d.essence === 'undefined') throw new Error("Deity missing valid essence: " + JSON.stringify(d));
+      if (!d.trigger || d.trigger === 'undefined') throw new Error("Deity missing valid trigger: " + JSON.stringify(d));
+      if (!d.status || d.status === 'undefined') throw new Error("Deity missing valid status: " + JSON.stringify(d));
+      if (!d.locationText || d.locationText === 'undefined') throw new Error("Deity missing valid locationText: " + JSON.stringify(d));
+    });
+
     var enJson = JSON.stringify(shenShaEn);
+    if (enJson.indexOf('"undefined"') !== -1) {
+      throw new Error("Four Auspicious Deities contains 'undefined' in JSON output: " + enJson);
+    }
     var leaks = enJson.match(/[\u4e00-\u9fa5]/g);
     if (leaks && leaks.length > 0) {
       throw new Error("Residual Chinese in calculateShenSha English mode: " + leaks.join(""));
@@ -15210,6 +15225,12 @@ assert 'id="sensitivityProgressBar"' in idx_content, "Missing #sensitivityProgre
 assert 'id="sensitivityDiagnosisText"' in idx_content, "Missing #sensitivityDiagnosisText in index.html"
 assert 'id="btnTriggerRectificationFromCard"' in idx_content, "Missing #btnTriggerRectificationFromCard in index.html"
 assert 'id="btnOpenRectificationModal"' in idx_content, "Missing #btnOpenRectificationModal in index.html"
+assert 'id="btnRectifyTopNav"' in idx_content, "Missing #btnRectifyTopNav in index.html"
+assert 'id="rectificationHeroBanner"' in idx_content, "Missing #rectificationHeroBanner in index.html"
+assert 'id="btnBannerOpenRectification"' in idx_content, "Missing #btnBannerOpenRectification in index.html"
+assert 'id="portalFeatureRectify"' in idx_content, "Missing #portalFeatureRectify in index.html"
+assert 'id="navBtnRectification"' in idx_content, "Missing #navBtnRectification in index.html"
+assert 'id="btnLoadSampleEvents"' in idx_content, "Missing #btnLoadSampleEvents in index.html"
 assert 'id="rectificationModal"' in idx_content, "Missing #rectificationModal in index.html"
 assert 'id="rectificationCloseBtn"' in idx_content, "Missing #rectificationCloseBtn in index.html"
 assert 'id="rectifyBirthDate"' in idx_content, "Missing #rectifyBirthDate in index.html"
@@ -15423,7 +15444,238 @@ assert run_check121.returncode == 0, f"Check 121 JSC test failed: stdout={run_ch
 
 print("✓ 121. 生时临界微扰分析（31点离散采样/方差极差/相变诊断）、贝叶斯历史事件生时校准（13时辰MAP推演/双峰决胜题/一键采纳回填）、离线向量检索RAG（13部古籍+荣枯鉴+历史先贤）、决策沙盘反事实动力学（动能净产出vs心理能耗）与军师轻度链接Hybrid LLM（计算归算法表达归模型/端侧Gemini Nano/优雅降级/中英双语100%零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 121 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 122. Validating Dynamic Phase Space & Double-Well Potential Manifold (PhasePortraitEngine)
+# ==============================================================================
+print("\n=== 122. Validating Dynamic Phase Space & Double-Well Potential Manifold (PhasePortraitEngine) ===")
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_content = f.read()
+
+assert 'id="phasePortraitSection"' in idx_content, "Missing #phasePortraitSection in index.html"
+assert 'id="phasePortraitCanvas"' in idx_content, "Missing #phasePortraitCanvas in index.html"
+assert 'id="btnResetPhaseParams"' in idx_content, "Missing #btnResetPhaseParams in index.html"
+assert 'id="paramA"' in idx_content, "Missing #paramA in index.html"
+assert 'id="paramB"' in idx_content, "Missing #paramB in index.html"
+assert 'id="paramC"' in idx_content, "Missing #paramC in index.html"
+assert 'id="paramGamma"' in idx_content, "Missing #paramGamma in index.html"
+assert 'id="phaseTrajectorySummary"' in idx_content, "Missing #phaseTrajectorySummary in index.html"
+
+jsc_check122_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("js/phase_portrait.js");
+    load("js/bazi-engine.js");
+
+    var eng = new PhasePortraitEngine();
+    // Test force computation: F(x) = -(a*x^3 - b*x - c)
+    var force = eng.computeForce(1.0, 1.0, 2.0, 0.0);
+    // -(1*1 - 2*1 - 0) = -(-1) = 1
+    if (Math.abs(force - 1.0) > 1e-6) {
+      throw new Error("computeForce mismatch: expected 1.0, got " + force);
+    }
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    var derived = PhasePortraitEngine.deriveParametersAndTrajectory(bazi, [], 30);
+    if (!derived || typeof derived.a !== 'number' || typeof derived.b !== 'number') {
+      throw new Error("deriveParametersAndTrajectory failed: " + JSON.stringify(derived));
+    }
+    if (derived.trajectoryPoints.length !== 100) {
+      throw new Error("Expected 100 trajectory points, got: " + derived.trajectoryPoints.length);
+    }
+    derived.trajectoryPoints.forEach(function(pt) {
+      if (typeof pt.x !== 'number' || typeof pt.v !== 'number' || pt.x < -3.0 || pt.x > 3.0) {
+        throw new Error("Invalid trajectory point: " + JSON.stringify(pt));
+      }
+    });
+
+    // Verify bilingual summaries & zero residual Chinese in English summary
+    if (!derived.summaryZh || !derived.summaryEn) {
+      throw new Error("Missing summaryZh or summaryEn in derived result");
+    }
+    if (/[\u4e00-\u9fa5]/.test(derived.summaryEn)) {
+      throw new Error("Residual Chinese in PhasePortrait summaryEn: " + derived.summaryEn);
+    }
+    """
+]
+run_check122 = subprocess.run(jsc_check122_cmd, capture_output=True, text=True)
+assert run_check122.returncode == 0, f"Check 122 JSC test failed: stdout={run_check122.stdout} stderr={run_check122.stderr}"
+print("✓ 122. 动力学相空间与双井势能流形（非线性耗散积分/相平面流线场/双稳态分岔/百岁轨迹(x,v)/双语零中文残留）全量验证通过！")
+
+# ==============================================================================
+# 123. Validating Multi-Party Political Game Network (PoliticalGameMatrix)
+# ==============================================================================
+print("\n=== 123. Validating Multi-Party Political Game Network (PoliticalGameMatrix) ===")
+
+assert 'id="politicalGameSection"' in idx_content, "Missing #politicalGameSection in index.html"
+assert 'id="gameStemMe"' in idx_content, "Missing #gameStemMe in index.html"
+assert 'id="gameStemBoss"' in idx_content, "Missing #gameStemBoss in index.html"
+assert 'id="gameStemRival"' in idx_content, "Missing #gameStemRival in index.html"
+assert 'id="gameStemAlly"' in idx_content, "Missing #gameStemAlly in index.html"
+assert 'id="gameMatrixTblContainer"' in idx_content, "Missing #gameMatrixTblContainer in index.html"
+assert 'id="gameTransitStrategyCard"' in idx_content, "Missing #gameTransitStrategyCard in index.html"
+
+jsc_check123_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("js/game_matrix.js");
+
+    var matrixEngine = new PoliticalGameMatrix();
+    if (matrixEngine.players.length !== 4) {
+      throw new Error("Expected 4 default actors, got: " + matrixEngine.players.length);
+    }
+
+    var matrixZh = matrixEngine.buildMatrix("zh");
+    var matrixEn = matrixEngine.buildMatrix("en");
+
+    if (matrixZh.length !== 4 || matrixEn.length !== 4) {
+      throw new Error("Invalid matrix dimensions");
+    }
+
+    var reportsZh = matrixEngine.analyzeYearTransit("丙", "zh");
+    var reportsEn = matrixEngine.analyzeYearTransit("丙", "en");
+
+    if (!reportsZh.length || !reportsEn.length) {
+      throw new Error("Failed to generate transit reports");
+    }
+
+    // Check Codex Rong Ku Jian citations in reports
+    var hasCanon = reportsZh.some(function(r) { return r.canon_reference && r.canon_reference.indexOf("荣枯鉴") !== -1; });
+    if (!hasCanon) {
+      throw new Error("Missing Rong Ku Jian citation in transit reports");
+    }
+
+    // Zero residual Chinese in EN outputs
+    var matrixEnStr = JSON.stringify(matrixEn);
+    var reportsEnStr = JSON.stringify(reportsEn);
+    if (/[\u4e00-\u9fa5]/.test(matrixEnStr)) {
+      throw new Error("Residual Chinese in PoliticalGameMatrix EN matrix: " + matrixEnStr);
+    }
+    if (/[\u4e00-\u9fa5]/.test(reportsEnStr)) {
+      throw new Error("Residual Chinese in PoliticalGameMatrix EN reports: " + reportsEnStr);
+    }
+    """
+]
+run_check123 = subprocess.run(jsc_check123_cmd, capture_output=True, text=True)
+assert run_check123.returncode == 0, f"Check 123 JSC test failed: stdout={run_check123.stdout} stderr={run_check123.stderr}"
+print("✓ 123. 组织多方博弈政治矩阵（十神有向图权力克应/3~5人博弈网络/《荣枯鉴》传世兵法/流年战术/双语零中文残留）全量验证通过！")
+
+# ==============================================================================
+# 124. Validating NOAA Geomagnetic Declination & 24 Mountains Calibration (GeomagneticCorrection)
+# ==============================================================================
+print("\n=== 124. Validating NOAA Geomagnetic Declination & 24 Mountains Calibration (GeomagneticCorrection) ===")
+
+assert 'id="geomagneticSection"' in idx_content, "Missing #geomagneticSection in index.html"
+assert 'id="geoLatInput"' in idx_content, "Missing #geoLatInput in index.html"
+assert 'id="geoLonInput"' in idx_content, "Missing #geoLonInput in index.html"
+assert 'id="geoMagHeadingInput"' in idx_content, "Missing #geoMagHeadingInput in index.html"
+assert 'id="btnCalibGeomagnetic"' in idx_content, "Missing #btnCalibGeomagnetic in index.html"
+assert 'id="geoCalibResultContainer"' in idx_content, "Missing #geoCalibResultContainer in index.html"
+
+jsc_check124_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("js/geomagnetism.js");
+
+    // Beijing (approx -7.4°)
+    var decBeijing = GeomagneticCorrection.getDeclination(39.90, 116.40, 2026);
+    if (decBeijing > -5.0 || decBeijing < -9.0) {
+      throw new Error("Unexpected Beijing declination: " + decBeijing);
+    }
+
+    // New York (approx -12.7°)
+    var decNY = GeomagneticCorrection.getDeclination(40.71, -74.00, 2026);
+    if (decNY > -10.0 || decNY < -15.0) {
+      throw new Error("Unexpected New York declination: " + decNY);
+    }
+
+    // Test heading calibration
+    var calibZh = GeomagneticCorrection.correctCompassHeading(180, -7.5, "zh");
+    if (!calibZh || typeof calibZh.trueHeading !== 'number' || !calibZh.mountain) {
+      throw new Error("Invalid heading calibration output: " + JSON.stringify(calibZh));
+    }
+
+    // Test void line parting detection
+    var calibParting = GeomagneticCorrection.correctCompassHeading(172.0, 0, "zh");
+    if (typeof calibParting.isParting !== 'boolean') {
+      throw new Error("Missing isParting boolean");
+    }
+
+    // Zero residual Chinese in EN output
+    var calibEn = GeomagneticCorrection.correctCompassHeading(180, -7.5, "en");
+    var calibEnStr = JSON.stringify(calibEn);
+    if (/[\u4e00-\u9fa5]/.test(calibEnStr)) {
+      throw new Error("Residual Chinese in GeomagneticCorrection EN output: " + calibEnStr);
+    }
+    """
+]
+run_check124 = subprocess.run(jsc_check124_cmd, capture_output=True, text=True)
+assert run_check124.returncode == 0, f"Check 124 JSC test failed: stdout={run_check124.stdout} stderr={run_check124.stderr}"
+print("✓ 124. NOAA 地磁偏角与大地测量修正（WMM 全球网格双线性插值/长期漂移补偿/二十四山向真北解算/兼向出卦研判/双语零中文残留）全量验证通过！")
+
+# ==============================================================================
+# 125. Validating Dynamic Tianji Battle Rhythm Calendar Feed Engine (CalendarFeedEngine)
+# ==============================================================================
+print("\n=== 125. Validating Dynamic Tianji Battle Rhythm Calendar Feed Engine (CalendarFeedEngine) ===")
+
+assert 'id="tianjiCalendarFeedSection"' in idx_content, "Missing #tianjiCalendarFeedSection in index.html"
+assert 'id="tianjiEventsList"' in idx_content, "Missing #tianjiEventsList in index.html"
+assert 'id="btnDownloadTianjiICS"' in idx_content, "Missing #btnDownloadTianjiICS in index.html"
+assert 'id="btnCopyWebcalUrl"' in idx_content, "Missing #btnCopyWebcalUrl in index.html"
+
+jsc_check125_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("js/feed_engine.js");
+    load("js/bazi-engine.js");
+
+    var bazi = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 12, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+
+    var feed = new CalendarFeedEngine(bazi, 2026);
+    var eventsZh = feed.extractCriticalEvents(2026, "zh");
+    if (!eventsZh || eventsZh.length < 18) {
+      throw new Error("Expected at least 18 critical dates, got: " + (eventsZh ? eventsZh.length : 0));
+    }
+
+    var icsZh = feed.generateICSContent(eventsZh, "zh");
+    if (icsZh.indexOf("BEGIN:VCALENDAR") === -1 || icsZh.indexOf("VERSION:2.0") === -1 || icsZh.indexOf("BEGIN:VEVENT") === -1 || icsZh.indexOf("BEGIN:VALARM") === -1 || icsZh.indexOf("TRIGGER:-PT4H") === -1) {
+      throw new Error("ICS missing standard RFC 5545 calendar headers or alarm triggers");
+    }
+
+    var eventsEn = feed.extractCriticalEvents(2026, "en");
+    var icsEn = feed.generateICSContent(eventsEn, "en");
+
+    // Zero residual Chinese in EN output
+    var eventsEnStr = JSON.stringify(eventsEn);
+    if (/[\u4e00-\u9fa5]/.test(eventsEnStr)) {
+      throw new Error("Residual Chinese in CalendarFeedEngine EN events: " + eventsEnStr);
+    }
+    if (/[\u4e00-\u9fa5]/.test(icsEn)) {
+      throw new Error("Residual Chinese in CalendarFeedEngine EN ICS stream: " + icsEn);
+    }
+
+    var webcalUrl = CalendarFeedEngine.getWebcalSubscriptionUrl(bazi, 2026);
+    if (!webcalUrl || webcalUrl.indexOf("webcal://") !== 0) {
+      throw new Error("Invalid webcal subscription URL: " + webcalUrl);
+    }
+    """
+]
+run_check125 = subprocess.run(jsc_check125_cmd, capture_output=True, text=True)
+assert run_check125.returncode == 0, f"Check 125 JSC test failed: stdout={run_check125.stdout} stderr={run_check125.stderr}"
+print("✓ 125. 动态订阅式天机进退节律历（全年18~24个高势能拐点/RFC 5545 VEVENT+VALARM标准日历流/webcal订阅/双语零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 125 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

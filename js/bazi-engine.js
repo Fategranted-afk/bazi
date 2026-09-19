@@ -1366,13 +1366,25 @@ class BaZiEngine {
       }
     ];
 
-    if (!isEn) {
+    if (isEn) {
+      fourAuspicious.forEach(item => {
+        item.nameEn = item.name;
+        item.verseEn = item.verse;
+        item.essenceEn = item.essence;
+        item.triggerEn = item.trigger;
+        item.advisorQueryEn = item.advisorQuery;
+        item.statusEn = item.status;
+        item.locationTextEn = item.locationText;
+      });
+    } else {
       fourAuspicious.forEach(item => {
         item.nameZh = item.name;
         item.verseZh = item.verse;
         item.essenceZh = item.essence;
         item.triggerZh = item.trigger;
         item.advisorQueryZh = item.advisorQuery;
+        item.statusZh = item.status;
+        item.locationTextZh = item.locationText;
       });
     }
 

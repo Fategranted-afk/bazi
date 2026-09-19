@@ -84,6 +84,12 @@
           ⛩️ 命理门庭
         </button>
 
+        <!-- Bayesian Birth Time Rectification Modal Button in Top Nav -->
+        <button id="btnRectifyTopNav" class="px-2.5 sm:px-3 py-1.5 text-xs rounded-xl border border-amber-500/50 bg-amber-950/70 hover:bg-amber-900/90 text-amber-300 font-bold transition flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer shadow-sm whitespace-nowrap" title="时辰不确定？以历史重大事件反推精确时辰" data-i18n="btn_rectify_topnav">
+          <span>🕰️</span>
+          <span data-i18n="btn_rectify_topnav_text">以事校时</span>
+        </button>
+
         <!-- PWA Install Button (Shown when prompt is available) -->
         <button id="btnInstallPwa" class="hidden px-2.5 py-1.5 text-xs rounded-lg border border-emerald-600/50 bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 font-medium transition flex items-center gap-1 shadow-sm whitespace-nowrap" data-i18n="btn_install_pwa">
           📲 安装离线应用
@@ -212,9 +218,10 @@
             <div>
               <div class="flex items-center justify-between mb-1">
                 <label class="block text-xs font-medium text-gray-300" data-i18n="lbl_birth_time">出生时间 (当地钟表时)</label>
-                <button type="button" id="btnOpenRectificationModal" class="text-[11px] text-amber-400 hover:text-amber-300 transition flex items-center gap-1 cursor-pointer font-medium" title="时辰不确定？以历史大事件反推精确时辰">
+                <button type="button" id="btnOpenRectificationModal" class="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-600/30 via-amber-500/20 to-amber-700/30 hover:from-amber-600/50 hover:to-amber-700/50 text-amber-300 border border-amber-500/50 text-[11px] font-bold transition flex items-center gap-1 cursor-pointer shadow-sm active:scale-95 animate-pulse" title="时辰不确定或处于交界？以历史重大事件反推精确时辰">
                   <span>🕰️</span>
                   <span id="btnRectifyText" data-i18n="btn_rectify_birthtime">以事推时</span>
+                  <span class="text-[9px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">MAP</span>
                 </button>
               </div>
               <input type="time" id="birthTime" class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
@@ -256,6 +263,28 @@
                 <input type="text" id="currentCustomCityInput" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500 hidden" placeholder="输入自定义城市名称 / Enter custom city name" data-i18n-placeholder="ph_custom_city">
               </div>
             </div>
+          </div>
+
+          <!-- Dedicated Bayesian Rectification Interactive Banner -->
+          <div id="rectificationHeroBanner" class="p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-amber-950/70 via-[#181a28]/90 to-amber-950/70 border border-amber-500/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-xl flex-shrink-0 shadow-inner">
+                🕰️
+              </div>
+              <div class="space-y-0.5">
+                <div class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+                  <span data-i18n="rectify_banner_title">时辰不确定 / 交界敏感？贝叶斯以事校时</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">BAYESIAN MAP</span>
+                </div>
+                <p class="text-[11px] text-gray-300 leading-snug" data-i18n="rectify_banner_desc">
+                  输入 2~3 个历史重大事件（升学、结婚、破财、大病），全自动遍历 13 时辰 Softmax 逆推最符时柱
+                </p>
+              </div>
+            </div>
+            <button type="button" id="btnBannerOpenRectification" class="w-full sm:w-auto px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold transition shadow-md active:scale-95 cursor-pointer flex items-center justify-center gap-1.5 flex-shrink-0 whitespace-nowrap">
+              <span>⚡</span>
+              <span data-i18n="rectify_banner_btn">启动以事校时</span>
+            </button>
           </div>
 
           <!-- Advanced Astronomical Options & True Solar Time Settings -->
@@ -465,6 +494,18 @@
             </p>
           </div>
 
+          <!-- Card: Bayesian Birth Time Rectification -->
+          <div id="portalFeatureRectify" class="feature-showcase-card cursor-pointer group border-amber-500/40 bg-gradient-to-b from-amber-950/20 to-transparent">
+            <div class="flex items-center space-x-2 text-amber-300 mb-1.5 font-bold font-serif-sc">
+              <span class="text-base">🕰️</span>
+              <span data-i18n="portal_card_rectify_title">贝叶斯以事校时</span>
+              <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">MAP</span>
+            </div>
+            <p class="text-gray-400 text-[11px] leading-relaxed" data-i18n="portal_card_rectify_desc">
+              输入2~3个历史重大事件，遍历13时辰计算后验概率波谱，双峰决胜题一键采纳回填。
+            </p>
+          </div>
+
           <!-- Card 11: Scenario Simulator Sandbox (Hidden to avoid duplication with standalone simulator while keeping test parity) -->
           <div class="hidden feature-showcase-card cursor-pointer group" data-jump-view="view-simulator">
             <div class="flex items-center space-x-2 text-indigo-400 mb-1.5 font-bold font-serif-sc">
@@ -593,6 +634,11 @@
           <span class="text-base">📜</span>
           <span data-i18n="nav_view_history">历史人物参考 (南北乱世300年)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_history">史鉴推演</span>
+        </button>
+        <button id="navBtnRectification" type="button" class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-amber-300 hover:text-amber-100 hover:bg-amber-950/60 border border-amber-500/40 cursor-pointer shadow-sm active:scale-95 whitespace-nowrap" title="贝叶斯以事校时 · 逆推精确生时">
+          <span class="text-base">🕰️</span>
+          <span data-i18n="nav_rectify_btn">以事校时</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/80 text-amber-300 border border-amber-600/40 font-mono font-bold">MAP</span>
         </button>
       </div>
     </nav>
@@ -1451,6 +1497,120 @@
       </div>
       <div id="ecologicalResonanceContainer" class="space-y-4">
         <!-- Injected dynamically via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Dynamic Phase Space & Double-Well Potential Manifold (动力学相空间与势能井流形) -->
+    <section id="phasePortraitSection" class="bg-card rounded-2xl border border-amber-500/40 p-5 sm:p-6 shadow-2xl space-y-5 bg-gradient-to-br from-[#141724] via-[#0f111a] to-black">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🌀</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+              <span data-i18n="phase_portrait_title">动力学相空间与双井势能流形 (Phase Space & Potential Manifold)</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">PHASE DYNAMICS</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="phase_portrait_sub">
+              将离散年份运势重构为非线性耗散动力学相轨迹 (x, v)，洞察格局刚性与双稳态吸引子
+            </p>
+          </div>
+        </div>
+        <button id="btnResetPhaseParams" type="button" class="px-3 py-1.5 rounded-xl bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 text-xs font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+          <span>🔄</span>
+          <span data-i18n="phase_btn_reset">重置动力学参数</span>
+        </button>
+      </div>
+
+      <!-- Canvas & Controls Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+        <!-- Canvas Arena (8 cols) -->
+        <div class="lg:col-span-8 flex flex-col items-center justify-center p-3 rounded-xl bg-black/50 border border-gray-800">
+          <canvas id="phasePortraitCanvas" width="640" height="360" class="w-full h-auto max-h-[360px] rounded-lg shadow-inner"></canvas>
+          <div class="flex flex-wrap items-center justify-between w-full pt-2 px-1 text-[11px] text-gray-400 font-mono">
+            <span data-i18n="phase_legend_axis_x">横轴 x: 能量位移 (身弱受阻 < 0 < 身旺用神)</span>
+            <span data-i18n="phase_legend_axis_v">纵轴 v: 动量速率 (逆境蓄势 < 0 < 顺境迸发)</span>
+          </div>
+        </div>
+
+        <!-- Dynamic Parameter Tuning Sliders (4 cols) -->
+        <div class="lg:col-span-4 p-4 rounded-xl bg-black/30 border border-gray-800 space-y-3.5 text-xs">
+          <div class="text-xs font-bold text-amber-200 font-serif-sc border-b border-gray-800/80 pb-1.5 flex items-center justify-between">
+            <span>⚙️ 势函数参数调谐 (V(x) Manifold)</span>
+            <span id="phaseStateBadge" class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 font-mono">ATTRACTOR</span>
+          </div>
+
+          <!-- Parameter a: Rigidity -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-gray-300">
+              <span data-i18n="phase_param_rigidity">格局刚性 (a):</span>
+              <span id="labelParamA" class="font-mono text-amber-400 font-bold">1.20</span>
+            </div>
+            <input type="range" id="paramA" min="0.2" max="3.0" step="0.05" value="1.20" class="w-full accent-amber-500 cursor-pointer">
+          </div>
+
+          <!-- Parameter b: Bifurcation -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-gray-300">
+              <span data-i18n="phase_param_bifurcation">双稳态分岔 (b):</span>
+              <span id="labelParamB" class="font-mono text-amber-400 font-bold">0.80</span>
+            </div>
+            <input type="range" id="paramB" min="0.0" max="2.5" step="0.05" value="0.80" class="w-full accent-amber-500 cursor-pointer">
+          </div>
+
+          <!-- Parameter c: Decadal Bias -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-gray-300">
+              <span data-i18n="phase_param_bias">大运偏压 (c):</span>
+              <span id="labelParamC" class="font-mono text-amber-400 font-bold">0.00</span>
+            </div>
+            <input type="range" id="paramC" min="-2.0" max="2.0" step="0.05" value="0.00" class="w-full accent-amber-500 cursor-pointer">
+          </div>
+
+          <!-- Parameter gamma: Damping -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-gray-300">
+              <span data-i18n="phase_param_damping">耗散阻尼 (γ):</span>
+              <span id="labelParamGamma" class="font-mono text-amber-400 font-bold">0.38</span>
+            </div>
+            <input type="range" id="paramGamma" min="0.1" max="1.0" step="0.02" value="0.38" class="w-full accent-amber-500 cursor-pointer">
+          </div>
+
+          <!-- Summary Diagnosis Box -->
+          <div id="phaseTrajectorySummary" class="p-2.5 rounded-lg bg-[#161824] border border-amber-900/30 text-[11px] text-gray-300 leading-relaxed font-sans">
+            动力学参数根据原局子平量化评分与当值大运自动绑定，相轨迹平滑穿行于势能井。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tianji Battle Rhythm Calendar · RFC 5545 (天机·个人进退节律历) -->
+    <section id="tianjiCalendarFeedSection" class="bg-card rounded-2xl border border-indigo-500/40 p-5 sm:p-6 shadow-2xl space-y-4 bg-gradient-to-br from-[#121424] via-[#0f101c] to-black">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">📅</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-indigo-300 flex items-center gap-2">
+              <span data-i18n="feed_title">天机·个人进退节律历 (Tianji Battle Rhythm Calendar · RFC 5545)</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">RFC 5545</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="feed_sub">
+              全年精选 18~24 个高势能跃迁拐点日，原生支持导入 iPhone / Mac / Google Calendar
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnDownloadTianjiICS" type="button" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs shadow-md transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+            <span data-i18n="feed_btn_download_ics">📥 下载全年生效日历 (.ics)</span>
+          </button>
+          <button id="btnCopyWebcalUrl" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-indigo-300 border border-indigo-500/40 text-xs font-bold transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+            <span data-i18n="feed_btn_copy_webcal">📲 复制订阅链接</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Critical Events List Container -->
+      <div id="tianjiEventsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+        <!-- Injected via JS -->
       </div>
     </section>
   </div>
@@ -2354,6 +2514,52 @@
     <div id="fengshuiContentContainer" class="space-y-6">
       <!-- Injected via JS -->
     </div>
+
+    <!-- NOAA Geomagnetic Declination & 24 Mountain Calibration Section -->
+    <div id="geomagneticSection" class="p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-[#0a1412] via-[#0f1f1c] to-[#070e0d] shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-emerald-900/50 pb-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-emerald-400 text-emerald-300">大地测量</span>
+            <h3 class="text-lg font-bold font-serif-sc text-emerald-200" data-i18n="geomag_title">
+              NOAA 地磁偏角与二十四山真北校正仪 (Geomagnetic & 24 Mountains)
+            </h3>
+          </div>
+          <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="geomag_sub">
+            基于 NOAA WMM 全球离线网格插值与年漂移补偿，消除磁北与地理真北偏差，杜绝兼向出卦
+          </p>
+        </div>
+        <div class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/60">
+          WMM-2025 SECULAR DRIFT
+        </div>
+      </div>
+
+      <!-- Coordinate & Heading Inputs -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-black/30 p-4 rounded-xl border border-emerald-900/30">
+        <div>
+          <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lat">纬度 (Latitude):</label>
+          <input type="number" id="geoLatInput" step="0.01" value="39.90" placeholder="39.90" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+        </div>
+        <div>
+          <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lon">经度 (Longitude):</label>
+          <input type="number" id="geoLonInput" step="0.01" value="116.40" placeholder="116.40" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+        </div>
+        <div>
+          <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_heading">罗盘测量磁方位 (Magnetic Heading °):</label>
+          <input type="number" id="geoMagHeadingInput" step="0.1" min="0" max="360" value="180.0" placeholder="180.0" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+        </div>
+        <div class="flex items-end">
+          <button type="button" id="btnCalibGeomagnetic" class="w-full py-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center justify-center gap-1.5" data-i18n="geomag_btn_calib">
+            🧭 计算真北山向与出卦诊断
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Container -->
+      <div id="geoCalibResultContainer" class="p-4 rounded-xl border border-emerald-900/40 bg-black/40">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
   </div>
 
   <!-- View 9: Career & Wealth Trajectory (职场打工人破局与财运事业推演) -->
@@ -2401,6 +2607,103 @@
     <!-- Content Container for Career & Wealth Trajectory -->
     <div id="careerContentContainer" class="space-y-6">
       <!-- Injected via JS -->
+    </div>
+
+    <!-- View 9: Political Game Matrix Section -->
+    <div id="politicalGameSection" class="p-6 rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#0c0e1a] via-[#12162a] to-[#0a0c16] shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-indigo-900/50 pb-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300">博弈网络</span>
+            <h3 class="text-lg font-bold font-serif-sc text-indigo-200" data-i18n="game_matrix_title">
+              组织多方博弈政治矩阵 (Multi-Party Political Game Network)
+            </h3>
+          </div>
+          <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="game_matrix_sub">
+            将双轨推演升级为 3~5 人非零和博弈网络，十神有向图权力克应与流年破局战法
+          </p>
+        </div>
+        <div class="text-xs font-mono text-indigo-400 bg-indigo-950/60 px-3 py-1.5 rounded-lg border border-indigo-800/60">
+          N×N TEN GODS DIRECTED GRAPH
+        </div>
+      </div>
+
+      <!-- Actors Configuration -->
+      <div class="bg-black/30 p-4 rounded-xl border border-indigo-900/30">
+        <h4 class="text-xs font-bold text-indigo-300 mb-3" data-i18n="game_matrix_role_select">参与者日主配置</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_me">我 (命主)</label>
+            <select id="gameStemMe" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-amber-300 font-bold focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚">庚 (Yang Metal)</option>
+              <option value="辛">辛 (Yin Metal)</option>
+              <option value="壬">壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_boss">直属领导 (决策者)</label>
+            <select id="gameStemBoss" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚" selected>庚 (Yang Metal)</option>
+              <option value="辛">辛 (Yin Metal)</option>
+              <option value="壬">壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_rival">竞争对手 (同侪)</label>
+            <select id="gameStemRival" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚">庚 (Yang Metal)</option>
+              <option value="辛" selected>辛 (Yin Metal)</option>
+              <option value="壬">壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_ally">核心技术骨干 (潜在同盟)</label>
+            <select id="gameStemAlly" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚">庚 (Yang Metal)</option>
+              <option value="辛">辛 (Yin Metal)</option>
+              <option value="壬" selected>壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrix Table Container -->
+      <div id="gameMatrixTblContainer" class="overflow-x-auto rounded-xl border border-indigo-900/40 bg-black/40 p-4">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Transit Year Strategy Card -->
+      <div id="gameTransitStrategyCard" class="p-4 rounded-xl border border-amber-600/30 bg-amber-950/15">
+        <!-- Rendered via JS -->
+      </div>
     </div>
 
     <!-- Dual-Track Scenario Simulator Portal Banner in Career View -->
@@ -2971,13 +3274,13 @@
             <div>
               <label class="text-[11px] text-gray-400 block mb-1" data-i18n="rectify_lbl_approx_time">记忆模糊区间 (选填)</label>
               <select id="rectifyApproxHour" class="w-full bg-black/50 border border-gray-700 rounded-lg p-2 text-xs text-gray-100">
-                <option value="-1">完全不知 / 全天13时辰遍历</option>
-                <option value="4">凌晨 (寅卯时 03:00 - 07:00)</option>
-                <option value="9">上午 (辰巳时 07:00 - 11:00)</option>
-                <option value="13">中午 (午未时 11:00 - 15:00)</option>
-                <option value="17">傍晚 (申酉时 15:00 - 19:00)</option>
-                <option value="21">夜间 (戌亥时 19:00 - 23:00)</option>
-                <option value="0">子时 (23:00 - 01:00)</option>
+                <option value="-1" data-i18n="rectify_approx_unknown">完全不知 / 全天13时辰遍历</option>
+                <option value="4" data-i18n="rectify_approx_dawn">凌晨 (寅卯时 03:00 - 07:00)</option>
+                <option value="9" data-i18n="rectify_approx_morning">上午 (辰巳时 07:00 - 11:00)</option>
+                <option value="13" data-i18n="rectify_approx_noon">中午 (午未时 11:00 - 15:00)</option>
+                <option value="17" data-i18n="rectify_approx_evening">傍晚 (申酉时 15:00 - 19:00)</option>
+                <option value="21" data-i18n="rectify_approx_night">夜间 (戌亥时 19:00 - 23:00)</option>
+                <option value="0" data-i18n="rectify_approx_midnight">子时 (23:00 - 01:00)</option>
               </select>
             </div>
           </div>
@@ -2990,7 +3293,9 @@
               <span>2️⃣</span>
               <span data-i18n="rectify_step2_title">录入 2~3 个已发生的确定性重大历史事件</span>
             </div>
-            <span class="text-[10px] text-gray-500 font-mono">2-3 EVENTS REQUIRED</span>
+            <button type="button" id="btnLoadSampleEvents" class="text-[10px] px-2 py-0.5 rounded bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 transition cursor-pointer active:scale-95" data-i18n="rectify_btn_load_sample">
+              ⚡ 载入示例事件
+            </button>
           </div>
 
           <!-- Event 1 -->
@@ -3000,15 +3305,15 @@
               <span class="text-[10px] text-gray-400" data-i18n="rectify_event_1_hint">主要影响大运与地支刑冲</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <input type="number" id="rectifyEventYear1" min="1950" max="2035" placeholder="年份 (如 2018)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <input type="number" id="rectifyEventYear1" min="1950" max="2035" placeholder="年份 (如 2018)" data-i18n-placeholder="rectify_ph_year" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
               <select id="rectifyEventType1" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
-                <option value="career_academic">学业登顶 / 职场重大跃迁</option>
-                <option value="trauma_accident">严重伤病 / 手术意外血光</option>
-                <option value="marriage_union">婚恋正缘 / 结婚领证</option>
-                <option value="childbirth">添丁生育 / 子嗣落地</option>
-                <option value="relocation_travel">跨国搬迁 / 远行移居</option>
+                <option value="career_academic" data-i18n="rectify_opt_career">学业登顶 / 职场重大跃迁</option>
+                <option value="trauma_accident" data-i18n="rectify_opt_trauma">严重伤病 / 手术意外血光</option>
+                <option value="marriage_union" data-i18n="rectify_opt_marriage">婚恋正缘 / 结婚领证</option>
+                <option value="childbirth" data-i18n="rectify_opt_childbirth">添丁生育 / 子嗣落地</option>
+                <option value="relocation_travel" data-i18n="rectify_opt_relocation">跨国搬迁 / 远行移居</option>
               </select>
-              <input type="text" id="rectifyEventDesc1" placeholder="事件备注 (如 考研上岸/骨折)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <input type="text" id="rectifyEventDesc1" placeholder="事件备注 (如 考研上岸/骨折)" data-i18n-placeholder="rectify_ph_desc" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
             </div>
           </div>
 
@@ -3019,15 +3324,15 @@
               <span class="text-[10px] text-gray-400" data-i18n="rectify_event_2_hint">校验时柱子女宫与门户位</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <input type="number" id="rectifyEventYear2" min="1950" max="2035" placeholder="年份 (如 2020)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <input type="number" id="rectifyEventYear2" min="1950" max="2035" placeholder="年份 (如 2020)" data-i18n-placeholder="rectify_ph_year" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
               <select id="rectifyEventType2" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
-                <option value="trauma_accident">严重伤病 / 手术意外血光</option>
-                <option value="career_academic">学业登顶 / 职场重大跃迁</option>
-                <option value="marriage_union">婚恋正缘 / 结婚领证</option>
-                <option value="childbirth">添丁生育 / 子嗣落地</option>
-                <option value="relocation_travel">跨国搬迁 / 远行移居</option>
+                <option value="trauma_accident" data-i18n="rectify_opt_trauma">严重伤病 / 手术意外血光</option>
+                <option value="career_academic" data-i18n="rectify_opt_career">学业登顶 / 职场重大跃迁</option>
+                <option value="marriage_union" data-i18n="rectify_opt_marriage">婚恋正缘 / 结婚领证</option>
+                <option value="childbirth" data-i18n="rectify_opt_childbirth">添丁生育 / 子嗣落地</option>
+                <option value="relocation_travel" data-i18n="rectify_opt_relocation">跨国搬迁 / 远行移居</option>
               </select>
-              <input type="text" id="rectifyEventDesc2" placeholder="事件备注 (如 创业破财/大手术)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <input type="text" id="rectifyEventDesc2" placeholder="事件备注 (如 创业破财/大手术)" data-i18n-placeholder="rectify_ph_desc" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
             </div>
           </div>
 
@@ -3038,15 +3343,15 @@
               <span class="text-[10px] text-gray-500">OPTIONAL TIE-BREAKER</span>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              <input type="number" id="rectifyEventYear3" min="1950" max="2035" placeholder="年份 (如 2023)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <input type="number" id="rectifyEventYear3" min="1950" max="2035" placeholder="年份 (如 2023)" data-i18n-placeholder="rectify_ph_year" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
               <select id="rectifyEventType3" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
-                <option value="childbirth">添丁生育 / 子嗣落地</option>
-                <option value="marriage_union">婚恋正缘 / 结婚领证</option>
-                <option value="relocation_travel">跨国搬迁 / 远行移居</option>
-                <option value="career_academic">学业登顶 / 职场重大跃迁</option>
-                <option value="trauma_accident">严重伤病 / 手术意外血光</option>
+                <option value="childbirth" data-i18n="rectify_opt_childbirth">添丁生育 / 子嗣落地</option>
+                <option value="marriage_union" data-i18n="rectify_opt_marriage">婚恋正缘 / 结婚领证</option>
+                <option value="relocation_travel" data-i18n="rectify_opt_relocation">跨国搬迁 / 远行移居</option>
+                <option value="career_academic" data-i18n="rectify_opt_career">学业登顶 / 职场重大跃迁</option>
+                <option value="trauma_accident" data-i18n="rectify_opt_trauma">严重伤病 / 手术意外血光</option>
               </select>
-              <input type="text" id="rectifyEventDesc3" placeholder="事件备注 (如 顺利得子/出洋留学)" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
+              <input type="text" id="rectifyEventDesc3" placeholder="事件备注 (如 顺利得子/出洋留学)" data-i18n-placeholder="rectify_ph_desc" class="bg-black/40 border border-gray-700 rounded p-1.5 text-xs text-gray-100">
             </div>
           </div>
 
@@ -3104,6 +3409,10 @@
   <script src="data/enterprises.js"></script>
   <script src="js/simulator-engine.js"></script>
   <script src="js/social-card-engine.js"></script>
+  <script src="js/phase_portrait.js"></script>
+  <script src="js/game_matrix.js"></script>
+  <script src="js/geomagnetism.js"></script>
+  <script src="js/feed_engine.js"></script>
   <script src="js/portrait-engine.js?v=2026091404"></script>
   <script src="js/luck-engine.js?v=2026091404"></script>
   <script src="js/iching-engine.js?v=2026091404"></script>

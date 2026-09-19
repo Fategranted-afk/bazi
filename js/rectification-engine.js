@@ -350,8 +350,8 @@ class RectificationEngine {
           branch: cand.branch,
           hourPillarZh: hourPillarZh,
           hourPillarEn: hourPillarEn,
-          patternZh: baziRes.zipingScore?.pattern || '正格',
-          patternEn: baziRes.zipingScore?.pattern || 'Standard Pattern',
+          patternZh: baziRes.zipingScore?.categoryZh || baziRes.zipingScore?.pattern || '正格',
+          patternEn: baziRes.zipingScore?.categoryEn || 'Standard Pattern',
           logScore: logLikelihood,
           evidences: eventEvidences
         });

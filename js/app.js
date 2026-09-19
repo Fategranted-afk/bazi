@@ -1146,6 +1146,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof renderHistoricalFiguresView === 'function') {
         renderHistoricalFiguresView(result, currentLuckResult);
       }
+      if (typeof renderPhasePortrait === 'function') {
+        renderPhasePortrait(result, currentLuckResult);
+      }
+      if (typeof renderTianjiCalendarFeed === 'function') {
+        renderTianjiCalendarFeed(result, currentLuckResult);
+      }
+      if (typeof renderPoliticalGameMatrix === 'function') {
+        renderPoliticalGameMatrix(result, currentLuckResult);
+      }
+      if (typeof renderGeomagneticCalibrator === 'function') {
+        renderGeomagneticCalibrator(result);
+      }
       updateDashboardSummaryBar();
       updateLandingPreview();
 
@@ -1319,43 +1331,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const shenSha = precalcShenSha || (typeof BaZiEngine !== 'undefined' && typeof BaZiEngine.calculateShenSha === 'function' ? BaZiEngine.calculateShenSha(res, currentLang) : null);
     if (!shenSha || !shenSha.fourAuspicious) return;
 
-    container.innerHTML = shenSha.fourAuspicious.map(d => `
+    container.innerHTML = shenSha.fourAuspicious.map(d => {
+      const dName = isEn ? (d.nameEn || d.name || '') : (d.nameZh || d.name || '');
+      const dVerse = isEn ? (d.verseEn || d.verse || '') : (d.verseZh || d.verse || '');
+      const dEssence = isEn ? (d.essenceEn || d.essence || '') : (d.essenceZh || d.essence || '');
+      const dTrigger = isEn ? (d.triggerEn || d.trigger || '') : (d.triggerZh || d.trigger || '');
+      const dStatus = isEn ? (d.statusEn || d.status || '') : (d.statusZh || d.status || '');
+      const dLocation = isEn ? (d.locationTextEn || d.locationText || '') : (d.locationTextZh || d.locationText || '');
+
+      return `
       <div class="deity-card p-4 rounded-xl border border-amber-600/30 bg-[#161824]/90 hover:border-amber-500/60 transition shadow-lg flex flex-col justify-between space-y-3">
         <div>
           <!-- Header -->
           <div class="flex items-center justify-between pb-2 border-b border-gray-800">
             <div class="flex items-center space-x-2">
-              <span class="text-xl">${d.icon}</span>
-              <span class="font-bold font-serif-sc text-sm text-amber-200">${isEn ? d.nameEn : d.nameZh}</span>
+              <span class="text-xl">${d.icon || '✨'}</span>
+              <span class="font-bold font-serif-sc text-sm text-amber-200">${dName}</span>
             </div>
-            <span class="text-[10px] px-2 py-0.5 rounded-full border font-mono ${d.statusClass}">
-              ${d.status}
+            <span class="text-[10px] px-2 py-0.5 rounded-full border font-mono ${d.statusClass || ''}">
+              ${dStatus}
             </span>
           </div>
 
           <!-- Verse -->
           <div class="mt-2.5 p-2 rounded-lg bg-black/40 border border-gray-800/80 text-[11px] text-amber-300/90 font-serif-sc leading-relaxed">
-            ${isEn ? d.verseEn : d.verseZh}
+            ${dVerse}
           </div>
 
           <!-- Content Details -->
           <div class="mt-2.5 space-y-2 text-xs text-gray-300">
             <p>
               <span class="text-gray-400 font-medium">${typeof I18N !== 'undefined' ? I18N.t('deity_card_location_label', currentLang) : (isEn ? 'Chart Position: ' : '命盘落位：')}</span>
-              <span class="font-semibold text-amber-200">${d.locationText}</span>
+              <span class="font-semibold text-amber-200">${dLocation}</span>
             </p>
             <p class="text-gray-400 text-[11px] leading-relaxed">
               <span class="text-gray-300 font-medium">${typeof I18N !== 'undefined' ? I18N.t('deity_card_essence_label', currentLang) : (isEn ? 'Manifested Power: ' : '显化威能：')}</span>
-              ${isEn ? d.essenceEn : d.essenceZh}
+              ${dEssence}
             </p>
             <p class="text-emerald-400/90 text-[11px] leading-relaxed">
               <span class="text-emerald-300 font-medium">${typeof I18N !== 'undefined' ? I18N.t('deity_card_trigger_label', currentLang) : (isEn ? 'Transit Cycle: ' : '岁运时令：')}</span>
-              ${isEn ? d.triggerEn : d.triggerZh}
+              ${dTrigger}
             </p>
           </div>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   // Render Birth Time Sensitivity & Structural Stability (生时临界微扰分析与结构稳定性)
@@ -1441,8 +1462,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('rectificationModal');
     const openBtn1 = document.getElementById('btnOpenRectificationModal');
     const openBtn2 = document.getElementById('btnTriggerRectificationFromCard');
+    const openBtnTop = document.getElementById('btnRectifyTopNav');
+    const openBtnBanner = document.getElementById('btnBannerOpenRectification');
+    const openBtnNav = document.getElementById('navBtnRectification');
+    const openBtnPortal = document.getElementById('portalFeatureRectify');
     const closeBtn = document.getElementById('rectificationCloseBtn');
     const runBtn = document.getElementById('btnRunRectification');
+    const loadSampleBtn = document.getElementById('btnLoadSampleEvents');
 
     function openModal() {
       if (!modal) return;
@@ -1462,8 +1488,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (openBtn1) openBtn1.addEventListener('click', openModal);
     if (openBtn2) openBtn2.addEventListener('click', openModal);
+    if (openBtnTop) openBtnTop.addEventListener('click', openModal);
+    if (openBtnBanner) openBtnBanner.addEventListener('click', openModal);
+    if (openBtnNav) openBtnNav.addEventListener('click', openModal);
+    if (openBtnPortal) openBtnPortal.addEventListener('click', openModal);
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (runBtn) runBtn.addEventListener('click', handleRunRectification);
+
+    if (loadSampleBtn) {
+      loadSampleBtn.addEventListener('click', () => {
+        const isEn = (currentLang === 'en');
+        const y1 = document.getElementById('rectifyEventYear1');
+        const t1 = document.getElementById('rectifyEventType1');
+        const d1 = document.getElementById('rectifyEventDesc1');
+        if (y1) y1.value = '2018';
+        if (t1) t1.value = 'career_academic';
+        if (d1) d1.value = isEn ? 'College Entrance / University Admission' : '高考考研 / 名校录取';
+
+        const y2 = document.getElementById('rectifyEventYear2');
+        const t2 = document.getElementById('rectifyEventType2');
+        const d2 = document.getElementById('rectifyEventDesc2');
+        if (y2) y2.value = '2022';
+        if (t2) t2.value = 'career_academic';
+        if (d2) d2.value = isEn ? 'Major Career Promotion / Landed Tech Giant' : '职场跃迁 / 入职大厂';
+
+        const y3 = document.getElementById('rectifyEventYear3');
+        const t3 = document.getElementById('rectifyEventType3');
+        const d3 = document.getElementById('rectifyEventDesc3');
+        if (y3) y3.value = '2024';
+        if (t3) t3.value = 'relocation_travel';
+        if (d3) d3.value = isEn ? 'Cross-City Relocation / Rental Move' : '跨城迁移 / 独立租房';
+
+        handleRunRectification();
+      });
+    }
   }
 
   // Run Bayesian Birth Time Rectification
@@ -9665,6 +9723,377 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  // ==========================================================================
+  // 🌀 动力学相空间与双井势能流形 (Phase Portrait & Potential Manifold)
+  // ==========================================================================
+  let cachedPhaseEngine = null;
+  let cachedPhaseDerived = null;
+
+  function renderPhasePortrait(res, luckRes) {
+    if (!res || typeof PhasePortraitEngine === 'undefined') return;
+    const canvas = document.getElementById('phasePortraitCanvas');
+    if (!canvas) return;
+
+    if (!cachedPhaseEngine) {
+      cachedPhaseEngine = new PhasePortraitEngine(canvas);
+    }
+
+    const luckCycles = (luckRes && luckRes.decades) || (res._luckDecades) || [];
+    const currentAge = fourPillarsActiveAge || 30;
+    const derived = PhasePortraitEngine.deriveParametersAndTrajectory(res, luckCycles, currentAge);
+    cachedPhaseDerived = derived;
+
+    const inputA = document.getElementById('paramA');
+    const inputB = document.getElementById('paramB');
+    const inputC = document.getElementById('paramC');
+    const inputGamma = document.getElementById('paramGamma');
+    const lblA = document.getElementById('labelParamA');
+    const lblB = document.getElementById('labelParamB');
+    const lblC = document.getElementById('labelParamC');
+    const lblGamma = document.getElementById('labelParamGamma');
+    const summaryBox = document.getElementById('phaseTrajectorySummary');
+
+    if (inputA) inputA.value = derived.a;
+    if (inputB) inputB.value = derived.b;
+    if (inputC) inputC.value = derived.c;
+    if (inputGamma) inputGamma.value = derived.gamma;
+
+    if (lblA) lblA.textContent = derived.a.toFixed(2);
+    if (lblB) lblB.textContent = derived.b.toFixed(2);
+    if (lblC) lblC.textContent = derived.c.toFixed(2);
+    if (lblGamma) lblGamma.textContent = derived.gamma.toFixed(2);
+
+    const isEn = (currentLang === 'en');
+    if (summaryBox) {
+      summaryBox.textContent = isEn ? derived.summaryEn : derived.summaryZh;
+    }
+
+    const isDark = !document.documentElement.classList.contains('light-theme');
+    cachedPhaseEngine.renderVectorField(derived.a, derived.b, derived.c, derived.gamma, isDark);
+    cachedPhaseEngine.renderTrajectory(derived.trajectoryPoints, currentAge, isDark);
+  }
+
+  function initPhasePortraitControls() {
+    const canvas = document.getElementById('phasePortraitCanvas');
+    const inputA = document.getElementById('paramA');
+    const inputB = document.getElementById('paramB');
+    const inputC = document.getElementById('paramC');
+    const inputGamma = document.getElementById('paramGamma');
+    const lblA = document.getElementById('labelParamA');
+    const lblB = document.getElementById('labelParamB');
+    const lblC = document.getElementById('labelParamC');
+    const lblGamma = document.getElementById('labelParamGamma');
+    const btnReset = document.getElementById('btnResetPhaseParams');
+
+    function updateFromSliders() {
+      if (!canvas || typeof PhasePortraitEngine === 'undefined') return;
+      if (!cachedPhaseEngine) cachedPhaseEngine = new PhasePortraitEngine(canvas);
+
+      const a = parseFloat(inputA?.value || 1.2);
+      const b = parseFloat(inputB?.value || 0.8);
+      const c = parseFloat(inputC?.value || 0.0);
+      const gamma = parseFloat(inputGamma?.value || 0.38);
+
+      if (lblA) lblA.textContent = a.toFixed(2);
+      if (lblB) lblB.textContent = b.toFixed(2);
+      if (lblC) lblC.textContent = c.toFixed(2);
+      if (lblGamma) lblGamma.textContent = gamma.toFixed(2);
+
+      const isDark = !document.documentElement.classList.contains('light-theme');
+      cachedPhaseEngine.renderVectorField(a, b, c, gamma, isDark);
+      if (cachedPhaseDerived && cachedPhaseDerived.trajectoryPoints) {
+        cachedPhaseEngine.renderTrajectory(cachedPhaseDerived.trajectoryPoints, fourPillarsActiveAge || 30, isDark);
+      }
+    }
+
+    [inputA, inputB, inputC, inputGamma].forEach(slider => {
+      if (slider) slider.addEventListener('input', updateFromSliders);
+    });
+
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        if (currentBaziResult) {
+          renderPhasePortrait(currentBaziResult, currentLuckResult);
+        }
+      });
+    }
+  }
+
+  // ==========================================================================
+  // 📅 天机·个人进退节律历 (Tianji Battle Rhythm Calendar · RFC 5545)
+  // ==========================================================================
+  let cachedTianjiEvents = null;
+
+  function renderTianjiCalendarFeed(res, luckRes) {
+    if (typeof CalendarFeedEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const container = document.getElementById('tianjiEventsList');
+    const btnDownload = document.getElementById('btnDownloadTianjiICS');
+    const btnCopyWebcal = document.getElementById('btnCopyWebcalUrl');
+    if (!container) return;
+
+    const year = selectedAnnualYear || 2026;
+    const feedEngine = new CalendarFeedEngine(res, year);
+    const events = feedEngine.extractCriticalEvents(year, currentLang);
+    cachedTianjiEvents = events;
+
+    const typeBadge = (type) => {
+      switch(type) {
+        case 'noble_mentor': return { text: isEn ? 'Noble Mentor' : '贵人', cls: 'bg-amber-950 text-amber-300 border-amber-600' };
+        case 'wenchang_focus': return { text: isEn ? 'Wen Chang' : '文昌', cls: 'bg-purple-950 text-purple-300 border-purple-600' };
+        case 'wealth_pivot': return { text: isEn ? 'Wealth' : '财星', cls: 'bg-emerald-950 text-emerald-300 border-emerald-600' };
+        case 'crisis_defense': return { text: isEn ? 'Defense' : '化煞', cls: 'bg-rose-950 text-rose-300 border-rose-600' };
+        case 'romance_union': return { text: isEn ? 'Romance' : '桃花', cls: 'bg-pink-950 text-pink-300 border-pink-600' };
+        case 'travel_move': return { text: isEn ? 'Post Horse' : '驿马', cls: 'bg-cyan-950 text-cyan-300 border-cyan-600' };
+        default: return { text: isEn ? 'Pivot' : '转折', cls: 'bg-indigo-950 text-indigo-300 border-indigo-600' };
+      }
+    };
+
+    container.innerHTML = events.slice(0, 12).map(e => {
+      const badge = typeBadge(e.type);
+      const title = isEn ? e.titleEn : e.titleZh;
+      const summary = isEn ? e.summaryEn : e.summaryZh;
+      const action = isEn ? e.actionEn : e.actionZh;
+      return `
+        <div class="p-3 rounded-xl bg-black/40 border border-indigo-950 hover:border-indigo-700/60 transition space-y-1.5 text-xs shadow">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-indigo-400 font-bold">${e.dateStr}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded border font-mono ${badge.cls}">${badge.text}</span>
+          </div>
+          <h5 class="font-bold text-gray-200 font-serif-sc truncate" title="${title}">${title}</h5>
+          <p class="text-[11px] text-gray-400 line-clamp-2 leading-relaxed">${summary}</p>
+          <div class="pt-1 text-[11px] text-emerald-400/90 leading-tight">
+            <strong>${isEn ? 'Directive: ' : '战术行持：'}</strong>${action}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (btnDownload && !btnDownload.hasAttribute('data-bound')) {
+      btnDownload.setAttribute('data-bound', 'true');
+      btnDownload.addEventListener('click', () => {
+        const eng = new CalendarFeedEngine(currentBaziResult, selectedAnnualYear || 2026);
+        eng.downloadICS(cachedTianjiEvents, `tianji_calendar_${selectedAnnualYear || 2026}.ics`, currentLang);
+      });
+    }
+
+    if (btnCopyWebcal && !btnCopyWebcal.hasAttribute('data-bound')) {
+      btnCopyWebcal.setAttribute('data-bound', 'true');
+      btnCopyWebcal.addEventListener('click', () => {
+        const url = CalendarFeedEngine.getWebcalSubscriptionUrl(currentBaziResult, selectedAnnualYear || 2026);
+        if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          navigator.clipboard.writeText(url).then(() => {
+            const orig = btnCopyWebcal.innerHTML;
+            btnCopyWebcal.innerHTML = `<span>✅ ${currentLang === 'en' ? 'Copied URL!' : '已复制订阅链接!'}</span>`;
+            setTimeout(() => { btnCopyWebcal.innerHTML = orig; }, 2000);
+          });
+        } else {
+          prompt(currentLang === 'en' ? 'Copy Webcal Subscription URL:' : '请复制 Webcal 订阅链接：', url);
+        }
+      });
+    }
+  }
+
+  // ==========================================================================
+  // ♟️ 组织多方博弈政治矩阵 (Political Game Network)
+  // ==========================================================================
+  function renderPoliticalGameMatrix(res, luckRes) {
+    if (typeof PoliticalGameMatrix === 'undefined') return;
+    const isEn = (currentLang === 'en');
+
+    const meStemEl = document.getElementById('gameStemMe');
+    const bossStemEl = document.getElementById('gameStemBoss');
+    const rivalStemEl = document.getElementById('gameStemRival');
+    const allyStemEl = document.getElementById('gameStemAlly');
+    const tblContainer = document.getElementById('gameMatrixTblContainer');
+    const stratCard = document.getElementById('gameTransitStrategyCard');
+
+    if (res && res.dayMaster && meStemEl && !meStemEl.hasAttribute('data-user-selected')) {
+      meStemEl.value = res.dayMaster;
+    }
+
+    const meStem = meStemEl?.value || (res && res.dayMaster) || '甲';
+    const bossStem = bossStemEl?.value || '庚';
+    const rivalStem = rivalStemEl?.value || '辛';
+    const allyStem = allyStemEl?.value || '壬';
+
+    const players = [
+      { id: 'me', nameZh: '我 (命主)', nameEn: 'Self (Day Master)', dm: meStem, role: 'self' },
+      { id: 'boss', nameZh: '直属领导 (决策者)', nameEn: 'Direct Supervisor', dm: bossStem, role: 'leader' },
+      { id: 'rival', nameZh: '竞争对手 (同侪)', nameEn: 'Key Competitor (Peer)', dm: rivalStem, role: 'rival' },
+      { id: 'ally', nameZh: '核心技术骨干 (潜在同盟)', nameEn: 'Core Technical Ally', dm: allyStem, role: 'ally' }
+    ];
+
+    const matrixEngine = new PoliticalGameMatrix(players);
+    const matrix = matrixEngine.buildMatrix(currentLang);
+
+    if (tblContainer) {
+      let html = `<table class="w-full text-xs text-left border-collapse">`;
+      html += `<thead><tr class="border-b border-indigo-900/60 text-gray-400 font-mono">`;
+      html += `<th class="p-2">${isEn ? 'Actor \\ Target' : '施动方 \\ 目标方'}</th>`;
+      players.forEach(p => {
+        html += `<th class="p-2 text-indigo-300 font-bold">${isEn ? p.nameEn : p.nameZh} (${p.dm})</th>`;
+      });
+      html += `</tr></thead><tbody>`;
+
+      matrix.forEach(row => {
+        html += `<tr class="border-b border-gray-800/60 hover:bg-white/5 transition">`;
+        html += `<td class="p-2 font-bold text-indigo-200">${isEn ? row.player.nameEn : row.player.nameZh} (${row.player.dm})</td>`;
+        row.relations.forEach(cell => {
+          if (cell.targetId === row.player.id) {
+            html += `<td class="p-2 text-gray-600 font-mono text-center">—</td>`;
+          } else {
+            const edgeColor = cell.edgeType === 'conflict' ? 'text-rose-400 bg-rose-950/30' :
+                             cell.edgeType === 'synergy' ? 'text-emerald-400 bg-emerald-950/30' :
+                             cell.edgeType === 'friction' ? 'text-amber-400 bg-amber-950/30' : 'text-blue-300 bg-blue-950/30';
+            html += `<td class="p-2">
+              <span class="px-1.5 py-0.5 rounded text-[11px] font-semibold ${edgeColor}">
+                ${isEn ? cell.tenGodEn : cell.tenGodZh}
+              </span>
+              <div class="text-[10px] text-gray-400 mt-1 leading-tight">${isEn ? cell.descEn : cell.descZh}</div>
+            </td>`;
+          }
+        });
+        html += `</tr>`;
+      });
+      html += `</tbody></table>`;
+      tblContainer.innerHTML = html;
+    }
+
+    // Transit Strategy Card
+    if (stratCard) {
+      const transitStem = (luckRes && luckRes.annual && luckRes.annual.pillar && luckRes.annual.pillar.stem) || '丙';
+      const transitReports = matrixEngine.analyzeYearTransit(transitStem, currentLang);
+      
+      let stratHtml = `
+        <div class="flex items-center justify-between pb-2 border-b border-amber-800/40 mb-3">
+          <h4 class="text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+            <span>📜</span>
+            <span>${isEn ? 'Transit Year Political Directives (Codex Rong Ku Jian)' : '当值流年多方破局战法 (融合《荣枯鉴》)'}</span>
+          </h4>
+          <span class="text-[10px] font-mono text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-700/50">
+            ${isEn ? `TRANSIT STEM [${transitStem}]` : `岁君干支【${transitStem}】`}
+          </span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      `;
+
+      transitReports.forEach(rep => {
+        stratHtml += `
+          <div class="p-3 rounded-lg bg-black/40 border border-amber-900/30 space-y-1.5 text-xs">
+            <div class="font-bold text-amber-300 flex items-center gap-1.5">
+              <span>🎯</span>
+              <span>${rep.strategic_posture}</span>
+            </div>
+            <p class="text-gray-300 text-[11px] leading-relaxed">${rep.tactical_action}</p>
+            <blockquote class="p-1.5 rounded bg-amber-950/30 border-l-2 border-amber-500 text-[10px] text-amber-200/90 font-serif-sc">
+              ${rep.canon_reference}
+            </blockquote>
+            <p class="text-emerald-400/90 text-[11px] leading-tight pt-1">
+              <strong>${isEn ? 'Action: ' : '战术行持：'}</strong>${rep.action_item}
+            </p>
+          </div>
+        `;
+      });
+
+      stratHtml += `</div>`;
+      stratCard.innerHTML = stratHtml;
+    }
+  }
+
+  function initPoliticalGameControls() {
+    ['gameStemMe', 'gameStemBoss', 'gameStemRival', 'gameStemAlly'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('change', () => {
+          if (id === 'gameStemMe') el.setAttribute('data-user-selected', 'true');
+          renderPoliticalGameMatrix(currentBaziResult, currentLuckResult);
+        });
+      }
+    });
+  }
+
+  // ==========================================================================
+  // 🧭 NOAA 地磁偏角与二十四山校正 (Geomagnetic Declination Calibration)
+  // ==========================================================================
+  function renderGeomagneticCalibrator(res) {
+    if (typeof GeomagneticCorrection === 'undefined') return;
+    const latInput = document.getElementById('geoLatInput');
+    const lonInput = document.getElementById('geoLonInput');
+    const headingInput = document.getElementById('geoMagHeadingInput');
+    const btnCalib = document.getElementById('btnCalibGeomagnetic');
+    const resultBox = document.getElementById('geoCalibResultContainer');
+
+    if (latInput && !latInput.hasAttribute('data-customized')) {
+      const customLon = document.getElementById('customLongitude')?.value;
+      if (customLon) lonInput.value = parseFloat(customLon).toFixed(2);
+    }
+
+    function doCalibrate() {
+      if (!resultBox) return;
+      const isEn = (currentLang === 'en');
+      const lat = parseFloat(latInput?.value || 39.90);
+      const lon = parseFloat(lonInput?.value || 116.40);
+      const heading = parseFloat(headingInput?.value || 180.0);
+      const year = selectedAnnualYear || 2026;
+
+      const dec = GeomagneticCorrection.getDeclination(lat, lon, year);
+      const calib = GeomagneticCorrection.correctCompassHeading(heading, dec, currentLang);
+
+      const statusBadgeClass = calib.isSevereParting ? 'bg-rose-950 text-rose-300 border-rose-600' :
+                              calib.isParting ? 'bg-amber-950 text-amber-300 border-amber-600' :
+                              'bg-emerald-950 text-emerald-300 border-emerald-600';
+
+      const decDir = dec >= 0 ? (isEn ? 'East (+)' : '东偏 (+)') : (isEn ? 'West (-)' : '西偏 (-)');
+
+      resultBox.innerHTML = `
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pb-3 border-b border-gray-800 text-xs">
+          <div>
+            <span class="text-gray-400 block">${isEn ? 'Declination:' : '本地地磁偏角:'}</span>
+            <span class="text-emerald-300 font-mono font-bold text-sm">${dec}° (${decDir})</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block">${isEn ? 'True Heading:' : '校正真北方位:'}</span>
+            <span class="text-amber-300 font-mono font-bold text-sm">${calib.trueHeading}°</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block">${isEn ? '24 Mountain:' : '归入二十四山:'}</span>
+            <span class="text-cyan-300 font-bold text-sm font-serif-sc">${calib.mountain}</span>
+          </div>
+          <div>
+            <span class="text-gray-400 block">${isEn ? 'Center Offset:' : '山向中心偏离:'}</span>
+            <span class="font-mono text-sm ${Math.abs(calib.centerOffset) > 4.5 ? 'text-rose-400 font-bold' : 'text-gray-200'}">${calib.centerOffset > 0 ? '+' : ''}${calib.centerOffset}°</span>
+          </div>
+        </div>
+        <div class="mt-3 p-3 rounded-lg bg-black/30 border border-gray-800 space-y-1.5 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-full border text-[10px] font-mono ${statusBadgeClass}">
+              ${calib.isSevereParting ? (isEn ? 'SEVERE PARTING' : '严重出卦兼向') : calib.isParting ? (isEn ? 'CUSP PARTING' : '兼向立局') : (isEn ? 'PURE MOUNTAIN' : '正向纯清')}
+            </span>
+            <span class="text-gray-200 font-medium">${calib.warning}</span>
+          </div>
+          <p class="text-emerald-400/90 text-[11px] leading-relaxed">
+            <strong>${isEn ? 'Feng Shui Adjustment: ' : '空间形煞调整：'}</strong>${calib.advice}
+          </p>
+        </div>
+      `;
+    }
+
+    if (btnCalib && !btnCalib.hasAttribute('data-bound')) {
+      btnCalib.setAttribute('data-bound', 'true');
+      btnCalib.addEventListener('click', doCalibrate);
+    }
+
+    [latInput, lonInput].forEach(inp => {
+      if (inp && !inp.hasAttribute('data-bound')) {
+        inp.setAttribute('data-bound', 'true');
+        inp.addEventListener('input', () => inp.setAttribute('data-customized', 'true'));
+      }
+    });
+
+    doCalibrate();
+  }
+
   // ==========================================
   // 📜 历史人物参考与南北乱世三百年人物镜像 (Historical Figures Mirror & Reference)
   // ==========================================
@@ -10507,9 +10936,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // If switching to luck view, refresh Chrono-Navigator canvas
-    if (targetViewId === 'view-luck' && currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
-      setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
+    // If switching to luck view, refresh Chrono-Navigator canvas, Phase Portrait & Tianji Feed
+    if (targetViewId === 'view-luck' && currentLuckResult) {
+      if (currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
+        setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
+      }
+      if (typeof renderPhasePortrait === 'function' && currentBaziResult) {
+        renderPhasePortrait(currentBaziResult, currentLuckResult);
+      }
+      if (typeof renderTianjiCalendarFeed === 'function' && currentBaziResult) {
+        renderTianjiCalendarFeed(currentBaziResult, currentLuckResult);
+      }
     }
 
     // If switching to synastry view, calculate if empty with progress bar
@@ -10520,13 +10957,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // If switching to fengshui view, render if chart exists
-    if (targetViewId === 'view-fengshui' && currentBaziResult && typeof renderSpatialFengShui === 'function') {
-      renderSpatialFengShui(currentBaziResult, currentLuckResult);
+    if (targetViewId === 'view-fengshui' && currentBaziResult) {
+      if (typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+      if (typeof renderGeomagneticCalibrator === 'function') {
+        renderGeomagneticCalibrator(currentBaziResult);
+      }
     }
 
     // If switching to career view, render if chart exists
-    if (targetViewId === 'view-career' && currentBaziResult && typeof renderCareerWealth === 'function') {
-      renderCareerWealth(currentBaziResult, currentLuckResult);
+    if (targetViewId === 'view-career' && currentBaziResult) {
+      if (typeof renderCareerWealth === 'function') {
+        renderCareerWealth(currentBaziResult, currentLuckResult);
+      }
+      if (typeof renderPoliticalGameMatrix === 'function') {
+        renderPoliticalGameMatrix(currentBaziResult, currentLuckResult);
+      }
     }
 
     // If switching to simulator view, run simulation if empty
@@ -17337,6 +17784,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initPortalFeaturesShowcase();
   initAdvSolarToggle();
   initRectificationModal();
+  initPhasePortraitControls();
+  initPoliticalGameControls();
 
   // Return to Portal & Edit Natal Buttons
   if (btnReturnToPortal) {
@@ -17563,6 +18012,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initRectificationModal = initRectificationModal;
   window.handleRunRectification = handleRunRectification;
   window.renderRectificationResults = renderRectificationResults;
+  window.renderPhasePortrait = renderPhasePortrait;
+  window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
+  window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;
+  window.renderGeomagneticCalibrator = renderGeomagneticCalibrator;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';
