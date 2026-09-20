@@ -15007,8 +15007,7 @@ with open("data/historical_figures.js", "r", encoding="utf-8") as f:
     figures_src = f.read()
 
 # Verify HTML elements for dedicated subpage and jump navigation
-assert 'id="navBtnGeo"' in index_html_src, "Missing navBtnGeo in index.html"
-assert 'data-view="view-georesonance"' in index_html_src, "Missing data-view='view-georesonance' in index.html"
+assert 'id="sim-tab-georesonance"' in index_html_src or 'id="navBtnGeo"' in index_html_src, "Missing georesonance subpage navigation in index.html"
 assert 'id="view-georesonance"' in index_html_src, "Missing view-georesonance container in index.html"
 assert 'id="ecologicalResonanceContainerSubpage"' in index_html_src, "Missing ecologicalResonanceContainerSubpage in index.html"
 assert 'id="btnJumpToHomeFromGeo"' in index_html_src, "Missing btnJumpToHomeFromGeo in index.html"
@@ -16579,7 +16578,51 @@ run_check129 = subprocess.run(jsc_check129_cmd, capture_output=True, text=True)
 assert run_check129.returncode == 0, f"Check 129 JSC test failed: stdout={run_check129.stdout} stderr={run_check129.stderr}"
 print("✓ 129. 胜负沙盘对标十二大典专属副页面架构（双轨沙盘/地理生态匹配仪/空间风水实操十策三大专属副页面瞬时切换与双语零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 129 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 130. Validating Primary Navigation Bar Refinement (Removal of Geo & Feng Shui Nav Buttons & Preservation of All Pages) ===
+print("\n=== 130. Validating Primary Navigation Bar Refinement ===")
+
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_src_130 = f.read()
+
+# Extract primaryViewNav snippet
+assert '<nav id="primaryViewNav"' in idx_src_130, "Missing #primaryViewNav in index.html"
+nav_start = idx_src_130.find('<nav id="primaryViewNav"')
+nav_end = idx_src_130.find('</nav>', nav_start)
+assert nav_start != -1 and nav_end != -1, "Could not locate primaryViewNav bounds in index.html"
+primary_nav_html = idx_src_130[nav_start:nav_end]
+
+# 1. Assert navBtnGeo and navBtnFengShui are removed from #primaryViewNav
+assert 'id="navBtnGeo"' not in primary_nav_html, "navBtnGeo must NOT be in primaryViewNav"
+assert 'id="navBtnFengShui"' not in primary_nav_html, "navBtnFengShui must NOT be in primaryViewNav"
+assert 'data-view="view-georesonance"' not in primary_nav_html, "view-georesonance link must NOT be in primaryViewNav"
+assert 'data-view="view-fengshui"' not in primary_nav_html, "view-fengshui link must NOT be in primaryViewNav"
+
+# 2. Assert all other 11 buttons remain in #primaryViewNav
+expected_nav_btns = [
+    "navBtnHome", "navBtnStrategy", "navBtnFriction", "navBtnLuck",
+    "navBtnCanons", "navBtnIChing", "navBtnSynastry", "navBtnCareer",
+    "navBtnSimulator", "navBtnHistory", "navBtnRectification"
+]
+for btn_id in expected_nav_btns:
+    assert f'id="{btn_id}"' in primary_nav_html, f"Expected {btn_id} to be preserved in primaryViewNav"
+
+# 3. Assert all pages remain intact without disruption ("不要动别的页面")
+expected_views = [
+    "view-home", "view-strategy", "view-friction", "view-luck",
+    "view-canons", "view-iching", "view-synastry", "view-career",
+    "view-simulator", "view-history", "view-georesonance", "view-fengshui"
+]
+for v_id in expected_views:
+    assert f'id="{v_id}"' in idx_src_130, f"Expected page {v_id} to remain intact in index.html"
+
+# 4. Assert Decision Simulator dedicated subpages are intact
+for sub_id in ["sim-tab-sandbox", "sim-tab-georesonance", "sim-tab-fengshui"]:
+    assert f'id="{sub_id}"' in idx_src_130, f"Expected simulator subpage {sub_id} to remain intact"
+
+print("✓ 130. 顶栏主导航（已精准精简去除空间风水与地理匹配、保留其余11大主导航按钮、且全量页面与沙盘专属副页面完好无损）验证通过！")
+
+print("\n🎉 ALL 130 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

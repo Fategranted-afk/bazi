@@ -15573,7 +15573,14 @@ document.addEventListener('DOMContentLoaded', () => {
           if (sBtn) sBtn.click();
         } else if (act === 'open_fengshui') {
           const fBtn = document.getElementById('navBtnFengShui');
-          if (fBtn) fBtn.click();
+          if (fBtn) {
+            fBtn.click();
+          } else if (typeof switchPrimaryView === 'function') {
+            switchPrimaryView('view-simulator');
+            if (typeof window.switchSimulatorSubpage === 'function') {
+              window.switchSimulatorSubpage('sim-tab-fengshui');
+            }
+          }
         } else if (act === 'open_dossier_spouse') {
           const dBtn = document.getElementById('btnExportDossier');
           if (dBtn) dBtn.click();
