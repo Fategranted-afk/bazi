@@ -2587,16 +2587,21 @@ body {
 
 /* Table of Contents for Imperial Dossier Page 1 */
 .imperial-toc-nav {
+  display: block !important;
   transition: all 0.2s ease;
+  background: rgba(251, 243, 228, 0.9);
+  border: 1.5px solid rgba(180, 83, 9, 0.35);
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(120, 53, 15, 0.08);
 }
 @media print {
   .imperial-toc-nav {
-    display: none !important;
+    display: block !important;
   }
 }
 #imperialDossierContainer.exporting-pdf .imperial-toc-nav,
 #imperialDossierContainer.exporting-pdf-single .imperial-toc-nav {
-  display: none !important;
+  display: block !important;
 }
 
 /* Synastry Dossier Independent A4 Battle Report Page */

@@ -1558,13 +1558,13 @@ class SpatialFengShuiEngine {
           </div>
           <div class="flex items-center gap-2 self-start sm:self-center flex-wrap">
             <span class="text-xs text-gray-400 font-mono">${isEn ? "Switch City:" : "切换测试城市："}</span>
-            <select id="fsCardCountrySelect" class="bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+            <select id="fsCardCountrySelect" class="fs-card-country-select bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
               ${countryOptionsHtml}
             </select>
-            <select id="fsCardCitySelect" class="bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+            <select id="fsCardCitySelect" class="fs-card-city-select bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
               ${cityOptionsHtml}
             </select>
-            <input type="text" id="fsCardCustomCityInput" class="bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500 w-32 ${ev.cityKey === 'custom' ? '' : 'hidden'}" placeholder="${customInputPlaceholder}" value="${customVal}">
+            <input type="text" id="fsCardCustomCityInput" class="fs-card-custom-city-input bg-black/50 border border-gray-700 rounded-lg px-2 py-1 text-xs text-gray-100 focus:outline-none focus:border-amber-500 w-32 ${ev.cityKey === 'custom' ? '' : 'hidden'}" placeholder="${customInputPlaceholder}" value="${customVal}">
           </div>
         </div>
 

@@ -16085,7 +16085,230 @@ run_check127 = subprocess.run(jsc_check127_cmd, capture_output=True, text=True)
 assert run_check127.returncode == 0, f"Check 127 JSC test failed: stdout={run_check127.stdout} stderr={run_check127.stderr}"
 print("✓ 127. 双人合盘深度升级（格局对比/终身轨迹推演重合度/价值观五维图谱）、独立PDF战报模态导出及钦天八卷目录锚点导航（双语100%零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 127 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+print("\n=== 128. Validating Imperial PDF Table of Contents Visibility & Complete Spatial Feng Shui Simulator Suite ===")
+with open("css/style.css", "r", encoding="utf-8") as f:
+    css_content = f.read()
+
+# 1. Verify Imperial PDF TOC is NOT hidden in exporting-pdf or @media print
+assert "#imperialDossierContainer.exporting-pdf .imperial-toc-nav" in css_content, "Missing .imperial-toc-nav in #imperialDossierContainer.exporting-pdf"
+assert "display: block !important" in css_content.split("#imperialDossierContainer.exporting-pdf .imperial-toc-nav")[1].split("}")[0], \
+    "TOC must be display: block !important in exporting-pdf so it appears in downloaded PDF"
+assert "display: block !important" in css_content.split("@media print")[1].split(".imperial-toc-nav")[1].split("}")[0], \
+    "TOC must be display: block !important in @media print so it appears in printed PDF"
+
+# 2. Verify index.html contains full Spatial Feng Shui & NOAA Calibrator inside view-simulator
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_content = f.read()
+
+assert 'id="view-simulator"' in idx_content, "Missing #view-simulator in index.html"
+sim_slice = idx_content.split('id="view-simulator"')[1].split('id="view-')[0]
+assert 'id="simFengshuiSection"' in sim_slice, "Missing #simFengshuiSection inside #view-simulator"
+assert 'id="simFengshuiQuickBadges"' in sim_slice, "Missing #simFengshuiQuickBadges inside #view-simulator"
+assert 'id="simFengshuiContentContainer"' in sim_slice, "Missing #simFengshuiContentContainer inside #view-simulator"
+assert 'id="simGeomagneticSection"' in sim_slice, "Missing #simGeomagneticSection inside #view-simulator"
+assert 'id="simBtnCalibGeomagnetic"' in sim_slice, "Missing #simBtnCalibGeomagnetic inside #view-simulator"
+assert 'id="simGeoCalibResultContainer"' in sim_slice, "Missing #simGeoCalibResultContainer inside #view-simulator"
+
+# 3. Verify simulator.html contains full standalone Spatial Feng Shui & NOAA Calibrator
+with open("simulator.html", "r", encoding="utf-8") as f:
+    sim_html_content = f.read()
+
+assert 'js/geomagnetism.js' in sim_html_content, "simulator.html missing js/geomagnetism.js script"
+assert 'js/fengshui-engine.js' in sim_html_content, "simulator.html missing js/fengshui-engine.js script"
+assert 'id="simStandaloneFengshuiSection"' in sim_html_content, "simulator.html missing #simStandaloneFengshuiSection"
+assert 'id="simStandaloneFengshuiQuickBadges"' in sim_html_content, "simulator.html missing #simStandaloneFengshuiQuickBadges"
+assert 'id="simStandaloneFengshuiContentContainer"' in sim_html_content, "simulator.html missing #simStandaloneFengshuiContentContainer"
+assert 'id="simStandaloneGeomagneticSection"' in sim_html_content, "simulator.html missing #simStandaloneGeomagneticSection"
+assert 'id="simStandaloneBtnCalibGeomagnetic"' in sim_html_content, "simulator.html missing #simStandaloneBtnCalibGeomagnetic"
+assert 'id="simStandaloneGeoCalibResultContainer"' in sim_html_content, "simulator.html missing #simStandaloneGeoCalibResultContainer"
+assert 'renderStandaloneFengShui' in sim_html_content, "simulator.html missing renderStandaloneFengShui function"
+assert 'renderStandaloneGeomagneticCalibrator' in sim_html_content, "simulator.html missing renderStandaloneGeomagneticCalibrator function"
+
+# 4. JSC Runtime Verification: Zero Chinese leak in Imperial TOC and app.js multi-container rendering
+jsc_check128_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("data/institutions.js");
+    load("data/enterprises.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/geomagnetism.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+    load("js/simulator-engine.js");
+
+    var testChart = BaZiEngine.calculate({
+      year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var testLuck = LuckEngine.calculateLuck(testChart, 2026);
+
+    // Mock DOM elements
+    var domStore = {};
+    function makeEl(id, tag) {
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "39.90",
+        className: "",
+        classList: {
+          add: function(){}, remove: function(){}, contains: function(){ return false; }
+        },
+        style: {},
+        addEventListener: function(){},
+        querySelectorAll: function(){ return []; },
+        querySelector: function(){ return null; },
+        getAttribute: function(a){ return this[a] || null; },
+        setAttribute: function(a, v){ this[a] = v; },
+        hasAttribute: function(a){ return this[a] !== undefined; },
+        appendChild: function(c){},
+        scrollIntoView: function(){}
+      };
+    }
+
+    var ids = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "btnExportDossier", "btnQuickExportSinglePdf", "btnToggleFlux", "btnInstallPwa",
+      "imperialDossierModal", "imperialDossierContainer", "calcBtn",
+      "birthDate", "birthTime", "gender", "useSolarTime", "lateRatAsNextDay",
+      "customLongitude", "timezoneSelect", "citySelect", "fsec-canons", "view-friction",
+      "frictionContentContainer", "careerContentContainer", "careerTargetYear",
+      "careerQuickBadgesDashboard", "currentCountrySelect", "currentCitySelect",
+      "fengshuiContentContainer", "fengshuiQuickBadges",
+      "simFengshuiContentContainer", "simFengshuiQuickBadges",
+      "geoLatInput", "geoLonInput", "geoMagHeadingInput", "btnCalibGeomagnetic", "geoCalibResultContainer",
+      "simGeoLatInput", "simGeoLonInput", "simGeoMagHeadingInput", "simBtnCalibGeomagnetic", "simGeoCalibResultContainer",
+      "simStandaloneFengshuiContentContainer", "simStandaloneFengshuiQuickBadges",
+      "simStandaloneGeoLatInput", "simStandaloneGeoLonInput", "simStandaloneGeoMagHeadingInput",
+      "simStandaloneBtnCalibGeomagnetic", "simStandaloneGeoCalibResultContainer"
+    ];
+    ids.forEach(function(id) { domStore[id] = makeEl(id); });
+    domStore["birthDate"].value = "1990-06-20";
+    domStore["birthTime"].value = "14:30";
+    domStore["gender"].value = "乾造";
+
+    var mockConsole = {
+      log: function(){},
+      warn: function(){},
+      error: function(){},
+      info: function(){}
+    };
+    if (typeof console === "undefined") {
+      var console = mockConsole;
+    } else {
+      if (!console.error) console.error = function(){};
+      if (!console.warn) console.warn = function(){};
+      if (!console.log) console.log = function(){};
+    }
+
+    var document = {
+      documentElement: { lang: "en", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeEl("body"),
+      getElementById: function(id) {
+        if (!domStore[id]) domStore[id] = makeEl(id);
+        return domStore[id];
+      },
+      querySelectorAll: function(s) {
+        return [];
+      },
+      querySelector: function(s) { return null; },
+      createElement: function(tag) { return makeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") handler();
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      SynastryEngine: SynastryEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine,
+      ScenarioSimulatorEngine: ScenarioSimulatorEngine,
+      GeomagneticCorrection: GeomagneticCorrection
+    };
+
+    load("js/app.js");
+
+    // Test Imperial Dossier Page 1 Table of Contents in ZH
+    window.renderImperialDossierPages(testChart, testLuck, "zh");
+    var impZh = domStore["imperialDossierContainer"].innerHTML;
+    if (impZh.indexOf("imperial-toc-nav") === -1) throw new Error("Missing .imperial-toc-nav in Imperial Dossier ZH");
+    if (impZh.indexOf("卷首·终身自己") === -1 && impZh.indexOf("Blueprint") === -1) throw new Error("Missing P1 Blueprint link in ZH");
+    if (impZh.indexOf("特别·人物画像") === -1 && impZh.indexOf("Soul Mirror") === -1) throw new Error("Missing P2 Soul Mirror link in ZH");
+    if (impZh.indexOf("卷二·格局兵法") === -1 && impZh.indexOf("Patterns") === -1) throw new Error("Missing P4 Patterns link in ZH");
+
+    // Test Imperial Dossier Page 1 Table of Contents in EN (zero Chinese leak)
+    window.renderImperialDossierPages(testChart, testLuck, "en");
+    var impEn = domStore["imperialDossierContainer"].innerHTML;
+    var page1En = impEn.split('id="imperialPage2"')[0];
+    var leaksEn = page1En.match(/[\\u4e00-\\u9fa5]/g);
+    if (leaksEn && leaksEn.length > 0) {
+      throw new Error("Residual Chinese on Imperial Dossier Page 1 in EN: " + leaksEn.slice(0, 30).join(""));
+    }
+
+    // Test renderSpatialFengShui populates both main container & simulator container
+    window.renderSpatialFengShui(testChart, testLuck);
+    if (!domStore["fengshuiContentContainer"].innerHTML) {
+      throw new Error("renderSpatialFengShui failed to populate fengshuiContentContainer");
+    }
+    if (!domStore["simFengshuiContentContainer"].innerHTML) {
+      throw new Error("renderSpatialFengShui failed to populate simFengshuiContentContainer");
+    }
+    if (!domStore["simFengshuiQuickBadges"].innerHTML) {
+      throw new Error("renderSpatialFengShui failed to populate simFengshuiQuickBadges");
+    }
+
+    // Test renderGeomagneticCalibrator populates both main & simulator containers
+    window.renderGeomagneticCalibrator(testChart);
+    if (!domStore["geoCalibResultContainer"].innerHTML) {
+      throw new Error("renderGeomagneticCalibrator failed to populate geoCalibResultContainer");
+    }
+    if (!domStore["simGeoCalibResultContainer"].innerHTML) {
+      throw new Error("renderGeomagneticCalibrator failed to populate simGeoCalibResultContainer");
+    }
+    """
+]
+run_check128 = subprocess.run(jsc_check128_cmd, capture_output=True, text=True)
+assert run_check128.returncode == 0, f"Check 128 JSC test failed: stdout={run_check128.stdout} stderr={run_check128.stderr}"
+print("✓ 128. 皇家线装战报第一页目录导航（PDF与打印可见性/点击跳转/双语零中文残留）与空间风水全套实操指南+NOAA地磁校正仪深度融入决策沙盘全量验证通过！")
+
+print("\n🎉 ALL 128 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

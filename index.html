@@ -2955,6 +2955,82 @@
         <!-- Dynamically injected via ScenarioSimulatorEngine -->
       </div>
     </div>
+
+    <!-- Complete Spatial Feng Shui & Metaphysical Remediation Guide in Decision Sandbox (八字开运与空间风水指南 · 实操调理十策与大地测量) -->
+    <div id="simFengshuiSection" class="space-y-6 pt-6 border-t border-indigo-500/30">
+      <!-- Header Banner -->
+      <div class="p-5 rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-black/60 to-teal-950/40 shadow-2xl relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 mb-1">
+              <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300" data-i18n="seal_view_fengshui">空间开运</span>
+              <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-emerald-300" data-i18n="fengshui_banner_title">
+                八字开运与空间风水指南 · 实操调理十策
+              </h2>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="fengshui_banner_desc">
+              依本命八字喜用五行、三元九运个人命卦与原局刑冲格局，定制十项实操改运器物与空间气场调理锦囊：从延年聚财大阵、龙龟双铃化煞、贪合忘冲生肖佩戴，到泰山石补缺、洛书吉数与积德行善实修。
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div id="simFengshuiQuickBadges" class="flex flex-wrap gap-2 text-xs">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Container for City Evaluation & 10 Practical Items -->
+      <div id="simFengshuiContentContainer" class="space-y-6">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- NOAA Geomagnetic Declination & 24 Mountain Calibration Section -->
+      <div id="simGeomagneticSection" class="p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-[#0a1412] via-[#0f1f1c] to-[#070e0d] shadow-2xl space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-emerald-900/50 pb-4">
+          <div>
+            <div class="flex items-center space-x-2 mb-1">
+              <span class="chinese-seal text-xs py-0.5 border-emerald-400 text-emerald-300">大地测量</span>
+              <h3 class="text-lg font-bold font-serif-sc text-emerald-200" data-i18n="geomag_title">
+                NOAA 地磁偏角与二十四山真北校正仪 (Geomagnetic & 24 Mountains)
+              </h3>
+            </div>
+            <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="geomag_sub">
+              基于 NOAA WMM 全球离线网格插值与年漂移补偿，消除磁北与地理真北偏差，杜绝兼向出卦
+            </p>
+          </div>
+          <div class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/60">
+            WMM-2025 SECULAR DRIFT
+          </div>
+        </div>
+
+        <!-- Coordinate & Heading Inputs -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-black/30 p-4 rounded-xl border border-emerald-900/30">
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lat">纬度 (Latitude):</label>
+            <input type="number" id="simGeoLatInput" step="0.01" value="39.90" placeholder="39.90" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lon">经度 (Longitude):</label>
+            <input type="number" id="simGeoLonInput" step="0.01" value="116.40" placeholder="116.40" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_heading">罗盘测量磁方位 (Magnetic Heading °):</label>
+            <input type="number" id="simGeoMagHeadingInput" step="0.1" min="0" max="360" value="180.0" placeholder="180.0" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+          </div>
+          <div class="flex items-end">
+            <button type="button" id="simBtnCalibGeomagnetic" class="w-full py-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center justify-center gap-1.5" data-i18n="geomag_btn_calib">
+              🧭 计算真北山向与出卦诊断
+            </button>
+          </div>
+        </div>
+
+        <!-- Calibration Results -->
+        <div id="simGeoCalibResultContainer" class="p-4 rounded-xl bg-black/40 border border-emerald-900/40">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- View 10: Historical Figures Reference (历史人物参考 · 南北乱世三百年) -->

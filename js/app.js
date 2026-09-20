@@ -8850,12 +8850,20 @@ document.addEventListener('DOMContentLoaded', () => {
   // 空间风水指南 · 实操十策
   function renderSpatialFengShui(bazi, luck) {
     const isEn = (currentLang === 'en');
-    const container = document.getElementById('fengshuiContentContainer');
-    const badgesContainer = document.getElementById('fengshuiQuickBadges');
-    if (!container) return;
+    const containers = [
+      document.getElementById('fengshuiContentContainer'),
+      document.getElementById('simFengshuiContentContainer')
+    ].filter(Boolean);
+    const badgesContainers = [
+      document.getElementById('fengshuiQuickBadges'),
+      document.getElementById('simFengshuiQuickBadges')
+    ].filter(Boolean);
+    if (containers.length === 0) return;
 
     if (!bazi || !bazi.pillars) {
-      container.innerHTML = `<p class="text-xs text-gray-500">${isEn ? 'Awaiting natal chart calculation...' : '八字排盘数据就绪后自动生成空间指南...'}</p>`;
+      containers.forEach(c => {
+        c.innerHTML = `<p class="text-xs text-gray-500">${isEn ? 'Awaiting natal chart calculation...' : '八字排盘数据就绪后自动生成空间指南...'}</p>`;
+      });
       return;
     }
 
@@ -8870,12 +8878,14 @@ document.addEventListener('DOMContentLoaded', () => {
       : null;
 
     if (!guide) {
-      container.innerHTML = `<p class="text-xs text-gray-500">${isEn ? 'Feng Shui engine awaiting initialization...' : '风水引擎计算中...'}</p>`;
+      containers.forEach(c => {
+        c.innerHTML = `<p class="text-xs text-gray-500">${isEn ? 'Feng Shui engine awaiting initialization...' : '风水引擎计算中...'}</p>`;
+      });
       return;
     }
 
-    if (badgesContainer) {
-      badgesContainer.innerHTML = `
+    if (badgesContainers.length > 0) {
+      const badgesHtml = `
         <span class="px-2.5 py-1 rounded-full border border-emerald-500/40 bg-emerald-950/60 text-emerald-300 font-bold">
           ${isEn ? guide.kuaInfo.nameEn : guide.kuaInfo.nameZh} (${isEn ? guide.kuaInfo.sectorEn : guide.kuaInfo.sectorZh})
         </span>
@@ -8894,6 +8904,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </span>
         ` : ''}
       `;
+      badgesContainers.forEach(bc => {
+        bc.innerHTML = badgesHtml;
+      });
     }
 
     const y = guide.yanNianItem;
@@ -8968,7 +8981,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
-    container.innerHTML = cityCardHtml + driftCardHtml + `
+    const fullFengshuiHtml = cityCardHtml + driftCardHtml + `
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="bg-card p-5 sm:p-6 rounded-2xl border border-border-color shadow-xl space-y-3.5 flex flex-col justify-between">
           <div class="space-y-2.5">
@@ -9239,10 +9252,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
 
-    const inCardCountry = document.getElementById('fsCardCountrySelect');
-    const inCardCity = document.getElementById('fsCardCitySelect');
-    const inCardCustom = document.getElementById('fsCardCustomCityInput');
-    if (inCardCountry && inCardCity) {
+    containers.forEach(c => {
+      c.innerHTML = fullFengshuiHtml;
+    });
+
+    document.querySelectorAll('.fs-card-country-select').forEach(inCardCountry => {
       inCardCountry.addEventListener('change', (e) => {
         currentResidenceCountry = e.target.value;
         if (currentCountrySelect) currentCountrySelect.value = currentResidenceCountry;
@@ -9257,6 +9271,9 @@ document.addEventListener('DOMContentLoaded', () => {
         populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
         renderSpatialFengShui(bazi, luck);
       });
+    });
+
+    document.querySelectorAll('.fs-card-city-select').forEach(inCardCity => {
       inCardCity.addEventListener('change', (e) => {
         currentResidenceCity = e.target.value;
         if (currentCitySelect) currentCitySelect.value = currentResidenceCity;
@@ -9266,14 +9283,15 @@ document.addEventListener('DOMContentLoaded', () => {
         populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
         renderSpatialFengShui(bazi, luck);
         if (currentResidenceCity === 'custom') {
-          const freshCustomInput = document.getElementById('fsCardCustomCityInput');
-          if (freshCustomInput && typeof freshCustomInput.focus === 'function') {
-            freshCustomInput.focus();
-          }
+          const freshCustomInputs = document.querySelectorAll('.fs-card-custom-city-input');
+          freshCustomInputs.forEach(inp => {
+            if (inp && typeof inp.focus === 'function') inp.focus();
+          });
         }
       });
-    }
-    if (inCardCustom) {
+    });
+
+    document.querySelectorAll('.fs-card-custom-city-input').forEach(inCardCustom => {
       inCardCustom.addEventListener('change', (e) => {
         currentResidenceCustomName = e.target.value.trim();
         if (currentCustomCityInput) currentCustomCityInput.value = currentResidenceCustomName;
@@ -9292,7 +9310,7 @@ document.addEventListener('DOMContentLoaded', () => {
           renderSpatialFengShui(bazi, luck);
         }
       });
-    }
+    });
   }
 
   // ==========================================
@@ -10018,80 +10036,100 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   function renderGeomagneticCalibrator(res) {
     if (typeof GeomagneticCorrection === 'undefined') return;
-    const latInput = document.getElementById('geoLatInput');
-    const lonInput = document.getElementById('geoLonInput');
-    const headingInput = document.getElementById('geoMagHeadingInput');
-    const btnCalib = document.getElementById('btnCalibGeomagnetic');
-    const resultBox = document.getElementById('geoCalibResultContainer');
-
-    if (latInput && !latInput.hasAttribute('data-customized')) {
-      const customLon = document.getElementById('customLongitude')?.value;
-      if (customLon) lonInput.value = parseFloat(customLon).toFixed(2);
-    }
-
-    function doCalibrate() {
-      if (!resultBox) return;
-      const isEn = (currentLang === 'en');
-      const lat = parseFloat(latInput?.value || 39.90);
-      const lon = parseFloat(lonInput?.value || 116.40);
-      const heading = parseFloat(headingInput?.value || 180.0);
-      const year = selectedAnnualYear || 2026;
-
-      const dec = GeomagneticCorrection.getDeclination(lat, lon, year);
-      const calib = GeomagneticCorrection.correctCompassHeading(heading, dec, currentLang);
-
-      const statusBadgeClass = calib.isSevereParting ? 'bg-rose-950 text-rose-300 border-rose-600' :
-                              calib.isParting ? 'bg-amber-950 text-amber-300 border-amber-600' :
-                              'bg-emerald-950 text-emerald-300 border-emerald-600';
-
-      const decDir = dec >= 0 ? (isEn ? 'East (+)' : '东偏 (+)') : (isEn ? 'West (-)' : '西偏 (-)');
-
-      resultBox.innerHTML = `
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pb-3 border-b border-gray-800 text-xs">
-          <div>
-            <span class="text-gray-400 block">${isEn ? 'Declination:' : '本地地磁偏角:'}</span>
-            <span class="text-emerald-300 font-mono font-bold text-sm">${dec}° (${decDir})</span>
-          </div>
-          <div>
-            <span class="text-gray-400 block">${isEn ? 'True Heading:' : '校正真北方位:'}</span>
-            <span class="text-amber-300 font-mono font-bold text-sm">${calib.trueHeading}°</span>
-          </div>
-          <div>
-            <span class="text-gray-400 block">${isEn ? '24 Mountain:' : '归入二十四山:'}</span>
-            <span class="text-cyan-300 font-bold text-sm font-serif-sc">${calib.mountain}</span>
-          </div>
-          <div>
-            <span class="text-gray-400 block">${isEn ? 'Center Offset:' : '山向中心偏离:'}</span>
-            <span class="font-mono text-sm ${Math.abs(calib.centerOffset) > 4.5 ? 'text-rose-400 font-bold' : 'text-gray-200'}">${calib.centerOffset > 0 ? '+' : ''}${calib.centerOffset}°</span>
-          </div>
-        </div>
-        <div class="mt-3 p-3 rounded-lg bg-black/30 border border-gray-800 space-y-1.5 text-xs">
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded-full border text-[10px] font-mono ${statusBadgeClass}">
-              ${calib.isSevereParting ? (isEn ? 'SEVERE PARTING' : '严重出卦兼向') : calib.isParting ? (isEn ? 'CUSP PARTING' : '兼向立局') : (isEn ? 'PURE MOUNTAIN' : '正向纯清')}
-            </span>
-            <span class="text-gray-200 font-medium">${calib.warning}</span>
-          </div>
-          <p class="text-emerald-400/90 text-[11px] leading-relaxed">
-            <strong>${isEn ? 'Feng Shui Adjustment: ' : '空间形煞调整：'}</strong>${calib.advice}
-          </p>
-        </div>
-      `;
-    }
-
-    if (btnCalib && !btnCalib.hasAttribute('data-bound')) {
-      btnCalib.setAttribute('data-bound', 'true');
-      btnCalib.addEventListener('click', doCalibrate);
-    }
-
-    [latInput, lonInput].forEach(inp => {
-      if (inp && !inp.hasAttribute('data-bound')) {
-        inp.setAttribute('data-bound', 'true');
-        inp.addEventListener('input', () => inp.setAttribute('data-customized', 'true'));
+    const calibratorPairs = [
+      {
+        lat: document.getElementById('geoLatInput'),
+        lon: document.getElementById('geoLonInput'),
+        heading: document.getElementById('geoMagHeadingInput'),
+        btn: document.getElementById('btnCalibGeomagnetic'),
+        result: document.getElementById('geoCalibResultContainer')
+      },
+      {
+        lat: document.getElementById('simGeoLatInput'),
+        lon: document.getElementById('simGeoLonInput'),
+        heading: document.getElementById('simGeoMagHeadingInput'),
+        btn: document.getElementById('simBtnCalibGeomagnetic'),
+        result: document.getElementById('simGeoCalibResultContainer')
       }
-    });
+    ];
 
-    doCalibrate();
+    calibratorPairs.forEach(pair => {
+      const latInput = pair.lat;
+      const lonInput = pair.lon;
+      const headingInput = pair.heading;
+      const btnCalib = pair.btn;
+      const resultBox = pair.result;
+      if (!resultBox) return;
+
+      if (latInput && !latInput.hasAttribute('data-customized')) {
+        const customLon = document.getElementById('customLongitude')?.value;
+        if (customLon) lonInput.value = parseFloat(customLon).toFixed(2);
+      }
+
+      function doCalibrate() {
+        if (!resultBox) return;
+        const isEn = (currentLang === 'en');
+        const lat = parseFloat(latInput?.value || 39.90);
+        const lon = parseFloat(lonInput?.value || 116.40);
+        const heading = parseFloat(headingInput?.value || 180.0);
+        const year = selectedAnnualYear || 2026;
+
+        const dec = GeomagneticCorrection.getDeclination(lat, lon, year);
+        const calib = GeomagneticCorrection.correctCompassHeading(heading, dec, currentLang);
+
+        const statusBadgeClass = calib.isSevereParting ? 'bg-rose-950 text-rose-300 border-rose-600' :
+                                calib.isParting ? 'bg-amber-950 text-amber-300 border-amber-600' :
+                                'bg-emerald-950 text-emerald-300 border-emerald-600';
+
+        const decDir = dec >= 0 ? (isEn ? 'East (+)' : '东偏 (+)') : (isEn ? 'West (-)' : '西偏 (-)');
+
+        resultBox.innerHTML = `
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pb-3 border-b border-gray-800 text-xs">
+            <div>
+              <span class="text-gray-400 block">${isEn ? 'Declination:' : '本地地磁偏角:'}</span>
+              <span class="text-emerald-300 font-mono font-bold text-sm">${dec}° (${decDir})</span>
+            </div>
+            <div>
+              <span class="text-gray-400 block">${isEn ? 'True Heading:' : '校正真北方位:'}</span>
+              <span class="text-amber-300 font-mono font-bold text-sm">${calib.trueHeading}°</span>
+            </div>
+            <div>
+              <span class="text-gray-400 block">${isEn ? '24 Mountain:' : '归入二十四山:'}</span>
+              <span class="text-cyan-300 font-bold text-sm font-serif-sc">${calib.mountain}</span>
+            </div>
+            <div>
+              <span class="text-gray-400 block">${isEn ? 'Center Offset:' : '山向中心偏离:'}</span>
+              <span class="font-mono text-sm ${Math.abs(calib.centerOffset) > 4.5 ? 'text-rose-400 font-bold' : 'text-gray-200'}">${calib.centerOffset > 0 ? '+' : ''}${calib.centerOffset}°</span>
+            </div>
+          </div>
+          <div class="mt-3 p-3 rounded-lg bg-black/30 border border-gray-800 space-y-1.5 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded-full border text-[10px] font-mono ${statusBadgeClass}">
+                ${calib.isSevereParting ? (isEn ? 'SEVERE PARTING' : '严重出卦兼向') : calib.isParting ? (isEn ? 'CUSP PARTING' : '兼向立局') : (isEn ? 'PURE MOUNTAIN' : '正向纯清')}
+              </span>
+              <span class="text-gray-200 font-medium">${calib.warning}</span>
+            </div>
+            <p class="text-emerald-400/90 text-[11px] leading-relaxed">
+              <strong>${isEn ? 'Feng Shui Adjustment: ' : '空间形煞调整：'}</strong>${calib.advice}
+            </p>
+          </div>
+        `;
+      }
+
+      if (btnCalib && !btnCalib.hasAttribute('data-bound')) {
+        btnCalib.setAttribute('data-bound', 'true');
+        btnCalib.addEventListener('click', doCalibrate);
+      }
+
+      [latInput, lonInput].forEach(inp => {
+        if (inp && !inp.hasAttribute('data-bound')) {
+          inp.setAttribute('data-bound', 'true');
+          inp.addEventListener('input', () => inp.setAttribute('data-customized', 'true'));
+        }
+      });
+
+      doCalibrate();
+    });
   }
 
   // ==========================================
@@ -10981,6 +11019,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const simContainer = document.getElementById('simResultsContainer');
       if (simContainer && !simContainer.children.length && typeof executeScenarioSimulation === 'function') {
         executeScenarioSimulation();
+      }
+      if (typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+      if (typeof renderGeomagneticCalibrator === 'function') {
+        renderGeomagneticCalibrator(currentBaziResult);
       }
     }
 
@@ -17534,35 +17578,38 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Clickable Table of Contents (8 Imperial Scrolls Navigation) -->
-          <div class="imperial-toc-nav bg-amber-950/5 border border-amber-900/20 rounded px-2 py-1 text-[9px] font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 mb-0.5 border-b border-amber-900/10 pb-0.5">
-              <span class="flex items-center gap-1"><span>📜</span><span>${isEn ? 'Table of Contents · Eight Imperial Scrolls Navigation' : '天机御览目录 · 钦天八卷全览导航'}</span></span>
-              <span class="text-[8.5px] text-amber-800/70 font-mono">${isEn ? 'CLICK TO NAVIGATE' : '点击直达对应卷宗'}</span>
+          <div class="imperial-toc-nav bg-gradient-to-r from-amber-950/10 via-amber-900/5 to-amber-950/10 border border-amber-900/30 rounded px-2.5 py-1.5 text-[9px] font-serif-sc shadow-sm">
+            <div class="flex items-center justify-between font-bold text-amber-950 mb-1 border-b border-amber-900/20 pb-0.5">
+              <span class="flex items-center gap-1.5">
+                <span class="text-amber-800 text-xs">📜</span>
+                <span class="font-bold tracking-wide">${isEn ? 'Imperial Table of Contents · Eight Scrolls Directory' : '天机御览总目 · 钦天八卷全览导航'}</span>
+              </span>
+              <span class="text-[8px] text-amber-900 font-mono tracking-wider bg-amber-900/10 px-1.5 py-0.5 rounded border border-amber-900/20">${isEn ? 'CLICK TO NAVIGATE' : '点击直达对应卷宗'}</span>
             </div>
             <div class="grid grid-cols-4 gap-1 text-[8.5px] text-center">
-              <a href="#imperialPage1" onclick="jumpToImperialPage('imperialPage1'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P1. Blueprint' : '卷首. 终身统览'}
+              <a href="#imperialPage1" onclick="jumpToImperialPage('imperialPage1'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P1</span>${isEn ? 'Blueprint (Self)' : '卷首·终身自己'}
               </a>
-              <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P2. Soul Mirror' : '特别. 照命镜像'}
+              <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P2</span>${isEn ? 'Soul Mirror' : '特别·人物画像'}
               </a>
-              <a href="#imperialPage3" onclick="jumpToImperialPage('imperialPage3'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P3. Four Pillars' : '卷一. 四柱立极'}
+              <a href="#imperialPage3" onclick="jumpToImperialPage('imperialPage3'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P3</span>${isEn ? 'Four Pillars' : '卷一·四柱立极'}
               </a>
-              <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P4. Patterns' : '卷二. 格局兵法'}
+              <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? 'Patterns (Warfare)' : '卷二·格局兵法'}
               </a>
-              <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P5. Decennial Luck' : '卷三. 岁运推演'}
+              <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Decennial Luck' : '卷三·岁运推演'}
               </a>
-              <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P6. Mind & Codex' : '卷四. 心理与冯道'}
+              <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Mind & Codex' : '卷四·心理与冯道'}
               </a>
-              <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P7. Geo Feng Shui' : '卷五. 地缘风水'}
+              <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Geo Feng Shui' : '卷五·地缘风水'}
               </a>
-              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
-                ${isEn ? 'P8. Hexagrams' : '卷六. 六十四卦'}
+              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P8</span>${isEn ? 'Hexagrams' : '卷六·六十四卦'}
               </a>
             </div>
           </div>
@@ -18967,6 +19014,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
   window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;
   window.renderGeomagneticCalibrator = renderGeomagneticCalibrator;
+  window.renderSpatialFengShui = renderSpatialFengShui;
+  window.renderImperialDossierPages = renderImperialDossierPages;
   window.openSynastryDossierModal = openSynastryDossierModal;
   window.renderSynastryDossierPages = renderSynastryDossierPages;
   window.downloadSynastryPDF = downloadSynastryPDF;
