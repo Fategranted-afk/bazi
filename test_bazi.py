@@ -5346,17 +5346,17 @@ jsc_dossier5_cmd = [
     elementStore["dossierLangEn"].trigger("click");
 
     var enHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!enHtml.includes("Page 1 / 8")) throw new Error("Missing Page 1 / 8 in EN");
-    if (!enHtml.includes("Page 2 / 8")) throw new Error("Missing Page 2 / 8 in EN");
-    if (!enHtml.includes("Page 8 / 8")) throw new Error("Missing Page 8 / 8 in EN");
-    if (!enHtml.includes("Supreme Historical Soul Mirror")) throw new Error("Missing Supreme Historical Soul Mirror in EN Page 2");
+    if (!enHtml.includes("Page 1 / 9")) throw new Error("Missing Page 1 / 9 in EN");
+    if (!enHtml.includes("Page 2 / 9")) throw new Error("Missing Page 2 / 9 in EN");
+    if (!enHtml.includes("Page 9 / 9")) throw new Error("Missing Page 9 / 9 in EN");
+    if (!enHtml.includes("Supreme Historical Soul Mirror")) throw new Error("Missing Supreme Historical Soul Mirror in EN");
     if (!enHtml.includes("Decennial Trajectory & 14-Character Energy Synthesis")) throw new Error("Missing Decennial Trajectory title in EN");
     if (!enHtml.includes("14-CHARACTER HOLOGRAPHIC MATRIX")) throw new Error("Missing 14-char matrix in EN");
-    if (!enHtml.includes("Current Residence City Geographic Five-Element Evaluation")) throw new Error("Missing Residence City Evaluation title in EN Page 7");
-    if (!enHtml.includes("Bespoke Spatial Feng Shui Remedies")) throw new Error("Missing Remedies in EN Page 7");
-    if (!enHtml.includes("Career Calling & Optimal Ecosystem")) throw new Error("Missing Career Calling in EN Page 1");
-    if (!enHtml.includes("Domestic Spouse Ballast")) throw new Error("Missing Spouse Ballast in EN Page 1");
-    if (!enHtml.includes("Three Golden Rules for Life")) throw new Error("Missing Three Golden Rules in EN Page 1");
+    if (!enHtml.includes("Current Residence City Geographic Five-Element Evaluation")) throw new Error("Missing Residence City Evaluation title in EN");
+    if (!enHtml.includes("Bespoke Spatial Feng Shui Remedies")) throw new Error("Missing Remedies in EN");
+    if (!enHtml.includes("Career Calling & Optimal Ecosystem")) throw new Error("Missing Career Calling in EN");
+    if (!enHtml.includes("Domestic Spouse Ballast")) throw new Error("Missing Spouse Ballast in EN");
+    if (!enHtml.includes("Three Golden Rules for Life")) throw new Error("Missing Three Golden Rules in EN");
     if (enHtml.includes("undefined")) throw new Error("Found 'undefined' in EN Dossier HTML!");
     if (!enHtml.includes("imperial-corner-wrap-top")) throw new Error("EN dossier missing imperial-corner-wrap-top");
     if (!enHtml.includes("imperial-corner-wrap-bottom")) throw new Error("EN dossier missing imperial-corner-wrap-bottom");
@@ -5373,9 +5373,9 @@ jsc_dossier5_cmd = [
 
     elementStore["dossierLangZh"].trigger("click");
     var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
-    if (!zhHtml.includes("Page 1 / 8")) throw new Error("Missing Page 1 / 8 in ZH");
-    if (!zhHtml.includes("Page 2 / 8")) throw new Error("Missing Page 2 / 8 in ZH");
-    if (!zhHtml.includes("Page 8 / 8")) throw new Error("Missing Page 8 / 8 in ZH");
+    if (!zhHtml.includes("Page 1 / 9")) throw new Error("Missing Page 1 / 9 in ZH");
+    if (!zhHtml.includes("Page 2 / 9")) throw new Error("Missing Page 2 / 9 in ZH");
+    if (!zhHtml.includes("Page 9 / 9")) throw new Error("Missing Page 9 / 9 in ZH");
     if (!zhHtml.includes("imperial-corner-wrap-top")) throw new Error("ZH dossier missing imperial-corner-wrap-top");
     if (!zhHtml.includes("imperial-corner-wrap-bottom")) throw new Error("ZH dossier missing imperial-corner-wrap-bottom");
     if (!zhHtml.includes("imperial-card")) throw new Error("ZH dossier missing imperial-card classes");
@@ -8292,16 +8292,16 @@ jsc_check84_cmd = [
     load("js/app.js");
     if (document._domReady) document._domReady();
 
-    // 3. Test 8-Page Imperial Dossier Rendering in ZH and EN
+    // 3. Test 9-Page Imperial Dossier Rendering in ZH and EN
     elementStore['calcBtn'].trigger('click');
     elementStore['btnExportDossier'].trigger('click');
 
     // Test ZH Dossier
     elementStore['dossierLangZh'].trigger('click');
     var dossierZh = elementStore['imperialDossierContainer'].innerHTML;
-    if (!dossierZh.includes("Page 1 / 8")) throw new Error("ZH Dossier missing Page 1 / 8");
-    if (!dossierZh.includes("Page 2 / 8")) throw new Error("ZH Dossier missing Page 2 / 8");
-    if (!dossierZh.includes("Page 8 / 8 · Complete Dossier")) throw new Error("ZH Dossier missing Page 8 / 8 · Complete Dossier");
+    if (!dossierZh.includes("Page 1 / 9")) throw new Error("ZH Dossier missing Page 1 / 9");
+    if (!dossierZh.includes("Page 2 / 9")) throw new Error("ZH Dossier missing Page 2 / 9");
+    if (!dossierZh.includes("Page 9 / 9 · Complete Dossier")) throw new Error("ZH Dossier missing Page 9 / 9 · Complete Dossier");
     if (!dossierZh.includes("乱世三百年至高天命历史镜像")) throw new Error("ZH Dossier missing Page 2 Soul Mirror Title");
     if (!dossierZh.includes("学优点 · 破局战法")) throw new Error("ZH Dossier missing Strengths column");
     if (!dossierZh.includes("戒缺点 · 避险熔断")) throw new Error("ZH Dossier missing Pitfalls column");
@@ -8313,9 +8313,9 @@ jsc_check84_cmd = [
     // Test EN Dossier
     elementStore['dossierLangEn'].trigger('click');
     var dossierEn = elementStore['imperialDossierContainer'].innerHTML;
-    if (!dossierEn.includes("Page 1 / 8")) throw new Error("EN Dossier missing Page 1 / 8");
-    if (!dossierEn.includes("Page 2 / 8")) throw new Error("EN Dossier missing Page 2 / 8");
-    if (!dossierEn.includes("Page 8 / 8 · Complete Dossier")) throw new Error("EN Dossier missing Page 8 / 8 · Complete Dossier");
+    if (!dossierEn.includes("Page 1 / 9")) throw new Error("EN Dossier missing Page 1 / 9");
+    if (!dossierEn.includes("Page 2 / 9")) throw new Error("EN Dossier missing Page 2 / 9");
+    if (!dossierEn.includes("Page 9 / 9 · Complete Dossier")) throw new Error("EN Dossier missing Page 9 / 9 · Complete Dossier");
     if (!dossierEn.includes("Supreme Historical Soul Mirror")) throw new Error("EN Dossier missing Page 2 Soul Mirror Title");
     if (!dossierEn.includes("Strengths to Absorb")) throw new Error("EN Dossier missing Strengths column in EN");
     if (!dossierEn.includes("Pitfalls to Avoid")) throw new Error("EN Dossier missing Pitfalls column in EN");
@@ -8656,9 +8656,9 @@ jsc_check86_cmd = [
     var zhPages = zhHtml.split('class="imperial-page');
     if (!zhPages[1].includes('钦天<br>御批')) throw new Error("Page 1 missing 钦天御批 square seal in bottom right");
     if (zhPages[6].includes('钦定勘验印鉴')) throw new Error("Page 6 should NOT have 钦定勘验印鉴 (moved to last page)");
-    if (!zhPages[8].includes('钦定勘验印鉴')) throw new Error("Page 8 missing 钦定勘验印鉴");
-    if (!zhPages[8].includes('钦天监正堂之宝')) throw new Error("Page 8 missing 钦天监正堂之宝");
-    if (!zhPages[8].includes('研读时参验古典原文与白话指引对照')) throw new Error("Page 8 missing reflection preservation note");
+    if (!zhPages[9].includes('钦定勘验印鉴')) throw new Error("Page 9 missing 钦定勘验印鉴");
+    if (!zhPages[9].includes('钦天监正堂之宝')) throw new Error("Page 9 missing 钦天监正堂之宝");
+    if (!zhPages[9].includes('研读时参验古典原文与白话指引对照')) throw new Error("Page 9 missing reflection preservation note");
 
     // Test EN Dossier layout and zero Chinese characters
     elementStore['dossierLangEn'].trigger('click');
@@ -8673,8 +8673,8 @@ jsc_check86_cmd = [
     var enPages = enHtml.split('class="imperial-page');
     if (!enPages[1].includes('IMPERIAL<br>RESCRIPT')) throw new Error("EN Page 1 missing IMPERIAL RESCRIPT");
     if (enPages[6].includes('Certification Authority:')) throw new Error("EN Page 6 should NOT have Certification Authority");
-    if (!enPages[8].includes('Certification Authority:')) throw new Error("EN Page 8 missing Certification Authority");
-    if (!enPages[8].includes('IMPERIAL SEAL OF ASTRONOMY')) throw new Error("EN Page 8 missing IMPERIAL SEAL OF ASTRONOMY");
+    if (!enPages[9].includes('Certification Authority:')) throw new Error("EN Page 9 missing Certification Authority");
+    if (!enPages[9].includes('IMPERIAL SEAL OF ASTRONOMY')) throw new Error("EN Page 9 missing IMPERIAL SEAL OF ASTRONOMY");
 
     var zhMatches = enHtml.match(/[\\u4e00-\\u9fa5]/g);
     if (zhMatches && zhMatches.length > 0) {
@@ -14378,72 +14378,72 @@ jsc_check115_cmd = [
     window.renderImperialDossierPages(testBazi, luck, "zh");
     var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
     var zhPages = zhHtml.split('class="imperial-page');
-    if (zhPages.length !== 9) {
-      throw new Error("Imperial Dossier must have exactly 8 pages in ZH, got: " + (zhPages.length - 1));
+    if (zhPages.length !== 10) {
+      throw new Error("Imperial Dossier must have exactly 9 pages in ZH, got: " + (zhPages.length - 1));
     }
 
-    // Page 4 checks
-    if (!zhPages[4].includes("徐乐吾《子平真诠评注》《造化元钥评注》具象取用决策中间件")) {
-      throw new Error("Imperial Dossier Page 4 in ZH missing Xu Lewu middleware card");
+    // Page 5 checks (previously Page 4 before dedicated TOC was added)
+    if (!zhPages[5].includes("徐乐吾《子平真诠评注》《造化元钥评注》具象取用决策中间件")) {
+      throw new Error("Imperial Dossier Page 5 in ZH missing Xu Lewu middleware card");
     }
-    if (!zhPages[4].includes("二、生杀破局与战略胜负手")) {
-      throw new Error("Imperial Dossier Page 4 in ZH missing strategic breakthrough section");
+    if (!zhPages[5].includes("二、生杀破局与战略胜负手")) {
+      throw new Error("Imperial Dossier Page 5 in ZH missing strategic breakthrough section");
     }
 
-    // Page 8 checks
-    if (!zhPages[8].includes("四、百岁人生宏图五大阶段全景统览")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing 5 Macro Phases section");
+    // Page 9 checks (previously Page 8)
+    if (!zhPages[9].includes("四、百岁人生宏图五大阶段全景统览")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing 5 Macro Phases section");
     }
-    if (!zhPages[8].includes("少年启蒙立基期") || !zhPages[8].includes("青年展翼破局期") || !zhPages[8].includes("壮年建功鼎盛期")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing phase names");
+    if (!zhPages[9].includes("少年启蒙立基期") || !zhPages[9].includes("青年展翼破局期") || !zhPages[9].includes("壮年建功鼎盛期")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing phase names");
     }
-    if (!zhPages[8].includes("五、本命四大吉神神煞照命矩阵")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing Four Auspicious Deities section");
+    if (!zhPages[9].includes("五、本命四大吉神神煞照命矩阵")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing Four Auspicious Deities section");
     }
-    if (!zhPages[8].includes("天乙贵人") || !zhPages[8].includes("文昌贵人") || !zhPages[8].includes("红鸾天喜") || !zhPages[8].includes("驿马星动")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing auspicious deity names");
+    if (!zhPages[9].includes("天乙贵人") || !zhPages[9].includes("文昌贵人") || !zhPages[9].includes("红鸾天喜") || !zhPages[9].includes("驿马星动")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing auspicious deity names");
     }
-    if (!zhPages[8].includes("五代权相冯道《荣枯鉴》处世保全法旨")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing Feng Dao directive");
+    if (!zhPages[9].includes("五代权相冯道《荣枯鉴》处世保全法旨")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing Feng Dao directive");
     }
-    if (!zhPages[8].includes("核心产出：")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing '核心产出：'");
+    if (!zhPages[9].includes("核心产出：")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing '核心产出：'");
     }
-    if (!zhPages[8].includes("Page 8 / 8 · Complete Dossier")) {
-      throw new Error("Imperial Dossier Page 8 in ZH missing footer");
+    if (!zhPages[9].includes("Page 9 / 9 · Complete Dossier")) {
+      throw new Error("Imperial Dossier Page 9 in ZH missing footer");
     }
 
     // Test English Dossier & Zero Chinese Residuals
     window.renderImperialDossierPages(testBazi, luck, "en");
     var enHtml = elementStore["imperialDossierContainer"].innerHTML;
     var enPages = enHtml.split('class="imperial-page');
-    if (enPages.length !== 9) {
-      throw new Error("Imperial Dossier must have exactly 8 pages in EN, got: " + (enPages.length - 1));
+    if (enPages.length !== 10) {
+      throw new Error("Imperial Dossier must have exactly 9 pages in EN, got: " + (enPages.length - 1));
     }
 
-    // Page 4 EN checks
-    if (!enPages[4].includes("Xu Lewu Canonical Decision Middleware")) {
-      throw new Error("Imperial Dossier Page 4 in EN missing Xu Lewu middleware");
+    // Page 5 EN checks (previously Page 4)
+    if (!enPages[5].includes("Xu Lewu Canonical Decision Middleware")) {
+      throw new Error("Imperial Dossier Page 5 in EN missing Xu Lewu middleware");
     }
 
-    // Page 8 EN checks
-    if (!enPages[8].includes("IV. Lifelong Five Grand Macro Phases Trajectory")) {
-      throw new Error("Imperial Dossier Page 8 in EN missing Five Macro Phases section");
+    // Page 9 EN checks (previously Page 8)
+    if (!enPages[9].includes("IV. Lifelong Five Grand Macro Phases Trajectory")) {
+      throw new Error("Imperial Dossier Page 9 in EN missing Five Macro Phases section");
     }
-    if (!enPages[8].includes("V. Four Major Auspicious Deities Natal Matrix")) {
-      throw new Error("Imperial Dossier Page 8 in EN missing Four Auspicious Deities section");
+    if (!enPages[9].includes("V. Four Major Auspicious Deities Natal Matrix")) {
+      throw new Error("Imperial Dossier Page 9 in EN missing Four Auspicious Deities section");
     }
-    if (!enPages[8].includes("VII. Feng Dao Rong Ku Jian Workplace Directive")) {
-      throw new Error("Imperial Dossier Page 8 in EN missing Feng Dao directive in EN");
+    if (!enPages[9].includes("VII. Feng Dao Rong Ku Jian Workplace Directive")) {
+      throw new Error("Imperial Dossier Page 9 in EN missing Feng Dao directive in EN");
     }
-    if (!enPages[8].includes("Outputs:")) {
-      throw new Error("Imperial Dossier Page 8 in EN missing 'Outputs:'");
+    if (!enPages[9].includes("Outputs:")) {
+      throw new Error("Imperial Dossier Page 9 in EN missing 'Outputs:'");
     }
-    if (!enPages[8].includes("Certification Authority:")) {
-      throw new Error("Imperial Dossier Page 8 in EN missing Certification Authority");
+    if (!enPages[9].includes("Certification Authority:")) {
+      throw new Error("Imperial Dossier Page 9 in EN missing Certification Authority");
     }
-    if (!enPages[8].includes("IMPERIAL SEAL OF ASTRONOMY")) {
-      throw new Error("Imperial Dossier Page 8 in EN missing IMPERIAL SEAL OF ASTRONOMY");
+    if (!enPages[9].includes("IMPERIAL SEAL OF ASTRONOMY")) {
+      throw new Error("Imperial Dossier Page 9 in EN missing IMPERIAL SEAL OF ASTRONOMY");
     }
 
     // Full English residual Chinese check
@@ -15831,7 +15831,7 @@ assert 'window.renderSynastryDossierPages = renderSynastryDossierPages' in app_c
 assert 'window.downloadSynastryPDF = downloadSynastryPDF' in app_content, "Missing window.downloadSynastryPDF in app.js"
 assert 'window.fallbackExportSynastryPDF = fallbackExportSynastryPDF' in app_content, "Missing window.fallbackExportSynastryPDF in app.js"
 assert 'window.jumpToImperialPage = jumpToImperialPage' in app_content, "Missing window.jumpToImperialPage in app.js"
-for p_idx in range(1, 9):
+for p_idx in range(1, 10):
     assert f'id="imperialPage{p_idx}"' in app_content, f"Missing #imperialPage{p_idx} in app.js"
 assert 'id="synastryPage1"' in app_content, "Missing #synastryPage1 in app.js"
 assert 'id="synastryPage2"' in app_content, "Missing #synastryPage2 in app.js"
@@ -16062,11 +16062,11 @@ jsc_check127_cmd = [
       throw new Error("Residual Chinese in Business EN Synastry Dossier HTML: " + enBizLeaks.slice(0, 30).join(""));
     }
 
-    // 10. Test Imperial Dossier 8-page ID anchors and Table of Contents jump
+    // 10. Test Imperial Dossier 9-page ID anchors and Table of Contents jump
     var luck = LuckEngine.calculateLuck(chartA, 2026);
     window.renderImperialDossierPages(chartA, luck, "zh");
     var htmlImperial = elementStore["imperialDossierContainer"].innerHTML;
-    for (var k = 1; k <= 8; k++) {
+    for (var k = 1; k <= 9; k++) {
       if (htmlImperial.indexOf('id="imperialPage' + k + '"') === -1) {
         throw new Error("Missing #imperialPage" + k + " in imperial dossier render");
       }
@@ -16621,7 +16621,214 @@ for sub_id in ["sim-tab-sandbox", "sim-tab-georesonance", "sim-tab-fengshui"]:
 
 print("✓ 130. 顶栏主导航（已精准精简去除空间风水与地理匹配、保留其余11大主导航按钮、且全量页面与沙盘专属副页面完好无损）验证通过！")
 
-print("\n🎉 ALL 130 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 131. Validating Dedicated Imperial Dossier Page 1 (Table of Contents), Restored Page 2 Clean Layout & 9-Page Complete Architecture ===
+print("\n=== 131. Validating Dedicated Imperial Dossier Page 1 (Table of Contents), Restored Page 2 Clean Layout & 9-Page Complete Architecture ===")
+
+# Static file checks
+assert 'id="imperialPage1"' in app_content, "Missing #imperialPage1 in app.js"
+for p_idx in range(1, 10):
+    assert f'id="imperialPage{p_idx}"' in app_content, f"Missing #imperialPage{p_idx} in app.js"
+assert 'Page 1 / 9' in app_content, "Missing 'Page 1 / 9' in app.js"
+assert 'Page 2 / 9' in app_content, "Missing 'Page 2 / 9' in app.js"
+assert 'Page 9 / 9 · Complete Dossier' in app_content, "Missing 'Page 9 / 9 · Complete Dossier' in app.js"
+
+# i18n checks for 9-page dossier
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_content = f.read()
+
+assert '9-Page' in i18n_content or '9页' in i18n_content, "i18n.js missing 9-page description"
+assert 'dossier_download_btn' in i18n_content, "Missing dossier_download_btn key in i18n.js"
+
+# JavaScriptCore simulation
+jsc_check131_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var testChart = BaZiEngine.calculate({
+      year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var testLuck = LuckEngine.calculateLuck(testChart, 2026);
+
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      var classes = [];
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "",
+        checked: false,
+        options: [],
+        selectedIndex: 0,
+        classList: {
+          add: function(cls) { if (classes.indexOf(cls) === -1) classes.push(cls); },
+          remove: function(cls) { var idx = classes.indexOf(cls); if (idx !== -1) classes.splice(idx, 1); },
+          contains: function(cls) { return classes.indexOf(cls) !== -1; }
+        },
+        className: "",
+        style: {},
+        _children: [],
+        _listeners: {},
+        addEventListener: function(evt, h) { (this._listeners[evt] = this._listeners[evt] || []).push(h); },
+        appendChild: function(c) { this._children.push(c); if (c && c.innerHTML) this.innerHTML += c.innerHTML; },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        scrollIntoView: function() { this._scrolled = true; }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "btnExportDossier", "btnQuickExportSinglePdf", "imperialDossierModal",
+      "imperialDossierContainer", "calcBtn", "birthDate", "birthTime", "gender",
+      "useSolarTime", "lateRatAsNextDay", "customLongitude", "timezoneSelect",
+      "citySelect", "fsec-canons", "view-friction", "frictionContentContainer",
+      "careerContentContainer", "currentCountrySelect", "currentCitySelect"
+    ];
+    for (var i = 1; i <= 9; i++) {
+      domIds.push("imperialPage" + i);
+    }
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") handler();
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      SynastryEngine: SynastryEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine
+    };
+
+    load("js/app.js");
+
+    // 1. Render ZH Dossier
+    window.renderImperialDossierPages(testChart, testLuck, "zh");
+    var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
+    var zhPages = zhHtml.split('class="imperial-page');
+    if (zhPages.length !== 10) {
+      throw new Error("Imperial Dossier in ZH must have 9 pages, found: " + (zhPages.length - 1));
+    }
+
+    var page1Zh = zhPages[1];
+    var page2Zh = zhPages[2];
+
+    // Page 1 ZH checks
+    if (!page1Zh.includes('天机御览 · 卷首总目')) throw new Error("Page 1 ZH missing 卷首总目 header");
+    if (!page1Zh.includes('imperial-toc-nav')) throw new Error("Page 1 ZH missing .imperial-toc-nav");
+    if (!page1Zh.includes('Page 1 / 9')) throw new Error("Page 1 ZH missing Page 1 / 9 footer");
+    if (!page1Zh.includes('钦天<br>御批')) throw new Error("Page 1 ZH missing 钦天御批 square seal");
+    for (var k = 2; k <= 9; k++) {
+      if (!page1Zh.includes("jumpToImperialPage('imperialPage" + k + "')")) {
+        throw new Error("Page 1 ZH missing jump link for imperialPage" + k);
+      }
+    }
+
+    // Page 2 ZH checks (restored clean layout - NO .imperial-toc-nav)
+    if (page2Zh.includes('imperial-toc-nav')) {
+      throw new Error("Page 2 ZH must NOT contain .imperial-toc-nav (should have restored clean spacious layout)");
+    }
+    if (!page2Zh.includes('卷首三要终身统览')) throw new Error("Page 2 ZH missing 卷首三要终身统览 title");
+    if (!page2Zh.includes('Page 2 / 9')) throw new Error("Page 2 ZH missing Page 2 / 9 footer");
+
+    // 2. Render EN Dossier and Verify Zero Chinese Leaks across entire 9-page dossier
+    window.renderImperialDossierPages(testChart, testLuck, "en");
+    var enHtml = elementStore["imperialDossierContainer"].innerHTML;
+    var enPages = enHtml.split('class="imperial-page');
+    if (enPages.length !== 10) {
+      throw new Error("Imperial Dossier in EN must have 9 pages, found: " + (enPages.length - 1));
+    }
+
+    var page1En = enPages[1];
+    var page2En = enPages[2];
+
+    // Page 1 EN checks
+    if (!page1En.includes('CLASSIFIED ARCHIVE · TABLE OF CONTENTS')) throw new Error("Page 1 EN missing TOC header");
+    if (!page1En.includes('imperial-toc-nav')) throw new Error("Page 1 EN missing .imperial-toc-nav");
+    if (!page1En.includes('Page 1 / 9')) throw new Error("Page 1 EN missing Page 1 / 9 footer");
+    if (!page1En.includes('IMPERIAL<br>RESCRIPT')) throw new Error("Page 1 EN missing IMPERIAL RESCRIPT seal");
+
+    // Page 2 EN checks (restored clean layout)
+    if (page2En.includes('imperial-toc-nav')) {
+      throw new Error("Page 2 EN must NOT contain .imperial-toc-nav");
+    }
+    if (!page2En.includes('Imperial Celestial Blueprint')) throw new Error("Page 2 EN missing Blueprint title");
+    if (!page2En.includes('Page 2 / 9')) throw new Error("Page 2 EN missing Page 2 / 9 footer");
+
+    // Absolute zero Chinese leak check across entire 9-page EN Dossier
+    var enLeaks = enHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (enLeaks && enLeaks.length > 0) {
+      throw new Error("Residual Chinese found in 9-Page EN Imperial Dossier (" + enLeaks.length + " chars): " + enLeaks.slice(0, 30).join(""));
+    }
+
+    // 3. Test jumpToImperialPage interactivity
+    elementStore["imperialPage2"]._scrolled = false;
+    elementStore["imperialPage9"]._scrolled = false;
+    window.jumpToImperialPage("imperialPage2");
+    if (!elementStore["imperialPage2"]._scrolled) throw new Error("jumpToImperialPage failed to scroll to imperialPage2");
+    window.jumpToImperialPage("imperialPage9");
+    if (!elementStore["imperialPage9"]._scrolled) throw new Error("jumpToImperialPage failed to scroll to imperialPage9");
+    """
+]
+run_check131 = subprocess.run(jsc_check131_cmd, capture_output=True, text=True)
+assert run_check131.returncode == 0, f"Check 131 JSC test failed: stdout={run_check131.stdout} stderr={run_check131.stderr}"
+print("✓ 131. 皇家战报首卷独立目录总目（Page 1 Dedicated Master Table of Contents）、卷二终身统览原貌回归净爽布局（移除内联导航条）、全本九卷直达锚点跳转及双语100%零中文残留全量验证通过！")
+
+print("\n🎉 ALL 131 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

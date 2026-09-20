@@ -16474,7 +16474,7 @@ document.addEventListener('DOMContentLoaded', () => {
       printBtnEl.textContent = isEn ? 'System Print / Save as PDF' : '系统打印 / 另存为 PDF';
     }
     if (downloadBtnEl) {
-      downloadBtnEl.textContent = isEn ? 'Direct Download 8-Page PDF' : '直接下载 8 页 PDF 文件';
+      downloadBtnEl.textContent = isEn ? 'Direct Download 9-Page PDF' : '直接下载 9 页 PDF 文件';
     }
     if (downloadSingleBtnEl) {
       downloadSingleBtnEl.textContent = isEn ? 'Export Page 1 PDF' : '导出卷首单页 PDF';
@@ -16561,7 +16561,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
 
     showDossierStatus(
-      isEn ? '⏳ Compiling 8-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 8 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
+      isEn ? '⏳ Compiling 9-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 9 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
       'info'
     );
 
@@ -16589,7 +16589,7 @@ document.addEventListener('DOMContentLoaded', () => {
             orientation: 'portrait'
           },
           pagebreak: {
-            mode: [] // Pure 8-page continuous A4 rendering without spurious spacer injections
+            mode: [] // Pure 9-page continuous A4 rendering without spurious spacer injections
           }
         };
 
@@ -17626,7 +17626,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     container.innerHTML = `
-      <!-- Page 1: Executive Summary Blueprint -->
+      <!-- Page 1: Dedicated Master Table of Contents -->
       <div id="imperialPage1" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
@@ -17639,6 +17639,239 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="imperial-watermark">${watermarkText}</div>
 
         <div class="imperial-frame flex flex-col justify-between p-5 space-y-1.5">
+          <!-- Header -->
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2">
+            <div class="flex items-center justify-between">
+              <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL MASTER INDEX' : '钦天监正堂之宝'}</span>
+              <span class="text-[10.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · TABLE OF CONTENTS' : '天机御览 · 卷首总目'}</span>
+            </div>
+            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首总目'}</h1>
+            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? 'Master Table of Contents · Complete Thematic Directory Across Eight Imperial Volumes' : '天机御览总目 · 钦天八卷全相统览与直达导引'}</p>
+          </div>
+
+          <!-- Subject Quick Metadata Banner -->
+          <div class="imperial-card imperial-card-gold grid grid-cols-4 gap-2 text-[10.5px] p-2 text-center font-serif-sc">
+            <div><span class="text-gray-500">${isEn ? 'Subject:' : '命主造化:'}</span> <b class="text-amber-950 font-mono ml-0.5">${genderStr}</b></div>
+            <div><span class="text-gray-500">${isEn ? 'Day Master:' : '日元元神:'}</span> <b class="text-amber-900 ml-0.5">${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`}</b></div>
+            <div><span class="text-gray-500">${isEn ? 'Pattern:' : '统帅格局:'}</span> <b class="text-amber-900 ml-0.5 truncate">${domPat}</b></div>
+            <div><span class="text-gray-500">${isEn ? 'Key Medicine:' : '相神大药:'}</span> <b class="text-red-900 ml-0.5">${keyMedicineText}</b></div>
+          </div>
+
+          <!-- Quick Navigation Bar (8 Imperial Scrolls) -->
+          <div class="imperial-toc-nav bg-gradient-to-r from-amber-950/10 via-amber-900/5 to-amber-950/10 border border-amber-900/30 rounded px-2.5 py-1 text-[9px] font-serif-sc shadow-sm">
+            <div class="flex items-center justify-between font-bold text-amber-950 mb-0.5 border-b border-amber-900/20 pb-0.5">
+              <span class="flex items-center gap-1.5">
+                <span class="text-amber-800 text-xs">📜</span>
+                <span class="font-bold tracking-wide">${isEn ? 'Imperial Table of Contents · Eight Scrolls Directory' : '天机御览总目 · 钦天八卷全览导航'}</span>
+              </span>
+              <span class="text-[8px] text-amber-900 font-mono tracking-wider bg-amber-900/10 px-1.5 py-0.5 rounded border border-amber-900/20">${isEn ? 'CLICK TO NAVIGATE' : '点击直达对应卷宗'}</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1 text-[8.5px] text-center">
+              <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P2</span>${isEn ? 'Blueprint (Self)' : '卷首·终身自己'}
+              </a>
+              <a href="#imperialPage3" onclick="jumpToImperialPage('imperialPage3'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P3</span>${isEn ? 'Soul Mirror' : '特别·人物画像'}
+              </a>
+              <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? 'Four Pillars' : '卷一·四柱立极'}
+              </a>
+              <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Patterns (Warfare)' : '卷二·格局兵法'}
+              </a>
+              <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Kinship' : '卷三·六亲全息'}
+              </a>
+              <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Mind & Codex' : '卷四·心理与冯道'}
+              </a>
+              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P8</span>${isEn ? 'Geo Feng Shui' : '卷五·地缘风水'}
+              </a>
+              <a href="#imperialPage9" onclick="jumpToImperialPage('imperialPage9'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
+                <span class="font-bold text-amber-900 mr-0.5">P9</span>${isEn ? 'Hexagrams & Workplace' : '卷六·六十四卦'}
+              </a>
+            </div>
+          </div>
+
+          <!-- Structured 8-Scroll Thematic Directory Cards Grid -->
+          <div class="grid grid-cols-2 gap-2 font-serif-sc">
+            <!-- Scroll 1 / Page 2 -->
+            <div onclick="jumpToImperialPage('imperialPage2'); return false;" class="imperial-card imperial-card-emerald p-2 text-xs space-y-1 hover:border-emerald-600 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>🎯</span>
+                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll I · Sovereign Blueprint' : '卷首 · 终身自己'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-200/80 text-emerald-950 border border-emerald-600/30">Page 2 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Ecosystem: ' : '天命职能：'}</b>${arch1.icon} ${isEn ? arch1.nameEn.split(/[（(]/)[0].trim() : arch1.nameZh.split(/[（(]/)[0].trim()} (${arch1.fitScore}${isEn ? '/100' : '分'})</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Capital & Spouse: ' : '资财与压舱石：'}</b>${isEn ? 'Direct/Indirect Wealth & Spouse Ballast' : '正偏财守财红线 · 配偶家庭压舱石'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-emerald-900 font-medium">
+                <span>${isEn ? 'Three Sovereign Decrees' : '钦天监终身三铁律'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 2 / Page 3 -->
+            <div onclick="jumpToImperialPage('imperialPage3'); return false;" class="imperial-card imperial-card-gold p-2 text-xs space-y-1 hover:border-amber-700 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>👑</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll II · Historical Soul Mirror' : '特别 · 人物画像'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 border border-amber-600/30">Page 3 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Top Resonance: ' : '先贤照胆：'}</b>${isEn ? topMatch.nameEn : topMatch.nameZh} (${isEn ? topMatch.dynastyEn : topMatch.dynastyZh}) · #1 (${topMatch.similarityScore}%)</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Dual Strategy: ' : '胜负双轨：'}</b>${isEn ? 'Historical Breakthrough Tactics & Pitfalls' : '前三位先贤破局战法 · 避险熔断红线'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-amber-900 font-medium">
+                <span>${isEn ? '4D Metaphysics Calibration' : '四维气象测度与当代合参'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 3 / Page 4 -->
+            <div onclick="jumpToImperialPage('imperialPage4'); return false;" class="imperial-card imperial-card-gold p-2 text-xs space-y-1 hover:border-amber-700 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>🏛️</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll III · Four Pillars Grid' : '卷一 · 四柱立极'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 border border-amber-600/30">Page 4 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Natal Matrix: ' : '四柱神机：'}</b>${isEn ? 'Four Pillars Stems & Branches, NaYin & Ten Gods' : '年月日时干支纳音 · 坐支十神力量分布'}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Day Master: ' : '日元旺衰：'}</b>${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`} · ${isEn ? 'De Ling & De Di' : '得令得地得势剖析'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-amber-900 font-medium">
+                <span>${isEn ? 'Elemental Balance & Score' : '五行分布与子平100分量化'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 4 / Page 5 -->
+            <div onclick="jumpToImperialPage('imperialPage5'); return false;" class="imperial-card imperial-card-accent p-2 text-xs space-y-1 hover:border-amber-700 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>⚔️</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll IV · Patterns & Warfare' : '卷二 · 格局兵法'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 border border-amber-600/30">Page 5 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Dominant Pattern: ' : '统帅格局：'}</b>${domPat} (${domTier})</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Middleware: ' : '决策中间件：'}</b>${isEn ? 'Xu Lewu Canonical Decision Middleware' : '徐乐吾评注具象取用决策中间件'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-amber-900 font-medium">
+                <span>${isEn ? '80/20 Pareto High-Leverage Pivot' : '二八关键枢纽战略战法'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 5 / Page 6 -->
+            <div onclick="jumpToImperialPage('imperialPage6'); return false;" class="imperial-card imperial-card-rose p-2 text-xs space-y-1 hover:border-rose-600 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>💍</span>
+                  <span class="group-hover:text-rose-900 transition">${isEn ? 'Scroll V · Kinship & Spouse' : '卷三 · 六亲全息'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-rose-200/80 text-rose-950 border border-rose-600/30">Page 6 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Spouse Hologram: ' : '配偶正缘：'}</b>${isEn ? `Branch [${spBranchEn}] · ${spArch}` : `日支坐【${spBranch}】· ${spArch}`}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Aesthetics & Lineage: ' : '颜值品相与家境：'}</b>${isEn ? 'Appearance, intellect & ancestral background' : '配偶颜值才智 · 门楣家境 · 结缘方位'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-rose-900 font-medium">
+                <span>${isEn ? 'Parents & Offspring Palaces' : '父母祖荫与子女宫传承'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 6 / Page 7 -->
+            <div onclick="jumpToImperialPage('imperialPage7'); return false;" class="imperial-card imperial-card-emerald p-2 text-xs space-y-1 hover:border-emerald-600 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>🧘</span>
+                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll VI · Zen Mindset & Codex' : '卷四 · 禅道心智'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-emerald-200/80 text-emerald-950 border border-emerald-600/30">Page 7 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Mental Friction: ' : '心智体检：'}</b>${isEn ? 'Root causes of friction & vulnerability manual' : '原生精神内耗归因 · 易感暗礁说明'}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Feng Dao Codex: ' : '冯道法旨：'}</b>${isEn ? 'Rong Ku Jian survival & preservation rules' : '五代权相冯道《荣枯鉴》处世保全'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-emerald-900 font-medium">
+                <span>${isEn ? 'Zen-Dao Equanimity Directives' : '三经解脱与降服内耗心法'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 7 / Page 8 -->
+            <div onclick="jumpToImperialPage('imperialPage8'); return false;" class="imperial-card imperial-card-gold p-2 text-xs space-y-1 hover:border-amber-700 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>🧭</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VII · Decennial & Geo' : '卷五 · 地缘风水'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 border border-amber-600/30">Page 8 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? '14-Char Matrix: ' : '十四字矩阵：'}</b>${isEn ? 'Natal, decennial & annual energy synthesis' : '原局岁运十四字全景气机集成'}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'City Resonance: ' : '城市气数：'}</b>${cityCityDisplay} (${cityElementDisplay}) · ${cityGradeDisplay}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-amber-900 font-medium">
+                <span>${isEn ? 'Spatial Feng Shui Remedies' : '专属空间风水调理三策'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+
+            <!-- Scroll 8 / Page 9 -->
+            <div onclick="jumpToImperialPage('imperialPage9'); return false;" class="imperial-card imperial-card-accent p-2 text-xs space-y-1 hover:border-amber-700 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[11px]">
+                  <span>💼</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VIII · Career & Legacy' : '卷六 · 职场推演'}</span>
+                </span>
+                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 border border-amber-600/30">Page 9 / 9</span>
+              </div>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Workplace Archetypes: ' : '职场原型：'}</b>${isEn ? 'Executive, Specialist, Commercial & Governance' : '操盘统帅/战略研发/商业转化/制度合规'}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Macro Phases: ' : '百岁宏图：'}</b>${isEn ? 'Youth, Breakthrough, Apex, Legacy, Harmony' : '少年/青年/壮年/知命/归真五大阶段'}</p>
+              <div class="flex items-center justify-between pt-0.5 text-[9px] text-amber-900 font-medium">
+                <span>${isEn ? 'Four Auspicious Deities & Seal' : '四大吉神照命与钦定终身宝印'}</span>
+                <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Rescript / Reading Guidelines Box with square seal -->
+          <div class="imperial-card imperial-card-accent p-2.5 text-xs space-y-0.5 font-serif-sc relative overflow-hidden">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+              <span class="flex items-center gap-1"><span class="text-sm">👑</span><span>${isEn ? 'Imperial Master Rescript · Principles for Reading the Dossier' : '钦天监御制总目鉴词 · 阅卷研解三要旨'}</span></span>
+              <span class="text-[9.5px] text-amber-900 font-mono">${isEn ? 'CANONICAL DECREE' : '钦定鉴词'}</span>
+            </div>
+            <div class="relative pt-0.5 min-h-[44px]">
+              <div class="space-y-0.5 text-[10px] text-amber-950 leading-tight" style="padding-right: 30mm;">
+                <p>${isEn ? '1. Holistic Integration: Read the Master Blueprint on Page 2 first to anchor your core life strategy before exploring granular scrolls.' : '一、以卷首立基：先阅卷首三要终身统览，立足天命职能与家庭压舱石之核心大局，而后分卷精研。'}</p>
+                <p>${isEn ? '2. Temporal Synchronization: Cross-examine your decennial transits and historical soul mirror to seize high-leverage strategic windows.' : '二、以岁运参机：合参乱世三百年先贤胜负战法与十四字岁运矩阵，顺应天道节律，进退有度。'}</p>
+                <p>${isEn ? '3. Somatic & Spatial Harmony: Fortify your internal mindset through Zen-Dao and optimize your living sanctuary via spatial Feng Shui.' : '三、以心道固本：内修禅道心智断除内耗，外借空间地缘风水纳吉避凶，知行合一，终身立于不败之地。'}</p>
+              </div>
+              <div class="imperial-seal-square ${isEn ? 'is-en' : ''}" title="${isEn ? 'Imperial Rescript' : '钦天御批'}">
+                ${isEn ? 'IMPERIAL<br>RESCRIPT' : '钦天<br>御批'}
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Master Table of Contents' : '大明/大清钦天监 · 卷首 目录总目'}</span>
+            <span>Page 1 / 9</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2: Executive Summary Blueprint (Restored Clean Layout) -->
+      <div id="imperialPage2" class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
           <!-- Header -->
           <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2">
             <div class="flex items-center justify-between">
@@ -17655,43 +17888,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <div><span class="text-gray-500">${isEn ? 'Day Master:' : '日元元神:'}</span> <b class="text-amber-900 ml-0.5">${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`}</b></div>
             <div><span class="text-gray-500">${isEn ? 'Pattern:' : '统帅格局:'}</span> <b class="text-amber-900 ml-0.5 truncate">${domPat}</b></div>
             <div><span class="text-gray-500">${isEn ? 'Key Medicine:' : '相神大药:'}</span> <b class="text-red-900 ml-0.5">${keyMedicineText}</b></div>
-          </div>
-
-          <!-- Clickable Table of Contents (8 Imperial Scrolls Navigation) -->
-          <div class="imperial-toc-nav bg-gradient-to-r from-amber-950/10 via-amber-900/5 to-amber-950/10 border border-amber-900/30 rounded px-2.5 py-1.5 text-[9px] font-serif-sc shadow-sm">
-            <div class="flex items-center justify-between font-bold text-amber-950 mb-1 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5">
-                <span class="text-amber-800 text-xs">📜</span>
-                <span class="font-bold tracking-wide">${isEn ? 'Imperial Table of Contents · Eight Scrolls Directory' : '天机御览总目 · 钦天八卷全览导航'}</span>
-              </span>
-              <span class="text-[8px] text-amber-900 font-mono tracking-wider bg-amber-900/10 px-1.5 py-0.5 rounded border border-amber-900/20">${isEn ? 'CLICK TO NAVIGATE' : '点击直达对应卷宗'}</span>
-            </div>
-            <div class="grid grid-cols-4 gap-1 text-[8.5px] text-center">
-              <a href="#imperialPage1" onclick="jumpToImperialPage('imperialPage1'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P1</span>${isEn ? 'Blueprint (Self)' : '卷首·终身自己'}
-              </a>
-              <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P2</span>${isEn ? 'Soul Mirror' : '特别·人物画像'}
-              </a>
-              <a href="#imperialPage3" onclick="jumpToImperialPage('imperialPage3'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P3</span>${isEn ? 'Four Pillars' : '卷一·四柱立极'}
-              </a>
-              <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? 'Patterns (Warfare)' : '卷二·格局兵法'}
-              </a>
-              <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Decennial Luck' : '卷三·岁运推演'}
-              </a>
-              <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Mind & Codex' : '卷四·心理与冯道'}
-              </a>
-              <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Geo Feng Shui' : '卷五·地缘风水'}
-              </a>
-              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P8</span>${isEn ? 'Hexagrams' : '卷六·六十四卦'}
-              </a>
-            </div>
           </div>
 
           <!-- Module 1: Career Calling -->
@@ -17764,13 +17960,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Master Executive Summary' : '大明/大清钦天监 · 卷首 终身统览'}</span>
-            <span>Page 1 / 8</span>
+            <span>Page 2 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 2: Special Prologue: Supreme Historical Soul Mirror -->
-      <div id="imperialPage2" class="imperial-page relative">
+      <!-- Page 3: Special Prologue: Supreme Historical Soul Mirror -->
+      <div id="imperialPage3" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -17934,13 +18130,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Historical Soul Mirror Prologue' : '大明/大清钦天监 · 卷首附卷 历史照命'}</span>
-            <span>Page 2 / 8</span>
+            <span>Page 3 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 3: Cover & Four Pillars Grand Altar -->
-      <div id="imperialPage3" class="imperial-page relative">
+      <!-- Page 4: Cover & Four Pillars Grand Altar -->
+      <div id="imperialPage4" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18043,13 +18239,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷一'}</span>
-            <span>Page 3 / 8</span>
+            <span>Page 4 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 4: Volume I - 80/20 Grand Picture Pareto Strategy -->
-      <div id="imperialPage4" class="imperial-page relative">
+      <!-- Page 5: Volume I - 80/20 Grand Picture Pareto Strategy -->
+      <div id="imperialPage5" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18115,13 +18311,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷二'}</span>
-            <span>Page 4 / 8</span>
+            <span>Page 5 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 5: Volume III - 4D Kinship Profiles -->
-      <div id="imperialPage5" class="imperial-page relative">
+      <!-- Page 6: Volume III - 4D Kinship Profiles -->
+      <div id="imperialPage6" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18178,13 +18374,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷三'}</span>
-            <span>Page 5 / 8</span>
+            <span>Page 6 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 6: Volume IV - Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Strategy -->
-      <div id="imperialPage6" class="imperial-page relative">
+      <!-- Page 7: Volume IV - Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Strategy -->
+      <div id="imperialPage7" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18330,13 +18526,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
-            <span>Page 6 / 8</span>
+            <span>Page 7 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 7: Volume V - Decennial Trajectory, 14-Character Energy Synthesis & Residence City Geographic Qi -->
-      <div id="imperialPage7" class="imperial-page relative">
+      <!-- Page 8: Volume V - Decennial Trajectory, 14-Character Energy Synthesis & Residence City Geographic Qi -->
+      <div id="imperialPage8" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18579,13 +18775,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷五'}</span>
-            <span>Page 7 / 8</span>
+            <span>Page 8 / 9</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 8: Volume VI - Career & Wealth Trajectory -->
-      <div id="imperialPage8" class="imperial-page relative">
+      <!-- Page 9: Volume VI - Career & Wealth Trajectory -->
+      <div id="imperialPage9" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18752,7 +18948,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Verification Stamp & Complete Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-0.5 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 6' : '大明/大清钦天监 · 卷六'}</span>
-            <span>Page 8 / 8 · Complete Dossier</span>
+            <span>Page 9 / 9 · Complete Dossier</span>
           </div>
         </div>
       </div>
