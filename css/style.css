@@ -2410,7 +2410,17 @@ body {
     overflow: hidden !important;
     border: none !important;
   }
-  #imperialDossierModal {
+  #imperialDossierModal.hidden,
+  #synastryDossierModal.hidden {
+    display: none !important;
+    height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+  }
+  #imperialDossierModal:not(.hidden) {
     display: block !important;
     position: static !important;
     inset: auto !important;
@@ -2432,6 +2442,38 @@ body {
     visibility: visible !important;
   }
   #imperialDossierContainer {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 210mm !important;
+    background: #fcfbf7 !important;
+    background-color: #fcfbf7 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+  #synastryDossierModal:not(.hidden) {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    background: #fcfbf7 !important;
+    background-color: #fcfbf7 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    width: 210mm !important;
+    min-height: auto !important;
+    visibility: visible !important;
+  }
+  #synastryDossierContainer,
+  #synastryDossierContainer * {
+    visibility: visible !important;
+  }
+  #synastryDossierContainer {
     position: static !important;
     left: auto !important;
     top: auto !important;
@@ -2566,7 +2608,7 @@ body {
   color: #1a1612;
   width: 210mm;
   min-height: 296.5mm;
-  padding: 14mm 14mm 14mm 14mm;
+  padding: 14mm 14mm 14mm 24mm;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -2588,7 +2630,7 @@ body {
     height: 296.5mm !important;
     max-height: 296.5mm !important;
     min-height: 296.5mm !important;
-    padding: 14mm 14mm 14mm 14mm !important;
+    padding: 14mm 14mm 14mm 24mm !important;
     page-break-after: always !important;
     break-after: page !important;
     page-break-inside: avoid !important;
@@ -2623,6 +2665,7 @@ body {
   height: 296.5mm !important;
   min-height: 296.5mm !important;
   max-height: 296.5mm !important;
+  padding: 14mm 14mm 14mm 24mm !important;
   page-break-after: always !important;
   break-after: page !important;
   page-break-inside: avoid !important;

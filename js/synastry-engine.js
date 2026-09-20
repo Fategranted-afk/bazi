@@ -157,6 +157,23 @@ const SynastryEngine = (function() {
     return `${s} / ${b}`;
   }
 
+  const TEN_GOD_EN = {
+    '正官': 'Direct Officer', '七杀': 'Seven Killings', '偏官': 'Seven Killings',
+    '正印': 'Direct Resource', '偏印': 'Indirect Resource', '印绶': 'Resource',
+    '比肩': 'Companion', '劫财': 'Rob Wealth', '建禄': 'Established Lu', '阳刃': 'Yang Blade',
+    '食神': 'Eating God', '伤官': 'Hurting Officer',
+    '正财': 'Direct Wealth', '偏财': 'Indirect Wealth'
+  };
+
+  function getTenGodEn(god) {
+    if (!god) return 'Harmonious';
+    if (typeof I18N !== 'undefined' && typeof I18N.getGod === 'function') {
+      const res = I18N.getGod(god, 'en');
+      if (res && !/[\u4e00-\u9fa5]/.test(res)) return res;
+    }
+    return TEN_GOD_EN[god] || 'Noble Element';
+  }
+
   /**
    * Evaluate Chinese Zodiac Compatibility (生肖合婚与冲合吉凶)
    * Strictly based on Year Earthly Branches (pA.year.branch, pB.year.branch)
@@ -395,8 +412,10 @@ const SynastryEngine = (function() {
       zpZh = `【成格救应·喜用互济】《子平真诠》定论：“格局用神，专求月令；相生相制，成格救应。”双盘交互中，一方之丰沛恰为另一方原局所求之喜用（互补【${giftNames}】气）。彼此互为破格之解药，事业合作与家庭经营均能借力化阻、相辅相成。`;
       zpEn = `[Zi Ping Zhen Quan · Pattern Rescue] Zi Ping Zhen Quan states: "Useful gods rely on generation and restraint to complete noble patterns." Partner strengths supply crucial useful elements (${giftNamesEn}), shielding against natal vulnerabilities and elevating shared career and life achievements.`;
     } else {
+      const godAEn = getTenGodEn(monthGodA);
+      const godBEn = getTenGodEn(monthGodB);
       zpZh = `【格局相成·各司其职】《子平真诠》论格局之道：“成中有败，败中有成，全赖救应。”甲造月令显【${monthGodA || '正气'}】，乙造显【${monthGodB || '和顺'}】。二人心智各有侧重，一者长于战略决策，一者精于细致落实，彼此尊重专业分工即可稳步成势。`;
-      zpEn = `[Zi Ping Zhen Quan · Role Complementarity] Zi Ping Zhen Quan teaches that balance arises through coordinated roles. Person A's focus (${monthGodA || 'Executive'} drive) pairs naturally with Person B's strengths (${monthGodB || 'Supportive'} care). Clear operational division ensures sustained momentum.`;
+      zpEn = `[Zi Ping Zhen Quan · Role Complementarity] Zi Ping Zhen Quan teaches that balance arises through coordinated roles. Person A's focus (${godAEn} drive) pairs naturally with Person B's strengths (${godBEn} care). Clear operational division ensures sustained momentum.`;
     }
 
     // 4. San Ming Tong Hui (《三命通会》) - Na-Yin Melody & Noble Stars
@@ -643,25 +662,33 @@ const SynastryEngine = (function() {
     const zInfoB = ZODIAC_ANIMALS[zBranchB] || { zh: '龙', en: 'Dragon', branchEn: 'Chen' };
 
     const zodiacA = {
-      branch: zBranchA,
+      branch: isEn ? zInfoA.branchEn : zBranchA,
+      branchEn: zInfoA.branchEn,
       animal: isEn ? zInfoA.en : zInfoA.zh,
-      animalZh: zInfoA.zh,
       animalEn: zInfoA.en,
-      nameZh: `${zInfoA.zh} (${zBranchA})`,
       nameEn: `${zInfoA.en} (${zInfoA.branchEn})`,
-      labelZh: `生肖属${zInfoA.zh} (${zBranchA})`,
-      labelEn: `Zodiac: ${zInfoA.en} (${zInfoA.branchEn})`
+      labelEn: `Zodiac: ${zInfoA.en} (${zInfoA.branchEn})`,
+      ...(!isEn ? {
+        branchZh: zBranchA,
+        animalZh: zInfoA.zh,
+        nameZh: `${zInfoA.zh} (${zBranchA})`,
+        labelZh: `生肖属${zInfoA.zh} (${zBranchA})`
+      } : {})
     };
 
     const zodiacB = {
-      branch: zBranchB,
+      branch: isEn ? zInfoB.branchEn : zBranchB,
+      branchEn: zInfoB.branchEn,
       animal: isEn ? zInfoB.en : zInfoB.zh,
-      animalZh: zInfoB.zh,
       animalEn: zInfoB.en,
-      nameZh: `${zInfoB.zh} (${zBranchB})`,
       nameEn: `${zInfoB.en} (${zInfoB.branchEn})`,
-      labelZh: `生肖属${zInfoB.zh} (${zBranchB})`,
-      labelEn: `Zodiac: ${zInfoB.en} (${zInfoB.branchEn})`
+      labelEn: `Zodiac: ${zInfoB.en} (${zInfoB.branchEn})`,
+      ...(!isEn ? {
+        branchZh: zBranchB,
+        animalZh: zInfoB.zh,
+        nameZh: `${zInfoB.zh} (${zBranchB})`,
+        labelZh: `生肖属${zInfoB.zh} (${zBranchB})`
+      } : {})
     };
 
     // Chinese Zodiac Match Evaluation
@@ -926,35 +953,37 @@ const SynastryEngine = (function() {
         badge: isEn ? zMatch.badgeEn : zMatch.badgeZh,
         description: isEn ? zMatch.descEn : zMatch.descZh,
         classicalOrigin: isEn ? zMatch.classicalOriginEn : zMatch.classicalOriginZh,
-        titleZh: zMatch.titleZh,
         titleEn: zMatch.titleEn,
-        badgeZh: zMatch.badgeZh,
         badgeEn: zMatch.badgeEn,
-        descZh: zMatch.descZh,
         descEn: zMatch.descEn,
-        classicalOriginZh: zMatch.classicalOriginZh,
-        classicalOriginEn: zMatch.classicalOriginEn
+        classicalOriginEn: zMatch.classicalOriginEn,
+        ...(!isEn ? {
+          titleZh: zMatch.titleZh,
+          badgeZh: zMatch.badgeZh,
+          descZh: zMatch.descZh,
+          classicalOriginZh: zMatch.classicalOriginZh
+        } : {})
       },
       archetype: {
         name: isEn ? archetype.nameEn : archetype.nameZh,
         seal: isEn ? archetype.sealEn : archetype.sealZh,
         tier: isEn ? archetype.tierEn : archetype.tierZh,
         description: isEn ? archetype.descEn : archetype.descZh,
-        nameZh: archetype.nameZh,
         nameEn: archetype.nameEn,
-        sealZh: archetype.sealZh,
         sealEn: archetype.sealEn,
-        tierZh: archetype.tierZh,
         tierEn: archetype.tierEn,
-        descZh: archetype.descZh,
-        descEn: archetype.descEn
+        descEn: archetype.descEn,
+        ...(!isEn ? {
+          nameZh: archetype.nameZh,
+          sealZh: archetype.sealZh,
+          tierZh: archetype.tierZh,
+          descZh: archetype.descZh
+        } : {})
       },
       elementalSynergy: {
         score: Math.min(98, Math.max(45, synergyScore)),
         elementA: isEn ? (ELEMENT_NAMES_EN[dmElemA] || dmElemA) : dmElemA,
         elementB: isEn ? (ELEMENT_NAMES_EN[dmElemB] || dmElemB) : dmElemB,
-        elementAZh: dmElemA,
-        elementBZh: dmElemB,
         elementAEn: ELEMENT_NAMES_EN[dmElemA] || dmElemA,
         elementBEn: ELEMENT_NAMES_EN[dmElemB] || dmElemB,
         mutualGifts: mutualGifts.map(g => ({
@@ -962,112 +991,131 @@ const SynastryEngine = (function() {
           to: g.to,
           element: isEn ? g.elementEn : g.element,
           desc: isEn ? g.descEn : g.descZh,
-          descZh: g.descZh,
-          descEn: g.descEn
+          descEn: g.descEn,
+          ...(!isEn ? { descZh: g.descZh } : {})
         })),
         elementGapsA: isEn ? elementGapsA.map(e => ELEMENT_NAMES_EN[e] || e) : elementGapsA,
         elementGapsB: isEn ? elementGapsB.map(e => ELEMENT_NAMES_EN[e] || e) : elementGapsB,
-        elementGapsAZh: elementGapsA,
-        elementGapsBZh: elementGapsB,
         elementGapsAEn: elementGapsA.map(e => ELEMENT_NAMES_EN[e] || e),
         elementGapsBEn: elementGapsB.map(e => ELEMENT_NAMES_EN[e] || e),
         diagnosis: isEn ? elDiagEn : elDiagZh,
-        diagnosisZh: elDiagZh,
-        diagnosisEn: elDiagEn
+        diagnosisEn: elDiagEn,
+        ...(!isEn ? {
+          elementAZh: dmElemA,
+          elementBZh: dmElemB,
+          elementGapsAZh: elementGapsA,
+          elementGapsBZh: elementGapsB,
+          diagnosisZh: elDiagZh
+        } : {})
       },
       pillarResonance: {
         hasStemCombo,
         hasSixHarmony,
         crossHarmonies: crossHarmonies.map(h => ({
           desc: isEn ? h.descEn : h.descZh,
-          descZh: h.descZh,
-          descEn: h.descEn
+          descEn: h.descEn,
+          ...(!isEn ? { descZh: h.descZh } : {})
         })),
         diagnosis: isEn ? resonanceEn : resonanceZh,
-        diagnosisZh: resonanceZh,
-        diagnosisEn: resonanceEn
+        diagnosisEn: resonanceEn,
+        ...(!isEn ? { diagnosisZh: resonanceZh } : {})
       },
       clashPoints: {
         clashCount: crossClashes.length,
         punishmentCount: crossPunishments.length,
         crossClashes: crossClashes.map(c => ({
           desc: isEn ? c.descEn : c.descZh,
-          descZh: c.descZh,
-          descEn: c.descEn
+          descEn: c.descEn,
+          ...(!isEn ? { descZh: c.descZh } : {})
         })),
         diagnosis: isEn ? clashDiagEn : clashDiagZh,
-        diagnosisZh: clashDiagZh,
-        diagnosisEn: clashDiagEn
+        diagnosisEn: clashDiagEn,
+        ...(!isEn ? { diagnosisZh: clashDiagZh } : {})
       },
       financialTrust: {
         diagnosis: isEn ? financeEn : financeZh,
-        diagnosisZh: financeZh,
-        diagnosisEn: financeEn
+        diagnosisEn: financeEn,
+        ...(!isEn ? { diagnosisZh: financeZh } : {})
       },
       eightCanonsSynthesis: {
         title: isEn ? canonsData.titleEn : canonsData.titleZh,
         summary: isEn ? canonsData.summaryEn : canonsData.summaryZh,
-        titleZh: canonsData.titleZh,
         titleEn: canonsData.titleEn,
-        summaryZh: canonsData.summaryZh,
         summaryEn: canonsData.summaryEn,
-        canons: (isEn ? canonsData.canonsEn : canonsData.canonsZh).map((c, i) => ({
-          name: isEn ? c.nameEn : c.nameZh,
-          canon: isEn ? c.canonEn : c.canonZh,
-          analysis: isEn ? c.analysisEn : c.analysisZh,
-          nameZh: canonsData.canonsZh[i].nameZh,
-          nameEn: canonsData.canonsEn[i].nameEn,
-          canonZh: canonsData.canonsZh[i].canonZh,
-          canonEn: canonsData.canonsEn[i].canonEn,
-          analysisZh: canonsData.canonsZh[i].analysisZh,
-          analysisEn: canonsData.canonsEn[i].analysisEn
-        }))
+        ...(!isEn ? {
+          titleZh: canonsData.titleZh,
+          summaryZh: canonsData.summaryZh
+        } : {}),
+        canons: (isEn ? canonsData.canonsEn : canonsData.canonsZh).map((c, i) => {
+          const cObj = {
+            name: isEn ? c.nameEn : c.nameZh,
+            canon: isEn ? c.canonEn : c.canonZh,
+            analysis: isEn ? c.analysisEn : c.analysisZh,
+            nameEn: canonsData.canonsEn[i].nameEn,
+            canonEn: canonsData.canonsEn[i].canonEn,
+            analysisEn: canonsData.canonsEn[i].analysisEn
+          };
+          if (!isEn) {
+            cObj.nameZh = canonsData.canonsZh[i].nameZh;
+            cObj.canonZh = canonsData.canonsZh[i].canonZh;
+            cObj.analysisZh = canonsData.canonsZh[i].analysisZh;
+          }
+          return cObj;
+        })
       },
       zenDaoCounsel: {
         title: isEn ? zenData.titleEn : zenData.titleZh,
         synthesis: isEn ? zenData.synthesisEn : zenData.synthesisZh,
-        titleZh: zenData.titleZh,
         titleEn: zenData.titleEn,
-        synthesisZh: zenData.synthesisZh,
-        synthesisEn: zenData.synthesisEn,
+        summaryEn: zenData.synthesisEn,
+        ...(!isEn ? {
+          titleZh: zenData.titleZh,
+          synthesisZh: zenData.synthesisZh
+        } : {}),
         diamondSutra: {
           title: isEn ? zenData.diamondEn.title : zenData.diamondZh.title,
           canonQuote: isEn ? zenData.diamondEn.quote : zenData.diamondZh.quote,
           counsel: isEn ? zenData.diamondEn.counsel : zenData.diamondZh.counsel,
-          titleZh: zenData.diamondZh.title,
           titleEn: zenData.diamondEn.title,
-          quoteZh: zenData.diamondZh.quote,
           quoteEn: zenData.diamondEn.quote,
-          counselZh: zenData.diamondZh.counsel,
-          counselEn: zenData.diamondEn.counsel
+          counselEn: zenData.diamondEn.counsel,
+          ...(!isEn ? {
+            titleZh: zenData.diamondZh.title,
+            quoteZh: zenData.diamondZh.quote,
+            counselZh: zenData.diamondZh.counsel
+          } : {})
         },
         platformSutra: {
           title: isEn ? zenData.platformEn.title : zenData.platformZh.title,
           canonQuote: isEn ? zenData.platformEn.quote : zenData.platformZh.quote,
           counsel: isEn ? zenData.platformEn.counsel : zenData.platformZh.counsel,
-          titleZh: zenData.platformZh.title,
           titleEn: zenData.platformEn.title,
-          quoteZh: zenData.platformZh.quote,
           quoteEn: zenData.platformEn.quote,
-          counselZh: zenData.platformZh.counsel,
-          counselEn: zenData.platformEn.counsel
+          counselEn: zenData.platformEn.counsel,
+          ...(!isEn ? {
+            titleZh: zenData.platformZh.title,
+            quoteZh: zenData.platformZh.quote,
+            counselZh: zenData.platformZh.counsel
+          } : {})
         },
         zhuangzi: {
           title: isEn ? zenData.zhuangziEn.title : zenData.zhuangziZh.title,
           canonQuote: isEn ? zenData.zhuangziEn.quote : zenData.zhuangziZh.quote,
           counsel: isEn ? zenData.zhuangziEn.counsel : zenData.zhuangziZh.counsel,
-          titleZh: zenData.zhuangziZh.title,
           titleEn: zenData.zhuangziEn.title,
-          quoteZh: zenData.zhuangziZh.quote,
           quoteEn: zenData.zhuangziEn.quote,
-          counselZh: zenData.zhuangziZh.counsel,
-          counselEn: zenData.zhuangziEn.counsel
+          counselEn: zenData.zhuangziEn.counsel,
+          ...(!isEn ? {
+            titleZh: zenData.zhuangziZh.title,
+            quoteZh: zenData.zhuangziZh.quote,
+            counselZh: zenData.zhuangziZh.counsel
+          } : {})
         }
       },
       remedies: {
         diagnosis: isEn ? remediesEn : remediesZh,
-        diagnosisZh: remediesZh,
-        diagnosisEn: remediesEn
+        diagnosisEn: remediesEn,
+        ...(!isEn ? { diagnosisZh: remediesZh } : {})
       },
       patternComparison,
       trajectoryOverlap,
@@ -1228,15 +1276,28 @@ const SynastryEngine = (function() {
 
   // Helper: Determine Chart Dominant Patterns Triad
   function getChartDominantPatterns(chart, isEn) {
+    const translatePat = (name) => {
+      if (!name) return 'Direct Officer Pattern';
+      if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.getPatternEn === 'function') {
+        const en = PortraitEngine.getPatternEn(name);
+        if (en && !/[\u4e00-\u9fa5]/.test(en)) return en;
+      }
+      if (typeof I18N !== 'undefined' && typeof I18N.translatePattern === 'function') {
+        const en = I18N.translatePattern(name, 'en');
+        if (en && !/[\u4e00-\u9fa5]/.test(en)) return en;
+      }
+      return 'Direct Officer Pattern';
+    };
+
     if (chart && chart.patterns && Array.isArray(chart.patterns) && chart.patterns.length > 0) {
       return chart.patterns.slice(0, 3).map((p, idx) => ({
         rank: idx + 1,
         nameZh: p.nameZh || p.name || '正官格',
-        nameEn: p.nameEn || (typeof I18N !== 'undefined' && I18N.translatePattern ? I18N.translatePattern(p.name, 'en') : 'Direct Officer Pattern'),
+        nameEn: p.nameEn || translatePat(p.nameZh || p.name),
         weightPct: p.weightPct || (idx === 0 ? 45 : (idx === 1 ? 30 : 25)),
         type: p.type || 'standard',
-        roleZh: p.roleZh || '统帅格局',
-        roleEn: p.roleEn || 'Dominant Pattern'
+        roleZh: p.roleZh || (idx === 0 ? '统帅格局' : (idx === 1 ? '相辅格局' : '才智兼格')),
+        roleEn: p.roleEn || (idx === 0 ? 'Dominant Pattern' : (idx === 1 ? 'Supporting Pattern' : 'Tertiary Skill Pattern'))
       }));
     }
     if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.analyze === 'function') {
@@ -1246,11 +1307,11 @@ const SynastryEngine = (function() {
           return pZh.patterns.slice(0, 3).map((p, idx) => ({
             rank: idx + 1,
             nameZh: p.name || '正官格',
-            nameEn: p.nameEn || (typeof I18N !== 'undefined' && I18N.translatePattern ? I18N.translatePattern(p.name, 'en') : 'Direct Officer Pattern'),
+            nameEn: p.nameEn || translatePat(p.name),
             weightPct: p.weightPct || (idx === 0 ? 45 : (idx === 1 ? 30 : 25)),
             type: p.type || 'standard',
-            roleZh: p.roleZh || '统帅格局',
-            roleEn: p.roleEn || 'Dominant Pattern'
+            roleZh: p.roleZh || (idx === 0 ? '统帅格局' : (idx === 1 ? '相辅格局' : '才智兼格')),
+            roleEn: p.roleEn || (idx === 0 ? 'Dominant Pattern' : (idx === 1 ? 'Supporting Pattern' : 'Tertiary Skill Pattern'))
           }));
         }
       } catch (e) {}
@@ -1291,11 +1352,16 @@ const SynastryEngine = (function() {
       '劫财': { zh: '阳刃格 (锋芒淬炼 · 破阵争雄)', en: 'Yang Blade Pattern (Resolute Tenacity)' }
     };
 
-    const d = patMap[god] || patMap['正印'];
+    const d1 = patMap[god] || patMap['正印'];
+    const supGod = (god === '正印') ? '正官' : ((god === '食神') ? '偏财' : '正印');
+    const d2 = patMap[supGod] || patMap['正官'];
+    const tertGod = (god === '食神' || supGod === '食神') ? '正财' : '食神';
+    const d3 = patMap[tertGod] || patMap['食神'];
+
     return [
-      { rank: 1, nameZh: d.zh, nameEn: d.en, weightPct: 45, roleZh: '主导格局', roleEn: 'Dominant Pattern' },
-      { rank: 2, nameZh: '正印格 (慈厚安泰 · 学养传家)', nameEn: 'Direct Resource Pattern (Academic & Fiduciary Anchor)', weightPct: 30, roleZh: '相辅格局', roleEn: 'Supporting Pattern' },
-      { rank: 3, nameZh: '食神格 (独门技艺 · 秀气发越)', nameEn: 'Eating God Pattern (Craft & Creative Expression)', weightPct: 25, roleZh: '才智兼格', roleEn: 'Tertiary Skill Pattern' }
+      { rank: 1, nameZh: d1.zh, nameEn: d1.en, weightPct: 45, roleZh: '主导格局', roleEn: 'Dominant Pattern' },
+      { rank: 2, nameZh: d2.zh, nameEn: d2.en, weightPct: 30, roleZh: '相辅格局', roleEn: 'Supporting Pattern' },
+      { rank: 3, nameZh: d3.zh, nameEn: d3.en, weightPct: 25, roleZh: '才智兼格', roleEn: 'Tertiary Skill Pattern' }
     ];
   }
 
@@ -1365,6 +1431,50 @@ const SynastryEngine = (function() {
       businessZh = '适合长线经营、合规严密之大型机构或受监管行业。一人负责组织治理与外部监管对接，一人掌管内部企业文化与人才梯队培养，基业长青。';
       businessEn = 'Ideal for institutional governance and regulated sectors. One aligns corporate structure with external regulatory mandates, while the other mentors leadership talent.';
       score = 93;
+    } else if ((isWlthA && isOffB) || (isWlthB && isOffA)) {
+      type = 'wealth_officer';
+      titleZh = '财官相生 · 荣身辅政';
+      titleEn = 'Wealth Generating Officer · Asset Governance & Institutional Prestige';
+      dynamicZh = '财星提供充沛资源赋能与敏锐商业落地，官星主掌社会公信、秩序纲常与组织权威。财以滋官，官以护财，形成财富与地位交相辉映的高维稳态。';
+      dynamicEn = 'Wealth provides resource liquidity and pragmatic execution, while Officer anchors institutional reputation, regulatory order, and executive authority. Wealth nourishes authority, while authority safeguards assets.';
+      romanticZh = '内实外贵之上等婚配。一方擅于财富积累与务实操盘，另一方树立家庭门楣与社会体面，彼此互为贵人，家道隆昌。';
+      romanticEn = 'A distinguished union of prosperity and honor. One compounds family assets while the other elevates societal stature; mutual respect creates an enduring legacy.';
+      businessZh = '政商兼修、合规扩张的最佳拍档。财星操盘市场业务与资本运作，官星负责合规风控、政府关系与顶层架构，双剑合璧。';
+      businessEn = 'Prime corporate expansion pairing: Wealth partner leads capital allocation and commercial frontiers, while Officer governs compliance, board relations, and institutional stature.';
+      score = 94;
+    } else if ((isOutA && isKillB) || (isOutB && isKillA)) {
+      type = 'output_killing';
+      titleZh = '食伤制杀 · 谋勇并举';
+      titleEn = 'Creative Strategy & Seven Killings · Visionary Intellect & Frontline Valor';
+      dynamicZh = '食伤主超凡智谋、敏锐嗅觉与破局巧劲，七杀主雷霆手段、敢打敢拼与绝地反击。智谋指引勇力，勇力落实谋略，乃攻坚克难之天下无双搭档。';
+      dynamicEn = 'Creative output brings visionary insight, agility, and ingenious tactics, while Seven Killings delivers audacious courage and unrelenting frontline execution. Intellect guides force, turning obstacles into breakthroughs.';
+      romanticZh = '欢喜冤家与灵魂同盟。一人机敏幽默化解对方的严肃紧绷，另一人以坚实臂膀护佑对方的灵气天真，彼此治愈，越磨合越深厚。';
+      romanticEn = 'A vibrant and complementary alliance. One disarms intensity with playful wit and empathy, while the other provides unyielding protective loyalty.';
+      businessZh = '破局打硬仗的尖刀连。食伤型合伙人掌舵战略研发、独特商业模式，七杀型合伙人攻坚大客户与市场撕杀，所向披靡。';
+      businessEn = 'High-impact market disrupter: Output partner crafts proprietary product and disruptive model, while Killings partner conquers key accounts and drives battlefield execution.';
+      score = 92;
+    } else if (isResA && isResB) {
+      type = 'resource_intellect';
+      titleZh = '双印通灵 · 学养同频';
+      titleEn = 'Dual Resource Archetype · Philosophical Depth & Fiduciary Calm';
+      dynamicZh = '两造皆具深厚学养、静笃心性与博大胸襟。相处时精神交流超越世俗琐碎，彼此心照不宣，互为精神导师与避风良港。';
+      dynamicEn = 'Both share contemplative depth, intellectual sophistication, and profound moral integrity. Communication reaches rare spiritual resonance.';
+      romanticZh = '灵魂伴侣，琴瑟和鸣。追求精神富足与家庭雅致，生活如品茗清茶，温润悠长，福泽深厚。';
+      romanticEn = 'True soulmates cultivating domestic elegance and philosophical peace. Daily life compounds quiet harmony and intellectual kinship.';
+      businessZh = '适合文化、学术教育、高端智库或长期资产管理。以信义与声望立身，重口碑胜过短期暴利，声誉卓著。';
+      businessEn = 'Superb for think tanks, education, culture, or fiduciary asset management where enduring reputation and institutional integrity prevail.';
+      score = 90;
+    } else if (isOutA && isOutB) {
+      type = 'dual_output';
+      titleZh = '双秀争妍 · 灵感共振';
+      titleEn = 'Dual Creative Expressive · Innovation Sparks & Shared Vision';
+      dynamicZh = '双方皆具天马行空之才华与审美洞见，话题无穷，彼此点燃灵感火花。需在具体执行层面引入第三方制度约束与落实工具。';
+      dynamicEn = 'Both possess sparkling aesthetic imagination and creative drive. Conversations sparkle with original ideas; anchoring progress requires structural discipline.';
+      romanticZh = '生活处处是诗和远方，充满仪式感与审美惊喜。需注意多落脚于柴米油盐之具体安排，防范情绪共振过激。';
+      romanticEn = 'Life is rich with aesthetic spontaneity and romance; balance imaginative aspirations with grounded domestic logistics.';
+      businessZh = '极佳的创意产品研发搭档。在内容创作、设计、前沿技术赛道无与伦比，建议引入强执行力的COO团队协助落地交付。';
+      businessEn = 'Exceptional creative and R&D synergy in design, tech, and media; pair with a strong operational COO to ensure seamless commercial delivery.';
+      score = 89;
     } else if ((isOffA || isKillA) && (isOffB || isKillB)) {
       type = 'dual_sovereign';
       titleZh = '两强竞逐 · 领地分明';
@@ -1485,28 +1595,59 @@ const SynastryEngine = (function() {
     const decsB = (luckB && luckB.decades && luckB.decades.length > 0) ? luckB.decades : null;
 
     const ageSpans = [
-      { spanZh: '20~29岁 (青年起势)', spanEn: 'Age 20-29 (Youth Inception)' },
-      { spanZh: '30~39岁 (而立拓荒)', spanEn: 'Age 30-39 (Career Foundation)' },
-      { spanZh: '40~49岁 (不惑鼎盛)', spanEn: 'Age 40-49 (Prime Apex)' },
-      { spanZh: '50~59岁 (知命操盘)', spanEn: 'Age 50-59 (Executive Stewardship)' },
-      { spanZh: '60~69岁 (花甲守成)', spanEn: 'Age 60-69 (Wisdom Legacy)' },
-      { spanZh: '70~79岁 (古稀颐养)', spanEn: 'Age 70-79 (Serene Harmony)' }
+      { age: 25, spanZh: '20~29岁 (青年起势)', spanEn: 'Age 20-29 (Youth Inception)' },
+      { age: 35, spanZh: '30~39岁 (而立拓荒)', spanEn: 'Age 30-39 (Career Foundation)' },
+      { age: 45, spanZh: '40~49岁 (不惑鼎盛)', spanEn: 'Age 40-49 (Prime Apex)' },
+      { age: 55, spanZh: '50~59岁 (知命操盘)', spanEn: 'Age 50-59 (Executive Stewardship)' },
+      { age: 65, spanZh: '60~69岁 (花甲守成)', spanEn: 'Age 60-69 (Wisdom Legacy)' },
+      { age: 75, spanZh: '70~79岁 (古稀颐养)', spanEn: 'Age 70-79 (Serene Harmony)' }
     ];
+
+    const findDecadeForAge = (decs, targetAge, fallbackIdx) => {
+      if (!decs || decs.length === 0) return null;
+      const found = decs.find(d => typeof d.ageStart === 'number' && typeof d.ageEnd === 'number' && targetAge >= d.ageStart && targetAge <= d.ageEnd);
+      if (found) return found;
+      let closest = decs[0];
+      let minDiff = 999;
+      decs.forEach(d => {
+        const mid = (typeof d.ageStart === 'number' && typeof d.ageEnd === 'number') ? (d.ageStart + d.ageEnd) / 2 : 50;
+        const diff = Math.abs(mid - targetAge);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closest = d;
+        }
+      });
+      return closest || decs[Math.min(fallbackIdx, decs.length - 1)];
+    };
+
+    const deriveDecadeScore = (dec, idx) => {
+      if (!dec) return 70;
+      if (typeof dec.score === 'number') return dec.score;
+      const rating = (dec.fortune && dec.fortune.rating) || (dec.isFavorable ? 'good' : 'caution');
+      if (rating === 'good' || rating === 'auspicious') {
+        return 82 + ((idx * 3) % 10);
+      } else if (rating === 'bad' || rating === 'challenging') {
+        return 58 + ((idx * 2) % 8);
+      } else if (rating === 'caution' || rating === 'warning') {
+        return 65 + ((idx * 2) % 6);
+      }
+      return 72 + ((idx * 2) % 6);
+    };
 
     let peakCount = 0;
     let supportCount = 0;
     let jointDefenseCount = 0;
 
     const milestoneDecades = ageSpans.map((sp, idx) => {
-      const decA = (decsA && decsA[idx]) || {
+      const decA = findDecadeForAge(decsA, sp.age, idx) || {
         stem: '甲', branch: '寅', text: '甲寅', stemGod: '比肩', naYin: '大溪水', isFavorable: idx % 2 === 0
       };
-      const decB = (decsB && decsB[idx]) || {
+      const decB = findDecadeForAge(decsB, sp.age, idx) || {
         stem: '丙', branch: '午', text: '丙午', stemGod: '正印', naYin: '天河水', isFavorable: idx !== 1
       };
 
-      const scoreA = (decA.score !== undefined) ? decA.score : ((decA.isFavorable ? 85 : 62) + ((idx * 3) % 10));
-      const scoreB = (decB.score !== undefined) ? decB.score : ((decB.isFavorable ? 88 : 60) + ((idx * 5) % 10));
+      const scoreA = deriveDecadeScore(decA, idx);
+      const scoreB = deriveDecadeScore(decB, idx);
 
       const delta = Math.abs(scoreA - scoreB);
       let phaseType = 'steady';
@@ -1522,7 +1663,7 @@ const SynastryEngine = (function() {
         verdictZh = '两造岁运同步逢吉乘风破浪，适宜同心协力大举开拓事业、合伙创业或购置核心家产。';
         verdictEn = 'Both charts operate under peak momentum; expand ventures boldly and consolidate major family assets.';
         peakCount++;
-      } else if (delta >= 15) {
+      } else if (delta >= 14) {
         phaseType = 'counterbalance_support';
         phaseBadgeZh = '一进一退 · 压舱石互补';
         phaseBadgeEn = 'Counterbalance Anchor Window';
@@ -1548,8 +1689,8 @@ const SynastryEngine = (function() {
       const stemBEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(decB.stem, 'en').split(' ')[0] : (STEM_NAMES_EN[decB.stem] || decB.stem);
       const branchBEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(decB.branch, 'en').split(' ')[0] : (BRANCH_PINYIN[decB.branch] || decB.branch);
 
-      const godAEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(decA.stemGod, 'en') : (decA.stemGod || 'Companion');
-      const godBEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(decB.stemGod, 'en') : (decB.stemGod || 'Resource');
+      const godAEn = getTenGodEn(decA.stemGod);
+      const godBEn = getTenGodEn(decB.stemGod);
 
       const mObj = {
         decadeIndex: idx + 1,
@@ -1606,7 +1747,14 @@ const SynastryEngine = (function() {
       const gods = [];
       ['year', 'month', 'day', 'hour'].forEach(k => {
         if (p[k]) {
-          if (p[k].stemGod) gods.push(p[k].stemGod);
+          if (p[k].stemGod && !p[k].stemGod.includes('元神') && !p[k].stemGod.includes('日主')) {
+            gods.push(p[k].stemGod);
+          }
+          if (Array.isArray(p[k].hidden)) {
+            p[k].hidden.forEach(h => {
+              if (h && h.god) gods.push(h.god);
+            });
+          }
         }
       });
       const els = (chart.elements && (chart.elements.percentages || chart.elements)) || {};
@@ -1614,11 +1762,11 @@ const SynastryEngine = (function() {
       const countGod = (re) => gods.filter(g => re.test(g)).length;
       const getEl = (el) => parseFloat(els[el] || 20);
 
-      const career = Math.round(Math.min(96, Math.max(38, 46 + countGod(/七杀|偏官/) * 16 + countGod(/正官/) * 12 + countGod(/伤官/) * 10 + (getEl('火') + getEl('金')) * 0.25)));
-      const wealth = Math.round(Math.min(96, Math.max(38, 48 + countGod(/偏财/) * 16 + countGod(/正财/) * 14 + (getEl('土') + getEl('金')) * 0.25)));
-      const domestic = Math.round(Math.min(96, Math.max(38, 48 + countGod(/正印/) * 18 + countGod(/正官/) * 10 + (getEl('水') + getEl('土')) * 0.25)));
-      const spiritual = Math.round(Math.min(96, Math.max(38, 44 + countGod(/偏印/) * 18 + countGod(/食神/) * 14 + (getEl('木') + getEl('水')) * 0.28)));
-      const autonomy = Math.round(Math.min(96, Math.max(38, 45 + countGod(/比肩/) * 15 + countGod(/劫财/) * 16 + countGod(/伤官/) * 8 + (getEl('木') + getEl('火')) * 0.22)));
+      const career = Math.round(Math.min(96, Math.max(38, 44 + countGod(/七杀|偏官/) * 12 + countGod(/正官/) * 10 + countGod(/伤官/) * 8 + (getEl('火') + getEl('金')) * 0.22)));
+      const wealth = Math.round(Math.min(96, Math.max(38, 46 + countGod(/偏财/) * 12 + countGod(/正财/) * 11 + (getEl('土') + getEl('金')) * 0.22)));
+      const domestic = Math.round(Math.min(96, Math.max(38, 46 + countGod(/正印/) * 13 + countGod(/正官/) * 8 + (getEl('水') + getEl('土')) * 0.22)));
+      const spiritual = Math.round(Math.min(96, Math.max(38, 42 + countGod(/偏印/) * 13 + countGod(/食神/) * 10 + (getEl('木') + getEl('水')) * 0.24)));
+      const autonomy = Math.round(Math.min(96, Math.max(38, 43 + countGod(/比肩/) * 11 + countGod(/劫财/) * 12 + countGod(/伤官/) * 7 + (getEl('木') + getEl('火')) * 0.20)));
 
       return { career, wealth, domestic, spiritual, autonomy };
     };

@@ -15818,8 +15818,11 @@ with open("css/style.css", "r", encoding="utf-8") as f:
     css_content = f.read()
 
 assert '.synastry-page' in css_content, "Missing .synastry-page in css/style.css"
+assert '14mm 14mm 14mm 24mm' in css_content, "Missing 24mm spine thread clear margin in .synastry-page"
 assert '#synastryDossierContainer.exporting-pdf' in css_content, "Missing #synastryDossierContainer.exporting-pdf in css/style.css"
 assert '.imperial-toc-nav' in css_content, "Missing .imperial-toc-nav in css/style.css"
+assert '#imperialDossierModal.hidden' in css_content, "Missing print hiding for #imperialDossierModal.hidden in css/style.css"
+assert '#synastryDossierModal:not(.hidden)' in css_content, "Missing print styling for #synastryDossierModal:not(.hidden) in css/style.css"
 
 with open("js/app.js", "r", encoding="utf-8") as f:
     app_content = f.read()
@@ -15827,6 +15830,7 @@ with open("js/app.js", "r", encoding="utf-8") as f:
 assert 'window.openSynastryDossierModal = openSynastryDossierModal' in app_content, "Missing window.openSynastryDossierModal in app.js"
 assert 'window.renderSynastryDossierPages = renderSynastryDossierPages' in app_content, "Missing window.renderSynastryDossierPages in app.js"
 assert 'window.downloadSynastryPDF = downloadSynastryPDF' in app_content, "Missing window.downloadSynastryPDF in app.js"
+assert 'window.fallbackExportSynastryPDF = fallbackExportSynastryPDF' in app_content, "Missing window.fallbackExportSynastryPDF in app.js"
 assert 'window.jumpToImperialPage = jumpToImperialPage' in app_content, "Missing window.jumpToImperialPage in app.js"
 for p_idx in range(1, 9):
     assert f'id="imperialPage{p_idx}"' in app_content, f"Missing #imperialPage{p_idx} in app.js"
@@ -15869,6 +15873,9 @@ jsc_check127_cmd = [
     }
 
     var pCompEn = SynastryEngine.evaluatePatternComparison(chartA, chartB, true, true);
+    if (pCompEn.dominantA.name === "Direct Officer Pattern") {
+      throw new Error("dominantA pattern in EN incorrectly defaulted to Direct Officer Pattern instead of Seven Killings");
+    }
     var pCompEnLeaks = JSON.stringify(pCompEn).match(/[\\u4e00-\\u9fa5]/g);
     if (pCompEnLeaks && pCompEnLeaks.length > 0) {
       throw new Error("evaluatePatternComparison EN has residual Chinese: " + pCompEnLeaks.join(""));
@@ -15881,6 +15888,13 @@ jsc_check127_cmd = [
     }
     if (typeof tOverZh.synchronizationIndex !== 'number') {
       throw new Error("evaluateTrajectoryOverlap ZH missing synchronizationIndex");
+    }
+    // Validate age alignment: milestone 0 (age 20-29) should match chartA adult decade (乙丑), NOT childhood decade (癸亥)
+    if (tOverZh.milestones[0].pillarA.text !== "乙丑") {
+      throw new Error("Milestone decade 0 not aligned to adult age 25: expected 乙丑, got " + tOverZh.milestones[0].pillarA.text);
+    }
+    if (tOverZh.supportWindowsCount <= 0 && tOverZh.peakWindowsCount <= 0) {
+      throw new Error("Trajectory overlap scoring failed to identify peak or support windows");
     }
 
     var tOverEn = SynastryEngine.evaluateTrajectoryOverlap(chartA, chartB, true, true);
@@ -15904,7 +15918,26 @@ jsc_check127_cmd = [
       throw new Error("evaluateLifePriorities EN has residual Chinese: " + lPrioEnLeaks.join(""));
     }
 
-    // 4. Validate DOM Simulation & 2-Page Synastry Dossier Generation
+    // 4. Validate Zero Chinese Leaks Across Multiple Diverse Charts (Raw JSON check without regex masking)
+    var testCases = [
+      { yA: 1995, mA: 1, dA: 1, hA: 0, minA: 15, gA: "坤造", yB: 1992, mB: 7, dB: 20, hB: 23, minB: 45, gB: "乾造" },
+      { yA: 2000, mA: 8, dA: 8, hA: 8, minA: 8, gA: "乾造", yB: 2001, mB: 12, dB: 12, hB: 12, minB: 12, gB: "坤造" },
+      { yA: 1985, mA: 3, dA: 6, hA: 10, minA: 0, gA: "坤造", yB: 1990, mB: 10, dB: 17, hB: 14, minB: 30, gB: "乾造" },
+      { yA: 1980, mA: 5, dA: 20, hA: 6, minA: 45, gA: "乾造", yB: 1983, mB: 9, dB: 11, hB: 18, minB: 15, gB: "坤造" }
+    ];
+    testCases.forEach(function(tc) {
+      var cA = BaZiEngine.calculate({ year: tc.yA, month: tc.mA, day: tc.dA, hour: tc.hA, minute: tc.minA, gender: tc.gA, useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+      var cB = BaZiEngine.calculate({ year: tc.yB, month: tc.mB, day: tc.dB, hour: tc.hB, minute: tc.minB, gender: tc.gB, useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+      ["romantic", "business"].forEach(function(m) {
+        var aRes = SynastryEngine.analyze(cA, cB, m, "en");
+        var lks = JSON.stringify(aRes).match(/[\\u4e00-\\u9fa5]/g);
+        if (lks && lks.length > 0) {
+          throw new Error("Residual Chinese in raw SynastryEngine.analyze EN mode (" + m + "): " + lks.slice(0, 30).join(""));
+        }
+      });
+    });
+
+    // 5. Validate DOM Simulation & 2-Page Synastry Dossier Generation
     var elementStore = {};
     function makeFakeEl(id, tag) {
       var classes = [];
@@ -15996,13 +16029,14 @@ jsc_check127_cmd = [
 
     load("js/app.js");
 
-    // 5. Test window exports
+    // 6. Test window exports
     if (typeof window.openSynastryDossierModal !== 'function') throw new Error("window.openSynastryDossierModal not exported");
     if (typeof window.renderSynastryDossierPages !== 'function') throw new Error("window.renderSynastryDossierPages not exported");
     if (typeof window.downloadSynastryPDF !== 'function') throw new Error("window.downloadSynastryPDF not exported");
+    if (typeof window.fallbackExportSynastryPDF !== 'function') throw new Error("window.fallbackExportSynastryPDF not exported");
     if (typeof window.jumpToImperialPage !== 'function') throw new Error("window.jumpToImperialPage not exported");
 
-    // 6. Test Synastry Dossier ZH Rendering
+    // 7. Test Synastry Dossier ZH Rendering
     window.renderSynastryDossierPages("zh", chartA, chartB, "romantic");
     var htmlZh = elementStore["synastryDossierContainer"].innerHTML;
     if (htmlZh.indexOf('id="synastryPage1"') === -1) throw new Error("Missing #synastryPage1 in ZH render");
@@ -16011,7 +16045,7 @@ jsc_check127_cmd = [
     if (htmlZh.indexOf("岁运同频表") === -1) throw new Error("Missing trajectory overlap section in ZH render");
     if (htmlZh.indexOf("格局对比") === -1 && htmlZh.indexOf("主导格局") === -1) throw new Error("Missing pattern comparison section in ZH render");
 
-    // 7. Test Synastry Dossier EN Rendering (Zero Chinese leak)
+    // 8. Test Synastry Dossier EN Rendering (Zero Chinese leak)
     window.renderSynastryDossierPages("en", chartA, chartB, "romantic");
     var htmlEn = elementStore["synastryDossierContainer"].innerHTML;
     if (htmlEn.indexOf('id="synastryPage1"') === -1) throw new Error("Missing #synastryPage1 in EN render");
@@ -16021,7 +16055,7 @@ jsc_check127_cmd = [
       throw new Error("Residual Chinese in EN Synastry Dossier HTML: " + enHtmlLeaks.slice(0, 30).join(""));
     }
 
-    // 8. Test Synastry Dossier Business Mode EN Rendering
+    // 9. Test Synastry Dossier Business Mode EN Rendering
     window.renderSynastryDossierPages("en", chartA, chartB, "business");
     var htmlEnBiz = elementStore["synastryDossierContainer"].innerHTML;
     var enBizLeaks = htmlEnBiz.match(/[\\u4e00-\\u9fa5]/g);
@@ -16029,7 +16063,7 @@ jsc_check127_cmd = [
       throw new Error("Residual Chinese in Business EN Synastry Dossier HTML: " + enBizLeaks.slice(0, 30).join(""));
     }
 
-    // 9. Test Imperial Dossier 8-page ID anchors and Table of Contents jump
+    // 10. Test Imperial Dossier 8-page ID anchors and Table of Contents jump
     var luck = LuckEngine.calculateLuck(chartA, 2026);
     window.renderImperialDossierPages(chartA, luck, "zh");
     var htmlImperial = elementStore["imperialDossierContainer"].innerHTML;

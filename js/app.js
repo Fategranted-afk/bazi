@@ -13574,12 +13574,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const rawValA = document.getElementById('synastryLabelA')?.value;
     const rawValB = document.getElementById('synastryLabelB')?.value;
     let labelA = rawValA || (isEn ? 'Person A' : '甲造');
-    if (isEn && labelA === '甲造') labelA = 'Person A';
-    if (!isEn && labelA === 'Person A') labelA = '甲造';
+    if (isEn && (labelA === '甲造' || labelA === 'Subject A')) labelA = 'Person A';
+    if (!isEn && (labelA === 'Person A' || labelA === 'Subject A')) labelA = '甲造';
 
     let labelB = rawValB || (isEn ? 'Person B' : '乙造');
-    if (isEn && labelB === '乙造') labelB = 'Person B';
-    if (!isEn && labelB === 'Person B') labelB = '乙造';
+    if (isEn && (labelB === '乙造' || labelB === 'Subject B')) labelB = 'Person B';
+    if (!isEn && (labelB === 'Person B' || labelB === 'Subject B')) labelB = '乙造';
 
     const score = data.overallScore;
     const arc = data.archetype;
@@ -14064,13 +14064,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const rawValA = document.getElementById('synastryLabelA')?.value;
     const rawValB = document.getElementById('synastryLabelB')?.value;
-    let labelA = rawValA || (isEn ? 'Subject A' : '甲造');
-    if (isEn && labelA === '甲造') labelA = 'Subject A';
-    if (!isEn && labelA === 'Subject A') labelA = '甲造';
+    let labelA = rawValA || (isEn ? 'Person A' : '甲造');
+    if (isEn && (labelA === '甲造' || labelA === 'Subject A')) labelA = 'Person A';
+    if (!isEn && (labelA === 'Person A' || labelA === 'Subject A')) labelA = '甲造';
 
-    let labelB = rawValB || (isEn ? 'Subject B' : '乙造');
-    if (isEn && labelB === '乙造') labelB = 'Subject B';
-    if (!isEn && labelB === 'Subject B') labelB = '乙造';
+    let labelB = rawValB || (isEn ? 'Person B' : '乙造');
+    if (isEn && (labelB === '乙造' || labelB === 'Subject B')) labelB = 'Person B';
+    if (!isEn && (labelB === 'Person B' || labelB === 'Subject B')) labelB = '乙造';
 
     const pA = cachedChartA.pillars;
     const pB = cachedChartB.pillars;
@@ -14424,9 +14424,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).catch((err) => {
           container.classList.remove('exporting-pdf');
           console.warn('html2pdf synastry error, invoking fallback:', err);
-          if (typeof window !== 'undefined' && typeof window.print === 'function') {
-            window.print();
-          }
+          fallbackExportSynastryPDF(container, filename, isEn);
         });
         return;
       } catch (err) {
@@ -14436,7 +14434,62 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     container.classList.remove('exporting-pdf');
-    if (typeof window !== 'undefined' && typeof window.print === 'function') {
+    fallbackExportSynastryPDF(container, filename, isEn);
+  }
+
+  function fallbackExportSynastryPDF(container, filename, isEn) {
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
+    const pages = (container.querySelectorAll && typeof container.querySelectorAll === 'function')
+      ? Array.from(container.querySelectorAll('.synastry-page'))
+      : [];
+
+    if (!pages || pages.length === 0) {
+      if (typeof window.print === 'function') window.print();
+      return;
+    }
+
+    if (typeof renderPagesToJpegs === 'function' && typeof compileA4PdfFromJpegs === 'function') {
+      renderPagesToJpegs(pages).then((jpegList) => {
+        if (!jpegList || jpegList.length === 0) {
+          if (typeof window.print === 'function') window.print();
+          return;
+        }
+        const pdfBytes = compileA4PdfFromJpegs(jpegList);
+        if (typeof Blob === 'undefined' || typeof URL === 'undefined') {
+          if (typeof window.print === 'function') window.print();
+          return;
+        }
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `${filename}.pdf`;
+        if (document.body && typeof document.body.appendChild === 'function') {
+          document.body.appendChild(link);
+        }
+        if (typeof link.click === 'function') {
+          link.click();
+        }
+        setTimeout(() => {
+          if (link.parentNode && typeof link.parentNode.removeChild === 'function') {
+            link.parentNode.removeChild(link);
+          }
+          if (typeof URL.revokeObjectURL === 'function') {
+            URL.revokeObjectURL(blobUrl);
+          }
+        }, 2000);
+        showSynastryDossierStatus(
+          isEn ? '✅ Synastry Battle Report PDF generated and download started!' : '✅ 钦天监 · 双人合盘战报 PDF 已成功生成并开始下载！',
+          'success'
+        );
+      }).catch((err) => {
+        console.warn('fallbackExportSynastryPDF error:', err);
+        if (typeof window.print === 'function') window.print();
+      });
+      return;
+    }
+
+    if (typeof window.print === 'function') {
       window.print();
     }
   }
@@ -16876,6 +16929,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openSynastryDossierModal = openSynastryDossierModal;
     window.renderSynastryDossierPages = renderSynastryDossierPages;
     window.downloadSynastryPDF = downloadSynastryPDF;
+    window.fallbackExportSynastryPDF = fallbackExportSynastryPDF;
   }
 
   function renderImperialDossierPages(arg1, arg2, arg3) {
