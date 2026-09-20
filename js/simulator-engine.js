@@ -1341,6 +1341,85 @@ class ScenarioSimulatorEngine {
             : `【反事实动力学洞察】：方案B【${resB.title}】与流年形成“借势闭环”，心理能耗显著更低（${resB.burnoutIndex}% vs ${resA.burnoutIndex}%），能够以更小内耗沉淀长期核心势能。`)
     };
 
+    // Directional Resonance Analysis between Option A and Option B
+    const cityMetaA = resA.geoEnergy?.cityMeta || {};
+    const cityMetaB = resB.geoEnergy?.cityMeta || {};
+
+    const directionalResonance = {
+      optionA: {
+        city: resA.cityName,
+        direction: isEn ? (cityMetaA.dirEn || 'South') : (cityMetaA.dirZh || '南方'),
+        directionEn: cityMetaA.dirEn || 'South',
+        element: isEn ? (cityMetaA.elem || 'Fire') : (cityMetaA.elem === 'Fire' ? '火' : cityMetaA.elem === 'Water' ? '水' : cityMetaA.elem === 'Wood' ? '木' : cityMetaA.elem === 'Metal' ? '金' : '土'),
+        elementEn: cityMetaA.elem || 'Fire',
+        elementHeavenly: isEn ? (cityMetaA.nameEn || 'Southern Fire') : (cityMetaA.nameZh || '南方丙丁火'),
+        score: resA.geoEnergyScore,
+        resonanceGrade: isEn ? (cityMetaA.gradeEn || 'Auspicious') : (cityMetaA.gradeZh || '吉 / 大利'),
+        clusterSynergy: isEn ? (cityMetaA.clusterSynergyEn || 'Metropolitan Growth Vector') : (cityMetaA.clusterSynergyZh || '都市群发展中枢'),
+        analysis: isEn ? (resA.geoEnergy?.descEn || 'Favorable directional alignment') : (resA.geoEnergy?.descZh || '地缘生旺'),
+        analysisEn: resA.geoEnergy?.descEn || 'Favorable directional alignment'
+      },
+      optionB: {
+        city: resB.cityName,
+        direction: isEn ? (cityMetaB.dirEn || 'North') : (cityMetaB.dirZh || '北方'),
+        directionEn: cityMetaB.dirEn || 'North',
+        element: isEn ? (cityMetaB.elem || 'Water') : (cityMetaB.elem === 'Fire' ? '火' : cityMetaB.elem === 'Water' ? '水' : cityMetaB.elem === 'Wood' ? '木' : cityMetaB.elem === 'Metal' ? '金' : '土'),
+        elementEn: cityMetaB.elem || 'Water',
+        elementHeavenly: isEn ? (cityMetaB.nameEn || 'Northern Water') : (cityMetaB.nameZh || '北方壬癸水'),
+        score: resB.geoEnergyScore,
+        resonanceGrade: isEn ? (cityMetaB.gradeEn || 'Auspicious') : (cityMetaB.gradeZh || '吉 / 大利'),
+        clusterSynergy: isEn ? (cityMetaB.clusterSynergyEn || 'Metropolitan Growth Vector') : (cityMetaB.clusterSynergyZh || '都市群发展中枢'),
+        analysis: isEn ? (resB.geoEnergy?.descEn || 'Favorable directional alignment') : (resB.geoEnergy?.descZh || '地缘生旺'),
+        analysisEn: resB.geoEnergy?.descEn || 'Favorable directional alignment'
+      },
+      comparativeVerdict: isEn
+        ? (resA.geoEnergyScore >= resB.geoEnergyScore
+            ? `[Directional Qi Resonance]: ${resA.cityName} channels ${cityMetaA.nameEn || 'Southern Fire'} (+${resA.geoEnergyScore} pts), creating superior elemental harmony with your natal Day Master compared to ${resB.cityName} (+${resB.geoEnergyScore} pts).`
+            : `[Directional Qi Resonance]: ${resB.cityName} channels ${cityMetaB.nameEn || 'Northern Water'} (+${resB.geoEnergyScore} pts), offering greater nourishing synergy than ${resA.cityName} (+${resA.geoEnergyScore} pts).`)
+        : (resA.geoEnergyScore >= resB.geoEnergyScore
+            ? `【地缘方位气数共振】：${resA.cityName}纳${cityMetaA.nameZh || '南方丙丁火'}气数（+${resA.geoEnergyScore}分），较${resB.cityName}（+${resB.geoEnergyScore}分）对命局更有生扶之效。`
+            : `【地缘方位气数共振】：${resB.cityName}纳${cityMetaB.nameZh || '北方壬癸水'}气数（+${resB.geoEnergyScore}分），较${resA.cityName}（+${resA.geoEnergyScore}分）对命主更有生扶之功。`),
+      comparativeVerdictEn: (resA.geoEnergyScore >= resB.geoEnergyScore
+        ? `[Directional Qi Resonance]: ${resA.cityName} channels ${cityMetaA.nameEn || 'Southern Fire'} (+${resA.geoEnergyScore} pts), creating superior elemental harmony with your natal Day Master compared to ${resB.cityName} (+${resB.geoEnergyScore} pts).`
+        : `[Directional Qi Resonance]: ${resB.cityName} channels ${cityMetaB.nameEn || 'Northern Water'} (+${resB.geoEnergyScore} pts), offering greater nourishing synergy than ${resA.cityName} (+${resA.geoEnergyScore} pts).`)
+    };
+
+    // Merged Spatial Feng Shui 10 Practical Remedies
+    const winOpt = (winner === 'B') ? optionB : optionA;
+    const winCity = (winner === 'B') ? resB.cityName : resA.cityName;
+    const winCountry = (winner === 'B') ? (optionB.country || 'China') : (optionA.country || 'UK');
+
+    const defaultRemedies = [
+      { icon: '💰', titleZh: '一、延年吉位聚财大阵', titleEn: '1. Yan Nian Wealth Qi Array', badgeZh: '聚财护库', badgeEn: 'Wealth Accumulation', descZh: '根据命卦锁定第一延年吉位，布设紫水晶洞与聚宝盆，固守现金流防波堤。', descEn: 'Anchor the prime Yan Nian sector with amethyst geodes and wealth basins to secure cash flow reserves.' },
+      { icon: '🐢', titleZh: '二、龙龟双铃化煞安神', titleEn: '2. Dragon Turtle & Bells Protection', badgeZh: '化煞解厄', badgeEn: 'Dispel Sha Qi', descZh: '化解办公桌冲门或尖角对冲，安放开光纯铜龙龟，佩以八卦双铃，抵御小人暗箭。', descEn: 'Neutralize desk door clash or sharp poison arrows with brass dragon turtles and Bagua bells.' },
+      { icon: '📿', titleZh: '三、贪合忘冲生肖佩戴', titleEn: '3. Tan He Wang Chong Zodiac Charm', badgeZh: '化冲为合', badgeEn: 'Convert Clash to Harmony', descZh: '依本命与流年地支对冲，佩戴六合生肖玉佩（贪合忘冲），将对抗性摩擦转化为合作贵人。', descEn: 'Wear Liu-He zodiac charms to entice dynamic combinations and neutralize branch clashes into supportive mentors.' },
+      { icon: '🚗', titleZh: '四、车内行车出入平安护持', titleEn: '4. Car & Transit Talismanic Safeguard', badgeZh: '出行辟险', badgeEn: 'Transit Safeguard', descZh: '在爱车后视镜悬挂朱砂平安符与沉香木挂件，净化旅途流动气场，防范驿马冲煞。', descEn: 'Hang cinnabar talismans and agarwood beads from rearview mirrors to cleanse moving Qi.' },
+      { icon: '🏔️', titleZh: '五、户型太极缺角泰山石补齐', titleEn: '5. Taiji Missing Sector Stone Remedy', badgeZh: '定鼎乾坤', badgeEn: 'Anchor Missing Sector', descZh: '住宅若西北或东北有缺角，在缺角方位安置朱砂刻字泰山石敢当，填补太极真气。', descEn: 'Place cinnabar-inscribed Mount Tai stones at missing northwest or northeast corners to restore Taiji equilibrium.' },
+      { icon: '👥', titleZh: '六、三合贵人局生旺催化', titleEn: '6. San He Noble Triad Array', badgeZh: '招引贵人', badgeEn: 'Mentor Magnet', descZh: '以原局三合局之贵人方位摆设琉璃生肖阵列，催化职场提携与重大商业引荐。', descEn: 'Arrange elemental triad glass figurines in designated directions to magnetize senior patrons.' },
+      { icon: '✨', titleZh: '七、岁运三元九运吉气生旺', titleEn: '7. Period 9 Star & Trio Boost', badgeZh: '九运亨通', badgeEn: 'Period 9 Prosperity', descZh: '顺应离火九运大势，在正南方与正北方置办光能水景，引动生生不息之天机财脉。', descEn: 'Harness Period 9 Fire by placing solar illuminated water features in south and north sectors.' },
+      { icon: '🔢', titleZh: '八、河图洛书吉数与选楼选号', titleEn: '8. Hetu Luoshu Favorable Numbers & Colors', badgeZh: '数字物性', badgeEn: 'Resonant Numbers', descZh: '选用与用神同频之河图数（如水一六、火二七、木三八）作为手机尾数、车牌与楼层。', descEn: 'Adopt Hetu-Luoshu numerical resonances as mobile digits, floor levels, and vehicle plates.' },
+      { icon: '🕊️', titleZh: '九、积德行善与心性实修', titleEn: '9. Ethical Merit & Mindful Rectification', badgeZh: '阴骘固本', badgeEn: 'Karmic Rectification', descZh: '风水之极在心性。日行一善，宽以待人，定期布施回馈社会，乃破尽天下凶煞之至高护法。', descEn: 'The supreme summit of Feng Shui is inner virtue; daily acts of altruism dissolve all adverse Sha Qi.' },
+      { icon: '🏛️', titleZh: '十、户型气场综合调理评级与总诀', titleEn: '10. Holistic Spatial Qi Rating & Grand Directives', badgeZh: '天人合一', badgeEn: 'Holistic Harmony', descZh: '坐向坚实、藏风聚气、动静分明。顺承天地之气运，心境自然澄明，无往不利。', descEn: 'Solid backrest, Qi accumulation, balanced Yin and Yang: align with spatial harmony to ensure lasting fortune.' }
+    ];
+
+    const remediesList = defaultRemedies.map((item, idx) => ({
+      order: idx + 1,
+      icon: item.icon,
+      title: isEn ? item.titleEn : item.titleZh,
+      badge: isEn ? item.badgeEn : item.badgeZh,
+      desc: isEn ? item.descEn : item.descZh
+    }));
+
+    const spatialFengShuiRemedies = {
+      targetCity: winCity,
+      targetCountry: isEn ? (winCountry === 'China' ? 'China' : (winCountry === 'UK' ? 'UK' : (winCountry === 'USA' ? 'USA' : (winCountry === 'Canada' ? 'Canada' : 'Global')))) : winCountry,
+      kuaName: isEn ? 'Kan Water Kua (1)' : '坎水命',
+      yanNianSector: isEn ? 'South (Li)' : '正南方 (离宫)',
+      primaryFavorableElement: isEn ? 'Wood' : '木',
+      holisticRatingBadge: isEn ? 'Tier-1 Favorable Sanctuary' : '上上大吉 · 乾坤生旺',
+      remedies: remediesList
+    };
+
     return {
       optionA: resA,
       optionB: resB,
@@ -1350,7 +1429,9 @@ class ScenarioSimulatorEngine {
       summary: isEn ? summaryEn : summaryZh,
       leaderboard: cleanLeaderboard,
       top3Patterns: cleanTop3,
-      counterfactualDynamics
+      counterfactualDynamics,
+      directionalResonance,
+      spatialFengShuiRemedies
     };
   }
 }

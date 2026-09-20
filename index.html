@@ -2467,11 +2467,15 @@
         </div>
       </div>
 
-      <!-- Calculate Button -->
-      <div class="flex justify-center pt-2">
-        <button id="calcSynastryBtn" class="px-8 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-amber-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-sm shadow-xl transition active:scale-95 flex items-center gap-2 border border-amber-500/40" data-i18n="synastry_calc_btn">
+      <!-- Calculate & Export Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3.5 pt-2">
+        <button id="calcSynastryBtn" class="px-8 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-amber-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold text-sm shadow-xl transition active:scale-95 flex items-center gap-2 border border-amber-500/40 cursor-pointer" data-i18n="synastry_calc_btn">
           <span>🚀</span>
           <span>生成双人合盘全息战报</span>
+        </button>
+        <button id="btnSynastryDownloadPDF" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-700 via-amber-800 to-yellow-900 hover:from-amber-600 hover:to-yellow-800 text-white font-bold text-sm shadow-xl transition active:scale-95 flex items-center gap-2 border border-amber-400/50 cursor-pointer hidden" data-i18n="synastry_export_pdf_btn">
+          <span>📜</span>
+          <span>导出合盘独立战报 PDF</span>
         </button>
       </div>
 
@@ -3121,6 +3125,50 @@
 
     <!-- Printable Dossier Pages Container -->
     <div id="imperialDossierContainer" class="w-full flex flex-col items-center">
+      <!-- Injected via JavaScript -->
+    </div>
+  </div>
+ 
+  <!-- View 7 Synastry Independent PDF Dossier Modal -->
+  <div id="synastryDossierModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-start">
+    <div class="no-print w-full max-w-4xl flex flex-wrap items-center justify-between gap-3 py-3 mb-3 border-b border-amber-800/40 text-gray-200">
+      <div class="flex items-center space-x-2">
+        <span class="text-xl">💞</span>
+        <h3 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc" data-i18n="synastry_modal_title">
+          双人合盘 · 婚恋合婚与商业博弈战报 (独立 PDF 导出)
+        </h3>
+      </div>
+      <div class="flex items-center space-x-3">
+        <!-- Language Switch inside Synastry Dossier -->
+        <div class="flex items-center rounded-lg border border-gray-700 bg-gray-900/90 p-0.5">
+          <button id="synastryDossierLangZh" class="px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium cursor-pointer">中文</button>
+          <button id="synastryDossierLangEn" class="px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium cursor-pointer">English</button>
+        </div>
+        <!-- Direct PDF Download Button -->
+        <button id="synastryDossierDownloadPdfBtn" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95" data-i18n="synastry_dossier_download_btn">
+          <span>📥</span>
+          <span>下载合盘 PDF</span>
+        </button>
+        <!-- Print / PDF Button -->
+        <button id="synastryDossierPrintBtn" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95" data-i18n="synastry_dossier_print_btn">
+          <span>🖨️</span>
+          <span>系统打印 / 另存为 PDF</span>
+        </button>
+        <!-- Close Button -->
+        <button id="synastryDossierCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="synastry_dossier_close_btn">
+          关闭预览
+        </button>
+      </div>
+    </div>
+
+    <!-- Export Status Banner -->
+    <div id="synastryDossierExportStatus" class="no-print hidden w-full max-w-4xl mb-3 px-4 py-2.5 rounded-lg text-xs font-medium border flex items-center justify-between transition shadow-md bg-amber-950/80 border-amber-600/50 text-amber-200">
+      <span id="synastryDossierExportStatusMsg"></span>
+      <button id="synastryDossierExportStatusDismiss" class="text-xs underline ml-2 opacity-80 hover:opacity-100 cursor-pointer">✕</button>
+    </div>
+
+    <!-- Printable Synastry Dossier Pages Container -->
+    <div id="synastryDossierContainer" class="w-full flex flex-col items-center">
       <!-- Injected via JavaScript -->
     </div>
   </div>

@@ -218,6 +218,12 @@ const I18N = (function() {
       synastry_load_current: "📥 载入当前主盘",
       synastry_calc_btn: "🚀 生成双人合盘全息战报",
       synastry_score_label: "双人综合契合度",
+      synastry_export_pdf_btn: "📜 导出合盘独立战报 PDF",
+      synastry_modal_title: "钦天监 · 双人合盘博弈战报 (独立 PDF 导出)",
+      synastry_dossier_download_btn: "📥 下载合盘 PDF (2页)",
+      synastry_dossier_print_btn: "🖨️ 系统打印 / 另存为 PDF",
+      synastry_dossier_close_btn: "关闭预览",
+      synastry_generating: "⏳ 正在编译 2 页钦天监 · 双人合盘独立战报 PDF，请稍候...",
 
       // Imperial Dossier
       dossier_modal_title: "钦天监 · 御制天机 · 皇家绝美珍藏册 (A4 级导出)",
@@ -1043,6 +1049,12 @@ const I18N = (function() {
       synastry_load_current: "📥 Load From Primary Chart",
       synastry_calc_btn: "🚀 Generate Synastry Compatibility Dossier",
       synastry_score_label: "Overall Compatibility Synergy",
+      synastry_export_pdf_btn: "📜 Export Synastry Battle Report PDF",
+      synastry_modal_title: "Qin Tian Jian · Dual Synastry Battle Report (Independent PDF Export)",
+      synastry_dossier_download_btn: "📥 Download Synastry PDF (2-Page)",
+      synastry_dossier_print_btn: "🖨️ System Print / Save as PDF",
+      synastry_dossier_close_btn: "Close Preview",
+      synastry_generating: "⏳ Compiling 2-Page Qin Tian Jian Synastry Battle Report PDF...",
 
       // Imperial Dossier
       dossier_modal_title: "Qin Tian Jian · Imperial Celestial Blueprint (A4 Export)",

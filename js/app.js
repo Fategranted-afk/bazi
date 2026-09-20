@@ -13474,6 +13474,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     }
+
+    const btnExportSynastry = document.getElementById('btnSynastryDownloadPDF');
+    if (btnExportSynastry) {
+      btnExportSynastry.addEventListener('click', () => {
+        openSynastryDossierModal(currentLang);
+      });
+    }
+
+    const modalLangZh = document.getElementById('synastryDossierLangZh');
+    const modalLangEn = document.getElementById('synastryDossierLangEn');
+    if (modalLangZh) {
+      modalLangZh.addEventListener('click', () => {
+        openSynastryDossierModal('zh');
+      });
+    }
+    if (modalLangEn) {
+      modalLangEn.addEventListener('click', () => {
+        openSynastryDossierModal('en');
+      });
+    }
+
+    const btnDownloadPdf = document.getElementById('synastryDossierDownloadPdfBtn');
+    if (btnDownloadPdf) {
+      btnDownloadPdf.addEventListener('click', () => {
+        downloadSynastryPDF(currentSynastryDossierLang || currentLang);
+      });
+    }
+
+    const btnPrint = document.getElementById('synastryDossierPrintBtn');
+    if (btnPrint) {
+      btnPrint.addEventListener('click', () => {
+        window.print();
+      });
+    }
+
+    const btnClose = document.getElementById('synastryDossierCloseBtn');
+    if (btnClose) {
+      btnClose.addEventListener('click', () => {
+        const modal = document.getElementById('synastryDossierModal');
+        if (modal) modal.classList.add('hidden');
+      });
+    }
+
+    const btnDismiss = document.getElementById('synastryDossierExportStatusDismiss');
+    if (btnDismiss) {
+      btnDismiss.addEventListener('click', () => {
+        const statusEl = document.getElementById('synastryDossierExportStatus');
+        if (statusEl) statusEl.classList.add('hidden');
+      });
+    }
   }
 
   function triggerCalculateSynastry() {
@@ -13759,7 +13809,636 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <p class="text-gray-100 text-xs sm:text-sm leading-relaxed font-serif-sc whitespace-pre-line">${data.remedies.diagnosis}</p>
       </div>
+
+      <!-- Section 9: Dual-Chart Structural Pattern Comparison & Engine Interaction -->
+      ${data.patternComparison ? `
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-950/30 via-black/50 to-amber-950/20 border border-indigo-500/40 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-indigo-800/40 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-base">⚔️</span>
+            <h5 class="text-sm font-bold text-indigo-200 font-serif-sc">${isEn ? '9. Dual-Chart Structural Pattern Comparison & Engine Interaction' : '9. 双人格局对比与结构性互动深度推演'}</h5>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">${isEn ? 'Pattern Matrix' : '格局对撞'}</span>
+          </div>
+          <span class="chinese-seal text-[10px] py-0 border-indigo-500 text-indigo-300">${isEn ? 'PATTERNS' : '格局合参'}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-black/40 border border-amber-500/30 space-y-2">
+            <div class="flex items-center justify-between border-b border-amber-900/30 pb-1 text-amber-300 font-bold font-serif-sc">
+              <span>👤 ${labelA} ${isEn ? 'Dominant Pattern Triad' : '主导格局三联'}</span>
+              <span class="text-[10px] text-amber-400 font-mono">${data.patternComparison.dominantA.role}</span>
+            </div>
+            <div class="text-amber-200 font-bold text-sm">${data.patternComparison.dominantA.name}</div>
+            <div class="space-y-1 pt-1">
+              ${data.patternComparison.top3PatternsA.map(p => `
+                <div class="flex items-center justify-between text-[11px] text-gray-300 bg-amber-950/20 px-2 py-0.5 rounded">
+                  <span>#${p.rank} ${p.name}</span>
+                  <span class="font-mono text-amber-300">${p.weightPct}%</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-black/40 border border-purple-500/30 space-y-2">
+            <div class="flex items-center justify-between border-b border-purple-900/30 pb-1 text-purple-300 font-bold font-serif-sc">
+              <span>👥 ${labelB} ${isEn ? 'Dominant Pattern Triad' : '主导格局三联'}</span>
+              <span class="text-[10px] text-purple-400 font-mono">${data.patternComparison.dominantB.role}</span>
+            </div>
+            <div class="text-purple-200 font-bold text-sm">${data.patternComparison.dominantB.name}</div>
+            <div class="space-y-1 pt-1">
+              ${data.patternComparison.top3PatternsB.map(p => `
+                <div class="flex items-center justify-between text-[11px] text-gray-300 bg-purple-950/20 px-2 py-0.5 rounded">
+                  <span>#${p.rank} ${p.name}</span>
+                  <span class="font-mono text-purple-300">${p.weightPct}%</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/30 via-purple-950/30 to-black/50 border border-amber-500/30 space-y-2.5 text-xs">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">⚡</span>
+              <span class="font-bold text-amber-200 font-serif-sc">${data.patternComparison.interaction.title}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-300 font-mono font-bold">${isEn ? 'Resonance' : '格局共鸣'}: ${data.patternComparison.interaction.score}%</span>
+          </div>
+          <p class="text-gray-200 leading-relaxed font-serif-sc">${data.patternComparison.interaction.dynamic}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
+            <div class="p-2 rounded bg-black/40 border border-rose-900/30 space-y-1">
+              <span class="font-bold text-rose-300 font-serif-sc">💍 ${isEn ? 'Romantic Directive:' : '婚恋相处战略纲要：'}</span>
+              <p class="text-gray-300 leading-tight font-serif-sc">${data.patternComparison.interaction.romanticDirective}</p>
+            </div>
+            <div class="p-2 rounded bg-black/40 border border-blue-900/30 space-y-1">
+              <span class="font-bold text-blue-300 font-serif-sc">🤝 ${isEn ? 'Business Directive:' : '商业合伙战略纲要：'}</span>
+              <p class="text-gray-300 leading-tight font-serif-sc">${data.patternComparison.interaction.businessDirective}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- Section 10: Lifelong Trajectory Overlap & Decennial Synchronization -->
+      ${data.trajectoryOverlap ? `
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-base">📈</span>
+            <h5 class="text-sm font-bold text-emerald-200 font-serif-sc">${isEn ? '10. Lifelong Trajectory Overlap & Decennial Synchronization' : '10. 人生轨迹推演重合度与岁运同频表'}</h5>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Overlap' : '轨迹重合'}</span>
+          </div>
+          <span class="chinese-seal text-[10px] py-0 border-emerald-500 text-emerald-300">${isEn ? 'TRAJECTORY' : '岁运同频'}</span>
+        </div>
+
+        <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${data.trajectoryOverlap.summary}</p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-center border-collapse">
+            <thead>
+              <tr class="text-gray-400 border-b border-gray-800">
+                <th class="py-2 text-left">${isEn ? 'Age Span' : '年龄跨度'}</th>
+                <th class="py-2">${labelA} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
+                <th class="py-2 border-l border-gray-800">${labelB} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
+                <th class="py-2 border-l border-gray-800">${isEn ? 'Synergy Phase' : '同频评级'}</th>
+                <th class="py-2 text-left border-l border-gray-800 pl-3">${isEn ? 'Decennial Strategic Directive' : '岁运共振推演定论'}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/60 font-serif-sc">
+              ${data.trajectoryOverlap.milestones.map(m => `
+                <tr class="hover:bg-white/5 transition">
+                  <td class="py-2.5 text-left font-bold text-amber-200/90 whitespace-nowrap">${m.ageSpan}</td>
+                  <td class="py-2.5 font-mono text-amber-300">${m.pillarA.text} <span class="text-[10px] text-gray-400">(${m.pillarA.score}${isEn ? 'pts' : '分'})</span></td>
+                  <td class="py-2.5 border-l border-gray-800 font-mono text-purple-300">${m.pillarB.text} <span class="text-[10px] text-gray-400">(${m.pillarB.score}${isEn ? 'pts' : '分'})</span></td>
+                  <td class="py-2.5 border-l border-gray-800 whitespace-nowrap">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.phaseType === 'peak_resonance' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : (m.phaseType === 'counterbalance_support' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40' : 'bg-gray-700/40 text-gray-300 border border-gray-600/40')}">
+                      ${m.phaseBadge}
+                    </span>
+                  </td>
+                  <td class="py-2.5 text-left border-l border-gray-800 pl-3 text-gray-300 text-[11px] leading-tight">${m.verdict}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- Section 11: Life Focal Priorities & Core Values 5D Profile -->
+      ${data.lifePriorities ? `
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-950/30 via-black/50 to-amber-950/20 border border-rose-500/40 shadow-xl space-y-4">
+        <div class="flex items-center justify-between border-b border-rose-800/40 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🧭</span>
+            <h5 class="text-sm font-bold text-rose-200 font-serif-sc">${isEn ? '11. Life Focal Priorities & Core Values 5D Profile' : '11. 人生侧重点与核心价值观五维图谱'}</h5>
+            <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">${data.lifePriorities.alignmentScore}% ${isEn ? 'Alignment' : '共鸣契合'}</span>
+          </div>
+          <span class="chinese-seal text-[10px] py-0 border-rose-500 text-rose-300">${isEn ? 'VALUES' : '五维取向'}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 rounded-xl bg-black/40 border border-amber-500/30 flex items-center justify-between">
+            <span class="text-gray-300">👤 ${labelA} ${isEn ? 'Top Priority Anchor' : '第一核心人生侧重点'}:</span>
+            <b class="text-amber-300 font-serif-sc">${data.lifePriorities.topPriorityA.name} (${data.lifePriorities.topPriorityA.score}${isEn ? 'pts' : '分'})</b>
+          </div>
+          <div class="p-3 rounded-xl bg-black/40 border border-purple-500/30 flex items-center justify-between">
+            <span class="text-gray-300">👥 ${labelB} ${isEn ? 'Top Priority Anchor' : '第一核心人生侧重点'}:</span>
+            <b class="text-purple-300 font-serif-sc">${data.lifePriorities.topPriorityB.name} (${data.lifePriorities.topPriorityB.score}${isEn ? 'pts' : '分'})</b>
+          </div>
+        </div>
+
+        <div class="space-y-2.5 text-xs">
+          ${data.lifePriorities.dimensions.map(dim => `
+            <div class="p-3 rounded-xl bg-black/40 border border-gray-800 space-y-1.5">
+              <div class="flex flex-wrap items-center justify-between gap-1 text-[11px]">
+                <span class="font-bold text-gray-200 font-serif-sc">${dim.name}</span>
+                <span class="px-2 py-0.2 rounded text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/30 font-mono">${dim.status}</span>
+              </div>
+              <p class="text-[10px] text-gray-400 font-serif-sc">${dim.desc}</p>
+              <div class="grid grid-cols-2 gap-3 pt-1">
+                <div>
+                  <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                    <span>${labelA}</span>
+                    <span>${dim.scoreA}%</span>
+                  </div>
+                  <div class="w-full bg-gray-800 rounded-full h-1.5 mt-0.5">
+                    <div class="bg-amber-500 h-1.5 rounded-full" style="width: ${dim.scoreA}%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                    <span>${labelB}</span>
+                    <span>${dim.scoreB}%</span>
+                  </div>
+                  <div class="w-full bg-gray-800 rounded-full h-1.5 mt-0.5">
+                    <div class="bg-purple-500 h-1.5 rounded-full" style="width: ${dim.scoreB}%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/30 to-black/50 border border-amber-500/30 text-xs font-serif-sc space-y-1">
+          <div class="font-bold text-amber-200 flex items-center gap-1.5">
+            <span>⚖️</span><span>${isEn ? 'Core Value Harmony Protocol & Demarcation Rule' : '价值观调和总则与相处协议'}</span>
+          </div>
+          <p class="text-gray-200 leading-relaxed">${data.lifePriorities.harmonyProtocol}</p>
+        </div>
+      </div>
+      ` : ''}
     `;
+
+    const btnExportPdf = document.getElementById('btnSynastryDownloadPDF');
+    if (btnExportPdf) {
+      btnExportPdf.classList.remove('hidden');
+    }
+  }
+
+  // ==========================================================================
+  // Independent Synastry PDF Export Engine
+  // ==========================================================================
+  let currentSynastryDossierLang = null;
+
+  function showSynastryDossierStatus(msg, type = 'info') {
+    const banner = document.getElementById('synastryDossierExportStatus');
+    const msgEl = document.getElementById('synastryDossierExportStatusMsg');
+    if (!banner || !msgEl) return;
+    msgEl.textContent = msg;
+    banner.className = 'no-print w-full max-w-4xl mb-3 px-4 py-2.5 rounded-lg text-xs font-medium border flex items-center justify-between transition shadow-md ' +
+      (type === 'success' ? 'bg-emerald-950/80 border-emerald-600/50 text-emerald-200' :
+       type === 'error' ? 'bg-rose-950/80 border-rose-600/50 text-rose-200' :
+       'bg-amber-950/80 border-amber-600/50 text-amber-200');
+    banner.classList.remove('hidden');
+    if (type === 'success') {
+      setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 4500);
+    }
+  }
+
+  function openSynastryDossierModal(lang) {
+    const modal = document.getElementById('synastryDossierModal');
+    if (!modal) return;
+    const activeLang = lang || currentSynastryDossierLang || currentLang || 'zh';
+    currentSynastryDossierLang = activeLang;
+    renderSynastryDossierPages(activeLang);
+    modal.classList.remove('hidden');
+
+    const zhBtn = document.getElementById('synastryDossierLangZh');
+    const enBtn = document.getElementById('synastryDossierLangEn');
+    if (zhBtn && enBtn) {
+      if (activeLang === 'en') {
+        zhBtn.className = 'px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium cursor-pointer';
+        enBtn.className = 'px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium cursor-pointer';
+      } else {
+        zhBtn.className = 'px-2 py-0.5 text-xs rounded bg-amber-600 text-white font-medium cursor-pointer';
+        enBtn.className = 'px-2 py-0.5 text-xs rounded text-gray-400 hover:text-gray-200 font-medium cursor-pointer';
+      }
+    }
+  }
+
+  function renderSynastryDossierPages(lang, chartA, chartB, mode) {
+    const activeLang = lang || currentSynastryDossierLang || currentLang || 'zh';
+    currentSynastryDossierLang = activeLang;
+    const isEn = (activeLang === 'en');
+
+    const container = document.getElementById('synastryDossierContainer');
+    if (!container) return;
+
+    if (chartA) cachedChartA = chartA;
+    if (chartB) cachedChartB = chartB;
+    if (mode) currentSynastryMode = mode;
+
+    if (!cachedChartA || !cachedChartB) {
+      if (typeof BaZiEngine !== 'undefined') {
+        cachedChartA = BaZiEngine.calculate({ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: '乾造', useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+        cachedChartB = BaZiEngine.calculate({ year: 1990, month: 5, day: 15, hour: 10, minute: 0, gender: '坤造', useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+      }
+    }
+    if (!cachedChartA || !cachedChartB) return;
+
+    const isRomantic = (currentSynastryMode !== 'business');
+    const data = SynastryEngine.analyze(cachedChartA, cachedChartB, currentSynastryMode || 'romantic', activeLang);
+    currentSynastryResult = data;
+
+    const rawValA = document.getElementById('synastryLabelA')?.value;
+    const rawValB = document.getElementById('synastryLabelB')?.value;
+    let labelA = rawValA || (isEn ? 'Subject A' : '甲造');
+    if (isEn && labelA === '甲造') labelA = 'Subject A';
+    if (!isEn && labelA === 'Subject A') labelA = '甲造';
+
+    let labelB = rawValB || (isEn ? 'Subject B' : '乙造');
+    if (isEn && labelB === '乙造') labelB = 'Subject B';
+    if (!isEn && labelB === 'Subject B') labelB = '乙造';
+
+    const pA = cachedChartA.pillars;
+    const pB = cachedChartB.pillars;
+    const score = data.overallScore;
+    const arc = data.archetype;
+
+    const watermarkText = isEn ? 'QIN TIAN JIAN · SYNASTRY BATTLE REPORT' : '钦天监 · 双人合盘御批';
+
+    const genderA = isEn ? ((cachedChartA.gender === '乾造' || cachedChartA.gender === '男') ? 'Yang Male (Qian)' : 'Yin Female (Kun)') : (cachedChartA.gender || '乾造');
+    const genderB = isEn ? ((cachedChartB.gender === '乾造' || cachedChartB.gender === '男') ? 'Yang Male (Qian)' : 'Yin Female (Kun)') : (cachedChartB.gender || '坤造');
+
+    const dmA = isEn ? `${I18N.getStem(cachedChartA.dayMaster, 'en').split(' ')[0]}` : cachedChartA.dayMaster;
+    const dmB = isEn ? `${I18N.getStem(cachedChartB.dayMaster, 'en').split(' ')[0]}` : cachedChartB.dayMaster;
+
+    const patA = data.patternComparison ? data.patternComparison.dominantA.name : (isEn ? 'Direct Officer' : '正官格');
+    const patB = data.patternComparison ? data.patternComparison.dominantB.name : (isEn ? 'Direct Resource' : '正印格');
+
+    const zodA = isEn ? data.zodiacA.animalEn : data.zodiacA.animalZh;
+    const zodB = isEn ? data.zodiacB.animalEn : data.zodiacB.animalZh;
+
+    container.innerHTML = `
+      <!-- Page 1: Natal Comparison & Core Compatibility -->
+      <div id="synastryPage1" class="synastry-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
+          <!-- Header -->
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-1.5">
+            <div class="flex items-center justify-between">
+              <span class="imperial-seal-stamp">${isEn ? 'SYNASTRY BATTLE REPORT' : '钦天监正堂之宝 · 双人合盘'}</span>
+              <span class="text-[10px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE' : '天机合参 · 终身博弈'}</span>
+            </div>
+            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Dual Synastry Battle Report · Scroll I' : '钦天监 · 双人合盘博弈战报 · 卷首：核心契合与命盘对照'}</h1>
+            <p class="text-[10px] text-amber-900/85 font-serif-sc">${isEn ? 'Dual Natal Geometry · Compatibility Synergy · 5D Life Focal Priorities' : '双人命盘乾坤对照 · 契合指数 · 价值观五维图谱'}</p>
+          </div>
+
+          <!-- Dual Subject Quick Metadata Banner -->
+          <div class="imperial-card imperial-card-gold grid grid-cols-2 gap-2 text-[10px] p-2 font-serif-sc">
+            <div class="border-r border-amber-900/20 pr-2 space-y-0.5">
+              <div class="flex items-center justify-between font-bold text-amber-950">
+                <span>👤 ${labelA} (${genderA})</span>
+                <span class="font-mono text-amber-900">${dmA}</span>
+              </div>
+              <div class="text-gray-700 flex justify-between">
+                <span>${isEn ? 'Pattern:' : '主导格局:'} <b>${patA}</b></span>
+                <span>${isEn ? 'Zodiac:' : '生肖:'} <b>${zodA}</b></span>
+              </div>
+            </div>
+            <div class="pl-1 space-y-0.5">
+              <div class="flex items-center justify-between font-bold text-purple-950">
+                <span>👥 ${labelB} (${genderB})</span>
+                <span class="font-mono text-purple-900">${dmB}</span>
+              </div>
+              <div class="text-gray-700 flex justify-between">
+                <span>${isEn ? 'Pattern:' : '主导格局:'} <b>${patB}</b></span>
+                <span>${isEn ? 'Zodiac:' : '生肖:'} <b>${zodB}</b></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Synergy & Archetype Banner -->
+          <div class="imperial-card imperial-card-rose p-2 text-xs flex items-center justify-between gap-3 font-serif-sc">
+            <div class="flex items-center gap-3">
+              <div class="text-center px-3 py-1 rounded-lg bg-amber-950/10 border border-amber-900/20">
+                <span class="text-xl font-black font-mono text-rose-900">${score}%</span>
+                <div class="text-[8.5px] uppercase font-bold text-gray-600">${isEn ? 'Synergy' : '契合指数'}</div>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-bold text-amber-950">${arc.name}</span>
+                  <span class="imperial-seal-stamp text-[9px] py-0">${arc.seal}</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 font-bold border border-amber-600/30">${arc.tier}</span>
+                </div>
+                <p class="text-[10px] text-gray-800 leading-tight mt-0.5">${arc.description}</p>
+              </div>
+            </div>
+            <div class="text-right flex-shrink-0 text-[10px] font-mono text-rose-900 font-bold">
+              ${data.zodiacMatch.badge}<br>
+              <span class="text-[9px] text-gray-600 font-serif-sc">${isEn ? `${data.zodiacA.animalEn} & ${data.zodiacB.animalEn}` : `${data.zodiacA.animalZh} · ${data.zodiacB.animalZh}`}</span>
+            </div>
+          </div>
+
+          <!-- Dual Four Pillars Grand Table -->
+          <div class="imperial-card imperial-card-gold p-2 space-y-1 font-serif-sc text-xs">
+            <div class="font-bold text-amber-950 border-b border-amber-900/20 pb-0.5 flex justify-between text-[10.5px]">
+              <span>${isEn ? 'Dual Four Pillars Direct Comparison' : '双人命盘四柱对照神机表'}</span>
+              <span class="font-mono text-gray-600">${labelA} vs ${labelB}</span>
+            </div>
+            <table class="w-full text-[9.5px] text-center border-collapse">
+              <thead>
+                <tr class="text-gray-600 border-b border-amber-900/20">
+                  <th class="py-1 text-left">${isEn ? 'Pillar' : '柱位'}</th>
+                  <th class="py-1">${labelA} (${isEn ? 'Stem-Branch' : '干支'})</th>
+                  <th class="py-1">${labelA} (${isEn ? 'Ten God' : '十神'})</th>
+                  <th class="py-1">${labelA} (${isEn ? 'Na-Yin' : '纳音'})</th>
+                  <th class="py-1 border-l border-amber-900/20">${labelB} (${isEn ? 'Stem-Branch' : '干支'})</th>
+                  <th class="py-1">${labelB} (${isEn ? 'Ten God' : '十神'})</th>
+                  <th class="py-1">${labelB} (${isEn ? 'Na-Yin' : '纳音'})</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-amber-900/15 font-mono">
+                ${['year', 'month', 'day', 'hour'].map(k => {
+                  const colA = pA[k];
+                  const colB = pB[k];
+                  const pLabel = isEn
+                    ? { year: 'Year (Root)', month: 'Month (Career)', day: 'Day (Self/Spouse)', hour: 'Hour (Vision)' }[k]
+                    : { year: '年柱 (根基)', month: '月柱 (事业)', day: '日柱 (自身/配偶)', hour: '时柱 (愿景)' }[k];
+                  const gzTextA = isEn ? `${I18N.getStem(colA.stem, 'en').split(' ')[0]}-${I18N.getBranch(colA.branch, 'en').split(' ')[0]}` : colA.text;
+                  const gzTextB = isEn ? `${I18N.getStem(colB.stem, 'en').split(' ')[0]}-${I18N.getBranch(colB.branch, 'en').split(' ')[0]}` : colB.text;
+                  const isDay = (k === 'day');
+                  const rowClass = isDay ? 'bg-amber-200/40 font-bold' : '';
+                  return `
+                    <tr class="${rowClass}">
+                      <td class="py-1 text-left font-serif-sc text-amber-950 font-bold">${pLabel}</td>
+                      <td class="py-1 text-amber-900">${gzTextA}</td>
+                      <td class="py-1 text-gray-700">${isEn ? I18N.getGod(colA.stemGod, 'en') : colA.stemGod}</td>
+                      <td class="py-1 text-gray-500">${isEn ? I18N.getNaYin(colA.naYin, 'en') : colA.naYin}</td>
+                      <td class="py-1 border-l border-amber-900/20 text-purple-900">${gzTextB}</td>
+                      <td class="py-1 text-gray-700">${isEn ? I18N.getGod(colB.stemGod, 'en') : colB.stemGod}</td>
+                      <td class="py-1 text-gray-500">${isEn ? I18N.getNaYin(colB.naYin, 'en') : colB.naYin}</td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Five Elements Symbiosis & Soul Resonance -->
+          <div class="grid grid-cols-2 gap-2 text-[10px] font-serif-sc">
+            <div class="imperial-card imperial-card-emerald p-2 space-y-0.5">
+              <div class="font-bold text-emerald-950 border-b border-amber-900/15 pb-0.5 flex justify-between">
+                <span>🌱 ${isEn ? 'Five Elements Symbiosis' : '五行气机交融图谱'}</span>
+                <span class="font-mono text-emerald-800">${data.elementalSynergy.score}%</span>
+              </div>
+              <p class="text-gray-800 leading-tight line-clamp-3">${data.elementalSynergy.diagnosis}</p>
+            </div>
+            <div class="imperial-card imperial-card-accent p-2 space-y-0.5">
+              <div class="font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span>✨ ${isEn ? 'Soul Resonance & Pillar Chemistry' : '柱位交互与情志默契'}</span>
+              </div>
+              <p class="text-gray-800 leading-tight line-clamp-3">${data.pillarResonance.diagnosis}</p>
+            </div>
+          </div>
+
+          <!-- Section 11: 5D Life Priorities & Core Values Comparative Table -->
+          ${data.lifePriorities ? `
+          <div class="imperial-card imperial-card-rose p-2 text-[10px] space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
+              <span>🧭 ${isEn ? '5D Life Focal Priorities & Core Values Profile' : '人生侧重点与核心价值观五维图谱'}</span>
+              <span class="text-rose-900 font-mono">${data.lifePriorities.alignmentScore}% ${isEn ? 'Alignment' : '共鸣度'}</span>
+            </div>
+            <div class="grid grid-cols-5 gap-1.5 text-center text-[9px] pt-0.5">
+              ${data.lifePriorities.dimensions.map(dim => `
+                <div class="p-1 rounded bg-white/70 border border-amber-900/15">
+                  <div class="font-bold text-amber-950 truncate">${dim.name}</div>
+                  <div class="font-mono text-gray-700 text-[8.5px] mt-0.5">${labelA}: ${dim.scoreA}% | ${labelB}: ${dim.scoreB}%</div>
+                  <div class="text-[8px] text-rose-800 truncate mt-0.5">${dim.status}</div>
+                </div>
+              `).join('')}
+            </div>
+            <p class="text-[9.5px] text-amber-950 leading-tight pt-0.5"><b>${isEn ? 'Harmony Protocol: ' : '价值观调和总则：'}</b>${data.lifePriorities.harmonyProtocol}</p>
+          </div>
+          ` : ''}
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Dual Synastry Battle Report · Scroll I' : '大明/大清钦天监 · 双人合盘战报 卷首'}</span>
+            <span>Page 1 / 2</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 2: Patterns, Trajectory Overlap & Zen-Dao Remedies -->
+      <div id="synastryPage2" class="synastry-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
+          <!-- Header -->
+          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-1.5">
+            <div class="flex items-center justify-between">
+              <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL RESCRIPT' : '御制天机'}</span>
+              <span class="text-[10px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'DECENNIAL SYNCHRONIZATION & REMEDIES' : '岁运同频 · 破局锦囊'}</span>
+            </div>
+            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Dual Synastry Battle Report · Scroll II' : '钦天监 · 双人合盘博弈战报 · 卷二：格局互参与终身岁运推演'}</h1>
+            <p class="text-[10px] text-amber-900/85 font-serif-sc">${isEn ? 'Structural Pattern Interaction · Lifelong Decennial Overlap · Zen Trinity Counsel & Mutual Remedies' : '格局对撞互动 · 终身岁运推演同频表 · 三经调和智慧与共生锦囊'}</p>
+          </div>
+
+          <!-- Section 9: Dual-Chart Structural Pattern Comparison & Engine Interaction -->
+          ${data.patternComparison ? `
+          <div class="imperial-card imperial-card-gold p-2 text-[10px] space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
+              <span>⚔️ ${isEn ? 'Dual-Chart Structural Pattern Comparison & Interaction' : '主导格局对比与结构性互动深度推演'}</span>
+              <span class="text-[9px] px-2 py-0.2 rounded bg-amber-200/80 text-amber-950 font-mono font-bold">${data.patternComparison.interaction.title} (${data.patternComparison.interaction.score}%)</span>
+            </div>
+            <p class="text-gray-800 leading-tight text-[9.5px]">${data.patternComparison.interaction.dynamic}</p>
+            <div class="grid grid-cols-2 gap-2 text-[9px] text-gray-800 pt-0.5">
+              <div class="p-1 bg-white/70 rounded border border-amber-900/15">
+                <b>💍 ${isEn ? 'Romantic Directive: ' : '婚恋相处：'}</b>${data.patternComparison.interaction.romanticDirective}
+              </div>
+              <div class="p-1 bg-white/70 rounded border border-amber-900/15">
+                <b>🤝 ${isEn ? 'Business Directive: ' : '商业合伙：'}</b>${data.patternComparison.interaction.businessDirective}
+              </div>
+            </div>
+          </div>
+          ` : ''}
+
+          <!-- Section 10: Lifelong Trajectory Overlap & Decennial Synchronization Table -->
+          ${data.trajectoryOverlap ? `
+          <div class="imperial-card imperial-card-emerald p-2 text-[9.5px] space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
+              <span>📈 ${isEn ? 'Lifelong Trajectory Overlap & Decennial Synchronization' : '终身轨迹推演重合度与岁运同频表'}</span>
+              <span class="text-[9px] font-mono text-emerald-900 font-bold">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Synchronization' : '同频指数'}</span>
+            </div>
+            <table class="w-full text-[9px] text-center border-collapse">
+              <thead>
+                <tr class="text-gray-600 border-b border-amber-900/20">
+                  <th class="py-0.5 text-left">${isEn ? 'Age Span' : '年龄阶段'}</th>
+                  <th class="py-0.5">${labelA} (${isEn ? 'Decade' : '大运'})</th>
+                  <th class="py-0.5 border-l border-amber-900/20">${labelB} (${isEn ? 'Decade' : '大运'})</th>
+                  <th class="py-0.5 border-l border-amber-900/20">${isEn ? 'Synergy Phase' : '同频态势'}</th>
+                  <th class="py-0.5 text-left border-l border-amber-900/20 pl-2">${isEn ? 'Decennial Strategic Verdict' : '岁运推演定论'}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-amber-900/15">
+                ${data.trajectoryOverlap.milestones.map(m => `
+                  <tr>
+                    <td class="py-1 text-left font-serif-sc text-amber-950 font-bold whitespace-nowrap">${m.ageSpan}</td>
+                    <td class="py-1 font-mono text-amber-900">${m.pillarA.text} (${m.pillarA.score})</td>
+                    <td class="py-1 border-l border-amber-900/20 font-mono text-purple-900">${m.pillarB.text} (${m.pillarB.score})</td>
+                    <td class="py-1 border-l border-amber-900/20 whitespace-nowrap"><span class="px-1 py-0.2 rounded text-[8.5px] font-bold bg-amber-100 text-amber-950 border border-amber-600/30">${m.phaseBadge}</span></td>
+                    <td class="py-1 text-left border-l border-amber-900/20 pl-2 text-gray-800 text-[8.5px] leading-tight">${m.verdict}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+          ` : ''}
+
+          <!-- Clash Points & Financial Trust -->
+          <div class="grid grid-cols-2 gap-2 text-[9.5px] font-serif-sc">
+            <div class="imperial-card imperial-card-rose p-1.5 space-y-0.5">
+              <div class="font-bold text-rose-950 border-b border-amber-900/15 pb-0.5 flex justify-between">
+                <span>⚡ ${isEn ? 'Clash Points & Stress Vectors' : '潜在雷区与刑冲预警'}</span>
+                <span class="chinese-seal text-[8px] py-0 border-rose-600 text-rose-700">${isEn ? 'CLASHES' : '刑冲克害'}</span>
+              </div>
+              <p class="text-gray-800 leading-tight line-clamp-3">${data.clashPoints.diagnosis}</p>
+            </div>
+            <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5">
+              <div class="font-bold text-amber-950 border-b border-amber-900/15 pb-0.5 flex justify-between">
+                <span>💰 ${isEn ? 'Financial Trust & Game Theory' : '财富合力与商业资产博弈'}</span>
+                <span class="chinese-seal text-[8px] py-0">${isEn ? 'WEALTH' : '财星博弈'}</span>
+              </div>
+              <p class="text-gray-800 leading-tight line-clamp-3">${data.financialTrust.diagnosis}</p>
+            </div>
+          </div>
+
+          <!-- Zen & Dao Trinity Relationship Counsel & Mutual Remedies -->
+          <div class="imperial-card imperial-card-accent p-2 text-[9.5px] space-y-1 font-serif-sc relative overflow-hidden">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+              <span>🧘 ${isEn ? 'Zen & Dao Trinity Counsel & Mutual Remedies' : '三经调和之道与双人共生锦囊'}</span>
+              <span class="chinese-seal text-[8px] py-0 border-purple-600 text-purple-700">${isEn ? 'ZEN-DAO' : '通关胜道'}</span>
+            </div>
+            <div class="relative min-h-[46px]">
+              <div class="space-y-0.5 text-gray-800 leading-tight text-[9px]" style="padding-right: 30mm;">
+                <p><b>${isEn ? 'Diamond Sutra: ' : '金刚经破相：'}</b>${data.zenDaoCounsel.diamondSutra.counsel}</p>
+                <p><b>${isEn ? 'Platform Sutra: ' : '坛经当下：'}</b>${data.zenDaoCounsel.platformSutra.counsel}</p>
+                <p><b>${isEn ? 'Zhuangzi Autonomy: ' : '庄子齐物：'}</b>${data.zenDaoCounsel.zhuangzi.counsel}</p>
+                <p class="text-amber-950 font-bold"><b>${isEn ? 'Supreme Remedy: ' : '至高解法：'}</b>${data.remedies.diagnosis}</p>
+              </div>
+              <div class="imperial-seal-square ${isEn ? 'is-en' : ''}" title="${isEn ? 'Synastry Rescript' : '钦天合盘'}">
+                ${isEn ? 'SYNASTRY<br>RESCRIPT' : '钦天<br>合盘'}
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Dual Synastry Battle Report · Scroll II' : '大明/大清钦天监 · 双人合盘战报 卷二'}</span>
+            <span>Page 2 / 2</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function downloadSynastryPDF(lang) {
+    const activeLang = lang || currentSynastryDossierLang || currentLang || 'zh';
+    const isEn = (activeLang === 'en');
+    renderSynastryDossierPages(activeLang);
+
+    const container = document.getElementById('synastryDossierContainer');
+    if (!container) return;
+
+    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const filename = isEn ? `QinTianJian_Synastry_Report_${dateStr}` : `钦天监双人合盘博弈战报_${dateStr}`;
+
+    showSynastryDossierStatus(
+      isEn ? '⏳ Compiling 2-Page Qin Tian Jian Synastry Battle Report PDF...' : '⏳ 正在编译 2 页钦天监 · 双人合盘独立战报 PDF，请稍候...',
+      'info'
+    );
+
+    container.classList.add('exporting-pdf');
+
+    if (typeof html2pdf !== 'undefined') {
+      try {
+        const opt = {
+          margin: 0,
+          filename: `${filename}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            letterRendering: true,
+            scrollY: 0,
+            scrollX: 0,
+            backgroundColor: '#fcfbf7',
+            logging: false
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          },
+          pagebreak: {
+            mode: []
+          }
+        };
+
+        html2pdf().set(opt).from(container).save().then(() => {
+          container.classList.remove('exporting-pdf');
+          showSynastryDossierStatus(
+            isEn ? '✅ Synastry Battle Report PDF generated and download started!' : '✅ 钦天监 · 双人合盘战报 PDF 已成功生成并开始下载！',
+            'success'
+          );
+        }).catch((err) => {
+          container.classList.remove('exporting-pdf');
+          console.warn('html2pdf synastry error, invoking fallback:', err);
+          if (typeof window !== 'undefined' && typeof window.print === 'function') {
+            window.print();
+          }
+        });
+        return;
+      } catch (err) {
+        container.classList.remove('exporting-pdf');
+        console.warn('html2pdf invocation error:', err);
+      }
+    }
+
+    container.classList.remove('exporting-pdf');
+    if (typeof window !== 'undefined' && typeof window.print === 'function') {
+      window.print();
+    }
   }
 
 
@@ -15213,6 +15892,178 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
+
+      <!-- Counterfactual Dynamics & Burnout Matrix -->
+      ${simRes.counterfactualDynamics ? `
+        <div class="rounded-2xl border border-amber-600/40 bg-gradient-to-r from-amber-950/30 via-slate-900/60 to-purple-950/30 p-5 space-y-4 shadow-2xl">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">⚡</span>
+              <h4 class="text-sm sm:text-base font-bold text-amber-200 font-serif-sc">
+                ${isEn ? 'Counterfactual Dynamics: Net Kinetic Yield vs. Burnout Index' : '外场强迫与反事实动力学沙盘（动能净产出 vs 心理能耗）'}
+              </h4>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-950 border border-amber-700/40 text-amber-300 font-mono">
+              ${isEn ? 'BURNOUT AUDIT' : '能耗动力学'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <!-- Option A Dynamics -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-indigo-500/40 space-y-2">
+              <div class="flex items-center justify-between font-bold">
+                <span class="text-indigo-300 font-serif-sc">🅰️ ${simRes.counterfactualDynamics.optionA.title}</span>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-indigo-900/60 text-indigo-200">
+                  ${isEn ? 'Yield' : '净动能'}: ${simRes.counterfactualDynamics.optionA.netKineticYield} pts
+                </span>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px] text-gray-300">
+                  <span>${isEn ? 'Psychological Burnout Index' : '心智能耗率 (Burnout)'}</span>
+                  <span class="font-bold font-mono ${simRes.counterfactualDynamics.optionA.burnoutIndex > 65 ? 'text-rose-400' : 'text-emerald-400'}">${simRes.counterfactualDynamics.optionA.burnoutIndex}%</span>
+                </div>
+                <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                  <div class="h-full ${simRes.counterfactualDynamics.optionA.burnoutIndex > 65 ? 'bg-rose-500' : 'bg-emerald-500'} rounded-full transition-all duration-500" style="width: ${simRes.counterfactualDynamics.optionA.burnoutIndex}%"></div>
+                </div>
+              </div>
+              <div class="text-[11px] text-indigo-200/90 leading-relaxed font-sans pt-1 border-t border-gray-800/60">
+                🧭 ${simRes.counterfactualDynamics.optionA.trajectory}
+              </div>
+            </div>
+
+            <!-- Option B Dynamics -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-purple-500/40 space-y-2">
+              <div class="flex items-center justify-between font-bold">
+                <span class="text-purple-300 font-serif-sc">🅱️ ${simRes.counterfactualDynamics.optionB.title}</span>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-900/60 text-purple-200">
+                  ${isEn ? 'Yield' : '净动能'}: ${simRes.counterfactualDynamics.optionB.netKineticYield} pts
+                </span>
+              </div>
+              <div class="space-y-1">
+                <div class="flex justify-between text-[11px] text-gray-300">
+                  <span>${isEn ? 'Psychological Burnout Index' : '心智能耗率 (Burnout)'}</span>
+                  <span class="font-bold font-mono ${simRes.counterfactualDynamics.optionB.burnoutIndex > 65 ? 'text-rose-400' : 'text-emerald-400'}">${simRes.counterfactualDynamics.optionB.burnoutIndex}%</span>
+                </div>
+                <div class="h-2 rounded-full bg-gray-800 overflow-hidden">
+                  <div class="h-full ${simRes.counterfactualDynamics.optionB.burnoutIndex > 65 ? 'bg-rose-500' : 'bg-emerald-500'} rounded-full transition-all duration-500" style="width: ${simRes.counterfactualDynamics.optionB.burnoutIndex}%"></div>
+                </div>
+              </div>
+              <div class="text-[11px] text-purple-200/90 leading-relaxed font-sans pt-1 border-t border-gray-800/60">
+                🧭 ${simRes.counterfactualDynamics.optionB.trajectory}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-black/30 border border-amber-900/30 text-xs text-amber-100 font-serif-sc leading-relaxed">
+            ${simRes.counterfactualDynamics.comparativeAdvice}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Directional Resonance Analysis Section (地理方位共振分析) -->
+      ${simRes.directionalResonance ? `
+        <div class="rounded-2xl border border-sky-500/40 bg-gradient-to-r from-sky-950/30 via-slate-900/60 to-blue-950/30 p-5 space-y-4 shadow-2xl">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🧭</span>
+              <h4 class="text-sm sm:text-base font-bold text-sky-200 font-serif-sc">
+                ${isEn ? 'Directional Resonance & Cardinal Qi Analysis' : '地理方位场能共振分析 · 双轨时空裁量'}
+              </h4>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-sky-950 border border-sky-700/40 text-sky-300 font-mono">
+              ${isEn ? 'DIRECTIONAL RESONANCE' : '方位气场共振'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <!-- Option A Direction -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-indigo-500/40 space-y-2">
+              <div class="flex items-center justify-between font-bold">
+                <span class="text-indigo-300 font-serif-sc">🅰️ ${simRes.directionalResonance.optionA.city} (${simRes.directionalResonance.optionA.direction})</span>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-indigo-900/60 text-indigo-200">
+                  ${simRes.directionalResonance.optionA.score}${isEn ? ' pts' : '分'} · ${simRes.directionalResonance.optionA.resonanceGrade}
+                </span>
+              </div>
+              <div class="text-[11px] text-gray-300">
+                <span class="text-amber-400 font-medium">${isEn ? 'Elemental Frequency: ' : '天干五行气脉：'}</span>
+                <span>${simRes.directionalResonance.optionA.elementHeavenly}</span>
+              </div>
+              <div class="text-[11px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-gray-800/60">
+                ${simRes.directionalResonance.optionA.analysis}
+              </div>
+            </div>
+
+            <!-- Option B Direction -->
+            <div class="p-3.5 rounded-xl bg-black/40 border border-purple-500/40 space-y-2">
+              <div class="flex items-center justify-between font-bold">
+                <span class="text-purple-300 font-serif-sc">🅱️ ${simRes.directionalResonance.optionB.city} (${simRes.directionalResonance.optionB.direction})</span>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-purple-900/60 text-purple-200">
+                  ${simRes.directionalResonance.optionB.score}${isEn ? ' pts' : '分'} · ${simRes.directionalResonance.optionB.resonanceGrade}
+                </span>
+              </div>
+              <div class="text-[11px] text-gray-300">
+                <span class="text-amber-400 font-medium">${isEn ? 'Elemental Frequency: ' : '天干五行气脉：'}</span>
+                <span>${simRes.directionalResonance.optionB.elementHeavenly}</span>
+              </div>
+              <div class="text-[11px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-gray-800/60">
+                ${simRes.directionalResonance.optionB.analysis}
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-black/30 border border-sky-900/40 text-xs text-sky-100 font-serif-sc leading-relaxed">
+            🧭 ${isEn ? simRes.directionalResonance.comparativeVerdictEn : simRes.directionalResonance.comparativeVerdict}
+          </div>
+        </div>
+      ` : ''}
+
+      <!-- Spatial Feng Shui 10 Practical Remedies (空间风水实操调理十策) -->
+      ${simRes.spatialFengShuiRemedies ? `
+        <div class="rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/30 via-slate-900/60 to-teal-950/30 p-5 space-y-4 shadow-2xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🏡</span>
+              <div>
+                <h4 class="text-sm sm:text-base font-bold text-emerald-200 font-serif-sc">
+                  ${isEn ? 'Bespoke Spatial Feng Shui 10 Practical Remedies (Winning Path Deployment)' : '终局胜局 · 专属空间风水实操调理十策 (按图索骥落地执行)'}
+                </h4>
+                <p class="text-[11px] text-gray-400 mt-0.5 font-sans">
+                  ${isEn ? `Target Hub: ${simRes.spatialFengShuiRemedies.targetCity} · Personal Kua: ${simRes.spatialFengShuiRemedies.kuaName} · Prime Yan Nian: ${simRes.spatialFengShuiRemedies.yanNianSector}` : `落地赋能枢纽：${simRes.spatialFengShuiRemedies.targetCity} · 本命元卦：${simRes.spatialFengShuiRemedies.kuaName} · 延年吉位：${simRes.spatialFengShuiRemedies.yanNianSector}`}
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-700/50 text-emerald-300 font-mono">
+                ${simRes.spatialFengShuiRemedies.holisticRatingBadge}
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-900/50 border border-emerald-500/40 text-emerald-200 font-mono">
+                ${isEn ? '10 PRACTICAL REMEDIES' : '风水实操十策'}
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            ${simRes.spatialFengShuiRemedies.remedies.map(rem => `
+              <div class="p-3 rounded-xl bg-black/40 border border-emerald-900/40 hover:border-emerald-500/40 transition space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between border-b border-gray-800/80 pb-1">
+                    <span class="font-bold text-emerald-300 font-serif-sc flex items-center gap-1.5">
+                      <span>${rem.icon}</span>
+                      <span>${isEn ? (rem.titleEn || rem.title) : (rem.titleZh || rem.title)}</span>
+                    </span>
+                    <span class="text-[9.5px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-300 font-mono border border-emerald-500/20">
+                      ${isEn ? (rem.badgeEn || rem.badge) : (rem.badgeZh || rem.badge)}
+                    </span>
+                  </div>
+                  <p class="text-[11px] text-gray-300 leading-relaxed font-sans pt-1">
+                    ${isEn ? (rem.descEn || rem.desc) : (rem.descZh || rem.desc)}
+                  </p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : ''}
     `;
   }
 
@@ -16005,6 +16856,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Global exposure for controllers and testing
+  function jumpToImperialPage(pageId) {
+    if (typeof document === 'undefined') return;
+    const el = document.getElementById(pageId);
+    if (el && typeof el.scrollIntoView === 'function') {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
   if (typeof window !== 'undefined') {
     window.downloadImperialDossierPDF = downloadImperialDossierPDF;
     window.downloadImperialSinglePagePDF = downloadImperialSinglePagePDF;
@@ -16013,6 +16872,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.compileA4PdfFromJpegs = compileA4PdfFromJpegs;
     window.openImperialDossierModal = openImperialDossierModal;
     window.renderImperialDossierPages = renderImperialDossierPages;
+    window.jumpToImperialPage = jumpToImperialPage;
+    window.openSynastryDossierModal = openSynastryDossierModal;
+    window.renderSynastryDossierPages = renderSynastryDossierPages;
+    window.downloadSynastryPDF = downloadSynastryPDF;
   }
 
   function renderImperialDossierPages(arg1, arg2, arg3) {
@@ -16586,7 +17449,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     container.innerHTML = `
       <!-- Page 1: Executive Summary Blueprint -->
-      <div class="imperial-page relative">
+      <div id="imperialPage1" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -16614,6 +17477,40 @@ document.addEventListener('DOMContentLoaded', () => {
             <div><span class="text-gray-500">${isEn ? 'Day Master:' : '日元元神:'}</span> <b class="text-amber-900 ml-0.5">${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`}</b></div>
             <div><span class="text-gray-500">${isEn ? 'Pattern:' : '统帅格局:'}</span> <b class="text-amber-900 ml-0.5 truncate">${domPat}</b></div>
             <div><span class="text-gray-500">${isEn ? 'Key Medicine:' : '相神大药:'}</span> <b class="text-red-900 ml-0.5">${keyMedicineText}</b></div>
+          </div>
+
+          <!-- Clickable Table of Contents (8 Imperial Scrolls Navigation) -->
+          <div class="imperial-toc-nav bg-amber-950/5 border border-amber-900/20 rounded px-2 py-1 text-[9px] font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 mb-0.5 border-b border-amber-900/10 pb-0.5">
+              <span class="flex items-center gap-1"><span>📜</span><span>${isEn ? 'Table of Contents · Eight Imperial Scrolls Navigation' : '天机御览目录 · 钦天八卷全览导航'}</span></span>
+              <span class="text-[8.5px] text-amber-800/70 font-mono">${isEn ? 'CLICK TO NAVIGATE' : '点击直达对应卷宗'}</span>
+            </div>
+            <div class="grid grid-cols-4 gap-1 text-[8.5px] text-center">
+              <a href="#imperialPage1" onclick="jumpToImperialPage('imperialPage1'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P1. Blueprint' : '卷首. 终身统览'}
+              </a>
+              <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P2. Soul Mirror' : '特别. 照命镜像'}
+              </a>
+              <a href="#imperialPage3" onclick="jumpToImperialPage('imperialPage3'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P3. Four Pillars' : '卷一. 四柱立极'}
+              </a>
+              <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P4. Patterns' : '卷二. 格局兵法'}
+              </a>
+              <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P5. Decennial Luck' : '卷三. 岁运推演'}
+              </a>
+              <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P6. Mind & Codex' : '卷四. 心理与冯道'}
+              </a>
+              <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P7. Geo Feng Shui' : '卷五. 地缘风水'}
+              </a>
+              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-0.5 rounded bg-amber-100/70 hover:bg-amber-200 text-amber-950 border border-amber-900/20 cursor-pointer font-medium truncate no-underline">
+                ${isEn ? 'P8. Hexagrams' : '卷六. 六十四卦'}
+              </a>
+            </div>
           </div>
 
           <!-- Module 1: Career Calling -->
@@ -16692,7 +17589,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 2: Special Prologue: Supreme Historical Soul Mirror -->
-      <div class="imperial-page relative">
+      <div id="imperialPage2" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -16862,7 +17759,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 3: Cover & Four Pillars Grand Altar -->
-      <div class="imperial-page relative">
+      <div id="imperialPage3" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -16971,7 +17868,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 4: Volume I - 80/20 Grand Picture Pareto Strategy -->
-      <div class="imperial-page relative">
+      <div id="imperialPage4" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -17043,7 +17940,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 5: Volume III - 4D Kinship Profiles -->
-      <div class="imperial-page relative">
+      <div id="imperialPage5" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -17106,7 +18003,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 6: Volume IV - Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Strategy -->
-      <div class="imperial-page relative">
+      <div id="imperialPage6" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -17258,7 +18155,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 7: Volume V - Decennial Trajectory, 14-Character Energy Synthesis & Residence City Geographic Qi -->
-      <div class="imperial-page relative">
+      <div id="imperialPage7" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -17507,7 +18404,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Page 8: Volume VI - Career & Wealth Trajectory -->
-      <div class="imperial-page relative">
+      <div id="imperialPage8" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -18016,6 +18913,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
   window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;
   window.renderGeomagneticCalibrator = renderGeomagneticCalibrator;
+  window.openSynastryDossierModal = openSynastryDossierModal;
+  window.renderSynastryDossierPages = renderSynastryDossierPages;
+  window.downloadSynastryPDF = downloadSynastryPDF;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';

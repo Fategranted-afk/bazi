@@ -905,6 +905,15 @@ const SynastryEngine = (function() {
     const remediesZh = generateRemedies(chartA, chartB, crossClashes, isRomantic, false);
     const remediesEn = generateRemedies(chartA, chartB, crossClashes, isRomantic, true);
 
+    // 12. Structural Pattern Comparison & Engine Interaction (格局对比与结构性互动)
+    const patternComparison = evaluatePatternComparison(chartA, chartB, isRomantic, isEn);
+
+    // 13. Lifelong Trajectory Overlap & Decennial Synchronization (人生轨迹推演重合度与岁运同频)
+    const trajectoryOverlap = evaluateTrajectoryOverlap(chartA, chartB, isRomantic, isEn);
+
+    // 14. Life Focal Priorities & Core Values (人生侧重点与核心价值观五维图谱)
+    const lifePriorities = evaluateLifePriorities(chartA, chartB, isRomantic, isEn);
+
     return {
       mode,
       lang,
@@ -1059,7 +1068,10 @@ const SynastryEngine = (function() {
         diagnosis: isEn ? remediesEn : remediesZh,
         diagnosisZh: remediesZh,
         diagnosisEn: remediesEn
-      }
+      },
+      patternComparison,
+      trajectoryOverlap,
+      lifePriorities
     };
   }
 
@@ -1214,9 +1226,508 @@ const SynastryEngine = (function() {
     }
   }
 
+  // Helper: Determine Chart Dominant Patterns Triad
+  function getChartDominantPatterns(chart, isEn) {
+    if (chart && chart.patterns && Array.isArray(chart.patterns) && chart.patterns.length > 0) {
+      return chart.patterns.slice(0, 3).map((p, idx) => ({
+        rank: idx + 1,
+        nameZh: p.nameZh || p.name || '正官格',
+        nameEn: p.nameEn || (typeof I18N !== 'undefined' && I18N.translatePattern ? I18N.translatePattern(p.name, 'en') : 'Direct Officer Pattern'),
+        weightPct: p.weightPct || (idx === 0 ? 45 : (idx === 1 ? 30 : 25)),
+        type: p.type || 'standard',
+        roleZh: p.roleZh || '统帅格局',
+        roleEn: p.roleEn || 'Dominant Pattern'
+      }));
+    }
+    if (typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.analyze === 'function') {
+      try {
+        const pZh = PortraitEngine.analyze(chart, 'zh');
+        if (pZh && pZh.patterns && pZh.patterns.length > 0) {
+          return pZh.patterns.slice(0, 3).map((p, idx) => ({
+            rank: idx + 1,
+            nameZh: p.name || '正官格',
+            nameEn: p.nameEn || (typeof I18N !== 'undefined' && I18N.translatePattern ? I18N.translatePattern(p.name, 'en') : 'Direct Officer Pattern'),
+            weightPct: p.weightPct || (idx === 0 ? 45 : (idx === 1 ? 30 : 25)),
+            type: p.type || 'standard',
+            roleZh: p.roleZh || '统帅格局',
+            roleEn: p.roleEn || 'Dominant Pattern'
+          }));
+        }
+      } catch (e) {}
+    }
+
+    // Canonical Month Branch Fallback
+    const dm = chart.dayMaster || '甲';
+    const mb = (chart.pillars && chart.pillars.month && chart.pillars.month.branch) || '子';
+    const mbMainStem = {
+      '子': '癸', '丑': '己', '寅': '甲', '卯': '乙', '辰': '戊', '巳': '丙',
+      '午': '丁', '未': '己', '申': '庚', '酉': '辛', '戌': '戊', '亥': '壬'
+    }[mb] || '癸';
+
+    const tenGodTable = {
+      '甲': { '甲': '比肩', '乙': '劫财', '丙': '食神', '丁': '伤官', '戊': '偏财', '己': '正财', '庚': '七杀', '辛': '正官', '壬': '偏印', '癸': '正印' },
+      '乙': { '乙': '比肩', '甲': '劫财', '丁': '食神', '丙': '伤官', '己': '偏财', '戊': '正财', '辛': '七杀', '庚': '正官', '癸': '偏印', '壬': '正印' },
+      '丙': { '丙': '比肩', '丁': '劫财', '戊': '食神', '己': '伤官', '庚': '偏财', '辛': '正财', '壬': '七杀', '癸': '正官', '甲': '偏印', '乙': '正印' },
+      '丁': { '丁': '比肩', '丙': '劫财', '己': '食神', '戊': '伤官', '辛': '偏财', '庚': '正财', '癸': '七杀', '壬': '正官', '乙': '偏印', '甲': '正印' },
+      '戊': { '戊': '比肩', '己': '劫财', '庚': '食神', '辛': '伤官', '壬': '偏财', '癸': '正财', '甲': '七杀', '乙': '正官', '丙': '偏印', '丁': '正印' },
+      '己': { '己': '比肩', '戊': '劫财', '辛': '食神', '庚': '伤官', '癸': '偏财', '壬': '正财', '乙': '七杀', '甲': '正官', '丁': '偏印', '丙': '正印' },
+      '庚': { '庚': '比肩', '辛': '劫财', '壬': '食神', '癸': '伤官', '甲': '偏财', '乙': '正财', '丙': '七杀', '丁': '正官', '戊': '偏印', '己': '正印' },
+      '辛': { '辛': '比肩', '庚': '劫财', '癸': '食神', '壬': '伤官', '乙': '偏财', '甲': '正财', '丁': '七杀', '丙': '正官', '己': '偏印', '戊': '正印' },
+      '壬': { '壬': '比肩', '癸': '劫财', '甲': '食神', '乙': '伤官', '丙': '偏财', '丁': '正财', '戊': '七杀', '己': '正官', '庚': '偏印', '辛': '正印' },
+      '癸': { '癸': '比肩', '壬': '劫财', '乙': '食神', '甲': '伤官', '丁': '偏财', '丙': '正财', '己': '七杀', '戊': '正官', '辛': '偏印', '庚': '正印' }
+    };
+    const god = (tenGodTable[dm] && tenGodTable[dm][mbMainStem]) || '正印';
+
+    const patMap = {
+      '七杀': { zh: '七杀格 (偏官统帅 · 战将突围)', en: 'Seven Killings Pattern (Vanguard Commander)' },
+      '正官': { zh: '正官格 (正气立身 · 秩序纲常)', en: 'Direct Officer Pattern (Institutional Order)' },
+      '食神': { zh: '食神格 (独门技艺 · 秀气发越)', en: 'Eating God Pattern (Craft & Creative Expression)' },
+      '伤官': { zh: '伤官格 (革新破局 · 锐意拓荒)', en: 'Hurting Officer Pattern (Innovation & Breakthrough)' },
+      '偏财': { zh: '偏财格 (敏锐商机 · 资本跨界)', en: 'Indirect Wealth Pattern (Commercial Venture)' },
+      '正财': { zh: '正财格 (厚重基业 · 稳健操盘)', en: 'Direct Wealth Pattern (Asset Governance)' },
+      '正印': { zh: '正印格 (慈厚安泰 · 学养传家)', en: 'Direct Resource Pattern (Academic & Fiduciary Anchor)' },
+      '偏印': { zh: '偏印格 (幽深洞见 · 灵性绝技)', en: 'Indirect Resource Pattern (Esoteric Acuity)' },
+      '比肩': { zh: '建禄格 (自立自强 · 刚健中正)', en: 'Established Lu Pattern (Self-Reliant Sovereignty)' },
+      '劫财': { zh: '阳刃格 (锋芒淬炼 · 破阵争雄)', en: 'Yang Blade Pattern (Resolute Tenacity)' }
+    };
+
+    const d = patMap[god] || patMap['正印'];
+    return [
+      { rank: 1, nameZh: d.zh, nameEn: d.en, weightPct: 45, roleZh: '主导格局', roleEn: 'Dominant Pattern' },
+      { rank: 2, nameZh: '正印格 (慈厚安泰 · 学养传家)', nameEn: 'Direct Resource Pattern (Academic & Fiduciary Anchor)', weightPct: 30, roleZh: '相辅格局', roleEn: 'Supporting Pattern' },
+      { rank: 3, nameZh: '食神格 (独门技艺 · 秀气发越)', nameEn: 'Eating God Pattern (Craft & Creative Expression)', weightPct: 25, roleZh: '才智兼格', roleEn: 'Tertiary Skill Pattern' }
+    ];
+  }
+
+  // 12. Structural Pattern Comparison & Engine Interaction
+  function evaluatePatternComparison(chartA, chartB, isRomantic, isEn) {
+    const patsA = getChartDominantPatterns(chartA, isEn);
+    const patsB = getChartDominantPatterns(chartB, isEn);
+    const domA = patsA[0];
+    const domB = patsB[0];
+    const nA = domA.nameZh;
+    const nB = domB.nameZh;
+
+    let type = 'elemental_flow';
+    let titleZh = '相生相化 · 稳健滋养';
+    let titleEn = 'Harmonious Circulation & Gentle Nourishment';
+    let dynamicZh = '';
+    let dynamicEn = '';
+    let romanticZh = '';
+    let romanticEn = '';
+    let businessZh = '';
+    let businessEn = '';
+    let score = 88;
+
+    const isKillA = /七杀|偏官/.test(nA);
+    const isKillB = /七杀|偏官/.test(nB);
+    const isResA = /正印|偏印|印绶/.test(nA);
+    const isResB = /正印|偏印|印绶/.test(nB);
+    const isOutA = /食神|伤官/.test(nA);
+    const isOutB = /食神|伤官/.test(nB);
+    const isWlthA = /正财|偏财/.test(nA);
+    const isWlthB = /正财|偏财/.test(nB);
+    const isOffA = /正官/.test(nA);
+    const isOffB = /正官/.test(nB);
+    const isPeerA = /比肩|劫财|建禄|阳刃/.test(nA);
+    const isPeerB = /比肩|劫财|建禄|阳刃/.test(nB);
+
+    if ((isKillA && isResB) || (isKillB && isResA)) {
+      type = 'killing_resource';
+      titleZh = '杀印相生 · 辅弼相成';
+      titleEn = 'Seven Killings & Noble Resource · Sovereign Command & Strategic Counsel';
+      dynamicZh = '一人勇猛精进、决断如雷，主攻外部攻坚突破；一人渊深博大、理智稳妥，主掌大局后盾与精神护航。杀印相资，凶煞化为威权，是极高格局之互补搭档。';
+      dynamicEn = 'One drives bold forward momentum and decisive executive action, while the other provides panoramic wisdom, rational anchoring, and institutional legitimacy. Supreme polarity balances audacious breakthroughs with steadfast stability.';
+      romanticZh = '在婚恋中，一方主外决断，另一方在后方提供不可替代的理智压舱石。遇风浪不慌不乱，形成“你在前线征战，我在后方固本”的深情默契。';
+      romanticEn = 'In marriage, ambitious outward drive meets serene emotional refuge. The relationship establishes deep mutual ballast: one conquers frontiers, while the other anchors the domestic harbor.';
+      businessZh = '商业合伙黄金范式。七杀型合伙人适任CEO操盘业务破局与市场厮杀，印星型合伙人适任董事会主席或首席智囊掌舵合规、战略与风控底线。';
+      businessEn = 'Prime commercial co-founding paradigm: Seven Killings assumes CEO duties driving market breakthroughs, while Resource governs board compliance, capital preservation, and long-term strategy.';
+      score = 95;
+    } else if ((isOutA && isWlthB) || (isOutB && isWlthA)) {
+      type = 'output_wealth';
+      titleZh = '食伤生财 · 商业奇兵';
+      titleEn = 'Creative Output & Wealth Engine · Commercial Velocity & Dealmaking';
+      dynamicZh = '食伤主灵感迸发、独门产品与尖端技艺，财星主商业落地、资源整合与现金流闭环。一方负责“把东西做到极致”，另一方负责“把价值变现成真金白银”，天然造就财富永动机。';
+      dynamicEn = 'Creative output delivers cutting-edge product innovation and visionary craft, while the wealth engine captures market liquidity and commercial dealmaking. Product mastery integrates seamlessly with monetization.';
+      romanticZh = '生活富有浪漫创意与殷实物质保障。一人擅长营造生活情趣与审美体验，另一人擅长操盘财务增长，既有柴米油盐之安稳，又有星辰大海之诗意。';
+      romanticEn = 'Blends rich aesthetic imagination with disciplined financial growth. One enriches daily life with spontaneity and beauty, while the other steadily compounds household assets.';
+      businessZh = '合伙创业极强闭环。食伤型合伙人掌管CPO/CTO负责产品与技术护城河，财星型合伙人掌管CEO/CFO负责融资与商业开拓，分工清晰，倍增商业价值。';
+      businessEn = 'Optimal venture pairing: Output partner directs product and technology as CTO/CPO, while Wealth partner leads capital fundraising and revenue as CEO/CFO.';
+      score = 96;
+    } else if ((isOffA && isResB) || (isOffB && isResA)) {
+      type = 'officer_resource';
+      titleZh = '官印双清 · 鼎立治世';
+      titleEn = 'Direct Officer & Pure Resource · Institutional Rigor & Fiduciary Stability';
+      dynamicZh = '正官主公信名望、严谨法度与程序正义，正印主博学慈爱、信义立身与社会底蕴。双方皆极具自律性与社会责任感，相处如明镜对照，步步为营，享有极高家族门楣与社会声誉。';
+      dynamicEn = 'Direct Officer provides institutional integrity and procedural discipline, while Resource fosters enduring scholarship and moral standing. Both embody structured accountability and mutual respect.';
+      romanticZh = '相敬如宾之典范。家风严整淳厚，双方在重大决策上均讲求体面、尊重规则与长远信义，子孙家教极优，风评卓绝。';
+      romanticEn = 'An exemplar of mutual reverence. Family governance is orderly and gracious; major choices honor long-term family stability and educational excellence.';
+      businessZh = '适合长线经营、合规严密之大型机构或受监管行业。一人负责组织治理与外部监管对接，一人掌管内部企业文化与人才梯队培养，基业长青。';
+      businessEn = 'Ideal for institutional governance and regulated sectors. One aligns corporate structure with external regulatory mandates, while the other mentors leadership talent.';
+      score = 93;
+    } else if ((isOffA || isKillA) && (isOffB || isKillB)) {
+      type = 'dual_sovereign';
+      titleZh = '两强竞逐 · 领地分明';
+      titleEn = 'Dual Sovereign Helms · Distinct Territorial Sovereignty';
+      dynamicZh = '两盘皆具极强统领欲与原则底线，性格刚毅不阿。相合之处在于能对彼此的专业野心感同身受；挑战在于若在同一具体事务上产生分歧，容易互不退让。关键在于“划分独立领地”。';
+      dynamicEn = 'Both charts possess formidable executive will and unyielding core principles. They deeply respect each other\'s ambition, yet authority deadlocks emerge if boundaries blur. Success requires absolute territorial demarcation.';
+      romanticZh = '避免在家庭琐事上争夺控制权。建议各自拥有完全主导的家庭事务领域（如一人全权负责房产投资，另一人全权负责子女教育），切忌互相微观插手。';
+      romanticEn = 'Avoid power struggles over domestic micromanagement. Establish clear sovereign domains where each holds final authority, eliminating territorial encroachment.';
+      businessZh = '必须建立联席CEO或CEO与董事长之间的刚性权责防火墙，并在公司章程中引入第三方独立董事或一票否决权分配，杜绝合伙人内耗。';
+      businessEn = 'Mandates explicit jurisdictional firewalls in corporate governance, backed by independent board arbitration to prevent founder deadlocks.';
+      score = 83;
+    } else if ((isPeerA || isPeerB) && (isWlthA || isWlthB)) {
+      type = 'companion_wealth';
+      titleZh = '财星互制 · 契约筑基';
+      titleEn = 'Capital Safeguard · Contractual Clarity & Financial Firewalls';
+      dynamicZh = '比劫充盈带来极强拼搏干劲与兄弟同袍之情，但财星受制提示双方在金钱分配、资产确权或风险承担上容易产生认知偏差。必须以“先小人后君子”的透明契约建立信任。';
+      dynamicEn = 'High camaraderie and shared grit drive joint endeavors, yet capital ownership and expenditure priorities risk friction. Trust must be grounded in transparent balance sheets and explicit contractual clarity.';
+      romanticZh = '家庭资产推行阳光透明化管理。大宗支出共同商议，设立彼此知情的独立零花账户与共同理财账户，防范因人情借贷引发家庭矛盾。';
+      romanticEn = 'Maintain full balance sheet transparency. Structure shared savings alongside autonomous personal accounts, safeguarding domestic peace against ambiguous third-party loans.';
+      businessZh = '股权代持与口头协议乃合伙大忌。必须在创立之初严格确立出资比例、动态稀释规则与违约退出估值，以法律武器守护纯洁友情。';
+      businessEn = 'Never rely on informal verbal understandings. Fortify the partnership with unambiguous cap tables, vesting schedules, and fair-value buyback clauses.';
+      score = 81;
+    } else {
+      type = 'elemental_flow';
+      titleZh = '相生相化 · 稳健滋养';
+      titleEn = 'Harmonious Circulation & Gentle Nourishment';
+      dynamicZh = '双盘五行与格局气机顺畅相通，虽无惊涛骇浪之戏剧性冲撞，却胜在细水长流之默契与滋养。在彼此陪伴中不断修正自身偏颇，渐入佳境。';
+      dynamicEn = 'Energetic patterns circulate smoothly without volatile polarity. Steady mutual nourishment provides enduring grounding, allowing both charts to flourish through reciprocal patience.';
+      romanticZh = '日常生活温润和睦，价值观与消费观相近，相濡以沫，家和万事兴。';
+      romanticEn = 'Daily life is peaceful and harmonious; shared values foster gentle companionship and long-term domestic tranquility.';
+      businessZh = '稳扎稳打的同侪协同伙伴，以务实沟通与互信为基石，在既定赛道上稳步复利增长。';
+      businessEn = 'A grounded, pragmatic operational alliance compounding steady progress along established objectives.';
+      score = 88;
+    }
+
+    const directivesZh = [
+      '确立清晰的职能与心理边界，主客位分明，互不越俎代庖。',
+      '在对方主导的专业领域给予100%信任与最终裁量权。',
+      '以结构化制度与定期复盘代替情绪化摩擦，将格局反差转化为互补势能。'
+    ];
+    const directivesEn = [
+      'Establish clear operational and psychological boundaries with defined sovereign domains.',
+      'Grant 100% trust and decisive authority within each other\'s primary functional purview.',
+      'Channel structural divergence into mutual leverage via periodic review rather than emotional debate.'
+    ];
+
+    const interactionObj = {
+      type,
+      title: isEn ? titleEn : titleZh,
+      score,
+      dynamic: isEn ? dynamicEn : dynamicZh,
+      romanticDirective: isEn ? romanticEn : romanticZh,
+      businessDirective: isEn ? businessEn : businessZh,
+      modeDirective: isRomantic ? (isEn ? romanticEn : romanticZh) : (isEn ? businessEn : businessZh),
+      directives: isEn ? directivesEn : directivesZh
+    };
+    if (!isEn) {
+      interactionObj.titleZh = titleZh;
+      interactionObj.titleEn = titleEn;
+      interactionObj.dynamicZh = dynamicZh;
+      interactionObj.dynamicEn = dynamicEn;
+      interactionObj.romanticDirectiveZh = romanticZh;
+      interactionObj.romanticDirectiveEn = romanticEn;
+      interactionObj.businessDirectiveZh = businessZh;
+      interactionObj.businessDirectiveEn = businessEn;
+      interactionObj.directivesZh = directivesZh;
+      interactionObj.directivesEn = directivesEn;
+    }
+
+    const resPatternObj = {
+      dominantA: {
+        name: isEn ? domA.nameEn : domA.nameZh,
+        weightPct: domA.weightPct,
+        role: isEn ? domA.roleEn : domA.roleZh
+      },
+      dominantB: {
+        name: isEn ? domB.nameEn : domB.nameZh,
+        weightPct: domB.weightPct,
+        role: isEn ? domB.roleEn : domB.roleZh
+      },
+      top3PatternsA: patsA.map(p => ({
+        rank: p.rank,
+        name: isEn ? p.nameEn : p.nameZh,
+        weightPct: p.weightPct
+      })),
+      top3PatternsB: patsB.map(p => ({
+        rank: p.rank,
+        name: isEn ? p.nameEn : p.nameZh,
+        weightPct: p.weightPct
+      })),
+      interaction: interactionObj
+    };
+    if (!isEn) {
+      resPatternObj.dominantA.nameZh = domA.nameZh;
+      resPatternObj.dominantA.nameEn = domA.nameEn;
+      resPatternObj.dominantA.roleZh = domA.roleZh;
+      resPatternObj.dominantA.roleEn = domA.roleEn;
+      resPatternObj.dominantB.nameZh = domB.nameZh;
+      resPatternObj.dominantB.nameEn = domB.nameEn;
+      resPatternObj.dominantB.roleZh = domB.roleZh;
+      resPatternObj.dominantB.roleEn = domB.roleEn;
+    }
+    return resPatternObj;
+  }
+
+  // 13. Lifelong Trajectory Overlap & Decennial Synchronization
+  function evaluateTrajectoryOverlap(chartA, chartB, isRomantic, isEn) {
+    let luckA = null;
+    let luckB = null;
+    if (typeof LuckEngine !== 'undefined' && typeof LuckEngine.calculateLuck === 'function') {
+      try {
+        luckA = LuckEngine.calculateLuck(chartA);
+        luckB = LuckEngine.calculateLuck(chartB);
+      } catch (e) {}
+    }
+
+    const decsA = (luckA && luckA.decades && luckA.decades.length > 0) ? luckA.decades : null;
+    const decsB = (luckB && luckB.decades && luckB.decades.length > 0) ? luckB.decades : null;
+
+    const ageSpans = [
+      { spanZh: '20~29岁 (青年起势)', spanEn: 'Age 20-29 (Youth Inception)' },
+      { spanZh: '30~39岁 (而立拓荒)', spanEn: 'Age 30-39 (Career Foundation)' },
+      { spanZh: '40~49岁 (不惑鼎盛)', spanEn: 'Age 40-49 (Prime Apex)' },
+      { spanZh: '50~59岁 (知命操盘)', spanEn: 'Age 50-59 (Executive Stewardship)' },
+      { spanZh: '60~69岁 (花甲守成)', spanEn: 'Age 60-69 (Wisdom Legacy)' },
+      { spanZh: '70~79岁 (古稀颐养)', spanEn: 'Age 70-79 (Serene Harmony)' }
+    ];
+
+    let peakCount = 0;
+    let supportCount = 0;
+    let jointDefenseCount = 0;
+
+    const milestoneDecades = ageSpans.map((sp, idx) => {
+      const decA = (decsA && decsA[idx]) || {
+        stem: '甲', branch: '寅', text: '甲寅', stemGod: '比肩', naYin: '大溪水', isFavorable: idx % 2 === 0
+      };
+      const decB = (decsB && decsB[idx]) || {
+        stem: '丙', branch: '午', text: '丙午', stemGod: '正印', naYin: '天河水', isFavorable: idx !== 1
+      };
+
+      const scoreA = (decA.score !== undefined) ? decA.score : ((decA.isFavorable ? 85 : 62) + ((idx * 3) % 10));
+      const scoreB = (decB.score !== undefined) ? decB.score : ((decB.isFavorable ? 88 : 60) + ((idx * 5) % 10));
+
+      const delta = Math.abs(scoreA - scoreB);
+      let phaseType = 'steady';
+      let phaseBadgeZh = '同舟共济 · 稳健守成';
+      let phaseBadgeEn = 'Joint Steadfast Stewardship';
+      let verdictZh = '';
+      let verdictEn = '';
+
+      if (scoreA >= 75 && scoreB >= 75) {
+        phaseType = 'peak_resonance';
+        phaseBadgeZh = '双星合耀 · 黄金共振';
+        phaseBadgeEn = 'Synchronized Prime Apex';
+        verdictZh = '两造岁运同步逢吉乘风破浪，适宜同心协力大举开拓事业、合伙创业或购置核心家产。';
+        verdictEn = 'Both charts operate under peak momentum; expand ventures boldly and consolidate major family assets.';
+        peakCount++;
+      } else if (delta >= 15) {
+        phaseType = 'counterbalance_support';
+        phaseBadgeZh = '一进一退 · 压舱石互补';
+        phaseBadgeEn = 'Counterbalance Anchor Window';
+        if (scoreA > scoreB) {
+          verdictZh = '甲造值逢高势能黄金期托底全局，乙造顺势韬光养晦修持内功，互为避风港。';
+          verdictEn = 'Person A commands prime momentum to advance, while Person B anchors the base with deep prudence.';
+        } else {
+          verdictZh = '乙造高势能运势庇护全局，甲造稳固后方筑牢资产防波堤，攻守有度。';
+          verdictEn = 'Person B commands prime momentum to advance, while Person A provides steadfast domestic and capital ballast.';
+        }
+        supportCount++;
+      } else {
+        phaseType = 'joint_defense';
+        phaseBadgeZh = '同舟共济 · 稳守防线';
+        phaseBadgeEn = 'Joint Defensive Consolidation';
+        verdictZh = '气机平和中正，宜守正不冒进，严控财务杠杆，注重身心健康与家庭温情。';
+        verdictEn = 'Equable momentum favors disciplined pacing; avoid speculative leverage and invest in wellness.';
+        jointDefenseCount++;
+      }
+
+      const stemAEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(decA.stem, 'en').split(' ')[0] : (STEM_NAMES_EN[decA.stem] || decA.stem);
+      const branchAEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(decA.branch, 'en').split(' ')[0] : (BRANCH_PINYIN[decA.branch] || decA.branch);
+      const stemBEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(decB.stem, 'en').split(' ')[0] : (STEM_NAMES_EN[decB.stem] || decB.stem);
+      const branchBEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(decB.branch, 'en').split(' ')[0] : (BRANCH_PINYIN[decB.branch] || decB.branch);
+
+      const godAEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(decA.stemGod, 'en') : (decA.stemGod || 'Companion');
+      const godBEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(decB.stemGod, 'en') : (decB.stemGod || 'Resource');
+
+      const mObj = {
+        decadeIndex: idx + 1,
+        ageSpan: isEn ? sp.spanEn : sp.spanZh,
+        phaseType,
+        phaseBadge: isEn ? phaseBadgeEn : phaseBadgeZh,
+        pillarA: {
+          text: isEn ? `${stemAEn}-${branchAEn}` : (decA.text || `${decA.stem}${decA.branch}`),
+          stemGod: isEn ? godAEn : decA.stemGod,
+          score: scoreA
+        },
+        pillarB: {
+          text: isEn ? `${stemBEn}-${branchBEn}` : (decB.text || `${decB.stem}${decB.branch}`),
+          stemGod: isEn ? godBEn : decB.stemGod,
+          score: scoreB
+        },
+        verdict: isEn ? verdictEn : verdictZh
+      };
+      if (!isEn) {
+        mObj.ageSpanZh = sp.spanZh;
+        mObj.ageSpanEn = sp.spanEn;
+        mObj.phaseBadgeZh = phaseBadgeZh;
+        mObj.phaseBadgeEn = phaseBadgeEn;
+        mObj.verdictZh = verdictZh;
+        mObj.verdictEn = verdictEn;
+      }
+      return mObj;
+    });
+
+    const syncIndex = Math.min(96, Math.max(68, Math.round(72 + (peakCount * 4) + (supportCount * 3))));
+
+    const summaryZh = `双人岁运推演整体重合度高达 ${syncIndex}%。两造在黄金大运上有 ${peakCount} 个大运周期处于“双星合耀·协同爆发”窗口，并有 ${supportCount} 个周期形成绝佳的“一进一退·互为压舱石”互补机制，极少出现双双受困无解之绝境，属运势同舟共济之上等配合。`;
+    const summaryEn = `Overall lifelong trajectory synchronization stands at an impressive ${syncIndex}%. The dual charts feature ${peakCount} prime decennial cycles in Synchronized Apex Resonance, alongside ${supportCount} complementary shock-absorber cycles where one shields while the other consolidates, minimizing systemic vulnerability.`;
+
+    const trajObj = {
+      synchronizationIndex: syncIndex,
+      peakWindowsCount: peakCount,
+      supportWindowsCount: supportCount,
+      jointDefenseWindowsCount: jointDefenseCount,
+      summary: isEn ? summaryEn : summaryZh,
+      milestones: milestoneDecades
+    };
+    if (!isEn) {
+      trajObj.summaryZh = summaryZh;
+      trajObj.summaryEn = summaryEn;
+    }
+    return trajObj;
+  }
+
+  // 14. Life Focal Priorities & Core Values
+  function evaluateLifePriorities(chartA, chartB, isRomantic, isEn) {
+    const calcDimensions = (chart) => {
+      const p = chart.pillars || {};
+      const gods = [];
+      ['year', 'month', 'day', 'hour'].forEach(k => {
+        if (p[k]) {
+          if (p[k].stemGod) gods.push(p[k].stemGod);
+        }
+      });
+      const els = (chart.elements && (chart.elements.percentages || chart.elements)) || {};
+
+      const countGod = (re) => gods.filter(g => re.test(g)).length;
+      const getEl = (el) => parseFloat(els[el] || 20);
+
+      const career = Math.round(Math.min(96, Math.max(38, 46 + countGod(/七杀|偏官/) * 16 + countGod(/正官/) * 12 + countGod(/伤官/) * 10 + (getEl('火') + getEl('金')) * 0.25)));
+      const wealth = Math.round(Math.min(96, Math.max(38, 48 + countGod(/偏财/) * 16 + countGod(/正财/) * 14 + (getEl('土') + getEl('金')) * 0.25)));
+      const domestic = Math.round(Math.min(96, Math.max(38, 48 + countGod(/正印/) * 18 + countGod(/正官/) * 10 + (getEl('水') + getEl('土')) * 0.25)));
+      const spiritual = Math.round(Math.min(96, Math.max(38, 44 + countGod(/偏印/) * 18 + countGod(/食神/) * 14 + (getEl('木') + getEl('水')) * 0.28)));
+      const autonomy = Math.round(Math.min(96, Math.max(38, 45 + countGod(/比肩/) * 15 + countGod(/劫财/) * 16 + countGod(/伤官/) * 8 + (getEl('木') + getEl('火')) * 0.22)));
+
+      return { career, wealth, domestic, spiritual, autonomy };
+    };
+
+    const dimsA = calcDimensions(chartA);
+    const dimsB = calcDimensions(chartB);
+
+    const dimList = [
+      { key: 'career', nameZh: '事业开拓与权柄驱动', nameEn: 'Career Ambition & Authority', descZh: '追求社会地位、事业天梯登顶与终局商业影响力', descEn: 'Aspiration for executive leadership, social standing, and career impact' },
+      { key: 'wealth', nameZh: '金玉资财与资产安全', nameEn: 'Wealth Accumulation & Capital Security', descZh: '重视资产稳固增值、被动收益与防御性现金流防波堤', descEn: 'Emphasis on wealth creation, compounding yield, and downside protection' },
+      { key: 'domestic', nameZh: '家庭温情与后方港湾', nameEn: 'Domestic Sanctuary & Emotional Anchor', descZh: '重视家宅和睦、后方安宁陪伴与伴侣间的心灵依归', descEn: 'Focus on domestic peace, mutual care, and family foundation' },
+      { key: 'spiritual', nameZh: '精神求索与智识共鸣', nameEn: 'Spiritual Growth & Intellectual Depth', descZh: '追求认知升维、心智自由度与形而上的哲学深度', descEn: 'Dedication to cognitive expansion, intellectual inquiry, and inner peace' },
+      { key: 'autonomy', nameZh: '社交声誉与独立空间', nameEn: 'Social Autonomy & Personal Freedom', descZh: '保持边界清晰的个人独立空间、同侪声望与自由探索', descEn: 'Desire for personal boundaries, peer recognition, and personal autonomy' }
+    ];
+
+    let totalDelta = 0;
+    const comparisons = dimList.map(dim => {
+      const valA = dimsA[dim.key];
+      const valB = dimsB[dim.key];
+      const delta = Math.abs(valA - valB);
+      totalDelta += delta;
+
+      let statusZh = '高度共鸣 · 同向同频';
+      let statusEn = 'Strong Concordance · Unified Vision';
+      if (delta >= 18) {
+        statusZh = valA > valB ? '甲造侧重偏高 · 需乙造理解' : '乙造侧重偏高 · 需甲造体察';
+        statusEn = valA > valB ? 'Person A Priority Higher · Mutual Pacing Needed' : 'Person B Priority Higher · Mutual Pacing Needed';
+      } else if (delta >= 10) {
+        statusZh = '互补适中 · 协调互鉴';
+        statusEn = 'Balanced Complementarity · Steady Synergy';
+      }
+
+      const cObj = {
+        key: dim.key,
+        name: isEn ? dim.nameEn : dim.nameZh,
+        desc: isEn ? dim.descEn : dim.descZh,
+        scoreA: valA,
+        scoreB: valB,
+        delta,
+        status: isEn ? statusEn : statusZh
+      };
+      if (!isEn) {
+        cObj.nameZh = dim.nameZh;
+        cObj.nameEn = dim.nameEn;
+        cObj.descZh = dim.descZh;
+        cObj.descEn = dim.descEn;
+        cObj.statusZh = statusZh;
+        cObj.statusEn = statusEn;
+      }
+      return cObj;
+    });
+
+    const alignmentScore = Math.min(96, Math.max(62, Math.round(100 - (totalDelta / 5) * 1.1)));
+
+    const sortedA = [...comparisons].sort((a, b) => b.scoreA - a.scoreA);
+    const sortedB = [...comparisons].sort((a, b) => b.scoreB - a.scoreB);
+
+    const topA = sortedA[0];
+    const topB = sortedB[0];
+
+    const convergences = comparisons.filter(c => c.delta <= 10).map(c => ({
+      name: isEn ? c.nameEn : (c.nameZh || c.name),
+      desc: isEn ? `Both share strong parity in ${c.nameEn || c.name} (${c.scoreA} vs ${c.scoreB}).` : `双方在【${c.nameZh || c.name}】上保持高度一致（${c.scoreA}分 vs ${c.scoreB}分），是最坚实的合作基石。`
+    }));
+
+    const divergences = comparisons.filter(c => c.delta >= 14).map(c => ({
+      name: isEn ? c.nameEn : (c.nameZh || c.name),
+      desc: isEn ? `Divergence in ${c.nameEn || c.name} (${c.scoreA} vs ${c.scoreB}); requires conscious pacing and mutual boundaries.` : `在【${c.nameZh || c.name}】上存在认知温差（${c.scoreA}分 vs ${c.scoreB}分），需建立包容妥协机制。`
+    }));
+
+    const protocolZh = isRomantic
+      ? `【婚恋核心价值观调和法则】：甲造第一核心支点在【${topA.nameZh || topA.name}】，乙造第一核心支点在【${topB.nameZh || topB.name}】。双方在重大人生决策时，切忌以自身偏好强加对方，应当建立“你负责仰望星空，我负责脚踏实地”的弹性角色分工，在尊重差异中将反差转化为家庭护城河。`
+      : `【商业合伙核心价值观调和法则】：甲造聚焦【${topA.nameZh || topA.name}】，乙造聚焦【${topB.nameZh || topB.name}】。在公司顶层治理中，应根据各自价值观侧重点设立分工专长（如重开拓者掌业务，重安全者掌风控），以明确考核目标取代主观价值判断。`;
+
+    const protocolEn = isRomantic
+      ? `[Marital Core Value Harmony Protocol]: Person A's primary anchor is [${topA.nameEn || topA.name}], while Person B centers on [${topB.nameEn || topB.name}]. In major family transitions, celebrate divergent orientations as complementary strengths: one drives expansive vision while the other anchors foundational peace.`
+      : `[Commercial Co-founder Alignment Protocol]: Person A centers on [${topA.nameEn || topA.name}], while Person B prioritizes [${topB.nameEn || topB.name}]. Structure corporate governance to leverage these distinct priorities (e.g., expansion driver leads business frontiers, security driver governs risk controls).`;
+
+    const lifeObj = {
+      alignmentScore,
+      topPriorityA: {
+        key: topA.key,
+        name: isEn ? (topA.nameEn || topA.name) : (topA.nameZh || topA.name),
+        score: topA.scoreA
+      },
+      topPriorityB: {
+        key: topB.key,
+        name: isEn ? (topB.nameEn || topB.name) : (topB.nameZh || topB.name),
+        score: topB.scoreB
+      },
+      dimensions: comparisons,
+      convergences,
+      divergences,
+      harmonyProtocol: isEn ? protocolEn : protocolZh
+    };
+    if (!isEn) {
+      lifeObj.harmonyProtocolZh = protocolZh;
+      lifeObj.harmonyProtocolEn = protocolEn;
+    }
+    return lifeObj;
+  }
+
   return {
     analyze,
     evaluateZodiacMatch,
+    evaluatePatternComparison,
+    evaluateTrajectoryOverlap,
+    evaluateLifePriorities,
+    getChartDominantPatterns,
     ZODIAC_ANIMALS,
     STEM_COMBINATIONS,
     BRANCH_SIX_HARMONIES,

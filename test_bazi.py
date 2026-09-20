@@ -15797,7 +15797,261 @@ run_check126 = subprocess.run(jsc_check126_cmd, capture_output=True, text=True)
 assert run_check126.returncode == 0, f"Check 126 JSC test failed: stdout={run_check126.stdout} stderr={run_check126.stderr}"
 print("✓ 126. 交互军师高阶格局辨析与卯戌合火暗财妻星辩证（伤官吐秀vs驾杀/水旺戌土无金/卯戌合化火/杀刃带伤/暗财妻星/双语零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 126 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# Check 127: Synastry Depth & Independent PDF Export (双人合盘深度与独立PDF战报)
+# ==============================================================================
+print("\n=== 127. Validating Synastry Depth (Patterns, Trajectory Overlap, 5D Priorities) & Independent PDF Export ===")
+
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_content = f.read()
+
+assert 'id="btnSynastryDownloadPDF"' in idx_content, "Missing #btnSynastryDownloadPDF in index.html"
+assert 'id="synastryDossierModal"' in idx_content, "Missing #synastryDossierModal in index.html"
+assert 'id="synastryDossierContainer"' in idx_content, "Missing #synastryDossierContainer in index.html"
+assert 'id="synastryDossierLangZh"' in idx_content, "Missing #synastryDossierLangZh in index.html"
+assert 'id="synastryDossierLangEn"' in idx_content, "Missing #synastryDossierLangEn in index.html"
+assert 'id="synastryDossierDownloadPdfBtn"' in idx_content, "Missing #synastryDossierDownloadPdfBtn in index.html"
+assert 'id="synastryDossierPrintBtn"' in idx_content, "Missing #synastryDossierPrintBtn in index.html"
+assert 'id="synastryDossierCloseBtn"' in idx_content, "Missing #synastryDossierCloseBtn in index.html"
+
+with open("css/style.css", "r", encoding="utf-8") as f:
+    css_content = f.read()
+
+assert '.synastry-page' in css_content, "Missing .synastry-page in css/style.css"
+assert '#synastryDossierContainer.exporting-pdf' in css_content, "Missing #synastryDossierContainer.exporting-pdf in css/style.css"
+assert '.imperial-toc-nav' in css_content, "Missing .imperial-toc-nav in css/style.css"
+
+with open("js/app.js", "r", encoding="utf-8") as f:
+    app_content = f.read()
+
+assert 'window.openSynastryDossierModal = openSynastryDossierModal' in app_content, "Missing window.openSynastryDossierModal in app.js"
+assert 'window.renderSynastryDossierPages = renderSynastryDossierPages' in app_content, "Missing window.renderSynastryDossierPages in app.js"
+assert 'window.downloadSynastryPDF = downloadSynastryPDF' in app_content, "Missing window.downloadSynastryPDF in app.js"
+assert 'window.jumpToImperialPage = jumpToImperialPage' in app_content, "Missing window.jumpToImperialPage in app.js"
+for p_idx in range(1, 9):
+    assert f'id="imperialPage{p_idx}"' in app_content, f"Missing #imperialPage{p_idx} in app.js"
+assert 'id="synastryPage1"' in app_content, "Missing #synastryPage1 in app.js"
+assert 'id="synastryPage2"' in app_content, "Missing #synastryPage2 in app.js"
+
+jsc_check127_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+
+    var chartA = BaZiEngine.calculate({ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+    var chartB = BaZiEngine.calculate({ year: 1990, month: 5, day: 15, hour: 10, minute: 0, gender: "坤造", useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+
+    // 1. Validate SynastryEngine.evaluatePatternComparison
+    var pCompZh = SynastryEngine.evaluatePatternComparison(chartA, chartB, true, false);
+    if (!pCompZh.dominantA || !pCompZh.dominantB || !pCompZh.interaction) {
+      throw new Error("evaluatePatternComparison ZH missing core fields");
+    }
+    if (!pCompZh.interaction.romanticDirective || !pCompZh.interaction.businessDirective) {
+      throw new Error("evaluatePatternComparison ZH missing romantic/business directives");
+    }
+
+    var pCompEn = SynastryEngine.evaluatePatternComparison(chartA, chartB, true, true);
+    var pCompEnLeaks = JSON.stringify(pCompEn).match(/[\\u4e00-\\u9fa5]/g);
+    if (pCompEnLeaks && pCompEnLeaks.length > 0) {
+      throw new Error("evaluatePatternComparison EN has residual Chinese: " + pCompEnLeaks.join(""));
+    }
+
+    // 2. Validate SynastryEngine.evaluateTrajectoryOverlap
+    var tOverZh = SynastryEngine.evaluateTrajectoryOverlap(chartA, chartB, true, false);
+    if (!tOverZh.milestones || tOverZh.milestones.length !== 6) {
+      throw new Error("evaluateTrajectoryOverlap ZH missing 6 milestone decades, got: " + (tOverZh.milestones ? tOverZh.milestones.length : 0));
+    }
+    if (typeof tOverZh.synchronizationIndex !== 'number') {
+      throw new Error("evaluateTrajectoryOverlap ZH missing synchronizationIndex");
+    }
+
+    var tOverEn = SynastryEngine.evaluateTrajectoryOverlap(chartA, chartB, true, true);
+    var tOverEnLeaks = JSON.stringify(tOverEn).match(/[\\u4e00-\\u9fa5]/g);
+    if (tOverEnLeaks && tOverEnLeaks.length > 0) {
+      throw new Error("evaluateTrajectoryOverlap EN has residual Chinese: " + tOverEnLeaks.join(""));
+    }
+
+    // 3. Validate SynastryEngine.evaluateLifePriorities
+    var lPrioZh = SynastryEngine.evaluateLifePriorities(chartA, chartB, true, false);
+    if (!lPrioZh.dimensions || lPrioZh.dimensions.length !== 5) {
+      throw new Error("evaluateLifePriorities ZH missing 5 dimensions");
+    }
+    if (!lPrioZh.harmonyProtocol) {
+      throw new Error("evaluateLifePriorities ZH missing harmonyProtocol");
+    }
+
+    var lPrioEn = SynastryEngine.evaluateLifePriorities(chartA, chartB, true, true);
+    var lPrioEnLeaks = JSON.stringify(lPrioEn).match(/[\\u4e00-\\u9fa5]/g);
+    if (lPrioEnLeaks && lPrioEnLeaks.length > 0) {
+      throw new Error("evaluateLifePriorities EN has residual Chinese: " + lPrioEnLeaks.join(""));
+    }
+
+    // 4. Validate DOM Simulation & 2-Page Synastry Dossier Generation
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      var classes = [];
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "",
+        checked: false,
+        options: [{ text: "男", value: "乾造" }, { text: "女", value: "坤造" }],
+        selectedIndex: 0,
+        classList: {
+          add: function(cls) { if (classes.indexOf(cls) === -1) classes.push(cls); },
+          remove: function(cls) { var idx = classes.indexOf(cls); if (idx !== -1) classes.splice(idx, 1); },
+          contains: function(cls) { return classes.indexOf(cls) !== -1; }
+        },
+        className: "",
+        style: {},
+        _children: [],
+        _listeners: {},
+        addEventListener: function(evt, h) { (this._listeners[evt] = this._listeners[evt] || []).push(h); },
+        appendChild: function(c) { this._children.push(c); if (c && c.innerHTML) this.innerHTML += c.innerHTML; },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        scrollIntoView: function() { this._scrolled = true; }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "btnExportDossier", "btnQuickExportSinglePdf", "btnToggleFlux", "btnInstallPwa",
+      "imperialDossierModal", "imperialDossierContainer", "calcBtn",
+      "birthDate", "birthTime", "gender", "useSolarTime", "lateRatAsNextDay",
+      "customLongitude", "timezoneSelect", "citySelect", "fsec-canons", "view-friction",
+      "frictionContentContainer", "careerContentContainer", "careerTargetYear",
+      "careerQuickBadgesDashboard", "currentCountrySelect", "currentCitySelect",
+      "synastryLabelA", "synastryLabelB", "btnSynastryDownloadPDF",
+      "synastryDossierModal", "synastryDossierContainer",
+      "synastryDossierLangZh", "synastryDossierLangEn",
+      "synastryDossierDownloadPdfBtn", "synastryDossierPrintBtn",
+      "synastryDossierCloseBtn", "synastryDossierExportStatus",
+      "synastryDossierExportStatusMsg", "synastryDossierExportStatusDismiss"
+    ];
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+    elementStore["birthDate"].value = "1990-06-20";
+    elementStore["birthTime"].value = "14:30";
+    elementStore["gender"].value = "乾造";
+
+    var document = {
+      documentElement: { lang: "en", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") handler();
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      SynastryEngine: SynastryEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine
+    };
+
+    load("js/app.js");
+
+    // 5. Test window exports
+    if (typeof window.openSynastryDossierModal !== 'function') throw new Error("window.openSynastryDossierModal not exported");
+    if (typeof window.renderSynastryDossierPages !== 'function') throw new Error("window.renderSynastryDossierPages not exported");
+    if (typeof window.downloadSynastryPDF !== 'function') throw new Error("window.downloadSynastryPDF not exported");
+    if (typeof window.jumpToImperialPage !== 'function') throw new Error("window.jumpToImperialPage not exported");
+
+    // 6. Test Synastry Dossier ZH Rendering
+    window.renderSynastryDossierPages("zh", chartA, chartB, "romantic");
+    var htmlZh = elementStore["synastryDossierContainer"].innerHTML;
+    if (htmlZh.indexOf('id="synastryPage1"') === -1) throw new Error("Missing #synastryPage1 in ZH render");
+    if (htmlZh.indexOf('id="synastryPage2"') === -1) throw new Error("Missing #synastryPage2 in ZH render");
+    if (htmlZh.indexOf("五维图谱") === -1) throw new Error("Missing 5D life priorities section in ZH render");
+    if (htmlZh.indexOf("岁运同频表") === -1) throw new Error("Missing trajectory overlap section in ZH render");
+    if (htmlZh.indexOf("格局对比") === -1 && htmlZh.indexOf("主导格局") === -1) throw new Error("Missing pattern comparison section in ZH render");
+
+    // 7. Test Synastry Dossier EN Rendering (Zero Chinese leak)
+    window.renderSynastryDossierPages("en", chartA, chartB, "romantic");
+    var htmlEn = elementStore["synastryDossierContainer"].innerHTML;
+    if (htmlEn.indexOf('id="synastryPage1"') === -1) throw new Error("Missing #synastryPage1 in EN render");
+    if (htmlEn.indexOf('id="synastryPage2"') === -1) throw new Error("Missing #synastryPage2 in EN render");
+    var enHtmlLeaks = htmlEn.match(/[\\u4e00-\\u9fa5]/g);
+    if (enHtmlLeaks && enHtmlLeaks.length > 0) {
+      throw new Error("Residual Chinese in EN Synastry Dossier HTML: " + enHtmlLeaks.slice(0, 30).join(""));
+    }
+
+    // 8. Test Synastry Dossier Business Mode EN Rendering
+    window.renderSynastryDossierPages("en", chartA, chartB, "business");
+    var htmlEnBiz = elementStore["synastryDossierContainer"].innerHTML;
+    var enBizLeaks = htmlEnBiz.match(/[\\u4e00-\\u9fa5]/g);
+    if (enBizLeaks && enBizLeaks.length > 0) {
+      throw new Error("Residual Chinese in Business EN Synastry Dossier HTML: " + enBizLeaks.slice(0, 30).join(""));
+    }
+
+    // 9. Test Imperial Dossier 8-page ID anchors and Table of Contents jump
+    var luck = LuckEngine.calculateLuck(chartA, 2026);
+    window.renderImperialDossierPages(chartA, luck, "zh");
+    var htmlImperial = elementStore["imperialDossierContainer"].innerHTML;
+    for (var k = 1; k <= 8; k++) {
+      if (htmlImperial.indexOf('id="imperialPage' + k + '"') === -1) {
+        throw new Error("Missing #imperialPage" + k + " in imperial dossier render");
+      }
+    }
+    if (htmlImperial.indexOf("imperial-toc-nav") === -1) {
+      throw new Error("Missing .imperial-toc-nav in imperial dossier page 1");
+    }
+    window.jumpToImperialPage("imperialPage3");
+    if (!elementStore["imperialPage3"]._scrolled) {
+      throw new Error("jumpToImperialPage did not trigger scrollIntoView on target page element");
+    }
+    """
+]
+run_check127 = subprocess.run(jsc_check127_cmd, capture_output=True, text=True)
+assert run_check127.returncode == 0, f"Check 127 JSC test failed: stdout={run_check127.stdout} stderr={run_check127.stderr}"
+print("✓ 127. 双人合盘深度升级（格局对比/终身轨迹推演重合度/价值观五维图谱）、独立PDF战报模态导出及钦天八卷目录锚点导航（双语100%零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 127 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
