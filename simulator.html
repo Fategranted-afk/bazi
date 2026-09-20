@@ -97,8 +97,35 @@
       </div>
     </div>
 
-    <!-- Quick Preset Crossroads Bar -->
-    <section class="space-y-3">
+    <!-- Standalone Subpages Navigation Toolbar (对标12大典专属副页面架构) -->
+    <div class="px-5 py-3 border border-indigo-900/60 bg-[#121422] rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xl">
+      <div class="flex items-center space-x-2">
+        <span class="text-xs font-bold text-indigo-400 font-serif-sc" id="lblSimStandaloneSubNav">⚖️ 胜负沙盘专属副页面：</span>
+        <div id="simStandaloneSubTabsContainer" class="flex flex-wrap gap-2 text-xs">
+          <button type="button" class="sim-standalone-sub-tab-btn active px-3.5 py-1.5 rounded-xl border border-indigo-500/60 bg-indigo-950/70 text-indigo-200 font-medium transition cursor-pointer flex items-center gap-1.5 shadow-sm" data-sim-tab="sim-standalone-tab-sandbox">
+            <span>⚔️</span>
+            <span id="simStandaloneTabTitleSandbox">双轨全息推演沙盘</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono" id="simStandaloneTabBadgeSandbox">胜负对决</span>
+          </button>
+          <button type="button" class="sim-standalone-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-sim-tab="sim-standalone-tab-georesonance">
+            <span>🗺️</span>
+            <span id="simStandaloneTabTitleGeoresonance">地理方位与组织生态匹配仪</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono" id="simStandaloneTabBadgeGeoresonance">生态定位</span>
+          </button>
+          <button type="button" class="sim-standalone-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-sim-tab="sim-standalone-tab-fengshui">
+            <span>🏡</span>
+            <span id="simStandaloneTabTitleFengshui">空间风水指南 · 实操调理十策</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono" id="simStandaloneTabBadgeFengshui">空间开运</span>
+          </button>
+        </div>
+      </div>
+      <div class="text-[11px] text-gray-400 font-mono" id="lblSimStandaloneSubNavNote">对标十二大典独立副页面架构 · 三大高维决策中枢</div>
+    </div>
+
+    <!-- Subpage Pane 1: 双轨全息推演沙盘 -->
+    <div id="sim-standalone-tab-sandbox" class="sim-standalone-subpage-pane space-y-6">
+      <!-- Quick Preset Crossroads Bar -->
+      <section class="space-y-3">
       <div class="flex items-center justify-between">
         <h3 class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-2">
           <span>⚡</span>
@@ -348,8 +375,48 @@
     <div id="simStandaloneResultsContainer" class="space-y-6">
       <!-- Dynamically injected via ScenarioSimulatorEngine -->
     </div>
+  </div>
+  <!-- End of sim-standalone-tab-sandbox -->
+
+  <!-- Subpage Pane 2: 地理方位与组织生态匹配仪 (专属副页面) -->
+  <div id="sim-standalone-tab-georesonance" class="sim-standalone-subpage-pane space-y-6 hidden">
+    <div id="simStandaloneEcologicalResonanceSection" class="space-y-6">
+      <!-- Top Breadcrumb & Banner -->
+      <div class="bg-card p-4 rounded-2xl border border-gray-800 shadow-xl flex flex-wrap items-center justify-between gap-3 bg-gradient-to-r from-blue-950/40 via-black/60 to-indigo-950/40">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🗺️</span>
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-blue-300 font-serif-sc flex items-center gap-2">
+              <span id="simStandaloneEcoTitle">地理方位与组织生态匹配仪 · 专属研解专页</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-600/40 font-mono" id="simStandaloneEcoSeal">生态定位</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" id="simStandaloneEcoDesc">
+              融合五行地气方位场能共振、全球代表都市群战略契合度评估，以及体制内/创业/合伙/独立四大组织生态位诊断与反内耗归因。
+            </p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="simStandaloneBtnJumpToFengShui" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+            <span>🏡</span>
+            <span id="simStandaloneBtnJumpToFengShuiText">空间风水指南</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Container -->
+      <section class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-4 bg-gradient-to-br from-[#12151d] via-[#0f1118] to-black">
+        <div id="simStandaloneEcologicalResonanceContainer" class="space-y-4">
+          <!-- Injected dynamically via JavaScript -->
+        </div>
+      </section>
+    </div>
+  </div>
+  <!-- End of sim-standalone-tab-georesonance -->
+
+  <!-- Subpage Pane 3: 空间风水指南 · 实操调理十策 (专属副页面) -->
+  <div id="sim-standalone-tab-fengshui" class="sim-standalone-subpage-pane space-y-6 hidden">
     <!-- Complete Spatial Feng Shui & Metaphysical Remediation Guide in Decision Sandbox (八字开运与空间风水指南 · 实操调理十策与大地测量) -->
-    <div id="simStandaloneFengshuiSection" class="space-y-6 pt-6 border-t border-indigo-500/30">
+    <div id="simStandaloneFengshuiSection" class="space-y-6">
       <!-- Header Banner -->
       <div class="p-5 rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-black/60 to-teal-950/40 shadow-2xl relative overflow-hidden">
         <div class="flex flex-wrap items-center justify-between gap-4">
@@ -424,6 +491,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <!-- End of sim-standalone-tab-fengshui -->
   </main>
 
   <!-- Footer -->
@@ -508,6 +577,247 @@
             <span>${isEn ? "Tier: " + (tier.includes("旺") ? "Strong" : "Weak") : "格局：" + tier}</span>
           </div>
         `;
+      }
+
+      let selectedStandaloneResonanceTab = 'directions';
+
+      function renderStandaloneEcologicalResonance() {
+        const container = document.getElementById('simStandaloneEcologicalResonanceContainer');
+        if (!container) return;
+        const isEn = (currentLang === 'en');
+        if (!luck || !luck.ecologicalResonance) {
+          container.innerHTML = `<p class="text-xs text-gray-500">${isEn ? 'Awaiting calculation...' : '计算中...'}</p>`;
+          return;
+        }
+
+        const eco = luck.ecologicalResonance;
+        container.innerHTML = '';
+
+        // Sub-tab Navigation
+        const tabsWrapper = document.createElement('div');
+        tabsWrapper.className = 'flex flex-wrap items-center gap-2 border-b border-gray-800/80 pb-2.5';
+        const tabs = [
+          { id: 'directions', labelZh: '🧭 城市与方位能量场', labelEn: '🧭 City & Cardinal Field' },
+          { id: 'ecosystems', labelZh: '💼 组织生态位与反内耗归因', labelEn: '💼 Workplace Ecosystem Diagnostic' }
+        ];
+
+        tabs.forEach(t => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const isActive = (selectedStandaloneResonanceTab === t.id);
+          btn.className = `px-3.5 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer ${
+            isActive
+              ? 'bg-blue-600/30 text-blue-300 border-blue-500/60 shadow-md shadow-blue-950/40'
+              : 'bg-black/40 text-gray-400 border-gray-800 hover:text-gray-200 hover:border-gray-700'
+          }`;
+          btn.textContent = isEn ? t.labelEn : t.labelZh;
+          btn.addEventListener('click', () => {
+            selectedStandaloneResonanceTab = t.id;
+            renderStandaloneEcologicalResonance();
+          });
+          tabsWrapper.appendChild(btn);
+        });
+        container.appendChild(tabsWrapper);
+
+        // Tab 1: Geographic Directions
+        if (selectedStandaloneResonanceTab === 'directions') {
+          const geoWrapper = document.createElement('div');
+          geoWrapper.className = 'space-y-4';
+
+          geoWrapper.innerHTML = `
+            <div class="p-3.5 rounded-xl bg-blue-950/30 border border-blue-500/40 text-xs sm:text-sm text-blue-200 flex items-center gap-2.5">
+              <span class="text-xl">🌟</span>
+              <span class="font-serif-sc font-medium">${isEn ? eco.bestDirectionEn : eco.bestDirectionZh}</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              ${(eco.geographicDirections || []).map(d => `
+                <div class="p-4 rounded-xl border border-gray-800/90 bg-black/45 space-y-3 hover:border-blue-500/40 transition flex flex-col justify-between">
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                      <div class="flex items-center space-x-2">
+                        <span class="text-base font-bold font-serif-sc text-blue-300">
+                          ${isEn ? d.directionEn : d.directionZh}
+                        </span>
+                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono border border-blue-500/30">
+                          ${isEn ? d.elementEn : d.element}
+                        </span>
+                      </div>
+                      <span class="text-xs font-bold font-mono text-blue-400">
+                        ${d.fitScore}% · ${isEn ? d.ratingEn : d.ratingZh}
+                      </span>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-gray-900 rounded-full h-1.5 overflow-hidden">
+                      <div class="bg-gradient-to-r from-blue-600 to-cyan-400 h-full rounded-full" style="width: ${d.fitScore}%;"></div>
+                    </div>
+
+                    <div class="text-[11.5px] text-gray-300 space-y-1 pt-1 font-serif-sc">
+                      <div>
+                        <span class="text-amber-400 font-semibold">${isEn ? 'Key Metropolitan Clusters: ' : '代表都市群：'}</span>
+                        <span class="text-gray-300">${isEn ? d.citiesEn : d.citiesZh}</span>
+                      </div>
+                      <div class="pt-1 text-[11px] leading-relaxed text-gray-400 font-serif-sc">
+                        <span class="text-blue-300 font-medium">${isEn ? 'Field Resonance: ' : '气场共振：'}</span>
+                        ${isEn ? d.resonanceEn : d.resonanceZh}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-2 rounded-lg bg-blue-950/20 border border-blue-900/40 text-[11px] text-blue-200 leading-tight font-serif-sc">
+                    <span class="font-bold">${isEn ? 'Strategic Advice: ' : '发展指引：'}</span>${isEn ? d.careerSynergyEn : d.careerSynergyZh}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+
+          // Cross-View Bridge to Feng Shui
+          const bridge = document.createElement('div');
+          bridge.className = 'mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-950/30 via-black/50 to-stone-900/40 border border-amber-500/40 flex flex-wrap items-center justify-between gap-3 shadow-lg';
+          bridge.innerHTML = `
+            <div class="flex items-center space-x-3">
+              <span class="text-2xl">🧭</span>
+              <div>
+                <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300">
+                  ${isEn ? 'Spatial Feng Shui & Current Residence City Guidance' : '空间风水指南 · 当前居住城市与室内外气机调理'}
+                </h5>
+                <p class="text-[11px] text-gray-400 mt-0.5">
+                  ${isEn ? 'Evaluate geographic five-element affinity of your residence city and deploy classical space remedies' : '评估当前居住城市地缘五行契合度 · 延年位聚财阵、龙龟化煞、太极缺角等实操十策'}
+                </p>
+              </div>
+            </div>
+            <button type="button" class="btn-bridge-to-fengshui px-3.5 py-1.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/50 text-xs font-serif-sc font-semibold flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+              <span>🧭</span>
+              <span>${isEn ? 'Open Spatial Feng Shui Guide →' : '进入空间风水指南 →'}</span>
+            </button>
+          `;
+          geoWrapper.appendChild(bridge);
+          const fsBtn = bridge.querySelector('.btn-bridge-to-fengshui');
+          if (fsBtn) {
+            fsBtn.addEventListener('click', () => {
+              if (window.switchStandaloneSimulatorSubpage) {
+                window.switchStandaloneSimulatorSubpage('sim-standalone-tab-fengshui');
+              }
+            });
+          }
+
+          container.appendChild(geoWrapper);
+        }
+
+        // Tab 2: Workplace Ecosystems
+        if (selectedStandaloneResonanceTab === 'ecosystems') {
+          const ecoSysWrapper = document.createElement('div');
+          ecoSysWrapper.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+
+          if (eco.workplaceEcosystems && Array.isArray(eco.workplaceEcosystems)) {
+            eco.workplaceEcosystems.forEach(es => {
+              const card = document.createElement('div');
+              card.className = 'p-4 sm:p-5 rounded-xl border border-gray-800/90 bg-black/45 space-y-3 hover:border-gray-700 transition flex flex-col justify-between';
+
+              let gradeBadgeColor = 'bg-blue-500/20 text-blue-300 border-blue-500/30';
+              if (es.fitScore >= 80) gradeBadgeColor = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+              else if (es.fitScore < 65) gradeBadgeColor = 'bg-rose-500/20 text-rose-300 border-rose-500/40';
+
+              card.innerHTML = `
+                <div class="space-y-2.5">
+                  <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-xl">${es.icon}</span>
+                      <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-gray-200">
+                        ${isEn ? es.nameEn : es.nameZh}
+                      </h5>
+                    </div>
+                    <span class="text-xs px-2 py-0.5 rounded-full border ${gradeBadgeColor} font-mono font-bold">
+                      ${es.fitScore}% · ${isEn ? es.gradeEn : es.gradeZh}
+                    </span>
+                  </div>
+
+                  <!-- Progress Bar -->
+                  <div class="w-full bg-gray-900 rounded-full h-1.5 overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 h-full rounded-full" style="width: ${es.fitScore}%;"></div>
+                  </div>
+
+                  <!-- Resonance Mechanism -->
+                  <p class="text-xs text-gray-300 leading-relaxed font-serif-sc">
+                    ${isEn ? es.resonanceEn : es.resonanceZh}
+                  </p>
+
+                  <!-- Friction Root Cause -->
+                  <div class="p-2.5 rounded-lg bg-rose-950/20 border border-rose-900/30 space-y-1 text-xs">
+                    <div class="font-bold text-rose-300 flex items-center gap-1">
+                      <span>⚠️</span>
+                      <span>${isEn ? 'Friction Reef & Avoidance:' : '内耗暗礁与规避解法：'}</span>
+                    </div>
+                    <p class="text-rose-200/80 leading-relaxed">
+                      ${isEn ? es.frictionRootCauseEn : es.frictionRootCauseZh}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Strategic Advice -->
+                <div class="p-2.5 rounded-lg bg-gray-900/60 border border-gray-800 text-xs text-gray-300 leading-relaxed mt-2 font-serif-sc">
+                  <strong class="text-amber-400">${isEn ? 'Strategic Blueprint: ' : '战术施展：'}</strong>${isEn ? es.strategicBlueprintEn : es.strategicBlueprintZh}
+                </div>
+              `;
+              ecoSysWrapper.appendChild(card);
+            });
+          }
+
+          container.appendChild(ecoSysWrapper);
+        }
+      }
+
+      function initSimulatorStandaloneSubpages() {
+        const subTabBtns = document.querySelectorAll('.sim-standalone-sub-tab-btn');
+        const subPanes = document.querySelectorAll('.sim-standalone-subpage-pane');
+        if (!subTabBtns.length) return;
+
+        window.switchStandaloneSimulatorSubpage = function(targetTabId) {
+          subTabBtns.forEach(btn => {
+            const isMatch = (btn.getAttribute('data-sim-tab') === targetTabId);
+            if (isMatch) {
+              btn.classList.add('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
+              btn.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+            } else {
+              btn.classList.remove('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
+              btn.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+            }
+          });
+          subPanes.forEach(p => {
+            if (p.id === targetTabId) {
+              p.classList.remove('hidden');
+            } else {
+              p.classList.add('hidden');
+            }
+          });
+          if (targetTabId === 'sim-standalone-tab-georesonance') {
+            renderStandaloneEcologicalResonance();
+          }
+          if (targetTabId === 'sim-standalone-tab-fengshui') {
+            renderStandaloneFengShui();
+            renderStandaloneGeomagneticCalibrator();
+          }
+        };
+
+        subTabBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-sim-tab');
+            if (target && window.switchStandaloneSimulatorSubpage) {
+              window.switchStandaloneSimulatorSubpage(target);
+            }
+          });
+        });
+
+        const jumpBtn = document.getElementById('simStandaloneBtnJumpToFengShui');
+        if (jumpBtn) {
+          jumpBtn.addEventListener('click', () => {
+            if (window.switchStandaloneSimulatorSubpage) {
+              window.switchStandaloneSimulatorSubpage('sim-standalone-tab-fengshui');
+            }
+          });
+        }
       }
 
       let currentResidenceCountry = 'Canada';
@@ -1238,6 +1548,34 @@
           document.getElementById("simLangEnBtn").className = "px-2.5 py-1 text-xs rounded-md font-medium transition text-gray-400 hover:text-gray-200";
         }
 
+        const subNavLbl = document.getElementById("lblSimStandaloneSubNav");
+        if (subNavLbl) subNavLbl.textContent = isEn ? "⚖️ Sandbox Dedicated Subpages:" : "⚖️ 胜负沙盘专属副页面：";
+        const tSandbox = document.getElementById("simStandaloneTabTitleSandbox");
+        if (tSandbox) tSandbox.textContent = isEn ? "Dual-Track Scenario Sandbox" : "双轨全息推演沙盘";
+        const bSandbox = document.getElementById("simStandaloneTabBadgeSandbox");
+        if (bSandbox) bSandbox.textContent = isEn ? "Clash Projector" : "胜负对决";
+        const tGeo = document.getElementById("simStandaloneTabTitleGeoresonance");
+        if (tGeo) tGeo.textContent = isEn ? "Geographic Field & Workplace Ecosystem" : "地理方位与组织生态匹配仪";
+        const bGeo = document.getElementById("simStandaloneTabBadgeGeoresonance");
+        if (bGeo) bGeo.textContent = isEn ? "Eco Positioning" : "生态定位";
+        const tFeng = document.getElementById("simStandaloneTabTitleFengshui");
+        if (tFeng) tFeng.textContent = isEn ? "Spatial Feng Shui & 10 Practical Remedies" : "空间风水指南 · 实操调理十策";
+        const bFeng = document.getElementById("simStandaloneTabBadgeFengshui");
+        if (bFeng) bFeng.textContent = isEn ? "Spatial Flow" : "空间开运";
+        const subNavNote = document.getElementById("lblSimStandaloneSubNavNote");
+        if (subNavNote) subNavNote.textContent = isEn ? "Architected on 12 Canons subpage paradigm · 3 Strategic Decision Hubs" : "对标十二大典独立副页面架构 · 三大高维决策中枢";
+
+        const ecoTitle = document.getElementById("simStandaloneEcoTitle");
+        if (ecoTitle) ecoTitle.textContent = isEn ? "Geographic Cardinal Field & Workplace Ecosystem Matching Diagnostic" : "地理方位与组织生态匹配仪 · 专属研解专页";
+        const ecoSeal = document.getElementById("simStandaloneEcoSeal");
+        if (ecoSeal) ecoSeal.textContent = isEn ? "Eco Positioning" : "生态定位";
+        const ecoDesc = document.getElementById("simStandaloneEcoDesc");
+        if (ecoDesc) ecoDesc.textContent = isEn
+          ? "Synthesizes five-element directional qi field resonance, global metropolitan cluster strategic alignment, and 4 major organizational ecosystems diagnostic with friction attribution."
+          : "融合五行地气方位场能共振、全球代表都市群战略契合度评估，以及体制内/创业/合伙/独立四大组织生态位诊断与反内耗归因。";
+        const jumpFsBtnText = document.getElementById("simStandaloneBtnJumpToFengShuiText");
+        if (jumpFsBtnText) jumpFsBtnText.textContent = isEn ? "Spatial Feng Shui Guide" : "空间风水指南";
+
         const fSeal = document.getElementById("simStandaloneFengshuiSeal");
         if (fSeal) fSeal.textContent = isEn ? "Spatial Feng Shui" : "空间开运";
         const fTitle = document.getElementById("simStandaloneFengshuiBannerTitle");
@@ -1266,6 +1604,7 @@
         renderBadges();
         syncInstitutionsAndEnterprises("A");
         syncInstitutionsAndEnterprises("B");
+        renderStandaloneEcologicalResonance();
         renderStandaloneFengShui();
         renderStandaloneGeomagneticCalibrator();
       }
@@ -1882,6 +2221,7 @@
       });
 
       // Initialization
+      initSimulatorStandaloneSubpages();
       updateI18n();
       setupPresets();
       // Set initial defaults

@@ -6301,7 +6301,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderEcologicalResonance(res, luckRes, isEn) {
     const containers = [
       document.getElementById('ecologicalResonanceContainer'),
-      document.getElementById('ecologicalResonanceContainerSubpage')
+      document.getElementById('ecologicalResonanceContainerSubpage'),
+      document.getElementById('simEcologicalResonanceContainer')
     ].filter(Boolean);
     if (containers.length === 0) return;
     if (!luckRes || !luckRes.ecologicalResonance) {
@@ -6428,7 +6429,13 @@ document.addEventListener('DOMContentLoaded', () => {
       geoWrapper.appendChild(fengshuiBridge);
       const fsBtn = fengshuiBridge.querySelector ? fengshuiBridge.querySelector('.btn-bridge-to-fengshui') : null;
       if (fsBtn && fsBtn.addEventListener) {
-        fsBtn.addEventListener('click', () => switchPrimaryView('view-fengshui'));
+        fsBtn.addEventListener('click', () => {
+          if (container.id === 'simEcologicalResonanceContainer' && typeof window.switchSimulatorSubpage === 'function') {
+            window.switchSimulatorSubpage('sim-tab-fengshui');
+          } else {
+            switchPrimaryView('view-fengshui');
+          }
+        });
       }
 
       container.appendChild(geoWrapper);
@@ -11020,6 +11027,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (simContainer && !simContainer.children.length && typeof executeScenarioSimulation === 'function') {
         executeScenarioSimulation();
       }
+      if (typeof renderEcologicalResonance === 'function') {
+        renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
+      }
       if (typeof renderSpatialFengShui === 'function') {
         renderSpatialFengShui(currentBaziResult, currentLuckResult);
       }
@@ -11143,6 +11153,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpenGeoSubpageFromLuck = document.getElementById('btnOpenGeoSubpageFromLuck');
   if (btnOpenGeoSubpageFromLuck) {
     btnOpenGeoSubpageFromLuck.addEventListener('click', () => switchPrimaryView('view-georesonance'));
+  }
+  const simBtnJumpToHomeFromGeo = document.getElementById('simBtnJumpToHomeFromGeo');
+  if (simBtnJumpToHomeFromGeo) {
+    simBtnJumpToHomeFromGeo.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+  const simBtnJumpToLuckFromGeo = document.getElementById('simBtnJumpToLuckFromGeo');
+  if (simBtnJumpToLuckFromGeo) {
+    simBtnJumpToLuckFromGeo.addEventListener('click', () => switchPrimaryView('view-luck'));
+  }
+  const simBtnJumpToFengShuiFromGeo = document.getElementById('simBtnJumpToFengShuiFromGeo');
+  if (simBtnJumpToFengShuiFromGeo) {
+    simBtnJumpToFengShuiFromGeo.addEventListener('click', () => {
+      if (typeof window.switchSimulatorSubpage === 'function') {
+        window.switchSimulatorSubpage('sim-tab-fengshui');
+      } else {
+        switchPrimaryView('view-fengshui');
+      }
+    });
   }
 
   // Career Fullscreen Mode Controller (Seamlessly Enter / Exit Fullscreen without losing BaZi data)
@@ -11360,6 +11388,51 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Simulator Dedicated Subpages Switching Logic (对标12大典专属副页面架构)
+  const simSubTabBtns = document.querySelectorAll('.sim-sub-tab-btn');
+  const simSubPanes = document.querySelectorAll('.sim-subpage-pane');
+
+  function switchSimulatorSubpage(targetTabId) {
+    if (!simSubTabBtns.length) return;
+    simSubTabBtns.forEach(b => {
+      const isMatch = (b.getAttribute('data-sim-tab') === targetTabId);
+      if (isMatch) {
+        b.classList.add('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
+        b.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+      } else {
+        b.classList.remove('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
+        b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+      }
+    });
+    simSubPanes.forEach(p => {
+      if (p.id === targetTabId) {
+        p.classList.remove('hidden');
+      } else {
+        p.classList.add('hidden');
+      }
+    });
+    if (targetTabId === 'sim-tab-georesonance' && currentBaziResult) {
+      if (typeof renderEcologicalResonance === 'function') {
+        renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
+      }
+    } else if (targetTabId === 'sim-tab-fengshui' && currentBaziResult) {
+      if (typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+      if (typeof renderGeomagneticCalibrator === 'function') {
+        renderGeomagneticCalibrator(currentBaziResult);
+      }
+    }
+  }
+  window.switchSimulatorSubpage = switchSimulatorSubpage;
+
+  simSubTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-sim-tab');
+      if (targetTab) switchSimulatorSubpage(targetTab);
+    });
+  });
 
   // Transit Fortune Cycle Sub-Tabs (Decade / Annual / Month / Day)
   const fortuneCycleTabs = document.getElementById('fortuneCycleTabs');

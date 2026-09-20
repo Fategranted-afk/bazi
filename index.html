@@ -2765,269 +2765,343 @@
       </div>
     </div>
 
-    <!-- Dual-Track 'What-If' Decision Simulator Sandbox -->
-    <div id="scenarioSimulatorSection" class="p-5 sm:p-6 rounded-2xl border border-indigo-500/40 bg-gradient-to-b from-[#131625]/90 to-[#0b0d18]/90 shadow-2xl space-y-6">
-      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/30 pb-4">
-        <div>
-          <div class="flex items-center space-x-2 mb-1">
-            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300" data-i18n="seal_sim_setup">推演对抗</span>
-            <h3 class="text-lg sm:text-xl font-bold font-serif-sc text-indigo-200" data-i18n="sim_setup_title">
-              双轨推演对抗参数设置
-            </h3>
-          </div>
-          <p class="text-xs text-gray-400" data-i18n="sim_setup_sub">
-            设定方案甲与方案乙之行业、城市与十神场能，测算全息综合胜率
-          </p>
-        </div>
-        <button id="btnRunSimulator" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-600 hover:from-indigo-500 hover:to-amber-500 text-white font-bold text-xs sm:text-sm shadow-xl border border-indigo-400/40 transition active:scale-95 cursor-pointer flex items-center gap-2" data-i18n="sim_run_btn">
-          <span>⚡</span>
-          <span>启动双轨全息推演</span>
-        </button>
-      </div>
-
-      <!-- Two-Column Side-by-Side Configuration Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Option A Config -->
-        <div class="p-4 rounded-xl border border-indigo-800/50 bg-black/40 space-y-3">
-          <div class="flex items-center justify-between border-b border-indigo-900/50 pb-2">
-            <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-1.5" data-i18n="sim_opt_a_title">
-              <span>🅰️</span> 方案 A
-            </h4>
-            <span class="text-[11px] text-gray-500">主选方向</span>
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1" id="lblTitleA">方案名称 (Title)</label>
-            <input id="simTitleA" type="text" value="英国伯明翰 · 高校学术科研" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none" />
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1" id="lblInstA">目标名校 (University)</label>
-              <select id="simInstA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
-                <option value="">-- 自选/无学府联动 --</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1" id="lblEntA">目标五百强 (Enterprise)</label>
-              <select id="simEntA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
-                <option value="">-- 自选/无名企联动 --</option>
-              </select>
-            </div>
-          </div>
-          <div id="simEntRoleContainerA" class="hidden">
-            <label class="block text-[11px] text-indigo-400 mb-1" id="lblEntRoleA">企业典型核心岗位 (Typical Role)</label>
-            <select id="simEntRoleA" class="w-full text-xs p-1.5 rounded bg-indigo-950/60 border border-indigo-700 text-indigo-200 focus:outline-none"></select>
-          </div>
-          <div id="simMatchedBadgeA" class="hidden text-xs p-2.5 rounded-xl bg-black/40 border border-indigo-900/50 space-y-1"></div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
-              <select id="simCountryA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-                <option value="UK" selected>英国 (UK)</option>
-                <option value="China">中国 (China)</option>
-                <option value="USA">美国 (USA)</option>
-                <option value="Canada">加拿大 (Canada)</option>
-                <option value="Singapore">新加坡 (Singapore)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">目标城市 (City)</label>
-              <input id="simCityA" type="text" value="Birmingham" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200" />
-            </div>
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1">行业赛道 (Industry)</label>
-            <select id="simIndustryA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-              <option value="academia_research" selected>高校学术与科研治学 (水/木)</option>
-              <option value="tech_ai">AI人工智能与前沿科技 (火/木)</option>
-              <option value="finance_quant">金融量化与对冲投资 (金/水)</option>
-              <option value="civil_admin">体制机关与合规行政 (土/火)</option>
-              <option value="manufacturing">实体智能制造与工程硬件 (土/金)</option>
-              <option value="creative_media">文化出海与数字内容创意 (木/火)</option>
-            </select>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">岗位生态位 (Role)</label>
-              <select id="simRoleA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-                <option value="specialist" selected>技术人员 · 单一深度</option>
-                <option value="civil">文职治理 · 综合保障</option>
-                <option value="martial">武职开拓 · 一线攻坚</option>
-                <option value="executive">操盘统帅 · 全局决断</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">直属上司/环境 (Boss)</label>
-              <select id="simManagerA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-                <option value="resource" selected>温和放权护持 (正印型)</option>
-                <option value="killings">严格结果导向 (七杀型)</option>
-                <option value="rob_wealth">同侪高压赛马 (比劫型)</option>
-                <option value="wealth">商业效益驱动 (财星型)</option>
-                <option value="officer">体制合规秩序 (正官型)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Option B Config -->
-        <div class="p-4 rounded-xl border border-purple-800/50 bg-black/40 space-y-3">
-          <div class="flex items-center justify-between border-b border-purple-900/50 pb-2">
-            <h4 class="text-sm font-bold text-purple-300 flex items-center gap-1.5" data-i18n="sim_opt_b_title">
-              <span>🅱️</span> 方案 B
-            </h4>
-            <span class="text-[11px] text-gray-500">对比备选</span>
-          </div>
-          <div>
-            <label class="block text-xs text-gray-400 mb-1" id="lblTitleB">方案名称 (Title)</label>
-            <input id="simTitleB" type="text" value="深圳/伦敦 · 量化对冲基金" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none" />
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1" id="lblInstB">目标名校 (University)</label>
-              <select id="simInstB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none">
-                <option value="">-- 自选/无学府联动 --</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1" id="lblEntB">目标五百强 (Enterprise)</label>
-              <select id="simEntB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-purple-500 focus:outline-none">
-                <option value="">-- 自选/无名企联动 --</option>
-              </select>
-            </div>
-          </div>
-          <div id="simEntRoleContainerB" class="hidden">
-            <label class="block text-[11px] text-purple-400 mb-1" id="lblEntRoleB">企业典型核心岗位 (Typical Role)</label>
-            <select id="simEntRoleB" class="w-full text-xs p-1.5 rounded bg-purple-950/60 border border-purple-700 text-purple-200 focus:outline-none"></select>
-          </div>
-          <div id="simMatchedBadgeB" class="hidden text-xs p-2.5 rounded-xl bg-black/40 border border-purple-900/50 space-y-1"></div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
-              <select id="simCountryB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-                <option value="China" selected>中国 (China)</option>
-                <option value="UK">英国 (UK)</option>
-                <option value="USA">美国 (USA)</option>
-                <option value="Canada">加拿大 (Canada)</option>
-                <option value="Singapore">新加坡 (Singapore)</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">目标城市 (City)</label>
-              <input id="simCityB" type="text" value="Shenzhen" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200" />
-            </div>
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1">行业赛道 (Industry)</label>
-            <select id="simIndustryB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-              <option value="finance_quant" selected>金融量化与对冲投资 (金/水)</option>
-              <option value="tech_ai">AI人工智能与前沿科技 (火/木)</option>
-              <option value="academia_research">高校学术与科研治学 (水/木)</option>
-              <option value="civil_admin">体制机关与合规行政 (土/火)</option>
-              <option value="manufacturing">实体智能制造与工程硬件 (土/金)</option>
-              <option value="creative_media">文化出海与数字内容创意 (木/火)</option>
-            </select>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">岗位生态位 (Role)</label>
-              <select id="simRoleB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-                <option value="specialist" selected>技术人员 · 单一深度</option>
-                <option value="civil">文职治理 · 综合保障</option>
-                <option value="martial">武职开拓 · 一线攻坚</option>
-                <option value="executive">操盘统帅 · 全局决断</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">直属上司/环境 (Boss)</label>
-              <select id="simManagerB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
-                <option value="killings" selected>严格结果导向 (七杀型)</option>
-                <option value="rob_wealth">同侪高压赛马 (比劫型)</option>
-                <option value="wealth">商业效益驱动 (财星型)</option>
-                <option value="resource">温和放权护持 (正印型)</option>
-                <option value="officer">体制合规秩序 (正官型)</option>
-              </select>
-            </div>
-          </div>
+    <!-- Simulator Dedicated Subpages Navigation Toolbar (对标12大典专属副页面架构) -->
+    <div class="px-5 py-3 border border-indigo-900/60 bg-[#121422] rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xl">
+      <div class="flex items-center space-x-2">
+        <span class="text-xs font-bold text-indigo-400 font-serif-sc" data-i18n="sim_subpage_nav_label">⚖️ 胜负沙盘专属副页面：</span>
+        <div id="simSubTabsContainer" class="flex flex-wrap gap-2 text-xs">
+          <button type="button" class="sim-sub-tab-btn active px-3.5 py-1.5 rounded-xl border border-indigo-500/60 bg-indigo-950/70 text-indigo-200 font-medium transition cursor-pointer flex items-center gap-1.5 shadow-sm" data-sim-tab="sim-tab-sandbox">
+            <span>⚔️</span>
+            <span data-i18n="sim_tab_title_sandbox">双轨全息推演沙盘</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono" data-i18n="sim_tab_badge_sandbox">胜负对决</span>
+          </button>
+          <button type="button" class="sim-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-sim-tab="sim-tab-georesonance">
+            <span>🗺️</span>
+            <span data-i18n="sim_tab_title_georesonance">地理方位与组织生态匹配仪</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono" data-i18n="sim_tab_badge_georesonance">生态定位</span>
+          </button>
+          <button type="button" class="sim-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-sim-tab="sim-tab-fengshui">
+            <span>🏡</span>
+            <span data-i18n="sim_tab_title_fengshui">空间风水指南 · 实操调理十策</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono" data-i18n="sim_tab_badge_fengshui">空间开运</span>
+          </button>
         </div>
       </div>
+      <div class="text-[11px] text-gray-400 font-mono" data-i18n="sim_subpage_note">对标十二大典独立副页面架构 · 三大高维决策中枢</div>
+    </div>
 
-      <!-- Simulation Results Output Dashboard -->
-      <div id="simResultsContainer" class="space-y-4">
-        <!-- Dynamically injected via ScenarioSimulatorEngine -->
+    <!-- Subpage Pane 1: 双轨全息推演沙盘 -->
+    <div id="sim-tab-sandbox" class="sim-subpage-pane space-y-6">
+      <!-- Dual-Track 'What-If' Decision Simulator Sandbox -->
+      <div id="scenarioSimulatorSection" class="p-5 sm:p-6 rounded-2xl border border-indigo-500/40 bg-gradient-to-b from-[#131625]/90 to-[#0b0d18]/90 shadow-2xl space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-indigo-500/30 pb-4">
+          <div>
+            <div class="flex items-center space-x-2 mb-1">
+              <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300" data-i18n="seal_sim_setup">推演对抗</span>
+              <h3 class="text-lg sm:text-xl font-bold font-serif-sc text-indigo-200" data-i18n="sim_setup_title">
+                双轨推演对抗参数设置
+              </h3>
+            </div>
+            <p class="text-xs text-gray-400" data-i18n="sim_setup_sub">
+              设定方案甲与方案乙之行业、城市与十神场能，测算全息综合胜率
+            </p>
+          </div>
+          <button id="btnRunSimulator" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-600 hover:from-indigo-500 hover:to-amber-500 text-white font-bold text-xs sm:text-sm shadow-xl border border-indigo-400/40 transition active:scale-95 cursor-pointer flex items-center gap-2" data-i18n="sim_run_btn">
+            <span>⚡</span>
+            <span>启动双轨全息推演</span>
+          </button>
+        </div>
+
+        <!-- Two-Column Side-by-Side Configuration Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Option A Config -->
+          <div class="p-4 rounded-xl border border-indigo-800/50 bg-black/40 space-y-3">
+            <div class="flex items-center justify-between border-b border-indigo-900/50 pb-2">
+              <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-1.5" data-i18n="sim_opt_a_title">
+                <span>🅰️</span> 方案 A
+              </h4>
+              <span class="text-[11px] text-gray-500">主选方向</span>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1" id="lblTitleA">方案名称 (Title)</label>
+              <input id="simTitleA" type="text" value="英国伯明翰 · 高校学术科研" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1" id="lblInstA">目标名校 (University)</label>
+                <select id="simInstA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
+                  <option value="">-- 自选/无学府联动 --</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1" id="lblEntA">目标五百强 (Enterprise)</label>
+                <select id="simEntA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
+                  <option value="">-- 自选/无名企联动 --</option>
+                </select>
+              </div>
+            </div>
+            <div id="simEntRoleContainerA" class="hidden">
+              <label class="block text-[11px] text-indigo-400 mb-1" id="lblEntRoleA">企业典型核心岗位 (Typical Role)</label>
+              <select id="simEntRoleA" class="w-full text-xs p-1.5 rounded bg-indigo-950/60 border border-indigo-700 text-indigo-200 focus:outline-none"></select>
+            </div>
+            <div id="simMatchedBadgeA" class="hidden text-xs p-2.5 rounded-xl bg-black/40 border border-indigo-900/50 space-y-1"></div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
+                <select id="simCountryA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                  <option value="UK" selected>英国 (UK)</option>
+                  <option value="China">中国 (China)</option>
+                  <option value="USA">美国 (USA)</option>
+                  <option value="Canada">加拿大 (Canada)</option>
+                  <option value="Singapore">新加坡 (Singapore)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">目标城市 (City)</label>
+                <input id="simCityA" type="text" value="Birmingham" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">行业赛道 (Industry)</label>
+              <select id="simIndustryA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="academia_research" selected>高校学术与科研治学 (水/木)</option>
+                <option value="tech_ai">AI人工智能与前沿科技 (火/木)</option>
+                <option value="finance_quant">金融量化与对冲投资 (金/水)</option>
+                <option value="civil_admin">体制机关与合规行政 (土/火)</option>
+                <option value="manufacturing">实体智能制造与工程硬件 (土/金)</option>
+                <option value="creative_media">文化出海与数字内容创意 (木/火)</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">岗位生态位 (Role)</label>
+                <select id="simRoleA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                  <option value="specialist" selected>技术人员 · 单一深度</option>
+                  <option value="civil">文职治理 · 综合保障</option>
+                  <option value="martial">武职开拓 · 一线攻坚</option>
+                  <option value="executive">操盘统帅 · 全局决断</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">直属上司/环境 (Boss)</label>
+                <select id="simManagerA" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                  <option value="resource" selected>温和放权护持 (正印型)</option>
+                  <option value="killings">严格结果导向 (七杀型)</option>
+                  <option value="officer">体制合规秩序 (正官型)</option>
+                  <option value="rob_wealth">同侪高压赛马 (比劫型)</option>
+                  <option value="wealth">商业效益驱动 (财星型)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Option B Config -->
+          <div class="p-4 rounded-xl border border-indigo-800/50 bg-black/40 space-y-3">
+            <div class="flex items-center justify-between border-b border-indigo-900/50 pb-2">
+              <h4 class="text-sm font-bold text-indigo-300 flex items-center gap-1.5" data-i18n="sim_opt_b_title">
+                <span>🅱️</span> 方案 B
+              </h4>
+              <span class="text-[11px] text-gray-500">对比备选</span>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1" id="lblTitleB">方案名称 (Title)</label>
+              <input id="simTitleB" type="text" value="中国深圳 · 量化对冲基金" class="w-full text-xs p-2 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1" id="lblInstB">目标名校 (University)</label>
+                <select id="simInstB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
+                  <option value="">-- 自选/无学府联动 --</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1" id="lblEntB">目标五百强 (Enterprise)</label>
+                <select id="simEntB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200 focus:border-indigo-500 focus:outline-none">
+                  <option value="">-- 自选/无名企联动 --</option>
+                </select>
+              </div>
+            </div>
+            <div id="simEntRoleContainerB" class="hidden">
+              <label class="block text-[11px] text-indigo-400 mb-1" id="lblEntRoleB">企业典型核心岗位 (Typical Role)</label>
+              <select id="simEntRoleB" class="w-full text-xs p-1.5 rounded bg-indigo-950/60 border border-indigo-700 text-indigo-200 focus:outline-none"></select>
+            </div>
+            <div id="simMatchedBadgeB" class="hidden text-xs p-2.5 rounded-xl bg-black/40 border border-indigo-900/50 space-y-1"></div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">国家 (Country)</label>
+                <select id="simCountryB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                  <option value="UK">英国 (UK)</option>
+                  <option value="China" selected>中国 (China)</option>
+                  <option value="USA">美国 (USA)</option>
+                  <option value="Canada">加拿大 (Canada)</option>
+                  <option value="Singapore">新加坡 (Singapore)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">目标城市 (City)</label>
+                <input id="simCityB" type="text" value="Shenzhen" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">行业赛道 (Industry)</label>
+              <select id="simIndustryB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                <option value="academia_research">高校学术与科研治学 (水/木)</option>
+                <option value="tech_ai">AI人工智能与前沿科技 (火/木)</option>
+                <option value="finance_quant" selected>金融量化与对冲投资 (金/水)</option>
+                <option value="civil_admin">体制机关与合规行政 (土/火)</option>
+                <option value="manufacturing">实体智能制造与工程硬件 (土/金)</option>
+                <option value="creative_media">文化出海与数字内容创意 (木/火)</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">岗位生态位 (Role)</label>
+                <select id="simRoleB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                  <option value="specialist">技术人员 · 单一深度</option>
+                  <option value="civil">文职治理 · 综合保障</option>
+                  <option value="martial" selected>武职开拓 · 一线攻坚</option>
+                  <option value="executive">操盘统帅 · 全局决断</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] text-gray-400 mb-1">直属上司/环境 (Boss)</label>
+                <select id="simManagerB" class="w-full text-xs p-1.5 rounded bg-gray-900 border border-gray-700 text-gray-200">
+                  <option value="killings" selected>严格结果导向 (七杀型)</option>
+                  <option value="rob_wealth">同侪高压赛马 (比劫型)</option>
+                  <option value="wealth">商业效益驱动 (财星型)</option>
+                  <option value="resource">温和放权护持 (正印型)</option>
+                  <option value="officer">体制合规秩序 (正官型)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulation Results Output Dashboard -->
+        <div id="simResultsContainer" class="space-y-4">
+          <!-- Dynamically injected via ScenarioSimulatorEngine -->
+        </div>
       </div>
     </div>
 
-    <!-- Complete Spatial Feng Shui & Metaphysical Remediation Guide in Decision Sandbox (八字开运与空间风水指南 · 实操调理十策与大地测量) -->
-    <div id="simFengshuiSection" class="space-y-6 pt-6 border-t border-indigo-500/30">
-      <!-- Header Banner -->
-      <div class="p-5 rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-black/60 to-teal-950/40 shadow-2xl relative overflow-hidden">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div class="flex items-center space-x-2 mb-1">
-              <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300" data-i18n="seal_view_fengshui">空间开运</span>
-              <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-emerald-300" data-i18n="fengshui_banner_title">
-                八字开运与空间风水指南 · 实操调理十策
-              </h2>
-            </div>
-            <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="fengshui_banner_desc">
-              依本命八字喜用五行、三元九运个人命卦与原局刑冲格局，定制十项实操改运器物与空间气场调理锦囊：从延年聚财大阵、龙龟双铃化煞、贪合忘冲生肖佩戴，到泰山石补缺、洛书吉数与积德行善实修。
-            </p>
-          </div>
-          <div class="flex items-center gap-3">
-            <div id="simFengshuiQuickBadges" class="flex flex-wrap gap-2 text-xs">
-              <!-- Injected via JS -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Content Container for City Evaluation & 10 Practical Items -->
-      <div id="simFengshuiContentContainer" class="space-y-6">
-        <!-- Injected via JS -->
-      </div>
-
-      <!-- NOAA Geomagnetic Declination & 24 Mountain Calibration Section -->
-      <div id="simGeomagneticSection" class="p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-[#0a1412] via-[#0f1f1c] to-[#070e0d] shadow-2xl space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-emerald-900/50 pb-4">
-          <div>
-            <div class="flex items-center space-x-2 mb-1">
-              <span class="chinese-seal text-xs py-0.5 border-emerald-400 text-emerald-300">大地测量</span>
-              <h3 class="text-lg font-bold font-serif-sc text-emerald-200" data-i18n="geomag_title">
-                NOAA 地磁偏角与二十四山真北校正仪 (Geomagnetic & 24 Mountains)
+    <!-- Subpage Pane 2: 地理方位与组织生态匹配仪 (专属副页面) -->
+    <div id="sim-tab-georesonance" class="sim-subpage-pane space-y-6 hidden">
+      <!-- Dedicated Geographic & Workplace Ecological Resonance Section inside Simulator (地理方位与组织生态匹配仪 · 专属研解专页) -->
+      <div id="simEcologicalResonanceSection" class="space-y-6">
+        <!-- Top Breadcrumb & Banner -->
+        <div class="bg-card p-4 rounded-2xl border border-gray-800 shadow-xl flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">🗺️</span>
+            <div>
+              <h3 class="text-sm sm:text-base font-bold text-blue-300 font-serif-sc flex items-center gap-2">
+                <span data-i18n="geo_banner_title">地理方位与组织生态匹配仪 · 专属研解专页</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-950/80 text-blue-300 border border-blue-600/40 font-mono" data-i18n="seal_view_georesonance">生态定位</span>
               </h3>
+              <p class="text-xs text-gray-400 mt-0.5" data-i18n="geo_banner_desc">
+                融合五行地气方位场能共振、全球代表都市群战略契合度评估，以及体制内/创业/合伙/独立四大组织生态位诊断与反内耗归因。
+              </p>
             </div>
-            <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="geomag_sub">
-              基于 NOAA WMM 全球离线网格插值与年漂移补偿，消除磁北与地理真北偏差，杜绝兼向出卦
-            </p>
           </div>
-          <div class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/60">
-            WMM-2025 SECULAR DRIFT
-          </div>
-        </div>
-
-        <!-- Coordinate & Heading Inputs -->
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-black/30 p-4 rounded-xl border border-emerald-900/30">
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lat">纬度 (Latitude):</label>
-            <input type="number" id="simGeoLatInput" step="0.01" value="39.90" placeholder="39.90" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lon">经度 (Longitude):</label>
-            <input type="number" id="simGeoLonInput" step="0.01" value="116.40" placeholder="116.40" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_heading">罗盘测量磁方位 (Magnetic Heading °):</label>
-            <input type="number" id="simGeoMagHeadingInput" step="0.1" min="0" max="360" value="180.0" placeholder="180.0" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
-          </div>
-          <div class="flex items-end">
-            <button type="button" id="simBtnCalibGeomagnetic" class="w-full py-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center justify-center gap-1.5" data-i18n="geomag_btn_calib">
-              🧭 计算真北山向与出卦诊断
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="simBtnJumpToHomeFromGeo" type="button" class="px-3 py-1.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 border border-gray-700 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+              <span>🏛️</span>
+              <span data-i18n="btn_jump_home_from_geo">返回核心主盘</span>
+            </button>
+            <button id="simBtnJumpToLuckFromGeo" type="button" class="px-3 py-1.5 rounded-xl bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 border border-purple-700/50 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+              <span>⏳</span>
+              <span data-i18n="btn_jump_luck_from_geo">岁运推演全盘</span>
+            </button>
+            <button id="simBtnJumpToFengShuiFromGeo" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-xs font-semibold flex items-center gap-1.5 transition cursor-pointer">
+              <span>🏡</span>
+              <span data-i18n="btn_jump_fengshui_from_geo">空间风水指南</span>
             </button>
           </div>
         </div>
 
-        <!-- Calibration Results -->
-        <div id="simGeoCalibResultContainer" class="p-4 rounded-xl bg-black/40 border border-emerald-900/40">
+        <!-- Content Container -->
+        <section class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-4 bg-gradient-to-br from-[#12151d] via-[#0f1118] to-black">
+          <div id="simEcologicalResonanceContainer" class="space-y-4">
+            <!-- Injected dynamically via JavaScript -->
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Subpage Pane 3: 空间风水指南 · 实操调理十策 (专属副页面) -->
+    <div id="sim-tab-fengshui" class="sim-subpage-pane space-y-6 hidden">
+      <!-- Complete Spatial Feng Shui & Metaphysical Remediation Guide in Decision Sandbox (八字开运与空间风水指南 · 实操调理十策与大地测量) -->
+      <div id="simFengshuiSection" class="space-y-6">
+        <!-- Header Banner -->
+        <div class="p-5 rounded-2xl border border-emerald-500/40 bg-gradient-to-r from-emerald-950/40 via-black/60 to-teal-950/40 shadow-2xl relative overflow-hidden">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center space-x-2 mb-1">
+                <span class="chinese-seal text-xs py-0.5 border-emerald-500 text-emerald-300" data-i18n="seal_view_fengshui">空间开运</span>
+                <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-emerald-300" data-i18n="fengshui_banner_title">
+                  八字开运与空间风水指南 · 实操调理十策
+                </h2>
+              </div>
+              <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed" data-i18n="fengshui_banner_desc">
+                依本命八字喜用五行、三元九运个人命卦与原局刑冲格局，定制十项实操改运器物与空间气场调理锦囊：从延年聚财大阵、龙龟双铃化煞、贪合忘冲生肖佩戴，到泰山石补缺、洛书吉数与积德行善实修。
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div id="simFengshuiQuickBadges" class="flex flex-wrap gap-2 text-xs">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Container for City Evaluation & 10 Practical Items -->
+        <div id="simFengshuiContentContainer" class="space-y-6">
           <!-- Injected via JS -->
+        </div>
+
+        <!-- NOAA Geomagnetic Declination & 24 Mountain Calibration Section -->
+        <div id="simGeomagneticSection" class="p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-[#0a1412] via-[#0f1f1c] to-[#070e0d] shadow-2xl space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-emerald-900/50 pb-4">
+            <div>
+              <div class="flex items-center space-x-2 mb-1">
+                <span class="chinese-seal text-xs py-0.5 border-emerald-400 text-emerald-300">大地测量</span>
+                <h3 class="text-lg font-bold font-serif-sc text-emerald-200" data-i18n="geomag_title">
+                  NOAA 地磁偏角与二十四山真北校正仪 (Geomagnetic & 24 Mountains)
+                </h3>
+              </div>
+              <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="geomag_sub">
+                基于 NOAA WMM 全球离线网格插值与年漂移补偿，消除磁北与地理真北偏差，杜绝兼向出卦
+              </p>
+            </div>
+            <div class="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/60">
+              WMM-2025 SECULAR DRIFT
+            </div>
+          </div>
+
+          <!-- Coordinate & Heading Inputs -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 bg-black/30 p-4 rounded-xl border border-emerald-900/30">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lat">纬度 (Latitude):</label>
+              <input type="number" id="simGeoLatInput" step="0.01" value="39.90" placeholder="39.90" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_lon">经度 (Longitude):</label>
+              <input type="number" id="simGeoLonInput" step="0.01" value="116.40" placeholder="116.40" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1" data-i18n="geomag_lbl_heading">罗盘测量磁方位 (Magnetic Heading °):</label>
+              <input type="number" id="simGeoMagHeadingInput" step="0.1" min="0" max="360" value="180.0" placeholder="180.0" class="w-full bg-[#161824] border border-emerald-700/50 rounded-lg p-2 text-xs text-gray-100 focus:outline-none focus:border-emerald-400">
+            </div>
+            <div class="flex items-end">
+              <button type="button" id="simBtnCalibGeomagnetic" class="w-full py-2 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center justify-center gap-1.5" data-i18n="geomag_btn_calib">
+                🧭 计算真北山向与出卦诊断
+              </button>
+            </div>
+          </div>
+
+          <!-- Calibration Results -->
+          <div id="simGeoCalibResultContainer" class="p-4 rounded-xl bg-black/40 border border-emerald-900/40">
+            <!-- Injected via JS -->
+          </div>
         </div>
       </div>
     </div>
