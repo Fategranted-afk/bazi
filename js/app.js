@@ -10953,10 +10953,10 @@ document.addEventListener('DOMContentLoaded', () => {
     viewNavBtns.forEach(btn => {
       const v = btn.getAttribute('data-view');
       if (v === targetViewId) {
-        btn.classList.add('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white', 'border-amber-500/50', 'shadow-lg');
+        btn.classList.add('active', 'bg-gradient-to-r', 'from-amber-500', 'to-orange-500', 'text-white', 'border-amber-400/50', 'shadow-lg');
         btn.classList.remove('text-gray-400', 'hover:text-gray-200', 'border-transparent');
       } else {
-        btn.classList.remove('active', 'bg-gradient-to-r', 'from-amber-600', 'to-amber-700', 'text-white', 'border-amber-500/50', 'shadow-lg');
+        btn.classList.remove('active', 'bg-gradient-to-r', 'from-amber-500', 'to-orange-500', 'text-white', 'border-amber-400/50', 'shadow-lg');
         btn.classList.add('text-gray-400', 'hover:text-gray-200', 'border-transparent');
       }
     });

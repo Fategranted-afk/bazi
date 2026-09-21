@@ -16885,6 +16885,10 @@ assert '[data-theme="light"] #primaryViewNav' in css_content, "Missing light the
 assert 'rgba(255, 255, 255, 0.96)' in css_content, "Missing refined glass background for primaryViewNav in light theme"
 assert '[data-theme="light"] #solarTermTag' in css_content, "Missing light theme solarTermTag override"
 assert '[data-theme="light"] #dashboardTopSummaryBar' in css_content, "Missing light theme dashboardTopSummaryBar override"
+assert 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)' in css_content, "Missing bright luminous orange for active nav button"
+assert '[data-theme="light"] #rectificationHeroBanner' in css_content, "Missing light theme rectificationHeroBanner override"
+assert '[data-theme="light"] #btnRibbonOpenAdvisor' in css_content, "Missing light theme btnRibbonOpenAdvisor override"
+assert '[data-theme="light"] #btnReturnToPortal' in css_content, "Missing light theme btnReturnToPortal override"
 
 # 4. JSC Dynamic verification: switchPrimaryView('view-luck') triggers hexagram rendering and 0 residual Chinese in EN
 jsc_check132_cmd = [
