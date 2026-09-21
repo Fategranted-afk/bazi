@@ -17657,7 +17657,451 @@ assert run_check135.returncode == 0, f"Check 135 JSC test failed: stdout={run_ch
 
 print("✓ 135. 皇家战报第四页换新（岁运流转·五柱同参+百岁运势时空罗盘+周易六十四卦周期推演图+未来十年2026-2035行运总谱）及主盘以事校对融合（双向平滑联动与双语100%零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 135 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==========================================
+# 136. Validating Friction View Sub-Tabs (Zhou Yi 64 Hexagrams Divination Suite Embedded), Career View Simulator Sandbox & Imperial Dossier Page 4 Vector SVG
+# ==========================================
+print("\n=== 136. Validating Friction View Sub-Tabs, Career View Simulator Sandbox & Imperial Dossier Page 4 Vector SVG ===")
+
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_content_136 = f.read()
+with open("css/style.css", "r", encoding="utf-8") as f:
+    css_content_136 = f.read()
+with open("js/i18n.js", "r", encoding="utf-8") as f:
+    i18n_content_136 = f.read()
+with open("js/app.js", "r", encoding="utf-8") as f:
+    app_content_136 = f.read()
+
+# 1. Top Navbar streamlining assertions
+assert 'id="navBtnIChing"' in idx_content_136, "navBtnIChing must exist in index.html"
+assert 'id="navBtnSimulator"' in idx_content_136, "navBtnSimulator must exist in index.html"
+btn_iching_idx = idx_content_136.find('id="navBtnIChing"')
+btn_iching_chunk = idx_content_136[btn_iching_idx - 60 : btn_iching_idx + 120]
+assert 'hidden' in btn_iching_chunk, "navBtnIChing must have hidden class in primaryViewNav"
+
+btn_sim_idx = idx_content_136.find('id="navBtnSimulator"')
+btn_sim_chunk = idx_content_136[btn_sim_idx - 60 : btn_sim_idx + 120]
+assert 'hidden' in btn_sim_chunk, "navBtnSimulator must have hidden class in primaryViewNav"
+
+# 2. Friction sub-tabs architecture assertions
+assert 'id="frictionTabsContainer"' in idx_content_136, "Missing frictionTabsContainer in index.html"
+for subtab_id in [
+    'tab-fric-specs', 'tab-fric-zen', 'tab-fric-canons', 'tab-fric-triggers',
+    'tab-fric-protocols', 'tab-fric-habits', 'tab-fric-iching', 'tab-fric-all'
+]:
+    assert f'data-fric-tab="{subtab_id}"' in idx_content_136, f"Missing data-fric-tab='{subtab_id}' in index.html"
+
+# Verify #tab-fric-iching embeds #view-iching inside #view-friction
+assert 'id="tab-fric-iching"' in idx_content_136, "Missing tab-fric-iching container in index.html"
+fric_view_slice = idx_content_136.split('id="view-friction"')[1].split('<!-- End of view-iching -->')[0]
+assert 'id="tab-fric-iching"' in fric_view_slice, "tab-fric-iching must be inside view-friction"
+assert 'id="view-iching"' in fric_view_slice, "view-iching must be inside tab-fric-iching"
+assert 'id="ichingQueryInput"' in fric_view_slice, "ichingQueryInput must be inside view-iching"
+assert 'id="coinTossArena"' in fric_view_slice, "coinTossArena must be inside view-iching"
+
+# 3. Career view simulator nesting assertions
+career_slice = idx_content_136.split('id="view-career"')[1].split('<!-- End of view-career -->')[0]
+assert 'id="view-simulator"' in career_slice, "view-simulator must be nested inside view-career"
+assert 'id="scenarioSimulatorSection"' in career_slice, "scenarioSimulatorSection must be inside view-career"
+
+# 4. CSS styles assertions
+assert '.fric-tab-btn' in css_content_136, "Missing .fric-tab-btn in style.css"
+assert '.fric-tab-btn.active' in css_content_136, "Missing .fric-tab-btn.active in style.css"
+for murky_hex in ['#78350f', '#92400e', '#b45309', '#d97706']:
+    assert murky_hex not in css_content_136, f"Murky amber {murky_hex} must not be in style.css"
+
+# 5. I18N keys assertions
+for fric_key in [
+    'tab_fric_specs', 'tab_fric_zen', 'tab_fric_canons', 'tab_fric_triggers',
+    'tab_fric_protocols', 'tab_fric_habits', 'tab_fric_iching', 'tab_fric_all'
+]:
+    assert fric_key in i18n_content_136, f"Missing i18n key {fric_key} in i18n.js"
+
+# 6. JavaScript functions assertions in app.js
+assert 'generateImperialHexagramTrajectorySvg' in app_content_136, "Missing generateImperialHexagramTrajectorySvg in app.js"
+assert 'switchFrictionTab' in app_content_136, "Missing switchFrictionTab in app.js"
+assert 'tab-fric-iching' in app_content_136, "Missing tab-fric-iching handling in app.js"
+
+# 7. Dynamic JSC Headless Execution
+jsc_check136_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r"""
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+    load("js/rectification-engine.js");
+
+    var elementStore = {};
+    function MockClassList(el) {
+      this.el = el;
+      this.classes = {};
+    }
+    MockClassList.prototype.add = function() {
+      for (var i = 0; i < arguments.length; i++) this.classes[arguments[i]] = true;
+    };
+    MockClassList.prototype.remove = function() {
+      for (var i = 0; i < arguments.length; i++) delete this.classes[arguments[i]];
+    };
+    MockClassList.prototype.contains = function(cls) {
+      return !!this.classes[cls];
+    };
+
+    function createMockElement(id, tag) {
+      var el = {
+        _id: id || '',
+        get id() { return this._id; },
+        set id(v) {
+          this._id = v;
+          if (v) elementStore[v] = this;
+        },
+        tagName: (tag || 'div').toUpperCase(),
+        classList: new MockClassList(),
+        style: {},
+        attributes: {},
+        _children: [],
+        get children() { return this._children || []; },
+        _listeners: {},
+        _rawInnerHTML: '',
+        get innerHTML() {
+          var ch = (this._children || []).map(function(c) {
+            var t = (c.tagName || 'div').toLowerCase();
+            var idStr = c.id ? (' id="' + c.id + '"') : '';
+            var cls = (c.classList && c.classList.classes) ? Object.keys(c.classList.classes).join(' ') : '';
+            var clsStr = cls ? (' class="' + cls + '"') : '';
+            return '<' + t + idStr + clsStr + '>' + (c.innerHTML || '') + '</' + t + '>';
+          }).join('');
+          return (this._rawInnerHTML || '') + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this._children = [];
+        },
+        get textContent() {
+          return this.innerHTML.replace(/<[^>]*>/g, '');
+        },
+        set textContent(val) {
+          this.innerHTML = val;
+        },
+        appendChild: function(c) {
+          this._children.push(c);
+          return c;
+        },
+        setAttribute: function(k, v) { this.attributes[k] = v; },
+        getAttribute: function(k) { return this.attributes[k] || null; },
+        removeAttribute: function(k) { delete this.attributes[k]; },
+        addEventListener: function(evt, fn) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        },
+        trigger: function(evt, e) {
+          var list = this._listeners[evt] || [];
+          for (var i = 0; i < list.length; i++) list[i](e || {});
+        },
+        click: function() { this.trigger('click'); },
+        querySelector: function(sel) {
+          if (sel.startsWith('#')) {
+            var targetId = sel.slice(1);
+            return elementStore[targetId] || null;
+          }
+          return null;
+        },
+        querySelectorAll: function(sel) {
+          return [];
+        },
+        scrollIntoView: function() {}
+      };
+      if (id) elementStore[id] = el;
+      return el;
+    }
+
+    var allMockIds = [
+      'primaryViewNav', 'view-home', 'view-strategy', 'view-friction', 'view-luck',
+      'view-canons', 'view-iching', 'view-synastry', 'view-fengshui', 'view-career',
+      'view-simulator', 'view-history', 'view-georesonance',
+      'navBtnHome', 'navBtnStrategy', 'navBtnFriction', 'navBtnLuck', 'navBtnCanons',
+      'navBtnIChing', 'navBtnSynastry', 'navBtnFengShui', 'navBtnCareer', 'navBtnHistory',
+      'navBtnSimulator',
+      'frictionTabsContainer', 'frictionContentContainer', 'tab-fric-iching',
+      'tab-fric-specs', 'tab-fric-zen', 'tab-fric-canons', 'tab-fric-triggers',
+      'tab-fric-protocols', 'tab-fric-habits', 'tab-fric-all',
+      'fsec-canons', 'fsec-triggers', 'fsec-protocols', 'fsec-habits',
+      'btnJumpToHomeFromFriction', 'btnJumpToHomeFromCareer', 'btnJumpToSimulatorFromCareer',
+      'btnJumpToHomeFromSimulator', 'scenarioSimulatorSection',
+      'ichingQueryInput', 'ichingSelect', 'coinTossArena',
+      'imperialDossierModal', 'imperialDossierContainer',
+      'birthDate', 'birthTime', 'gender', 'citySelect', 'calcBtn',
+      'btnToggleAdvSolar', 'advSolarTimeContainer', 'useTrueSolarTime', 'timezoneSelect', 'customLongitude', 'lateRatNextDay'
+    ];
+
+    allMockIds.forEach(function(id) {
+      elementStore[id] = createMockElement(id, 'div');
+    });
+
+    // Mock friction sub-tab buttons in frictionTabsContainer
+    var fricTabsList = [
+      'tab-fric-specs', 'tab-fric-zen', 'tab-fric-canons', 'tab-fric-triggers',
+      'tab-fric-protocols', 'tab-fric-habits', 'tab-fric-iching', 'tab-fric-all'
+    ];
+    var fricTabBtnElements = [];
+    fricTabsList.forEach(function(tId) {
+      var btn = createMockElement('', 'button');
+      btn.classList.add('fric-tab-btn');
+      btn.setAttribute('data-fric-tab', tId);
+      if (tId === 'tab-fric-specs') btn.classList.add('active');
+      fricTabBtnElements.push(btn);
+    });
+
+    // Mock view nav buttons
+    var viewNavMap = {
+      'navBtnHome': 'view-home',
+      'navBtnStrategy': 'view-strategy',
+      'navBtnFriction': 'view-friction',
+      'navBtnLuck': 'view-luck',
+      'navBtnCanons': 'view-canons',
+      'navBtnIChing': 'view-iching',
+      'navBtnSynastry': 'view-synastry',
+      'navBtnFengShui': 'view-fengshui',
+      'navBtnCareer': 'view-career',
+      'navBtnHistory': 'view-history',
+      'navBtnSimulator': 'view-simulator'
+    };
+    var mockNavBtnList = [];
+    Object.keys(viewNavMap).forEach(function(btnId) {
+      var btnEl = elementStore[btnId];
+      btnEl.classList.add('view-nav-btn');
+      btnEl.setAttribute('data-view', viewNavMap[btnId]);
+      mockNavBtnList.push(btnEl);
+    });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: createMockElement('body', 'body'),
+      getElementById: function(id) {
+        if (!elementStore[id]) {
+          elementStore[id] = createMockElement(id, 'div');
+        }
+        return elementStore[id];
+      },
+      createElement: function(tag) {
+        return createMockElement('', tag);
+      },
+      querySelectorAll: function(sel) {
+        if (sel === '.view-nav-btn') return mockNavBtnList;
+        if (sel.includes('.fric-tab-btn')) return fricTabBtnElements;
+        if (sel === '.sim-sub-tab-btn') return [];
+        if (sel === '.sim-subpage-pane') return [];
+        if (sel === '.fric-tab-pane') {
+          return [
+            elementStore['tab-fric-specs'], elementStore['tab-fric-zen'],
+            elementStore['tab-fric-canons'], elementStore['tab-fric-triggers'],
+            elementStore['tab-fric-protocols'], elementStore['tab-fric-habits'],
+            elementStore['tab-fric-iching'], elementStore['tab-fric-all']
+          ];
+        }
+        return [];
+      },
+      addEventListener: function(evt, fn) {
+        if (evt === 'DOMContentLoaded') document._domReady = fn;
+      }
+    };
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // 1. Validate Imperial Dossier Page 4 Vector SVG Trajectory in ZH and EN
+    var bRes = BaZiEngine.calculate({
+      year: 2002, month: 10, day: 24, hour: 18, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var lRes = LuckEngine.calculateLuck(bRes, 2026);
+    var pZh = PortraitEngine.analyze(bRes, "zh");
+    var pEn = I18N.translatePortrait(pZh, "en");
+
+    var dossierPagesZh = window.renderImperialDossierPages(bRes, lRes, "zh") || elementStore["imperialDossierContainer"].innerHTML;
+    var page4ZhMatch = dossierPagesZh.match(/<div id="imperialPage4"[\s\S]*?Page 4 \/ 9[\s\S]*?<\/div>\s*<\/div>/);
+    if (!page4ZhMatch) throw new Error("Could not find imperialPage4 in ZH dossier");
+    var page4Zh = page4ZhMatch[0];
+
+    var expectedZhPhrases = [
+      "百岁岁运六十四卦易数气机波动轨迹",
+      "同性相斥 · 变卦激荡",
+      "异性相吸 · 守本稳健",
+      "当前岁次游标",
+      "1岁 (初爻潜龙发端)",
+      "100岁 (期颐圆满归道)"
+    ];
+    for (var i = 0; i < expectedZhPhrases.length; i++) {
+      if (!page4Zh.includes(expectedZhPhrases[i])) {
+        throw new Error("Page 4 ZH missing expected phrase: " + expectedZhPhrases[i]);
+      }
+    }
+
+    var dossierPagesEn = window.renderImperialDossierPages(bRes, lRes, "en") || elementStore["imperialDossierContainer"].innerHTML;
+    var page4EnMatch = dossierPagesEn.match(/<div id="imperialPage4"[\s\S]*?Page 4 \/ 9[\s\S]*?<\/div>\s*<\/div>/);
+    if (!page4EnMatch) throw new Error("Could not find imperialPage4 in EN dossier");
+    var page4En = page4EnMatch[0];
+
+    var expectedEnPhrases = [
+      "Lifelong 64 Hexagrams Dynamic Qi Trajectory",
+      "Mutated (Breakthrough)",
+      "Preserved (Harmony)",
+      "Current Needle",
+      "Age 1 (Early Inception)",
+      "Age 100 (Centenarian)"
+    ];
+    for (var j = 0; j < expectedEnPhrases.length; j++) {
+      if (!page4En.includes(expectedEnPhrases[j])) {
+        throw new Error("Page 4 EN missing expected phrase: " + expectedEnPhrases[j]);
+      }
+    }
+
+    // Zero residual Chinese across entire 9-page EN Dossier
+    var enResiduals = dossierPagesEn.match(/[\u4e00-\u9fa5]/g);
+    if (enResiduals && enResiduals.length > 0) {
+      throw new Error("Residual Chinese in EN Imperial Dossier (" + enResiduals.length + "): " + enResiduals.slice(0, 20).join(""));
+    }
+
+    // 2. Validate Friction View Sub-Tabs Rendering in ZH & EN
+    window.renderFrictionView(pZh, bRes, false);
+    var fricZhHtml = elementStore["frictionContentContainer"].innerHTML;
+    if (!fricZhHtml.includes("原厂心智调律 · 七大专卷导航目录")) {
+      throw new Error("Missing quick directory in frictionContentContainer ZH");
+    }
+    if (!fricZhHtml.includes("tab-fric-specs")) throw new Error("Missing tab-fric-specs in ZH");
+    if (!fricZhHtml.includes("tab-fric-zen")) throw new Error("Missing tab-fric-zen in ZH");
+    if (!fricZhHtml.includes("fsec-canons")) throw new Error("Missing fsec-canons in ZH");
+    if (!fricZhHtml.includes("fsec-triggers")) throw new Error("Missing fsec-triggers in ZH");
+    if (!fricZhHtml.includes("fsec-protocols")) throw new Error("Missing fsec-protocols in ZH");
+    if (!fricZhHtml.includes("fsec-habits")) throw new Error("Missing fsec-habits in ZH");
+
+    // Test switchFrictionTab function
+    window.switchFrictionTab("tab-fric-specs");
+    if (elementStore["tab-fric-specs"].classList.contains("hidden")) {
+      throw new Error("tab-fric-specs must not be hidden when active");
+    }
+    if (!elementStore["tab-fric-zen"].classList.contains("hidden")) {
+      throw new Error("tab-fric-zen must be hidden when tab-fric-specs is active");
+    }
+
+    window.switchFrictionTab("tab-fric-zen");
+    if (elementStore["tab-fric-zen"].classList.contains("hidden")) {
+      throw new Error("tab-fric-zen must not be hidden when active");
+    }
+
+    window.switchFrictionTab("tab-fric-iching");
+    if (elementStore["tab-fric-iching"].classList.contains("hidden")) {
+      throw new Error("tab-fric-iching must not be hidden when active");
+    }
+    if (elementStore["view-iching"].classList.contains("hidden")) {
+      throw new Error("view-iching must not be hidden when tab-fric-iching is active");
+    }
+
+    window.switchFrictionTab("tab-fric-all");
+    if (elementStore["tab-fric-specs"].classList.contains("hidden") || elementStore["tab-fric-zen"].classList.contains("hidden")) {
+      throw new Error("All content panes must be visible when tab-fric-all is active");
+    }
+
+    // Test EN Friction View rendering & Zero Residual Chinese
+    elementStore["frictionContentContainer"].innerHTML = "";
+    window.renderFrictionView(pEn, bRes, true);
+    var fricEnHtml = elementStore["frictionContentContainer"].innerHTML;
+    var fricResiduals = fricEnHtml.match(/[\u4e00-\u9fa5]/g);
+    if (fricResiduals && fricResiduals.length > 0) {
+      throw new Error("Residual Chinese in EN Friction View (" + fricResiduals.length + "): " + fricResiduals.slice(0, 20).join(""));
+    }
+
+    // 3. Validate switchPrimaryView for nested views
+    // Switch to view-iching
+    window.switchPrimaryView("view-iching");
+    if (elementStore["view-friction"].classList.contains("hidden")) {
+      throw new Error("view-friction must be visible when switching to view-iching");
+    }
+    if (elementStore["view-iching"].classList.contains("hidden")) {
+      throw new Error("view-iching must be visible when switching to view-iching");
+    }
+    if (elementStore["tab-fric-iching"].classList.contains("hidden")) {
+      throw new Error("tab-fric-iching must be visible when switching to view-iching");
+    }
+    if (!elementStore["view-home"].classList.contains("hidden")) {
+      throw new Error("view-home must be hidden when switching to view-iching");
+    }
+
+    // Switch to view-simulator
+    window.switchPrimaryView("view-simulator");
+    if (elementStore["view-career"].classList.contains("hidden")) {
+      throw new Error("view-career must be visible when switching to view-simulator");
+    }
+    if (elementStore["view-simulator"].classList.contains("hidden")) {
+      throw new Error("view-simulator must be visible when switching to view-simulator");
+    }
+    if (!elementStore["view-friction"].classList.contains("hidden")) {
+      throw new Error("view-friction must be hidden when switching to view-simulator");
+    }
+
+    // Switch to view-career
+    window.switchPrimaryView("view-career");
+    if (elementStore["view-career"].classList.contains("hidden")) {
+      throw new Error("view-career must be visible");
+    }
+    if (elementStore["view-simulator"].classList.contains("hidden")) {
+      throw new Error("view-simulator must stay visible inside view-career");
+    }
+
+    // Switch back to view-home
+    window.switchPrimaryView("view-home");
+    if (elementStore["view-home"].classList.contains("hidden")) {
+      throw new Error("view-home must be visible");
+    }
+    if (!elementStore["view-career"].classList.contains("hidden")) {
+      throw new Error("view-career must be hidden");
+    }
+    if (!elementStore["view-friction"].classList.contains("hidden")) {
+      throw new Error("view-friction must be hidden");
+    }
+    """
+]
+
+run_check136 = subprocess.run(jsc_check136_cmd, capture_output=True, text=True)
+assert run_check136.returncode == 0, f"Check 136 JSC test failed: stdout={run_check136.stdout} stderr={run_check136.stderr}"
+
+print("✓ 136. 精神内耗子页架构升级（周易文王六十四卦易道神机起卦研解内嵌独立Sub-Tab、一经一页精研）、职场破局内嵌胜负对抗沙盘及皇家战报第四页百岁六十四卦气机波动轨迹矢量图全量验证通过！")
+
+print("\n🎉 ALL 136 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

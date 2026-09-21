@@ -2288,6 +2288,29 @@ body {
   border-bottom-color: var(--accent-gold);
 }
 
+/* Friction Sub-tabs Styles */
+.fric-tab-btn {
+  padding: 6px 12px;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.fric-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.fric-tab-btn.active {
+  color: #fff !important;
+  background: linear-gradient(to right, #ea580c, #be123c) !important;
+  border-color: rgba(249, 115, 22, 0.4) !important;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.25) !important;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPortraitData = null;
   let currentLang = (typeof localStorage !== 'undefined' && localStorage.getItem('bazi_lang')) ? localStorage.getItem('bazi_lang') : 'zh';
   let activePrimaryView = 'view-home';
+  let activeFrictionTab = 'tab-fric-specs';
   let lastDivinationResult = null;
   let currentCoinStep = 1;
   let currentCoinLines = [];
@@ -3881,22 +3882,72 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
-    container.appendChild(specsCard);
 
-    // 2. Unified Quick Anchor Navigation Bar (一页统览 · 锚点平滑导航)
-    const navAnchorsWrapper = document.createElement('div');
-    navAnchorsWrapper.className = 'flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-3 sticky top-0 bg-[#0c0e14]/90 backdrop-blur z-10';
-    navAnchorsWrapper.innerHTML = `
+    // Directory navigation strip inside specs card
+    const specsQuickDir = document.createElement('div');
+    specsQuickDir.className = 'p-4 rounded-xl border border-rose-900/40 bg-black/60 space-y-3 font-serif-sc mt-2';
+    specsQuickDir.innerHTML = `
+      <div class="flex items-center justify-between border-b border-rose-900/30 pb-2">
+        <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+          <span>📑</span>
+          <span>${isEn ? 'Directory of Zen-Dao & Cognitive Manual Volumes:' : '原厂心智调律 · 七大专卷导航目录：'}</span>
+        </span>
+        <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Dedicated Single-Page Archives' : '一经一页 · 专卷精研'}</span>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-xs">
+        <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-amber-500/30 bg-amber-950/20 hover:bg-amber-900/40 text-amber-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-zen">
+          <div class="font-bold flex items-center gap-1"><span>☸️</span> <span>${isEn ? 'Zen-Dao' : '禅道三经'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Diamond·Platform·Zhuangzi' : '金刚·坛经·庄子'}</div>
+        </button>
+        <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-blue-500/30 bg-blue-950/20 hover:bg-blue-900/40 text-blue-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-canons">
+          <div class="font-bold flex items-center gap-1"><span>📜</span> <span>${isEn ? '8 Canons' : '八典细注'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Canonical Exegesis' : '正统赋文出厂'}</div>
+        </button>
+        <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-purple-500/30 bg-purple-950/20 hover:bg-purple-900/40 text-purple-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-triggers">
+          <div class="font-bold flex items-center gap-1"><span>⚡</span> <span>${isEn ? 'Red Lines' : '压力红线'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Trigger Signatures' : '四大触发开关'}</div>
+        </button>
+        <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-900/40 text-emerald-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-protocols">
+          <div class="font-bold flex items-center gap-1"><span>🛡️</span> <span>${isEn ? 'Protocols' : '自救降维'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Emergency Reset' : '三阶硬核重启'}</div>
+        </button>
+        <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-teal-500/30 bg-teal-950/20 hover:bg-teal-900/40 text-teal-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-habits">
+          <div class="font-bold flex items-center gap-1"><span>🌿</span> <span>${isEn ? 'Habits' : '五行微调'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? '5-Element Rituals' : '身心微仪式'}</div>
+        </button>
+        <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-amber-500/40 bg-amber-950/30 hover:bg-amber-900/50 text-amber-300 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-iching">
+          <div class="font-bold flex items-center gap-1"><span>☯️</span> <span>${isEn ? 'I Ching' : '易道神机'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? '64 Hexagrams Oracle' : '蓍草金钱起卦'}</div>
+        </button>
+      </div>
+    `;
+    specsCard.appendChild(specsQuickDir);
+
+    // Tab Pane 1: Hardware Specs
+    const paneSpecs = document.createElement('div');
+    paneSpecs.id = 'tab-fric-specs';
+    paneSpecs.className = 'fric-tab-pane space-y-6';
+    paneSpecs.appendChild(specsCard);
+
+    // Unified Quick Anchor Navigation Bar for "全卷通览" (Tab Pane 8)
+    const allNavWrapper = document.createElement('div');
+    allNavWrapper.id = 'tab-fric-all';
+    allNavWrapper.className = 'fric-tab-pane hidden flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-3 sticky top-0 bg-[#0c0e14]/90 backdrop-blur z-10';
+    allNavWrapper.innerHTML = `
       <div class="flex flex-wrap items-center gap-2">
-        <button type="button" data-fric-anchor="fsec-canons" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-amber-950/40 text-amber-300 border-amber-500/50 hover:bg-amber-900/50 flex items-center gap-1.5 shadow-sm">
+        <button type="button" data-fric-anchor="tab-fric-zen" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-amber-950/40 text-amber-300 border-amber-500/50 hover:bg-amber-900/50 flex items-center gap-1.5 shadow-sm">
           <span>☸️</span>
-          <span>${isEn ? 'Zen-Dao Trinity & 8 Canons' : '禅道三经与八典汇通'}</span>
+          <span>${isEn ? 'Zen-Dao Trinity' : '禅道三经至理'}</span>
+        </button>
+        <button type="button" data-fric-anchor="fsec-canons" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-blue-950/30 text-blue-300 border-blue-500/40 hover:bg-blue-900/40 flex items-center gap-1.5">
+          <span>📜</span>
+          <span>${isEn ? '8 Classical Canons' : '八典对症细注'}</span>
         </button>
         <button type="button" data-fric-anchor="fsec-triggers" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-rose-950/30 text-rose-300 border-rose-500/40 hover:bg-rose-900/40 flex items-center gap-1.5">
           <span>⚡</span>
           <span>${isEn ? 'Stress Triggers & Red Lines' : '极端压力触发与红线'}</span>
         </button>
-        <button type="button" data-fric-anchor="fsec-protocols" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-blue-950/30 text-blue-300 border-blue-500/40 hover:bg-blue-900/40 flex items-center gap-1.5">
+        <button type="button" data-fric-anchor="fsec-protocols" class="fric-anchor-btn px-3 py-1.5 text-xs rounded-xl font-serif-sc font-semibold transition border cursor-pointer bg-purple-950/30 text-purple-300 border-purple-500/40 hover:bg-purple-900/40 flex items-center gap-1.5">
           <span>🛡️</span>
           <span>${isEn ? 'Three-Tier Emergency Reset' : '出厂自救三阶降维心法'}</span>
         </button>
@@ -3909,9 +3960,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ${isEn ? '📖 Single-Page Unified Manual' : '📖 一页统览 · 顺流阅读'}
       </span>
     `;
-    container.appendChild(navAnchorsWrapper);
 
-    navAnchorsWrapper.querySelectorAll('.fric-anchor-btn').forEach(btn => {
+    allNavWrapper.querySelectorAll('.fric-anchor-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const targetId = btn.getAttribute('data-fric-anchor');
         const targetEl = document.getElementById(targetId);
@@ -3921,16 +3971,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    const manualBodyWrapper = document.createElement('div');
-    manualBodyWrapper.className = 'space-y-8 pt-2';
-
     // ==========================================
-    // 1. 🌟 禅道三经与八典经文汇通 · 心智解脱专栏 (Canons & Zen-Dao Sanctuary)
+    // 1. 🌟 禅道三经 · 心智解脱专栏 (Zen-Dao Trinity)
     // ==========================================
-    const canonsSection = document.createElement('div');
-    canonsSection.id = 'fsec-canons';
-    canonsSection.className = 'space-y-6 scroll-mt-16';
-
     let zenHtml = '';
     if (mf.zenDaoWisdom) {
       const zd = mf.zenDaoWisdom;
@@ -3950,7 +3993,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="p-4 sm:p-5 rounded-xl border border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-purple-950/20 to-black/80 shadow-xl space-y-3.5">
             <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-amber-500/30">
               <div class="flex items-center space-x-2">
-                <span class="chinese-seal text-[10px] py-0.5">${isEn ? 'SOVEREIGN DIAGNOSTIC' : '🧠 心理状态诊断'}</span>
+                <span class="chinese-seal text-[10px] py-0.5">${isEn ? 'SOVEREIGN DIAGNOSTIC' : '心理状态诊断'}</span>
                 <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300">
                   ${archetypeTitle}
                 </h4>
@@ -4025,8 +4068,8 @@ document.addEventListener('DOMContentLoaded', () => {
           : `${c.theme.split(' ')[0]} bg-black/50`;
 
         const statusBadgeHtml = isPrimary
-          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-black shadow-sm font-mono flex items-center gap-1">${isEn ? (it.statusBadge || it.statusBadgeEn || '🏆 Primary Sovereign Antidote') : (it.statusBadgeZh || it.statusBadge || '🏆 本命第一主药')}</span>`
-          : `<span class="px-2 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-gray-900/80 border border-gray-700/60 flex items-center gap-1">${isEn ? (it.statusBadge || it.statusBadgeEn || '🛡️ Auxiliary Shield') : (it.statusBadgeZh || it.statusBadge || '🛡️ 协同护持经')}</span>`;
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400 text-black shadow-sm font-mono flex items-center gap-1">${isEn ? (it.statusBadge || it.statusBadgeEn || 'Primary Sovereign Antidote') : (it.statusBadgeZh || it.statusBadge || '本命第一主药')}</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10px] font-mono text-gray-400 bg-gray-900/80 border border-gray-700/60 flex items-center gap-1">${isEn ? (it.statusBadge || it.statusBadgeEn || 'Auxiliary Shield') : (it.statusBadgeZh || it.statusBadge || '协同护持经')}</span>`;
 
         const quotesList = it.quotes || [];
         const quotesHtml = quotesList.map(q => `
@@ -4128,6 +4171,15 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    // Tab Pane 2: Zen-Dao Trinity
+    const paneZen = document.createElement('div');
+    paneZen.id = 'tab-fric-zen';
+    paneZen.className = 'fric-tab-pane space-y-6 hidden scroll-mt-16';
+    paneZen.innerHTML = zenHtml;
+
+    // ==========================================
+    // 2. 📜 八大典籍正统经文细注与出厂心智调律 (Eight Canons Exegesis)
+    // ==========================================
     const canonsCardsHtml = (mf.classicalCanonsManual || []).map(c => `
       <div class="p-4 sm:p-5 rounded-xl border border-gray-800 bg-black/45 space-y-3 hover:border-amber-500/40 transition flex flex-col justify-between">
         <div class="space-y-2.5">
@@ -4158,38 +4210,26 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     `).join('');
 
-    canonsSection.innerHTML = `
-      <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/40">
-        <div class="flex items-center space-x-2.5">
-          <span class="text-2xl">☸️</span>
-          <div>
-            <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
-              <span>${isEn ? 'One: Zen-Dao Trinity & Eight Classical Canons Sanctuary' : '一、禅道三经与八典经文汇通 · 心智解脱专栏'}</span>
-            </h4>
-            <p class="text-xs text-gray-400 mt-0.5">
-              ${isEn ? 'Diamond, Platform & Zhuangzi crowned at top, unified with Eight Classical Canons exegesis' : '金刚经破相、坛经离境、庄子游心置顶尊崇 · 融通八大典籍正统经文出厂调律'}
-            </p>
+    // Tab Pane 3: Eight Canons
+    const paneCanons = document.createElement('div');
+    paneCanons.id = 'tab-fric-canons';
+    paneCanons.className = 'fric-tab-pane space-y-6 hidden';
+    paneCanons.innerHTML = `
+      <div id="fsec-canons" class="space-y-4 scroll-mt-16">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-500/40">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">📜</span>
+            <div>
+              <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+                <span>${isEn ? 'Eight Classical Canons Scripture Manual & Factory Tuning' : '八大典籍正统经文细注与出厂心智调律'}</span>
+              </h4>
+              <p class="text-xs text-gray-400 mt-0.5">
+                ${isEn ? 'Sanming, Qiongtong, Ziping Zhenquan, Ditiansui, Yuanhai, Shenfeng, Yuzhao, Lixuzhong Psychological Exegesis' : '三命通会、穷通宝鉴、子平真诠、滴天髓、渊海子平、神峰通考、玉照定真经、李虚中命书八大典籍正统赋文出厂调律'}
+              </p>
+            </div>
           </div>
-        </div>
-        <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300">
-          ${isEn ? 'CANONS SANCTUARY' : '经文汇通'}
-        </span>
-      </div>
-
-      <!-- Crowned Pinned Section: Zen-Dao Trinity Wisdom -->
-      ${zenHtml}
-
-      <!-- Eight Classical Canons Scripture Manual -->
-      <div class="space-y-3 pt-2">
-        <div class="flex items-center justify-between pb-1 border-b border-gray-800">
-          <div class="flex items-center space-x-2">
-            <span class="text-lg">📜</span>
-            <h5 class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc">
-              ${isEn ? 'Eight Classical Canons Scripture Manual & Factory Tuning' : '八大典籍正统经文细注与出厂心智调律'}
-            </h5>
-          </div>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-            ${isEn ? 'All 8 Ancient Canons' : '八典全息'}
+          <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300 font-serif-sc">
+            ${isEn ? 'ALL 8 CANONS' : '八典全息'}
           </span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -4197,14 +4237,13 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
     `;
-    manualBodyWrapper.appendChild(canonsSection);
 
     // ==========================================
-    // 2. ⚡ 极端压力触发开关与认知红线
+    // 3. ⚡ 极端压力触发开关与认知红线 (Stress Triggers)
     // ==========================================
     const triggersSection = document.createElement('div');
     triggersSection.id = 'fsec-triggers';
-    triggersSection.className = 'space-y-4 pt-4 border-t border-gray-800/80 scroll-mt-16';
+    triggersSection.className = 'space-y-4 scroll-mt-16';
     triggersSection.innerHTML = `
       <div class="flex items-center justify-between pb-2 border-b border-rose-900/40">
         <div class="flex items-center space-x-2.5">
@@ -4253,14 +4292,19 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('')}
       </div>
     `;
-    manualBodyWrapper.appendChild(triggersSection);
+
+    // Tab Pane 4: Stress Triggers
+    const paneTriggers = document.createElement('div');
+    paneTriggers.id = 'tab-fric-triggers';
+    paneTriggers.className = 'fric-tab-pane space-y-6 hidden';
+    paneTriggers.appendChild(triggersSection);
 
     // ==========================================
-    // 3. 🛡️ 出厂自救三阶战训降维心法
+    // 4. 🛡️ 出厂自救三阶战训降维心法 (Emergency Protocols)
     // ==========================================
     const protocolsSection = document.createElement('div');
     protocolsSection.id = 'fsec-protocols';
-    protocolsSection.className = 'space-y-5 pt-4 border-t border-gray-800/80 scroll-mt-16';
+    protocolsSection.className = 'space-y-5 scroll-mt-16';
     protocolsSection.innerHTML = `
       <div class="flex items-center justify-between pb-2 border-b border-amber-500/30">
         <div class="flex items-center space-x-2.5">
@@ -4304,21 +4348,26 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('')}
       </div>
     `;
-    manualBodyWrapper.appendChild(protocolsSection);
+
+    // Tab Pane 5: De-escalation Protocols
+    const paneProtocols = document.createElement('div');
+    paneProtocols.id = 'tab-fric-protocols';
+    paneProtocols.className = 'fric-tab-pane space-y-6 hidden';
+    paneProtocols.appendChild(protocolsSection);
 
     // ==========================================
-    // 4. 🌿 每日五行能量微习惯与出厂调律
+    // 5. 🌿 每日五行能量微习惯与出厂调律 (5-Element Habits)
     // ==========================================
     const habitsSection = document.createElement('div');
     habitsSection.id = 'fsec-habits';
-    habitsSection.className = 'space-y-4 pt-4 border-t border-gray-800/80 scroll-mt-16';
+    habitsSection.className = 'space-y-4 scroll-mt-16';
     habitsSection.innerHTML = `
       <div class="flex items-center justify-between pb-2 border-b border-emerald-900/40">
         <div class="flex items-center space-x-2.5">
           <span class="text-2xl">🌿</span>
           <div>
             <h4 class="text-sm sm:text-base font-bold text-emerald-300 font-serif-sc">
-              ${isEn ? 'Four: Daily Five-Element Energy Micro-Habits' : '四、每日五行能量微习惯与出厂调律'}
+              ${isEn ? 'Four: Daily Five-Element Energy Micro-Habits & Factory Tuning' : '四、每日五行能量微习惯与出厂调律'}
             </h4>
             <p class="text-xs text-gray-400 mt-0.5">
               ${isEn ? 'Grounding circadian rhythms and balancing elemental qi with 3~5 minute daily micro-rituals' : '每天3~5分钟微仪式 · 借木火土金水五气调和身心 · 稳固日常心智底盘'}
@@ -4366,9 +4415,67 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('')}
       </div>
     `;
-    manualBodyWrapper.appendChild(habitsSection);
 
-    container.appendChild(manualBodyWrapper);
+    // Zhou Yi I Ching Invitation Card inside Habits
+    const ichingInviteCard = document.createElement('div');
+    ichingInviteCard.className = 'p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-purple-950/20 to-black/80 shadow-xl flex flex-wrap items-center justify-between gap-4 mt-6';
+    ichingInviteCard.innerHTML = `
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-xl">☯️</span>
+          <h4 class="text-base font-bold font-serif-sc text-amber-300">
+            ${isEn ? 'Zhou Yi 64 Hexagrams Divination · Yarrow & Coins Oracle' : '周易文王六十四卦 · 蓍草金钱起卦研解'}
+          </h4>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed max-w-xl font-serif-sc">
+          ${isEn ? 'Consult the timeless I Ching oracle for career crossroads, relationships, wealth, and strategic navigation with CSPRNG yarrow stalks, coins, and plum blossom methods.' : '融汇大衍筮法、三铜钱六掷法、梅花易数时空起卦与六十四卦全典。本卦变卦动爻齐参，解构大义、事业、财智、姻缘与趋避锦囊。'}
+        </p>
+      </div>
+      <button type="button" class="btn-jump-to-iching-subtab px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white text-xs font-bold font-serif-sc transition shadow-lg flex items-center gap-1.5 cursor-pointer">
+        <span>⚡</span>
+        <span>${isEn ? 'Open 64 Hexagrams Divination' : '一键进入六十四卦神机起卦'}</span>
+        <span>→</span>
+      </button>
+    `;
+    habitsSection.appendChild(ichingInviteCard);
+
+    // Tab Pane 6: Five-Element Habits
+    const paneHabits = document.createElement('div');
+    paneHabits.id = 'tab-fric-habits';
+    paneHabits.className = 'fric-tab-pane space-y-6 hidden';
+    paneHabits.appendChild(habitsSection);
+
+    // Append all panes to container
+    container.appendChild(allNavWrapper);
+    container.appendChild(paneSpecs);
+    container.appendChild(paneZen);
+    container.appendChild(paneCanons);
+    container.appendChild(paneTriggers);
+    container.appendChild(paneProtocols);
+    container.appendChild(paneHabits);
+
+    // Wire up any sub-tab jump buttons rendered inside the content
+    container.querySelectorAll('.btn-goto-fric-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-target-tab');
+        if (target && typeof switchFrictionTab === 'function') {
+          switchFrictionTab(target);
+        }
+      });
+    });
+
+    const ichingSubtabBtn = habitsSection.querySelector('.btn-jump-to-iching-subtab');
+    if (ichingSubtabBtn) {
+      ichingSubtabBtn.addEventListener('click', () => {
+        if (typeof switchFrictionTab === 'function') {
+          switchFrictionTab('tab-fric-iching');
+        }
+      });
+    }
+
+    if (typeof switchFrictionTab === 'function') {
+      switchFrictionTab(activeFrictionTab || 'tab-fric-specs');
+    }
   }
 
   // Render Classical Literature Modules (Five Canons Integration)
@@ -10750,7 +10857,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     viewNavBtns.forEach(btn => {
       const v = btn.getAttribute('data-view');
-      if (v === targetViewId) {
+      if (v === targetViewId || (targetViewId === 'view-iching' && v === 'view-friction') || (targetViewId === 'view-simulator' && v === 'view-career')) {
         btn.classList.add('active', 'bg-gradient-to-r', 'from-amber-500', 'to-orange-500', 'text-white', 'border-amber-400/50', 'shadow-lg');
         btn.classList.remove('text-gray-400', 'hover:text-gray-200', 'border-transparent');
       } else {
@@ -10760,7 +10867,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     Object.entries(primaryViews).forEach(([vId, el]) => {
-      if (el) {
+      if (!el) return;
+      if (targetViewId === 'view-iching') {
+        if (vId === 'view-friction' || vId === 'view-iching') {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      } else if (targetViewId === 'view-simulator') {
+        if (vId === 'view-career' || vId === 'view-simulator') {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      } else if (targetViewId === 'view-career') {
+        if (vId === 'view-career' || vId === 'view-simulator') {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      } else if (targetViewId === 'view-friction') {
+        if (vId === 'view-friction') {
+          el.classList.remove('hidden');
+        } else if (vId === 'view-iching') {
+          // controlled by switchFrictionTab
+        } else {
+          el.classList.add('hidden');
+        }
+      } else {
         if (vId === targetViewId) {
           el.classList.remove('hidden');
         } else {
@@ -10768,6 +10902,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+
+    if (targetViewId === 'view-iching') {
+      if (typeof switchFrictionTab === 'function') {
+        switchFrictionTab('tab-fric-iching');
+      }
+    } else if (targetViewId === 'view-friction') {
+      if (typeof switchFrictionTab === 'function') {
+        switchFrictionTab(activeFrictionTab || 'tab-fric-specs');
+      }
+    } else if (targetViewId === 'view-simulator') {
+      const simSec = document.getElementById('scenarioSimulatorSection') || document.getElementById('view-simulator');
+      if (simSec && typeof simSec.scrollIntoView === 'function') {
+        setTimeout(() => simSec.scrollIntoView({ behavior: 'smooth' }), 50);
+      }
+    }
 
     // If switching to home view, refresh radar canvas & ziping score
     if (targetViewId === 'view-home' && currentBaziResult) {
@@ -10833,7 +10982,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // If switching to simulator view, run simulation if empty
     if (targetViewId === 'view-simulator' && currentBaziResult) {
       const simContainer = document.getElementById('simResultsContainer');
-      if (simContainer && !simContainer.children.length && typeof executeScenarioSimulation === 'function') {
+      if (simContainer && (!simContainer.children || !simContainer.children.length) && typeof executeScenarioSimulation === 'function') {
         executeScenarioSimulation();
       }
       if (typeof renderEcologicalResonance === 'function') {
@@ -11231,6 +11380,75 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetTab) switchSimulatorSubpage(targetTab);
     });
   });
+
+  // Friction & Zen-Dao Dedicated Sub-Tabs Switching Logic (类似于8经架构 · 一经一页)
+  const fricTabBtns = document.querySelectorAll('#frictionTabsContainer .fric-tab-btn');
+
+  function switchFrictionTab(targetTabId) {
+    if (!targetTabId) return;
+    activeFrictionTab = targetTabId;
+    const btns = document.querySelectorAll('#frictionTabsContainer .fric-tab-btn');
+    const contentPanes = [
+      'tab-fric-specs', 'tab-fric-zen', 'tab-fric-canons',
+      'tab-fric-triggers', 'tab-fric-protocols', 'tab-fric-habits'
+    ];
+    const ichingPane = document.getElementById('tab-fric-iching');
+    const viewIChing = document.getElementById('view-iching');
+    const allNav = document.getElementById('tab-fric-all');
+
+    if (btns && btns.length) {
+      btns.forEach(b => {
+        const isMatch = (b.getAttribute('data-fric-tab') === targetTabId);
+        if (isMatch) {
+          b.classList.add('active');
+          b.classList.remove('text-gray-400', 'hover:text-gray-200');
+        } else {
+          b.classList.remove('active');
+          b.classList.add('text-gray-400', 'hover:text-gray-200');
+        }
+      });
+    }
+
+    if (targetTabId === 'tab-fric-all') {
+      if (allNav) allNav.classList.remove('hidden');
+      contentPanes.forEach(id => {
+        const p = document.getElementById(id);
+        if (p) p.classList.remove('hidden');
+      });
+      if (ichingPane) ichingPane.classList.add('hidden');
+    } else if (targetTabId === 'tab-fric-iching') {
+      if (allNav) allNav.classList.add('hidden');
+      contentPanes.forEach(id => {
+        const p = document.getElementById(id);
+        if (p) p.classList.add('hidden');
+      });
+      if (ichingPane) ichingPane.classList.remove('hidden');
+      if (viewIChing) viewIChing.classList.remove('hidden');
+    } else {
+      if (allNav) allNav.classList.add('hidden');
+      if (ichingPane) ichingPane.classList.add('hidden');
+      contentPanes.forEach(id => {
+        const p = document.getElementById(id);
+        if (p) {
+          if (p.id === targetTabId) {
+            p.classList.remove('hidden');
+          } else {
+            p.classList.add('hidden');
+          }
+        }
+      });
+    }
+  }
+  window.switchFrictionTab = switchFrictionTab;
+
+  if (fricTabBtns && fricTabBtns.length) {
+    fricTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-fric-tab');
+        if (targetTab) switchFrictionTab(targetTab);
+      });
+    });
+  }
 
   // Transit Fortune Cycle Sub-Tabs (Decade / Annual / Month / Day)
   const fortuneCycleTabs = document.getElementById('fortuneCycleTabs');
@@ -16862,12 +17080,19 @@ document.addEventListener('DOMContentLoaded', () => {
       lang = arg3;
       if (arg1 && typeof arg1 === 'object') currentBaziResult = arg1;
       if (arg2 && typeof arg2 === 'object') currentLuckResult = arg2;
+    } else if (typeof arg3 === 'boolean') {
+      lang = arg3 ? 'en' : 'zh';
+      if (arg1 && typeof arg1 === 'object') currentBaziResult = arg1;
+      if (arg2 && typeof arg2 === 'object') currentLuckResult = arg2;
     } else if (typeof arg2 === 'string') {
       lang = arg2;
       if (arg1 && typeof arg1 === 'object') currentBaziResult = arg1;
+    } else if (typeof arg2 === 'boolean') {
+      lang = arg2 ? 'en' : 'zh';
+      if (arg1 && typeof arg1 === 'object') currentBaziResult = arg1;
     }
     const container = document.getElementById('imperialDossierContainer');
-    if (!container) return;
+    if (!container) return '';
 
     if (!currentBaziResult) {
       if (typeof triggerCalculate === 'function') {
@@ -17664,6 +17889,180 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     }
+
+    // Lifelong 100-Year Hexagram Qi Fluctuations & Transit Trajectory Vector SVG Generator
+    function generateImperialHexagramTrajectorySvg(points, activeAge, curYear, isEnMode) {
+      if (!points || points.length === 0) return '';
+      const totalPts = points.length;
+      const w = 730;
+      const h = 88;
+      const padL = 36;
+      const padR = 16;
+      const padT = 18;
+      const padB = 16;
+      const chartW = w - padL - padR;
+      const chartH = h - padT - padB;
+
+      const getX = (idx) => padL + (idx / (totalPts - 1)) * chartW;
+      const getY = (sc) => padT + chartH - ((Math.max(20, Math.min(100, sc)) - 20) / 80) * chartH;
+
+      // Find Xian Tian boundary
+      const xtCutoff = points.findIndex(p => !p.isXianTian);
+      const xtCount = (xtCutoff > 0) ? xtCutoff : 48;
+      const xtWidth = (xtCount / (totalPts - 1)) * chartW;
+
+      // Build coordinates and nodes
+      let coords = [];
+      let mutatedNodes = [];
+      let preservedNodes = [];
+
+      for (let i = 0; i < totalPts; i++) {
+        const pt = points[i];
+        const x = getX(i);
+        const sc = (pt.score !== undefined) ? pt.score : 65;
+        const y = getY(sc);
+        coords.push({ x, y, pt });
+
+        if (pt.isMutated) {
+          mutatedNodes.push({ x: x.toFixed(1), y: y.toFixed(1) });
+        } else {
+          preservedNodes.push({ x: x.toFixed(1), y: y.toFixed(1) });
+        }
+      }
+
+      // Polyline path
+      const linePath = coords.map((c, i) => `${i === 0 ? 'M' : 'L'} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(' ');
+      const areaPath = `${linePath} L ${coords[totalPts - 1].x.toFixed(1)} ${(padT + chartH).toFixed(1)} L ${coords[0].x.toFixed(1)} ${(padT + chartH).toFixed(1)} Z`;
+
+      // Active Age Cursor
+      const activeIdx = Math.max(0, Math.min(totalPts - 1, activeAge - 1));
+      const curPt = points[activeIdx] || points[0];
+      const curX = getX(activeIdx);
+      const curY = getY((curPt.score !== undefined) ? curPt.score : 65);
+      const curAgeVal = (curPt.age !== undefined) ? curPt.age : activeAge;
+      const curTagText = isEnMode
+        ? `Age ${curAgeVal} (${curPt.year || curYear}) · Current Needle`
+        : `${curAgeVal}岁 (${curPt.year || curYear}年) · 当前岁次游标`;
+
+      // Score Grid lines
+      const scoreLevels = [40, 60, 80, 100];
+      const gridLinesHtml = scoreLevels.map(sc => {
+        const y = getY(sc).toFixed(1);
+        return `
+          <line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="rgba(180, 130, 60, 0.18)" stroke-dasharray="2 3" stroke-width="0.8"/>
+          <text x="${padL - 4}" y="${(parseFloat(y) + 2.5).toFixed(1)}" text-anchor="end" fill="#92400e" font-size="7px" font-family="monospace">${sc}%</text>
+        `;
+      }).join('');
+
+      // Age ticks
+      const ageTicks = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      const ageTicksHtml = ageTicks.map(ag => {
+        const x = getX(ag - 1).toFixed(1);
+        const yLine = (padT + chartH).toFixed(1);
+        const yText = (padT + chartH + 10).toFixed(1);
+        return `
+          <line x1="${x}" y1="${yLine}" x2="${x}" y2="${(parseFloat(yLine) + 2.5).toFixed(1)}" stroke="#b45309" stroke-width="0.8"/>
+          <text x="${x}" y="${yText}" text-anchor="middle" fill="#78350f" font-size="7px" font-family="monospace">${ag}</text>
+        `;
+      }).join('');
+
+      const chartTitle = isEnMode ? 'Lifelong 64 Hexagrams Dynamic Qi Trajectory' : '百岁岁运六十四卦易数气机波动轨迹';
+      const legendMutated = isEnMode ? 'Mutated (Breakthrough)' : '同性相斥 · 变卦激荡';
+      const legendPreserved = isEnMode ? 'Preserved (Harmony)' : '异性相吸 · 守本稳健';
+      const legendCursor = isEnMode ? 'Current Needle' : '当前岁次游标';
+      const axisStart = isEnMode ? 'Age 1 (Early Inception)' : '1岁 (初爻潜龙发端)';
+      const axisEnd = isEnMode ? 'Age 100 (Centenarian)' : '100岁 (期颐圆满归道)';
+      const epochXian = isEnMode ? `Early Heaven (1-${xtCount}y)` : `前半生 · 先天命基 (1~${xtCount}岁)`;
+      const epochHou = isEnMode ? `Later Heaven (${xtCount + 1}-100y)` : `后半生 · 后天跃升 (${xtCount + 1}~100岁)`;
+
+      return `
+        <div class="bg-amber-50/40 rounded-lg p-1 border border-amber-900/20 space-y-0.5">
+          <!-- Legend Bar -->
+          <div class="flex flex-wrap items-center justify-between text-[8px] text-amber-950 px-0.5 border-b border-amber-900/10 pb-0.5 font-serif-sc">
+            <div class="flex items-center gap-1.5 font-bold text-amber-900">
+              <span>📈</span>
+              <span>${chartTitle}</span>
+            </div>
+            <div class="flex items-center gap-2 text-[7.5px] font-mono text-gray-700">
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-500 inline-block border border-amber-700"></span>
+                <span>${legendMutated}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block border border-emerald-700"></span>
+                <span>${legendPreserved}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded bg-rose-600 inline-block"></span>
+                <span>${legendCursor}</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- SVG Chart -->
+          <div class="relative w-full overflow-hidden">
+            <svg viewBox="0 0 ${w} ${h}" class="w-full h-18 sm:h-20 block select-none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="imperialHexGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.30"/>
+                  <stop offset="50%" stop-color="#10b981" stop-opacity="0.16"/>
+                  <stop offset="100%" stop-color="#6366f1" stop-opacity="0.02"/>
+                </linearGradient>
+                <linearGradient id="imperialHexStrokeGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="50%" stop-color="#10b981"/>
+                  <stop offset="100%" stop-color="#8b5cf6"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Chart Background & Axes -->
+              <rect x="${padL}" y="${padT}" width="${chartW}" height="${chartH}" fill="rgba(255, 255, 255, 0.45)" rx="2"/>
+
+              <!-- Xian Tian & Hou Tian Top Epoch Ribbon -->
+              <rect x="${padL}" y="${padT - 6.5}" width="${xtWidth.toFixed(1)}" height="5.5" fill="rgba(217, 119, 6, 0.4)" rx="1"/>
+              <text x="${(padL + 3).toFixed(1)}" y="${padT - 2}" fill="#92400e" font-size="6px" font-family="sans-serif" font-weight="bold">${epochXian}</text>
+
+              <rect x="${(padL + xtWidth).toFixed(1)}" y="${padT - 6.5}" width="${(chartW - xtWidth).toFixed(1)}" height="5.5" fill="rgba(109, 40, 217, 0.35)" rx="1"/>
+              <text x="${(padL + xtWidth + 3).toFixed(1)}" y="${padT - 2}" fill="#4c1d95" font-size="6px" font-family="sans-serif" font-weight="bold">${epochHou}</text>
+
+              <!-- Horizontal Grid Lines & Score Labels -->
+              ${gridLinesHtml}
+
+              <!-- Axis Baseline -->
+              <line x1="${padL}" y1="${(padT + chartH).toFixed(1)}" x2="${w - padR}" y2="${(padT + chartH).toFixed(1)}" stroke="#78350f" stroke-width="0.8"/>
+
+              <!-- Area Fill -->
+              <path d="${areaPath}" fill="url(#imperialHexGrad)" />
+
+              <!-- Trajectory Curve -->
+              <path d="${linePath}" fill="none" stroke="url(#imperialHexStrokeGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Nodes: Mutated vs Preserved -->
+              ${mutatedNodes.map(m => `<circle cx="${m.x}" cy="${m.y}" r="1.5" fill="#f59e0b" stroke="#ffffff" stroke-width="0.5"/>`).join('')}
+              ${preservedNodes.map(m => `<circle cx="${m.x}" cy="${m.y}" r="1.5" fill="#10b981" stroke="#ffffff" stroke-width="0.5"/>`).join('')}
+
+              <!-- Age X-Axis Ticks -->
+              ${ageTicksHtml}
+
+              <!-- Active Age Indicator Line & Tag -->
+              <line x1="${curX.toFixed(1)}" y1="${padT}" x2="${curX.toFixed(1)}" y2="${(padT + chartH).toFixed(1)}" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 2" />
+              <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="3" fill="#e11d48" stroke="#ffffff" stroke-width="1"/>
+
+              <!-- Floating Tag -->
+              <rect x="${Math.max(padL, Math.min(w - padR - 92, curX - 46)).toFixed(1)}" y="${(padT - 15).toFixed(1)}" width="92" height="10" rx="2" fill="#ffe4e6" stroke="#e11d48" stroke-width="0.8"/>
+              <text x="${Math.max(padL + 46, Math.min(w - padR - 46, curX)).toFixed(1)}" y="${(padT - 7.5).toFixed(1)}" text-anchor="middle" fill="#9f1239" font-size="6.8px" font-family="monospace" font-weight="bold">${curTagText}</text>
+            </svg>
+          </div>
+
+          <!-- Bottom Axis Inception / Centenarian Labels -->
+          <div class="flex justify-between items-center text-[7px] text-amber-900/80 font-mono px-0.5">
+            <span>${axisStart}</span>
+            <span>${axisEnd}</span>
+          </div>
+        </div>
+      `;
+    }
+
     const activeTlItem = tl.find(t => t.year === currentCalYear) || tl.find(t => t.age === currentAge) || tl[0] || {
       year: currentCalYear,
       ganZhi: '丙午',
@@ -18320,44 +18719,44 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
+        <div class="imperial-frame flex flex-col justify-between p-3 space-y-1">
           <!-- Header -->
-          <div class="text-center space-y-0.5 border-b-2 border-amber-900/60 pb-1.5">
+          <div class="text-center space-y-0.5 border-b-2 border-amber-900/60 pb-1">
             <div class="flex items-center justify-between">
               <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL SEAL' : '钦天监正堂之宝'}</span>
-              <span class="text-[10px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · VOLUME I' : '天机御览 · 卷一岁运'}</span>
+              <span class="text-[9.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · VOLUME I' : '天机御览 · 卷一岁运'}</span>
             </div>
-            <h1 class="text-lg font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Volume I · Lifelong Transits & 64 Hexagrams System' : '岁运流转 · 大运流年流月流日全阶推演系统'}</h1>
-            <p class="text-[10px] text-amber-900/85 font-serif-sc">${isEn ? '5-Pillar Synergy · Decennial Luck, Tai Sui, Solar Terms & Daily Harmonics' : '五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶'}</p>
-            <div class="text-[9px] font-mono text-amber-950/80 bg-amber-100/50 py-0.5 px-2 rounded border border-amber-900/20 inline-block mt-0.5">
+            <h1 class="text-base sm:text-lg font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Volume I · Lifelong Transits & 64 Hexagrams System' : '岁运流转 · 大运流年流月流日全阶推演系统'}</h1>
+            <p class="text-[9px] sm:text-[9.5px] text-amber-900/85 font-serif-sc">${isEn ? '5-Pillar Synergy · Decennial Luck, Tai Sui, Solar Terms & Daily Harmonics' : '五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶'}</p>
+            <div class="text-[8.5px] font-mono text-amber-950/80 bg-amber-100/50 py-0.2 px-2 rounded border border-amber-900/20 inline-block">
               ${luckGenderStr} · ${luckDirStr} · ${luckStartAgeStr}
             </div>
           </div>
 
           <!-- Module 1: Lifelong Chrono-Navigator -->
-          <div class="imperial-card imperial-card-gold p-2 space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 font-serif-sc">
             <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
               <div class="flex items-center gap-1.5">
                 <span>⏳</span>
                 <span class="font-bold text-xs text-amber-950">${isEn ? 'Lifelong Chrono-Navigator (1~100 Years)' : '百岁运势时空罗盘 (Lifelong Chrono-Navigator)'}</span>
               </div>
-              <span class="text-[8.5px] font-mono text-amber-900 bg-amber-200/60 px-1.5 py-0.2 rounded border border-amber-500/30">${isEn ? '1~100y Panorama' : '1~100 岁全景'}</span>
+              <span class="text-[8px] font-mono text-amber-900 bg-amber-200/60 px-1 py-0.2 rounded border border-amber-500/30">${isEn ? '1~100y Panorama' : '1~100 岁全景'}</span>
             </div>
 
             <!-- Dynamic Energy Curve & Life Fortune Tide Vector SVG -->
             ${generateImperialLifelongCurveSvg(tl, currentAge, currentCalYear, isEn)}
 
             <!-- Spotlight Card of Active Year -->
-            <div class="bg-white/80 rounded p-1.5 border border-amber-900/15 space-y-1">
-              <div class="flex items-center justify-between text-[10px] font-bold">
+            <div class="bg-white/80 rounded p-1 border border-amber-900/15 space-y-0.5 text-[8px]">
+              <div class="flex items-center justify-between text-[9.5px] font-bold">
                 <span class="text-amber-950 flex items-center gap-1">
                   <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
                   <span>${activeYearAgeHeading}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-900 border border-emerald-400/40">${isEn ? ((activeTlItem.alertsEn && activeTlItem.alertsEn[0]) || 'Harmonious Transit') : ((activeTlItem.alerts && activeTlItem.alerts[0]) || '岁运祥和')}</span>
+                <span class="text-[8px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-900 border border-emerald-400/40">${isEn ? ((activeTlItem.alertsEn && activeTlItem.alertsEn[0]) || 'Harmonious Transit') : ((activeTlItem.alerts && activeTlItem.alerts[0]) || '岁运祥和')}</span>
               </div>
 
-              <div class="grid grid-cols-4 gap-1 text-[8.5px] text-gray-700 bg-amber-50/60 p-1 rounded">
+              <div class="grid grid-cols-4 gap-1 text-[8px] text-gray-700 bg-amber-50/60 p-1 rounded">
                 <div><span class="text-gray-500">${isEn ? 'Decade Cycle:' : '所属十年大运:'}</span> <b class="text-gray-900 font-mono block">${isEn ? activeDecadeLabelEn : activeDecadeLabelZh}</b></div>
                 <div><span class="text-gray-500">${isEn ? 'Ten God Ruler:' : '岁君十神司权:'}</span> <b class="text-amber-900 font-mono block">${isEn ? (activeTlItem.tenGodEn || I18N.getGod(activeTlItem.tenGod, 'en')) : activeTlItem.tenGod}</b></div>
                 <div><span class="text-gray-500">${isEn ? 'Na-Yin Element:' : '年柱纳音律动:'}</span> <b class="text-gray-900 font-mono block">${isEn ? (activeTlItem.naYinEn || I18N.getNaYin(activeTlItem.naYin, 'en')) : activeTlItem.naYin}</b></div>
@@ -18365,19 +18764,19 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
 
               <!-- Energy and Wealth metrics -->
-              <div class="grid grid-cols-2 gap-2 text-[9px] font-mono pt-0.5">
-                <div class="flex items-center justify-between px-1.5 py-0.5 rounded bg-amber-100/70 border border-amber-900/10">
+              <div class="grid grid-cols-2 gap-2 text-[8px] font-mono pt-0.5">
+                <div class="flex items-center justify-between px-1 py-0.2 rounded bg-amber-100/70 border border-amber-900/10">
                   <span class="text-gray-600">${isEn ? 'Vitality & Energy Index:' : '生命能量与活力指数:'}</span>
                   <span class="font-bold text-amber-950">${activeTlItem.energyScore || 62} / 100</span>
                 </div>
-                <div class="flex items-center justify-between px-1.5 py-0.5 rounded bg-amber-100/70 border border-amber-900/10">
+                <div class="flex items-center justify-between px-1 py-0.2 rounded bg-amber-100/70 border border-amber-900/10">
                   <span class="text-gray-600">${isEn ? 'Wealth & Opportunity Tide:' : '财富运势与机遇潮汐:'}</span>
                   <span class="font-bold text-amber-950">${activeTlItem.wealthScore || 55} / 100</span>
                 </div>
               </div>
 
               <!-- Transit directive -->
-              <div class="pt-1 border-t border-amber-900/10 text-[9px] leading-relaxed text-gray-800">
+              <div class="pt-0.5 border-t border-amber-900/10 text-[8px] leading-relaxed text-gray-800">
                 <span class="font-bold text-amber-950">🎯 ${isEn ? 'Strategic Transit Directive: ' : '流年战略锦囊与行持准则：'}</span>
                 <span>${isEn ? (activeTlItem.directiveEn || 'Consolidate core competencies, maintain prudence, avoid impulsive speculative ventures, and accumulate compounding advantage.') : (activeTlItem.directiveZh || '气机平稳，此岁最宜深耕根本、储备能量，忌盲目扩张与冒进投机；修身立德，积厚流光。')}</span>
               </div>
@@ -18385,14 +18784,17 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Module 2: I-Ching 64 Hexagrams Lifelong Progression -->
-          <div class="imperial-card imperial-card-accent p-2 space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 font-serif-sc">
             <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
               <div class="flex items-center gap-1.5">
                 <span>☯️</span>
                 <span class="font-bold text-xs text-amber-950">${isEn ? 'I-Ching 64 Hexagrams Cycle · Lifelong Progression' : '周易六十四卦周期推演图 · 百岁岁运演化与六爻时序全景'}</span>
               </div>
-              <span class="text-[8.5px] font-mono text-amber-900">${isEn ? 'Ni Haisha Tian Ji Hologram' : '倪海厦天纪易数推演 · 六十四卦全息图谱'}</span>
+              <span class="text-[8px] font-mono text-amber-900">${isEn ? 'Ni Haisha Tian Ji Hologram' : '倪海厦天纪易数推演 · 六十四卦全息图谱'}</span>
             </div>
+
+            <!-- Dynamic Lifelong 100-Year Hexagram Trajectory Vector SVG -->
+            ${generateImperialHexagramTrajectorySvg(hexTrajectoryList, currentAge, currentCalYear, isEn)}
 
             <!-- Active Year Hexagram Details -->
             <div class="bg-white/80 rounded p-1.5 border border-amber-900/15 space-y-1 text-xs">
@@ -19191,6 +19593,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderImperialDossierPages(lang);
       });
     }
+    return container ? container.innerHTML : '';
   }
 
   // ==========================================================================

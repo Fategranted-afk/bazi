@@ -600,7 +600,7 @@
           <span data-i18n="nav_view_canons">十二大典与经文细注</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_canons">十二典通</span>
         </button>
-        <button id="navBtnIChing" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-iching">
+        <button id="navBtnIChing" class="hidden view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-iching">
           <span class="text-base">☯️</span>
           <span data-i18n="nav_view_iching">周易六十四卦 · 蓍草/金钱起卦研解</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_iching">易道神机</span>
@@ -615,7 +615,7 @@
           <span data-i18n="nav_view_career">职场打工人与财运事业推演</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/30 font-normal" data-i18n="seal_view_career">职场破局</span>
         </button>
-        <button id="navBtnSimulator" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-simulator">
+        <button id="navBtnSimulator" class="hidden view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-simulator">
           <span class="text-base">⚖️</span>
           <span data-i18n="nav_view_simulator">胜负沙盘 (双轨对抗推演)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-950/60 text-indigo-300 border border-indigo-800/30 font-normal" data-i18n="seal_view_simulator">推演对决</span>
@@ -1271,9 +1271,237 @@
         </div>
       </div>
 
+      <!-- Friction & Zen-Dao Sub-Tabs Navigation (类似于8经架构 · 一经一页) -->
+      <div id="frictionTabsContainer" class="flex flex-wrap border-b border-gray-800 bg-[#171922] rounded-xl p-1.5 gap-1 shadow-md">
+        <button type="button" class="fric-tab-btn active text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition" data-fric-tab="tab-fric-specs">
+          <span data-i18n="tab_fric_specs">🧘 《原厂心智说明》</span>
+          <span class="text-[10px] bg-rose-500/20 text-rose-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_specs_badge">硬件体检</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-zen">
+          <span data-i18n="tab_fric_zen">☸️ 《禅道三经至理》</span>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_zen_badge">金刚·坛经·庄子</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-canons">
+          <span data-i18n="tab_fric_canons">📜 《八典对症细注》</span>
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_canons_badge">正统赋文</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-triggers">
+          <span data-i18n="tab_fric_triggers">⚡ 《极端压力红线》</span>
+          <span class="text-[10px] bg-purple-500/20 text-purple-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_triggers_badge">触发开关</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-protocols">
+          <span data-i18n="tab_fric_protocols">🛡️ 《自救三阶降维》</span>
+          <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_protocols_badge">硬重启法</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-habits">
+          <span data-i18n="tab_fric_habits">🌿 《五行微习惯》</span>
+          <span class="text-[10px] bg-teal-500/20 text-teal-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_habits_badge">身心调理</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-iching">
+          <span data-i18n="tab_fric_iching">☯️ 《周易文王六十四卦》</span>
+          <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_iching_badge">易道神机</span>
+        </button>
+        <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-all">
+          <span data-i18n="tab_fric_all">📑 《全卷通览》</span>
+          <span class="text-[10px] bg-gray-700/50 text-gray-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_all_badge">全篇顺读</span>
+        </button>
+      </div>
+
       <!-- Main Friction Content Container (Gauge + 3min Somatic + 4 Combat Solutions + Zen/Dao Trinity) -->
       <div id="frictionContentContainer" class="space-y-6">
         <!-- Injected dynamically via JavaScript -->
+      </div>
+
+      <!-- Tab Pane 7: I-Ching Divination Container (周易文王六十四卦 · 易道神机起卦研解) -->
+      <div id="tab-fric-iching" class="fric-tab-pane hidden space-y-6">
+        <!-- View 4: Zhou Yi (I Ching) 64 Hexagrams Divination (周易六十四卦起卦研解) -->
+        <div id="view-iching" class="space-y-6">
+          <!-- Header Banner -->
+          <div class="p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-black/60 to-purple-950/40 shadow-2xl relative overflow-hidden">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center space-x-2 mb-1">
+                  <span class="chinese-seal text-xs py-0.5" data-i18n="seal_view_iching">易道天机</span>
+                  <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-amber-300" data-i18n="iching_banner_title">
+                    周易文王六十四卦 · 蓍草金钱起卦研解
+                  </h2>
+                </div>
+                <p class="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed" data-i18n="iching_banner_desc">
+                  融汇大衍筮法（老阴/少阳/少阴/老阳正统概率）、三铜钱六掷法、梅花易数时空起卦与六十四卦全典。本卦变卦动爻齐参，解构大义、事业、财智、姻缘与趋避锦囊。
+                </p>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono" data-i18n="iching_csprng_badge">
+                  ☯️ 大衍筮法 · CSPRNG
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divination Interactive Control Console -->
+          <div class="bg-card p-5 rounded-2xl border border-border-color shadow-xl space-y-4">
+            <!-- Query / Intent Input & Select -->
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="relative flex-1">
+                <input type="text" id="ichingQueryInput" placeholder="心念所感，所测何事？（如：近期创业合伙前景、重大职业转型决策、家庭情感走势...）" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500 transition" data-i18n-placeholder="iching_query_placeholder">
+              </div>
+              <!-- 64 Hexagrams Direct Dropdown -->
+              <div class="w-full sm:w-64">
+                <select id="ichingSelect" class="w-full bg-black/50 border border-gray-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-amber-500 font-serif-sc">
+                  <option value="" data-i18n="iching_select_placeholder">📖 六十四卦速查全览...</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Quick Inquiry Presets -->
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <span class="text-gray-400 font-serif-sc" data-i18n="iching_quick_intent_label">🎯 快捷心念直测:</span>
+              <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-rose-950/40 text-rose-300 hover:bg-rose-900/60 border border-rose-700/40 transition cursor-pointer" data-intent="什么时候可以碰到对象，以及对象在何方" data-intent-en="When and where will I meet my spouse?">
+                💑 <span data-i18n="iching_chip_romance">什么时候碰到对象，在何方</span>
+              </button>
+              <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-blue-950/40 text-blue-300 hover:bg-blue-900/60 border border-blue-700/40 transition cursor-pointer" data-intent="今年适合跳槽创业还是留在原单位" data-intent-en="Career transition and venture outlook?">
+                💼 <span data-i18n="iching_chip_career">事业跳槽创业与生态位</span>
+              </button>
+              <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/60 border border-emerald-700/40 transition cursor-pointer" data-intent="未来半年投资理财与财富收益走势" data-intent-en="Wealth outlook and investment returns?">
+                💰 <span data-i18n="iching_chip_wealth">投资理财与财富守成</span>
+              </button>
+              <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 border border-amber-700/40 transition cursor-pointer" data-intent="眼下这件事去留进退吉凶如何决断" data-intent-en="Decision feasibility: should I proceed?">
+                🧭 <span data-i18n="iching_chip_decision">进退去留抉择可行性</span>
+              </button>
+            </div>
+
+            <!-- Action Buttons Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <!-- Button 1: Instant Sacred Yarrow -->
+              <button id="ichingInstantBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-amber-500/40">
+                <span class="text-lg">⚡</span>
+                <span data-i18n="iching_btn_instant">一键神机起卦 (大衍筮法)</span>
+              </button>
+
+              <!-- Button 2: Interactive 3 Coins -->
+              <button id="ichingCoinBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-800 to-indigo-800 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-purple-600/40">
+                <span class="text-lg">🪙</span>
+                <span data-i18n="iching_btn_coin">三铜钱摇卦 (六掷成卦)</span>
+              </button>
+
+              <!-- Button 3: Plum Blossom Time Divination -->
+              <button id="ichingTimeBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-teal-800 to-emerald-800 hover:from-teal-700 hover:to-emerald-700 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-teal-600/40">
+                <span class="text-lg">⏱️</span>
+                <span data-i18n="iching_btn_time">梅花易数时间卦 (当下气运)</span>
+              </button>
+            </div>
+
+            <!-- Coin Toss Interactive Arena (Hidden by default unless Coin Toss is active) -->
+            <div id="coinTossArena" class="hidden p-4 rounded-xl bg-black/40 border border-purple-500/40 space-y-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-800/40 pb-2">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-bold text-purple-300 font-serif-sc" data-i18n="coin_arena_title">🪙 乾隆通宝 · 三铜钱六掷摇卦实录</span>
+                  <span id="coinStepBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-purple-900/40 text-purple-200 border border-purple-700/40 font-mono">第 1 / 6 掷</span>
+                </div>
+                <button id="coinResetBtn" class="text-xs text-gray-400 hover:text-rose-400 transition" data-i18n="btn_reset_coin">重新开始</button>
+              </div>
+
+              <!-- 3 Coins Graphic Representation -->
+              <div class="flex items-center justify-center gap-4 sm:gap-8 py-3">
+                <div id="coinGraphic1" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
+                  字 (3)
+                </div>
+                <div id="coinGraphic2" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
+                  字 (3)
+                </div>
+                <div id="coinGraphic3" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
+                  背 (2)
+                </div>
+              </div>
+
+              <!-- Coin Toss Interactive Button -->
+              <div class="flex justify-center">
+                <button id="throwCoinBtn" class="px-8 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm shadow-xl transition active:scale-95" data-i18n="coin_throw_initial">
+                  掷出第 1 爻 (初爻)
+                </button>
+              </div>
+
+              <!-- Incremental Lines Built -->
+              <div id="coinLinesProgress" class="flex flex-col-reverse gap-1.5 max-w-sm mx-auto pt-2">
+                <!-- Step lines appear here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Divination Result Container -->
+          <div id="ichingResultContainer" class="space-y-6">
+            <!-- Default Prompt before casting -->
+            <div id="ichingInitPrompt" class="p-12 text-center bg-card rounded-2xl border border-border-color shadow-lg space-y-3">
+              <div class="text-4xl">☯️</div>
+              <h3 class="text-base font-bold text-gray-300 font-serif-sc" data-i18n="iching_init_title">
+                易者，变也。穷则变，变则通，通则久。
+              </h3>
+              <p class="text-xs text-gray-500 max-w-md mx-auto" data-i18n="iching_init_desc">
+                请诚心默想心中所求，点击上方【一键神机起卦】、【三铜钱摇卦】或【梅花易数时间卦】，感通天地阴阳造化。
+              </p>
+            </div>
+
+            <!-- Result Card (Hidden until cast) -->
+            <div id="ichingResultCard" class="hidden space-y-6">
+              <!-- Overview Banner & Deciding Rule Badge -->
+              <div id="ichingMetaBanner" class="p-4 rounded-xl bg-black/40 border border-gray-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <!-- Metadata injected via JS -->
+              </div>
+
+              <!-- Targeted Custom Inquiry Direct Resolution Card (问事神机直断) -->
+              <div id="ichingTargetedInquiryCard" class="space-y-4">
+                <!-- Dynamically populated via renderIChingResult -->
+              </div>
+
+              <!-- Dual Hexagram Visual Display (Original Hexagram vs. Resulting Hexagram) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Original Hexagram (本卦) -->
+                <div id="originalHexagramCard" class="p-5 rounded-2xl border border-amber-600/40 bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 shadow-xl space-y-4">
+                  <!-- Injected via JS -->
+                </div>
+
+                <!-- Resulting Hexagram (变卦 / 之卦) -->
+                <div id="resultingHexagramCard" class="p-5 rounded-2xl border border-purple-600/40 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 shadow-xl space-y-4">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+
+              <!-- Complementary Hexagram Perspective Badges (互卦 / 错卦 / 综卦) -->
+              <div id="complementaryHexagramsBar" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <!-- Injected via JS -->
+              </div>
+
+              <!-- Canonical Scriptures (卦辞、彖传、大象传、六爻爻辞) -->
+              <div class="p-5 rounded-2xl border border-border-color bg-card shadow-xl space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                  <h3 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+                    <span data-i18n="iching_canonical_sec_title">📜 文王卦辞与先秦经文全典 (Canonical Scriptures)</span>
+                  </h3>
+                  <span id="oracleFocusTag" class="text-[11px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">
+                    动爻定断
+                  </span>
+                </div>
+
+                <div id="canonicalScripturesContent" class="space-y-4 text-xs sm:text-sm">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+
+              <!-- Modern Multi-Dimensional In-Depth Interpretations -->
+              <div class="space-y-4">
+                <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+                  <span data-i18n="iching_modern_sec_title">💡 周易现代实战全相研解 (Modern Multi-Dimensional Analysis)</span>
+                  <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_modern_iching">极深研几</span>
+                </h3>
+
+                <div id="modernInterpretationCards" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                  <!-- Injected via JS: 核心大义、事业决策、求财投资、情感人际、趋避锦囊 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of view-iching -->
       </div>
     </section>
   </div>
@@ -2363,195 +2591,6 @@
   </div>
   <!-- End of view-canons -->
 
-  <!-- View 4: Zhou Yi (I Ching) 64 Hexagrams Divination (周易六十四卦起卦研解) -->
-  <div id="view-iching" class="space-y-6 hidden">
-    <!-- Header Banner -->
-    <div class="p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-black/60 to-purple-950/40 shadow-2xl relative overflow-hidden">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <div class="flex items-center space-x-2 mb-1">
-            <span class="chinese-seal text-xs py-0.5" data-i18n="seal_view_iching">易道天机</span>
-            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-amber-300" data-i18n="iching_banner_title">
-              周易文王六十四卦 · 蓍草金钱起卦研解
-            </h2>
-          </div>
-          <p class="text-xs sm:text-sm text-gray-300 max-w-2xl leading-relaxed" data-i18n="iching_banner_desc">
-            融汇大衍筮法（老阴/少阳/少阴/老阳正统概率）、三铜钱六掷法、梅花易数时空起卦与六十四卦全典。本卦变卦动爻齐参，解构大义、事业、财智、姻缘与趋避锦囊。
-          </p>
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="text-xs px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono" data-i18n="iching_csprng_badge">
-            ☯️ 大衍筮法 · CSPRNG
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Divination Interactive Control Console -->
-    <div class="bg-card p-5 rounded-2xl border border-border-color shadow-xl space-y-4">
-      <!-- Query / Intent Input & Select -->
-      <div class="flex flex-col sm:flex-row gap-3">
-        <div class="relative flex-1">
-          <input type="text" id="ichingQueryInput" placeholder="心念所感，所测何事？（如：近期创业合伙前景、重大职业转型决策、家庭情感走势...）" class="w-full bg-black/40 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:border-amber-500 transition" data-i18n-placeholder="iching_query_placeholder">
-        </div>
-        <!-- 64 Hexagrams Direct Dropdown -->
-        <div class="w-full sm:w-64">
-          <select id="ichingSelect" class="w-full bg-black/50 border border-gray-700 rounded-xl px-3 py-2.5 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-amber-500 font-serif-sc">
-            <option value="" data-i18n="iching_select_placeholder">📖 六十四卦速查全览...</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Quick Inquiry Presets -->
-      <div class="flex flex-wrap items-center gap-2 text-xs">
-        <span class="text-gray-400 font-serif-sc" data-i18n="iching_quick_intent_label">🎯 快捷心念直测:</span>
-        <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-rose-950/40 text-rose-300 hover:bg-rose-900/60 border border-rose-700/40 transition cursor-pointer" data-intent="什么时候可以碰到对象，以及对象在何方" data-intent-en="When and where will I meet my spouse?">
-          💑 <span data-i18n="iching_chip_romance">什么时候碰到对象，在何方</span>
-        </button>
-        <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-blue-950/40 text-blue-300 hover:bg-blue-900/60 border border-blue-700/40 transition cursor-pointer" data-intent="今年适合跳槽创业还是留在原单位" data-intent-en="Career transition and venture outlook?">
-          💼 <span data-i18n="iching_chip_career">事业跳槽创业与生态位</span>
-        </button>
-        <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-emerald-950/40 text-emerald-300 hover:bg-emerald-900/60 border border-emerald-700/40 transition cursor-pointer" data-intent="未来半年投资理财与财富收益走势" data-intent-en="Wealth outlook and investment returns?">
-          💰 <span data-i18n="iching_chip_wealth">投资理财与财富守成</span>
-        </button>
-        <button type="button" class="iching-intent-chip px-2.5 py-1 rounded-lg bg-amber-950/40 text-amber-300 hover:bg-amber-900/60 border border-amber-700/40 transition cursor-pointer" data-intent="眼下这件事去留进退吉凶如何决断" data-intent-en="Decision feasibility: should I proceed?">
-          🧭 <span data-i18n="iching_chip_decision">进退去留抉择可行性</span>
-        </button>
-      </div>
-
-      <!-- Action Buttons Row -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <!-- Button 1: Instant Sacred Yarrow -->
-        <button id="ichingInstantBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-amber-500/40">
-          <span class="text-lg">⚡</span>
-          <span data-i18n="iching_btn_instant">一键神机起卦 (大衍筮法)</span>
-        </button>
-
-        <!-- Button 2: Interactive 3 Coins -->
-        <button id="ichingCoinBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-purple-800 to-indigo-800 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-purple-600/40">
-          <span class="text-lg">🪙</span>
-          <span data-i18n="iching_btn_coin">三铜钱摇卦 (六掷成卦)</span>
-        </button>
-
-        <!-- Button 3: Plum Blossom Time Divination -->
-        <button id="ichingTimeBtn" class="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-teal-800 to-emerald-800 hover:from-teal-700 hover:to-emerald-700 text-white font-bold text-sm shadow-lg transition active:scale-[0.98] border border-teal-600/40">
-          <span class="text-lg">⏱️</span>
-          <span data-i18n="iching_btn_time">梅花易数时间卦 (当下气运)</span>
-        </button>
-      </div>
-
-      <!-- Coin Toss Interactive Arena (Hidden by default unless Coin Toss is active) -->
-      <div id="coinTossArena" class="hidden p-4 rounded-xl bg-black/40 border border-purple-500/40 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-800/40 pb-2">
-          <div class="flex items-center space-x-2">
-            <span class="text-xs font-bold text-purple-300 font-serif-sc" data-i18n="coin_arena_title">🪙 乾隆通宝 · 三铜钱六掷摇卦实录</span>
-            <span id="coinStepBadge" class="text-[11px] px-2 py-0.5 rounded-full bg-purple-900/40 text-purple-200 border border-purple-700/40 font-mono">第 1 / 6 掷</span>
-          </div>
-          <button id="coinResetBtn" class="text-xs text-gray-400 hover:text-rose-400 transition" data-i18n="btn_reset_coin">重新开始</button>
-        </div>
-
-        <!-- 3 Coins Graphic Representation -->
-        <div class="flex items-center justify-center gap-4 sm:gap-8 py-3">
-          <div id="coinGraphic1" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
-            字 (3)
-          </div>
-          <div id="coinGraphic2" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
-            字 (3)
-          </div>
-          <div id="coinGraphic3" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-amber-400/80 bg-gradient-to-br from-amber-600 via-amber-700 to-amber-900 flex items-center justify-center shadow-lg text-xs font-bold text-amber-100 font-serif-sc">
-            背 (2)
-          </div>
-        </div>
-
-        <!-- Coin Toss Interactive Button -->
-        <div class="flex justify-center">
-          <button id="throwCoinBtn" class="px-8 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm shadow-xl transition active:scale-95" data-i18n="coin_throw_initial">
-            掷出第 1 爻 (初爻)
-          </button>
-        </div>
-
-        <!-- Incremental Lines Built -->
-        <div id="coinLinesProgress" class="flex flex-col-reverse gap-1.5 max-w-sm mx-auto pt-2">
-          <!-- Step lines appear here -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Divination Result Container -->
-    <div id="ichingResultContainer" class="space-y-6">
-      <!-- Default Prompt before casting -->
-      <div id="ichingInitPrompt" class="p-12 text-center bg-card rounded-2xl border border-border-color shadow-lg space-y-3">
-        <div class="text-4xl">☯️</div>
-        <h3 class="text-base font-bold text-gray-300 font-serif-sc" data-i18n="iching_init_title">
-          易者，变也。穷则变，变则通，通则久。
-        </h3>
-        <p class="text-xs text-gray-500 max-w-md mx-auto" data-i18n="iching_init_desc">
-          请诚心默想心中所求，点击上方【一键神机起卦】、【三铜钱摇卦】或【梅花易数时间卦】，感通天地阴阳造化。
-        </p>
-      </div>
-
-      <!-- Result Card (Hidden until cast) -->
-      <div id="ichingResultCard" class="hidden space-y-6">
-        <!-- Overview Banner & Deciding Rule Badge -->
-        <div id="ichingMetaBanner" class="p-4 rounded-xl bg-black/40 border border-gray-800 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <!-- Metadata injected via JS -->
-        </div>
-
-        <!-- Targeted Custom Inquiry Direct Resolution Card (问事神机直断) -->
-        <div id="ichingTargetedInquiryCard" class="space-y-4">
-          <!-- Dynamically populated via renderIChingResult -->
-        </div>
-
-        <!-- Dual Hexagram Visual Display (Original Hexagram vs. Resulting Hexagram) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Original Hexagram (本卦) -->
-          <div id="originalHexagramCard" class="p-5 rounded-2xl border border-amber-600/40 bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 shadow-xl space-y-4">
-            <!-- Injected via JS -->
-          </div>
-
-          <!-- Resulting Hexagram (变卦 / 之卦) -->
-          <div id="resultingHexagramCard" class="p-5 rounded-2xl border border-purple-600/40 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/60 shadow-xl space-y-4">
-            <!-- Injected via JS -->
-          </div>
-        </div>
-
-        <!-- Complementary Hexagram Perspective Badges (互卦 / 错卦 / 综卦) -->
-        <div id="complementaryHexagramsBar" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <!-- Injected via JS -->
-        </div>
-
-        <!-- Canonical Scriptures (卦辞、彖传、大象传、六爻爻辞) -->
-        <div class="p-5 rounded-2xl border border-border-color bg-card shadow-xl space-y-4">
-          <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-            <h3 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
-              <span data-i18n="iching_canonical_sec_title">📜 文王卦辞与先秦经文全典 (Canonical Scriptures)</span>
-            </h3>
-            <span id="oracleFocusTag" class="text-[11px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">
-              动爻定断
-            </span>
-          </div>
-
-          <div id="canonicalScripturesContent" class="space-y-4 text-xs sm:text-sm">
-            <!-- Injected via JS -->
-          </div>
-        </div>
-
-        <!-- Modern Multi-Dimensional In-Depth Interpretations -->
-        <div class="space-y-4">
-          <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
-            <span data-i18n="iching_modern_sec_title">💡 周易现代实战全相研解 (Modern Multi-Dimensional Analysis)</span>
-            <span class="chinese-seal text-[10px] py-0.2" data-i18n="seal_modern_iching">极深研几</span>
-          </h3>
-
-          <div id="modernInterpretationCards" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <!-- Injected via JS: 核心大义、事业决策、求财投资、情感人际、趋避锦囊 -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- End of view-iching -->
-
   <!-- View 7: Synastry & Partner Compatibility (双人合盘 · 婚恋合婚与合伙人博弈) -->
   <div id="view-synastry" class="space-y-6 hidden">
     <section class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-6">
@@ -2917,10 +2956,9 @@
         </a>
       </div>
     </div>
-  </div>
 
-  <!-- View 12: Scenario Simulator Sandbox (胜负沙盘 · 双轨全息决策对抗) -->
-  <div id="view-simulator" class="space-y-6 hidden">
+    <!-- View 12: Scenario Simulator Sandbox (胜负沙盘 · 双轨全息决策对抗 · 内嵌于职场破局) -->
+    <div id="view-simulator" class="space-y-6 pt-4 border-t border-indigo-900/50">
     <!-- Header Banner -->
     <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-slate-950/40 shadow-2xl relative overflow-hidden">
       <div class="flex flex-wrap items-center justify-between gap-4">
@@ -3289,6 +3327,7 @@
       </div>
     </div>
   </div>
+  <!-- End of view-career (including embedded view-simulator) -->
 
   <!-- View 10: Historical Figures Reference (历史人物参考 · 南北乱世三百年) -->
   <div id="view-history" class="space-y-6 hidden">
