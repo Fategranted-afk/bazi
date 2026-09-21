@@ -1714,6 +1714,301 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Initialize In-Page Bayesian Rectification Workbench
+  function initInPageRectification() {
+    const section = document.getElementById('rectificationSection');
+    const workbench = document.getElementById('homeRectificationWorkbench');
+    const toggleBtn = document.getElementById('btnToggleHomeRectification');
+    const iconToggle = document.getElementById('iconToggleHomeRectify');
+    const textToggle = document.getElementById('textToggleHomeRectify');
+    const loadSampleBtn = document.getElementById('btnHomeLoadSampleEvents');
+    const runBtn = document.getElementById('btnHomeRunRectification');
+
+    function syncBaseFromHome() {
+      const bDate = document.getElementById('birthDate')?.value;
+      const bGender = document.getElementById('gender')?.value;
+      const rDate = document.getElementById('homeRectifyBirthDate');
+      const rGender = document.getElementById('homeRectifyGender');
+      if (rDate && bDate && !rDate.value) rDate.value = bDate;
+      if (rGender && bGender) rGender.value = bGender;
+    }
+
+    function toggleWorkbench(forceOpen = null) {
+      if (!workbench) return;
+      syncBaseFromHome();
+      const shouldOpen = (forceOpen !== null) ? forceOpen : workbench.classList.contains('hidden');
+      const isEn = (currentLang === 'en');
+      if (shouldOpen) {
+        workbench.classList.remove('hidden');
+        if (iconToggle) iconToggle.textContent = '▼';
+        if (textToggle) {
+          textToggle.textContent = isEn ? 'Collapse Calibration Workbench' : '收起校对工作台';
+          textToggle.setAttribute('data-i18n', 'btn_toggle_rectify_workbench_collapse');
+        }
+      } else {
+        workbench.classList.add('hidden');
+        if (iconToggle) iconToggle.textContent = '⚡';
+        if (textToggle) {
+          textToggle.textContent = isEn ? 'Expand Calibration Workbench' : '展开校对工作台';
+          textToggle.setAttribute('data-i18n', 'btn_toggle_rectify_workbench');
+        }
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => toggleWorkbench());
+    }
+
+    if (loadSampleBtn) {
+      loadSampleBtn.addEventListener('click', () => {
+        const isEn = (currentLang === 'en');
+        const y1 = document.getElementById('homeRectifyEventYear1');
+        const t1 = document.getElementById('homeRectifyEventType1');
+        const d1 = document.getElementById('homeRectifyEventDesc1');
+        if (y1) y1.value = '2018';
+        if (t1) t1.value = 'exam';
+        if (d1) d1.value = isEn ? 'National Exam / Key University Admission' : '高考金榜 / 985名校录取';
+
+        const y2 = document.getElementById('homeRectifyEventYear2');
+        const t2 = document.getElementById('homeRectifyEventType2');
+        const d2 = document.getElementById('homeRectifyEventDesc2');
+        if (y2) y2.value = '2021';
+        if (t2) t2.value = 'career_jump';
+        if (d2) d2.value = isEn ? 'Major Promotion / Joined Industry Leader' : '职场跃迁 / 破格升任总监';
+
+        const y3 = document.getElementById('homeRectifyEventYear3');
+        const t3 = document.getElementById('homeRectifyEventType3');
+        const d3 = document.getElementById('homeRectifyEventDesc3');
+        if (y3) y3.value = '2023';
+        if (t3) t3.value = 'marriage';
+        if (d3) d3.value = isEn ? 'Marriage / Acquired Home & Settled' : '领证结婚 / 置业安居';
+
+        handleHomeRunRectification();
+      });
+    }
+
+    if (runBtn) {
+      runBtn.addEventListener('click', handleHomeRunRectification);
+    }
+
+    // Connect any 'btn-goto-rectification' or card rectification triggers to smoothly scroll and expand
+    document.querySelectorAll('.btn-goto-rectification').forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleWorkbench(true);
+        if (section && typeof section.scrollIntoView === 'function') {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    const triggerFromCard = document.getElementById('btnTriggerRectificationFromCard');
+    if (triggerFromCard) {
+      triggerFromCard.addEventListener('click', () => {
+        toggleWorkbench(true);
+        if (section && typeof section.scrollIntoView === 'function') {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  }
+
+  // Run In-Page Bayesian Birth Time Rectification
+  function handleHomeRunRectification() {
+    if (typeof RectificationEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const rDate = document.getElementById('homeRectifyBirthDate')?.value || document.getElementById('birthDate')?.value;
+    if (!rDate) {
+      alert(isEn ? 'Please confirm birth date first.' : '请先确认出生日期。');
+      return;
+    }
+    const [year, month, day] = rDate.split('-').map(Number);
+    const gender = document.getElementById('homeRectifyGender')?.value || document.getElementById('gender')?.value || '乾造';
+    
+    let approxVal = parseInt(document.getElementById('homeRectifyApproxHour')?.value, 10);
+    if (isNaN(approxVal)) {
+      const valStr = document.getElementById('homeRectifyApproxHour')?.value;
+      if (valStr === 'morning') approxVal = 8;
+      else if (valStr === 'afternoon') approxVal = 14;
+      else if (valStr === 'evening') approxVal = 20;
+      else if (valStr === 'night') approxVal = 2;
+      else approxVal = -1;
+    }
+
+    const events = [];
+    const y1 = parseInt(document.getElementById('homeRectifyEventYear1')?.value, 10);
+    const t1 = document.getElementById('homeRectifyEventType1')?.value;
+    const d1 = document.getElementById('homeRectifyEventDesc1')?.value || '';
+    if (y1 && t1) events.push({ year: y1, type: t1, description: d1 });
+
+    const y2 = parseInt(document.getElementById('homeRectifyEventYear2')?.value, 10);
+    const t2 = document.getElementById('homeRectifyEventType2')?.value;
+    const d2 = document.getElementById('homeRectifyEventDesc2')?.value || '';
+    if (y2 && t2) events.push({ year: y2, type: t2, description: d2 });
+
+    const y3 = parseInt(document.getElementById('homeRectifyEventYear3')?.value, 10);
+    const t3 = document.getElementById('homeRectifyEventType3')?.value;
+    const d3 = document.getElementById('homeRectifyEventDesc3')?.value || '';
+    if (y3 && t3) events.push({ year: y3, type: t3, description: d3 });
+
+    if (events.length === 0) {
+      alert(isEn ? 'Please enter at least 1 or 2 past major historical life events.' : '请至少录入 1~2 个已发生的确定性重大历史事件。');
+      return;
+    }
+
+    const useTrueSolarTime = document.getElementById('useTrueSolarTime')?.checked || false;
+    const longitude = parseFloat(document.getElementById('customLongitude')?.value) || 116.4;
+    const timezone = parseFloat(document.getElementById('timezoneSelect')?.value) || 8.0;
+
+    const natalBase = {
+      year, month, day, gender,
+      approximateHour: (!isNaN(approxVal) && approxVal >= 0) ? approxVal : null,
+      useTrueSolarTime, longitude, timezone
+    };
+
+    const res = RectificationEngine.rectifyBirthTime(natalBase, events);
+    if (!res || !res.top1) return;
+
+    renderHomeRectificationResults(res, isEn);
+  }
+
+  // Render In-Page Bayesian MAP Rectification Results & Rankings
+  function renderHomeRectificationResults(res, isEn) {
+    const resultsArea = document.getElementById('homeRectificationResultsArea');
+    if (!resultsArea) return;
+    resultsArea.classList.remove('hidden');
+
+    const top1 = res.top1;
+    const top2 = res.top2;
+    const tie = res.tieBreaker;
+
+    let tieBreakerHtml = '';
+    if (tie) {
+      tieBreakerHtml = `
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/60 to-purple-950/60 border border-amber-500/60 shadow-lg space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+              <span>⚖️</span>
+              <span>${isEn ? tie.titleEn : tie.titleZh}</span>
+            </span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-900 text-amber-200 font-mono">TIE-BREAKER</span>
+          </div>
+          <p class="text-xs text-amber-100/90 leading-relaxed font-sans">
+            ${isEn ? tie.questionEn : tie.questionZh}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <button type="button" class="btn-home-tiebreaker text-left p-2.5 rounded-lg border border-amber-600/40 bg-black/40 hover:bg-amber-900/40 hover:border-amber-400 transition cursor-pointer active:scale-95" data-cand-idx="0">
+              <div class="text-xs font-bold text-amber-200 mb-0.5">${isEn ? tie.optionAEn : tie.optionAZh}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? top1.nameEn : top1.nameZh}</div>
+            </button>
+            <button type="button" class="btn-home-tiebreaker text-left p-2.5 rounded-lg border border-purple-600/40 bg-black/40 hover:bg-purple-900/40 hover:border-purple-400 transition cursor-pointer active:scale-95" data-cand-idx="1">
+              <div class="text-xs font-bold text-purple-200 mb-0.5">${isEn ? tie.optionBEn : tie.optionBZh}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? (top2 ? (isEn ? top2.nameEn : top2.nameZh) : '') : ''}</div>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    const evidencesHtml = (top1.evidences || []).map(ev => `
+      <div class="flex items-start gap-1.5 text-[11px] text-emerald-200/90">
+        <span class="text-emerald-400 font-bold">✓</span>
+        <span>${isEn ? ev.textEn : ev.textZh}</span>
+      </div>
+    `).join('');
+
+    const rankingsHtml = (res.rankings || []).slice(0, 5).map((c, i) => `
+      <div class="flex items-center justify-between p-2 rounded-lg bg-black/30 border border-gray-800 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-5 text-center font-mono font-bold ${i === 0 ? 'text-amber-400' : 'text-gray-500'}">#${i + 1}</span>
+          <span class="font-medium text-gray-200">${isEn ? c.nameEn : c.nameZh}</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded bg-gray-800 text-gray-400 font-mono">${isEn ? c.hourPillarEn : c.hourPillarZh}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-20 sm:w-28 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-400" style="width: ${c.confidencePercent}%;"></div>
+          </div>
+          <span class="font-mono text-[11px] text-amber-300 w-10 text-right">${c.confidencePercent}%</span>
+        </div>
+      </div>
+    `).join('');
+
+    resultsArea.innerHTML = `
+      <!-- Winner Candidate Card -->
+      <div class="p-4 rounded-xl border border-emerald-500/60 bg-gradient-to-r from-emerald-950/40 via-black/40 to-emerald-950/40 shadow-xl space-y-3">
+        <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2">
+          <div>
+            <div class="text-[10px] font-bold text-emerald-400 font-mono tracking-wider">${isEn ? 'MAXIMUM A POSTERIORI (MAP) CANDIDATE' : '贝叶斯最大后验概率推荐时辰'}</div>
+            <h4 class="text-base font-bold text-gray-100 font-serif-sc mt-0.5">${isEn ? top1.nameEn : top1.nameZh} · ${isEn ? top1.hourPillarEn : top1.hourPillarZh}${isEn ? ' Pillar' : '柱'}</h4>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-black text-emerald-400 font-mono">${top1.confidencePercent}%</div>
+            <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confidence' : '后验置信度'}</div>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="text-[11px] font-bold text-gray-300 font-serif-sc">${isEn ? 'Deterministic Historical Evidence Alignment:' : '重大历史事件对数似然增益印证：'}</div>
+          <div class="space-y-1 bg-black/30 p-2 rounded-lg border border-emerald-900/30">
+            ${evidencesHtml || `<div class="text-gray-400 text-xs">${isEn ? 'Aligned with prior distribution and static structure.' : '与先验时空分布及静态格局高度吻合。'}</div>`}
+          </div>
+        </div>
+
+        <button id="btnHomeAdoptRectifiedHour" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 hover:from-emerald-500 hover:to-teal-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-95 border border-emerald-400/40">
+          <span>🎯</span>
+          <span>${isEn ? 'Apply Recommended Hour & Recalculate Chart' : '一键采纳此推荐时辰并重算核心主盘'}</span>
+        </button>
+      </div>
+
+      <!-- Tie-Breaker if bimodal -->
+      ${tieBreakerHtml}
+
+      <!-- Top Rankings -->
+      <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2">
+        <div class="flex items-center justify-between text-xs font-bold text-gray-300">
+          <span>${isEn ? 'Top Hypothesis Probability Spectrum' : '全时辰后验概率波谱排行榜'}</span>
+          <span class="text-[10px] text-gray-500 font-mono">SOFTMAX DISTRIBUTION</span>
+        </div>
+        <div class="space-y-1.5">
+          ${rankingsHtml}
+        </div>
+      </div>
+    `;
+
+    function applyHourAndRecalculate(cand) {
+      if (!cand) return;
+      const bTime = document.getElementById('birthTime');
+      const bDate = document.getElementById('birthDate');
+      const rDate = document.getElementById('homeRectifyBirthDate');
+      if (bTime) {
+        const hh = String(cand.hour).padStart(2, '0');
+        const mm = String(cand.minute).padStart(2, '0');
+        bTime.value = `${hh}:${mm}`;
+      }
+      if (bDate && rDate && rDate.value) {
+        bDate.value = rDate.value;
+      }
+
+      if (typeof triggerCalculate === 'function') triggerCalculate();
+      const paretoSec = document.getElementById('paretoCoreSection') || document.getElementById('pillarsContainer');
+      if (paretoSec && typeof paretoSec.scrollIntoView === 'function') {
+        paretoSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    const btnAdopt = document.getElementById('btnHomeAdoptRectifiedHour');
+    if (btnAdopt) {
+      btnAdopt.addEventListener('click', () => applyHourAndRecalculate(top1));
+    }
+
+    resultsArea.querySelectorAll('.btn-home-tiebreaker').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cIdx = parseInt(btn.getAttribute('data-cand-idx'), 10);
+        const chosen = (cIdx === 1 && top2) ? top2 : top1;
+        applyHourAndRecalculate(chosen);
+      });
+    });
+  }
+
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
   function renderPortrait(res) {
     if (typeof PortraitEngine === 'undefined') return;
@@ -18960,6 +19255,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPortalFeaturesShowcase();
   initAdvSolarToggle();
   initRectificationModal();
+  initInPageRectification();
   initPhasePortraitControls();
   initPoliticalGameControls();
 
@@ -19188,6 +19484,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initRectificationModal = initRectificationModal;
   window.handleRunRectification = handleRunRectification;
   window.renderRectificationResults = renderRectificationResults;
+  window.initInPageRectification = initInPageRectification;
+  window.handleHomeRunRectification = handleHomeRunRectification;
+  window.renderHomeRectificationResults = renderHomeRectificationResults;
   window.renderPhasePortrait = renderPhasePortrait;
   window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
   window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;

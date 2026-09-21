@@ -17372,16 +17372,18 @@ assert run_check134.returncode == 0, f"Check 134 JSC test failed: stdout={run_ch
 
 print("✓ 134. 核心主盘帕累托全相扩充（大局破局全景七章+六亲深度侧写全息图谱+十二大典细分依据抽屉）与双语100%零中文残留全量验证通过！")
 
-# === 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Removal ===
-print("\n=== 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Removal ===")
+# === 135. Validating Imperial Dossier Page 4 & In-Page Rectification and Grand Strategy Tab Consolidation ===
+print("\n=== 135. Validating Imperial Dossier Page 4 & In-Page Rectification and Grand Strategy Tab Consolidation ===")
 
 with open('index.html', 'r', encoding='utf-8') as f:
     index_html_135 = f.read()
 
-assert 'id="rectificationSection"' not in index_html_135, "#rectificationSection should be removed from index.html"
-assert 'btn-goto-rectification' not in index_html_135, ".btn-goto-rectification should be removed from index.html"
-assert 'id="homeRectificationWorkbench"' not in index_html_135, "#homeRectificationWorkbench should be removed from index.html"
-assert 'id="paretoCoreSection" class="hidden' in index_html_135, "#paretoCoreSection should be hidden from core chart in index.html"
+assert 'id="rectificationSection"' in index_html_135, "#rectificationSection must be present in index.html"
+assert 'btn-goto-rectification' in index_html_135, ".btn-goto-rectification must be present in index.html"
+assert 'id="homeRectificationWorkbench"' in index_html_135, "#homeRectificationWorkbench must be present in index.html"
+assert 'id="paretoCoreSection"' in index_html_135 and 'id="paretoCoreSection" class="hidden' not in index_html_135, "#paretoCoreSection must be visible in core chart"
+assert 'id="navBtnStrategy" class="hidden' in index_html_135, "#navBtnStrategy must be hidden to streamline nav tabs"
+assert 'id="navBtnRectification" type="button" class="hidden' in index_html_135 or 'id="navBtnRectification" class="hidden' in index_html_135, "#navBtnRectification must be hidden to streamline nav tabs"
 
 jsc_check135_cmd = [
     "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
@@ -17407,6 +17409,7 @@ jsc_check135_cmd = [
     load("js/career-engine.js");
     load("data/historical_figures.js");
     load("js/history-engine.js");
+    load("js/rectification-engine.js");
 
     var testChart = BaZiEngine.calculate({
       year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造",
@@ -17461,7 +17464,14 @@ jsc_check135_cmd = [
       "useSolarTime", "lateRatAsNextDay", "customLongitude", "timezoneSelect",
       "citySelect", "fsec-canons", "view-friction", "frictionContentContainer",
       "careerContentContainer", "currentCountrySelect", "currentCitySelect",
-      "paretoCoreSection"
+      "paretoCoreSection", "rectificationSection", "homeRectificationWorkbench",
+      "btnToggleHomeRectification", "iconToggleHomeRectify", "textToggleHomeRectify",
+      "btnHomeLoadSampleEvents", "btnHomeRunRectification", "homeRectifyBirthDate",
+      "homeRectifyGender", "homeRectifyApproxHour", "homeRectifyEventYear1",
+      "homeRectifyEventType1", "homeRectifyEventDesc1", "homeRectifyEventYear2",
+      "homeRectifyEventType2", "homeRectifyEventDesc2", "homeRectifyEventYear3",
+      "homeRectifyEventType3", "homeRectifyEventDesc3", "homeRectificationResultsArea",
+      "btnHomeAdoptRectifiedHour"
     ];
     for (var i = 1; i <= 9; i++) {
       domIds.push("imperialPage" + i);
@@ -17504,7 +17514,8 @@ jsc_check135_cmd = [
       SynastryEngine: SynastryEngine,
       SpatialFengShuiEngine: SpatialFengShuiEngine,
       CareerEngine: CareerEngine,
-      HistoricalEngine: HistoricalEngine
+      HistoricalEngine: HistoricalEngine,
+      RectificationEngine: RectificationEngine
     };
 
     load("js/app.js");
@@ -17620,6 +17631,23 @@ jsc_check135_cmd = [
     var enLeaks = enHtml.match(/[\\u4e00-\\u9fa5]/g);
     if (enLeaks && enLeaks.length > 0) {
       throw new Error("Residual Chinese found in 9-Page EN Imperial Dossier (" + enLeaks.length + " chars): " + enLeaks.slice(0, 30).join(""));
+    }
+
+    // 4. Test In-Page Rectification Workbench Functions & Runtime Execution
+    if (typeof window.initInPageRectification !== 'function') throw new Error("window.initInPageRectification missing");
+    if (typeof window.handleHomeRunRectification !== 'function') throw new Error("window.handleHomeRunRectification missing");
+    if (typeof window.renderHomeRectificationResults !== 'function') throw new Error("window.renderHomeRectificationResults missing");
+
+    elementStore["homeRectifyBirthDate"].value = "1990-06-20";
+    elementStore["homeRectifyGender"].value = "乾造";
+    elementStore["homeRectifyEventYear1"].value = "2018";
+    elementStore["homeRectifyEventType1"].value = "exam";
+    elementStore["homeRectifyEventYear2"].value = "2021";
+    elementStore["homeRectifyEventType2"].value = "career_jump";
+    window.handleHomeRunRectification();
+    var resultsHtml = elementStore["homeRectificationResultsArea"].innerHTML;
+    if (!resultsHtml.includes("贝叶斯最大后验概率推荐时辰") && !resultsHtml.includes("MAXIMUM A POSTERIORI")) {
+      throw new Error("homeRectificationResultsArea did not render MAP candidate: " + resultsHtml);
     }
     """
 ]

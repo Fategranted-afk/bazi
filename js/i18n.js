@@ -169,6 +169,9 @@ const I18N = (function() {
       rectify_check_sub: "出生时辰微小误差（父母记忆偏差或真太阳时交界）可能导致时柱格局偏差。建议使用“以事校对”输入既往关键事件，逆推真命时辰以大幅提升命盘精准度。",
       btn_goto_rectification: "立即进行以事校对",
       rectify_adopt_success_toast: "已成功采纳校准时辰，核心主盘已完成精准重算！",
+      checkpoint_banner_title: "命理精度校准 · 觉得推演与经历不符？",
+      checkpoint_banner_desc: "若感觉当前大局格局、六亲或现实推演与实际情况有偏差，多因出生时辰模糊；可通过【以事推时 · 贝叶斯生时校准中枢】，录入2~3件既往确定性真实大事件逆推真命时辰并一键重新排盘。",
+      btn_goto_rectify_text: "立即校对生时",
 
       // Phase Portrait Engine (相空间与势能井流形)
       phase_portrait_title: "动力学相空间与双井势能流形 (Phase Space & Potential Manifold)",
@@ -1041,6 +1044,9 @@ const I18N = (function() {
       rectify_check_sub: "Minor birth time discrepancy near cusp or solar time boundary can cause pattern divergence. Use Event-Based Rectification to input past milestones, reverse-calculate your true birth hour, and maximize chart accuracy.",
       btn_goto_rectification: "Calibrate via Past Events",
       rectify_adopt_success_toast: "Rectified birth hour adopted successfully! Core natal chart has been recalculated with precision.",
+      checkpoint_banner_title: "Accuracy Calibration · Deduction Differs from Experience?",
+      checkpoint_banner_desc: "If current dominant patterns, kinship, or life deductions differ from your lived reality due to hour ambiguity, use the Bayesian Event Rectification Hub to input 2-3 confirmed milestones, reverse-calculate your authentic birth hour, and recalculate with a single click.",
+      btn_goto_rectify_text: "Calibrate Birth Hour Now",
 
       // Phase Portrait Engine
       phase_portrait_title: "Nonlinear Phase Space & Double-Well Potential Manifold",
