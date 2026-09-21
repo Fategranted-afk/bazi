@@ -17372,7 +17372,277 @@ assert run_check134.returncode == 0, f"Check 134 JSC test failed: stdout={run_ch
 
 print("✓ 134. 核心主盘帕累托全相扩充（大局破局全景七章+六亲深度侧写全息图谱+十二大典细分依据抽屉）与双语100%零中文残留全量验证通过！")
 
-print("\n🎉 ALL 134 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Workbench ===
+print("\n=== 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Workbench ===")
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    index_html_135 = f.read()
+
+assert 'id="rectificationSection"' in index_html_135, "Missing #rectificationSection in index.html"
+assert 'btn-goto-rectification' in index_html_135, "Missing .btn-goto-rectification in index.html"
+assert 'id="homeRectificationWorkbench"' in index_html_135, "Missing #homeRectificationWorkbench in index.html"
+assert 'id="btnHomeRunRectification"' in index_html_135, "Missing #btnHomeRunRectification in index.html"
+assert 'id="homeRectificationResultsArea"' in index_html_135, "Missing #homeRectificationResultsArea in index.html"
+
+jsc_check135_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var testChart = BaZiEngine.calculate({
+      year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var testLuck = LuckEngine.calculateLuck(testChart, 2026);
+
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      var classes = [];
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "",
+        checked: false,
+        options: [],
+        selectedIndex: 0,
+        classList: {
+          add: function(cls) { if (classes.indexOf(cls) === -1) classes.push(cls); },
+          remove: function(cls) { var idx = classes.indexOf(cls); if (idx !== -1) classes.splice(idx, 1); },
+          toggle: function(cls) {
+            var idx = classes.indexOf(cls);
+            if (idx !== -1) classes.splice(idx, 1);
+            else classes.push(cls);
+          },
+          contains: function(cls) { return classes.indexOf(cls) !== -1; }
+        },
+        className: "",
+        style: {},
+        _children: [],
+        _listeners: {},
+        addEventListener: function(evt, h) { (this._listeners[evt] = this._listeners[evt] || []).push(h); },
+        trigger: function(evt) {
+          var hs = this._listeners[evt] || [];
+          for (var i = 0; i < hs.length; i++) hs[i]({ target: this, preventDefault: function(){} });
+        },
+        appendChild: function(c) { this._children.push(c); if (c && c.innerHTML) this.innerHTML += c.innerHTML; },
+        querySelectorAll: function(sel) {
+          if (sel === ".btn-goto-rectification") return [elementStore["btnGotoRectification"]];
+          return [];
+        },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        scrollIntoView: function() { this._scrolled = true; }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "btnExportDossier", "btnQuickExportSinglePdf", "imperialDossierModal",
+      "imperialDossierContainer", "calcBtn", "birthDate", "birthTime", "gender",
+      "useSolarTime", "lateRatAsNextDay", "customLongitude", "timezoneSelect",
+      "citySelect", "fsec-canons", "view-friction", "frictionContentContainer",
+      "careerContentContainer", "currentCountrySelect", "currentCitySelect",
+      "rectificationSection", "homeRectificationWorkbench", "btnToggleHomeRectification",
+      "btnHomeLoadSampleEvents", "btnHomeRunRectification", "homeRectificationResultsArea",
+      "homeRectifyBirthDate", "homeRectifyGender", "homeRectifyApproxHour",
+      "homeRectifyEventYear1", "homeRectifyEventType1", "homeRectifyEventDesc1",
+      "homeRectifyEventYear2", "homeRectifyEventType2", "homeRectifyEventDesc2",
+      "homeRectifyEventYear3", "homeRectifyEventType3", "homeRectifyEventDesc3",
+      "paretoCoreSection", "btnGotoRectification"
+    ];
+    for (var i = 1; i <= 9; i++) {
+      domIds.push("imperialPage" + i);
+    }
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function(sel) {
+        if (sel === ".btn-goto-rectification") return [elementStore["btnGotoRectification"]];
+        return [];
+      },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") handler();
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      SynastryEngine: SynastryEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine
+    };
+
+    load("js/app.js");
+
+    // 1. Verify In-Page Rectification Workbench
+    if (typeof window.initInPageRectification === 'function') {
+      window.initInPageRectification();
+    }
+    elementStore["btnGotoRectification"].trigger("click");
+    if (elementStore["homeRectificationWorkbench"].classList.contains("hidden")) {
+      throw new Error("Clicking .btn-goto-rectification should unhide #homeRectificationWorkbench");
+    }
+    if (!elementStore["rectificationSection"]._scrolled) {
+      throw new Error("Clicking .btn-goto-rectification should scroll to #rectificationSection");
+    }
+
+    // 2. Render ZH Dossier & Verify Page 4
+    window.renderImperialDossierPages(testChart, testLuck, "zh");
+    var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
+    var zhPages = zhHtml.split('class="imperial-page');
+    if (zhPages.length !== 10) {
+      throw new Error("Imperial Dossier in ZH must have 9 pages, found: " + (zhPages.length - 1));
+    }
+
+    var page1Zh = zhPages[1];
+    var page4Zh = zhPages[4];
+
+    // Page 1 TOC checks for Page 4
+    if (!page1Zh.includes('卷一·岁运易数')) throw new Error("Page 1 ZH TOC missing 卷一·岁运易数");
+    if (!page1Zh.includes('卷一 · 岁运六十四卦')) throw new Error("Page 1 ZH TOC missing 卷一 · 岁运六十四卦");
+
+    // Page 4 ZH component checks
+    var expectedPage4Zh = [
+      "岁运流转 · 大运流年流月流日全阶推演系统",
+      "五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶",
+      "阳男 · 顺行 (+10年/步)",
+      "百岁运势时空罗盘 (Lifelong Chrono-Navigator)",
+      "1~100 岁全景",
+      "生命能量与活力指数",
+      "财富运势与机遇潮汐",
+      "战略定调",
+      "流年战略锦囊与行持准则",
+      "周易六十四卦周期推演图 · 百岁岁运演化与六爻时序全景",
+      "倪海厦天纪易数推演 · 六十四卦全息图谱",
+      "当年值年卦",
+      "卦象特征与阴阳律",
+      "天纪秘解与玉上有光",
+      "五行气机交感流变",
+      "百岁岁运六十四卦行持全景总谱",
+      "Page 4 / 9"
+    ];
+    for (var k = 0; k < expectedPage4Zh.length; k++) {
+      if (!page4Zh.includes(expectedPage4Zh[k])) {
+        throw new Error("Page 4 ZH missing: " + expectedPage4Zh[k]);
+      }
+    }
+
+    // Verify 10-year roster (current year 2026 to 2035)
+    for (var yr = 2026; yr <= 2035; yr++) {
+      if (!page4Zh.includes(String(yr))) {
+        throw new Error("Page 4 ZH 10-year roster missing year: " + yr);
+      }
+    }
+
+    // 3. Render EN Dossier & Verify Page 4 & Zero Chinese Leaks
+    window.renderImperialDossierPages(testChart, testLuck, "en");
+    var enHtml = elementStore["imperialDossierContainer"].innerHTML;
+    var enPages = enHtml.split('class="imperial-page');
+    if (enPages.length !== 10) {
+      throw new Error("Imperial Dossier in EN must have 9 pages, found: " + (enPages.length - 1));
+    }
+
+    var page1En = enPages[1];
+    var page4En = enPages[4];
+
+    // Page 1 EN TOC checks for Page 4
+    if (!page1En.includes('Transits & Hexagrams')) throw new Error("Page 1 EN TOC missing Transits & Hexagrams");
+    if (!page1En.includes('Scroll III · Transits & Hexagrams')) throw new Error("Page 1 EN TOC missing Scroll III card");
+
+    // Page 4 EN component checks
+    var expectedPage4En = [
+      "Volume I · Lifelong Transits & 64 Hexagrams System",
+      "5-Pillar Synergy · Decennial Luck, Tai Sui, Solar Terms & Daily Harmonics",
+      "Yang Male · Forward (+10y/step)",
+      "Lifelong Chrono-Navigator (1~100 Years)",
+      "Vitality & Energy Index:",
+      "Wealth & Opportunity Tide:",
+      "Strategic Focus:",
+      "Strategic Transit Directive:",
+      "I-Ching 64 Hexagrams Cycle · Lifelong Progression",
+      "Ni Haisha Tian Ji Hologram",
+      "Annual Hexagram",
+      "Hexagram Nature & Yin-Yang Law:",
+      "Tian Ji Secret Exposition:",
+      "Five Elements Dynamic Flow:",
+      "Lifelong 64 Hexagrams Action Roster (10-Year Horizon)",
+      "Page 4 / 9"
+    ];
+    for (var m = 0; m < expectedPage4En.length; m++) {
+      if (!page4En.includes(expectedPage4En[m])) {
+        throw new Error("Page 4 EN missing: " + expectedPage4En[m]);
+      }
+    }
+
+    // Verify 10-year roster in EN (2026 to 2035)
+    for (var yrEn = 2026; yrEn <= 2035; yrEn++) {
+      if (!page4En.includes(String(yrEn))) {
+        throw new Error("Page 4 EN 10-year roster missing year: " + yrEn);
+      }
+    }
+
+    // Absolute zero Chinese leak check across entire 9-page EN Dossier
+    var enLeaks = enHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (enLeaks && enLeaks.length > 0) {
+      throw new Error("Residual Chinese found in 9-Page EN Imperial Dossier (" + enLeaks.length + " chars): " + enLeaks.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check135 = subprocess.run(jsc_check135_cmd, capture_output=True, text=True)
+assert run_check135.returncode == 0, f"Check 135 JSC test failed: stdout={run_check135.stdout} stderr={run_check135.stderr}"
+
+print("✓ 135. 皇家战报第四页换新（岁运流转·五柱同参+百岁运势时空罗盘+周易六十四卦周期推演图+未来十年2026-2035行运总谱）及主盘以事校对融合（双向平滑联动与双语100%零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 135 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

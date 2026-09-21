@@ -1795,6 +1795,7 @@ const LuckEngine = (function() {
       let nextDecade = (dIdx !== -1 && dIdx < decades.length - 1) ? decades[dIdx + 1] : null;
 
       let decadeText = activeDecade ? activeDecade.text : (age < (decades[0] ? decades[0].ageStart : 10) ? "童限" : "晚境");
+      let decadeTextEn = activeDecade ? ((typeof I18N !== "undefined" && activeDecade.stem && activeDecade.branch) ? I18N.getStem(activeDecade.stem, "en").split(" ")[0] + "-" + I18N.getBranch(activeDecade.branch, "en").split(" ")[0] : (activeDecade.textEn || "Decade Cycle")) : (age < (decades[0] ? decades[0].ageStart : 10) ? "Early Childhood" : "Later Years");
       let decadeSpanZh = activeDecade ? activeDecade.ageSpanZh : (age < (decades[0] ? decades[0].ageStart : 10) ? `1 ~ ${(decades[0] ? decades[0].ageStart - 1 : 9)} 岁` : `${(decades[decades.length - 1] ? decades[decades.length - 1].ageEnd + 1 : 90)} 岁之后`);
       let decadeSpanEn = activeDecade ? activeDecade.ageSpanEn : (age < (decades[0] ? decades[0].ageStart : 10) ? `Age 1-${(decades[0] ? decades[0].ageStart - 1 : 9)}` : `Age ${(decades[decades.length - 1] ? decades[decades.length - 1].ageEnd + 1 : 90)}+`);
 
@@ -1994,6 +1995,7 @@ const LuckEngine = (function() {
         naYin,
         naYinEn: (typeof I18N !== "undefined") ? I18N.getNaYin(naYin, "en") : naYin,
         decade: decadeText,
+        decadeEn: decadeTextEn,
         decadeSpanZh,
         decadeSpanEn,
         energyScore,

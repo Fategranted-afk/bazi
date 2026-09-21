@@ -1714,6 +1714,250 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // In-Page Event Rectification Workbench (Integrated inside Home Core View)
+  function initInPageRectification() {
+    const section = document.getElementById('rectificationSection');
+    if (!section) return;
+
+    // Link accuracy checkpoint buttons from Pareto section to workbench
+    document.querySelectorAll('.btn-goto-rectification').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const workbench = document.getElementById('homeRectificationWorkbench');
+        if (workbench) workbench.classList.remove('hidden');
+        section.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Toggle workbench visibility
+    const btnToggle = document.getElementById('btnToggleHomeRectification');
+    const workbench = document.getElementById('homeRectificationWorkbench');
+    if (btnToggle && workbench) {
+      btnToggle.addEventListener('click', () => {
+        workbench.classList.toggle('hidden');
+      });
+    }
+
+    // Load sample events
+    const btnSample = document.getElementById('btnHomeLoadSampleEvents');
+    if (btnSample) {
+      btnSample.addEventListener('click', () => {
+        const isEn = (currentLang === 'en');
+        if (workbench) workbench.classList.remove('hidden');
+
+        const y1 = document.getElementById('homeRectifyEventYear1');
+        const t1 = document.getElementById('homeRectifyEventType1');
+        const d1 = document.getElementById('homeRectifyEventDesc1');
+        if (y1) y1.value = 2018;
+        if (t1) t1.value = 'exam';
+        if (d1) d1.value = isEn ? 'Top University Key Academic Breakthrough' : '考入双一流高校 / 重大考学跃升';
+
+        const y2 = document.getElementById('homeRectifyEventYear2');
+        const t2 = document.getElementById('homeRectifyEventType2');
+        const d2 = document.getElementById('homeRectifyEventDesc2');
+        if (y2) y2.value = 2021;
+        if (t2) t2.value = 'career_jump';
+        if (d2) d2.value = isEn ? 'Major Career Pivot / Director Level Promotion' : '跳槽至知名外企任架构总监';
+
+        const y3 = document.getElementById('homeRectifyEventYear3');
+        const t3 = document.getElementById('homeRectifyEventType3');
+        const d3 = document.getElementById('homeRectifyEventDesc3');
+        if (y3) y3.value = 2023;
+        if (t3) t3.value = 'marriage';
+        if (d3) d3.value = isEn ? 'Marriage / Acquired Primary Residence' : '结婚领证并置业安家';
+
+        handleHomeRunRectification();
+      });
+    }
+
+    // Run MAP rectification
+    const btnRun = document.getElementById('btnHomeRunRectification');
+    if (btnRun) {
+      btnRun.addEventListener('click', handleHomeRunRectification);
+    }
+  }
+
+  // Handle In-Page Bayesian Birth Time Rectification
+  function handleHomeRunRectification() {
+    if (typeof RectificationEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const bDate = document.getElementById('birthDate')?.value;
+    if (!bDate) {
+      alert(isEn ? 'Please confirm birth date first.' : '请先确认出生日期。');
+      return;
+    }
+    const [year, month, day] = bDate.split('-').map(Number);
+    const gender = document.getElementById('gender')?.value || '乾造';
+    const approxVal = parseInt(document.getElementById('homeRectifyApproxHour')?.value, 10);
+
+    const events = [];
+    const y1 = parseInt(document.getElementById('homeRectifyEventYear1')?.value, 10);
+    const t1 = document.getElementById('homeRectifyEventType1')?.value;
+    const d1 = document.getElementById('homeRectifyEventDesc1')?.value || '';
+    if (y1 && t1) events.push({ year: y1, type: t1, description: d1 });
+
+    const y2 = parseInt(document.getElementById('homeRectifyEventYear2')?.value, 10);
+    const t2 = document.getElementById('homeRectifyEventType2')?.value;
+    const d2 = document.getElementById('homeRectifyEventDesc2')?.value || '';
+    if (y2 && t2) events.push({ year: y2, type: t2, description: d2 });
+
+    const y3 = parseInt(document.getElementById('homeRectifyEventYear3')?.value, 10);
+    const t3 = document.getElementById('homeRectifyEventType3')?.value;
+    const d3 = document.getElementById('homeRectifyEventDesc3')?.value || '';
+    if (y3 && t3) events.push({ year: y3, type: t3, description: d3 });
+
+    if (events.length === 0) {
+      alert(isEn ? 'Please enter at least 1 or 2 past major historical life events.' : '请至少录入 1~2 个已发生的确定性重大历史事件。');
+      return;
+    }
+
+    const useTrueSolarTime = document.getElementById('useTrueSolarTime')?.checked || false;
+    const longitude = parseFloat(document.getElementById('customLongitude')?.value) || 116.4;
+    const timezone = parseFloat(document.getElementById('timezoneSelect')?.value) || 8.0;
+
+    const natalBase = {
+      year, month, day, gender,
+      approximateHour: (!isNaN(approxVal) && approxVal >= 0) ? approxVal : null,
+      useTrueSolarTime, longitude, timezone
+    };
+
+    const res = RectificationEngine.rectifyBirthTime(natalBase, events);
+    if (!res || !res.top1) return;
+
+    renderHomeRectificationResults(res, isEn);
+  }
+
+  // Render In-Page Rectification Results
+  function renderHomeRectificationResults(res, isEn) {
+    const resultsArea = document.getElementById('homeRectificationResultsArea');
+    if (!resultsArea) return;
+    resultsArea.classList.remove('hidden');
+
+    const top1 = res.top1;
+    const top2 = res.top2;
+    const tie = res.tieBreaker;
+
+    let tieBreakerHtml = '';
+    if (tie) {
+      tieBreakerHtml = `
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/60 to-purple-950/60 border border-amber-500/60 shadow-lg space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+              <span>⚖️</span>
+              <span>${isEn ? tie.titleEn : tie.titleZh}</span>
+            </span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-900 text-amber-200 font-mono">TIE-BREAKER</span>
+          </div>
+          <p class="text-xs text-amber-100/90 leading-relaxed font-sans">
+            ${isEn ? tie.questionEn : tie.questionZh}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <button type="button" class="btn-home-tiebreaker-choice text-left p-2.5 rounded-lg border border-amber-600/40 bg-black/40 hover:bg-amber-900/40 hover:border-amber-400 transition cursor-pointer active:scale-95" data-cand-idx="0">
+              <div class="text-xs font-bold text-amber-200 mb-0.5">${isEn ? tie.optionAEn : tie.optionAZh}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? top1.nameEn : top1.nameZh}</div>
+            </button>
+            <button type="button" class="btn-home-tiebreaker-choice text-left p-2.5 rounded-lg border border-purple-600/40 bg-black/40 hover:bg-purple-900/40 hover:border-purple-400 transition cursor-pointer active:scale-95" data-cand-idx="1">
+              <div class="text-xs font-bold text-purple-200 mb-0.5">${isEn ? tie.optionBEn : tie.optionBZh}</div>
+              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? (top2 ? (isEn ? top2.nameEn : top2.nameZh) : '') : ''}</div>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    const evidencesHtml = (top1.evidences || []).map(ev => `
+      <div class="flex items-start gap-1.5 text-[11px] text-emerald-200/90">
+        <span class="text-emerald-400 font-bold">✓</span>
+        <span>${isEn ? ev.textEn : ev.textZh}</span>
+      </div>
+    `).join('');
+
+    const rankingsHtml = (res.rankings || []).slice(0, 5).map((c, i) => `
+      <div class="flex items-center justify-between p-2 rounded-lg bg-black/30 border border-gray-800 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-5 text-center font-mono font-bold ${i === 0 ? 'text-amber-400' : 'text-gray-500'}">#${i + 1}</span>
+          <span class="font-medium text-gray-200">${isEn ? c.nameEn : c.nameZh}</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded bg-gray-800 text-gray-400 font-mono">${isEn ? c.hourPillarEn : c.hourPillarZh}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-20 sm:w-28 bg-gray-800 h-1.5 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-400" style="width: ${c.confidencePercent}%;"></div>
+          </div>
+          <span class="font-mono text-[11px] text-amber-300 w-10 text-right">${c.confidencePercent}%</span>
+        </div>
+      </div>
+    `).join('');
+
+    resultsArea.innerHTML = `
+      <!-- Winner Candidate Card -->
+      <div class="p-4 rounded-xl border border-emerald-500/60 bg-gradient-to-r from-emerald-950/40 via-black/40 to-emerald-950/40 shadow-xl space-y-3">
+        <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2">
+          <div>
+            <div class="text-[10px] font-bold text-emerald-400 font-mono tracking-wider">${isEn ? 'MAXIMUM A POSTERIORI (MAP) CANDIDATE' : '贝叶斯最大后验概率推荐时辰'}</div>
+            <h4 class="text-base font-bold text-gray-100 font-serif-sc mt-0.5">${isEn ? top1.nameEn : top1.nameZh} · ${isEn ? top1.hourPillarEn : top1.hourPillarZh}${isEn ? ' Pillar' : '柱'}</h4>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-black text-emerald-400 font-mono">${top1.confidencePercent}%</div>
+            <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confidence' : '后验置信度'}</div>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="text-[11px] font-bold text-gray-300 font-serif-sc">${isEn ? 'Deterministic Historical Evidence Alignment:' : '重大历史事件对数似然增益印证：'}</div>
+          <div class="space-y-1 bg-black/30 p-2 rounded-lg border border-emerald-900/30">
+            ${evidencesHtml || `<div class="text-gray-400 text-xs">${isEn ? 'Aligned with prior distribution and static structure.' : '与先验时空分布及静态格局高度吻合。'}</div>`}
+          </div>
+        </div>
+
+        <button id="btnHomeAdoptRectifiedHour" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 hover:from-emerald-500 hover:to-teal-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+          <span>🎯</span>
+          <span>${isEn ? 'Apply Recommended Hour & Recalculate Chart' : '一键采纳此推荐时辰并排盘'}</span>
+        </button>
+      </div>
+
+      <!-- Tie-Breaker if bimodal -->
+      ${tieBreakerHtml}
+
+      <!-- Top Rankings -->
+      <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2">
+        <div class="flex items-center justify-between text-xs font-bold text-gray-300">
+          <span>${isEn ? 'Top Hypothesis Probability Spectrum' : '全时辰后验概率波谱排行榜'}</span>
+          <span class="text-[10px] text-gray-500 font-mono">SOFTMAX DISTRIBUTION</span>
+        </div>
+        <div class="space-y-1.5">
+          ${rankingsHtml}
+        </div>
+      </div>
+    `;
+
+    function applyHourAndRecalculate(cand) {
+      if (!cand) return;
+      const bTime = document.getElementById('birthTime');
+      if (bTime) {
+        const hh = String(cand.hour).padStart(2, '0');
+        const mm = String(cand.minute).padStart(2, '0');
+        bTime.value = `${hh}:${mm}`;
+      }
+      if (typeof triggerCalculate === 'function') triggerCalculate();
+      const paretoSec = document.getElementById('paretoCoreSection');
+      if (paretoSec && typeof paretoSec.scrollIntoView === 'function') {
+        paretoSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    const btnAdopt = document.getElementById('btnHomeAdoptRectifiedHour');
+    if (btnAdopt) {
+      btnAdopt.addEventListener('click', () => applyHourAndRecalculate(top1));
+    }
+
+    resultsArea.querySelectorAll('.btn-home-tiebreaker-choice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cIdx = parseInt(btn.getAttribute('data-cand-idx'), 10);
+        const chosen = (cIdx === 1 && top2) ? top2 : top1;
+        applyHourAndRecalculate(chosen);
+      });
+    });
+  }
+
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
   function renderPortrait(res) {
     if (typeof PortraitEngine === 'undefined') return;
@@ -17128,6 +17372,165 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // ========================================================================
+    // Page 4: Lifelong Transits & 64 Hexagrams Progression System (五柱同参与六十四卦)
+    // ========================================================================
+    const birthYr = (bazi.input && bazi.input.year) || bazi.birthYear || 1990;
+    const currentCalYear = new Date().getFullYear();
+    const currentAge = Math.max(1, Math.min(100, currentCalYear - birthYr + 1));
+
+    // Luck decades & progression
+    const decMeta = (luck && luck.decadeMeta) || {};
+    const luckDirStr = (decMeta.direction === 1)
+      ? (isEn ? 'Forward (+10y/step)' : '顺行 (+10年/步)')
+      : (isEn ? 'Reverse (-10y/step)' : '逆行 (-10年/步)');
+    const luckGenderStr = isMale
+      ? (isEn ? 'Yang Male' : '阳男')
+      : (isEn ? 'Yin Female' : '阴女');
+    const startAgeNum = decMeta.nominalStartAge || 6;
+    const startYearNum = decMeta.startCalendarYear || (birthYr + startAgeNum);
+    const diffDaysNum = (decMeta.diffDays !== undefined) ? decMeta.diffDays : 16;
+    const diffHoursNum = (decMeta.diffHours !== undefined) ? decMeta.diffHours : 12;
+    const luckStartAgeStr = isEn
+      ? `Start Age ${startAgeNum} (${startYearNum}) · ${diffDaysNum}d ${diffHoursNum}h after birth`
+      : `${startAgeNum}岁起运 (${startYearNum}年) · 出生后${diffDaysNum}天${diffHoursNum}时交节`;
+
+    // Chrono timeline item for active year
+    const tl = (luck && luck.timeline) ? luck.timeline : [];
+    const activeTlItem = tl.find(t => t.year === currentCalYear) || tl.find(t => t.age === currentAge) || tl[0] || {
+      year: currentCalYear,
+      ganZhi: '丙午',
+      ganZhiEn: 'Bing-Wu',
+      decade: '童限',
+      decadeSpanZh: '1 ~ 5 岁',
+      decadeSpanEn: 'Ages 1 - 5',
+      tenGod: '偏印',
+      tenGodEn: 'Indirect Resource',
+      naYin: '天河水',
+      naYinEn: 'Heaven River Water',
+      energyScore: 62,
+      wealthScore: 55,
+      focusZh: '稳健深耕 · 蓄势待发',
+      focusEn: 'Consolidation & Strategic Preparation',
+      directiveZh: `${currentAge}岁（${currentCalYear} 丙午年）气数平稳中和，逢【偏印】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`,
+      directiveEn: `Age ${currentAge} (${currentCalYear} Bing-Wu): Energy is balanced and disciplined under Indirect Resource. Sharpen core skills, build reputation, and optimize assets to solidify foundations for upcoming prime cycles.`,
+      alerts: ['岁运祥和'],
+      alertsEn: ['Harmonious Transit']
+    };
+
+    const activeYearAgeHeading = isEn
+      ? (currentAge === 1 ? `Age 0 (Nominal 1) · ${currentCalYear} ${activeTlItem.ganZhiEn || 'Bing-Wu'}` : `Age ${currentAge - 1} (Nominal ${currentAge}) · ${currentCalYear} ${activeTlItem.ganZhiEn || 'Bing-Wu'}`)
+      : (currentAge === 1 ? `0岁初生 (虚岁1) · ${currentCalYear}年 ${activeTlItem.ganZhi || '丙午'}` : `${currentAge - 1}岁 (虚岁${currentAge}) · ${currentCalYear}年 ${activeTlItem.ganZhi || '丙午'}`);
+
+    let activeDecadeLabelZh = '童限大运 (1 ~ 5 岁)';
+    let activeDecadeLabelEn = 'Early Childhood (Ages 1 - 5)';
+    if (activeTlItem.decade) {
+      if (activeTlItem.decade === '童限') {
+        activeDecadeLabelZh = `童限大运 (${activeTlItem.decadeSpanZh || '1 ~ 5 岁'})`;
+        activeDecadeLabelEn = `Early Childhood (${activeTlItem.decadeSpanEn || 'Ages 1 - 5'})`;
+      } else if (activeTlItem.decade === '晚境') {
+        activeDecadeLabelZh = `晚境大运 (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `Later Golden Years (${activeTlItem.decadeSpanEn || ''})`;
+      } else if (activeTlItem.decadeEn) {
+        activeDecadeLabelZh = `${activeTlItem.decade} (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `${activeTlItem.decadeEn} (${activeTlItem.decadeSpanEn || ''})`;
+      } else if (activeTlItem.decade.length >= 2) {
+        const dStem = activeTlItem.decade[0];
+        const dBranch = activeTlItem.decade[1];
+        const sEn = (typeof I18N !== 'undefined') ? I18N.getStem(dStem, 'en').split(' ')[0] : dStem;
+        const bEn = (typeof I18N !== 'undefined') ? I18N.getBranch(dBranch, 'en').split(' ')[0] : dBranch;
+        activeDecadeLabelZh = `${activeTlItem.decade} (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `${sEn}-${bEn} (${activeTlItem.decadeSpanEn || ''})`;
+      } else {
+        activeDecadeLabelZh = `${activeTlItem.decade} (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `Decade Cycle (${activeTlItem.decadeSpanEn || ''})`;
+      }
+    }
+
+    // IChing hexagram trajectory and active year hexagram
+    let hexTrajectoryList = (luck && luck.hexTrajectory && luck.hexTrajectory.length > 0)
+      ? luck.hexTrajectory
+      : ((typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
+        ? IChingEngine.calculateLifelongCycle(bazi)
+        : []);
+
+    // Active year I-Ching details
+    let activeHexItem = hexTrajectoryList.find(p => p.year === currentCalYear) || hexTrajectoryList.find(p => p.age === currentAge) || hexTrajectoryList[0] || null;
+    if (!activeHexItem && typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
+      const hCalc = IChingEngine.calculateFourPillarsHexagrams(bazi, currentAge, currentCalYear);
+      if (hCalc && hCalc.zhiNian) {
+        const znObj = hCalc.zhiNian;
+        const isXian = (currentAge <= (hCalc.xianTian ? hCalc.xianTian.totalYears : 30));
+        activeHexItem = {
+          age: currentAge,
+          year: currentCalYear,
+          isXianTian: isXian,
+          epochZh: isXian ? '前半生 · 先天命基' : '后半生 · 后天跃升',
+          epochEn: isXian ? 'Early Heaven Foundation' : 'Later Heaven Ascension',
+          governingHex: isXian ? (hCalc.xianTian ? hCalc.xianTian.hexagram : { number: 14, nameZh: '火天大有', nameEn: 'Great Possession' }) : (hCalc.houTian ? hCalc.houTian.hexagram : { number: 14, nameZh: '火天大有', nameEn: 'Great Possession' }),
+          activeLinePos: znObj.activeLinePos || 1,
+          isYangLine: znObj.isYangLine,
+          annualGanzhiZh: znObj.annualGanzhiZh || '丙午',
+          annualGanzhiEn: znObj.annualGanzhiEn || 'Bing-Wu',
+          annualHex: znObj.hexagram || { number: 14, nameZh: '火天大有', nameEn: 'Great Possession' },
+          isMutated: znObj.isMutated,
+          ruleInteractionZh: znObj.ruleInteractionZh || '异性相吸 · 守本稳健 → 阴阳相合守本卦【火天大有】（元堂阳爻首年 · 逢阳年不动（守本卦））',
+          ruleInteractionEn: znObj.ruleInteractionEn || 'Opposite Polarities Attract -> Retain Base Hexagram (Great Possession)',
+          optimalActionZh: '【事业 + 读书】',
+          optimalActionEn: '[Career + Study]',
+          optimalDirectiveZh: '知行合一：以学术深研与核心技能精进化作职场跃迁杠杆，极其适宜考取权威执照、发表专著并获高层提拔。',
+          optimalDirectiveEn: 'Integrate deep learning with practical execution: build verifiable technical depth and authority.',
+          annualTJ: znObj.tianJi || {
+            riddleZh: '财源广进，事业登顶；防物极必反与奢侈傲慢，多行善积德，方保长盛不衰。五谷丰登，仓廪充实；日照金山，指天道酬善、福禄双全，富贵长春之万全大象。',
+            riddleEn: 'Treasures emerge through integrity and calculated persistence; fortune and honor sustain through modesty and generosity.'
+          },
+          dynamicInterpretationZh: '重山叠嶂滞涩 (比劫争厚 · 宜通关活气) · 土多则滞，过于执拗固执易失良机；宜以金泄之、以木疏之，打破惯性思维。',
+          dynamicInterpretationEn: 'Dissolve stagnation through open channels and flexibility: balance inward perseverance with outward diplomacy.',
+          score: 88
+        };
+      }
+    }
+
+    // Filter next 10 years starting from current calendar year (e.g. 2026 -> 2026-2035)
+    let next10HexCards = hexTrajectoryList.filter(p => p.year >= currentCalYear && p.year <= currentCalYear + 9);
+    if (next10HexCards.length === 0) {
+      next10HexCards = hexTrajectoryList.slice(0, 10);
+    }
+
+    const render10YearHexCardsHtml = `
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-1 text-left font-serif-sc">
+        ${next10HexCards.map(pt => {
+          const ptHex = pt.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
+          const ptOpt = pt.optimalAction || {};
+          const isRisk = pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) || (ptOpt.shortBadgeEn && ptOpt.shortBadgeEn.includes('Risk'));
+          const isCurrent = (pt.year === currentCalYear);
+          return `
+            <div class="p-1 rounded border ${isCurrent ? 'border-amber-600 bg-amber-100/60 shadow-xs' : 'border-amber-900/20 bg-white/70'} space-y-0.5">
+              <div class="flex items-center justify-between text-[8.5px] font-mono border-b border-amber-900/15 pb-0.5">
+                <span class="font-bold ${isCurrent ? 'text-amber-950 font-black' : 'text-gray-800'}">${pt.age}${isEn ? 'y' : '岁'} · ${pt.year}</span>
+                <span class="text-[7.5px] px-1 py-0.1 rounded font-mono font-bold ${pt.isMutated ? 'bg-amber-200 text-amber-900 border border-amber-500/40' : 'bg-emerald-100 text-emerald-900 border border-emerald-500/40'}">${pt.isMutated ? (isEn ? 'Mut' : '变') : (isEn ? 'Base' : '本')}</span>
+              </div>
+              <div class="font-bold text-[9px] truncate text-amber-950 pt-0.5">
+                ${isEn ? `Hex ${ptHex.number} · ${ptHex.nameEn}` : `第${ptHex.number}卦 · ${ptHex.nameZh}`}
+              </div>
+              <div>
+                <span class="inline-block px-1 py-0.2 rounded text-[8px] font-bold font-mono ${isRisk ? 'bg-rose-100 text-rose-900 border border-rose-300' : 'bg-amber-100 text-amber-900 border border-amber-300'}">
+                  ${isEn ? (ptOpt.shortBadgeEn || '[Focus]') : (ptOpt.shortBadgeZh || '【当年最宜】')}
+                </span>
+              </div>
+              <p class="text-[8px] text-gray-700 leading-tight line-clamp-2 pt-0.5 font-sans">
+                ${isEn ? (ptOpt.actionEn || 'Consolidate skills and build enduring value.') : (ptOpt.actionZh || '知行合一，深耕核心技能，稳步开拓。')}
+              </p>
+              <div class="pt-0.5 border-t border-amber-900/10 text-[7.5px] font-mono flex items-center gap-1 ${isRisk ? 'text-rose-800' : 'text-emerald-800'} truncate">
+                <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 ${isRisk ? 'bg-rose-600' : 'bg-emerald-600'}"></span>
+                <span class="truncate">${isEn ? (isRisk ? 'Risk: Prudent Defense' : 'Shield: Steady Cultivation') : (isRisk ? '防险：守正固本，杜绝盲进' : '护身：蓄势深耕，守中得正')}</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
     container.innerHTML = `
       <!-- Page 1: Dedicated Master Table of Contents -->
       <div id="imperialPage1" class="imperial-page relative">
@@ -17177,7 +17580,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="font-bold text-amber-900 mr-0.5">P3</span>${isEn ? 'Soul Mirror' : '特别·人物画像'}
               </a>
               <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
-                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? 'Four Pillars' : '卷一·四柱立极'}
+                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? 'Transits & Hexagrams' : '卷一·岁运易数'}
               </a>
               <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-1 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline shadow-xs block">
                 <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Patterns (Warfare)' : '卷二·格局兵法'}
@@ -17237,15 +17640,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <div onclick="jumpToImperialPage('imperialPage4'); return false;" class="imperial-card imperial-card-gold p-2 text-xs space-y-1 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[11px]">
-                  <span>🏛️</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll III · Four Pillars Grid' : '卷一 · 四柱立极'}</span>
+                  <span>⏳</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll III · Transits & Hexagrams' : '卷一 · 岁运六十四卦'}</span>
                 </span>
                 <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-200/80 text-amber-950 border border-amber-600/30">Page 4 / 9</span>
               </div>
-              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Natal Matrix: ' : '四柱神机：'}</b>${isEn ? 'Four Pillars Stems & Branches, NaYin & Ten Gods' : '年月日时干支纳音 · 坐支十神力量分布'}</p>
-              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? 'Day Master: ' : '日元旺衰：'}</b>${isEn ? `${I18N.getStem(bazi.dayMaster, 'en').split(' ')[0]} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`} · ${isEn ? 'De Ling & De Di' : '得令得地得势剖析'}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? '5-Pillar Synergy: ' : '五柱同参：'}</b>${isEn ? 'Decennial luck, annual Tai Sui & 100-year Chrono-Navigator' : '十年大运太岁流年 · 百岁时空罗盘与战略锦囊'}</p>
+              <p class="text-[9.5px] text-gray-800 leading-tight"><b>${isEn ? '64 Hexagrams: ' : '六十四卦：'}</b>${isEn ? 'Ni Haisha Yin-Yang law & 10-year action roster' : '倪海厦阴阳律起伏动变 · 近十年行运全景总谱'}</p>
               <div class="flex items-center justify-between pt-0.5 text-[9px] text-amber-900 font-medium">
-                <span>${isEn ? 'Elemental Balance & Score' : '五行分布与子平100分量化'}</span>
+                <span>${isEn ? '100-Year Dynamic Resonance' : '百岁气机演变与时序递进'}</span>
                 <span class="font-bold group-hover:translate-x-0.5 transition">→</span>
               </div>
             </div>
@@ -17638,7 +18041,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Page 4: Cover & Four Pillars Grand Altar -->
+      <!-- Page 4: Volume I - Lifelong Transits & 64 Hexagrams Progression System -->
       <div id="imperialPage4" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
@@ -17650,98 +18053,119 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-5 space-y-2">
+        <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
           <!-- Header -->
-          <div class="text-center space-y-1 border-b-2 border-amber-900/60 pb-2">
+          <div class="text-center space-y-0.5 border-b-2 border-amber-900/60 pb-1.5">
             <div class="flex items-center justify-between">
               <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL SEAL' : '钦天监正堂之宝'}</span>
-              <span class="text-[10.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE' : '天机御览 · 卷一图谱'}</span>
+              <span class="text-[10px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · VOLUME I' : '天机御览 · 卷一岁运'}</span>
             </div>
-            <h1 class="text-xl font-black font-serif-sc text-amber-950 tracking-wider">${mainTitle}</h1>
-            <p class="text-[10.5px] text-amber-900/85 font-serif-sc">${isEn ? 'Volume I · Sacred Four Pillars & Five-Element Architecture' : '卷一 · 四柱本命神机图谱与五行气象'}</p>
-          </div>
-
-          <!-- Metadata Box -->
-          <div class="imperial-card imperial-card-gold grid grid-cols-2 gap-2 text-xs p-2.5 font-serif-sc">
-            <div>
-              <span class="text-gray-500">${isEn ? 'Subject:' : '本命造化:'}</span>
-              <span class="font-bold text-gray-900 ml-1 font-mono">${genderStr}</span>
-            </div>
-            <div>
-              <span class="text-gray-500">${isEn ? 'Solar Date:' : '阳历生辰:'}</span>
-              <span class="font-bold text-gray-900 ml-1 font-mono">${dateStr}</span>
-            </div>
-            <div>
-              <span class="text-gray-500">${isEn ? 'Day Master & Vigor:' : '日元本命与旺衰:'}</span>
-              <span class="font-bold text-amber-900 ml-1">${isEn ? `${I18N.getStem(bazi.dayMaster, 'en')} (${portrait.vigor.status})` : `${bazi.dayMaster} (${portrait.vigor.status})`}</span>
-            </div>
-            <div>
-              <span class="text-gray-500">${isEn ? 'Dominant Pattern:' : '核心统帅格局:'}</span>
-              <span class="font-bold text-amber-900 ml-1">${domPat} (${domTier})</span>
+            <h1 class="text-lg font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Volume I · Lifelong Transits & 64 Hexagrams System' : '岁运流转 · 大运流年流月流日全阶推演系统'}</h1>
+            <p class="text-[10px] text-amber-900/85 font-serif-sc">${isEn ? '5-Pillar Synergy · Decennial Luck, Tai Sui, Solar Terms & Daily Harmonics' : '五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶'}</p>
+            <div class="text-[9px] font-mono text-amber-950/80 bg-amber-100/50 py-0.5 px-2 rounded border border-amber-900/20 inline-block mt-0.5">
+              ${luckGenderStr} · ${luckDirStr} · ${luckStartAgeStr}
             </div>
           </div>
 
-          <!-- Sacred Four Pillars Grid Table -->
-          <div class="space-y-1">
-            <h2 class="text-xs font-bold text-amber-950 tracking-wider flex items-center justify-between">
-              <span>${isEn ? 'FOUR PILLARS SACRED GRID' : '四柱本命神机图谱'}</span>
-              <span class="text-[10px] text-amber-900/70 font-mono">${isEn ? 'Orthodox Natal Matrix' : '内府四柱大典'}</span>
-            </h2>
-            <table class="imperial-table text-xs text-center">
-              <thead>
-                <tr>
-                  <th>${isEn ? 'Pillar' : '柱位'}</th>
-                  <th>${isEn ? 'Year' : '年柱 (根基)'}</th>
-                  <th>${isEn ? 'Month' : '月柱 (提纲)'}</th>
-                  <th>${isEn ? 'Day' : '日柱 (本命元神)'}</th>
-                  <th>${isEn ? 'Hour' : '时柱 (归宿愿景)'}</th>
-                </tr>
-              </thead>
-              <tbody class="font-serif-sc">
-                <tr>
-                  <td class="font-bold bg-amber-50/50">${isEn ? 'Ten God' : '主气十神'}</td>
-                  <td>${isEn ? I18N.getGod(p.year.stemGod, 'en') : p.year.stemGod}</td>
-                  <td>${isEn ? I18N.getGod(p.month.stemGod, 'en') : p.month.stemGod}</td>
-                  <td class="font-bold text-amber-900 bg-amber-100/70">${isEn ? 'Day Master' : '本命元神'}</td>
-                  <td>${isEn ? I18N.getGod(p.hour.stemGod, 'en') : p.hour.stemGod}</td>
-                </tr>
-                <tr class="text-base font-bold bg-amber-50/80">
-                  <td class="font-sans text-xs">${isEn ? 'Gan-Zhi' : '天干地支'}</td>
-                  <td class="text-amber-900">${isEn ? I18N.getStem(p.year.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.year.branch, 'en').split(' ')[0] : p.year.text}</td>
-                  <td class="text-amber-900">${isEn ? I18N.getStem(p.month.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.month.branch, 'en').split(' ')[0] : p.month.text}</td>
-                  <td class="text-red-900 font-black bg-amber-100/90">${isEn ? I18N.getStem(p.day.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.day.branch, 'en').split(' ')[0] : p.day.text}</td>
-                  <td class="text-amber-900">${isEn ? I18N.getStem(p.hour.stem, 'en').split(' ')[0] + '-' + I18N.getBranch(p.hour.branch, 'en').split(' ')[0] : p.hour.text}</td>
-                </tr>
-                <tr>
-                  <td class="font-bold bg-amber-50/50">${isEn ? 'Hidden Stems' : '地支藏干'}</td>
-                  <td>${(p.year.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                  <td>${(p.month.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                  <td class="bg-amber-100/50">${(p.day.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                  <td>${(p.hour.hidden || []).map(h => isEn ? I18N.getStem(h.stem, 'en').split(' ')[0] : h.stem).join(isEn ? ', ' : ' ')}</td>
-                </tr>
-                <tr>
-                  <td class="font-bold bg-amber-50/50">${isEn ? 'Na-Yin Element' : '纳音五行'}</td>
-                  <td>${isEn ? I18N.getNaYin(p.year.naYin, 'en') : p.year.naYin}</td>
-                  <td>${isEn ? I18N.getNaYin(p.month.naYin, 'en') : p.month.naYin}</td>
-                  <td class="bg-amber-100/50">${isEn ? I18N.getNaYin(p.day.naYin, 'en') : p.day.naYin}</td>
-                  <td>${isEn ? I18N.getNaYin(p.hour.naYin, 'en') : p.hour.naYin}</td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- Module 1: Lifelong Chrono-Navigator -->
+          <div class="imperial-card imperial-card-gold p-2 space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <div class="flex items-center gap-1.5">
+                <span>⏳</span>
+                <span class="font-bold text-xs text-amber-950">${isEn ? 'Lifelong Chrono-Navigator (1~100 Years)' : '百岁运势时空罗盘 (Lifelong Chrono-Navigator)'}</span>
+              </div>
+              <span class="text-[8.5px] font-mono text-amber-900 bg-amber-200/60 px-1.5 py-0.2 rounded border border-amber-500/30">${isEn ? '1~100y Panorama' : '1~100 岁全景'}</span>
+            </div>
+
+            <!-- Spotlight Card of Active Year -->
+            <div class="bg-white/80 rounded p-1.5 border border-amber-900/15 space-y-1">
+              <div class="flex items-center justify-between text-[10px] font-bold">
+                <span class="text-amber-950 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                  <span>${activeYearAgeHeading}</span>
+                </span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-900 border border-emerald-400/40">${isEn ? ((activeTlItem.alertsEn && activeTlItem.alertsEn[0]) || 'Harmonious Transit') : ((activeTlItem.alerts && activeTlItem.alerts[0]) || '岁运祥和')}</span>
+              </div>
+
+              <div class="grid grid-cols-4 gap-1 text-[8.5px] text-gray-700 bg-amber-50/60 p-1 rounded">
+                <div><span class="text-gray-500">${isEn ? 'Decade Cycle:' : '所属十年大运:'}</span> <b class="text-gray-900 font-mono block">${isEn ? activeDecadeLabelEn : activeDecadeLabelZh}</b></div>
+                <div><span class="text-gray-500">${isEn ? 'Ten God Ruler:' : '岁君十神司权:'}</span> <b class="text-amber-900 font-mono block">${isEn ? (activeTlItem.tenGodEn || I18N.getGod(activeTlItem.tenGod, 'en')) : activeTlItem.tenGod}</b></div>
+                <div><span class="text-gray-500">${isEn ? 'Na-Yin Element:' : '年柱纳音律动:'}</span> <b class="text-gray-900 font-mono block">${isEn ? (activeTlItem.naYinEn || I18N.getNaYin(activeTlItem.naYin, 'en')) : activeTlItem.naYin}</b></div>
+                <div><span class="text-gray-500">${isEn ? 'Strategic Focus:' : '战略定调:'}</span> <b class="text-amber-950 block truncate">${isEn ? (activeTlItem.focusEn || 'Consolidation') : (activeTlItem.focusZh || '稳健深耕 · 蓄势待发')}</b></div>
+              </div>
+
+              <!-- Energy and Wealth metrics -->
+              <div class="grid grid-cols-2 gap-2 text-[9px] font-mono pt-0.5">
+                <div class="flex items-center justify-between px-1.5 py-0.5 rounded bg-amber-100/70 border border-amber-900/10">
+                  <span class="text-gray-600">${isEn ? 'Vitality & Energy Index:' : '生命能量与活力指数:'}</span>
+                  <span class="font-bold text-amber-950">${activeTlItem.energyScore || 62} / 100</span>
+                </div>
+                <div class="flex items-center justify-between px-1.5 py-0.5 rounded bg-amber-100/70 border border-amber-900/10">
+                  <span class="text-gray-600">${isEn ? 'Wealth & Opportunity Tide:' : '财富运势与机遇潮汐:'}</span>
+                  <span class="font-bold text-amber-950">${activeTlItem.wealthScore || 55} / 100</span>
+                </div>
+              </div>
+
+              <!-- Transit directive -->
+              <div class="pt-1 border-t border-amber-900/10 text-[9px] leading-relaxed text-gray-800">
+                <span class="font-bold text-amber-950">🎯 ${isEn ? 'Strategic Transit Directive: ' : '流年战略锦囊与行持准则：'}</span>
+                <span>${isEn ? (activeTlItem.directiveEn || 'Consolidate core competencies, maintain prudence, avoid impulsive speculative ventures, and accumulate compounding advantage.') : (activeTlItem.directiveZh || '气机平稳，此岁最宜深耕根本、储备能量，忌盲目扩张与冒进投机；修身立德，积厚流光。')}</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Five Elements Balance Box -->
-          <div class="imperial-card p-2.5 text-xs space-y-1">
-            <div class="flex items-center justify-between font-bold text-amber-950">
-              <span>${isEn ? 'Five Elements Dynamic Balance:' : '五行能量分布与气机平衡:'}</span>
-              <span class="font-mono">${elSummaryStr}</span>
+          <!-- Module 2: I-Ching 64 Hexagrams Lifelong Progression -->
+          <div class="imperial-card imperial-card-accent p-2 space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <div class="flex items-center gap-1.5">
+                <span>☯️</span>
+                <span class="font-bold text-xs text-amber-950">${isEn ? 'I-Ching 64 Hexagrams Cycle · Lifelong Progression' : '周易六十四卦周期推演图 · 百岁岁运演化与六爻时序全景'}</span>
+              </div>
+              <span class="text-[8.5px] font-mono text-amber-900">${isEn ? 'Ni Haisha Tian Ji Hologram' : '倪海厦天纪易数推演 · 六十四卦全息图谱'}</span>
             </div>
-            <p class="text-gray-800 leading-relaxed font-serif-sc">${portrait.patterns[0].gradeEvaluation ? (isEn ? (portrait.patterns[0].gradeEvaluation.strengthsAndFlawsEn || portrait.patterns[0].gradeEvaluation.strengthsAndFlaws) : portrait.patterns[0].gradeEvaluation.strengthsAndFlaws) : ''}</p>
+
+            <!-- Active Year Hexagram Details -->
+            <div class="bg-white/80 rounded p-1.5 border border-amber-900/15 space-y-1 text-xs">
+              <div class="flex items-center justify-between text-[10px] font-bold text-amber-950 border-b border-amber-900/10 pb-0.5">
+                <span class="flex items-center gap-1">
+                  <span>${currentCalYear}${isEn ? ' ' : '年 · '}${isEn ? (activeHexItem && activeHexItem.annualGanzhiEn ? activeHexItem.annualGanzhiEn : 'Bing-Wu') : (activeHexItem && activeHexItem.annualGanzhiZh ? activeHexItem.annualGanzhiZh : '丙午')}</span>
+                  <span class="text-[9px] text-amber-800 font-normal">(${isEn ? 'Annual Hexagram' : '当年值年卦'})</span>
+                </span>
+                <span class="font-mono text-amber-900">${isEn ? `Hex ${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.number : 52} · ${activeHexItem && activeHexItem.annualHex ? (activeHexItem.annualHex.nameEn || 'Mountain') : 'Mountain'}` : `第${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.number : 52}卦 · ${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.nameZh : '艮为山'}`}</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[8.5px] leading-tight">
+                <div class="p-1 rounded bg-amber-50/70 border border-amber-900/10 space-y-0.5">
+                  <span class="font-bold text-amber-950 block">${isEn ? 'Hexagram Nature & Yin-Yang Law:' : '卦象特征与阴阳律：'}</span>
+                  <p class="text-gray-700">${isEn ? (activeHexItem && activeHexItem.ruleInteractionEn ? activeHexItem.ruleInteractionEn : 'Opposite polarities harmonize -> Keep base hexagram') : (activeHexItem && activeHexItem.ruleInteractionZh ? activeHexItem.ruleInteractionZh : '艮卦 · 重山叠嶂 · 止其所止 · 阴阳相合守本卦')}</p>
+                </div>
+                <div class="p-1 rounded bg-amber-50/70 border border-amber-900/10 space-y-0.5">
+                  <span class="font-bold text-amber-950 block">${isEn ? 'Tian Ji Secret Exposition:' : '天纪秘解与玉上有光：'}</span>
+                  <p class="text-gray-700">${isEn ? (activeHexItem && activeHexItem.annualTJ && activeHexItem.annualTJ.riddleEn ? activeHexItem.annualTJ.riddleEn : 'Treasures emerge through integrity and calculated persistence; fortune and honor sustain through modesty and generosity.') : (activeHexItem && activeHexItem.annualTJ && activeHexItem.annualTJ.riddleZh ? activeHexItem.annualTJ.riddleZh : '动静得时，行止有道；止其所止，知所当止。行其庭，不见其人，安其身也。外实内虚，蓄势深藏，方成大器。')}</p>
+                </div>
+                <div class="p-1 rounded bg-amber-50/70 border border-amber-900/10 space-y-0.5">
+                  <span class="font-bold text-amber-950 block">${isEn ? 'Five Elements Dynamic Flow:' : '五行气机交感流变：'}</span>
+                  <p class="text-gray-700">${isEn ? (activeHexItem && activeHexItem.dynamicInterpretationEn ? activeHexItem.dynamicInterpretationEn : 'Dissolve stagnation through open channels and flexibility: balance inward perseverance with outward diplomacy.') : (activeHexItem && activeHexItem.dynamicInterpretationZh ? activeHexItem.dynamicInterpretationZh : '重山叠嶂滞涩 (比劫争厚 · 宜通关活气) · 土多则滞，过于执拗固执易失良机；宜以金泄之、以木疏之，打破惯性思维。')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: 10-Year Lifelong Action Roster (Current Year + 9 Years Horizon, e.g. 2026-2035) -->
+          <div class="imperial-card p-1.5 space-y-1">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <div class="flex items-center gap-1 font-bold text-[10.5px] text-amber-950">
+                <span>📜</span>
+                <span>${isEn ? 'Lifelong 64 Hexagrams Action Roster (10-Year Horizon)' : '百岁岁运六十四卦行持全景总谱'}</span>
+              </div>
+              <span class="text-[8px] font-mono text-amber-900">${currentCalYear} ~ ${currentCalYear + 9}${isEn ? ' Ten-Year Hexagram Matrix' : ' 年当年及未来十年岁运卦象与行持锦囊'}</span>
+            </div>
+            ${render10YearHexCardsHtml}
           </div>
 
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 1' : '大明/大清钦天监 · 卷一'}</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Volume I: Transits & Hexagrams' : '大明/大清钦天监 · 卷一 岁运六十四卦'}</span>
             <span>Page 4 / 9</span>
           </div>
         </div>
@@ -18561,6 +18985,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPortalFeaturesShowcase();
   initAdvSolarToggle();
   initRectificationModal();
+  initInPageRectification();
   initPhasePortraitControls();
   initPoliticalGameControls();
 
@@ -18789,6 +19214,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initRectificationModal = initRectificationModal;
   window.handleRunRectification = handleRunRectification;
   window.renderRectificationResults = renderRectificationResults;
+  window.initInPageRectification = initInPageRectification;
+  window.handleHomeRunRectification = handleHomeRunRectification;
+  window.renderHomeRectificationResults = renderHomeRectificationResults;
   window.renderPhasePortrait = renderPhasePortrait;
   window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
   window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;
