@@ -2164,924 +2164,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const adviceEl = document.getElementById('personaAdvice');
     if (adviceEl) adviceEl.textContent = pData.portrait.advice;
 
-    // 5.5 Pareto 80/20 Core Synthesis Report Rendering (👑 五经全盘画像 · 帕累托 20% 关键枢纽全盘分析)
+    // 5.5 Pareto 80/20 Core Synthesis & Kinship Hologram (👑 全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱)
     const paretoContainer = document.getElementById('paretoCoreContainer');
     if (paretoContainer && pData.paretoCore) {
-      paretoContainer.innerHTML = '';
-      const pc = pData.paretoCore;
-
-      // 0. 👑 第一核心主导格局 20% 统帅横幅 (Dominant Pattern 20/80 Fulcrum Banner)
-      if (pc.primaryPatternNameZh) {
-        const topBanner = document.createElement('div');
-        topBanner.className = 'p-4 rounded-xl bg-gradient-to-r from-amber-950/50 via-amber-900/25 to-black/60 border-2 border-amber-500/60 shadow-xl space-y-2';
-        
-        const topTabooSummaryText = isEn
-          ? (pc.tabooSummaryEn || pc.tabooSummary || (pc.grandPicture && (pc.grandPicture.tabooSummaryEn || pc.grandPicture.tabooSummary)) || (pc.grandPicture && pc.grandPicture.patternAnalysis && (pc.grandPicture.patternAnalysis.tabooSummaryEn || pc.grandPicture.patternAnalysis.tabooEn)))
-          : (pc.tabooSummaryZh || pc.tabooSummary || (pc.grandPicture && (pc.grandPicture.tabooSummaryZh || pc.grandPicture.tabooSummary)) || (pc.grandPicture && pc.grandPicture.patternAnalysis && (pc.grandPicture.patternAnalysis.tabooSummaryZh || pc.grandPicture.patternAnalysis.tabooZh)));
-
-        topBanner.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-xs py-0.5">${isEn ? 'PARETO 20% FULCRUM' : '👑 帕累托 20% 统帅枢纽'}</span>
-              <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300">
-                ${isEn ? `Primary Dominant Pattern: ${pc.primaryPatternName || pc.primaryPatternNameEn || pc.primaryPatternNameZh} (${pc.primaryPatternWeightPct}%)` : `第一核心主导格局：${pc.primaryPatternNameZh || pc.primaryPatternName}（能量占比：${pc.primaryPatternWeightPct}%）`}
-              </h3>
-            </div>
-            <span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40 font-mono">
-              ${isEn ? 'Governs 80% Destiny' : '十二典融通 · 统领全盘80%命途大纲'}
-            </span>
-          </div>
-          <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">
-            ${isEn ? pc.primaryPatternDescEn : pc.primaryPatternDescZh}
-          </p>
-          ${topTabooSummaryText ? `
-            <div class="mt-2.5 p-3 rounded-xl bg-gradient-to-r from-rose-950/40 via-red-950/20 to-black/60 border border-rose-500/50 shadow-md space-y-1.5">
-              <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-rose-500/20">
-                <div class="flex items-center space-x-1.5">
-                  <span class="text-sm">🛑</span>
-                  <span class="text-xs sm:text-sm font-bold text-rose-300 font-serif-sc">
-                    ${isEn ? 'Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}
-                  </span>
-                </div>
-                <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold border border-rose-500/40 font-mono">
-                  ${isEn ? '80% Taboo Summary' : '80% 避险总纲'}
-                </span>
-              </div>
-              <p class="text-xs text-rose-100/95 leading-relaxed font-sans font-medium">
-                ${topTabooSummaryText}
-              </p>
-            </div>
-          ` : ''}
-        `;
-        paretoContainer.appendChild(topBanner);
-      }
-
-      // 0.5 👑 全盘大局通融 · 综合全息画像 (Grand Picture Holistic Masterpiece Card)
-      if (pc.grandPicture) {
-        const gp = pc.grandPicture;
-        const grandCard = document.createElement('div');
-        grandCard.className = 'p-5 sm:p-6 rounded-2xl bg-gradient-to-b from-amber-950/40 via-black/85 to-stone-950/90 border-2 border-amber-500/70 shadow-2xl space-y-5';
-
-        const highlights = (isEn ? (gp.highlightsEn || gp.highlights) : (gp.highlightsZh || gp.highlights)) || [];
-        const highlightsHtml = highlights.map(h => `
-          <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-500/40 font-mono">
-            ${h}
-          </span>
-        `).join('');
-
-        const rulesList = (isEn ? (gp.rulesEn || gp.rules) : (gp.rulesZh || gp.rules)) || [];
-        const rulesCardsHtml = rulesList.map(r => `
-          <div class="p-3 bg-black/40 rounded-xl border border-amber-500/30 space-y-1.5 flex flex-col justify-between">
-            <span class="text-xs font-bold text-amber-300 font-serif-sc">${r.label}</span>
-            <p class="text-[11px] text-gray-300 leading-relaxed">${r.desc}</p>
-          </div>
-        `).join('');
-
-        grandCard.innerHTML = `
-          <!-- Header -->
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-amber-500/40">
-            <div class="flex items-center space-x-2.5">
-              <span class="chinese-seal text-xs py-0.5">${isEn ? 'GRAND PICTURE' : '👑 综合全息画像'}</span>
-              <h3 class="text-base sm:text-xl font-bold font-serif-sc text-amber-300">
-                ${isEn ? (gp.titleEn || gp.title) : (gp.titleZh || gp.title)}
-              </h3>
-            </div>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              ${highlightsHtml}
-            </div>
-          </div>
-
-          <!-- Subtitle / Methodology -->
-          <div class="p-3 bg-amber-950/20 rounded-xl border-l-4 border-amber-500 text-xs text-amber-200/90 font-serif-sc leading-relaxed">
-            ${isEn ? (gp.subtitleEn || gp.subtitle) : (gp.subtitleZh || gp.subtitle)}
-          </div>
-
-          <!-- 1. 命盘总相与生命大纲 -->
-          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-2">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
-                <span>🏛️</span>
-                <span>${isEn ? '1. Grand Archetype & Sovereign Life Blueprint' : '一、命盘大局总相与生命大纲'}</span>
-              </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
-                ${isEn ? 'Day Master & Sovereign Mandate' : '元神气象 · 格局司权'}
-              </span>
-            </div>
-            <p class="text-xs text-gray-200 leading-relaxed font-sans">
-              ${isEn ? (gp.thesisEn || gp.thesis) : (gp.thesisZh || gp.thesis)}
-            </p>
-          </div>
-
-          <!-- 2. 主导格局深度解析 (二八法则 · 格之可取与避讳大忌) -->
-          ${gp.patternAnalysis ? `
-          <div class="p-4 rounded-xl bg-black/40 border border-amber-500/40 space-y-3.5 shadow-lg">
-            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-amber-500/20">
-              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
-                <span>📜</span>
-                <span>${isEn ? '2. Top 3 Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、前三主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
-              </h4>
-              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
-                ${isEn ? 'Top 3 Synergy Matrix' : '前三主导格局 · 综合通融'}
-              </span>
-            </div>
-            
-            <p class="text-xs text-gray-400 font-serif-sc">
-              ${isEn ? 'Multi-dimensional analysis of the top 3 governing patterns: 20% levers, 80% taboos, and unified synthesis.' : '原局前三主导核心格局多维对校 · 逐格深剖20%核心胜手与80%损耗暗礁 · 汇通全相破局战略总论'}
-            </p>
-
-            <div class="space-y-3 pt-0.5">
-              ${(gp.patternAnalysis.topPatterns || [gp.patternAnalysis]).map((pat, pIdx) => {
-                const rankStyles = [
-                  { border: 'border-amber-500/50', bg: 'bg-amber-950/15', text: 'text-amber-300', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40', tagZh: '#1 第一核心主导格局', tagEn: '#1 Primary Governing Pattern' },
-                  { border: 'border-emerald-500/40', bg: 'bg-emerald-950/15', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', tagZh: '#2 第二辅助生发格局', tagEn: '#2 Secondary Operating Pattern' },
-                  { border: 'border-purple-500/40', bg: 'bg-purple-950/15', text: 'text-purple-300', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/40', tagZh: '#3 第三潜质调和格局', tagEn: '#3 Tertiary Stabilizing Pattern' }
-                ];
-                const st = rankStyles[pIdx] || rankStyles[0];
-                const pName = isEn ? (pat.nameEn || pat.name) : (pat.nameZh || pat.name);
-                const pSum = isEn ? (pat.summaryEn || pat.summary) : (pat.summaryZh || pat.summary);
-                const pFav = isEn ? (pat.favorableEn || pat.favorable) : (pat.favorableZh || pat.favorable);
-                const pTab = isEn ? (pat.tabooEn || pat.taboo) : (pat.tabooZh || pat.taboo);
-                const pCon = isEn ? (pat.paretoConclusionEn || pat.paretoConclusion) : (pat.paretoConclusionZh || pat.paretoConclusion);
-                const pRole = isEn ? (pat.roleEn || pat.role) : (pat.roleZh || pat.role);
-                const pWeight = pat.weightPct ? `${pat.weightPct}%` : '';
-
-                return `
-                  <div class="p-3 sm:p-3.5 rounded-xl ${st.bg} border ${st.border} space-y-2.5 transition-all">
-                    <!-- Pattern Header -->
-                    <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
-                      <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono border ${st.badge}">
-                          ${isEn ? (pat.rankEn || st.tagEn) : (pat.rankZh || st.tagZh)}
-                        </span>
-                        <span class="text-xs sm:text-sm font-bold ${st.text} font-serif-sc">
-                          ${pName}
-                        </span>
-                      </div>
-                      <div class="flex items-center gap-2 text-[10px] font-mono">
-                        ${pWeight ? `<span class="px-1.5 py-0.2 rounded bg-black/40 text-amber-300 border border-amber-500/30 font-bold">${pWeight}</span>` : ''}
-                        ${pRole ? `<span class="text-gray-400 font-serif-sc truncate">${pRole}</span>` : ''}
-                      </div>
-                    </div>
-
-                    <!-- Summary -->
-                    <p class="text-xs text-gray-200 leading-relaxed font-sans">
-                      ${pSum}
-                    </p>
-
-                    <!-- 20% Lever vs 80% Taboo Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-0.5">
-                      <!-- 20% Favorable Lever -->
-                      <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
-                        <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
-                          <span>🟢</span>
-                          <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
-                        </span>
-                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                          ${pFav}
-                        </p>
-                      </div>
-
-                      <!-- 80% Taboo Reef -->
-                      <div class="p-2.5 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
-                        <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
-                          <span>🔴</span>
-                          <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
-                        </span>
-                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                          ${pTab}
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- Direct Vernacular Conclusion -->
-                    <div class="p-2.5 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
-                      <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
-                        <span>💡</span>
-                        <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
-                      </span>
-                      <p class="text-xs text-amber-100/95 pattern-vernacular-text leading-relaxed font-sans font-medium">
-                        ${pCon}
-                      </p>
-                    </div>
-
-                    ${(pat.xuRuleZh || pat.xuCaseZh) ? `
-                      <div class="p-2.5 rounded-lg bg-blue-950/20 border border-blue-500/30 space-y-1.5 text-xs">
-                        <div class="flex items-center justify-between">
-                          <span class="font-bold text-blue-300 flex items-center gap-1 font-serif-sc text-[11px]">
-                            <span>📑</span>
-                            <span>${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '《子平真诠评注》《造化元钥评注》徐乐吾实操中间件'}</span>
-                          </span>
-                          <span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${isEn ? 'Decision Middleware' : '具象决策中间件'}</span>
-                        </div>
-                        ${(isEn ? pat.xuRuleEn : pat.xuRuleZh) ? `
-                          <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                            <b class="text-amber-300">${isEn ? 'Operational Rule: ' : '实操规则：'}</b>${isEn ? pat.xuRuleEn : pat.xuRuleZh}
-                          </p>
-                        ` : ''}
-                        ${(isEn ? pat.xuCaseEn : pat.xuCaseZh) ? `
-                          <p class="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-blue-900/30">
-                            <b class="text-indigo-300">${isEn ? 'Case Precedent: ' : '实证范例：'}</b>${isEn ? pat.xuCaseEn : pat.xuCaseZh}
-                          </p>
-                        ` : ''}
-                      </div>
-                    ` : ''}
-                  </div>
-                `;
-              }).join('')}
-            </div>
-
-            <!-- Comprehensive Cross-Pattern Synthesis Card -->
-            ${gp.patternAnalysis.synthesisZh ? `
-              <div class="p-3.5 rounded-xl bg-gradient-to-br from-amber-950/30 via-[#181622] to-black border-2 border-amber-500/60 shadow-xl space-y-2 mt-1">
-                <div class="flex items-center justify-between pb-1.5 border-b border-amber-500/30">
-                  <h5 class="text-xs sm:text-sm font-bold text-amber-200 flex items-center gap-1.5 font-serif-sc">
-                    <span>👑</span>
-                    <span>${isEn ? (gp.patternAnalysis.synthesisTitleEn || 'Unified Top 3 Synergy Directive') : (gp.patternAnalysis.synthesisTitleZh || '前三主导格局通融 · 综合全相破局总论')}</span>
-                  </h5>
-                  <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold font-serif-sc">
-                    ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
-                  </span>
-                </div>
-                <p class="text-xs text-amber-100/95 pattern-synthesis-text leading-relaxed font-serif-sc font-medium">
-                  ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
-                </p>
-              </div>
-            ` : ''}
-          </div>
-          ` : ''}
-
-          <!-- 3. 生杀破局与战略胜负手 -->
-          <div class="p-4 rounded-xl bg-black/40 border border-rose-900/40 space-y-2">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
-                <span>⚔️</span>
-                <span>${isEn ? '3. Strategic Breakthrough Campaign & 20% Lever' : '三、生杀破局与战略胜负手 (20% 关键抓手)'}</span>
-              </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
-                ${isEn ? 'Disease & Medicine Alchemy' : '以病取药 · 相神救应'}
-              </span>
-            </div>
-            <p class="text-xs text-gray-200 leading-relaxed font-sans">
-              ${isEn ? (gp.campaignEn || gp.campaign) : (gp.campaignZh || gp.campaign)}
-            </p>
-          </div>
-
-          <!-- 4. 需要避讳的地方 · 80% 损耗暗礁 (所当避者) -->
-          ${(gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh))) ? `
-          <div class="p-4 rounded-xl bg-black/40 border border-rose-900/40 space-y-2">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
-                <span>🛑</span>
-                <span>${isEn ? '4. Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)' : '四、需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
-              </h4>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono font-bold">
-                ${isEn ? '80% Taboo Summary' : '80% 避险总纲'}
-              </span>
-            </div>
-            <p class="text-xs text-rose-100/95 leading-relaxed font-sans font-medium">
-              ${isEn
-                ? (gp.tabooSummaryEn || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryEn || gp.patternAnalysis.tabooEn)))
-                : (gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh)))}
-            </p>
-          </div>
-          ` : ''}
-
-          <!-- High-Density Executive Summary of Kinship, Era & Golden Directives -->
-          <div class="p-4 rounded-xl bg-gradient-to-br from-black/50 via-stone-900/30 to-black/60 border border-gray-800/80 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800/70">
-              <div class="flex items-center space-x-2">
-                <span class="text-base">🛡️</span>
-                <h5 class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc">
-                  ${isEn ? '5. Executive Overview: Kinship Ballast, Macro Era & Lifetime Directives' : '五、六亲防线 · 时代借势 · 终身不败立身三则统览'}
-                </h5>
-              </div>
-              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 font-mono border border-amber-500/30">
-                ${isEn ? 'High-Density Strategic Pill' : '高密精要'}
-              </span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 pt-1">
-              <div class="p-2.5 rounded-lg bg-black/40 border border-emerald-900/40 text-[11px] text-gray-300 space-y-1">
-                <span class="text-emerald-300 font-bold block font-serif-sc">🛡️ ${isEn ? 'Kinship Sanctuary' : '六亲后方压舱石'}</span>
-                <p class="line-clamp-2 text-gray-400 font-sans">${isEn ? (gp.kinshipEn || gp.kinship) : (gp.kinshipZh || gp.kinship)}</p>
-              </div>
-              <div class="p-2.5 rounded-lg bg-black/40 border border-teal-900/40 text-[11px] text-gray-300 space-y-1">
-                <span class="text-teal-300 font-bold block font-serif-sc">🚀 ${isEn ? 'Period 9 Era Wave' : '离九运时代场能'}</span>
-                <p class="line-clamp-2 text-gray-400 font-sans">${isEn ? (gp.eraEn || gp.era) : (gp.eraZh || gp.era)}</p>
-              </div>
-              <div class="p-2.5 rounded-lg bg-black/40 border border-amber-900/40 text-[11px] text-gray-300 space-y-1">
-                <span class="text-amber-300 font-bold block font-serif-sc">🎯 ${isEn ? 'Lifetime Directives' : '终身黄金三则'}</span>
-                <p class="line-clamp-2 text-gray-400 font-sans">${isEn ? 'Grounded disciplines, non-negotiable moats, and strategic leverage for continuous compounding.' : '严明法度驭锋芒、广阔利他融孤寒、守正出奇终身不败之立身定海神针。'}</p>
-              </div>
-            </div>
-            <div class="pt-2 flex justify-end">
-              <button type="button" class="btn-jump-to-strategy px-3 py-1.5 rounded-xl bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/40 text-xs font-serif-sc font-medium flex items-center gap-1.5 transition cursor-pointer">
-                <span>⚔️</span>
-                <span>${isEn ? 'Explore Full Grand Strategy & Kinship Dynamics →' : '查阅完整大局破局与六亲全息画像 →'}</span>
-              </button>
-            </div>
-          </div>
-        `;
-        paretoContainer.appendChild(grandCard);
-
-        const jumpStratBtn = grandCard.querySelector ? grandCard.querySelector('.btn-jump-to-strategy') : null;
-        if (jumpStratBtn && jumpStratBtn.addEventListener) {
-          jumpStratBtn.addEventListener('click', () => switchPrimaryView('view-strategy'));
-        }
-      }
-
-      // Details Drawer & Expand/Collapse Toggle
-      const detailsDivider = document.createElement('div');
-      detailsDivider.className = 'pt-4 pb-1 border-t border-gray-800/80 flex items-center justify-between gap-2';
-      detailsDivider.innerHTML = `
-        <div class="flex items-center space-x-2">
-          <span class="chinese-seal text-[10px] py-0">${isEn ? 'CANONICAL DETAILS' : '十二典依据'}</span>
-          <h4 class="text-xs sm:text-sm font-bold text-gray-300 font-serif-sc">
-            ${isEn ? '🔍 Classical Canonical Textual Evidences & Palace Exegeses' : '🔍 深入查验十二经典细分依据与六亲全息'}
-          </h4>
-        </div>
-        <button id="toggleParetoDetailsBtn" type="button" class="px-3 py-1 text-xs rounded-lg bg-gray-800/90 hover:bg-gray-700 text-amber-300 border border-gray-700 transition flex items-center gap-1.5 shadow cursor-pointer">
-          <span id="toggleParetoDetailsIcon">▼</span>
-          <span id="toggleParetoDetailsText">${isEn ? 'Show Canonical Breakdowns' : '展开十二大典细分卡片'}</span>
-        </button>
-      `;
-      paretoContainer.appendChild(detailsDivider);
-
-      const paretoDetailsContainer = document.createElement('div');
-      paretoDetailsContainer.id = 'paretoDetailsContainer';
-      paretoDetailsContainer.className = 'space-y-4 hidden';
-      paretoContainer.appendChild(paretoDetailsContainer);
-
-      const toggleBtn = detailsDivider.querySelector('#toggleParetoDetailsBtn');
-      if (toggleBtn) {
-        toggleBtn.onclick = () => {
-          const isHidden = paretoDetailsContainer.classList.contains('hidden');
-          const toggleIcon = detailsDivider.querySelector('#toggleParetoDetailsIcon');
-          const toggleText = detailsDivider.querySelector('#toggleParetoDetailsText');
-          if (isHidden) {
-            paretoDetailsContainer.classList.remove('hidden');
-            if (toggleIcon) toggleIcon.textContent = '▲';
-            if (toggleText) toggleText.textContent = isEn ? 'Collapse Canonical Breakdowns' : '收起十二大典细分卡片';
-          } else {
-            paretoDetailsContainer.classList.add('hidden');
-            if (toggleIcon) toggleIcon.textContent = '▼';
-            if (toggleText) toggleText.textContent = isEn ? 'Show Canonical Breakdowns' : '展开十二大典细分卡片';
-          }
-        };
-      }
-
-      // 1. 👑 十二大典 20/80 全相关键枢纽 (The Twelve Classical Canons 20/80 Matrix)
-      if (pc.canons) {
-        const canonList = [
-          pc.canons.ditiansui,
-          pc.canons.qiongtong,
-          pc.canons.ziping,
-          pc.canons.sanming,
-          pc.canons.yuanhai,
-          pc.canons.shenfeng,
-          pc.canons.yuzhao,
-          pc.canons.lixuzhong,
-          pc.canons.lantai,
-          pc.canons.wuxing,
-          pc.canons.qianli,
-          pc.canons.xulewu
-        ].filter(Boolean);
-
-        canonList.forEach(c => {
-          const card = document.createElement('div');
-          let borderTheme = 'border-amber-500/40 bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60';
-          let tagColor = 'bg-amber-500/20 text-amber-300 border-amber-500/30';
-          let leftBorder = 'border-amber-500';
-
-          if (c.canonId === 'ditiansui') {
-            borderTheme = 'border-amber-600/40 bg-gradient-to-br from-amber-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-amber-600/20 text-amber-300 border-amber-600/40';
-            leftBorder = 'border-amber-600';
-          } else if (c.canonId === 'qiongtong') {
-            borderTheme = 'border-sky-600/40 bg-gradient-to-br from-sky-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-sky-600/20 text-sky-300 border-sky-600/40';
-            leftBorder = 'border-sky-500';
-          } else if (c.canonId === 'ziping') {
-            borderTheme = 'border-violet-600/40 bg-gradient-to-br from-violet-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-violet-600/20 text-violet-300 border-violet-600/40';
-            leftBorder = 'border-violet-500';
-          } else if (c.canonId === 'sanming') {
-            borderTheme = 'border-yellow-600/40 bg-gradient-to-br from-yellow-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-yellow-600/20 text-yellow-300 border-yellow-600/40';
-            leftBorder = 'border-yellow-500';
-          } else if (c.canonId === 'yuanhai') {
-            borderTheme = 'border-rose-600/40 bg-gradient-to-br from-rose-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-rose-600/20 text-rose-300 border-rose-600/40';
-            leftBorder = 'border-rose-500';
-          } else if (c.canonId === 'shenfeng') {
-            borderTheme = 'border-orange-500/40 bg-gradient-to-br from-orange-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-orange-500/20 text-orange-300 border-orange-500/30';
-            leftBorder = 'border-orange-500';
-          } else if (c.canonId === 'yuzhao') {
-            borderTheme = 'border-emerald-600/40 bg-gradient-to-br from-emerald-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-emerald-600/20 text-emerald-300 border-emerald-600/40';
-            leftBorder = 'border-emerald-500';
-          } else if (c.canonId === 'lixuzhong') {
-            borderTheme = 'border-teal-600/40 bg-gradient-to-br from-teal-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-teal-600/20 text-teal-300 border-teal-600/40';
-            leftBorder = 'border-teal-500';
-          } else if (c.canonId === 'lantai') {
-            borderTheme = 'border-indigo-600/40 bg-gradient-to-br from-indigo-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-indigo-600/20 text-indigo-300 border-indigo-600/40';
-            leftBorder = 'border-indigo-500';
-          } else if (c.canonId === 'wuxing') {
-            borderTheme = 'border-emerald-600/40 bg-gradient-to-br from-emerald-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-emerald-600/20 text-emerald-300 border-emerald-600/40';
-            leftBorder = 'border-emerald-500';
-          } else if (c.canonId === 'qianli') {
-            borderTheme = 'border-blue-600/40 bg-gradient-to-br from-blue-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-blue-600/20 text-blue-300 border-blue-600/40';
-            leftBorder = 'border-blue-500';
-          } else if (c.canonId === 'xulewu') {
-            borderTheme = 'border-cyan-600/40 bg-gradient-to-br from-cyan-950/25 via-black/40 to-black/60';
-            tagColor = 'bg-cyan-600/20 text-cyan-300 border-cyan-600/40';
-            leftBorder = 'border-cyan-500';
-          }
-
-          card.className = `p-4 rounded-xl border ${borderTheme} shadow-xl space-y-3`;
-
-          let innerGrid = '';
-          if (c.canonId === 'shenfeng') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-rose-900/40 space-y-1.5">
-                  <div class="flex items-center justify-between">
-                    <span class="text-rose-400 font-bold flex items-center gap-1">
-                      <span>⚠️</span>
-                      <span>${isEn ? 'Natal Core Affliction (Disease / 病):' : '命盘核心受制病灶 (病)：'}</span>
-                    </span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono">${isEn ? (c.diseaseNameEn || c.diseaseName) : (c.diseaseNameZh || c.diseaseName)}</span>
-                  </div>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.symptomEn || c.symptom) : (c.symptomZh || c.symptom)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
-                  <div class="flex items-center justify-between">
-                    <span class="text-emerald-400 font-bold flex items-center gap-1">
-                      <span>💊</span>
-                      <span>${isEn ? 'Divine Antidote (Medicine / 药):' : '神峰通关至圣解药 (药)：'}</span>
-                    </span>
-                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono">${isEn ? 'Supreme Antidote' : '化险为贵'}</span>
-                  </div>
-                  <p class="text-emerald-200 text-[11px] leading-relaxed font-medium">${isEn ? (c.medicineEn || c.medicine) : (c.medicineZh || c.medicine)}</p>
-                  <p class="text-gray-400 text-[10.5px] leading-relaxed pt-1 border-t border-gray-800/60">${isEn ? (c.rationaleEn || c.rationale) : (c.rationaleZh || c.rationale)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'ditiansui' || c.canonId === 'qiongtong') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-amber-300 font-bold block">${isEn ? 'Core Vitality & Meteorological Mandate:' : '核心理气气象与五行生机：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-emerald-300 font-bold block">${isEn ? 'Favorable YongShen vs Avoidance Taboos:' : '喜用相生与避坑严戒：'}</span>
-                  <div class="text-[11px] text-emerald-200 font-medium">【${isEn ? 'Favorable' : '喜用'}】：${isEn ? (c.favorableEn || c.favorable) : (c.favorableZh || c.favorable)}</div>
-                  <div class="text-[11px] text-rose-300 pt-1 border-t border-gray-800/60">【${isEn ? 'Taboos' : '所忌'}】：${isEn ? (c.taboosEn || c.taboos) : (c.taboosZh || c.taboos)}</div>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'ziping') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-violet-300 font-bold block">${isEn ? 'Pattern Formation & High Achievement Criteria:' : '格局确立与成格成贵基石：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                  <p class="text-violet-200 text-[10.5px] pt-1 border-t border-gray-800/60">【${isEn ? 'Formation' : '成格'}】：${isEn ? (c.formationEn || c.formation) : (c.formationZh || c.formation)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-emerald-300 font-bold block">${isEn ? 'Guarding Minister (Xiang Shen) & Rescue Synergy:' : '相神救应法度与化险为夷：'}</span>
-                  <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.rescueEn || c.rescue) : (c.rescueZh || c.rescue)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'sanming' || c.canonId === 'yuanhai') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-yellow-300 font-bold block">${isEn ? 'Core Axis & Legacy Trajectory:' : '命理骨相与终身归宿大势：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-amber-300 font-bold block">${isEn ? 'Canonical Scripture & Verse Oracle:' : '经文赋诗神断启示：'}</span>
-                  <p class="text-amber-200/90 text-[11px] font-serif-sc leading-relaxed">“${isEn ? (c.verseEn || c.verseQuoteEn || c.verse || c.verseQuote) : (c.verseZh || c.verseQuoteZh || c.verse || c.verseQuote)}”</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'yuzhao') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
-                <div class="p-2.5 bg-black/35 rounded-lg border border-gray-800/60 space-y-1">
-                  <span class="text-rose-300 font-bold block">${isEn ? 'Spouse Palace:' : '配偶宫照：'}</span>
-                  <p class="text-gray-300 text-[10.5px] leading-relaxed">${isEn ? (c.spouseSummaryEn || c.spouseSummary) : (c.spouseSummaryZh || c.spouseSummary)}</p>
-                </div>
-                <div class="p-2.5 bg-black/35 rounded-lg border border-gray-800/60 space-y-1">
-                  <span class="text-emerald-300 font-bold block">${isEn ? 'Children Palace:' : '子息宫照：'}</span>
-                  <p class="text-gray-300 text-[10.5px] leading-relaxed">${isEn ? (c.childrenSummaryEn || c.childrenSummary) : (c.childrenSummaryZh || c.childrenSummary)}</p>
-                </div>
-                <div class="p-2.5 bg-black/35 rounded-lg border border-gray-800/60 space-y-1">
-                  <span class="text-indigo-300 font-bold block">${isEn ? 'Ancestral Base:' : '父母祖业：'}</span>
-                  <p class="text-gray-300 text-[10.5px] leading-relaxed">${isEn ? (c.parentsSummaryEn || c.parentsSummary) : (c.parentsSummaryZh || c.parentsSummary)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'lixuzhong') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-teal-300 font-bold block">${isEn ? 'Three Primes (Rank, Destiny, Body):' : '三元论全息解构 (天元禄 · 地元命 · 人元身)：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed whitespace-pre-line font-mono">${isEn ? (c.threePrimesEn || c.threePrimes) : (c.threePrimesZh || c.threePrimes)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
-                  <span class="text-amber-300 font-bold block">${isEn ? 'Acoustic Geography & Macro Era:' : '音律地理方位与宏观AI时代周期：'}</span>
-                  <div class="text-emerald-300 font-semibold mb-0.5">${isEn ? (c.idealGeographyEn || c.idealGeography) : (c.idealGeographyZh || c.idealGeography)}</div>
-                  <p class="text-gray-300 text-[10.5px] leading-relaxed">${isEn ? (c.targetCitiesEn || c.targetCities) : (c.targetCitiesZh || c.targetCities)}</p>
-                  <p class="text-teal-200 text-[10.5px] pt-1 border-t border-gray-800/60">${isEn ? (c.eraMacroTrendEn || c.eraMacroTrend) : (c.eraMacroTrendZh || c.eraMacroTrend)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'lantai') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
-                  <span class="text-indigo-300 font-bold block">${isEn ? 'NaYin Configuration & Acoustic Image:' : '纳音神机与象数大格判词：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
-                  <span class="text-emerald-300 font-bold block">${isEn ? 'Modern Strategic Archetype & Action:' : '现代心智与社会画像破局：'}</span>
-                  <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'wuxing') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
-                  <span class="text-emerald-300 font-bold block">${isEn ? 'Year Root Sovereignty (Nian Ben):' : '年本岁命根基全息：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
-                  <span class="text-amber-300 font-bold block">${isEn ? 'Lu-Ma Riding Vitality & Macro Leverage:' : '禄马乘旺借势宏观大计：'}</span>
-                  <p class="text-amber-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'qianli') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-blue-900/40 space-y-1.5">
-                  <span class="text-blue-300 font-bold block">${isEn ? 'Yong Shen Protocol & Balancing Rationale:' : '用神五法取用与推命依据：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-blue-900/40 space-y-1.5">
-                  <span class="text-cyan-300 font-bold block">${isEn ? 'Modern Action Rule & Decision Guide:' : '近代实战定式与行动指南：'}</span>
-                  <p class="text-cyan-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
-                </div>
-              </div>
-            `;
-          } else if (c.canonId === 'xulewu') {
-            innerGrid = `
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div class="p-3 bg-black/35 rounded-lg border border-cyan-900/40 space-y-1.5">
-                  <span class="text-cyan-300 font-bold block">${isEn ? 'Decision Middleware (Operational Rule & Vigor Fine-tuning):' : '实操决策中间件（月令规则与身强身弱细化）：'}</span>
-                  <p class="text-gray-300 text-[11px] leading-relaxed whitespace-pre-line">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
-                </div>
-                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
-                  <span class="text-indigo-300 font-bold block">${isEn ? 'Documented Historical Case Precedent:' : '民国实务断案实录范例：'}</span>
-                  <p class="text-indigo-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
-                </div>
-              </div>
-            `;
-          }
-
-          card.innerHTML = `
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800/60">
-              <div class="flex items-center space-x-2">
-                <span class="chinese-seal text-[10px] py-0">${isEn ? c.canonNameEn : c.canonNameZh}</span>
-                <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
-                  <span>${isEn ? (c.titleEn || c.title) : (c.titleZh || c.title)}</span>
-                </h4>
-              </div>
-              <span class="text-[10px] px-2 py-0.5 rounded-full ${tagColor} font-mono">
-                ${isEn ? (c.pivotNameEn || c.pivotName) : (c.pivotNameZh || c.pivotName)}
-              </span>
-            </div>
-
-            <div class="p-2.5 bg-black/50 rounded-lg text-xs text-amber-200/90 font-serif-sc border-l-2 ${leftBorder} leading-relaxed">
-              ${isEn ? (c.subtitleEn || c.subtitle) : (c.subtitleZh || c.subtitle)}
-            </div>
-
-            ${innerGrid}
-
-            ${c.personaDepiction || c.personaDepictionEn ? `
-            <div class="p-3 bg-black/45 rounded-lg border border-gray-800/80 text-xs space-y-2">
-              <div>
-                <span class="text-amber-300 font-bold block mb-0.5">👤 ${isEn ? 'Classical Personality & Persona Depiction:' : '本经深度个性肖像与气象刻画：'}</span>
-                <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.personaDepictionEn || c.personaDepiction) : (c.personaDepictionZh || c.personaDepiction)}</p>
-              </div>
-              <div class="pt-1.5 border-t border-gray-800/60">
-                <span class="text-blue-300 font-bold block mb-0.5">📈 ${isEn ? 'Destiny Trajectory & Lifelong Turning Points:' : '本经所指命运走向与人生关隘：'}</span>
-                <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.destinyTrajectoryEn || c.destinyTrajectory) : (c.destinyTrajectoryZh || c.destinyTrajectory)}</p>
-              </div>
-              <div class="pt-1.5 border-t border-gray-800/60">
-                <span class="text-emerald-300 font-bold block mb-0.5">⚡ ${isEn ? 'Core Actionable Maneuver & Strategy:' : '本经核心实战战术与破局手：'}</span>
-                <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.actionableManeuverEn || c.actionableManeuver) : (c.actionableManeuverZh || c.actionableManeuver)}</p>
-              </div>
-            </div>` : ''}
-
-            <div class="p-3 bg-black/40 rounded-lg border border-gray-800/60 text-xs space-y-1.5">
-              <span class="text-amber-300 font-bold block">${isEn ? '🎯 20% High-Leverage Strategic Action Plan:' : '🎯 20% 核心抓手现代破局实操法门：'}</span>
-              <p class="text-gray-200 leading-relaxed text-[11.5px]">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
-              ${c.sculptingTypeZh ? `
-              <div class="pt-1.5 border-t border-gray-800/60 flex flex-wrap items-center justify-between text-[11px] text-amber-400/90 font-mono">
-                <span>【${isEn ? (c.sculptingTypeEn || c.sculptingType) : (c.sculptingTypeZh || c.sculptingType)}】</span>
-                <span class="text-gray-400 font-sans">${isEn ? (c.sculptingAdviceEn || c.sculptingAdvice) : (c.sculptingAdviceZh || c.sculptingAdvice)}</span>
-              </div>` : ''}
-              ${(c.genderDiffZh || c.genderDiff) ? `
-              <div class="pt-1.5 border-t border-gray-800/60 text-[11px] text-amber-300/90 leading-relaxed">
-                <span class="font-bold text-amber-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
-                ${isEn ? (c.genderDiffEn || c.genderDiff) : (c.genderDiffZh || c.genderDiff)}
-              </div>` : ''}
-            </div>
-          `;
-          paretoDetailsContainer.appendChild(card);
-        });
-      } else if (pc.fulcrum) {
-        const fc = pc.fulcrum;
-        const fulcrumCard = document.createElement('div');
-        fulcrumCard.className = 'p-4 rounded-xl border border-amber-500/40 bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 shadow-xl space-y-3';
-        fulcrumCard.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-amber-800/40">
-            <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-[10px] py-0">${isEn ? 'Shen Feng Tong Kao' : '神峰通考'}</span>
-              <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
-                <span>${isEn ? (fc.titleEn || fc.title) : (fc.titleZh || fc.title)}</span>
-              </h4>
-            </div>
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
-              ${isEn ? '20% Breakthrough Fulcrum' : '以病取药 · 绝地大成'}
-            </span>
-          </div>
-
-          <div class="p-2.5 bg-black/50 rounded-lg text-xs text-amber-200/90 font-serif-sc border-l-2 border-amber-500 leading-relaxed">
-            ${isEn ? (fc.subtitleEn || fc.subtitle) : (fc.subtitleZh || fc.subtitle)}
-          </div>
-
-          <div class="p-3 bg-amber-950/20 rounded-lg border border-amber-500/30 text-xs space-y-1.5">
-            <span class="text-amber-300 font-bold block">${isEn ? '🎯 20% High-Leverage Modern Strategic Action Plan:' : '🎯 20% 核心抓手现代破局实操法门：'}</span>
-            <p class="text-gray-200 leading-relaxed text-[11.5px]">${isEn ? (fc.modernStrategyEn || fc.modernStrategy) : (fc.modernStrategyZh || fc.modernStrategy)}</p>
-          </div>
-        `;
-        paretoDetailsContainer.appendChild(fulcrumCard);
-      }
-
-      // 2. 💑 夫妻与婚姻深层全息透视 (Yu Zhao Ding Zhen Jing)
-      if (pc.spouse) {
-        const sp = pc.spouse;
-        const spouseCard = document.createElement('div');
-        spouseCard.className = 'p-4 rounded-xl border border-rose-900/50 bg-gradient-to-br from-rose-950/15 via-black/40 to-black/60 shadow-xl space-y-3';
-        spouseCard.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-rose-900/40">
-            <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-[10px] py-0">${isEn ? 'Yu Zhao Ding Zhen' : '玉照定真经'}</span>
-              <h4 class="text-sm sm:text-base font-bold text-rose-300 font-serif-sc flex items-center gap-1.5">
-                <span>${isEn ? (sp.titleEn || sp.title) : (sp.titleZh || sp.title)}</span>
-              </h4>
-            </div>
-            <div class="flex items-center gap-1.5 text-[10px] font-mono text-rose-300">
-              <span class="px-2 py-0.5 rounded bg-rose-500/20 border border-rose-500/30">${isEn ? 'Day Branch: ' : '日支夫妻宫：'}${sp.palaceBranch}</span>
-              <span class="px-2 py-0.5 rounded bg-purple-500/20 border border-purple-500/30">${isEn ? (sp.spouseStarEn || sp.spouseStar) : (sp.spouseStarZh || sp.spouseStar)}</span>
-            </div>
-          </div>
-
-          <div class="p-2.5 bg-black/50 rounded-lg text-xs text-rose-200/90 font-serif-sc border-l-2 border-rose-500 leading-relaxed">
-            ${isEn ? (sp.subtitleEn || sp.subtitle) : (sp.subtitleZh || sp.subtitle)}
-          </div>
-
-          <!-- 4-Dimension Kinship Layout -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Elemental Aura:' : '能量等级与五行气象：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.energyEn || sp.energy) : (sp.energyZh || sp.energy)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-rose-300 font-bold block">🧠 2. ${isEn ? 'Psychological Archetype & Character Profile:' : '心性原型与性格特征画像：'}</span>
-              <div class="text-amber-200 font-semibold mb-1">【${isEn ? (sp.archetypeEn || sp.archetype) : (sp.archetypeZh || sp.archetype)}】</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.personalityEn || sp.personality) : (sp.personalityZh || sp.personality)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Likely Demeanour, Aura & Aesthetic Presence:' : '有可能的气质仪态与风采容貌：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.demeanourEn || sp.demeanour) : (sp.demeanourZh || sp.demeanour)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Relationship Dynamics & Interaction Mechanics:' : '相处关系与互动机制：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.relationshipEn || sp.relationship) : (sp.relationshipZh || sp.relationship)}</p>
-              <p class="text-rose-300 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Friction Reefs: ' : '潜在暗礁：'}</b>${isEn ? (sp.clashRiskEn || sp.clashRisk) : (sp.clashRiskZh || sp.clashRisk)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-pink-300 font-bold block">🌺 5. ${isEn ? 'Appearance, Allure & Physical Traits:' : '容貌品相与颜值相貌：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.appearanceEn || sp.appearance) : (sp.appearanceZh || sp.appearance)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-cyan-300 font-bold block">💡 6. ${isEn ? 'Intellect, Cognitive Depth & Academic Caliber:' : '才智心智与学历学识：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.intellectEn || sp.intellect) : (sp.intellectZh || sp.intellect)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5 md:col-span-2">
-              <span class="text-amber-300 font-bold block">🏡 7. ${isEn ? 'Family Pedigree & Household Foundations:' : '原生门楣与家庭家境：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (sp.familyBgEn || sp.familyBg) : (sp.familyBgZh || sp.familyBg)}</p>
-            </div>
-          </div>
-
-          <div class="p-3 bg-rose-950/20 rounded-lg border border-rose-500/30 text-xs space-y-1.5">
-            <span class="text-emerald-300 font-bold block">${isEn ? '💍 Matrimonial Harmony & Daily Cultivation Guide:' : '💍 婚姻护持秘诀与日常相处法则：'}</span>
-            <p class="text-gray-200 text-[11.5px] leading-relaxed">${isEn ? (sp.adviceEn || sp.advice) : (sp.adviceZh || sp.advice)}</p>
-            ${sp.genderDiffZh || sp.genderDiff ? `
-            <div class="pt-1.5 border-t border-rose-900/40 text-[11px] text-rose-300/90 leading-relaxed">
-              <span class="font-bold text-rose-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
-              ${isEn ? (sp.genderDiffEn || sp.genderDiff) : (sp.genderDiffZh || sp.genderDiff)}
-            </div>` : ''}
-          </div>
-        `;
-        paretoDetailsContainer.appendChild(spouseCard);
-      }
-
-      // 3. 👶 子女与后嗣才干缘法 (Yu Zhao Ding Zhen Jing)
-      if (pc.children) {
-        const ch = pc.children;
-        const childrenCard = document.createElement('div');
-        childrenCard.className = 'p-4 rounded-xl border border-emerald-900/50 bg-gradient-to-br from-emerald-950/15 via-black/40 to-black/60 shadow-xl space-y-3';
-        childrenCard.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-emerald-900/40">
-            <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-[10px] py-0">${isEn ? 'Yu Zhao Ding Zhen' : '玉照定真经'}</span>
-              <h4 class="text-sm sm:text-base font-bold text-emerald-300 font-serif-sc flex items-center gap-1.5">
-                <span>${isEn ? (ch.titleEn || ch.title) : (ch.titleZh || ch.title)}</span>
-              </h4>
-            </div>
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
-              ${isEn ? 'Hour Pillar: ' : '时宿子女宫：'}${ch.hourPillarText}
-            </span>
-          </div>
-
-          <div class="p-2.5 bg-black/50 rounded-lg text-xs text-emerald-200/90 font-serif-sc border-l-2 border-emerald-500 leading-relaxed">
-            ${isEn ? (ch.subtitleEn || ch.subtitle) : (ch.subtitleZh || ch.subtitle)}
-          </div>
-
-          <!-- 4-Dimension Kinship Layout -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Innate Vitality:' : '能量等级与五行气象：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.energyEn || ch.energy) : (ch.energyZh || ch.energy)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-emerald-300 font-bold block">🧠 2. ${isEn ? 'Character Archetype & Frontier Talent:' : '心性原型与天赋赛道：'}</span>
-              <div class="text-amber-200 font-semibold mb-1">【${isEn ? (ch.archetypeEn || ch.archetype) : (ch.archetypeZh || ch.archetype)}】</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.personalityEn || ch.personality) : (ch.personalityZh || ch.personality)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Likely Demeanour, Intellectual Presence & Aura:' : '有可能的气质仪态与风度神采：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.demeanourEn || ch.demeanour) : (ch.demeanourZh || ch.demeanour)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-blue-300 font-bold block">🤝 4. ${isEn ? 'Parent-Child Dynamics & Mentorship Guide:' : '相处关系与亲子沟通互动密码：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (ch.relationshipEn || ch.relationship) : (ch.relationshipZh || ch.relationship)}</p>
-              <p class="text-emerald-200 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Mentorship Key: ' : '沟通避坑：'}</b>${isEn ? (ch.guideEn || ch.guide) : (ch.guideZh || ch.guide)}</p>
-            </div>
-          </div>
-
-          ${ch.genderDiffZh || ch.genderDiff ? `
-          <div class="p-3 bg-emerald-950/20 rounded-lg border border-emerald-500/30 text-xs space-y-1">
-            <span class="font-bold text-emerald-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
-            <p class="text-gray-200 text-[11px] leading-relaxed">${isEn ? (ch.genderDiffEn || ch.genderDiff) : (ch.genderDiffZh || ch.genderDiff)}</p>
-          </div>` : ''}
-        `;
-        paretoDetailsContainer.appendChild(childrenCard);
-      }
-
-      // 4. 🏡 父母与家族祖荫传承 (Yu Zhao Ding Zhen Jing)
-      if (pc.parents) {
-        const pa = pc.parents;
-        const parentsCard = document.createElement('div');
-        parentsCard.className = 'p-4 rounded-xl border border-indigo-900/50 bg-gradient-to-br from-indigo-950/15 via-black/40 to-black/60 shadow-xl space-y-3';
-        parentsCard.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-indigo-900/40">
-            <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-[10px] py-0">${isEn ? 'Yu Zhao Ding Zhen' : '玉照定真经'}</span>
-              <h4 class="text-sm sm:text-base font-bold text-indigo-300 font-serif-sc flex items-center gap-1.5">
-                <span>${isEn ? (pa.titleEn || pa.title) : (pa.titleZh || pa.title)}</span>
-              </h4>
-            </div>
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">
-              ${isEn ? (pa.typeEn || pa.type) : (pa.typeZh || pa.type)}
-            </span>
-          </div>
-
-          <div class="p-2.5 bg-black/50 rounded-lg text-xs text-indigo-200/90 font-serif-sc border-l-2 border-indigo-500 leading-relaxed">
-            ${isEn ? (pa.subtitleEn || pa.subtitle) : (pa.subtitleZh || pa.subtitle)}
-          </div>
-
-          <!-- 4-Dimension Kinship Layout -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-amber-300 font-bold block">⚡ 1. ${isEn ? 'Energy Scale & Ancestral Foundation:' : '能量等级与祖业根基底色：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.energyEn || pa.energy) : (pa.energyZh || pa.energy)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-indigo-300 font-bold block">🧠 2. ${isEn ? 'Parental Character Archetype & Mindset:' : '父母心性原型与思维模式画像：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.personalityEn || pa.personality) : (pa.personalityZh || pa.personality)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-purple-300 font-bold block">✨ 3. ${isEn ? 'Family Demeanour & Upbringing Heritage:' : '家风气质风度与言传身教熏陶：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.demeanourEn || pa.demeanour) : (pa.demeanourZh || pa.demeanour)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-emerald-300 font-bold block">🤝 4. ${isEn ? 'Intergenerational Dynamics & Filial Balance:' : '相处互动机制与孝道自主平衡：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (pa.relationshipEn || pa.relationship) : (pa.relationshipZh || pa.relationship)}</p>
-              <p class="text-amber-200 text-[10.5px] pt-1 border-t border-gray-800/60"><b>${isEn ? 'Resource vs Debt: ' : '隐形资源vs约束：'}</b>${isEn ? (pa.debtOrBlessingEn || pa.debtOrBlessing) : (pa.debtOrBlessingZh || pa.debtOrBlessing)}</p>
-            </div>
-          </div>
-
-          <div class="p-3 bg-indigo-950/20 rounded-lg border border-indigo-500/30 text-xs space-y-1.5">
-            <span class="text-emerald-300 font-bold block">${isEn ? '🌿 Harmonizing Filial Devotion with Sovereign Autonomy:' : '🌿 孝道奉养与自主人生平衡法则：'}</span>
-            <p class="text-gray-200 text-[11.5px] leading-relaxed">${isEn ? (pa.filialAdviceEn || pa.filialAdvice) : (pa.filialAdviceZh || pa.filialAdvice)}</p>
-            ${pa.genderDiffZh || pa.genderDiff ? `
-            <div class="pt-1.5 border-t border-indigo-900/40 text-[11px] text-indigo-300/90 leading-relaxed">
-              <span class="font-bold text-indigo-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
-              ${isEn ? (pa.genderDiffEn || pa.genderDiff) : (pa.genderDiffZh || pa.genderDiff)}
-            </div>` : ''}
-          </div>
-        `;
-        paretoDetailsContainer.appendChild(parentsCard);
-      }
-
-      // 5. 🌍 人与社会环境/时代周期的综合交互分析 (Li Xu Zhong Ming Shu)
-      if (pc.environment) {
-        const env = pc.environment;
-        const envCard = document.createElement('div');
-        envCard.className = 'p-4 rounded-xl border border-teal-900/50 bg-gradient-to-br from-teal-950/15 via-black/40 to-black/60 shadow-xl space-y-3';
-        envCard.innerHTML = `
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-teal-900/40">
-            <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-[10px] py-0">${isEn ? 'Li Xu Zhong' : '李虚中命书'}</span>
-              <h4 class="text-sm sm:text-base font-bold text-teal-300 font-serif-sc flex items-center gap-1.5">
-                <span>${isEn ? (env.titleEn || env.title) : (env.titleZh || env.title)}</span>
-              </h4>
-            </div>
-            <span class="text-[10px] px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
-              ${isEn ? 'Three Primes & Spatial Resonance' : '三元禄命 · 音律场能'}
-            </span>
-          </div>
-
-          <div class="p-2.5 bg-black/50 rounded-lg text-xs text-teal-200/90 font-serif-sc border-l-2 border-teal-500 leading-relaxed">
-            ${isEn ? (env.subtitleEn || env.subtitle) : (env.subtitleZh || env.subtitle)}
-          </div>
-
-          <div class="p-3 bg-black/35 rounded-lg border border-teal-800/40 text-xs space-y-1.5">
-            <span class="text-teal-300 font-bold block">${isEn ? 'Three Primes Integration (Heavenly Rank, Earthly Destiny, Human Body):' : '三元论全息解构 (天元为禄 · 地元为命 · 人元为身)：'}</span>
-            <p class="text-gray-300 text-[11px] leading-relaxed whitespace-pre-line font-mono">${isEn ? (env.threePrimesEn || env.threePrimes) : (env.threePrimesZh || env.threePrimes)}</p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-amber-300 font-bold block">${isEn ? 'Optimal Geographical Direction & Key Metropolises:' : '最佳地理发展方位与核心城市群：'}</span>
-              <div class="text-emerald-300 font-semibold mb-0.5">${isEn ? (env.idealGeographyEn || env.idealGeography) : (env.idealGeographyZh || env.idealGeography)}</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (env.targetCitiesEn || env.targetCities) : (env.targetCitiesZh || env.targetCities)}</p>
-            </div>
-
-            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
-              <span class="text-cyan-300 font-bold block">${isEn ? 'Workspace & Residence Physical Feng Shui Energy Field:' : '办公与居住物理空间场能调控：'}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (env.workspaceEnergyEn || env.workspaceEnergy) : (env.workspaceEnergyZh || env.workspaceEnergy)}</p>
-            </div>
-          </div>
-
-          <div class="p-3 bg-teal-950/20 rounded-lg border border-teal-500/30 text-xs space-y-1.5">
-            <span class="text-amber-300 font-bold block">${isEn ? '🚀 Macro Era Cycle Synchronization (AI / Digital Paradigm):' : '🚀 宏观时代周期交互（顺应AI与数字化变革红利）：'}</span>
-            <p class="text-gray-200 text-[11.5px] leading-relaxed">${isEn ? (env.eraMacroTrendEn || env.eraMacroTrend) : (env.eraMacroTrendZh || env.eraMacroTrend)}</p>
-            ${env.genderDiffZh || env.genderDiff ? `
-            <div class="pt-1.5 border-t border-teal-900/40 text-[11px] text-teal-300/90 leading-relaxed">
-              <span class="font-bold text-teal-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
-              ${isEn ? (env.genderDiffEn || env.genderDiff) : (env.genderDiffZh || env.genderDiff)}
-            </div>` : ''}
-          </div>
-        `;
-        paretoDetailsContainer.appendChild(envCard);
-      }
+      renderStrategyAndKinshipContent(paretoContainer, pData, res, isEn, { includeCanonsDrawer: true });
     }
 
     // 6. Day Master Defects & Vulnerabilities Rendering
@@ -3473,9 +2559,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFrictionView(pData, res, isEn);
   }
 
-  // 👑 Dedicated Grand Strategy & Kinship Hologram View Renderer (全新独立大相与破局战役战略视图)
-  function renderStrategyView(pData, res, isEn) {
-    const container = document.getElementById('strategyContentContainer');
+  // 👑 Unified Strategic Grand Picture & 4D Kinship Hologram Renderer
+  function renderStrategyAndKinshipContent(container, pData, res, isEn, options = {}) {
     if (!container) return;
     if (!pData || !pData.paretoCore) {
       container.innerHTML = `
@@ -3492,8 +2577,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. 👑 第一核心主导格局 20% 统帅枢纽横幅 (Dominant Pattern 20/80 Fulcrum Banner)
     if (pc.primaryPatternNameZh || pc.primaryPatternName) {
-      const patName = isEn ? (pc.primaryPatternName || pc.primaryPatternNameEn) : (pc.primaryPatternNameZh || pc.primaryPatternName);
+      const patName = isEn ? (pc.primaryPatternName || pc.primaryPatternNameEn || pc.primaryPatternNameZh) : (pc.primaryPatternNameZh || pc.primaryPatternName);
       const patDesc = isEn ? (pc.primaryPatternDescEn || pc.primaryPatternDesc) : (pc.primaryPatternDescZh || pc.primaryPatternDesc);
+      const topTabooSummaryText = isEn
+        ? (pc.tabooSummaryEn || pc.tabooSummary || (pc.grandPicture && (pc.grandPicture.tabooSummaryEn || pc.grandPicture.tabooSummary)) || (pc.grandPicture && pc.grandPicture.patternAnalysis && (pc.grandPicture.patternAnalysis.tabooSummaryEn || pc.grandPicture.patternAnalysis.tabooEn)))
+        : (pc.tabooSummaryZh || pc.tabooSummary || (pc.grandPicture && (pc.grandPicture.tabooSummaryZh || pc.grandPicture.tabooSummary)) || (pc.grandPicture && pc.grandPicture.patternAnalysis && (pc.grandPicture.patternAnalysis.tabooSummaryZh || pc.grandPicture.patternAnalysis.tabooZh)));
+
       const banner = document.createElement('div');
       banner.className = 'p-5 rounded-2xl bg-gradient-to-r from-amber-950/60 via-amber-900/30 to-black/70 border-2 border-amber-500/70 shadow-2xl space-y-2.5';
       banner.innerHTML = `
@@ -3505,12 +2594,30 @@ document.addEventListener('DOMContentLoaded', () => {
             </h3>
           </div>
           <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40 font-mono">
-            ${isEn ? 'Governs 80% Destiny' : '八经融通 · 统领全盘80%命途大纲'}
+            ${isEn ? 'Governs 80% Destiny' : '十二典融通 · 统领全盘80%命途大纲'}
           </span>
         </div>
         <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-serif-sc">
           ${patDesc}
         </p>
+        ${topTabooSummaryText ? `
+          <div class="mt-2.5 p-3 rounded-xl bg-gradient-to-r from-rose-950/40 via-red-950/20 to-black/60 border border-rose-500/50 shadow-md space-y-1.5">
+            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1 border-b border-rose-500/20">
+              <div class="flex items-center space-x-1.5">
+                <span class="text-sm">🛑</span>
+                <span class="text-xs sm:text-sm font-bold text-rose-300 font-serif-sc">
+                  ${isEn ? 'Taboos to Avoid · 80% Waste & Hazards (What Must Be Shunned)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}
+                </span>
+              </div>
+              <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-[10px] font-bold border border-rose-500/40 font-mono">
+                ${isEn ? '80% Taboo Summary' : '80% 避险总纲'}
+              </span>
+            </div>
+            <p class="text-xs text-rose-100/95 leading-relaxed font-sans font-medium">
+              ${topTabooSummaryText}
+            </p>
+          </div>
+        ` : ''}
       `;
       container.appendChild(banner);
     }
@@ -3553,7 +2660,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ${isEn ? (gp.subtitleEn || gp.subtitle) : (gp.subtitleZh || gp.subtitle)}
         </div>
 
-        <!-- 1. 命盘大局总相与生命大纲 -->
+        <!-- 1. Grand Archetype & Life Blueprint -->
         <div class="p-4 rounded-xl bg-black/45 border border-amber-500/30 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
@@ -3569,145 +2676,145 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 2. 主导格局深度解析 (二八法则 · 格之可取与避讳大忌) -->
-          ${gp.patternAnalysis ? `
-          <div class="p-4 sm:p-5 rounded-xl bg-black/45 border border-amber-500/40 space-y-3.5 shadow-lg">
-            <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-amber-500/20">
-              <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
-                <span>📜</span>
-                <span>${isEn ? '2. Top 3 Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、前三主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
-              </h4>
-              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
-                ${isEn ? 'Top 3 Synergy Matrix' : '前三主导格局 · 综合通融'}
-              </span>
-            </div>
-            
-            <p class="text-xs text-gray-400 font-serif-sc">
-              ${isEn ? 'Multi-dimensional analysis of the top 3 governing patterns: 20% levers, 80% taboos, and unified synthesis.' : '原局前三主导核心格局多维对校 · 逐格深剖20%核心胜手与80%损耗暗礁 · 汇通全相破局战略总论'}
-            </p>
+        <!-- 2. Dominant Pattern Analysis -->
+        ${gp.patternAnalysis ? `
+        <div class="p-4 sm:p-5 rounded-xl bg-black/45 border border-amber-500/40 space-y-3.5 shadow-lg">
+          <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-amber-500/20">
+            <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
+              <span>📜</span>
+              <span>${isEn ? '2. Top 3 Dominant Pattern Analysis (80/20 Law: Strengths vs Taboos)' : '二、前三主导格局深度解析 (二八法则 · 格之可取与避讳大忌)'}</span>
+            </h4>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
+              ${isEn ? 'Top 3 Synergy Matrix' : '前三主导格局 · 综合通融'}
+            </span>
+          </div>
+          
+          <p class="text-xs text-gray-400 font-serif-sc">
+            ${isEn ? 'Multi-dimensional analysis of the top 3 governing patterns: 20% levers, 80% taboos, and unified synthesis.' : '原局前三主导核心格局多维对校 · 逐格深剖20%核心胜手与80%损耗暗礁 · 汇通全相破局战略总论'}
+          </p>
 
-            <div class="space-y-3 pt-0.5">
-              ${(gp.patternAnalysis.topPatterns || [gp.patternAnalysis]).map((pat, pIdx) => {
-                const rankStyles = [
-                  { border: 'border-amber-500/50', bg: 'bg-amber-950/15', text: 'text-amber-300', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40', tagZh: '#1 第一核心主导格局', tagEn: '#1 Primary Governing Pattern' },
-                  { border: 'border-emerald-500/40', bg: 'bg-emerald-950/15', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', tagZh: '#2 第二辅助生发格局', tagEn: '#2 Secondary Operating Pattern' },
-                  { border: 'border-purple-500/40', bg: 'bg-purple-950/15', text: 'text-purple-300', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/40', tagZh: '#3 第三潜质调和格局', tagEn: '#3 Tertiary Stabilizing Pattern' }
-                ];
-                const st = rankStyles[pIdx] || rankStyles[0];
-                const pName = isEn ? (pat.nameEn || pat.name) : (pat.nameZh || pat.name);
-                const pSum = isEn ? (pat.summaryEn || pat.summary) : (pat.summaryZh || pat.summary);
-                const pFav = isEn ? (pat.favorableEn || pat.favorable) : (pat.favorableZh || pat.favorable);
-                const pTab = isEn ? (pat.tabooEn || pat.taboo) : (pat.tabooZh || pat.taboo);
-                const pCon = isEn ? (pat.paretoConclusionEn || pat.paretoConclusion) : (pat.paretoConclusionZh || pat.paretoConclusion);
-                const pRole = isEn ? (pat.roleEn || pat.role) : (pat.roleZh || pat.role);
-                const pWeight = pat.weightPct ? `${pat.weightPct}%` : '';
+          <div class="space-y-3 pt-0.5">
+            ${(gp.patternAnalysis.topPatterns || [gp.patternAnalysis]).map((pat, pIdx) => {
+              const rankStyles = [
+                { border: 'border-amber-500/50', bg: 'bg-amber-950/15', text: 'text-amber-300', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40', tagZh: '#1 第一核心主导格局', tagEn: '#1 Primary Governing Pattern' },
+                { border: 'border-emerald-500/40', bg: 'bg-emerald-950/15', text: 'text-emerald-300', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', tagZh: '#2 第二辅助生发格局', tagEn: '#2 Secondary Operating Pattern' },
+                { border: 'border-purple-500/40', bg: 'bg-purple-950/15', text: 'text-purple-300', badge: 'bg-purple-500/20 text-purple-300 border-purple-500/40', tagZh: '#3 第三潜质调和格局', tagEn: '#3 Tertiary Stabilizing Pattern' }
+              ];
+              const st = rankStyles[pIdx] || rankStyles[0];
+              const pName = isEn ? (pat.nameEn || pat.name) : (pat.nameZh || pat.name);
+              const pSum = isEn ? (pat.summaryEn || pat.summary) : (pat.summaryZh || pat.summary);
+              const pFav = isEn ? (pat.favorableEn || pat.favorable) : (pat.favorableZh || pat.favorable);
+              const pTab = isEn ? (pat.tabooEn || pat.taboo) : (pat.tabooZh || pat.taboo);
+              const pCon = isEn ? (pat.paretoConclusionEn || pat.paretoConclusion) : (pat.paretoConclusionZh || pat.paretoConclusion);
+              const pRole = isEn ? (pat.roleEn || pat.role) : (pat.roleZh || pat.role);
+              const pWeight = pat.weightPct ? `${pat.weightPct}%` : '';
 
-                return `
-                  <div class="p-3 sm:p-3.5 rounded-xl ${st.bg} border ${st.border} space-y-2.5 transition-all">
-                    <!-- Pattern Header -->
-                    <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
-                      <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono border ${st.badge}">
-                          ${isEn ? (pat.rankEn || st.tagEn) : (pat.rankZh || st.tagZh)}
-                        </span>
-                        <span class="text-xs sm:text-sm font-bold ${st.text} font-serif-sc">
-                          ${pName}
-                        </span>
-                      </div>
-                      <div class="flex items-center gap-2 text-[10px] font-mono">
-                        ${pWeight ? `<span class="px-1.5 py-0.2 rounded bg-black/40 text-amber-300 border border-amber-500/30 font-bold">${pWeight}</span>` : ''}
-                        ${pRole ? `<span class="text-gray-400 font-serif-sc truncate">${pRole}</span>` : ''}
-                      </div>
-                    </div>
-
-                    <!-- Summary -->
-                    <p class="text-xs text-gray-200 leading-relaxed font-sans">
-                      ${pSum}
-                    </p>
-
-                    <!-- 20% Lever vs 80% Taboo Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-0.5">
-                      <!-- 20% Favorable Lever -->
-                      <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
-                        <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
-                          <span>🟢</span>
-                          <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
-                        </span>
-                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                          ${pFav}
-                        </p>
-                      </div>
-
-                      <!-- 80% Taboo Reef -->
-                      <div class="p-2.5 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
-                        <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
-                          <span>🔴</span>
-                          <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
-                        </span>
-                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                          ${pTab}
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- Direct Vernacular Conclusion -->
-                    <div class="p-2.5 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
-                      <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
-                        <span>💡</span>
-                        <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
+              return `
+                <div class="p-3 sm:p-3.5 rounded-xl ${st.bg} border ${st.border} space-y-2.5 transition-all">
+                  <!-- Pattern Header -->
+                  <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono border ${st.badge}">
+                        ${isEn ? (pat.rankEn || st.tagEn) : (pat.rankZh || st.tagZh)}
                       </span>
-                      <p class="text-xs text-amber-100/95 pattern-vernacular-text leading-relaxed font-sans font-medium">
-                        ${pCon}
+                      <span class="text-xs sm:text-sm font-bold ${st.text} font-serif-sc">
+                        ${pName}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-2 text-[10px] font-mono">
+                      ${pWeight ? `<span class="px-1.5 py-0.2 rounded bg-black/40 text-amber-300 border border-amber-500/30 font-bold">${pWeight}</span>` : ''}
+                      ${pRole ? `<span class="text-gray-400 font-serif-sc truncate">${pRole}</span>` : ''}
+                    </div>
+                  </div>
+
+                  <!-- Summary -->
+                  <p class="text-xs text-gray-200 leading-relaxed font-sans">
+                    ${pSum}
+                  </p>
+
+                  <!-- 20% Lever vs 80% Taboo Grid -->
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-0.5">
+                    <!-- 20% Favorable Lever -->
+                    <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-500/40 space-y-1">
+                      <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 font-serif-sc">
+                        <span>🟢</span>
+                        <span>${isEn ? 'Core Strengths to Harness (20% Pareto Lever)' : '格之可取 · 20% 核心胜手 (所当取者)'}</span>
+                      </span>
+                      <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                        ${pFav}
                       </p>
                     </div>
 
-                    ${(pat.xuRuleZh || pat.xuCaseZh) ? `
-                      <div class="p-2.5 rounded-lg bg-blue-950/20 border border-blue-500/30 space-y-1.5 text-xs">
-                        <div class="flex items-center justify-between">
-                          <span class="font-bold text-blue-300 flex items-center gap-1 font-serif-sc text-[11px]">
-                            <span>📑</span>
-                            <span>${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '《子平真诠评注》《造化元钥评注》徐乐吾实操中间件'}</span>
-                          </span>
-                          <span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${isEn ? 'Decision Middleware' : '具象决策中间件'}</span>
-                        </div>
-                        ${(isEn ? pat.xuRuleEn : pat.xuRuleZh) ? `
-                          <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
-                            <b class="text-amber-300">${isEn ? 'Operational Rule: ' : '实操规则：'}</b>${isEn ? pat.xuRuleEn : pat.xuRuleZh}
-                          </p>
-                        ` : ''}
-                        ${(isEn ? pat.xuCaseEn : pat.xuCaseZh) ? `
-                          <p class="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-blue-900/30">
-                            <b class="text-indigo-300">${isEn ? 'Case Precedent: ' : '实证范例：'}</b>${isEn ? pat.xuCaseEn : pat.xuCaseZh}
-                          </p>
-                        ` : ''}
-                      </div>
-                    ` : ''}
+                    <!-- 80% Taboo Reef -->
+                    <div class="p-2.5 rounded-lg bg-rose-950/25 border border-rose-500/40 space-y-1">
+                      <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5 font-serif-sc">
+                        <span>🔴</span>
+                        <span>${isEn ? 'Fatal Taboos to Avoid (80% Waste & Hazards)' : '需要避讳的地方 · 80% 损耗暗礁 (所当避者)'}</span>
+                      </span>
+                      <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                        ${pTab}
+                      </p>
+                    </div>
                   </div>
-                `;
-              }).join('')}
-            </div>
 
-            <!-- Comprehensive Cross-Pattern Synthesis Card -->
-            ${gp.patternAnalysis.synthesisZh ? `
-              <div class="p-3.5 rounded-xl bg-gradient-to-br from-amber-950/30 via-[#181622] to-black border-2 border-amber-500/60 shadow-xl space-y-2 mt-1">
-                <div class="flex items-center justify-between pb-1.5 border-b border-amber-500/30">
-                  <h5 class="text-xs sm:text-sm font-bold text-amber-200 flex items-center gap-1.5 font-serif-sc">
-                    <span>👑</span>
-                    <span>${isEn ? (gp.patternAnalysis.synthesisTitleEn || 'Unified Top 3 Synergy Directive') : (gp.patternAnalysis.synthesisTitleZh || '前三主导格局通融 · 综合全相破局总论')}</span>
-                  </h5>
-                  <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold font-serif-sc">
-                    ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
-                  </span>
+                  <!-- Direct Vernacular Conclusion -->
+                  <div class="p-2.5 rounded-lg bg-gradient-to-r from-amber-950/40 via-stone-900/50 to-black/60 border-l-4 border-amber-500 border border-amber-500/30 space-y-1">
+                    <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+                      <span>💡</span>
+                      <span>${isEn ? 'Pareto Bottom-Line Direct Vernacular Takeaway' : '二八法则 · 白话实战定论 (直接结论)'}</span>
+                    </span>
+                    <p class="text-xs text-amber-100/95 pattern-vernacular-text leading-relaxed font-sans font-medium">
+                      ${pCon}
+                    </p>
+                  </div>
+
+                  ${(pat.xuRuleZh || pat.xuCaseZh) ? `
+                    <div class="p-2.5 rounded-lg bg-blue-950/20 border border-blue-500/30 space-y-1.5 text-xs">
+                      <div class="flex items-center justify-between">
+                        <span class="font-bold text-blue-300 flex items-center gap-1 font-serif-sc text-[11px]">
+                          <span>📑</span>
+                          <span>${isEn ? 'Xu Lewu Monthly Rule & Case Middleware' : '《子平真诠评注》《造化元钥评注》徐乐吾实操中间件'}</span>
+                        </span>
+                        <span class="text-[9px] px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 font-mono">${isEn ? 'Decision Middleware' : '具象决策中间件'}</span>
+                      </div>
+                      ${(isEn ? pat.xuRuleEn : pat.xuRuleZh) ? `
+                        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                          <b class="text-amber-300">${isEn ? 'Operational Rule: ' : '实操规则：'}</b>${isEn ? pat.xuRuleEn : pat.xuRuleZh}
+                        </p>
+                      ` : ''}
+                      ${(isEn ? pat.xuCaseEn : pat.xuCaseZh) ? `
+                        <p class="text-[10px] text-gray-400 leading-relaxed font-sans pt-1 border-t border-blue-900/30">
+                          <b class="text-indigo-300">${isEn ? 'Case Precedent: ' : '实证范例：'}</b>${isEn ? pat.xuCaseEn : pat.xuCaseZh}
+                        </p>
+                      ` : ''}
+                    </div>
+                  ` : ''}
                 </div>
-                <p class="text-xs text-amber-100/95 pattern-synthesis-text leading-relaxed font-serif-sc font-medium">
-                  ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
-                </p>
-              </div>
-            ` : ''}
+              `;
+            }).join('')}
           </div>
-          ` : ''}
 
-        <!-- 3. 生杀破局与战略胜负手 -->
+          <!-- Comprehensive Cross-Pattern Synthesis Card -->
+          ${gp.patternAnalysis.synthesisZh ? `
+            <div class="p-3.5 rounded-xl bg-gradient-to-br from-amber-950/30 via-[#181622] to-black border-2 border-amber-500/60 shadow-xl space-y-2 mt-1">
+              <div class="flex items-center justify-between pb-1.5 border-b border-amber-500/30">
+                <h5 class="text-xs sm:text-sm font-bold text-amber-200 flex items-center gap-1.5 font-serif-sc">
+                  <span>👑</span>
+                  <span>${isEn ? (gp.patternAnalysis.synthesisTitleEn || 'Unified Top 3 Synergy Directive') : (gp.patternAnalysis.synthesisTitleZh || '前三主导格局通融 · 综合全相破局总论')}</span>
+                </h5>
+                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold font-serif-sc">
+                  ${isEn ? 'Holistic Synthesis' : '三格通融 · 综合解析'}
+                </span>
+              </div>
+              <p class="text-xs text-amber-100/95 pattern-synthesis-text leading-relaxed font-serif-sc font-medium">
+                ${isEn ? gp.patternAnalysis.synthesisEn : gp.patternAnalysis.synthesisZh}
+              </p>
+            </div>
+          ` : ''}
+        </div>
+        ` : ''}
+
+        <!-- 3. Breakthrough Strategic Pivots -->
         <div class="p-4 rounded-xl bg-black/45 border border-rose-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-rose-300 flex items-center gap-2 font-serif-sc">
@@ -3723,7 +2830,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 4. 需要避讳的地方 · 80% 损耗暗礁 (所当避者) -->
+        <!-- 4. Taboos and Hazards -->
         ${(gp.tabooSummaryZh || gp.tabooSummary || (gp.patternAnalysis && (gp.patternAnalysis.tabooSummaryZh || gp.patternAnalysis.tabooZh))) ? `
         <div class="p-4 rounded-xl bg-black/45 border border-rose-900/40 space-y-2">
           <div class="flex items-center justify-between">
@@ -3743,7 +2850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         ` : ''}
 
-        <!-- 5. 六亲后方与家庭压舱石 -->
+        <!-- 5. Kinship Ballast -->
         <div class="p-4 rounded-xl bg-black/45 border border-emerald-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
@@ -3759,7 +2866,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 6. 时代跃迁与宏观时空场能共振 -->
+        <!-- 6. Era Supercycle Resonance -->
         <div class="p-4 rounded-xl bg-black/45 border border-teal-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
@@ -3775,7 +2882,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 7. 终身立身不败之黄金三则 -->
+        <!-- 7. Lifetime Golden Directives -->
         <div class="p-4 sm:p-5 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
@@ -3794,9 +2901,9 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(grandCard);
     }
 
-    // 3. 👑 六亲深度侧写全息图 (Kinship 4D Depth Profiles: 配偶、子女、父母)
+    // 3. 👥 六亲深度侧写全息图谱 (4D Kinship Profiles: Spouse, Children, Parents)
     const kinshipSection = document.createElement('div');
-    kinshipSection.className = 'space-y-4';
+    kinshipSection.className = 'space-y-4 pt-1';
     kinshipSection.innerHTML = `
       <div class="flex items-center justify-between pb-2 border-b border-gray-800">
         <div class="flex items-center space-x-2">
@@ -3807,10 +2914,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <span class="chinese-seal text-[10px] py-0">${isEn ? 'Yu Zhao Ding Zhen' : '玉照定真'}</span>
       </div>
-      <div id="kinshipStrategyCardsGrid" class="grid grid-cols-1 gap-5"></div>
     `;
+    const kg = document.createElement('div');
+    kg.className = 'grid grid-cols-1 gap-5 kinship-cards-grid';
+    kinshipSection.appendChild(kg);
     container.appendChild(kinshipSection);
-    const kg = kinshipSection.querySelector('#kinshipStrategyCardsGrid');
 
     // Spouse 4D Card
     if (pc.spouse && kg) {
@@ -3826,7 +2934,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </h4>
           </div>
           <div class="flex items-center gap-1.5 text-xs font-mono">
-            <span class="px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">${isEn ? 'Palace: ' : '日支夫妻宫：'}${sp.palaceBranch}</span>
+            <span class="px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">${isEn ? ('Palace: ' + ((typeof PortraitEngine !== 'undefined' && PortraitEngine.toBranchEn) ? PortraitEngine.toBranchEn(sp.palaceBranch) : sp.palaceBranch)) : ('日支夫妻宫：' + sp.palaceBranch)}</span>
             <span class="px-2.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">${isEn ? (sp.spouseStarEn || sp.spouseStar) : (sp.spouseStarZh || sp.spouseStar)}</span>
           </div>
         </div>
@@ -3896,7 +3004,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </h4>
           </div>
           <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono">
-            ${isEn ? 'Hour Pillar: ' : '时宿子女宫：'}${ch.hourPillarText}
+            ${isEn ? ('Hour Pillar: ' + ((typeof PortraitEngine !== 'undefined' && PortraitEngine.toPillarEn) ? PortraitEngine.toPillarEn(ch.hourPillarText) : ch.hourPillarText)) : ('时宿子女宫：' + ch.hourPillarText)}
           </span>
         </div>
 
@@ -3988,6 +3096,401 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       kg.appendChild(paCard);
     }
+
+    // 4. Details Drawer & Expand/Collapse Toggle (for Canons Matrix)
+    if (options.includeCanonsDrawer) {
+      const detailsDivider = document.createElement('div');
+      detailsDivider.className = 'pt-4 pb-1 border-t border-gray-800/80 flex items-center justify-between gap-2';
+      detailsDivider.innerHTML = `
+        <div class="flex items-center space-x-2">
+          <span class="chinese-seal text-[10px] py-0">${isEn ? 'CANONICAL DETAILS' : '十二典依据'}</span>
+          <h4 class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc">
+            ${isEn ? '🔍 Classical Canonical Textual Evidences & Palace Exegeses' : '🔍 深入查验十二经典细分依据与六亲全息'}
+          </h4>
+        </div>
+      `;
+
+      const toggleBtn = document.createElement('button');
+      toggleBtn.id = 'toggleParetoDetailsBtn';
+      toggleBtn.type = 'button';
+      toggleBtn.className = 'px-3 py-1.5 rounded-xl bg-amber-950/40 hover:bg-amber-900/50 text-amber-300 border border-amber-500/40 text-xs font-serif-sc font-medium flex items-center gap-1.5 transition cursor-pointer shadow';
+      toggleBtn.innerHTML = `
+        <span id="toggleParetoDetailsIcon">▼</span>
+        <span id="toggleParetoDetailsText">${isEn ? 'Show Canonical Breakdowns' : '展开十二大典细分卡片'}</span>
+      `;
+      detailsDivider.appendChild(toggleBtn);
+      container.appendChild(detailsDivider);
+
+      const paretoDetailsContainer = document.createElement('div');
+      paretoDetailsContainer.id = 'paretoDetailsContainer';
+      paretoDetailsContainer.className = 'space-y-4 hidden';
+      container.appendChild(paretoDetailsContainer);
+
+      toggleBtn.onclick = () => {
+        const isHidden = paretoDetailsContainer.classList.contains('hidden');
+        const toggleIcon = toggleBtn.querySelector('#toggleParetoDetailsIcon') || detailsDivider.querySelector('#toggleParetoDetailsIcon');
+        const toggleText = toggleBtn.querySelector('#toggleParetoDetailsText') || detailsDivider.querySelector('#toggleParetoDetailsText');
+        if (isHidden) {
+          paretoDetailsContainer.classList.remove('hidden');
+          if (toggleIcon) toggleIcon.textContent = '▲';
+          if (toggleText) toggleText.textContent = isEn ? 'Collapse Canonical Breakdowns' : '收起十二大典细分卡片';
+        } else {
+          paretoDetailsContainer.classList.add('hidden');
+          if (toggleIcon) toggleIcon.textContent = '▼';
+          if (toggleText) toggleText.textContent = isEn ? 'Show Canonical Breakdowns' : '展开十二大典细分卡片';
+        }
+      };
+
+      // Canons Matrix rendering
+      if (pc.canons) {
+        const canonList = [
+          pc.canons.ditiansui,
+          pc.canons.qiongtong,
+          pc.canons.ziping,
+          pc.canons.sanming,
+          pc.canons.yuanhai,
+          pc.canons.shenfeng,
+          pc.canons.yuzhao,
+          pc.canons.lixuzhong,
+          pc.canons.lantai,
+          pc.canons.wuxing,
+          pc.canons.qianli,
+          pc.canons.xulewu
+        ].filter(Boolean);
+
+        canonList.forEach(c => {
+          const card = document.createElement('div');
+          let borderTheme = 'border-amber-500/40 bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60';
+          let tagColor = 'bg-amber-500/20 text-amber-300 border-amber-500/30';
+          let leftBorder = 'border-amber-500';
+
+          if (c.canonId === 'ditiansui') {
+            borderTheme = 'border-amber-600/40 bg-gradient-to-br from-amber-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-amber-600/20 text-amber-300 border-amber-600/40';
+            leftBorder = 'border-amber-600';
+          } else if (c.canonId === 'qiongtong') {
+            borderTheme = 'border-sky-600/40 bg-gradient-to-br from-sky-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-sky-600/20 text-sky-300 border-sky-600/40';
+            leftBorder = 'border-sky-500';
+          } else if (c.canonId === 'ziping') {
+            borderTheme = 'border-violet-600/40 bg-gradient-to-br from-violet-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-violet-600/20 text-violet-300 border-violet-600/40';
+            leftBorder = 'border-violet-500';
+          } else if (c.canonId === 'sanming') {
+            borderTheme = 'border-yellow-600/40 bg-gradient-to-br from-yellow-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-yellow-600/20 text-yellow-300 border-yellow-600/40';
+            leftBorder = 'border-yellow-500';
+          } else if (c.canonId === 'yuanhai') {
+            borderTheme = 'border-rose-600/40 bg-gradient-to-br from-rose-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-rose-600/20 text-rose-300 border-rose-600/40';
+            leftBorder = 'border-rose-500';
+          } else if (c.canonId === 'shenfeng') {
+            borderTheme = 'border-orange-500/40 bg-gradient-to-br from-orange-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-orange-500/20 text-orange-300 border-orange-500/30';
+            leftBorder = 'border-orange-500';
+          } else if (c.canonId === 'yuzhao') {
+            borderTheme = 'border-emerald-600/40 bg-gradient-to-br from-emerald-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-emerald-600/20 text-emerald-300 border-emerald-600/40';
+            leftBorder = 'border-emerald-500';
+          } else if (c.canonId === 'lixuzhong') {
+            borderTheme = 'border-teal-600/40 bg-gradient-to-br from-teal-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-teal-600/20 text-teal-300 border-teal-600/40';
+            leftBorder = 'border-teal-500';
+          } else if (c.canonId === 'lantai') {
+            borderTheme = 'border-indigo-600/40 bg-gradient-to-br from-indigo-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-indigo-600/20 text-indigo-300 border-indigo-600/40';
+            leftBorder = 'border-indigo-500';
+          } else if (c.canonId === 'wuxing') {
+            borderTheme = 'border-emerald-600/40 bg-gradient-to-br from-emerald-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-emerald-600/20 text-emerald-300 border-emerald-600/40';
+            leftBorder = 'border-emerald-500';
+          } else if (c.canonId === 'qianli') {
+            borderTheme = 'border-blue-600/40 bg-gradient-to-br from-blue-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-blue-600/20 text-blue-300 border-blue-600/40';
+            leftBorder = 'border-blue-500';
+          } else if (c.canonId === 'xulewu') {
+            borderTheme = 'border-cyan-600/40 bg-gradient-to-br from-cyan-950/25 via-black/40 to-black/60';
+            tagColor = 'bg-cyan-600/20 text-cyan-300 border-cyan-600/40';
+            leftBorder = 'border-cyan-500';
+          }
+
+          card.className = `p-4 rounded-xl border ${borderTheme} shadow-xl space-y-3`;
+
+          let innerGrid = '';
+          if (c.canonId === 'shenfeng') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-rose-900/40 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-rose-400 font-bold flex items-center gap-1">
+                      <span>⚠️</span>
+                      <span>${isEn ? 'Natal Core Affliction (Disease):' : '命盘核心受制病灶 (病)：'}</span>
+                    </span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono">${isEn ? (c.diseaseNameEn || c.diseaseName) : (c.diseaseNameZh || c.diseaseName)}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.symptomEn || c.symptom) : (c.symptomZh || c.symptom)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="text-emerald-400 font-bold flex items-center gap-1">
+                      <span>💊</span>
+                      <span>${isEn ? 'Divine Antidote (Medicine):' : '神峰通关至圣解药 (药)：'}</span>
+                    </span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono">${isEn ? 'Supreme Antidote' : '化险为贵'}</span>
+                  </div>
+                  <p class="text-emerald-200 text-[11px] leading-relaxed font-medium">${isEn ? (c.medicineEn || c.medicine) : (c.medicineZh || c.medicine)}</p>
+                  <p class="text-gray-400 text-[10.5px] leading-relaxed pt-1 border-t border-gray-800/60">${isEn ? (c.rationaleEn || c.rationale) : (c.rationaleZh || c.rationale)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'ditiansui' || c.canonId === 'qiongtong') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
+                  <span class="text-amber-300 font-bold block">${isEn ? 'Core Vitality & Meteorological Mandate:' : '核心理气气象与五行生机：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Favorable YongShen vs Avoidance Taboos:' : '喜用相生与避坑严戒：'}</span>
+                  <div class="text-[11px] text-emerald-200 font-medium">【${isEn ? 'Favorable' : '喜用'}】：${isEn ? (c.favorableEn || c.favorable) : (c.favorableZh || c.favorable)}</div>
+                  <div class="text-[11px] text-rose-300 pt-1 border-t border-gray-800/60">【${isEn ? 'Taboos' : '所忌'}】：${isEn ? (c.taboosEn || c.taboos) : (c.taboosZh || c.taboos)}</div>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'ziping') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
+                  <span class="text-violet-300 font-bold block">${isEn ? 'Pattern Formation & High Achievement Criteria:' : '格局确立与成格成贵基石：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                  <p class="text-violet-200 text-[10.5px] pt-1 border-t border-gray-800/60">【${isEn ? 'Formation' : '成格'}】：${isEn ? (c.formationEn || c.formation) : (c.formationZh || c.formation)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-gray-800/60 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Guarding Minister (Xiang Shen) & Rescue Synergy:' : '相神救应法度与化险为夷：'}</span>
+                  <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.rescueEn || c.rescue) : (c.rescueZh || c.rescue)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'sanming') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-yellow-900/40 space-y-1.5">
+                  <span class="text-yellow-300 font-bold block">${isEn ? 'Universal Structure & Comprehensive Pivot:' : '大成架构与原局枢纽：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-yellow-900/40 space-y-1.5">
+                  <span class="text-amber-300 font-bold block">${isEn ? 'Nayin Resonance & Hidden Auxiliary Levers:' : '纳音生克与暗带格局解构：'}</span>
+                  <p class="text-amber-200 text-[11px] leading-relaxed">${isEn ? (c.nayinDynamicsEn || c.nayinDynamics) : (c.nayinDynamicsZh || c.nayinDynamics)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'yuanhai') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-rose-900/40 space-y-1.5">
+                  <span class="text-rose-300 font-bold block">${isEn ? 'Ancient Foundation & Authentic Formation:' : '正统根基与真传格局断法：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-rose-900/40 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Classical Poetry & Golden Verses:' : '经典歌赋指要与真机点穴：'}</span>
+                  <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.verseSnippetEn || c.verseSnippet) : (c.verseSnippetZh || c.verseSnippet)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'yuzhao') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Six Relatives & Positional Hologram:' : '四柱六亲深层宫位映射：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <span class="text-teal-300 font-bold block">${isEn ? 'Ancient Direct Aphorisms:' : '秘传铁口神断直断密旨：'}</span>
+                  <p class="text-teal-200 text-[11px] leading-relaxed">${isEn ? (c.aphorismEn || c.aphorism) : (c.aphorismZh || c.aphorism)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'lixuzhong') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-teal-900/40 space-y-1.5">
+                  <span class="text-teal-300 font-bold block">${isEn ? 'Three Primes Model (Stem, Branch, Nayin):' : '干禄·支命·纳音身三命源流：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-teal-900/40 space-y-1.5">
+                  <span class="text-amber-300 font-bold block">${isEn ? 'Tang Dynasty Noble Rank Calibration:' : '李唐至高贵气定盘总诀：'}</span>
+                  <p class="text-amber-200 text-[11px] leading-relaxed">${isEn ? (c.nobleRankEn || c.nobleRank) : (c.nobleRankZh || c.nobleRank)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'lantai') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
+                  <span class="text-indigo-300 font-bold block">${isEn ? 'Sublime Literary Metaphor & Aristocratic Noble Formations:' : '雅致辞章·贵胄极品大格：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
+                  <span class="text-purple-300 font-bold block">${isEn ? 'Nayin Cosmic Alchemy & Astronomical Formations:' : '纳音天象造化·乾坤大化之机：'}</span>
+                  <p class="text-purple-200 text-[11px] leading-relaxed">${isEn ? (c.astronomicalFormationEn || c.astronomicalFormation) : (c.astronomicalFormationZh || c.astronomicalFormation)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'wuxing') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <span class="text-emerald-300 font-bold block">${isEn ? 'Year Root Sovereignty (Nian Ben):' : '年本岁命根基全息：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-emerald-900/40 space-y-1.5">
+                  <span class="text-amber-300 font-bold block">${isEn ? 'Lu-Ma Riding Vitality & Macro Leverage:' : '禄马乘旺借势宏观大计：'}</span>
+                  <p class="text-amber-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'qianli') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-blue-900/40 space-y-1.5">
+                  <span class="text-blue-300 font-bold block">${isEn ? 'Yong Shen Protocol & Balancing Rationale:' : '用神五法取用与推命依据：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-blue-900/40 space-y-1.5">
+                  <span class="text-cyan-300 font-bold block">${isEn ? 'Modern Action Rule & Decision Guide:' : '近代实战定式与行动指南：'}</span>
+                  <p class="text-cyan-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+                </div>
+              </div>
+            `;
+          } else if (c.canonId === 'xulewu') {
+            innerGrid = `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 bg-black/35 rounded-lg border border-cyan-900/40 space-y-1.5">
+                  <span class="text-cyan-300 font-bold block">${isEn ? 'Decision Middleware (Operational Rule & Vigor Fine-tuning):' : '实操决策中间件（月令规则与身强身弱细化）：'}</span>
+                  <p class="text-gray-300 text-[11px] leading-relaxed whitespace-pre-line">${isEn ? (c.summaryEn || c.summary) : (c.summaryZh || c.summary)}</p>
+                </div>
+                <div class="p-3 bg-black/35 rounded-lg border border-indigo-900/40 space-y-1.5">
+                  <span class="text-indigo-300 font-bold block">${isEn ? 'Documented Historical Case Precedent:' : '民国实务断案实录范例：'}</span>
+                  <p class="text-indigo-200 text-[11px] leading-relaxed">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+                </div>
+              </div>
+            `;
+          }
+
+          card.innerHTML = `
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800/60">
+              <div class="flex items-center space-x-2">
+                <span class="chinese-seal text-[10px] py-0">${isEn ? c.canonNameEn : c.canonNameZh}</span>
+                <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                  <span>${isEn ? (c.titleEn || c.title) : (c.titleZh || c.title)}</span>
+                </h4>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full ${tagColor} font-mono">
+                ${isEn ? (c.pivotNameEn || c.pivotName) : (c.pivotNameZh || c.pivotName)}
+              </span>
+            </div>
+
+            <div class="p-2.5 bg-black/50 rounded-lg text-xs text-amber-200/90 font-serif-sc border-l-2 ${leftBorder} leading-relaxed">
+              ${isEn ? (c.subtitleEn || c.subtitle) : (c.subtitleZh || c.subtitle)}
+            </div>
+
+            ${innerGrid}
+
+            ${c.personaDepiction || c.personaDepictionEn ? `
+            <div class="p-3 bg-black/45 rounded-lg border border-gray-800/80 text-xs space-y-2">
+              <div>
+                <span class="text-amber-300 font-bold block mb-0.5">👤 ${isEn ? 'Classical Personality & Persona Depiction:' : '本经深度个性肖像与气象刻画：'}</span>
+                <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.personaDepictionEn || c.personaDepiction) : (c.personaDepictionZh || c.personaDepiction)}</p>
+              </div>
+              <div class="pt-1.5 border-t border-gray-800/60">
+                <span class="text-blue-300 font-bold block mb-0.5">📈 ${isEn ? 'Destiny Trajectory & Lifelong Turning Points:' : '本经所指命运走向与人生关隘：'}</span>
+                <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (c.destinyTrajectoryEn || c.destinyTrajectory) : (c.destinyTrajectoryZh || c.destinyTrajectory)}</p>
+              </div>
+              <div class="pt-1.5 border-t border-gray-800/60">
+                <span class="text-emerald-300 font-bold block mb-0.5">⚡ ${isEn ? 'Core Actionable Maneuver & Strategy:' : '本经核心实战战术与破局手：'}</span>
+                <p class="text-emerald-200 text-[11px] leading-relaxed">${isEn ? (c.actionableManeuverEn || c.actionableManeuver) : (c.actionableManeuverZh || c.actionableManeuver)}</p>
+              </div>
+            </div>` : ''}
+
+            <div class="p-3 bg-black/40 rounded-lg border border-gray-800/60 text-xs space-y-1.5">
+              <span class="text-amber-300 font-bold block">${isEn ? '🎯 20% High-Leverage Strategic Action Plan:' : '🎯 20% 核心抓手现代破局实操法门：'}</span>
+              <p class="text-gray-200 leading-relaxed text-[11.5px]">${isEn ? (c.modernStrategyEn || c.modernStrategy) : (c.modernStrategyZh || c.modernStrategy)}</p>
+              ${c.sculptingTypeZh ? `
+              <div class="pt-1.5 border-t border-gray-800/60 flex flex-wrap items-center justify-between text-[11px] text-amber-400/90 font-mono">
+                <span>【${isEn ? (c.sculptingTypeEn || c.sculptingType) : (c.sculptingTypeZh || c.sculptingType)}】</span>
+                <span class="text-gray-400 font-sans">${isEn ? (c.sculptingAdviceEn || c.sculptingAdvice) : (c.sculptingAdviceZh || c.sculptingAdvice)}</span>
+              </div>` : ''}
+              ${(c.genderDiffZh || c.genderDiff) ? `
+              <div class="pt-1.5 border-t border-gray-800/60 text-[11px] text-amber-300/90 leading-relaxed">
+                <span class="font-bold text-amber-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
+                ${isEn ? (c.genderDiffEn || c.genderDiff) : (c.genderDiffZh || c.genderDiff)}
+              </div>` : ''}
+            </div>
+          `;
+          paretoDetailsContainer.appendChild(card);
+        });
+      }
+
+      // Environment card
+      if (pc.environment) {
+        const env = pc.environment;
+        const envCard = document.createElement('div');
+        envCard.className = 'p-4 rounded-xl border border-teal-900/50 bg-gradient-to-br from-teal-950/15 via-black/40 to-black/60 shadow-xl space-y-3';
+        envCard.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-teal-900/40">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0">${isEn ? 'Li Xu Zhong' : '李虚中命书'}</span>
+              <h4 class="text-sm sm:text-base font-bold text-teal-300 font-serif-sc flex items-center gap-1.5">
+                <span>${isEn ? (env.titleEn || env.title) : (env.titleZh || env.title)}</span>
+              </h4>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
+              ${isEn ? 'Three Primes & Spatial Resonance' : '三元禄命 · 音律场能'}
+            </span>
+          </div>
+
+          <div class="p-2.5 bg-black/50 rounded-lg text-xs text-teal-200/90 font-serif-sc border-l-2 border-teal-500 leading-relaxed">
+            ${isEn ? (env.subtitleEn || env.subtitle) : (env.subtitleZh || env.subtitle)}
+          </div>
+
+          <div class="p-3 bg-black/35 rounded-lg border border-teal-800/40 text-xs space-y-1.5">
+            <span class="text-teal-300 font-bold block">${isEn ? 'Three Primes Integration (Heavenly Rank, Earthly Destiny, Human Body):' : '三元论全息解构 (天元为禄 · 地元为命 · 人元为身)：'}</span>
+            <p class="text-gray-300 text-[11px] leading-relaxed whitespace-pre-line font-mono">${isEn ? (env.threePrimesEn || env.threePrimes) : (env.threePrimesZh || env.threePrimes)}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-amber-300 font-bold block">${isEn ? 'Optimal Geographical Direction & Key Metropolises:' : '最佳地理发展方位与核心城市群：'}</span>
+              <div class="text-emerald-300 font-semibold mb-0.5">${isEn ? (env.idealGeographyEn || env.idealGeography) : (env.idealGeographyZh || env.idealGeography)}</div>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (env.targetCitiesEn || env.targetCities) : (env.targetCitiesZh || env.targetCities)}</p>
+            </div>
+
+            <div class="p-3 bg-black/35 rounded-lg border border-gray-800 space-y-1.5">
+              <span class="text-cyan-300 font-bold block">${isEn ? 'Workspace & Residence Physical Feng Shui Energy Field:' : '办公与居住物理空间场能调控：'}</span>
+              <p class="text-gray-300 text-[11px] leading-relaxed">${isEn ? (env.workspaceEnergyEn || env.workspaceEnergy) : (env.workspaceEnergyZh || env.workspaceEnergy)}</p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-teal-950/20 rounded-lg border border-teal-500/30 text-xs space-y-1.5">
+            <span class="text-amber-300 font-bold block">${isEn ? '🚀 Macro Era Cycle Synchronization (AI / Digital Paradigm):' : '🚀 宏观时代周期交互（顺应AI与数字化变革红利）：'}</span>
+            <p class="text-gray-200 text-[11.5px] leading-relaxed">${isEn ? (env.eraMacroTrendEn || env.eraMacroTrend) : (env.eraMacroTrendZh || env.eraMacroTrend)}</p>
+            ${env.genderDiffZh || env.genderDiff ? `
+            <div class="pt-1.5 border-t border-teal-900/40 text-[11px] text-teal-300/90 leading-relaxed">
+              <span class="font-bold text-teal-400">⚖️ ${isEn ? 'Gender Dynamics (Male vs. Female):' : '男女命差异 · 乾坤造化辨析：'}</span>
+              ${isEn ? (env.genderDiffEn || env.genderDiff) : (env.genderDiffZh || env.genderDiff)}
+            </div>` : ''}
+          </div>
+        `;
+        paretoDetailsContainer.appendChild(envCard);
+      }
+    }
+  }
+
+  // 👑 Dedicated Grand Strategy & Kinship Hologram View Renderer (全新独立大相与破局战役战略视图)
+  function renderStrategyView(pData, res, isEn) {
+    const container = document.getElementById('strategyContentContainer');
+    if (!container) return;
+    renderStrategyAndKinshipContent(container, pData, res, isEn, { includeCanonsDrawer: false });
   }
 
   // 🧘 Original Factory-Default Mindset Manual & Zen-Dao View Renderer (原厂心理使用说明书)

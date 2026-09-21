@@ -17124,7 +17124,255 @@ for dark_hex in ['#78350f', '#92400e', '#b45309', '#d97706']:
 
 print("✓ 133. 周易六十四卦时空周期推演图精准置于百岁时空罗盘战略锦囊下方、全域橘色明艳升维标准及双语100%零中文残留全量验证通过！")
 
-print("\n🎉 ALL 133 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 134. Validate Grand Strategy & 4D Kinship Hologram Expansion into Core Natal Chart & 100% Zero Residual Chinese
+print("\n=== 134. Validating Grand Strategy & 4D Kinship Hologram Expansion into Core Natal Chart ===")
+
+# Verify index.html #paretoCoreSection has updated title, seal, and subnote
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_134 = f.read()
+
+assert 'id="paretoCoreSection"' in idx_134, "Missing #paretoCoreSection in index.html"
+assert 'id="paretoCoreContainer"' in idx_134, "Missing #paretoCoreContainer in index.html"
+assert 'data-i18n="sec_pareto_title"' in idx_134, "Missing sec_pareto_title in index.html"
+assert 'data-i18n="seal_pareto"' in idx_134, "Missing seal_pareto in index.html"
+assert 'data-i18n="pareto_subnote"' in idx_134, "Missing pareto_subnote in index.html"
+
+# Verify i18n.js has the expanded translations in both zh and en
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_134 = f.read()
+
+assert '全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱' in i18n_134
+assert '大局破局' in i18n_134
+assert '深度融汇生杀破局战略胜负手、六亲深度侧写' in i18n_134
+assert 'Grand Strategy & Breakthrough Campaign · Pareto 20% Sovereign Hologram' in i18n_134
+assert 'Strategic Breakthrough' in i18n_134
+assert 'Deeply synthesizing strategic breakthrough battlegrounds' in i18n_134
+
+# Run JavaScriptCore validation for paretoCoreContainer
+jsc_check134_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r"""
+    var window = this;
+    var global = this;
+    window.addEventListener = function(evt, fn) {};
+    window.devicePixelRatio = 2;
+    window.cancelAnimationFrame = function() {};
+    window.requestAnimationFrame = function(cb) { return 1; };
+
+    var localStorage = {
+      _data: {},
+      getItem: function(k) { return this._data[k] || null; },
+      setItem: function(k, v) { this._data[k] = String(v); }
+    };
+    var performance = { now: function() { return Date.now(); } };
+
+    var allIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal", "dashboardTopSummaryBar",
+      "dashboardSummaryBadges", "portalPresetsContainer", "portalFeaturesGrid",
+      "langZhBtn", "langEnBtn", "btnExportDossier", "nowBtn",
+      "birthDate", "birthTime", "gender", "citySelect", "currentCountrySelect", "currentCitySelect", "currentCustomCityInput", "calcBtn", "useTrueSolarTime", "timezoneSelect", "customLongitude", "lateRatNextDay",
+      "solarCalcDetail", "calcPerfBadge", "solarTermTag", "primaryViewNav", "navBtnHome", "navBtnStrategy",
+      "navBtnFriction", "navBtnLuck", "navBtnCanons", "navBtnIChing", "navBtnSynastry", "navBtnFengShui",
+      "navBtnCareer", "navBtnHistory", "view-home", "view-strategy", "pillarsContainer", "dmTitle", "dmElementDesc",
+      "elementRadarCanvas", "elementsBarContainer", "paretoCoreSection", "paretoCoreContainer", "strategyContentContainer",
+      "mentalFrictionSection", "defectsContainer", "patternWeightSummaryBar", "portraitPatternsContainer",
+      "personaPersonality", "personaCareer", "personaWealth", "personaAdvice"
+    ];
+
+    var elementStore = {};
+    function makeEl(id, tag) {
+      var navMap = {
+        "navBtnHome": "view-home",
+        "navBtnStrategy": "view-strategy",
+        "navBtnFriction": "view-friction",
+        "navBtnLuck": "view-luck",
+        "navBtnCanons": "view-canons",
+        "navBtnIChing": "view-iching",
+        "navBtnSynastry": "view-synastry",
+        "navBtnFengShui": "view-fengshui",
+        "navBtnCareer": "view-career",
+        "navBtnHistory": "view-history"
+      };
+      return {
+        id: id,
+        tagName: (tag || "DIV").toUpperCase(),
+        "data-view": navMap[id] || null,
+        value: id === "birthDate" ? "1990-06-20" : (id === "birthTime" ? "14:30" : ""),
+        checked: false,
+        _rawInnerHTML: "",
+        get innerHTML() {
+          var s = this._rawInnerHTML || "";
+          for (var i = 0; i < (this._children || []).length; i++) {
+            var c = this._children[i];
+            s += "<div id=\"" + (c.id || "") + "\" class=\"" + (c.className || "") + "\">" + (c.innerHTML || "") + "</div>";
+          }
+          return s;
+        },
+        set innerHTML(v) { this._rawInnerHTML = v; this._children = []; },
+        className: "",
+        style: {},
+        options: [{ textContent: "乾造", value: "乾造" }, { textContent: "坤造", value: "坤造" }],
+        selectedIndex: 0,
+        focus: function() {},
+        blur: function() {},
+        width: 300, height: 200, clientWidth: 300, clientHeight: 200,
+        getBoundingClientRect: function() { return { width: 300, height: 200, left: 0, top: 0, right: 300, bottom: 200 }; },
+        _listeners: {},
+        _children: [],
+        classList: {
+          _classes: [],
+          add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+          remove: function(c) { var idx = this._classes.indexOf(c); if (idx >= 0) this._classes.splice(idx, 1); },
+          contains: function(c) { return this._classes.indexOf(c) >= 0; }
+        },
+        addEventListener: function(evt, handler) { this._listeners[evt] = this._listeners[evt] || []; this._listeners[evt].push(handler); },
+        trigger: function(evt, data) { var handlers = this._listeners[evt] || []; for (var i = 0; i < handlers.length; i++) handlers[i].call(this, data || {}); },
+        appendChild: function(child) { if (child) { this._children.push(child); child.parentElement = this; } return child; },
+        querySelectorAll: function() { return []; },
+        querySelector: function(sel) {
+          if (sel && sel.indexOf("#") === 0) {
+            var tid = sel.slice(1);
+            for (var i = 0; i < this._children.length; i++) {
+              if (this._children[i].id === tid) return this._children[i];
+              if (this._children[i].querySelector) {
+                var sub = this._children[i].querySelector(sel);
+                if (sub) return sub;
+              }
+            }
+          }
+          return null;
+        },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined && this[a] !== null; },
+        getContext: function() { return { clearRect: function(){}, beginPath: function(){}, moveTo: function(){}, lineTo: function(){}, closePath: function(){}, stroke: function(){}, fill: function(){}, fillText: function(){}, arc: function(){}, setLineDash: function(){}, scale: function(){}, createLinearGradient: function(){ return { addColorStop: function(){} }; } }; }
+      };
+    }
+
+    allIds.forEach(function(id) { elementStore[id] = makeEl(id); });
+
+    var document = {
+      _domReady: null,
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function(sel) {
+        if (sel === ".view-nav-btn") {
+          return Object.keys(elementStore).filter(function(k) { return k.startsWith("navBtn"); }).map(function(k) { return elementStore[k]; });
+        }
+        return [];
+      },
+      querySelector: function(sel) { return null; },
+      createElement: function(tag) { return makeEl("dyn_" + Math.random(), tag); },
+      addEventListener: function(evt, fn) { if (evt === "DOMContentLoaded") this._domReady = fn; }
+    };
+
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/lantaimiaoxuan.js");
+    load("data/wuxingjingji.js");
+    load("data/qianliminggao.js");
+    load("data/xulewu_commentary.js");
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/portrait-engine.js");
+    load("js/luck-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/chart.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+    load("js/app.js");
+
+    if (document._domReady) document._domReady();
+
+    // 1. Calculate in Chinese (ZH)
+    elementStore["birthDate"].value = "1990-06-20";
+    elementStore["birthTime"].value = "14:30";
+    elementStore["gender"].value = "male";
+    elementStore["calcBtn"].trigger("click");
+
+    var paretoZh = elementStore["paretoCoreContainer"].innerHTML;
+
+    var expectedZh = [
+      "第一核心主导格局",
+      "全盘大局通融 · 综合全息画像",
+      "一、命盘大局总相与生命大纲",
+      "二、前三主导格局深度解析",
+      "三、生杀破局与战略胜负手",
+      "四、需要避讳的地方 · 80% 损耗暗礁",
+      "五、六亲后方与家庭压舱石",
+      "六、时代跃迁与宏观时空场能共振",
+      "七、终身立身不败之黄金三则",
+      "六亲深度侧写全息图谱",
+      "夫妻与婚姻深层全息透视",
+      "子女与后嗣才干缘法",
+      "父母与家族祖荫传承",
+      "展开十二大典细分卡片"
+    ];
+
+    for (var i = 0; i < expectedZh.length; i++) {
+      if (paretoZh.indexOf(expectedZh[i]) === -1) {
+        throw new Error("Missing in paretoZh: " + expectedZh[i]);
+      }
+    }
+
+    // 2. Switch to English and calculate
+    elementStore["langEnBtn"].trigger("click");
+    elementStore["calcBtn"].trigger("click");
+
+    var paretoEn = elementStore["paretoCoreContainer"].innerHTML;
+
+    var expectedEn = [
+      "Primary Dominant Pattern",
+      "Grand Holistic Synthesis",
+      "1. Grand Archetype & Sovereign Life Blueprint",
+      "2. Top 3 Dominant Pattern Analysis",
+      "3. Strategic Breakthrough Campaign & 20% Lever",
+      "4. Taboos to Avoid · 80% Waste & Hazards",
+      "5. Domestic Sanctuary & Kinship Ballast",
+      "6. Macro Era Supercycle & Spatial Trajectory",
+      "7. Sovereign Grand Directives (Lifetime Golden Rules)",
+      "Holographic Kinship 4D Depth Profiles",
+      "Spouse & Marital Dynamics",
+      "Children & Descendants",
+      "Parents & Ancestral Heritage",
+      "Show Canonical Breakdowns"
+    ];
+
+    for (var j = 0; j < expectedEn.length; j++) {
+      if (paretoEn.indexOf(expectedEn[j]) === -1) {
+        throw new Error("Missing in paretoEn: " + expectedEn[j]);
+      }
+    }
+
+    // 3. Strict assertion: 100% zero residual Chinese in English mode
+    var zhLeaks = paretoEn.match(/[\u4e00-\u9fa5]/g);
+    if (zhLeaks && zhLeaks.length > 0) {
+      throw new Error("Residual Chinese found in paretoCoreContainer EN (" + zhLeaks.length + " chars): " + zhLeaks.slice(0, 30).join(""));
+    }
+    """
+]
+
+run_check134 = subprocess.run(jsc_check134_cmd, capture_output=True, text=True)
+assert run_check134.returncode == 0, f"Check 134 JSC test failed: stdout={run_check134.stdout} stderr={run_check134.stderr}"
+
+print("✓ 134. 核心主盘帕累托全相扩充（大局破局全景七章+六亲深度侧写全息图谱+十二大典细分依据抽屉）与双语100%零中文残留全量验证通过！")
+
+print("\n🎉 ALL 134 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

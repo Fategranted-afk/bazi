@@ -651,9 +651,9 @@ const I18N = (function() {
       persona_advice_title: "🧘 人生修身与行运锦囊 (Strategic Life Coaching)",
 
       // Pareto 80/20 Core Synthesis
-      sec_pareto_title: "👑 十二大典核心画像 · 帕累托 20% 关键枢纽全相分析",
-      seal_pareto: "80/20十二典全相",
-      pareto_subnote: "十二大典全息汇通，过滤80%平庸细枝末节噪声，锁定决定命主80%运势走向的20%核心枢纽，赋能夫妻、子女、父母六亲全息与宏观时代场能交互",
+      sec_pareto_title: "👑 全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱",
+      seal_pareto: "大局破局",
+      pareto_subnote: "深度融汇生杀破局战略胜负手、六亲深度侧写（父母/配偶/子女四维全息）、宏观时空场能共振与终身不败立身三则",
 
       // Zhou Yi (I Ching) 64 Hexagrams
       iching_banner_title: "周易文王六十四卦 · 蓍草金钱起卦研解",
@@ -1490,9 +1490,9 @@ const I18N = (function() {
       persona_advice_title: "🧘 Strategic Life Coaching & Self-Cultivation",
 
       // Pareto 80/20 Core Synthesis
-      sec_pareto_title: "👑 Twelve Canons Holographic Portrait · Pareto 80/20 Vital Fulcrum Core Synthesis",
-      seal_pareto: "80/20 Twelve Canons",
-      pareto_subnote: "Synthesizing all 12 master treatises and commentaries to isolate the vital 20% fulcrum that drives 80% of destiny, linking marital, offspring, and ancestral roots with macro-era acoustic resonance.",
+      sec_pareto_title: "👑 Grand Strategy & Breakthrough Campaign · Pareto 20% Sovereign Hologram",
+      seal_pareto: "Strategic Breakthrough",
+      pareto_subnote: "Deeply synthesizing strategic breakthrough battlegrounds, holographic 4D kinship profiles (parents/spouse/children), macro-temporal field resonance, and three lifetime golden directives.",
 
       // Zhou Yi (I Ching) 64 Hexagrams
       iching_banner_title: "Zhou Yi King Wen 64 Hexagrams Divination System",
