@@ -15,13 +15,13 @@ const I18N = (function() {
       btn_theme_light: "☀️ 晨曦",
 
       // Primary View Navigation
-      nav_view_home: "🏛️ 核心主盘与全相基底",
-      nav_view_strategy: "👑 战略大局与六亲全息",
-      nav_view_friction: "🧘 精神内耗与禅道心智",
-      nav_view_luck: "⏳ 岁运推演 (大运 / 流年 / 流月 / 流日)",
-      nav_view_canons: "📜 十二大典与经文细注",
-      nav_view_iching: "☯️ 周易六十四卦 · 蓍草/金钱起卦研解",
-      nav_view_synastry: "💞 双人合盘 · 婚恋与合伙博弈",
+      nav_view_home: "核心主盘与全相基底",
+      nav_view_strategy: "战略大局与六亲全息",
+      nav_view_friction: "精神内耗与禅道心智",
+      nav_view_luck: "岁运推演 (大运 / 流年 / 流月 / 流日)",
+      nav_view_canons: "十二大典与经文细注",
+      nav_view_iching: "周易六十四卦 · 蓍草/金钱起卦研解",
+      nav_view_synastry: "双人合盘 · 婚恋与合伙博弈",
       seal_view_home: "主干命基",
       seal_view_strategy: "大局破局",
       seal_view_friction: "禅道心智",
@@ -57,7 +57,7 @@ const I18N = (function() {
       lbl_sim_ent: "目标五百强 (Enterprise)",
       lbl_sim_ent_role: "企业典型核心岗位 (Typical Role)",
       opt_sim_custom: "-- 自选/无联动 --",
-      nav_view_simulator: "⚖️ 胜负沙盘 (双轨对抗推演)",
+      nav_view_simulator: "胜负沙盘 (双轨对抗推演)",
       seal_view_simulator: "推演对决",
       btn_open_simulator: "打开现实决策双轨对抗推演沙盘",
       btn_open_simulator_text: "胜负沙盘",
@@ -322,14 +322,14 @@ const I18N = (function() {
       td_transition_warning: "交脱大运防震法则",
 
       // Spatial Feng Shui & Ziping 100 Score & Tian Ji Hexagrams
-      nav_view_fengshui: "🏡 空间风水指南 (实操十策)",
+      nav_view_fengshui: "空间风水指南 (实操十策)",
       seal_view_fengshui: "空间开运",
       portal_card8_title: "空间风水指南",
       portal_card8_desc: "延年聚财貔貅鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数",
       portal_fengshui_title: "空间风水指南实操十策",
       portal_fengshui_desc: "延年聚财鼎 · 龙龟双铃化煞 · 贪合忘冲六合生肖 · 缺角泰山石 · 洛书吉数",
       // Career & Wealth Trajectory & Ten Gods Definitions
-      nav_view_career: "💼 职场打工人与财运事业推演",
+      nav_view_career: "职场打工人与财运事业推演",
       seal_view_career: "职场破局",
       portal_card9_title: "职场打工人与财运事业推演",
       portal_card9_desc: "向上管理不得罪领导 · 同僚防抢功防火墙 · 文武技术高管四大生态位 · 岁运财运时序",
@@ -342,7 +342,7 @@ const I18N = (function() {
       btn_exit_fullscreen_career: "退出全屏",
 
       // Geographic & Workplace Ecological Resonance Subpage
-      nav_view_georesonance: "🗺️ 地理方位与组织生态匹配",
+      nav_view_georesonance: "地理方位与组织生态匹配",
       seal_view_georesonance: "生态定位",
       geo_banner_title: "地理方位与组织生态匹配仪 · 专属研解专页",
       geo_banner_desc: "融合五行地气方位场能共振、全球代表都市群战略契合度评估，以及体制内/创业/合伙/独立四大组织生态位诊断与反内耗归因。",
@@ -352,7 +352,7 @@ const I18N = (function() {
       btn_open_geo_subpage: "进入独立专页研解 →",
 
       // Historical Figures Reference (东汉末年至唐初贞观)
-      nav_view_history: "📜 历史人物参考 (东汉至唐初)",
+      nav_view_history: "历史人物参考 (东汉至唐初)",
       seal_view_history: "史鉴推演",
       portal_card10_title: "历史人物参考 (东汉至唐初)",
       portal_card10_desc: "东汉末年至唐初贞观 · 449位风云人物 · 性格位置生平胜负手 · 相似度测算与学戒大略",
@@ -854,13 +854,13 @@ const I18N = (function() {
       btn_theme_light: "☀️ Light",
 
       // Primary View Navigation
-      nav_view_home: "🏛️ Natal Chart & Core Blueprint",
-      nav_view_strategy: "👑 Grand Strategy & Kinship Hologram",
-      nav_view_friction: "🧘 Mental Friction & Zen-Dao Mastery",
-      nav_view_luck: "⏳ Transit Cycles (Decade / Year / Month / Day)",
-      nav_view_canons: "📜 12 Classical Canons & Commentaries",
-      nav_view_iching: "☯️ I Ching 64 Hexagrams Divination",
-      nav_view_synastry: "💞 Synastry & Partner Compatibility",
+      nav_view_home: "Natal Chart & Core Blueprint",
+      nav_view_strategy: "Grand Strategy & Kinship Hologram",
+      nav_view_friction: "Mental Friction & Zen-Dao Mastery",
+      nav_view_luck: "Transit Cycles (Decade / Year / Month / Day)",
+      nav_view_canons: "12 Classical Canons & Commentaries",
+      nav_view_iching: "I Ching 64 Hexagrams Divination",
+      nav_view_synastry: "Synastry & Partner Compatibility",
       seal_view_home: "Core Base",
       seal_view_strategy: "Strategy",
       seal_view_friction: "Zen-Dao",
@@ -896,7 +896,7 @@ const I18N = (function() {
       lbl_sim_ent: "Target Enterprise (Fortune 500)",
       lbl_sim_ent_role: "Typical Core Role",
       opt_sim_custom: "-- Custom / None --",
-      nav_view_simulator: "⚖️ Decision Sandbox ('What-If')",
+      nav_view_simulator: "Decision Sandbox ('What-If')",
       seal_view_simulator: "Scenario Clash",
       btn_open_simulator: "Open Dual-Track Scenario Simulator",
       btn_open_simulator_text: "Decision Sandbox",
@@ -1161,14 +1161,14 @@ const I18N = (function() {
       td_transition_warning: "Decade Transition Shock-Absorption Rule",
 
       // Spatial Feng Shui & Ziping 100 Score & Tian Ji Hexagrams
-      nav_view_fengshui: "🏡 Spatial Feng Shui & Remediation",
+      nav_view_fengshui: "Spatial Feng Shui & Remediation",
       seal_view_fengshui: "Spatial Remediation",
       portal_card8_title: "Spatial Feng Shui & Remediation",
       portal_card8_desc: "Yan Nian Wealth Array · Dragon Turtle & Bells · 6-Harmony Zodiac · Mount Tai Stone · Hetu Numbers",
       portal_fengshui_title: "Spatial Feng Shui 10 Practical Remedies",
       portal_fengshui_desc: "Yan Nian Wealth Pixiu · Dragon Turtle & Bells · Harmony Over Clash Talisman · Mt. Tai Stone · Luoshu Numbers",
       // Career & Wealth Trajectory & Ten Gods Definitions
-      nav_view_career: "💼 Career & Wealth Trajectory",
+      nav_view_career: "Career & Wealth Trajectory",
       seal_view_career: "Career Edge",
       portal_card9_title: "Career & Wealth Trajectory System",
       portal_card9_desc: "Managing Upward · Colleague Firewall · Civil/Martial/Specialist/Executive Archetypes · Wealth Timing",
@@ -1181,7 +1181,7 @@ const I18N = (function() {
       btn_exit_fullscreen_career: "Exit Fullscreen",
 
       // Geographic & Workplace Ecological Resonance Subpage
-      nav_view_georesonance: "🗺️ Geographic & Workplace Resonance",
+      nav_view_georesonance: "Geographic & Workplace Resonance",
       seal_view_georesonance: "Eco-Alignment",
       geo_banner_title: "Geographic & Workplace Ecological Resonance · Dedicated Dossier",
       geo_banner_desc: "Synthesizing cardinal elemental fields, global metropolitan cluster synergy scores, and four workplace ecological niche diagnostics with friction circuit-breakers.",
@@ -1191,7 +1191,7 @@ const I18N = (function() {
       btn_open_geo_subpage: "Open Dedicated Subpage →",
 
       // Historical Figures Reference (Eastern Han to Early Tang)
-      nav_view_history: "📜 Historical Figures Reference",
+      nav_view_history: "Historical Figures Reference",
       seal_view_history: "Historical Mirror",
       portal_card10_title: "Historical Figures Reference (Eastern Han to Tang)",
       portal_card10_desc: "Eastern Han to Early Tang · 449 Historical Titans · Personality, Archetype & Deeds · Similarity & Guidance",

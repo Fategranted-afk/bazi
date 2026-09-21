@@ -8691,8 +8691,8 @@ print("\n=== 87. Validating Light Theme Low-Brightness Tone & High-Contrast Typo
 with open('css/style.css', 'r', encoding='utf-8') as f:
     css_content = f.read()
 
-assert '--bg-primary: #ebe5d8;' in css_content, "Missing toned-down eye-care --bg-primary in style.css"
-assert '--bg-card: #f5f0e4;' in css_content, "Missing non-glare --bg-card in style.css"
+assert '--bg-primary: #f8f6f0;' in css_content, "Missing refined silk --bg-primary in style.css"
+assert '--bg-card: #ffffff;' in css_content, "Missing warm ivory --bg-card in style.css"
 assert '[data-theme="light"] header' in css_content, "Missing light theme header override"
 assert '[data-theme="light"] .text-gray-100' in css_content, "Missing light theme text-gray-100 contrast override"
 assert '[data-theme="light"] .text-amber-100' in css_content, "Missing light theme text-amber-100 contrast override"
@@ -16828,7 +16828,244 @@ run_check131 = subprocess.run(jsc_check131_cmd, capture_output=True, text=True)
 assert run_check131.returncode == 0, f"Check 131 JSC test failed: stdout={run_check131.stdout} stderr={run_check131.stderr}"
 print("✓ 131. 皇家战报首卷独立目录总目（Page 1 Dedicated Master Table of Contents）、卷二终身统览原貌回归净爽布局（移除内联导航条）、全本九卷直达锚点跳转及双语100%零中文残留全量验证通过！")
 
-print("\n🎉 ALL 131 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 132. Validate Light Theme Refinements, No Duplicate Nav Emojis, and Tianji 64 Hexagrams 1:1 Migration into Luck View
+print("\n=== 132. Validating Light Theme Refinements, Nav Emojis, & Tianji 64 Hexagrams 1:1 Migration ===")
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_content = f.read()
+
+# 1. Verify fourPillarsHexSection and ichingCycleSection are inside view-luck and NOT view-iching
+view_luck_pos = html_content.find('id="view-luck"')
+view_luck_end = html_content.find('<!-- End of view-luck -->')
+view_iching_pos = html_content.find('id="view-iching"')
+view_iching_end = html_content.find('<!-- End of view-iching -->')
+fourteen_char_pos = html_content.find('id="fourteenCharEnergySection"')
+four_pillars_hex_pos = html_content.find('id="fourPillarsHexSection"')
+iching_cycle_pos = html_content.find('id="ichingCycleSection"')
+
+assert view_luck_pos != -1, "view-luck not found in index.html"
+assert view_luck_end != -1, "<!-- End of view-luck --> not found in index.html"
+assert view_iching_pos != -1, "view-iching not found in index.html"
+assert four_pillars_hex_pos != -1, "fourPillarsHexSection not found in index.html"
+assert iching_cycle_pos != -1, "ichingCycleSection not found in index.html"
+
+assert view_luck_pos < four_pillars_hex_pos < view_luck_end, "fourPillarsHexSection must be located within view-luck"
+assert view_luck_pos < iching_cycle_pos < view_luck_end, "ichingCycleSection must be located within view-luck"
+assert fourteen_char_pos < four_pillars_hex_pos, "fourPillarsHexSection must be placed after fourteenCharEnergySection in view-luck"
+
+# Verify view-iching does NOT contain fourPillarsHexSection or ichingCycleSection
+if view_iching_end != -1:
+    iching_block = html_content[view_iching_pos:view_iching_end]
+else:
+    iching_block = html_content[view_iching_pos:]
+assert 'id="fourPillarsHexSection"' not in iching_block, "fourPillarsHexSection must NOT be in view-iching"
+assert 'id="ichingCycleSection"' not in iching_block, "ichingCycleSection must NOT be in view-iching"
+assert 'id="ichingQueryInput"' in iching_block, "view-iching must retain ichingQueryInput"
+assert 'id="ichingSelect"' in iching_block, "view-iching must retain ichingSelect"
+
+# 2. Verify no duplicate emojis in i18n.js nav_view_*
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_content = f.read()
+
+import re
+emoji_pattern = re.compile(r'[\U00010000-\U0010ffff\u2600-\u27bf]')
+nav_matches = re.findall(r'nav_view_\w+:\s*"([^"]+)"', i18n_content)
+assert len(nav_matches) > 0, "No nav_view_* entries found in i18n.js"
+for nav_str in nav_matches:
+    first_char = nav_str.strip()[:2]
+    assert not emoji_pattern.search(first_char), f"Duplicate emoji detected in nav_view key: '{nav_str}'"
+
+# 3. Verify CSS styling refinements
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+
+assert '--bg-primary: #f8f6f0;' in css_content, "Missing refined silk --bg-primary in css"
+assert '--bg-card: #ffffff;' in css_content, "Missing warm white --bg-card in css"
+assert '[data-theme="light"] #primaryViewNav' in css_content, "Missing light theme primaryViewNav override"
+assert 'rgba(255, 255, 255, 0.96)' in css_content, "Missing refined glass background for primaryViewNav in light theme"
+assert '[data-theme="light"] #solarTermTag' in css_content, "Missing light theme solarTermTag override"
+assert '[data-theme="light"] #dashboardTopSummaryBar' in css_content, "Missing light theme dashboardTopSummaryBar override"
+
+# 4. JSC Dynamic verification: switchPrimaryView('view-luck') triggers hexagram rendering and 0 residual Chinese in EN
+jsc_check132_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    r"""
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/synastry-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/career-engine.js");
+    load("data/historical_figures.js");
+    load("js/history-engine.js");
+
+    var testChart = BaZiEngine.calculate({
+      year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造",
+      useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0
+    });
+    var testLuck = LuckEngine.calculateLuck(testChart, 2026);
+
+    var elementStore = {};
+    function makeFakeEl(id, tag) {
+      var classes = [];
+      return {
+        id: id || "",
+        tagName: (tag || "div").toUpperCase(),
+        innerHTML: "",
+        value: "35",
+        checked: false,
+        options: [],
+        selectedIndex: 0,
+        classList: {
+          add: function(cls) { if (classes.indexOf(cls) === -1) classes.push(cls); },
+          remove: function(cls) { var idx = classes.indexOf(cls); if (idx !== -1) classes.splice(idx, 1); },
+          contains: function(cls) { return classes.indexOf(cls) !== -1; }
+        },
+        className: "",
+        style: {},
+        _children: [],
+        _listeners: {},
+        addEventListener: function(evt, h) { (this._listeners[evt] = this._listeners[evt] || []).push(h); },
+        appendChild: function(c) { this._children.push(c); if (c && c.innerHTML) this.innerHTML += c.innerHTML; },
+        querySelectorAll: function() { return []; },
+        querySelector: function() { return null; },
+        getAttribute: function(a) { return this[a] || null; },
+        setAttribute: function(a, v) { this[a] = v; },
+        hasAttribute: function(a) { return this[a] !== undefined; },
+        scrollIntoView: function() { this._scrolled = true; },
+        getBoundingClientRect: function() { return { width: 600, height: 300, top: 0, left: 0 }; },
+        getContext: function() {
+          return {
+            clearRect: function() {},
+            beginPath: function() {},
+            arc: function() {},
+            fill: function() {},
+            stroke: function() {},
+            fillText: function() {},
+            strokeText: function() {},
+            moveTo: function() {},
+            lineTo: function() {},
+            closePath: function() {},
+            save: function() {},
+            restore: function() {},
+            setLineDash: function() {},
+            measureText: function() { return { width: 50 }; },
+            createLinearGradient: function() {
+              return { addColorStop: function() {} };
+            }
+          };
+        }
+      };
+    }
+
+    var domIds = [
+      "landingPortalView", "dashboardView", "btnPortalTopNav", "btnReturnToPortal",
+      "btnExportDossier", "btnQuickExportSinglePdf", "imperialDossierModal",
+      "imperialDossierContainer", "calcBtn", "birthDate", "birthTime", "gender",
+      "useSolarTime", "lateRatAsNextDay", "customLongitude", "timezoneSelect",
+      "citySelect", "fsec-canons", "view-friction", "frictionContentContainer",
+      "careerContentContainer", "currentCountrySelect", "currentCitySelect",
+      "view-luck", "view-iching", "view-home", "fourPillarsHexSection", "ichingCycleSection",
+      "fourPillarsHexContainer", "ichingCycleContainer", "fourPillarsAgeSlider",
+      "fourPillarsAgeDisplay", "ichingCycleAgeBadge", "ichingCycleCanvas",
+      "ichingCyclePlayBtn", "ichingCyclePlayIcon", "ichingCyclePlayText",
+      "ichingCyclePrevBtn", "ichingCycleNextBtn", "ichingTabTimeline",
+      "ichingTabYaoStages", "ichingTabCosmic"
+    ];
+    domIds.forEach(function(id) { elementStore[id] = makeFakeEl(id); });
+
+    var document = {
+      documentElement: { lang: "zh", getAttribute: function() { return "light"; }, setAttribute: function() {} },
+      body: makeFakeEl("body"),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
+        return elementStore[id];
+      },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function(tag) { return makeFakeEl(null, tag); },
+      addEventListener: function(event, handler) {
+        if (event === "DOMContentLoaded") handler();
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      SynastryEngine: SynastryEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine,
+      HistoricalEngine: HistoricalEngine
+    };
+
+    load("js/app.js");
+
+    window.currentBaziResult = testChart;
+    window.currentLuckResult = testLuck;
+
+    // Test calling renderFourPillarsHexagrams into the container
+    window.renderFourPillarsHexagrams(testChart);
+    var hexHtml = elementStore["fourPillarsHexContainer"].innerHTML;
+    if (!hexHtml || hexHtml.length < 50) {
+      throw new Error("fourPillarsHexContainer was not properly populated: " + hexHtml);
+    }
+    if (!hexHtml.includes("先天卦") && !hexHtml.includes("Innate Hexagram")) {
+      throw new Error("fourPillarsHexContainer missing Innate Hexagram rendering");
+    }
+
+    // Test calling renderHexagramCycle
+    window.renderHexagramCycle(testChart, 35);
+    var cycleHtml = elementStore["ichingCycleContainer"].innerHTML;
+    if (!cycleHtml || cycleHtml.length < 50) {
+      throw new Error("ichingCycleContainer was not properly populated");
+    }
+
+    // Test switchPrimaryView to view-luck executes seamlessly
+    window.switchPrimaryView("view-luck");
+
+    // Test English mode rendering for Tianji Hexagrams: Zero residual Chinese
+    window.setLanguage("en");
+    window.renderFourPillarsHexagrams(testChart);
+    var enHexHtml = elementStore["fourPillarsHexContainer"].innerHTML;
+    var enHexLeaks = enHexHtml.match(/[\u4e00-\u9fa5]/g);
+    if (enHexLeaks && enHexLeaks.length > 0) {
+      throw new Error("Residual Chinese found in EN Four Pillars Hexagrams (" + enHexLeaks.length + " chars): " + enHexLeaks.slice(0, 30).join(""));
+    }
+    """
+]
+run_check132 = subprocess.run(jsc_check132_cmd, capture_output=True, text=True)
+assert run_check132.returncode == 0, f"Check 132 JSC test failed: stdout={run_check132.stdout} stderr={run_check132.stderr}"
+print("✓ 132. 浅昼配色优雅美化、导航栏零双重图标、周易天纪六十四卦1:1迁入岁运推演与双语100%零中文残留全量验证通过！")
+
+print("\n🎉 ALL 132 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

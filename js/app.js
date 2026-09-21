@@ -10944,7 +10944,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!primaryViews[targetViewId]) return;
     activePrimaryView = targetViewId;
 
-    if (targetViewId !== 'view-iching') {
+    if (targetViewId !== 'view-luck') {
       if (typeof stopIChingCyclePlay === 'function' && isIChingCyclePlaying) {
         stopIChingCyclePlay();
       }
@@ -10981,17 +10981,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // If switching to luck view, refresh Chrono-Navigator canvas, Phase Portrait & Tianji Feed
-    if (targetViewId === 'view-luck' && currentLuckResult) {
-      if (currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
+    // If switching to luck view, refresh Chrono-Navigator canvas, Phase Portrait, Tianji Feed, & Four Pillars Hexagrams / Cycle Progression
+    if (targetViewId === 'view-luck') {
+      if (currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
         setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
       }
-      if (typeof renderPhasePortrait === 'function' && currentBaziResult) {
+      if (typeof renderPhasePortrait === 'function' && currentBaziResult && currentLuckResult) {
         renderPhasePortrait(currentBaziResult, currentLuckResult);
       }
-      if (typeof renderTianjiCalendarFeed === 'function' && currentBaziResult) {
+      if (typeof renderTianjiCalendarFeed === 'function' && currentBaziResult && currentLuckResult) {
         renderTianjiCalendarFeed(currentBaziResult, currentLuckResult);
       }
+      if (typeof renderFourPillarsHexagrams === 'function' && currentBaziResult) {
+        renderFourPillarsHexagrams(currentBaziResult);
+      }
+      if (typeof renderHexagramCycle === 'function' && currentBaziResult) {
+        renderHexagramCycle(currentBaziResult, fourPillarsActiveAge);
+      }
+      setTimeout(() => {
+        if (activeIChingCycleTab === 'timeline' && cachedIChingCycleData && typeof drawHexagramCycleChart === 'function') {
+          drawHexagramCycleChart(cachedIChingCycleData, fourPillarsActiveAge);
+        }
+      }, 60);
     }
 
     // If switching to synastry view, calculate if empty with progress bar
@@ -11041,17 +11052,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // If switching to history view, render if chart exists
     if (targetViewId === 'view-history' && currentBaziResult && typeof renderHistoricalFiguresView === 'function') {
       renderHistoricalFiguresView(currentBaziResult, currentLuckResult);
-    }
-
-    // If switching to iching view, render Four Pillars Hexagrams & Cycle Progression if chart exists
-    if (targetViewId === 'view-iching' && currentBaziResult) {
-      if (typeof renderFourPillarsHexagrams === 'function') renderFourPillarsHexagrams(currentBaziResult);
-      if (typeof renderHexagramCycle === 'function') renderHexagramCycle(currentBaziResult, fourPillarsActiveAge);
-      setTimeout(() => {
-        if (activeIChingCycleTab === 'timeline' && cachedIChingCycleData && typeof drawHexagramCycleChart === 'function') {
-          drawHexagramCycleChart(cachedIChingCycleData, fourPillarsActiveAge);
-        }
-      }, 50);
     }
 
     // If switching to georesonance view, render if chart exists
@@ -19295,6 +19295,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openSynastryDossierModal = openSynastryDossierModal;
   window.renderSynastryDossierPages = renderSynastryDossierPages;
   window.downloadSynastryPDF = downloadSynastryPDF;
+  window.switchPrimaryView = switchPrimaryView;
 
   // Restore user inputs from localStorage only when returning to dashboard or explicitly requested
   const locHash = (typeof window !== 'undefined' && window.location && window.location.hash) ? window.location.hash : '';

@@ -23,14 +23,14 @@
 [data-theme="light"],
 html.light,
 body.light-theme {
-  /* Softer, warm-toned, eye-friendly parchment background with lowered brightness */
-  --bg-primary: #ebe5d8;
-  --bg-secondary: #ded7c7;
-  --bg-card: #f5f0e4;
-  --bg-card-hover: #eae3d3;
-  --text-main: #18181b;
-  --text-muted: #1e293b;
-  --border-color: #cbbeaa;
+  /* Refined, elegant warm silk & ivory eye-comfort canvas with high-contrast typography */
+  --bg-primary: #f8f6f0;
+  --bg-secondary: #f0ebe1;
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf8f5;
+  --text-main: #1f2937;
+  --text-muted: #4b5563;
+  --border-color: #e5dfd5;
   --accent-gold: #92400e;
   --accent-red: #b91c1c;
   --accent-jade: #065f46;
@@ -61,8 +61,9 @@ body.light-theme .bg-\[\#0b0f19\] {
 [data-theme="light"] header,
 html.light header,
 body.light-theme header {
-  background-color: rgba(235, 229, 216, 0.95) !important;
-  border-bottom-color: #cbbeaa !important;
+  background-color: rgba(248, 246, 240, 0.96) !important;
+  border-bottom-color: #e5dfd5 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 
 [data-theme="light"] header h1,
@@ -80,7 +81,7 @@ html.light header .text-gray-400,
 html.light header .text-gray-300,
 body.light-theme header .text-gray-400,
 body.light-theme header .text-gray-300 {
-  color: #1e293b !important;
+  color: #374151 !important;
 }
 
 [data-theme="light"] #themeToggle,
@@ -98,9 +99,29 @@ body.light-theme #nowBtn,
 body.light-theme #btnToggleFlux,
 body.light-theme #langZhBtn,
 body.light-theme #langEnBtn {
-  background-color: #e5ded0 !important;
-  border-color: #cbbeaa !important;
-  color: #18181b !important;
+  background-color: #ffffff !important;
+  border-color: #e5dfd5 !important;
+  color: #1f2937 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+[data-theme="light"] #themeToggle:hover,
+[data-theme="light"] #nowBtn:hover,
+[data-theme="light"] #btnToggleFlux:hover,
+[data-theme="light"] #langZhBtn:hover,
+[data-theme="light"] #langEnBtn:hover,
+html.light #themeToggle:hover,
+html.light #nowBtn:hover,
+html.light #btnToggleFlux:hover,
+html.light #langZhBtn:hover,
+html.light #langEnBtn:hover,
+body.light-theme #themeToggle:hover,
+body.light-theme #nowBtn:hover,
+body.light-theme #btnToggleFlux:hover,
+body.light-theme #langZhBtn:hover,
+body.light-theme #langEnBtn:hover {
+  background-color: #faf8f5 !important;
+  border-color: #d1c7b7 !important;
+  color: #111827 !important;
 }
 
 [data-theme="light"] #langZhBtn.bg-amber-600,
@@ -279,7 +300,7 @@ body.light-theme #advisorModal .bg-gray-900\/40,
 body.light-theme #advisorModal .bg-gray-900,
 body.light-theme #advisorModal #advisorContextBadges {
   background-color: #fdfaf3 !important;
-  border-color: #ded7c7 !important;
+  border-color: #e5dfd5 !important;
 }
 
 /* Light Theme Card Tiles & Sub-Boxes (彻底消除黑盒底色，呈现温润宣纸质感) */
@@ -326,7 +347,7 @@ body.light-theme .bg-black\/70,
 body.light-theme .bg-black\/80,
 body.light-theme .bg-black\/90 {
   background-color: #ffffff !important;
-  border-color: #ded7c7 !important;
+  border-color: #e5dfd5 !important;
   box-shadow: 0 1px 3px rgba(100, 80, 50, 0.04) !important;
 }
 
@@ -1872,13 +1893,24 @@ body.light-theme select:focus {
 [data-theme="light"] #primaryViewNav,
 html.light #primaryViewNav,
 body.light-theme #primaryViewNav {
-  background-color: #ded7c7 !important;
-  border-color: #cbbeaa !important;
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #e5dfd5 !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
 }
 [data-theme="light"] #primaryViewNav button,
 html.light #primaryViewNav button,
 body.light-theme #primaryViewNav button {
-  color: #4b5563 !important;
+  background-color: #f8f6f0 !important;
+  color: #374151 !important;
+  border-color: #e8e3d8 !important;
+  transition: all 0.2s ease-in-out;
+}
+[data-theme="light"] #primaryViewNav button:hover,
+html.light #primaryViewNav button:hover,
+body.light-theme #primaryViewNav button:hover {
+  background-color: #ede7dc !important;
+  color: #111827 !important;
+  border-color: #d6ccbe !important;
 }
 [data-theme="light"] #primaryViewNav button.active,
 [data-theme="light"] #primaryViewNav button[data-active="true"],
@@ -1886,10 +1918,27 @@ html.light #primaryViewNav button.active,
 html.light #primaryViewNav button[data-active="true"],
 body.light-theme #primaryViewNav button.active,
 body.light-theme #primaryViewNav button[data-active="true"] {
-  background-color: #f5f0e4 !important;
-  color: #78350f !important;
-  border-color: #cbbeaa !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  background: linear-gradient(135deg, #d97706, #b45309) !important;
+  color: #ffffff !important;
+  border-color: #b45309 !important;
+  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.28) !important;
+}
+
+[data-theme="light"] #dashboardTopSummaryBar,
+html.light #dashboardTopSummaryBar,
+body.light-theme #dashboardTopSummaryBar {
+  background-color: #ffffff !important;
+  border: 1px solid #e5dfd5 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] #solarTermTag,
+html.light #solarTermTag,
+body.light-theme #solarTermTag {
+  background-color: #fef3c7 !important;
+  border-color: #fde68a !important;
+  color: #92400e !important;
+  font-weight: 600 !important;
 }
 
 /* Pill Badges & Chips */
@@ -2926,7 +2975,7 @@ body.light-theme .archetype-preset-card.active {
 html.light .mini-pillar-card,
 body.light-theme .mini-pillar-card {
   background: #fdfaf4 !important;
-  border-color: #ded7c7 !important;
+  border-color: #e5dfd5 !important;
   box-shadow: 0 1px 4px rgba(100, 80, 50, 0.05) !important;
 }
 
