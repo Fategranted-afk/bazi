@@ -1714,250 +1714,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // In-Page Event Rectification Workbench (Integrated inside Home Core View)
-  function initInPageRectification() {
-    const section = document.getElementById('rectificationSection');
-    if (!section) return;
-
-    // Link accuracy checkpoint buttons from Pareto section to workbench
-    document.querySelectorAll('.btn-goto-rectification').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const workbench = document.getElementById('homeRectificationWorkbench');
-        if (workbench) workbench.classList.remove('hidden');
-        section.scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-
-    // Toggle workbench visibility
-    const btnToggle = document.getElementById('btnToggleHomeRectification');
-    const workbench = document.getElementById('homeRectificationWorkbench');
-    if (btnToggle && workbench) {
-      btnToggle.addEventListener('click', () => {
-        workbench.classList.toggle('hidden');
-      });
-    }
-
-    // Load sample events
-    const btnSample = document.getElementById('btnHomeLoadSampleEvents');
-    if (btnSample) {
-      btnSample.addEventListener('click', () => {
-        const isEn = (currentLang === 'en');
-        if (workbench) workbench.classList.remove('hidden');
-
-        const y1 = document.getElementById('homeRectifyEventYear1');
-        const t1 = document.getElementById('homeRectifyEventType1');
-        const d1 = document.getElementById('homeRectifyEventDesc1');
-        if (y1) y1.value = 2018;
-        if (t1) t1.value = 'exam';
-        if (d1) d1.value = isEn ? 'Top University Key Academic Breakthrough' : '考入双一流高校 / 重大考学跃升';
-
-        const y2 = document.getElementById('homeRectifyEventYear2');
-        const t2 = document.getElementById('homeRectifyEventType2');
-        const d2 = document.getElementById('homeRectifyEventDesc2');
-        if (y2) y2.value = 2021;
-        if (t2) t2.value = 'career_jump';
-        if (d2) d2.value = isEn ? 'Major Career Pivot / Director Level Promotion' : '跳槽至知名外企任架构总监';
-
-        const y3 = document.getElementById('homeRectifyEventYear3');
-        const t3 = document.getElementById('homeRectifyEventType3');
-        const d3 = document.getElementById('homeRectifyEventDesc3');
-        if (y3) y3.value = 2023;
-        if (t3) t3.value = 'marriage';
-        if (d3) d3.value = isEn ? 'Marriage / Acquired Primary Residence' : '结婚领证并置业安家';
-
-        handleHomeRunRectification();
-      });
-    }
-
-    // Run MAP rectification
-    const btnRun = document.getElementById('btnHomeRunRectification');
-    if (btnRun) {
-      btnRun.addEventListener('click', handleHomeRunRectification);
-    }
-  }
-
-  // Handle In-Page Bayesian Birth Time Rectification
-  function handleHomeRunRectification() {
-    if (typeof RectificationEngine === 'undefined') return;
-    const isEn = (currentLang === 'en');
-    const bDate = document.getElementById('birthDate')?.value;
-    if (!bDate) {
-      alert(isEn ? 'Please confirm birth date first.' : '请先确认出生日期。');
-      return;
-    }
-    const [year, month, day] = bDate.split('-').map(Number);
-    const gender = document.getElementById('gender')?.value || '乾造';
-    const approxVal = parseInt(document.getElementById('homeRectifyApproxHour')?.value, 10);
-
-    const events = [];
-    const y1 = parseInt(document.getElementById('homeRectifyEventYear1')?.value, 10);
-    const t1 = document.getElementById('homeRectifyEventType1')?.value;
-    const d1 = document.getElementById('homeRectifyEventDesc1')?.value || '';
-    if (y1 && t1) events.push({ year: y1, type: t1, description: d1 });
-
-    const y2 = parseInt(document.getElementById('homeRectifyEventYear2')?.value, 10);
-    const t2 = document.getElementById('homeRectifyEventType2')?.value;
-    const d2 = document.getElementById('homeRectifyEventDesc2')?.value || '';
-    if (y2 && t2) events.push({ year: y2, type: t2, description: d2 });
-
-    const y3 = parseInt(document.getElementById('homeRectifyEventYear3')?.value, 10);
-    const t3 = document.getElementById('homeRectifyEventType3')?.value;
-    const d3 = document.getElementById('homeRectifyEventDesc3')?.value || '';
-    if (y3 && t3) events.push({ year: y3, type: t3, description: d3 });
-
-    if (events.length === 0) {
-      alert(isEn ? 'Please enter at least 1 or 2 past major historical life events.' : '请至少录入 1~2 个已发生的确定性重大历史事件。');
-      return;
-    }
-
-    const useTrueSolarTime = document.getElementById('useTrueSolarTime')?.checked || false;
-    const longitude = parseFloat(document.getElementById('customLongitude')?.value) || 116.4;
-    const timezone = parseFloat(document.getElementById('timezoneSelect')?.value) || 8.0;
-
-    const natalBase = {
-      year, month, day, gender,
-      approximateHour: (!isNaN(approxVal) && approxVal >= 0) ? approxVal : null,
-      useTrueSolarTime, longitude, timezone
-    };
-
-    const res = RectificationEngine.rectifyBirthTime(natalBase, events);
-    if (!res || !res.top1) return;
-
-    renderHomeRectificationResults(res, isEn);
-  }
-
-  // Render In-Page Rectification Results
-  function renderHomeRectificationResults(res, isEn) {
-    const resultsArea = document.getElementById('homeRectificationResultsArea');
-    if (!resultsArea) return;
-    resultsArea.classList.remove('hidden');
-
-    const top1 = res.top1;
-    const top2 = res.top2;
-    const tie = res.tieBreaker;
-
-    let tieBreakerHtml = '';
-    if (tie) {
-      tieBreakerHtml = `
-        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/60 to-purple-950/60 border border-amber-500/60 shadow-lg space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
-              <span>⚖️</span>
-              <span>${isEn ? tie.titleEn : tie.titleZh}</span>
-            </span>
-            <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-900 text-amber-200 font-mono">TIE-BREAKER</span>
-          </div>
-          <p class="text-xs text-amber-100/90 leading-relaxed font-sans">
-            ${isEn ? tie.questionEn : tie.questionZh}
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-            <button type="button" class="btn-home-tiebreaker-choice text-left p-2.5 rounded-lg border border-amber-600/40 bg-black/40 hover:bg-amber-900/40 hover:border-amber-400 transition cursor-pointer active:scale-95" data-cand-idx="0">
-              <div class="text-xs font-bold text-amber-200 mb-0.5">${isEn ? tie.optionAEn : tie.optionAZh}</div>
-              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? top1.nameEn : top1.nameZh}</div>
-            </button>
-            <button type="button" class="btn-home-tiebreaker-choice text-left p-2.5 rounded-lg border border-purple-600/40 bg-black/40 hover:bg-purple-900/40 hover:border-purple-400 transition cursor-pointer active:scale-95" data-cand-idx="1">
-              <div class="text-xs font-bold text-purple-200 mb-0.5">${isEn ? tie.optionBEn : tie.optionBZh}</div>
-              <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confirm & Apply' : '确认为此并排盘'} ➔ ${isEn ? (top2 ? (isEn ? top2.nameEn : top2.nameZh) : '') : ''}</div>
-            </button>
-          </div>
-        </div>
-      `;
-    }
-
-    const evidencesHtml = (top1.evidences || []).map(ev => `
-      <div class="flex items-start gap-1.5 text-[11px] text-emerald-200/90">
-        <span class="text-emerald-400 font-bold">✓</span>
-        <span>${isEn ? ev.textEn : ev.textZh}</span>
-      </div>
-    `).join('');
-
-    const rankingsHtml = (res.rankings || []).slice(0, 5).map((c, i) => `
-      <div class="flex items-center justify-between p-2 rounded-lg bg-black/30 border border-gray-800 text-xs">
-        <div class="flex items-center gap-2">
-          <span class="w-5 text-center font-mono font-bold ${i === 0 ? 'text-amber-400' : 'text-gray-500'}">#${i + 1}</span>
-          <span class="font-medium text-gray-200">${isEn ? c.nameEn : c.nameZh}</span>
-          <span class="text-[10px] px-1.5 py-0.2 rounded bg-gray-800 text-gray-400 font-mono">${isEn ? c.hourPillarEn : c.hourPillarZh}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-20 sm:w-28 bg-gray-800 h-1.5 rounded-full overflow-hidden">
-            <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-400" style="width: ${c.confidencePercent}%;"></div>
-          </div>
-          <span class="font-mono text-[11px] text-amber-300 w-10 text-right">${c.confidencePercent}%</span>
-        </div>
-      </div>
-    `).join('');
-
-    resultsArea.innerHTML = `
-      <!-- Winner Candidate Card -->
-      <div class="p-4 rounded-xl border border-emerald-500/60 bg-gradient-to-r from-emerald-950/40 via-black/40 to-emerald-950/40 shadow-xl space-y-3">
-        <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2">
-          <div>
-            <div class="text-[10px] font-bold text-emerald-400 font-mono tracking-wider">${isEn ? 'MAXIMUM A POSTERIORI (MAP) CANDIDATE' : '贝叶斯最大后验概率推荐时辰'}</div>
-            <h4 class="text-base font-bold text-gray-100 font-serif-sc mt-0.5">${isEn ? top1.nameEn : top1.nameZh} · ${isEn ? top1.hourPillarEn : top1.hourPillarZh}${isEn ? ' Pillar' : '柱'}</h4>
-          </div>
-          <div class="text-right">
-            <div class="text-2xl font-black text-emerald-400 font-mono">${top1.confidencePercent}%</div>
-            <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Confidence' : '后验置信度'}</div>
-          </div>
-        </div>
-
-        <div class="space-y-1.5">
-          <div class="text-[11px] font-bold text-gray-300 font-serif-sc">${isEn ? 'Deterministic Historical Evidence Alignment:' : '重大历史事件对数似然增益印证：'}</div>
-          <div class="space-y-1 bg-black/30 p-2 rounded-lg border border-emerald-900/30">
-            ${evidencesHtml || `<div class="text-gray-400 text-xs">${isEn ? 'Aligned with prior distribution and static structure.' : '与先验时空分布及静态格局高度吻合。'}</div>`}
-          </div>
-        </div>
-
-        <button id="btnHomeAdoptRectifiedHour" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 hover:from-emerald-500 hover:to-teal-700 text-white font-bold text-xs shadow-lg transition flex items-center justify-center gap-2 cursor-pointer active:scale-95">
-          <span>🎯</span>
-          <span>${isEn ? 'Apply Recommended Hour & Recalculate Chart' : '一键采纳此推荐时辰并排盘'}</span>
-        </button>
-      </div>
-
-      <!-- Tie-Breaker if bimodal -->
-      ${tieBreakerHtml}
-
-      <!-- Top Rankings -->
-      <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2">
-        <div class="flex items-center justify-between text-xs font-bold text-gray-300">
-          <span>${isEn ? 'Top Hypothesis Probability Spectrum' : '全时辰后验概率波谱排行榜'}</span>
-          <span class="text-[10px] text-gray-500 font-mono">SOFTMAX DISTRIBUTION</span>
-        </div>
-        <div class="space-y-1.5">
-          ${rankingsHtml}
-        </div>
-      </div>
-    `;
-
-    function applyHourAndRecalculate(cand) {
-      if (!cand) return;
-      const bTime = document.getElementById('birthTime');
-      if (bTime) {
-        const hh = String(cand.hour).padStart(2, '0');
-        const mm = String(cand.minute).padStart(2, '0');
-        bTime.value = `${hh}:${mm}`;
-      }
-      if (typeof triggerCalculate === 'function') triggerCalculate();
-      const paretoSec = document.getElementById('paretoCoreSection');
-      if (paretoSec && typeof paretoSec.scrollIntoView === 'function') {
-        paretoSec.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    const btnAdopt = document.getElementById('btnHomeAdoptRectifiedHour');
-    if (btnAdopt) {
-      btnAdopt.addEventListener('click', () => applyHourAndRecalculate(top1));
-    }
-
-    resultsArea.querySelectorAll('.btn-home-tiebreaker-choice').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const cIdx = parseInt(btn.getAttribute('data-cand-idx'), 10);
-        const chosen = (cIdx === 1 && top2) ? top2 : top1;
-        applyHourAndRecalculate(chosen);
-      });
-    });
-  }
-
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
   function renderPortrait(res) {
     if (typeof PortraitEngine === 'undefined') return;
@@ -17396,7 +17152,223 @@ document.addEventListener('DOMContentLoaded', () => {
       : `${startAgeNum}岁起运 (${startYearNum}年) · 出生后${diffDaysNum}天${diffHoursNum}时交节`;
 
     // Chrono timeline item for active year
-    const tl = (luck && luck.timeline) ? luck.timeline : [];
+    let tl = (luck && luck.timeline) ? luck.timeline : [];
+    if ((!tl || tl.length === 0) && typeof LuckEngine !== 'undefined' && typeof LuckEngine.calculateLifelongTimeline === 'function') {
+      tl = LuckEngine.calculateLifelongTimeline(bazi, luck);
+    }
+    if (!tl || tl.length === 0) {
+      tl = [];
+      for (let a = 1; a <= 100; a++) {
+        const y = birthYr + a - 1;
+        const eScore = Math.max(25, Math.min(95, Math.round(58 + Math.sin(a / 7.5) * 16 + ((a >= 28 && a <= 55) ? 12 : -4))));
+        const wScore = Math.max(20, Math.min(95, Math.round(52 + Math.cos(a / 6.8) * 18 + ((a >= 32 && a <= 58) ? 14 : -5))));
+        tl.push({
+          age: a,
+          nominalAge: a,
+          realAge: Math.max(0, a - 1),
+          year: y,
+          energyScore: eScore,
+          wealthScore: wScore,
+          ganZhi: '丙午',
+          ganZhiEn: 'Bing-Wu',
+          decade: '童限',
+          decadeSpanZh: '1 ~ 5 岁',
+          decadeSpanEn: 'Ages 1 - 5',
+          tenGod: '偏印',
+          tenGodEn: 'Indirect Resource',
+          naYin: '天河水',
+          naYinEn: 'Heaven River Water',
+          focusZh: '稳健深耕 · 蓄势待发',
+          focusEn: 'Consolidation & Strategic Preparation',
+          directiveZh: `${currentAge}岁（${currentCalYear} 丙午年）气数平稳中和，逢【偏印】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`,
+          directiveEn: `Age ${currentAge} (${currentCalYear} Bing-Wu): Energy is balanced and disciplined under Indirect Resource. Sharpen core skills, build reputation, and optimize assets to solidify foundations for upcoming prime cycles.`,
+          alerts: ['岁运祥和'],
+          alertsEn: ['Harmonious Transit']
+        });
+      }
+    }
+
+    // Lifelong 100-Year Energy & Life/Wealth Curves Vector SVG Generator
+    function generateImperialLifelongCurveSvg(timeline, activeAge, curYear, isEnMode) {
+      if (!timeline || timeline.length === 0) return '';
+      const totalPts = timeline.length;
+      const w = 730;
+      const h = 106;
+      const padL = 36;
+      const padR = 16;
+      const padT = 14;
+      const padB = 20;
+      const chartW = w - padL - padR;
+      const chartH = h - padT - padB;
+
+      const getX = (idx) => padL + (idx / (totalPts - 1)) * chartW;
+      const getY = (score) => padT + chartH - (Math.max(0, Math.min(100, score)) / 100) * chartH;
+
+      // Golden Prime Window: Age 28 to 55
+      const primeStartIdx = Math.max(0, Math.min(totalPts - 1, 27));
+      const primeEndIdx = Math.max(0, Math.min(totalPts - 1, 54));
+      const primeX1 = getX(primeStartIdx);
+      const primeX2 = getX(primeEndIdx);
+      const primeW = primeX2 - primeX1;
+
+      let energyPts = [];
+      let wealthPts = [];
+      let alertNodes = [];
+
+      for (let i = 0; i < totalPts; i++) {
+        const it = timeline[i];
+        const x = getX(i);
+        const eVal = (it.energyScore !== undefined) ? it.energyScore : 60;
+        const wVal = (it.wealthScore !== undefined) ? it.wealthScore : 50;
+        const yE = getY(eVal);
+        const yW = getY(wVal);
+        energyPts.push({ x, y: yE });
+        wealthPts.push({ x, y: yW });
+
+        if (it.alerts && it.alerts.length > 0) {
+          const hasClash = it.alerts.some(a => a.includes('冲') || a.includes('并') || a.includes('提纲') || a.includes('慎'));
+          const hasAusp = it.alerts.some(a => a.includes('吉') || a.includes('合') || a.includes('祥和') || a.includes('高光') || a.includes('巅峰'));
+          if (hasClash || hasAusp) {
+            alertNodes.push({
+              x: x.toFixed(1),
+              y: (Math.min(yE, yW) - 3.5).toFixed(1),
+              color: hasClash ? '#dc2626' : '#059669',
+              label: hasClash ? (isEnMode ? 'Clash' : '刑冲') : (isEnMode ? 'Auspicious' : '天吉')
+            });
+          }
+        }
+      }
+
+      const eLinePath = energyPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+      const eAreaPath = `${eLinePath} L ${energyPts[totalPts - 1].x.toFixed(1)} ${(padT + chartH).toFixed(1)} L ${energyPts[0].x.toFixed(1)} ${(padT + chartH).toFixed(1)} Z`;
+
+      const wLinePath = wealthPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+      const wAreaPath = `${wLinePath} L ${wealthPts[totalPts - 1].x.toFixed(1)} ${(padT + chartH).toFixed(1)} L ${wealthPts[0].x.toFixed(1)} ${(padT + chartH).toFixed(1)} Z`;
+
+      // Active Age Indicator line
+      const activeIdx = Math.max(0, Math.min(totalPts - 1, activeAge - 1));
+      const curItem = timeline[activeIdx] || timeline[0];
+      const curX = getX(activeIdx);
+      const curEy = getY((curItem.energyScore !== undefined) ? curItem.energyScore : 60);
+      const curWy = getY((curItem.wealthScore !== undefined) ? curItem.wealthScore : 50);
+      const curAgeVal = (curItem.realAge !== undefined) ? curItem.realAge : (curItem.age - 1);
+      const curTagText = isEnMode
+        ? (curAgeVal === 0 ? `Age 0 (${curItem.year})` : `Age ${curAgeVal} (${curItem.year})`)
+        : (curAgeVal === 0 ? `0岁 (${curItem.year}年)` : `${curAgeVal}岁 (${curItem.year}年)`);
+
+      const scoreLevels = [25, 50, 75, 100];
+      const gridLinesHtml = scoreLevels.map(sc => {
+        const y = getY(sc).toFixed(1);
+        return `
+          <line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="rgba(180, 130, 60, 0.2)" stroke-dasharray="2 3" stroke-width="0.8"/>
+          <text x="${padL - 4}" y="${(parseFloat(y) + 3).toFixed(1)}" text-anchor="end" fill="#92400e" font-size="8px" font-family="monospace" font-weight="bold">${sc}</text>
+        `;
+      }).join('');
+
+      const ageTicks = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      const ageTicksHtml = ageTicks.map(ag => {
+        const x = getX(ag - 1).toFixed(1);
+        const yLine = (padT + chartH).toFixed(1);
+        const yText = (padT + chartH + 13).toFixed(1);
+        const label = isEnMode ? (ag === 1 ? '1y' : (ag === 100 ? '100y' : `${ag}`)) : (ag === 1 ? '1岁' : (ag === 100 ? '100岁' : `${ag}`));
+        return `
+          <line x1="${x}" y1="${yLine}" x2="${x}" y2="${(parseFloat(yLine) + 3).toFixed(1)}" stroke="#b45309" stroke-width="1"/>
+          <text x="${x}" y="${yText}" text-anchor="middle" fill="#78350f" font-size="8px" font-family="monospace">${label}</text>
+        `;
+      }).join('');
+
+      const energyLabel = isEnMode ? 'Vitality & Life Energy Curve' : '生命能量与活力曲线';
+      const wealthLabel = isEnMode ? 'Wealth & Life Fortune Tide' : '财富走势与机遇潮汐';
+      const primeLabel = isEnMode ? 'Prime Window (Ages 28-55)' : '黄金破局期 (28~55岁)';
+      const currentLabel = isEnMode ? 'Current: ' : '当前定位: ';
+      const primeBandText = isEnMode ? 'Prime Productivity Peak Window' : '黄金壮年破局高光带 (28~55岁)';
+
+      return `
+        <div class="bg-amber-50/40 rounded-lg p-1.5 border border-amber-900/20 space-y-1">
+          <!-- Legend Bar -->
+          <div class="flex flex-wrap items-center justify-between text-[9px] text-amber-950 px-1 border-b border-amber-900/10 pb-0.5 font-serif-sc">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block border border-amber-700"></span>
+                <span class="font-bold text-amber-900">${energyLabel}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block border border-emerald-700"></span>
+                <span class="font-bold text-emerald-900">${wealthLabel}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-1.5 rounded bg-amber-300/60 inline-block border border-amber-500/50"></span>
+                <span class="text-amber-900/90">${primeLabel}</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-1 text-[8.5px] font-mono text-amber-900">
+              <span>📍</span>
+              <span>${currentLabel}${curTagText}</span>
+            </div>
+          </div>
+
+          <!-- SVG Chart -->
+          <div class="relative w-full overflow-hidden">
+            <svg viewBox="0 0 ${w} ${h}" class="w-full h-24 sm:h-28 block select-none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="imperialEnergyGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.38"/>
+                  <stop offset="100%" stop-color="#d97706" stop-opacity="0.03"/>
+                </linearGradient>
+                <linearGradient id="imperialWealthGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.32"/>
+                  <stop offset="100%" stop-color="#059669" stop-opacity="0.03"/>
+                </linearGradient>
+                <linearGradient id="imperialGoldenZone" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.06"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Chart Background & Axes -->
+              <rect x="${padL}" y="${padT}" width="${chartW}" height="${chartH}" fill="rgba(255, 255, 255, 0.45)" rx="2"/>
+
+              <!-- Golden Prime Window Band (Age 28-55) -->
+              <rect x="${primeX1.toFixed(1)}" y="${padT}" width="${primeW.toFixed(1)}" height="${chartH}" fill="url(#imperialGoldenZone)" stroke="rgba(217, 119, 6, 0.25)" stroke-width="0.8" rx="2"/>
+              <text x="${(primeX1 + 4).toFixed(1)}" y="${(padT + 9).toFixed(1)}" fill="#92400e" font-size="7.5px" font-family="sans-serif" font-weight="bold">${primeBandText}</text>
+
+              <!-- Horizontal Grid Lines & Score Labels -->
+              ${gridLinesHtml}
+
+              <!-- Axis Baseline -->
+              <line x1="${padL}" y1="${(padT + chartH).toFixed(1)}" x2="${w - padR}" y2="${(padT + chartH).toFixed(1)}" stroke="#78350f" stroke-width="1"/>
+
+              <!-- Area Fills -->
+              <path d="${wAreaPath}" fill="url(#imperialWealthGrad)" />
+              <path d="${eAreaPath}" fill="url(#imperialEnergyGrad)" />
+
+              <!-- Polyline Curves -->
+              <path d="${wLinePath}" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="${eLinePath}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Alert Nodes -->
+              ${alertNodes.map(c => `
+                <circle cx="${c.x}" cy="${c.y}" r="2" fill="${c.color}" stroke="#ffffff" stroke-width="0.8"/>
+              `).join('')}
+
+              <!-- Age X-Axis Ticks -->
+              ${ageTicksHtml}
+
+              <!-- Active Age Indicator Line -->
+              <line x1="${curX.toFixed(1)}" y1="${padT}" x2="${curX.toFixed(1)}" y2="${(padT + chartH).toFixed(1)}" stroke="#b45309" stroke-width="1.6" stroke-dasharray="3 2" />
+              
+              <!-- Active Points on Curves -->
+              <circle cx="${curX.toFixed(1)}" cy="${curEy.toFixed(1)}" r="3.5" fill="#d97706" stroke="#ffffff" stroke-width="1.2"/>
+              <circle cx="${curX.toFixed(1)}" cy="${curWy.toFixed(1)}" r="3.5" fill="#059669" stroke="#ffffff" stroke-width="1.2"/>
+
+              <!-- Active Age Floating Tag -->
+              <rect x="${Math.max(padL, Math.min(w - padR - 76, curX - 38)).toFixed(1)}" y="${(padT - 13).toFixed(1)}" width="76" height="12" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="0.8"/>
+              <text x="${Math.max(padL + 38, Math.min(w - padR - 38, curX)).toFixed(1)}" y="${(padT - 4).toFixed(1)}" text-anchor="middle" fill="#78350f" font-size="8px" font-family="monospace" font-weight="bold">${curTagText}</text>
+            </svg>
+          </div>
+        </div>
+      `;
+    }
     const activeTlItem = tl.find(t => t.year === currentCalYear) || tl.find(t => t.age === currentAge) || tl[0] || {
       year: currentCalYear,
       ganZhi: '丙午',
@@ -18076,6 +18048,9 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <span class="text-[8.5px] font-mono text-amber-900 bg-amber-200/60 px-1.5 py-0.2 rounded border border-amber-500/30">${isEn ? '1~100y Panorama' : '1~100 岁全景'}</span>
             </div>
+
+            <!-- Dynamic Energy Curve & Life Fortune Tide Vector SVG -->
+            ${generateImperialLifelongCurveSvg(tl, currentAge, currentCalYear, isEn)}
 
             <!-- Spotlight Card of Active Year -->
             <div class="bg-white/80 rounded p-1.5 border border-amber-900/15 space-y-1">
@@ -18985,7 +18960,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPortalFeaturesShowcase();
   initAdvSolarToggle();
   initRectificationModal();
-  initInPageRectification();
   initPhasePortraitControls();
   initPoliticalGameControls();
 
@@ -19214,9 +19188,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initRectificationModal = initRectificationModal;
   window.handleRunRectification = handleRunRectification;
   window.renderRectificationResults = renderRectificationResults;
-  window.initInPageRectification = initInPageRectification;
-  window.handleHomeRunRectification = handleHomeRunRectification;
-  window.renderHomeRectificationResults = renderHomeRectificationResults;
   window.renderPhasePortrait = renderPhasePortrait;
   window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
   window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;

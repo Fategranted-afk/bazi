@@ -17372,17 +17372,16 @@ assert run_check134.returncode == 0, f"Check 134 JSC test failed: stdout={run_ch
 
 print("✓ 134. 核心主盘帕累托全相扩充（大局破局全景七章+六亲深度侧写全息图谱+十二大典细分依据抽屉）与双语100%零中文残留全量验证通过！")
 
-# === 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Workbench ===
-print("\n=== 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Workbench ===")
+# === 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Removal ===
+print("\n=== 135. Validating Imperial Dossier Page 4 (Lifelong Transits, 64 Hexagrams Cycle, 10-Year Horizon Roster) & In-Page Rectification Removal ===")
 
 with open('index.html', 'r', encoding='utf-8') as f:
     index_html_135 = f.read()
 
-assert 'id="rectificationSection"' in index_html_135, "Missing #rectificationSection in index.html"
-assert 'btn-goto-rectification' in index_html_135, "Missing .btn-goto-rectification in index.html"
-assert 'id="homeRectificationWorkbench"' in index_html_135, "Missing #homeRectificationWorkbench in index.html"
-assert 'id="btnHomeRunRectification"' in index_html_135, "Missing #btnHomeRunRectification in index.html"
-assert 'id="homeRectificationResultsArea"' in index_html_135, "Missing #homeRectificationResultsArea in index.html"
+assert 'id="rectificationSection"' not in index_html_135, "#rectificationSection should be removed from index.html"
+assert 'btn-goto-rectification' not in index_html_135, ".btn-goto-rectification should be removed from index.html"
+assert 'id="homeRectificationWorkbench"' not in index_html_135, "#homeRectificationWorkbench should be removed from index.html"
+assert 'id="paretoCoreSection" class="hidden' in index_html_135, "#paretoCoreSection should be hidden from core chart in index.html"
 
 jsc_check135_cmd = [
     "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
@@ -17446,10 +17445,7 @@ jsc_check135_cmd = [
           for (var i = 0; i < hs.length; i++) hs[i]({ target: this, preventDefault: function(){} });
         },
         appendChild: function(c) { this._children.push(c); if (c && c.innerHTML) this.innerHTML += c.innerHTML; },
-        querySelectorAll: function(sel) {
-          if (sel === ".btn-goto-rectification") return [elementStore["btnGotoRectification"]];
-          return [];
-        },
+        querySelectorAll: function(sel) { return []; },
         querySelector: function() { return null; },
         getAttribute: function(a) { return this[a] || null; },
         setAttribute: function(a, v) { this[a] = v; },
@@ -17465,13 +17461,7 @@ jsc_check135_cmd = [
       "useSolarTime", "lateRatAsNextDay", "customLongitude", "timezoneSelect",
       "citySelect", "fsec-canons", "view-friction", "frictionContentContainer",
       "careerContentContainer", "currentCountrySelect", "currentCitySelect",
-      "rectificationSection", "homeRectificationWorkbench", "btnToggleHomeRectification",
-      "btnHomeLoadSampleEvents", "btnHomeRunRectification", "homeRectificationResultsArea",
-      "homeRectifyBirthDate", "homeRectifyGender", "homeRectifyApproxHour",
-      "homeRectifyEventYear1", "homeRectifyEventType1", "homeRectifyEventDesc1",
-      "homeRectifyEventYear2", "homeRectifyEventType2", "homeRectifyEventDesc2",
-      "homeRectifyEventYear3", "homeRectifyEventType3", "homeRectifyEventDesc3",
-      "paretoCoreSection", "btnGotoRectification"
+      "paretoCoreSection"
     ];
     for (var i = 1; i <= 9; i++) {
       domIds.push("imperialPage" + i);
@@ -17485,10 +17475,7 @@ jsc_check135_cmd = [
         if (!elementStore[id]) elementStore[id] = makeFakeEl(id);
         return elementStore[id];
       },
-      querySelectorAll: function(sel) {
-        if (sel === ".btn-goto-rectification") return [elementStore["btnGotoRectification"]];
-        return [];
-      },
+      querySelectorAll: function(sel) { return []; },
       querySelector: function() { return null; },
       createElement: function(tag) { return makeFakeEl(null, tag); },
       addEventListener: function(event, handler) {
@@ -17522,18 +17509,6 @@ jsc_check135_cmd = [
 
     load("js/app.js");
 
-    // 1. Verify In-Page Rectification Workbench
-    if (typeof window.initInPageRectification === 'function') {
-      window.initInPageRectification();
-    }
-    elementStore["btnGotoRectification"].trigger("click");
-    if (elementStore["homeRectificationWorkbench"].classList.contains("hidden")) {
-      throw new Error("Clicking .btn-goto-rectification should unhide #homeRectificationWorkbench");
-    }
-    if (!elementStore["rectificationSection"]._scrolled) {
-      throw new Error("Clicking .btn-goto-rectification should scroll to #rectificationSection");
-    }
-
     // 2. Render ZH Dossier & Verify Page 4
     window.renderImperialDossierPages(testChart, testLuck, "zh");
     var zhHtml = elementStore["imperialDossierContainer"].innerHTML;
@@ -17556,6 +17531,12 @@ jsc_check135_cmd = [
       "阳男 · 顺行 (+10年/步)",
       "百岁运势时空罗盘 (Lifelong Chrono-Navigator)",
       "1~100 岁全景",
+      "生命能量与活力曲线",
+      "财富走势与机遇潮汐",
+      "黄金破局期 (28~55岁)",
+      'viewBox="0 0 730 106"',
+      'stroke="#d97706"',
+      'stroke="#059669"',
       "生命能量与活力指数",
       "财富运势与机遇潮汐",
       "战略定调",
@@ -17603,6 +17584,12 @@ jsc_check135_cmd = [
       "5-Pillar Synergy · Decennial Luck, Tai Sui, Solar Terms & Daily Harmonics",
       "Yang Male · Forward (+10y/step)",
       "Lifelong Chrono-Navigator (1~100 Years)",
+      "Vitality & Life Energy Curve",
+      "Wealth & Life Fortune Tide",
+      "Prime Window (Ages 28-55)",
+      'viewBox="0 0 730 106"',
+      'stroke="#d97706"',
+      'stroke="#059669"',
       "Vitality & Energy Index:",
       "Wealth & Opportunity Tide:",
       "Strategic Focus:",

@@ -683,182 +683,6 @@
         </div>
       </section>
 
-      <!-- Event-Based Birth Time Rectification Workbench (以事校对 · 命盘准确度校准中枢) -->
-      <section id="rectificationSection" class="p-5 sm:p-6 rounded-2xl bg-card border border-amber-600/40 shadow-xl space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
-          <div class="flex items-center space-x-2.5">
-            <span class="text-2xl">🕰️</span>
-            <div>
-              <div class="flex items-center gap-2">
-                <h3 class="text-base sm:text-lg font-bold text-amber-200 font-serif-sc flex items-center gap-2">
-                  <span data-i18n="rectify_inpage_title">以事校对 · 命盘准确度校准中枢</span>
-                  <span class="chinese-seal text-[10px] py-0.2 border-amber-500 text-amber-300" data-i18n="seal_rectification">以事校对</span>
-                  <span class="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-amber-950/80 text-amber-300 border border-amber-600/40">BAYESIAN MAP</span>
-                </h3>
-              </div>
-              <p class="text-xs text-gray-400 mt-0.5" data-i18n="rectify_inpage_sub">
-                若您觉得核心主盘格局、六亲或大势推演与真实人生有出入，多因出生时辰交界模糊；可通过2~3件既往关键事件逆推真命时辰，一键采纳并重算主盘。
-              </p>
-            </div>
-          </div>
-          <div class="flex items-center gap-2">
-            <button id="btnToggleHomeRectification" type="button" class="px-3.5 py-1.5 rounded-xl border border-amber-500/50 bg-amber-950/60 hover:bg-amber-900/80 text-amber-200 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-95">
-              <span id="iconToggleHomeRectify">⚡</span>
-              <span id="textToggleHomeRectify" data-i18n="btn_toggle_rectify_workbench">展开校对工作台</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Rationale Callout Banner -->
-        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/30 via-black/40 to-amber-950/20 border border-amber-500/30 text-xs text-gray-300 leading-relaxed space-y-1">
-          <div class="font-bold text-amber-200 flex items-center gap-1.5">
-            <span>💡</span>
-            <span data-i18n="rectify_rationale_title">为什么主盘推演可能不准？（时辰临界与以事校对原理）</span>
-          </div>
-          <p class="text-gray-300" data-i18n="rectify_rationale_desc">
-            八字以两个小时为一个时辰。若出生时间处于时辰交界（如 12:50~13:10）、或医院手表时间未校正真太阳时、或长辈记忆偏差，时柱干支便可能错位，导致统帅格局、十神用神发生质变。以事校对通过您已经发生的真实人生大事件（如金榜题名、重大伤病、婚恋置业等），运用贝叶斯后验概率逆推最匹配的时辰，确保推演坚实可信。
-          </p>
-        </div>
-
-        <!-- In-Page Rectification Workbench Container -->
-        <div id="homeRectificationWorkbench" class="space-y-4 pt-1">
-          <!-- Step 1: Base Parameters (Auto-synced from Natal Input) -->
-          <div class="p-4 rounded-xl bg-black/40 border border-gray-800 space-y-3">
-            <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
-              <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                <span data-i18n="rectify_step1_title">第一步：基准出生信息（已自动同步）</span>
-              </span>
-              <span class="text-[10px] text-gray-500 font-mono" data-i18n="rectify_step1_sync_hint">Auto-Synced</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-              <div>
-                <label class="block text-gray-400 mb-1" data-i18n="lbl_birth_date">出生公历日期</label>
-                <input id="homeRectifyBirthDate" type="date" class="w-full bg-black/60 border border-gray-700 rounded-lg p-2 text-white font-mono focus:border-amber-500 focus:outline-none">
-              </div>
-              <div>
-                <label class="block text-gray-400 mb-1" data-i18n="lbl_gender">造化性别</label>
-                <select id="homeRectifyGender" class="w-full bg-black/60 border border-gray-700 rounded-lg p-2 text-white focus:border-amber-500 focus:outline-none">
-                  <option value="乾造" data-i18n="opt_qian">乾造 (男命)</option>
-                  <option value="坤造" data-i18n="opt_kun">坤造 (女命)</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-gray-400 mb-1" data-i18n="rectify_approx_hour">大致出生时辰范围</label>
-                <select id="homeRectifyApproxHour" class="w-full bg-black/60 border border-gray-700 rounded-lg p-2 text-white focus:border-amber-500 focus:outline-none font-mono">
-                  <option value="all" data-i18n="rectify_opt_all_hours">全天12时辰全域扫描 (All 12 Double-Hours)</option>
-                  <option value="morning" data-i18n="rectify_opt_morning">早晨 (卯辰巳 05:00-11:00)</option>
-                  <option value="afternoon" data-i18n="rectify_opt_afternoon">下午 (午未申 11:00-17:00)</option>
-                  <option value="evening" data-i18n="rectify_opt_evening">傍晚入夜 (酉戌亥 17:00-23:00)</option>
-                  <option value="night" data-i18n="rectify_opt_night">深夜子丑 (子丑寅 23:00-05:00)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Step 2: Historical Milestone Events Inputs -->
-          <div class="p-4 rounded-xl bg-black/40 border border-gray-800 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
-              <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                <span data-i18n="rectify_step2_title">第二步：录入既往确凿关键事件（建议2~3件）</span>
-              </span>
-              <button id="btnHomeLoadSampleEvents" type="button" class="text-[11px] px-2.5 py-1 rounded bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 transition cursor-pointer" data-i18n="btn_load_sample_events">
-                ⚡ 载入典型事件范例
-              </button>
-            </div>
-
-            <!-- Event Rows -->
-            <div class="space-y-2.5" id="homeRectifyEventsRowsContainer">
-              <!-- Row 1 -->
-              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 text-xs items-center bg-black/20 p-2 rounded-lg border border-gray-800/60">
-                <div class="sm:col-span-3">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_year">发生公历年份</label>
-                  <input id="homeRectifyEventYear1" type="number" min="1900" max="2100" placeholder="如 2018" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white font-mono focus:border-amber-500 focus:outline-none text-xs">
-                </div>
-                <div class="sm:col-span-4">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_type">事件性质类别</label>
-                  <select id="homeRectifyEventType1" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white focus:border-amber-500 focus:outline-none text-xs">
-                    <option value="exam" data-i18n="rectify_type_exam">高考金榜 / 重大考学跃升 (Academic / Exam)</option>
-                    <option value="illness" data-i18n="rectify_type_illness">重大手术 / 意外伤灾 (Surgery / Illness)</option>
-                    <option value="marriage" data-i18n="rectify_type_marriage">结婚成家 / 缔结契约 (Marriage / Union)</option>
-                    <option value="child" data-i18n="rectify_type_child">生儿育女 / 添丁添喜 (Childbirth)</option>
-                    <option value="career_jump" data-i18n="rectify_type_career_jump">职业跃迁 / 破格提拔 (Major Promotion)</option>
-                    <option value="wealth_loss" data-i18n="rectify_type_wealth_loss">破财被骗 / 投资折戟 (Wealth Loss / Debt)</option>
-                    <option value="relocation" data-i18n="rectify_type_relocation">跨国远徙 / 重大动迁 (Relocation / Move)</option>
-                  </select>
-                </div>
-                <div class="sm:col-span-5">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_desc">简要备注（选填）</label>
-                  <input id="homeRectifyEventDesc1" type="text" placeholder="如 考入985名校计算机系" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white focus:border-amber-500 focus:outline-none text-xs">
-                </div>
-              </div>
-
-              <!-- Row 2 -->
-              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 text-xs items-center bg-black/20 p-2 rounded-lg border border-gray-800/60">
-                <div class="sm:col-span-3">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_year">发生公历年份</label>
-                  <input id="homeRectifyEventYear2" type="number" min="1900" max="2100" placeholder="如 2021" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white font-mono focus:border-amber-500 focus:outline-none text-xs">
-                </div>
-                <div class="sm:col-span-4">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_type">事件性质类别</label>
-                  <select id="homeRectifyEventType2" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white focus:border-amber-500 focus:outline-none text-xs">
-                    <option value="career_jump" data-i18n="rectify_type_career_jump">职业跃迁 / 破格提拔 (Major Promotion)</option>
-                    <option value="exam" data-i18n="rectify_type_exam">高考金榜 / 重大考学跃升 (Academic / Exam)</option>
-                    <option value="illness" data-i18n="rectify_type_illness">重大手术 / 意外伤灾 (Surgery / Illness)</option>
-                    <option value="marriage" data-i18n="rectify_type_marriage">结婚成家 / 缔结契约 (Marriage / Union)</option>
-                    <option value="child" data-i18n="rectify_type_child">生儿育女 / 添丁添喜 (Childbirth)</option>
-                    <option value="wealth_loss" data-i18n="rectify_type_wealth_loss">破财被骗 / 投资折戟 (Wealth Loss / Debt)</option>
-                    <option value="relocation" data-i18n="rectify_type_relocation">跨国远徙 / 重大动迁 (Relocation / Move)</option>
-                  </select>
-                </div>
-                <div class="sm:col-span-5">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_desc">简要备注（选填）</label>
-                  <input id="homeRectifyEventDesc2" type="text" placeholder="如 跳槽至头部外企任总监" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white focus:border-amber-500 focus:outline-none text-xs">
-                </div>
-              </div>
-
-              <!-- Row 3 -->
-              <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 text-xs items-center bg-black/20 p-2 rounded-lg border border-gray-800/60">
-                <div class="sm:col-span-3">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_year">发生公历年份</label>
-                  <input id="homeRectifyEventYear3" type="number" min="1900" max="2100" placeholder="如 2023" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white font-mono focus:border-amber-500 focus:outline-none text-xs">
-                </div>
-                <div class="sm:col-span-4">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_type">事件性质类别</label>
-                  <select id="homeRectifyEventType3" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white focus:border-amber-500 focus:outline-none text-xs">
-                    <option value="marriage" data-i18n="rectify_type_marriage">结婚成家 / 缔结契约 (Marriage / Union)</option>
-                    <option value="exam" data-i18n="rectify_type_exam">高考金榜 / 重大考学跃升 (Academic / Exam)</option>
-                    <option value="illness" data-i18n="rectify_type_illness">重大手术 / 意外伤灾 (Surgery / Illness)</option>
-                    <option value="child" data-i18n="rectify_type_child">生儿育女 / 添丁添喜 (Childbirth)</option>
-                    <option value="career_jump" data-i18n="rectify_type_career_jump">职业跃迁 / 破格提拔 (Major Promotion)</option>
-                    <option value="wealth_loss" data-i18n="rectify_type_wealth_loss">破财被骗 / 投资折戟 (Wealth Loss / Debt)</option>
-                    <option value="relocation" data-i18n="rectify_type_relocation">跨国远徙 / 重大动迁 (Relocation / Move)</option>
-                  </select>
-                </div>
-                <div class="sm:col-span-5">
-                  <label class="block text-[10px] text-gray-400 mb-0.5" data-i18n="rectify_event_desc">简要备注（选填）</label>
-                  <input id="homeRectifyEventDesc3" type="text" placeholder="如 结婚领证并置业" class="w-full bg-black/60 border border-gray-700 rounded p-1.5 text-white focus:border-amber-500 focus:outline-none text-xs">
-                </div>
-              </div>
-            </div>
-
-            <!-- Action Button -->
-            <div class="pt-2 flex justify-end">
-              <button id="btnHomeRunRectification" type="button" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs shadow-lg transition flex items-center gap-2 cursor-pointer active:scale-95 border border-amber-400/40">
-                <span>⚡</span>
-                <span data-i18n="btn_run_rectification">启动贝叶斯最大后验概率逆推 (Compute MAP Rectification)</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Step 3: Rectification Results & 1-Click Adopt Area -->
-          <div id="homeRectificationResultsArea" class="hidden space-y-3 pt-1">
-            <!-- Dynamically populated via JS -->
-          </div>
-        </div>
-      </section>
-
       <!-- Four Auspicious Deities Matrix (命造四大吉神全相鉴照) -->
       <section id="fourAuspiciousDeitiesSection" class="bg-card p-5 sm:p-6 rounded-2xl border border-amber-600/40 shadow-xl space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-gray-800">
@@ -1060,7 +884,7 @@
       </div>
 
       <!-- Pareto 80/20 Core Synthesis Section (👑 全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱) -->
-      <div id="paretoCoreSection" class="space-y-4 pt-3 border-t border-gray-800">
+      <div id="paretoCoreSection" class="hidden space-y-4 pt-3 border-t border-gray-800">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h3 class="text-base sm:text-lg font-bold text-amber-300 font-serif-sc flex items-center gap-2">
@@ -1074,26 +898,6 @@
           <div class="flex items-center gap-1.5 text-[10px] font-mono text-amber-400/90 bg-amber-950/30 px-2.5 py-1 rounded-lg border border-amber-800/40">
             <span data-i18n="pareto_eight_canons_tag">《滴天髓》·《穷通》·《真诠》·《三命》·《渊海》·《神峰》·《玉照》·《李虚中》·《兰台》·《精纪》·《千里》·《徐乐吾》</span>
           </div>
-        </div>
-
-        <!-- Accuracy Checkpoint Callout Banner (觉得推演不符？以事校对引导) -->
-        <div class="p-3 sm:p-3.5 rounded-xl bg-gradient-to-r from-amber-950/40 via-black/50 to-amber-950/30 border border-amber-500/40 flex flex-wrap items-center justify-between gap-3 shadow-md">
-          <div class="flex items-center gap-2.5">
-            <span class="text-xl">💡</span>
-            <div>
-              <div class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-2">
-                <span data-i18n="rectify_check_prompt">推演结果与您的实际经历存在出入？</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30 font-bold" data-i18n="rectify_check_tag">ACCURACY CALIBRATION</span>
-              </div>
-              <p class="text-[11px] text-gray-300 mt-0.5" data-i18n="rectify_check_sub">
-                出生时辰微小误差（父母记忆偏差或真太阳时交界）可能导致时柱格局偏差。建议使用“以事校对”输入既往关键事件，逆推真命时辰以大幅提升命盘精准度。
-              </p>
-            </div>
-          </div>
-          <button type="button" class="btn-goto-rectification px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5 cursor-pointer active:scale-95 border border-amber-400/40">
-            <span>🕰️</span>
-            <span data-i18n="btn_goto_rectification">立即进行以事校对</span>
-          </button>
         </div>
 
         <div id="paretoCoreContainer" class="space-y-4">
