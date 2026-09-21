@@ -8,14 +8,14 @@
   --text-muted: #9ca3af;
   --border-color: #374151;
   --accent-red: #e11d48;
-  --accent-gold: #d4af37;
+  --accent-gold: #f97316;
   --accent-jade: #10b981;
   --seal-red: #c23531;
 
   /* Five Elements colors */
   --color-wood: #10b981;
   --color-fire: #ef4444;
-  --color-earth: #f59e0b;
+  --color-earth: #f97316;
   --color-metal: #fbbf24;
   --color-water: #3b82f6;
 }
@@ -72,7 +72,7 @@ html.light header h1,
 html.light header .text-amber-100,
 body.light-theme header h1,
 body.light-theme header .text-amber-100 {
-  color: #78350f !important;
+  color: #1f2937 !important;
 }
 
 [data-theme="light"] header .text-gray-400,
@@ -815,7 +815,7 @@ body.light-theme #progressStep4,
 body.light-theme #progressStep5 {
   background-color: #ffffff !important;
   border-color: #cbbeaa !important;
-  color: #78350f !important;
+  color: #1f2937 !important;
 }
 
 [data-theme="light"] input[type="range"]::-webkit-slider-runnable-track,
@@ -859,7 +859,7 @@ body.light-theme button.bg-gray-900,
 body.light-theme a.bg-gray-800,
 body.light-theme a.bg-gray-900 {
   background-color: #f5f0e4 !important;
-  color: #78350f !important;
+  color: #1f2937 !important;
   border-color: #cbbeaa !important;
   box-shadow: 0 1px 3px rgba(100, 80, 50, 0.08) !important;
 }
@@ -891,9 +891,9 @@ body.light-theme button.bg-gray-800:hover,
 body.light-theme button.bg-gray-900:hover,
 body.light-theme a.bg-gray-800:hover,
 body.light-theme a.bg-gray-900:hover {
-  background-color: #eae3d3 !important;
-  color: #92400e !important;
-  border-color: #b45309 !important;
+  background-color: #fff7ed !important;
+  color: #ea580c !important;
+  border-color: #f97316 !important;
 }
 
 [data-theme="light"] #btnJumpToLuckFromGeo,
@@ -929,29 +929,35 @@ body.light-theme #advisorChatStream .bg-\[\#181b28\] {
 [data-theme="light"] .advisor-followup-pill,
 html.light .advisor-followup-pill,
 body.light-theme .advisor-followup-pill {
-  background-color: #f5f0e4 !important;
-  border-color: #cbbeaa !important;
-  color: #78350f !important;
+  background-color: #ffffff !important;
+  border: 1px solid #fed7aa !important;
+  color: #c2410c !important;
+  box-shadow: 0 1px 3px rgba(249, 115, 22, 0.08) !important;
 }
 [data-theme="light"] .advisor-followup-pill:hover,
 html.light .advisor-followup-pill:hover,
 body.light-theme .advisor-followup-pill:hover {
-  background-color: #eae3d3 !important;
-  border-color: #b45309 !important;
-  color: #92400e !important;
+  background-color: #fff7ed !important;
+  border-color: #fb923c !important;
+  color: #ea580c !important;
+  box-shadow: 0 2px 6px rgba(249, 115, 22, 0.2) !important;
 }
 [data-theme="light"] .advisor-action-btn,
 html.light .advisor-action-btn,
 body.light-theme .advisor-action-btn {
-  background-color: #fef3c7 !important;
-  border-color: #d97706 !important;
-  color: #92400e !important;
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+  border: 1px solid #fed7aa !important;
+  color: #ea580c !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 4px rgba(249, 115, 22, 0.12) !important;
 }
 [data-theme="light"] .advisor-action-btn:hover,
 html.light .advisor-action-btn:hover,
 body.light-theme .advisor-action-btn:hover {
-  background-color: #fde68a !important;
-  color: #78350f !important;
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%) !important;
+  border-color: #f97316 !important;
+  color: #ffffff !important;
+  box-shadow: 0 3px 10px rgba(249, 115, 22, 0.35) !important;
 }
 [data-theme="light"] .advisor-diag-node,
 html.light .advisor-diag-node,
@@ -1220,17 +1226,20 @@ body.light-theme .text-amber-100,
 body.light-theme .text-amber-200,
 body.light-theme [class*="text-amber-50"],
 body.light-theme [class*="text-amber-100"],
-body.light-theme [class*="text-amber-200"],
+body.light-theme [class*="text-amber-200"] {
+  color: #c2410c !important;
+}
+
 [data-theme="light"] .pattern-synthesis-text,
 html.light .pattern-synthesis-text,
 body.light-theme .pattern-synthesis-text,
 [data-theme="light"] .pattern-vernacular-text,
 html.light .pattern-vernacular-text,
 body.light-theme .pattern-vernacular-text {
-  color: #78350f !important;
+  color: #1f2937 !important;
 }
 
-/* 5. Dark Golden Bronze / Warm Ochre (Amber 300-500) */
+/* 5. Luminous Warm Terracotta Orange (Amber 300-500) */
 [data-theme="light"] .text-amber-300,
 [data-theme="light"] .text-amber-400,
 [data-theme="light"] .text-amber-500,
@@ -1249,7 +1258,7 @@ body.light-theme .text-amber-500,
 body.light-theme [class*="text-amber-300"],
 body.light-theme [class*="text-amber-400"],
 body.light-theme [class*="text-amber-500"] {
-  color: #92400e !important;
+  color: #c2410c !important;
 }
 
 /* 6. Dark Golden Bronze (Yellow 50-200) */
@@ -1844,15 +1853,17 @@ body.light-theme [class*="text-fuchsia-500"] {
 [data-theme="light"] .btn-ask-deity-advisor,
 html.light .btn-ask-deity-advisor,
 body.light-theme .btn-ask-deity-advisor {
-  background: linear-gradient(to right, #fef3c7, #fde68a) !important;
-  border-color: #f59e0b !important;
-  color: #78350f !important;
+  background: linear-gradient(135deg, #fffbeb, #fef3c7) !important;
+  border-color: #fed7aa !important;
+  color: #ea580c !important;
+  font-weight: 600 !important;
 }
 [data-theme="light"] .btn-ask-deity-advisor:hover,
 html.light .btn-ask-deity-advisor:hover,
 body.light-theme .btn-ask-deity-advisor:hover {
-  background: linear-gradient(to right, #fde68a, #fcd34d) !important;
-  color: #78350f !important;
+  background: linear-gradient(135deg, #fb923c, #f97316) !important;
+  border-color: #f97316 !important;
+  color: #ffffff !important;
 }
 
 /* Gradient Headings in Light Mode */
@@ -1862,7 +1873,7 @@ html.light h1.bg-gradient-to-r,
 html.light .bg-gradient-to-r.from-amber-100,
 body.light-theme h1.bg-gradient-to-r,
 body.light-theme .bg-gradient-to-r.from-amber-100 {
-  background-image: linear-gradient(to right, #78350f, #92400e, #831843) !important;
+  background-image: linear-gradient(to right, #ea580c, #f97316, #e11d48) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
@@ -1897,8 +1908,8 @@ html.light input:focus,
 html.light select:focus,
 body.light-theme input:focus,
 body.light-theme select:focus {
-  border-color: #92400e !important;
-  box-shadow: 0 0 0 2px rgba(146, 64, 14, 0.15) !important;
+  border-color: #f97316 !important;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
 }
 
 /* Navigation Tabs & Primary Nav */
@@ -2095,9 +2106,9 @@ body.light-theme [class*="bg-amber-950"],
 body.light-theme [class*="bg-amber-900"],
 body.light-theme [class*="bg-yellow-950"],
 body.light-theme [class*="bg-yellow-900"] {
-  background-color: rgba(217, 119, 6, 0.15) !important;
-  color: #78350f !important;
-  border-color: rgba(180, 83, 9, 0.35) !important;
+  background-color: rgba(249, 115, 22, 0.12) !important;
+  color: #c2410c !important;
+  border-color: rgba(249, 115, 22, 0.35) !important;
 }
 
 [data-theme="light"] [class*="bg-emerald-950"],
@@ -2377,7 +2388,7 @@ body {
   width: 5.5mm;
   height: 5.5mm;
   border-radius: 50%;
-  border: 1.8px solid #92400e;
+  border: 1.8px solid #f97316;
   background: #fbf6ec;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.35), 0 0 0 1px rgba(212, 175, 55, 0.45);
 }
@@ -2510,7 +2521,7 @@ body {
   background: linear-gradient(180deg, rgba(255, 245, 247, 0.9) 0%, rgba(253, 238, 241, 0.82) 100%);
 }
 .imperial-card-gold {
-  border-left: 3.5px solid #b45309 !important;
+  border-left: 3.5px solid #f97316 !important;
   background: linear-gradient(180deg, rgba(255, 251, 240, 0.9) 0%, rgba(254, 244, 222, 0.82) 100%);
 }
 
@@ -2891,9 +2902,9 @@ body {
   height: 22px;
   border-radius: 50%;
   background: #fef08a;
-  border: 3px solid #b45309;
+  border: 3px solid #f97316;
   cursor: pointer;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.8);
   transition: transform 0.1s ease;
 }
 .chrono-slider::-webkit-slider-thumb:hover {
@@ -2932,9 +2943,9 @@ body {
   background: rgba(26, 29, 40, 0.9);
 }
 .archetype-preset-card.active {
-  border-color: #d97706;
-  background: linear-gradient(135deg, rgba(217, 119, 6, 0.15), rgba(15, 23, 42, 0.8));
-  box-shadow: 0 0 0 1px #d97706, 0 8px 20px -4px rgba(217, 119, 6, 0.35);
+  border-color: #f97316;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(15, 23, 42, 0.8));
+  box-shadow: 0 0 0 1px #f97316, 0 8px 20px -4px rgba(249, 115, 22, 0.35);
 }
 
 /* Live Preview Mini Pillar Cards */
@@ -2968,14 +2979,16 @@ body {
 
 /* Grand CTA Calculate Button */
 .cta-calc-btn {
-  background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #be123c 100%);
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 45%, #ea580c 100%) !important;
+  border: 1px solid #fdba74 !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 30px -5px rgba(180, 83, 9, 0.5), 0 0 20px rgba(217, 119, 6, 0.2);
+  box-shadow: 0 10px 30px -5px rgba(249, 115, 22, 0.45), 0 0 20px rgba(251, 146, 60, 0.25) !important;
 }
 .cta-calc-btn:hover {
+  background: linear-gradient(135deg, #fdba74 0%, #fb923c 45%, #f97316 100%) !important;
   transform: translateY(-2px) scale(1.01);
-  box-shadow: 0 15px 35px -5px rgba(180, 83, 9, 0.7), 0 0 25px rgba(245, 158, 11, 0.4);
-  filter: brightness(1.08);
+  box-shadow: 0 15px 35px -5px rgba(249, 115, 22, 0.6), 0 0 25px rgba(249, 115, 22, 0.4) !important;
+  filter: brightness(1.05);
 }
 .cta-calc-btn:active {
   transform: translateY(0) scale(0.99);
@@ -3101,15 +3114,15 @@ body.light-theme .archetype-preset-card {
 html.light .archetype-preset-card:hover,
 body.light-theme .archetype-preset-card:hover {
   background: var(--bg-card-hover) !important;
-  border-color: #d97706 !important;
+  border-color: #f97316 !important;
 }
 
 [data-theme="light"] .archetype-preset-card.active,
 html.light .archetype-preset-card.active,
 body.light-theme .archetype-preset-card.active {
-  background: linear-gradient(135deg, rgba(217, 119, 6, 0.16), #fcf7ed) !important;
-  border-color: #d97706 !important;
-  box-shadow: 0 0 0 1px #d97706, 0 4px 12px rgba(217, 119, 6, 0.12) !important;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.16), #fff7ed) !important;
+  border-color: #f97316 !important;
+  box-shadow: 0 0 0 1px #f97316, 0 4px 12px rgba(249, 115, 22, 0.16) !important;
 }
 
 [data-theme="light"] .mini-pillar-card,
@@ -3124,7 +3137,7 @@ body.light-theme .mini-pillar-card {
 html.light .mini-pillar-card:hover,
 body.light-theme .mini-pillar-card:hover {
   background: #ffffff !important;
-  border-color: #d97706 !important;
+  border-color: #f97316 !important;
 }
 
 [data-theme="light"] .feature-showcase-card,
@@ -3139,8 +3152,8 @@ body.light-theme .feature-showcase-card {
 html.light .feature-showcase-card:hover,
 body.light-theme .feature-showcase-card:hover {
   background: var(--bg-card-hover) !important;
-  border-color: #d97706 !important;
-  box-shadow: 0 6px 18px -4px rgba(180, 83, 9, 0.12) !important;
+  border-color: #f97316 !important;
+  box-shadow: 0 6px 18px -4px rgba(249, 115, 22, 0.18) !important;
 }
 
 [data-theme="light"] #portalCardAdvisor,
@@ -3189,23 +3202,6 @@ body.light-theme .history-fullscreen-mode {
   display: none !important;
 }
 
-[data-theme="light"] #btnPortalTopNav,
-html.light #btnPortalTopNav,
-body.light-theme #btnPortalTopNav {
-  background: rgba(254, 243, 199, 0.92) !important;
-  border-color: #d97706 !important;
-  color: #92400e !important;
-  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.2) !important;
-}
-
-[data-theme="light"] #btnPortalTopNav:hover,
-html.light #btnPortalTopNav:hover,
-body.light-theme #btnPortalTopNav:hover {
-  background: rgba(253, 230, 138, 0.98) !important;
-  border-color: #b45309 !important;
-  color: #78350f !important;
-}
-
 /* Scrollbar isolation for header action row on compact viewports */
 .no-scrollbar {
   -ms-overflow-style: none;
@@ -3213,6 +3209,116 @@ body.light-theme #btnPortalTopNav:hover {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ==========================================================================
+   Universal Radiant Luminous Orange Standard (全域明艳橘色标准规范)
+   ========================================================================== */
+
+/* 1. Floating Advisor Trigger Button */
+#btnOpenAdvisorFloating {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 60%, #ea580c 100%) !important;
+  border: 1.5px solid #fdba74 !important;
+  box-shadow: 0 10px 28px rgba(249, 115, 22, 0.45), 0 0 16px rgba(251, 146, 60, 0.3) !important;
+  color: #ffffff !important;
+}
+#btnOpenAdvisorFloating:hover {
+  background: linear-gradient(135deg, #fdba74 0%, #fb923c 60%, #f97316 100%) !important;
+  box-shadow: 0 14px 35px rgba(249, 115, 22, 0.6), 0 0 24px rgba(251, 146, 60, 0.45) !important;
+}
+
+/* 2. Core Action, Inquiry & Export Buttons */
+#advisorSendBtn,
+#btnRunRectification,
+#dossierPrintBtn,
+#synastryDossierPrintBtn,
+#btnSynastryDownloadPDF,
+#ichingInstantBtn,
+#chronoPlayBtn,
+#btnDeitiesAskAdvisor,
+#dbSearchBtn,
+#smCustomQueryBtn,
+#luckTodayBtn,
+#ichingCyclePlayBtn,
+#dossierLangZh,
+#synastryDossierLangZh {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 100%) !important;
+  border-color: #f97316 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.28) !important;
+}
+
+#advisorSendBtn:hover,
+#btnRunRectification:hover,
+#dossierPrintBtn:hover,
+#synastryDossierPrintBtn:hover,
+#btnSynastryDownloadPDF:hover,
+#ichingInstantBtn:hover,
+#chronoPlayBtn:hover,
+#btnDeitiesAskAdvisor:hover,
+#dbSearchBtn:hover,
+#smCustomQueryBtn:hover,
+#luckTodayBtn:hover,
+#ichingCyclePlayBtn:hover {
+  background: linear-gradient(135deg, #fdba74 0%, #fb923c 100%) !important;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.42) !important;
+}
+
+/* 3. Divination Ancient Bronze Coins */
+#coinGraphic1,
+#coinGraphic2,
+#coinGraphic3 {
+  background: linear-gradient(135deg, #fb923c 0%, #f97316 50%, #ea580c 100%) !important;
+  border: 2px solid #fef08a !important;
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.35) !important;
+  color: #ffffff !important;
+}
+
+/* 4. I Ching Milestone Navigation & Tabs in Light Mode */
+[data-theme="light"] .iching-milestone-btn,
+html.light .iching-milestone-btn,
+body.light-theme .iching-milestone-btn {
+  background-color: #ffffff !important;
+  border-color: #fed7aa !important;
+  color: #374151 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="light"] .iching-milestone-btn:hover,
+html.light .iching-milestone-btn:hover,
+body.light-theme .iching-milestone-btn:hover {
+  background-color: #fff7ed !important;
+  border-color: #fb923c !important;
+  color: #ea580c !important;
+}
+
+[data-theme="light"] #ichingTabTimeline.bg-amber-500\/20,
+html.light #ichingTabTimeline.bg-amber-500\/20,
+body.light-theme #ichingTabTimeline.bg-amber-500\/20 {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7) !important;
+  border-color: #fed7aa !important;
+  color: #c2410c !important;
+}
+
+/* 5. 100-Year Hexagram Roster Cards in Light Mode */
+[data-theme="light"] .iching-roster-card,
+html.light .iching-roster-card,
+body.light-theme .iching-roster-card {
+  background-color: #ffffff !important;
+  border-color: #e5dfd5 !important;
+  color: #1f2937 !important;
+}
+[data-theme="light"] .iching-roster-card:hover,
+html.light .iching-roster-card:hover,
+body.light-theme .iching-roster-card:hover {
+  background-color: #fff7ed !important;
+  border-color: #fdba74 !important;
+}
+[data-theme="light"] .iching-roster-card.border-amber-500,
+html.light .iching-roster-card.border-amber-500,
+body.light-theme .iching-roster-card.border-amber-500 {
+  background: linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%) !important;
+  border-color: #f97316 !important;
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.22) !important;
 }
 
 

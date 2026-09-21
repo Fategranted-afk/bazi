@@ -16834,24 +16834,28 @@ print("\n=== 132. Validating Light Theme Refinements, Nav Emojis, & Tianji 64 He
 with open('index.html', 'r', encoding='utf-8') as f:
     html_content = f.read()
 
-# 1. Verify fourPillarsHexSection and ichingCycleSection are inside view-luck and NOT view-iching
+# 1. Verify fourPillarsHexSection and ichingCycleSection are inside view-luck directly below chronoNavigatorSection
 view_luck_pos = html_content.find('id="view-luck"')
 view_luck_end = html_content.find('<!-- End of view-luck -->')
 view_iching_pos = html_content.find('id="view-iching"')
 view_iching_end = html_content.find('<!-- End of view-iching -->')
-fourteen_char_pos = html_content.find('id="fourteenCharEnergySection"')
+chrono_nav_pos = html_content.find('id="chronoNavigatorSection"')
+chrono_card_pos = html_content.find('id="chronoYearCard"')
 four_pillars_hex_pos = html_content.find('id="fourPillarsHexSection"')
 iching_cycle_pos = html_content.find('id="ichingCycleSection"')
+fourteen_char_pos = html_content.find('id="fourteenCharEnergySection"')
 
 assert view_luck_pos != -1, "view-luck not found in index.html"
 assert view_luck_end != -1, "<!-- End of view-luck --> not found in index.html"
 assert view_iching_pos != -1, "view-iching not found in index.html"
 assert four_pillars_hex_pos != -1, "fourPillarsHexSection not found in index.html"
 assert iching_cycle_pos != -1, "ichingCycleSection not found in index.html"
+assert chrono_nav_pos != -1, "chronoNavigatorSection not found in index.html"
 
 assert view_luck_pos < four_pillars_hex_pos < view_luck_end, "fourPillarsHexSection must be located within view-luck"
 assert view_luck_pos < iching_cycle_pos < view_luck_end, "ichingCycleSection must be located within view-luck"
-assert fourteen_char_pos < four_pillars_hex_pos, "fourPillarsHexSection must be placed after fourteenCharEnergySection in view-luck"
+assert chrono_card_pos < iching_cycle_pos < four_pillars_hex_pos, "ichingCycleSection must be placed directly below chronoNavigatorSection / chronoYearCard"
+assert four_pillars_hex_pos < fourteen_char_pos, "fourPillarsHexSection must precede fourteenCharEnergySection"
 
 # Verify view-iching does NOT contain fourPillarsHexSection or ichingCycleSection
 if view_iching_end != -1:
@@ -16875,7 +16879,7 @@ for nav_str in nav_matches:
     first_char = nav_str.strip()[:2]
     assert not emoji_pattern.search(first_char), f"Duplicate emoji detected in nav_view key: '{nav_str}'"
 
-# 3. Verify CSS styling refinements
+# 3. Verify CSS styling refinements & universal radiant luminous orange standard
 with open('css/style.css', 'r', encoding='utf-8') as f:
     css_content = f.read()
 
@@ -16889,6 +16893,12 @@ assert 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)' in css_content, "Miss
 assert '[data-theme="light"] #rectificationHeroBanner' in css_content, "Missing light theme rectificationHeroBanner override"
 assert '[data-theme="light"] #btnRibbonOpenAdvisor' in css_content, "Missing light theme btnRibbonOpenAdvisor override"
 assert '[data-theme="light"] #btnReturnToPortal' in css_content, "Missing light theme btnReturnToPortal override"
+assert '#btnOpenAdvisorFloating' in css_content, "Missing radiant orange for #btnOpenAdvisorFloating"
+assert '.cta-calc-btn' in css_content, "Missing radiant orange for .cta-calc-btn"
+assert '#advisorSendBtn' in css_content, "Missing radiant orange for #advisorSendBtn"
+# Confirm murky dark ambers are completely eradicated from style.css
+for murky_hex in ['#78350f', '#92400e', '#b45309', '#d97706']:
+    assert murky_hex not in css_content, f"Murky dark amber {murky_hex} must be completely eliminated from style.css"
 
 # 4. JSC Dynamic verification: switchPrimaryView('view-luck') triggers hexagram rendering and 0 residual Chinese in EN
 jsc_check132_cmd = [
@@ -17063,13 +17073,58 @@ jsc_check132_cmd = [
     if (enHexLeaks && enHexLeaks.length > 0) {
       throw new Error("Residual Chinese found in EN Four Pillars Hexagrams (" + enHexLeaks.length + " chars): " + enHexLeaks.slice(0, 30).join(""));
     }
+    // Test English mode rendering for 64 Hexagrams Cycle: Zero residual Chinese
+    window.renderHexagramCycle(testChart, 35);
+    var enCycleHtml = elementStore["ichingCycleContainer"].innerHTML;
+    var enCycleLeaks = enCycleHtml.match(/[\u4e00-\u9fa5]/g);
+    if (enCycleLeaks && enCycleLeaks.length > 0) {
+      throw new Error("Residual Chinese found in EN Hexagram Cycle (" + enCycleLeaks.length + " chars): " + enCycleLeaks.slice(0, 30).join(""));
+    }
     """
 ]
 run_check132 = subprocess.run(jsc_check132_cmd, capture_output=True, text=True)
 assert run_check132.returncode == 0, f"Check 132 JSC test failed: stdout={run_check132.stdout} stderr={run_check132.stderr}"
 print("✓ 132. 浅昼配色优雅美化、导航栏零双重图标、周易天纪六十四卦1:1迁入岁运推演与双语100%零中文残留全量验证通过！")
 
-print("\n🎉 ALL 132 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 133. Validate Dedicated Placement of Hexagram Cycle Directly Below Lifelong Chrono-Navigator & Radiant Orange Standard
+print("\n=== 133. Validating Hexagram Cycle Directly Below Lifelong Chrono-Navigator & Radiant Orange Standard ===")
+
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_133 = f.read()
+
+# Assert precise topological ordering inside view-luck
+c_nav_pos = html_133.find('id="chronoNavigatorSection"')
+c_year_card_pos = html_133.find('id="chronoYearCard"')
+iching_pos = html_133.find('id="ichingCycleSection"')
+four_p_pos = html_133.find('id="fourPillarsHexSection"')
+lifelong_syn_pos = html_133.find('id="lifelongSynthesisSection"')
+
+assert c_nav_pos != -1 and c_year_card_pos != -1, "Chrono navigator elements must exist"
+assert iching_pos != -1, "ichingCycleSection must exist"
+assert four_p_pos != -1, "fourPillarsHexSection must exist"
+assert lifelong_syn_pos != -1, "lifelongSynthesisSection must exist"
+
+assert c_year_card_pos < iching_pos, "ichingCycleSection must be placed directly beneath chronoYearCard (流年战略锦囊与行持准则)"
+assert iching_pos < four_p_pos, "fourPillarsHexSection must immediately follow ichingCycleSection"
+assert four_p_pos < lifelong_syn_pos, "lifelongSynthesisSection must follow fourPillarsHexSection"
+
+# Verify style.css luminous orange standards
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_133 = f.read()
+
+# Assert glowing orange standard on floating advisor and grand cta
+assert 'linear-gradient(135deg, #fb923c 0%, #f97316 45%, #ea580c 100%)' in css_133 or 'linear-gradient(135deg, #fb923c 0%, #f97316 60%, #ea580c 100%)' in css_133, "Missing bright multi-stop radiant orange gradient"
+assert '#btnOpenAdvisorFloating' in css_133, "Missing #btnOpenAdvisorFloating in style.css"
+assert '.cta-calc-btn' in css_133, "Missing .cta-calc-btn in style.css"
+assert '#advisorSendBtn' in css_133, "Missing #advisorSendBtn in style.css"
+
+# Strict check that all 4 muddy brown/dark amber hexes are 100% eliminated from style.css
+for dark_hex in ['#78350f', '#92400e', '#b45309', '#d97706']:
+    assert dark_hex not in css_133, f"style.css contains disallowed murky color: {dark_hex}"
+
+print("✓ 133. 周易六十四卦时空周期推演图精准置于百岁时空罗盘战略锦囊下方、全域橘色明艳升维标准及双语100%零中文残留全量验证通过！")
+
+print("\n🎉 ALL 133 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
