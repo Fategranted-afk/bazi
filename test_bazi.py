@@ -18548,6 +18548,8 @@ jsc_check138_cmd = [
     if (!ichingZh.includes("流年值年卦与阴阳律")) throw new Error("renderMasterProfileIChing ZH missing 流年值年卦与阴阳律");
     if (!ichingZh.includes("当年最适合做什么")) throw new Error("renderMasterProfileIChing ZH missing 当年最适合做什么");
     if (!ichingZh.includes("天纪秘解与玉上有光")) throw new Error("renderMasterProfileIChing ZH missing 天纪秘解与玉上有光");
+    if (!ichingZh.includes("profileIChingRosterScrollTrack")) throw new Error("renderMasterProfileIChing ZH missing profileIChingRosterScrollTrack");
+    if (!ichingZh.includes("百岁岁运六十四卦行持全景总谱")) throw new Error("renderMasterProfileIChing ZH missing 百岁岁运六十四卦行持全景总谱");
 
     // Verify underlying I-Ching engine calculation workflow remains intact
     var ichingCycle = IChingEngine.calculateLifelongCycle(baziObj);
@@ -18588,6 +18590,8 @@ jsc_check138_cmd = [
     if (!ichingEn.includes("Annual Transit & Law")) throw new Error("renderMasterProfileIChing EN missing Annual Transit & Law");
     if (!ichingEn.includes("Optimal Yearly Strategy")) throw new Error("renderMasterProfileIChing EN missing Optimal Yearly Strategy");
     if (!ichingEn.includes("Tian Ji Master Directive & Riddle")) throw new Error("renderMasterProfileIChing EN missing Tian Ji Master Directive & Riddle");
+    if (!ichingEn.includes("profileIChingRosterScrollTrack")) throw new Error("renderMasterProfileIChing EN missing profileIChingRosterScrollTrack");
+    if (!ichingEn.includes("100-Year Lifelong Hexagrams & Optimal Action Roster")) throw new Error("renderMasterProfileIChing EN missing 100-Year Lifelong Hexagrams & Optimal Action Roster");
 
     var ichingEnLeaks = ichingEn.match(/[\u4e00-\u9fa5]/g);
     if (ichingEnLeaks && ichingEnLeaks.length > 0) {

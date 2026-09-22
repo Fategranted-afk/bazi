@@ -8190,11 +8190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const elDynamicScore = document.getElementById('ichingTelemetryDynamicScore');
         if (elDynamicScore) elDynamicScore.textContent = `${item.score}% ${isEn ? 'Adjusted' : '校准能级'}`;
 
-        const elShenShaBlock = document.getElementById('ichingTelemetryShenShaBlock');
-        if (elShenShaBlock) {
-          elShenShaBlock.innerHTML = renderShenShaTelemetryContent(item, isEn);
-        }
-
         // Real-time synchronization of active selection state and auto-scroll on Roster Cards
         const rosterCards = container.querySelectorAll('.iching-roster-card');
         if (rosterCards && rosterCards.length > 0) {
@@ -8349,14 +8344,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
         ` : ''}
-
-        <!-- 5. Auspicious Deities & Malefic Stars Shen Sha Block -->
-        <div id="ichingTelemetryShenShaBlock" class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
-          ${renderShenShaTelemetryContent(item, isEn)}
-        </div>
       </div>
 
-      <!-- 7. 100-Year Hexagram Trajectory Roster -->
+      <!-- 6. 100-Year Hexagram Trajectory Roster -->
       <div class="p-3.5 rounded-2xl bg-black/40 border border-gray-800 space-y-2.5 shadow">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
           <div class="flex items-center space-x-2 text-xs">
@@ -20342,6 +20332,70 @@ document.addEventListener('DOMContentLoaded', () => {
       <div id="profileIChingTelemetryGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
         ${getMasterProfileIChingTelemetryHtml(points[curIdx], isEn)}
       </div>
+
+      <!-- 100-Year Hexagram Trajectory Roster Slide -->
+      <div class="p-3.5 rounded-2xl bg-black/40 border border-gray-800 space-y-2.5 shadow">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+          <div class="flex items-center space-x-2 text-xs">
+            <span class="text-amber-400 font-bold">📜</span>
+            <span class="font-bold text-gray-200 font-serif-sc">${isEn ? '100-Year Lifelong Hexagrams & Optimal Action Roster' : '百岁岁运六十四卦行持全景总谱'}</span>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? '(Click any card to inspect year)' : '（点击任意年份卡片可瞬时联动调阅）'}</span>
+          </div>
+          <div class="flex items-center gap-1 text-[10px] text-gray-400 font-mono">
+            <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">${isEn ? '👑 Deities' : '👑 吉神'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-rose-950/60 text-rose-300 border border-rose-700/50">${isEn ? '⚠️ Hazards' : '⚠️ 凶煞'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">${isEn ? 'Romance' : '桃花'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${isEn ? 'Career' : '事业'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">${isEn ? 'Study' : '读书'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">${isEn ? 'Stability' : '守成'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-rose-900/40 text-rose-300 border border-rose-700/40">${isEn ? 'Risk' : '防险'}</span>
+          </div>
+        </div>
+
+        <!-- Horizontal Scrollable Year Hexagram Cards -->
+        <div id="profileIChingRosterScrollTrack" class="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+          ${points.map(pt => {
+            const isSelected = (pt.age === points[curIdx].age);
+            const ptHex = pt.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
+            const ptOpt = pt.optimalAction || {};
+            const ptAus = pt.auspiciousDeities || [];
+            const ptMal = pt.maleficDeities || [];
+            return `
+              <div class="profile-iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left ${isSelected ? 'border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg' : 'border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60'}" data-age="${pt.age}">
+                <div class="flex items-center justify-between text-[10.5px] font-mono text-gray-400 border-b border-gray-800/60 pb-1">
+                  <span class="font-bold ${isSelected ? 'text-amber-300' : 'text-gray-300'}">${pt.age}${isEn ? 'y' : '岁'} · ${pt.year}</span>
+                  <span class="text-[9px] px-1.5 py-0.2 rounded font-mono ${pt.isMutated ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'}">${pt.isMutated ? (isEn ? 'Mut' : '变') : (isEn ? 'Base' : '本')}</span>
+                </div>
+                <div class="pt-1.5 font-serif-sc font-bold text-xs truncate ${isSelected ? 'text-amber-200' : 'text-gray-200'}">
+                  ${isEn ? `Hexagram ${ptHex.number} · ${ptHex.nameEn}` : `第${ptHex.number}卦 · ${ptHex.nameZh}`}
+                </div>
+                ${ptAus.length > 0 ? `
+                  <div class="flex flex-wrap gap-1 pt-1">
+                    ${ptAus.map(d => `<span class="px-1 py-0.2 rounded text-[8px] font-mono font-bold border ${d.badgeClass}">${isEn ? d.tagEn : d.tagZh}</span>`).join('')}
+                  </div>
+                ` : ''}
+                ${ptMal.length > 0 ? `
+                  <div class="flex flex-wrap gap-1 pt-1">
+                    ${ptMal.map(d => `<span class="px-1 py-0.2 rounded text-[8px] font-mono font-bold border ${d.badgeClass}">${isEn ? d.tagEn : d.tagZh}</span>`).join('')}
+                  </div>
+                ` : ''}
+                <div class="pt-1">
+                  <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-bold font-mono ${ptOpt.badgeClass || 'bg-amber-500/20 text-amber-300'}">
+                    ${isEn ? (ptOpt.shortBadgeEn || '[Focus]') : (ptOpt.shortBadgeZh || '【当年最宜】')}
+                  </span>
+                </div>
+                <p class="text-[9.5px] text-gray-400 line-clamp-1 pt-1 font-sans">
+                  ${isEn ? (ptOpt.actionEn || '') : (ptOpt.actionZh || '')}
+                </p>
+                <div class="mt-1.5 pt-1 border-t border-gray-800/50 text-[9px] font-mono flex items-center gap-1 ${pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) ? 'text-rose-400' : 'text-emerald-400'}">
+                  <span class="w-1.5 h-1.5 rounded-full ${pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) ? 'bg-rose-500' : 'bg-emerald-500'}"></span>
+                  <span class="truncate">${isEn ? (pt.score < 50 || (ptOpt.shortBadgeEn && ptOpt.shortBadgeEn.includes('Risk')) ? 'Risk Alert: Defense & Capital' : 'Safeguard: Compounding Growth') : (pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) ? '防险：守正固本，杜绝盲进' : '护身：蓄势深耕，守中得正')}</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
     `;
 
     // Bind Milestone buttons
@@ -20351,6 +20405,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (a) jumpToAge(a);
       });
     });
+
+    // Bind Roster card click events
+    if (container.querySelectorAll && typeof container.querySelectorAll === 'function') {
+      container.querySelectorAll('.profile-iching-roster-card').forEach(c => {
+        if (c.addEventListener) {
+          c.addEventListener('click', () => {
+            const a = (c.getAttribute && typeof c.getAttribute === 'function') ? parseInt(c.getAttribute('data-age'), 10) : 0;
+            if (a) jumpToAge(a);
+          });
+        }
+      });
+    }
+
+    // Auto-scroll initially selected roster card into view
+    const initialProfileCard = (container.querySelector && typeof container.querySelector === 'function')
+      ? container.querySelector(`.profile-iching-roster-card[data-age="${points[curIdx].age}"]`)
+      : null;
+    if (initialProfileCard && typeof initialProfileCard.scrollIntoView === 'function') {
+      try {
+        initialProfileCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } catch (e) {
+        initialProfileCard.scrollIntoView(false);
+      }
+    }
 
     // Bind SVG Chart click & node click
     const svgChart = document.getElementById('profileIChingSvgChart');
@@ -20459,11 +20537,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
       ` : ''}
-
-      <!-- 6. Auspicious Deities & Malefic Stars Shen Sha Block -->
-      <div class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
-        ${renderShenShaTelemetryContent(item, isEn)}
-      </div>
     `;
   }
 
@@ -20503,6 +20576,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('profileIChingTelemetryGrid');
     if (grid) {
       grid.innerHTML = getMasterProfileIChingTelemetryHtml(item, isEn);
+    }
+
+    // Update Roster Cards active selection and auto-scroll
+    const pContainer = document.getElementById('profileIChingSection');
+    if (pContainer && typeof pContainer.querySelectorAll === 'function') {
+      const pCards = pContainer.querySelectorAll('.profile-iching-roster-card');
+      if (pCards && pCards.length > 0) {
+        pCards.forEach(card => {
+          if (!card || !card.getAttribute || typeof card.getAttribute !== 'function') return;
+          const cardAge = parseInt(card.getAttribute('data-age'), 10);
+          const isSelected = (cardAge === age);
+          if (isSelected) {
+            card.className = 'profile-iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg';
+            const titleEl = (card.querySelector && typeof card.querySelector === 'function') ? card.querySelector('.font-serif-sc') : null;
+            if (titleEl && titleEl.classList) {
+              titleEl.classList.remove('text-gray-200');
+              titleEl.classList.add('text-amber-200');
+            }
+            const ageSpan = (card.querySelector && typeof card.querySelector === 'function') ? card.querySelector('.font-mono > span:first-child') : null;
+            if (ageSpan && ageSpan.classList) {
+              ageSpan.classList.remove('text-gray-300');
+              ageSpan.classList.add('text-amber-300');
+            }
+            if (card.scrollIntoView && typeof card.scrollIntoView === 'function') {
+              try {
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+              } catch (e) {
+                card.scrollIntoView(false);
+              }
+            }
+          } else {
+            card.className = 'profile-iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60';
+            const titleEl = (card.querySelector && typeof card.querySelector === 'function') ? card.querySelector('.font-serif-sc') : null;
+            if (titleEl && titleEl.classList) {
+              titleEl.classList.remove('text-amber-200');
+              titleEl.classList.add('text-gray-200');
+            }
+            const ageSpan = (card.querySelector && typeof card.querySelector === 'function') ? card.querySelector('.font-mono > span:first-child') : null;
+            if (ageSpan && ageSpan.classList) {
+              ageSpan.classList.remove('text-amber-300');
+              ageSpan.classList.add('text-gray-300');
+            }
+          }
+        });
+      }
     }
   }
 
