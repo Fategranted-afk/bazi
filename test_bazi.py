@@ -18782,6 +18782,34 @@ jsc_check139_cmd = [
     if (copyEnLeaks && copyEnLeaks.length > 0) {
       throw new Error("Residual Chinese in EN copy text: " + copyEnLeaks.join(""));
     }
+
+    // 6. Test action banner formatting with long string (no double colons and length within bounds)
+    var testCardZh = SocialCardEngine.extractCardData(bazi, luck, "zh");
+    testCardZh.annualAction = "沉潜蓄势：宜闭门深造、阅读研析、修身养性，守好当下基本盘，不争一时短长，以学问夯实未来十年地基。";
+    var actionTexts = [];
+    var testCanvas = {
+      width: 750, height: 1180,
+      getContext: function() {
+        return {
+          save: function(){}, restore: function(){},
+          clearRect: function(){}, fillRect: function(){}, strokeRect: function(){},
+          beginPath: function(){}, closePath: function(){},
+          moveTo: function(){}, lineTo: function(){}, arc: function(){}, arcTo: function(){},
+          stroke: function(){}, fill: function(){}, clip: function(){},
+          textAlign: "start", textBaseline: "alphabetic",
+          fillText: function(t, x, y){ actionTexts.push(t); },
+          measureText: function(t){ return { width: (t || '').length * 12 }; },
+          createLinearGradient: function(){ return { addColorStop: function(){} }; },
+          createRadialGradient: function(){ return { addColorStop: function(){} }; }
+        };
+      }
+    };
+    SocialCardEngine.renderToCanvas(testCanvas, testCardZh, luck, "zh");
+    var bannerLine = actionTexts.find(function(t) { return t.includes("年度行持"); });
+    if (!bannerLine) throw new Error("Missing action banner text in canvas");
+    if (bannerLine.includes("年度行持：沉潜蓄势：")) throw new Error("Action banner has ugly double colons");
+    if (!bannerLine.includes("年度行持 · 沉潜蓄势：")) throw new Error("Action banner should use refined typography");
+    if (bannerLine.length * 12 > 564) throw new Error("Action banner line overflows max width: " + (bannerLine.length * 12));
     """
 ]
 

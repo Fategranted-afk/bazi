@@ -2199,10 +2199,10 @@ class SocialCardEngine {
     this.drawWrappedText(ctx, data.hexDirective, W / 2, dais3Y + 78, 570, 20, 2, 'center');
 
     // Action banner - Vibrant Emerald-Gold Gradient with High-Contrast White Text
-    const bannerW = 590;
+    const bannerW = 600;
     const bannerH = 46;
-    const bannerX = W / 2 - bannerW / 2;
-    const bannerY = dais3Y + 134;
+    const bannerX = Math.round((W - bannerW) / 2);
+    const bannerY = dais3Y + 132;
 
     let bannerGrad = null;
     if (ctx.createLinearGradient) {
@@ -2227,19 +2227,60 @@ class SocialCardEngine {
     SocialCardEngine.drawRoundedRect(ctx, bannerX, bannerY, bannerW, bannerH, 10);
     if (ctx.stroke) ctx.stroke();
 
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 12.5px sans-serif';
-    const actionPrefix = data.isEn ? 'Direct Action: ' : '年度行持：';
-    const rawActionText = data.annualAction || (data.isEn ? 'Build undeniable craft & let works speak.' : '以硬核作品立世，顺应天理，游刃有余。');
-    let displayAction = rawActionText;
-    if (data.isEn && displayAction.length > 76) {
-      displayAction = displayAction.slice(0, 73) + '...';
-    } else if (!data.isEn && displayAction.length > 46) {
-      displayAction = displayAction.slice(0, 44) + '...';
+    // Clean action text format (eliminates awkward double colons and unifies styling)
+    const rawActionText = (data.annualAction || (data.isEn ? 'Build undeniable craft & let works speak.' : '以硬核作品立世，顺应天理，游刃有余。')).trim();
+    let actionText = '';
+    if (data.isEn) {
+      const mEn = rawActionText.match(/^([^:]{3,24}):(.*)/);
+      if (mEn) {
+        actionText = `Direct Action · ${mEn[1].trim()}: ${mEn[2].trim()}`;
+      } else {
+        actionText = `Direct Action: ${rawActionText}`;
+      }
+    } else {
+      const mZh = rawActionText.match(/^([^\s：:]{2,8})[：:](.*)/);
+      if (mZh) {
+        actionText = `年度行持 · ${mZh[1].trim()}：${mZh[2].trim()}`;
+      } else {
+        actionText = `年度行持：${rawActionText}`;
+      }
     }
-    const actionText = `${actionPrefix}${displayAction}`;
+
+    const maxTextW = bannerW - 36;
+    const fontStr = 'bold 11.5px sans-serif';
+    ctx.font = fontStr;
+
+    const measureBannerText = (t) => {
+      if (ctx.measureText) {
+        try { return ctx.measureText(t).width; } catch (e) {}
+      }
+      let w = 0;
+      for (let i = 0; i < t.length; i++) {
+        w += /[\u4e00-\u9fa5]/.test(t[i]) ? 12 : 6.8;
+      }
+      return w;
+    };
+
+    let displayText = actionText;
+    if (measureBannerText(displayText) > maxTextW) {
+      while (displayText.length > 6 && measureBannerText(displayText + '...') > maxTextW) {
+        displayText = displayText.slice(0, -1);
+      }
+      displayText = displayText.replace(/[，,、\s；;。.]+$/, '') + '...';
+    }
+
+    // Isolated clipped rendering prevents any horizontal bleeding
+    if (ctx.save) ctx.save();
+    SocialCardEngine.drawRoundedRect(ctx, bannerX, bannerY, bannerW, bannerH, 10);
+    if (ctx.clip) ctx.clip();
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = fontStr;
     ctx.textAlign = 'center';
-    ctx.fillText(actionText, W / 2, bannerY + 28);
+    ctx.textBaseline = 'middle';
+    ctx.fillText(displayText, W / 2, bannerY + bannerH / 2);
+    ctx.textBaseline = 'alphabetic';
+    if (ctx.restore) ctx.restore();
 
     // 6. Footer Brand & Link
     ctx.fillStyle = '#475569';
