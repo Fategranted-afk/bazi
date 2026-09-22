@@ -10972,7 +10972,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     viewNavBtns.forEach(btn => {
       const v = btn.getAttribute('data-view');
-      if (v === targetViewId || (targetViewId === 'view-iching' && v === 'view-friction') || (targetViewId === 'view-simulator' && v === 'view-career')) {
+      if (v === targetViewId) {
         btn.classList.add('active', 'bg-gradient-to-r', 'from-amber-500', 'to-orange-500', 'text-white', 'border-amber-400/50', 'shadow-lg');
         btn.classList.remove('text-gray-400', 'hover:text-gray-200', 'border-transparent');
       } else {
@@ -11040,6 +11040,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
         setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
+      }
+    }
+
+    // If switching to strategy view, refresh grand strategy
+    if (targetViewId === 'view-strategy' && currentBaziResult) {
+      if (typeof renderStrategyView === 'function' && typeof currentPortraitData !== 'undefined') {
+        renderStrategyView(currentPortraitData, currentBaziResult, currentLang === 'en');
       }
     }
 
