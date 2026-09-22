@@ -3,7 +3,7 @@
  * Grounded in 520+ Years from Eastern Han, Three Kingdoms, Jin, Northern & Southern Dynasties, Sui, Late Sui Collapse to Early Tang Zhenguan:
  * Eastern Han & Three Kingdoms, Western Jin, Sixteen Kingdoms, Eastern Jin, Southern Dynasties, Northern Wei, Northern Zhou/Qi, Sui, Sui Collapse, and Sui-Tang Zhenguan.
  * Compares Native's BaZi (Day Master, 100-pt Score, Patterns, Ten Gods, Archetypes)
- * against 449 Historical Figures to calculate multi-dimensional correlation:
+ * against 549 Historical Figures (449 Chinese Classical + 100 Modern Western Titans) to calculate multi-dimensional correlation:
  * [Personality Resonance + Historical Deeds Reflection + Strengths Leverage + Weakness Circuit-Breakers].
  * Generates natural wide score distributions and bespoke evaluations with 100% bilingual parity.
  */
@@ -495,7 +495,8 @@ class HistoricalEngine {
       'northern_zhou_qi': { zh: '东西二魏与周齐对峙', en: 'Eastern/Western Wei, Northern Qi & Zhou', figures: [] },
       'sui': { zh: '乱世终局与大隋统一', en: 'Reunification by Great Sui', figures: [] },
       'sui_collapse': { zh: '隋末崩塌与群雄割据', en: 'Late Sui Collapse & Warlords', figures: [] },
-      'sui_tang_zhenguan': { zh: '隋唐鼎革与贞观盛世', en: 'Sui-Tang & Zhenguan Era', figures: [] }
+      'sui_tang_zhenguan': { zh: '隋唐鼎革与贞观盛世', en: 'Sui-Tang & Zhenguan Era', figures: [] },
+      'western_modern': { zh: '近代西方与全球秩序 (1800-1945)', en: 'Modern West & Global Order (1800-1945)', figures: [] }
     };
 
     scoredFigures.forEach(fig => {

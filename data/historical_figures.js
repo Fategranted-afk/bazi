@@ -1,7 +1,7 @@
 /**
- * 历史人物参考 449位历史名人数据库 (东汉末年至唐初贞观：公元184年 - 公元705年)
- * Historical Figures Mirror & Reference Database (184 AD - 705 AD)
- * 涵盖：东汉末年群雄逐鹿、三国鼎立、西晋风云、五胡十六国、东晋门阀风度、南朝宋齐梁陈、北魏拓土汉化、周齐对峙、大隋一统、隋末崩塌与群雄割据、隋唐鼎革与贞观盛世
+ * 历史人物参考 549位历史名人数据库 (449位中华古典先贤 + 100位近代西方风云人物 1800-1945)
+ * Historical Figures Mirror & Reference Database (549 Historical Titans)
+ * 涵盖：东汉三国、西晋、五胡十六国、东晋、南朝、北魏、周齐、大隋统一、隋末崩塌、大唐贞观，以及近代西方（1800-1945）拿破仑战争、工业革命与两次世界大战风云
  */
 
 const HISTORICAL_FIGURES = [
@@ -22004,6 +22004,4906 @@ const HISTORICAL_FIGURES = [
       "Superb defense without offensive weapons, lacking military leverage to settle outcomes",
       "Overly reliant on legal statutes against actors who recognize no law"
     ]
+  },
+  {
+      "id": "napoleon_bonaparte",
+      "nameZh": "拿破仑·波拿巴",
+      "nameEn": "Napoleon Bonaparte",
+      "dynastyZh": "法兰西第一帝国",
+      "dynastyEn": "First French Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拿破仑时代 (1800-1815)",
+      "eraNameEn": "Modern West · Napoleonic Era (1800-1815)",
+      "positionZh": "法兰西第一帝国皇帝 · 欧陆战略统帅与法典奠基者",
+      "positionEn": "Emperor of the French · Continental Military Strategist & Civil Code Architect",
+      "personalityZh": "雄才大略、极具魄力与危机感知、雷厉风行、统帅力强、崇尚效率与绝对秩序",
+      "personalityEn": "Grand strategic visionary, extraordinarily bold, decisive in crisis turnaround, commanding, and relentless in operational efficiency",
+      "deedsZh": "雾月政变执掌法国，颁布《法国民法典》重塑现代欧陆法系；通过奥斯特里茨等战役横扫欧洲大陆封建联军，建立大陆封锁体系，深刻重构近代世界版图与政治军事范式。",
+      "deedsEn": "Seized power in 18 Brumaire coup and promulgated the Napoleonic Code, reshaping modern civil law. Triumphed at Austerlitz to shatter European coalitions and radically reformed modern military doctrine.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "偏财",
+          "偏印"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "以宏大格局重组散乱资源，在危机中果断以雷霆手段打破僵局；长于建立标准化制度范式，善以集中优势兵力实现单点爆破。",
+      "strengthAdviceEn": "Consolidate fragmented resources with visionary courage, shatter deadlocks decisively during crises, and leverage concentrated force to achieve decisive tactical breakthroughs.",
+      "weaknessAdviceZh": "严防顺境中好大喜功与过度扩张战线！滑铁卢与远征莫斯科警示后人切戒轻视地理后勤极限，切忌受骄狂与专断意志操弄。",
+      "weaknessAdviceEn": "Guard strictly against triumphalist imperial overreach and extended supply lines. The Russian campaign and Waterloo warn against ignoring logistical limits and unchecked hubris.",
+      "historicalQuoteZh": "黑格尔评其为「骑在马背上的世界灵魂」；其自云：「我的真正光荣并非打了四十次胜仗，滑铁卢抹去了这一切记忆，但有一件东西不会被人忘却，那就是我的民法典。」",
+      "historicalQuoteEn": "Hegel praised him as the world-soul on horseback; he declared: My true glory is not forty victorious battles, but my Civil Code which will live forever.",
+      "auxiliaryStrengthsZh": [
+          "长于在大变局中雷厉风行整合权力与资源",
+          "开创性建立法典与制度范式锁定长期胜势"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Executes piercing consolidation of power and resources in crises",
+          "Institutes foundational legal frameworks and institutional paradigms"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "连胜之后易生傲慢轻敌之念，必须设立后勤底线",
+          "严防刚愎自用推翻既定盟约与多边均势机制"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Hubris after continuous triumphs requires rigid logistical circuit-breakers",
+          "Avoid authoritarian disregard for multilateral diplomacy and balance of power"
+      ]
+  },
+  {
+      "id": "duke_of_wellington",
+      "nameZh": "威灵顿公爵",
+      "nameEn": "Arthur Wellesley, Duke of Wellington",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拿破仑战争 (1803-1815)",
+      "eraNameEn": "Modern West · Napoleonic Wars (1803-1815)",
+      "positionZh": "陆军元帅 · 滑铁卢决胜统帅 · 英国首相",
+      "positionEn": "Field Marshal · Victor of Waterloo · Prime Minister of the United Kingdom",
+      "personalityZh": "沉着坚毅、防守反击大师、严整周密、纪律严明、冷静务实",
+      "personalityEn": "Steadfast, master of defensive-offensive counterattacks, procedurally meticulous, disciplined, and immovably pragmatic",
+      "deedsZh": "在半岛战争中构筑托雷斯韦德拉防线拖垮法军主力；在滑铁卢战役中冷静坚守霍戈蒙特与拉艾圣特，协同布吕歇尔彻底终结拿破仑时代；后出任英国首相主持通过天主教解放法案。",
+      "deedsEn": "Engineered the Lines of Torres Vedras during the Peninsular War to exhaust French forces. Orchestrated the steadfast defense at Waterloo alongside Blucher to defeat Napoleon, and later served as Prime Minister passing Catholic Emancipation.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于以铁律构筑纵深防御阵地，抗压韧性极强；沉毅等待对手犯错，在战局转折点施展致命反击锁定胜局。",
+      "strengthAdviceEn": "Excel at constructing deep defensive bastions with disciplined resolve, patiently absorbing pressure until the adversary errs before unleashing a decisive counter-strike.",
+      "weaknessAdviceZh": "切忌因战术谨慎而陷入保守迟滞；在政治决策与公众共识推进中，需多听取民间柔性诉求，避免生硬对抗激化矛盾。",
+      "weaknessAdviceEn": "Guard against tactical rigidity sliding into excessive conservatism; cultivate flexibility in stakeholder relations to avoid unnecessary political friction.",
+      "historicalQuoteZh": "西方军界赞其：「他在逆境中如同坚不可摧的花岗岩，从不冒险，但从不失手。」",
+      "historicalQuoteEn": "Military historians acclaimed him: He stood like an immovable granite rock in adversity, never taking reckless risks and never missing a decisive opening.",
+      "auxiliaryStrengthsZh": [
+          "善筑纵深防线以静制动，抗击极端外部压力",
+          "恪守严明纪律与长效原则，胜局掌控力极高"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Excels at resilient defensive positioning to weather severe external turbulence",
+          "Upholds unwavering discipline and operational rigor for ultimate control"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于注重既定阵地易错失早期主动出击窗口",
+          "行事过于刚硬可能导致盟友或团队沟通内耗"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Excessive reliance on static defense may overlook early offensive opportunities",
+          "Rigid demeanor risks interpersonal strain and diplomatic friction"
+      ]
+  },
+  {
+      "id": "charles_maurice_de_talleyrand",
+      "nameZh": "塔列朗",
+      "nameEn": "Charles-Maurice de Talleyrand",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拿破仑战争至复辟时期 (1789-1838)",
+      "eraNameEn": "Modern West · Revolutionary & Restoration Eras (1789-1838)",
+      "positionZh": "外交大臣 · 多边外交博弈大师 · 六朝元老",
+      "positionEn": "Minister of Foreign Affairs · Master of Multilateral Diplomacy · Elder Statesman",
+      "personalityZh": "极其敏锐、圆融机变、深谙人性、善借大势、洞察利益平衡",
+      "personalityEn": "Extremely astute, adaptable, master of human psychology, macro momentum manipulator, and peerless balance-of-power negotiator",
+      "deedsZh": "历经波旁王朝、法国大革命、拿破仑帝国、波旁复辟与七月王朝数代政权更迭；在维也纳会议上代表战败的法国利用战胜国矛盾纵横捭阖，成功恢复法国大国地位并维护领土完整。",
+      "deedsEn": "Navigated the Bourbon monarchy, French Revolution, Napoleonic Empire, and Restoration. At the Congress of Vienna, he masterfully exploited rivalries among victors to preserve French borders and restore France to great power status.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "偏财",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "偏财格",
+      "strengthAdviceZh": "长于在多方势力的夹缝中借力打力，以极高情商与利益再平衡化解死局；善于捕捉大势转向，提前为组织布局生存后路。",
+      "strengthAdviceEn": "Master of navigating complex multipolar factions by realigning mutual interests, possessing the foresight to secure exit strategies ahead of macro shifts.",
+      "weaknessAdviceZh": "切防过度投机与个人声誉道德透支！不可因过分追求实用利害而丧失组织长期基石信任，需常怀敬畏之心。",
+      "weaknessAdviceEn": "Guard against unbridled opportunism that compromises institutional credibility and long-term reputation. Maintain ethical boundaries to preserve core trust.",
+      "historicalQuoteZh": "拿破仑曾对其爱恨交织，叹其为「用丝袜包裹的粪便」，但又不得不承认：「塔列朗在谈判桌上为法国赢得的，比我用百万军队赢来的还要多。」",
+      "historicalQuoteEn": "Napoleon famously lamented his shifting allegiances yet conceded: Talleyrand won more for France at the negotiating table than my armies won on the battlefield.",
+      "auxiliaryStrengthsZh": [
+          "极具多边利益平衡能力，绝境中能巧借矛盾脱困",
+          "大势嗅觉敏锐，能在时代剧变前夕抢先落子布局"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Superb multilateral negotiation acumen that unlocks solutions from deadlocks",
+          "Visionary environmental scanning that positions for impending macro shifts"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "频繁权谋转向可能导致长线信用资产严重受损",
+          "过分算计眼前利益易被同僚与盟友防备疏远"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Frequent realignments risk depleting foundational moral credibility",
+          "Excessive Machiavellian calculation triggers wariness among strategic partners"
+      ]
+  },
+  {
+      "id": "klemens_von_metternich",
+      "nameZh": "梅特涅",
+      "nameEn": "Klemens von Metternich",
+      "dynastyZh": "奥地利帝国",
+      "dynastyEn": "Austrian Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 维也纳体系时期 (1809-1848)",
+      "eraNameEn": "Modern West · Metternich System Era (1809-1848)",
+      "positionZh": "奥地利帝国首相 · 维也纳均势体系总设计师",
+      "positionEn": "Chancellor of the Austrian Empire · Architect of the Concert of Europe",
+      "personalityZh": "持重周密、讲求均势、崇尚秩序、冷静理智、善于操盘国际多边机制",
+      "personalityEn": "Prudent, procedurally meticulous, devoted to equilibrium, rationally composed, and brilliant orchestrator of institutional balance",
+      "deedsZh": "主持维也纳会议并缔造欧洲协调机制（Concert of Europe），维持了欧洲大陆长达近百年的大国均势与相对和平；以外交平衡弥补奥地利军事与经济实力相对衰落的劣势。",
+      "deedsEn": "Orchestrated the Congress of Vienna and established the Concert of Europe, maintaining continental balance of power and peace for decades while shielding a vulnerable Austrian Empire.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于设计严密的制度与平衡机制，以程序化协同稳定全局；能以有限筹码通过多边联动构筑战略护城河。",
+      "strengthAdviceEn": "Excels at designing robust multilateral governance systems that maintain equilibrium, leveraging limited tangible resources through diplomatic orchestration.",
+      "weaknessAdviceZh": "切忌固步自封与逆历史浪潮而动！面对底层新兴技术、思想与民生诉求的爆发，必须主动拥抱演进，不可一味压制封堵。",
+      "weaknessAdviceEn": "Avoid dogmatic resistance to emerging historical tides and societal transformations. Adapt institutions flexibly rather than suppressing organic progress.",
+      "historicalQuoteZh": "基辛格在其名作《恢复的世界》中高度评价其：「梅特涅以外交天才在欧洲废墟上重建了均势与合法性，创造了罕见的和平世纪。」",
+      "historicalQuoteEn": "Henry Kissinger praised him in A World Restored: Metternich rebuilt European equilibrium and legitimacy from ruins, forging a rare century of stability.",
+      "auxiliaryStrengthsZh": [
+          "精通制度设计与均势制衡，能以小博大统驭多方",
+          "行事稳健周全，善于构筑长效规则防范系统性危机"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Master of institutional architecture and equilibrium that maximizes leverage",
+          "Procedurally rigorous stewardship that protects systems against volatility"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于迷信传统旧秩序易忽视底层新生生产力的冲击",
+          "防守有余开拓不足，变革压力过大时容易被动应对"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Attachment to established order risks ignoring transformative grassroots forces",
+          "Strong defensive posture may falter during sudden structural disruptions"
+      ]
+  },
+  {
+      "id": "carl_von_clausewitz",
+      "nameZh": "卡尔·冯·克劳塞维茨",
+      "nameEn": "Carl von Clausewitz",
+      "dynastyZh": "普鲁士",
+      "dynastyEn": "Kingdom of Prussia",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拿破仑战争与军事理论奠基 (1806-1831)",
+      "eraNameEn": "Modern West · Napoleonic Wars & Strategic Theory (1806-1831)",
+      "positionZh": "普鲁士少将 · 军事理论宗师 · 《战争论》作者",
+      "positionEn": "Major General · Master Military Theorist · Author of On War",
+      "personalityZh": "洞察深邃、逻辑严密、长于哲学抽象与战争本质反思、求真务实",
+      "personalityEn": "Profoundly analytical, logically rigorous, adept at philosophical abstraction, and devoted to dissecting fundamental realities of conflict",
+      "deedsZh": "亲历拿破仑战争全过程，深入研究法奥普俄诸大战役；写就传世经典《战争论》，提出「战争是政治通过另一种手段的延续」、「战争迷雾」与「战略重心」等划时代哲学概念。",
+      "deedsEn": "Participated in the Napoleonic Wars and synthesized decades of warfare into the immortal treatise On War, formulating immortal doctrines on friction, centers of gravity, and war as the continuation of politics.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "伤官",
+          "七杀"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "具有穿透表面迷雾直击事物底层本质的哲学洞察力；善于将繁杂经验总结为系统化理论框架，为组织行动提供战略指南针。",
+      "strengthAdviceEn": "Possesses acute theoretical insight that pierces superficial chaos to uncover underlying dynamics, codifying practical experience into strategic principles.",
+      "weaknessAdviceZh": "需注意理论建构与现场执行的动态适配；谨防陷入纯粹的形而上学推演，必须随时以实战一线的数据反馈校准认知。",
+      "weaknessAdviceEn": "Ensure conceptual frameworks remain grounded in operational reality. Avoid overly abstract theoretical deliberation by continuously validating hypotheses against direct field data.",
+      "historicalQuoteZh": "世界战略界共识：「在克劳塞维茨之后，不懂得政治目的与战略重心的人，不配指挥现代军队与组织。」",
+      "historicalQuoteEn": "Global strategic consensus: Since Clausewitz, no leader who fails to grasp political objectives and centers of gravity can effectively command modern enterprises.",
+      "auxiliaryStrengthsZh": [
+          "穿透战略迷雾洞察事物本质规律，构筑高维认知壁垒",
+          "善于将实操经验抽象沉淀为具有指导意义的长效方法论"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Pierces operational fog to reveal systemic laws and establish cognitive moats",
+          "Distills complex empirical findings into enduring strategic methodologies"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "思辨过度可能拖慢面临瞬时危机时的应激执行速度",
+          "言语严谨深奥可能增加跨部门基层落地的沟通门槛"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Excessive contemplation may delay rapid instinctive tactical execution",
+          "High-level theoretical phrasing risks communication overhead with front-line staff"
+      ]
+  },
+  {
+      "id": "horatio_nelson",
+      "nameZh": "霍雷肖·纳尔逊",
+      "nameEn": "Horatio Nelson",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拿破仑战争海战决胜 (1798-1805)",
+      "eraNameEn": "Modern West · Napoleonic Naval Campaigns (1798-1805)",
+      "positionZh": "皇家海军中将 · 特拉法尔加海战统帅 · 民族英雄",
+      "positionEn": "Vice Admiral · Hero of Trafalgar · Master Naval Tactician",
+      "personalityZh": "勇烈绝伦、敢于打破陈规、身先士卒、战术机敏、极富感染力",
+      "personalityEn": "Incomparably courageous, unconventional tactician, leads from the front, agile, and inspiringly charismatic",
+      "deedsZh": "在阿布基尔海战、哥本哈根战役与特拉法尔加海战中连创奇迹；在特拉法尔加打破传统单纵队战术，采用双纵队中央突破战法全歼法西联合舰队，奠定大英帝国百年海权霸业。",
+      "deedsEn": "Achieved legendary victories at the Nile, Copenhagen, and Trafalgar. Defied conventional linear naval tactics by deploying parallel assault columns at Trafalgar, annihilating the Franco-Spanish fleet to secure British maritime dominance.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "伤官",
+          "比肩"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于在生死关头颠覆行业成规，以大胆创新的非对称战术一击制胜；身先士卒具备极强的人格魅力与团队向心力。",
+      "strengthAdviceEn": "Excels at disrupting established conventions in high-stakes environments, executing audacious asymmetrical maneuvers while commanding fierce loyalty by personal example.",
+      "weaknessAdviceZh": "切戒置自身安全与系统冗余于不顾的孤注一掷！个人英雄主义虽可破阵，但核心统帅一旦陨落，团队后续承接风险将急剧攀升。",
+      "weaknessAdviceEn": "Avoid reckless personal exposure that compromises organizational succession. Strategic audacity must be balanced with survival safeguards.",
+      "historicalQuoteZh": "特拉法尔加旗舰上升起的旗语成为传世信条：「英格兰期盼人人都恪尽职守。」",
+      "historicalQuoteEn": "His immortal signal at Trafalgar remains an eternal leadership beacon: England expects that every man will do his duty.",
+      "auxiliaryStrengthsZh": [
+          "敢于突破教条开创不对称打击打法，战术爆发力极强",
+          "以极高人格感召力凝聚军心士气，身先士卒破关斩将"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Breaks rigid dogmas to pioneer asymmetric tactics with explosive decisiveness",
+          "Unifies team morale through compelling personal courage and charismatic example"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "行事风格冒险激进，容易在顺境中忽略自身防护盲区",
+          "过于依赖统帅个人直觉，可能给标准化传承带来挑战"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "High risk appetite may lead to neglecting vital defense and succession protocols",
+          "Over-reliance on personal genius challenges systematic organizational handover"
+      ]
+  },
+  {
+      "id": "gebhard_von_bluecher",
+      "nameZh": "布吕歇尔",
+      "nameEn": "Gebhard von Blücher",
+      "dynastyZh": "普鲁士",
+      "dynastyEn": "Kingdom of Prussia",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 反法同盟与滑铁卢战役 (1806-1815)",
+      "eraNameEn": "Modern West · Coalition Wars & Waterloo (1806-1815)",
+      "positionZh": "普鲁士陆军元帅 · 瓦尔施塔特亲王 · 坚韧名将",
+      "positionEn": "Field Marshal · Prince of Wahlstatt · Relentless Vanguard Commander",
+      "personalityZh": "刚烈凶悍、百折不挠、忠诚笃实、雷厉风行、被称为「前进将军」",
+      "personalityEn": "Fierce, indomitable, fiercely loyal, rapid in offensive pursuit, famously dubbed Marschall Vorwarts",
+      "deedsZh": "历经耶拿惨败而不气馁，以七十高龄领军转战莱比锡民族大会战；在利尼战役被法军击败负伤后仍强行率军增援滑铁卢战场，在关键时刻给法军以致命夹击，彻底粉碎拿破仑。",
+      "deedsEn": "Overcame early defeats to lead Allied armies at the Battle of Leipzig. Despite severe injury at Ligny, he relentlessly marched his army to reinforce Wellington at Waterloo, delivering the decisive flank blow to Napoleon.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "羊刃",
+          "比肩"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "拥有超乎常人的抗打击逆商与意志韧性；认准战略大目标后绝不因局部受挫而动摇，执行推进力摧枯拉朽。",
+      "strengthAdviceEn": "Possesses extraordinary resilience and relentless drive, pursuing critical overarching objectives with unyielding momentum despite severe short-term setbacks.",
+      "weaknessAdviceZh": "冲锋过猛易陷孤军深入之险；在组织协调中需加强参谋智囊的制约平衡，避免凭一时血气之勇草率下注。",
+      "weaknessAdviceEn": "Relentless aggression risks outrunning organizational support and supply. Balance fiery impulse with sober counsel from tactical staff.",
+      "historicalQuoteZh": "盟军统帅部评价他：「他是唯一在被拿破仑击败十次后，第二天早晨仍然敢于向拿破仑发起冲锋的将领。」",
+      "historicalQuoteEn": "Allied high command celebrated him: The only commander who, defeated ten times by Napoleon, charged him again with fury the following morning.",
+      "auxiliaryStrengthsZh": [
+          "拥有百折不挠的绝顶逆商，能够在惨败后迅速重整旗鼓",
+          "雷厉风行重信守诺，能为盟友在关键时刻提供坚实支撑"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Peerless resilience that rallies forces immediately after devastating setbacks",
+          "Relentlessly dependable execution that delivers game-changing allied support"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "有时战术粗放欠缺细腻推演，容易遭到精细伏击",
+          "行事急躁刚烈，需依赖高素质参谋班底弥补短板"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Occasional tactical bluntness risks walking into sophisticated traps",
+          "Impatient temperament requires analytical staff to provide balancing counsel"
+      ]
+  },
+  {
+      "id": "mikhail_kutuzov",
+      "nameZh": "米哈伊尔·库图佐夫",
+      "nameEn": "Mikhail Kutuzov",
+      "dynastyZh": "俄罗斯帝国",
+      "dynastyEn": "Russian Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 1812年俄法战争 (1805-1813)",
+      "eraNameEn": "Modern West · Patriotic War of 1812 (1805-1813)",
+      "positionZh": "陆军元帅 · 斯摩棱斯克公爵 · 战略反击宗师",
+      "positionEn": "Field Marshal · Prince of Smolensk · Master of Strategic Attrition",
+      "personalityZh": "老练沉稳、深谋远虑、极其隐忍、善于利用战略纵深与时间维度拖垮强敌",
+      "personalityEn": "Seasoned, calculating, profoundly patient, and master of trading space and time to wear down formidable foes",
+      "deedsZh": "在1812年卫国战争中临危受命指挥俄军，在博罗季诺战役血战后力排众议主动放弃莫斯科；采取坚壁清野与焦土抗战策略，诱使拿破仑大军因严寒与补给断绝全线溃败，反败为胜。",
+      "deedsEn": "Appointed supreme commander during Napoleon's 1812 invasion of Russia. Fought the bloody Battle of Borodino and made the audacious decision to evacuate Moscow, utilizing scorched-earth attrition and winter to destroy the Grande Armee.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "偏印",
+          "正官"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "深谙「以退为进」与大纵深战略消耗精髓；面对狂暴攻势能顶住巨大非议隐忍不发，等待天时地利全面倒向己方时施展绝杀。",
+      "strengthAdviceEn": "Master of strategic retreat and deep attrition, capable of enduring intense criticism while conserving core strength until decisive external advantages align.",
+      "weaknessAdviceZh": "过度隐忍可能造成己方基层士气与声誉阶段性受挫；必须在退却过程中严明组织纪律，防止有序后撤演变为溃散混乱。",
+      "weaknessAdviceEn": "Prolonged strategic withdrawal can strain internal morale and stakeholder trust. Maintain rigorous operational discipline to keep strategic retreat from unraveling.",
+      "historicalQuoteZh": "托尔斯泰在《战争与和平》中赞叹：「库图佐夫懂得顺应历史的潜流与自然的大势，他是俄罗斯土地上真正的大智若愚者。」",
+      "historicalQuoteEn": "Leo Tolstoy wrote in War and Peace: Kutuzov understood the deep currents of history and natural forces, embodying true wisdom disguised as simplicity.",
+      "auxiliaryStrengthsZh": [
+          "善用战略纵深与时间杠杆拖垮竞争对手，隐忍蓄力极深",
+          "具备极强抗压心理素质，能顶住外界非议坚持正确决策"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Leverages strategic depth and temporal friction to exhaust overextended rivals",
+          "Possesses immense psychological stamina to uphold winning courses under scrutiny"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "前期退让过多可能导致资产流失与团队士气动摇",
+          "动作迟缓稳重有余，面对快节奏战术机遇易显滞后"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Extensive early concessions risk asset degradation and stakeholder panic",
+          "Deliberate pace may miss fleeting short-term tactical windows"
+      ]
+  },
+  {
+      "id": "alexander_i",
+      "nameZh": "亚历山大一世",
+      "nameEn": "Alexander I of Russia",
+      "dynastyZh": "俄罗斯帝国",
+      "dynastyEn": "Russian Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拿破仑战争与神圣同盟 (1801-1825)",
+      "eraNameEn": "Modern West · Napoleonic Wars & Holy Alliance (1801-1825)",
+      "positionZh": "俄罗斯帝国皇帝 · 欧洲解放者 · 神圣同盟倡导者",
+      "positionEn": "Emperor of Russia · Liberator of Europe · Architect of the Holy Alliance",
+      "personalityZh": "崇高理想与现实权谋兼备、神秘复杂、兼具欧洲自由主义与东正教传统情怀",
+      "personalityEn": "Enigmatic blend of lofty idealism and pragmatic calculation, balancing European Enlightenment with traditional spiritual devotion",
+      "deedsZh": "在拿破仑横扫欧陆之危局下坚决抗战，莫斯科大火后拒绝媾和并乘胜反攻直捣巴黎；在维也纳会议上作为战胜国核心领袖倡导建立「神圣同盟」，重塑战后欧洲秩序并极大提升沙俄地缘影响力。",
+      "deedsEn": "Resisted Napoleon's invasion and led the triumphant Coalition forces into Paris in 1814. Championed the Holy Alliance at the Congress of Vienna, elevating Russian geopolitical preeminence across post-war Europe.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "偏印",
+          "劫财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于以宏大意识形态与道义旗帜凝聚盟友共识；在至暗时刻能顶住诱惑与恐吓坚守战略底线，最终收获超额地缘红利。",
+      "strengthAdviceEn": "Unifies disparate allies under sweeping moral and strategic banners, steadfastly holding baseline commitments through dark crises to reap outsized structural rewards.",
+      "weaknessAdviceZh": "性格中理想主义与多疑多变易造成政策反复；切防因追求脱离生产力实际的形而上构想而荒废国内制度与经济根基改革。",
+      "weaknessAdviceEn": "Vacillating between expansive idealism and moody skepticism can cause inconsistent policy execution. Ground visionary initiatives in tangible socioeconomic foundations.",
+      "historicalQuoteZh": "同时代外交家称其为「北方的斯芬克斯」，拿破仑曾评道：「亚历山大绝非平庸之辈，他比任何人想象的都要机敏莫测。」",
+      "historicalQuoteEn": "Known as the Northern Sphinx, Napoleon reflected: Alexander has immense subtlety and political intellect, far deeper than common observers imagine.",
+      "auxiliaryStrengthsZh": [
+          "擅打道义大旗与宏观战略联合，能凝聚多方多边阵营",
+          "在至暗危局中展现惊人战略定力，拒不屈服换取长线反转"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Commands high moral ground to orchestrate complex multilateral coalitions",
+          "Exhibits exceptional strategic perseverance during darkest adversity to reverse tides"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "理想与现实脱节易导致政策摇摆不定，让执行团队困惑",
+          "神秘多疑的心态容易疏离身边真正具备改革魄力的辅臣"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Divergence between lofty vision and practical realities creates strategic vacillation",
+          "Mystical and secretive tendencies risk alienating pragmatic reformers"
+      ]
+  },
+  {
+      "id": "simon_bolivar",
+      "nameZh": "西蒙·玻利瓦尔",
+      "nameEn": "Simon Bolivar",
+      "dynastyZh": "大哥伦比亚",
+      "dynastyEn": "Gran Colombia",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 拉丁美洲独立战争 (1810-1830)",
+      "eraNameEn": "Modern West · Latin American Independence (1810-1830)",
+      "positionZh": "大哥伦比亚总统 · 南美解放者 · 共和先驱",
+      "positionEn": "President of Gran Colombia · El Libertador · Continental Revolutionary Pioneer",
+      "personalityZh": "激情澎湃、崇尚自由、坚韧不屈、极富感染力与宏大联邦愿景",
+      "personalityEn": "Passionate, fiercely devoted to liberty, indomitable in adversity, charismatic, and driven by pan-continental republican visions",
+      "deedsZh": "率领拉美独立军翻越安第斯山险隘突袭博亚卡，取得委内瑞拉、哥伦比亚、厄瓜多尔、秘鲁与玻利维亚独立；创立大哥伦比亚共和国，提出泛拉美联盟的宏伟构想。",
+      "deedsEn": "Led liberation armies across the formidable Andes to triumph at Boyaca and Carabobo, securing independence for Venezuela, Colombia, Ecuador, Peru, and Bolivia while founding Gran Colombia.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "偏财"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "极富开创性与感召力，善于在绝境中唤起众人崇高理想并实施不可能的战术机动；能在大格局中勾勒远超时代的顶层蓝图。",
+      "strengthAdviceEn": "Inspires teams toward seemingly impossible horizons with visionary passion, executing daring strategic maneuvers over insurmountable terrain.",
+      "weaknessAdviceZh": "宏大愿景若缺乏坚实的地方治理利益机制绑定，极易走向分裂；切戒以强力集权取代法治分权，防止组织内部离心分崩离析。",
+      "weaknessAdviceEn": "Pan-continental blueprints without localized administrative and institutional grounding face disintegration. Avoid over-centralization that alienates regional factions.",
+      "historicalQuoteZh": "拉美人民尊其为「解放者」（El Libertador）；其临终感叹：「在美洲推动革命，就像在海洋中耕作一样艰难。」",
+      "historicalQuoteEn": "Revered as El Libertador across the Americas; he famously lamented the turbulence of nation-building: He who serves a revolution plows the sea.",
+      "auxiliaryStrengthsZh": [
+          "具备无与伦比的精神感召力与开疆拓土的进取魄力",
+          "在极端艰难的地形与后勤下长于以奇兵实现战略逆转"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Incomparable charismatic leadership that drives radical pioneer breakthroughs",
+          "Executes audacious logistical and tactical flanking maneuvers in harsh conditions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对复杂派系利益整合不足，宏伟蓝图易受地方军阀割据撕裂",
+          "后期易滑向集权专断倾向，削弱最初建立的民主共识"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Inadequate synthesis of entrenched regional interests risks fracturing grand designs",
+          "Tendency toward autocratic centralization risks eroding institutional consensus"
+      ]
+  },
+  {
+      "id": "jose_de_san_martin",
+      "nameZh": "何塞·德·圣马丁",
+      "nameEn": "Jose de San Martin",
+      "dynastyZh": "阿根廷 / 南美",
+      "dynastyEn": "South America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 南美独立战争 (1812-1824)",
+      "eraNameEn": "Modern West · South American Independence (1812-1824)",
+      "positionZh": "安第斯军司令 · 秘鲁护国公 · 南美独立双子星",
+      "positionEn": "General of the Army of the Andes · Protector of Peru · Continental Liberator",
+      "personalityZh": "严谨克制、胸怀大局、品格高洁、不恋权柄、善打组织准备充分之仗",
+      "personalityEn": "Disciplined, austere, selfless, strategically disciplined, and master of comprehensive operational preparation",
+      "deedsZh": "组建纪律严明的安第斯军，成功横越安第斯山脉解放智利（查卡布科战役与迈普战役）；率军北上攻克利马宣布秘鲁独立；在瓜亚基尔会谈后为避免革命内讧，主动让权予玻利瓦尔并隐退欧洲。",
+      "deedsEn": "Organized the disciplined Army of the Andes, crossed icy peaks to liberate Chile at Chacabuco and Maipu, and liberated Peru. Selflessly yielded supreme command to Bolivar to avert civil discord and retired in dignity.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "食神"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于通过系统化组织整训打造无坚不摧的纪律之师；具有超越权位执念的高尚风骨，懂得在全局利益面前主动退让保全胜果。",
+      "strengthAdviceEn": "Forges disciplined, high-performance operational teams through rigorous preparation; possesses rare moral elevation to step aside when collective victory demands unified leadership.",
+      "weaknessAdviceZh": "过早的道德隐退可能使自己苦心孤诣开创的事业陷入缺乏坚强舵手的混乱；需确保组织交接机制具备制度化稳定性。",
+      "weaknessAdviceEn": "Voluntary abdication driven by ethical purity risks leaving vulnerable nascent systems to factional chaos; construct institutional governance continuity.",
+      "historicalQuoteZh": "历史学家盛赞：「圣马丁在赢得胜利后把军刀挂起，他征服了暴政，更征服了自己的权力欲望。」",
+      "historicalQuoteEn": "Historians acclaim him: Having vanquished tyranny, San Martin conquered personal ambition by hanging up his saber and stepping into history.",
+      "auxiliaryStrengthsZh": [
+          "作风严谨周密注重后勤筹划，战役准备万无一失",
+          "胸襟宽广公忠体国，在权力面前展现至高道德自律"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Rigorous operational and logistical planning ensuring foolproof mission readiness",
+          "Profound ethical integrity and selflessness that prioritizes mission over ego"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对复杂阴暗政治斗争缺乏容忍度，易采取消极回避态度",
+          "功成身退过早可能削弱新秩序的稳定压舱石力量"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Low tolerance for Machiavellian political infighting may prompt premature withdrawal",
+          "Exiting early may leave fragile organizations without their strongest anchor"
+      ]
+  },
+  {
+      "id": "george_canning",
+      "nameZh": "乔治·坎宁",
+      "nameEn": "George Canning",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 维也纳体系与自由外交时期 (1807-1827)",
+      "eraNameEn": "Modern West · Vienna System & Liberal Diplomacy (1807-1827)",
+      "positionZh": "外交大臣兼英国首相 · 自由主义外交先驱",
+      "positionEn": "Foreign Secretary & Prime Minister of the United Kingdom · Pioneer of Liberal Diplomacy",
+      "personalityZh": "雄辩敏锐、极具战略前瞻性、善用民意、打破保守同盟框架",
+      "personalityEn": "Eloquent, keenly forward-looking, adept at harnessing public opinion, and bold in dismantling outdated continental shackles",
+      "deedsZh": "打破梅特涅神圣同盟对拉美独立运动的干涉企图，承认拉美诸共和国独立并打开广阔商贸版图；提出「召来新世界以平衡旧世界」，为英国奠定全球自由贸易主导权。",
+      "deedsEn": "Resisted the Holy Alliance's reactionary interventions and recognized Latin American republics, expanding British trade networks and declaring: I called the New World into existence to redress the balance of the Old.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "正财",
+          "正官"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "善于以非对称地缘杠杆打破传统旧势力同盟的封锁，开辟广阔新市场；擅长通过公众演讲与道义感召重构外交竞争议程。",
+      "strengthAdviceEn": "Disrupts entrenched cartels by establishing strategic footholds in emerging markets, leveraging visionary rhetoric to redefine industry agendas.",
+      "weaknessAdviceZh": "言辞锋芒过露易激化保守集团的强烈敌意；在推动颠覆性战略转向时需注重内阁内部同僚关系的粘合与安抚。",
+      "weaknessAdviceEn": "Cutting eloquence and unilateral boldness risk provoking severe resistance from conservative factions. Reassure cautious stakeholders during transitions.",
+      "historicalQuoteZh": "英国议会评赞：「他拥有将外交事务变成全体国民骄傲的非凡口才，将英国带上了世界新秩序的制高点。」",
+      "historicalQuoteEn": "The British Parliament memorialized: He possessed the genius to turn foreign policy into national pride, placing Britain at the helm of the new world.",
+      "auxiliaryStrengthsZh": [
+          "敏锐捕捉新兴市场与非对称地缘战略机遇，眼光极远",
+          "以高超雄辩与商业远见破除旧有教条束缚"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Acute recognition of emerging asymmetric market opportunities and global trends",
+          "Master of persuasive oratory that dissolves outmoded institutional dogmas"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "锋芒毕露容易在组织高层树敌，遭遇保守派联合阻击",
+          "步子过快容易让内部执行支撑系统出现脱节"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Sharp personal brilliance may alienate peer executives and ignite factional backlash",
+          "Rapid strategic pivots risk outpacing organizational operational bandwidth"
+      ]
+  },
+  {
+      "id": "marquis_de_lafayette",
+      "nameZh": "拉法耶特侯爵",
+      "nameEn": "Marquis de Lafayette",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 法美革命时期 (1776-1834)",
+      "eraNameEn": "Modern West · Franco-American Revolutionary Eras (1776-1834)",
+      "positionZh": "国民自卫军司令 · 两个世界的英雄 · 自由主义旗手",
+      "positionEn": "Commander of National Guard · Hero of the Two Worlds · Champion of Liberty",
+      "personalityZh": "热忱正直、崇尚宪政自由、品格纯粹、兼具浪漫理想与政治操守",
+      "personalityEn": "Chivalric, devoted to constitutional liberty, morally unblemished, blending romantic idealism with republican integrity",
+      "deedsZh": "青年时期跨大西洋志愿支援美国独立战争，成为华盛顿亲密战友与约克镇大捷功臣；在法国大革命中起草《人权宣言》，统帅国民自卫军维护宪政秩序；1830年七月革命中再次作为德高望重的领袖稳定政局。",
+      "deedsEn": "Volunteered in the American Revolution as Washington's trusted general at Yorktown. Drafted the Declaration of the Rights of Man in 1789, led the National Guard, and served as moral guarantor of constitutional order in 1830.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "食神"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "具有极高道德声望与跨阵营信誉；善于在大动荡中充当温和理性中坚力量，以宪法与秩序防范极端流血与动乱。",
+      "strengthAdviceEn": "Commands immense moral credibility across partisan aisles, serving as an anchor of moderation and constitutional sanity during turbulent crises.",
+      "weaknessAdviceZh": "在狂暴革命与极权博弈中，过于恪守温和中道易两头受敌；在残酷政治角力中需补充决断杀伐与铁腕执行手段。",
+      "weaknessAdviceEn": "Steadfast devotion to moderate constitutionalism can be vulnerable during ruthless political extremes. Supplement ethical consistency with pragmatic steel.",
+      "historicalQuoteZh": "美国国会永久悬挂其画像，尊其为「两个世界的英雄」（Hero of the Two Worlds）。",
+      "historicalQuoteEn": "Honored by the United States Congress as an honorary citizen and celebrated worldwide as the Hero of the Two Worlds.",
+      "auxiliaryStrengthsZh": [
+          "具备跨文化、跨周期的崇高道德号召力与公信力",
+          "坚守法治与人权底线，能在极端撕裂中扮演调停中坚"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Transcendent moral authority and cross-cultural trust that outlasts regimes",
+          "Unwavering commitment to legal safeguards that bridges polarized divides"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "面对极端激进势力的野蛮撕裂缺乏足够狠辣的自保手段",
+          "过于恪守绅士原则可能在不对称权谋竞争中陷入被动"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Vulnerable to ruthless radicalism due to lack of Machiavellian defenses",
+          "Chivalric attachment to fair play can be exploited in asymmetrical conflict"
+      ]
+  },
+  {
+      "id": "louis_philippe_i",
+      "nameZh": "路易-菲利普一世",
+      "nameEn": "Louis-Philippe I",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 七月王朝时期 (1830-1848)",
+      "eraNameEn": "Modern West · July Monarchy (1830-1848)",
+      "positionZh": "法国国王 · 公民国王 · 资产阶级君主",
+      "positionEn": "King of the French · The Citizen King · Bourgeois Monarch",
+      "personalityZh": "务实精明、崇尚中庸调和、注重工商业利益、作风亲民低调",
+      "personalityEn": "Pragmatic, shrewd, devoted to the golden mean, commercially oriented, and bourgeois in personal demeanor",
+      "deedsZh": "在1830年七月革命后被拥立为王，确立君主立宪制并大力扶持工商业与铁路建设，推动法国工业革命起步；对外面奉行和平妥协路线，避免重燃欧陆战火。",
+      "deedsEn": "Ascended following the 1830 July Revolution, establishing a constitutional bourgeois monarchy. Championed banking, industrialization, and rail networks while maintaining diplomatic peace in Europe.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正财",
+          "正官",
+          "正印"
+      ],
+      "patternType": "正财格",
+      "strengthAdviceZh": "善于把握中产工商业阶层的核心诉求，以务实重商政策推动经济底层基础设施落地；善用中庸之道维稳多方基本盘。",
+      "strengthAdviceEn": "Aligns with core commercial and business stakeholders to drive tangible economic modernization, utilizing pragmatic moderation to pacify divergent interests.",
+      "weaknessAdviceZh": "严防对底层劳工疾苦与政治改革诉求漠然视之！「致富吧，先生们」的功利执念若缺乏社会财富二次分配与民主参与，极易触发系统性崩溃（1848年革命覆亡之鉴）。",
+      "weaknessAdviceEn": "Guard against complacency toward grassroots working-class grievances. Economic prosperity without social mobility and political inclusion risks abrupt systemic collapse.",
+      "historicalQuoteZh": "历史学家称其为「戴圆顶礼帽、手拿雨伞的国王」，展现了近代资本主义时代王权的世俗化过渡形态。",
+      "historicalQuoteEn": "Historians depict him as the King with the umbrella, symbolizing the pragmatic transition from absolute divine right to modern secular capitalism.",
+      "auxiliaryStrengthsZh": [
+          "务实专注工商业经济与基础设施建设，深谙商业运营逻辑",
+          "行事低调不事张扬，能在多元利益集团中寻找折中平衡点"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Focuses on commercial modernization and pragmatic infrastructure deployment",
+          "Low-profile, consensus-driven managerial style that balances vested factions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对底层民众深层次矛盾缺乏敏锐共情，容易形成利益茧房",
+          "缺乏力挽狂澜的战略决断魄力，遇重大风浪易弃盘退场"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Detached from grassroots economic distress, creating an elite echo chamber",
+          "Lacks decisive turnaround tenacity when catastrophic macro volatility strikes"
+      ]
+  },
+  {
+      "id": "alexis_de_tocqueville",
+      "nameZh": "托克维尔",
+      "nameEn": "Alexis de Tocqueville",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 近代政治学与社会学奠基 (1830-1859)",
+      "eraNameEn": "Modern West · Foundations of Political Sociology (1830-1859)",
+      "positionZh": "政治思想家 · 历史学家 · 法国外交部长",
+      "positionEn": "Political Thinker & Sociologist · Historian · Foreign Minister of France",
+      "personalityZh": "洞察深邃、极具预见性、客观超然、崇尚自由制度与法治理性",
+      "personalityEn": "Profoundly prescient, objective, analytical, and passionately devoted to constitutional liberty and sociological truth",
+      "deedsZh": "深入考察美国考察民主体制并写就巨著《论美国的民主》，精准预言美俄两极霸权格局；出版《旧制度与大革命》，深刻揭示法国大革命爆发的制度社会根源，开创近代政治社会学研究范式。",
+      "deedsEn": "Analyzed American democracy to author Democracy in America, famously predicting the Cold War superpower duel between the US and Russia. Penned The Old Regime and the Revolution, revolutionizing comparative institutional sociology.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "正官",
+          "伤官"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "具备跨越百年的前瞻预判力与深刻的制度解构力；能穿透纷繁复杂的社会表面现象，精准识别组织运转背后的深层动力学与潜在危机。",
+      "strengthAdviceEn": "Unrivaled foresight and institutional diagnostics, discerning systemic social and organizational currents decades before they manifest as crises.",
+      "weaknessAdviceZh": "研究过于超然冷静可能导致在具体行政与权力博弈中的执行敏捷度受限；需强化将高深战略洞见转化为日常管理制度的落地手腕。",
+      "weaknessAdviceEn": "Detached sociological contemplation may reduce tactical agility in bare-knuckle operational politics. Bridge profound analysis with operational execution.",
+      "historicalQuoteZh": "思想史界公认其为近代最伟大的政治社会学家之一：「他在1835年写下的预言，在二十世纪全部变成了现实。」",
+      "historicalQuoteEn": "Universally acknowledged as a giant of modern political thought: Predictions he made in 1835 became the geopolitical reality of the 20th century.",
+      "auxiliaryStrengthsZh": [
+          "具备超时代的宏观历史与地缘洞察力，预判战略风向极准",
+          "善于从制度与文化机理深处诊断组织弊病与潜在崩塌风险"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Visionary geopolitical foresight that charts evolutionary arcs across generations",
+          "Diagnoses structural dysfunctions and latent systemic risks with scientific rigor"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "书生意气重于政治手腕，在瞬息万变的政坛乱局中不善权谋",
+          "推演深刻但往往给出警示而非立竿见影的短效破局药方"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Philosophical purity can be outmaneuvered by short-term political opportunists",
+          "Focuses on deep systemic warnings rather than expedient short-term fixes"
+      ]
+  },
+  {
+      "id": "carl_friedrich_gauss",
+      "nameZh": "卡尔·弗里德里希·高斯",
+      "nameEn": "Carl Friedrich Gauss",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 近代数学与科学革命 (1800-1855)",
+      "eraNameEn": "Modern West · Scientific & Mathematical Revolution (1800-1855)",
+      "positionZh": "数学王子 · 哥廷根天文台台长 · 近代科学泰斗",
+      "positionEn": "Princeps Mathematicorum · Director of Gottingen Observatory · Scientific Giant",
+      "personalityZh": "严谨求真、极致追求完美、深邃专注、不尚虚名、具有超凡数学直觉",
+      "personalityEn": "Obsessively rigorous, perfectionist, profoundly focused, modest, possessing miraculous mathematical intuition",
+      "deedsZh": "在数论、微分几何、大地测量学、概率统计（高斯正态分布）与电磁学（高斯定律）等诸多领域作出奠基性贡献；以最小二乘法仅凭微弱观测数据成功计算谷神星轨道震惊世界。",
+      "deedsEn": "Revolutionized number theory, differential geometry, geodesy, probability (normal distribution), and electromagnetism. Rediscovered asteroid Ceres by inventing the method of least squares from sparse data points.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "伤官",
+          "偏印"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "长于以严密的底层逻辑和高阶抽象工具重塑业务算法；具备极强的数据洞察力与单点攻坚能力，能以极高专业壁垒解决行业终极难题。",
+      "strengthAdviceEn": "Masters foundational mathematical rigor to reconstruct complex systems, possessing unparalleled analytical power to solve intractable technical bottlenecks.",
+      "weaknessAdviceZh": "对未臻完美的成果绝不轻易示人（「宁缺毋滥」）虽保全了学术声誉，但也可能因推迟发布而错失先发商业红利或让后人重复造轮子。",
+      "weaknessAdviceEn": "Reluctance to publish until absolute perfection is achieved risks missing early strategic windows and delaying wider technological adoption.",
+      "historicalQuoteZh": "数学界铭刻其座右铭：「宁少毋滥，但求成熟」（Pauca sed matura），尊其为阿基米德与牛顿之后最伟大的数学巨匠。",
+      "historicalQuoteEn": "Celebrated by his personal motto Pauca sed matura (Few, but ripe), revered alongside Archimedes and Newton as the pinnacle of mathematical genius.",
+      "auxiliaryStrengthsZh": [
+          "拥有极致深厚的底层算法与逻辑推演能力，破除复杂迷局",
+          "精益求精专注纯粹，以极高标准构筑不可替代的专业护城河"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Formulates foundational algorithms and mathematical frameworks to decode complexity",
+          "Upholds unyielding technical excellence to build an insurmountable moat"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过度追求完美导致产品或成果发布节奏严重推迟",
+          "不屑于琐碎世俗社交，团队对外拓展与商业变现意愿较弱"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Perfectionist standards can severely stall product release timelines",
+          "Reluctance to engage in commercial negotiation may slow economic scaling"
+      ]
+  },
+  {
+      "id": "michael_faraday",
+      "nameZh": "迈克尔·法拉第",
+      "nameEn": "Michael Faraday",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 电磁学革命与工业启蒙 (1812-1867)",
+      "eraNameEn": "Modern West · Electromagnetism & Industrial Dawn (1812-1867)",
+      "positionZh": "皇家研究所实验室主任 · 电学之父 · 实验物理学巨擘",
+      "positionEn": "Director of Royal Institution Laboratory · Father of Electricity · Master Experimentalist",
+      "personalityZh": "谦逊纯粹、动手能力极强、直觉敏锐、不慕荣利、坚守科学探索伦理",
+      "personalityEn": "Humble, profoundly intuitive, hands-on master of experimentation, indifferent to wealth, ethically pristine",
+      "deedsZh": "出身寒微自学成才，发现电磁感应现象与电解定律，发明早期发电机与电动机雏形；提出「场」与「力线」的革命性物理概念，奠定了现代电气文明与麦克斯韦方程组的物理基础。",
+      "deedsEn": "Rose from humble apprentice to discover electromagnetic induction and electrolysis, inventing the electric motor and transformer. Introduced field and lines of force concepts, sparking the electrical era.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "食神",
+          "正印",
+          "比肩"
+      ],
+      "patternType": "食神格",
+      "strengthAdviceZh": "长于将理论构想通过极致的动手实验转化为革命性生产力原型；人品高洁不谋私利，深孚技术同仁与公众爱戴。",
+      "strengthAdviceEn": "Translates abstract scientific concepts into transformative physical prototypes through obsessive experimentation; inspires deep loyalty through selfless integrity.",
+      "weaknessAdviceZh": "数学量化工具稍显欠缺（赖麦克斯韦后继完成数学化）；技术创新者需主动引入跨学科数理与商业合伙人，避免创新成果被他人垄断或变现脱节。",
+      "weaknessAdviceEn": "Lack of formal mathematical modeling required Maxwell to complete his equations; specialists must partner with commercial and analytical peers.",
+      "historicalQuoteZh": "爱因斯坦书房墙上仅悬挂三幅肖像：牛顿、麦克斯韦与法拉第。后人赞其：「法拉第把文明从黑暗引向了光明。」",
+      "historicalQuoteEn": "Einstein kept only three portraits in his study: Newton, Maxwell, and Faraday. Acclaimed for illuminating human civilization with electrical power.",
+      "auxiliaryStrengthsZh": [
+          "直觉敏锐实践力超群，善于通过极简实验验证颠覆性原理",
+          "专注技术探索不图虚名，具备极强的人格凝聚力与信誉"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Acute physical intuition and peerless experimental execution validating breakthroughs",
+          "Selfless dedication to pure craft that commands universal respect and trust"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "缺乏高阶数学与正规金融工具支撑，难以独立闭环大规模产业",
+          "过于淡泊名利可能导致关键专利流失与商业价值被外部侵吞"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Lack of formal mathematical and financial tooling limits standalone commercial scaling",
+          "Extreme indifference to commercial wealth may allow external actors to exploit innovations"
+      ]
+  },
+  {
+      "id": "ludwig_van_beethoven",
+      "nameZh": "路德维希·凡·贝多芬",
+      "nameEn": "Ludwig van Beethoven",
+      "dynastyZh": "奥地利 / 德国",
+      "dynastyEn": "Austria & Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 古典向浪漫主义过渡 (1800-1827)",
+      "eraNameEn": "Modern West · Classical to Romantic Transition (1800-1827)",
+      "positionZh": "乐圣 · 自由艺术宗师 · 交响乐与室内乐泰斗",
+      "positionEn": "Master Composer · Titan of Symphonic Music · Musical Revolutionary",
+      "personalityZh": "狂飙突进、傲骨嶙峋、抗击命运、激情澎湃、追求人类自由与尊严",
+      "personalityEn": "Fiery, unbending, wrestling fate, intensely passionate, devoted to human liberty and transcendent dignity",
+      "deedsZh": "在双耳完全失聪的绝境中扼住命运的咽喉，创作出《英雄交响曲》、《命运交响曲》、《第九交响曲（合唱）》及晚期弦乐四重奏；将音乐从宫廷附庸升华为表达全人类苦难与崇高精神的独立艺术巅峰。",
+      "deedsEn": "Overcame total deafness to conquer fate, composing the Eroica, Fifth, and Ninth Symphonies alongside late string quartets. Elevated music from aristocratic diversion to an immortal monument of human struggle and triumph.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "偏印"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备在绝境死地中爆发出颠覆性创造力的超凡意志；作品气象宏大、摄人心魄，具有唤醒群体内在抗争斗志的精神号召力。",
+      "strengthAdviceEn": "Unleashes paradigm-shattering creative firepower under crushing personal adversity, infusing output with monumental emotional resonance that inspires millions.",
+      "weaknessAdviceZh": "性格孤傲暴烈、不耐世俗羁绊与繁文缛节，易引发日常人际冲突与合作阻滞；在团队协同中需要宽容的经纪人或保护者作为缓冲层。",
+      "weaknessAdviceEn": "Volatile temperament and contempt for conventional social niceties ignite interpersonal friction. Requires diplomatic intermediaries to insulate collaborative execution.",
+      "historicalQuoteZh": "罗曼·罗兰在《贝多芬传》中写道：「一个不幸的人，贫穷、残废、孤独，由痛苦造成的人，世界不给他欢乐，他却创造了欢乐给予世界！」",
+      "historicalQuoteEn": "Romain Rolland wrote: An unfortunate, deaf, poor, lonely man, created by suffering, to whom the world gave no joy, yet who created joy for all mankind.",
+      "auxiliaryStrengthsZh": [
+          "抗击绝境的意志力无与伦比，能在生命低谷期创造出旷世杰作",
+          "作品格局宏伟穿透时代，具备极高精神感召力与艺术壁垒"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Peerless resilience that transforms existential agony into epochal masterpieces",
+          "Monumental creative vision that commands timeless resonance and cultural hegemony"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "脾气暴烈狂放，极难遵从组织常规流程与行政管控",
+          "不耐烦于日常人情世故，容易因言辞生硬激化人际矛盾"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Volatile individualism resists corporate routines and bureaucratic procedures",
+          "Aversion to social diplomacy can alienate necessary organizational patrons"
+      ]
+  },
+  {
+      "id": "arthur_schopenhauer",
+      "nameZh": "阿图尔·叔本华",
+      "nameEn": "Arthur Schopenhauer",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 意志哲学与现代思想开创 (1818-1860)",
+      "eraNameEn": "Modern West · Philosophy of the Will & Modern Thought (1818-1860)",
+      "positionZh": "哲学家 · 唯意志论与现代悲观主义哲学开创者",
+      "positionEn": "Philosopher · Founder of Voluntarism & Modern Philosophical Pessimism",
+      "personalityZh": "冷峻犀利、洞悉人性欲望、独立孤傲、批判精神极强、不从流俗",
+      "personalityEn": "Caustically penetrating, dissecting human desire, solitary, fiercely critical, and uncompromisingly independent",
+      "deedsZh": "出版划时代名著《作为意志和表象的世界》，打破黑格尔理性主义神话，首次将非理性的「生命意志」确立为世界本体；其思想深刻启蒙了尼采、瓦格纳、托尔斯泰、弗洛伊德及现代心理学。",
+      "deedsEn": "Penned The World as Will and Representation, challenging Hegelian rationalism by positing blind will as the metaphysical core of existence. Paved the way for Nietzsche, Freud, and modern depth psychology.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "伤官",
+          "比肩"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "善于冷峻撕破一切虚饰谎言，直击人类动机与商业欲望底层最真实的驱动力；不随波逐流，耐得住长期坐冷板凳而终成一家之言。",
+      "strengthAdviceEn": "Pierces sentimental illusions to expose the biological and psychological drives beneath human action, holding fast to unconventional truths until history catches up.",
+      "weaknessAdviceZh": "过度强调苦难与虚无易消解行动者的执行斗志；切防陷入愤世嫉俗与过度防卫的社交孤岛，需以建设性行动转化深刻认知。",
+      "weaknessAdviceEn": "Excessive focus on vanity and suffering can erode operational morale. Prevent deep psychological clarity from devolving into cynical paralysis.",
+      "historicalQuoteZh": "尼采坦言：「我是叔本华最忠实的读者，翻开他的第一页，我就知道我必须读完他的全部著作。」",
+      "historicalQuoteEn": "Nietzsche confessed: I am one of those readers of Schopenhauer who know after the first page that they will read all he ever wrote.",
+      "auxiliaryStrengthsZh": [
+          "直击人性欲望本质，具备极高批判性认知与独立思考壁垒",
+          "耐得住数十年寂寞冷遇，以坚定学术自信实现历史性逆袭"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Pierces behavioral facades to expose fundamental motives, creating deep insight",
+          "Endures decades of professional obscurity with unwavering intellectual conviction"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "思想带有浓厚悲观色彩，若不加调节易削弱团队的长期进取心",
+          "性格多疑孤僻防备心极重，容易给外部合作设下严苛心理壁垒"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Pessimistic disposition can dampen operational enthusiasm if unmoderated",
+          "High interpersonal suspicion erects barriers against collaborative ventures"
+      ]
+  },
+  {
+      "id": "nathan_mayer_rothschild",
+      "nameZh": "内森·梅耶·罗斯柴尔德",
+      "nameEn": "Nathan Mayer Rothschild",
+      "dynastyZh": "英国",
+      "dynastyEn": "British Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 近代跨国金融与滑铁卢融资 (1806-1836)",
+      "eraNameEn": "Modern West · Transnational Finance & Napoleonic Subsidies (1806-1836)",
+      "positionZh": "金融家 · 罗斯柴尔德伦敦行创始人 · 国际债券市场奠基人",
+      "positionEn": "Financier · Founder of N M Rothschild & Sons · Architect of Modern Bond Markets",
+      "personalityZh": "精明敏锐、情报意识超前、决断神速、善于调动跨国资本网络、风险嗅觉极强",
+      "personalityEn": "Commercially razor-sharp, obsessed with intelligence networks, lightning-fast in decision-making, and master of international arbitrage",
+      "deedsZh": "在拿破仑战争期间利用遍布欧洲的信鸽与快艇情报网络，突破大陆封锁为威灵顿公爵军队走私筹措巨额黄金军饷；在滑铁卢战役消息传回伦敦前精准把握公债市场脉搏，一举奠定罗斯柴尔德家族金融帝国的霸权地位。",
+      "deedsEn": "Built a trans-European information and courier courier network that outpaced royal couriers. Smuggled gold to fund Wellington's campaigns and masterfully orchestrated British sovereign bonds during Waterloo.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "偏财",
+          "七杀",
+          "正官"
+      ],
+      "patternType": "偏财格",
+      "strengthAdviceZh": "极其重视信息差与时效性，善于搭建超越行业常规的敏捷情报中枢；能在全市场恐慌或狂热中逆向操作，以惊人魄力吞吐巨额资本锁定超额胜局。",
+      "strengthAdviceEn": "Leverages proprietary information networks to capture massive arbitrage windows, executing counter-cyclical capital allocation with steely composure during market panics.",
+      "weaknessAdviceZh": "过度利用政治战争内幕杠杆极易引发公众道德反弹与监管反制；跨国巨资运作需注意合规透明度与社会公义反哺，避免招致系统性政治清算。",
+      "weaknessAdviceEn": "Over-leveraging confidential intelligence risks severe political and societal blowback. Anchor high-stakes financial power in institutional legitimacy and public trust.",
+      "historicalQuoteZh": "维多利亚时代评论家称其为「欧洲无冕之王」；拜伦勋爵在诗中写道：「罗斯柴尔德与巴林，他们才是借贷战争与和平的真正主宰。」",
+      "historicalQuoteEn": "Lord Byron wrote in Don Juan: Who hold the balance of the world? Who reign over congress, whether royalist or liberal? Rothschild and Baring.",
+      "auxiliaryStrengthsZh": [
+          "对信息时效与市场预期具有极强洞察力，善打逆向投资胜仗",
+          "具备跨国资源调度与复杂跨界交易的超强操盘执行力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Superb grasp of information asymmetry and contrarian market positioning",
+          "Peerless orchestrator of transnational capital networks and complex transactions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "游走在战争与政策边缘杠杆过高，稍有不慎易引火烧身",
+          "过度算计商业利害，容易在公众舆论与监管层面积累信任赤字"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "High-leverage operations along political margins attract acute geopolitical risk",
+          "Intense commercial calculation accumulates reputational deficit over time"
+      ]
+  },
+  {
+      "id": "otto_von_bismarck",
+      "nameZh": "奥托·冯·俾斯麦",
+      "nameEn": "Otto von Bismarck",
+      "dynastyZh": "德意志帝国",
+      "dynastyEn": "German Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 铁血统一与现实政治 (1862-1890)",
+      "eraNameEn": "Modern West · Realpolitik & German Unification (1862-1890)",
+      "positionZh": "德意志帝国首相 · 铁血宰相 · 均势外交大师",
+      "positionEn": "Chancellor of the German Empire · The Iron Chancellor · Master of Realpolitik",
+      "personalityZh": "刚毅果决、极其清醒务实、深谋远虑、崇尚铁腕手段、精于多重同盟制衡",
+      "personalityEn": "Steely and resolute, profoundly pragmatic, calculatingly foresighted, commanding, and master of complex equilibrium alliances",
+      "deedsZh": "发表著名「铁血演说」，主导普丹、普奥、普法三次王朝战争，实现德意志统一并建立德意志帝国；建国后缔造错综复杂的欧洲同盟体系（三皇同盟、再保险条约），同时开创现代社会保障制度体系以化解阶级矛盾。",
+      "deedsEn": "Delivered the Iron and Blood speech and orchestrated three unifying wars against Denmark, Austria, and France to establish the German Empire. Constructed the intricate Bismarckian alliance system to secure continental peace while pioneering modern social security legislation.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "偏印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "长于在极其复杂的多元博弈中洞察现实力量边界，善以有限战争达成精准政治目标；能构建多层制度网络对冲潜在地缘风险。",
+      "strengthAdviceEn": "Masters Realpolitik by understanding the boundaries of power, using measured force to achieve precise political aims while building intricate institutional firewalls against external systemic shocks.",
+      "weaknessAdviceZh": "切忌将体系维系过度建立在个人无与伦比的政治手腕之上！一旦核心铁腕人物离任，过于复杂的平衡网络极易因后继者粗暴操作而迅速破裂失控。",
+      "weaknessAdviceEn": "Avoid creating systemic architectures that depend entirely on the irreplaceable genius of a single ruler. Systems must be resilient enough for ordinary successors to operate without unraveling.",
+      "historicalQuoteZh": "基辛格赞其：「俾斯麦以神乎其技的手腕维持了欧洲二十年和平，他是近代现实主义外交史上无人能及的高峰。」",
+      "historicalQuoteEn": "Henry Kissinger eulogized: Bismarck maintained European peace for two decades through sheer diplomatic virtuosity, standing as the supreme titan of Realpolitik.",
+      "auxiliaryStrengthsZh": [
+          "深谙现实力量边界与政治目的匹配，战略克制力极强",
+          "善于构筑多重制衡同盟体系，以制度防火墙防范系统风险"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Balances political objectives strictly with realistic capacity, exhibiting masterly restraint",
+          "Constructs intricate interlocking alliances to buffer against catastrophic geopolitical risks"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "权力结构过度集权于自身，未能培养起成熟的制度化接班人",
+          "强人政治压制党派民主健康发展，为帝国后期盲动埋下隐患"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "System over-relies on personal virtuosity without institutionalizing succession pathways",
+          "Suppressed democratic mechanisms, leaving fragile institutional governance after departure"
+      ]
+  },
+  {
+      "id": "abraham_lincoln",
+      "nameZh": "亚伯拉罕·林肯",
+      "nameEn": "Abraham Lincoln",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 美国内战与联邦再造 (1861-1865)",
+      "eraNameEn": "Modern West · American Civil War & Federal Renewal (1861-1865)",
+      "positionZh": "第16任美国总统 · 联邦拯救者 · 解放黑奴者",
+      "positionEn": "16th President of the United States · Savior of the Union · The Great Emancipator",
+      "personalityZh": "坚毅仁厚、极具政治智慧、抗压能力登峰造极、宽容大度、信仰坚定",
+      "personalityEn": "Resolute yet compassionate, politically masterful, possessing superhuman adversity quotient, magnanimous, and steadfastly principled",
+      "deedsZh": "在国家分裂与内战狂澜中力挽狂澜，发表《解放黑奴宣言》与《葛底斯堡演说》；组建「政敌内阁」团结一切力量，指挥联邦军彻底击败南部邦联维护国家统一，奠定美国崛起为现代工业强国的制度基石。",
+      "deedsEn": "Preserved the Union through the American Civil War, issuing the Emancipation Proclamation and the Gettysburg Address. Assembled a Team of Rivals cabinet and prosecuted the war to ultimate victory, securing American democratic and industrial foundations.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "正官",
+          "比肩"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "拥有超凡的道德定力与极高心智抗压带宽；善于包容政敌与多方异见，以崇高的使命愿景与柔韧手腕化解极端内部分歧，带领组织穿越至暗风暴。",
+      "strengthAdviceEn": "Commands sublime moral fortitude and boundless psychological bandwidth, absorbing dissent from rivals to forge unity toward transcendent historical missions.",
+      "weaknessAdviceZh": "仁厚宽和切不可忽视防范潜伏的极端分子阴谋；在危机决战与战后重建过渡期，必须对核心领袖安保与组织执行防线建立绝对刚性的防御机制。",
+      "weaknessAdviceEn": "Boundless magnanimity must not blind leadership to fanatical security risks. Implement absolute operational and personal security safeguards during critical transitions.",
+      "historicalQuoteZh": "托尔斯泰评道：「林肯是人性的基督，他在权力的顶峰表现出纯粹的仁慈与坚定，是人类历史上最伟大的人物之一。」",
+      "historicalQuoteEn": "Leo Tolstoy wrote: Lincoln was a miniature of Christ, demonstrating pure magnanimity and steel at the summit of power, one of the greatest beings in human history.",
+      "auxiliaryStrengthsZh": [
+          "具备至高精神道德感召力与化敌为友的超凡胸襟",
+          "在灭顶危局中展现无与伦比的战略韧性，百折不挠挽救大局"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Transcendent moral authority that unifies rivals into a cohesive executive team",
+          "Unrivaled fortitude in existential adversity that rescues systems from total collapse"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "行事过于宽厚有时易被激进反对派利用为软弱可欺",
+          "战后重建时期缺乏足够严密的个人安保与风险防范预案"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Profound leniency can occasionally be misread by unprincipled foes as hesitation",
+          "Insufficient personal security measures during volatile postwar reconciliation"
+      ]
+  },
+  {
+      "id": "ulysses_s_grant",
+      "nameZh": "尤利西斯·S·格兰特",
+      "nameEn": "Ulysses S. Grant",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 美国内战与重建时期 (1861-1877)",
+      "eraNameEn": "Modern West · Civil War & Reconstruction (1861-1877)",
+      "positionZh": "联邦军总司令 · 陆军上将 · 第18任美国总统",
+      "positionEn": "General of the Army · Union Commander-in-Chief · 18th President of the United States",
+      "personalityZh": "坚毅顽强、沉默寡言、执行力雷厉风行、专注战略总目标、不惧损耗",
+      "personalityEn": "Relentlessly tenacious, laconic, unshakeable in operational execution, laser-focused on core objectives, undeterred by attrition",
+      "deedsZh": "在维克斯堡战役中包围降伏南军彻底切断密西西比河；出任联邦军总司令后制定全线协同压迫战略，在陆路战役中不惧伤亡持续施压，最终在阿波马托克斯接受李将军投降结束内战；总统任内坚决镇压三K党维护重建法案。",
+      "deedsEn": "Captured Vicksburg to split the Confederacy along the Mississippi. Formulated the coordinated grand strategy that ground down Lee's forces in the Overland Campaign, accepting Confederate surrender at Appomattox and later dismantling the KKK as President.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "比肩",
+          "正官"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "拥有极强的穿透阻力与战略聚焦能力；一旦锁死核心破局点，便以持续、坚决且系统的压力压垮竞争对手，绝不因局部波折半途而废。",
+      "strengthAdviceEn": "Focuses relentlessly on the critical operational bottleneck, applying systematic, sustained pressure that breaks the adversary's capacity to resist.",
+      "weaknessAdviceZh": "在从纯军事统帅向复杂政商经济管理转型时，需提高对身边亲信腐败与投机分子的鉴别力，谨防因轻信熟人导致行政声誉受损。",
+      "weaknessAdviceEn": "Transitioning from direct operational command to complex political-economic governance demands vigilant auditing of close associates to prevent corruption scandals.",
+      "historicalQuoteZh": "林肯在面对军方弹劾格兰特时断言：「我无法不用这个人，因为他在真正战斗。」",
+      "historicalQuoteEn": "Lincoln firmly rejected calls to dismiss him: I cannot spare this man; he fights.",
+      "auxiliaryStrengthsZh": [
+          "具备钢铁般的执行意志与战略定力，死磕核心主线决不妥协",
+          "善于运用整体资源优势实施协同压迫，瓦解对手抵抗意志"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Ironclad execution and strategic perseverance that drives relentless progress",
+          "Skillfully harnesses overall systemic advantages to apply overwhelming pressure"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "战术打法有时过于直接刚猛，阶段性付出的资源代价偏高",
+          "在民政官场与商业投资中防人意识薄弱，易遭宵小算计利用"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Frontal attrition tactics can incur high initial expenditure of resources",
+          "Naivete in political and commercial networking invites exploitation by unscrupulous allies"
+      ]
+  },
+  {
+      "id": "robert_e_lee",
+      "nameZh": "罗伯特·E·李",
+      "nameEn": "Robert E. Lee",
+      "dynastyZh": "美洲邦联",
+      "dynastyEn": "Confederate States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 美国内战 (1861-1865)",
+      "eraNameEn": "Modern West · American Civil War (1861-1865)",
+      "positionZh": "北弗吉尼亚军团司令 · 邦联军总司令 · 防守反击大师",
+      "positionEn": "Commander of the Army of Northern Virginia · General in Chief · Master of Maneuver",
+      "personalityZh": "儒雅严谨、战术机变神妙、敢于险中求胜、深受部属崇拜、富有骑士风度",
+      "personalityEn": "Courtly, procedurally refined, brilliant operational tactician, audacity in fluid maneuvers, revered by troops, chivalrous",
+      "deedsZh": "在资源与兵力处于绝对劣势下统率北弗吉尼亚军团，在七天战役、第二次马纳萨斯、钱斯勒斯维尔战役中以寡击众大败联邦军主力；大势已去时在阿波马托克斯果断投降拒绝进行游击战，避免了国家陷入无休止流血仇杀。",
+      "deedsEn": "Commanded the Army of Northern Virginia against overwhelming odds, achieving stunning tactical victories at Second Manassas and Chancellorsville. In defeat, rejected guerrilla warfare at Appomattox to foster national healing.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "偏印",
+          "伤官"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于在资源极度匮乏与劣势逆境中寻找敌方破绽，以精妙的分兵包抄与非对称战术创造局部绝对优势；深孚众望，组织凝聚力极强。",
+      "strengthAdviceEn": "Excels at diagnosing enemy vulnerabilities when operating with inferior resources, employing daring flanking maneuvers to forge decisive local superiority.",
+      "weaknessAdviceZh": "切忌因战术胜利的惯性而盲目发动超越自身国力支撑的战略冒险（葛底斯堡匹克特冲锋之痛）；大局不可逆时需及早做好资产清算与止损准备。",
+      "weaknessAdviceEn": "Guard against allowing tactical overconfidence to drive unsupportable strategic offensives (such as Pickett's Charge). Implement hard stop-loss measures when systemic limits are reached.",
+      "historicalQuoteZh": "丘吉尔评价他：「他是美国历史上最杰出的军事天才之一，也是一位即便在战败中也无懈可击的高贵绅士。」",
+      "historicalQuoteEn": "Winston Churchill acclaimed him: One of the noblest Americans who ever lived, a tactical master of war and a chivalrous gentleman in defeat.",
+      "auxiliaryStrengthsZh": [
+          "在严重劣势下长于出奇制胜，战术穿插与捕捉战机能力登峰造极",
+          "拥有崇高的人格风范与职业操守，败局面前能以大局为重理性止损"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Peerless operational maneuvering that manufactures victory from acute deficits",
+          "Deep ethical integrity that prioritizes systemic peace over senseless scorched-earth resistance"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "战略视野受制于本邦本土执念，未能从全局宏观大盘统筹资源",
+          "关键战役中对前线将领指令有时过于含蓄柔和，缺乏铁腕硬性约束"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Regional loyalties restricted broad geopolitical vision across wider theaters",
+          "Discretionary phrasing of operational orders allowed subordinate ambiguity at critical junctures"
+      ]
+  },
+  {
+      "id": "queen_victoria",
+      "nameZh": "维多利亚女王",
+      "nameEn": "Queen Victoria",
+      "dynastyZh": "大英帝国",
+      "dynastyEn": "British Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 维多利亚时代盛世 (1837-1901)",
+      "eraNameEn": "Modern West · Victorian Golden Era (1837-1901)",
+      "positionZh": "大英帝国女王 · 印度女皇 · 盛世立宪君主",
+      "positionEn": "Queen of the United Kingdom · Empress of India · Constitutional Monarch",
+      "personalityZh": "端庄持重、恪守责任、尊奉道德家庭伦理、适应立宪演进、善择贤相",
+      "personalityEn": "Stately, dutiful, moral exemplar of domestic ethics, adaptable to constitutional evolution, astute in prime ministerial selection",
+      "deedsZh": "在位63年见证大英帝国工业革命巅峰与「日不落帝国」全盛；成功处理王室与议会政党内阁的关系，将君主制转型为超越党派纷争的国家道德象征与稳定压舱石；通过王室联姻网络深刻影响近代欧洲各王朝地缘格局。",
+      "deedsEn": "Reigned 63 years over the height of the Industrial Revolution and Pax Britannica. Transformed the Crown into a non-partisan moral anchor of constitutional democracy, earning the title Grandmother of Europe through royal diplomacy.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于将个人权威与组织长期品牌价值观高度绑定，成为体系抵御风浪的道德灯塔与信任压舱石；懂得放权予专业职业经理人（首相），确保制度自驱动运转。",
+      "strengthAdviceEn": "Harmonizes institutional governance with timeless brand credibility, acting as a non-partisan stabilizing beacon while empowering elite executive ministers.",
+      "weaknessAdviceZh": "对传统礼仪规范的固执坚守容易在晚年出现与青年一代思想脱节；长期的退隐悲悼心理容易削弱王室公共能见度，需时刻维护组织对外公信力活力。",
+      "weaknessAdviceEn": "Rigid attachment to moral traditionalism risks friction with emergent generational sensibilities. Avoid withdrawing from operational visibility during periods of bereavement.",
+      "historicalQuoteZh": "时代史家评道：「维多利亚不仅统治了一个帝国，她定义了一个时代，她让大英帝国的王冠在工业与民主的大浪淘沙中坚不可摧。」",
+      "historicalQuoteEn": "Historians recorded: Victoria did not merely rule an empire; she defined an epoch, cementing the constitutional crown amidst the storms of industrialization.",
+      "auxiliaryStrengthsZh": [
+          "善于确立组织长效道德标准与信任资产，为体系提供稳定核心",
+          "深谙宪政权力边界，充分放权专业内阁同时保持至高威望"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Establishes enduring cultural and moral credibility that anchors systemic stability",
+          "Understands constitutional governance boundaries, delegating power effectively while retaining ultimate dignity"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "个人好恶过于鲜明（如厚待迪斯雷利而疏远格莱斯顿），易受偏见左右",
+          "阿尔伯特亲王逝后长期深居简出，导致公共形象与朝野沟通阶段性脱节"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Personal partiality toward favored ministers risked perceptions of political bias",
+          "Protracted periods of private seclusion occasionally created public communication vacuums"
+      ]
+  },
+  {
+      "id": "benjamin_disraeli",
+      "nameZh": "本杰明·迪斯雷利",
+      "nameEn": "Benjamin Disraeli",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 维多利亚一国保守主义 (1868-1881)",
+      "eraNameEn": "Modern West · Victorian One-Nation Conservatism (1868-1881)",
+      "positionZh": "英国首相 · 一国保守主义奠基者 · 帝国地缘战略家",
+      "positionEn": "Prime Minister of the United Kingdom · Founder of One-Nation Conservatism · Imperial Strategist",
+      "personalityZh": "才华横溢、极富浪漫想象力、辞令华美敏锐、善解人意、兼具民粹洞察与帝国宏图",
+      "personalityEn": "Brilliant, romantically imaginative, master of parliamentary rhetoric, empathetic, blending populist intuition with grand imperial vision",
+      "deedsZh": "开创「一国保守主义」（One Nation Conservatism），将社会改良与传统秩序结合以争取劳工阶层；果断向罗斯柴尔德家族紧急借款买下苏伊士运河控制权，策封维多利亚女王为印度女皇；在柏林会议上巧妙遏制俄国扩张，赢得「体面的和平」。",
+      "deedsEn": "Pioneered One-Nation Conservatism bridging aristocratic order with working-class social reform. Audaciously purchased control of the Suez Canal with Rothschild loans, made Victoria Empress of India, and checked Russian expansion at the Congress of Berlin.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "偏财",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "偏财格",
+      "strengthAdviceZh": "极善把握民众与领袖的情感心理脉搏，能将宏大的地缘战略转化为震撼人心的政治叙事；善于利用金融资本与杠杆工具抢占核心战略资产咽喉。",
+      "strengthAdviceEn": "Masters emotional intelligence and compelling narrative framing, translating complex geopolitical imperatives into gripping visions while executing agile capital maneuvers.",
+      "weaknessAdviceZh": "热衷戏剧化博弈与帝国冒险有时容易背负过度财政债务；在政策推行中需注重扎实的基层法条推敲，避免口惠而实不至的华而不实倾向。",
+      "weaknessAdviceEn": "Theatrical flair and geopolitical gambits risk fiscal strain. Reinforce grand oratory with rigorous administrative follow-through.",
+      "historicalQuoteZh": "俾斯麦在柏林会议上赞叹：「那个年迈的犹太人，才是这里真正的人物（Der alte Jude, das ist der Mann!）。」",
+      "historicalQuoteEn": "Bismarck observed at the Congress of Berlin: The old Jew, that is the man!",
+      "auxiliaryStrengthsZh": [
+          "精于叙事构建与心理赋能，善打动人心凝聚最高决策层支持",
+          "敏锐捕捉关键战略通道枢纽（如苏伊士运河），敢下重注锁定胜手"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Master of narrative architecture and executive psychology that secures elite buy-in",
+          "Seizes critical geopolitical chokepoints with bold capital intervention"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政治作风有时带有较浓厚的表演与投机色彩，引来政敌深重猜忌",
+          "帝国扩张前线过长导致后期军费预算吃紧，民生内政易受挤压"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Flamboyant political showmanship occasionally invites charges of opportunistic insincerity",
+          "Overextended imperial defense commitments create severe budgetary pressures"
+      ]
+  },
+  {
+      "id": "william_ewart_gladstone",
+      "nameZh": "威廉·尤尔特·格莱斯顿",
+      "nameEn": "William Ewart Gladstone",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 自由主义巅峰时代 (1868-1894)",
+      "eraNameEn": "Modern West · Gladstonian Liberalism (1868-1894)",
+      "positionZh": "四度出任英国首相 · 自由主义旗手 · 「大长者」",
+      "positionEn": "Four-Time Prime Minister of the United Kingdom · The Grand Old Man · Champion of Liberalism",
+      "personalityZh": "道德严谨、极其勤勉、雄辩滔滔、笃信财政节俭与自由贸易、执着理想",
+      "personalityEn": "Morally uncompromising, tirelessly industrious, oratorical powerhouse, devoted to fiscal austerity and free trade, passionately righteous",
+      "deedsZh": "四度组阁执掌英国，推行全面的司法、公务员与世俗教育制度改革，确立秘密投票制与初等教育普及；奉行严苛的财政赤字控制与零关税自由贸易；晚年不顾党内分裂坚决推动爱尔兰地方自治法案（Irish Home Rule）。",
+      "deedsEn": "Served as Prime Minister four separate times, institutionalizing the competitive civil service, secret ballot, and universal elementary education. Pioneered Gladstonian finance based on low taxation and balanced budgets, and championing Irish Home Rule.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "伤官"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "具有超强的制度构建力与财政内控把关能力；崇尚程序正义与道德纯洁性，善于通过自上而下的系统立法革除体制积弊与寻租空间。",
+      "strengthAdviceEn": "Commands peerless institutional discipline and fiscal austerity, driving sweeping systemic reforms that eradicate bureaucratic corruption and rent-seeking.",
+      "weaknessAdviceZh": "道德优越感过强往往导致对待不同意见者缺乏灵活性与人情温度；对重大敏感地缘危机（如苏丹戈登事件）反应迟缓，容易在对外抗争中陷于被动孤立。",
+      "weaknessAdviceEn": "Intense moral righteousness can alienate practical allies and monarchical patrons. Avoid unyielding doctrinal rigidity when geopolitical crises require swift pragmatic force.",
+      "historicalQuoteZh": "维多利亚女王曾抱怨其说话像「对我发表群众演说」；而英国公众则亲切地尊其为人民的「大长者」（Grand Old Man）。",
+      "historicalQuoteEn": "Queen Victoria famously lamented: He speaks to me as if I were a public meeting; yet the British public venerated him as the Grand Old Man.",
+      "auxiliaryStrengthsZh": [
+          "财政内控与审计把关极为严格，能为组织打造清明健康的运行底盘",
+          "具备崇高的道义号召力与长期主义立法韧劲，制度改革穿透力强"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Incomparable fiscal stewardship and administrative integrity building a clean operational base",
+          "Transcendent moral conviction that propels enduring structural reforms through deep headwinds"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "道德说教意味过重，往往让同僚和上层感到压抑与疏离",
+          "对外战略过于迷信和平理性道义，遭遇现实武力挑战时决断迟滞"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Sanctimonious posture can alienate executive peers and key institutional sponsors",
+          "Over-reliance on legalistic moralism can paralyze timely military or decisive responses"
+      ]
+  },
+  {
+      "id": "camillo_cavour",
+      "nameZh": "卡米洛·加富尔",
+      "nameEn": "Camillo Cavour",
+      "dynastyZh": "意大利王国",
+      "dynastyEn": "Kingdom of Italy",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 意大利复兴与统一大业 (1852-1861)",
+      "eraNameEn": "Modern West · Italian Risorgimento (1852-1861)",
+      "positionZh": "撒丁王国首相 · 意大利统一总设计师 · 现代意大利奠基人",
+      "positionEn": "Prime Minister of Piedmont-Sardinia · Architect of Italian Unification · Foundational Statesman",
+      "personalityZh": "务实精明、擅长国际借力、经济改革先驱、极富耐性、政略布局缜密",
+      "personalityEn": "Shrewdly pragmatic, master of diplomatic leverage, modernizing economist, infinitely patient, meticulously strategic",
+      "deedsZh": "在皮埃蒙特推行工业化、铁路建设与自由贸易改革夯实国力；通过出兵克里米亚战争打入欧洲大国俱乐部，巧妙利用拿破仑三世联法抗奥收复伦巴第；因势利导统合加里波第红衫军，成功实现意大利王国的统一建立。",
+      "deedsEn": "Modernized Piedmont through railways and free trade. Leveraged participation in the Crimean War to secure French military alliance against Austria, astutely assimilating Garibaldi's southern conquests to proclaim a unified Kingdom of Italy.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "偏财",
+          "正官",
+          "正印"
+      ],
+      "patternType": "偏财格",
+      "strengthAdviceZh": "善于以小博大借调国际大国力量化解自身硬实力短板；长于将内政经济造血能力与外部外交杠杆完美闭环，以极高情商驾驭不可控的激进盟友。",
+      "strengthAdviceEn": "Masters diplomatic leverage to compensate for tangible material deficits, aligning domestic economic capacity with international alliances to achieve grand strategic integration.",
+      "weaknessAdviceZh": "频繁的多边利益交易有时不得不牺牲核心领土资产（如将尼斯与萨伏伊割让法国）；在快速吞并整合异质化区域时需深耕基层治理，防范长期南北发展割裂。",
+      "weaknessAdviceEn": "Complex diplomatic bargaining can involve painful territorial concessions. Rapid territorial assimilation requires deep grassroots administrative investment to avoid systemic regional divides.",
+      "historicalQuoteZh": "历史定论：「加富尔是意大利统一的头脑，正如加里波第是佩剑，马志尼是灵魂。」",
+      "historicalQuoteEn": "Historical consensus: Cavour was the brain of Italian unification, just as Garibaldi was its sword and Mazzini its soul.",
+      "auxiliaryStrengthsZh": [
+          "精通经济造血与国际借力，能用最小代价撬动最宏大地缘结果",
+          "善于调和体制内外不同阵营力量，政治手腕圆融老辣"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Seamlessly integrates economic modernization with international diplomatic leverage",
+          "Adept at balancing radical grassroots insurgents with established monarchical power"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "外交折冲过于频繁易招致极端民族主义阵营的道德指责",
+          "统一节奏过快给国家留下长期的南北发展失衡与基层融合难题"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Pragmatic territorial compromises provoke fierce blowback from ideological purists",
+          "Rapid geographic annexation outpaced cultural and administrative integration"
+      ]
+  },
+  {
+      "id": "giuseppe_garibaldi",
+      "nameZh": "朱塞佩·加里波第",
+      "nameEn": "Giuseppe Garibaldi",
+      "dynastyZh": "意大利王国",
+      "dynastyEn": "Kingdom of Italy",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 意大利统一与千人远征 (1848-1870)",
+      "eraNameEn": "Modern West · Italian Unification & Expedition of the Thousand (1848-1870)",
+      "positionZh": "游击战名将 · 两西西里独裁官 · 意大利统一之剑",
+      "positionEn": "Master Guerrilla Commander · Dictator of the Two Sicilies · Sword of Italian Unification",
+      "personalityZh": "英勇绝伦、赤诚忠烈、视权势如浮云、极具平民亲和力、战场直觉敏锐",
+      "personalityEn": "Heroically fearless, fiercely sincere, indifferent to personal power, beloved by the masses, possessing brilliant tactical intuition",
+      "deedsZh": "率领仅一千名志愿红衫军渡海远征西西里，以弱胜强奇迹般推翻两西西里王国统治；在沃图尔诺战役击溃正规军后，在泰阿诺会面中将整个南意大利的统治权无私移交给维克托·伊曼纽尔二世，隐退回卡普雷拉岛耕作。",
+      "deedsEn": "Led the legendary Expedition of the Thousand, overthrowing the Bourbon Kingdom of the Two Sicilies with asymmetric guerrilla audacity. At Teano, selflessly handed all southern conquests to King Victor Emmanuel II before retiring to his farm.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "伤官",
+          "比肩"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于在毫无常规资源保障的绝境下发动群众，以超高士气与不对称游击战法击碎庞大陈腐体系；具有天下为公的至高人格魅力。",
+      "strengthAdviceEn": "Ignites grassroots zeal to conquer seemingly impossible odds, utilizing asymmetric, high-mobility tactical warfare while remaining totally untainted by personal ambition.",
+      "weaknessAdviceZh": "政治成熟度与行政制度管理能力不足，容易被更老练成熟的政客利用借力后边缘化；必须强化对制度规则与政治妥协机理的深度理解。",
+      "weaknessAdviceEn": "Guileless military idealism can be easily outmaneuvered by seasoned political bureaucrats. Complement martial passion with sophisticated administrative acumen.",
+      "historicalQuoteZh": "全欧洲自由主义阵营尊其为「两半球的英雄」；亚伯拉罕·林肯曾正式邀请其出任美国内战联邦军高级司令官。",
+      "historicalQuoteEn": "Celebrated as the Hero of Two Worlds; Abraham Lincoln officially offered him high command in the Union Army during the American Civil War.",
+      "auxiliaryStrengthsZh": [
+          "极具平民号召力与战役突击胆魄，善于以非正规战打碎庞大对手",
+          "胸怀坦荡不恋权柄，关键时刻能为了国家大局无私退让"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Galvanizes volunteer devotion with unmatched operational audacity and asymmetric warfare",
+          "Immense purity of purpose that surrenders supreme power without a shred of ego"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "缺乏长期行政体系运营与财政管理能力，难以主导后方治理",
+          "行事凭直觉与赤子之心驱动，容易在复杂阴险的政坛博弈中受挫"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Lacks bureaucratic stamina and administrative discipline for protracted governance",
+          "Impulsive moral innocence is ill-equipped for subtle peacetime political intrigue"
+      ]
+  },
+  {
+      "id": "helmuth_von_moltke_the_elder",
+      "nameZh": "老毛奇",
+      "nameEn": "Helmuth von Moltke the Elder",
+      "dynastyZh": "德意志帝国",
+      "dynastyEn": "German Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代总参谋部与近代战争革新 (1857-1888)",
+      "eraNameEn": "Modern West · General Staff Modernization & Warfare (1857-1888)",
+      "positionZh": "大总参谋长 · 陆军元帅 · 现代参谋部之父",
+      "positionEn": "Chief of the Prussian General Staff · Field Marshal · Architect of Modern Military Command",
+      "personalityZh": "沉静内敛、思维缜密如钟表、精通技术与后勤、善于委托指挥体系",
+      "personalityEn": "Reserved, possessing clockwork analytical precision, technological and logistical pioneer, creator of mission-type tactics",
+      "deedsZh": "将近代铁路网与有线电报系统深度融入战争筹划，提出「分进合击」与「任务委任指挥」（Auftragstaktik）思想；主导普鲁士大总参谋部在克尼格雷茨战役与色当战役中精准歼灭奥法主力军，奠定德意志帝国军事神话。",
+      "deedsEn": "Integrated modern railroads and the telegraph into strategic planning, pioneering Auftragstaktik (mission-type command). Guided the General Staff to decisive encirclement victories at Koniggratz and Sedan, revolutionizing modern staff operations.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "偏印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于搭建现代分布式赋能组织架构；长于以工业化基础设施支撑业务前线，给予前方单元充分决策自主权，实现大规模协同与瞬时响应的完美统一。",
+      "strengthAdviceEn": "Architect of modern distributed organizational command, leveraging cutting-edge infrastructure while delegating tactical autonomy to front-line leaders.",
+      "weaknessAdviceZh": "过度追求军事战役上的速胜与技术完美，容易在长期政治结局构建上退位让步；战争机器一旦发动，必须受严谨政治目的统驭（克劳塞维茨铁律）。",
+      "weaknessAdviceEn": "Technical and operational perfection must never eclipse overarching grand-strategic and political sanity. Ensure operational instruments remain subordinate to long-term policy.",
+      "historicalQuoteZh": "德意志军界传世名言出其之口：「没有一个作战计划能够在与敌人主力接触后依然完全成立。」",
+      "historicalQuoteEn": "Penned the immortal operational maxim: No plan of operations extends with certainty beyond the first encounter with the enemy's main force.",
+      "auxiliaryStrengthsZh": [
+          "开创现代科学参谋与扁平化授权体系，大幅提升组织协同效率",
+          "精通现代基础设施与新技术应用，善于将后勤壁垒转化为胜势"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Founded scientific staff architecture and mission-driven command delegation",
+          "Harnesses cutting-edge technology and logistical infrastructure into operational leverage"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于偏重军事推演技术细节，对战后地缘政治复杂性考量不足",
+          "面对政治领袖介入时偏好专业割裂，容易形成军政沟通脱节"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Hyper-focus on operational elegance can neglect subtle geopolitical ramifications",
+          "Insistence on military autonomy risks friction with grand political stewardship"
+      ]
+  },
+  {
+      "id": "alfred_von_schlieffen",
+      "nameZh": "阿尔弗雷德·冯·施里芬",
+      "nameEn": "Alfred von Schlieffen",
+      "dynastyZh": "德意志帝国",
+      "dynastyEn": "German Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 总参谋部与速决战大战略 (1891-1906)",
+      "eraNameEn": "Modern West · General Staff & Grand Strategy (1891-1906)",
+      "positionZh": "大总参谋长 · 陆军大将 · 施里芬计划制定者",
+      "positionEn": "Chief of the German General Staff · Generaloberst · Architect of the Schlieffen Plan",
+      "personalityZh": "偏执专注、追求绝对歼灭、崇尚两翼大包围、工作狂、推演大师",
+      "personalityEn": "Obsessively focused, devoted to total decisive annihilation, master of double-envelopment doctrine, tireless operational planner",
+      "deedsZh": "担任德意志帝国总参谋长十五年，痴迷于坎尼战役模式研究；制定旨在克服两线作战危局的「施里芬计划」，主张集中帝国陆军右翼绝对优势穿过比利时迅速包抄歼灭法军主力；临终留下著名遗言「务必使右翼保持强韧」。",
+      "deedsEn": "Served 15 years as Chief of the General Staff, obsessively formulating the Schlieffen Plan to resolve Germany's two-front dilemma. Envisioned a massive right-wing sweep through Belgium to envelop Paris and destroy the French army, famously whispering on his deathbed: Keep the right wing strong.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "偏印",
+          "伤官"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于围绕核心致命痛点进行极致的战术数学推演与非对称兵力配置；能将复杂的两线危局简化为雷霆一击的破局公式。",
+      "strengthAdviceEn": "Designs hyper-focused mathematical models and concentrated force structures to crack systemic deadlocks, pursuing absolute operational leverage.",
+      "weaknessAdviceZh": "严防脱离政治外交环境与现实后勤物理极限的沙盘推演偏执！过于僵硬的作战预案一旦遭遇突发变数（如比利时抵抗与英国参战），系统极易发生毁灭性死锁。",
+      "weaknessAdviceEn": "Guard against rigid theoretical perfectionism that ignores political realities and logistical limits. Over-engineered masterplans collapse when fluid assumptions fail.",
+      "historicalQuoteZh": "军事史家李德·哈特评赞：「施里芬是一位极富想象力的战术艺术家，但他把战略当成了纯粹的力学，忽略了人性和政治的摩擦。」",
+      "historicalQuoteEn": "B.H. Liddell Hart commented: Schlieffen was an imaginative operational artist, but he treated war as pure mechanics, neglecting psychological and political friction.",
+      "auxiliaryStrengthsZh": [
+          "长于极致聚焦的单点爆破与大迂回战役构想，战术穿透力极强",
+          "治军推演极其严苛周密，对参谋团队培养标准极高"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Master of sweeping double envelopment concepts designed for total tactical disruption",
+          "Demands supreme analytical rigor and meticulous planning from executive staff"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "计划缺乏弹性与应变容错冗余，关键支点受阻即可能引发全盘停滞",
+          "忽视外部政治盟约与国际法外交后果，容易引发严重战略反噬"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Zero tolerance for friction creates systemic fragility when timeline assumptions crack",
+          "Blinded to diplomatic and geopolitical consequences of aggressive operational pathways"
+      ]
+  },
+  {
+      "id": "alfred_thayer_mahan",
+      "nameZh": "阿尔弗雷德·塞耶·马汉",
+      "nameEn": "Alfred Thayer Mahan",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代海权理论奠基 (1885-1914)",
+      "eraNameEn": "Modern West · Foundations of Modern Sea Power (1885-1914)",
+      "positionZh": "海军少将 · 历史学家 · 《海权论》创始人",
+      "positionEn": "Rear Admiral · Naval Historian · Founder of Sea Power Theory",
+      "personalityZh": "视野恢弘、洞察深邃、善于总结地缘历史规律、坚定笃实、理论建构力强",
+      "personalityEn": "Monumental geopolitical horizon, profound historical insight, disciplined, establishing enduring strategic doctrines",
+      "deedsZh": "出版划时代巨著《海权对历史的影响（1660-1783）》，提出海权决定大国兴衰与世界霸权演变；主张建立由主力战列舰组成的决战舰队并掌控关键海上交通咽喉，深刻启发了老罗斯福、德皇威廉二世与近代日本海军战略。",
+      "deedsEn": "Authored The Influence of Sea Power upon History (1660-1783), establishing that command of the sea determines national greatness. Advocated concentrated battle fleets and strategic chokepoints, profoundly shaping Theodore Roosevelt, Kaiser Wilhelm II, and modern global maritime strategy.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "正官",
+          "偏印"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备跨越世纪的宏观战略洞察力，善于从海量历史数据中提炼出主宰大格局演化的核心底层逻辑（海权与通道控制）；能以权威理论武装决策层。",
+      "strengthAdviceEn": "Possesses sweeping macro vision that distills generational geopolitical rules, identifying critical strategic chokepoints and weaponizing doctrinal frameworks for statecraft.",
+      "weaknessAdviceZh": "理论若被狂热野心家教条式理解，易引发破坏性的全球军备竞赛（如英德海军造舰竞赛）；战略规划需平衡硬实力扩张与民生财政负担。",
+      "weaknessAdviceEn": "Doctrines dogmatically applied can trigger destructive arms races (e.g. Anglo-German naval rivalry). Balance capital-intensive military scaling with sustainable fiscal health.",
+      "historicalQuoteZh": "历史公认：「马汉的书改变了世界航道的走向，他是近代世界上影响力仅次于克劳塞维茨的战略理论家。」",
+      "historicalQuoteEn": "Global consensus: Mahan's writings shifted global maritime history, establishing him as one of the most influential strategists since Clausewitz.",
+      "auxiliaryStrengthsZh": [
+          "善于发现决定大局生死的非对称核心杠杆（海权与战略通道）",
+          "理论体系逻辑严谨磅礴，对国家最高决策具有深远塑造力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Identifies asymmetric levers of global dominance such as maritime communication corridors",
+          "Formulates rigorous doctrinal treatises that fundamentally reshape grand strategy"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于强调决战舰队大舰巨炮，低估了潜艇与非对称破交战术的新威胁",
+          "理论门槛过高，若脱离具体国情盲目模仿易拖垮本国财政"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Overemphasized concentrated capital fleets while underestimating asymmetric submarine warfare",
+          "Uncritical adoption by emerging powers risked crippling national treasuries"
+      ]
+  },
+  {
+      "id": "theodore_roosevelt",
+      "nameZh": "西奥多·罗斯福",
+      "nameEn": "Theodore Roosevelt",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 进步时代与崛起霸权 (1901-1909)",
+      "eraNameEn": "Modern West · Progressive Era & Rising World Power (1901-1909)",
+      "positionZh": "第26任美国总统 · 诺贝尔和平奖得主 · 进步主义领袖",
+      "positionEn": "26th President of the United States · Nobel Peace Prize Laureate · Progressive Leader",
+      "personalityZh": "精力无限、斗志昂扬、敢作敢当、兼具开拓霸气与改革正义感、博学多才",
+      "personalityEn": "Boundlessly energetic, fiercely pugnacious, charismatic, crusading reformer, combining imperial audacity with progressive justice",
+      "deedsZh": "在内政中推行「公平施政」（Square Deal），挥动反托拉斯大棒拆解标准石油与垄断巨头，设立国家公园保护自然资源；对外奉行「巨棒外交」，主持修建巴拿马运河，调停日俄战争促成《朴茨茅斯和约》，派遣大白舰队环球航行宣示大国崛起。",
+      "deedsEn": "Spearheaded the Square Deal, busting monopolistic trusts and preserving millions of acres of national forests. Internationally wielded Big Stick diplomacy, constructed the Panama Canal, brokered the Treaty of Portsmouth ending the Russo-Japanese War, and dispatched the Great White Fleet.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "比肩",
+          "伤官"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "拥有无与伦比的领袖能量与开创魄力，善于向既得利益垄断集团主动宣战重塑行业规则；长于以高威慑力的硬实力为后盾进行高效和平博弈。",
+      "strengthAdviceEn": "Commands relentless executive energy and crusading courage, breaking entrenched monopolies while pairing overwhelming deterrent capability with diplomatic mediation.",
+      "weaknessAdviceZh": "好勇斗狠的个性有时显得过于咄咄逼人，外交干预主义若无节制容易在拉美等外围引发长期怨恨；决策需注意留出柔性缓冲余地。",
+      "weaknessAdviceEn": "Uncompromising pugnacity risks unnecessary confrontations and imperialist friction in peripheral regions. Modulate aggressive rhetoric with collaborative reassurance.",
+      "historicalQuoteZh": "其著名家训响彻世界：「温言在口，大棒在手，故而致远（Speak softly and carry a big stick; you will go far）。」",
+      "historicalQuoteEn": "His immortal leadership maxim remains an American legend: Speak softly and carry a big stick; you will go far.",
+      "auxiliaryStrengthsZh": [
+          "具备排山倒海般的执行推动力与打破利益固化格局的勇气",
+          "极善把握硬实力威慑与高明外交调停的辩证平衡"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Overwhelming executive vitality that smashes institutional paralysis and monopolies",
+          "Balances credible military deterrence with masterful diplomatic arbitration"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "行事风格过于强势霸道，有时给盟友和下属施加过度心理压迫",
+          "介入主义冲动过强，容易过度承诺超出地缘核心利益"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Domineering interpersonal style can overwhelm colleagues and create friction",
+          "Interventionist impulse risks overextending commitments beyond core frontiers"
+      ]
+  },
+  {
+      "id": "thomas_edison",
+      "nameZh": "托马斯·爱迪生",
+      "nameEn": "Thomas Edison",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 工业实验室与发明产业化 (1876-1931)",
+      "eraNameEn": "Modern West · Industrial R&D & Commercial Innovation (1876-1931)",
+      "positionZh": "发明家 · 通用电气创始人 · 门洛帕克的奇迹",
+      "positionEn": "Inventor & Industrial Entrepreneur · Founder of General Electric · Wizard of Menlo Park",
+      "personalityZh": "坚忍不拔、不知疲倦、极具商业敏锐度、注重实用价值、专利意识极强",
+      "personalityEn": "Indomitably persistent, tireless, intensely commercial, pragmatically focused, fiercely protective of intellectual property",
+      "deedsZh": "建立世界上第一个工业化研发实验室（门洛帕克实验室），将发明由个人手工转化为团队流水线产业；完善白炽灯泡并建立珍珠街中心发电站与直流供电系统，发明留声机、活动电影放映机，一生拥有1093项专利，创立通用电气公司（GE）。",
+      "deedsEn": "Pioneered the modern industrial research laboratory at Menlo Park, institutionalizing systematic technological invention. Perfected the incandescent electric lamp, established the Pearl Street central power station, invented the phonograph, and founded General Electric with 1,093 patents.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正财",
+          "伤官",
+          "偏印"
+      ],
+      "patternType": "正财格",
+      "strengthAdviceZh": "善于将技术研发与商业变现、规模化量产深度绑定；具备惊人的迭代实验毅力，善于组织跨学科工程团队实现技术工业化量产落地。",
+      "strengthAdviceEn": "Merges scientific innovation with industrial-scale commercialization and intellectual property moats, driving relentless empirical iteration to achieve market dominance.",
+      "weaknessAdviceZh": "技术执念过深可能演变为对颠覆性新技术路线的盲目排斥与恶性打压（如电流战争中对特斯拉与交流电的抹黑）；需保持开放胸怀接纳范式迭代。",
+      "weaknessAdviceEn": "Entrenched technological and commercial investment can breed destructive resistance to superior innovations (e.g. War of the Currents against AC). Embrace structural paradigm shifts.",
+      "historicalQuoteZh": "爱迪生传世名言激励整个人类近代史：「天才是百分之一的灵感，加上百分之九十九的汗水。」",
+      "historicalQuoteEn": "His timeless maxim continues to inspire global engineering: Genius is one percent inspiration, ninety-nine percent perspiration.",
+      "auxiliaryStrengthsZh": [
+          "极具商业眼光与产业化落地能力，善将技术专利转化为庞大商业帝国",
+          "拥有超常的试错耐受力与拼搏精神，以汗水换取技术飞跃"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Unites technical invention with shrewd commercialization and patent architecture",
+          "Exceptional stamina for high-volume iterative experimentation and relentless trial"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "商业竞争手段有时过于苛刻狠辣，在电流之争中留下道德瑕疵",
+          "对既有技术路径沉没成本过分固执，容易延误拥抱新技术范式"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aggressive competitive tactics in commercial rivalries damaged ethical standing",
+          "Stubborn attachment to proprietary legacy standards can delay adoption of superior paradigms"
+      ]
+  },
+  {
+      "id": "nikola_tesla",
+      "nameZh": "尼古拉·特斯拉",
+      "nameEn": "Nikola Tesla",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 交流电革命与无线电先驱 (1884-1943)",
+      "eraNameEn": "Modern West · AC Revolution & Wireless Visionary (1884-1943)",
+      "positionZh": "发明家 · 电气工程师 · 交流电之父 · 现代科技普罗米修斯",
+      "positionEn": "Inventor & Electrical Engineer · Father of Alternating Current · Technological Prometheus",
+      "personalityZh": "天马行空、具有超凡工程直觉、纯粹理想主义、不羁超脱、视金钱如尘土",
+      "personalityEn": "Transcendent visionary, possessing miraculous mental engineering visualization, pure idealist, unconventional, unconcerned with commercial wealth",
+      "deedsZh": "发明多相交流电系统与感应电动机，在1893年芝加哥世博会与尼亚加拉瀑布水电站中彻底战胜直流电；开发特斯拉线圈、无线电通信雏形（后获美最高法院追认优先权），提出全球无线能量传输（沃登克里夫塔）等超时代的未来科技蓝图。",
+      "deedsEn": "Invented the polyphase alternating current power system and induction motor, illuminating the 1893 Chicago World's Fair and harnessing Niagara Falls. Pioneered radio transmission, robotics, and Tesla coils, conceptualizing visionary wireless power systems.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "偏印",
+          "七杀"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "拥有跨越时代的先知般远见与极致深邃的物理空间想象力；善于以颠覆性的底层第一性原理重构能量与信息传递范式。",
+      "strengthAdviceEn": "Possesses prophetic technological foresight and three-dimensional mental visualization, revolutionizing energy and communication through radical first-principles thinking.",
+      "weaknessAdviceZh": "极度缺乏商业契约意识与资本运营能力；在推行超前项目时若脱离当时工业基础设施与投资人容忍度，极易导致项目烂尾与晚年凄凉困顿。",
+      "weaknessAdviceEn": "Critical deficiency in commercial statecraft and financial management. Untethered visionary moonshots that ignore current industrial infrastructure risk commercial ruin.",
+      "historicalQuoteZh": "科学界公认其为现代工业文明奠基者之一：「如果世界上没有特斯拉，现代工业和电力生活将倒退数十年。」",
+      "historicalQuoteEn": "Scientific consensus celebrates him: Without Tesla, the electrified infrastructure of the modern industrial world would have been delayed by decades.",
+      "auxiliaryStrengthsZh": [
+          "具备超越时代的颠覆性科技先知洞见，能开创全新工业范式",
+          "思维不受世俗利益与传统成见束缚，技术探索纯粹极致"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Epoch-defining technological prescience that unearths revolutionary physical paradigms",
+          "Pure devotion to craft totally unpolluted by mercenary commercial compromise"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "严重欠缺商业运营与资产自保意识，关键专利权益易遭掠夺",
+          "构想过于超前脱离当代制造能力支撑，容易陷入资源枯竭窘境"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Severe vulnerability in contractual negotiation and long-term financial self-defense",
+          "Blueprints often outstripped contemporary manufacturing capabilities, causing resource exhaustion"
+      ]
+  },
+  {
+      "id": "charles_darwin",
+      "nameZh": "查尔斯·达尔文",
+      "nameEn": "Charles Darwin",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 生物进化论与科学范式革命 (1831-1882)",
+      "eraNameEn": "Modern West · Evolutionary Biology & Paradigm Shift (1831-1882)",
+      "positionZh": "博物学家 · 进化论奠基人 · 《物种起源》作者",
+      "positionEn": "Naturalist · Founder of Evolutionary Biology · Author of On the Origin of Species",
+      "personalityZh": "极其耐心细致、观察入微、求真审慎、谦逊温和、具有惊人的实证精神",
+      "personalityEn": "Meticulously observant, empirical, cautious scholar, humble, quiet revolutionary driven by unyielding factual evidence",
+      "deedsZh": "随小猎犬号历经五年环球科学考察，在加拉帕戈斯群岛积累海量实证样本；沉潜二十余年缜密求证，发表震撼世界的《物种起源》，确立「物竞天择，适者生存」的自然选择学说，彻底颠覆了神创论与人类起源认知。",
+      "deedsEn": "Voyaged on HMS Beagle collecting geological and biological evidence across the globe. After two decades of exhaustive empirical validation, published On the Origin of Species (1859), revolutionizing human understanding through natural selection.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "偏印",
+          "正财"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "善于在漫长的时间周期中潜心积累底层第一手真实数据，通过海量拼图归纳出主导系统演化的终极规律；行事审慎求真，经得起最严苛的科学检验。",
+      "strengthAdviceEn": "Excels at patient multi-year empirical data accumulation, deducing universal structural laws from microscopic observations and building unassailable evidential frameworks.",
+      "weaknessAdviceZh": "面对革命性成果引起的巨大社会争议与教条围攻，性格过于内敛温和，需依赖赫胥黎（「达尔文的斗犬」）等强势公关盟友出面辩护；学者需善择前线捍卫者。",
+      "weaknessAdviceEn": "Gentle and conflict-averse disposition requires formidable public champions (like Huxley, Darwin's Bulldog) to wage external battles against entrenched dogma.",
+      "historicalQuoteZh": "人类科学史公认：《物种起源》是人类思想史上最具颠覆性的一本书，达尔文与牛顿、爱因斯坦并列为科学史三座丰碑。",
+      "historicalQuoteEn": "Scientific consensus: Origin of Species stands as one of the most transformative books in human history, placing Darwin alongside Newton and Einstein.",
+      "auxiliaryStrengthsZh": [
+          "具备惊人的长期主义定力与微观洞察力，善于归纳系统演进终极规律",
+          "求真务实极其审慎，以不可动摇的翔实数据构筑学术壁垒"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Extraordinary long-term empirical patience that deduces profound systemic laws",
+          "Meticulous verification habits that construct invulnerable evidence-based arguments"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "性格过于温和回避正面舆论冲突，抗击恶意非议的进攻性不足",
+          "对自身成果过分谨慎推迟发表，险些被华莱士抢先首发"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aversion to direct controversy leaves defense of ideas dependent on proxies",
+          "Extreme caution in withholding publication risked losing historical priority to Wallace"
+      ]
+  },
+  {
+      "id": "karl_marx",
+      "nameZh": "卡尔·马克思",
+      "nameEn": "Karl Marx",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 唯物史观与现代政治经济学批判 (1844-1883)",
+      "eraNameEn": "Modern West · Historical Materialism & Political Economy (1844-1883)",
+      "positionZh": "思想家 · 哲学家 · 政治经济学家 · 《资本论》作者",
+      "positionEn": "Philosopher & Political Economist · Revolutionary Socialist · Author of Das Kapital",
+      "personalityZh": "批判锐利、洞察深邃、逻辑宏伟、坚韧不屈、献身劳工解放与社会公平",
+      "personalityEn": "Intellectually incisive, structurally profound, dialectically formidable, indomitable in poverty, devoted to human emancipation",
+      "deedsZh": "创立历史唯物主义与剩余价值学说，揭示资本主义生产方式与经济危机的内在矛盾规律；撰写《共产党宣言》与鸿篇巨著《资本论》，创建第一国际，深刻改写了十九至二十世纪人类政治、经济与思想版图。",
+      "deedsEn": "Co-authored The Communist Manifesto and authored Das Kapital, dissecting the structural mechanics of capitalism, surplus value, and recurring systemic crises. Founded the First International, fundamentally altering modern political and economic history.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "偏印",
+          "正官"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具有刺破一切意识形态表象、直击底层生产力与生产关系核心矛盾的超凡批判洞察力；理论建构磅礴宏大，能为受压迫群体提供强大的行动纲领与终极信仰。",
+      "strengthAdviceEn": "Unrivaled capacity to dismantle superficial socio-economic facades and analyze core structural incentives, providing oppressed movements with an enduring ideological framework.",
+      "weaknessAdviceZh": "宏观理论的深刻批判性在向具体政权建设与微观市场配置落地转化时极度复杂；需防范后继者将其理论教条化、公式化，切戒脱离生产力发展客观阶段。",
+      "weaknessAdviceEn": "Profound macro-critique faces immense friction when translated into pragmatic microeconomic administrative systems. Guard against dogmatic codification that outpaces material realities.",
+      "historicalQuoteZh": "英国广播公司（BBC）千年思想家评选中高居榜首；其墓碑铭刻其名言：「哲学家们只是用不同的方式解释世界，而问题在于改变世界。」",
+      "historicalQuoteEn": "Voted the Greatest Thinker of the Millennium by BBC; his epitaph immortalizes his core creed: The philosophers have only interpreted the world; the point is to change it.",
+      "auxiliaryStrengthsZh": [
+          "具备直击人类生产关系深层矛盾的高维洞察力，思想穿透力极强",
+          "在极端贫困与流亡中矢志不移，具备无可比拟的学术与信仰韧性"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Peerless intellectual penetration into structural economic incentives and power dynamics",
+          "Indomitable ideological conviction that persevered through profound poverty and exile"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于注重阶级斗争的刚性对决，对改良妥协与技术自愈机制考量偏少",
+          "经济理论中对微观市场供求价格自适应机制的细部论述相对薄弱"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Focus on structural conflict can understate market mechanisms of iterative reform",
+          "Microeconomic price-discovery and individual entrepreneurial dynamics were secondary in model"
+      ]
+  },
+  {
+      "id": "friedrich_nietzsche",
+      "nameZh": "弗里德里希·尼采",
+      "nameEn": "Friedrich Nietzsche",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 重估一切价值与现代精神革命 (1872-1889)",
+      "eraNameEn": "Modern West · Transvaluation of Values & Modern Thought (1872-1889)",
+      "positionZh": "哲学家 · 文化批判家 · 诗人 · 「超人」哲学提出者",
+      "positionEn": "Philosopher & Cultural Critic · Poet · Prophet of the Ubermensch",
+      "personalityZh": "激情反叛、狂飙犀利、孤高绝俗、挑战一切传统偶像、文字极具爆破力",
+      "personalityEn": "Fiercely rebellious, caustically brilliant, solitary, smashing historical idols, possessing explosive aphoristic prose",
+      "deedsZh": "宣布「上帝已死」，提出「重估一切价值」、权力意志与「超人」哲学；创作《查拉图斯特拉如是说》、《善恶的彼岸》与《论道德的谱系》，以雷霆般的诗意哲学打破欧洲两千年来基督教奴隶道德传统，开启现代主义、存在主义与后现代思潮之门。",
+      "deedsEn": "Proclaimed the death of God, advocating the transvaluation of all values, will to power, and the Ubermensch. Penned Thus Spoke Zarathustra, Beyond Good and Evil, and On the Genealogy of Morality, dismantling European moral dogmas and igniting existentialism.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "偏印"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "善于用极富爆破力的人格与语言粉碎僵化陈腐的认知枷锁，激发个体在虚无时代重构生命意义与至高创造意志；长于击碎思维定式。",
+      "strengthAdviceEn": "Shatters calcified institutional dogmas with explosive intellectual vitality, inspiring individuals to transcend nihilism and forge heroic self-overcoming.",
+      "weaknessAdviceZh": "思维锋芒极端狂暴傲世，若缺乏稳固的现实锚定物极易反噬心智健康与人际关系；其格言式狂言易被极端极端政治分子歪曲附会，需筑牢人文主义底线。",
+      "weaknessAdviceEn": "Violently unconstrained mental intensity risks personal psychic strain and alienation. Aphoristic provocations must be safeguarded from distortion by destructive ideologies.",
+      "historicalQuoteZh": "尼采自许为「炸药」，其名言震烁古今：「凡不能毁灭我的，必使我更强大。」",
+      "historicalQuoteEn": "Declaring himself dynamite, his immortal aphorism continues to steel the human spirit: What does not kill me makes me stronger.",
+      "auxiliaryStrengthsZh": [
+          "打破旧有教条牢笼的认知破坏力举世无双，能极大地激发个体内在潜能",
+          "以超拔的哲学诗篇构建起抗击虚无与平庸的精神图腾"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Peerless intellectual power to dismantle mental taboos and awaken sovereign creativity",
+          "Constructs heroic, life-affirming frameworks that conquer spiritual nihilism"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "思想过于孤绝激进缺乏温和缓冲，极度不耐繁琐的世俗妥协",
+          "晚年精神负荷超载崩溃，警示后人必须重视身心平衡与心理防线"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Extreme radical individualism resists pragmatic social compromises",
+          "Mental burnout warns against intellectual isolation without emotional anchors"
+      ]
+  },
+  {
+      "id": "louis_pasteur",
+      "nameZh": "路易·巴斯德",
+      "nameEn": "Louis Pasteur",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代微生物学与防疫革命 (1854-1895)",
+      "eraNameEn": "Modern West · Microbiology & Vaccination Revolution (1854-1895)",
+      "positionZh": "微生物学家 · 化学家 · 巴斯德研究所创始人 · 近代医学之父",
+      "positionEn": "Microbiologist & Chemist · Founder of Pasteur Institute · Father of Modern Medicine",
+      "personalityZh": "严谨笃实、热爱人类、实验设计精妙、百折不挠、敢于向医学成见开火",
+      "personalityEn": "Empirically rigorous, devoted to humanity, brilliant experimental designer, tenacious, challenging medical dogmatism",
+      "deedsZh": "彻底推翻「自然发生论」，开创病原微生物学（细菌学说）；发明巴氏消毒法救赎酿酒与乳业；成功研制炭疽疫苗与狂犬病疫苗，建立巴斯德研究所，使全人类人均寿命大幅延长，拯救了亿万生命。",
+      "deedsEn": "Disproved spontaneous generation and established the germ theory of disease. Developed pasteurization for dairy and wine, pioneered life-saving rabies and anthrax vaccines, and established the Pasteur Institute, transforming modern public health and doubling human life expectancy.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "食神",
+          "正官"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "善于以无懈可击的对照实验击溃千百年来流传的荒谬常识与医学迷信；长于将实验室精微科研成果直接转化为拯救产业与生命的大规模公共健康产品。",
+      "strengthAdviceEn": "Combines flawless empirical experimental design with rapid translational execution, converting laboratory breakthroughs into global public health standards that preserve millions of lives.",
+      "weaknessAdviceZh": "在狂犬病疫苗等早期人体实验阶段承担着巨大的伦理与法律破灭风险；在推动跨越式科学冒险时需完善风控流程与医学伦理审查，降低制度性震荡。",
+      "weaknessAdviceEn": "Navigated enormous ethical and legal stakes during the first clinical trials on humans. Mitigate clinical and institutional risks with formal oversight and transparent peer consensus.",
+      "historicalQuoteZh": "巴斯德名言被刻在世界无数实验室门上：「机会只青睐有准备的头脑。」法国公投选其为「历史上最伟大的法国人」前列。",
+      "historicalQuoteEn": "His legendary motto guides researchers worldwide: Fortune favors the prepared mind. Widely celebrated as one of the greatest benefactors of humankind.",
+      "auxiliaryStrengthsZh": [
+          "拥有精湛绝伦的实验设计与科学求证功底，结论无可辩驳",
+          "怀抱深厚人道关怀，善于将科研成果光速转化为产业与民生价值"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Peerless experimental rigor that disproves entrenched misconceptions irrefutably",
+          "Translates laboratory discoveries into transformative humanitarian and industrial solutions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "早期向传统医学权威发起全面宣战树敌颇多，承受巨大心理围攻",
+          "在未完成动物试验前直接救治人体的高风险赌注具有不可复制性"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Direct challenges to traditional medical establishments invited fierce hostility",
+          "High-risk early human interventions were audacious gambits impossible in regulated eras"
+      ]
+  },
+  {
+      "id": "marie_curie",
+      "nameZh": "玛丽·居里",
+      "nameEn": "Marie Curie",
+      "dynastyZh": "法国 / 波兰",
+      "dynastyEn": "France & Poland",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 放射性科学开创与现代物理化学 (1896-1934)",
+      "eraNameEn": "Modern West · Pioneering Radioactivity (1896-1934)",
+      "positionZh": "物理学家兼化学家 · 双料诺贝尔奖得主 · 居里研究所创始人",
+      "positionEn": "Physicist & Chemist · Two-Time Nobel Laureate · Founder of Curie Institutes",
+      "personalityZh": "坚忍不拔、纯粹高洁、专注耐劳、无私奉献、在苦难中坚守科学信仰",
+      "personalityEn": "Incomparably resilient, ethically pure, indefatigably industrious, selfless, unwavering in pursuit of scientific truth",
+      "deedsZh": "在极简陋的棚屋实验室中夜以继日沥青提炼，发现钋（Polonium）与镭（Radium）两大新放射性元素；开创放射性理论，成为历史上首位女性诺贝尔奖得主及唯一一位在物理和化学两个不同领域皆获诺贝尔奖的科学宗师；一战期间亲上前线推广移动X光车救治伤兵。",
+      "deedsEn": "Discovered polonium and radium after laboriously processing tons of pitchblende. Pioneered the theory of radioactivity, becoming the first woman to win a Nobel Prize and the only person to win Nobel Prizes in two distinct sciences. Deployed mobile X-ray units on WWI frontlines.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "偏印",
+          "比肩"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备超越肉体极限的科学专注度与耐受力，能从数以吨计的粗糙废料中提炼出微克级的纯净真理核心；品格崇高，拒绝申请专利将成果无偿献给人类。",
+      "strengthAdviceEn": "Possesses transcendent focus and endurance, extracting microscopic ounces of pure truth from tons of raw chaos while selflessly refusing to patent discoveries for private enrichment.",
+      "weaknessAdviceZh": "为科学事业舍生忘死，长期缺乏对自身放射线辐射的健康物理防护（导致恶性白血病逝世）；追求崇高事业必须配套严密职业安全防护机制。",
+      "weaknessAdviceEn": "Extreme dedication to scientific discovery without protective shields led to fatal radiation poisoning. Enforce rigid personal health and occupational safety protocols.",
+      "historicalQuoteZh": "爱因斯坦由衷赞道：「在所有的著名人物中，居里夫人是唯一一个没有被盛名所腐蚀的人。」",
+      "historicalQuoteEn": "Albert Einstein memorialized her: Of all celebrated figures, Marie Curie is the only one whom fame has not corrupted.",
+      "auxiliaryStrengthsZh": [
+          "拥有不可思议的科研毅力与艰苦卓绝的实干精神，耐得住一切苦难",
+          "品德高尚纯粹无私，将关键技术公之于世服务全人类"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Inhuman persistence and physical resilience that extracts breakthrough truth from hardship",
+          "Profound moral nobility that places humanitarian advancement above personal commercial wealth"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对实验过程中的潜在物理伤害严重缺乏自我保护意识，牺牲巨大",
+          "醉心实验室基础研究，对外部学术政治与世俗舆论防御能力薄弱"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Lacked occupational health safeguards against lethal radiation hazards",
+          "Vulnerable to external media vitriol and academic factional politics"
+      ]
+  },
+  {
+      "id": "max_planck",
+      "nameZh": "马克斯·普朗克",
+      "nameEn": "Max Planck",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 量子假说与现代物理破晓 (1900-1947)",
+      "eraNameEn": "Modern West · Quantum Theory & Modern Physics (1900-1947)",
+      "positionZh": "理论物理学家 · 量子论奠基人 · 诺贝尔物理学奖得主",
+      "positionEn": "Theoretical Physicist · Originator of Quantum Theory · Nobel Laureate",
+      "personalityZh": "为人正派厚重、科学自律极高、勇于推翻既有成见、人格受人爱戴",
+      "personalityEn": "Deeply principled, scientifically disciplined, willing to question own classical assumptions, universally revered",
+      "deedsZh": "为解决黑体辐射紫外灾变，提出划时代的「能量子」假说（E=hv），打破经典力学能量连续性神话，开创量子力学新时代；作为德意志学术领袖极力提携爱因斯坦，二战期间直面希特勒抗议迫害犹太学者。",
+      "deedsEn": "Proposed the revolutionary quantum hypothesis (E=hv) to resolve black-body radiation, dismantling classical continuous physics and birthing quantum mechanics. Championed Einstein and defended persecuted scholars during Nazi oppression.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "正官",
+          "偏印"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备在坚实学术传统基础上勇于自我扬弃、开创全新物理维度的非凡勇气；长于以公允威望提携青年异端天才，充当科学界坚实保护伞。",
+      "strengthAdviceEn": "Possesses the intellectual integrity to challenge personal classical preconceptions, opening radical new frontiers while providing mentorship and institutional cover for nonconformist genius.",
+      "weaknessAdviceZh": "传统德意志保守教养导致其在极权体制早期抗争中偏向温和妥协（「内向流亡」），承受了儿子被杀等深重家庭悲剧；面对极端暴政需具备更早的断离止损敏锐度。",
+      "weaknessAdviceEn": "Traditional institutional loyalty slowed timely political resistance against totalitarianism. Recognize when moral decay in host systems demands total organizational severance.",
+      "historicalQuoteZh": "科学界名言「普朗克科学定律」名垂青史：「一个新的科学真理取得胜利，不是通过让它的反对者信服，而是因为反对者逐渐死去，新一代人成长起来。」",
+      "historicalQuoteEn": "Famed for Planck's Principle: A new scientific truth does not triumph by convincing its opponents, but because its opponents eventually die and a new generation grows up familiar with it.",
+      "auxiliaryStrengthsZh": [
+          "能在经典逻辑极限死穴中敢于引入量子化假设，破壁能力超凡",
+          "为人温和公允德高望重，善于凝聚学术共同体并庇护后进天才"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Daring conceptual leap that postulated quantization to resolve deadlocks",
+          "Unimpeachable moral integrity and institutional stewardship fostering talent"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过分恪守建制内体制规则，早期对极权主义政治险恶缺乏警惕",
+          "在晚年家庭遭遇惨烈政治摧残，警示后人必须提早设立政治避险防火墙"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Excessive procedural institutionalism delayed early resistance to political tyranny",
+          "Endured tragic family losses, emphasizing the need for early political risk firewalls"
+      ]
+  },
+  {
+      "id": "james_clerk_maxwell",
+      "nameZh": "詹姆斯·克拉克·麦克斯韦",
+      "nameEn": "James Clerk Maxwell",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 经典电磁理论统一 (1860-1879)",
+      "eraNameEn": "Modern West · Unification of Classical Electromagnetism (1860-1879)",
+      "positionZh": "理论物理学家与数学家 · 麦克斯韦方程组创立者 · 卡文迪许实验室首任主任",
+      "positionEn": "Theoretical Physicist & Mathematician · Formulator of Maxwell's Equations · First Cavendish Professor",
+      "personalityZh": "天赋异禀、数学直觉出神入化、谦和幽默、善于跨领域大一统抽象",
+      "personalityEn": "Prodigiously gifted, peerless mathematical intuition, modest, witty, master of grand theoretical unification",
+      "deedsZh": "提出著名的麦克斯韦方程组，将电、磁、光三大现象统摄于统一的数学框架之中，预言电磁波的存在并计算出光速即电磁波速；创立分子运动论与彩色摄影三原色理论，筹建世界著名卡文迪许实验室。",
+      "deedsEn": "Formulated Maxwell's equations, unifying electricity, magnetism, and optics into a singular mathematical architecture and predicting electromagnetic waves. Founded statistical thermodynamics and established the famed Cavendish Laboratory.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "正印",
+          "偏印"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备将散乱庞杂的实验现象通过极致优美对称的数学语言进行「大一统」的顶层建模能力；能提前预判未知物理现象与未来工业底层支柱。",
+      "strengthAdviceEn": "Peerless capacity for grand mathematical unification, distilling disparate experimental chaos into symmetrical equations that predict unseen structural reality.",
+      "weaknessAdviceZh": "理论过于超前精深，在其生前仅有极少数顶尖学者能完全读懂；开创性技术需要配套生动直观的展示方案与商业普及者（如赫兹实验证实）。",
+      "weaknessAdviceEn": "Theoretical formulations were so mathematically complex that few contemporaries grasped them. Radical abstractions require accessible demonstrations for widespread adoption.",
+      "historicalQuoteZh": "爱因斯坦评价：「麦克斯韦的成就，是自牛顿以来物理学所经历的最深刻和最富有成效的飞跃。」",
+      "historicalQuoteEn": "Einstein declared: The work of James Clerk Maxwell changed the world forever; it is the most profound and fruitful leap physics experienced since Newton.",
+      "auxiliaryStrengthsZh": [
+          "拥有将庞杂现实提炼为终极对称优美数学模型的超绝大一统能力",
+          "预见力极强，方程中直接推演出电磁波为现代通信奠基"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Supreme ability to unify fragmented phenomena into elegant, symmetric models",
+          "Visionary foresight that derived electromagnetic radiation, founding modern wireless era"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "48岁英年早逝留给人类无尽遗憾，警示天才需极度珍视身体负荷",
+          "生前不重世俗宣传推广，其划时代价值需待赫兹等后继者多年后验证"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Untimely death at 48 reminds brilliant leaders to guard biological vitality",
+          "Indifference to personal marketing delayed universal recognition until Hertz's experiments"
+      ]
+  },
+  {
+      "id": "john_d_rockefeller",
+      "nameZh": "约翰·D·洛克菲勒",
+      "nameEn": "John D. Rockefeller",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代石油工业与托拉斯帝国 (1870-1937)",
+      "eraNameEn": "Modern West · Petroleum Monopoly & Philanthropy (1870-1937)",
+      "positionZh": "标准石油公司创始人 · 现代商业托拉斯之父 · 全球首富与慈善巨擘",
+      "positionEn": "Founder of Standard Oil · Father of Industrial Trusts · World's First Billionaire & Philanthropist",
+      "personalityZh": "极其自律、冷酷精明、注重细节成本控制、善于横向纵向整合、信仰虔诚",
+      "personalityEn": "Iron-disciplined, calculatingly shrewd, fanatical on cost control, master of horizontal and vertical integration, deeply pious",
+      "deedsZh": "创立标准石油公司（Standard Oil），开创性构建炼油、管道、铁路运费回扣与全产业链纵向整合体系，控制全美90%炼油产能；首创现代托拉斯（Trust）垄断组织形式；晚年开创现代科学慈善事业，创立洛克菲勒基金会、芝加哥大学与协和医学院。",
+      "deedsEn": "Founded Standard Oil, mastering horizontal and vertical integration across refining, pipelines, and logistics to control 90% of US oil refining. Pioneered the corporate trust and later revolutionized scientific philanthropy via the Rockefeller Foundation and University of Chicago.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正财",
+          "偏财",
+          "七杀"
+      ],
+      "patternType": "正财格",
+      "strengthAdviceZh": "极善通过极致的成本内控、副产品利用与全产业链协同消灭一切跑冒滴漏；长于在行业恶性内卷竞争中趁低吸纳吞并，构筑无可动摇的规模壁垒。",
+      "strengthAdviceEn": "Supreme master of micro-cost optimization, supply-chain dominance, and opportunistic acquisitions during industry downturns to construct absolute scale moats.",
+      "weaknessAdviceZh": "早期消灭竞争对手手段过于残酷冷酷（「特洛伊木马」与差别运价），积累深重社会民怨并招致反托拉斯法反制拆解；商业运作必须高度重视公信力与反垄断红线。",
+      "weaknessAdviceEn": "Brutal monopolistic tactics sparked immense public outrage and antitrust dismantling. Mitigate anti-competitive dominance with public value sharing.",
+      "historicalQuoteZh": "商业史上评价：「他是资本主义进化史上最无情的竞争者，但也是以科学方式系统回馈人类的最伟大慈善家。」",
+      "historicalQuoteEn": "Business history verdict: The most ruthless competitor in the history of capitalism, yet also the greatest pioneer of systemic, scientific philanthropy.",
+      "auxiliaryStrengthsZh": [
+          "供应链纵向一体化与微观成本控制达到极致，行业护城河深不可测",
+          "善于在行业经济下行期果断低价收购整合，逆向放大资本优势"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Flawless supply-chain integration and micro-cost discipline creating unmatched scale",
+          "Executes ruthless counter-cyclical acquisitions during industry down-cycles"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "恶性压榨排挤中小竞争对手导致道德形象破产，引来国家反垄断重拳",
+          "过度追求完全控制易忽视监管红线，最终遭遇反托拉斯司法强行拆分"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aggressive market bullying damaged public goodwill and invited regulatory fury",
+          "Obsession with absolute market hegemony triggered forced antitrust dissolution"
+      ]
+  },
+  {
+      "id": "andrew_carnegie",
+      "nameZh": "安德鲁·卡内基",
+      "nameEn": "Andrew Carnegie",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代钢铁工业与财富福音 (1870-1919)",
+      "eraNameEn": "Modern West · Steel Modernization & Gospel of Wealth (1870-1919)",
+      "positionZh": "卡内基钢铁公司创始人 · 钢铁大王 · 《财富的福音》倡导者",
+      "positionEn": "Founder of Carnegie Steel · Steel Titan · Author of The Gospel of Wealth",
+      "personalityZh": "雄心勃勃、极富演说才能、敢于重注新技术投资、知人善任、富有远见",
+      "personalityEn": "Ambitiously visionary, eloquent, bold adopter of cutting-edge technology, brilliant talent recruiter, foresighted",
+      "deedsZh": "出身苏格兰织工寒门，率先引进贝塞麦转炉炼钢法，在匹兹堡建立规模空前的卡内基钢铁帝国，提供美国铁路网与摩天大楼建设所需的几乎所有廉价钢材；以近5亿美元将公司售予摩根（组建美国钢铁公司）；撰写《财富的福音》，捐赠建立数千座免费公共图书馆与卡内基梅隆大学。",
+      "deedsEn": "Rose from poor immigrant bobbin boy to adopt the Bessemer steel process, creating the world's most productive steel empire. Sold to J.P. Morgan to form U.S. Steel, then pioneered modern giving via The Gospel of Wealth, funding 2,500 public libraries and Carnegie Mellon University.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "偏财",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "偏财格",
+      "strengthAdviceZh": "善于以非凡胆识在行业技术萌芽期倾囊下注最前沿先进设备，以惊人产能降维打击竞争对手；极善识别人才（如弗里克、施瓦布），搭建顶尖职业经理人团队。",
+      "strengthAdviceEn": "Boldly reinvests profits into cutting-edge technology and heavy equipment to achieve lowest-cost production, excelling at recruiting top-tier executive managers.",
+      "weaknessAdviceZh": "追求降低成本过程中对待一线工人工资与工会诉求手段过于强硬（霍姆斯泰德大罢工流血惨剧）；企业必须建立良性劳资利益分享机制，谨防激化对抗。",
+      "weaknessAdviceEn": "Relentless wage reductions and union suppression culminated in the bloody Homestead Strike. Establish equitable workforce profit-sharing to avoid severe labor strife.",
+      "historicalQuoteZh": "其著名墓志铭震撼世人：「长眠于此的人，善于将比他自己更优秀的人聚集在身边为他工作。」",
+      "historicalQuoteEn": "His famous epitaph encapsulates his leadership philosophy: Here lies a man who knew how to enlist in his service better men than himself.",
+      "auxiliaryStrengthsZh": [
+          "敢于在经济萧条期大规模扩建最先进生产线，技术替代眼光极准",
+          "懂得高薪分红招揽顶尖将才，授权职业经理人高效操盘"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Dares to build advanced production facilities during panics, capturing low costs",
+          "Recruits and empowers world-class managerial talent with generous incentives"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "与合伙人弗里克矛盾激化引发劳资流血冲突，晚年留下洗刷不掉的历史污点",
+          "性格中存在自负与好大喜功成分，退休前决策易产生情绪化反复"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Violent Homestead Strike damaged moral standing despite philanthropic redemption",
+          "Occasional vanity and emotional friction created bitter rift with key partners"
+      ]
+  },
+  {
+      "id": "jp_morgan",
+      "nameZh": "J·P·摩根",
+      "nameEn": "J.P. Morgan",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代华尔街与企业重组整合 (1890-1913)",
+      "eraNameEn": "Modern West · Wall Street Hegemony & Industrial Consolidation (1890-1913)",
+      "positionZh": "华尔街金融帝王 · 摩根财团掌门人 · 「摩根化」重组宗师",
+      "positionEn": "Titan of Wall Street · Head of J.P. Morgan & Co. · Master of Morganization",
+      "personalityZh": "威严霸气、极具领袖气场、重视信誉重于黄金、雷厉风行、善断大局",
+      "personalityEn": "Formidably commanding, commanding immense executive presence, valuing character above gold, decisive, master of systemic rescue",
+      "deedsZh": "开创「摩根化」（Morganization）重构模式，先后整顿全美陷入恶性竞争的铁路网，主导整合创建通用电气（GE）、美国钢铁（US Steel）与国际收割机公司；在1893年和1907年两次金融大恐慌中以一己之力召集华尔街银行家入室锁门，充当事实上的「中央银行」拯救全美金融体系。",
+      "deedsEn": "Pioneered Morganization, ending cutthroat competition to forge consolidated giants like General Electric and U.S. Steel. Acted as a de facto central bank during the 1893 and 1907 panics, locking bankers in his library until rescue funds were pledged.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "拥有无与伦比的行业领袖号召力与信任压舱石地位；长于以高位资本重组消灭行业恶性内卷，建立秩序井然、分工明确的产业超级联合体。",
+      "strengthAdviceEn": "Commands peerless institutional authority and financial credibility, restructuring entire industries to eliminate destructive price wars and establish stable corporate cartels.",
+      "weaknessAdviceZh": "过度的私人金融集权与对竞争的扼杀直接促成了美国联邦储备系统（Fed）的建立与强监管反弹；私人资本决不可凌驾于国家主权与公众监督之上。",
+      "weaknessAdviceEn": "Unchecked private financial hegemony triggered intense political backlash, leading directly to the creation of the Federal Reserve and antitrust regulation.",
+      "historicalQuoteZh": "摩根在国会作证时的名言成为商业信条：「商业最重要的基石是性格与信誉，钱财次之。一个我信不过的人，即便用全基督教世界所有的黄金抵押，我也绝不借他一分钱。」",
+      "historicalQuoteEn": "Testified before Congress in an immortal maxim: The first thing is character, before money or anything else. A man I do not trust could not get money on all the bonds in Christendom.",
+      "auxiliaryStrengthsZh": [
+          "个人信誉与权威极其厚重，能在灭顶金融风暴中力挽狂澜稳定大局",
+          "善于自上而下实施资本重组并购，消灭行业内耗建立超级巨头"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Supreme personal and financial integrity acting as a stabilizing anchor during panics",
+          "Masters top-down corporate consolidation to eliminate margin-crushing price wars"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "行事作风过于傲慢专断独行，容易激化社会大众对金融巨鳄的仇视",
+          "过度集中的寡头垄断结构阻碍了中小企业的自由竞争活力"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Imperious and aristocratic demeanor attracted fierce populist and regulatory wrath",
+          "Oligopolistic market dominance stifled competitive entrepreneurial dynamism"
+      ]
+  },
+  {
+      "id": "henry_ford",
+      "nameZh": "亨利·福特",
+      "nameEn": "Henry Ford",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 福特主义与现代大规模流水线 (1903-1947)",
+      "eraNameEn": "Modern West · Fordism & Assembly Line Revolution (1903-1947)",
+      "positionZh": "福特汽车公司创始人 · 现代流水线装配之父 · 工业平民化先驱",
+      "positionEn": "Founder of Ford Motor Company · Father of the Moving Assembly Line · Democratizer of the Automobile",
+      "personalityZh": "专注执着、极具平民工匠情怀、崇尚效率极致、性格固执顽强",
+      "personalityEn": "Obsessively focused, devoted to industrial democratization, fanatical on efficiency, stubborn, pioneering industrialist",
+      "deedsZh": "设计研发极简实用的T型车，率先引入现代移动式传送带流水线，将汽车生产耗时由12小时降至93分钟，使汽车从奢侈品变成普通家庭消费品；惊世骇俗地推行「日薪五美元」与八小时工作制，不仅大幅降低离职率，更一举创造了现代美国工薪中产消费阶层。",
+      "deedsEn": "Introduced the Model T and pioneered the moving assembly line, slashing chassis assembly from 12 hours to 93 minutes. Revolutionized labor economics by introducing the five-dollar day and 40-hour workweek, forging the modern American middle-class consumer society.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正财",
+          "比肩",
+          "偏印"
+      ],
+      "patternType": "正财格",
+      "strengthAdviceZh": "长于将复杂工业工艺极致解构为高度标准化的可复制流程，实现惊人的效率爆发与成本骤降；敢于向一线员工让利，创造自驱动良性消费飞轮。",
+      "strengthAdviceEn": "Masters radical process decomposition and moving assembly standardization to unlock exponential efficiency, aligning worker wages with product affordability to ignite market demand.",
+      "weaknessAdviceZh": "对单一成功产品的过度迷信与病态偏执（「顾客可以选任何颜色，只要它是黑色的」），险些被通用汽车多品牌战略击溃；企业必须根据市场审美演化及时迭代创新。",
+      "weaknessAdviceEn": "Dogmatic attachment to a single product line (Any color so long as it is black) almost allowed General Motors to conquer the market. Cultivate market responsiveness.",
+      "historicalQuoteZh": "《时代》周刊将其评为二十世纪最具影响力的工业家：「福特把世界放在了轮子上，他不仅革新了工厂，更重塑了人类现代生活方式。」",
+      "historicalQuoteEn": "Time Magazine named him among the 20th century's defining titans: Henry Ford put the world on wheels, revolutionizing not just manufacturing, but human society.",
+      "auxiliaryStrengthsZh": [
+          "开创移动装配流水线实现生产力数量级跃迁，标准化能力登峰造极",
+          "极具商业大格局，以五美元日薪开启内生消费经济良性循环"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Pioneered the moving assembly line, engineering exponential leaps in productivity",
+          "Visionary wage economics that turned industrial workers into loyal consumers"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "性格过于刚愎偏执拒不听劝，错失汽车外观与配置多元化升级良机",
+          "晚年管理作风专断多疑，动用厂区便衣打手压制工会引发严重声誉危机"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Dogmatic refusal to diversify models nearly handed market leadership to competitors",
+          "Authoritarian surveillance and anti-union violence severely tarnished legacy"
+      ]
+  },
+  {
+      "id": "cecil_rhodes",
+      "nameZh": "塞西尔·罗兹",
+      "nameEn": "Cecil Rhodes",
+      "dynastyZh": "大英帝国",
+      "dynastyEn": "British Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 帝国扩张与垄断矿业托拉斯 (1881-1902)",
+      "eraNameEn": "Modern West · Imperial Expansion & Mining Monopolies (1881-1902)",
+      "positionZh": "开普殖民地总理 · 戴比尔斯钻石垄断组织创始人 · 罗德奖学金创立者",
+      "positionEn": "Prime Minister of Cape Colony · Founder of De Beers · Creator of Rhodes Scholarship",
+      "personalityZh": "野心磅礴、崇尚帝国征服、长于垄断资本整合、意志狂热、行事不择手段",
+      "personalityEn": "Monumentally ambitious, driven by imperial expansion, master of monopoly cartels, fanatically relentless, unscrupulous",
+      "deedsZh": "建立德比尔斯（De Beers）统一控制全球90%钻石交易；创立英国南非公司，以武力开疆拓土吞并罗得西亚（今津巴布韦与赞比亚）；构想自开罗至开普敦贯通非洲大陆的「红线」铁路网；遗嘱设立世界顶尖的罗德奖学金培育未来全球领袖。",
+      "deedsEn": "Monopolized 90% of global diamonds through De Beers and founded the British South Africa Company, conquering Rhodesia. Conceptualized the Cape-to-Cairo railway across Africa and endowed the prestigious Rhodes Scholarships at Oxford.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "偏财",
+          "比肩"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "拥有无与伦比的宏大地缘野心与产业绝对垄断操盘魄力；善于将巨额矿业资本与国家地缘扩张深度捆绑，开创以资本行使治权的极端模式。",
+      "strengthAdviceEn": "Commands boundless geopolitical ambition and monopolistic appetite, fusing vast private extractive wealth with imperial expansion to achieve total market dominance.",
+      "weaknessAdviceZh": "极端的白人优越狂妄与粗暴的掠夺扩张手段点燃了惨烈的布尔战争，给非洲南部留下深刻的种族仇恨疮疤；扩张必须受到人道正义与国际法理约束。",
+      "weaknessAdviceEn": "Unchecked racial hubris and aggressive corporate imperialism ignited the catastrophic Boer War, leaving deep trauma. Subordinate expansion to human rights and lawful governance.",
+      "historicalQuoteZh": "近代帝国主义讽刺名画《罗兹巨像》记录其野心；其名言：「只要有可能，我甚至要把夜空中的行星吞并。」",
+      "historicalQuoteEn": "Immortalized by the cartoon The Rhodes Colossus; he notoriously declared: I would annex the planets if I could; I often think of that.",
+      "auxiliaryStrengthsZh": [
+          "具备吞吐大陆的超级商业与地缘野心，产业垄断与开疆拓土魄力极强",
+          "善于运用顶级金融资本支撑长线扩张，设立奖学金锁定长期影响力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Continental ambition that establishes monopolistic commodity control and infrastructure",
+          "Leverages transnational capital to fund long-range geopolitical visions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "极度傲慢与种族主义偏见导致其在詹姆森劫掠事件中彻底翻车",
+          "不择手段的侵略性扩张在南非埋下了长达数十年的残酷战乱火种"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Reckless arrogance culminated in the disastrous Jameson Raid disaster",
+          "Merciless expansionist tactics sowed decades of bloody regional instability"
+      ]
+  },
+  {
+      "id": "franz_joseph_i",
+      "nameZh": "弗朗茨·约瑟夫一世",
+      "nameEn": "Franz Joseph I",
+      "dynastyZh": "奥匈帝国",
+      "dynastyEn": "Austro-Hungarian Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 双重君主制与帝国黄昏 (1848-1916)",
+      "eraNameEn": "Modern West · Dual Monarchy & Imperial Twilight (1848-1916)",
+      "positionZh": "奥匈帝国皇帝兼匈牙利国王 · 维也纳盛世见证者 · 悲剧帝王",
+      "positionEn": "Emperor of Austria & King of Hungary · Sovereign of Dual Monarchy · Tragic Monarch",
+      "personalityZh": "恪尽职守、极其勤政、生活节俭自律、性格保守内敛、饱尝命运磨难",
+      "personalityEn": "Dutiful, fanatically hard-working bureaucrat, ascetically disciplined, conservative, enduring immense personal tragedy",
+      "deedsZh": "在位长达68年，在1848年革命废墟中登基，通过《1867年奥匈折衷方案》开创二元君主制维系多民族帝国统一；经历弟弟被枪决、独子自杀、皇后茜茜公主遇刺、继承人斐迪南大公遇刺等惨烈家庭变故；一战爆发后在帝国崩溃前夜逝世。",
+      "deedsEn": "Reigned 68 years, stabilising the empire after the 1848 revolutions by brokering the Austro-Hungarian Compromise of 1867. Endured the executions, suicides, and assassinations of his brother, son, wife Empress Elisabeth, and heir Franz Ferdinand.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "拥有超乎常人的勤勉敬业精神与官僚治理韧性，数十年如一日伏案批阅公文；善于在多民族撕裂的悬崖边缘通过制度妥协充当帝国的最后凝聚纽带。",
+      "strengthAdviceEn": "Displays relentless administrative diligence and bureaucratic stamina, serving for seven decades as the sole indispensable unifying thread holding a fragile multi-ethnic empire together.",
+      "weaknessAdviceZh": "思想过于保守因循成规，面对急剧膨胀的巴尔干民族主义与盟友德国军国主义绑架缺乏力挽狂澜的战略魄力，最终将帝国拖入自杀性的一战毁灭深渊。",
+      "weaknessAdviceEn": "Dogmatic adherence to rigid court protocol and diplomatic fatalism allowed Austrian policy to be hijacked by militarists, plunging the empire into the cataclysm of WWI.",
+      "historicalQuoteZh": "斯蒂芬·茨威格在《昨日的世界》中写道：「只要弗朗茨·约瑟夫还活着，人们就觉得世界还会按照旧有的庄严节奏平静前行。」",
+      "historicalQuoteEn": "Stefan Zweig wrote in The World of Yesterday: As long as Franz Joseph was alive, everyone felt that the old world would continue in its majestic rhythm.",
+      "auxiliaryStrengthsZh": [
+          "恪尽职守一生勤勉如官僚劳模，在滔天历史巨浪中维系多民族架构近七十年",
+          "在逆境与惨烈家庭打击面前展现出钢铁般的君王尊严与克制"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Exemplary bureaucratic industry and dignity holding a fracturing empire together for 68 years",
+          "Steely regal stoicism enduring harrowing personal losses without abandoning his post"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "缺乏战略前瞻预判与大刀阔斧的改革勇气，对巴尔干火药桶处置失策",
+          "被动顺从军方极端冒险决策签署宣战诏书，亲手将百年帝国引向覆灭"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Lacked visionary boldness to dismantle imperial paralysis and defuse Balkan nationalism",
+          "Passive acquiescence to hawkish mobilization precipitated the death of the Austro-Hungarian Empire"
+      ]
+  },
+  {
+      "id": "wilhelm_ii",
+      "nameZh": "威廉二世",
+      "nameEn": "Wilhelm II",
+      "dynastyZh": "德意志帝国",
+      "dynastyEn": "German Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 世界政策与帝国竞逐 (1888-1918)",
+      "eraNameEn": "Modern West · Weltpolitik & Imperial Rivalry (1888-1918)",
+      "positionZh": "德意志帝国末代皇帝 · 普鲁士国王 · 「世界政策」推行者",
+      "positionEn": "Last German Emperor & King of Prussia · Architect of Weltpolitik",
+      "personalityZh": "好大喜功、虚荣浮躁、辞令轻率、追求阳光下的地盘、极易情绪化",
+      "personalityEn": "Flamboyant, vain, impetuous in rhetoric, obsessed with a place in the sun, emotionally volatile, militarily theatrical",
+      "deedsZh": "登基后罢黜俾斯麦弃用大陆均势战略，推行激进扩张的「世界政策」（Weltpolitik）；全力支持提尔皮茨打造公海舰队挑起英德造舰竞赛，在摩洛哥危机与波斯尼亚危机中屡次激化矛盾；最终向奥匈开出「空头支票」点燃第一次世界大战，战败后被迫退位流亡荷兰。",
+      "deedsEn": "Dismissed Bismarck to pursue aggressive Weltpolitik, abandoning the Reinsurance Treaty with Russia. Provoked Britain with a reckless naval arms race and issued the blank check to Austria-Hungary in 1914, sparking World War I and ending the Hohenzollern dynasty in abdication.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "劫财"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备极高的自我表现欲与时代宏大抱负，善于利用近代大众传媒包装帝国强权形象；能迅速调动举国工业资源投向重装科技军工舰队。",
+      "strengthAdviceEn": "Possesses grandiose ambition and theatrical flair that rallies nationalistic zeal, mobilizing modern industrial output toward cutting-edge technological naval warfare.",
+      "weaknessAdviceZh": "极其致命的性格缺陷在于缺乏战略定力与自知之明！轻浮狂妄的外交表态（如克鲁格电报与每日电讯报事件）将周边所有强国尽数推向对立面；切戒让情绪主导最高决策。",
+      "weaknessAdviceEn": "Catastrophic lack of strategic discipline, impulse control, and emotional maturity. Reckless, bombastic public diplomacy alienated every major power, creating total geopolitical encirclement.",
+      "historicalQuoteZh": "丘吉尔评价其：「他并非一个恶魔，但他是一个无药可救的虚荣者，他那不成熟的戏剧化表演毁灭了一个伟大的帝国。」",
+      "historicalQuoteEn": "Winston Churchill observed: He was not a wicked man, but a hopelessly theatrical one whose immature bluster destroyed a great nation.",
+      "auxiliaryStrengthsZh": [
+          "善于激发国民大国崛起自豪感，工业产能与军事科技投资推进果决",
+          "极度重视现代海军舰队与工业重器建设，推动德国军工走向世界前沿"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Rallies patriotic fervor and accelerates strategic investment in cutting-edge industries",
+          "Championed modernization of high-tech naval armaments and heavy engineering"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "口无遮拦辞令轻率屡屡引发重大外交灾难，彻底葬送俾斯麦均势遗产",
+          "在真正的大战危机降临前夕陷入惊慌失措与精神崩溃，缺乏统帅定力"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Impulsive bluster and diplomatic gaffes pushed Britain, France, and Russia into alliance",
+          "Succumbed to panicky vacillation when the real storm arrived, lacking true strategic nerve"
+      ]
+  },
+  {
+      "id": "nicholas_ii",
+      "nameZh": "尼古拉二世",
+      "nameEn": "Nicholas II",
+      "dynastyZh": "俄罗斯帝国",
+      "dynastyEn": "Russian Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 罗曼诺夫王朝终局 (1894-1917)",
+      "eraNameEn": "Modern West · Fall of the Romanov Dynasty (1894-1917)",
+      "positionZh": "全俄罗斯皇帝与独裁者 · 罗曼诺夫王朝末代沙皇",
+      "positionEn": "Emperor & Autocrat of All the Russias · Last Tsar of the Romanov Dynasty",
+      "personalityZh": "温和儒雅、执迷专制神权、性格优柔寡断、受家庭内廷左右、脱离民情",
+      "personalityEn": "Gentle in private life, dogmatically devoted to autocracy, indecisive, dominated by court cabals, fatally detached from popular suffering",
+      "deedsZh": "统治期间遭遇日俄战争惨败与1905年革命，虽被迫签署《十月宣言》设立杜马但旋即架空改革；迷信神秘僧侣拉斯普京导致内廷声誉彻底破产；一战中盲目亲上前线统帅军队导致后方经济彻底瘫痪，最终在二月革命中被迫退位，全家罹难终结了罗曼诺夫王朝300年统治。",
+      "deedsEn": "Suffered catastrophic defeat in the Russo-Japanese War and faced the 1905 Revolution. Allowed Rasputin to erode imperial legitimacy, assumed personal military command in WWI while the home front collapsed, and was forced to abdicate in the 1917 February Revolution.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "偏印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "私人品行温和忠厚、爱护家庭，在顺境中具备维系传统礼仪象征的体面风度；对国家与君权神授的古老传统怀有真诚但偏执的虔诚信仰。",
+      "strengthAdviceEn": "Courteous and devoted family patriarch who possessed graceful manners in times of calm, deeply believing in the sacred spiritual obligation of the imperial office.",
+      "weaknessAdviceZh": "作为庞大帝国掌舵人，优柔寡断与政治盲目是致命剧毒！面对历史必然的现代化与宪政转型，一味固步自封拒绝放权妥协，最终导致系统彻底崩塌与个人惨烈毁灭。",
+      "weaknessAdviceEn": "Fatal indecisiveness, defensive obstinacy, and isolation from socioeconomic realities. Rigid refusal to adapt autocratic power to modern constitutional governance ensured systemic ruin.",
+      "historicalQuoteZh": "俄国历史学家评价他：「他是一位体面温和的贵族绅士，却是一位灾难性的专制君主，历史给他的重担远远超出了他的肩膀。」",
+      "historicalQuoteEn": "Russian historians conclude: An amiable country gentleman trapped in the mantle of an autocrat; history placed a burden upon him far heavier than his shoulders could bear.",
+      "auxiliaryStrengthsZh": [
+          "私德端庄温和重视亲情，恪守传统君主宗教伦理信条",
+          "在失去权力和生命绝境面前保持了沉静从容的个人尊严"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Gentle domestic decorum and devotion to deep religious and dynastic heritage",
+          "Maintained personal poise and dignified serenity in the face of captivity and death"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政治眼光极其短浅闭塞，优柔寡断且极易被内廷宠臣后宫误导",
+          "面对社会深层矛盾与民主诉求采取暴力镇压，亲手掘下王朝墓穴"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Paralyzing indecision and political blindness, falling under destructive court cabals",
+          "Violently suppressed urgent social and political reforms, accelerating revolutionary collapse"
+      ]
+  },
+  {
+      "id": "florence_nightingale",
+      "nameZh": "弗洛伦斯·南丁格尔",
+      "nameEn": "Florence Nightingale",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 战地医疗与现代护理学革命 (1854-1910)",
+      "eraNameEn": "Modern West · Battlefield Healthcare & Nursing Revolution (1854-1910)",
+      "positionZh": "现代护理学鼻祖 · 医疗统计学先驱 · 「提灯女士」",
+      "positionEn": "Founder of Modern Nursing · Pioneer of Medical Statistics · The Lady with the Lamp",
+      "personalityZh": "大爱无疆、意志如铁、注重数据与卫生标准、组织管理大师、不知疲倦",
+      "personalityEn": "Transcendent humanitarian compassion, iron will, data-driven, managerial reformer, tireless institutional architect",
+      "deedsZh": "在克里米亚战争中率领女护士奔赴斯库台野战医院，以极其严苛的卫生消毒与通风制度将英军伤兵死亡率从42%骤降至2%；运用首创的极坐标统计图（玫瑰图）向英国议会游说展示卫生改革紧迫性；创办世界上第一所正规护士学校，奠定全球现代护理与公共卫生体系。",
+      "deedsEn": "Led nurses to Scutari during the Crimean War, cutting British military hospital death rates from 42% to 2% through rigorous sanitary discipline. Invented the polar area diagram (rose chart) to lobby Parliament, founding modern professional nursing.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "食神"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于将博大的人道主义情怀与严谨冷酷的数据统计图表结合，以不可辩驳的实证证据击溃庞大官僚体制的傲慢怠惰；精通流程化卫生标准管理。",
+      "strengthAdviceEn": "Unites profound humanitarian devotion with rigorous mathematical statistics, deploying data visualizations to shatter bureaucratic indifference and enforce hygienic standards.",
+      "weaknessAdviceZh": "对流程标准和卫生细节的极致严苛有时让下属与合作医生感到巨大的行政压迫感；在推行组织变革时需平衡刚性纪律与团队心理关怀。",
+      "weaknessAdviceEn": "Fierce, unbending perfectionism placed immense pressure on subordinates and medical colleagues. Balance iron administrative standards with empathetic burnout care.",
+      "historicalQuoteZh": "全欧洲铭记其夜间巡视病房的提灯身影，尊其为「提灯天使」；国际护士节以其诞辰永久设立。",
+      "historicalQuoteEn": "Immortalized worldwide as The Lady with the Lamp; her birthday is celebrated globally as International Nurses Day.",
+      "auxiliaryStrengthsZh": [
+          "兼具崇高圣洁的奉献精神与钢铁般冷酷的行政改革手腕",
+          "首创统计玫瑰图，以精湛的数据可视化手段推动国家级制度立法"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Combines angelic compassion with an iron administrative will that bends bureaucracies",
+          "Pioneered statistical data visualization to enact transformative public health reforms"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "性格过于刚烈强势苛求完美，容易引发与体制内传统官员的激烈冲突",
+          "过度透支自身体力导致中晚年长期缠绵病榻，需设立身体能量熔断机制"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Fierce and uncompromising perfectionism ignited sharp battles with institutional elites",
+          "Severe physical burnout crippled her health, warning against relentless self-exhaustion"
+      ]
+  },
+  {
+      "id": "alexander_graham_bell",
+      "nameZh": "亚历山大·格拉汉姆·贝尔",
+      "nameEn": "Alexander Graham Bell",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代电信通讯革命 (1876-1922)",
+      "eraNameEn": "Modern West · Telecommunications & Acoustic Invention (1876-1922)",
+      "positionZh": "电话发明者 · 美国电话电报公司（AT&T）先驱 · 声学发明家",
+      "positionEn": "Inventor of the Telephone · Pioneer of AT&T · Acoustic Scientist",
+      "personalityZh": "热爱探索、深具人道关怀（关注聋哑人教育）、求知欲旺盛、兼具发明才华与商业开创性",
+      "personalityEn": "Boundlessly curious, devoted to deaf education, hands-on acoustic innovator, combining inventive genius with commercial foresight",
+      "deedsZh": "在研究聋人语言声学过程中发明了世界上第一台实用电话机，取得划时代的历史专利；与合伙人创立贝尔电话公司（后发展为通信帝国AT&T）；其后涉足水翼船、航空工程与光通信（光电话）等前沿领域，并长期资助《国家地理》杂志。",
+      "deedsEn": "Invented the first practical telephone while working on deaf speech acoustics, securing the foundational patent. Co-founded the Bell Telephone Company (later AT&T) and pioneered hydrofoils, aeronautics, and photophones while nurturing the National Geographic Society.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "食神",
+          "正财",
+          "正印"
+      ],
+      "patternType": "食神格",
+      "strengthAdviceZh": "善于从特殊人群（聋哑人声学感知）的独特痛点中洞察出改变全人类的普适性技术突破口；长于构建核心基础专利壁垒并孵化产业巨擘。",
+      "strengthAdviceEn": "Uncovers transformative universal technological breakthroughs from niche physical pain-points, securing unassailable patent moats that anchor generational enterprises.",
+      "weaknessAdviceZh": "面对西联汇款等巨头的恶性专利诉讼围剿时曾承受巨大心理煎熬；科技先驱必须配备极强悍的专业知识产权法务团队保驾护航。",
+      "weaknessAdviceEn": "Faced brutal patent litigation from monopolistic titans like Western Union. Shield foundational inventions with elite intellectual property litigation defense.",
+      "historicalQuoteZh": "贝尔实验室门上铭刻其精神信条：「当一扇门关上时，另一扇门就会打开；但我们常常过于长久地凝视着关闭的门，以至于看不见已为我们打开的门。」",
+      "historicalQuoteEn": "His philosophical guidance remains immortal: When one door closes, another opens; but we often look so long at the closed door that we do not see the one which has opened for us.",
+      "auxiliaryStrengthsZh": [
+          "善于从微观声学原理切入并跨界整合，创造改变人类生活方式的发明",
+          "构建起坚不可摧的底层通信专利壁垒，开创现代电信百年版图"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Translates subtle physical acoustic principles into paradigm-shifting inventions",
+          "Constructed ironclad foundational patent moats that underpinned the telecommunications era"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "兴趣过于宽泛分散，晚年在水翼船与飞行器等多个非主业领域消耗大量资源",
+          "不善卷入冷酷商业缠斗，后期多依靠合伙人操盘日常企业运营"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Broad exploratory interests dispersed later focus across disparate experimental fields",
+          "Averse to corporate warfare, delegating aggressive business operations to partners"
+      ]
+  },
+  {
+      "id": "sigmund_freud",
+      "nameZh": "西格蒙德·弗洛伊德",
+      "nameEn": "Sigmund Freud",
+      "dynastyZh": "奥地利",
+      "dynastyEn": "Austria",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 精神分析学与潜意识革命 (1895-1939)",
+      "eraNameEn": "Modern West · Psychoanalysis & Subconscious Revolution (1895-1939)",
+      "positionZh": "精神病学家 · 精神分析学派创始人 · 《梦的解析》作者",
+      "positionEn": "Neurologist & Psychoanalyst · Founder of Psychoanalysis · Author of The Interpretation of Dreams",
+      "personalityZh": "洞察深邃入微、敢于触碰人类禁忌、逻辑自洽、开创性强、理论意志坚定",
+      "personalityEn": "Profoundly introspective, fearlessly challenging sexual taboos, building self-consistent theoretical systems, dogmatically determined",
+      "deedsZh": "出版《梦的解析》、《性学三论》与《自我与本我》，开创精神分析学；提出潜意识、压抑、本我/自我/超我以及心理防御机制等划时代概念，彻底打破了近代启蒙运动以来对人类「绝对理性」的迷信，对现代心理学、文学、艺术与社会学产生了不可估量的塑造作用。",
+      "deedsEn": "Authored The Interpretation of Dreams, Three Essays on the Theory of Sexuality, and The Ego and the Id, establishing psychoanalysis. Revolutionized modern thought by uncovering the subconscious, repression, and psychological defense mechanisms.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "伤官",
+          "七杀"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "具备直视人性幽暗深处、撕碎一切道德伪善与理性假象的高维心理洞察力；善于从看似琐碎荒诞的梦境与口误中解构出复杂的潜意识运行机制。",
+      "strengthAdviceEn": "Pierces sentimental social facades to expose subterranean subconscious drivers, interpreting subtle slips and dreams to decode hidden human behavior.",
+      "weaknessAdviceZh": "对自身理论体系具有极强的学术霸权倾向，对荣格、阿德勒等杰出弟子的不同见解采取粗暴驱逐打压；学术探索需容纳多元分歧与自我修正。",
+      "weaknessAdviceEn": "Authoritarian intolerance for doctrinal deviations prompted bitter ruptures with brilliant disciples like Jung and Adler. Foster inclusive pluralism in theoretical evolutions.",
+      "historicalQuoteZh": "思想界公认：「哥白尼把人类从宇宙中心拉下，达尔文把人类从生物皇冠拉下，而弗洛伊德则把人类从理性的王座上拉了下来。」",
+      "historicalQuoteEn": "Intellectual consensus: Copernicus displaced humanity from the cosmic center, Darwin displaced us from biological primacy, and Freud displaced us from rational self-mastery.",
+      "auxiliaryStrengthsZh": [
+          "开创潜意识深海探索，建立自成一体的人性心理动力学分析模型",
+          "敢冒天下之大不韪挑战维多利亚时代道德禁忌，学术勇气无与伦比"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Pioneered the exploration of the subconscious, mapping systemic psychological dynamics",
+          "Audaciously defied suffocating Victorian taboos to advance human self-knowledge"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "学阀作风过重，无法容忍核心门徒在理论上的创新叛逆，导致学派分裂",
+          "将一切人类心理驱动过度归结于泛性论，在科学实证可检验性上饱受争议"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Dogmatic intellectual intolerance caused destructive sectarian splits with top proteges",
+          "Over-attributing psychological neurosis to pansexual drives created scientific vulnerability"
+      ]
+  },
+  {
+      "id": "leo_tolstoy",
+      "nameZh": "列夫·托尔斯泰",
+      "nameEn": "Leo Tolstoy",
+      "dynastyZh": "俄罗斯帝国",
+      "dynastyEn": "Russian Empire",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 俄国批判现实主义与道德哲学 (1862-1910)",
+      "eraNameEn": "Modern West · Russian Realism & Moral Philosophy (1862-1910)",
+      "positionZh": "文学泰斗 · 思想家 · 《战争与和平》作者 · 俄国革命的镜子",
+      "positionEn": "Literary Giant · Moral Philosopher · Author of War and Peace · Conscience of Humanity",
+      "personalityZh": "博大精深、洞悉历史宏大演进、极富同情心、追求道德纯洁、勇于解剖自我灵魂",
+      "personalityEn": "Epic in scope, profound in historical fatalism, deeply empathetic to suffering, morally pure, relentlessly self-critical",
+      "deedsZh": "创作世界文学巅峰巨著《战争与和平》、《安娜·卡列尼娜》与《复活》；深入剖析历史大潮中个人的宿命与俄国社会阶级裂痕；晚年放弃贵族特权，倡导「博爱」与「托尔斯泰主义」（非暴力不抵抗），对甘地等世界和平运动产生了深远影响。",
+      "deedsEn": "Penned monuments of world literature including War and Peace, Anna Karenina, and Resurrection, dissecting historical dynamics and the human soul. Renounced aristocratic privilege in later life to champion Christian anarchism and nonviolent resistance, inspiring Mahatma Gandhi.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备宏伟阔大的全景式历史洞察力与穿透人性悲欢的文学共情力；能从波澜壮阔的时代运动中看透历史真正的潜流规律。",
+      "strengthAdviceEn": "Possesses panoramic narrative breadth and emotional resonance, mapping epic historical collisions while perceiving the underlying organic currents of destiny.",
+      "weaknessAdviceZh": "晚年过度执着于极端的道德纯洁性与彻底弃绝财富，导致与家庭至亲产生不可调和的剧烈撕裂；崇高道德理想需关照身边具体人的真实温情。",
+      "weaknessAdviceEn": "Absolute moral purism and renunciation of family wealth provoked agonizing domestic estrangement. Balance transcendent humanitarian crusades with love for immediate kin.",
+      "historicalQuoteZh": "列宁赞其为「俄国革命的一面镜子，创作了无与伦比的世界文学图景」；高尔基叹道：「不认识托尔斯泰，就不能算真正认识俄罗斯。」",
+      "historicalQuoteEn": "Lenin called him the mirror of the Russian revolution; Maxim Gorky lamented: To not know Tolstoy is to not know Russia.",
+      "auxiliaryStrengthsZh": [
+          "拥有史诗级的全景大局观与对历史客观规律的超然敬畏之心",
+          "敢于直面自我内心的虚伪脆弱，道德反思精神达到人类巅峰"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Epic macro-historical horizon that harmonizes individual choices with organic destiny",
+          "Unsparing moral introspection and empathy that resonates across cultural boundaries"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "历史唯物主义宿命论倾向稍重，有时低估了个体英雄在局部的关键干预作用",
+          "晚年思想过于乌托邦理想化，离家出走客死车站留下家庭悲剧"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Fatalistic philosophy of history can understate decisive tactical leadership leverage",
+          "Utopian asceticism caused agonizing domestic rift, culminating in dying at a train station"
+      ]
+  },
+  {
+      "id": "william_mckinley",
+      "nameZh": "威廉·麦金莱",
+      "nameEn": "William McKinley",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 美西战争与走向世界帝国 (1897-1901)",
+      "eraNameEn": "Modern West · Spanish-American War & Global Emergence (1897-1901)",
+      "positionZh": "第25任美国总统 · 关税与金本位捍卫者 · 走向世界强权奠基者",
+      "positionEn": "25th President of the United States · Champion of Tariffs & Gold Standard · Architect of Modern US Power",
+      "personalityZh": "稳健沉着、极善倾听民意、善于平衡国会党派、坚定捍卫工商业利益",
+      "personalityEn": "Steady, master listener of public sentiment, expert congressional broker, staunch protector of industrial tariffs and business stability",
+      "deedsZh": "推行高关税保护本土制造业并签署《金本位法》稳定货币；领导美西战争以极小代价闪电击败西班牙，夺取菲律宾、波多黎各与关岛，兼并夏威夷；提出对华「门户开放」政策，将美国从传统的孤立主义彻底推上全球大国竞争主舞台。",
+      "deedsEn": "Enacted the protective Dingley Tariff and Gold Standard Act to fuel industrial boom. Prosecuted the 100-day Spanish-American War to acquire Puerto Rico, Guam, and the Philippines, annexed Hawaii, and issued the Open Door Policy, launching America as a global power.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正财",
+          "正官",
+          "正印"
+      ],
+      "patternType": "正财格",
+      "strengthAdviceZh": "善于以稳健可靠的宏观经济政策为工业实体保驾护航；长于顺应大众民意与国会各方共识推进地缘扩张，以低成本换取巨大战略资产版图。",
+      "strengthAdviceEn": "Provides predictable fiscal and trade architecture that anchors explosive industrial growth, aligning domestic political consensus with low-cost overseas expansion.",
+      "weaknessAdviceZh": "行事过于迎合民意与黄色新闻舆论的狂热裹挟，在早期本可避免的美西战争中退让缺乏定力；对无政府主义极端安保威胁掉以轻心（导致遇刺身亡）。",
+      "weaknessAdviceEn": "Susceptible to yellow journalism and popular war hysteria. Failure to enforce rigorous executive security protocols led to his tragic assassination.",
+      "historicalQuoteZh": "历史学家评道：「麦克斯韦用方程照亮了电磁，而麦金莱则用关税与军舰让美国第一次意识到了自己在世界舞台上的绝对分量。」",
+      "historicalQuoteEn": "Historians observe: McKinley transformed American isolationism into decisive global power, paving the way for the American Century.",
+      "auxiliaryStrengthsZh": [
+          "善于以稳健货币与保护性关税夯实本土产业底盘，推动经济繁荣",
+          "精准把握国际战略扩张窗口期，以极低战损换取全球地缘枢纽资产"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Fosters stable domestic monetary architecture and industrial expansion",
+          "Capitalizes on geopolitical windows to annex critical overseas stepping stones at low cost"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "容易受到报业舆论与大众民族主义情绪过度牵制与绑架",
+          "个人日常安保防范意识淡薄，在布法罗世博会上遭刺客枪击殒命"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Excessive deference to sensationalist media pushed the nation into hasty war",
+          "Lax security awareness permitted fatal anarchist assassination at the Pan-American Exposition"
+      ]
+  },
+  {
+      "id": "winston_churchill",
+      "nameZh": "温斯顿·丘吉尔",
+      "nameEn": "Winston Churchill",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 二战战时内阁与大同盟 (1940-1945)",
+      "eraNameEn": "Modern West · Wartime Coalition & Resistance (1940-1945)",
+      "positionZh": "英国战时首相 · 绝不屈服的抗战领袖 · 诺贝尔文学奖得主",
+      "positionEn": "Prime Minister of the United Kingdom · Indomitable Wartime Leader · Nobel Laureate in Literature",
+      "personalityZh": "斗志昂扬、辞令雄浑如雷鸣、意志如钢铁、极富历史使命感、危机逆商登峰造极",
+      "personalityEn": "Defiant, possessing thunderous rhetorical power, steel-willed, acutely historical-minded, possessing transcendent adversity resilience",
+      "deedsZh": "在法国溃败、英国孤立无援的绝境中临危组阁，发表「热血、辛劳、眼泪和汗水」等震撼演讲彻底打消投降妥协幻想；指挥不列颠空战击退纳粹空袭，极力推动建立美英苏反法西斯大同盟，率领大英帝国浴血奋战赢得二战彻底胜利。",
+      "deedsEn": "Assumed premiership during Britain's darkest hour in 1940, rallying the nation with historic oratory promising nothing but blood, toil, tears and sweat. Orchestrated the Battle of Britain, forged the Grand Alliance with FDR and Stalin, and led the Allied coalition to unconditional victory.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "伤官",
+          "偏印"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于在面临灭顶之灾的绝境死地中以无比崇高的演说与钢铁意志点燃全员斗志；长于在大国宏观博弈中穿针引线，搭建坚不可摧的战略攻守同盟。",
+      "strengthAdviceEn": "Ignites collective indomitable defiance in existential crises through sublime rhetorical command, masterfully orchestrating global alliances to grind down tyrannical opponents.",
+      "weaknessAdviceZh": "帝国殖民执念与个人战略直觉有时过于刚愎冒险（如一战达达尼尔战役与二战地中海软下腹执念）；重大战役筹划需强化专业参谋联席会议的科学制约。",
+      "weaknessAdviceEn": "Imperial nostalgia and maverick operational impulses occasionally sponsored perilous side-shows (e.g. Gallipoli, Mediterranean soft underbelly). Balance intuition with joint staff vetting.",
+      "historicalQuoteZh": "丘吉尔在至暗时刻的豪言震烁古今：「我们将在海滩作战，我们将在登陆点作战，我们将在田野和街道作战，我们绝不投降！」",
+      "historicalQuoteEn": "His immortal declaration in 1940 remains the pinnacle of leadership defiance: We shall fight on the beaches, we shall fight on the landing grounds, we shall never surrender.",
+      "auxiliaryStrengthsZh": [
+          "在至暗时刻拥有无与伦比的精神定力与鼓动人心的高超演说才华",
+          "具备全球宏观大战略视野，善于联络盟友构筑战略制胜天网"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Incomparable defiance during catastrophic crises that galvanizes collective morale",
+          "Master of global grand strategy that constructs game-winning coalitions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "性格过于固执好斗有时不顾参谋反对硬推高风险战术侧翼冒险",
+          "对战后民生经济重建与去殖民化大潮感知迟钝，大选骤然失利"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Pig-headed operational micro-management occasionally sponsored strategic sideshows",
+          "Insensitivity to post-war domestic social reform led to immediate peacetime electoral defeat"
+      ]
+  },
+  {
+      "id": "franklin_d_roosevelt",
+      "nameZh": "富兰克林·D·罗斯福",
+      "nameEn": "Franklin D. Roosevelt",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 新政与反法西斯同盟 (1933-1945)",
+      "eraNameEn": "Modern West · New Deal & Grand Coalition (1933-1945)",
+      "positionZh": "第32任美国总统 · 四届连任总统 · 现代福利与二战同盟统帅",
+      "positionEn": "32nd President of the United States · Four-Term President · Master of the New Deal & Allied Coalition",
+      "personalityZh": "乐观从容、极具政治手腕与同理心、深不可测、善于沟通、兼具原则坚定与战术极度灵活",
+      "personalityEn": "Supreme political maestro, profoundly composed, empathetic, master communicator, blending unshakeable strategic principles with tactical fluidity",
+      "deedsZh": "克服小儿麻痹症重度瘫痪当选总统，推行「罗斯福新政」（百日新政、田纳西水利、社会保障法）带领美国走出大萧条；打破传统四次当选，在珍珠港事变后动员美国成为「民主国家兵工厂」，倡导签署《联合国家宣言》并奠定联合国体制雏形。",
+      "deedsEn": "Overcame debilitating polio paralysis to launch the New Deal, steering the US through the Great Depression with fireside chats. Transformed America into the Arsenal of Democracy after Pearl Harbor, led the Grand Alliance through WWII, and laid the foundations for the United Nations.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "偏财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "长于在极其复杂的多元利益与意识形态对立中游刃有余地协调博弈；善用温暖坦诚的公共沟通（炉边谈话）重建公众底层信任，以柔韧而坚定的定力操盘全球大棋局。",
+      "strengthAdviceEn": "Unrivaled political virtuosity balancing fractious domestic and geopolitical interests, rebuilding foundational societal trust via authentic mass communication while quietly steering global outcomes.",
+      "weaknessAdviceZh": "作风有时过于高深莫测，内阁部门职能故意重叠交叉引发部属恶性内耗；雅尔塔会议对战后东欧地缘边界处置在冷战爆发后承受争议，需强化协议的执行核验约束。",
+      "weaknessAdviceEn": "Secretive and elusive administrative style bred bureaucratic rivalries through overlapping mandates. Yalta compromises on Eastern Europe required firmer enforceable compliance mechanisms.",
+      "historicalQuoteZh": "历史学家盛赞：「他在壁炉边消除了全国的恐慌，又在轮椅上拯救了整个现代自由文明。」",
+      "historicalQuoteEn": "Historians observe: He dispelled a nation's panic from a fireside chair, and preserved global democratic civilization from a wheelchair.",
+      "auxiliaryStrengthsZh": [
+          "具备超凡的政治心理按摩与公共沟通艺术，善于重塑崩溃的信心底盘",
+          "战略柔韧性极强，能在不露声色中统御全局并建立长效世界秩序"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Master of public communication that repairs shattered collective confidence",
+          "Incomparable strategic agility and patience in orchestrating world-historic alliances"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "行事过于隐秘善变，有时让身边核心幕僚与部长感到捉摸不透",
+          "对苏联战后地缘野心研判偶有乐观，促成雅尔塔妥协留下长期冷战隐患"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Enigmatic and secretive administrative maneuvers occasionally left top ministers in the dark",
+          "Overestimated cooperative postwar relations with Stalin, seeding Cold War tensions at Yalta"
+      ]
+  },
+  {
+      "id": "dwight_d_eisenhower",
+      "nameZh": "德怀特·D·艾森豪威尔",
+      "nameEn": "Dwight D. Eisenhower",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 盟军最高统帅与欧洲胜利 (1942-1953)",
+      "eraNameEn": "Modern West · Supreme Allied Command & Victory (1942-1953)",
+      "positionZh": "盟军最高统帅 · 五星上将 · 第34任美国总统",
+      "positionEn": "Supreme Allied Commander Europe · General of the Army · 34th President of the United States",
+      "personalityZh": "沉稳圆融、长于跨组织协调、极具大局观、隐忍大度、决策果敢坚毅",
+      "personalityEn": "Calm, consummate diplomatic reconciler, panoramic strategic horizon, magnanimous under fire, resolute under pressure",
+      "deedsZh": "作为盟军远征军最高统帅（SHAEF），成功弥合美英法各方巨大战略分歧与将领骄横争吵（如巴顿与蒙哥马利）；在恶劣天气下果敢下达霸王行动（诺曼底登陆）出征令，指挥数百万大军横扫西欧彻底终结纳粹德国；其后当选总统结束朝鲜战争并建设全美州际高速公路系统。",
+      "deedsEn": "Orchestrated the grand Allied coalition as Supreme Commander Europe, harmonizing British and American strategic doctrines and managing combustible egos. Made the momentous decision to launch Operation Overlord on D-Day, liberating Western Europe, and later created the US Interstate Highway System.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "长于在极其复杂的多元利益集团与桀骜不驯的顶尖专家间充当超级组织粘合剂；具备在决定组织命运的极限时刻承担全部历史责任的超强决策魄力。",
+      "strengthAdviceEn": "Consummate coalition orchestrator, harmonizing fierce executive rivalries while shouldering sole existential accountability during high-stakes operational pivots (such as D-Day).",
+      "weaknessAdviceZh": "宽大平正的协调作风有时被前线激进战将视为过于保守拖沓（如阿登战役前夕的平宽战线战略）；在追求全面稳妥的同时需警惕错失局部速决破局的战机。",
+      "weaknessAdviceEn": "Deliberate, broad-front offensive doctrine was criticized by field commanders as overly cautious. Complement steady coalition balance with rapid-strike opportunism.",
+      "historicalQuoteZh": "诺曼底登陆前夕，他在口袋里写下独自承担失败责任的便条，这成为世界领导力史上的巅峰范例。",
+      "historicalQuoteEn": "His draft note written before D-Day taking sole personal blame in the event of failure remains the gold standard of executive accountability.",
+      "auxiliaryStrengthsZh": [
+          "无与伦比的跨跨文化、跨军种超级协同粘合能力，能驾驭一切刺头将领",
+          "在大战决胜关头敢于拍板承担全部败亡责任，领袖担当极其厚重"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Supreme coalition leadership harmonizing clashing egos and disparate national doctrines",
+          "Steely executive resolve that bears ultimate accountability in life-or-death decisions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "平宽战线战略较为消耗后勤资源，战役推进速度偏向稳健中庸",
+          "面对突发局部变故反应稍重程序核准，战术灵动闪击稍显受限"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Broad-front advance consumed enormous logistics and occasionally slowed pursuit",
+          "Reliance on systematic consensus can dampen lightning-fast opportunistic tactical maneuvers"
+      ]
+  },
+  {
+      "id": "george_c_marshall",
+      "nameZh": "乔治·C·马歇尔",
+      "nameEn": "George C. Marshall",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 全球战争组织与战后复兴 (1939-1951)",
+      "eraNameEn": "Modern West · Global Logistics & Postwar Reconstruction (1939-1951)",
+      "positionZh": "陆军参谋长 · 五星上将 · 国务卿 · 马歇尔计划总策划者 · 诺贝尔和平奖得主",
+      "positionEn": "Chief of Staff of the US Army · General of the Army · Secretary of State · Architect of the Marshall Plan · Nobel Peace Prize Laureate",
+      "personalityZh": "高风亮节、大公无私、组织管理神乎其技、冷静严正、深孚两党与全军信赖",
+      "personalityEn": "Austere moral integrity, completely selfless, organizational genius, unflinchingly objective, commanding universal trust",
+      "deedsZh": "在二战前夕将十余万落后的美国陆军奇迹般扩充为千万规模的全球现代化战争机器；知人善任破格提拔艾森豪威尔、巴顿、布拉德利；主持制定全球两线作战总战略；战后出任国务卿提出「欧洲复兴计划」（马歇尔计划），以数百亿美元援助拯救西欧经济崩溃并奠定战后西方阵营基石。",
+      "deedsEn": "Built the US Army from an obsolete force of 180,000 into an eight-million-strong global military machine, handpicking Eisenhower, Bradley, and Patton. Orchestrated Allied global logistics, and as Secretary of State conceived the Marshall Plan, earning the Nobel Peace Prize.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "偏印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "拥有无与伦比的组织顶层设计与大规模供应链物资调配统帅能力；品格无可挑剔，不搞派系私斗，能让一切资源流向最能产生成果的核心业务单元。",
+      "strengthAdviceEn": "Architect of unprecedented institutional scaling and global logistical pipelines, operating with sublime integrity that dispels factional politics and channels resources to optimal operational talent.",
+      "weaknessAdviceZh": "行事过于严肃刻板不苟言笑，在调处极端复杂凶险的异质化政治内战（如1946年调处国共谈判）时，容易因过分讲求绅士信约而低估残酷权谋的破坏力。",
+      "weaknessAdviceEn": "Unbending procedural rectitude can struggle when mediating ruthless, ideological civil conflicts. Balance gentlemanly good-faith assumptions with deep structural realpolitik defenses.",
+      "historicalQuoteZh": "丘吉尔盛赞他是「组织胜利的真正功臣（The Organizer of Victory）」；杜鲁门总统赞其为「我们时代最伟大的美国人」。",
+      "historicalQuoteEn": "Winston Churchill acclaimed him: The true Organizer of Victory; President Harry S. Truman declared him the greatest American of our generation.",
+      "auxiliaryStrengthsZh": [
+          "极其出神入化的大规模组织扩建与后勤供应链调度大师",
+          "品格高洁无私无畏，具备无可替代的跨党派公信力与用人魄力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Unparalleled mastery of massive organizational expansion and global logistical supply",
+          "Absolute moral purity and selflessness commanding total executive credibility"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于恪守程序中立原则，在处理诡谲莫测的海外意识形态纷争时易陷被动",
+          "为人严正冷峻缺乏人情社交润滑，有时令下级感到难以接近的敬畏压力"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Procedural rectitude struggled against unscrupulous asymmetric political adversaries abroad",
+          "Stern and unapproachable personal demeanor intimidated all but the boldest colleagues"
+      ]
+  },
+  {
+      "id": "george_s_patton",
+      "nameZh": "乔治·S·巴顿",
+      "nameEn": "George S. Patton",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 装甲纵深突击与机动作战 (1942-1945)",
+      "eraNameEn": "Modern West · Armored Blitzkrieg & Aggressive Maneuver (1942-1945)",
+      "positionZh": "第三集团军司令 · 陆军四星上将 · 「铁胆老将」",
+      "positionEn": "Commander of Third US Army · General · Old Blood and Guts",
+      "personalityZh": "勇烈狂暴、狂热崇尚进攻、战场直觉出神入化、敢冒奇险、脾气火爆桀骜不驯",
+      "personalityEn": "Aggressively bold, fanatical offensive drive, miraculous tactical intuition, insatiable risk appetite, fiery, unpredictable",
+      "deedsZh": "在北非整训溃散美军打出铁血威名；西西里战役神速抢占巴勒莫；诺曼底眼镜蛇行动后率第三集团军展开惊天大狂飙，横扫法国北部直插德国边境；在阿登战役中以不可思议的90度大转兵，在严寒暴雪中狂飙救出被围巴斯托涅的美军第101空降师。",
+      "deedsEn": "Restored American combat discipline in North Africa and raced through Sicily. Commanded the Third Army in an epic armored dash across France after the Cobra breakout, and performed a legendary 90-degree pivot in blizzard conditions to relieve Bastogne during the Battle of the Bulge.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "羊刃",
+          "伤官"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于以超越人类常规极限的装甲突进速度撕裂敌方防线，将进攻动能发挥至登峰造极；长于在瞬息万变的混沌战局中以绝对自信施展奇迹般的战术机动。",
+      "strengthAdviceEn": "Master of aggressive operational mobility and armored velocity that shatters adversary rear areas, commanding tactical turnarounds under harsh conditions with ferocious combat drive.",
+      "weaknessAdviceZh": "言行极其缺乏政治纪律与口德把门，多次因辱骂伤兵和发表不当政治言论（如战后非纳粹化争议）让最高统帅部蒙羞受挫；战术猛将必须设立严格的公关与政治防火墙。",
+      "weaknessAdviceEn": "Volatile temperament and reckless public utterances repeatedly caused diplomatic and political crises. High-impact operational disruptors must be buffered by vigilant communications handlers.",
+      "historicalQuoteZh": "德军参谋部在战时秘密档案中将其列为「盟军阵营中最具进攻威胁、最难以捉摸的将领」。",
+      "historicalQuoteEn": "German High Command considered him the Allies' most dangerous and aggressively unpredictable operational field commander.",
+      "auxiliaryStrengthsZh": [
+          "无坚不摧的突击意志与闪击机动速度，能在混乱战场创造神迹破局",
+          "具备极强的基层带兵感染力，善于将铁血纪律与荣誉感注入全军"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Unrivaled offensive momentum and battlefield audacity that unlocks impossible breakthroughs",
+          "Electrifying operational leadership that transforms hesitation into aggressive initiative"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "口无遮拦狂妄自大，缺乏现代高层政治大局观与外交情商",
+          "进攻过猛有时忽视两翼掩护与后勤油料极限，给整体协同带来脱节风险"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Reckless outbursts and political insensitivity created immense organizational embarrassment",
+          "Aggressive speed occasionally outran fuel pipelines and exposed operational flanks"
+      ]
+  },
+  {
+      "id": "douglas_macarthur",
+      "nameZh": "道格拉斯·麦克阿瑟",
+      "nameEn": "Douglas MacArthur",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 西南太平洋跳岛战术与仁川登陆 (1941-1951)",
+      "eraNameEn": "Modern West · Pacific Island-Hopping & Incheon Landing (1941-1951)",
+      "positionZh": "西南太平洋盟军总司令 · 五星上将 · 盟军占领日本最高司令官",
+      "positionEn": "Supreme Commander Southwest Pacific Area · General of the Army · Supreme Commander Allied Powers Japan",
+      "personalityZh": "心高气傲、戏剧化表演大师、极具战略大视野、敢下惊天豪赌、功勋卓著",
+      "personalityEn": "Flamboyant, theatrical maestro of personal PR, sweeping strategic horizon, audacious grand gambler, legendary record of achievement",
+      "deedsZh": "在菲律宾陷落时留下「我必将归来」的诺言并最终践行誓言；在西南太平洋开创「跳岛战术」，绕开日军坚固设防据点直插腹心；在战后作为最高司令官和平改造战败国日本，颁布和平宪法奠定现代日本民主繁荣基石；在朝鲜战场力排众议成功实施惊世仁川登陆。",
+      "deedsEn": "Promised I shall return after the fall of the Philippines and fulfilled it. Pioneered the Island-Hopping doctrine bypassing Japanese fortresses, democratized post-war Japan with a pacifist constitution, and orchestrated the brilliant Incheon amphibious landing in 1950.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "偏财"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备宏伟阔大的地缘大局观与非凡的战术想象力；善于在舆论公关与战略心理战上塑造不可战胜的战神神话，敢于力排众议发动改变历史走向的跨海两栖偷袭。",
+      "strengthAdviceEn": "Combines sweeping geopolitical vision with audacious tactical imagination, deploying public relations to command moral authority while executing masterstrokes like Incheon.",
+      "weaknessAdviceZh": "骄横狂妄目空一切，公然挑战文官政府对军队的绝对领导权（违抗杜鲁门总统指令最终遭解职）；高级业务统帅切不可让个人救世主幻觉凌驾于组织最高宪章之上。",
+      "weaknessAdviceEn": "Insufferable megalomania and insubordination to civilian constitutional authority led to his humiliating dismissal by Truman. Never allow personal ego to eclipse institutional hierarchy.",
+      "historicalQuoteZh": "麦克阿瑟在国会告别演说中的名言传诵世纪：「老兵不死，只是慢慢凋零（Old soldiers never die, they just fade away）。」",
+      "historicalQuoteEn": "His farewell address to Congress etched his name in rhetorical history: Old soldiers never die; they just fade away.",
+      "auxiliaryStrengthsZh": [
+          "开创跳岛战术以极小伤亡夺取广袤太平洋战区，战术构思极为精妙",
+          "在仁川登陆中展现敢于押上身家性命实施战役奇袭的超级魄力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Pioneered leapfrogging doctrine to neutralize enemy strongholds with minimal Allied casualties",
+          "Supreme audacity to wager entire reputation on brilliant amphibious operational surprise"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "虚荣自恋至极，公报与勋奖过度集中于自身，引发同僚和部属强烈反感",
+          "战略狂妄低估东方大国参战决心，在鸭绿江边遭遇惨痛战役伏击与政治解职"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Egomania and vanity bred deep resentment among naval peers and subordinate officers",
+          "Arrogant dismissal of intelligence warnings brought severe strategic reversal in Korea"
+      ]
+  },
+  {
+      "id": "chester_w_nimitz",
+      "nameZh": "切斯特·W·尼米兹",
+      "nameEn": "Chester W. Nimitz",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 中途岛战役与太平洋舰队大反攻 (1941-1945)",
+      "eraNameEn": "Modern West · Midway & Pacific Naval Hegemony (1941-1945)",
+      "positionZh": "太平洋舰队总司令兼太平洋战区盟军总司令 · 海军五星上将 · 大洋决战统帅",
+      "positionEn": "Commander in Chief, Pacific Fleet & Pacific Ocean Areas · Fleet Admiral · Master of Maritime Warfare",
+      "personalityZh": "虚怀若谷、极度冷静沉着、信任情报与前线将帅、善于整合海空工业力量",
+      "personalityEn": "Modest, immovably serene under catastrophe, trusted intelligence and frontline admirals, master of industrial naval logistics",
+      "deedsZh": "在珍珠港惨败后临危受命接掌太平洋舰队，力排众议完全信任罗什福尔密码破译团队；在中途岛海战中以弱胜强伏击击沉日军四艘主力航母，一举扭转二战太平洋战局；协同斯普鲁恩斯、哈尔西指挥跳岛战役与马里亚纳海战，最终在密苏里号战列舰上代表美国签署日本无条件投降书。",
+      "deedsEn": "Assumed Pacific Fleet command amidst the ruins of Pearl Harbor, trusting codebreakers to achieve the miracle at Midway. Directed the dual-drive offensive across the Central Pacific with Spruance and Halsey, accepting Japanese surrender aboard the USS Missouri.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "食神"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "具有大将泰山崩于前而色不变的至高定力；善于在关键时刻完全信任专业情报分析并果断授权前方战术指挥官，将庞大的航母工业制造力转化为无懈可击的大洋制海权。",
+      "strengthAdviceEn": "Displays imperturbable calm under existential crisis, empowering technical specialists and intelligence analysts while orchestrating industrial naval logistics into crushing sea control.",
+      "weaknessAdviceZh": "性格过于低调谦抑，不尚张扬公关，在大众舆论曝光度上长期被高调同行掩盖；深谋远虑的统帅需适度加强对自身组织战略愿景的对外发声。",
+      "weaknessAdviceEn": "Self-effacing modesty occasionally allowed louder, theatrical peers to monopolize public credit. Pair quiet operational brilliance with strategic external communication.",
+      "historicalQuoteZh": "海军史界定论：「珍珠港让美国流血，但尼米兹在中途岛让太阳帝国陨落，他是历史上指挥规模最宏大海上战役的沉默巨人。」",
+      "historicalQuoteEn": "Naval historians conclude: Pearl Harbor wounded America, but Nimitz vanquished the rising sun at Midway; the quiet giant who commanded history's largest fleet.",
+      "auxiliaryStrengthsZh": [
+          "极其尊重数据与专业情报破译成果，敢在关键时刻倾注筹码发动精确伏击",
+          "性情谦逊公正善于调解内部矛盾，能让斯普鲁恩斯等帅才各尽其用"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Acted decisively on intelligence insights, wagering limited aircraft carriers to win Midway",
+          "Unassuming humility and fairness that elicited peak operational brilliance from admirals"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "作风过于低调不重公关造势，在大众层面的知名度未能匹配其历史功绩",
+          "在莱特湾海战中对哈尔西舰队的追击沟通协调偶有断层，留下一丝险情"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Extreme modesty allowed more theatrical generals to capture disproportionate public acclaim",
+          "Communication ambiguities during the Battle of Leyte Gulf briefly exposed the landing beaches"
+      ]
+  },
+  {
+      "id": "bernard_montgomery",
+      "nameZh": "伯纳德·蒙哥马利",
+      "nameEn": "Bernard Montgomery",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 阿拉曼大捷与西北欧战役 (1942-1945)",
+      "eraNameEn": "Modern West · El Alamein & Northwest Europe (1942-1945)",
+      "positionZh": "陆军元帅 · 阿拉曼第一子爵 · 「沙漠之鼠」统帅",
+      "positionEn": "Field Marshal · 1st Viscount Montgomery of Alamein · Victor of El Alamein",
+      "personalityZh": "极其谨慎周密、注重后勤准备、打万全之仗、演讲极具士兵感染力、性格孤傲好强",
+      "personalityEn": "Painstakingly methodical, logistical perfectionist, refuses combat without overwhelming preparation, inspirational to infantry, prickly",
+      "deedsZh": "临危接掌北非第八集团军，彻底整肃军纪扫除失败主义；在阿拉曼战役中凭借详尽筹备与绝对物资优势击溃隆美尔非洲军团，彻底扭转北非战局；率英军参加西西里与诺曼底战役；指挥发起「市场花园行动」试图提前结束战争未果，后稳健推进攻入德国本土受降纳粹军队。",
+      "deedsEn": "Revitalized the battered Eighth Army in North Africa, meticulously marshaling superior armor and artillery to crush Rommel at El Alamein. Commanded Allied ground forces in Normandy, though his ambitious Operation Market Garden faltered, before accepting the surrender of German forces in 1945.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "偏印",
+          "七杀"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "长于以严谨细致的后勤准备和绝对兵力压制打稳健必胜之仗，绝不打无准备、无把握之仗；善于在基层官兵中以通俗演讲唤醒狂热求胜信念。",
+      "strengthAdviceEn": "Master of methodical, set-piece operational battles anchored in crushing logistical superiority, refusing engagement until victory is mathematically assured while inspiring troops.",
+      "weaknessAdviceZh": "打法有时过于死板迟重，缺乏追击溃敌的灵动战机捕捉力；性格尖酸孤僻常与美军盟友（如巴顿、布拉德利、艾森豪威尔）发生激烈摩擦，险些危及战时联盟团结。",
+      "weaknessAdviceEn": "Deliberate, set-piece tactics can be rigid and slow in opportunistic exploitation. Abrasive vanity repeatedly ignited severe diplomatic friction with American allies.",
+      "historicalQuoteZh": "丘吉尔在阿拉曼战役后留下名言：「在阿拉曼之前，我们未尝一胜；在阿拉曼之后，我们未尝一败。」",
+      "historicalQuoteEn": "Churchill famously immortalized his triumph: Before Alamein we never had a victory. After Alamein we never had a defeat.",
+      "auxiliaryStrengthsZh": [
+          "筹备极其周密详尽，注重绝对资源压制与步炮协同，战役胜算极高",
+          "善于深入一线士兵打成一片，战前动员与部队凝聚力极强"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Methodical planning ensuring overwhelming material dominance before launching operations",
+          "Peerless connection with frontline soldiers, boosting morale through charismatic direct addresses"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "战术推进偏于稳重僵硬，缺乏在运动战中果断包抄全歼残敌的迅猛手腕",
+          "狂妄自大且言辞刻薄，极难与同僚进行平等和谐的团队跨国协同"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Overly cautious pacing occasionally allowed routed enemy forces to retreat and regroup",
+          "Abrasive arrogance and inability to admit errors strained critical coalition partnerships"
+      ]
+  },
+  {
+      "id": "charles_de_gaulle",
+      "nameZh": "夏尔·戴高乐",
+      "nameEn": "Charles de Gaulle",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 自由法国与国家主权再造 (1940-1946)",
+      "eraNameEn": "Modern West · Free France & National Restoration (1940-1946)",
+      "positionZh": "自由法国领袖 · 陆军准将 · 法兰西第五共和国奠基者",
+      "positionEn": "Leader of Free France · Brigadier General · Founder of the French Fifth Republic",
+      "personalityZh": "傲骨嶙峋、极具法兰西宏大情怀、绝不妥协低头、意志如磐石、政治博弈手腕高超",
+      "personalityEn": "Majestically proud, consumed by France's grand destiny, unyielding in adversity, steel-willed, master of political statecraft",
+      "deedsZh": "在法国败降的至暗时刻流亡伦敦，通过BBC发表《6月18日呼吁》点燃抵抗火种；在毫无资源筹码的极端困境下，以近乎顽固的自尊与丘吉尔、罗斯福展开激烈外交抗争，成功维护了法国独立主权与大国地位；率军解放巴黎，为战后法国争得联合国安理会五常席位与德国占领区。",
+      "deedsEn": "Broadcast the Appeal of 18 June from London after France fell, igniting the French Resistance. Possessing virtually no material power, his obstinate dignity forced Churchill and FDR to recognize Free France, securing a permanent UN Security Council seat.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "偏印",
+          "正官"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于在自身实力处于绝对低谷时以无可动摇的尊严与道义旗帜进行非对称博弈；长于以高昂的民族文化精神资本换取顶级大国地缘话语权。",
+      "strengthAdviceEn": "Wields moral grandeur and uncompromising sovereignty to achieve outsized diplomatic leverage when material resources are depleted, anchoring legitimacy in national pride.",
+      "weaknessAdviceZh": "过度傲慢敏感与寸步不让的作风常令盟友（尤其是罗斯福）感到极度头疼与怨恨；在战术性协同中需学会适当释放善意，避免将战略盟友推向反感对立。",
+      "weaknessAdviceEn": "Imperious obstinacy and hypersensitive national pride frequently alienated indispensable allies (especially FDR). Temper grand-strategic dignity with practical tactical warmth.",
+      "historicalQuoteZh": "戴高乐在其《战争回忆录》开篇写下传世名句：「一生中，我对法兰西形成了一幅确定的画卷。她像童话中的公主或壁画上的圣母，注定要成就非凡伟业。」",
+      "historicalQuoteEn": "The opening words of his War Memoirs remain legendary: All my life I have had a certain idea of France, inspired as much by sentiment as by reason.",
+      "auxiliaryStrengthsZh": [
+          "在毫无物质资本的绝境下凭借至高道义与意志捍卫国家主权独立",
+          "具备极深战略远见与政略手腕，为法国赢得五常大国不可逆之地位"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Extracted supreme geopolitical concessions through uncompromising moral leverage in defeat",
+          "Profound geopolitical vision that restored great-power status and institutional sovereignty"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "为人极度傲慢严苛寸土不让，与英美盟国最高领袖日常沟通关系极其紧张",
+          "个人英雄主义色彩过于浓厚，战后早期因反对党派政治一度被迫下野"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aloof haughtiness and suspicious defensiveness severely strained alliance diplomacy",
+          "Distaste for parliamentary compromise caused temporary political resignation in 1946"
+      ]
+  },
+  {
+      "id": "woodrow_wilson",
+      "nameZh": "伍德罗·威尔逊",
+      "nameEn": "Woodrow Wilson",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 一战参战与国际联盟构想 (1913-1921)",
+      "eraNameEn": "Modern West · WWI & League of Nations Idealism (1913-1921)",
+      "positionZh": "第28任美国总统 · 诺贝尔和平奖得主 · 国际联盟倡导者 · 学者总统",
+      "positionEn": "28th President of the United States · Nobel Peace Prize Laureate · League of Nations Architect",
+      "personalityZh": "学者风骨、道德理想主义至上、辞令典雅感人、自负固执、追求世界永久和平",
+      "personalityEn": "Scholarly, uncompromising moral idealist, high-minded in oratory, intellectually stubborn, pursuing eternal collective security",
+      "deedsZh": "普林斯顿大学校长出身，内政中推动建立联邦储备系统（Fed）与联邦贸易委员会；打破美国百年孤立主义传统率军参加第一次世界大战；在巴黎和会上提出著名的「十四点和平原则」（Fourteen Points）倡导民族自决，力主创建国际联盟（League of Nations）奠定现代国际多边机制开端。",
+      "deedsEn": "President of Princeton University, created the Federal Reserve System and Federal Trade Commission. Led America into World War I to make the world safe for democracy, formulating the Fourteen Points and designing the League of Nations to establish collective security.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "正官",
+          "伤官"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备崇高宏大的国际主义理想与制度设计愿景；善于将道德伦理注入原本赤裸裸的丛林强权政治，开创全球多边治理新范式。",
+      "strengthAdviceEn": "Infuses international statecraft with transcendent moral architecture, designing multilateral collective security frameworks that redefine global governance beyond imperial sphere-of-influence politics.",
+      "weaknessAdviceZh": "思想过于脱离现实地缘政治斗争残酷性，在巴黎和会上遭遇英法老辣政客（克里孟梭、劳合·乔治）的无情解构；对国内共和党参议员采取顽固对抗态度，导致凡尔赛条约与国联草案在美参议院惨遭否决。",
+      "weaknessAdviceEn": "Utopian moralism collapsed against the cynical realpolitik of European empires. Refusal to compromise with domestic Senate rivals prevented US ratification of the League.",
+      "historicalQuoteZh": "历史学家评道：「他是悲剧性的先知，他点亮了照亮二十世纪国际秩序的理想火炬，但他的双脚却被现实绊倒。」",
+      "historicalQuoteEn": "Historians observe: A tragic visionary prophet whose League of Nations failed in his lifetime, yet served as the institutional blueprint for the post-1945 United Nations.",
+      "auxiliaryStrengthsZh": [
+          "具备高瞻远瞩的全球多边治理制度构建力，开创集体安全机制先河",
+          "以崇高的民族自决与民主道义旗帜打破欧洲古老帝国主义分赃逻辑"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Architect of global multilateral governance frameworks, founding the League of Nations",
+          "Championed national self-determination to challenge European colonial realpolitik"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过分自负清高缺乏政治妥协艺术，坚决拒绝修改条约条款导致参院翻盘",
+          "理想与现实力量差距过大，未能有效阻止战胜国对德国实施掠夺性严惩"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Dogmatic intellectual arrogance rejected domestic compromises, sinking treaty ratification",
+          "Naivete concerning European revanchism allowed punitive Versailles terms that seeded WWII"
+      ]
+  },
+  {
+      "id": "david_lloyd_george",
+      "nameZh": "大卫·劳合·乔治",
+      "nameEn": "David Lloyd George",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 一战战时内阁与战后调停 (1916-1922)",
+      "eraNameEn": "Modern West · WWI Coalition & Postwar Settlement (1916-1922)",
+      "positionZh": "英国首相 · 一战战时领袖 · 现代福利国家先驱 · 威尔士雄鹰",
+      "positionEn": "Prime Minister of the United Kingdom · WWI Victory Architect · Pioneer of Welfare State",
+      "personalityZh": "机智过人、辞令极具感染力、擅长危机化解、行事敏捷多变、善于周旋各派",
+      "personalityEn": "Supremely witty, electrifying orator, pragmatic crisis-solver, strategically nimble, master political consensus-builder",
+      "deedsZh": "在财政大臣任内推出「人民预算」，为英国奠定现代国家养老金与健康保险制度基础；一战最危急时刻出任首相建立小型战时内阁，力推护航舰队体制粉碎德国无限制潜艇战；在巴黎和会上充当威尔逊理想主义与克里孟梭复仇主义之间的实用主义平衡者。",
+      "deedsEn": "Pioneered the People's Budget introducing state pensions and national health insurance. Led the British Empire through WWI as wartime Prime Minister, adopting the naval convoy system to defeat U-boats, and acted as pragmatic mediator at the Paris Peace Conference.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "偏财",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "偏财格",
+      "strengthAdviceZh": "善于在四面受敌的极端危局中以高度灵动的战术变通化解危机；长于在大国首脑博弈中扮演润滑剂与务实平衡者，以高超情商推动不可思议的妥协落地。",
+      "strengthAdviceEn": "Master of tactical flexibility and dynamic crisis improvisation, defusing intractable deadlocks by finding pragmatic middle ground between clashing ideologies.",
+      "weaknessAdviceZh": "行事过于灵活善变，常被同僚与对手批评为缺乏政治操守与信誉（被称为「狡黠的威尔士狐狸」）；战后保守党内阁倒戈将其彻底边缘化，终生未能重返权力中心。",
+      "weaknessAdviceEn": "Excessive tactical opportunism and mercurial alliances eroded parliamentary trust. After the Conservative revolt broke his coalition in 1922, he never held office again.",
+      "historicalQuoteZh": "丘吉尔评价其：「他是我们赢得第一次世界大战胜利的最主要推动者，他的活力就像火山一样喷薄不息。」",
+      "historicalQuoteEn": "Winston Churchill wrote of his mentor: When the history of our country is written, Lloyd George will stand as the man who steered the nation to victory in the Great War.",
+      "auxiliaryStrengthsZh": [
+          "危机应对能力极强，推行护航舰队体制逆转大西洋战局",
+          "善于在大国博弈的锋芒碰撞中寻找平衡点，促成务实和解"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Exceptional crisis manager who introduced naval convoys to break the submarine blockade",
+          "Consummate multilateral dealmaker who forged practical compromises between extremes"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政治盟约与立场过于摇摆不定，积累了过多的政敌与道德猜忌",
+          "爱尔兰问题处理与条约签署留有争议，导致国内保守派联合倒戈"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Fluid political allegiances eventually exhausted party credibility and trust",
+          "Controversial compromises on Irish independence triggered a domestic political revolt"
+      ]
+  },
+  {
+      "id": "georges_clemenceau",
+      "nameZh": "乔治·克里孟梭",
+      "nameEn": "Georges Clemenceau",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 一战决胜与凡尔赛和约 (1917-1920)",
+      "eraNameEn": "Modern West · WWI Victory & Versailles Treaty (1917-1920)",
+      "positionZh": "法国一战总理 · 「法兰西之虎」 · 胜利之父",
+      "positionEn": "Prime Minister of France · The Tiger · Father of Victory",
+      "personalityZh": "凶悍刚烈、意志如铁、辞令犀利如刀、战斗到底、绝不妥协",
+      "personalityEn": "Ferocious, iron-willed, bitingly sarcastic, fiercely determined, fighting to the bitter end",
+      "deedsZh": "在1917年法国军队大哗变、国内悲观绝望的至暗时刻临危出任总理，以铁腕镇压失败主义并提出「我的内政是作战，外交是作战」；全力支持福煦出任协约国最高司令打赢百日攻势取得一战胜利；在巴黎和会上坚持严厉削弱德国以保卫法国安全，被尊为「胜利之父」。",
+      "deedsEn": "Assumed premiership during the mutinies and despair of 1917, crushing pacifism with his battle cry: I wage war! Championed Ferdinand Foch as Supreme Allied Commander to win the war, and fiercely prosecuted French revanchist claims at Versailles to neutralize Germany.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "伤官",
+          "羊刃"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "具备凶悍绝伦的战斗意志与肃清组织内部动摇分子的铁血魄力；长于在绝境中激发起全员背水一战的向死而生勇气。",
+      "strengthAdviceEn": "Unleashes ferocious executive will and uncompromising discipline to crush organizational defeatism, inspiring total mobilization for existential survival.",
+      "weaknessAdviceZh": "凡尔赛和会上对德国的严苛报复与过度羞辱，既未能彻底从肉体上消灭德国工业战争潜力，又埋下了德国深重的复仇狂热火种，为二十年后二战爆发埋下灾难祸根。",
+      "weaknessAdviceEn": "Ruthlessly punitive Versailles terms neither permanently incapacitated German industrial war potential nor reconciled its people, fertilizing the soil for Nazism.",
+      "historicalQuoteZh": "丘吉尔叹道：「克里孟梭就是法国，一头伤痕累累却依旧咆哮的老虎，只要他还有一口气，法兰西就决不屈服。」",
+      "historicalQuoteEn": "Winston Churchill eulogized: He was an old tiger who had clawed his way through life. While Clemenceau drew breath, France could never lose heart.",
+      "auxiliaryStrengthsZh": [
+          "铁血镇压失败主义动摇，为濒临瓦解的法国陆军注入决战意志",
+          "在大国博弈谈判中如猛虎搏兔，竭尽全力为法国争取核心安全利益"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Crushed defeatism with ruthless resolve, steeling a crumbling army for final triumph",
+          "Tenacious defender of national security who fought fiercely at Versailles"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "报复心理过于浓烈，施加惩罚性条款引发被征服民族的极端复仇情绪",
+          "脾气暴烈得罪太多盟友与党派，战后竞选总统惨遭滑铁卢"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Obsessive revanchism established an unsustainable peace that ignited future war",
+          "Abrasive, combative disposition alienated parliamentary allies, ending his political career"
+      ]
+  },
+  {
+      "id": "ferdinand_foch",
+      "nameZh": "费迪南·福煦",
+      "nameEn": "Ferdinand Foch",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 协约国最高统帅与百日攻势 (1914-1918)",
+      "eraNameEn": "Modern West · Supreme Allied Command & Hundred Days (1914-1918)",
+      "positionZh": "协约国军总司令 · 法国陆军元帅 · 英国与波兰陆军元帅 · 决胜统帅",
+      "positionEn": "Supreme Allied Commander · Marshal of France, Great Britain & Poland · Master of the Counter-Offensive",
+      "personalityZh": "崇尚进攻精神、意志坚定不拔、战略协调大师、深谙协同作战精髓",
+      "personalityEn": "Aggressive doctrinal thinker, unyielding in crisis, master of multilateral operational coordination, coordinated offensive expert",
+      "deedsZh": "在马恩河战役中指挥第九集团军顶住德军中央突破；1918年春德军鲁登道夫攻势濒临突破时临危受命出任协约国最高司令，统一协调美英法军队指挥权，指挥发起百日反攻彻底击溃德军，迫使德国在贡比涅森林停战协定车厢中签字投降。",
+      "deedsEn": "Held the center at the First Battle of the Marne. Appointed Supreme Allied Commander in 1918 during the Ludendorff Offensive, unifying French, British, and American forces to launch the crushing Hundred Days Offensive that forced Germany's surrender in the Compiegne wagon.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "比肩"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于在面临全面崩溃的绝境中统一多国、多军种互不相属的庞大指挥链；长于把握敌军攻势强弩之末的拐点，组织排山倒海般的多点全线反击。",
+      "strengthAdviceEn": "Unifies disjointed multinational armies under unified command during existential breakdowns, executing sweeping, synchronized counter-offensives at the enemy's culminating point.",
+      "weaknessAdviceZh": "一战前过分迷信「进攻至上」（Attaque a outrance）理论，低估了现代重机枪与堑壕战的血腥杀伤力，在战争初期造成了巨大的非必要伤亡。",
+      "weaknessAdviceEn": "Pre-war dogmatic devotion to the cult of the offensive underestimated modern machine guns and artillery, causing horrific early casualties in the Battle of the Frontiers.",
+      "historicalQuoteZh": "福煦在审阅《凡尔赛条约》后留下了震惊世界的预言：「这不是和平，这不过是二十年的休战（This is not peace. It is an armistice for twenty years）。」",
+      "historicalQuoteEn": "His prophetic verdict on the Treaty of Versailles in 1919 remains legendary: This is not peace. It is an armistice for twenty years.",
+      "auxiliaryStrengthsZh": [
+          "在盟军濒临崩溃之际成功构建统一指挥权，展现卓越的多边调度才能",
+          "精准捕捉德军攻势耗尽拐点，以百日攻势终结第一次世界大战"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Successfully established unified Allied operational command to halt German collapse",
+          "Seized operational initiative with precision during the decisive Hundred Days Offensive"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "早期推崇盲目进攻学说忽视防守工事与重火力，前期代价极其沉重",
+          "对战后停战边界过于苛求彻底军事占领莱茵河，未被英美政治家采纳"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Pre-war doctrinal obsession with aggressive infantry spirit ignored tactical fire realities",
+          "Demanded complete military dismemberment of the Rhineland, creating diplomatic friction"
+      ]
+  },
+  {
+      "id": "john_j_pershing",
+      "nameZh": "约翰·J·潘兴",
+      "nameEn": "John J. Pershing",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 美国远征军与现代陆军正规化 (1917-1924)",
+      "eraNameEn": "Modern West · American Expeditionary Forces & Modernization (1917-1924)",
+      "positionZh": "美国欧洲远征军总司令 · 特级陆军上将 · 现代美军教父",
+      "positionEn": "Commander of American Expeditionary Forces · General of the Armies · Father of Modern US Army",
+      "personalityZh": "治军极其严格、军容严整不苟、意志如铁、坚决维护独立指挥权、作风硬朗",
+      "personalityEn": "Fiercely disciplined, demanding soldierly perfection, iron-willed, uncompromising in preserving independent command, austere",
+      "deedsZh": "在第一次世界大战中率领两百万美国远征军（AEF）开赴欧洲；顶住英法联军最高统帅部将美军拆散作为补充兵填补战壕的巨大压力，坚决维护美军独立作战建制；在圣米耶勒战役与默兹-阿尔贡战役中指挥大兵团作战击溃德军防线，并在战后培养提携了马歇尔、麦克阿瑟、巴顿、艾森豪威尔等二战领军名将。",
+      "deedsEn": "Organized and commanded the two-million-strong American Expeditionary Forces in Europe during WWI. Resisted Allied pressure to amalgamate American troops into British and French armies, led the massive Meuse-Argonne Offensive, and mentored the legendary brass of WWII.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "具有极高的正规化军队建设标准与组织原则底线；在外部强大势力的兼并打压下敢于以钢铁定力坚守自身独立主权，为组织未来跨越式发展保留核心火种与干部梯队。",
+      "strengthAdviceEn": "Instills uncompromising operational standards and discipline while defending institutional autonomy against external encroachment, nurturing talent that defines future generations.",
+      "weaknessAdviceZh": "早期盲目推崇步枪手开阔地进攻的传统战术理念，对欧洲战壕毒气与机枪火力残酷性准备不足，在战争初期造成了较重人员伤亡。",
+      "weaknessAdviceEn": "Early tactical preference for open warfare over trench realities resulted in high casualties until integrated combined-arms techniques were adopted.",
+      "historicalQuoteZh": "美国国会授予其最高军衔「特级上将」（General of the Armies），尊其为近代美军正规化现代化的总教父。",
+      "historicalQuoteEn": "Honored by Congress with the singular rank General of the Armies, universally remembered as the architect of modern American military power.",
+      "auxiliaryStrengthsZh": [
+          "顶住同盟国统帅部拆分吞并压力，坚决捍卫美军独立作战指挥体系",
+          "慧眼识珠破格任用马歇尔、巴顿等杰出后进，为国家储备两代栋梁"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Fiercely defended operational independence against foreign amalgamation pressure",
+          "Master talent spotter who nurtured Marshall, Eisenhower, and Patton for WWII"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "初抵欧洲战区战术理念稍显陈旧，在现代火网前付出了过高学费",
+          "治军风格过于严苛冰冷不近人情，缺乏温和的人文心理关怀"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Underestimated European defensive fire density, incurring unnecessary early losses",
+          "Austere, unforgiving disciplinary style intimidated junior officers and subordinates"
+      ]
+  },
+  {
+      "id": "paul_von_hindenburg",
+      "nameZh": "保罗·冯·兴登堡",
+      "nameEn": "Paul von Hindenburg",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 坦能堡大捷与魏玛共和国黄昏 (1914-1934)",
+      "eraNameEn": "Modern West · Tannenberg & Twilight of Weimar (1914-1934)",
+      "positionZh": "陆军元帅 · 帝国名将 · 魏玛共和国第二任总统",
+      "positionEn": "Field Marshal · Victor of Tannenberg · 2nd President of the Weimar Republic",
+      "personalityZh": "威严沉稳如巨石、恪守普鲁士军人传统、被国民神化、政治判断迟钝",
+      "personalityEn": "Monumentally stoic, embodiment of Prussian military virtue, national icon, politically out of his depth in democratic governance",
+      "deedsZh": "一战爆发后以67岁高龄复出指挥东线，在坦能堡战役中包围全歼俄国第二集团军，被德国国民尊为救世主般的民族英雄；后与鲁登道夫执掌最高陆军指挥部（第三最高指挥部）实行战时准独裁；1925年当选魏玛共和国总统，在晚年大萧条危机中未能抵挡住纳粹狂潮，受右翼策动最终任命希特勒为帝国总理。",
+      "deedsEn": "Recalled from retirement in 1914 to crush the Russian invasion at Tannenberg, becoming a mythic German titan. Led the High Command with Ludendorff, and was elected President of Weimar Germany in 1925, but in senility appointed Hitler Chancellor in 1933.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "正官",
+          "比肩"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备在国家至暗时刻如花岗岩般屹立不倒的威严形象与安定人心的精神图腾价值；长于以古老军人的厚重威信充当政权动荡时期的稳定器。",
+      "strengthAdviceEn": "Embodies granite-like stoic authority that calms mass panic in national emergencies, serving as an irreplaceable traditional symbol of order amidst chaos.",
+      "weaknessAdviceZh": "在晚年神志昏聩与政治阴谋包围下，缺乏现代民主宪政法治敏锐度，轻易被野心家与宠臣集团欺瞒绑架，亲手签发赋予独裁者权力的法令，铸成毁灭文明的历史大错。",
+      "weaknessAdviceEn": "Senile complacency and reactionary political blindness allowed elite cabals to manipulate his authority, leading directly to the destruction of democracy.",
+      "historicalQuoteZh": "历史定论：「他以坦能堡的荣耀登上神坛，却在柏林的总理府将共和国的钥匙拱手交给了恶魔。」",
+      "historicalQuoteEn": "Historical verdict: He ascended to mythic glory at Tannenberg, only to hand the keys of the republic to totalitarian catastrophe in his twilight.",
+      "auxiliaryStrengthsZh": [
+          "在坦能堡战役中展现泰山崩于前而色不变的沉雄定力，粉碎沙俄侵入",
+          "具备德意志传统容克贵族的威重气象，在政局动荡中深孚老兵民众信赖"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Unshakeable stoic calm during the Russian invasion that enabled the triumph of Tannenberg",
+          "Commands immense traditional deference that stabilized fractured state institutions"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政治智能严重不足，晚年沦为施莱歇尔与巴本等宫廷阴谋家的傀儡提线木偶",
+          "在关键宪政关头未能坚守民主底线，错误任命纳粹导致德意志滑入深渊"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Naive political acumen manipulated by palace camarillas and reactionary conspirators",
+          "Capitulated in senility to appoint Hitler Chancellor, dismantling the constitutional republic"
+      ]
+  },
+  {
+      "id": "erich_ludendorff",
+      "nameZh": "埃里希·鲁登道夫",
+      "nameEn": "Erich Ludendorff",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 东线胜利与战时总体战体制 (1914-1918)",
+      "eraNameEn": "Modern West · Eastern Front Triumphs & Total War (1914-1918)",
+      "positionZh": "第一军需总监 · 步兵上将 · 总体战理论奠基人",
+      "positionEn": "First Quartermaster General · General of the Infantry · Mastermind of Total War",
+      "personalityZh": "工作狂、组织策划能力极强、战术天才、追求全面控制、心理承受力脆弱",
+      "personalityEn": "Workaholic, organizational genius, operational tactician, obsessive control freak, brittle under catastrophic failure",
+      "deedsZh": "作为兴登堡的参谋长共同指挥坦能堡战役与马祖里湖战役；实际掌控德国战时最高经济与军事决策权，推行全面军事动员体制（兴登堡计划）；制定突破东线迫使苏俄签署《布列斯特和约》；发动1918年西线皇帝攻势未果后精神崩溃要求停战，战后提出「刀刺在背」神话与「总体战」理论。",
+      "deedsEn": "Operational brain behind the victories of Tannenberg and the Eastern Front. Imposed a de facto military dictatorship mobilizing all industry under the Hindenburg Program. Spearheaded the 1918 Spring Offensive before suffering a psychological breakdown, later coining the stab-in-the-back myth.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "偏印",
+          "伤官"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "长于极其庞大复杂的战役组织策划与举国工业生产力极限动员；能将海量战术资源编织为具有惊人撕裂力的集中突破拳头。",
+      "strengthAdviceEn": "Possesses formidable organizational genius in total industrial and military mobilization, concentrating massive tactical firepower to rupture strategic fronts.",
+      "weaknessAdviceZh": "心理防线虽然看似坚硬实则极度脆弱，一旦宏大赌博受挫极易发生精神崩溃；缺乏政治大局观与外交妥协退让空间，盲目追求无法企及的绝对全胜。",
+      "weaknessAdviceEn": "Brittle psychological resilience when grand gambles collapse. Total lack of diplomatic sensibility, chasing an unattainable total victory that bankrupts the state.",
+      "historicalQuoteZh": "军事学者评论他：「他是一个无与伦比的战役战术组织者，但也是一个灾难性的战略家与政治家，他将德国的一切都押在了轮盘赌上。」",
+      "historicalQuoteEn": "Military historians conclude: A tactical and operational planner of genius, but a catastrophic grand strategist who staked an entire nation on a single roll of the dice.",
+      "auxiliaryStrengthsZh": [
+          "极其精湛的参谋作业与战役筹备能力，在战术组织与动员上堪称大师",
+          "果断推行渗透突击战术，在1918年春季攻势中一度撕裂西欧防线"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Master of intricate staff operational planning and total wartime industrial mobilization",
+          "Pioneered stormtrooper infiltration tactics that shattered static trench warfare"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "精神抗挫韧性严重不足，在战局受阻黑日降临时迅速陷入恐慌绝望",
+          "战后煽动极右翼背刺阴谋论与总体战狂想，毒化了战后德国政治土壤"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Brittle psychological stamina under systemic adversity leading to operational panic",
+          "Fostered the toxic stab-in-the-back myth that radicalized interwar German politics"
+      ]
+  },
+  {
+      "id": "te_lawrence",
+      "nameZh": "T·E·劳伦斯",
+      "nameEn": "T.E. Lawrence",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 阿拉伯起义与不对称机动战 (1916-1922)",
+      "eraNameEn": "Modern West · Arab Revolt & Desert Guerrilla Warfare (1916-1922)",
+      "positionZh": "英国陆军上校 · 考古学家 · 作家 · 「阿拉伯的劳伦斯」",
+      "positionEn": "Colonel · Archaeologist & Writer · Lawrence of Arabia · Master of Guerrilla Warfare",
+      "personalityZh": "才华横溢、极度敏锐、富有浪漫探险精神、长于跨文化共情、心理极其复杂撕裂",
+      "personalityEn": "Brilliantly erudite, acutely perceptive, romantic adventurer, empathetic cross-cultural leader, psychologically complex and tormented",
+      "deedsZh": "作为联络官深入阿拉伯腹地，与费萨尔王子结盟发动阿拉伯起义对抗奥斯曼帝国；打破欧洲正规战教条，开创性运用骆驼骑兵展开大漠机动作战与爆破汉志铁路；奇袭攻克战略要港亚喀巴并攻入大马士革；撰写不朽名著《智慧七柱》，开创现代非正规游击战理论。",
+      "deedsEn": "Liaison officer during the Arab Revolt, forging an alliance with Prince Faisal. Revolutionized irregular warfare by using high-mobility camel cavalry to attack the Hejaz Railway, audaciously capturing Aqaba from the desert and authoring Seven Pillars of Wisdom.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "偏印",
+          "七杀"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备深入异质化文化肌理并取得当地人绝对信任的超强共情力；长于在非正规战场以极小资源调动非对称机动战力，重创庞大臃肿的正规体制。",
+      "strengthAdviceEn": "Commands extraordinary cross-cultural empathy to unite disparate factions, pioneering asymmetric hit-and-run mobility that paralyzes rigid, conventional bureaucracies with minimal resources.",
+      "weaknessAdviceZh": "自身深陷大英帝国殖民欺骗政策（赛克斯-皮科协定背叛阿拉伯人）与阿拉伯独立崇高理想的剧烈道德撕裂，晚年选择隐姓埋名自甘平庸逃避现实。",
+      "weaknessAdviceEn": "Agonizing moral torment between imperial British betrayals (Sykes-Picot) and promises to Arab allies. Moral disillusionment prompted retreat into anonymous escapism.",
+      "historicalQuoteZh": "李德·哈特称其为「游击战的克劳塞维茨」；名著《智慧七柱》被公认为现代军事理论与英语散文的双重巅峰。",
+      "historicalQuoteEn": "B.H. Liddell Hart hailed him as the Clausewitz of guerrilla warfare; Seven Pillars of Wisdom remains a twin monument of literature and tactical strategy.",
+      "auxiliaryStrengthsZh": [
+          "善于跨越民族与文化鸿沟建立深厚信任，以极小筹码撬动庞大战区",
+          "开创现代大漠非对称机动作战理论，将机动性与破坏力发挥到极致"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Cross-cultural empathy that unites fractured tribes into an effective fighting coalition",
+          "Pioneered modern asymmetric guerrilla doctrine exploiting mobility and psychological shock"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "内心道德负罪感过重，面对残酷政治利益背叛时容易陷入精神抑郁",
+          "抗拒体制化行政约束，在战后大国分赃博弈中缺乏足够坚硬的政略手段"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Profound moral sensitivity led to severe emotional disillusionment and psychic retreat",
+          "Resistance to conventional bureaucratic statecraft limited post-war political effectiveness"
+      ]
+  },
+  {
+      "id": "georgy_zhukov",
+      "nameZh": "格奥尔吉·朱可夫",
+      "nameEn": "Georgy Zhukov",
+      "dynastyZh": "苏联",
+      "dynastyEn": "Soviet Union",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 苏德战争战略大反攻与柏林决胜 (1939-1953)",
+      "eraNameEn": "Modern West · Great Patriotic War & Fall of Berlin (1939-1953)",
+      "positionZh": "苏联元帅 · 四次苏联英雄 · 胜利元帅 · 最高副统帅",
+      "positionEn": "Marshal of the Soviet Union · Four-Time Hero of the Soviet Union · Marshal of Victory",
+      "personalityZh": "刚毅铁血、魄力宏大、严厉冷酷、临危受命、具有超凡战役决断力与意志力",
+      "personalityEn": "Iron-willed, ruthless, uncompromising in execution, supreme crisis fixer, possessing indomitable operational resolve",
+      "deedsZh": "在诺门坎战役以装甲合围重创日军；在莫斯科保卫战、斯大林格勒战役、库尔斯克战役等最危急关头担任最高副统帅临危受命力挽狂澜；指挥巴格拉季昂行动收复白俄罗斯，率第一白俄罗斯方面军长驱直入攻克柏林，代表苏联接受纳粹德国无条件投降并主持红场胜利阅兵。",
+      "deedsEn": "Won early fame at Khalkhin Gol before anchoring the supreme crises of WWII at Moscow, Stalingrad, and Kursk. Coordinated Operation Bagration and commanded the 1st Belorussian Front into Berlin, accepting German surrender and presiding over the 1945 Victory Parade.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "羊刃",
+          "比肩"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于在面临灭顶溃败之灾的极限绝境下迅速稳定防线，以钢铁般的冷酷意志强行推动大纵深装甲合围与全线决战；长于大规模现代诸军兵种协同作战。",
+      "strengthAdviceEn": "Supreme master of crisis triage and deep mechanized operational art, imposing iron discipline to halt catastrophic routs and executing massive encirclement counter-offensives.",
+      "weaknessAdviceZh": "治军极其严厉冷酷，不惜一切代价达成战役目的导致部队付出的伤亡极其惨烈；战后功高震主遭到斯大林猜忌贬黜，在最高权力政治博弈中缺乏柔韧自保手腕。",
+      "weaknessAdviceEn": "Ruthless operational calculus incurred harrowing casualties to secure objectives. Overshadowing political leadership invited Stalin's paranoid demotion after the war.",
+      "historicalQuoteZh": "艾森豪威尔赞叹：「全世界都欠朱可夫元帅一份无法偿还的感激。」俄罗斯人民尊其为无可替代的「胜利象征」。",
+      "historicalQuoteEn": "Dwight D. Eisenhower observed: One day there will be a greater appreciation of Zhukov's colossal military role; he was the indomitable Marshal of Victory.",
+      "auxiliaryStrengthsZh": [
+          "在国家生死存亡关头具备超凡的定力与铁血执行力，挽狂澜于既倒",
+          "长于指挥数百万现代化大兵团协同作战，大纵深战役穿插艺术登峰造极"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Superhuman fortitude during existential collapse, turning defensive lines into counter-offensives",
+          "Master of combined-arms coordination and deep mechanized operational encirclements"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "战术攻坚作战作风过于冷酷刚硬，有时对一线士兵生命代价考量不足",
+          "性格刚直傲岸缺乏政治圆融退让手腕，战后两度在克里姆林宫权力斗争中遭贬"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Brutal operational resolve occasionally accepted catastrophic casualty rates",
+          "Blunt martial pride lacked political subtlety, inviting post-war political purges"
+      ]
+  },
+  {
+      "id": "konstantin_rokossovsky",
+      "nameZh": "康斯坦丁·罗科索夫斯基",
+      "nameEn": "Konstantin Rokossovsky",
+      "dynastyZh": "苏联",
+      "dynastyEn": "Soviet Union",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 大纵深战役法与巴格拉季昂行动 (1941-1945)",
+      "eraNameEn": "Modern West · Deep Operational Art & Bagration (1941-1945)",
+      "positionZh": "苏联元帅兼波兰元帅 · 两次苏联英雄 · 红色名将",
+      "positionEn": "Marshal of the Soviet Union & Marshal of Poland · Master of Deep Operations",
+      "personalityZh": "儒雅坚韧、战术精湛绝伦、胸襟开阔、尊重下属、在酷刑与蒙冤中坚守信念",
+      "personalityEn": "Courtly, resilient, tactically peerless, magnanimous, respectful of subordinates, unbroken by torture and unjust imprisonment",
+      "deedsZh": "在大清洗中身陷囹圄遭受酷刑拔牙折磨却坚不吐假供；获释复出后在莫斯科战役顽强阻击德军；斯大林格勒战役中指挥顿河方面军完成天王星行动合围并俘虏保卢斯第六集团军；在库尔斯克战役成功化解德军装甲突击；在巴格拉季昂行动中力排众议坚持「双主攻」战略全歼德军中央集团军群。",
+      "deedsEn": "Survived torture during the Great Purge without false confession. Orchestrated the encirclement and capture of Paulus's 6th Army at Stalingrad, engineered the defensive masterclass at Kursk, and conceived the brilliant twin-thrust plan of Operation Bagration, destroying Army Group Centre.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于打破战役教条，敢于在统帅（斯大林）面前坚持正确的「双主攻」非对称方案；治军极具人情味，善于以最小的伤亡代价达成最大战役战果。",
+      "strengthAdviceEn": "Possesses the courage to defend unconventional operational plans (such as the twin-axis thrust of Bagration) before supreme political authority, achieving massive triumphs with tactical elegance.",
+      "weaknessAdviceZh": "由于其波兰贵族出身与曾被清洗入狱的政治污点，终生处于苏波两大地缘政治夹缝与克里姆林宫的隐秘戒备之中；军事统帅需时刻注重政治身份风险隔离。",
+      "weaknessAdviceEn": "Dual Polish-Russian identity and historical purge scars left him politically vulnerable in both Moscow and Warsaw. Buffer professional excellence with political vigilance.",
+      "historicalQuoteZh": "斯大林在巴格拉季昂行动后公开向其道歉，破例称呼其名字和父称；朱可夫评价他：「罗科索夫斯基是我见过的最懂战争艺术的真正军事家。」",
+      "historicalQuoteEn": "Stalin broke protocol to address him by name and patronymic; Zhukov acknowledged: Rokossovsky was an operational artist of the highest magnitude.",
+      "auxiliaryStrengthsZh": [
+          "敢于顶住最高权威压力坚持科学战略决策（双主攻构想），定力极强",
+          "战役指挥艺术灵动多变，注重步坦空协同与降低非必要伤亡"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Moral courage to stand up to supreme dictators to defend sound tactical plans",
+          "Operational elegance combining maneuver with combined-arms to minimize casualties"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政治背景敏感夹在苏波两国民族情结之间，战后两头不讨好",
+          "为人过于谦和隐忍，在战役头号荣誉（如攻克柏林主攻权）分配中被动让步"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Complex ethnic and political identity created enduring vulnerabilities in postwar politics",
+          "Courtly modesty allowed more aggressive peers to claim prime ceremonial glory (e.g. Berlin)"
+      ]
+  },
+  {
+      "id": "aleksandr_vasilevsky",
+      "nameZh": "亚历山大·华西列夫斯基",
+      "nameEn": "Aleksandr Vasilevsky",
+      "dynastyZh": "苏联",
+      "dynastyEn": "Soviet Union",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 总参谋部大统筹与远东风暴 (1941-1945)",
+      "eraNameEn": "Modern West · General Staff Master & August Storm (1941-1945)",
+      "positionZh": "总参谋长 · 苏联元帅 · 国防部副部长 · 远东战役总司令",
+      "positionEn": "Chief of the General Staff · Marshal of the Soviet Union · Commander of Far East Forces",
+      "personalityZh": "极其低调谦逊、逻辑周密严谨、善于向斯大林谏言、宏观协调大师、运筹帷幄",
+      "personalityEn": "Self-effacingly modest, logically rigorous, trusted counselor to Stalin, master of grand-strategic coordination, immaculate planner",
+      "deedsZh": "作为总参谋长几乎参与制定了苏德战争期间所有重大战役计划（斯大林格勒、库尔斯克、白俄罗斯、东普鲁士战役）；善于在地图前将斯大林的战略直觉转化为精密可执行的数百万大兵团作战预案；1945年指挥「八月风暴行动」，在短短三周内横扫中国东北全歼百万日本关东军。",
+      "deedsEn": "As Chief of the General Staff, meticulously drafted virtually every grand strategic plan of the Great Patriotic War (Stalingrad, Kursk, Bagration, East Prussia). Commanded the 1945 August Storm offensive, routing Japan's Kwantung Army in Manchuria in three weeks.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "偏财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于在高层最高决策者与前线桀骜战将之间充当精密可靠的中枢传动轴；具备将错综复杂的全国战争物资与战略储备在千钧一发之际精准投送到关键突破口的大师级操盘力。",
+      "strengthAdviceEn": "Master orchestrator of grand strategy and logistical pipelines, translating political imperatives into flawless multi-front operations while coordinating fiery field commanders.",
+      "weaknessAdviceZh": "作风过于隐入幕后不尚个人张扬，在大众历史记忆中其显赫功勋常被前线战将遮蔽；幕僚型战略家需在适当历史节点固化自身的制度性话语权。",
+      "weaknessAdviceEn": "Extreme modesty and backstage diligence allowed frontline figures to capture the public limelight. Ensure strategic architects document their institutional contributions.",
+      "historicalQuoteZh": "斯大林对其极度依赖与尊敬，战时每日与其通电话长达数小时；苏联军界称其为「真正的红军大脑」。",
+      "historicalQuoteEn": "Stalin placed immense trust in his analytical calm, conferring daily. Revered among military historians as the undisputed brain of the Red Army.",
+      "auxiliaryStrengthsZh": [
+          "运筹帷幄决胜千里，参谋作业与宏观兵力调度能力达到人类战争巅峰",
+          "性格谦和谨慎深谙伴君之道，在残酷高层政治漩涡中始终屹立不倒"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Supreme architect of multi-million-soldier strategic operations and theater logistics",
+          "Prudent, selfless diplomacy that maintained absolute trust under a suspicious dictator"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "长期居于总参谋部幕后，独立指挥前线大兵团作战的公众曝光度不足",
+          "对最高统帅的某些政治命令过于顺从，缺乏公开抗辩的激进锐气"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Backstage operational focus allowed flamboyant field marshals to overshadow his acclaim",
+          "Institutional deference occasionally restrained vocal challenge to political interference"
+      ]
+  },
+  {
+      "id": "erwin_rommel",
+      "nameZh": "埃尔温·隆美尔",
+      "nameEn": "Erwin Rommel",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 装甲闪击战与北非战役 (1940-1944)",
+      "eraNameEn": "Modern West · Panzer Warfare & North African Campaign (1940-1944)",
+      "positionZh": "陆军元帅 · 「沙漠之狐」 · 战术机动大师",
+      "positionEn": "Field Marshal · The Desert Fox · Master of Tactical Maneuver",
+      "personalityZh": "身先士卒、战术机警如狐、敢冒奇险以速度破局、富有骑士作风、深得敌友敬佩",
+      "personalityEn": "Leads from the front, tactically cunning, audacious speed merchant, chivalrous in combat, respected by foes and allies",
+      "deedsZh": "在1940年法国战役中率领「魔鬼师」（第7装甲师）狂飙突进；在北非战场以极度劣势的兵力和严重断绝的后勤，凭借高超的装甲机动与防空炮反坦克战术打出托卜鲁克等一系列经典胜仗，获得「沙漠之狐」美誉；后负责加固诺曼底「大西洋堡垒」；因卷入7·20刺杀希特勒事件被迫服毒自尽。",
+      "deedsEn": "Commanded the Ghost Division in France before taking command of the Afrika Korps, repeatedly routing superior Allied forces through audacity and mobility despite severe logistical starvation. Upgraded the Atlantic Wall defenses and was forced to commit suicide following the 20 July plot.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "伤官",
+          "比肩"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于亲临交火一线捕捉稍纵即逝的战术战机，以非对称机动与出其不意在绝境中扭转乾坤；具备身先士卒凝聚全军死战的超凡感染力。",
+      "strengthAdviceEn": "Masters rapid tactical improvisation at the forward edge of battle, deploying asymmetric speed and personal frontline example to rout statically deployed opponents.",
+      "weaknessAdviceZh": "战役前线突进往往脱离后勤补给极限（「把战术胜利当成了战略总目标」），导致油料弹药耗尽后全盘崩盘；统帅决不可因局部机动的快感而轻视底层供应链天花板。",
+      "weaknessAdviceEn": "Tactical brilliance repeatedly outran strategic logistical capacity, leaving armored divisions stranded without fuel. Never allow tactical momentum to ignore hard supply limits.",
+      "historicalQuoteZh": "丘吉尔在英国下议院公然致敬：「虽然他是敌人，但我必须承认他是一位伟大的将军。」",
+      "historicalQuoteEn": "Winston Churchill famously paid tribute across enemy lines: We have a very daring and skillful opponent against us, and, may I say across the havoc of war, a great general.",
+      "auxiliaryStrengthsZh": [
+          "战术穿插机敏如狐，善于以少胜多打乱强敌阵脚创造奇迹战果",
+          "亲临火线带兵打仗极具人格魅力，在敌我双方阵营中均享有崇高军人声望"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Master of rapid tactical disruption who conjured victories out of severe numerical deficits",
+          "Charismatic frontline commander commanding universal chivalric respect across lines"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "缺乏宏观大战略与供应链后勤全局考量，常常在穷途末路时面临油料断绝",
+          "卷入高层政治暗杀缺乏足够城府自保，最终被迫服毒成为政治牺牲品"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Severe operational blindspot regarding logistical realities and grand strategic depth",
+          "Naive political maneuvering in the 20 July plot led to forced suicide"
+      ]
+  },
+  {
+      "id": "heinz_guderian",
+      "nameZh": "海因茨·古德里安",
+      "nameEn": "Heinz Guderian",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 闪击战理论与装甲纵深突破 (1937-1945)",
+      "eraNameEn": "Modern West · Blitzkrieg Doctrine & Armored Penetration (1937-1945)",
+      "positionZh": "大将 · 装甲兵总监 · 陆军参谋长 · 现代装甲战与闪电战之父",
+      "positionEn": "Generaloberst · Inspector General of Armoured Troops · Father of Modern Blitzkrieg",
+      "personalityZh": "开拓创新、敢于打破军事传统、雷厉风行、专注装甲核心、直言敢谏",
+      "personalityEn": "Pioneering innovator, shattering traditional military orthodoxy, fast, laser-focused on armored doctrine, blunt to superiors",
+      "deedsZh": "出版《注意——装甲兵！》，开创性提出将装甲坦克、机械化步兵、俯冲轰炸机与无线电通信紧密集成的全新作战理论，创立「闪电战」（Blitzkrieg）；在1940年色当战役指挥第19装甲军穿透阿登天险直插英吉利海峡，彻底包围英法主力；东线多次直面希特勒激烈抗争军事指挥权被免职。",
+      "deedsEn": "Penned Achtung - Panzer! to establish the revolutionary doctrine of massed armored formations supported by close air support and radio communications, fathering the Blitzkrieg. Executed the decisive Ardennes breakthrough at Sedan in 1940, racing to the English Channel.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "偏印"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备打破数百年传统兵种成见的划时代创新魄力，善于将新兴前沿科技与机动作战原理融合为摧枯拉朽的全新生产力工具；敢于向顶层权贵直陈弊病。",
+      "strengthAdviceEn": "Visionary operational innovator who integrated emergent armor, aviation, and radio technologies into a devastating tactical paradigm, fearlessly challenging archaic military dogmas.",
+      "weaknessAdviceZh": "性格暴烈刚直不喜妥协，在与上级和最高统帅争执时屡次激化矛盾导致被剥夺指挥权；专业技术创新者需学会柔韧的政治博弈技巧以保全核心项目主导权。",
+      "weaknessAdviceEn": "Combative and uncompromising temperament repeatedly sparked explosive clashes with High Command, resulting in multiple dismissals. Pair technical brilliance with political diplomacy.",
+      "historicalQuoteZh": "西方装甲界定论：「古德里安把引擎装在了大炮上，彻底重构了二十世纪地面战争的物理形态。」",
+      "historicalQuoteEn": "Armored warfare consensus: Guderian put an engine on the artillery and fundamentally transformed the physics of modern land combat.",
+      "auxiliaryStrengthsZh": [
+          "开创现代装甲集群大纵深闪击战理论体系，彻底终结了堑壕战时代",
+          "长于指挥装甲先锋进行雷霆突击，在关键突破口撕裂敌军防线"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Fathered the integrated armor-air-radio Blitzkrieg doctrine that revolutionized warfare",
+          "Peerless vanguard leader whose armored wedges tore open strategic defensive lines"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "脾气刚烈暴躁不耐繁文缛节，多次与最高统帅爆发正面冲突遭到免职",
+          "过度迷信装甲突破速度，在俄罗斯无边泥泞与严寒面前遭遇战役后勤死锁"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Explosive and stubborn temper alienated superiors, leading to repeated dismissals",
+          "Tactical velocity became paralyzed when confronted with vast Russian geography and winter"
+      ]
+  },
+  {
+      "id": "erich_von_manstein",
+      "nameZh": "埃里希·冯·曼施坦因",
+      "nameEn": "Erich von Manstein",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 镰刀收割计划与大纵深战术艺术 (1939-1944)",
+      "eraNameEn": "Modern West · Sickle Cut & Operational Masterpieces (1939-1944)",
+      "positionZh": "陆军元帅 · 德意志参谋体系最高代表 · 战略战术双重大师",
+      "positionEn": "Field Marshal · Master Operational Planner · Architect of the Manstein Plan",
+      "personalityZh": "智谋深邃、战局算计如神、战术机动与进攻组织大师、傲岸自信、推演缜密",
+      "personalityEn": "Intellectually brilliant, calculatingly profound, master of fluid operational maneuver, aristocratic arrogance, immaculate planner",
+      "deedsZh": "提出颠覆施里芬计划的「镰刀收割行动」（曼施坦因计划），建议将主攻方向选在盟军认为不可逾越的阿登森林，创造了六周内灭亡法国的军事神话；在克里米亚战役攻克塞瓦斯托波尔要塞；在斯大林格勒战役后于顿涅茨河战役中施展神妙反击（「反手抽击」）重夺哈尔科夫，稳住整条崩溃防线。",
+      "deedsEn": "Conceived the Sickle Cut (Manstein Plan), routing Anglo-French armies in six weeks through the Ardennes. Captured Sevastopol Fortress and executed the legendary backhand blow counter-offensive at Third Kharkov, stabilizing the entire collapsing southern front in 1943.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "七杀",
+          "伤官"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "具备在棋盘大局前洞察敌军最薄弱死穴并发动致命一击的超凡战略算力；善于在退却防守中以极度精妙的机动反击打崩优势敌军的进攻锋芒。",
+      "strengthAdviceEn": "Commands peerless operational calculation that identifies the adversary's fatal vulnerability, executing devastating fluid counter-punches (the backhand blow) to turn retreat into triumph.",
+      "weaknessAdviceZh": "傲慢自负轻视同僚与盟友，沉溺于纯粹军事战役的精妙艺术而完全对纳粹罪行采取道德失明与同流合污；专业精英绝不可用职业操守作为逃避人类基本良知责任的挡箭牌。",
+      "weaknessAdviceEn": "Aristocratic arrogance and moral blindness toward atrocities. Elite professional brilliance must never be weaponized as an excuse for moral complicity in criminal enterprises.",
+      "historicalQuoteZh": "英国军事历史学家李德·哈特评其为：「第二次世界大战中各参战国中最具天赋、最卓越的战役战术指挥官。」",
+      "historicalQuoteEn": "B.H. Liddell Hart judged him: The Allies' most formidable operational adversary, and arguably the most brilliant general of the Second World War.",
+      "auxiliaryStrengthsZh": [
+          "制定阿登突破「镰刀收割」战略方案，以非凡想象力创造闪电灭亡法国奇迹",
+          "在顿涅茨河反击战中展现无与伦比的后退反击艺术，堪称机动防御教科书"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Conceived the revolutionary Sichelschnitt plan that dismantled French defenses in six weeks",
+          "Executed the masterclass backhand counter-offensive at Kharkov to stabilize the eastern front"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "贵族精英傲慢意识极深，与同僚关系紧张，屡次因大战略分歧被希特勒解职",
+          "在战争罪行面前采取道德冷漠与视而不见，战后受到纽伦堡法庭审判与历史鞭笞"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aloof aristocratic pride ignited constant friction with colleagues and Supreme Command",
+          "Moral detachment from political atrocities left an indelible ethical stain on his legacy"
+      ]
+  },
+  {
+      "id": "omar_bradley",
+      "nameZh": "奥马尔·布拉德利",
+      "nameEn": "Omar Bradley",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 诺曼底眼镜蛇行动与大兵团推进 (1944-1953)",
+      "eraNameEn": "Modern West · Operation Cobra & 12th Army Group (1944-1953)",
+      "positionZh": "第12集团军群司令 · 陆军五星上将 · 首任参谋长联席会议主席 · 「大兵将军」",
+      "positionEn": "Commander of 12th Army Group · General of the Army · 1st Chairman of Joint Chiefs · The GI's General",
+      "personalityZh": "沉着稳健、关爱普通士兵、组织协调力强、作风平实低调、深受全军敬爱",
+      "personalityEn": "Methodical, deeply protective of frontline troops, organizational steady hand, unpretentious, universally trusted",
+      "deedsZh": "指挥美军第一集团军突破诺曼底滩头，策划「眼镜蛇行动」（Operation Cobra）利用地毯式轰炸成功撕裂德军防线实现装甲大突围；升任第12集团军群司令统帅百万大军（美军历史上指挥人数最多的单一阵营司令）；战后出任首任参谋长联席会议主席，主持军种整合并定调冷战军事战略。",
+      "deedsEn": "Commanded the US First Army on D-Day and orchestrated Operation Cobra to break out from the Normandy bocage. Commanded the 12th Army Group—the largest American force in history (1.3 million troops)—into Germany, and served as the first Chairman of the Joint Chiefs of Staff.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于以极其稳健扎实的系统性推进和压倒性步兵炮兵工业火力突破敌军坚固防线；作风平易近人注重保护基层士卒生命，是组织坚如磐石的压舱中坚。",
+      "strengthAdviceEn": "Excels at methodical, highly coordinated combined-arms operations underpinned by massive industrial firepower, commanding deep organizational trust through genuine care for frontline personnel.",
+      "weaknessAdviceZh": "作战风格偏向稳健中庸，在法莱斯包围圈合围过程中过于谨慎，导致部分德军精锐装甲力量逃脱；在关键追击时刻需敢于释放战术冒险进攻胆量。",
+      "weaknessAdviceEn": "Methodical caution occasionally missed rapid closing windows (e.g. the Falaise Pocket encirclement gap). Pair steady operational security with ruthless exploitation speed.",
+      "historicalQuoteZh": "著名战地记者厄尼·派尔称其为「大兵将军」（The GI's General），全军上下将其视为最值得托付生命的厚重统帅。",
+      "historicalQuoteEn": "Ernie Pyle immortalized him as The GI's General, honoring his quiet humanity and unwavering care for the ordinary enlisted soldier.",
+      "auxiliaryStrengthsZh": [
+          "策划眼镜蛇行动实现战略大破局，统帅百万美军稳步推进进军中欧",
+          "为人谦逊亲和爱兵如子，享有极高的内部军心凝聚力与信任纽带"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Architect of Operation Cobra, orchestrating the breakout that liberated France",
+          "Affectionately revered as the GI's General, inspiring selfless devotion through steady humility"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "战役推进偏于稳重甚至略显保守，在法莱斯缺口合围时决策稍慢让部分敌军逃脱",
+          "性格缺乏戏剧化张力与公共造势热情，重大战役光芒常被巴顿等高调将领掩盖"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Cautious disposition slowed the rapid sealing of the Falaise pocket, allowing German cadres to flee",
+          "Understated personal profile routinely left dramatic headlines to flamboyant subordinates"
+      ]
+  },
+  {
+      "id": "ernest_king",
+      "nameZh": "欧内斯特·金",
+      "nameEn": "Ernest King",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 两洋舰队顶层规划与太平洋战略 (1941-1945)",
+      "eraNameEn": "Modern West · Two-Ocean Fleet Strategy & Global Logistics (1941-1945)",
+      "positionZh": "海军作战部长兼美国舰队总司令 · 海军五星上将 · 全球海权铁腕舵手",
+      "positionEn": "Chief of Naval Operations & Commander in Chief, US Fleet · Fleet Admiral · Master of Naval Strategy",
+      "personalityZh": "铁面无私、冷酷严苛、意志如花岗岩、战略眼光极其宏大、坚决捍卫太平洋战区",
+      "personalityEn": "Austere, mercilessly demanding, granite-willed, panoramic global naval strategist, fierce champion of the Pacific Theater",
+      "deedsZh": "历史上唯一同时兼任海军作战部长与全美舰队总司令（COMINCH）的五星上将；主导建立规模空前的两洋舰队，力排陆军「欧洲第一」偏见，坚决开辟瓜达尔卡纳尔岛战役开启太平洋战略反攻；统筹全球反潜战、护航体系与航空母舰作战兵团，奠定美国战后全球霸权海权基石。",
+      "deedsEn": "The only naval officer to simultaneously serve as Chief of Naval Operations and Commander-in-Chief US Fleet. Championed the Guadalcanal offensive to seize initiative in the Pacific, directed the global anti-submarine campaign, and oversaw the construction of history's mightiest two-ocean navy.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "正官",
+          "偏印"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "具备极其宏大且不可动摇的全球制海权顶层规划力；在跨军种与跨盟国激烈利益争夺中敢于以铁血意志寸土必争，为核心战略战区争取关键资源倾斜。",
+      "strengthAdviceEn": "Uncompromising strategic titan who formulated the structural blue-water naval expansion, fearlessly battling cross-service rivals and British allies to guarantee essential Pacific theater resources.",
+      "weaknessAdviceZh": "脾气极度暴躁专横、言辞苛刻冷酷，其女儿曾坦言「他是全人类中最难以相处的人」；二战早期因轻视反潜护航经验导致美东海岸遭遇毁灭性「欢乐时光」潜艇猎杀。",
+      "weaknessAdviceEn": "Abrasive, merciless, and combative demeanor made him historically difficult to work with. Early resistance to British convoy lessons led to catastrophic merchant shipping losses off the US East Coast.",
+      "historicalQuoteZh": "罗斯福总统曾幽默地赞道：「他脾气坏得每早用喷灯剃须，但他能把海军的每一艘战舰都驱使到最该去的地方。」",
+      "historicalQuoteEn": "FDR famously quipped: He shaves every morning with a blowtorch, but he gets naval results that no polite admiral could ever deliver.",
+      "auxiliaryStrengthsZh": [
+          "极具战略远见与顶层资源争夺魄力，力主发动瓜岛战役夺得太平洋主动权",
+          "统筹全球两洋海军工业化建设，打造人类历史上最庞大的海上霸权力量"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Foresaw the absolute primacy of the Pacific offensive, forcing the launch of Guadalcanal",
+          "Orchestrated the miraculous expansion of the two-ocean battle fleet to defeat Axis powers"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "为人专横暴戾极难相处，与陆军及英国海军参谋部日常协调摩擦剧烈",
+          "早期傲慢拒绝英国反潜护航经验，导致美东海岸航线蒙受惨重的U艇屠杀损失"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Fiercely combative and arrogant interpersonal style repeatedly caused severe alliance friction",
+          "Dogmatic delay in implementing coastal convoys in 1942 cost hundreds of merchant lives"
+      ]
+  },
+  {
+      "id": "arthur_harris",
+      "nameZh": "阿瑟·哈里斯",
+      "nameEn": "Arthur Harris",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 战略轰炸与全方位空权打击 (1942-1945)",
+      "eraNameEn": "Modern West · Strategic Bombing Campaign (1942-1945)",
+      "positionZh": "空军元帅 · 皇家空军轰炸机司令部总司令 · 「轰炸机哈里斯」",
+      "positionEn": "Air Chief Marshal · Commander-in-Chief RAF Bomber Command · Bomber Harris",
+      "personalityZh": "冷酷坚毅、执着偏执、不顾非议、坚信空中毁灭力量、具有不可动摇的执行意志",
+      "personalityEn": "Relentlessly resolute, single-minded, impervious to moral criticism, devoted to strategic air power, steel-willed",
+      "deedsZh": "执掌英国皇家空军轰炸机司令部，坚信战略夜间地毯式轰炸能够摧毁纳粹德国的工业造血机制与国民抵抗意志；组织千机大轰炸突袭科隆、汉堡（火灾风暴）与德累斯顿；极大牵制了德军空军主力与数百万高射炮防空兵力，为诺曼底登陆开辟制空权奠定基础。",
+      "deedsEn": "Commanded RAF Bomber Command throughout the combined bomber offensive against Nazi Germany, orchestrating massive thousand-bomber raids over Cologne, Hamburg, and Dresden. Gutted German war industry, destroyed urban logistics, and tied down millions of Axis troops in home air defense.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "七杀",
+          "伤官",
+          "偏印"
+      ],
+      "patternType": "七杀格",
+      "strengthAdviceZh": "善于顶住来自社会与国际一切舆论非议，以摧枯拉朽的毁灭性饱和打击力量彻底压制对手的底层工业产能；意志如钢铁，绝不被中间阻力分心动摇。",
+      "strengthAdviceEn": "Wields terrifying operational focus and overwhelming saturated force application to destroy adversary industrial infrastructure, maintaining ruthless resolve despite immense collateral controversy.",
+      "weaknessAdviceZh": "对区域无差别轰炸的执念引发了巨大的平民人道灾难与战后道德反弹（如德累斯顿大火），其战功在战后遭到刻意冷遇；任何绝对力量的施展必须衡量战后道义资产损耗。",
+      "weaknessAdviceEn": "Uncompromising reliance on area firebombing caused devastating civilian casualties that severely scarred his post-war historical standing. Modern operations demand proportional precision.",
+      "historicalQuoteZh": "其轰炸机部队墓志铭铭刻其残酷誓言：「纳粹种下了风，他们就必将收获暴风雨（They sowed the wind, and now they are going to reap the whirlwind）。」",
+      "historicalQuoteEn": "His defiant operational creed remains immortalized: The Nazis entered this war under the rather childish delusion that they were going to bomb everyone else and nobody was going to bomb them; they have sown the wind, and now they are going to reap the whirlwind.",
+      "auxiliaryStrengthsZh": [
+          "以无可动摇的铁石心肠推行战略大轰炸，彻底粉碎纳粹德国工业后方",
+          "极度专注单一核心破局打法，为西线开辟第二战场夺取决定性制空权"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Ruthless operational persistence in prosecuting the strategic air offensive against all odds",
+          "Tied down the bulk of German artillery, fighter aviation, and labor away from the Russian front"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对地毯式无差别轰炸过于执迷，战后背负深重的人道主义伦理争议",
+          "言辞孤傲刚硬得罪政界高层，导致其手下数万阵亡轰炸机机组战后授勋受冷遇"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Area bombing doctrine inflicted horrific civilian destruction that tarnished historical legacy",
+          "Abrasive contempt for political sensitivities resulted in prolonged post-war political isolation"
+      ]
+  },
+  {
+      "id": "hugh_dowding",
+      "nameZh": "休·道丁",
+      "nameEn": "Hugh Dowding",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 不列颠空战与雷达防空协同 (1936-1940)",
+      "eraNameEn": "Modern West · Battle of Britain & The Dowding System (1936-1940)",
+      "positionZh": "空军上将 · 第一代道丁男爵 · 战斗机司令部总司令 · 不列颠空战救星",
+      "positionEn": "Air Chief Marshal · 1st Baron Dowding · Commander-in-Chief RAF Fighter Command · Savior of Britain",
+      "personalityZh": "冷静理智、极具科技眼光、抵制狂热冒险、坚守战略预备队、性格孤僻被称「老闷棍」",
+      "personalityEn": "Coldly analytical, technologically prescient, resistant to political gambling, protective of reserves, austere and stoic",
+      "deedsZh": "创建世界上第一个将雷达探测、皇家观测团、专用电话网与中央作战室紧密集成的现代化防空指挥体系（「道丁体系」）；在法国战役期间冒死向丘吉尔直谏拒绝将最后的战斗机中队送去法国当炮灰；指挥不列颠之战以科学轮换与精确拦截击退纳粹狂轰滥炸，拯救了英国文明。",
+      "deedsEn": "Architect of the Dowding System, the world's first integrated air defense network uniting radar, observer corps, and ground-control interception. Resisted Churchill's demands to squander fighters in the doomed Battle of France, masterminding the victory in the Battle of Britain.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "偏印",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于利用最新前沿传感科技与数据中枢打造现代一体化防御预警网络；具备敢于直面最高政治领袖拒绝自杀性冒进、誓死保全核心战力火种的惊人战略定力。",
+      "strengthAdviceEn": "Pioneered sensor-fused integrated command-and-control networks, possessing the supreme moral courage to confront political superiors and protect strategic reserves from futile dissipation.",
+      "weaknessAdviceZh": "作风严峻孤僻缺乏社交手腕，在击败德国后因内部将领「大机群战术」争吵而遭政军两界迅速冷酷解职；技术奠基者需重视内部同僚派系关系平衡。",
+      "weaknessAdviceEn": "Austere, unglamorous, and tactically defensive mindset alienated flamboyant subordinates and politicians, leading to his abrupt dismissal immediately following victory. Cultivate political alliances.",
+      "historicalQuoteZh": "英国官方历史定论：「如果说历史上有哪一个人凭借科学的战略防空体系拯救了大英帝国，那这个人就是道丁。」",
+      "historicalQuoteEn": "Official British history concludes: If ever any one man won the Battle of Britain and preserved Western freedom, that man was Hugh Dowding.",
+      "auxiliaryStrengthsZh": [
+          "开创雷达协同指挥防空体系，实现技术与指挥链的完美降维打击",
+          "敢于冒死抗命拒绝挥霍最后空军家底，展现历史罕见的战略冷静"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Invented the integrated radar-telecom air defense architecture that defeated the Luftwaffe",
+          "Heroic moral fortitude resisting prime ministerial pressure to squander Britain's last fighters"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "性格过于清高孤绝缺乏官场社交技巧，空战刚一胜利便遭同僚排挤解职",
+          "偏好分散截击战术，在军内大机群理论争辩中处于政治被动"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aloof, aristocratic austerity made him easy prey for bureaucratic rivals after the crisis passed",
+          "Defensive tactical preference for small squadron intercepts left him open to political ambush"
+      ]
+  },
+  {
+      "id": "albert_einstein",
+      "nameZh": "阿尔伯特·爱因斯坦",
+      "nameEn": "Albert Einstein",
+      "dynastyZh": "美国 / 德国",
+      "dynastyEn": "United States & Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 相对论革命与现代物理学重构 (1905-1955)",
+      "eraNameEn": "Modern West · Relativity & Modern Theoretical Physics (1905-1955)",
+      "positionZh": "理论物理学家 · 相对论创立者 · 诺贝尔物理学奖得主 · 二十世纪科学象征",
+      "positionEn": "Theoretical Physicist · Founder of Relativity · Nobel Laureate · Symbol of Modern Genius",
+      "personalityZh": "天马行空、具有孩童般的纯真与好奇心、叛逆不羁、深邃幽默、追求宇宙终极优美和谐",
+      "personalityEn": "Transcendent conceptual imagination, child-like wonder, fiercely nonconformist, profoundly humorous, pursuing cosmic harmony",
+      "deedsZh": "在1905年奇迹年发表光电效应、布朗运动与狭义相对论（质能方程E=mc²）；后历经十年艰辛提出广义相对论，彻底重塑人类时空观与引力认知；致信罗斯福启动曼哈顿工程；晚年倾尽心血追求大一统场论，并致力于世界和平与反核反战运动。",
+      "deedsEn": "Published four miraculous papers in 1905 introducing the photoelectric effect, Brownian motion, and Special Relativity (E=mc2). Formulated General Relativity in 1915 to redefine spacetime and gravitation. Alerted FDR to initiate the atomic project, spending his twilight years pursuing Unified Field Theory and world peace.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "火",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "具备在思想实验中摆脱一切肉眼经验表象束缚、直抵宇宙底层时空几何对称美的超凡第一性原理认知能力；敢于推翻统治两百年的牛顿经典力学大厦。",
+      "strengthAdviceEn": "Unrivaled first-principles cognitive power utilizing visual thought experiments to transcend physical intuition and revolutionize spacetime physics, challenging two centuries of Newtonian certainty.",
+      "weaknessAdviceZh": "晚年对量子力学概率解释的本能抗拒（「上帝不掷骰子」）使其在理论前沿遭遇哥本哈根学派的挑战与孤立；即便是一代宗师也需防范认知锚定偏见。",
+      "weaknessAdviceEn": "Philosophical refusal to accept quantum indeterminacy (God does not play dice) left him isolated from mainstream particle physics in his later years. Guard against cognitive anchoring.",
+      "historicalQuoteZh": "《时代》周刊将其评为「二十世纪世纪风云人物（Person of the Century）」；人类公认他是与牛顿并驾齐驱的科学至高峰岳。",
+      "historicalQuoteEn": "Named Person of the Century by Time Magazine, universally revered alongside Isaac Newton as the apex of human scientific intellect.",
+      "auxiliaryStrengthsZh": [
+          "凭借超凡思想实验颠覆传统时空认知，提出相对论开创新物理纪元",
+          "怀抱至高人道主义情怀，勇敢挑战权威抵制极权主义暴政"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Overthrew classical physics through sublime mental thought experiments to birth relativity",
+          "Transcendent moral conscience speaking truth to power against militarism and fascism"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "晚年对量子力学非决定论采取排斥态度，在理论物理最前沿陷入孤独攻坚",
+          "生活起居不修边幅不谙世俗人情，对家庭事务缺乏足够细腻关照"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Philosophical skepticism toward quantum probabilities separated him from the modern vanguard",
+          "Indifference to mundane social convention created domestic friction in personal relationships"
+      ]
+  },
+  {
+      "id": "j_robert_oppenheimer",
+      "nameZh": "J·罗伯特·奥本海默",
+      "nameEn": "J. Robert Oppenheimer",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 曼哈顿工程与原子弹破晓 (1942-1967)",
+      "eraNameEn": "Modern West · Manhattan Project & Atomic Dawn (1942-1967)",
+      "positionZh": "理论物理学家 · 曼哈顿计划科技总负责人 · 普林斯顿高等研究院院长 · 「原子弹之父」",
+      "positionEn": "Theoretical Physicist · Director of Los Alamos Laboratory · Father of the Atomic Bomb",
+      "personalityZh": "才华横溢、极富领袖协调魄力、兼具深邃哲学修养与艺术气质、内心饱受道德煎熬",
+      "personalityEn": "Brilliant polymath, magnetic scientific orchestrator, philosophically refined, culturally sophisticated, plagued by moral torment",
+      "deedsZh": "统率洛斯阿拉莫斯国家实验室，以卓越的领导才华将数千名桀骜不驯的世界顶级物理学家、化学家与工程巨擘凝聚为高效攻坚团队；主导完成人类首次核试验（三位一体试验），成功研发两颗原子弹加速二战终结；战后反对发展氢弹惨遭麦卡锡主义政治安全审查迫害。",
+      "deedsEn": "Directed the Los Alamos Laboratory, uniting thousands of combustible, world-class scientists and engineers into a peerless R&D machine. Orchestrated the Trinity test and delivery of the atomic bomb, and later endured McCarthyite security purges after resisting the hydrogen bomb.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "偏印",
+          "正财"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "长于将纯粹深奥的理论物理探索与工业工程大规模跨学科协同完美融合；具备把控复杂科研工程节奏、凝聚多位诺奖得主共谋大业的无双统御才华。",
+      "strengthAdviceEn": "Supreme scientific orchestrator who reconciled esoteric theoretical research with massive industrial-scale engineering, commanding the fierce loyalty of competing scientific geniuses.",
+      "weaknessAdviceZh": "政治成熟度与官场权力防身手腕薄弱，在战后冷战狂热风暴中因文人傲慢得罪了施特劳斯等政客，导致安全许可被剥夺蒙冤受辱；纯粹专家需筑牢政治护城河。",
+      "weaknessAdviceEn": "Naivete in bare-knuckle bureaucratic infighting. Caustic wit alienated vindictive political figures like Lewis Strauss, precipitating his humiliating 1954 security clearance purge.",
+      "historicalQuoteZh": "核试爆成功那一刻，其心中默念印度《摩诃婆罗多》梵文诗句：「我现在成了死神，世界的毁灭者。」",
+      "historicalQuoteEn": "Watching the Trinity fireball, he famously recalled the Hindu scripture of the Bhagavad Gita: Now I am become Death, the destroyer of worlds.",
+      "auxiliaryStrengthsZh": [
+          "具备统御世界顶尖学者团队的无双组织协调才华，将不可能变为现实",
+          "思维兼具量子物理敏锐度与人文哲学深邃，极具领袖人格感染力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Miraculous interdisciplinary leadership uniting world-class intellects under wartime pressure",
+          "Deeply cultured polymath whose charisma bridged theoretical abstractions and engineering"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "言辞偶露傲慢锋芒树敌颇多，缺乏应对政治冷箭与官僚阴谋的自卫手腕",
+          "核爆后深陷极度内疚与精神折磨，难以在残酷冷战大国博弈中独善其身"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Arrogant intellectual dismissiveness alienated petty political bureaucrats who later destroyed him",
+          "Deep moral anguish over atomic destruction paralyzed his effectiveness in the Cold War realpolitik"
+      ]
+  },
+  {
+      "id": "enrico_fermi",
+      "nameZh": "恩里科·费米",
+      "nameEn": "Enrico Fermi",
+      "dynastyZh": "美国 / 意大利",
+      "dynastyEn": "United States & Italy",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 核反应堆与受控核裂变开创 (1938-1954)",
+      "eraNameEn": "Modern West · First Nuclear Reactor & Quantum Statistics (1938-1954)",
+      "positionZh": "物理学家 · 诺贝尔物理学奖得主 · 芝加哥一号堆创立者 · 最后的通才物理学家",
+      "positionEn": "Physicist · Nobel Laureate · Architect of Chicago Pile-1 · The Last Polymath of Physics",
+      "personalityZh": "理论与实验双绝、极其务实清晰、长于极简数量级估算、思维敏捷如电脑、平易近人",
+      "personalityEn": "Supreme dual-master of theory and experiment, brutally pragmatic, master of order-of-magnitude estimation (Fermi problems), clear, unpretentious",
+      "deedsZh": "理论与实验皆为大师的二十世纪最后一人；因慢中子诱发核裂变获诺贝尔奖；流亡美国后在芝加哥大学废弃橄榄球场地下主持建成人类历史上第一座可控自持核裂变反应堆（芝加哥一号堆），正式开启人类原子能时代；在曼哈顿工程中担任核心解决瓶颈问题的总顾问。",
+      "deedsEn": "The last physicist equally supreme in both theoretical derivation and bench experimentation. Won the Nobel Prize for slow-neutron reactions and built the world's first artificial nuclear reactor (Chicago Pile-1) in 1942, ushering in the nuclear age. Solved key bottlenecks for the Manhattan Project.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "正财",
+          "食神"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "善于用极简的数量级估算（费米问题）与清晰直观的物理模型穿透极度复杂的未知混沌；理论与实操毫无脱节，能随时挽起袖子解决一线最棘手工艺死结。",
+      "strengthAdviceEn": "Unrivaled mastery of order-of-magnitude estimation and razor-sharp intuitive modeling, effortlessly bridging esoteric quantum theory with hands-on mechanical troubleshooting.",
+      "weaknessAdviceZh": "性格极其务实求稳回避政治道德纷争，对核技术引发的毁灭性政治伦理后果采取相对中立疏离态度；科学泰斗需注重对重大破坏性技术赋予伦理方向引领。",
+      "weaknessAdviceEn": "Deep reluctance to engage in political and ethical crusades led him to adopt a technocratic neutrality concerning atomic weapons. Complement pragmatic craft with ethical stewardship.",
+      "historicalQuoteZh": "物理学界同仁尊称其为「教皇」（The Pope），因为他在物理推断上「永远不会犯错」。",
+      "historicalQuoteEn": "His scientific peers reverently nicknamed him The Pope because his physical and numerical deductions were infallibly correct.",
+      "auxiliaryStrengthsZh": [
+          "理论推演与动手实验双重巅峰，善以极简模型破解世纪科学难题",
+          "为人务实谦逊极其清晰，培养出多位诺奖得主，弟子桃李满天下"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Equal genius in theoretical formulation and laboratory execution; the ultimate scientific polymath",
+          "Incomparable clarity of thought that nurtured an entire generation of Nobel laureates"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过于恪守技术实用主义中立立场，对重大技术伦理的政治发言较为被动",
+          "53岁因胃癌早逝过早离开科学界，警示科研工作者需筑牢辐射与健康防线"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Averse to political engagement, remaining an aloof technocrat on critical ethical battlegrounds",
+          "Untimely death at 53 cut short an incomparable mind, emphasizing radiation safety limits"
+      ]
+  },
+  {
+      "id": "niels_bohr",
+      "nameZh": "尼尔斯·玻尔",
+      "nameEn": "Niels Bohr",
+      "dynastyZh": "丹麦",
+      "dynastyEn": "Denmark",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 哥本哈根学派与量子力学大本营 (1913-1962)",
+      "eraNameEn": "Modern West · Copenhagen School & Quantum Philosophy (1913-1962)",
+      "positionZh": "理论物理学家 · 哥本哈根学派灵魂 · 互补原理创立者 · 诺贝尔奖得主",
+      "positionEn": "Theoretical Physicist · Soul of the Copenhagen School · Founder of Complementarity · Nobel Laureate",
+      "personalityZh": "温厚和蔼、具有深邃辩证哲学思维、善于倾听引导、庇护年轻学者、追求真理纯粹",
+      "personalityEn": "Gentle, profoundly dialectical thinker, inspirational mentor, sanctuary for threatened scientists, devoted to truth",
+      "deedsZh": "提出玻尔原子行星模型并获诺贝尔奖；创立哥本哈根理论物理研究所，将其打造为全世界年轻量子物理学家的思想圣殿（海森堡、泡利、狄拉克等）；提出革命性的「互补原理」化解波粒二象性矛盾；二战期间逃离纳粹占领区，竭力推动国际原子能开放合作与世界和平。",
+      "deedsEn": "Formulated the Bohr model of the atom, winning the Nobel Prize. Established the Institute for Theoretical Physics in Copenhagen, mentoring Heisenberg, Pauli, and Dirac into the vanguard of quantum mechanics. Formulated the Complementarity Principle and tirelessly lobbied for international nuclear openness.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "偏印",
+          "正官"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "长于以启发式对谈与包容宽松的学术环境催化青年异端天才产生颠覆性创新；具备将看似水火不容的矛盾现象统摄于「互补对立统一」的高维辩证哲学眼光。",
+      "strengthAdviceEn": "Master catalyst of collaborative genius, cultivating an open intellectual sanctuary that nurtured revolutionary discoveries while reconciling contradictions via the principle of complementarity.",
+      "weaknessAdviceZh": "语言表述常常极度晦涩深奥（追求概念的极致精确反而导致语义含混），公开演说往往令外行人甚至专业物理学家困惑难解；需加强通俗化科普转译能力。",
+      "weaknessAdviceEn": "Dialectical nuances and elliptical speech patterns occasionally resulted in profound semantic obscurity that baffled contemporaries. Pair deep philosophical concepts with crisp, accessible prose.",
+      "historicalQuoteZh": "海森堡感叹：「在玻尔身边，人们才能真正学会如何思考物理。」爱因斯坦由衷赞叹：「玻尔是具有最高度理智与仁爱胸怀的人。」",
+      "historicalQuoteEn": "Heisenberg observed: It was only at Bohr's side that one learned how to truly think in physics; Einstein praised him as possessing the highest intellectual and moral purity.",
+      "auxiliaryStrengthsZh": [
+          "开创哥本哈根学派打造世界物理圣地，善于激发培养青年科学家群体",
+          "提出互补原理化解认识论危机，辩证哲学智慧达到现代科学巅峰"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Built the intellectual powerhouse of the Copenhagen Institute that shaped 20th-century physics",
+          "Philosophical brilliance that reconciled contradictory wave-particle phenomena into complementarity"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "口头表达过于深奥曲折，日常沟通往往难以直接传达清晰指令",
+          "早期对大国军备竞赛残酷性抱有过于天真的理想主义幻想，劝说政客屡屡受挫"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Deeply convoluted and hesitant speaking manner made direct operational communication difficult",
+          "Naive idealism concerning wartime nuclear transparency was coldly rejected by Churchill and FDR"
+      ]
+  },
+  {
+      "id": "werner_heisenberg",
+      "nameZh": "维尔纳·海森堡",
+      "nameEn": "Werner Heisenberg",
+      "dynastyZh": "德国",
+      "dynastyEn": "Germany",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 测不准原理与量子力学矩阵力学 (1925-1976)",
+      "eraNameEn": "Modern West · Matrix Mechanics & Uncertainty Principle (1925-1976)",
+      "positionZh": "理论物理学家 · 量子力学矩阵力学创立者 · 不确定性原理提出者 · 诺贝尔奖得主",
+      "positionEn": "Theoretical Physicist · Founder of Matrix Mechanics · Uncertainty Principle Pioneer · Nobel Laureate",
+      "personalityZh": "年轻天才、数学物理直觉极其敏锐、敢于摒弃经典轨道概念、内心深处充满民族复杂情结",
+      "personalityEn": "Prodigious mathematical intuition, daringly dispensing with classical physical models, philosophically complex, torn by patriotic dilemmas",
+      "deedsZh": "年仅24岁在黑尔戈兰岛疗养时创立量子力学的第一种数学形式——矩阵力学；提出著名的「测不准原理」（不确定性原理），揭示人类无法同时精准测定微观粒子的位置与动量，震撼了现代哲学认知；二战期间留在德国负责纳粹铀计划（德国原子弹计划），留下了扑朔迷离的「哥本哈根会影」历史公案。",
+      "deedsEn": "Created matrix mechanics at age 24, inventing quantum mechanics. Formulated the Uncertainty Principle, proving that the exact position and momentum of a particle cannot be simultaneously measured. Led the German nuclear project during WWII, leaving the controversial Copenhagen meeting mystery.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "偏印",
+          "七杀"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "善于完全抛弃一切无法直接观测的经验假象，仅凭严密的可观测量数据重构物理大厦；具备打破经典决定论宇宙观的颠覆性数学洞察力。",
+      "strengthAdviceEn": "Fearlessly discards unobservable intuitive assumptions to reconstruct scientific paradigms solely from observable data, revolutionizing modern epistemology with mathematical rigor.",
+      "weaknessAdviceZh": "在极权政权统治下选择留在体制内进行所谓的「科学守护」，导致其在二战期间陷入深重的道义嫌疑与师徒（与玻尔）决裂；高级知识分子需警惕被邪恶体制利用成为工具人。",
+      "weaknessAdviceEn": "Navigating moral compromise within totalitarian regimes led to tragic ethical ambiguity and broken relationships with mentors. Moral vigilance must accompany intellectual genius.",
+      "historicalQuoteZh": "量子物理学界公认其为现代科学史上最具突破性的天才大脑之一，其测不准原理成为现代信息论与哲学的核心支柱。",
+      "historicalQuoteEn": "Universally acknowledged as one of physics' ultimate trailblazers, his Uncertainty Principle stands as an immortal pillar of modern scientific philosophy.",
+      "auxiliaryStrengthsZh": [
+          "凭借矩阵力学与不确定性原理奠定现代量子大厦，技术创新突破力无与伦比",
+          "直觉极其敏锐，敢于直视微观世界本质的不连续与不可预测性"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Monumental mathematical intuition that established the non-deterministic foundation of quantum theory",
+          "Audacity to discard classical trajectories, focusing solely on observable quantum realities"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政治立场与历史道义抉择暧昧不清，二战期间留守德国导致其国际声誉饱受重创",
+          "与导师玻尔的会面沟通失控破裂，给个人晚年学术交往蒙上挥之不去的阴影"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Moral ambiguity during the Nazi era permanently shadowed his historical reputation",
+          "Disastrous 1941 Copenhagen meeting severed lifelong intellectual bonds with Niels Bohr"
+      ]
+  },
+  {
+      "id": "alan_turing",
+      "nameZh": "艾伦·图灵",
+      "nameEn": "Alan Turing",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 图灵机模型与布莱切利园密码破译 (1936-1954)",
+      "eraNameEn": "Modern West · Turing Machine & Bletchley Park Cryptanalysis (1936-1954)",
+      "positionZh": "数学家 · 逻辑学家 · 密码分析家 · 计算机科学与人工智能之父",
+      "positionEn": "Mathematician & Logician · Bletchley Park Cryptanalyst · Father of Computer Science & Artificial Intelligence",
+      "personalityZh": "天才深邃、孤僻纯真、思维极具机器逻辑穿透力、不羁于世俗教条、坚毅专注",
+      "personalityEn": "Prodigious intellect, unworldly, intensely logical, indifferent to social conventions, heroically persistent in problem-solving",
+      "deedsZh": "提出「图灵机」理论模型，为现代电子计算机奠定可计算性底层理论框架；二战期间在布莱切利园主持研制机电解密机「炸弹」（Bombe），成功破解纳粹德国至高军事密码「英格玛」（Enigma），使盟军二战进程缩短至少两年并拯救了千万生命；提出「图灵测试」开辟现代人工智能（AI）先河。",
+      "deedsEn": "Conceptualized the universal Turing Machine, providing the theoretical blueprint for modern digital computing. At Bletchley Park, designed the Bombe decryption machines to break the Enigma cipher, shortening WWII by years. Pioneered artificial intelligence via the Turing Test.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "伤官",
+          "食神"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "拥有以机械算法与逻辑自动化取代人类繁琐思维的超凡抽象开创力；长于在海量密码混沌中寻找逻辑漏洞实施单点爆破，以非对称技术力量拯救国家文明。",
+      "strengthAdviceEn": "Masters algorithmic abstraction to automate complex intellectual deduction, uncovering asymmetric systemic vulnerabilities in cryptosystems to unlock strategic salvation.",
+      "weaknessAdviceZh": "性格极度孤僻不通世故，完全缺乏世俗体制内官僚生存自保手腕；面对战后保守社会的无情歧视与化学阉割迫害未能建立有效的自卫屏障，导致41岁英年自尽身亡。",
+      "weaknessAdviceEn": "Completely unequipped for bureaucratic politics or societal homophobia. Inability to navigate persecution following his arrest led to tragedy. Institutions must protect vulnerable genius.",
+      "historicalQuoteZh": "英国官方后正式向其道歉并将其印在新版50英镑纸币上；科学界公认图灵奖为计算机科学最高荣誉，尊其为拯救文明的无名英雄。",
+      "historicalQuoteEn": "Posthumously pardoned by the Crown and honored on the £50 banknote; the Turing Award stands as the highest distinction in computer science, honoring a savior of civilization.",
+      "auxiliaryStrengthsZh": [
+          "开创现代计算机科学与人工智能理论先河，构筑改变人类文明的底层算法",
+          "在布莱切利园破译英格玛密码，以科技脑力将二战进程提前终结两年"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Conceived the foundational theoretical architecture of computing and artificial intelligence",
+          "Cracked the Enigma naval ciphers, altering the trajectory of the Battle of the Atlantic"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "极度不耐世俗社交与体制规训，在官僚斗争与人际博弈中处于绝对劣势",
+          "面对战后残酷的制度迫害与心理压迫缺乏有效的防御机制，酿成旷世悲剧"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Helplessly vulnerable in the face of brutal state persecution and social prejudice",
+          "Lacked institutional defenses against cruel legal intolerance, leading to his tragic death at 41"
+      ]
+  },
+  {
+      "id": "john_maynard_keynes",
+      "nameZh": "约翰·梅纳德·凯恩斯",
+      "nameEn": "John Maynard Keynes",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 凯恩斯革命与战后布雷顿森林体系 (1919-1946)",
+      "eraNameEn": "Modern West · Keynesian Revolution & Bretton Woods (1919-1946)",
+      "positionZh": "经济学家 · 现代宏观经济学之父 · 剑桥学派代表 · 布雷顿森林体系英国总代表",
+      "positionEn": "Economist · Father of Modern Macroeconomics · Architect of the Bretton Woods System",
+      "personalityZh": "才华横溢、极富演说辩才、商业投资眼光毒辣、兼具艺术修养、敢于颠覆古典教条",
+      "personalityEn": "Brilliantly versatile, persuasive orator, razor-sharp private investor, culturally sophisticated, fearlessly defying orthodoxy",
+      "deedsZh": "出版《和约的经济后果》精准预言凡尔赛条约严惩德国必将引爆第二次世界大战；在大萧条泥潭中发表划时代巨著《就业、利息和货币通论》，打破古典市场自愈神话，开创国家干预与有效需求管理理论（凯恩斯主义）；主持布雷顿森林会议代表英国构建战后国际货币基金组织（IMF）与世界银行。",
+      "deedsEn": "Predicted WWII in The Economic Consequences of the Peace. Revolutionized economic theory with The General Theory of Employment, Interest and Money, inventing modern macroeconomics to combat depressions. Led the British delegation at Bretton Woods, shaping the IMF and World Bank.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "偏财",
+          "正官"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备刺破陈腐学术教条、直击宏观经济运行本质痛点的超凡批判力；长于在政府与市场之间建立反周期的调节杠杆，善用生动雄辩引导国家最高经济顶层设计。",
+      "strengthAdviceEn": "Shatters obsolete orthodoxies with acute macro-analytical insight, formulating counter-cyclical fiscal and monetary policies that steer national economies through crises.",
+      "weaknessAdviceZh": "赤字财政与国家干预政策若被后世庸碌政客滥用为无休止印钞与扩张支出的借口，极易引发恶性通胀与滞胀泥潭；应用其理论必须时刻警惕财政赤字失控风险。",
+      "weaknessAdviceEn": "Counter-cyclical stimulus misused by short-termist politicians risks entrenching inflation and sovereign debt traps. Couple demand management with structural discipline.",
+      "historicalQuoteZh": "经济学界公认凯恩斯是二十世纪最伟大的经济学家：「他不仅挽救了资本主义自由体制，更为人类战后繁荣提供了航海图。」",
+      "historicalQuoteEn": "Economic consensus: Keynes rescued democratic capitalism from the brink of ideological collapse, charting the golden post-war era of global prosperity.",
+      "auxiliaryStrengthsZh": [
+          "精准预言凡尔赛和约恶果与大萧条走势，宏观经济预判眼光冠绝时代",
+          "创立宏观经济学与有效需求理论，为人类抗击经济衰退提供手术刀级工具"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Prophetic foresight anticipating global crises from the Treaty of Versailles to 1929",
+          "Invented macroeconomics, providing governments with tools to tame depression and unemployment"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对长期债务累积的负面效应相对乐观（名言「长期来看我们都死了」），为后世滞胀埋下理论借口",
+          "布雷顿森林会议上受制于英国衰落国力，未能成功确立国际清算联盟班克（Bancor）构想"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Overly cavalier about protracted debt accumulation (In the long run we are all dead)",
+          "Failed to establish his global currency (Bancor) due to America's ascendant economic hegemony"
+      ]
+  },
+  {
+      "id": "friedrich_hayek",
+      "nameZh": "弗里德里希·哈耶克",
+      "nameEn": "Friedrich Hayek",
+      "dynastyZh": "英国 / 奥地利",
+      "dynastyEn": "United Kingdom & Austria",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 奥地利学派与自由秩序原理 (1931-1992)",
+      "eraNameEn": "Modern West · Austrian Economics & Classical Liberalism (1931-1992)",
+      "positionZh": "经济学家兼思想家 · 诺贝尔经济学奖得主 · 《通往奴役之路》作者 · 自由至上主义旗手",
+      "positionEn": "Economist & Social Philosopher · Nobel Laureate · Author of The Road to Serfdom",
+      "personalityZh": "深邃执着、坚信自发秩序、耐得住半生冷板凳、逻辑严整纯粹、警惕国家全能主义",
+      "personalityEn": "Deeply patient, devoted to spontaneous order, enduring decades of academic marginalization, logically pristine, anti-statist",
+      "deedsZh": "出版震撼世界的《通往奴役之路》，深刻警示计划经济与国家全能主义必然导致个人自由沦丧与极权主义深渊；提出「自发秩序」与「分散知识」理论，阐明价格机制是人类社会协调数千万人隐性知识的最有效工具；沉潜数十年后终在二十世纪七八十年代被撒切尔夫人和里根奉为国家复兴圣经。",
+      "deedsEn": "Authored The Road to Serfdom, warning that central economic planning inevitably destroys personal liberty and fosters totalitarianism. Developed theories of spontaneous order and dispersed knowledge, demonstrating that market prices coordinate decentralized human intelligence.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "偏印",
+          "正财"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "善于穿透一切以崇高名义推行的集权诱惑，直击人类认知局限性与分散自适应力量的底层真谛；具备在漫长历史寒冬中坚守真理的超凡学术定力。",
+      "strengthAdviceEn": "Unmasks the perils of centralized hubris, demonstrating that distributed market knowledge outperforms state planners, maintaining ideological fidelity through decades of Keynesian dominance.",
+      "weaknessAdviceZh": "对任何形式的国家宏观干预与社会福利政策采取近乎绝对化的排斥态度，在面临突发系统性金融大危机或公共卫生灾难时，纯粹自由放任容易陷入行动迟缓的社会痛苦困境。",
+      "weaknessAdviceEn": "Doctrinal hostility to emergency state interventions can appear unyielding during catastrophic crises. Balance libertarian ideals with emergency stabilization safety nets.",
+      "historicalQuoteZh": "撒切尔夫人在内阁会议上从手提包中掏出哈耶克的《自由秩序原理》重重摔在桌上宣布：「这才是我们信仰的准则！」",
+      "historicalQuoteEn": "Margaret Thatcher famously slammed Hayek's The Constitution of Liberty on the cabinet table, declaring: This is what we believe.",
+      "auxiliaryStrengthsZh": [
+          "以无可辩驳的逻辑揭示自发秩序与价格机制真谛，捍卫自由文明基石",
+          "耐得住近半个世纪的冷遇与嘲弄，以纯粹学术信念迎来全球性的思想复兴"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Unassailable defense of spontaneous order, decentralized knowledge, and constitutional liberty",
+          "Endured decades of professional obscurity before witnessing his doctrines conquer the world"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "理论倾向于绝对化自由放任，对市场失灵与剧烈外部性冲击下的托底救助缺乏弹性",
+          "早期著作在英美学术圈遭遇凯恩斯主义压制，缺乏通俗大众公关的敏捷抓手"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Doctrinal purism offers limited operational tools during short-term liquidity shocks",
+          "Academic abstraction struggled against pragmatic, interventionist political appeals"
+      ]
+  },
+  {
+      "id": "harry_s_truman",
+      "nameZh": "哈里·S·杜鲁门",
+      "nameEn": "Harry S. Truman",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 二战终局裁决与冷战大战略奠基 (1945-1953)",
+      "eraNameEn": "Modern West · Pivotal Atomic Decisions & Cold War Architecture (1945-1953)",
+      "positionZh": "第33任美国总统 · 杜鲁门主义提出者 · 马歇尔计划与北约缔造者",
+      "positionEn": "33rd President of the United States · Architect of Truman Doctrine · Founder of NATO",
+      "personalityZh": "质朴果敢、敢于担当、雷厉风行、平易近人、具有常识般的决断力与钢铁神经",
+      "personalityEn": "Homespun, courageous, decisive, unpretentious, possessing common-sense fortitude and nerves of steel",
+      "deedsZh": "在罗斯福骤逝后毫无准备下接任总统，果断拍板在日本广岛长崎投下原子弹迫使日本无条件投降终结二战；面对战后苏联扩张，提出「杜鲁门主义」，推行马歇尔计划救赎欧洲，果断实施柏林空运击破封锁；力排众议建立北大西洋公约组织（NATO）并承认以色列建国，奠定战后西方自由世界核心安全架构。",
+      "deedsEn": "Thrust into the presidency upon FDR's death, boldly authorized the atomic bombings to end WWII. Promulgated the Truman Doctrine, backed the Marshall Plan, sustained the Berlin Airlift, forged NATO, and recognized Israel, establishing the enduring foundations of post-war Western security.",
+      "archetype": "executive",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于在毫无退路的至高历史十字路口当机立断，以质朴而坚决的常识感拍板改变人类命运的重大决断；具有最高级的担当精神与抵御恐吓的钢铁意志。",
+      "strengthAdviceEn": "Uncompromising executive decisiveness that shoulders supreme historical accountability at critical crossroads, anchoring foreign policy in common-sense resolve and strategic deterrence.",
+      "weaknessAdviceZh": "偶尔言语粗粝、作风过于直接，在朝鲜战争后期与麦克阿瑟将军发生公开权力撕裂，导致个人民调支持率跌入历史低谷；统帅需注重柔韧维护体制威望。",
+      "weaknessAdviceEn": "Blunt, combative temperament ignited fierce political storms, notably the public firing of MacArthur. Maintain executive decorum even when exercising rightful constitutional supremacy.",
+      "historicalQuoteZh": "其办公桌上著名的标语牌成为现代公职人员的座右铭：「责任止于此（The buck stops here）！」",
+      "historicalQuoteEn": "His Oval Office desk plaque remains the gold standard of presidential accountability: The buck stops here.",
+      "auxiliaryStrengthsZh": [
+          "敢于在人类历史最高关头拍板投掷原子弹终结二战，决策魄力震古烁今",
+          "缔造北约、杜鲁门主义与柏林空运，构筑西方遏制苏联扩张的长效铁壁"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Unflinching courage to authorize atomic strikes and launch the Berlin Airlift under immense pressure",
+          "Architect of NATO and the Truman Doctrine, establishing global containment of tyranny"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "辞令过于质朴刚烈缺乏罗斯福式的贵族政治魅力，在国会博弈中常遇阻滞",
+          "在朝鲜半岛战局升级与将帅任免上遭遇深重政治波折，任期末年民调低迷"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Blunt, combative persona lacked charismatic nuance, fueling congressional friction",
+          "Dismissal of General MacArthur precipitated deep domestic political backlash"
+      ]
+  },
+  {
+      "id": "clement_attlee",
+      "nameZh": "克莱门特·艾德礼",
+      "nameEn": "Clement Attlee",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 现代福利国家建立与大英帝国解殖 (1945-1951)",
+      "eraNameEn": "Modern West · Postwar Welfare State & Decolonization (1945-1951)",
+      "positionZh": "英国首相 · 工党领袖 · 英国国民医疗服务体系（NHS）缔造者 · 「沉默的巨匠」",
+      "positionEn": "Prime Minister of the United Kingdom · Labour Leader · Founder of the NHS · Quiet Master of Reform",
+      "personalityZh": "极其低调谦逊、言简意赅、执行力强韧、专注制度建设、开明务实",
+      "personalityEn": "Understated, laconic, quietly formidable in execution, devoted to institutional fairness, pragmatically progressive",
+      "deedsZh": "在1945年大选中击败民族英雄丘吉尔组建工党政府；雷厉风行推行贝弗里奇报告，创立全球首创的国民医疗服务体系（NHS）与摇篮到坟墓的社会保障制度；将煤炭、铁路、钢铁等核心支柱产业国有化；极具战略清醒地主动准许印度、巴基斯坦独立，开启大英帝国的和平有序解殖转型。",
+      "deedsEn": "Defeated Winston Churchill in the landmark 1945 election to build the modern British welfare state. Established the National Health Service (NHS) and cradle-to-grave social security, nationalized key industries, and oversaw the orderly decolonization and independence of India and Pakistan.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "长于以低调、高效且不事张扬的会议主持技巧牢牢驾驭内阁中桀骜不驯的各路政坛巨头（贝文、莫里森）；善于将崇高的社会公平蓝图转化为不可逆的国家基石制度。",
+      "strengthAdviceEn": "Master of understated, laconic cabinet management that harnesses volatile political titans, transforming progressive social ideals into irreversible public institutions like the NHS.",
+      "weaknessAdviceZh": "过于沉闷朴素的公共形象在面对战后严酷的财政外汇危机与物资配给紧缩时，难以给予大众激情澎湃的情绪按摩；改革家需适度兼顾宏观愿景的魅力传达。",
+      "weaknessAdviceEn": "Laconic and austere public persona struggled to convey visionary inspiration during post-war austerity and currency crises. Pair structural administrative genius with charismatic communication.",
+      "historicalQuoteZh": "丘吉尔曾讥讽其为「一辆空出租车开到唐宁街十号，艾德礼从车里走了出来」，但历史民调中艾德礼多次被英国历任历史学家评为「二十世纪最成功的英国首相」。",
+      "historicalQuoteEn": "Churchill famously mocked him as an empty taxi from which Attlee emerged; yet British historians routinely rank him among the greatest prime ministers in history.",
+      "auxiliaryStrengthsZh": [
+          "不尚空谈专注制度顶层设计，一举开创影响全人类的现代福利与全民医保制度",
+          "清醒洞察大势主动推进印度和平独立，避免了帝国在殖民血海中内耗"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Built the modern welfare state and NHS, cementing universal healthcare into national life",
+          "Pragmatic foresight to grant Indian independence peacefully, averting colonial quagmires"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "缺乏鼓动大众激情的魅力型领袖气质，在处理战后严重英镑危机时显得被动",
+          "国有化铺摊子过大过急，给英国经济埋下了效率低下与财政负担隐患"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Understated public demeanor struggled to inspire a weary nation through prolonged rationing",
+          "Extensive nationalization of heavy industry burdened future British productivity"
+      ]
+  },
+  {
+      "id": "eleanor_roosevelt",
+      "nameZh": "埃莉诺·罗斯福",
+      "nameEn": "Eleanor Roosevelt",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 全球人权宣言与现代人道主义先锋 (1933-1962)",
+      "eraNameEn": "Modern West · Universal Declaration of Human Rights & Civil Rights (1933-1962)",
+      "positionZh": "第一夫人 · 联合国人权委员会首任主席 · 「世界第一夫人」 · 民权运动先驱",
+      "positionEn": "First Lady of the United States · First Chair of UN Human Rights Commission · First Lady of the World",
+      "personalityZh": "仁爱无疆、道德勇气超群、直面社会不公、独立坚韧、具备宏大世界主义情怀",
+      "personalityEn": "Boundlessly compassionate, morally fearless, crusader against racial and gender injustice, fiercely independent, cosmopolitan",
+      "deedsZh": "打破传统第一夫人花瓶形象，深入全美矿区、贫民窟与少数族裔社区为弱势群体呐喊，成为新政良心与民权先锋；二战后出任首任联合国人权委员会主席，以非凡的外交耐力调解美苏阵营巨大分歧，主持起草并通过《世界人权宣言》（UDHR），被杜鲁门总统赞为「世界第一夫人」。",
+      "deedsEn": "Redefined the role of First Lady, championing African American civil rights and labor welfare during the New Deal. Appointed by Truman to chair the UN Commission on Human Rights, she steered the drafting and unanimous passage of the Universal Declaration of Human Rights.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "伤官",
+          "正官"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "具备跨越阶级、种族与国界的人类普世共情力与至高道德勇气；长于在高度冷战对抗的多边博弈中，以惊人的柔韧与耐性促成各方签署保护全人类尊严的历史纲领。",
+      "strengthAdviceEn": "Wields transcendent moral authority and universal human empathy, bridging bitter Cold War ideological chasms to codify inalienable human rights into global international law.",
+      "weaknessAdviceZh": "在追求崇高社会正义时言论过于超前激进，多次给罗斯福总统的南部保守派白人选票基本盘带来政治压力与公关危机；倡导者需在理想主义与现实政治之间把握节奏。",
+      "weaknessAdviceEn": "Uncompromising radicalism on racial civil rights caused acute political friction with conservative Southern Democrats. Calibrate idealistic crusades with practical electoral coalitions.",
+      "historicalQuoteZh": "杜鲁门总统在其逝世时致悼词：「她是整个世界的人民心中真正的第一夫人，她照亮了黑暗中受苦者的尊严。」",
+      "historicalQuoteEn": "President Truman paid her supreme tribute: She was the First Lady of the World, dedicating her life to lifting the dignity of the forgotten and oppressed.",
+      "auxiliaryStrengthsZh": [
+          "主持起草《世界人权宣言》奠定全球人道基石，展现卓越的多边外交斡旋力",
+          "敢于冲破传统世俗偏见为被边缘化少数群体发声，道德号召力无与伦比"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Chaired and unified the passage of the Universal Declaration of Human Rights",
+          "Fearless moral advocacy for civil rights, women's empowerment, and marginalized workers"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "政策诉求过于纯粹理想化，在当时美国南方种族隔离制度现实前屡受挫折",
+          "晚年深度介入党内派系博弈与反核运动，遭遇极端保守势力的猛烈恶毒攻击"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Moral absolutism occasionally collided with the sordid realities of machine politics",
+          "Relentless progressive activism made her a frequent target of McCarthyite vitriol"
+      ]
+  },
+  {
+      "id": "george_f_kennan",
+      "nameZh": "乔治·F·凯南",
+      "nameEn": "George F. Kennan",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 长电报与冷战遏制战略 (1946-1989)",
+      "eraNameEn": "Modern West · Long Telegram & Containment Doctrine (1946-1989)",
+      "positionZh": "外交官兼历史学家 · 国务院政策规划室主任 · 遏制战略之父 · 普利策奖得主",
+      "positionEn": "Diplomat & Historian · Director of Policy Planning · Father of Containment · Pulitzer Laureate",
+      "personalityZh": "深邃冷峻、精通俄国历史心理、洞察极其敏锐、具有贵族知识分子风骨、警惕过度军事化",
+      "personalityEn": "Profoundly erudite, psychological master of Russian history, razor-sharp foresight, aristocratic intellectual integrity, anti-militaristic",
+      "deedsZh": "从莫斯科发回震惊华盛顿的五千字「长电报」（Long Telegram），并在《外交事务》匿名发表《苏联行为的根源》（X文章），提出「长期的、耐心的、坚定的全面遏制战略」（Containment），成为指导美国冷战半个世纪的顶层大战略总纲；晚年极力反对将遏制战略单纯军事化与北约盲目东扩，展现先知般远见。",
+      "deedsEn": "Authored the historic 5,500-word Long Telegram from Moscow and the X Article in Foreign Affairs, establishing the grand-strategic doctrine of containment that guided US Cold War policy for 45 years. Later warned presciently against the militarization of containment and reckless NATO eastward expansion.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "偏印",
+          "正官",
+          "伤官"
+      ],
+      "patternType": "偏印格",
+      "strengthAdviceZh": "善于从深厚的历史文化底蕴与民族心理结构深处，解构竞争对手长期行为的动力学根源；长于提出超越短期军事对抗、以时间与制度耐力不战而屈人之兵的宏伟战略大纲。",
+      "strengthAdviceEn": "Diagnoses geopolitical rivals through historical and cultural psychology, formulating patient, multi-decade containment doctrines that allow internal structural contradictions to dissolve threats.",
+      "weaknessAdviceZh": "书生学者的冷峻超然常被华盛顿鹰派政客与军方误读甚至扭曲利用；在看到自身提出的「遏制战略」被蜕变为全球军备竞赛与越南战争泥潭时，陷入深重的无力感与痛苦。",
+      "weaknessAdviceEn": "Detached philosophical nuance was hijacked by military hawks into global interventionism. Strategic theorists must maintain active narrative control over the execution of their doctrines.",
+      "historicalQuoteZh": "基辛格赞道：「乔治·凯南以一己之力提出了一整套大战略，这是近代外交史上绝无仅有的思想胜利。」",
+      "historicalQuoteEn": "Henry Kissinger celebrated him: George Kennan came as close to authoring the diplomatic doctrine of his era as any diplomat in our history.",
+      "auxiliaryStrengthsZh": [
+          "以超凡历史洞察力写就长电报创立遏制理论，为西方冷战取胜确立指南针",
+          "晚年敏锐预警北约东扩与军事干预恶果，展现令人惊叹的先知级战略前瞻"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Father of the Containment doctrine that navigated the Western alliance through the Cold War",
+          "Presciently warned against militarized interventionism and reckless NATO expansionism"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "知识分子孤傲性格不适宜在官僚体制中厮杀，提出战略后迅速被边缘化",
+          "理论构想过于细腻注重政治经济维度，容易被粗暴的军方强硬派篡改利用"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Aloof scholarly disposition ill-suited for rough-and-tumble Washington bureaucratic politics",
+          "Subtle diplomatic containment was hijacked by hawkish militarists into the Vietnam quagmire"
+      ]
+  },
+  {
+      "id": "cordell_hull",
+      "nameZh": "科德尔·赫尔",
+      "nameEn": "Cordell Hull",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 互惠贸易与联合国创立 (1933-1944)",
+      "eraNameEn": "Modern West · Reciprocal Trade & Founding of the UN (1933-1944)",
+      "positionZh": "国务卿 · 诺贝尔和平奖得主 · 美国任期最长国务卿 · 「联合国之父」",
+      "positionEn": "US Secretary of State · Nobel Peace Prize Laureate · Father of the United Nations",
+      "personalityZh": "恪守原则、耐性极佳、崇尚自由贸易带来和平、深谙国会运作、沉稳厚重",
+      "personalityEn": "Uncompromising on principles, infinitely patient, passionate believer that free trade secures peace, master of congressional politics, steady",
+      "deedsZh": "在罗斯福内阁出任国务卿长达11年（美国历史上任职时间最长的国务卿）；坚信保护主义关税是导致战争的根源，主持通过《互惠贸易协定法》打破关税壁垒；二战后期全力投入战后世界和平组织规划，主持起草联合国宪章草案，被罗斯福赞为「联合国之父」并荣获诺贝尔和平奖。",
+      "deedsEn": "Served as Secretary of State for nearly 12 years under FDR. Championed the Reciprocal Tariff Act to tear down trade barriers that sparked the Great Depression. Guided the blueprints for the post-war international order, earning the Nobel Peace Prize as the Father of the United Nations.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "正财"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "善于将长远宏大的全球自由贸易愿景转化为扎实可执行的跨国互惠法律条约；长于在国会与行政分支之间构建超强两党共识，为战后国际机制保驾护航。",
+      "strengthAdviceEn": "Translates visionary free-trade ideals into enduring bilateral legal agreements, leveraging deep legislative networks to build unshakeable bipartisan domestic consensus for global governance.",
+      "weaknessAdviceZh": "对日战前谈判中（赫尔备忘录）过于死板坚守原则底线，缺乏柔性缓冲与危机管控妥协空间，客观上加速了日本军国主义铤而走险发动珍珠港偷袭。",
+      "weaknessAdviceEn": "Uncompromising diplomatic rectitude in the Hull Note left zero face-saving off-ramps for Japanese negotiators, accelerating the desperate decision to attack Pearl Harbor.",
+      "historicalQuoteZh": "罗斯福总统将其推崇为世界级政治家，赞其为「联合国体制真正的奠基者与精神父亲」。",
+      "historicalQuoteEn": "President Roosevelt affectionately honored him as a statesman of monumental vision, formally proclaiming him the Father of the United Nations.",
+      "auxiliaryStrengthsZh": [
+          "通过互惠贸易协定打破全球关税战壁垒，开辟战后全球经济一体化先河",
+          "主导联合国架构设计与大国协商，为全人类建立长效集体安全机制"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Pioneered reciprocal trade liberalization, dismantling destructive beggar-thy-neighbor tariffs",
+          "Architect of the United Nations Charter, embedding collective security into post-war order"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "对日最后通牒过于生硬刚直，未能为主战派和谈留下最后外交回旋余地",
+          "二战期间外交实权多次被罗斯福总统与霍普金斯越顶绕过，内心承受巨大隐忍"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Rigid diplomatic ultimatums in 1941 closed the door on eleventh-hour crisis de-escalation",
+          "Routinely bypassed by FDR and Harry Hopkins in top-level wartime summitry diplomacy"
+      ]
+  },
+  {
+      "id": "henry_l_stimson",
+      "nameZh": "亨利·L·史汀生",
+      "nameEn": "Henry L. Stimson",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 两党共治与战时陆军工业动员 (1911-1945)",
+      "eraNameEn": "Modern West · Bipartisan War Mobilization & Manhattan Project (1911-1945)",
+      "positionZh": "陆军部长兼国务卿 · 两朝元老 · 战时工业与曼哈顿工程掌舵人",
+      "positionEn": "Secretary of War & Secretary of State · Elder Statesman · Civilian Director of the Manhattan Project",
+      "personalityZh": "德高望重、高风亮节、大局意识极强、深谙两党共治之道、富有道德责任感",
+      "personalityEn": "Venerable, unimpeachable integrity, non-partisan statesman, moral heavyweight, master of military-industrial coordination",
+      "deedsZh": "历经塔夫脱、胡佛与罗斯福数届政府；九一八事变后发表著名的「史汀生不承认主义」捍卫国际秩序；以共和党元老身份在二战危局中应民主党罗斯福之邀出任陆军部长，力主跨党派国家大团结；掌管规模空前的战时军工动员与陆军建设，作为最高文官主管直接监督曼哈顿原子弹工程并拍板战后对日战略政策。",
+      "deedsEn": "Served in the cabinets of Taft, Hoover, and FDR. Formulated the Stimson Doctrine defying Japanese aggression in Manchuria. Joined FDR's wartime cabinet as a Republican Secretary of War, leading the civilian oversight of the Manhattan Project and post-war reconstruction.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "土",
+          "secondary": "金"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正印",
+          "偏印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "具备超越党派狭隘争斗的崇高元老风骨与家国情怀；长于在最高权力枢纽充当各方军政巨头（马歇尔、阿诺德、奥本海默）的坚实庇护者与决策定海神针。",
+      "strengthAdviceEn": "Transcends partisan tribalism to anchor grand-strategic defense governance, providing unshakeable civilian protection and funding for game-changing defense initiatives.",
+      "weaknessAdviceZh": "在二战初期面对西海岸反日狂潮时，未能坚决抵制签署臭名昭著的第9066号行政命令（日裔美国人集中拘留），成为其漫长公职生涯中沉重的宪政污点。",
+      "weaknessAdviceEn": "Acquiesced in authorizing Executive Order 9066 for the internment of Japanese Americans, an enduring civil-liberties stain on an otherwise distinguished career.",
+      "historicalQuoteZh": "马歇尔将军评价其：「在史汀生部长身边工作，你永远不必担心政治暗算，他就是美国公职人员道德尊严的化身。」",
+      "historicalQuoteEn": "General George Marshall stated: To serve beside Henry Stimson was to understand the meaning of selfless civic virtue and absolute moral courage.",
+      "auxiliaryStrengthsZh": [
+          "以跨党派元老身份出山稳定战时军政大局，确保美国最高权力中枢团结一致",
+          "以极高行政眼光全力为曼哈顿工程保驾护航，主导制定战后原子时代政策"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Transcended partisan divides to unify national war mobilization during existential peril",
+          "Provided visionary civilian leadership and absolute budget protection for the Manhattan Project"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "妥协默许了对日裔平民的强制拘禁安置，在宪法与人权历史上留下重大遗憾",
+          "年逾七旬体能负荷过重，战后对欧洲分治与纽伦堡审判的设计未能全程控盘"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Capitulated to wartime hysteria by approving the mass internment of Japanese Americans",
+          "Advanced age and physical exhaustion limited his direct influence on post-war European borders"
+      ]
+  },
+  {
+      "id": "alexander_fleming",
+      "nameZh": "亚历山大·弗莱明",
+      "nameEn": "Alexander Fleming",
+      "dynastyZh": "英国",
+      "dynastyEn": "United Kingdom",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 青霉素发现与现代抗生素革命 (1928-1945)",
+      "eraNameEn": "Modern West · Penicillin Discovery & Antibiotic Revolution (1928-1945)",
+      "positionZh": "细菌学家 · 青霉素发现者 · 诺贝尔生理学或医学奖得主 · 「拯救亿万生命的平凡英雄」",
+      "positionEn": "Bacteriologist · Discoverer of Penicillin · Nobel Laureate · Savior of Countless Lives",
+      "personalityZh": "细致敏锐、善于在偶然异象中发现真理、谦逊质朴、不慕虚荣、脚踏实地",
+      "personalityEn": "Keenly observant, discerning truth in accidental anomalies, humble, unpretentious, steadfastly empirical",
+      "deedsZh": "在一战战地医院目睹无数伤兵死于细菌感染引发败血症立志攻关；1928年在伦敦圣玛丽医院偶然发现青霉菌培养皿周围葡萄球菌溶解现象，凭借敏锐直觉分离出青霉素（盘尼西林）；后经弗洛里和钱恩团队提纯实现大规模工业化量产，在二战前线挽救了数百万盟军伤兵生命，彻底终结了人类在细菌感染面前束手无策的历史。",
+      "deedsEn": "Witnessed devastating battlefield sepsis during WWI, dedicating his life to antibacterial research. In 1928, astutely noticed a clear halo around penicillin mold in a contaminated petri dish. His discovery, purified by Florey and Chain, revolutionized medicine and saved millions of lives.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "木",
+          "secondary": "水"
+      },
+      "tenGodsAffinity": [
+          "正印",
+          "食神",
+          "偏印"
+      ],
+      "patternType": "正印格",
+      "strengthAdviceZh": "长于在日常看似废弃失败的偶然异常数据中，敏锐捕捉到足以颠覆整个人类产业的突破口；为人谦逊低调，毫不自夸，始终保持着科学家的赤子之心。",
+      "strengthAdviceEn": "Commands the observant intuition to seize monumental truth from serendipitous laboratory anomalies, transforming experimental accidents into generational medical revolutions.",
+      "weaknessAdviceZh": "早期发现青霉素后因自身化学提纯手段受限，未能迅速推动临床跨越，险些让这一世纪发现尘封十年；科技发现者需主动拥抱跨学科工程量产团队以加速成果落地。",
+      "weaknessAdviceEn": "Initial inability to isolate and chemically purify penicillin delayed its clinical deployment for a decade. Scientific innovators must aggressively partner with biochemical engineers.",
+      "historicalQuoteZh": "弗莱明获诺贝尔奖时谦逊地说道：「我并没有发明青霉素，是大自然创造了它，我只是偶然发现了它。」",
+      "historicalQuoteEn": "His humble Nobel acceptance speech reflects his enduring grace: I did not invent penicillin; nature invented it. I was simply fortunate enough to discover it.",
+      "auxiliaryStrengthsZh": [
+          "于细微观察中捕捉到青霉素抑菌奇迹，以敏锐洞察力开创人类抗生素时代",
+          "为人极其纯朴谦逊拒绝将青霉素申请专利牟利，为全人类廉价治病造福"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Keen empirical observation that transformed a contaminated petri dish into the antibiotic age",
+          "Refused personal patent profits, allowing cheap mass production to save countless lives"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "早期缺乏高超生物化学提纯技能，导致盘尼西林早期推广应用耽搁多年",
+          "性格过于木讷寡言不善公开辩护，其早期科研报告未能引起医学界足够重视"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Lacked chemical engineering expertise to scale purification independently",
+          "Reticent, laconic personality delayed widespread institutional recognition of his discovery"
+      ]
+  },
+  {
+      "id": "ernest_hemingway",
+      "nameZh": "欧内斯特·海明威",
+      "nameEn": "Ernest Hemingway",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 迷惘的一代与现代硬汉文学 (1926-1961)",
+      "eraNameEn": "Modern West · The Lost Generation & Hardboiled Modernism (1926-1961)",
+      "positionZh": "文学巨匠 · 诺贝尔文学奖得主 · 《老人与海》作者 · 「冰山理论」创立者",
+      "positionEn": "Literary Titan · Nobel Laureate · Author of The Old Man and the Sea · Master of Iceberg Theory",
+      "personalityZh": "刚烈硬朗、狂热拥抱危险体验、惜墨如金、崇尚重压之下的优雅、意志如铁",
+      "personalityEn": "Rugged, passionately embracing physical danger, minimalist prose stylist, exemplar of grace under pressure, indomitable",
+      "deedsZh": "亲历一战战场、西班牙内战与二战诺曼底登陆；创立革命性的「冰山理论」（八分之七隐于水下），以极其简练干净、剔除一切修饰的硬朗文风革新了现代世界文学叙事范式；创作《太阳照常升起》、《永别了，武器》、《丧钟为谁而鸣》与《老人与海》，塑造了百折不挠的现代硬汉精神图腾。",
+      "deedsEn": "Survived the front lines of WWI, the Spanish Civil War, and D-Day. Pioneered the Iceberg Theory of writing with stripped-down, muscular prose, transforming modern narrative style. Authored The Sun Also Rises, A Farewell to Arms, and The Old Man and the Sea, defining the modern ethos of resilience.",
+      "archetype": "specialist",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "火"
+      },
+      "tenGodsAffinity": [
+          "伤官",
+          "七杀",
+          "比肩"
+      ],
+      "patternType": "伤官格",
+      "strengthAdviceZh": "具备删繁就简直击本质的极端提炼能力与向死而生的硬汉精神气质；长于以「重压之下的优雅」（Grace under pressure）激励团队在毁灭性风暴中保持尊严与抗争意志。",
+      "strengthAdviceEn": "Master of radical conceptual reductionism and muscular minimalism, exemplifying grace under pressure and galvanizing collective defiance against existential despair.",
+      "weaknessAdviceZh": "沉溺于硬汉英雄主义与高风险极端体验（酗酒、斗牛、狩猎、空难重伤），晚年饱受脑震荡后遗症与偏执狂抑郁折磨；生命斗士需学会向脆弱与平凡生活和解。",
+      "weaknessAdviceEn": "Obsessive hyper-masculinity and addiction to physical danger resulted in severe trauma and depression. Balance relentless heroic aggression with emotional vulnerability and self-care.",
+      "historicalQuoteZh": "《老人与海》中传诵世界的名句铭刻人类精神殿堂：「一个人并不是生来要给打败的，你尽可以把他消灭掉，可就是打不败他。」",
+      "historicalQuoteEn": "His immortal declaration in The Old Man and the Sea defines his legacy: A man can be destroyed, but not defeated.",
+      "auxiliaryStrengthsZh": [
+          "开创现代极简主义文学叙事典范，冰山理论展现非凡的抽象凝练功底",
+          "塑造「重压之下的优雅」精神图腾，为人类抗击逆境提供不朽意志滋养"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Revolutionized world literature with the minimalist Iceberg Theory of stripped-down power",
+          "Defined the ethos of grace under pressure, inspiring generations to face adversity with stoicism"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "长期沉迷于过度冒险与酗酒狂暴生活方式，晚年身心健康严重崩塌",
+          "性格中存在极度自负与攻击性倾向，多次与恩人及文学同仁发生惨烈决裂"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Reckless pursuit of extreme physical danger caused cumulative brain injuries and depression",
+          "Combative ego and hyper-defensiveness repeatedly wrecked friendships and partnerships"
+      ]
+  },
+  {
+      "id": "jean_monnet",
+      "nameZh": "让·莫内",
+      "nameEn": "Jean Monnet",
+      "dynastyZh": "法国",
+      "dynastyEn": "France",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 欧洲联合与超国家机制构建 (1940-1979)",
+      "eraNameEn": "Modern West · European Integration & Supranational Institutions (1940-1979)",
+      "positionZh": "政治经济家 · 「欧洲之父」 · 舒曼计划总构想者 · 欧洲煤钢共同体首任主席",
+      "positionEn": "Political Economist · Father of Europe · Architect of the Schuman Plan · 1st President of ECSC",
+      "personalityZh": "极其务实、长于顶层机制设计、不慕虚名、善于在危机中化解世仇、宏观协调大师",
+      "personalityEn": "Profoundly pragmatic, master institutional designer, indifferent to personal acclaim, resolving ancient feuds through functional integration",
+      "deedsZh": "在两次世界大战中担任英法美三大战时联合军工与航运物资协调总管；二战后深刻反思法德百年宿仇根源，避开空洞政治口号，开创性构想出「舒曼计划」——将法德两国的煤钢资源统摄于一个超国家的高级公署之下（欧洲煤钢共同体），以不可逆的经济利益捆绑消除战争可能，奠定现代欧洲联盟（EU）制度基石。",
+      "deedsEn": "Coordinated Allied wartime shipping and munitions in both World Wars. Conceived the revolutionary Schuman Plan, binding French and German coal and steel under a supranational High Authority to make war materially impossible, laying the foundational cornerstone of the European Union.",
+      "archetype": "civil",
+      "fiveElements": {
+          "dominant": "水",
+          "secondary": "木"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "正财",
+          "正印"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "长于在历史世仇与死结面前不谈空泛口号，以极度务实精准的微观经济纽带（煤钢一体化）自下而上重构宏大国际秩序；不争虚名甘居幕后操盘，政治转化率极高。",
+      "strengthAdviceEn": "Master of functionalist institutional statecraft, bypassing ideological stalemates to engineer concrete economic integration that permanently anchors peace between historic rivals.",
+      "weaknessAdviceZh": "自上而下的技术官僚式推进往往忽视了基层大众的民主参与感，给欧洲一体化长远发展留下了著名的「民主赤字」隐患；顶层制度设计需兼顾民意温度。",
+      "weaknessAdviceEn": "Technocratic, elite-driven institutional construction can create a democratic deficit that alienates populist voters. Harmonize institutional elegance with popular democratic consent.",
+      "historicalQuoteZh": "历史学家称其为「没有王冠的欧洲建构之神」，欧洲理事会授予其唯一的「欧洲荣誉公民」至高称号。",
+      "historicalQuoteEn": "Historians honor him as the uncrowned unifier of Europe; formally proclaimed Honorary Citizen of Europe by the European Council.",
+      "auxiliaryStrengthsZh": [
+          "以超国家煤钢共同体化解德法千年世仇，制度设计构想堪称人类和平奇迹",
+          "善于幕后操盘调度跨国资源与顶层政治家，以极低调姿态撬动世界大局"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Engineered the Schuman Plan to make war between France and Germany materially impossible",
+          "Unrivaled backstage diplomatic facilitator translating visionary ideas into state action"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "过度依赖精英技术官僚自上而下推进，未能彻底解决欧洲一体化的民主赤字难题",
+          "自身从未参与过民意竞选缺乏基层选票基础，容易在民粹主义反弹时遭遇抵触"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Relied heavily on technocratic administrative elites, sowing early seeds of democratic deficit",
+          "Never held elected office, making his institutional vision vulnerable to grassroots backlash"
+      ]
+  },
+  {
+      "id": "matthew_ridgway",
+      "nameZh": "马修·李奇微",
+      "nameEn": "Matthew Ridgway",
+      "dynastyZh": "美国",
+      "dynastyEn": "United States of America",
+      "eraTag": "western_modern",
+      "eraNameZh": "近代西方 · 空降突击与阵线逆境整肃 (1942-1955)",
+      "eraNameEn": "Modern West · Airborne Warfare & Battlefield Revitalization (1942-1955)",
+      "positionZh": "第82空降师师长 · 陆军四星上将 · 第八集团军司令 · 临危受命大师",
+      "positionEn": "Commander of 82nd Airborne · General · Commander of Eighth Army · Master of Operational Recovery",
+      "personalityZh": "沉毅果敢、身先士卒、胸挂手雷带兵、治军严整、极其重视前线士气与战术细节",
+      "personalityEn": "Stoic, courageous, famously leading with hand grenades strapped to his chest harness, demanding, master of troop morale",
+      "deedsZh": "在二战中指挥美军第82空降师成功实施西西里与诺曼底敌后空降作战；后指挥第18空降军参加阿登战役扼守关键阵地；在朝鲜战争第八集团军司令沃克中将车祸身亡、美军全线溃退的至暗时刻临危受命接管前线，严厉整肃军纪驱除失败情绪，针对志愿军夜战与穿插特点研制「磁性战术」与火制阻击，稳住三八线战局。",
+      "deedsEn": "Commanded the 82nd Airborne Division in Sicily and Normandy, and led the XVIII Airborne Corps in the Battle of the Bulge. Assumed command of the routed US Eighth Army in Korea in 1950, restoring shattered morale and pioneering meat-grinder and magnetic tactics to stabilize the front.",
+      "archetype": "military",
+      "fiveElements": {
+          "dominant": "金",
+          "secondary": "土"
+      },
+      "tenGodsAffinity": [
+          "正官",
+          "七杀",
+          "比肩"
+      ],
+      "patternType": "正官格",
+      "strengthAdviceZh": "具备在组织陷入大溃败恐慌的绝境中单骑救主、迅速重肃军心士气的超级危机管理才能；长于亲临前沿战壕倾听一线痛点，以务实战术针对性破解强敌非对称打法。",
+      "strengthAdviceEn": "Supreme master of operational rescue and morale resuscitation during catastrophic routs, stepping onto the front lines to diagnose systemic tactical failures and engineer stabilized counter-punches.",
+      "weaknessAdviceZh": "战术打法偏向冷酷机械的消耗战（「绞肉机战术」），以压倒性钢铁火网弥补人员战术灵活性不足；在指挥体系中作风严厉，对犹豫不决的指挥官撤换毫不留情。",
+      "weaknessAdviceEn": "Attrition-heavy doctrine relied heavily on overwhelming firepower over fluid maneuver, while his demanding command style was unforgiving to vacillating subordinates.",
+      "historicalQuoteZh": "军事史家公认：「李奇微在朝鲜战场挽救了美军的尊严与命运，他是二十世纪美军历史上最顶尖的临危受命统帅之一。」",
+      "historicalQuoteEn": "Military historians conclude: Matthew Ridgway single-handedly rescued the morale and fate of the American army in Korea through sheer leadership presence.",
+      "auxiliaryStrengthsZh": [
+          "在全线溃退大恐慌中展现钢铁统帅定力，火速重整军心扭转乾坤",
+          "开创现代空降作战典范，战役一线身先士卒具备极强士兵感召力"
+      ],
+      "auxiliaryStrengthsEn": [
+          "Miraculous battlefield turnaround artist who transformed a defeated, routed army into a lethal force",
+          "Pioneered modern airborne assault doctrine, leading from the front with iconic courage"
+      ],
+      "auxiliaryWeaknessesZh": [
+          "依靠绝对弹药量堆叠的消耗战术代价高昂，在复杂山地地形中战役机动性受限",
+          "治军手段雷厉风行不假辞色，在关键防线撤换将领较为严苛引起内部争议"
+      ],
+      "auxiliaryWeaknessesEn": [
+          "Heavy reliance on ammunition-saturated attrition was resource-intensive and tactically rigid",
+          "Unforgiving relief of field officers created organizational anxiety during crises"
+      ]
   }
 ];
 

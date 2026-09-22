@@ -10508,17 +10508,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Section 4: 449 Figures Panorama & Gallery -->
+      <!-- Section 4: 549 Figures Panorama & Gallery -->
       <div class="space-y-4">
         <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
           <div class="flex items-center space-x-2">
             <span class="text-2xl">🌌</span>
             <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300">
-              ${isEn ? '4. Historical Panorama (449 Historical Figures Catalog)' : '四、全景历史人物长卷（449位历史人物名录）'}
+              ${isEn ? '4. Historical Panorama (549 Historical Figures Catalog)' : '四、全景历史人物长卷（549位历史人物名录）'}
             </h3>
           </div>
           <div class="text-xs text-gray-400 font-mono">
-            ${isEn ? '449 Historical Titans Curated' : '共收录 449 位风云人物'}
+            ${isEn ? '549 Historical Titans Curated' : '共收录 549 位风云人物'}
           </div>
         </div>
 
@@ -10541,7 +10541,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Era Tabs -->
           <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="dashEraTabsContainer">
             <button class="dash-era-tab-btn ${historyActiveEra === 'all' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="all">
-              ${isEn ? 'All Eras (449)' : '全部时代 (449)'}
+              ${isEn ? 'All Eras (549)' : '全部时代 (549)'}
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'eastern_han_three_kingdoms' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="eastern_han_three_kingdoms">
               ${isEn ? 'Three Kingdoms (104)' : '东汉三国 (104)'}
@@ -10572,6 +10572,9 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
             <button class="dash-era-tab-btn ${historyActiveEra === 'sui_tang_zhenguan' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="sui_tang_zhenguan">
               ${isEn ? 'Tang Zhenguan (104)' : '大唐贞观 (104)'}
+            </button>
+            <button class="dash-era-tab-btn ${historyActiveEra === 'western_modern' ? 'active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition' : 'px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition'}" data-era="western_modern">
+              ${isEn ? 'Modern West (100)' : '近代西方 (100)'}
             </button>
           </div>
 

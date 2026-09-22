@@ -7630,8 +7630,8 @@ jsc_check83_cmd = [
     if (typeof HISTORICAL_FIGURES === "undefined" || !Array.isArray(HISTORICAL_FIGURES)) {
       throw new Error("HISTORICAL_FIGURES database is not defined or not an array");
     }
-    if (HISTORICAL_FIGURES.length !== 449) {
-      throw new Error("Expected exactly 449 historical figures, got: " + HISTORICAL_FIGURES.length);
+    if (HISTORICAL_FIGURES.length !== 549) {
+      throw new Error("Expected exactly 549 historical figures, got: " + HISTORICAL_FIGURES.length);
     }
 
     var requiredFields = [
@@ -7652,7 +7652,8 @@ jsc_check83_cmd = [
       "northern_zhou_qi": 0,
       "sui": 0,
       "sui_collapse": 0,
-      "sui_tang_zhenguan": 0
+      "sui_tang_zhenguan": 0,
+      "western_modern": 0
     };
 
     var validArchetypes = ["executive", "military", "civil", "specialist"];
@@ -7700,6 +7701,7 @@ jsc_check83_cmd = [
     if (eraCounts["sui"] !== 10) throw new Error("sui count expected 10, got " + eraCounts["sui"]);
     if (eraCounts["sui_collapse"] !== 33) throw new Error("sui_collapse count expected 33, got " + eraCounts["sui_collapse"]);
     if (eraCounts["sui_tang_zhenguan"] !== 104) throw new Error("sui_tang_zhenguan count expected 104, got " + eraCounts["sui_tang_zhenguan"]);
+    if (eraCounts["western_modern"] !== 100) throw new Error("western_modern count expected 100, got " + eraCounts["western_modern"]);
 
     // 2. Validate HistoricalEngine calculations across diverse charts
     var testCharts = [
@@ -7730,8 +7732,8 @@ jsc_check83_cmd = [
       if (!res.topMatch || !res.topMatches || !res.allFiguresRanked || !res.synthesis) {
         throw new Error(tc.name + " missing core result structure");
       }
-      if (res.allFiguresRanked.length !== 449) {
-        throw new Error(tc.name + " expected 449 ranked figures, got: " + res.allFiguresRanked.length);
+      if (res.allFiguresRanked.length !== 549) {
+        throw new Error(tc.name + " expected 549 ranked figures, got: " + res.allFiguresRanked.length);
       }
       if (res.topMatches.length !== 5) {
         throw new Error(tc.name + " expected 5 topMatches, got: " + res.topMatches.length);
@@ -8019,15 +8021,15 @@ jsc_check83_dom_cmd = [
     if (histHtmlEn.indexOf("Avoid Weaknesses (Fatal Blindspots & Circuit-Breakers)") === -1) {
       throw new Error("Missing Avoid Weaknesses in EN");
     }
-    if (histHtmlEn.indexOf("449 Historical Figures Catalog") === -1) {
-      throw new Error("Missing 449 Historical Figures Catalog title in EN");
+    if (histHtmlEn.indexOf("549 Historical Figures Catalog") === -1) {
+      throw new Error("Missing 549 Historical Figures Catalog title in EN");
     }
     '''
 ]
 run_check83_dom = subprocess.run(jsc_check83_dom_cmd, capture_output=True, text=True)
 assert run_check83_dom.returncode == 0, f"Check 83 DOM simulation test failed: stdout={run_check83_dom.stdout} stderr={run_check83_dom.stderr}"
 
-print("✓ 历史人物参考引擎（449位风云人物全集、十大时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
+print("✓ 历史人物参考引擎（549位中外风云人物全集、十一代时代画卷、相似度量化测算、学优点戒缺点战略锦囊、DOM全量渲染与双语100%零中文残留）验证通过！")
 
 # 84. Validate 448 Historical Figures Expansion, Stabilized Card-Draw Modal, Page 2 Soul Mirror in Imperial Dossier & Quick 1-Page PDF
 print("\n=== 84. Validating 448 Figures Expansion (Including Sui Collapse), Card-Draw Modal, Page 2 Soul Mirror & Quick 1-Page PDF ===")
@@ -8092,9 +8094,9 @@ jsc_check84_cmd = [
     load("data/historical_figures.js");
     load("js/history-engine.js");
 
-    // 1. Verify exact 449 figures count and prominent titans
-    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 449) {
-      throw new Error("Expected exactly 449 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
+    // 1. Verify exact 549 figures count and prominent titans
+    if (!Array.isArray(HISTORICAL_FIGURES) || HISTORICAL_FIGURES.length !== 549) {
+      throw new Error("Expected exactly 549 historical figures, got: " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : "undefined"));
     }
 
     // Explicitly verify Cao Cao (Eastern Han / Three Kingdoms titan)
@@ -15064,8 +15066,8 @@ jsc_check119_cmd = [
     load("js/history-engine.js");
 
     // 1. Verify Yuwen Chengdu in Historical Figures Database
-    if (HISTORICAL_FIGURES.length !== 449) {
-      throw new Error("Expected exactly 449 historical figures, got: " + HISTORICAL_FIGURES.length);
+    if (HISTORICAL_FIGURES.length !== 549) {
+      throw new Error("Expected exactly 549 historical figures, got: " + HISTORICAL_FIGURES.length);
     }
     var yuwenChengdu = HISTORICAL_FIGURES.find(function(f) { return f.id === 'yuwen_chengdu'; });
     if (!yuwenChengdu) throw new Error("Missing Yuwen Chengdu (宇文成都)!");
@@ -19109,8 +19111,26 @@ jsc_check141_cmd = [
     if (typeof histRes.topMatch.similarityScore !== 'number' || histRes.topMatch.similarityScore <= 0) {
       throw new Error("Invalid similarityScore: " + histRes.topMatch.similarityScore);
     }
-    if (!HISTORICAL_FIGURES || HISTORICAL_FIGURES.length < 449) {
-      throw new Error("Historical figures database incomplete: expected at least 449, found " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : 0));
+    if (!HISTORICAL_FIGURES || HISTORICAL_FIGURES.length !== 549) {
+      throw new Error("Historical figures database incomplete: expected exactly 549, found " + (HISTORICAL_FIGURES ? HISTORICAL_FIGURES.length : 0));
+    }
+
+    // Verify Modern Western Figures (1800-1945)
+    var westernFigures = HISTORICAL_FIGURES.filter(function(f) { return f.eraTag === 'western_modern'; });
+    if (westernFigures.length !== 100) {
+      throw new Error("Expected exactly 100 modern Western figures, found: " + westernFigures.length);
+    }
+    var napoleon = HISTORICAL_FIGURES.find(function(f) { return f.id === 'napoleon_bonaparte'; });
+    if (!napoleon || !napoleon.nameZh.includes('拿破仑') || napoleon.archetype !== 'executive') {
+      throw new Error("Napoleon Bonaparte missing or invalid");
+    }
+    var churchill = HISTORICAL_FIGURES.find(function(f) { return f.id === 'winston_churchill'; });
+    if (!churchill || !churchill.nameZh.includes('丘吉尔') || churchill.archetype !== 'executive') {
+      throw new Error("Winston Churchill missing or invalid");
+    }
+    var einstein = HISTORICAL_FIGURES.find(function(f) { return f.id === 'albert_einstein'; });
+    if (!einstein || !einstein.nameZh.includes('爱因斯坦') || einstein.archetype !== 'specialist') {
+      throw new Error("Albert Einstein missing or invalid");
     }
     """
 ]
@@ -19118,7 +19138,7 @@ jsc_check141_cmd = [
 run_check141 = subprocess.run(jsc_check141_cmd, capture_output=True, text=True)
 assert run_check141.returncode == 0, f"Check 141 JSC test failed: stdout={run_check141.stdout} stderr={run_check141.stderr}"
 
-print("✓ 141. 顶栏8大主导航按钮精确显化（精简按钮按要求隐去）、DOM层级闭合零嵌套污染与449位历史人物镜像（宇文泰首位94.7%）完整渲染验证通过！")
+print("✓ 141. 顶栏8大主导航按钮精确显化（精简按钮按要求隐去）、DOM层级闭合零嵌套污染与549位中外历史人物镜像（含100位近代西方风云人物）完整渲染验证通过！")
 
 print("\n🎉 ALL 141 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 

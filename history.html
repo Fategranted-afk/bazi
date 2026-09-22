@@ -131,17 +131,17 @@
       </div>
     </section>
 
-    <!-- Section 4: All 449 Historical Figures Panorama & Filterable Gallery -->
+    <!-- Section 4: All 549 Historical Figures Panorama & Filterable Gallery -->
     <section class="space-y-4">
       <div class="flex flex-wrap items-center justify-between border-b border-gray-800 pb-3 gap-3">
         <div class="flex items-center space-x-2">
           <span class="text-2xl">🌌</span>
             <h3 class="text-base sm:text-lg font-bold font-serif-sc text-emerald-300" id="secTitlePanorama">
-            四、全景历史人物长卷（449位历史人物名录）
+            四、全景历史人物长卷（549位历史人物名录）
           </h3>
         </div>
         <div class="text-xs text-gray-400 font-mono" id="historyCounterBadge">
-          共收录 449 位风云人物
+          共收录 549 位风云人物
         </div>
       </div>
 
@@ -165,7 +165,7 @@
         <!-- Era Filter Tabs -->
         <div class="flex flex-wrap gap-1.5 text-xs pt-1 border-t border-gray-800/80" id="eraTabsContainer">
           <button class="era-tab-btn active px-3 py-1 rounded-lg border border-amber-500/50 bg-amber-950/60 text-amber-200 font-medium transition" data-era="all">
-            全部时代 (449)
+            全部时代 (549)
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="eastern_han_three_kingdoms">
             东汉三国 (104)
@@ -196,6 +196,9 @@
           </button>
           <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="sui_tang_zhenguan">
             大唐贞观 (104)
+          </button>
+          <button class="era-tab-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition" data-era="western_modern">
+            近代西方 (100)
           </button>
         </div>
 
@@ -299,8 +302,8 @@
           : "历史人物参考 · 历史名人人格镜像";
         document.getElementById("historyPageSeal").textContent = isEn ? "Historical Mirror" : "史鉴推演";
         document.getElementById("historyPageSubtitle").textContent = isEn
-          ? "Synthesizing 449 Historical Titans from Eastern Han to Early Tang · Personality, Role & Life Battles · Similarity Matching & Strategic Advice"
-          : "融汇东汉三国、西晋、五胡十六国、东晋、南北朝、北魏、东西魏、周齐、大隋统一、隋末崩塌至唐初贞观四百四十九位历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊";
+          ? "Synthesizing 549 Historical Titans (449 Classical Eastern & 100 Modern Western) · Personality, Role & Life Battles · Similarity Matching & Strategic Advice"
+          : "融汇449位中华古典先贤与100位近代西方（1800-1945）历史风云人物 · 性格位置事迹 · 相似度测算与学戒锦囊";
 
         const retEl = document.getElementById("historyBtnReturnText") || document.getElementById("historyBtnReturn");
         if (retEl) retEl.textContent = isEn ? "Return to Master Dashboard" : "返回全相总盘";
@@ -324,23 +327,23 @@
         document.getElementById("secSealTopFive").textContent = isEn ? "Top 5 Archetypes" : "群星谱系";
 
         document.getElementById("secTitlePanorama").textContent = isEn
-          ? "4. Historical Panorama (449 Historical Figures Catalog)"
-          : "四、全景历史人物长卷（449位历史人物名录）";
+          ? "4. Historical Panorama (549 Historical Figures Catalog)"
+          : "四、全景历史人物长卷（549位历史人物名录）";
         document.getElementById("historyCounterBadge").textContent = isEn
-          ? "449 Historical Titans Curated"
-          : "共收录 449 位风云人物";
+          ? "549 Historical Titans Curated"
+          : "共收录 549 位风云人物";
         document.getElementById("historySearchInput").placeholder = isEn
           ? "Search by name, era, position, personality, deeds..."
           : "输入历史人物姓名、时代、职位、性格特质搜索...";
         document.getElementById("lblSortBy").textContent = isEn ? "Sort by:" : "排序：";
 
         document.getElementById("historyFooterText").textContent = isEn
-          ? "© 2026 Historical Figures Mirror System · 449 Figures from Eastern Han to Early Tang · Guided by Ancient Wisdom"
-          : "© 2026 历史人物参考系统 · 东汉末年至唐初贞观四百四十九位人物镜像 · 以史为鉴 · 察己以律 · 顺势知命";
+          ? "© 2026 Historical Figures Mirror System · 549 Figures (Classical Eastern & Modern Western) · Guided by Ancient Wisdom"
+          : "© 2026 历史人物参考系统 · 五百四十九位中外历史风云人物镜像 · 以史为鉴 · 察己以律 · 顺势知命";
 
         // Translate era filter tabs
         const eraLabels = {
-          'all': isEn ? 'All Eras (449)' : '全部时代 (449)',
+          'all': isEn ? 'All Eras (549)' : '全部时代 (549)',
           'eastern_han_three_kingdoms': isEn ? 'Three Kingdoms (104)' : '东汉三国 (104)',
           'western_jin': isEn ? 'Western Jin (32)' : '西晋风云 (32)',
           'sixteen_kingdoms': isEn ? '16 Kingdoms (50)' : '五胡十六国 (50)',
@@ -350,7 +353,8 @@
           'northern_zhou_qi': isEn ? 'Zhou & Qi (20)' : '周齐对峙 (20)',
           'sui': isEn ? 'Sui Dynasty (10)' : '大隋统一 (10)',
           'sui_collapse': isEn ? 'Sui Collapse (33)' : '隋末崩塌 (33)',
-          'sui_tang_zhenguan': isEn ? 'Tang Zhenguan (104)' : '大唐贞观 (104)'
+          'sui_tang_zhenguan': isEn ? 'Tang Zhenguan (104)' : '大唐贞观 (104)',
+          'western_modern': isEn ? 'Modern West (100)' : '近代西方 (100)'
         };
         document.querySelectorAll('.era-tab-btn').forEach(btn => {
           const eraKey = btn.getAttribute('data-era');
