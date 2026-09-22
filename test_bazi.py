@@ -18614,7 +18614,183 @@ assert run_check138.returncode == 0, f"Check 138 JSC test failed: stdout={run_ch
 
 print("✓ 138. 主画像（全相命盘精华总览看板：第一主要格局简单描述与二八胜负手、岁运流转五柱同参、百岁时空罗盘趋势图与流年战术锦囊、周易六十四卦周期推演图与六爻时序天纪秘解、钦天监皇家九卷御览全本精萃与直达跳转，双语100%零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 138 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# === 139. Validating Soft Top Nav Buttons & Enriched Social Card (Expanded Virtues/Flaws & #2/#3 Sage Comparisons) ===
+print("\n=== 139. Validating Soft Top Nav Buttons & Enriched Social Card (Expanded Virtues/Flaws & #2/#3 Sage Comparisons) ===")
+
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_content_139 = f.read()
+
+with open("css/style.css", "r", encoding="utf-8") as f:
+    css_content_139 = f.read()
+
+# 1. Validate top navbar softer button colors in dark and light themes
+assert "emerald-500/35" in idx_content_139 and "emerald-950/50" in idx_content_139, \
+    "btnQuickExportSinglePdf must use softer emerald gradient styling"
+assert "purple-500/35" in idx_content_139 and "purple-950/50" in idx_content_139, \
+    "btnOpenSocialCard must use softer purple gradient styling"
+
+assert '[data-theme="light"] #btnQuickExportSinglePdf' in css_content_139, \
+    "css/style.css missing light theme styling for #btnQuickExportSinglePdf"
+assert '[data-theme="light"] #btnOpenSocialCard' in css_content_139, \
+    "css/style.css missing light theme styling for #btnOpenSocialCard"
+
+# 2. JSC execution for SocialCardEngine data extraction, Canvas rendering, and social copy
+jsc_check139_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc",
+    "-e",
+    """
+    var window = this;
+    var globalThis = this;
+
+    load("data/iching.js");
+    load("data/tianji.js");
+    load("data/tengods.js");
+    load("data/rongkujian.js");
+    load("data/historical_figures.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+    load("js/iching-engine.js");
+    load("js/social-card-engine.js");
+
+    var bazi = BaZiEngine.calculate({ year: 1990, month: 5, day: 15, hour: 10, minute: 30, gender: "male" });
+    var luck = LuckEngine.calculateLuck(bazi);
+
+    // 1. Data extraction in ZH
+    var cardZh = SocialCardEngine.extractCardData(bazi, luck, "zh");
+    if (!cardZh.figureAuxStrengths || cardZh.figureAuxStrengths.length < 2) {
+      throw new Error("Missing figureAuxStrengths in cardZh");
+    }
+    if (!cardZh.figureAuxWeaknesses || cardZh.figureAuxWeaknesses.length < 2) {
+      throw new Error("Missing figureAuxWeaknesses in cardZh");
+    }
+    if (!cardZh.fig2 || !cardZh.fig2.name || !cardZh.fig2.strength || !cardZh.fig2.weakness) {
+      throw new Error("Missing fig2 comparison data in cardZh");
+    }
+    if (!cardZh.fig3 || !cardZh.fig3.name || !cardZh.fig3.strength || !cardZh.fig3.weakness) {
+      throw new Error("Missing fig3 comparison data in cardZh");
+    }
+    if (!cardZh.fig2Name || !cardZh.fig3Name || !cardZh.fig2Strength || !cardZh.fig3Weakness) {
+      throw new Error("Missing flat fig2/fig3 fields in cardZh");
+    }
+
+    // 2. Data extraction in EN & 100% zero Chinese leaks
+    var cardEn = SocialCardEngine.extractCardData(bazi, luck, "en");
+    if (!cardEn.figureAuxStrengths || cardEn.figureAuxStrengths.length < 2) {
+      throw new Error("Missing figureAuxStrengths in cardEn");
+    }
+    if (!cardEn.figureAuxWeaknesses || cardEn.figureAuxWeaknesses.length < 2) {
+      throw new Error("Missing figureAuxWeaknesses in cardEn");
+    }
+    if (!cardEn.fig2 || !cardEn.fig2.name || !cardEn.fig2.strength || !cardEn.fig2.weakness) {
+      throw new Error("Missing fig2 comparison data in cardEn");
+    }
+    if (!cardEn.fig3 || !cardEn.fig3.name || !cardEn.fig3.strength || !cardEn.fig3.weakness) {
+      throw new Error("Missing fig3 comparison data in cardEn");
+    }
+    var cardEnJson = JSON.stringify(cardEn);
+    var enLeaks = cardEnJson.match(/[\\u4e00-\\u9fa5]/g);
+    if (enLeaks && enLeaks.length > 0) {
+      throw new Error("Residual Chinese in cardEn data: " + enLeaks.join(""));
+    }
+
+    // 3. Canvas rendering in ZH
+    var zhTexts = [];
+    var fakeCanvasZh = {
+      width: 0,
+      height: 0,
+      getContext: function() {
+        return {
+          save: function(){}, restore: function(){},
+          clearRect: function(){}, fillRect: function(){}, strokeRect: function(){},
+          beginPath: function(){}, closePath: function(){},
+          moveTo: function(){}, lineTo: function(){}, arc: function(){}, arcTo: function(){},
+          stroke: function(){}, fill: function(){}, clip: function(){},
+          textAlign: "start", textBaseline: "alphabetic",
+          fillText: function(t, x, y){ zhTexts.push(t); },
+          measureText: function(t){ return { width: (t || '').length * 10 }; },
+          createLinearGradient: function(){ return { addColorStop: function(){} }; },
+          createRadialGradient: function(){ return { addColorStop: function(){} }; }
+        };
+      }
+    };
+    SocialCardEngine.renderToCanvas(fakeCanvasZh, bazi, luck, "zh");
+    if (fakeCanvasZh.width !== 750 || fakeCanvasZh.height !== 1180) {
+      throw new Error("Canvas dimensions must be strictly 750x1180, got: " + fakeCanvasZh.width + "x" + fakeCanvasZh.height);
+    }
+    var zhAll = zhTexts.join(" ");
+    if (!zhAll.includes("立身功业 · 传世绝学壁垒")) throw new Error("ZH canvas missing '立身功业 · 传世绝学壁垒'");
+    if (!zhAll.includes("天机诫勉 · 避坑破局心法")) throw new Error("ZH canvas missing '天机诫勉 · 避坑破局心法'");
+    if (!zhAll.includes("辅助先贤对照 · 次席与三席照命镜鉴")) throw new Error("ZH canvas missing '辅助先贤对照 · 次席与三席照命镜鉴'");
+    if (!zhAll.includes("①") || !zhAll.includes("②")) throw new Error("ZH canvas missing expanded bullet points ① and ②");
+    if (!zhAll.includes("#2") || !zhAll.includes("#3")) throw new Error("ZH canvas missing rank #2 and #3 badges");
+    if (!zhAll.includes("借力：") || !zhAll.includes("避险：")) throw new Error("ZH canvas missing 借力 / 避险 labels");
+
+    // 4. Canvas rendering in EN & 100% zero Chinese leaks
+    var enTexts = [];
+    var fakeCanvasEn = {
+      width: 0,
+      height: 0,
+      getContext: function() {
+        return {
+          save: function(){}, restore: function(){},
+          clearRect: function(){}, fillRect: function(){}, strokeRect: function(){},
+          beginPath: function(){}, closePath: function(){},
+          moveTo: function(){}, lineTo: function(){}, arc: function(){}, arcTo: function(){},
+          stroke: function(){}, fill: function(){}, clip: function(){},
+          textAlign: "start", textBaseline: "alphabetic",
+          fillText: function(t, x, y){ enTexts.push(t); },
+          measureText: function(t){ return { width: (t || '').length * 8 }; },
+          createLinearGradient: function(){ return { addColorStop: function(){} }; },
+          createRadialGradient: function(){ return { addColorStop: function(){} }; }
+        };
+      }
+    };
+    SocialCardEngine.renderToCanvas(fakeCanvasEn, bazi, luck, "en");
+    var enAll = enTexts.join(" ");
+    if (!enAll.includes("KEY LEGACY & STRATEGIC MOAT")) throw new Error("EN canvas missing 'KEY LEGACY & STRATEGIC MOAT'");
+    if (!enAll.includes("KARMIC LESSON & STRATEGIC SAFEGUARDS")) throw new Error("EN canvas missing 'KARMIC LESSON & STRATEGIC SAFEGUARDS'");
+    if (!enAll.includes("SECONDARY SAGE MIRRORS · RANK #2 & #3 ARCHETYPES")) throw new Error("EN canvas missing secondary mirrors header");
+    if (!enAll.includes("①") || !enAll.includes("②")) throw new Error("EN canvas missing expanded bullet points ① and ②");
+    if (!enAll.includes("#2") || !enAll.includes("#3")) throw new Error("EN canvas missing #2 and #3 in EN");
+    if (!enAll.includes("Leverage:") || !enAll.includes("Caution:")) throw new Error("EN canvas missing Leverage / Caution labels");
+
+    var canvasEnLeaks = enAll.match(/[\\u4e00-\\u9fa5]/g);
+    if (canvasEnLeaks && canvasEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in EN canvas text: " + canvasEnLeaks.join(""));
+    }
+
+    // 5. Social copy text validation
+    var copyZh = SocialCardEngine.generateSocialCopyText(bazi, luck, "zh");
+    if (!copyZh.includes("①") || !copyZh.includes("②") || !copyZh.includes("#2") || !copyZh.includes("#3")) {
+      throw new Error("ZH copy text missing expanded points or secondary sage mirrors");
+    }
+    if (!copyZh.includes("借力【") || !copyZh.includes("避险【")) {
+      throw new Error("ZH copy text missing 借力 / 避险 breakdown");
+    }
+
+    var copyEn = SocialCardEngine.generateSocialCopyText(bazi, luck, "en");
+    if (!copyEn.includes("①") || !copyEn.includes("②") || !copyEn.includes("#2") || !copyEn.includes("#3")) {
+      throw new Error("EN copy text missing expanded points or secondary sage mirrors");
+    }
+    if (!copyEn.includes("Leverage [") || !copyEn.includes("Caution [")) {
+      throw new Error("EN copy text missing Leverage / Caution breakdown");
+    }
+    var copyEnLeaks = copyEn.match(/[\\u4e00-\\u9fa5]/g);
+    if (copyEnLeaks && copyEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in EN copy text: " + copyEnLeaks.join(""));
+    }
+    """
+]
+
+run_check139 = subprocess.run(jsc_check139_cmd, capture_output=True, text=True)
+assert run_check139.returncode == 0, f"Check 139 JSC test failed: stdout={run_check139.stdout} stderr={run_check139.stderr}"
+
+print("✓ 139. 顶栏快速生成PDF与社交名片柔和淡雅配色、社交名片立身绝学与天机诫勉①②优缺点扩充、次席与三席照命镜鉴双栏对比（借力与避险/双语100%零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 139 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

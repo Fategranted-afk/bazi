@@ -268,136 +268,233 @@ class SocialCardEngine {
     let figureAdviceZh = '心即理，事上磨炼；致良知以破心中贼，知行合一。临大事坚壁清野，严防急躁冒进，不取虚名而务实功。';
     let figureAdviceEn = 'Act as virtue dictates; unify wisdom with practical action. Contain reckless ambition and focus strictly on enduring craft.';
 
+    // Expanded Virtues & Flaws Safeguards (优点与缺点扩充)
+    let figureAuxStrengths = isEn
+      ? ['Anchors core domain competence with disciplined execution.', 'Accurately pierces strategic bottlenecks under pressure.']
+      : ['善于发挥核心立身之本，扎实深耕', '精准把握关键破局胜手，攻坚克难'];
+    let figureAuxWeaknesses = isEn
+      ? ['Guard against impulsive overreach and strategic blindspots.', 'Erect rigid behavioral circuit-breakers and safety buffers.']
+      : ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线'];
+
+    // Secondary & Tertiary Sage Mirrors (#2 次席 与 #3 三席照命人物)
+    let fig2Data = {
+      name: isEn ? 'Zhuge Liang' : '诸葛亮',
+      dynasty: isEn ? 'Three Kingdoms' : '三国',
+      sim: '88.6%',
+      strength: isEn ? 'Long-term grand vision and meticulous strategic execution.' : '隆中经略与躬行实干',
+      weakness: isEn ? 'Avoid strategic overextension and excessive micromanagement.' : '戒事必躬亲与心力过耗'
+    };
+
+    let fig3Data = {
+      name: isEn ? 'Xie An' : '谢安',
+      dynasty: isEn ? 'Eastern Jin' : '东晋',
+      sim: '85.4%',
+      strength: isEn ? 'Unshakable poise and high equilibrium under existential crises.' : '大局沉静与定海神针',
+      weakness: isEn ? 'Avoid complacency and delayed tactical enforcement.' : '戒优游放任与决断迟延'
+    };
+
     if (typeof HistoricalEngine !== 'undefined' && typeof HistoricalEngine.calculateSimilarity === 'function') {
       try {
         const hMatch = HistoricalEngine.calculateSimilarity(safeBazi, luck);
-        if (hMatch && hMatch.topMatch) {
-          const fig = hMatch.topMatch;
-          figureId = fig.id || 'wang_yangming';
-          figureNameZh = fig.nameZh || '王阳明';
-          figureNameEn = fig.nameEn || 'Wang Yangming';
-          figureDynastyZh = this._cleanDynasty(fig.dynastyZh || '南梁', false);
-          figureDynastyEn = this._cleanDynasty(fig.dynastyEn || 'Southern Liang', true);
-          figurePositionZh = fig.positionZh || '先贤名臣';
-          figurePositionEn = fig.positionEn || 'Historical Master';
-          figureArchetype = fig.archetype || 'specialist';
-          figureSim = (typeof fig.similarityScore === 'number' ? fig.similarityScore : 89.4) + '%';
+        if (hMatch) {
+          if (hMatch.topMatch) {
+            const fig = hMatch.topMatch;
+            figureId = fig.id || 'wang_yangming';
+            figureNameZh = fig.nameZh || '王阳明';
+            figureNameEn = fig.nameEn || 'Wang Yangming';
+            figureDynastyZh = this._cleanDynasty(fig.dynastyZh || '南梁', false);
+            figureDynastyEn = this._cleanDynasty(fig.dynastyEn || 'Southern Liang', true);
+            figurePositionZh = fig.positionZh || '先贤名臣';
+            figurePositionEn = fig.positionEn || 'Historical Master';
+            figureArchetype = fig.archetype || 'specialist';
+            figureSim = (typeof fig.similarityScore === 'number' ? fig.similarityScore : 89.4) + '%';
 
-          if (fig.historicalQuoteZh) {
-            figureQuoteZh = `“${fig.historicalQuoteZh.replace(/^[“"']|[”"']$/g, '')}”`;
-          }
-          if (fig.historicalQuoteEn) {
-            figureQuoteEn = `"${fig.historicalQuoteEn.replace(/^[“"']|[”"']$/g, '')}"`;
-          }
-
-          // Legacy (立身功业) - Rich multi-sentence strategic moat exegesis
-          if (fig.strengthAdviceZh) {
-            let s = fig.strengthAdviceZh.trim();
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureLegacyZh = s;
-          } else if (fig.deedsZh) {
-            let s = fig.deedsZh.trim();
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureLegacyZh = s;
-          } else if (fig.auxiliaryStrengthsZh && fig.auxiliaryStrengthsZh.length > 0) {
-            let s = (fig.auxiliaryStrengthsZh[1] || fig.auxiliaryStrengthsZh[0]).trim();
-            if (s.length < 30 && fig.auxiliaryStrengthsZh.length > 1) {
-              s = fig.auxiliaryStrengthsZh.join('；').trim();
+            if (fig.historicalQuoteZh) {
+              figureQuoteZh = `“${fig.historicalQuoteZh.replace(/^[“"']|[”"']$/g, '')}”`;
             }
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureLegacyZh = s;
-          }
-
-          if (fig.strengthAdviceEn) {
-            let s = fig.strengthAdviceEn.trim();
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureLegacyEn = s;
-          } else if (fig.deedsEn) {
-            let s = fig.deedsEn.trim();
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureLegacyEn = s;
-          } else if (fig.auxiliaryStrengthsEn && fig.auxiliaryStrengthsEn.length > 0) {
-            let s = fig.auxiliaryStrengthsEn[0].trim();
-            if (s.length < 30 && fig.auxiliaryStrengthsEn.length > 1) {
-              s = fig.auxiliaryStrengthsEn.join('; ').trim();
+            if (fig.historicalQuoteEn) {
+              figureQuoteEn = `"${fig.historicalQuoteEn.replace(/^[“"']|[”"']$/g, '')}"`;
             }
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureLegacyEn = s;
-          }
 
-          // Advice (天机诫勉) - Substantive cautionary advice
-          if (fig.weaknessAdviceZh) {
-            let s = fig.weaknessAdviceZh.trim();
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureAdviceZh = s;
-          } else if (fig.auxiliaryWeaknessesZh && fig.auxiliaryWeaknessesZh.length > 0) {
-            let s = fig.auxiliaryWeaknessesZh[0].trim();
-            if (s.length < 30 && fig.auxiliaryWeaknessesZh.length > 1) {
-              s = fig.auxiliaryWeaknessesZh.join('；').trim();
+            // Legacy (立身功业) - Rich multi-sentence strategic moat exegesis
+            if (fig.strengthAdviceZh) {
+              let s = fig.strengthAdviceZh.trim();
+              if (s.length > 120) s = s.slice(0, 116) + '。';
+              if (!/[。！？]$/.test(s)) s += '。';
+              figureLegacyZh = s;
+            } else if (fig.deedsZh) {
+              let s = fig.deedsZh.trim();
+              if (s.length > 120) s = s.slice(0, 116) + '。';
+              if (!/[。！？]$/.test(s)) s += '。';
+              figureLegacyZh = s;
+            } else if (fig.auxiliaryStrengthsZh && fig.auxiliaryStrengthsZh.length > 0) {
+              let s = (fig.auxiliaryStrengthsZh[1] || fig.auxiliaryStrengthsZh[0]).trim();
+              if (s.length < 30 && fig.auxiliaryStrengthsZh.length > 1) {
+                s = fig.auxiliaryStrengthsZh.join('；').trim();
+              }
+              if (s.length > 120) s = s.slice(0, 116) + '。';
+              if (!/[。！？]$/.test(s)) s += '。';
+              figureLegacyZh = s;
             }
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureAdviceZh = s;
-          }
 
-          if (fig.weaknessAdviceEn) {
-            let s = fig.weaknessAdviceEn.trim();
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureAdviceEn = s;
-          } else if (fig.auxiliaryWeaknessesEn && fig.auxiliaryWeaknessesEn.length > 0) {
-            let s = fig.auxiliaryWeaknessesEn[0].trim();
-            if (s.length < 30 && fig.auxiliaryWeaknessesEn.length > 1) {
-              s = fig.auxiliaryWeaknessesEn.join('; ').trim();
+            if (fig.strengthAdviceEn) {
+              let s = fig.strengthAdviceEn.trim();
+              if (s.length > 200) s = s.slice(0, 196) + '.';
+              if (!/[.!?]$/.test(s)) s += '.';
+              figureLegacyEn = s;
+            } else if (fig.deedsEn) {
+              let s = fig.deedsEn.trim();
+              if (s.length > 200) s = s.slice(0, 196) + '.';
+              if (!/[.!?]$/.test(s)) s += '.';
+              figureLegacyEn = s;
+            } else if (fig.auxiliaryStrengthsEn && fig.auxiliaryStrengthsEn.length > 0) {
+              let s = fig.auxiliaryStrengthsEn[0].trim();
+              if (s.length < 30 && fig.auxiliaryStrengthsEn.length > 1) {
+                s = fig.auxiliaryStrengthsEn.join('; ').trim();
+              }
+              if (s.length > 200) s = s.slice(0, 196) + '.';
+              if (!/[.!?]$/.test(s)) s += '.';
+              figureLegacyEn = s;
             }
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureAdviceEn = s;
+
+            // Advice (天机诫勉) - Substantive cautionary advice
+            if (fig.weaknessAdviceZh) {
+              let s = fig.weaknessAdviceZh.trim();
+              if (s.length > 120) s = s.slice(0, 116) + '。';
+              if (!/[。！？]$/.test(s)) s += '。';
+              figureAdviceZh = s;
+            } else if (fig.auxiliaryWeaknessesZh && fig.auxiliaryWeaknessesZh.length > 0) {
+              let s = fig.auxiliaryWeaknessesZh[0].trim();
+              if (s.length < 30 && fig.auxiliaryWeaknessesZh.length > 1) {
+                s = fig.auxiliaryWeaknessesZh.join('；').trim();
+              }
+              if (s.length > 120) s = s.slice(0, 116) + '。';
+              if (!/[。！？]$/.test(s)) s += '。';
+              figureAdviceZh = s;
+            }
+
+            if (fig.weaknessAdviceEn) {
+              let s = fig.weaknessAdviceEn.trim();
+              if (s.length > 200) s = s.slice(0, 196) + '.';
+              if (!/[.!?]$/.test(s)) s += '.';
+              figureAdviceEn = s;
+            } else if (fig.auxiliaryWeaknessesEn && fig.auxiliaryWeaknessesEn.length > 0) {
+              let s = fig.auxiliaryWeaknessesEn[0].trim();
+              if (s.length < 30 && fig.auxiliaryWeaknessesEn.length > 1) {
+                s = fig.auxiliaryWeaknessesEn.join('; ').trim();
+              }
+              if (s.length > 200) s = s.slice(0, 196) + '.';
+              if (!/[.!?]$/.test(s)) s += '.';
+              figureAdviceEn = s;
+            }
+
+            // Robust length safety guards ensuring >= 30 characters
+            if (figureLegacyZh.length < 30 && fig.deedsZh) {
+              let s = fig.deedsZh.trim();
+              if (s.length > 120) s = s.slice(0, 116) + '。';
+              if (!/[。！？]$/.test(s)) s += '。';
+              figureLegacyZh = s;
+            }
+            if (figureLegacyEn.length < 30 && fig.deedsEn) {
+              let s = fig.deedsEn.trim();
+              if (s.length > 200) s = s.slice(0, 196) + '.';
+              if (!/[.!?]$/.test(s)) s += '.';
+              figureLegacyEn = s;
+            }
+            if (figureAdviceZh.length < 30 && fig.personalityZh) {
+              figureAdviceZh = `为人${fig.personalityZh}，须设立刚性避险防线，严防盲动冒进。`;
+            }
+            if (figureAdviceEn.length < 30 && fig.personalityEn) {
+              figureAdviceEn = `Characterized by ${fig.personalityEn}; erect rigid circuit-breakers to safeguard against fatal blindspots.`;
+            }
+
+            // Archetype Label
+            if (figureArchetype === 'specialist') {
+              figureArchetypeLabelZh = '🏛️ 经世文宗 · 深度专家';
+              figureArchetypeLabelEn = '🏛️ Specialist & Canonical Master';
+            } else if (figureArchetype === 'executive') {
+              figureArchetypeLabelZh = '👑 统帅领袖 · 经纬乾坤';
+              figureArchetypeLabelEn = '👑 Executive & Grand Sovereign';
+            } else if (figureArchetype === 'civil') {
+              figureArchetypeLabelZh = '📜 庙堂文治 · 纲纪经略';
+              figureArchetypeLabelEn = '📜 Civil Governance & High Minister';
+            } else if (figureArchetype === 'military') {
+              figureArchetypeLabelZh = '⚔️ 铁血战将 · 临危破局';
+              figureArchetypeLabelEn = '⚔️ Martial Vanguard & Field Commander';
+            }
+
+            // Extract Top Match 1 Auxiliary Points
+            if (typeof HistoricalEngine.getAuxiliaryPoints === 'function') {
+              try {
+                const aux = HistoricalEngine.getAuxiliaryPoints(fig, isEn);
+                if (aux && Array.isArray(aux.strengths) && aux.strengths.length >= 2) {
+                  figureAuxStrengths = aux.strengths.slice(0, 2);
+                }
+                if (aux && Array.isArray(aux.weaknesses) && aux.weaknesses.length >= 2) {
+                  figureAuxWeaknesses = aux.weaknesses.slice(0, 2);
+                }
+              } catch (e) {}
+            }
           }
 
-          // Robust length safety guards ensuring >= 30 characters
-          if (figureLegacyZh.length < 30 && fig.deedsZh) {
-            let s = fig.deedsZh.trim();
-            if (s.length > 120) s = s.slice(0, 116) + '。';
-            if (!/[。！？]$/.test(s)) s += '。';
-            figureLegacyZh = s;
-          }
-          if (figureLegacyEn.length < 30 && fig.deedsEn) {
-            let s = fig.deedsEn.trim();
-            if (s.length > 200) s = s.slice(0, 196) + '.';
-            if (!/[.!?]$/.test(s)) s += '.';
-            figureLegacyEn = s;
-          }
-          if (figureAdviceZh.length < 30 && fig.personalityZh) {
-            figureAdviceZh = `为人${fig.personalityZh}，须设立刚性避险防线，严防盲动冒进。`;
-          }
-          if (figureAdviceEn.length < 30 && fig.personalityEn) {
-            figureAdviceEn = `Characterized by ${fig.personalityEn}; erect rigid circuit-breakers to safeguard against fatal blindspots.`;
-          }
-
-          // Archetype Label
-          if (figureArchetype === 'specialist') {
-            figureArchetypeLabelZh = '🏛️ 经世文宗 · 深度专家';
-            figureArchetypeLabelEn = '🏛️ Specialist & Canonical Master';
-          } else if (figureArchetype === 'executive') {
-            figureArchetypeLabelZh = '👑 统帅领袖 · 经纬乾坤';
-            figureArchetypeLabelEn = '👑 Executive & Grand Sovereign';
-          } else if (figureArchetype === 'civil') {
-            figureArchetypeLabelZh = '📜 庙堂文治 · 纲纪经略';
-            figureArchetypeLabelEn = '📜 Civil Governance & High Minister';
-          } else if (figureArchetype === 'military') {
-            figureArchetypeLabelZh = '⚔️ 铁血战将 · 临危破局';
-            figureArchetypeLabelEn = '⚔️ Martial Vanguard & Field Commander';
+          // Extract Top Matches #2 and #3
+          if (Array.isArray(hMatch.topMatches)) {
+            if (hMatch.topMatches[1]) {
+              const f2 = hMatch.topMatches[1];
+              let f2Aux = null;
+              if (typeof HistoricalEngine.getAuxiliaryPoints === 'function') {
+                try { f2Aux = HistoricalEngine.getAuxiliaryPoints(f2, isEn); } catch (e) {}
+              }
+              const f2Name = isEn ? (f2.nameEn || f2.nameZh) : (f2.nameZh || f2.nameEn);
+              const f2Dyn = this._cleanDynasty(isEn ? (f2.dynastyEn || f2.dynastyZh) : (f2.dynastyZh || f2.dynastyEn), isEn);
+              const f2Sim = (typeof f2.similarityScore === 'number' ? f2.similarityScore : 88.0) + '%';
+              const f2Str = f2Aux?.strengths?.[0] || (isEn ? f2.strengthAdviceEn : f2.strengthAdviceZh) || (isEn ? 'Core strategic clarity.' : '深谋远虑，运筹帷幄');
+              const f2Weak = f2Aux?.weaknesses?.[0] || (isEn ? f2.weaknessAdviceEn : f2.weaknessAdviceZh) || (isEn ? 'Guard against blindspots.' : '戒刚愎自用与独断专行');
+              fig2Data = {
+                name: f2Name,
+                dynasty: f2Dyn,
+                sim: f2Sim,
+                strength: f2Str,
+                weakness: f2Weak
+              };
+            }
+            if (hMatch.topMatches[2]) {
+              const f3 = hMatch.topMatches[2];
+              let f3Aux = null;
+              if (typeof HistoricalEngine.getAuxiliaryPoints === 'function') {
+                try { f3Aux = HistoricalEngine.getAuxiliaryPoints(f3, isEn); } catch (e) {}
+              }
+              const f3Name = isEn ? (f3.nameEn || f3.nameZh) : (f3.nameZh || f3.nameEn);
+              const f3Dyn = this._cleanDynasty(isEn ? (f3.dynastyEn || f3.dynastyZh) : (f3.dynastyZh || f3.dynastyEn), isEn);
+              const f3Sim = (typeof f3.similarityScore === 'number' ? f3.similarityScore : 85.0) + '%';
+              const f3Str = f3Aux?.strengths?.[0] || (isEn ? f3.strengthAdviceEn : f3.strengthAdviceZh) || (isEn ? 'Equilibrium under crisis.' : '临危不乱，沉着定局');
+              const f3Weak = f3Aux?.weaknesses?.[0] || (isEn ? f3.weaknessAdviceEn : f3.weaknessAdviceZh) || (isEn ? 'Prevent execution delays.' : '戒瞻前顾后与犹豫不决');
+              fig3Data = {
+                name: f3Name,
+                dynasty: f3Dyn,
+                sim: f3Sim,
+                strength: f3Str,
+                weakness: f3Weak
+              };
+            }
           }
         }
       } catch (e) {}
+    }
+
+    // Strict bilingual Chinese leak purification for English mode
+    if (isEn) {
+      const cleanEn = (s) => (s ? String(s).replace(/[\u4e00-\u9fa5]/g, '').trim() : '');
+      figureAuxStrengths = figureAuxStrengths.map(cleanEn).map(s => s || 'Core competence and disciplined focus.');
+      figureAuxWeaknesses = figureAuxWeaknesses.map(cleanEn).map(s => s || 'Rigid behavioral circuit-breakers.');
+      fig2Data.name = cleanEn(fig2Data.name) || 'Secondary Vanguard';
+      fig2Data.dynasty = cleanEn(fig2Data.dynasty) || 'Classical Era';
+      fig2Data.strength = cleanEn(fig2Data.strength) || 'Strategic precision and steadfast focus.';
+      fig2Data.weakness = cleanEn(fig2Data.weakness) || 'Guard against overextension.';
+      fig3Data.name = cleanEn(fig3Data.name) || 'Equilibrium Master';
+      fig3Data.dynasty = cleanEn(fig3Data.dynasty) || 'Classical Era';
+      fig3Data.strength = cleanEn(fig3Data.strength) || 'Composure in crisis and balanced strategy.';
+      fig3Data.weakness = cleanEn(fig3Data.weakness) || 'Prevent execution delays.';
     }
 
     // Annual Transit & Hexagram for 2026
@@ -503,6 +600,20 @@ class SocialCardEngine {
       figureQuote: isEn ? figureQuoteEn : figureQuoteZh,
       figureLegacy: isEn ? figureLegacyEn : figureLegacyZh,
       figureAdvice: isEn ? figureAdviceEn : figureAdviceZh,
+      figureAuxStrengths: figureAuxStrengths,
+      figureAuxWeaknesses: figureAuxWeaknesses,
+      fig2: fig2Data,
+      fig3: fig3Data,
+      fig2Name: fig2Data.name,
+      fig2Dynasty: fig2Data.dynasty,
+      fig2Sim: fig2Data.sim,
+      fig2Strength: fig2Data.strength,
+      fig2Weakness: fig2Data.weakness,
+      fig3Name: fig3Data.name,
+      fig3Dynasty: fig3Data.dynasty,
+      fig3Sim: fig3Data.sim,
+      fig3Strength: fig3Data.strength,
+      fig3Weakness: fig3Data.weakness,
       // Annual Transit
       annualYear: annualYear,
       annualGanzhi: annualGanzhi,
@@ -1766,29 +1877,29 @@ class SocialCardEngine {
     ctx.fillText(data.isEn ? '✦ SOUL MIRROR HISTORICAL PERSONA ✦' : '✦ 天 命 照 命 镜 像 · 先 贤 同 频 ✦', W / 2, dais2Y + 26);
 
     // Render Atmospheric Classical Stylized Portrait Medallion
-    const portraitCx = 148;
-    const portraitCy = dais2Y + 95;
-    const portraitR = 56;
+    const portraitCx = 140;
+    const portraitCy = dais2Y + 84;
+    const portraitR = 48;
     this.drawClassicalPortrait(ctx, data, portraitCx, portraitCy, portraitR);
 
     // Under-Portrait Dynasty Era Tablet
-    const eraPillW = 96;
-    const eraPillH = 20;
+    const eraPillW = 88;
+    const eraPillH = 18;
     const eraPillX = portraitCx - eraPillW / 2;
-    const eraPillY = portraitCy + portraitR + 6;
+    const eraPillY = portraitCy + portraitR + 5;
     ctx.fillStyle = '#fefce8';
-    SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 6);
+    SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 5);
     if (ctx.fill) ctx.fill();
     ctx.strokeStyle = '#b45309';
-    ctx.lineWidth = 1.2;
-    SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 6);
+    ctx.lineWidth = 1.1;
+    SocialCardEngine.drawRoundedRect(ctx, eraPillX, eraPillY, eraPillW, eraPillH, 5);
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#78350f';
     ctx.font = 'bold 11px sans-serif';
     ctx.textAlign = 'center';
     const eraStr = data.figureDynasty || (data.isEn ? 'Sage Era' : '先贤纪元');
-    ctx.fillText(eraStr, portraitCx, eraPillY + 14);
+    ctx.fillText(eraStr, portraitCx, eraPillY + 13);
 
     // Right of Portrait: Historical Persona Profile Panel
     const profileX = 226;
@@ -1797,20 +1908,20 @@ class SocialCardEngine {
     // Line 1: Figure Name & Affinity Resonance Score
     ctx.textAlign = 'left';
     ctx.fillStyle = '#0f172a';
-    ctx.font = 'bold 25px serif';
+    ctx.font = 'bold 23px serif';
 
     const rawFigName = data.figureName || (data.isEn ? 'Historical Sage' : '先贤宗师');
     let displayFigName = rawFigName;
     if (data.isEn && rawFigName.includes('(')) {
       displayFigName = rawFigName.split('(')[0].trim();
     }
-    ctx.fillText(displayFigName, profileX, dais2Y + 62);
+    ctx.fillText(displayFigName, profileX, dais2Y + 54);
 
     // Affinity Score Badge (warm amber pill)
-    const affW = 112;
-    const affH = 24;
-    const affX = W - 188;
-    const affY = dais2Y + 44;
+    const affW = 108;
+    const affH = 22;
+    const affX = W - 184;
+    const affY = dais2Y + 36;
     ctx.fillStyle = '#fff7ed';
     SocialCardEngine.drawRoundedRect(ctx, affX, affY, affW, affH, 6);
     if (ctx.fill) ctx.fill();
@@ -1820,47 +1931,47 @@ class SocialCardEngine {
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#b45309';
-    ctx.font = 'bold 13px monospace';
+    ctx.font = 'bold 12px monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(data.isEn ? `${data.figureSim} Match` : `⚡ ${data.figureSim} 同频`, affX + affW / 2, affY + 17);
+    ctx.fillText(data.isEn ? `${data.figureSim} Match` : `⚡ ${data.figureSim} 同频`, affX + affW / 2, affY + 15);
 
     // Line 2: Historical Official Position & Credentials
     ctx.textAlign = 'left';
     ctx.fillStyle = '#334155';
-    ctx.font = '13px sans-serif';
-    this.drawWrappedText(ctx, data.figurePosition, profileX, dais2Y + 90, profileW, 18, 2, 'left');
+    ctx.font = '12px sans-serif';
+    this.drawWrappedText(ctx, data.figurePosition, profileX, dais2Y + 76, profileW, 16, 1, 'left');
 
-    // Line 3: Archetype Vocation Pill (Bulletproof Left-Flush Architecture & Pixel-Perfect Symmetry)
-    const pillH = 22;
-    const pillY = dais2Y + 124;
+    // Line 3: Archetype Vocation Pill (Left-flush)
+    const pillH = 20;
+    const pillY = dais2Y + 98;
     const padX = 10;
-    const pillFont = 'bold 11.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
+    const pillFont = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
     ctx.font = pillFont;
 
     const archLabel = data.figureArchetypeLabel || '';
-    let archTextW = 120;
+    let archTextW = 110;
     if (ctx.measureText) {
       try {
         archTextW = ctx.measureText(archLabel).width;
       } catch (e) {}
     }
-    if (!archTextW || archTextW < 50) {
+    if (!archTextW || archTextW < 40) {
       let estimatedW = 0;
       for (let i = 0; i < archLabel.length; i++) {
-        estimatedW += /[\u4e00-\u9fa5]/.test(archLabel[i]) ? 12 : 7;
+        estimatedW += /[\u4e00-\u9fa5]/.test(archLabel[i]) ? 11 : 6.5;
       }
-      archTextW = Math.max(estimatedW, 100);
+      archTextW = Math.max(estimatedW, 90);
     }
 
     const pillW = Math.min(Math.round(archTextW + padX * 2), profileW);
     const pillX = profileX;
 
     ctx.fillStyle = '#eff6ff';
-    SocialCardEngine.drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 6);
+    SocialCardEngine.drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 5);
     if (ctx.fill) ctx.fill();
     ctx.strokeStyle = '#2563eb';
-    ctx.lineWidth = 1.2;
-    SocialCardEngine.drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 6);
+    ctx.lineWidth = 1.1;
+    SocialCardEngine.drawRoundedRect(ctx, pillX, pillY, pillW, pillH, 5);
     if (ctx.stroke) ctx.stroke();
 
     ctx.fillStyle = '#1d4ed8';
@@ -1870,69 +1981,188 @@ class SocialCardEngine {
     ctx.fillText(archLabel, pillX + padX, pillY + pillH / 2);
     ctx.textBaseline = 'alphabetic';
 
-    // Delicate Golden Separator Hairline (Cleanly below Dynasty pill)
+    // Separator hairline
     ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
     ctx.lineWidth = 1;
     if (ctx.beginPath) ctx.beginPath();
-    if (ctx.moveTo) ctx.moveTo(80, dais2Y + 188);
-    if (ctx.lineTo) ctx.lineTo(W - 80, dais2Y + 188);
+    if (ctx.moveTo) ctx.moveTo(80, dais2Y + 144);
+    if (ctx.lineTo) ctx.lineTo(W - 80, dais2Y + 144);
     if (ctx.stroke) ctx.stroke();
 
-    // Soul Resonance Quote (Airy, elegant serif)
+    // Soul Resonance Quote
     ctx.fillStyle = '#1e293b';
-    ctx.font = 'italic 12.5px serif';
-    this.drawWrappedText(ctx, data.figureQuote, W / 2, dais2Y + 204, 580, 18, 2, 'center');
+    ctx.font = 'italic 12px serif';
+    this.drawWrappedText(ctx, data.figureQuote, W / 2, dais2Y + 162, 580, 16, 1, 'center');
 
-    // Two Substantive Parchment Panels (Key Legacy & Karmic Lesson)
-    // Panel 1: Key Legacy & Strategic Moat (立身功业)
-    const legY = dais2Y + 248;
-    const cardH = 104;
-    const legW = W - 152;
+    // Safe extraction of auxiliary and comparison points with robust fallbacks
+    const auxStr = (Array.isArray(data.figureAuxStrengths) && data.figureAuxStrengths.length >= 2)
+      ? data.figureAuxStrengths
+      : (data.isEn
+          ? ['Anchors core domain competence with disciplined execution.', 'Accurately pierces strategic bottlenecks under pressure.']
+          : ['善于发挥核心立身之本，扎实深耕', '精准把握关键破局胜手，攻坚克难']);
+    const auxWeak = (Array.isArray(data.figureAuxWeaknesses) && data.figureAuxWeaknesses.length >= 2)
+      ? data.figureAuxWeaknesses
+      : (data.isEn
+          ? ['Guard against impulsive overreach and blindspots.', 'Erect rigid behavioral circuit-breakers and safety buffers.']
+          : ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线']);
+
+    const fig2Name = data.fig2Name || (data.fig2 && data.fig2.name) || (data.isEn ? 'Zhuge Liang' : '诸葛亮');
+    const fig2Dyn = data.fig2Dynasty || (data.fig2 && data.fig2.dynasty) || (data.isEn ? 'Three Kingdoms' : '三国');
+    const fig2Sim = data.fig2Sim || (data.fig2 && data.fig2.sim) || '88.6%';
+    const fig2Str = data.fig2Strength || (data.fig2 && data.fig2.strength) || (data.isEn ? 'Long-term grand vision and meticulous execution.' : '隆中经略与躬行实干');
+    const fig2Weak = data.fig2Weakness || (data.fig2 && data.fig2.weakness) || (data.isEn ? 'Avoid strategic overextension and micromanagement.' : '戒事必躬亲与心力过耗');
+
+    const fig3Name = data.fig3Name || (data.fig3 && data.fig3.name) || (data.isEn ? 'Xie An' : '谢安');
+    const fig3Dyn = data.fig3Dynasty || (data.fig3 && data.fig3.dynasty) || (data.isEn ? 'Eastern Jin' : '东晋');
+    const fig3Sim = data.fig3Sim || (data.fig3 && data.fig3.sim) || '85.4%';
+    const fig3Str = data.fig3Strength || (data.fig3 && data.fig3.strength) || (data.isEn ? 'Unshakable poise and high equilibrium in crisis.' : '大局沉静与定海神针');
+    const fig3Weak = data.fig3Weakness || (data.fig3 && data.fig3.weakness) || (data.isEn ? 'Avoid complacency and delayed enforcement.' : '戒优游放任与决断迟延');
+
+    const legW = dais2W - 36;
+
+    // Panel 1: Key Legacy & Strategic Moat (立身功业 · 传世绝学壁垒) + 优点扩充
+    const legY = dais2Y + 180;
+    const cardH = 86;
     ctx.fillStyle = '#fefce8';
-    SocialCardEngine.drawRoundedRect(ctx, 76, legY, legW, cardH, 10);
+    SocialCardEngine.drawRoundedRect(ctx, 74, legY, legW, cardH, 8);
     if (ctx.fill) ctx.fill();
-    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.40)';
     ctx.lineWidth = 1;
-    SocialCardEngine.drawRoundedRect(ctx, 76, legY, legW, cardH, 10);
+    SocialCardEngine.drawRoundedRect(ctx, 74, legY, legW, cardH, 8);
     if (ctx.stroke) ctx.stroke();
 
     // Left Golden Accent Bar
     ctx.fillStyle = '#d97706';
-    SocialCardEngine.drawRoundedRect(ctx, 76, legY, 4, cardH, 2);
+    SocialCardEngine.drawRoundedRect(ctx, 74, legY, 4, cardH, 2);
     if (ctx.fill) ctx.fill();
 
     ctx.textAlign = 'left';
     ctx.fillStyle = '#78350f';
-    ctx.font = 'bold 13px sans-serif';
-    ctx.fillText(data.isEn ? '✦ KEY LEGACY & STRATEGIC MOAT ✦' : '✦ 立身功业 · 传世绝学壁垒 ✦', 94, legY + 22);
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText(data.isEn ? '✦ KEY LEGACY & STRATEGIC MOAT ✦' : '✦ 立身功业 · 传世绝学壁垒 ✦', 88, legY + 17);
 
     ctx.fillStyle = '#18181b';
-    ctx.font = '12.5px sans-serif';
-    this.drawWrappedText(ctx, data.figureLegacy, 94, legY + 44, 560, 18, 3, 'left');
+    ctx.font = '11.5px sans-serif';
+    this.drawWrappedText(ctx, data.figureLegacy, 88, legY + 34, legW - 24, 15, 1, 'left');
 
-    // Panel 2: Karmic Lesson & Strategic Safeguards (天机诫勉)
-    const advY = dais2Y + 362;
+    ctx.fillStyle = '#92400e';
+    ctx.font = '10.5px sans-serif';
+    this.drawWrappedText(ctx, `① ${auxStr[0]}`, 88, legY + 52, legW - 24, 15, 1, 'left');
+    this.drawWrappedText(ctx, `② ${auxStr[1]}`, 88, legY + 70, legW - 24, 15, 1, 'left');
+
+    // Panel 2: Karmic Lesson & Strategic Safeguards (天机诫勉 · 避坑破局心法) + 缺点扩充
+    const advY = dais2Y + 274;
     ctx.fillStyle = '#fff1f2';
-    SocialCardEngine.drawRoundedRect(ctx, 76, advY, legW, cardH, 10);
+    SocialCardEngine.drawRoundedRect(ctx, 74, advY, legW, cardH, 8);
     if (ctx.fill) ctx.fill();
     ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
     ctx.lineWidth = 1;
-    SocialCardEngine.drawRoundedRect(ctx, 76, advY, legW, cardH, 10);
+    SocialCardEngine.drawRoundedRect(ctx, 74, advY, legW, cardH, 8);
     if (ctx.stroke) ctx.stroke();
 
     // Left Cinnabar Accent Bar
     ctx.fillStyle = '#dc2626';
-    SocialCardEngine.drawRoundedRect(ctx, 76, advY, 4, cardH, 2);
+    SocialCardEngine.drawRoundedRect(ctx, 74, advY, 4, cardH, 2);
     if (ctx.fill) ctx.fill();
 
     ctx.textAlign = 'left';
     ctx.fillStyle = '#b91c1c';
-    ctx.font = 'bold 13px sans-serif';
-    ctx.fillText(data.isEn ? '✦ KARMIC LESSON & STRATEGIC SAFEGUARDS ✦' : '✦ 天机诫勉 · 避坑破局心法 ✦', 94, advY + 22);
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText(data.isEn ? '✦ KARMIC LESSON & STRATEGIC SAFEGUARDS ✦' : '✦ 天机诫勉 · 避坑破局心法 ✦', 88, advY + 17);
 
     ctx.fillStyle = '#18181b';
-    ctx.font = '12.5px sans-serif';
-    this.drawWrappedText(ctx, data.figureAdvice, 94, advY + 44, 560, 18, 3, 'left');
+    ctx.font = '11.5px sans-serif';
+    this.drawWrappedText(ctx, data.figureAdvice, 88, advY + 34, legW - 24, 15, 1, 'left');
+
+    ctx.fillStyle = '#b91c1c';
+    ctx.font = '10.5px sans-serif';
+    this.drawWrappedText(ctx, `① ${auxWeak[0]}`, 88, advY + 52, legW - 24, 15, 1, 'left');
+    this.drawWrappedText(ctx, `② ${auxWeak[1]}`, 88, advY + 70, legW - 24, 15, 1, 'left');
+
+    // Panel 3: Secondary Sage Mirrors (#2 次席 & #3 三席辅助扩充对照)
+    const compY = dais2Y + 368;
+    ctx.fillStyle = '#78350f';
+    ctx.font = 'bold 11.5px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(data.isEn ? '✦ SECONDARY SAGE MIRRORS · RANK #2 & #3 ARCHETYPES ✦' : '✦ 辅助先贤对照 · 次席与三席照命镜鉴 ✦', W / 2, compY + 12);
+
+    const dualColW = Math.floor((legW - 12) / 2);
+    const dualColH = 88;
+    const col1X = 74;
+    const col2X = 74 + dualColW + 12;
+    const dualColY = compY + 20;
+
+    // Col 1 (#2 Figure)
+    ctx.fillStyle = '#f8fafc';
+    SocialCardEngine.drawRoundedRect(ctx, col1X, dualColY, dualColW, dualColH, 7);
+    if (ctx.fill) ctx.fill();
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
+    ctx.lineWidth = 0.9;
+    SocialCardEngine.drawRoundedRect(ctx, col1X, dualColY, dualColW, dualColH, 7);
+    if (ctx.stroke) ctx.stroke();
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px serif';
+    ctx.fillText(`#2 ${fig2Name} (${fig2Dyn})`, col1X + 8, dualColY + 16);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#b45309';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText(data.isEn ? `${fig2Sim} Match` : `⚡ ${fig2Sim} 同频`, col1X + dualColW - 8, dualColY + 16);
+
+    // Inner Hairline
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.20)';
+    ctx.lineWidth = 0.8;
+    if (ctx.beginPath) ctx.beginPath();
+    if (ctx.moveTo) ctx.moveTo(col1X + 8, dualColY + 23);
+    if (ctx.lineTo) ctx.lineTo(col1X + dualColW - 8, dualColY + 23);
+    if (ctx.stroke) ctx.stroke();
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#047857';
+    ctx.font = '10px sans-serif';
+    this.drawWrappedText(ctx, `⚔️ ${data.isEn ? 'Leverage: ' : '借力：'}${fig2Str}`, col1X + 8, dualColY + 38, dualColW - 16, 14, 1, 'left');
+
+    ctx.fillStyle = '#b91c1c';
+    ctx.font = '10px sans-serif';
+    this.drawWrappedText(ctx, `🛡️ ${data.isEn ? 'Caution: ' : '避险：'}${fig2Weak}`, col1X + 8, dualColY + 56, dualColW - 16, 14, 1, 'left');
+
+    // Col 2 (#3 Figure)
+    ctx.fillStyle = '#f8fafc';
+    SocialCardEngine.drawRoundedRect(ctx, col2X, dualColY, dualColW, dualColH, 7);
+    if (ctx.fill) ctx.fill();
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
+    ctx.lineWidth = 0.9;
+    SocialCardEngine.drawRoundedRect(ctx, col2X, dualColY, dualColW, dualColH, 7);
+    if (ctx.stroke) ctx.stroke();
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 11px serif';
+    ctx.fillText(`#3 ${fig3Name} (${fig3Dyn})`, col2X + 8, dualColY + 16);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#b45309';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText(data.isEn ? `${fig3Sim} Match` : `⚡ ${fig3Sim} 同频`, col2X + dualColW - 8, dualColY + 16);
+
+    // Inner Hairline
+    ctx.strokeStyle = 'rgba(217, 119, 6, 0.20)';
+    ctx.lineWidth = 0.8;
+    if (ctx.beginPath) ctx.beginPath();
+    if (ctx.moveTo) ctx.moveTo(col2X + 8, dualColY + 23);
+    if (ctx.lineTo) ctx.lineTo(col2X + dualColW - 8, dualColY + 23);
+    if (ctx.stroke) ctx.stroke();
+
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#047857';
+    ctx.font = '10px sans-serif';
+    this.drawWrappedText(ctx, `⚔️ ${data.isEn ? 'Leverage: ' : '借力：'}${fig3Str}`, col2X + 8, dualColY + 38, dualColW - 16, 14, 1, 'left');
+
+    ctx.fillStyle = '#b91c1c';
+    ctx.font = '10px sans-serif';
+    this.drawWrappedText(ctx, `🛡️ ${data.isEn ? 'Caution: ' : '避险：'}${fig3Weak}`, col2X + 8, dualColY + 56, dualColW - 16, 14, 1, 'left');
 
     // 5. Dais 3: Annual Transit Hexagram & Strategic Guidance
     const dais3X = 56;
@@ -2027,14 +2257,44 @@ class SocialCardEngine {
    * Includes enriched soul mirror persona, key legacy and karmic wisdom
    */
   static generateSocialCopyText(bazi, luck, lang = 'zh') {
-    const data = this.extractCardData(bazi, luck, lang);
+    const data = (bazi && bazi.figureName && bazi.figureAuxStrengths) ? bazi : this.extractCardData(bazi, luck, lang);
+    const auxStr = (Array.isArray(data.figureAuxStrengths) && data.figureAuxStrengths.length >= 2)
+      ? data.figureAuxStrengths
+      : (data.isEn
+          ? ['Anchors core domain competence with disciplined execution.', 'Accurately pierces strategic bottlenecks under pressure.']
+          : ['善于发挥核心立身之本，扎实深耕', '精准把握关键破局胜手，攻坚克难']);
+    const auxWeak = (Array.isArray(data.figureAuxWeaknesses) && data.figureAuxWeaknesses.length >= 2)
+      ? data.figureAuxWeaknesses
+      : (data.isEn
+          ? ['Guard against impulsive overreach and blindspots.', 'Erect rigid behavioral circuit-breakers and safety buffers.']
+          : ['戒除盲目自满与冲动短视', '设立刚性自保后手与避险防线']);
+
+    const fig2Name = data.fig2Name || (data.fig2 && data.fig2.name) || (data.isEn ? 'Zhuge Liang' : '诸葛亮');
+    const fig2Dyn = data.fig2Dynasty || (data.fig2 && data.fig2.dynasty) || (data.isEn ? 'Three Kingdoms' : '三国');
+    const fig2Sim = data.fig2Sim || (data.fig2 && data.fig2.sim) || '88.6%';
+    const fig2Str = data.fig2Strength || (data.fig2 && data.fig2.strength) || (data.isEn ? 'Long-term grand vision and meticulous execution.' : '隆中经略与躬行实干');
+    const fig2Weak = data.fig2Weakness || (data.fig2 && data.fig2.weakness) || (data.isEn ? 'Avoid strategic overextension and micromanagement.' : '戒事必躬亲与心力过耗');
+
+    const fig3Name = data.fig3Name || (data.fig3 && data.fig3.name) || (data.isEn ? 'Xie An' : '谢安');
+    const fig3Dyn = data.fig3Dynasty || (data.fig3 && data.fig3.dynasty) || (data.isEn ? 'Eastern Jin' : '东晋');
+    const fig3Sim = data.fig3Sim || (data.fig3 && data.fig3.sim) || '85.4%';
+    const fig3Str = data.fig3Strength || (data.fig3 && data.fig3.strength) || (data.isEn ? 'Unshakable poise and high equilibrium in crisis.' : '大局沉静与定海神针');
+    const fig3Weak = data.fig3Weakness || (data.fig3 && data.fig3.weakness) || (data.isEn ? 'Avoid complacency and delayed enforcement.' : '戒优游放任与决断迟延');
+
     if (data.isEn) {
       return `👑 BaZi-AI Decision Engine Profile:
 🌌 Day Master: [${data.dayMaster}] | Vigor Score: ${data.score}/100 (${data.tier})
 🏆 Career Calling: ${data.archetypeTitle}
-🪞 Soul Mirror Figure: ${data.figureName} (${data.figureDynasty} · Resonance: ${data.figureSim})
+🪞 Primary Soul Mirror: ${data.figureName} (${data.figureDynasty} · Resonance: ${data.figureSim})
 📜 Key Legacy: ${data.figureLegacy}
+  ① ${auxStr[0]}
+  ② ${auxStr[1]}
 💡 Karmic Wisdom: ${data.figureAdvice}
+  ① ${auxWeak[0]}
+  ② ${auxWeak[1]}
+⚔️ Secondary Sage Mirrors:
+  • #2 ${fig2Name} (${fig2Dyn} · ${fig2Sim}): Leverage [${fig2Str}] / Caution [${fig2Weak}]
+  • #3 ${fig3Name} (${fig3Dyn} · ${fig3Sim}): Leverage [${fig3Str}] / Caution [${fig3Weak}]
 ☯️ 2026 Transit Hexagram: [${data.hexName}]
 🎯 Annual Directive: "${data.hexDirective}"
 ⚔️ Strategic Action: "${data.annualAction}"
@@ -2044,9 +2304,16 @@ class SocialCardEngine {
     return `👑 【我的东方数理命盘与战略战报】
 🌌 日元本命：[${data.dayMaster}] | 子平活力：${data.score}分（${data.tier}）
 🏆 天命职能：${data.archetypeTitle}
-🪞 照命先贤：${data.figureName}（${data.figureDynasty} · 心智契合度：${data.figureSim}）
+🪞 首席照命先贤：${data.figureName}（${data.figureDynasty} · 心智契合度：${data.figureSim}）
 📜 传世功业：${data.figureLegacy}
+  ① ${auxStr[0]}
+  ② ${auxStr[1]}
 💡 天机诫勉：${data.figureAdvice}
+  ① ${auxWeak[0]}
+  ② ${auxWeak[1]}
+⚔️ 次席与三席镜鉴：
+  • #2 ${fig2Name} (${fig2Dyn} · ${fig2Sim})：借力【${fig2Str}】/ 避险【${fig2Weak}】
+  • #3 ${fig3Name} (${fig3Dyn} · ${fig3Sim})：借力【${fig3Str}】/ 避险【${fig3Weak}】
 ☯️ 2026值年卦：【${data.hexName}】
 🎯 年度行持密卷：“${data.hexDirective}”
 ⚔️ 年度核心战策：“${data.annualAction}”

@@ -247,6 +247,39 @@ body.light-theme [class*="bg-[#1"]:not([class*="bg-[#fcfbf7]"]) {
   border-color: var(--border-color) !important;
 }
 
+/* Light Mode Soft Pastel Tones for Top Nav Action Buttons */
+[data-theme="light"] #btnQuickExportSinglePdf,
+html.light #btnQuickExportSinglePdf,
+body.light-theme #btnQuickExportSinglePdf {
+  background: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #065f46 !important;
+  box-shadow: 0 1px 2px rgba(16, 185, 129, 0.08) !important;
+}
+[data-theme="light"] #btnQuickExportSinglePdf:hover,
+html.light #btnQuickExportSinglePdf:hover,
+body.light-theme #btnQuickExportSinglePdf:hover {
+  background: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
+  color: #047857 !important;
+}
+
+[data-theme="light"] #btnOpenSocialCard,
+html.light #btnOpenSocialCard,
+body.light-theme #btnOpenSocialCard {
+  background: #faf5ff !important;
+  border-color: #e9d5ff !important;
+  color: #6b21a8 !important;
+  box-shadow: 0 1px 2px rgba(168, 85, 247, 0.08) !important;
+}
+[data-theme="light"] #btnOpenSocialCard:hover,
+html.light #btnOpenSocialCard:hover,
+body.light-theme #btnOpenSocialCard:hover {
+  background: #f3e8ff !important;
+  border-color: #d8b4fe !important;
+  color: #581c87 !important;
+}
+
 /* Modals Translucent Soft Backdrop in Light Mode */
 [data-theme="light"] #advisorModal,
 [data-theme="light"] #calculationProgressModal,
