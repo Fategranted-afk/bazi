@@ -1170,7 +1170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         perfBadge.textContent = (currentLang === 'en') ? `⚡ Instant Calculation (${duration}ms)` : `⚡ 瞬时计算完成 (${duration}ms)`;
       }
     } catch (err) {
-      console.error('排盘计算发生异常:', err);
+      if (typeof console !== 'undefined' && console.error) console.error('排盘计算发生异常:', err);
     }
   }
 
@@ -13714,6 +13714,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isEn && (labelB === '乙造' || labelB === 'Subject B')) labelB = 'Person B';
     if (!isEn && (labelB === 'Person B' || labelB === 'Subject B')) labelB = '乙造';
 
+    const patA = (data.dominantPatternA && data.dominantPatternA.name)
+      || (data.patternComparison && data.patternComparison.dominantA && data.patternComparison.dominantA.name)
+      || (isEn ? 'Direct Officer Pattern' : '正官格');
+    const patB = (data.dominantPatternB && data.dominantPatternB.name)
+      || (data.patternComparison && data.patternComparison.dominantB && data.patternComparison.dominantB.name)
+      || (isEn ? 'Direct Resource Pattern' : '正印格');
+    const roleA = (data.dominantPatternA && data.dominantPatternA.role)
+      || (data.patternComparison && data.patternComparison.dominantA && data.patternComparison.dominantA.role)
+      || (isEn ? 'Dominant Pattern' : '统帅格局');
+    const roleB = (data.dominantPatternB && data.dominantPatternB.role)
+      || (data.patternComparison && data.patternComparison.dominantB && data.patternComparison.dominantB.role)
+      || (isEn ? 'Dominant Pattern' : '统帅格局');
+
     const score = data.overallScore;
     const arc = data.archetype;
     const pA = chartA.pillars;
@@ -13763,6 +13776,18 @@ document.addEventListener('DOMContentLoaded', () => {
               ${data.zodiacMatch.badge} · ${isEn ? `${data.zodiacA.animalEn} & ${data.zodiacB.animalEn}` : `${data.zodiacA.animalZh}${data.zodiacB.animalZh}`}
             </span>
           </div>
+          <!-- Primary Pattern Badges -->
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-0.5">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-500/15 text-amber-200 border border-amber-500/40 flex items-center gap-1.5 shadow-xs">
+              <span>👑</span>
+              <span>${labelA} ${isEn ? 'Primary Pattern' : '统帅主格'}: <b class="text-amber-300 font-bold">${patA}</b></span>
+            </span>
+            <span class="text-xs text-gray-500 font-mono">⚔️</span>
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-500/15 text-purple-200 border border-purple-500/40 flex items-center gap-1.5 shadow-xs">
+              <span>👑</span>
+              <span>${labelB} ${isEn ? 'Primary Pattern' : '统帅主格'}: <b class="text-purple-300 font-bold">${patB}</b></span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -13771,6 +13796,31 @@ document.addEventListener('DOMContentLoaded', () => {
           <span>${isEn ? 'Dual Four Pillars Direct Comparison' : '双人命盘四柱对照神机表'}</span>
           <span class="text-xs font-mono text-gray-400">${labelA} vs ${labelB}</span>
         </h5>
+
+        <!-- Primary Structural Pattern Summary Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-black/40 rounded-xl border border-amber-900/30 text-xs">
+          <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-amber-950/30 border border-amber-500/30">
+            <div class="flex items-center gap-2">
+              <span class="text-base">👑</span>
+              <div>
+                <div class="font-bold text-amber-200 font-serif-sc">${labelA} · ${isEn ? 'Dominant Structural Pattern' : '立极统帅主格'}</div>
+                <div class="text-[10px] text-amber-400 font-mono">${roleA}</div>
+              </div>
+            </div>
+            <span class="font-bold font-serif-sc text-sm text-amber-300">${patA}</span>
+          </div>
+          <div class="flex items-center justify-between px-3 py-2 rounded-lg bg-purple-950/30 border border-purple-500/30">
+            <div class="flex items-center gap-2">
+              <span class="text-base">👑</span>
+              <div>
+                <div class="font-bold text-purple-200 font-serif-sc">${labelB} · ${isEn ? 'Dominant Structural Pattern' : '立极统帅主格'}</div>
+                <div class="text-[10px] text-purple-400 font-mono">${roleB}</div>
+              </div>
+            </div>
+            <span class="font-bold font-serif-sc text-sm text-purple-300">${patB}</span>
+          </div>
+        </div>
+
         <div class="overflow-x-auto">
           <table class="w-full text-xs text-center border-collapse">
             <thead>
@@ -13807,6 +13857,11 @@ document.addEventListener('DOMContentLoaded', () => {
                   </tr>
                 `;
               }).join('')}
+              <tr class="bg-indigo-950/30 font-sans border-t-2 border-indigo-500/40 font-bold">
+                <td class="py-2.5 text-left font-bold text-amber-300 flex items-center gap-1"><span>👑</span><span>${isEn ? 'Dominant Pattern' : '立极统帅主格'}</span></td>
+                <td colspan="3" class="py-2.5 text-amber-200 font-serif-sc font-bold text-center">${patA}</td>
+                <td colspan="3" class="py-2.5 border-l border-gray-800 text-purple-200 font-serif-sc font-bold text-center">${patB}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -14335,6 +14390,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </tr>
                   `;
                 }).join('')}
+                <tr class="bg-amber-900/15 font-bold border-t border-amber-900/30">
+                  <td class="py-1 text-left font-serif-sc text-amber-950">${isEn ? 'Dominant Pattern' : '立极统帅格局'}</td>
+                  <td colspan="3" class="py-1 text-amber-900 font-serif-sc text-center font-black">${patA}</td>
+                  <td colspan="3" class="py-1 border-l border-amber-900/20 text-purple-950 font-serif-sc text-center font-black">${patB}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -14413,6 +14473,16 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
               <span>⚔️ ${isEn ? 'Dual-Chart Structural Pattern Comparison & Interaction' : '主导格局对比与结构性互动深度推演'}</span>
               <span class="text-[9px] px-2 py-0.2 rounded bg-amber-200/80 text-amber-950 font-mono font-bold">${data.patternComparison.interaction.title} (${data.patternComparison.interaction.score}%)</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-[9px] font-mono py-0.5 border-b border-amber-900/15">
+              <div class="flex justify-between items-center bg-amber-100/70 p-1 rounded border border-amber-500/30">
+                <span class="font-serif-sc text-amber-950 font-bold">👤 ${labelA} ${isEn ? 'Pattern:' : '统帅格局:'}</span>
+                <span class="text-amber-900 font-bold">${patA}</span>
+              </div>
+              <div class="flex justify-between items-center bg-purple-100/70 p-1 rounded border border-purple-500/30">
+                <span class="font-serif-sc text-purple-950 font-bold">👥 ${labelB} ${isEn ? 'Pattern:' : '统帅格局:'}</span>
+                <span class="text-purple-900 font-bold">${patB}</span>
+              </div>
             </div>
             <p class="text-gray-800 leading-tight text-[9.5px]">${data.patternComparison.interaction.dynamic}</p>
             <div class="grid grid-cols-2 gap-2 text-[9px] text-gray-800 pt-0.5">
@@ -17068,6 +17138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.jumpToImperialPage = jumpToImperialPage;
     window.openSynastryDossierModal = openSynastryDossierModal;
     window.renderSynastryDossierPages = renderSynastryDossierPages;
+    window.renderSynastryResult = renderSynastryResult;
     window.downloadSynastryPDF = downloadSynastryPDF;
     window.fallbackExportSynastryPDF = fallbackExportSynastryPDF;
   }
@@ -19898,6 +19969,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderImperialDossierPages = renderImperialDossierPages;
   window.openSynastryDossierModal = openSynastryDossierModal;
   window.renderSynastryDossierPages = renderSynastryDossierPages;
+  window.renderSynastryResult = renderSynastryResult;
   window.downloadSynastryPDF = downloadSynastryPDF;
   window.switchPrimaryView = switchPrimaryView;
 

@@ -18101,7 +18101,227 @@ assert run_check136.returncode == 0, f"Check 136 JSC test failed: stdout={run_ch
 
 print("✓ 136. 精神内耗子页架构升级（周易文王六十四卦易道神机起卦研解内嵌独立Sub-Tab、一经一页精研）、职场破局内嵌胜负对抗沙盘及皇家战报第四页百岁六十四卦气机波动轨迹矢量图全量验证通过！")
 
-print("\n🎉 ALL 136 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+print("\n=== 137. Validating Dual Synastry Dominant Structural Patterns (双人合盘各自立极统帅主格显化与双语零残留) ===")
+with open("js/synastry-engine.js", "r", encoding="utf-8") as f:
+    syn_src = f.read()
+
+assert "dominantPatternA" in syn_src, "Missing dominantPatternA in js/synastry-engine.js"
+assert "dominantPatternB" in syn_src, "Missing dominantPatternB in js/synastry-engine.js"
+assert "primaryPatternA" in syn_src, "Missing primaryPatternA in js/synastry-engine.js"
+assert "primaryPatternB" in syn_src, "Missing primaryPatternB in js/synastry-engine.js"
+
+with open("js/app.js", "r", encoding="utf-8") as f:
+    app_src = f.read()
+
+assert "patA" in app_src and "patB" in app_src, "Missing patA and patB in js/app.js"
+assert "Primary Pattern" in app_src, "Missing Primary Pattern badges in js/app.js"
+assert "立极统帅主格" in app_src, "Missing 立极统帅主格 in js/app.js"
+
+jsc_check137_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    f"""
+    var console = {{ log: function(){{}}, warn: function(){{}}, error: function(){{}}, info: function(){{}} }};
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/synastry-engine.js");
+
+    var chartA = BaZiEngine.calculate({{ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 }});
+    var chartB = BaZiEngine.calculate({{ year: 1990, month: 5, day: 15, hour: 10, minute: 0, gender: "坤造", useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 }});
+
+    // 1. Validate SynastryEngine.analyze returns dominant patterns
+    var resZh = SynastryEngine.analyze(chartA, chartB, "romantic", "zh");
+    if (!resZh.dominantPatternA || !resZh.dominantPatternB) {{
+      throw new Error("Missing dominantPatternA or dominantPatternB in analyze ZH");
+    }}
+    if (!resZh.dominantPatternA.name || !resZh.dominantPatternB.name) {{
+      throw new Error("Missing name in dominantPatternA or dominantPatternB ZH");
+    }}
+    if (resZh.primaryPatternA !== resZh.dominantPatternA.name) {{
+      throw new Error("primaryPatternA does not match dominantPatternA.name in ZH");
+    }}
+    if (resZh.primaryPatternB !== resZh.dominantPatternB.name) {{
+      throw new Error("primaryPatternB does not match dominantPatternB.name in ZH");
+    }}
+
+    var resEn = SynastryEngine.analyze(chartA, chartB, "romantic", "en");
+    if (!resEn.dominantPatternA || !resEn.dominantPatternB) {{
+      throw new Error("Missing dominantPatternA or dominantPatternB in analyze EN");
+    }}
+    if (/[\\u4e00-\\u9fa5]/.test(resEn.dominantPatternA.name) || /[\\u4e00-\\u9fa5]/.test(resEn.dominantPatternB.name)) {{
+      throw new Error("Chinese characters detected in EN dominant pattern names");
+    }}
+    var rawEnJson = JSON.stringify(resEn);
+    var leaks = rawEnJson.match(/[\\u4e00-\\u9fa5]/g);
+    if (leaks && leaks.length > 0) {{
+      throw new Error("Residual Chinese in raw SynastryEngine.analyze EN output: " + leaks.slice(0, 20).join(""));
+    }}
+
+    // 2. Validate DOM Rendering with Mock Document
+    var elementStore = {{}};
+    function MockClassList() {{
+      this.classes = {{}};
+    }}
+    MockClassList.prototype.add = function() {{
+      for (var i = 0; i < arguments.length; i++) this.classes[arguments[i]] = true;
+    }};
+    MockClassList.prototype.remove = function() {{
+      for (var i = 0; i < arguments.length; i++) delete this.classes[arguments[i]];
+    }};
+    MockClassList.prototype.contains = function(cls) {{
+      return !!this.classes[cls];
+    }};
+
+    function createMockElement(id, tag) {{
+      var el = {{
+        _id: id || '',
+        get id() {{ return this._id; }},
+        set id(v) {{
+          this._id = v;
+          if (v) elementStore[v] = this;
+        }},
+        tagName: (tag || 'div').toUpperCase(),
+        classList: new MockClassList(),
+        style: {{}},
+        attributes: {{}},
+        _children: [],
+        get children() {{ return this._children || []; }},
+        _listeners: {{}},
+        _rawInnerHTML: '',
+        get innerHTML() {{
+          var ch = (this._children || []).map(function(c) {{
+            var t = (c.tagName || 'div').toLowerCase();
+            var idStr = c.id ? (' id="' + c.id + '"') : '';
+            var cls = (c.classList && c.classList.classes) ? Object.keys(c.classList.classes).join(' ') : '';
+            var clsStr = cls ? (' class="' + cls + '"') : '';
+            return '<' + t + idStr + clsStr + '>' + (c.innerHTML || '') + '</' + t + '>';
+          }}).join('');
+          return (this._rawInnerHTML || '') + ch;
+        }},
+        set innerHTML(val) {{
+          this._rawInnerHTML = val;
+          this._children = [];
+        }},
+        appendChild: function(c) {{
+          this._children.push(c);
+          return c;
+        }},
+        setAttribute: function(k, v) {{ this.attributes[k] = v; }},
+        getAttribute: function(k) {{ return this.attributes[k] || null; }},
+        removeAttribute: function(k) {{ delete this.attributes[k]; }},
+        addEventListener: function(evt, fn) {{
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        }},
+        querySelector: function() {{ return null; }},
+        querySelectorAll: function() {{ return []; }},
+        scrollIntoView: function() {{}}
+      }};
+      if (id) elementStore[id] = el;
+      return el;
+    }}
+
+    var domIds = [
+      'synastryResultContainer', 'synastryLabelA', 'synastryLabelB',
+      'synastryDossierContainer', 'synastryDossierModal'
+    ];
+    domIds.forEach(function(id) {{ elementStore[id] = createMockElement(id, 'div'); }});
+
+    var document = {{
+      documentElement: {{ lang: "zh-CN", getAttribute: function() {{ return "dark"; }}, setAttribute: function() {{}} }},
+      body: createMockElement('body', 'body'),
+      getElementById: function(id) {{
+        if (!elementStore[id]) elementStore[id] = createMockElement(id, 'div');
+        return elementStore[id];
+      }},
+      createElement: function(tag) {{ return createMockElement('', tag); }},
+      querySelectorAll: function() {{ return []; }},
+      addEventListener: function(evt, fn) {{
+        if (evt === 'DOMContentLoaded') document._domReady = fn;
+      }}
+    }};
+
+    var window = {{
+      document: document,
+      console: console,
+      localStorage: {{ getItem: function(){{ return null; }}, setItem: function(){{}}, removeItem: function(){{}} }},
+      devicePixelRatio: 2,
+      addEventListener: function() {{}},
+      requestAnimationFrame: function(cb) {{ cb(); }},
+      setTimeout: function(cb) {{ cb(); return 1; }},
+      clearTimeout: function() {{}},
+      setInterval: function() {{ return 1; }},
+      clearInterval: function() {{}},
+      location: {{ reload: function(){{}}, hash: "", search: "" }},
+      scrollTo: function() {{}},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      SynastryEngine: SynastryEngine
+    }};
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // Test renderSynastryResult in ZH
+    window.renderSynastryResult(resZh, chartA, chartB, false);
+    var webZhHtml = elementStore["synastryResultContainer"].innerHTML;
+    if (!webZhHtml.includes("统帅主格")) throw new Error("renderSynastryResult ZH missing 统帅主格 in hero badge");
+    if (!webZhHtml.includes("立极统帅主格")) throw new Error("renderSynastryResult ZH missing 立极统帅主格 in summary strip or table");
+    if (!webZhHtml.includes(resZh.primaryPatternA)) throw new Error("renderSynastryResult ZH missing primaryPatternA: " + resZh.primaryPatternA);
+    if (!webZhHtml.includes(resZh.primaryPatternB)) throw new Error("renderSynastryResult ZH missing primaryPatternB: " + resZh.primaryPatternB);
+
+    // Test renderSynastryResult in EN
+    window.renderSynastryResult(resEn, chartA, chartB, true);
+    var webEnHtml = elementStore["synastryResultContainer"].innerHTML;
+    if (!webEnHtml.includes("Primary Pattern")) throw new Error("renderSynastryResult EN missing Primary Pattern in hero badge");
+    if (!webEnHtml.includes("Dominant Structural Pattern") && !webEnHtml.includes("Dominant Pattern")) {{
+      throw new Error("renderSynastryResult EN missing Dominant Structural Pattern");
+    }}
+    if (!webEnHtml.includes(resEn.primaryPatternA)) throw new Error("renderSynastryResult EN missing primaryPatternA: " + resEn.primaryPatternA);
+    if (!webEnHtml.includes(resEn.primaryPatternB)) throw new Error("renderSynastryResult EN missing primaryPatternB: " + resEn.primaryPatternB);
+    var webEnLeaks = webEnHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (webEnLeaks && webEnLeaks.length > 0) {{
+      throw new Error("Residual Chinese in renderSynastryResult EN HTML: " + webEnLeaks.slice(0, 20).join(""));
+    }}
+
+    // Test renderSynastryDossierPages in ZH & EN
+    window.renderSynastryDossierPages("zh", chartA, chartB, "romantic");
+    var dosZhHtml = elementStore["synastryDossierContainer"].innerHTML;
+    if (!dosZhHtml.includes("立极统帅格局") && !dosZhHtml.includes("统帅格局")) {{
+      throw new Error("renderSynastryDossierPages ZH missing 统帅格局 in Page 1 table or Page 2");
+    }}
+
+    window.renderSynastryDossierPages("en", chartA, chartB, "romantic");
+    var dosEnHtml = elementStore["synastryDossierContainer"].innerHTML;
+    if (!dosEnHtml.includes("Dominant Pattern") && !dosEnHtml.includes("Pattern:")) {{
+      throw new Error("renderSynastryDossierPages EN missing Dominant Pattern");
+    }}
+    var dosEnLeaks = dosEnHtml.match(/[\\u4e00-\\u9fa5]/g);
+    if (dosEnLeaks && dosEnLeaks.length > 0) {{
+      throw new Error("Residual Chinese in renderSynastryDossierPages EN HTML: " + dosEnLeaks.slice(0, 20).join(""));
+    }}
+    """
+]
+
+run_check137 = subprocess.run(jsc_check137_cmd, capture_output=True, text=True)
+assert run_check137.returncode == 0, f"Check 137 JSC test failed: stdout={run_check137.stdout} stderr={run_check137.stderr}"
+
+print("✓ 137. 双人合盘各自立极统帅主格显化（主盘对象/对比对象主导格局英雄区徽章、四柱对照神机总览双卡、四柱对照表底行与独立战报双页贯通，双语100%零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 137 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

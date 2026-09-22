@@ -935,6 +935,32 @@ const SynastryEngine = (function() {
     // 12. Structural Pattern Comparison & Engine Interaction (格局对比与结构性互动)
     const patternComparison = evaluatePatternComparison(chartA, chartB, isRomantic, isEn);
 
+    const dominantPatternA = {
+      rank: 1,
+      name: isEn ? (patternComparison.dominantA.nameEn || patternComparison.dominantA.name) : (patternComparison.dominantA.nameZh || patternComparison.dominantA.name),
+      role: isEn ? (patternComparison.dominantA.roleEn || patternComparison.dominantA.role) : (patternComparison.dominantA.roleZh || patternComparison.dominantA.role),
+      weightPct: patternComparison.dominantA.weightPct || 45,
+      nameEn: patternComparison.dominantA.nameEn || patternComparison.dominantA.name,
+      roleEn: patternComparison.dominantA.roleEn || patternComparison.dominantA.role,
+      ...(!isEn ? {
+        nameZh: patternComparison.dominantA.nameZh || patternComparison.dominantA.name,
+        roleZh: patternComparison.dominantA.roleZh || patternComparison.dominantA.role
+      } : {})
+    };
+
+    const dominantPatternB = {
+      rank: 1,
+      name: isEn ? (patternComparison.dominantB.nameEn || patternComparison.dominantB.name) : (patternComparison.dominantB.nameZh || patternComparison.dominantB.name),
+      role: isEn ? (patternComparison.dominantB.roleEn || patternComparison.dominantB.role) : (patternComparison.dominantB.roleZh || patternComparison.dominantB.role),
+      weightPct: patternComparison.dominantB.weightPct || 45,
+      nameEn: patternComparison.dominantB.nameEn || patternComparison.dominantB.name,
+      roleEn: patternComparison.dominantB.roleEn || patternComparison.dominantB.role,
+      ...(!isEn ? {
+        nameZh: patternComparison.dominantB.nameZh || patternComparison.dominantB.name,
+        roleZh: patternComparison.dominantB.roleZh || patternComparison.dominantB.role
+      } : {})
+    };
+
     // 13. Lifelong Trajectory Overlap & Decennial Synchronization (人生轨迹推演重合度与岁运同频)
     const trajectoryOverlap = evaluateTrajectoryOverlap(chartA, chartB, isRomantic, isEn);
 
@@ -947,6 +973,10 @@ const SynastryEngine = (function() {
       overallScore,
       zodiacA,
       zodiacB,
+      dominantPatternA,
+      dominantPatternB,
+      primaryPatternA: dominantPatternA.name,
+      primaryPatternB: dominantPatternB.name,
       zodiacMatch: {
         type: zMatch.type,
         title: isEn ? zMatch.titleEn : zMatch.titleZh,
