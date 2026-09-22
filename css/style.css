@@ -2129,14 +2129,20 @@ body.light-theme #btnResetToActualTime:hover {
 /* Pill Badges & Chips */
 [data-theme="light"] [class*="bg-amber-950"],
 [data-theme="light"] [class*="bg-amber-900"],
+[data-theme="light"] [class*="bg-orange-950"],
+[data-theme="light"] [class*="bg-orange-900"],
 [data-theme="light"] [class*="bg-yellow-950"],
 [data-theme="light"] [class*="bg-yellow-900"],
 html.light [class*="bg-amber-950"],
 html.light [class*="bg-amber-900"],
+html.light [class*="bg-orange-950"],
+html.light [class*="bg-orange-900"],
 html.light [class*="bg-yellow-950"],
 html.light [class*="bg-yellow-900"],
 body.light-theme [class*="bg-amber-950"],
 body.light-theme [class*="bg-amber-900"],
+body.light-theme [class*="bg-orange-950"],
+body.light-theme [class*="bg-orange-900"],
 body.light-theme [class*="bg-yellow-950"],
 body.light-theme [class*="bg-yellow-900"] {
   background-color: rgba(249, 115, 22, 0.12) !important;

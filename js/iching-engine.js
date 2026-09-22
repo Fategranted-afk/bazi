@@ -1309,7 +1309,7 @@ class IChingEngine {
         tagZh: '💥 岁破',
         tagEn: '💥 Sui Po',
         icon: '💥',
-        badgeClass: 'bg-orange-950/70 text-orange-300 border-orange-700/60',
+        badgeClass: 'bg-orange-500/20 text-orange-300 border-orange-500/40',
         descZh: '岁星正冲太岁之年。气机剧烈激荡，主环境变迁、居所搬迁或长辈长线波动。',
         descEn: 'Grand Duke Clash: year of energetic turbulence; triggers relocations, structural shifts, or family changes.',
         actionZh: '化煞锦囊：以动应冲，宜主动出差、修葺房屋，切忌大兴土木或高风险对赌。',
