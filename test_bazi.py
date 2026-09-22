@@ -18544,10 +18544,14 @@ jsc_check138_cmd = [
     if (!ichingZh.includes("profileIChingSvgChart")) throw new Error("renderMasterProfileIChing ZH missing profileIChingSvgChart");
     if (!ichingZh.includes("人生巅峰")) throw new Error("renderMasterProfileIChing ZH missing 人生巅峰");
     if (!ichingZh.includes("生命纪元与主导命基")) throw new Error("renderMasterProfileIChing ZH missing 生命纪元与主导命基");
-    if (!ichingZh.includes("大运统辖值爻")) throw new Error("renderMasterProfileIChing ZH missing 大运统辖值爻");
+    if (ichingZh.includes("大运统辖值爻")) throw new Error("renderMasterProfileIChing ZH should not display 大运统辖值爻");
     if (!ichingZh.includes("流年值年卦与阴阳律")) throw new Error("renderMasterProfileIChing ZH missing 流年值年卦与阴阳律");
     if (!ichingZh.includes("当年最适合做什么")) throw new Error("renderMasterProfileIChing ZH missing 当年最适合做什么");
     if (!ichingZh.includes("天纪秘解与玉上有光")) throw new Error("renderMasterProfileIChing ZH missing 天纪秘解与玉上有光");
+
+    // Verify underlying I-Ching engine calculation workflow remains intact
+    var ichingCycle = IChingEngine.calculateLifelongCycle(baziObj);
+    if (!ichingCycle || !ichingCycle[0] || !ichingCycle[0].activeLinePos) throw new Error("IChingEngine lifelong cycle missing activeLinePos in data model");
 
     var impZh = elementStore['masterProfileImperialSection'].innerHTML;
     if (!impZh.includes("钦天监 · 皇家九卷精装战报全卷精萃")) throw new Error("renderMasterProfileImperial ZH missing header");
@@ -18580,7 +18584,7 @@ jsc_check138_cmd = [
     if (!ichingEn.includes("64 Hexagrams Lifelong Trajectory")) throw new Error("renderMasterProfileIChing EN missing 64 Hexagrams Lifelong Trajectory");
     if (!ichingEn.includes("Apex Peak")) throw new Error("renderMasterProfileIChing EN missing Apex Peak");
     if (!ichingEn.includes("Life Epoch & Natal Base")) throw new Error("renderMasterProfileIChing EN missing Life Epoch & Natal Base");
-    if (!ichingEn.includes("Governing Yao Ruler")) throw new Error("renderMasterProfileIChing EN missing Governing Yao Ruler");
+    if (ichingEn.includes("Governing Yao Ruler")) throw new Error("renderMasterProfileIChing EN should not display Governing Yao Ruler");
     if (!ichingEn.includes("Annual Transit & Law")) throw new Error("renderMasterProfileIChing EN missing Annual Transit & Law");
     if (!ichingEn.includes("Optimal Yearly Strategy")) throw new Error("renderMasterProfileIChing EN missing Optimal Yearly Strategy");
     if (!ichingEn.includes("Tian Ji Master Directive & Riddle")) throw new Error("renderMasterProfileIChing EN missing Tian Ji Master Directive & Riddle");

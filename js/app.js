@@ -8146,7 +8146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const elTJDirective = document.getElementById('ichingTelemetryTJDirective');
       const elTJRiddle = document.getElementById('ichingTelemetryTJRiddle');
 
-      if (elEpochTitle && elRulerTitle && elTransitTitle && elTJDirective) {
+      if (elEpochTitle && elTransitTitle && elTJDirective) {
         if (elEpochBadge) {
           elEpochBadge.textContent = isEn ? (item.isXianTian ? 'Early Heaven' : 'Later Heaven') : (item.isXianTian ? '前半生' : '后半生');
           elEpochBadge.className = `px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isXianTian ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}`;
@@ -8158,7 +8158,7 @@ document.addEventListener('DOMContentLoaded', () => {
           elRulerBadge.textContent = isEn ? (item.isYangLine ? 'Yang (9y)' : 'Yin (6y)') : (item.isYangLine ? '阳九管9年' : '阴六管6年');
           elRulerBadge.className = `px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}`;
         }
-        elRulerTitle.textContent = isEn ? `Line ${item.activeLinePos} Active` : `第${item.activeLinePos}爻当值执权`;
+        if (elRulerTitle) elRulerTitle.textContent = isEn ? `Line ${item.activeLinePos} Active` : `第${item.activeLinePos}爻当值执权`;
         if (elRulerDesc) elRulerDesc.textContent = `${item.activeLine ? (isEn ? item.activeLine.ageSpanEn : item.activeLine.ageSpanZh) : ''} · ${isEn ? (item.isYangLine ? 'Solid Line (⚊)' : 'Broken Line (⚋)') : (item.isYangLine ? '天数纯阳' : '地数纯阴')}`;
 
         if (elTransitBadge) {
@@ -8271,7 +8271,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Real-Time Cycle Telemetry Detail Grid -->
-      <div id="ichingTelemetryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+      <div id="ichingTelemetryGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
         <!-- 1. Life Epoch & Governing Natal Mandate -->
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
@@ -8288,23 +8288,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 2. Governing Yao Ruler -->
-        <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
-          <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
-            <span>👑 ${isEn ? 'Governing Yao Ruler' : '大运统辖值爻'}</span>
-            <span id="ichingTelemetryRulerBadge" class="px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
-              ${isEn ? (item.isYangLine ? 'Yang (9y)' : 'Yin (6y)') : (item.isYangLine ? '阳九管9年' : '阴六管6年')}
-            </span>
-          </div>
-          <div id="ichingTelemetryRulerTitle" class="text-sm font-bold font-serif-sc text-amber-300">
-            ${isEn ? `Line ${item.activeLinePos} Active` : `第${item.activeLinePos}爻当值执权`}
-          </div>
-          <p id="ichingTelemetryRulerDesc" class="text-[11px] text-gray-300 leading-tight">
-            ${item.activeLine ? (isEn ? item.activeLine.ageSpanEn : item.activeLine.ageSpanZh) : ''} · ${isEn ? (item.isYangLine ? 'Solid Line (⚊)' : 'Broken Line (⚋)') : (item.isYangLine ? '天数纯阳' : '地数纯阴')}
-          </p>
-        </div>
-
-        <!-- 3. Annual Transit Hexagram & Yin-Yang Law -->
+        <!-- 2. Annual Transit Hexagram & Yin-Yang Law -->
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
             <span>☯️ ${isEn ? 'Annual Transit & Law' : '流年值年卦与阴阳律'}</span>
@@ -8333,7 +8317,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <!-- 4. Tian Ji Directive & Riddle -->
+        <!-- 3. Tian Ji Directive & Riddle -->
         <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
           <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
             <span>📜 ${isEn ? 'Tian Ji Master Directive' : '天纪秘解与玉上有光'}</span>
@@ -8347,9 +8331,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 5. BaZi Elemental Resonance & Dynamic Interpretation -->
+        <!-- 4. BaZi Elemental Resonance & Dynamic Interpretation -->
         ${item.dynamicInterpretationZh ? `
-          <div class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5 shadow">
+          <div class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5 shadow">
             <div class="flex flex-wrap items-center justify-between gap-2 font-bold text-amber-200 border-b border-amber-500/20 pb-1">
               <span class="flex items-center gap-1.5 font-serif-sc">
                 <span>⚖️</span>
@@ -8366,8 +8350,8 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         ` : ''}
 
-        <!-- 6. Auspicious Deities & Malefic Stars Shen Sha Block -->
-        <div id="ichingTelemetryShenShaBlock" class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
+        <!-- 5. Auspicious Deities & Malefic Stars Shen Sha Block -->
+        <div id="ichingTelemetryShenShaBlock" class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
           ${renderShenShaTelemetryContent(item, isEn)}
         </div>
       </div>
@@ -20355,7 +20339,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <!-- Real-Time 5 Core Tian Ji Telemetry Cards Grid -->
-      <div id="profileIChingTelemetryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+      <div id="profileIChingTelemetryGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
         ${getMasterProfileIChingTelemetryHtml(points[curIdx], isEn)}
       </div>
     `;
@@ -20414,23 +20398,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </p>
       </div>
 
-      <!-- 2. Governing Yao Ruler -->
-      <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
-        <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
-          <span>👑 ${isEn ? 'Governing Yao Ruler' : '大运统辖值爻'}</span>
-          <span class="px-1.5 py-0.2 rounded text-[9px] font-mono ${item.isYangLine ? 'bg-amber-500/20 text-amber-300' : 'bg-purple-500/20 text-purple-300'}">
-            ${isEn ? (item.isYangLine ? 'Yang (9y)' : 'Yin (6y)') : (item.isYangLine ? '阳九管9年' : '阴六管6年')}
-          </span>
-        </div>
-        <div class="text-sm font-bold font-serif-sc text-amber-300">
-          ${isEn ? `Line ${item.activeLinePos} Active` : `第${item.activeLinePos}爻当值执权`}
-        </div>
-        <p class="text-[11px] text-gray-300 leading-tight">
-          ${item.activeLine ? (isEn ? item.activeLine.ageSpanEn : item.activeLine.ageSpanZh) : ''} · ${isEn ? (item.isYangLine ? 'Solid Line (⚊)' : 'Broken Line (⚋)') : (item.isYangLine ? '天数纯阳' : '地数纯阴')}
-        </p>
-      </div>
-
-      <!-- 3. Annual Transit Hexagram & Yin-Yang Law -->
+      <!-- 2. Annual Transit Hexagram & Yin-Yang Law -->
       <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
         <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
           <span>☯️ ${isEn ? 'Annual Transit & Law' : '流年值年卦与阴阳律'}</span>
@@ -20446,7 +20414,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </p>
       </div>
 
-      <!-- 4. Optimal Yearly Strategy -->
+      <!-- 3. Optimal Yearly Strategy -->
       <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-1.5 shadow">
         <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
           <span>🎯 ${isEn ? 'Optimal Yearly Strategy' : '当年最适合做什么'}</span>
@@ -20459,8 +20427,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </p>
       </div>
 
-      <!-- 5. Tian Ji Master Directive & Riddle -->
-      <div class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-gradient-to-r from-amber-950/20 via-black/40 to-black/50 border border-amber-600/30 space-y-1.5 shadow">
+      <!-- 4. Tian Ji Master Directive & Riddle -->
+      <div class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-gradient-to-r from-amber-950/20 via-black/40 to-black/50 border border-amber-600/30 space-y-1.5 shadow">
         <div class="flex items-center justify-between text-gray-400 text-[10.5px] font-semibold border-b border-gray-800/70 pb-1">
           <span class="text-amber-300 font-bold">📜 ${isEn ? 'Tian Ji Master Directive & Riddle (Ancient Classical Oracle)' : '天纪秘解与玉上有光 (古法图谶经纶)'}</span>
           <span class="text-[10px] font-mono text-amber-400 font-bold">${item.score}% ${isEn ? 'Score' : '能级'}</span>
@@ -20473,9 +20441,9 @@ document.addEventListener('DOMContentLoaded', () => {
         </p>
       </div>
 
-      <!-- 6. BaZi Elemental Resonance (if present) -->
+      <!-- 5. BaZi Elemental Resonance (if present) -->
       ${item.dynamicInterpretationZh ? `
-        <div class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5 shadow">
+        <div class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs space-y-1.5 shadow">
           <div class="flex flex-wrap items-center justify-between gap-2 font-bold text-amber-200 border-b border-amber-500/20 pb-1">
             <span class="flex items-center gap-1.5 font-serif-sc">
               <span>⚖️</span>
@@ -20492,8 +20460,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       ` : ''}
 
-      <!-- 7. Auspicious Deities & Malefic Stars Shen Sha Block -->
-      <div class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
+      <!-- 6. Auspicious Deities & Malefic Stars Shen Sha Block -->
+      <div class="col-span-1 md:col-span-3 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
         ${renderShenShaTelemetryContent(item, isEn)}
       </div>
     `;
