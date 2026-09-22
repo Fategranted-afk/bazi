@@ -18321,7 +18321,301 @@ assert run_check137.returncode == 0, f"Check 137 JSC test failed: stdout={run_ch
 
 print("✓ 137. 双人合盘各自立极统帅主格显化（主盘对象/对比对象主导格局英雄区徽章、四柱对照神机总览双卡、四柱对照表底行与独立战报双页贯通，双语100%零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 137 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# ==============================================================================
+# 138. Validating Master Profile View (主画像 · 全相命盘精华总览看板)
+# ==============================================================================
+print("\n=== 138. Validating Master Profile View (主画像 · 全相命盘精华总览看板) ===")
+
+with open("index.html", "r", encoding="utf-8") as f:
+    idx_content = f.read()
+
+assert 'id="navBtnMasterProfile"' in idx_content, "index.html missing #navBtnMasterProfile"
+assert 'data-view="view-master-profile"' in idx_content, "index.html missing data-view='view-master-profile'"
+assert 'id="view-master-profile"' in idx_content, "index.html missing #view-master-profile"
+assert 'id="masterProfileOpenDossierBtn"' in idx_content, "index.html missing #masterProfileOpenDossierBtn"
+assert 'id="masterProfilePatternSection"' in idx_content, "index.html missing #masterProfilePatternSection"
+assert 'id="masterProfileChronoSection"' in idx_content, "index.html missing #masterProfileChronoSection"
+assert 'id="profileLuckProgressionText"' in idx_content, "index.html missing #profileLuckProgressionText"
+assert 'id="profileLuckStartAgeText"' in idx_content, "index.html missing #profileLuckStartAgeText"
+assert 'id="profileChronoNavigatorSection"' in idx_content, "index.html missing #profileChronoNavigatorSection"
+assert 'id="profileChronoPlayBtn"' in idx_content, "index.html missing #profileChronoPlayBtn"
+assert 'id="profileChronoAgeValueBadge"' in idx_content, "index.html missing #profileChronoAgeValueBadge"
+assert 'id="profileChronoJumpCurrent"' in idx_content, "index.html missing #profileChronoJumpCurrent"
+assert 'id="profileChronoJumpGolden"' in idx_content, "index.html missing #profileChronoJumpGolden"
+assert 'id="profileChronoJumpTransit"' in idx_content, "index.html missing #profileChronoJumpTransit"
+assert 'profile-chrono-quick-age' in idx_content, "index.html missing profile-chrono-quick-age"
+assert 'id="profileChronoAgeSlider"' in idx_content, "index.html missing #profileChronoAgeSlider"
+assert 'id="profileChronoTimelineCanvas"' in idx_content, "index.html missing #profileChronoTimelineCanvas"
+assert 'id="profileChronoYearCard"' in idx_content, "index.html missing #profileChronoYearCard"
+assert 'id="profileIChingSection"' in idx_content, "index.html missing #profileIChingSection"
+assert 'id="masterProfileImperialSection"' in idx_content, "index.html missing #masterProfileImperialSection"
+
+with open("js/i18n.js", "r", encoding="utf-8") as f:
+    i18n_content = f.read()
+
+assert "nav_view_master_profile" in i18n_content, "js/i18n.js missing nav_view_master_profile"
+assert "master_profile_title" in i18n_content, "js/i18n.js missing master_profile_title"
+assert "master_profile_badge" in i18n_content, "js/i18n.js missing master_profile_badge"
+
+jsc_check138_cmd = [
+    "/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc",
+    "-e",
+    """
+    var console = { log: function(){}, warn: function(){}, error: function(){}, info: function(){} };
+    load("data/sanming.js");
+    load("data/qiongtong.js");
+    load("data/zipingzhenquan.js");
+    load("data/ditiansui.js");
+    load("data/yuanhai.js");
+    load("data/shenfeng.js");
+    load("data/yuzhao.js");
+    load("data/lixuzhong.js");
+    load("data/rongkujian.js");
+    load("js/i18n.js");
+    load("js/bazi-engine.js");
+    load("js/luck-engine.js");
+    load("js/portrait-engine.js");
+    load("js/iching-engine.js");
+    load("js/career-engine.js");
+    load("js/history-engine.js");
+    load("js/fengshui-engine.js");
+    load("js/lifelong-synthesis-engine.js");
+
+    var elementStore = {};
+    function MockClassList() {
+      this.classes = {};
+      this.add = function() {
+        for (var i = 0; i < arguments.length; i++) this.classes[arguments[i]] = true;
+      };
+      this.remove = function() {
+        for (var i = 0; i < arguments.length; i++) delete this.classes[arguments[i]];
+      };
+      this.contains = function(cls) { return !!this.classes[cls]; };
+    }
+
+    function createMockElement(id, tag) {
+      var el = {
+        _id: id,
+        get id() { return this._id; },
+        set id(v) {
+          this._id = v;
+          if (v) elementStore[v] = this;
+        },
+        tagName: (tag || 'div').toUpperCase(),
+        classList: new MockClassList(),
+        style: {},
+        attributes: {},
+        _children: [],
+        get children() { return this._children || []; },
+        _listeners: {},
+        _rawInnerHTML: '',
+        get innerHTML() {
+          var ch = (this._children || []).map(function(c) {
+            var t = (c.tagName || 'div').toLowerCase();
+            var idStr = c.id ? (' id="' + c.id + '"') : '';
+            var cls = (c.classList && c.classList.classes) ? Object.keys(c.classList.classes).join(' ') : '';
+            var clsStr = cls ? (' class="' + cls + '"') : '';
+            return '<' + t + idStr + clsStr + '>' + (c.innerHTML || '') + '</' + t + '>';
+          }).join('');
+          return (this._rawInnerHTML || '') + ch;
+        },
+        set innerHTML(val) {
+          this._rawInnerHTML = val;
+          this._children = [];
+        },
+        appendChild: function(c) {
+          this._children.push(c);
+          return c;
+        },
+        setAttribute: function(k, v) { this.attributes[k] = v; },
+        getAttribute: function(k) { return this.attributes[k] || null; },
+        removeAttribute: function(k) { delete this.attributes[k]; },
+        addEventListener: function(evt, fn) {
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(fn);
+        },
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; },
+        scrollIntoView: function() {},
+        getContext: function() {
+          return {
+            setTransform: function(){},
+            scale: function(){},
+            clearRect: function(){},
+            beginPath: function(){},
+            moveTo: function(){},
+            lineTo: function(){},
+            stroke: function(){},
+            fill: function(){},
+            fillText: function(){},
+            setLineDash: function(){},
+            arc: function(){},
+            save: function(){},
+            restore: function(){},
+            createLinearGradient: function(){
+              return { addColorStop: function(){} };
+            }
+          };
+        },
+        getBoundingClientRect: function() {
+          return { width: 700, height: 128, left: 0, top: 0 };
+        }
+      };
+      if (id) elementStore[id] = el;
+      return el;
+    }
+
+    var domIds = [
+      'view-master-profile', 'masterProfilePatternSection', 'masterProfileChronoSection',
+      'profileLuckProgressionText', 'profileLuckStartAgeText', 'profileChronoNavigatorSection',
+      'profileChronoPlayBtn', 'profileChronoAgeValueBadge', 'profileChronoJumpCurrent',
+      'profileChronoJumpGolden', 'profileChronoJumpTransit', 'profileChronoAgeSlider',
+      'profileChronoTimelineCanvas', 'profileChronoYearCard', 'profileIChingSection',
+      'masterProfileImperialSection', 'masterProfileOpenDossierBtn', 'chronoAgeSlider',
+      'chronoTimelineCanvas', 'chronoYearCard', 'chronoAgeValueBadge', 'chronoPlayBtn',
+      'imperialDossierModal', 'profileIChingTelemetryGrid'
+    ];
+    domIds.forEach(function(id) { elementStore[id] = createMockElement(id, id.includes('Canvas') ? 'canvas' : 'div'); });
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: createMockElement('body', 'body'),
+      getElementById: function(id) {
+        if (!elementStore[id]) elementStore[id] = createMockElement(id, id && id.includes('Canvas') ? 'canvas' : 'div');
+        return elementStore[id];
+      },
+      createElement: function(tag) { return createMockElement('', tag); },
+      querySelector: function() { return null; },
+      querySelectorAll: function() { return []; },
+      addEventListener: function(evt, fn) {
+        if (evt === 'DOMContentLoaded') document._domReady = fn;
+      }
+    };
+
+    var window = {
+      document: document,
+      console: console,
+      localStorage: { getItem: function(){ return null; }, setItem: function(){}, removeItem: function(){} },
+      devicePixelRatio: 2,
+      addEventListener: function() {},
+      requestAnimationFrame: function(cb) { cb(); },
+      setTimeout: function(cb) { cb(); return 1; },
+      clearTimeout: function() {},
+      setInterval: function() { return 1; },
+      clearInterval: function() {},
+      location: { reload: function(){}, hash: "", search: "" },
+      scrollTo: function() {},
+      print: function() {},
+      I18N: I18N,
+      BaZiEngine: BaZiEngine,
+      LuckEngine: LuckEngine,
+      PortraitEngine: PortraitEngine,
+      IChingEngine: IChingEngine,
+      HistoricalEngine: HistoricalEngine,
+      SpatialFengShuiEngine: SpatialFengShuiEngine,
+      CareerEngine: CareerEngine,
+      LifelongSynthesisEngine: LifelongSynthesisEngine
+    };
+
+    load("js/app.js");
+    if (document._domReady) document._domReady();
+
+    // Calculate a test natal chart: 1990-05-15 08:30 Male
+    var baziObj = BaZiEngine.calculate({ year: 1990, month: 5, day: 15, hour: 8, minute: 30, gender: "乾造", useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+    var luckObj = LuckEngine.calculateLuck(baziObj);
+    baziObj.luck = luckObj;
+    currentBaziResult = baziObj;
+    currentLuckResult = luckObj;
+
+    // 1. Test renderMasterProfile in ZH
+    if (window.setLanguage) window.setLanguage('zh');
+    window.currentLang = 'zh';
+    window.renderMasterProfile(baziObj, 'zh');
+
+    var patZh = elementStore['masterProfilePatternSection'].innerHTML;
+    if (!patZh.includes("第一主要的格局")) throw new Error("renderMasterProfilePattern ZH missing 第一主要的格局");
+    if (!patZh.includes("简单白话概说")) throw new Error("renderMasterProfilePattern ZH missing 简单白话概说");
+    if (!patZh.includes("20% 核心胜手")) throw new Error("renderMasterProfilePattern ZH missing 20% 核心胜手");
+    if (!patZh.includes("80% 致命陷阱与避讳")) throw new Error("renderMasterProfilePattern ZH missing 80% 致命陷阱与避讳");
+    if (!patZh.includes("二八实战定论")) throw new Error("renderMasterProfilePattern ZH missing 二八实战定论");
+
+    var ichingZh = elementStore['profileIChingSection'].innerHTML;
+    if (!ichingZh.includes("周易六十四卦周期推演图")) throw new Error("renderMasterProfileIChing ZH missing 周易六十四卦周期推演图");
+    if (!ichingZh.includes("profileIChingSvgChart")) throw new Error("renderMasterProfileIChing ZH missing profileIChingSvgChart");
+    if (!ichingZh.includes("人生巅峰")) throw new Error("renderMasterProfileIChing ZH missing 人生巅峰");
+    if (!ichingZh.includes("生命纪元与主导命基")) throw new Error("renderMasterProfileIChing ZH missing 生命纪元与主导命基");
+    if (!ichingZh.includes("大运统辖值爻")) throw new Error("renderMasterProfileIChing ZH missing 大运统辖值爻");
+    if (!ichingZh.includes("流年值年卦与阴阳律")) throw new Error("renderMasterProfileIChing ZH missing 流年值年卦与阴阳律");
+    if (!ichingZh.includes("当年最适合做什么")) throw new Error("renderMasterProfileIChing ZH missing 当年最适合做什么");
+    if (!ichingZh.includes("天纪秘解与玉上有光")) throw new Error("renderMasterProfileIChing ZH missing 天纪秘解与玉上有光");
+
+    var impZh = elementStore['masterProfileImperialSection'].innerHTML;
+    if (!impZh.includes("钦天监 · 皇家九卷精装战报全卷精萃")) throw new Error("renderMasterProfileImperial ZH missing header");
+    if (!impZh.includes("masterProfileBtnInspectAll")) throw new Error("renderMasterProfileImperial ZH missing masterProfileBtnInspectAll");
+    if (!impZh.includes("masterProfileBtnExportSingle")) throw new Error("renderMasterProfileImperial ZH missing masterProfileBtnExportSingle");
+    if (!impZh.includes("masterProfileBtnExportFull")) throw new Error("renderMasterProfileImperial ZH missing masterProfileBtnExportFull");
+    if (!impZh.includes("masterProfileBtnPrint")) throw new Error("renderMasterProfileImperial ZH missing masterProfileBtnPrint");
+    if (!impZh.includes("卷一 · 御览总目")) throw new Error("renderMasterProfileImperial ZH missing 卷一 · 御览总目");
+    if (!impZh.includes("卷九 · 职场打工人破局与事业财运全相")) throw new Error("renderMasterProfileImperial ZH missing 卷九");
+    if (!impZh.includes("点击御览此卷")) throw new Error("renderMasterProfileImperial ZH missing 点击御览此卷");
+
+    // 2. Test renderMasterProfile in EN
+    if (window.setLanguage) window.setLanguage('en');
+    window.currentLang = 'en';
+    window.renderMasterProfile(baziObj, 'en');
+
+    var patEn = elementStore['masterProfilePatternSection'].innerHTML;
+    if (!patEn.includes("Primary Dominant Structural Pattern")) throw new Error("renderMasterProfilePattern EN missing Primary Dominant Structural Pattern");
+    if (!patEn.includes("Pattern Essence & Plain-Language Summary")) throw new Error("renderMasterProfilePattern EN missing Pattern Essence & Plain-Language Summary");
+    if (!patEn.includes("Vital 20% High-Leverage Strategic Strengths")) throw new Error("renderMasterProfilePattern EN missing Vital 20% High-Leverage Strategic Strengths");
+    if (!patEn.includes("Fatal 80% Frictions & Strategic Taboos")) throw new Error("renderMasterProfilePattern EN missing Fatal 80% Frictions & Strategic Taboos");
+    if (!patEn.includes("Pareto 80/20 Executive Direct Takeaway")) throw new Error("renderMasterProfilePattern EN missing Pareto 80/20 Executive Direct Takeaway");
+
+    var patEnLeaks = patEn.match(/[\u4e00-\u9fa5]/g);
+    if (patEnLeaks && patEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in renderMasterProfilePattern EN: " + patEnLeaks.slice(0, 20).join(""));
+    }
+
+    var ichingEn = elementStore['profileIChingSection'].innerHTML;
+    if (!ichingEn.includes("64 Hexagrams Lifelong Trajectory")) throw new Error("renderMasterProfileIChing EN missing 64 Hexagrams Lifelong Trajectory");
+    if (!ichingEn.includes("Apex Peak")) throw new Error("renderMasterProfileIChing EN missing Apex Peak");
+    if (!ichingEn.includes("Life Epoch & Natal Base")) throw new Error("renderMasterProfileIChing EN missing Life Epoch & Natal Base");
+    if (!ichingEn.includes("Governing Yao Ruler")) throw new Error("renderMasterProfileIChing EN missing Governing Yao Ruler");
+    if (!ichingEn.includes("Annual Transit & Law")) throw new Error("renderMasterProfileIChing EN missing Annual Transit & Law");
+    if (!ichingEn.includes("Optimal Yearly Strategy")) throw new Error("renderMasterProfileIChing EN missing Optimal Yearly Strategy");
+    if (!ichingEn.includes("Tian Ji Master Directive & Riddle")) throw new Error("renderMasterProfileIChing EN missing Tian Ji Master Directive & Riddle");
+
+    var ichingEnLeaks = ichingEn.match(/[\u4e00-\u9fa5]/g);
+    if (ichingEnLeaks && ichingEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in renderMasterProfileIChing EN: " + ichingEnLeaks.slice(0, 20).join(""));
+    }
+
+    var impEn = elementStore['masterProfileImperialSection'].innerHTML;
+    if (!impEn.includes("Imperial Dossier Compendium · 9-Volume Executive Blueprint")) throw new Error("renderMasterProfileImperial EN missing header");
+    if (!impEn.includes("Inspect Full 9-Page Dossier")) throw new Error("renderMasterProfileImperial EN missing Inspect Full 9-Page Dossier");
+    if (!impEn.includes("Volume I: Imperial Master Index & Four Pillars Matrix")) throw new Error("renderMasterProfileImperial EN missing Volume I");
+    if (!impEn.includes("Volume IX: Career Breakthrough & Wealth Trajectory")) throw new Error("renderMasterProfileImperial EN missing Volume IX");
+    if (!impEn.includes("Inspect Volume 1")) throw new Error("renderMasterProfileImperial EN missing Inspect Volume 1");
+
+    var impEnLeaks = impEn.match(/[\u4e00-\u9fa5]/g);
+    if (impEnLeaks && impEnLeaks.length > 0) {
+      throw new Error("Residual Chinese in renderMasterProfileImperial EN: " + impEnLeaks.slice(0, 20).join(""));
+    }
+
+    // 3. Test interactive functions: jumpToAge and jumpToImperialPage
+    window.jumpToAge(35);
+    window.jumpToImperialPage('imperialPage3');
+    window.printImperialDossier('en');
+    """
+]
+
+run_check138 = subprocess.run(jsc_check138_cmd, capture_output=True, text=True)
+assert run_check138.returncode == 0, f"Check 138 JSC test failed: stdout={run_check138.stdout} stderr={run_check138.stderr}"
+
+print("✓ 138. 主画像（全相命盘精华总览看板：第一主要格局简单描述与二八胜负手、岁运流转五柱同参、百岁时空罗盘趋势图与流年战术锦囊、周易六十四卦周期推演图与六爻时序天纪秘解、钦天监皇家九卷御览全本精萃与直达跳转，双语100%零中文残留）全量验证通过！")
+
+print("\n🎉 ALL 138 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

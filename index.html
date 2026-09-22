@@ -575,6 +575,11 @@
     <!-- Primary View Switcher Navigation Bar -->
     <nav id="primaryViewNav" class="sticky top-[61px] z-40 py-2 bg-[#12141c]/95 backdrop-blur-md rounded-2xl border border-gray-800 shadow-2xl p-2">
       <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5">
+        <button id="navBtnMasterProfile" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent cursor-pointer" data-view="view-master-profile">
+          <span class="text-base">👑</span>
+          <span data-i18n="nav_view_master_profile">主画像</span>
+          <span class="chinese-seal text-[9px] py-0 px-1.5" data-i18n="seal_view_master_profile">全相精华</span>
+        </button>
         <button id="navBtnHome" class="view-nav-btn active flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg bg-gradient-to-r from-amber-600 to-amber-700 text-white border border-amber-500/50" data-view="view-home">
           <span class="text-base">🏛️</span>
           <span data-i18n="nav_view_home">核心主盘与全相基底</span>
@@ -632,6 +637,139 @@
         </button>
       </div>
     </nav>
+
+    <!-- Master Profile View: Full Panoramic Executive Synthesis (主画像 · 全相命盘精华总览看板) -->
+    <div id="view-master-profile" class="space-y-6 hidden">
+      <!-- Master Profile Hero Banner -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/50 via-purple-950/30 to-black/70 border border-amber-500/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center space-x-3">
+          <span class="text-2xl sm:text-3xl">👑</span>
+          <div>
+            <h2 class="text-base sm:text-xl font-bold font-serif-sc text-amber-200 flex items-center gap-2">
+              <span data-i18n="master_profile_title">主画像 · 全相命盘精华总览</span>
+              <span class="chinese-seal text-[9px] sm:text-xs py-0.5 border-amber-500 text-amber-300" data-i18n="master_profile_badge">诸卷精萃</span>
+            </h2>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="master_profile_subtitle">
+              统帅主格 · 岁运流转全阶推演 · 百岁时空罗盘 · 周易六十四卦易数轨迹 · 钦天九卷御览精萃
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="masterProfileOpenDossierBtn" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95">
+            <span>📜</span>
+            <span data-i18n="btn_inspect_imperial_dossier">开启皇家九卷御览</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section 1: Primary Dominant Structural Pattern (第一主要的格局 · 简单描述与二八胜负手) -->
+      <section id="masterProfilePatternSection" class="bg-card rounded-2xl border border-amber-500/40 p-5 shadow-2xl space-y-4">
+        <!-- Dynamically injected via JavaScript: renderMasterProfile -->
+      </section>
+
+      <!-- Section 2: Time-Space Progression System (岁运流转 · 大运流年流月流日全阶推演系统) -->
+      <section id="masterProfileChronoSection" class="space-y-6">
+        <!-- Five Pillars Synergy Bar & Progression Header -->
+        <div class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-xl">🌌</span>
+              <div>
+                <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                  <span data-i18n="sec_luck_title">岁运流转 · 大运流年流月流日全阶推演系统</span>
+                  <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-normal border border-amber-500/30" data-i18n="badge_five_pillar_synergy">五柱同参</span>
+                </h3>
+                <p class="text-xs text-gray-400 mt-0.5" data-i18n="sec_luck_subtitle">五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-xs">
+              <div id="profileLuckProgressionBadge" class="px-2.5 py-1 rounded-md bg-blue-950/40 text-blue-300 border border-blue-800/50 font-mono flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                <span id="profileLuckProgressionText">--</span>
+              </div>
+              <div id="profileLuckStartAgeBadge" class="px-2.5 py-1 rounded-md bg-purple-950/40 text-purple-300 border border-purple-800/50 font-mono flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                <span id="profileLuckStartAgeText">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lifelong Chrono-Navigator in Master Profile -->
+          <div id="profileChronoNavigatorSection" class="p-5 rounded-2xl bg-gradient-to-br from-[#181a24] via-[#12141c] to-[#0d0f17] border border-amber-500/30 shadow-2xl space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800/80 pb-3">
+              <div class="flex items-center space-x-2.5">
+                <span class="text-2xl">⏳</span>
+                <div>
+                  <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+                    <span data-i18n="chrono_title">百岁运势时空罗盘 (Lifelong Chrono-Navigator)</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30" data-i18n="chrono_panorama_badge">1~100 岁全景</span>
+                  </h4>
+                  <p class="text-xs text-gray-400 mt-0.5" data-i18n="chrono_subtitle">
+                    1~100岁连续平滑推演 · 能量活力、财富走势与岁运刑冲全局图谱
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="profileChronoPlayBtn" type="button" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1 cursor-pointer active:scale-95" data-i18n="chrono_play">
+                  ▶️ 连续推演
+                </button>
+                <div id="profileChronoAgeValueBadge" class="px-3 py-1.5 rounded-lg bg-black/50 text-amber-300 font-mono text-xs font-bold border border-amber-600/40">
+                  -- 岁 (----)
+                </div>
+              </div>
+            </div>
+
+            <!-- Master Slider & Quick Jump Row -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-gray-400">
+                <span class="font-mono" data-i18n="chrono_age_min">1 岁 (初生)</span>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <button id="profileChronoJumpCurrent" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-amber-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_current">当前年龄</button>
+                  <button id="profileChronoJumpGolden" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-emerald-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_golden">巅峰高光</button>
+                  <button id="profileChronoJumpTransit" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-purple-300 border border-gray-700 transition cursor-pointer" data-i18n="chrono_btn_transit">大运交接</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="20">20</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="30">30</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="40">40</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="50">50</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="60">60</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="70">70</button>
+                  <button type="button" class="profile-chrono-quick-age px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-age="80">80</button>
+                </div>
+                <span class="font-mono" data-i18n="chrono_age_max">100 岁 (百岁)</span>
+              </div>
+              <input type="range" id="profileChronoAgeSlider" min="1" max="100" value="30" class="w-full chrono-slider cursor-pointer">
+            </div>
+
+            <!-- Canvas Trendline Chart -->
+            <div class="relative bg-black/40 rounded-xl p-2 border border-gray-800/80 overflow-hidden">
+              <div class="flex items-center justify-between text-[11px] text-gray-400 mb-1 px-1">
+                <span class="flex items-center gap-3">
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span> <span data-i18n="chrono_energy_label">能量活力:</span></span>
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> <span data-i18n="chrono_wealth_label">财富潮汐:</span></span>
+                </span>
+                <span class="text-gray-500 font-mono text-[10px]" data-i18n="chrono_slider_hint">滑动上方滑块或点击趋势图自由探索任意年份</span>
+              </div>
+              <canvas id="profileChronoTimelineCanvas" class="w-full h-32 block cursor-crosshair"></canvas>
+            </div>
+
+            <!-- Active Year Spotlight Card -->
+            <div id="profileChronoYearCard" class="p-4 rounded-xl bg-black/30 border border-amber-600/30 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+          <!-- Hexagram Cycle in Master Profile -->
+          <div id="profileIChingSection" class="p-5 rounded-2xl bg-card border border-border-color shadow-2xl space-y-5">
+            <!-- Dynamically populated via JS: trajectory SVG, milestones, Tian Ji cards -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Imperial Dossier Compendium & Executive Chapters (钦天监 · 皇家九卷精装战报全卷精萃) -->
+      <section id="masterProfileImperialSection" class="bg-card rounded-2xl border border-amber-500/40 p-5 shadow-2xl space-y-5">
+        <!-- Dynamically populated via JS: Action bar + 9 chapter executive cards -->
+      </section>
+    </div>
 
     <!-- View 1: Main Core & 20% Pareto (核心主盘与 20% 枢纽) -->
     <div id="view-home" class="space-y-6">

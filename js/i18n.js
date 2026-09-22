@@ -15,6 +15,12 @@ const I18N = (function() {
       btn_theme_light: "☀️ 晨曦",
 
       // Primary View Navigation
+      nav_view_master_profile: "主画像",
+      seal_view_master_profile: "全相精华",
+      master_profile_title: "主画像 · 全相命盘精华总览",
+      master_profile_badge: "诸卷精萃",
+      master_profile_subtitle: "统帅主格 · 岁运流转全阶推演 · 百岁时空罗盘 · 周易六十四卦易数轨迹 · 钦天九卷御览精萃",
+      btn_inspect_imperial_dossier: "开启皇家九卷御览",
       nav_view_home: "核心主盘与全相基底",
       nav_view_strategy: "战略大局与六亲全息",
       nav_view_friction: "精神内耗与禅道心智",
@@ -906,6 +912,12 @@ const I18N = (function() {
       btn_theme_light: "☀️ Light",
 
       // Primary View Navigation
+      nav_view_master_profile: "Master Profile",
+      seal_view_master_profile: "Executive Summary",
+      master_profile_title: "Master Profile · Executive Panoramic Synthesis",
+      master_profile_badge: "Compendium",
+      master_profile_subtitle: "Dominant Pattern · Lifelong Chrono-Navigator · 64 Hexagram Trajectory · Imperial Dossier",
+      btn_inspect_imperial_dossier: "Open Imperial Dossier",
       nav_view_home: "Natal Chart & Core Blueprint",
       nav_view_strategy: "Grand Strategy & Kinship Hologram",
       nav_view_friction: "Mental Friction & Zen-Dao Mastery",
