@@ -8000,6 +8000,119 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function handleAdvisorDeityInquiry() {
+    const isEn = (currentLang === 'en');
+    const q = isEn ? "How can I leverage this year's active deities and safeguard against risks?" : "问军师今年吉神何时当值、如何引动化煞？";
+    if (typeof openAdvisorWithPrompt === 'function') {
+      openAdvisorWithPrompt(q);
+    } else if (typeof openAdvisorModal === 'function') {
+      openAdvisorModal();
+    }
+  }
+  window.handleAdvisorDeityInquiry = handleAdvisorDeityInquiry;
+
+  function renderShenShaTelemetryContent(item, isEn) {
+    if (!item) return '';
+    let aus = item.auspiciousDeities || [];
+    let mal = item.maleficDeities || [];
+
+    if (aus.length === 0 && mal.length === 0 && typeof IChingEngine !== 'undefined' && typeof IChingEngine.evaluateYearlyShenSha === 'function' && currentBaziResult) {
+      const yearStem = item.annualStem || (item.annualGanzhiZh ? item.annualGanzhiZh[0] : '甲');
+      const yearBranch = item.annualBranch || (item.annualGanzhiZh ? item.annualGanzhiZh[1] : '子');
+      const evaluated = IChingEngine.evaluateYearlyShenSha(currentBaziResult, yearStem, yearBranch, item.age || 1, item.year || 2026);
+      if (evaluated) {
+        aus = evaluated.auspicious || [];
+        mal = evaluated.malefic || [];
+      }
+    }
+
+    const ausHtml = aus.length > 0 ? aus.map(d => `
+      <div class="p-2 rounded-lg bg-white/5 border border-amber-500/20 space-y-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-amber-300 flex items-center gap-1">
+            <span>${d.icon}</span> <span>${isEn ? d.nameEn : d.nameZh}</span>
+          </span>
+          <span class="px-1.5 py-0.2 rounded text-[9.5px] font-mono border ${d.badgeClass}">
+            ${isEn ? d.tagEn : d.tagZh}
+          </span>
+        </div>
+        <p class="text-[10.5px] text-gray-300 leading-snug">
+          <span class="text-amber-400/90 font-semibold">${isEn ? 'Essence: ' : '显化威能：'}</span>${isEn ? d.descEn : d.descZh}
+        </p>
+        <p class="text-[10.5px] text-emerald-300/90 leading-snug">
+          <span class="font-semibold">${isEn ? 'Optimal Action: ' : '当值行动：'}</span>${isEn ? d.actionEn : d.actionZh}
+        </p>
+      </div>
+    `).join('') : `
+      <div class="p-2.5 rounded-lg bg-white/5 border border-gray-800 text-[11px] text-gray-400 italic">
+        ${isEn ? 'No major auspicious deity active this year; maintain disciplined foundational progress.' : '当年无特殊大吉神值守，宜循常道稳扎稳打、守正固本。'}
+      </div>
+    `;
+
+    const malHtml = mal.length > 0 ? mal.map(d => `
+      <div class="p-2 rounded-lg bg-white/5 border border-rose-500/20 space-y-1">
+        <div class="flex items-center justify-between text-xs">
+          <span class="font-bold text-rose-300 flex items-center gap-1">
+            <span>${d.icon}</span> <span>${isEn ? d.nameEn : d.nameZh}</span>
+          </span>
+          <span class="px-1.5 py-0.2 rounded text-[9.5px] font-mono border ${d.badgeClass}">
+            ${isEn ? d.tagEn : d.tagZh}
+          </span>
+        </div>
+        <p class="text-[10.5px] text-gray-300 leading-snug">
+          <span class="text-rose-400/90 font-semibold">${isEn ? 'Risk Alert: ' : '煞曜暗礁：'}</span>${isEn ? d.descEn : d.descZh}
+        </p>
+        <p class="text-[10.5px] text-amber-300/90 leading-snug">
+          <span class="font-semibold">${isEn ? 'Safeguard: ' : '化煞护身：'}</span>${isEn ? d.actionEn : d.actionZh}
+        </p>
+      </div>
+    `).join('') : `
+      <div class="p-2.5 rounded-lg bg-white/5 border border-gray-800 text-[11px] text-gray-400 italic">
+        ${isEn ? 'No direct malefic clashes detected for this year; unobstructed momentum and serene flow.' : '当年无特殊恶煞直冲，气数清吉，从容行事。'}
+      </div>
+    `;
+
+    return `
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-1.5 text-xs">
+        <div class="flex items-center space-x-2">
+          <span class="text-amber-400 font-bold">👑</span>
+          <span class="font-bold text-gray-200 font-serif-sc">
+            ${isEn ? 'Annual Auspicious Deities & Malefic Stars Telemetry' : '命造神煞岁运鉴照 · 当值吉神与凶煞避讳'}
+          </span>
+          <span class="text-[10px] text-gray-400 font-mono">
+            (${item.year} ${isEn ? item.annualGanzhiEn : item.annualGanzhiZh} · ${item.age}${isEn ? 'y' : '岁'})
+          </span>
+        </div>
+        <button type="button" onclick="window.handleAdvisorDeityInquiry && window.handleAdvisorDeityInquiry()" class="px-2.5 py-0.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 hover:text-amber-200 transition text-[10.5px] font-medium flex items-center gap-1 cursor-pointer">
+          <span>🧙</span>
+          <span>${isEn ? 'Consult Advisor on Deities' : '问军师今年吉神何时当值'}</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5 pt-1">
+        <!-- Auspicious Deities -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between text-[11px] font-semibold text-amber-300 border-b border-gray-800/60 pb-0.5">
+            <span>👑 ${isEn ? 'Active Auspicious Deities' : '当值吉神护佑'}</span>
+            <span class="text-[9.5px] font-mono text-gray-400">${aus.length} ${isEn ? 'Active' : '位当值'}</span>
+          </div>
+          <div class="space-y-1.5">
+            ${ausHtml}
+          </div>
+        </div>
+        <!-- Malefic Stars -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between text-[11px] font-semibold text-rose-300 border-b border-gray-800/60 pb-0.5">
+            <span>⚠️ ${isEn ? 'Active Malefic & Hazard Stars' : '当值煞曜避讳'}</span>
+            <span class="text-[9.5px] font-mono text-gray-400">${mal.length} ${isEn ? 'Alerts' : '位警示'}</span>
+          </div>
+          <div class="space-y-1.5">
+            ${malHtml}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   function renderTimelineTabHtml(container, points, item, isEn) {
     const hex = item.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
     const tj = item.annualTJ || {};
@@ -8076,6 +8189,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (elDynamicInterp) elDynamicInterp.textContent = isEn ? (item.dynamicInterpretationEn || '') : (item.dynamicInterpretationZh || '');
         const elDynamicScore = document.getElementById('ichingTelemetryDynamicScore');
         if (elDynamicScore) elDynamicScore.textContent = `${item.score}% ${isEn ? 'Adjusted' : '校准能级'}`;
+
+        const elShenShaBlock = document.getElementById('ichingTelemetryShenShaBlock');
+        if (elShenShaBlock) {
+          elShenShaBlock.innerHTML = renderShenShaTelemetryContent(item, isEn);
+        }
 
         // Real-time synchronization of active selection state and auto-scroll on Roster Cards
         const rosterCards = container.querySelectorAll('.iching-roster-card');
@@ -8247,9 +8365,14 @@ document.addEventListener('DOMContentLoaded', () => {
             </p>
           </div>
         ` : ''}
+
+        <!-- 6. Auspicious Deities & Malefic Stars Shen Sha Block -->
+        <div id="ichingTelemetryShenShaBlock" class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
+          ${renderShenShaTelemetryContent(item, isEn)}
+        </div>
       </div>
 
-      <!-- 6. 100-Year Hexagram Trajectory Roster -->
+      <!-- 7. 100-Year Hexagram Trajectory Roster -->
       <div class="p-3.5 rounded-2xl bg-black/40 border border-gray-800 space-y-2.5 shadow">
         <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
           <div class="flex items-center space-x-2 text-xs">
@@ -8258,6 +8381,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="text-[10px] text-gray-400 font-mono">${isEn ? '(Click any card to inspect year)' : '（点击任意年份卡片可瞬时联动调阅）'}</span>
           </div>
           <div class="flex items-center gap-1 text-[10px] text-gray-400 font-mono">
+            <span class="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">${isEn ? '👑 Deities' : '👑 吉神'}</span>
+            <span class="px-1.5 py-0.2 rounded bg-rose-950/60 text-rose-300 border border-rose-700/50">${isEn ? '⚠️ Hazards' : '⚠️ 凶煞'}</span>
             <span class="px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">${isEn ? 'Romance' : '桃花'}</span>
             <span class="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${isEn ? 'Career' : '事业'}</span>
             <span class="px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">${isEn ? 'Study' : '读书'}</span>
@@ -8272,6 +8397,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const isSelected = (pt.age === item.age);
             const ptHex = pt.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
             const ptOpt = pt.optimalAction || {};
+            const ptAus = pt.auspiciousDeities || [];
+            const ptMal = pt.maleficDeities || [];
             return `
               <div class="iching-roster-card flex-shrink-0 w-40 sm:w-44 p-2.5 rounded-xl border transition cursor-pointer text-left ${isSelected ? 'border-amber-500 ring-2 ring-amber-500/50 bg-amber-950/40 shadow-lg' : 'border-gray-800/80 bg-black/50 hover:border-gray-600 hover:bg-gray-900/60'}" data-age="${pt.age}">
                 <div class="flex items-center justify-between text-[10.5px] font-mono text-gray-400 border-b border-gray-800/60 pb-1">
@@ -8281,6 +8408,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="pt-1.5 font-serif-sc font-bold text-xs truncate ${isSelected ? 'text-amber-200' : 'text-gray-200'}">
                   ${isEn ? `Hexagram ${ptHex.number} · ${ptHex.nameEn}` : `第${ptHex.number}卦 · ${ptHex.nameZh}`}
                 </div>
+                ${ptAus.length > 0 ? `
+                  <div class="flex flex-wrap gap-1 pt-1">
+                    ${ptAus.map(d => `<span class="px-1 py-0.2 rounded text-[8px] font-mono font-bold border ${d.badgeClass}">${isEn ? d.tagEn : d.tagZh}</span>`).join('')}
+                  </div>
+                ` : ''}
+                ${ptMal.length > 0 ? `
+                  <div class="flex flex-wrap gap-1 pt-1">
+                    ${ptMal.map(d => `<span class="px-1 py-0.2 rounded text-[8px] font-mono font-bold border ${d.badgeClass}">${isEn ? d.tagEn : d.tagZh}</span>`).join('')}
+                  </div>
+                ` : ''}
                 <div class="pt-1">
                   <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-bold font-mono ${ptOpt.badgeClass || 'bg-amber-500/20 text-amber-300'}">
                     ${isEn ? (ptOpt.shortBadgeEn || '[Focus]') : (ptOpt.shortBadgeZh || '【当年最宜】')}
@@ -15205,6 +15342,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modal) modal.classList.add('hidden');
   }
 
+  function openAdvisorWithPrompt(promptText) {
+    openAdvisorModal();
+    if (promptText) {
+      setTimeout(() => {
+        handleAdvisorQuery(promptText);
+      }, 50);
+    }
+  }
+  window.openAdvisorWithPrompt = openAdvisorWithPrompt;
+
   function refreshAdvisorContextBadges() {
     const badgesContainer = document.getElementById('advisorContextBadges');
     if (!badgesContainer || typeof AdvisorEngine === 'undefined') return;
@@ -18297,6 +18444,16 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="font-bold text-[9px] truncate text-amber-950 pt-0.5">
                 ${isEn ? `Hex ${ptHex.number} · ${ptHex.nameEn}` : `第${ptHex.number}卦 · ${ptHex.nameZh}`}
               </div>
+              ${(pt.auspiciousDeities && pt.auspiciousDeities.length > 0) ? `
+                <div class="flex flex-wrap gap-0.5 pt-0.5">
+                  ${pt.auspiciousDeities.map(d => `<span class="px-1 py-0.1 rounded text-[7px] font-mono font-bold bg-amber-100 text-amber-900 border border-amber-400/50">${isEn ? d.tagEn : d.tagZh}</span>`).join('')}
+                </div>
+              ` : ''}
+              ${(pt.maleficDeities && pt.maleficDeities.length > 0) ? `
+                <div class="flex flex-wrap gap-0.5 pt-0.5">
+                  ${pt.maleficDeities.map(d => `<span class="px-1 py-0.1 rounded text-[7px] font-mono font-bold bg-rose-100 text-rose-900 border border-rose-400/50">${isEn ? d.tagEn : d.tagZh}</span>`).join('')}
+                </div>
+              ` : ''}
               <div>
                 <span class="inline-block px-1 py-0.2 rounded text-[8px] font-bold font-mono ${isRisk ? 'bg-rose-100 text-rose-900 border border-rose-300' : 'bg-amber-100 text-amber-900 border border-amber-300'}">
                   ${isEn ? (ptOpt.shortBadgeEn || '[Focus]') : (ptOpt.shortBadgeZh || '【当年最宜】')}
@@ -20334,6 +20491,11 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
       ` : ''}
+
+      <!-- 7. Auspicious Deities & Malefic Stars Shen Sha Block -->
+      <div class="col-span-1 md:col-span-2 lg:col-span-4 p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2 shadow">
+        ${renderShenShaTelemetryContent(item, isEn)}
+      </div>
     `;
   }
 
@@ -20405,7 +20567,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷一 · 御览总目 (四柱八字元辰与纳音五行)',
         titleEn: 'Volume I: Imperial Master Index & Four Pillars Matrix',
         descZh: `本命日主【${dmDisplay}】，身命格局【${cleanVigorStatus}】。天干地支立极建构，天盘纳音与本命星宿精准交会，定基终身大纲。`,
-        descEn: `Day Master [${dmDisplay}] with [${cleanVigorStatus}] vigor baseline. Orthodox Four Pillars cosmic matrix establishes natal foundational architecture.`,
+        descEn: `Centered on Day Master [${dmDisplay}] with a [${cleanVigorStatus}] vigor baseline. The foundational Four Pillars chart aligns heavenly stems, earthly branches, and Melodic Elements (Na Yin) to establish your lifelong energetic baseline.`,
         tagsZh: ['四柱建元', '纳音五行', '元辰真印'],
         tagsEn: ['Four Pillars Matrix', 'Sound Elements', 'Day Master Vigor']
       },
@@ -20415,7 +20577,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷二 · 命局总览与主导格局 (成格考订与二八攻防)',
         titleEn: 'Volume II: Executive Blueprint & Primary Dominant Pattern',
         descZh: `以【${cleanPatName}】统领全相大局。精准界定20%破局高杠杆胜手与80%损耗暗礁，调候喜用神扶抑得宜。`,
-        descEn: `Anchored by the [${cleanPatName}]. Calibrates 20% high-leverage strategic strengths against 80% fatal friction sink with climate regulators.`,
+        descEn: `Led by the [${cleanPatName}]. Identifies your vital 20% high-leverage strengths while pinpointing the 80% friction traps to eliminate, balanced by seasonal climate regulators.`,
         tagsZh: ['统帅主格', '20%胜负手', '调候真神'],
         tagsEn: ['Dominant Pattern', '20% Pareto Lever', 'Climate Regulators']
       },
@@ -20425,7 +20587,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷三 · 史鉴镜鉴 (南北乱世300年同构镜像与历史灵魂宿命)',
         titleEn: 'Volume III: Supreme Historical Soul Mirror & Mirror Resonance',
         descZh: '以魏晋南北朝及隋唐历史名宿为魂灵镜像，复刻乱世博弈中的抉择胜负手，以史为鉴照见前行天命。',
-        descEn: 'Mirrored through dynastic epoch archetypes across 300 years of turbulent statecraft, illuminating strategic decision junctures.',
+        descEn: 'Mirrored through classical historical masters and statecraft archetypes across dynastic transitions, offering timeless wisdom for critical life choices.',
         tagsZh: ['同构名宿', '历史镜鉴', '乱世抉择'],
         tagsEn: ['Dynastic Mirror', 'Soul Archetype', 'Historical Decisions']
       },
@@ -20435,7 +20597,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷四 · 岁运流转与六十四卦易数 (大运流年流月流日全阶推演)',
         titleEn: 'Volume IV: Lifelong Transits & 64 Hexagrams Progression',
         descZh: '五柱同参，贯穿十年大运、太岁流年、十二节气流月与流日交感；百岁六十四卦变卦与守本时序全局图谱。',
-        descEn: 'Full 5-pillar decennial synergy, annual transits, solar terms, and lifelong 100-year 64 hexagram mutation/preservation trajectory.',
+        descEn: 'Comprehensive 5-pillar integration covering 10-year major luck decades, annual transits, solar terms, and a complete 100-year trajectory through the 64 I Ching hexagrams.',
         tagsZh: ['五柱同参', '六爻时序', '时空罗盘'],
         tagsEn: ['Five Pillars Synergy', 'Six-Yao Order', 'Chrono-Navigator']
       },
@@ -20445,7 +20607,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷五 · 二八战略大局 (终身二八胜负手与破局战役)',
         titleEn: 'Volume V: 80/20 Grand Picture Pareto Strategy',
         descZh: '严格贯彻二八极简法则：绝不在80%破事上虚耗心力，100%重兵聚焦20%具有非线性杠杆回报的终身胜负手。',
-        descEn: 'Ruthless Pareto discipline: zero bandwidth wasted on 80% trivial traps; complete mobilization behind the vital 20% compounding levers.',
+        descEn: 'The 80/20 Pareto principle applied to destiny: avoid squandering energy on low-value distractions, and channel your full focus into the 20% compounding levers that define success.',
         tagsZh: ['二八胜负手', '破局战役', '护城河防御'],
         tagsEn: ['Pareto Directives', 'Breakthrough Battles', 'Defensible Moat']
       },
@@ -20455,7 +20617,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷六 · 六亲全息深度侧写 (配偶婚恋 · 子女后嗣 · 父母祖荫)',
         titleEn: 'Volume VI: 4D Kinship Holographic Depth Profiles',
         descZh: '深度解构夫妻宫生克引力、父母福泽根基与子女星旺衰；厘清家族代际因果与亲密关系保全法门。',
-        descEn: 'Deconstructs marriage palace affinities, ancestral inheritance pillars, offspring vitality, and intergenerational relationship boundaries.',
+        descEn: 'Deep kinship dynamics: examines spouse palace compatibility, parental foundation, offspring prospects, and healthy intergenerational boundaries.',
         tagsZh: ['配偶情缘', '父母祖德', '子嗣福分'],
         tagsEn: ['Spouse Palace', 'Parental Lineage', 'Offspring Vitality']
       },
@@ -20465,7 +20627,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷七 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典',
         titleEn: 'Volume VII: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex',
         descZh: '《心经》《金刚经》《道德经》三大心智锚点，融合五代权相冯道《荣枯鉴》处世绝学：直为骨媚为仪，安身立命。',
-        descEn: 'Heart, Diamond & Dao De Jing meditative anchors coupled with Premier Feng Dao\'s survival armor: unassailable internal core and impenetrable shields.',
+        descEn: 'Inner resilience rooted in Zen and Daoist philosophy (Heart Sutra, Diamond Sutra, Dao De Jing), paired with Premier Feng Dao\'s Rong Ku Jian codex for navigating complex organizational dynamics.',
         tagsZh: ['三经心智', '冯道荣枯鉴', '处世保全'],
         tagsEn: ['Zen & Dao Wisdom', 'Feng Dao Codex', 'Survival Armor']
       },
@@ -20475,7 +20637,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷八 · 十年流年流月与天星地理 (14字干支全息气机合成与现居地校准)',
         titleEn: 'Volume VIII: Decennial Trajectory, 14-Character Energy Synthesis & City Qi',
         descZh: '十四字时空大合参，整合地磁偏角校准与现居地经纬气运，推导最佳空间风水朝向与天星时空窗口。',
-        descEn: '14-character temporal-spatial synthesis, residence city geomagnetic declination calibration, and environmental directional feng shui alignments.',
+        descEn: '14-character multi-pillar energy synthesis, calibrated with local geomagnetic coordinates and spatial feng shui directions for optimal living and working environments.',
         tagsZh: ['14字能量合成', '地磁校准', '现居地风水'],
         tagsEn: ['14-Char Synthesis', 'Geomagnetic Qi', 'Residence Feng Shui']
       },
@@ -20485,7 +20647,7 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷九 · 职场打工人破局与事业财运全相 (向上管理 · 同僚防波堤 · 天命生态位)',
         titleEn: 'Volume IX: Career Breakthrough & Wealth Trajectory',
         descZh: '正财主业与偏财副业双轨推演；穿透职场政治丛林，筑牢同僚防波堤与向上管理通道，锁死天命事业生态位。',
-        descEn: 'Dual-track direct salary vs investment wealth trajectory; superior management leverage, peer defense shields, and career ecological niche.',
+        descEn: 'Career and wealth strategy: dual-track analysis of earned income versus investment growth, upward management leverage, peer relationship safeguards, and your ideal career niche.',
         tagsZh: ['正财偏财', '向上管理', '事业生态位'],
         tagsEn: ['Dual Wealth Tracks', 'Upward Management', 'Career Niche']
       }
@@ -20923,8 +21085,11 @@ document.addEventListener('DOMContentLoaded', () => {
   window.renderCareerWealth = renderCareerWealth;
   window.initAdvisorAgent = initAdvisorAgent;
   window.openAdvisorModal = openAdvisorModal;
+  window.openAdvisorWithPrompt = openAdvisorWithPrompt;
   window.closeAdvisorModal = closeAdvisorModal;
   window.handleAdvisorQuery = handleAdvisorQuery;
+  window.handleAdvisorDeityInquiry = handleAdvisorDeityInquiry;
+  window.renderShenShaTelemetryContent = renderShenShaTelemetryContent;
   window.initScenarioSimulator = initScenarioSimulator;
   window.executeScenarioSimulation = executeScenarioSimulation;
   window.initSocialCard = initSocialCard;

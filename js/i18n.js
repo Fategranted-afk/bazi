@@ -905,8 +905,8 @@ const I18N = (function() {
     en: {
       // Header & Navigation
       app_title: "BaZi Charting & Classical Canons System",
-      app_subtitle: "Precise Astronomical Solar Terms · Built-in Di Tian Sui, San Ming Tong Hui, Qiong Tong, Zi Ping & Yuan Hai",
-      seal_canons: "5 Classics",
+      app_subtitle: "Precise Astronomical Solar Terms · Built on Di Tian Sui, San Ming Tong Hui, Qiong Tong, Zi Ping & Yuan Hai",
+      seal_canons: "Five Canonical Classics",
       btn_now: "⏱ Current Time",
       btn_theme_dark: "🌙 Dark",
       btn_theme_light: "☀️ Light",
@@ -1796,8 +1796,8 @@ const I18N = (function() {
       gender_dynamics_female: "Female Native (Kun Zao)",
 
       // Footer
-      footer_title: "BaZi Charting & Classical Canons System · Integrated Twelve Classics & Commentary Middleware",
-      footer_citations: "Citations: San Ming Tong Hui · Di Tian Sui · Qiong Tong Bao Jian · Zi Ping Zhen Quan · Yuan Hai Zi Ping · Shen Feng Tong Kao · Yu Zhao Ding Zhen Jing · Li Xu Zhong Ming Shu · Lan Tai Miao Xuan · Wu Xing Jing Ji · Qian Li Ming Gao · Xu Lewu Commentaries"
+      footer_title: "BaZi Strategic Analysis System · Built on Twelve Classical Canons & Master Commentaries",
+      footer_citations: "Canonical Sources: San Ming Tong Hui · Di Tian Sui · Qiong Tong Bao Jian · Zi Ping Zhen Quan · Yuan Hai Zi Ping · Shen Feng Tong Kao · Yu Zhao Ding Zhen Jing · Li Xu Zhong Ming Shu · Lan Tai Miao Xuan · Wu Xing Jing Ji · Qian Li Ming Gao · Xu Lewu Commentaries"
     }
   };
 

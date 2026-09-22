@@ -861,14 +861,14 @@ class IChingEngine {
           if (isYangYearK) {
             // 首年逢阳年不动（守本卦）
             stepZh = '元堂阴爻首年 · 逢阳年不动（守本卦）';
-            stepEn = 'Yin Line Year 1: Meets Yang Year -> Unchanged, Retains Base Hexagram';
+            stepEn = 'Yin Line Year 1: Meets Yang Year -> Inherent stability';
             lastMutatedLine = null;
           } else {
             // 首年逢阴年相感，阴变阳
             const prevVal = currBinary[startLine - 1];
             currBinary[startLine - 1] = 1 - prevVal;
             stepZh = `元堂阴爻首年 · 逢阴年相感 · 元堂（第${posNamesZh[startLine - 1]}爻）${prevVal === 1 ? '阳变阴' : '阴变阳'}`;
-            stepEn = `Yin Line Year 1: Meets Yin Year -> Yuan Tang Line ${startLine} ${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'}`;
+            stepEn = `Yin Line Year 1: Meets Yin Year -> Line ${startLine} ${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'}`;
             lastMutatedLine = startLine;
           }
         } else {
@@ -877,7 +877,7 @@ class IChingEngine {
           const prevVal = currBinary[currPos - 1];
           currBinary[currPos - 1] = 1 - prevVal;
           stepZh = `阴爻运第${k}年 · 向上推至第${posNamesZh[currPos - 1]}爻 · 阴阳互变（${prevVal === 1 ? '阳变阴' : '阴变阳'}）`;
-          stepEn = `Yin Line Year ${k}: Direct Push to Line ${currPos} -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
+          stepEn = `Yin Line Year ${k}: Shift to Line ${currPos} -> Inverted (${prevVal === 1 ? 'Yang to Yin' : 'Yin to Yang'})`;
           lastMutatedLine = currPos;
         }
       }
@@ -900,8 +900,8 @@ class IChingEngine {
       : `异性相吸 · 守本稳健 → 阴阳相合守本卦【${baseHexNameZh}】（${stepZh}）`;
 
     const ruleInteractionEn = isMutated
-      ? `Like Polarities Repel · Transformed Mutation -> Transformed Hexagram [${zhiNianHexNameEn}] (${stepEn})`
-      : `Opposite Polarities Attract · Resilient Stability -> Retain Base Hexagram [${baseHexNameEn}] (${stepEn})`;
+      ? `Dynamic Shift · Mutated Hexagram [${zhiNianHexNameEn}] (${stepEn})`
+      : `Harmonious Stability · Retains Base Hexagram [${baseHexNameEn}] (${stepEn})`;
 
     const zhiNianActiveLine = (activePhase.stage === 'xianTian' ? xianTianLines : houTianLines).find(l => l.position === activePhase.linePos) || xianTianLines[0];
     const zhiNianOptAction = this.evaluateYearlyOptimalAction(bazi, zhiNianHex, annualStem, annualBranch, targetAge, effSelectedYear, null, 70, isMutated);
@@ -1008,9 +1008,412 @@ class IChingEngine {
   }
 
   /**
+   * Evaluates Yearly Auspicious Deities & Malefic Stars for a transit year
+   * Incorporates Tian Yi, Wen Chang, Hong Luan, Tian Xi, Yi Ma, Lu Shen, Jiang Xing, Hua Gai,
+   * Yang Ren, Jie Sha, Zai Sha, Wang Shen, Sui Po, Day Clash, Gu Chen, Gua Su, Xun Kong.
+   */
+  static evaluateYearlyShenSha(bazi, annualStem, annualBranch, age, year) {
+    if (!bazi || !bazi.pillars) {
+      return { auspicious: [], malefic: [], hasAuspicious: false, hasMalefic: false };
+    }
+
+    const dayStem = bazi.dayMaster || (bazi.pillars.day && bazi.pillars.day.stem) || '甲';
+    const dayBranch = (bazi.pillars.day && bazi.pillars.day.branch) || '子';
+    const yearStem = (bazi.pillars.year && bazi.pillars.year.stem) || '甲';
+    const yearBranch = (bazi.pillars.year && bazi.pillars.year.branch) || '子';
+
+    const auspicious = [];
+    const malefic = [];
+
+    // 1. Tian Yi Nobleman (天乙贵人)
+    const tianYiMap = {
+      '甲': ['丑', '未'], '戊': ['丑', '未'], '庚': ['丑', '未'],
+      '乙': ['子', '申'], '己': ['子', '申'],
+      '丙': ['亥', '酉'], '丁': ['亥', '酉'],
+      '壬': ['卯', '巳'], '癸': ['卯', '巳'],
+      '辛': ['午', '寅']
+    };
+    const dayTianYi = tianYiMap[dayStem] || [];
+    const yearTianYi = tianYiMap[yearStem] || [];
+    const allTianYi = Array.from(new Set([...dayTianYi, ...yearTianYi]));
+    if (allTianYi.includes(annualBranch)) {
+      auspicious.push({
+        id: 'tianyi',
+        nameZh: '天乙贵人',
+        nameEn: 'Tian Yi Nobleman',
+        tagZh: '👑 天乙',
+        tagEn: '👑 Tian Yi',
+        icon: '👑',
+        badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+        descZh: '至尊极品吉神护佑。逢险呈祥，遇难成祥，高位贵人恩师破格提携。',
+        descEn: 'Supreme Noble Deity: transforms peril into fortune; senior mentors provide vital backing and protection.',
+        actionZh: '宜主动拜见贵人、争取核心资源，破冰关键项目。',
+        actionEn: 'Actively connect with senior mentors, seek critical sponsorship, and initiate key projects.'
+      });
+    }
+
+    // 2. Wen Chang (文昌贵人)
+    const wenChangMap = {
+      '甲': '巳', '乙': '午', '丙': '申', '丁': '酉', '戊': '申',
+      '己': '酉', '庚': '亥', '辛': '子', '壬': '寅', '癸': '卯'
+    };
+    if (annualBranch === wenChangMap[dayStem] || annualBranch === wenChangMap[yearStem]) {
+      auspicious.push({
+        id: 'wenchang',
+        nameZh: '文昌贵人',
+        nameEn: 'Wen Chang Wisdom Star',
+        tagZh: '📚 文昌',
+        tagEn: '📚 Wen Chang',
+        icon: '📚',
+        badgeClass: 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+        descZh: '科甲智慧文章吉神。思维缜密敏锐，利考学升迁、论文专著与核心技术突破。',
+        descEn: 'Scholastic & Wisdom Star: sharpens cognitive insight; highly favorable for exams, certifications, and technical breakthroughs.',
+        actionZh: '宜闭门深造、打磨硬核作品、考取权威认证。',
+        actionEn: 'Dedicate focus to deep learning, refining master craft, and acquiring prestigious credentials.'
+      });
+    }
+
+    // 3. Hong Luan & Tian Xi (红鸾天喜)
+    const BRANCHES_ORDER = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const yIdx = BRANCHES_ORDER.indexOf(yearBranch);
+    const hongLuanBranch = yIdx !== -1 ? BRANCHES_ORDER[(3 - yIdx + 12) % 12] : '卯';
+    const tianXiBranch = yIdx !== -1 ? BRANCHES_ORDER[((3 - yIdx + 12) % 12 + 6) % 12] : '酉';
+
+    if (annualBranch === hongLuanBranch) {
+      auspicious.push({
+        id: 'hongluan',
+        nameZh: '红鸾正缘',
+        nameEn: 'Hong Luan Romance',
+        tagZh: '🌸 红鸾',
+        tagEn: '🌸 Hong Luan',
+        icon: '🌸',
+        badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
+        descZh: '正缘第一吉神。主异性缘佳、正缘交契、婚恋结缘与名分确立。',
+        descEn: 'Supreme Romance Star: sparks destined romantic affinity, committed partnership, and marriage milestones.',
+        actionZh: '宜破除单身僵局、推进婚恋名分、拓展优质人际合作。',
+        actionEn: 'Embrace romantic openings, formalize partnerships, and expand cooperative networks.'
+      });
+    }
+
+    if (annualBranch === tianXiBranch) {
+      auspicious.push({
+        id: 'tianxi',
+        nameZh: '天喜照临',
+        nameEn: 'Tian Xi Joyful Star',
+        tagZh: '🎉 天喜',
+        tagEn: '🎉 Tian Xi',
+        icon: '🎉',
+        badgeClass: 'bg-pink-500/20 text-pink-300 border-pink-500/40',
+        descZh: '和睦喜庆吉星。拱照红鸾，增进和睦喜悦，主家宅喜庆与添丁添喜。',
+        descEn: 'Joyful Blessing Star: softens interpersonal tensions and brings household happiness and celebrations.',
+        actionZh: '宜举办庆典、修补家庭关系、共享阶段成果。',
+        actionEn: 'Host celebratory milestones, mend family relations, and share achievements.'
+      });
+    }
+
+    // 4. Yi Ma (驿马星动)
+    const yimaMap = {
+      '申': '寅', '子': '寅', '辰': '寅',
+      '寅': '申', '午': '申', '戌': '申',
+      '巳': '亥', '酉': '亥', '丑': '亥',
+      '亥': '巳', '卯': '巳', '未': '巳'
+    };
+    const allYiMa = Array.from(new Set([yimaMap[yearBranch], yimaMap[dayBranch]].filter(Boolean)));
+    if (allYiMa.includes(annualBranch)) {
+      auspicious.push({
+        id: 'yima',
+        nameZh: '驿马星动',
+        nameEn: 'Yi Ma Post Horse',
+        tagZh: '🐎 驿马',
+        tagEn: '🐎 Yi Ma',
+        icon: '🐎',
+        badgeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+        descZh: '时空跃迁动星。主动能爆发、出洋留学、异地开拓、赛道切换与破圈晋升。',
+        descEn: 'Spatial Mobility Star: activates rapid career velocity, international expansion, and strategic pivots.',
+        actionZh: '宜动不宜静，宜出差考察、拓展海外新市场、跨界换轨。',
+        actionEn: 'Opt for proactive motion: pursue business travel, explore new territories, and make bold career pivots.'
+      });
+    }
+
+    // 5. Lu Shen (禄神)
+    const luShenMap = {
+      '甲': '寅', '乙': '卯', '丙': '巳', '丁': '午', '戊': '巳',
+      '己': '午', '庚': '申', '辛': '酉', '壬': '亥', '癸': '子'
+    };
+    if (annualBranch === luShenMap[dayStem]) {
+      auspicious.push({
+        id: 'lushen',
+        nameZh: '专位禄神',
+        nameEn: 'Lu Shen Prosperity',
+        tagZh: '🏛️ 禄神',
+        tagEn: '🏛️ Lu Shen',
+        icon: '🏛️',
+        badgeClass: 'bg-teal-500/20 text-teal-300 border-teal-500/40',
+        descZh: '福禄本源吉星。主身体康健、自立自强、正职正财丰足与资产稳健。',
+        descEn: 'Prosperity Salary Star: signifies robust physical vitality, financial self-reliance, and stable asset growth.',
+        actionZh: '宜巩固主营基本盘、积累核心现金储备、自立自强。',
+        actionEn: 'Consolidate primary revenue streams, build cash reserves, and strengthen self-reliance.'
+      });
+    }
+
+    // 6. Jiang Xing (将星)
+    const jiangXingMap = {
+      '申': '子', '子': '子', '辰': '子',
+      '寅': '午', '午': '午', '戌': '午',
+      '巳': '酉', '酉': '酉', '丑': '酉',
+      '亥': '卯', '卯': '卯', '未': '卯'
+    };
+    if (annualBranch === jiangXingMap[yearBranch] || annualBranch === jiangXingMap[dayBranch]) {
+      auspicious.push({
+        id: 'jiangxing',
+        nameZh: '将星当权',
+        nameEn: 'Jiang Xing Commander',
+        tagZh: '⭐ 将星',
+        tagEn: '⭐ Jiang Xing',
+        icon: '⭐',
+        badgeClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40',
+        descZh: '统帅威权之星。主管理实权、领导威望、决断果敢与大局掌控。',
+        descEn: 'Command Authority Star: confers organizational leadership, strategic dominance, and decisive authority.',
+        actionZh: '宜挑起大梁、主持重大战役、整合团队令行禁止。',
+        actionEn: 'Take charge of major initiatives, lead organizational changes, and enforce standards.'
+      });
+    }
+
+    // 7. Hua Gai (华盖)
+    const huaGaiMap = {
+      '申': '辰', '子': '辰', '辰': '辰',
+      '寅': '戌', '午': '戌', '戌': '戌',
+      '巳': '丑', '酉': '丑', '丑': '丑',
+      '亥': '未', '卯': '未', '未': '未'
+    };
+    if (annualBranch === huaGaiMap[yearBranch] || annualBranch === huaGaiMap[dayBranch]) {
+      auspicious.push({
+        id: 'huagai',
+        nameZh: '华盖灵秀',
+        nameEn: 'Hua Gai Spiritual Canopy',
+        tagZh: '📜 华盖',
+        tagEn: '📜 Hua Gai',
+        icon: '📜',
+        badgeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+        descZh: '哲学艺术文星。灵性超凡、特立独行，利形而上思辨与原创作品。',
+        descEn: 'Spiritual Canopy Star: inspires deep philosophical insight, esoteric understanding, and creative mastery.',
+        actionZh: '宜潜心创作、阅读修心、探求底层真理。',
+        actionEn: 'Pursue creative focus, philosophical study, and foundational research.'
+      });
+    }
+
+    // ==========================================
+    // 凶神煞曜 (Inauspicious / Malefic Stars)
+    // ==========================================
+
+    // 1. Yang Ren (羊刃)
+    const yangRenMap = {
+      '甲': '卯', '乙': '寅', '丙': '午', '丁': '巳', '戊': '午',
+      '己': '巳', '庚': '酉', '辛': '申', '壬': '子', '癸': '亥'
+    };
+    if (annualBranch === yangRenMap[dayStem]) {
+      malefic.push({
+        id: 'yangren',
+        nameZh: '羊刃煞曜',
+        nameEn: 'Yang Blade Star',
+        tagZh: '🗡️ 羊刃',
+        tagEn: '🗡️ Yang Blade',
+        icon: '🗡️',
+        badgeClass: 'bg-rose-950/70 text-rose-300 border-rose-700/60',
+        descZh: '刚烈极旺兵戈之煞。意志如铁但刚亢易折，防冲动破财、口舌争执或意外伤损。',
+        descEn: 'Steel Blade Star: brings unyielding resolve but warns against reckless aggression, disputes, and physical strain.',
+        actionZh: '化煞锦囊：行事戒骄戒躁、事缓则圆；重要决策请专业顾问复核，注意运动安全。',
+        actionEn: 'Safeguard Playbook: Temper impulsiveness with patience; seek neutral counsel before high-stakes decisions.'
+      });
+    }
+
+    // 2. Jie Sha (劫煞)
+    const jieShaMap = {
+      '申': '巳', '子': '巳', '辰': '巳',
+      '寅': '亥', '午': '亥', '戌': '亥',
+      '巳': '寅', '酉': '寅', '丑': '寅',
+      '亥': '申', '卯': '申', '未': '申'
+    };
+    if (annualBranch === jieShaMap[yearBranch] || annualBranch === jieShaMap[dayBranch]) {
+      malefic.push({
+        id: 'jiesha',
+        nameZh: '劫煞阻滞',
+        nameEn: 'Jie Sha Robbery Star',
+        tagZh: '⚠️ 劫煞',
+        tagEn: '⚠️ Jie Sha',
+        icon: '⚠️',
+        badgeClass: 'bg-amber-950/70 text-amber-300 border-amber-700/60',
+        descZh: '外力掠夺破耗之煞。易招小人暗算、突发财务阻滞或项目横生枝节。',
+        descEn: 'Robbery Sha Star: cautions against sudden financial friction, contractual deceit, and external disruptions.',
+        actionZh: '化煞锦囊：收紧财务审批、不借贷不担保，严防合同文字陷阱。',
+        actionEn: 'Safeguard Playbook: Tighten financial controls, avoid lending or guarantees, and review legal contracts.'
+      });
+    }
+
+    // 3. Zai Sha (灾煞 - 白虎煞)
+    const zaiShaMap = {
+      '申': '午', '子': '午', '辰': '午',
+      '寅': '子', '午': '子', '戌': '子',
+      '巳': '卯', '酉': '卯', '丑': '卯',
+      '亥': '酉', '卯': '酉', '未': '酉'
+    };
+    if (annualBranch === zaiShaMap[yearBranch] || annualBranch === zaiShaMap[dayBranch]) {
+      malefic.push({
+        id: 'zaisha',
+        nameZh: '灾煞防险',
+        nameEn: 'Zai Sha Hazard Star',
+        tagZh: '⚡ 灾煞',
+        tagEn: '⚡ Zai Sha',
+        icon: '⚡',
+        badgeClass: 'bg-red-950/70 text-red-300 border-red-700/60',
+        descZh: '冲太岁将星之煞。主暗疾劳损、意外波折与血光防范。',
+        descEn: 'Calamity Sha Star: cautions against physical strain, unexpected setbacks, and travel accidents.',
+        actionZh: '化煞锦囊：保持规律作息、避免高危户外运动，定期体检固本培元。',
+        actionEn: 'Safeguard Playbook: Maintain healthy routines, avoid risky activities, and prioritize preventative wellness.'
+      });
+    }
+
+    // 4. Wang Shen (亡神)
+    const wangShenMap = {
+      '申': '亥', '子': '亥', '辰': '亥',
+      '寅': '巳', '午': '巳', '戌': '巳',
+      '巳': '申', '酉': '申', '丑': '申',
+      '亥': '寅', '卯': '寅', '未': '寅'
+    };
+    if (annualBranch === wangShenMap[yearBranch] || annualBranch === wangShenMap[dayBranch]) {
+      malefic.push({
+        id: 'wangshen',
+        nameZh: '亡神耗散',
+        nameEn: 'Wang Shen Dissipation',
+        tagZh: '🌪️ 亡神',
+        tagEn: '🌪️ Wang Shen',
+        icon: '🌪️',
+        badgeClass: 'bg-purple-950/70 text-purple-300 border-purple-700/60',
+        descZh: '心神耗散与是非之星。主思虑过重、内耗失眠、文书疏漏或涉官非争执。',
+        descEn: 'Dissipation Sha Star: signals mental exhaustion, overthinking, bureaucratic oversights, or paperwork disputes.',
+        actionZh: '化煞锦囊：简化日常杂务、不参与流言是非，文书往来严格留痕。',
+        actionEn: 'Safeguard Playbook: Streamline daily tasks, stay out of office gossip, and document all agreements in writing.'
+      });
+    }
+
+    // 5. Sui Po (岁破 / 冲太岁)
+    const CLASH_MAP = {
+      '子': '午', '丑': '未', '寅': '申', '卯': '酉', '辰': '戌', '巳': '亥',
+      '午': '子', '未': '丑', '申': '寅', '酉': '卯', '戌': '辰', '亥': '巳'
+    };
+    if (CLASH_MAP[annualBranch] === yearBranch) {
+      malefic.push({
+        id: 'suipo',
+        nameZh: '岁破冲太岁',
+        nameEn: 'Sui Po Grand Duke Clash',
+        tagZh: '💥 岁破',
+        tagEn: '💥 Sui Po',
+        icon: '💥',
+        badgeClass: 'bg-orange-950/70 text-orange-300 border-orange-700/60',
+        descZh: '岁星正冲太岁之年。气机剧烈激荡，主环境变迁、居所搬迁或长辈长线波动。',
+        descEn: 'Grand Duke Clash: year of energetic turbulence; triggers relocations, structural shifts, or family changes.',
+        actionZh: '化煞锦囊：以动应冲，宜主动出差、修葺房屋，切忌大兴土木或高风险对赌。',
+        actionEn: 'Safeguard Playbook: Lean into constructive movement: remodel spaces, travel, and avoid speculative bets.'
+      });
+    } else if (CLASH_MAP[annualBranch] === dayBranch) {
+      // 6. Day Clash (冲日柱夫妻宫)
+      malefic.push({
+        id: 'chongri',
+        nameZh: '日支逢冲',
+        nameEn: 'Day Pillar Clash',
+        tagZh: '⚡ 冲日',
+        tagEn: '⚡ Day Clash',
+        icon: '⚡',
+        badgeClass: 'bg-rose-950/70 text-rose-300 border-rose-700/60',
+        descZh: '夫妻宫与日主身宫逢冲。情绪易起波澜，亲密关系易生嫌隙。',
+        descEn: 'Day Branch Clash: impacts the spouse palace and personal center; calls for relationship emotional intelligence.',
+        actionZh: '化煞锦囊：对伴侣多包容体贴、聚少离多自得清净，戒翻旧账。',
+        actionEn: 'Safeguard Playbook: Practice patience with loved ones, allow personal space, and communicate clearly.'
+      });
+    }
+
+    // 7. Gu Chen & Gua Su (孤辰寡宿)
+    const guChenMap = {
+      '亥': '寅', '子': '寅', '丑': '寅',
+      '寅': '巳', '卯': '巳', '辰': '巳',
+      '巳': '申', '午': '申', '未': '申',
+      '申': '亥', '酉': '亥', '戌': '亥'
+    };
+    const guaSuMap = {
+      '亥': '戌', '子': '戌', '丑': '戌',
+      '寅': '丑', '卯': '丑', '辰': '丑',
+      '巳': '辰', '午': '辰', '未': '辰',
+      '申': '未', '酉': '未', '戌': '未'
+    };
+    if (annualBranch === guChenMap[yearBranch]) {
+      malefic.push({
+        id: 'guchen',
+        nameZh: '孤辰独处',
+        nameEn: 'Gu Chen Solitude',
+        tagZh: '🌒 孤辰',
+        tagEn: '🌒 Gu Chen',
+        icon: '🌒',
+        badgeClass: 'bg-gray-800 text-gray-300 border-gray-600',
+        descZh: '人际清冷与特立独行之宿。主知音难求、独挑大梁，利独立精研。',
+        descEn: 'Solitude Star: periods of independent work and detachment; ideal for self-directed study and solo projects.',
+        actionZh: '化煞锦囊：享受专注独处的生产力红利，不强求无意义社交。',
+        actionEn: 'Safeguard Playbook: Channel quiet solitary periods into focused productivity and deep study.'
+      });
+    }
+    if (annualBranch === guaSuMap[yearBranch]) {
+      malefic.push({
+        id: 'guasu',
+        nameZh: '寡宿自持',
+        nameEn: 'Gua Su Quietude',
+        tagZh: '🌘 寡宿',
+        tagEn: '🌘 Gua Su',
+        icon: '🌘',
+        badgeClass: 'bg-gray-800 text-gray-300 border-gray-600',
+        descZh: '内向收敛之宿。主情感疏离、清心寡欲，宜修身养性。',
+        descEn: 'Quietude Star: calls for emotional composure and self-contained inner cultivation.',
+        actionZh: '化煞锦囊：清心寡欲、温养元神，专注内心秩序。',
+        actionEn: 'Safeguard Playbook: Focus on inner calm, personal health, and cultivating emotional equilibrium.'
+      });
+    }
+
+    // 8. Xun Kong / Kong Wang (旬空)
+    const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const sIdx = STEMS.indexOf(dayStem);
+    const bIdx = BRANCHES_ORDER.indexOf(dayBranch);
+    if (sIdx !== -1 && bIdx !== -1) {
+      const xunStart = (bIdx - sIdx + 12) % 12;
+      const v1 = (xunStart - 2 + 12) % 12;
+      const v2 = (xunStart - 1 + 12) % 12;
+      const voidBranches = [BRANCHES_ORDER[v1], BRANCHES_ORDER[v2]];
+      if (voidBranches.includes(annualBranch)) {
+        malefic.push({
+          id: 'kongwang',
+          nameZh: '旬空潜沉',
+          nameEn: 'Void Branch Cycle',
+          tagZh: '🌀 旬空',
+          tagEn: '🌀 Void Cycle',
+          icon: '🌀',
+          badgeClass: 'bg-gray-800 text-gray-300 border-gray-600',
+          descZh: '岁运逢旬空，浮华退去，努力易有迟滞，宜务虚修心、沉稳积蓄。',
+          descEn: 'Void Branch: surface efforts face delays; best used for planning, introspection, and patient preparation.',
+          actionZh: '化煞锦囊：低调务实、不急功近利，做好防守不盲目铺摊子。',
+          actionEn: 'Safeguard Playbook: Maintain a low profile, avoid overextending capital, and focus on steady preparation.'
+        });
+      }
+    }
+
+    return {
+      auspicious,
+      malefic,
+      hasAuspicious: auspicious.length > 0,
+      hasMalefic: malefic.length > 0
+    };
+  }
+
+  /**
    * Calculates complete 100-year hexagram cycle progression
    * Returns array of 100 annual transit points with epoch, governing line,
-   * annual hexagram, Yin-Yang law interaction, and energy score.
+   * annual hexagram, Yin-Yang law interaction, energy score, and active deities/malefics.
    */
   static calculateLifelongCycle(bazi) {
     if (!bazi || !bazi.pillars) return [];
@@ -1078,6 +1481,8 @@ class IChingEngine {
         bazi, zn.hexagram, zn.annualStem, zn.annualBranch, age, yr, dyn, baziAdjustedScore, zn.isMutated
       );
 
+      const yearlyShenSha = this.evaluateYearlyShenSha(bazi, zn.annualStem, zn.annualBranch, age, yr);
+
       points.push({
         age,
         year: yr,
@@ -1120,6 +1525,10 @@ class IChingEngine {
         optimalActionEn: optAction.shortBadgeEn,
         optimalDirectiveZh: optAction.actionZh,
         optimalDirectiveEn: optAction.actionEn,
+        auspiciousDeities: yearlyShenSha.auspicious,
+        maleficDeities: yearlyShenSha.malefic,
+        hasAuspicious: yearlyShenSha.hasAuspicious,
+        hasMalefic: yearlyShenSha.hasMalefic,
         rawScore,
         score: baziAdjustedScore
       });

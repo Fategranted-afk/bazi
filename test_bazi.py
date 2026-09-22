@@ -18818,7 +18818,202 @@ assert run_check139.returncode == 0, f"Check 139 JSC test failed: stdout={run_ch
 
 print("✓ 139. 顶栏快速生成PDF与社交名片柔和淡雅配色、社交名片立身绝学与天机诫勉①②优缺点扩充、次席与三席照命镜鉴双栏对比（借力与避险/双语100%零中文残留）全量验证通过！")
 
-print("\n🎉 ALL 139 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+print("\n=== 140. Validating Four Major Auspicious Deities & Malefic Stars in 100-Year Hexagram Trajectory & English Readability ===")
+
+jsc_check140_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    "-e",
+    """
+    var window = this;
+    var global = this;
+    var console = { log: function() {}, warn: function() {}, error: function() {} };
+
+    // Mock minimal DOM environment
+    var elementStore = {};
+    function createElementMock(tag) {
+      return {
+        tagName: (tag || 'div').toUpperCase(),
+        children: [],
+        appendChild: function(c) { this.children.push(c); return c; },
+        style: {},
+        classList: {
+          classes: [],
+          add: function(c) { if (!this.classes.includes(c)) this.classes.push(c); },
+          remove: function(c) { this.classes = this.classes.filter(function(x) { return x !== c; }); },
+          contains: function(c) { return this.classes.includes(c); }
+        },
+        attributes: {},
+        setAttribute: function(k, v) { this.attributes[k] = String(v); },
+        getAttribute: function(k) { return this.attributes[k] || null; },
+        removeAttribute: function(k) { delete this.attributes[k]; },
+        innerHTML: '',
+        textContent: '',
+        value: '',
+        addEventListener: function(evt, handler) {
+          if (!this._listeners) this._listeners = {};
+          if (!this._listeners[evt]) this._listeners[evt] = [];
+          this._listeners[evt].push(handler);
+        },
+        trigger: function(evt) {
+          if (this._listeners && this._listeners[evt]) {
+            var self = this;
+            this._listeners[evt].forEach(function(h) { h.call(self, { clientX: 100, target: self, preventDefault: function() {} }); });
+          }
+        },
+        querySelector: function(sel) { return null; },
+        querySelectorAll: function(sel) { return []; },
+        scrollIntoView: function() {},
+        getBoundingClientRect: function() { return { left: 0, top: 0, width: 800, height: 240 }; },
+        getContext: function() {
+          return {
+            fillRect: function() {}, clearRect: function() {}, beginPath: function() {},
+            moveTo: function() {}, lineTo: function() {}, stroke: function() {}, fill: function() {},
+            arc: function() {}, measureText: function(t) { return { width: (t || '').length * 10 }; },
+            fillText: function() {}, setLineDash: function() {}, createLinearGradient: function() { return { addColorStop: function() {} }; },
+            save: function() {}, restore: function() {}, roundRect: function() {}, strokeRect: function() {}
+          };
+        }
+      };
+    }
+
+    var document = {
+      documentElement: { lang: "zh-CN", getAttribute: function() { return "dark"; }, setAttribute: function() {} },
+      body: createElementMock('body'),
+      createElement: createElementMock,
+      getElementById: function(id) {
+        if (!elementStore[id]) {
+          elementStore[id] = createElementMock('div');
+          elementStore[id].id = id;
+        }
+        return elementStore[id];
+      },
+      querySelector: function(sel) { return null; },
+      querySelectorAll: function(sel) { return []; },
+      addEventListener: function(evt, fn) { if (evt === 'DOMContentLoaded') document._domReady = fn; }
+    };
+
+    window.document = document;
+    window.addEventListener = function() {};
+    window.location = { hash: '', search: '' };
+    window.localStorage = { getItem: function() { return null; }, setItem: function() {}, removeItem: function() {} };
+
+    load('data/ditiansui.js');
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/lantaimiaoxuan.js');
+    load('data/wuxingjingji.js');
+    load('data/qianliminggao.js');
+    load('data/xulewu_commentary.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('js/i18n.js');
+    load('js/bazi-engine.js');
+    load('js/fengshui-engine.js');
+    load('js/portrait-engine.js');
+    load('js/luck-engine.js');
+    load('js/iching-engine.js');
+    load('js/synastry-engine.js');
+    load('js/chart.js');
+    load('js/career-engine.js');
+    load('data/historical_figures.js');
+    load('js/history-engine.js');
+    load('js/app.js');
+
+    if (document._domReady) document._domReady();
+
+    // 1. Validate IChingEngine.evaluateYearlyShenSha
+    var testBazi = {
+      dayMaster: '己',
+      pillars: {
+        year: { stem: '丙', branch: '午' },
+        month: { stem: '丁', branch: '酉' },
+        day: { stem: '己', branch: '亥' },
+        hour: { stem: '乙', branch: '亥' }
+      }
+    };
+
+    // Case A: 2029 (You year) -> Wen Chang (for Ji day master is You) & Tian Yi (for Bing year stem is You)
+    var ssYou = IChingEngine.evaluateYearlyShenSha(testBazi, '己', '酉', 4, 2029);
+    if (!ssYou.hasAuspicious) throw new Error('You year should have auspicious deities');
+    var hasWenChang = ssYou.auspicious.some(function(d) { return d.id === 'wenchang'; });
+    if (!hasWenChang) throw new Error('You year missing Wen Chang for Ji day master');
+    var hasTianYi = ssYou.auspicious.some(function(d) { return d.id === 'tianyi'; });
+    if (!hasTianYi) throw new Error('You year missing Tian Yi for Bing year stem');
+
+    // Case B: 2032 (Zi year) -> Tian Yi (for Ji day master is Zi), Zai Sha (for Wu year branch is Zi), Sui Po (Wu clashes Zi)
+    var ssZi = IChingEngine.evaluateYearlyShenSha(testBazi, '壬', '子', 7, 2032);
+    if (!ssZi.hasAuspicious) throw new Error('Zi year should have Tian Yi nobleman for Ji day master');
+    if (!ssZi.hasMalefic) throw new Error('Zi year should have malefic stars for Wu year branch');
+    var hasZaiSha = ssZi.malefic.some(function(d) { return d.id === 'zaisha'; });
+    var hasSuiPo = ssZi.malefic.some(function(d) { return d.id === 'suipo'; });
+    if (!hasZaiSha) throw new Error('Zi year missing Zai Sha for Wu branch');
+    if (!hasSuiPo) throw new Error('Zi year missing Sui Po clash for Wu branch');
+
+    // Case C: 2025 (Si year) -> Yang Ren (for Ji day master is Si) & Yi Ma (for Hai day branch is Si)
+    var ssSi = IChingEngine.evaluateYearlyShenSha(testBazi, '乙', '巳', 20, 2025);
+    var hasYangRen = ssSi.malefic.some(function(d) { return d.id === 'yangren'; });
+    var hasYiMa = ssSi.auspicious.some(function(d) { return d.id === 'yima'; });
+    if (!hasYangRen) throw new Error('Si year missing Yang Ren for Ji day master');
+    if (!hasYiMa) throw new Error('Si year missing Yi Ma for Hai day branch');
+
+    // 2. Validate calculateLifelongCycle incorporates deities
+    var cycle = IChingEngine.calculateLifelongCycle(testBazi);
+    if (!cycle || cycle.length !== 100) throw new Error('Lifelong cycle must have exactly 100 points');
+    for (var i = 0; i < cycle.length; i++) {
+      var pt = cycle[i];
+      if (!Array.isArray(pt.auspiciousDeities)) throw new Error('Point ' + i + ' missing auspiciousDeities array');
+      if (!Array.isArray(pt.maleficDeities)) throw new Error('Point ' + i + ' missing maleficDeities array');
+      if (typeof pt.hasAuspicious !== 'boolean') throw new Error('Point ' + i + ' missing hasAuspicious boolean');
+      if (typeof pt.hasMalefic !== 'boolean') throw new Error('Point ' + i + ' missing hasMalefic boolean');
+    }
+
+    // 3. Test renderShenShaTelemetryContent in ZH & EN
+    var samplePt = cycle.find(function(p) { return p.hasAuspicious && p.hasMalefic; }) || cycle[3];
+    var zhShenShaHtml = window.renderShenShaTelemetryContent(samplePt, false);
+    if (!zhShenShaHtml.includes('命造神煞岁运鉴照')) throw new Error('ZH Shen Sha missing title');
+    if (!zhShenShaHtml.includes('问军师今年吉神何时当值')) throw new Error('ZH Shen Sha missing advisor button');
+
+    var enShenShaHtml = window.renderShenShaTelemetryContent(samplePt, true);
+    if (!enShenShaHtml.includes('Annual Auspicious Deities & Malefic Stars Telemetry')) throw new Error('EN Shen Sha missing title');
+    if (!enShenShaHtml.includes('Consult Advisor on Deities')) throw new Error('EN Shen Sha missing advisor button');
+
+    var zhReg = /[\\u4e00-\\u9fa5]/;
+    if (zhReg.test(enShenShaHtml)) {
+      var leaked = enShenShaHtml.match(/[\\u4e00-\\u9fa5]/g).join('');
+      throw new Error('Residual Chinese found in EN Shen Sha telemetry: ' + leaked);
+    }
+
+    // 4. Test Pattern Exegesis in EN does not fall through to [Wealth Pattern] for Official & Resource
+    var pAnalysis = PortraitEngine.generatePatternExegesis('Official & Resource Pattern', '己', { totalScore: 65, isStrong: true }, null, 1, 30);
+    if (pAnalysis.summaryEn.includes('[Wealth Pattern]')) {
+      throw new Error('English summary incorrectly defaulted to [Wealth Pattern] instead of Official & Resource');
+    }
+    if (!pAnalysis.summaryEn.includes('Official & Resource')) {
+      throw new Error('English summary missing proper Official & Resource pattern name');
+    }
+
+    // 5. Verify Advisor handler exists on window
+    if (typeof window.handleAdvisorDeityInquiry !== 'function') {
+      throw new Error('window.handleAdvisorDeityInquiry missing');
+    }
+    if (typeof window.openAdvisorWithPrompt !== 'function') {
+      throw new Error('window.openAdvisorWithPrompt missing');
+    }
+    """
+]
+
+run_check140 = subprocess.run(jsc_check140_cmd, capture_output=True, text=True)
+assert run_check140.returncode == 0, f"Check 140 JSC test failed: stdout={run_check140.stdout} stderr={run_check140.stderr}"
+
+print("✓ 140. 百岁岁运六十四卦全相神煞鉴照（四大吉神与凶曜煞位全相推演/交互联动调阅/军师当值速问/英文100%零中文残留/格局英译校准）全量验证通过！")
+
+print("\n🎉 ALL 140 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+
 
 
 

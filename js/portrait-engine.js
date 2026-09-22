@@ -3848,113 +3848,137 @@ class PortraitEngine {
    */
   static generatePatternExegesis(patNameZh, dm, vigor, bazi, rank = 1, weightPct = null) {
     const pat = patNameZh || '';
+    const patLower = String(pat).toLowerCase();
+    const cleanPatEn = (this.getPatternEn ? this.getPatternEn(pat) : pat).replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Dominant Pattern';
 
-    // Determine archetype category
+    // Determine archetype category with robust Chinese & English pattern recognition
     let type = 'wealth';
-    if (pat.includes('官') && !pat.includes('伤官') && !pat.includes('食神生财') && !pat.includes('财旺生官')) {
+    if ((/官.*印|杀.*印|印.*官|印.*杀/.test(pat)) ||
+        (/official.*resource|resource.*official|officer.*seal|seal.*officer|authority.*resource/i.test(patLower))) {
+      type = 'officer_seal';
+    } else if ((pat.includes('官') && !pat.includes('伤官') && !pat.includes('食神生财') && !pat.includes('财旺生官')) ||
+               /direct officer|officer pattern|governance/i.test(patLower)) {
       type = 'officer';
-    } else if (pat.includes('杀') || pat.includes('偏官') || pat.includes('魁罡')) {
+    } else if (pat.includes('杀') || pat.includes('偏官') || pat.includes('魁罡') ||
+               /seven killing|seven-killing|killings/i.test(patLower)) {
       type = 'officer';
-    } else if (pat.includes('财')) {
+    } else if (pat.includes('财') || /wealth|capital/i.test(patLower)) {
       type = 'wealth';
-    } else if (pat.includes('印') || pat.includes('枭') || pat.includes('倒食')) {
+    } else if (pat.includes('印') || pat.includes('枭') || pat.includes('倒食') ||
+               /resource|seal|indirect resource|direct resource/i.test(patLower)) {
       type = 'seal';
-    } else if (pat.includes('伤') || pat.includes('食')) {
+    } else if (pat.includes('伤') || pat.includes('食') ||
+               /hurting officer|eating god|output|creator/i.test(patLower)) {
       type = 'output';
-    } else if (pat.includes('刃') || pat.includes('羊刃') || pat.includes('阳刃')) {
+    } else if (pat.includes('刃') || pat.includes('羊刃') || pat.includes('阳刃') ||
+               /yang blade|blade/i.test(patLower)) {
       type = 'blade';
-    } else if (pat.includes('禄') || pat.includes('月劫') || pat.includes('比肩') || pat.includes('劫财')) {
+    } else if (pat.includes('禄') || pat.includes('月劫') || pat.includes('比肩') || pat.includes('劫财') ||
+               /prosperity|companion|peer/i.test(patLower)) {
       type = 'prosperity';
-    } else if (pat.includes('专旺') || pat.includes('曲直') || pat.includes('炎上') || pat.includes('稼穑') || pat.includes('从革') || pat.includes('润下') || pat.includes('从')) {
+    } else if (pat.includes('专旺') || pat.includes('曲直') || pat.includes('炎上') || pat.includes('稼穑') || pat.includes('从革') || pat.includes('润下') || pat.includes('从') ||
+               /special|follow dominant|dominant flow/i.test(patLower)) {
       type = 'special';
     } else {
       type = 'wealth';
     }
 
     const exegesisData = {
+      'officer_seal': {
+        nameZh: '官印相生格 (杀印相生 / 官印双全 / 崇文重制)',
+        nameEn: 'Official & Resource Pattern (Institutional Governance & Trusted Authority)',
+        summaryZh: `本命以【${pat}】统帅全相大局。官为法度威仪，印为道德声望与深厚学养；官生印、印护身，化权为公信。《滴天髓》公推为“富贵双全、清流砥柱”之首选大格。天生兼具制度建构魄力与学者长者之风，受高层倚重、为同侪表率。`,
+        summaryEn: `Led by the [${cleanPatEn}], this chart unites institutional authority with strategic wisdom. The Official establishes governance and structural standards, while the Resource provides intellectual depth and moral credibility. You possess the natural poise of a senior decision-maker who earns institutional respect, builds lasting systems, and leads with high standards.`,
+        favorableZh: '【格之可取 · 20% 核心胜手】卓越的组织协调力、战略信用资本与定海神针般的统帅定力。善于在制度框架内整合各方利益，以崇高声誉与过硬履历化解尖锐对立，深得权威尊长信任，是复杂组织不可或缺的掌舵人。',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Exceptional institutional credibility, strategic consensus-building, and calm leadership poise. You navigate complex organizational governance with ease, resolve gridlocks with professional integrity, and naturally attract senior executive trust.',
+        tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌财星破印（见利忘义毁信誉）、贪恋浮名与官僚形式主义。切忌因短期利益妥协职业底线；严防被繁文缛节与派系内斗牵扯精力，切忌优柔寡断错失商业变现实操时机。',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Compromising professional ethics for short-term gains, becoming bogged down in bureaucratic formalities, and getting entangled in factional office politics. Never let procedural perfectionism delay critical commercial execution.',
+        paretoConclusionZh: '【二八法则 · 白话实战定论】一生绝不要把80%的精力耗费在“虚名应酬、无休止派系折冲、琐碎流程推诿”上；你真正的赢面只在20%——“坚守专业底线与个人信用金字招牌，以不可替代的制度成果和高水准交付服人，做大平台不可或缺的定海神针与执旗人”。',
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Don\'t squander 80% of your energy on ceremonial networking, bureaucratic delays, or political factionalism. Your true winning edge lies in the vital 20%: guard your professional credibility as an inviolable asset, deliver flawless institutional outcomes, and anchor yourself as an indispensable pillar of trust.'
+      },
       'wealth': {
         nameZh: '财格 (正财 / 偏财 / 财旺生官 / 食伤生财)',
         nameEn: 'Wealth Pattern (Direct / Indirect / Capital Generation)',
         summaryZh: `本命以【${pat}】坐镇第一核心主枢。在《子平真诠》与《渊海子平》中，财为养命之源，更是才干组织调度与现实资源变现的能量场。财格成器者，精髓不在贪恋浮财，而在对市场供需有天然敏锐的嗅觉、算度和超强的落地执行力。`,
-        summaryEn: `Anchored by the [Wealth Pattern], the natal architecture channels vital energy into resource orchestration, tangible commercial pragmatism, and compounding economic value. The essence lies in razor-sharp market instincts, calculated risk management, and rapid asset monetization.`,
+        summaryEn: `Governed by the [${cleanPatEn}], this chart is engineered for resource orchestration, commercial pragmatism, and compounding economic value. Your core strength is a sharp eye for market supply and demand, disciplined risk calculation, and the drive to transform ideas into profitable reality.`,
         favorableZh: '【格之可取 · 20% 核心胜手】极度敏锐的商业嗅觉、精算意识与资产变现穿透力。善于洞悉商业供需缝隙，将无形的才智、技术或人脉迅速打造成可持续自我造血的商业闭环与稳定现金流；处事务实果敢、不务虚名，只打十拿九稳的有准备之仗。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Exceptional commercial acuity and cashflow execution. Natural talent for transforming intangible ideas and networks into compounding productive assets with rigorous operational pragmatism.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Exceptional commercial acumen and cash-flow discipline. You excel at spotting unmet market needs, building self-sustaining business loops, and turning intangible skills or connections into reliable, compounding revenue.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌比劫夺财、盲目加杠杆与哥们义气式合伙。切忌在无制度防护下盲信他人借贷担保、挂名代持或跟风赌徒式投机；身弱逢旺财时，尤忌被虚妄物欲牵着鼻子走，导致精力透支、健康暗亏与后方动荡。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Over-leveraged speculation, unhedged financial guarantees, and informal vanity partnerships. Never succumb to peer-pressure lending; strictly prevent material chasing from draining health and family stability.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Over-leveraged speculation, unhedged financial guarantees, and informal partnerships based on goodwill rather than contracts. Never succumb to peer-pressure lending, and keep financial pursuits from compromising health or family stability.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】一生绝不要把80%的精力耗费在“假合伙、面子借款、盲目加杠杆”这等破财烂事上；你真正的赢面只在20%——“守死现金流生命线，专注于打造能持续自我造血的优质资产闭环，把好法务与财务风控关，只打十拿九稳的富裕仗”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Stop wasting 80% of mental bandwidth on loose partnerships, vanity loans, or speculative debt. Your 100% winning edge lies in the vital 20%: guard your cashflow lifeline with ironclad contracts, build self-sustaining cash assets, and only take calculated, high-margin opportunities.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Don\'t squander mental bandwidth on loose partnerships, vanity loans, or speculative debt. Your 100% winning edge lies in the vital 20%: guard your cash-flow lifeline with ironclad contracts, build self-sustaining cash assets, and take only calculated, high-margin opportunities.'
       },
       'officer': {
         nameZh: '官杀格 (正官格 / 七杀格 / 杀印相生 / 食神制杀)',
         nameEn: 'Officer & Seven Killings Pattern (Institutional Authority & Sovereign Execution)',
         summaryZh: `本命以【${pat}】执掌全相帅印。官杀为秩序、法纪、威权与克难攻坚之象征。《子平真诠》定论：正官清纯主清贵合规，七杀威猛贵在制化得宜。天生具备建构规则、驾驭复杂危机与统御全局的领袖骨相。`,
-        summaryEn: `Led by the [Officer & Seven Killings Pattern], this chart commands structural authority, institutional discipline, and crisis resilience. Its core power lies in establishing order amidst turbulence, enforcing strategic standards, and leading through high-stakes accountability.`,
+        summaryEn: `Led by the [${cleanPatEn}], this chart commands structural authority, institutional discipline, and crisis resilience. Its core power lies in establishing order amidst turbulence, enforcing strategic standards, and leading through high-stakes accountability.`,
         favorableZh: '【格之可取 · 20% 核心胜手】强大的大局担当、制度统筹魄力与危机决断力。临危不乱、处变不惊，在混沌局面中能迅速定规立约、整合各方力量攻城拔寨，自带令人信服的组织领袖威严与公信力。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Unshakeable crisis leadership, structural governance, and decisive operational clarity. Masters systemic coordination and holds institutional standards that rally teams through turbulence.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Unshakeable crisis leadership, structural governance, and decisive operational clarity. Masters systemic coordination and holds institutional standards that rally teams through turbulence.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌官杀混杂目标摇摆、滥用威权与逾越合规红线。切忌恃才刚愎、沉迷于人际权力争斗与情绪化对耗；严防急躁暴怒树敌招致暗箭攻讦，或因疏忽引发法律官非。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Authoritarian overreach, petty bureaucratic infighting, and legal compliance violations. Avoid erratic command shifts and emotional confrontation that spark avoidable political vendettas.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Authoritarian overreach, petty bureaucratic infighting, and legal compliance violations. Avoid erratic command shifts and emotional confrontation that spark avoidable political vendettas.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】不要把80%的宝贵算力浪费在“下属琐事较劲、人际站队攻讦、情绪化蛮干”上；你真正的赢面只在20%——“以不可挑剔的专业成果和严密制度立身，抓大放小、令行禁止，把内心的杀伐决断转化为公信力，用规则成事，绝不凭个人情绪蛮干”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Cease exhausting 80% of leadership bandwidth on micromanagement, factional friction, or personal grudges. Your vital 20% lever is ironclad institutional integrity and flawless execution—channel decisiveness into objective governance rather than subjective emotion.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Cease exhausting leadership bandwidth on micromanagement, factional friction, or personal grudges. Your vital 20% lever is ironclad institutional integrity and flawless execution—channel decisiveness into objective governance rather than subjective emotion.'
       },
       'seal': {
         nameZh: '印绶格 (正印格 / 偏印格 / 伤官配印 / 官印双全)',
         nameEn: 'Resource Seal Pattern (Knowledge Moat & Strategic Counsel)',
         summaryZh: `本命以【${pat}】统领全盘气象。印者生我庇我，代表深厚学养、系统认知、社会声望与避险护体之福德。《滴天髓》云“清纯印绶，名播九重”，天生具备学者鸿儒风范、深邃洞察力与极高的专业信任壁垒。`,
-        summaryEn: `Governed by the [Resource Seal Pattern], the native possesses deep scholarly intellect, long-term conceptual synthesis, and strong institutional reputation. This archetype thrives through intellectual moats, strategic counsel, and resilient protective endurance.`,
+        summaryEn: `Governed by the [${cleanPatEn}], this chart is distinguished by deep intellect, strategic foresight, and institutional credibility. You naturally build intellectual moats, offer trusted counsel, and prevail through patient endurance.`,
         favorableZh: '【格之可取 · 20% 核心胜手】顶级的认知系统建构力、不可替代的专业壁垒与信用资产。善于深钻某一专业领域建立行业权威，享有极高威望与贵人信任背书，擅长以静制动、化险为夷。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Formidable intellectual architecture, specialized mastery, and immaculate professional credibility. Naturally attracts mentorship and commands deep institutional trust.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Formidable intellectual architecture, specialized mastery, and immaculate professional credibility. Naturally attracts mentorship and commands deep institutional trust.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌“财星破印”见利忘义、脱离实际的书斋清高与因循守旧。切忌为短期蝇头小利牺牲长线声誉；严防在舒适圈内无限推演却迟迟不落地，陷入自命不凡却缺乏变现力的精神内耗。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Compromising reputation for short-term gains, ivory-tower detachment, and chronic over-theorizing. Beware of inertia and complacency that prevent intellectual knowledge from producing practical value.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Compromising reputation for short-term gains, ivory-tower detachment, and chronic over-theorizing. Beware of inertia and complacency that prevent intellectual knowledge from producing practical value.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】一生绝不要把80%的脑力耗费在“脱离市场的清高空想、追求虚妄的理论完美”中；你真正的赢面只在20%——“死磕你的核心专业壁垒与信用牌照，以作品和硬核交付立世，迅速给学术认知找到商业实体载体，用真金白银检验真知灼见”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Never squander 80% of mental energy on ivory-tower hesitation or unmonetized theory. Your vital 20% lever: build an impenetrable technical moat, anchor credibility in concrete products or services, and let real-world market traction validate your wisdom.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Never squander mental energy on ivory-tower hesitation or unmonetized theory. Your vital 20% lever: build an impenetrable technical moat, anchor credibility in concrete products or services, and let real-world market traction validate your wisdom.'
       },
       'output': {
         nameZh: '食伤格 (食神格 / 伤官格 / 食伤生财 / 食神制杀)',
         nameEn: 'Output Pattern (Innovation Breakthrough & Creative Value Creation)',
         summaryZh: `本命以【${pat}】发越全相秀气。食伤为元神才华智识之喷薄，主灵性悟性、审美创造、破局穿透力与商业变现。《渊海子平》誉为“聪明不过伤官，机变不过食神”，天生具备打破常规、重构商业范式的革新锐气。`,
-        summaryEn: `Governed by the [Output Pattern], the native channels brilliant creative intellect, disruptive vision, and expressive clarity. An agile innovator who penetrates outdated industry paradigms and transforms ideas into high-margin offerings.`,
+        summaryEn: `Governed by the [${cleanPatEn}], this chart channels brilliant creative intellect, disruptive vision, and expressive clarity. An agile innovator who penetrates outdated industry paradigms and transforms ideas into high-margin offerings.`,
         favorableZh: '【格之可取 · 20% 核心胜手】超常的灵感爆发力、爆款打造力与范式破局穿透力。擅长在传统死局中另辟蹊径，能迅速将技术创新、审美内容或商业模式转化为高溢价核心产品，极具个人魅力与破圈势能。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Extraordinary creative velocity, disruptive product design, and persuasive expressive reach. Excels at turning novel insights into high-value intellectual property and differentiated market offerings.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Extraordinary creative velocity, disruptive product design, and persuasive expressive reach. Excels at turning novel insights into high-value intellectual property and differentiated market offerings.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌“伤官见官”口无遮拦、恃才傲物公然挑战规则底线。切忌在公开场合硬顶上级或破坏行业潜规则；严防兴趣过泛浅尝辄止，因随性任性导致项目烂尾与情绪反刍。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Confrontational arrogance, undisciplined focus, and reckless defiance of regulatory baselines. Avoid alienating superiors and squandering energy on endless emotional debates.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Confrontational arrogance, undisciplined focus, and reckless defiance of regulatory baselines. Avoid alienating superiors and squandering energy on endless emotional debates.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】万万不要把80%的才华消耗在“当面硬怼领导、与杠精辩论、无休止发泄情绪”上；你真正的赢面只在20%——“管住任性抱怨的嘴，把全部惊人灵感与穿透力倾注于打磨不可替代的硬核产品或杀手级业务，用无可辩驳的商业战果封住所有质疑者的嘴”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Stop expending 80% of your genius on arguing with cynics or resisting institutional authority. Your vital 20% winning lever: master your impulses and channel 100% of your disruptive talent into ship-ready, world-class products that make criticism irrelevant.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Stop expending your genius on arguing with cynics or resisting institutional authority. Your vital 20% winning lever: master your impulses and channel 100% of your disruptive talent into ship-ready, world-class products that make criticism irrelevant.'
       },
       'blade': {
         nameZh: '阳刃格 (羊刃格 / 月刃专位 / 威权大将)',
         nameEn: 'Yang Blade Pattern (Martial Breakthrough & Crisis Resolution)',
         summaryZh: `本命以【${pat}】坐镇全相中枢。阳刃为日元极旺之兵戈锋刃，司生杀夺予之生克大权。《三命通会》确立铁律：羊刃至刚至烈，具有万夫不当之勇。天生具有雷厉风行的铁腕魄力与在狂风暴雨中逆风翻盘的钢铁意志。`,
-        summaryEn: `Governed by the [Yang Blade Pattern], this chart embodies fierce courage, supreme grit, and uncompromising operational momentum. A battlefield commander who thrives in high-stakes environments and conquers impossible bottlenecks through relentless will.`,
+        summaryEn: `Governed by the [${cleanPatEn}], this chart embodies fierce courage, supreme grit, and uncompromising operational momentum. A battlefield commander who thrives in high-stakes environments and conquers impossible bottlenecks through relentless will.`,
         favorableZh: '【格之可取 · 20% 核心胜手】绝境突围意志、极限制衡魄力与大将执行穿透力。在重大危机或行业大洗牌面前，常人胆怯退缩，而命主能迎难而上爆发出摧枯拉朽的攻坚力，敢向一切积弊挥刀重组。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Unshakeable crisis endurance, fierce execution, and strategic breakthrough power. Thrives when navigating corporate restructuring, turnaround turnpikes, and fiercely contested markets.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Unshakeable crisis endurance, fierce execution, and strategic breakthrough power. Thrives when navigating corporate restructuring, turnaround turnpikes, and fiercely contested markets.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌盲目逞强斗狠、急躁暴戾与意气用事。切忌在非原则小事上孤注一掷与对手恶性互耗；严防刚愎自用听不进反对意见，在人生高光顺境期因极度自满而遭致断崖式倾覆。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Impulsive combativeness, reckless brinkmanship, and tyrannical stubbornness. Never risk everything on trivial provocations or let unchecked hubris trigger self-sabotage.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Impulsive combativeness, reckless brinkmanship, and tyrannical stubbornness. Never risk everything on trivial provocations or let unchecked hubris trigger self-sabotage.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】万万不可把80%的精力用在“逞一时意气之勇、与人硬碰硬斗狠互耗”上；你真正的赢面只在20%——“以冰冷的合规法纪为利刃套上刀鞘，借平台规则与团队合力行生杀予夺，战则必胜，避开任何伤敌一千自损八百的冲动自残”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Never expend 80% of your martial grit on petty fights or ego-driven showdowns. Your vital 20% lever: encase your razor edge in ironclad legal discipline and institutional strategy—fight only decisive battles where total triumph is assured.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Never expend your martial grit on petty fights or ego-driven showdowns. Your vital 20% lever: encase your razor edge in ironclad legal discipline and institutional strategy—fight only decisive battles where total triumph is assured.'
       },
       'prosperity': {
         nameZh: '建禄月劫格 (身旺自立 / 专旺创业)',
         nameEn: 'Establish Prosperity Pattern (Independent Pioneer & Grounded Endurance)',
         summaryZh: `本命以【${pat}】统摄全盘底盘。建禄为日元临官自立之位，主身健体朗、自力更生、不求他人。《子平真诠》确立：建禄最喜透财透官，方能化一身磅礴生机为立国经邦之大业，具备超强的创业开拓韧性。`,
-        summaryEn: `Crowned by the [Establish Prosperity Pattern], the native possesses self-reliant stamina, immense work ethic, and relentless pioneering resilience. Designed to build foundational enterprises from the ground up without relying on inherited privilege.`,
+        summaryEn: `Grounded by the [${cleanPatEn}], this chart possesses self-reliant stamina, immense work ethic, and relentless pioneering resilience. Designed to build foundational enterprises from the ground up without relying on inherited privilege.`,
         favorableZh: '【格之可取 · 20% 核心胜手】磐石般的耐受力、白手起家的创业耐性与极强的生命自洽。不惧从零开拓新领地，擅长在最艰苦的基础盘上打地基、建团队，用日复一日的稳定复利构筑坚不可摧的基本盘。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Ironclad stamina, pioneering self-reliance, and compounding operational grit. Masters grassroots organization, zero-to-one business building, and systematic endurance.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Ironclad stamina, pioneering self-reliance, and compounding operational grit. Masters grassroots organization, zero-to-one business building, and systematic endurance.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌亲力亲为大包大揽、单打独斗拒绝分润与面子买单。切忌沦为无休止劳碌的苦力角色；严防被低效社交和亲友借贷拖垮，在团队管理中切忌独占收益导致伙伴反目。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Micromanaging exhaustion, refusal to share equity/profits, and enabling freeloading associates. Do not let personal pride trap you in relentless manual labor.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Micromanaging exhaustion, refusal to share equity/profits, and enabling freeloading associates. Do not let personal pride trap you in relentless manual labor.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】切忌在80%的“单打独斗、亲力亲为劳碌、面子买单”中掏空自己；你真正的赢面只在20%——“依托自身打不死的坚韧底盘，主动搭建现代分润机制与利益共同体，借制度与资本的杠杆做大蛋糕，从冲锋陷阵的干将跃升为运筹帷幄的掌盘人”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Avoid exhausting 80% of your energy as an isolated, solo workhorse. Your vital 20% lever: leverage your unshakeable work ethic to build scalable systems, align team incentives through profit-sharing, and transition from frontline fighter to master operator.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Avoid exhausting your energy as an isolated, solo workhorse. Your vital 20% lever: leverage your unshakeable work ethic to build scalable systems, align team incentives through profit-sharing, and transition from frontline fighter to master operator.'
       },
       'special': {
         nameZh: '专旺从格类 (纯阳纯阴 / 专旺成势 / 弃命从顺)',
         nameEn: 'Special Dominant & Follow Pattern (Focused Elemental Momentum)',
         summaryZh: `本命入【${pat}】专一纯粹大格。五行气势偏聚一方，或专旺成林，或从其强盛之势。《滴天髓》确立千古铁律：“从得真者只论从，专旺得局只论顺。”能量纯粹无驳杂，顺其天命大势则能成非凡巨业。`,
-        summaryEn: `Belonging to the [Special Dominant & Follow Pattern], this chart exhibits high elemental concentration. Guided by the classical canon Di Tian Sui, supreme breakthroughs occur through unyielding alignment with the single dominant elemental current rather than forced compromise.`,
+        summaryEn: `Belonging to the [${cleanPatEn}], this chart exhibits high elemental concentration. Guided by the classical canon Di Tian Sui, supreme breakthroughs occur through unyielding alignment with the single dominant elemental current rather than forced compromise.`,
         favorableZh: '【格之可取 · 20% 核心胜手】极度纯粹的单点突破穿透力与时代势能共振。一旦锁定符合本命五行气数的赛道，能以数倍于常人的势能集中倾泻于一点，迅速在细分领域建立压倒性绝对优势。',
-        favorableEn: 'Core Strengths to Harness (20% Pareto Lever): Extreme thematic focus and overwhelming momentum resonance. When aligned with its natural industry domain, the chart achieves categorical dominance and compounding market power.',
+        favorableEn: 'Core Strategic Strengths (20% Leverage): Extreme thematic focus and overwhelming momentum resonance. When aligned with its natural industry domain, the chart achieves categorical dominance and compounding market power.',
         tabooZh: '【需要避讳的地方 · 80% 损耗暗礁】最忌强行求全责备、逆势折腾与分散精力。切忌在中途为了迎合平庸的“全面发展”而强补弱项；严防与时代宏观趋势逆向抗衡，导致一着不慎全盘皆输。',
-        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Risk): Resisting macro currents, forced mediocrity, and diluting core strengths. Never derail focused momentum by chasing unrelated diversifications.',
+        tabooEn: 'Fatal Taboos to Avoid (80% Waste & Hazards): Resisting macro currents, forced mediocrity, and diluting core strengths. Never derail focused momentum by chasing unrelated diversifications.',
         paretoConclusionZh: '【二八法则 · 白话实战定论】一生绝不要把80%的精力耗费在“修补短板、迎合平庸大流”的徒劳努力中；你真正的赢面只在20%——“顺应天命的单一极大优势，将核心长板打磨到极致锋利，全仓借势时代大潮，顺天应人，做单点破局的行业霸主”。',
-        paretoConclusionEn: 'Pareto Executive Direct Takeaway: Stop wasting 80% of your life trying to patch minor weaknesses or blend into the crowd. Your 20% winning lever: sharpen your single dominant unfair advantage to absolute perfection, ride the macro supercycle, and dominate your chosen domain.'
+        paretoConclusionEn: 'Executive Playbook (Lifelong Strategic Rule): Stop wasting your life trying to patch minor weaknesses or blend into the crowd. Your 20% winning lever: sharpen your single dominant unfair advantage to absolute perfection, ride the macro supercycle, and dominate your chosen domain.'
       }
     };
 

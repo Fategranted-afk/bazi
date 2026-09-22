@@ -1943,20 +1943,32 @@ const LuckEngine = (function() {
       let focusEn = "";
 
       if (rating === "auspicious") {
-        focusZh = "主动突破 · 乘势扩张";
-        focusEn = "Active Expansion · Strategic Breakthrough";
-        directiveZh = `${age}岁（${year} ${ganZhi}年）临【${tenGod}】，能量与财禄双星高照。此年当顺应大势，果断开拓新增长极、落实重大职业晋升或战略投资，以进为御，奠定未来数年复利壁垒。`;
-        directiveEn = `At age ${age} (${year} ${ganZhiEn}), favored by [${tenGodEn}], vitality and fortune peak. Decisively pursue expansion, promotions, and strategic investments to establish high-leverage compound advantage.`;
+        focusZh = (age <= 6) ? "生机勃发 · 顺遂成长" : "主动突破 · 乘势扩张";
+        focusEn = (age <= 6) ? "Vibrant Vitality · Healthy Growth" : "Active Expansion · Strategic Breakthrough";
+        directiveZh = (age <= 6)
+          ? `${age}岁（${year} ${ganZhi}年）逢【${tenGod}】，福星护佑，元气充沛，利于健康茁壮成长与开蒙启智。`
+          : `${age}岁（${year} ${ganZhi}年）临【${tenGod}】，能量与财禄双星高照。此年当顺应大势，果断开拓新增长极、落实重大职业晋升或战略投资，以进为御，奠定未来数年复利壁垒。`;
+        directiveEn = (age <= 6)
+          ? `At age ${age} (${year} ${ganZhiEn}), favored by [${tenGodEn}], vital energy is strong and harmonious, supporting healthy physical growth and early developmental milestones.`
+          : `At age ${age} (${year} ${ganZhiEn}), favored by [${tenGodEn}], vitality and opportunity peak. Decisively pursue expansion, career milestones, and high-conviction strategic investments.`;
       } else if (rating === "challenging") {
-        focusZh = "守正防守 · 筑牢底线";
-        focusEn = "Prudent Defense · Boundary Preservation";
-        directiveZh = `${age}岁（${year} ${ganZhi}年）见【${alerts.length > 0 ? alerts.join(" / ") : tenGod}】，气机激荡震荡。此年战略核心在“防守反击与固本培元”，切忌盲目扩大杠杆，合同细节务求严密，注意脾胃睡眠调理。`;
-        directiveEn = `At age ${age} (${year} ${ganZhiEn}), navigating [${alertsEn.length > 0 ? alertsEn.join(" / ") : tenGodEn}], energetic currents fluctuate. Focus strictly on capital preservation, risk containment, and vitality restoration; avoid excessive leverage.`;
+        focusZh = (age <= 6) ? "细心呵护 · 稳固根本" : "守正防守 · 筑牢底线";
+        focusEn = (age <= 6) ? "Attentive Care · Solid Health" : "Prudent Defense · Boundary Preservation";
+        directiveZh = (age <= 6)
+          ? `${age}岁（${year} ${ganZhi}年）见【${alerts.length > 0 ? alerts.join(" / ") : tenGod}】，气机有所波动，当悉心照料饮食起居，固本培元。`
+          : `${age}岁（${year} ${ganZhi}年）见【${alerts.length > 0 ? alerts.join(" / ") : tenGod}】，气机激荡震荡。此年战略核心在“防守反击与固本培元”，切忌盲目扩大杠杆，合同细节务求严密，注意脾胃睡眠调理。`;
+        directiveEn = (age <= 6)
+          ? `At age ${age} (${year} ${ganZhiEn}), navigating [${alertsEn.length > 0 ? alertsEn.join(" / ") : tenGodEn}], physical energy fluctuates. Prioritize attentive daily care, wholesome routines, and restorative sleep.`
+          : `At age ${age} (${year} ${ganZhiEn}), navigating [${alertsEn.length > 0 ? alertsEn.join(" / ") : tenGodEn}], energetic currents fluctuate. Focus strictly on capital preservation, risk containment, and steady personal discipline.`;
       } else {
-        focusZh = "稳健深耕 · 蓄势待发";
-        focusEn = "Steady Cultivation · Poised Readiness";
-        directiveZh = `${age}岁（${year} ${ganZhi}年）气数平稳中和，逢【${tenGod}】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`;
-        directiveEn = `At age ${age} (${year} ${ganZhiEn}), energy flows evenly under [${tenGodEn}]. Ideal for refining technical craft, consolidating operational systems, and compounding core skills in preparation for the next growth surge.`;
+        focusZh = (age <= 6) ? "温和蓄养 · 启智萌发" : "稳健深耕 · 蓄势待发";
+        focusEn = (age <= 6) ? "Gentle Nurturing · Steady Growth" : "Steady Cultivation · Poised Readiness";
+        directiveZh = (age <= 6)
+          ? `${age}岁（${year} ${ganZhi}年）气数平和，逢【${tenGod}】值守，福德自持，宜顺应自然、健康乐活。`
+          : `${age}岁（${year} ${ganZhi}年）气数平稳中和，逢【${tenGod}】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`;
+        directiveEn = (age <= 6)
+          ? `At age ${age} (${year} ${ganZhiEn}), life energy flows gently under [${tenGodEn}], fostering peaceful well-being and natural, healthy growth.`
+          : `At age ${age} (${year} ${ganZhiEn}), energy flows steadily under [${tenGodEn}]. A prime period for deepening core craft, building professional reputation, and compounding your foundational strengths.`;
       }
 
       let annualHex = null;
