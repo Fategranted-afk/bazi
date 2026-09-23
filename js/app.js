@@ -9845,8 +9845,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const isDark = !document.documentElement.classList.contains('light-theme');
       cachedPhaseEngine.renderVectorField(a, b, c, gamma, isDark);
-      if (cachedPhaseDerived && cachedPhaseDerived.trajectoryPoints) {
-        cachedPhaseEngine.renderTrajectory(cachedPhaseDerived.trajectoryPoints, fourPillarsActiveAge || 30, isDark);
+
+      const score100 = (currentBaziResult && currentBaziResult.zipingScore && typeof currentBaziResult.zipingScore.totalScore === 'number')
+        ? currentBaziResult.zipingScore.totalScore : 50.0;
+      const luckCycles = (currentLuckResult && currentLuckResult.decades) || (currentBaziResult && currentBaziResult._luckDecades) || [];
+      const dynamicTrajectory = PhasePortraitEngine.integrateTrajectory(a, b, c, gamma, score100, luckCycles);
+      const curAge = fourPillarsActiveAge || 30;
+      cachedPhaseEngine.renderTrajectory(dynamicTrajectory, curAge, isDark);
+
+      const summaryBox = document.getElementById('phaseTrajectorySummary');
+      if (summaryBox) {
+        const curPt = dynamicTrajectory.find(p => p.age === curAge) || dynamicTrajectory[29];
+        const isAsc = curPt.v >= 0;
+        const isEn = (currentLang === 'en');
+        summaryBox.textContent = isEn
+          ? `System rigidity a=${a.toFixed(2)}, bifurcation b=${b.toFixed(2)}, transit bias c=${c.toFixed(2)}. Current age ${curAge} is in [${isAsc ? 'Spiral Ascending Phase' : 'Consolidation & Grounding Phase'}] (x=${curPt.x}, v=${curPt.v}).`
+          : `系统刚度 a=${a.toFixed(2)}，双稳态分岔 b=${b.toFixed(2)}，岁运外场 c=${c.toFixed(2)}。命主当前 ${curAge}岁，处于【${isAsc ? '螺旋上升跃迁期 🔺' : '筑底蓄势修整期 🔻'}】(x=${curPt.x}, v=${curPt.v})。`;
       }
     }
 
