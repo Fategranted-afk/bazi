@@ -823,20 +823,30 @@ const I18N = (function() {
       tab_qianli_badge: "民国实务断案",
       tab_xulewu: "📑 《徐乐吾评注》",
       tab_xulewu_badge: "实操中间件",
+      tab_western: "🌌 《西方数理大典》",
+      tab_western_badge: "波动与相空间 (10)",
       tab_schools: "🏛️ 四大学派全景",
       tab_schools_badge: "古典画像统揽",
       tab_search: "🔍 经典全库搜索",
 
       // Canons Categories & Filters
       canon_cat_filter_label: "🏛️ 典籍门类导引：",
-      canon_cat_all: "全部典籍 (12)",
+      canon_cat_all: "全部典籍 (22)",
       canon_cat_ancient: "📜 古法禄命宗 (4)",
       canon_cat_ziping: "⚖️ 子平正统格局宗 (4)",
       canon_cat_climate: "❄️ 气象调候理气宗 (2)",
       canon_cat_modern: "⚙️ 近世评注中间件 (2)",
+      canon_cat_western: "🌌 西方数理动力学 (10)",
       canon_cat_synthesis: "🏛️ 四大学派全景",
       canon_cat_tools: "📚 术语与搜索",
-      canon_total_count: "共收录 11 大传世经典与徐乐吾决策中间件（共 12 大典库）",
+      canon_total_count: "共收录 12 大东方典籍与 10 部西方数理动力学大典（共 22 大典库）",
+
+      // Western Canons
+      western_hero_title: "西方数理动力学与经典星命大典",
+      western_hero_desc: "汇集西方占星学中最具数学严密性、波动力学理论与球面几何学的五大领域十部权威学术大典：从傅里叶驻波展开、90°刻度盘中点矩阵，到地平物理坐标变换、希腊化黄道释放与赤道自转半弧校准。彻底告别主观臆测，将命理升维为严谨的能量相空间解析科学。",
+      western_auto_title: "当前命盘西方数理动力学直配映射与五维解算：",
+      western_filter_all: "全部大典 (10)",
+      western_search_placeholder: "搜索西方大典（如：Addey、Ebertin、驻波、中点、太阳弧、地平坐标、黄道释放）...",
 
       // Canons Contents
       canon_xulewu_auto: "当前命盘十干月令喜忌具象实操规则与近代断案 (《子平真诠评注》《造化元钥评注》)：",
@@ -1728,20 +1738,30 @@ const I18N = (function() {
       tab_qianli_badge: "Practical Case Law",
       tab_xulewu: "📑 Xu Lewu Commentaries",
       tab_xulewu_badge: "Decision Middleware",
+      tab_western: "🌌 Western Canons",
+      tab_western_badge: "Harmonics & Dynamics (10)",
       tab_schools: "🏛️ Four Schools Synthesis",
       tab_schools_badge: "Holographic Portrait",
       tab_search: "🔍 Universal Search",
 
       // Canons Categories & Filters
       canon_cat_filter_label: "🏛️ School Categories:",
-      canon_cat_all: "All Canons (12)",
+      canon_cat_all: "All Canons (22)",
       canon_cat_ancient: "📜 Ancient Lu-Ming (4)",
       canon_cat_ziping: "⚖️ Orthodox ZiPing (4)",
       canon_cat_climate: "❄️ Climatic & Qi (2)",
       canon_cat_modern: "⚙️ Modern Middleware (2)",
+      canon_cat_western: "🌌 Western Wave Dynamics (10)",
       canon_cat_synthesis: "🏛️ Schools Hologram",
       canon_cat_tools: "📚 Glossary & Search",
-      canon_total_count: "Comprising 11 Canonical Masterpieces & Xu Lewu Operational Middleware (12 Repositories)",
+      canon_total_count: "Comprising 12 Eastern Canons & 10 Western Mathematical Classics (22 Sacred Repositories)",
+
+      // Western Canons
+      western_hero_title: "Western Mathematical & Wave Dynamics Canons",
+      western_hero_desc: "Ten authoritative classical masterworks of mathematical rigor, wave mechanics, and spherical geometry across five core domains: from Fourier standing wave harmonics and 90-degree dial midpoint matrices to local space horizontal coordinates, Hellenistic Zodiacal Releasing, and equatorial semi-arc rectification.",
+      western_auto_title: "Western Wave Dynamics & Mathematical Calibration for Current Chart:",
+      western_filter_all: "All Masterworks (10)",
+      western_search_placeholder: "Search Western canons (e.g. Addey, Ebertin, standing wave, midpoint, solar arc)...",
 
       // Canons Contents
       canon_xulewu_auto: "Natal Monthly Decision Middleware & Case Law (Xu Lewu's Zi Ping & Zao Hua Yuan Yao Commentaries):",

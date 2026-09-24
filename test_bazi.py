@@ -19223,12 +19223,37 @@ jsc_check142_cmd = [
 run_check142 = subprocess.run(jsc_check142_cmd, capture_output=True, text=True)
 assert run_check142.returncode == 0, f"Check 142 JSC test failed: stdout={run_check142.stdout} stderr={run_check142.stderr}"
 
-# Ensure UI is NOT modified to display western canons yet (per user requirement: "先不要apply；只加到数据库就行")
+# Verify that Western Canons are fully integrated into View 3 (view-canons) as requested: "把它加到12 经那边"
 with open('index.html', 'r', encoding='utf-8') as f:
     idx_content = f.read()
-assert 'western_canons' not in idx_content, "Premature UI exposure: western_canons should not be in index.html yet"
+assert '<script src="data/western_canons.js"></script>' in idx_content, "Missing western_canons.js in index.html"
+assert 'data-school="western"' in idx_content, "Missing data-school='western' in index.html"
+assert 'data-tab="tab-western"' in idx_content, "Missing tab-western button in index.html"
+assert 'id="tab-western"' in idx_content, "Missing tab-western pane in index.html"
+assert 'id="westernCanonsAutoResult"' in idx_content, "Missing westernCanonsAutoResult in index.html"
+assert 'id="westernCanonsList"' in idx_content, "Missing westernCanonsList in index.html"
+assert 'id="westernCategoryFilter"' in idx_content, "Missing westernCategoryFilter in index.html"
+assert 'id="westernSearchInput"' in idx_content, "Missing westernSearchInput in index.html"
 
-print("✓ 142. 西方数理动力学与经典星命大典数据库（五大领域十部权威名著）、数学公式与零中文英文规范、辅助查询类及未入侵UI隔离验证通过！")
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_content = f.read()
+assert 'renderWesternCanonsList' in app_content, "Missing renderWesternCanonsList in app.js"
+assert 'initWesternCanonsView' in app_content, "Missing initWesternCanonsView in app.js"
+assert 'westernCanonsAutoResult' in app_content, "Missing westernCanonsAutoResult in app.js"
+assert 'WesternCanonsDB.search' in app_content, "Missing WesternCanonsDB.search in executeSearch"
+
+with open('js/i18n.js', 'r', encoding='utf-8') as f:
+    i18n_content = f.read()
+assert 'canon_cat_western' in i18n_content, "Missing canon_cat_western in i18n.js"
+assert 'tab_western' in i18n_content, "Missing tab_western in i18n.js"
+assert 'western_hero_title' in i18n_content, "Missing western_hero_title in i18n.js"
+
+# Verify 100% zero Chinese in all English properties of i18n.js
+en_part = i18n_content.split('en: {')[1].split('};\n')[0]
+cjk_in_western = [line for line in en_part.split('\n') if ('western' in line or 'canon_cat_' in line) and any('\u4e00' <= char <= '\u9fa5' for char in line)]
+assert len(cjk_in_western) == 0, f"Chinese characters detected in western English i18n: {cjk_in_western}"
+
+print("✓ 142. 西方数理动力学与经典星命大典数据库完整入库并深度集成至十二大典（导航分类/专属Tab/五维动力学直配/万象联合检索/双语零残留）全量验证通过！")
 
 print("\n🎉 ALL 142 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 

@@ -270,6 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof renderQianLiProtocols === 'function') {
       renderQianLiProtocols();
     }
+    if (typeof renderWesternCanonsList === 'function') {
+      renderWesternCanonsList();
+    }
     if (typeof window !== 'undefined' && typeof window.refreshIChingOnLangChange === 'function') {
       window.refreshIChingOnLangChange();
     }
@@ -5277,6 +5280,196 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-gray-400 pt-1.5 border-t border-gray-800 text-[11px]"><b class="text-gray-300">${isEn ? 'Scholarly Controversy & Objective Appraisal:' : '学术争议与客观公评：'}</b>${isEn ? manifesto.controversyEn : manifesto.controversyZh}</p>
           </div>
         `;
+      }
+    }
+
+    // 10c. 《西方数理大典》 (Western Mathematical & Wave Dynamics Canons) Auto Matching
+    const westernContainer = document.getElementById('westernCanonsAutoResult');
+    if (westernContainer && typeof WESTERN_CANONS_DATA !== 'undefined') {
+      const dm = res.dayMaster || '甲';
+      const vigorStr = (res.vigor && res.vigor.label) ? res.vigor.label : (isEn ? 'Balanced' : '中和');
+      const isStrong = res.vigor ? res.vigor.isStrong : true;
+      const topPatName = (res.patterns && res.patterns.length > 0) ? (isEn ? (res.patterns[0].nameEn || res.patterns[0].name) : res.patterns[0].name) : (isEn ? 'Orthodox Pattern' : '正本格局');
+
+      const h4Resistance = isStrong 
+        ? (isEn ? 'High Dynamic Momentum (H4 Tension Index: 78%) · Strong kinetic drive overcoming external damping' : '高动能抗阻态（第4泛音阻抗系数: 78%）· 能量充沛，主动对冲外部耗散')
+        : (isEn ? 'Resonant Potential Equilibrium (H9 Ground State Index: 82%) · Low kinetic dissipation, favoring structural stabilization' : '基态势能平衡态（第9泛音稳态系数: 82%）· 动能耗散低，以静制动，宜深构防线');
+
+      const localDirection = (res.favorableElements && res.favorableElements.length > 0) 
+        ? res.favorableElements[0] 
+        : '木';
+      const localBearingZh = localDirection === '木' ? '东向 (Azimuth 90° 震东方)' : (localDirection === '火' ? '南向 (Azimuth 180° 离南方)' : (localDirection === '金' ? '西向 (Azimuth 270° 兑西方)' : (localDirection === '水' ? '北向 (Azimuth 0°/360° 坎北方)' : '中原/西南 (Azimuth 225° 坤西南)')));
+      const localBearingEn = localDirection === '木' ? 'East (Azimuth 90° · Wood Meridian)' : (localDirection === '火' ? 'South (Azimuth 180° · Fire Meridian)' : (localDirection === '金' ? 'West (Azimuth 270° · Metal Meridian)' : (localDirection === '水' ? 'North (Azimuth 0°/360° · Water Meridian)' : 'Central / Southwest (Azimuth 225° · Earth Meridian)')));
+
+      westernContainer.innerHTML = `
+        <div class="bg-card p-5 rounded-xl border border-sky-500/30 shadow-lg space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-500/20">
+            <div class="flex items-center space-x-2">
+              <span class="chinese-seal text-[10px] py-0 border-sky-400 text-sky-300">${isEn ? 'Western Canons' : '西方数理大典'}</span>
+              <h3 class="text-base font-bold text-sky-200 font-serif-sc">${isEn ? '5-Domain Mathematical Physics Resonance & Kinetic Calibration' : '五大数理门类全景直配映射与动力学校准'}</h3>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-200 font-mono">
+              ${isEn ? `Day Master ${dm} · ${vigorStr}` : `日元 ${dm} · ${vigorStr}`} · ${topPatName}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+            <!-- 1. Harmonics & Phase Dynamics -->
+            <div class="p-3.5 bg-black/30 rounded-xl border border-sky-900/40 space-y-2 flex flex-col justify-between">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                    <span>〰️</span>
+                    <span>${isEn ? '1. Harmonics & Phase Space' : '1. 泛音驻波与相空间 (Addey / Rudhyar)'}</span>
+                  </span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 font-mono">H4 / H9 Wave</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">${h4Resistance}</p>
+                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-sky-200 font-mono">
+                  f(θ) = ∑ A_n cos(nθ + φ_n)
+                </div>
+              </div>
+              <button type="button" class="btn-jump-to-phase-portrait mt-2 w-full py-1 px-2 rounded bg-sky-950/60 hover:bg-sky-900 text-sky-300 border border-sky-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+                <span>🌀</span>
+                <span>${isEn ? 'View 3D Life-Chrono Spiral' : '调阅相空间百岁螺旋'}</span>
+              </button>
+            </div>
+
+            <!-- 2. Midpoints & Multi-Party Game -->
+            <div class="p-3.5 bg-black/30 rounded-xl border border-amber-900/40 space-y-2 flex flex-col justify-between">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-amber-300 font-bold flex items-center gap-1.5 font-sans">
+                    <span>📐</span>
+                    <span>${isEn ? '2. Midpoints & Game Matrix' : '2. 中点动力学与博弈 (Ebertin / Hand)'}</span>
+                  </span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">90° Dial Dialectics</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">${isEn ? `Primary pattern [${topPatName}] establishes structural vector balance across the 90° dial midpoint axes.` : `统帅主导格【${topPatName}】构成90°中点刻度盘第一应力轴，决定组织博弈平衡。`}</p>
+                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-amber-200 font-mono">
+                  (A + B) / 2 = C mod 90°
+                </div>
+              </div>
+              <button type="button" class="btn-jump-to-game-matrix mt-2 w-full py-1 px-2 rounded bg-amber-950/60 hover:bg-amber-900 text-amber-300 border border-amber-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+                <span>⚔️</span>
+                <span>${isEn ? 'Simulate Political Game Network' : '进入组织博弈沙盘'}</span>
+              </button>
+            </div>
+
+            <!-- 3. Local Space & Geographic Projection -->
+            <div class="p-3.5 bg-black/30 rounded-xl border border-emerald-900/40 space-y-2 flex flex-col justify-between">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-emerald-300 font-bold flex items-center gap-1.5 font-sans">
+                    <span>🧭</span>
+                    <span>${isEn ? '3. Local Space & ACG' : '3. 空间场域与地平投影 (Erlewine / Lewis)'}</span>
+                  </span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono">Azimuth Bearing</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed"><b class="text-emerald-400">${isEn ? 'Optimal Horizon Azimuth: ' : '物理地平方位角指向：'}</b>${isEn ? localBearingEn : localBearingZh}</p>
+                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-emerald-200 font-mono">
+                  (α, δ) → (A, h) [Horizon Transform]
+                </div>
+              </div>
+              <button type="button" class="btn-jump-to-georesonance mt-2 w-full py-1 px-2 rounded bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+                <span>🌍</span>
+                <span>${isEn ? 'Launch Geo Resonance Hub' : '调阅地理生态匹配仪'}</span>
+              </button>
+            </div>
+
+            <!-- 4. Hellenistic Time-Lords & Zodiacal Releasing -->
+            <div class="p-3.5 bg-black/30 rounded-xl border border-indigo-900/40 space-y-2 flex flex-col justify-between">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-indigo-300 font-bold flex items-center gap-1.5 font-sans">
+                    <span>⏳</span>
+                    <span>${isEn ? '4. Hellenistic Time-Lords' : '4. 希腊释放周期律 (Brennan / Valens)'}</span>
+                  </span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono">ZR Aphesis L1-L4</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">${isEn ? 'Multi-tiered time lord recurrence matching 10-year major luck transitions; identifies major structural transition jumps (Losing of the Bond).' : '多层级时间之主递推对应十年大运交接，精准标定人生能量爆发峰值期与“失纽跳轨”重大质变年份。'}</p>
+                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-indigo-200 font-mono">
+                  Aphesis(Spirit) → Peak Periods
+                </div>
+              </div>
+              <button type="button" class="btn-jump-to-chrono-luck mt-2 w-full py-1 px-2 rounded bg-indigo-950/60 hover:bg-indigo-900 text-indigo-300 border border-indigo-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+                <span>⏱️</span>
+                <span>${isEn ? 'Inspect Chrono Decades' : '调阅岁运流转时序'}</span>
+              </button>
+            </div>
+
+            <!-- 5. Spherical Astronomy & Primary Directions -->
+            <div class="p-3.5 bg-black/30 rounded-xl border border-rose-900/40 space-y-2 flex flex-col justify-between lg:col-span-2">
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <span class="text-rose-300 font-bold flex items-center gap-1.5 font-sans">
+                    <span>🔭</span>
+                    <span>${isEn ? '5. Spherical Directions & Solar Arc Rectification' : '5. 球面天文几何与太阳弧生时逆推 (Gansten / Tyl)'}</span>
+                  </span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono">1° = 1 Year Arc</span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">${isEn ? 'Earth equatorial rotation (4 min = 1° = 1 year) grounds Bayesian milestone life event reverse-calibration, resolving minute-level birth timing uncertainties.' : '以地球自转赤道半弧（严格4分钟 = 1° = 1岁）为标尺，与重大离散历史事件收敛逆推真实出生分钟，彻底杜绝生时模糊。'}</p>
+                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-rose-200 font-mono">
+                  ΔRAMC = Δα [4 min = 1° = 1 Year] · Δθ_SA = θ_Sun(t) - θ_Sun(t0)
+                </div>
+              </div>
+              <button type="button" class="btn-jump-to-rectification mt-2 w-full py-1 px-2 rounded bg-rose-950/60 hover:bg-rose-900 text-rose-300 border border-rose-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+                <span>🎯</span>
+                <span>${isEn ? 'Open Bayesian Milestone Rectifier' : '打开以事校对生时逆推仪'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Wire quick navigation buttons inside westernContainer
+      const btnPhase = westernContainer.querySelector('.btn-jump-to-phase-portrait');
+      if (btnPhase) {
+        btnPhase.addEventListener('click', () => {
+          const navLuck = document.getElementById('navBtnLuck');
+          if (navLuck) navLuck.click();
+          setTimeout(() => {
+            const phaseSec = document.getElementById('phasePortraitSection');
+            if (phaseSec) phaseSec.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        });
+      }
+
+      const btnGame = westernContainer.querySelector('.btn-jump-to-game-matrix');
+      if (btnGame) {
+        btnGame.addEventListener('click', () => {
+          if (typeof switchPrimaryView === 'function') switchPrimaryView('view-simulator');
+        });
+      }
+
+      const btnGeo = westernContainer.querySelector('.btn-jump-to-georesonance');
+      if (btnGeo) {
+        btnGeo.addEventListener('click', () => {
+          if (typeof switchPrimaryView === 'function') switchPrimaryView('view-simulator');
+          setTimeout(() => {
+            if (typeof switchSimulatorSubpage === 'function') switchSimulatorSubpage('sim-tab-georesonance');
+          }, 150);
+        });
+      }
+
+      const btnLuck = westernContainer.querySelector('.btn-jump-to-chrono-luck');
+      if (btnLuck) {
+        btnLuck.addEventListener('click', () => {
+          const navLuck = document.getElementById('navBtnLuck');
+          if (navLuck) navLuck.click();
+        });
+      }
+
+      const btnRect = westernContainer.querySelector('.btn-jump-to-rectification');
+      if (btnRect) {
+        btnRect.addEventListener('click', () => {
+          const navHome = document.getElementById('navBtnHome');
+          if (navHome) navHome.click();
+          setTimeout(() => {
+            const rectSec = document.getElementById('rectificationSection');
+            if (rectSec) rectSec.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        });
       }
     }
 
@@ -12209,6 +12402,171 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   renderQianLiProtocols();
 
+  // 《西方数理大典》 (Western Mathematical & Wave Dynamics Canons) List & Filter
+  let activeWesternCategory = 'all';
+  let westernSearchQuery = '';
+
+  function renderWesternCanonsList(filterCat, searchKeyword) {
+    const container = document.getElementById('westernCanonsList');
+    if (!container || typeof WesternCanonsDB === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const category = filterCat || activeWesternCategory || 'all';
+    const keyword = (searchKeyword !== undefined) ? searchKeyword : westernSearchQuery;
+
+    let canons = (category === 'all') ? WesternCanonsDB.getAll() : WesternCanonsDB.getByCategory(category);
+    if (keyword && keyword.trim()) {
+      const q = keyword.toLowerCase().trim();
+      canons = canons.filter(c => {
+        return (
+          (c.titleZh && c.titleZh.toLowerCase().includes(q)) ||
+          (c.titleEn && c.titleEn.toLowerCase().includes(q)) ||
+          (c.authorZh && c.authorZh.toLowerCase().includes(q)) ||
+          (c.authorEn && c.authorEn.toLowerCase().includes(q)) ||
+          (c.coreContentZh && c.coreContentZh.toLowerCase().includes(q)) ||
+          (c.coreContentEn && c.coreContentEn.toLowerCase().includes(q)) ||
+          (c.tags && c.tags.some(t => t.toLowerCase().includes(q)))
+        );
+      });
+    }
+
+    if (canons.length === 0) {
+      container.innerHTML = `
+        <div class="p-8 text-center bg-black/20 rounded-xl border border-gray-800 text-gray-400 text-xs">
+          ${isEn ? 'No Western canons matched your search or category filter.' : '未找到符合条件的西方大典，请尝试更换关键词或分类。'}
+        </div>
+      `;
+      return;
+    }
+
+    const categoryColorMap = {
+      harmonics_phase: { badgeBg: 'bg-sky-500/20', textCol: 'text-sky-300', border: 'border-sky-500/30' },
+      midpoints_game: { badgeBg: 'bg-amber-500/20', textCol: 'text-amber-300', border: 'border-amber-500/30' },
+      local_space_acg: { badgeBg: 'bg-emerald-500/20', textCol: 'text-emerald-300', border: 'border-emerald-500/30' },
+      hellenistic_zr: { badgeBg: 'bg-indigo-500/20', textCol: 'text-indigo-300', border: 'border-indigo-500/30' },
+      primary_directions: { badgeBg: 'bg-rose-500/20', textCol: 'text-rose-300', border: 'border-rose-500/30' }
+    };
+
+    container.innerHTML = canons.map(c => {
+      const col = categoryColorMap[c.categoryId] || { badgeBg: 'bg-gray-800', textCol: 'text-gray-300', border: 'border-gray-700' };
+      const catObj = (typeof WESTERN_CANONS_DATA !== 'undefined' && WESTERN_CANONS_DATA.categories) ? WESTERN_CANONS_DATA.categories.find(cat => cat.id === c.categoryId) : null;
+      const catName = catObj ? (isEn ? catObj.nameEn : catObj.nameZh) : c.categoryId;
+
+      return `
+        <div class="bg-card p-5 rounded-2xl border ${col.border} shadow-xl space-y-4 hover:border-sky-400/50 transition">
+          <!-- Card Header -->
+          <div class="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-gray-800">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2 py-0.5 rounded ${col.badgeBg} ${col.textCol} text-xs font-mono font-bold">
+                  #${c.number} ${catName}
+                </span>
+                <span class="text-xs text-gray-500 font-mono">(${c.year})</span>
+              </div>
+              <h4 class="text-base font-bold text-gray-100 font-serif-sc flex flex-wrap items-center gap-2">
+                <span>${isEn ? c.titleEn : c.titleZh}</span>
+                <span class="text-xs text-sky-400/80 font-sans font-normal">${isEn ? c.titleZh : c.titleEn}</span>
+              </h4>
+              <p class="text-xs text-amber-300/90 font-medium">
+                ${isEn ? c.authorEn : c.authorZh} · <span class="text-gray-400 font-normal">${isEn ? c.eraEn : c.eraZh}</span>
+              </p>
+            </div>
+            <span class="chinese-seal text-[10px] py-0 border-sky-400 text-sky-300">
+              ${isEn ? 'Western Canon' : '数理大典'}
+            </span>
+          </div>
+
+          <!-- Canonical Authority & Status -->
+          <div class="p-3 bg-sky-950/20 rounded-xl border border-sky-900/30 text-xs space-y-1">
+            <span class="text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+              <span>🏛️</span>
+              <span>${isEn ? 'Canonical Authority & Historical Status:' : '权威地位与学术奠基：'}</span>
+            </span>
+            <p class="text-gray-200 leading-relaxed">${isEn ? c.statusEn : c.statusZh}</p>
+          </div>
+
+          <!-- Core Wave Mechanics / Content -->
+          <div class="p-3 bg-black/30 rounded-xl border border-gray-800 text-xs space-y-1">
+            <span class="text-amber-300 font-bold flex items-center gap-1.5 font-sans">
+              <span>💡</span>
+              <span>${isEn ? 'Core Content & Wave Mechanics Paradigm:' : '核心内容与数理机制：'}</span>
+            </span>
+            <p class="text-gray-300 leading-relaxed">${isEn ? c.coreContentEn : c.coreContentZh}</p>
+          </div>
+
+          <!-- Mathematical / Physical Formulas Box -->
+          <div class="p-3.5 bg-black/40 rounded-xl border border-gray-800 text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-emerald-400 font-bold flex items-center gap-1.5 font-sans">
+                <span>📐</span>
+                <span>${isEn ? 'Rigorous Mathematical Formulas & Equations:' : '硬核数理方程与解析模型：'}</span>
+              </span>
+              <span class="text-[10px] text-gray-500 font-mono">LaTeX / Analytical Physics</span>
+            </div>
+            <div class="space-y-1.5">
+              ${c.mathFormulas.map(f => `
+                <div class="px-3 py-1.5 bg-black/60 rounded border border-gray-800/80 text-sky-300 font-mono text-xs overflow-x-auto">
+                  <code>${f}</code>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Platform Engine Mapping -->
+          <div class="p-3 bg-indigo-950/20 rounded-xl border border-indigo-900/30 text-xs flex flex-wrap items-center justify-between gap-2">
+            <div class="space-y-0.5">
+              <span class="text-indigo-300 font-bold block">${isEn ? 'Platform Engine Grounding:' : '本平台底层引擎映射：'}</span>
+              <p class="text-gray-300 leading-relaxed">${isEn ? c.engineMappingEn : c.engineMappingZh}</p>
+            </div>
+          </div>
+
+          <!-- Classical Verse / Maxim Quote -->
+          ${(c.keyVerses && c.keyVerses.length > 0) ? `
+            <div class="bg-[#141722] border-l-4 border-sky-400 p-3 rounded-r text-xs">
+              <span class="text-sky-300/80 font-medium block mb-0.5">${isEn ? 'Classical Aphorism / Maxim:' : '传世金句赋赋语：'}</span>
+              <p class="font-serif-sc text-sky-100 font-semibold leading-relaxed">“${isEn ? c.keyVerses[0].en : c.keyVerses[0].zh}”</p>
+            </div>
+          ` : ''}
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            ${c.tags.map(tag => `<span class="px-2 py-0.5 rounded bg-gray-900 border border-gray-800 text-[10px] text-gray-400">${tag}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function initWesternCanonsView() {
+    renderWesternCanonsList();
+
+    const catFilterGroup = document.getElementById('westernCategoryFilter');
+    if (catFilterGroup) {
+      const catBtns = catFilterGroup.querySelectorAll('.western-cat-btn');
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catBtns.forEach(b => {
+            b.classList.remove('active', 'border-sky-500/50', 'bg-sky-950/60', 'text-sky-200');
+            b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+          });
+          btn.classList.add('active', 'border-sky-500/50', 'bg-sky-950/60', 'text-sky-200');
+          btn.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+          activeWesternCategory = btn.getAttribute('data-category') || 'all';
+          renderWesternCanonsList(activeWesternCategory, westernSearchQuery);
+        });
+      });
+    }
+
+    const searchInput = document.getElementById('westernSearchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        westernSearchQuery = e.target.value;
+        renderWesternCanonsList(activeWesternCategory, westernSearchQuery);
+      });
+    }
+  }
+
+  initWesternCanonsView();
+
   // Universal Search across all 12 canonical & commentary databases
   const searchInput = document.getElementById('dbSearchInput');
   const searchBtn = document.getElementById('dbSearchBtn');
@@ -12237,10 +12595,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const qlResults = (typeof QianLiDB !== 'undefined') ? QianLiDB.search(query) : [];
     const xuResults = (typeof XuLewuDB !== 'undefined') ? XuLewuDB.search(query) : [];
     const tgResults = (typeof TenGodsDB !== 'undefined') ? TenGodsDB.search(query) : [];
+    const westResults = (typeof WesternCanonsDB !== 'undefined') ? WesternCanonsDB.search(query).map(c => ({
+      title: isEn ? c.titleEn : c.titleZh,
+      titleEn: c.titleEn,
+      source: isEn ? `Western Canons · ${c.authorEn}` : `《西方数理大典》· ${c.authorZh}`,
+      sourceEn: `Western Canons · ${c.authorEn}`,
+      content: isEn ? `${c.statusEn} ${c.coreContentEn}` : `${c.statusZh} ${c.coreContentZh}`,
+      contentEn: `${c.statusEn} ${c.coreContentEn}`,
+      detail: isEn ? `[Mathematical Formulas] ${c.mathFormulas.join('; ')}` : `【数理机制】${c.mathFormulas.join('；')}`,
+      detailEn: `[Mathematical Formulas] ${c.mathFormulas.join('; ')}`
+    })) : [];
     const all = [
       ...dtsResults, ...smResults, ...qtResults, ...zpResults, ...yhResults,
       ...sfResults, ...yzResults, ...lxzResults, ...ltResults, ...wxResults,
-      ...qlResults, ...xuResults, ...tgResults
+      ...qlResults, ...xuResults, ...tgResults, ...westResults
     ];
 
     if (all.length === 0) {
