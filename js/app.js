@@ -171,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const portalPresetsContainer = document.getElementById('portalPresetsContainer');
   const portalFeaturesGrid = document.getElementById('portalFeaturesGrid');
   let activeMainPage = 'landing'; // 'landing' | 'dashboard'
+  let activeWesternCategory = 'all';
+  let westernSearchQuery = '';
 
   function setLanguage(lang) {
     currentLang = lang;
@@ -12403,15 +12405,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderQianLiProtocols();
 
   // 《西方数理大典》 (Western Mathematical & Wave Dynamics Canons) List & Filter
-  let activeWesternCategory = 'all';
-  let westernSearchQuery = '';
-
   function renderWesternCanonsList(filterCat, searchKeyword) {
     const container = document.getElementById('westernCanonsList');
     if (!container || typeof WesternCanonsDB === 'undefined') return;
     const isEn = (currentLang === 'en');
     const category = filterCat || activeWesternCategory || 'all';
-    const keyword = (searchKeyword !== undefined) ? searchKeyword : westernSearchQuery;
+    const keyword = (searchKeyword !== undefined) ? searchKeyword : (westernSearchQuery || '');
 
     let canons = (category === 'all') ? WesternCanonsDB.getAll() : WesternCanonsDB.getByCategory(category);
     if (keyword && keyword.trim()) {

@@ -19255,7 +19255,176 @@ assert len(cjk_in_western) == 0, f"Chinese characters detected in western Englis
 
 print("✓ 142. 西方数理动力学与经典星命大典数据库完整入库并深度集成至十二大典（导航分类/专属Tab/五维动力学直配/万象联合检索/双语零残留）全量验证通过！")
 
-print("\n🎉 ALL 142 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 143. Validate Full Application Lifecycle & Smooth Transition to Page 2 (第一页面门户 -> 第二页面看板零TDZ阻断)
+print("\n=== 143. Validating Full App Lifecycle & Transition to Page 2 (第一页面门户 -> 第二页面看板零TDZ阻断) ===")
+jsc_check143_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    var window = this;
+    window.addEventListener = function(e, h) {};
+    window.removeEventListener = function() {};
+    window.scrollTo = function() {};
+    var document = {
+      readyState: 'complete',
+      documentElement: { lang: 'zh-CN', classList: { add: function(){}, remove: function(){} } },
+      body: { classList: { add: function(){}, remove: function(){} } },
+      location: { href: 'http://localhost/', search: '', hash: '' },
+      addEventListener: function(evt, handler) {
+        if (evt === 'DOMContentLoaded') {
+          this._domLoaded = handler;
+        }
+      },
+      removeEventListener: function() {},
+      getElementById: function(id) {
+        if (!this._elements[id]) {
+          this._elements[id] = {
+            id: id,
+            tagName: 'DIV',
+            classList: {
+              _classes: [],
+              add: function(c) { if (this._classes.indexOf(c) === -1) this._classes.push(c); },
+              remove: function(c) { var idx = this._classes.indexOf(c); if (idx !== -1) this._classes.splice(idx, 1); },
+              contains: function(c) { return this._classes.indexOf(c) !== -1; }
+            },
+            style: {},
+            attributes: {},
+            setAttribute: function(k, v) { this.attributes[k] = v; },
+            getAttribute: function(k) { return this.attributes[k] || null; },
+            hasAttribute: function(k) { return k in this.attributes; },
+            addEventListener: function(evt, h) {
+              this._handlers = this._handlers || {};
+              this._handlers[evt] = this._handlers[evt] || [];
+              this._handlers[evt].push(h);
+            },
+            click: function() {
+              if (this._handlers && this._handlers['click']) {
+                var self = this;
+                this._handlers['click'].forEach(function(h) { h.call(self, { preventDefault: function() {} }); });
+              }
+            },
+            querySelectorAll: function(sel) { return []; },
+            querySelector: function(sel) { return null; },
+            appendChild: function(c) { return c; },
+            removeChild: function(c) { return c; },
+            scrollIntoView: function() {},
+            focus: function() {},
+            getContext: function() {
+              return {
+                clearRect: function(){},
+                beginPath: function(){},
+                closePath: function(){},
+                moveTo: function(){},
+                lineTo: function(){},
+                stroke: function(){},
+                fill: function(){},
+                arc: function(){},
+                fillText: function(){},
+                measureText: function(){ return { width: 10 }; },
+                save: function(){},
+                restore: function(){},
+                translate: function(){},
+                rotate: function(){}
+              };
+            },
+            innerHTML: '',
+            value: '',
+            textContent: ''
+          };
+        }
+        return this._elements[id];
+      },
+      querySelectorAll: function(sel) { return []; },
+      querySelector: function(sel) { return null; },
+      createElement: function(tag) {
+        return document.getElementById('mock_' + Math.random());
+      },
+      _elements: {}
+    };
+    var localStorage = {
+      _store: {},
+      getItem: function(k) { return this._store[k] || null; },
+      setItem: function(k, v) { this._store[k] = String(v); },
+      removeItem: function(k) { delete this._store[k]; }
+    };
+    var navigator = { userAgent: 'Mozilla/5.0', serviceWorker: { register: function() { return Promise.resolve(); } } };
+
+    load('js/i18n.js');
+    load('data/ditiansui.js');
+    load('data/sanming.js');
+    load('data/qiongtong.js');
+    load('data/zipingzhenquan.js');
+    load('data/yuanhai.js');
+    load('data/shenfeng.js');
+    load('data/yuzhao.js');
+    load('data/lixuzhong.js');
+    load('data/lantaimiaoxuan.js');
+    load('data/wuxingjingji.js');
+    load('data/qianliminggao.js');
+    load('data/xulewu_commentary.js');
+    load('data/western_canons.js');
+    load('data/iching.js');
+    load('data/tianji.js');
+    load('data/tengods.js');
+    load('data/rongkujian.js');
+    load('js/bazi-engine.js');
+    load('js/sensitivity-engine.js');
+    load('js/rectification-engine.js');
+    load('js/vector-rag.js');
+    load('js/fengshui-engine.js');
+    load('js/career-engine.js');
+    load('data/historical_figures.js');
+    load('js/history-engine.js');
+    load('js/advisor-engine.js');
+    load('data/institutions.js');
+    load('data/enterprises.js');
+    load('js/simulator-engine.js');
+    load('js/social-card-engine.js');
+    load('js/phase_portrait.js');
+    load('js/game_matrix.js');
+    load('js/geomagnetism.js');
+    load('js/feed_engine.js');
+    load('js/portrait-engine.js');
+    load('js/luck-engine.js');
+    load('js/iching-engine.js');
+    load('js/lifelong-synthesis-engine.js');
+    load('js/synastry-engine.js');
+    load('js/visual-alchemy.js');
+    load('js/chart.js');
+    load('js/app.js');
+
+    // Simulate form values
+    document.getElementById('birthDate').value = '1990-06-20';
+    document.getElementById('birthTime').value = '14:30';
+    document.getElementById('gender').value = '乾造';
+
+    // 1. Verify DOMContentLoaded runs without any TDZ ReferenceError
+    if (document._domLoaded) {
+      document._domLoaded();
+    }
+
+    // 2. Verify calculate button click triggers and transitions to dashboard (Page 2)
+    var calcBtn = document.getElementById('calcBtn');
+    calcBtn.click();
+
+    var dashboard = document.getElementById('dashboardView');
+    if (dashboard.classList.contains('hidden')) {
+      throw new Error("Failed to transition to Page 2 (dashboardView remained hidden after calculate)");
+    }
+
+    var landing = document.getElementById('landingPortalView');
+    if (!landing.classList.contains('hidden')) {
+      throw new Error("Failed to hide Page 1 (landingPortalView remained visible after calculate)");
+    }
+    """
+]
+
+run_check143 = subprocess.run(jsc_check143_cmd, capture_output=True, text=True)
+assert run_check143.returncode == 0, f"Check 143 JSC test failed: stdout={run_check143.stdout} stderr={run_check143.stderr}"
+
+print("✓ 143. 全应用生命周期与第一页面（门户引导）到第二页面（分析看板）顺畅流转（零TDZ暂存死区阻断 / 计算按钮响应 / 视图平滑切换）验证通过！")
+
+print("\n🎉 ALL 143 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
