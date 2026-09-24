@@ -35,6 +35,7 @@ const STATIC_ASSETS = [
   './data/wuxingjingji.js',
   './data/qianliminggao.js',
   './data/xulewu_commentary.js',
+  './data/western_canons.js',
   './data/iching.js',
   './data/tianji.js',
   './icons/icon.svg',

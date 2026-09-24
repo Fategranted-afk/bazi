@@ -53,6 +53,7 @@ canons = [
     ('data/wuxingjingji.js', '《五行精纪》'),
     ('data/qianliminggao.js', '《千里命稿》'),
     ('data/xulewu_commentary.js', '《徐乐吾评注》'),
+    ('data/western_canons.js', '《西方数理大典》'),
     ('js/bazi-engine.js', '排盘引擎'),
     ('js/chart.js', '五行雷达图'),
     ('js/app.js', '界面控制器'),
@@ -19140,7 +19141,96 @@ assert run_check141.returncode == 0, f"Check 141 JSC test failed: stdout={run_ch
 
 print("✓ 141. 顶栏8大主导航按钮精确显化（精简按钮按要求隐去）、DOM层级闭合零嵌套污染与549位中外历史人物镜像（含100位近代西方风云人物）完整渲染验证通过！")
 
-print("\n🎉 ALL 141 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 142. Validate Western Canons Database (五大领域十部西方数理动力学与经典星命大典)
+print("\n=== 142. Validating Western Canons Database (五大领域十部西方数理动力学大典) ===")
+jsc_check142_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    load('data/western_canons.js');
+
+    if (typeof WESTERN_CANONS_DATA === 'undefined') {
+      throw new Error("WESTERN_CANONS_DATA is undefined");
+    }
+    if (typeof WesternCanonsDB === 'undefined') {
+      throw new Error("WesternCanonsDB is undefined");
+    }
+
+    if (!WESTERN_CANONS_DATA.categories || WESTERN_CANONS_DATA.categories.length !== 5) {
+      throw new Error("Expected 5 categories, got " + (WESTERN_CANONS_DATA.categories ? WESTERN_CANONS_DATA.categories.length : 0));
+    }
+
+    if (!WESTERN_CANONS_DATA.canons || WESTERN_CANONS_DATA.canons.length !== 10) {
+      throw new Error("Expected 10 canons, got " + (WESTERN_CANONS_DATA.canons ? WESTERN_CANONS_DATA.canons.length : 0));
+    }
+
+    var expectedIds = [
+      'addey_harmonics',
+      'rudhyar_lunation',
+      'ebertin_cosi',
+      'hand_composite',
+      'erlewine_local_space',
+      'lewis_acg',
+      'brennan_hellenistic',
+      'valens_anthologies',
+      'gansten_primary_directions',
+      'tyl_solar_arcs'
+    ];
+
+    expectedIds.forEach(function(id) {
+      var c = WesternCanonsDB.getById(id);
+      if (!c) throw new Error("Missing canon with id: " + id);
+      if (!c.mathFormulas || c.mathFormulas.length === 0) throw new Error("Missing mathFormulas in canon: " + id);
+      if (!c.engineMappingZh || !c.engineMappingEn) throw new Error("Missing engineMapping in canon: " + id);
+    });
+
+    // Verify 100% zero Chinese in all English properties
+    var cjkRegex = /[\\u4e00-\\u9fa5]/;
+    WESTERN_CANONS_DATA.categories.forEach(function(cat) {
+      if (cjkRegex.test(cat.nameEn)) throw new Error("Chinese found in category nameEn: " + cat.nameEn);
+      if (cjkRegex.test(cat.descriptionEn)) throw new Error("Chinese found in category descriptionEn: " + cat.descriptionEn);
+    });
+
+    WESTERN_CANONS_DATA.canons.forEach(function(c) {
+      ['titleEn', 'authorEn', 'eraEn', 'statusEn', 'coreContentEn', 'engineMappingEn'].forEach(function(key) {
+        if (c[key] && cjkRegex.test(c[key])) {
+          throw new Error("Chinese detected in canon " + c.id + " field " + key + ": " + c[key]);
+        }
+      });
+      if (c.keyVerses) {
+        c.keyVerses.forEach(function(v) {
+          if (v.en && cjkRegex.test(v.en)) {
+            throw new Error("Chinese detected in canon " + c.id + " verse en: " + v.en);
+          }
+        });
+      }
+    });
+
+    // Verify helper methods
+    var all = WesternCanonsDB.getAll();
+    if (all.length !== 10) throw new Error("WesternCanonsDB.getAll() length mismatch");
+
+    var hp = WesternCanonsDB.getByCategory('harmonics_phase');
+    if (hp.length !== 2) throw new Error("harmonics_phase should have 2 canons, got " + hp.length);
+
+    var searchRes = WesternCanonsDB.search('Ebertin');
+    if (searchRes.length !== 1 || searchRes[0].id !== 'ebertin_cosi') {
+      throw new Error("Search for 'Ebertin' failed");
+    }
+    """
+]
+
+run_check142 = subprocess.run(jsc_check142_cmd, capture_output=True, text=True)
+assert run_check142.returncode == 0, f"Check 142 JSC test failed: stdout={run_check142.stdout} stderr={run_check142.stderr}"
+
+# Ensure UI is NOT modified to display western canons yet (per user requirement: "先不要apply；只加到数据库就行")
+with open('index.html', 'r', encoding='utf-8') as f:
+    idx_content = f.read()
+assert 'western_canons' not in idx_content, "Premature UI exposure: western_canons should not be in index.html yet"
+
+print("✓ 142. 西方数理动力学与经典星命大典数据库（五大领域十部权威名著）、数学公式与零中文英文规范、辅助查询类及未入侵UI隔离验证通过！")
+
+print("\n🎉 ALL 142 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 
