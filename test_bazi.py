@@ -19424,7 +19424,90 @@ assert run_check143.returncode == 0, f"Check 143 JSC test failed: stdout={run_ch
 
 print("✓ 143. 全应用生命周期与第一页面（门户引导）到第二页面（分析看板）顺畅流转（零TDZ暂存死区阻断 / 计算按钮响应 / 视图平滑切换）验证通过！")
 
-print("\n🎉 ALL 143 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
+# 144. Validate KaTeX LaTeX Mathematical Typesetting & Softened Blue Palette in Western Canons
+print("\n=== 144. Validating KaTeX LaTeX Mathematical Typesetting & Softened Blue Palette ===")
+with open('index.html', 'r', encoding='utf-8') as f:
+    html_src = f.read()
+
+assert 'katex.min.css' in html_src, "Missing KaTeX CSS in index.html"
+assert 'katex.min.js' in html_src, "Missing KaTeX JS in index.html"
+assert 'border-sky-400/20' in html_src, "Missing softened blue border in tab-western"
+assert 'bg-sky-900/25' in html_src, "Missing softened blue active button background"
+
+with open('sw.js', 'r', encoding='utf-8') as f:
+    sw_src = f.read()
+assert 'katex.min.css' in sw_src, "Missing KaTeX CSS in sw.js cache"
+assert 'katex.min.js' in sw_src, "Missing KaTeX JS in sw.js cache"
+
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_src = f.read()
+assert '.western-formula-card' in css_src, "Missing .western-formula-card in css/style.css"
+assert '.katex-display' in css_src, "Missing .katex-display styling in css/style.css"
+
+with open('js/app.js', 'r', encoding='utf-8') as f:
+    app_src = f.read()
+assert 'renderLaTeXFormula' in app_src, "Missing renderLaTeXFormula in js/app.js"
+assert 'renderMathFallback' in app_src, "Missing renderMathFallback in js/app.js"
+assert 'western-formula-card' in app_src, "Missing western-formula-card in app.js"
+
+# JSC test for renderLaTeXFormula with and without mock KaTeX
+jsc_check144_cmd = [
+    '/System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc',
+    '-e',
+    """
+    var window = this;
+    var document = {
+      readyState: 'complete',
+      documentElement: { lang: 'zh-CN', classList: { add: function(){}, remove: function(){} } },
+      body: { classList: { add: function(){}, remove: function(){} } },
+      location: { href: 'http://localhost/', search: '', hash: '' },
+      addEventListener: function() {},
+      removeEventListener: function() {},
+      getElementById: function() { return { innerHTML: '', addEventListener: function(){}, querySelectorAll: function(){ return []; } }; },
+      querySelectorAll: function() { return []; },
+      querySelector: function() { return null; },
+      createElement: function() { return {}; }
+    };
+    var localStorage = { getItem: function(){ return null; }, setItem: function(){} };
+    var navigator = { userAgent: 'Mozilla/5.0' };
+
+    load('data/western_canons.js');
+    load('js/app.js');
+
+    if (typeof window.renderLaTeXFormula !== 'function') {
+      throw new Error("window.renderLaTeXFormula is not a function!");
+    }
+
+    // 1. Test fallback when KaTeX is absent
+    var fallbackResult = window.renderLaTeXFormula('f(\\\\theta) = \\\\sum_{n=1}^{N} A_n \\\\cos(n\\\\theta + \\\\phi_n)', true);
+    if (!fallbackResult || fallbackResult.indexOf('∑') === -1) {
+      throw new Error("Fallback math rendering failed to parse summation: " + fallbackResult);
+    }
+    if (fallbackResult.indexOf('θ') === -1) {
+      throw new Error("Fallback math rendering failed to parse theta: " + fallbackResult);
+    }
+
+    // 2. Test with KaTeX present
+    var mockCalled = false;
+    window.katex = {
+      renderToString: function(str, opts) {
+        mockCalled = true;
+        return '<span class="katex-mock">' + str + '</span>';
+      }
+    };
+    var katexResult = window.renderLaTeXFormula('\\\\Delta \\\\theta(t) \\\\pmod{360^\\\\circ}', true);
+    if (!mockCalled || katexResult.indexOf('katex-mock') === -1) {
+      throw new Error("renderLaTeXFormula failed to delegate to window.katex: " + katexResult);
+    }
+    """
+]
+
+run_check144 = subprocess.run(jsc_check144_cmd, capture_output=True, text=True)
+assert run_check144.returncode == 0, f"Check 144 JSC test failed: stdout={run_check144.stdout} stderr={run_check144.stderr}"
+
+print("✓ 144. KaTeX 数学公式渲染引擎（全量西方大典方程排版/优雅降级兜底/PWA离线缓存）与西方大典柔和淡雅蓝调配色全量验证通过！")
+
+print("\n🎉 ALL 144 VERIFICATION CHECKS PASSED WITH FLYING COLORS!")
 
 
 

@@ -43,7 +43,9 @@ const STATIC_ASSETS = [
   './icons/icon-512.png',
   './lib/html2pdf.bundle.min.js',
   'https://cdn.tailwindcss.com',
-  'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js'
+  'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js',
+  'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css',
+  'https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js'
 ];
 
 // Install Event: Pre-cache static assets

@@ -2,6 +2,73 @@
  * BaZi Metaphysics Application Controller
  */
 
+// LaTeX Mathematical Formula Renderer (KaTeX with robust fallback)
+function renderLaTeXFormula(latex, isBlock = true) {
+  if (!latex) return '';
+  if (typeof katex !== 'undefined' && typeof katex.renderToString === 'function') {
+    try {
+      return katex.renderToString(latex, {
+        displayMode: isBlock,
+        throwOnError: false,
+        strict: false
+      });
+    } catch (err) {
+      console.warn('KaTeX rendering error for:', latex, err);
+    }
+  }
+  return renderMathFallback(latex, isBlock);
+}
+
+function renderMathFallback(latex, isBlock = true) {
+  let s = String(latex)
+    .replace(/\\pmod\{([^}]+)\}/g, '(mod $1)')
+    .replace(/\\pmod\s+([0-9a-zA-Z^\\]+)/g, '(mod $1)')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1)/($2)')
+    .replace(/\\sum_\{([^}]+)\}\^\{([^}]+)\}/g, '∑_{$1}^{$2} ')
+    .replace(/\\sum/g, '∑')
+    .replace(/\\operatorname\{([^}]+)\}/g, '$1')
+    .replace(/\\text\{([^}]+)\}/g, '$1')
+    .replace(/\\theta/g, 'θ')
+    .replace(/\\phi/g, 'φ')
+    .replace(/\\alpha/g, 'α')
+    .replace(/\\delta/g, 'δ')
+    .replace(/\\lambda/g, 'λ')
+    .replace(/\\Delta/g, 'Δ')
+    .replace(/\\Phi/g, 'Φ')
+    .replace(/\\cos/g, 'cos')
+    .replace(/\\sin/g, 'sin')
+    .replace(/\\tan/g, 'tan')
+    .replace(/\\pm/g, '±')
+    .replace(/\\le/g, '≤')
+    .replace(/\\ge/g, '≥')
+    .replace(/\\in/g, '∈')
+    .replace(/\\dots/g, '…')
+    .replace(/\\equiv/g, '≡')
+    .replace(/\\implies/g, '⟹')
+    .replace(/\\xrightarrow\{([^}]+)\}/g, '―[$1]―>')
+    .replace(/\\odot/g, '☉')
+    .replace(/\\vec\{([^}]+)\}/g, '$1⃗')
+    .replace(/\^\\circ/g, '°')
+    .replace(/\\;/g, ' ')
+    .replace(/\\quad/g, '  ')
+    .replace(/\\,/g, ' ')
+    .replace(/\\&/g, '&')
+    .replace(/\\left\(/g, '(')
+    .replace(/\\right\(/g, ')')
+    .replace(/\\\{/g, '{')
+    .replace(/\\\}/g, '}');
+
+  const wrapperClass = isBlock ? 'block text-center font-mono text-xs text-slate-200 tracking-wide py-1' : 'inline font-mono text-xs text-slate-200 tracking-wide';
+  return `<span class="${wrapperClass}">${s}</span>`;
+}
+
+if (typeof window !== 'undefined') {
+  window.renderLaTeXFormula = renderLaTeXFormula;
+}
+if (typeof globalThis !== 'undefined') {
+  globalThis.renderLaTeXFormula = renderLaTeXFormula;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   // Comprehensive Global Regions and Cities Dataset
   const GLOBAL_REGIONS = [
@@ -5304,34 +5371,34 @@ document.addEventListener('DOMContentLoaded', () => {
       const localBearingEn = localDirection === '木' ? 'East (Azimuth 90° · Wood Meridian)' : (localDirection === '火' ? 'South (Azimuth 180° · Fire Meridian)' : (localDirection === '金' ? 'West (Azimuth 270° · Metal Meridian)' : (localDirection === '水' ? 'North (Azimuth 0°/360° · Water Meridian)' : 'Central / Southwest (Azimuth 225° · Earth Meridian)')));
 
       westernContainer.innerHTML = `
-        <div class="bg-card p-5 rounded-xl border border-sky-500/30 shadow-lg space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-500/20">
+        <div class="bg-card p-5 rounded-xl border border-sky-400/20 shadow-lg space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-400/20">
             <div class="flex items-center space-x-2">
-              <span class="chinese-seal text-[10px] py-0 border-sky-400 text-sky-300">${isEn ? 'Western Canons' : '西方数理大典'}</span>
-              <h3 class="text-base font-bold text-sky-200 font-serif-sc">${isEn ? '5-Domain Mathematical Physics Resonance & Kinetic Calibration' : '五大数理门类全景直配映射与动力学校准'}</h3>
+              <span class="chinese-seal text-[10px] py-0 border-sky-300/40 text-sky-200">${isEn ? 'Western Canons' : '西方数理大典'}</span>
+              <h3 class="text-base font-bold text-slate-100 font-serif-sc">${isEn ? '5-Domain Mathematical Physics Resonance & Kinetic Calibration' : '五大数理门类全景直配映射与动力学校准'}</h3>
             </div>
-            <span class="text-[11px] px-2 py-0.5 rounded bg-sky-500/20 text-sky-200 font-mono">
+            <span class="text-[11px] px-2 py-0.5 rounded bg-sky-400/10 text-sky-200 border border-sky-300/20 font-mono">
               ${isEn ? `Day Master ${dm} · ${vigorStr}` : `日元 ${dm} · ${vigorStr}`} · ${topPatName}
             </span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
             <!-- 1. Harmonics & Phase Dynamics -->
-            <div class="p-3.5 bg-black/30 rounded-xl border border-sky-900/40 space-y-2 flex flex-col justify-between">
+            <div class="p-3.5 bg-black/30 rounded-xl border border-sky-800/25 space-y-2 flex flex-col justify-between">
               <div class="space-y-1.5">
                 <div class="flex items-center justify-between">
-                  <span class="text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+                  <span class="text-sky-200 font-bold flex items-center gap-1.5 font-sans">
                     <span>〰️</span>
                     <span>${isEn ? '1. Harmonics & Phase Space' : '1. 泛音驻波与相空间 (Addey / Rudhyar)'}</span>
                   </span>
-                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-500/20 text-sky-300 font-mono">H4 / H9 Wave</span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-400/10 text-sky-200 border border-sky-400/20 font-mono">H4 / H9 Wave</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${h4Resistance}</p>
-                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-sky-200 font-mono">
-                  f(θ) = ∑ A_n cos(nθ + φ_n)
+                <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-slate-200 overflow-x-auto flex items-center justify-center">
+                  ${renderLaTeXFormula('f(\\theta) = \\sum_{n=1}^{N} A_n \\cos(n\\theta + \\phi_n)', false)}
                 </div>
               </div>
-              <button type="button" class="btn-jump-to-phase-portrait mt-2 w-full py-1 px-2 rounded bg-sky-950/60 hover:bg-sky-900 text-sky-300 border border-sky-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+              <button type="button" class="btn-jump-to-phase-portrait mt-2 w-full py-1 px-2 rounded bg-slate-800/60 hover:bg-slate-700/60 text-sky-200 border border-sky-400/20 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
                 <span>🌀</span>
                 <span>${isEn ? 'View 3D Life-Chrono Spiral' : '调阅相空间百岁螺旋'}</span>
               </button>
@@ -5348,8 +5415,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">90° Dial Dialectics</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${isEn ? `Primary pattern [${topPatName}] establishes structural vector balance across the 90° dial midpoint axes.` : `统帅主导格【${topPatName}】构成90°中点刻度盘第一应力轴，决定组织博弈平衡。`}</p>
-                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-amber-200 font-mono">
-                  (A + B) / 2 = C mod 90°
+                <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-amber-200 overflow-x-auto flex items-center justify-center">
+                  ${renderLaTeXFormula('\\frac{\\lambda_A + \\lambda_B}{2} \\equiv \\lambda_C \\pmod{90^\\circ}', false)}
                 </div>
               </div>
               <button type="button" class="btn-jump-to-game-matrix mt-2 w-full py-1 px-2 rounded bg-amber-950/60 hover:bg-amber-900 text-amber-300 border border-amber-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
@@ -5369,8 +5436,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono">Azimuth Bearing</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed"><b class="text-emerald-400">${isEn ? 'Optimal Horizon Azimuth: ' : '物理地平方位角指向：'}</b>${isEn ? localBearingEn : localBearingZh}</p>
-                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-emerald-200 font-mono">
-                  (α, δ) → (A, h) [Horizon Transform]
+                <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-emerald-200 overflow-x-auto flex items-center justify-center">
+                  ${renderLaTeXFormula('(\\alpha, \\delta) \\xrightarrow{\\text{Horizon}} (A, h)', false)}
                 </div>
               </div>
               <button type="button" class="btn-jump-to-georesonance mt-2 w-full py-1 px-2 rounded bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
@@ -5390,8 +5457,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono">ZR Aphesis L1-L4</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${isEn ? 'Multi-tiered time lord recurrence matching 10-year major luck transitions; identifies major structural transition jumps (Losing of the Bond).' : '多层级时间之主递推对应十年大运交接，精准标定人生能量爆发峰值期与“失纽跳轨”重大质变年份。'}</p>
-                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-indigo-200 font-mono">
-                  Aphesis(Spirit) → Peak Periods
+                <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-indigo-200 overflow-x-auto flex items-center justify-center">
+                  ${renderLaTeXFormula('\\text{ZR}(\\text{Spirit}) \\implies L_1 \\to L_4 \\; \\text{Peak}', false)}
                 </div>
               </div>
               <button type="button" class="btn-jump-to-chrono-luck mt-2 w-full py-1 px-2 rounded bg-indigo-950/60 hover:bg-indigo-900 text-indigo-300 border border-indigo-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
@@ -5411,8 +5478,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono">1° = 1 Year Arc</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${isEn ? 'Earth equatorial rotation (4 min = 1° = 1 year) grounds Bayesian milestone life event reverse-calibration, resolving minute-level birth timing uncertainties.' : '以地球自转赤道半弧（严格4分钟 = 1° = 1岁）为标尺，与重大离散历史事件收敛逆推真实出生分钟，彻底杜绝生时模糊。'}</p>
-                <div class="p-1.5 bg-black/50 rounded border border-gray-800 text-[11px] text-rose-200 font-mono">
-                  ΔRAMC = Δα [4 min = 1° = 1 Year] · Δθ_SA = θ_Sun(t) - θ_Sun(t0)
+                <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-rose-200 overflow-x-auto flex items-center justify-center">
+                  ${renderLaTeXFormula('\\Delta\\text{RAMC} = \\Delta\\alpha \\; [4^\\text{m} = 1^\\circ = 1\\text{y}], \\quad \\Delta\\theta_\\text{SA} = \\theta_\\odot(t) - \\theta_\\odot(t_0)', false)}
                 </div>
               </div>
               <button type="button" class="btn-jump-to-rectification mt-2 w-full py-1 px-2 rounded bg-rose-950/60 hover:bg-rose-900 text-rose-300 border border-rose-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
@@ -12438,7 +12505,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const categoryColorMap = {
-      harmonics_phase: { badgeBg: 'bg-sky-500/20', textCol: 'text-sky-300', border: 'border-sky-500/30' },
+      harmonics_phase: { badgeBg: 'bg-sky-400/10', textCol: 'text-sky-200', border: 'border-sky-400/20' },
       midpoints_game: { badgeBg: 'bg-amber-500/20', textCol: 'text-amber-300', border: 'border-amber-500/30' },
       local_space_acg: { badgeBg: 'bg-emerald-500/20', textCol: 'text-emerald-300', border: 'border-emerald-500/30' },
       hellenistic_zr: { badgeBg: 'bg-indigo-500/20', textCol: 'text-indigo-300', border: 'border-indigo-500/30' },
@@ -12451,7 +12518,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const catName = catObj ? (isEn ? catObj.nameEn : catObj.nameZh) : c.categoryId;
 
       return `
-        <div class="bg-card p-5 rounded-2xl border ${col.border} shadow-xl space-y-4 hover:border-sky-400/50 transition">
+        <div class="bg-card p-5 rounded-2xl border ${col.border} shadow-xl space-y-4 hover:border-sky-300/30 transition">
           <!-- Card Header -->
           <div class="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-gray-800">
             <div class="space-y-1">
@@ -12463,20 +12530,20 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <h4 class="text-base font-bold text-gray-100 font-serif-sc flex flex-wrap items-center gap-2">
                 <span>${isEn ? c.titleEn : c.titleZh}</span>
-                <span class="text-xs text-sky-400/80 font-sans font-normal">${isEn ? c.titleZh : c.titleEn}</span>
+                <span class="text-xs text-slate-400 font-sans font-normal">${isEn ? c.titleZh : c.titleEn}</span>
               </h4>
               <p class="text-xs text-amber-300/90 font-medium">
                 ${isEn ? c.authorEn : c.authorZh} · <span class="text-gray-400 font-normal">${isEn ? c.eraEn : c.eraZh}</span>
               </p>
             </div>
-            <span class="chinese-seal text-[10px] py-0 border-sky-400 text-sky-300">
+            <span class="chinese-seal text-[10px] py-0 border-sky-300/30 text-sky-200">
               ${isEn ? 'Western Canon' : '数理大典'}
             </span>
           </div>
 
           <!-- Canonical Authority & Status -->
-          <div class="p-3 bg-sky-950/20 rounded-xl border border-sky-900/30 text-xs space-y-1">
-            <span class="text-sky-300 font-bold flex items-center gap-1.5 font-sans">
+          <div class="p-3 bg-slate-900/30 rounded-xl border border-slate-800 text-xs space-y-1">
+            <span class="text-sky-200 font-bold flex items-center gap-1.5 font-sans">
               <span>🏛️</span>
               <span>${isEn ? 'Canonical Authority & Historical Status:' : '权威地位与学术奠基：'}</span>
             </span>
@@ -12493,18 +12560,18 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
 
           <!-- Mathematical / Physical Formulas Box -->
-          <div class="p-3.5 bg-black/40 rounded-xl border border-gray-800 text-xs space-y-2">
+          <div class="p-3.5 bg-black/40 rounded-xl border border-slate-800 text-xs space-y-2">
             <div class="flex items-center justify-between">
-              <span class="text-emerald-400 font-bold flex items-center gap-1.5 font-sans">
+              <span class="text-emerald-300 font-bold flex items-center gap-1.5 font-sans">
                 <span>📐</span>
                 <span>${isEn ? 'Rigorous Mathematical Formulas & Equations:' : '硬核数理方程与解析模型：'}</span>
               </span>
-              <span class="text-[10px] text-gray-500 font-mono">LaTeX / Analytical Physics</span>
+              <span class="text-[10px] text-slate-400 font-mono">KaTeX · Analytical Physics</span>
             </div>
-            <div class="space-y-1.5">
+            <div class="space-y-2">
               ${c.mathFormulas.map(f => `
-                <div class="px-3 py-1.5 bg-black/60 rounded border border-gray-800/80 text-sky-300 font-mono text-xs overflow-x-auto">
-                  <code>${f}</code>
+                <div class="western-formula-card px-3 py-2 bg-[#0c1017] rounded-lg border border-slate-800/80 text-slate-100 text-xs overflow-x-auto shadow-inner flex items-center justify-center">
+                  ${renderLaTeXFormula(f, true)}
                 </div>
               `).join('')}
             </div>
@@ -12520,9 +12587,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Classical Verse / Maxim Quote -->
           ${(c.keyVerses && c.keyVerses.length > 0) ? `
-            <div class="bg-[#141722] border-l-4 border-sky-400 p-3 rounded-r text-xs">
-              <span class="text-sky-300/80 font-medium block mb-0.5">${isEn ? 'Classical Aphorism / Maxim:' : '传世金句赋赋语：'}</span>
-              <p class="font-serif-sc text-sky-100 font-semibold leading-relaxed">“${isEn ? c.keyVerses[0].en : c.keyVerses[0].zh}”</p>
+            <div class="bg-[#131620] border-l-2 border-sky-300/40 p-3 rounded-r text-xs">
+              <span class="text-slate-400 font-medium block mb-0.5">${isEn ? 'Classical Aphorism / Maxim:' : '传世金句赋赋语：'}</span>
+              <p class="font-serif-sc text-slate-200 font-semibold leading-relaxed">“${isEn ? c.keyVerses[0].en : c.keyVerses[0].zh}”</p>
             </div>
           ` : ''}
 
@@ -12544,10 +12611,10 @@ document.addEventListener('DOMContentLoaded', () => {
       catBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           catBtns.forEach(b => {
-            b.classList.remove('active', 'border-sky-500/50', 'bg-sky-950/60', 'text-sky-200');
+            b.classList.remove('active', 'border-sky-300/30', 'bg-sky-900/25', 'text-sky-100');
             b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
           });
-          btn.classList.add('active', 'border-sky-500/50', 'bg-sky-950/60', 'text-sky-200');
+          btn.classList.add('active', 'border-sky-300/30', 'bg-sky-900/25', 'text-sky-100');
           btn.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
           activeWesternCategory = btn.getAttribute('data-category') || 'all';
           renderWesternCanonsList(activeWesternCategory, westernSearchQuery);
@@ -12560,6 +12627,17 @@ document.addEventListener('DOMContentLoaded', () => {
       searchInput.addEventListener('input', (e) => {
         westernSearchQuery = e.target.value;
         renderWesternCanonsList(activeWesternCategory, westernSearchQuery);
+      });
+    }
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', () => {
+        if (typeof katex !== 'undefined') {
+          const container = document.getElementById('westernCanonsList');
+          if (container && container.innerHTML.trim() !== '') {
+            renderWesternCanonsList(activeWesternCategory, westernSearchQuery);
+          }
+        }
       });
     }
   }

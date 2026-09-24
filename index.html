@@ -16,6 +16,8 @@
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <!-- Custom Metaphysics CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <!-- KaTeX Mathematical Typesetting CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script>
     (function() {
       try {
@@ -2398,7 +2400,7 @@
         </button>
         <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-western" data-school="western">
           <span data-i18n="tab_western">🌌 《西方数理大典》</span>
-          <span class="text-[10px] bg-sky-500/20 text-sky-300 px-1 py-0.2 rounded" data-i18n="tab_western_badge">波动与相空间 (10)</span>
+          <span class="text-[10px] bg-sky-400/10 text-sky-200/90 border border-sky-400/20 px-1.5 py-0.5 rounded" data-i18n="tab_western_badge">波动与相空间 (10)</span>
         </button>
         <button class="tab-btn text-sm font-semibold flex items-center space-x-1.5" data-tab="tab-schools" data-school="synthesis">
           <span data-i18n="tab_schools">🏛️ 四大学派全景</span>
@@ -2684,22 +2686,22 @@
       <!-- Tab: 《西方数理大典》 (Western Mathematical & Wave Dynamics Canons) -->
       <div id="tab-western" class="tab-pane hidden p-5 space-y-6">
         <!-- Hero Introduction Banner -->
-        <div class="bg-gradient-to-r from-sky-950/40 via-[#171b26] to-indigo-950/40 p-5 rounded-2xl border border-sky-500/30 shadow-xl space-y-3">
+        <div class="bg-gradient-to-r from-slate-900/60 via-[#141824] to-slate-900/60 p-5 rounded-2xl border border-sky-400/20 shadow-xl space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center space-x-3">
-              <span class="text-2xl p-2 rounded-xl bg-sky-500/10 border border-sky-400/30 text-sky-300">🌌</span>
+              <span class="text-2xl p-2 rounded-xl bg-sky-400/10 border border-sky-300/20 text-sky-200">🌌</span>
               <div>
-                <h3 class="text-base font-bold text-sky-200 font-serif-sc flex items-center gap-2" data-i18n="western_hero_title">
+                <h3 class="text-base font-bold text-slate-100 font-serif-sc flex items-center gap-2" data-i18n="western_hero_title">
                   西方数理动力学与经典星命大典
                 </h3>
-                <p class="text-xs text-sky-300/80 font-mono">Western Mathematical & Wave Dynamics Canons · 5 Major Domains & 10 Foundational Works</p>
+                <p class="text-xs text-slate-400 font-mono">Western Mathematical & Wave Dynamics Canons · 5 Major Domains & 10 Foundational Works</p>
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <span class="text-[11px] px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-200 border border-sky-400/30 font-mono">
+              <span class="text-[11px] px-2.5 py-1 rounded-full bg-sky-400/10 text-sky-200/90 border border-sky-300/20 font-mono">
                 100% Mathematical Physics
               </span>
-              <span class="text-[11px] px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-200 border border-indigo-400/30 font-mono">
+              <span class="text-[11px] px-2.5 py-1 rounded-full bg-indigo-500/15 text-indigo-200/90 border border-indigo-400/25 font-mono">
                 Wave Mechanics
               </span>
             </div>
@@ -2713,7 +2715,7 @@
         <div>
           <div class="text-xs text-gray-400 mb-2 font-medium flex items-center justify-between">
             <span data-i18n="western_auto_title">当前命盘西方数理动力学直配映射与五维解算：</span>
-            <span class="text-[11px] text-sky-400 font-mono">Phase Space · Midpoints · Local Horizon · Releasing · Rectification</span>
+            <span class="text-[11px] text-sky-300/80 font-mono">Phase Space · Midpoints · Local Horizon · Releasing · Rectification</span>
           </div>
           <div id="westernCanonsAutoResult">
             <!-- Injected via JavaScript -->
@@ -2723,7 +2725,7 @@
         <!-- Filter & Search Toolbar for Western Canons -->
         <div class="bg-[#12141c] p-3.5 rounded-xl border border-gray-800 flex flex-wrap items-center justify-between gap-3">
           <div class="flex flex-wrap items-center gap-1.5" id="westernCategoryFilter">
-            <button type="button" class="western-cat-btn active px-2.5 py-1 rounded-lg border border-sky-500/50 bg-sky-950/60 text-sky-200 text-xs font-medium transition" data-category="all" data-i18n="western_filter_all">全部大典 (10)</button>
+            <button type="button" class="western-cat-btn active px-2.5 py-1 rounded-lg border border-sky-300/30 bg-sky-900/25 text-sky-100 text-xs font-medium transition" data-category="all" data-i18n="western_filter_all">全部大典 (10)</button>
             <button type="button" class="western-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 text-xs transition" data-category="harmonics_phase">〰️ 泛音波动 (2)</button>
             <button type="button" class="western-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 text-xs transition" data-category="midpoints_game">📐 中点博弈 (2)</button>
             <button type="button" class="western-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 text-xs transition" data-category="local_space_acg">🧭 空间地平 (2)</button>
@@ -2731,7 +2733,7 @@
             <button type="button" class="western-cat-btn px-2.5 py-1 rounded-lg border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 text-xs transition" data-category="primary_directions">🔭 球面几何 (2)</button>
           </div>
           <div class="w-full sm:w-64">
-            <input type="text" id="westernSearchInput" placeholder="快速检索西方大典..." class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-sky-500" data-i18n-placeholder="western_search_placeholder">
+            <input type="text" id="westernSearchInput" placeholder="快速检索西方大典..." class="w-full bg-black/40 border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-gray-200 focus:outline-none focus:border-sky-400/40" data-i18n-placeholder="western_search_placeholder">
           </div>
         </div>
 
@@ -4027,6 +4029,7 @@
   <script src="data/wuxingjingji.js"></script>
   <script src="data/qianliminggao.js"></script>
   <script src="data/xulewu_commentary.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="data/western_canons.js"></script>
   <script src="data/iching.js"></script>
   <script src="data/tianji.js"></script>

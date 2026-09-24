@@ -3383,5 +3383,45 @@ body.light-theme .iching-roster-card.border-amber-500 {
   box-shadow: 0 4px 14px rgba(249, 115, 22, 0.22) !important;
 }
 
+/* 6. Western Canons Mathematical Formulas & KaTeX Typography */
+.western-formula-card {
+  transition: all 0.2s ease-in-out;
+}
+.western-formula-card:hover {
+  background-color: rgba(15, 23, 42, 0.7);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+.western-formula-card .katex-display {
+  margin: 0.2rem 0 !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.15rem 0 !important;
+  text-align: center;
+}
+.western-formula-card .katex {
+  font-size: 1.05rem;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="light"] .western-formula-card,
+html.light .western-formula-card,
+body.light-theme .western-formula-card {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+[data-theme="light"] .western-formula-card:hover,
+html.light .western-formula-card:hover,
+body.light-theme .western-formula-card:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+[data-theme="light"] .western-formula-card .katex,
+html.light .western-formula-card .katex,
+body.light-theme .western-formula-card .katex {
+  color: #1e293b !important;
+}
+
+
 
 
