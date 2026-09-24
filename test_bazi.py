@@ -19253,7 +19253,23 @@ en_part = i18n_content.split('en: {')[1].split('};\n')[0]
 cjk_in_western = [line for line in en_part.split('\n') if ('western' in line or 'canon_cat_' in line) and any('\u4e00' <= char <= '\u9fa5' for char in line)]
 assert len(cjk_in_western) == 0, f"Chinese characters detected in western English i18n: {cjk_in_western}"
 
-print("✓ 142. 西方数理动力学与经典星命大典数据库完整入库并深度集成至十二大典（导航分类/专属Tab/五维动力学直配/万象联合检索/双语零残留）全量验证通过！")
+# Verify plain-language takeaways and light mode contrast refinements
+assert 'westernHeroBanner' in idx_content, "Missing westernHeroBanner in index.html"
+assert 'plainMeaning1' in app_content, "Missing plainMeaning1 in app.js"
+assert 'plainMeaning2' in app_content, "Missing plainMeaning2 in app.js"
+assert 'plainMeaning3' in app_content, "Missing plainMeaning3 in app.js"
+assert 'plainMeaning4' in app_content, "Missing plainMeaning4 in app.js"
+assert 'plainMeaning5' in app_content, "Missing plainMeaning5 in app.js"
+assert 'western-auto-takeaway' in app_content, "Missing western-auto-takeaway in app.js"
+assert 'western-overview-banner' in app_content, "Missing western-overview-banner in app.js"
+
+with open('css/style.css', 'r', encoding='utf-8') as f:
+    css_content = f.read()
+assert '#westernHeroBanner' in css_content, "Missing #westernHeroBanner in css/style.css"
+assert '.western-auto-takeaway' in css_content, "Missing .western-auto-takeaway in css/style.css"
+assert '.western-auto-card-1' in css_content, "Missing .western-auto-card-1 in css/style.css"
+
+print("✓ 142. 西方数理动力学与经典星命大典数据库完整入库并深度集成至十二大典（导航分类/专属Tab/五维动力学直配/万象联合检索/五维通俗大白话提炼/浅昼高对比适配/双语零残留）全量验证通过！")
 
 # 143. Validate Full Application Lifecycle & Smooth Transition to Page 2 (第一页面门户 -> 第二页面看板零TDZ阻断)
 print("\n=== 143. Validating Full App Lifecycle & Transition to Page 2 (第一页面门户 -> 第二页面看板零TDZ阻断) ===")

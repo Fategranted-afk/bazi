@@ -5370,22 +5370,51 @@ document.addEventListener('DOMContentLoaded', () => {
       const localBearingZh = localDirection === '木' ? '东向 (Azimuth 90° 震东方)' : (localDirection === '火' ? '南向 (Azimuth 180° 离南方)' : (localDirection === '金' ? '西向 (Azimuth 270° 兑西方)' : (localDirection === '水' ? '北向 (Azimuth 0°/360° 坎北方)' : '中原/西南 (Azimuth 225° 坤西南)')));
       const localBearingEn = localDirection === '木' ? 'East (Azimuth 90° · Wood Meridian)' : (localDirection === '火' ? 'South (Azimuth 180° · Fire Meridian)' : (localDirection === '金' ? 'West (Azimuth 270° · Metal Meridian)' : (localDirection === '水' ? 'North (Azimuth 0°/360° · Water Meridian)' : 'Central / Southwest (Azimuth 225° · Earth Meridian)')));
 
+      const plainMeaning1 = isEn
+        ? 'Visualizes your life momentum into an energetic wave curve over 100 years. Pinpoints when to aggressively break through and when to fortify defenses, preventing premature burnout during energy troughs and maximizing breakthrough velocity at peak potential.'
+        : '把一生命运具象为能量起伏的波动曲线。标定何时该主动进攻破局、何时该稳健防守蓄力，杜绝在能量低谷期盲目冒进耗损、在势能巅峰期错失良机。';
+
+      const plainMeaning2 = isEn
+        ? 'Calculates your power leverage and structural tension axes in organizational politics. Quantifies the tipping points of alliances and profit distribution, revealing who acts as your natural strategic benefactor and where rival power friction lies.'
+        : '测算你在职场与组织博弈中的权力杠杆与受力焦点。精准计算合伙、结盟与利益分配的临界断裂点，告诉你谁是天然借力贵人、何处存在权力博弈暗礁。';
+
+      const plainMeaning3 = isEn
+        ? 'Reveals how geographic relocation and physical workspace orientation reshape your personal potential field. Guides you toward optimal global metropolitan hubs and desk azimuths to activate environmental momentum and eliminate chronic friction.'
+        : '揭示地理位移与物理空间对你个人势能场的直接重塑。告诉你迁徙至哪个城市、室内工位朝向何方能最大化激发顺风气场，杜绝水土不服与无谓内耗。';
+
+      const plainMeaning4 = isEn
+        ? 'Pinpoints your golden career breakout windows and track-jumping transformation years (Losing of the Bond). Time is governed by nested rhythmic cycles, forecasting irreversible industry tides 3 years in advance for decisive strategic positioning.'
+        : '锁定你职业生涯的黄金爆发期与赛道跃迁年份（解纽期）。时间由多层周期接管，提早3年预判重大行业风口与换道契机，实现人生质的阶层跃升。';
+
+      const plainMeaning5 = isEn
+        ? 'Reverse-engineers your authentic birth minute from verified historical milestones (promotions, surgeries, relocations, marriages). Because 4 minutes of Earth rotation equals 1 year of life, it resolves birth hour boundary ambiguity and solidifies your entire chart foundation.'
+        : '用你过往发生的真实大事件（升学、立业、开刀、成家等）逆流反推出生分钟。地球自转4分钟对应人生1年，彻底校准时辰边界模糊，让全盘推演底座绝对坚实。';
+
       westernContainer.innerHTML = `
-        <div class="bg-card p-5 rounded-xl border border-sky-400/20 shadow-lg space-y-4">
+        <div class="western-auto-box bg-card p-5 rounded-xl border border-sky-400/20 shadow-lg space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-sky-400/20">
             <div class="flex items-center space-x-2">
               <span class="chinese-seal text-[10px] py-0 border-sky-300/40 text-sky-200">${isEn ? 'Western Canons' : '西方数理大典'}</span>
               <h3 class="text-base font-bold text-slate-100 font-serif-sc">${isEn ? '5-Domain Mathematical Physics Resonance & Kinetic Calibration' : '五大数理门类全景直配映射与动力学校准'}</h3>
             </div>
-            <span class="text-[11px] px-2 py-0.5 rounded bg-sky-400/10 text-sky-200 border border-sky-300/20 font-mono">
+            <span class="western-dm-badge text-[11px] px-2 py-0.5 rounded bg-sky-400/10 text-sky-200 border border-sky-300/20 font-mono">
               ${isEn ? `Day Master ${dm} · ${vigorStr}` : `日元 ${dm} · ${vigorStr}`} · ${topPatName}
             </span>
           </div>
 
+          <!-- Overview Essence Callout -->
+          <div class="western-overview-banner p-3 rounded-xl bg-sky-500/10 border border-sky-400/20 text-xs text-slate-300 leading-relaxed flex items-start gap-2.5">
+            <span class="text-sky-300 text-sm flex-shrink-0 mt-0.5">💡</span>
+            <div>
+              <b class="text-sky-200 font-bold block mb-0.5">${isEn ? 'The Essence of 5-Domain Western Physics Calibration:' : '五维数理动力学直配 · 最核心的本质意义：'}</b>
+              <span>${isEn ? 'Bridges classical Eastern natal patterns into 5 rigorous Western mathematical physics disciplines: wave mechanics govern your energy rhythm, midpoints calculate political leverage, local space maps geographic relocation, zodiacal releasing clocks career quantum leaps, and spherical arcs reverse-engineer exact birth timing. A 5-dimensional actionable navigation compass.' : '以西方波动力学、中点博弈、地平坐标、黄道释放与赤道半弧五大数理工具，把传统东方四柱转换为看得懂、算得准、可落地的现代行动指引。告别模糊臆测，给人生重大决策一套清晰的数理能量导航仪。'}</span>
+            </div>
+          </div>
+
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
             <!-- 1. Harmonics & Phase Dynamics -->
-            <div class="p-3.5 bg-black/30 rounded-xl border border-sky-800/25 space-y-2 flex flex-col justify-between">
-              <div class="space-y-1.5">
+            <div class="western-auto-card western-auto-card-1 p-3.5 bg-black/30 rounded-xl border border-sky-800/25 space-y-2.5 flex flex-col justify-between">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-sky-200 font-bold flex items-center gap-1.5 font-sans">
                     <span>〰️</span>
@@ -5394,19 +5423,23 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-sky-400/10 text-sky-200 border border-sky-400/20 font-mono">H4 / H9 Wave</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${h4Resistance}</p>
+                <div class="western-auto-takeaway p-2.5 rounded-lg bg-sky-500/10 border border-sky-400/20 text-[11px] text-sky-200/90 leading-relaxed font-sans">
+                  <b class="text-sky-300 font-semibold block mb-0.5">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思：'}</b>
+                  <span>${plainMeaning1}</span>
+                </div>
                 <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-slate-200 overflow-x-auto flex items-center justify-center">
                   ${renderLaTeXFormula('f(\\theta) = \\sum_{n=1}^{N} A_n \\cos(n\\theta + \\phi_n)', false)}
                 </div>
               </div>
-              <button type="button" class="btn-jump-to-phase-portrait mt-2 w-full py-1 px-2 rounded bg-slate-800/60 hover:bg-slate-700/60 text-sky-200 border border-sky-400/20 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+              <button type="button" class="btn-jump-to-phase-portrait mt-2 w-full py-1.5 px-2 rounded bg-slate-800/60 hover:bg-slate-700/60 text-sky-200 border border-sky-400/20 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
                 <span>🌀</span>
                 <span>${isEn ? 'View 3D Life-Chrono Spiral' : '调阅相空间百岁螺旋'}</span>
               </button>
             </div>
 
             <!-- 2. Midpoints & Multi-Party Game -->
-            <div class="p-3.5 bg-black/30 rounded-xl border border-amber-900/40 space-y-2 flex flex-col justify-between">
-              <div class="space-y-1.5">
+            <div class="western-auto-card western-auto-card-2 p-3.5 bg-black/30 rounded-xl border border-amber-900/40 space-y-2.5 flex flex-col justify-between">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-amber-300 font-bold flex items-center gap-1.5 font-sans">
                     <span>📐</span>
@@ -5415,19 +5448,23 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono">90° Dial Dialectics</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${isEn ? `Primary pattern [${topPatName}] establishes structural vector balance across the 90° dial midpoint axes.` : `统帅主导格【${topPatName}】构成90°中点刻度盘第一应力轴，决定组织博弈平衡。`}</p>
+                <div class="western-auto-takeaway p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 leading-relaxed font-sans">
+                  <b class="text-amber-300 font-semibold block mb-0.5">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思：'}</b>
+                  <span>${plainMeaning2}</span>
+                </div>
                 <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-amber-200 overflow-x-auto flex items-center justify-center">
                   ${renderLaTeXFormula('\\frac{\\lambda_A + \\lambda_B}{2} \\equiv \\lambda_C \\pmod{90^\\circ}', false)}
                 </div>
               </div>
-              <button type="button" class="btn-jump-to-game-matrix mt-2 w-full py-1 px-2 rounded bg-amber-950/60 hover:bg-amber-900 text-amber-300 border border-amber-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+              <button type="button" class="btn-jump-to-game-matrix mt-2 w-full py-1.5 px-2 rounded bg-amber-950/60 hover:bg-amber-900 text-amber-300 border border-amber-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
                 <span>⚔️</span>
                 <span>${isEn ? 'Simulate Political Game Network' : '进入组织博弈沙盘'}</span>
               </button>
             </div>
 
             <!-- 3. Local Space & Geographic Projection -->
-            <div class="p-3.5 bg-black/30 rounded-xl border border-emerald-900/40 space-y-2 flex flex-col justify-between">
-              <div class="space-y-1.5">
+            <div class="western-auto-card western-auto-card-3 p-3.5 bg-black/30 rounded-xl border border-emerald-900/40 space-y-2.5 flex flex-col justify-between">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-emerald-300 font-bold flex items-center gap-1.5 font-sans">
                     <span>🧭</span>
@@ -5436,19 +5473,23 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 font-mono">Azimuth Bearing</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed"><b class="text-emerald-400">${isEn ? 'Optimal Horizon Azimuth: ' : '物理地平方位角指向：'}</b>${isEn ? localBearingEn : localBearingZh}</p>
+                <div class="western-auto-takeaway p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-[11px] text-emerald-200/90 leading-relaxed font-sans">
+                  <b class="text-emerald-300 font-semibold block mb-0.5">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思：'}</b>
+                  <span>${plainMeaning3}</span>
+                </div>
                 <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-emerald-200 overflow-x-auto flex items-center justify-center">
                   ${renderLaTeXFormula('(\\alpha, \\delta) \\xrightarrow{\\text{Horizon}} (A, h)', false)}
                 </div>
               </div>
-              <button type="button" class="btn-jump-to-georesonance mt-2 w-full py-1 px-2 rounded bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+              <button type="button" class="btn-jump-to-georesonance mt-2 w-full py-1.5 px-2 rounded bg-emerald-950/60 hover:bg-emerald-900 text-emerald-300 border border-emerald-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
                 <span>🌍</span>
                 <span>${isEn ? 'Launch Geo Resonance Hub' : '调阅地理生态匹配仪'}</span>
               </button>
             </div>
 
             <!-- 4. Hellenistic Time-Lords & Zodiacal Releasing -->
-            <div class="p-3.5 bg-black/30 rounded-xl border border-indigo-900/40 space-y-2 flex flex-col justify-between">
-              <div class="space-y-1.5">
+            <div class="western-auto-card western-auto-card-4 p-3.5 bg-black/30 rounded-xl border border-indigo-900/40 space-y-2.5 flex flex-col justify-between">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-indigo-300 font-bold flex items-center gap-1.5 font-sans">
                     <span>⏳</span>
@@ -5457,19 +5498,23 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono">ZR Aphesis L1-L4</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${isEn ? 'Multi-tiered time lord recurrence matching 10-year major luck transitions; identifies major structural transition jumps (Losing of the Bond).' : '多层级时间之主递推对应十年大运交接，精准标定人生能量爆发峰值期与“失纽跳轨”重大质变年份。'}</p>
+                <div class="western-auto-takeaway p-2.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-[11px] text-indigo-200/90 leading-relaxed font-sans">
+                  <b class="text-indigo-300 font-semibold block mb-0.5">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思：'}</b>
+                  <span>${plainMeaning4}</span>
+                </div>
                 <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-indigo-200 overflow-x-auto flex items-center justify-center">
                   ${renderLaTeXFormula('\\text{ZR}(\\text{Spirit}) \\implies L_1 \\to L_4 \\; \\text{Peak}', false)}
                 </div>
               </div>
-              <button type="button" class="btn-jump-to-chrono-luck mt-2 w-full py-1 px-2 rounded bg-indigo-950/60 hover:bg-indigo-900 text-indigo-300 border border-indigo-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+              <button type="button" class="btn-jump-to-chrono-luck mt-2 w-full py-1.5 px-2 rounded bg-indigo-950/60 hover:bg-indigo-900 text-indigo-300 border border-indigo-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
                 <span>⏱️</span>
                 <span>${isEn ? 'Inspect Chrono Decades' : '调阅岁运流转时序'}</span>
               </button>
             </div>
 
             <!-- 5. Spherical Astronomy & Primary Directions -->
-            <div class="p-3.5 bg-black/30 rounded-xl border border-rose-900/40 space-y-2 flex flex-col justify-between lg:col-span-2">
-              <div class="space-y-1.5">
+            <div class="western-auto-card western-auto-card-5 p-3.5 bg-black/30 rounded-xl border border-rose-900/40 space-y-2.5 flex flex-col justify-between lg:col-span-2">
+              <div class="space-y-2">
                 <div class="flex items-center justify-between">
                   <span class="text-rose-300 font-bold flex items-center gap-1.5 font-sans">
                     <span>🔭</span>
@@ -5478,11 +5523,15 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-500/20 text-rose-300 font-mono">1° = 1 Year Arc</span>
                 </div>
                 <p class="text-gray-300 leading-relaxed">${isEn ? 'Earth equatorial rotation (4 min = 1° = 1 year) grounds Bayesian milestone life event reverse-calibration, resolving minute-level birth timing uncertainties.' : '以地球自转赤道半弧（严格4分钟 = 1° = 1岁）为标尺，与重大离散历史事件收敛逆推真实出生分钟，彻底杜绝生时模糊。'}</p>
+                <div class="western-auto-takeaway p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/20 text-[11px] text-rose-200/90 leading-relaxed font-sans">
+                  <b class="text-rose-300 font-semibold block mb-0.5">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思：'}</b>
+                  <span>${plainMeaning5}</span>
+                </div>
                 <div class="western-formula-card px-2 py-1.5 bg-black/40 rounded border border-slate-800/80 text-[11px] text-rose-200 overflow-x-auto flex items-center justify-center">
                   ${renderLaTeXFormula('\\Delta\\text{RAMC} = \\Delta\\alpha \\; [4^\\text{m} = 1^\\circ = 1\\text{y}], \\quad \\Delta\\theta_\\text{SA} = \\theta_\\odot(t) - \\theta_\\odot(t_0)', false)}
                 </div>
               </div>
-              <button type="button" class="btn-jump-to-rectification mt-2 w-full py-1 px-2 rounded bg-rose-950/60 hover:bg-rose-900 text-rose-300 border border-rose-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
+              <button type="button" class="btn-jump-to-rectification mt-2 w-full py-1.5 px-2 rounded bg-rose-950/60 hover:bg-rose-900 text-rose-300 border border-rose-700/40 text-[11px] font-medium transition text-center flex items-center justify-center gap-1">
                 <span>🎯</span>
                 <span>${isEn ? 'Open Bayesian Milestone Rectifier' : '打开以事校对生时逆推仪'}</span>
               </button>

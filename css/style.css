@@ -3422,6 +3422,353 @@ body.light-theme .western-formula-card .katex {
   color: #1e293b !important;
 }
 
+/* 7. Western Canons Light Mode Refinements & Contrast Enhancements */
+[data-theme="light"] #westernHeroBanner,
+html.light #westernHeroBanner,
+body.light-theme #westernHeroBanner {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%) !important;
+  background-image: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%) !important;
+  border-color: #bae6fd !important;
+  box-shadow: 0 4px 20px rgba(186, 230, 253, 0.25) !important;
+}
+
+[data-theme="light"] #westernHeroBanner .western-hero-icon,
+html.light #westernHeroBanner .western-hero-icon,
+body.light-theme #westernHeroBanner .western-hero-icon {
+  background-color: #e0f2fe !important;
+  border-color: #7dd3fc !important;
+  color: #0284c7 !important;
+}
+
+[data-theme="light"] #westernHeroBanner .western-hero-title,
+html.light #westernHeroBanner .western-hero-title,
+body.light-theme #westernHeroBanner .western-hero-title {
+  color: #0c4a6e !important;
+}
+
+[data-theme="light"] #westernHeroBanner .western-hero-subtitle,
+html.light #westernHeroBanner .western-hero-subtitle,
+body.light-theme #westernHeroBanner .western-hero-subtitle {
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] #westernHeroBanner .western-hero-badge-1,
+html.light #westernHeroBanner .western-hero-badge-1,
+body.light-theme #westernHeroBanner .western-hero-badge-1 {
+  background-color: #e0f2fe !important;
+  border-color: #7dd3fc !important;
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] #westernHeroBanner .western-hero-badge-2,
+html.light #westernHeroBanner .western-hero-badge-2,
+body.light-theme #westernHeroBanner .western-hero-badge-2 {
+  background-color: #ede9fe !important;
+  border-color: #c4b5fd !important;
+  color: #6d28d9 !important;
+}
+
+[data-theme="light"] #westernHeroBanner .western-hero-desc,
+html.light #westernHeroBanner .western-hero-desc,
+body.light-theme #westernHeroBanner .western-hero-desc {
+  color: #334155 !important;
+}
+
+/* Western Canons Auto Calibration Container in Light Mode */
+[data-theme="light"] .western-auto-box,
+html.light .western-auto-box,
+body.light-theme .western-auto-box {
+  background-color: #ffffff !important;
+  border-color: #bae6fd !important;
+  box-shadow: 0 4px 16px rgba(186, 230, 253, 0.2) !important;
+}
+
+[data-theme="light"] .western-auto-box h3,
+html.light .western-auto-box h3,
+body.light-theme .western-auto-box h3 {
+  color: #0c4a6e !important;
+}
+
+[data-theme="light"] .western-auto-box .western-dm-badge,
+html.light .western-auto-box .western-dm-badge,
+body.light-theme .western-auto-box .western-dm-badge {
+  background-color: #f0f9ff !important;
+  border-color: #bae6fd !important;
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] .western-overview-banner,
+html.light .western-overview-banner,
+body.light-theme .western-overview-banner {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%) !important;
+  border-color: #7dd3fc !important;
+  color: #334155 !important;
+}
+
+[data-theme="light"] .western-overview-banner b,
+html.light .western-overview-banner b,
+body.light-theme .western-overview-banner b {
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] .western-auto-card,
+html.light .western-auto-card,
+body.light-theme .western-auto-card {
+  background-color: #f8fafc !important;
+}
+
+[data-theme="light"] .western-auto-card p,
+html.light .western-auto-card p,
+body.light-theme .western-auto-card p {
+  color: #334155 !important;
+}
+
+/* Card 1: Harmonics & Phase Space */
+[data-theme="light"] .western-auto-card-1,
+html.light .western-auto-card-1,
+body.light-theme .western-auto-card-1 {
+  border-color: #bae6fd !important;
+}
+[data-theme="light"] .western-auto-card-1 .western-auto-takeaway,
+html.light .western-auto-card-1 .western-auto-takeaway,
+body.light-theme .western-auto-card-1 .western-auto-takeaway {
+  background-color: #f0f9ff !important;
+  border-color: #bae6fd !important;
+  color: #0c4a6e !important;
+}
+[data-theme="light"] .western-auto-card-1 .western-auto-takeaway b,
+html.light .western-auto-card-1 .western-auto-takeaway b,
+body.light-theme .western-auto-card-1 .western-auto-takeaway b {
+  color: #0284c7 !important;
+}
+[data-theme="light"] .btn-jump-to-phase-portrait,
+html.light .btn-jump-to-phase-portrait,
+body.light-theme .btn-jump-to-phase-portrait {
+  background-color: #f0f9ff !important;
+  border-color: #7dd3fc !important;
+  color: #0369a1 !important;
+}
+[data-theme="light"] .btn-jump-to-phase-portrait:hover,
+html.light .btn-jump-to-phase-portrait:hover,
+body.light-theme .btn-jump-to-phase-portrait:hover {
+  background-color: #e0f2fe !important;
+  color: #0284c7 !important;
+}
+
+/* Card 2: Midpoints & Game Matrix */
+[data-theme="light"] .western-auto-card-2,
+html.light .western-auto-card-2,
+body.light-theme .western-auto-card-2 {
+  border-color: #fed7aa !important;
+}
+[data-theme="light"] .western-auto-card-2 .western-auto-takeaway,
+html.light .western-auto-card-2 .western-auto-takeaway,
+body.light-theme .western-auto-card-2 .western-auto-takeaway {
+  background-color: #fff7ed !important;
+  border-color: #fed7aa !important;
+  color: #9a3412 !important;
+}
+[data-theme="light"] .western-auto-card-2 .western-auto-takeaway b,
+html.light .western-auto-card-2 .western-auto-takeaway b,
+body.light-theme .western-auto-card-2 .western-auto-takeaway b {
+  color: #ea580c !important;
+}
+[data-theme="light"] .btn-jump-to-game-matrix,
+html.light .btn-jump-to-game-matrix,
+body.light-theme .btn-jump-to-game-matrix {
+  background-color: #fff7ed !important;
+  border-color: #fed7aa !important;
+  color: #ea580c !important;
+}
+[data-theme="light"] .btn-jump-to-game-matrix:hover,
+html.light .btn-jump-to-game-matrix:hover,
+body.light-theme .btn-jump-to-game-matrix:hover {
+  background-color: #ffedd5 !important;
+  color: #c2410c !important;
+}
+
+/* Card 3: Local Space & Geographic Resonance */
+[data-theme="light"] .western-auto-card-3,
+html.light .western-auto-card-3,
+body.light-theme .western-auto-card-3 {
+  border-color: #a7f3d0 !important;
+}
+[data-theme="light"] .western-auto-card-3 .western-auto-takeaway,
+html.light .western-auto-card-3 .western-auto-takeaway,
+body.light-theme .western-auto-card-3 .western-auto-takeaway {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+  color: #064e3b !important;
+}
+[data-theme="light"] .western-auto-card-3 .western-auto-takeaway b,
+html.light .western-auto-card-3 .western-auto-takeaway b,
+body.light-theme .western-auto-card-3 .western-auto-takeaway b {
+  color: #059669 !important;
+}
+[data-theme="light"] .btn-jump-to-georesonance,
+html.light .btn-jump-to-georesonance,
+body.light-theme .btn-jump-to-georesonance {
+  background-color: #ecfdf5 !important;
+  border-color: #6ee7b7 !important;
+  color: #047857 !important;
+}
+[data-theme="light"] .btn-jump-to-georesonance:hover,
+html.light .btn-jump-to-georesonance:hover,
+body.light-theme .btn-jump-to-georesonance:hover {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+/* Card 4: Hellenistic Zodiacal Releasing */
+[data-theme="light"] .western-auto-card-4,
+html.light .western-auto-card-4,
+body.light-theme .western-auto-card-4 {
+  border-color: #c7d2fe !important;
+}
+[data-theme="light"] .western-auto-card-4 .western-auto-takeaway,
+html.light .western-auto-card-4 .western-auto-takeaway,
+body.light-theme .western-auto-card-4 .western-auto-takeaway {
+  background-color: #eef2ff !important;
+  border-color: #c7d2fe !important;
+  color: #312e81 !important;
+}
+[data-theme="light"] .western-auto-card-4 .western-auto-takeaway b,
+html.light .western-auto-card-4 .western-auto-takeaway b,
+body.light-theme .western-auto-card-4 .western-auto-takeaway b {
+  color: #4338ca !important;
+}
+[data-theme="light"] .btn-jump-to-chrono-luck,
+html.light .btn-jump-to-chrono-luck,
+body.light-theme .btn-jump-to-chrono-luck {
+  background-color: #eef2ff !important;
+  border-color: #a5b4fc !important;
+  color: #4338ca !important;
+}
+[data-theme="light"] .btn-jump-to-chrono-luck:hover,
+html.light .btn-jump-to-chrono-luck:hover,
+body.light-theme .btn-jump-to-chrono-luck:hover {
+  background-color: #e0e7ff !important;
+  color: #3730a3 !important;
+}
+
+/* Card 5: Spherical Astronomy & Primary Directions */
+[data-theme="light"] .western-auto-card-5,
+html.light .western-auto-card-5,
+body.light-theme .western-auto-card-5 {
+  border-color: #fecdd3 !important;
+}
+[data-theme="light"] .western-auto-card-5 .western-auto-takeaway,
+html.light .western-auto-card-5 .western-auto-takeaway,
+body.light-theme .western-auto-card-5 .western-auto-takeaway {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+  color: #881337 !important;
+}
+[data-theme="light"] .western-auto-card-5 .western-auto-takeaway b,
+html.light .western-auto-card-5 .western-auto-takeaway b,
+body.light-theme .western-auto-card-5 .western-auto-takeaway b {
+  color: #e11d48 !important;
+}
+[data-theme="light"] .btn-jump-to-rectification,
+html.light .btn-jump-to-rectification,
+body.light-theme .btn-jump-to-rectification {
+  background-color: #fff1f2 !important;
+  border-color: #fda4af !important;
+  color: #be123c !important;
+}
+[data-theme="light"] .btn-jump-to-rectification:hover,
+html.light .btn-jump-to-rectification:hover,
+body.light-theme .btn-jump-to-rectification:hover {
+  background-color: #ffe4e6 !important;
+  color: #9f1239 !important;
+}
+
+/* Filter Bar & Search in Light Mode */
+[data-theme="light"] #westernCategoryFilter .western-cat-btn,
+html.light #westernCategoryFilter .western-cat-btn,
+body.light-theme #westernCategoryFilter .western-cat-btn {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+[data-theme="light"] #westernCategoryFilter .western-cat-btn:hover,
+html.light #westernCategoryFilter .western-cat-btn:hover,
+body.light-theme #westernCategoryFilter .western-cat-btn:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+[data-theme="light"] #westernCategoryFilter .western-cat-btn.active,
+html.light #westernCategoryFilter .western-cat-btn.active,
+body.light-theme #westernCategoryFilter .western-cat-btn.active {
+  background-color: #e0f2fe !important;
+  border-color: #38bdf8 !important;
+  color: #0369a1 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] #westernSearchInput,
+html.light #westernSearchInput,
+body.light-theme #westernSearchInput {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* 10 Western Canons List Cards in Light Mode */
+[data-theme="light"] #westernCanonsList > div,
+html.light #westernCanonsList > div,
+body.light-theme #westernCanonsList > div {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] #westernCanonsList .border-b.border-gray-800,
+html.light #westernCanonsList .border-b.border-gray-800,
+body.light-theme #westernCanonsList .border-b.border-gray-800 {
+  border-color: #f1f5f9 !important;
+}
+
+/* Inner sub-boxes of Western Canons Cards */
+[data-theme="light"] #westernCanonsList .bg-slate-900\/30,
+html.light #westernCanonsList .bg-slate-900\/30,
+body.light-theme #westernCanonsList .bg-slate-900\/30 {
+  background-color: #f0f9ff !important;
+  border-color: #bae6fd !important;
+}
+[data-theme="light"] #westernCanonsList .bg-black\/30,
+html.light #westernCanonsList .bg-black\/30,
+body.light-theme #westernCanonsList .bg-black\/30 {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+[data-theme="light"] #westernCanonsList .bg-black\/40,
+html.light #westernCanonsList .bg-black\/40,
+body.light-theme #westernCanonsList .bg-black\/40 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+[data-theme="light"] #westernCanonsList .bg-indigo-950\/20,
+html.light #westernCanonsList .bg-indigo-950\/20,
+body.light-theme #westernCanonsList .bg-indigo-950\/20 {
+  background-color: #eef2ff !important;
+  border-color: #c7d2fe !important;
+}
+[data-theme="light"] #westernCanonsList .bg-\[\#131620\],
+html.light #westernCanonsList .bg-\[\#131620\],
+body.light-theme #westernCanonsList .bg-\[\#131620\] {
+  background-color: #f1f5f9 !important;
+  border-left-color: #0284c7 !important;
+}
+[data-theme="light"] #westernCanonsList .bg-gray-900,
+html.light #westernCanonsList .bg-gray-900,
+body.light-theme #westernCanonsList .bg-gray-900 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
 
 
 
