@@ -3769,6 +3769,39 @@ body.light-theme #westernCanonsList .bg-gray-900 {
   color: #475569 !important;
 }
 
+/* Western Canons Formula Analysis Deep Explanation in Light Mode */
+[data-theme="light"] .western-formula-analysis,
+html.light .western-formula-analysis,
+body.light-theme .western-formula-analysis {
+  border-color: #e2e8f0 !important;
+}
+
+[data-theme="light"] .western-analysis-box,
+html.light .western-analysis-box,
+body.light-theme .western-analysis-box {
+  background-color: #f0f9ff !important;
+  border-color: #bae6fd !important;
+  color: #334155 !important;
+}
+
+[data-theme="light"] .western-analysis-box .analysis-lbl-principle,
+html.light .western-analysis-box .analysis-lbl-principle,
+body.light-theme .western-analysis-box .analysis-lbl-principle {
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] .western-analysis-box .analysis-lbl-variables,
+html.light .western-analysis-box .analysis-lbl-variables,
+body.light-theme .western-analysis-box .analysis-lbl-variables {
+  color: #ea580c !important;
+}
+
+[data-theme="light"] .western-analysis-box .analysis-lbl-inference,
+html.light .western-analysis-box .analysis-lbl-inference,
+body.light-theme .western-analysis-box .analysis-lbl-inference {
+  color: #047857 !important;
+}
+
 
 
 

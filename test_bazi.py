@@ -19182,6 +19182,10 @@ jsc_check142_cmd = [
       if (!c) throw new Error("Missing canon with id: " + id);
       if (!c.mathFormulas || c.mathFormulas.length === 0) throw new Error("Missing mathFormulas in canon: " + id);
       if (!c.engineMappingZh || !c.engineMappingEn) throw new Error("Missing engineMapping in canon: " + id);
+      if (!c.formulaAnalysis) throw new Error("Missing formulaAnalysis in canon: " + id);
+      if (!c.formulaAnalysis.principleZh || !c.formulaAnalysis.principleEn) throw new Error("Missing principle in canon: " + id);
+      if (!c.formulaAnalysis.variablesZh || !c.formulaAnalysis.variablesEn) throw new Error("Missing variables in canon: " + id);
+      if (!c.formulaAnalysis.inferenceZh || !c.formulaAnalysis.inferenceEn) throw new Error("Missing inference in canon: " + id);
     });
 
     // Verify 100% zero Chinese in all English properties
@@ -19197,6 +19201,13 @@ jsc_check142_cmd = [
           throw new Error("Chinese detected in canon " + c.id + " field " + key + ": " + c[key]);
         }
       });
+      if (c.formulaAnalysis) {
+        ['principleEn', 'variablesEn', 'inferenceEn'].forEach(function(key) {
+          if (c.formulaAnalysis[key] && cjkRegex.test(c.formulaAnalysis[key])) {
+            throw new Error("Chinese detected in canon " + c.id + " formulaAnalysis " + key + ": " + c.formulaAnalysis[key]);
+          }
+        });
+      }
       if (c.keyVerses) {
         c.keyVerses.forEach(function(v) {
           if (v.en && cjkRegex.test(v.en)) {
@@ -19262,14 +19273,16 @@ assert 'plainMeaning4' in app_content, "Missing plainMeaning4 in app.js"
 assert 'plainMeaning5' in app_content, "Missing plainMeaning5 in app.js"
 assert 'western-auto-takeaway' in app_content, "Missing western-auto-takeaway in app.js"
 assert 'western-overview-banner' in app_content, "Missing western-overview-banner in app.js"
+assert 'western-formula-analysis' in app_content, "Missing western-formula-analysis in app.js"
 
 with open('css/style.css', 'r', encoding='utf-8') as f:
     css_content = f.read()
 assert '#westernHeroBanner' in css_content, "Missing #westernHeroBanner in css/style.css"
 assert '.western-auto-takeaway' in css_content, "Missing .western-auto-takeaway in css/style.css"
 assert '.western-auto-card-1' in css_content, "Missing .western-auto-card-1 in css/style.css"
+assert '.western-analysis-box' in css_content, "Missing .western-analysis-box in css/style.css"
 
-print("✓ 142. 西方数理动力学与经典星命大典数据库完整入库并深度集成至十二大典（导航分类/专属Tab/五维动力学直配/万象联合检索/五维通俗大白话提炼/浅昼高对比适配/双语零残留）全量验证通过！")
+print("✓ 142. 西方数理动力学与经典星命大典数据库完整入库并深度集成至十二大典（导航分类/专属Tab/五维动力学直配/万象联合检索/五维通俗大白话提炼/十大名典数理物理原理与实战测量推演机制/浅昼高对比适配/双语零残留）全量验证通过！")
 
 # 143. Validate Full Application Lifecycle & Smooth Transition to Page 2 (第一页面门户 -> 第二页面看板零TDZ阻断)
 print("\n=== 143. Validating Full App Lifecycle & Transition to Page 2 (第一页面门户 -> 第二页面看板零TDZ阻断) ===")

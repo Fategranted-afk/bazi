@@ -12624,6 +12624,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
               `).join('')}
             </div>
+
+            <!-- Deep Mathematical Physics & Measurement Inference Explanation -->
+            ${c.formulaAnalysis ? `
+              <div class="western-formula-analysis mt-3 pt-3 border-t border-slate-800/80 space-y-2 font-sans">
+                <div class="flex items-center gap-1.5 text-sky-300 font-semibold text-xs">
+                  <span>🔬</span>
+                  <span>${isEn ? 'Mathematical Physics Principle & Inferential Mechanism:' : '数理物理原理与实战测量推演机制：'}</span>
+                </div>
+                
+                <div class="western-analysis-box p-2.5 rounded-lg bg-sky-950/20 border border-sky-900/30 text-[11px] text-slate-300 leading-relaxed space-y-2">
+                  <div>
+                    <b class="analysis-lbl-principle text-sky-300 block mb-0.5">${isEn ? '1. Principle & Measurement Mechanism (How it is Measured):' : '1. 物理测量与数理原理（How it is Measured）：'}</b>
+                    <span>${isEn ? c.formulaAnalysis.principleEn : c.formulaAnalysis.principleZh}</span>
+                  </div>
+                  <div>
+                    <b class="analysis-lbl-variables text-amber-300 block mb-0.5">${isEn ? '2. Symbolic Variables & Phenomenological Mapping (Variables & Mapping):' : '2. 变量符号与现实映射（Variables & Mapping）：'}</b>
+                    <span>${isEn ? c.formulaAnalysis.variablesEn : c.formulaAnalysis.variablesZh}</span>
+                  </div>
+                  <div>
+                    <b class="analysis-lbl-inference text-emerald-300 block mb-0.5">${isEn ? '3. Predictive Decision Tree & Reverse Inference (Why it can Infer Reality):' : '3. 为什么能推理现实（Predictive & Reverse Inference）：'}</b>
+                    <span class="whitespace-pre-line">${isEn ? c.formulaAnalysis.inferenceEn : c.formulaAnalysis.inferenceZh}</span>
+                  </div>
+                </div>
+              </div>
+            ` : ''}
           </div>
 
           <!-- Platform Engine Mapping -->
