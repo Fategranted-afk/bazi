@@ -15999,7 +15999,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  function handleAdvisorQuery(query) {
+  function escapeHtml(str) {
+    if (!str || typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function handleAdvisorQuery(query, userSituation = null) {
     if (!query) return;
     const input = document.getElementById('advisorQueryInput');
     if (input) input.value = '';
@@ -16013,7 +16023,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (typeof AdvisorEngine !== 'undefined' && typeof AdvisorEngine.generateAdvice === 'function') {
       const currentYear = new Date().getFullYear();
-      const advice = AdvisorEngine.generateAdvice(query, currentBaziResult, currentLuckResult, currentYear, currentLang, advisorSessionContext);
+      const advice = AdvisorEngine.generateAdvice(query, currentBaziResult, currentLuckResult, currentYear, currentLang, advisorSessionContext, userSituation);
       if (advice) {
         advisorSessionContext.lastCategory = advice.category;
         advisorSessionContext.lastSubcategory = advice.subcategory;
@@ -16029,6 +16039,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       saveAdvisorChatToStorage();
       renderAdvisorChatStream();
+      if (!document.getElementById('advisorLedgerDrawer')?.classList.contains('hidden')) {
+        renderAdvisorLedgerDrawer();
+      }
+      updateAdvisorBadgeCount();
 
       // Async Hybrid LLM Polish: "计算归算法，表达归模型"
       if (typeof AdvisorEngine.polishWithLLM === 'function') {
@@ -16449,6 +16463,60 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             ` : ''}
 
+            <!-- Situational Alignment & Deep Refinement Step (处境贴合度校准与深度定制环节) -->
+            <div class="advisor-situation-box p-3 rounded-xl bg-slate-900/60 border border-amber-600/30 space-y-2 text-xs">
+              <div class="flex items-center justify-between text-[11px] font-semibold text-amber-300 font-serif-sc border-b border-gray-800 pb-1">
+                <div class="flex items-center gap-1.5">
+                  <span>🎯</span>
+                  <span>${isEn ? 'Situational Reality Alignment' : '现实处境贴合度校准'}</span>
+                </div>
+                <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 font-mono">${isEn ? 'FEEDBACK LOOP' : '因地制宜'}</span>
+              </div>
+              <p class="text-gray-300 text-[11px] leading-relaxed font-sans">
+                ${isEn
+                  ? 'Do these tactical strategies and micro-actions align with your real-world circumstances (budget, runway, office dynamics, constraints)?'
+                  : '以上战术锦囊与落地微动作，是否切合您当下的实际现实处境（如现金流储备、领导风格、时间精力、制约痛点）？'}
+              </p>
+              ${msg.situationFeedback ? `
+                <div class="p-2 rounded-lg bg-emerald-950/40 border border-emerald-600/30 text-[11px] text-emerald-200 space-y-1">
+                  <div class="font-bold flex items-center gap-1">
+                    <span>✅</span>
+                    <span>${isEn ? 'Aligned with Reality:' : '已确认贴合实际处境：'}</span>
+                  </div>
+                  <div class="opacity-90 leading-relaxed">${escapeHtml(msg.situationFeedback.text || '')}</div>
+                </div>
+              ` : `
+                <div class="flex flex-wrap items-center gap-2 pt-0.5">
+                  <button type="button" class="advisor-situation-agree-btn px-2.5 py-1 rounded-lg border border-emerald-600/40 bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 hover:text-white transition text-[11px] font-medium flex items-center gap-1 cursor-pointer active:scale-95" data-msg-idx="${idx}">
+                    <span>👍</span>
+                    <span>${isEn ? 'Well-Aligned, Execute as Planned' : '非常贴合，直接照此执行'}</span>
+                  </button>
+                  <button type="button" class="advisor-situation-refine-btn px-2.5 py-1 rounded-lg border border-amber-600/50 bg-amber-950/40 hover:bg-amber-800/60 text-amber-200 hover:text-white transition text-[11px] font-medium flex items-center gap-1 cursor-pointer active:scale-95" data-msg-idx="${idx}">
+                    <span>✍️</span>
+                    <span>${isEn ? 'Describe Current Situation for Customization' : '补充我的具体处境（请求细致建议）'}</span>
+                  </button>
+                </div>
+                <!-- Expandable Situational Description Input Drawer -->
+                <div id="advisorSituationForm_${idx}" class="advisor-situation-form hidden pt-2 space-y-2 border-t border-gray-800/60">
+                  <label class="block text-[11px] text-amber-300 font-medium">
+                    ${isEn
+                      ? 'Describe your specific current constraints or dilemma (e.g. runway, aggressive boss, family pressure):'
+                      : '请简要描述您当前的现实处境、阻力或资源约束（例如：现公司在裁员但手头仅有6个月存款、领导强势抢功推诿、考公复习时间不足等）：'}
+                  </label>
+                  <textarea id="advisorSituationInput_${idx}" rows="2" class="w-full p-2 text-xs rounded-lg bg-black/60 border border-gray-700 text-gray-200 focus:outline-none focus:border-amber-500 placeholder-gray-500 resize-none font-sans" placeholder="${isEn ? 'e.g. Dept is laying off people, 5 months savings left, toxic manager...' : '例如：部门正在裁员，存款只够维持5个月，领导推诿抢功严重，准备考公但精力不够...'}"></textarea>
+                  <div class="flex items-center justify-end gap-2">
+                    <button type="button" class="advisor-situation-cancel-btn px-2.5 py-1 rounded border border-gray-700 bg-gray-800/60 text-gray-400 hover:text-gray-200 text-[11px] cursor-pointer" data-msg-idx="${idx}">
+                      ${isEn ? 'Cancel' : '取消'}
+                    </button>
+                    <button type="button" class="advisor-situation-submit-btn px-3 py-1 rounded border border-amber-600/60 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white font-bold text-[11px] shadow-sm cursor-pointer flex items-center gap-1 active:scale-95" data-msg-idx="${idx}">
+                      <span>⚡</span>
+                      <span>${isEn ? 'Generate Bespoke Situation Strategy' : '生成因地制宜细致建议'}</span>
+                    </button>
+                  </div>
+                </div>
+              `}
+            </div>
+
             <!-- Action Links (跨系统快捷联动) -->
             ${a.actionLinks && a.actionLinks.length ? `
               <div class="pt-1 flex flex-wrap gap-2">
@@ -16563,6 +16631,64 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         switchAdvisorView('ledger');
+      });
+    });
+
+    // Bind situational alignment buttons
+    stream.querySelectorAll('.advisor-situation-agree-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        if (advisorChatHistory[mIdx]) {
+          advisorChatHistory[mIdx].situationFeedback = {
+            state: 'agreed',
+            text: isEn ? 'Confirmed aligned with current real-world circumstances.' : '已确认贴合实际处境，正照此执行。'
+          };
+          saveAdvisorChatToStorage();
+          renderAdvisorChatStream();
+        }
+      });
+    });
+
+    stream.querySelectorAll('.advisor-situation-refine-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        const form = document.getElementById(`advisorSituationForm_${mIdx}`);
+        if (form) {
+          form.classList.toggle('hidden');
+          const ta = document.getElementById(`advisorSituationInput_${mIdx}`);
+          if (ta && !form.classList.contains('hidden')) ta.focus();
+        }
+      });
+    });
+
+    stream.querySelectorAll('.advisor-situation-cancel-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        const form = document.getElementById(`advisorSituationForm_${mIdx}`);
+        if (form) form.classList.add('hidden');
+      });
+    });
+
+    stream.querySelectorAll('.advisor-situation-submit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        const ta = document.getElementById(`advisorSituationInput_${mIdx}`);
+        const situationText = ta ? ta.value.trim() : '';
+        if (!situationText) return;
+        if (advisorChatHistory[mIdx]) {
+          advisorChatHistory[mIdx].situationFeedback = {
+            state: 'customized',
+            text: isEn ? `Customized with situation: "${situationText}"` : `已根据具体处境深度定制：“${situationText}”`
+          };
+        }
+        const queryText = isEn
+          ? `[Situational Context]: ${situationText}`
+          : `【现实处境补充与深度定制】：${situationText}`;
+        handleAdvisorQuery(queryText, situationText);
       });
     });
 
@@ -16945,6 +17071,68 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    // Situational Reality Context Alignment Card
+    const situationCardEl = document.getElementById('advisorLedgerSituationCard');
+    const activeSituation = (typeof ActionLedger !== 'undefined') ? ActionLedger.getActiveSituation() : '';
+    if (situationCardEl) {
+      if (activeSituation) {
+        situationCardEl.className = 'p-3 rounded-xl bg-purple-950/30 border border-purple-600/40 text-xs text-purple-200 space-y-1.5 shadow-sm';
+        situationCardEl.innerHTML = `
+          <div class="flex items-center justify-between font-bold text-[11px] text-purple-300 border-b border-purple-800/40 pb-1">
+            <div class="flex items-center gap-1.5 font-serif-sc">
+              <span>🎯</span>
+              <span>${isEn ? 'Active Real-World Situation Context' : '当前已对齐现实处境'}</span>
+            </div>
+            <button type="button" id="advisorLedgerUpdateSituationBtn" class="text-[10px] px-2 py-0.5 rounded bg-purple-900/60 hover:bg-purple-800 border border-purple-500/50 text-purple-200 transition cursor-pointer active:scale-95 flex items-center gap-1">
+              <span>✏️</span> <span>${isEn ? 'Update Situation' : '更新处境'}</span>
+            </button>
+          </div>
+          <div class="text-[11px] text-slate-200 leading-relaxed font-sans">${escapeHtml(activeSituation)}</div>
+        `;
+      } else {
+        situationCardEl.className = 'p-2.5 rounded-lg bg-amber-950/30 border border-amber-600/30 text-xs text-amber-200/90 space-y-1.5';
+        situationCardEl.innerHTML = `
+          <div class="flex items-center justify-between text-[11px] font-bold text-amber-300 font-serif-sc">
+            <div class="flex items-center gap-1.5">
+              <span>💡</span>
+              <span>${isEn ? 'Situational Reality Alignment' : '现实处境贴合度定制'}</span>
+            </div>
+            <button type="button" id="advisorLedgerInputSituationBtn" class="text-[10px] px-2 py-0.5 rounded bg-amber-900/60 hover:bg-amber-800 border border-amber-600/50 text-amber-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+              <span>✍️</span> <span>${isEn ? 'Input Situation' : '录入具体处境定制'}</span>
+            </button>
+          </div>
+          <div class="text-[11px] text-gray-300 leading-relaxed font-sans">
+            ${isEn
+              ? 'Describe your specific constraints (runway, office politics, exam schedule) to generate bespoke, hyper-targeted tactics in this ledger.'
+              : '觉得通用锦囊不够贴切？描述您的实际处境（如资金储备、领导风格、备考时间等），让军师生成因地制宜的精细化战术动作。'}
+          </div>
+        `;
+      }
+
+      const updBtn = document.getElementById('advisorLedgerUpdateSituationBtn');
+      if (updBtn) {
+        updBtn.addEventListener('click', () => {
+          switchAdvisorView('chat');
+          const input = document.getElementById('advisorUserInput');
+          if (input) {
+            input.value = isEn ? `[Situational Context]: ${activeSituation}` : `【现实处境补充与深度定制】：${activeSituation}`;
+            input.focus();
+          }
+        });
+      }
+      const inBtn = document.getElementById('advisorLedgerInputSituationBtn');
+      if (inBtn) {
+        inBtn.addEventListener('click', () => {
+          switchAdvisorView('chat');
+          const input = document.getElementById('advisorUserInput');
+          if (input) {
+            input.value = isEn ? 'My specific real-world circumstances are: ' : '我目前的具体现实处境是：';
+            input.focus();
+          }
+        });
+      }
+    }
+
     if (listEl) {
       const records = ActionLedger.getAll();
       if (records.length === 0) {
@@ -16957,7 +17145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="p-2.5 rounded-lg bg-black/40 border ${isDone ? 'border-gray-800/60' : 'border-amber-900/40'} space-y-1.5">
               <div class="flex items-center justify-between text-[11px]">
                 <div class="flex items-center gap-1.5">
-                  <span class="px-1.5 py-0.5 text-[9px] rounded bg-amber-500/20 text-amber-300 font-semibold">${r.badge}</span>
+                  <span class="px-1.5 py-0.5 text-[9px] rounded font-semibold ${r.badge === '处境定制' || r.badge === 'Situational' ? 'bg-purple-950/80 text-purple-300 border border-purple-600/40' : 'bg-amber-500/20 text-amber-300'}">${r.badge}</span>
                   <span class="text-gray-400 font-mono text-[10px]">${timeStr}</span>
                 </div>
                 <div class="flex items-center gap-1">

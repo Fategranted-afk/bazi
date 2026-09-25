@@ -12,7 +12,38 @@
  */
 class ActionLedger {
   static STORAGE_KEY = 'agy_action_ledger_v1';
+  static SITUATION_KEY = 'agy_action_ledger_situation_v1';
   static _memoryStore = [];
+  static _memorySituation = '';
+
+  static getActiveSituation() {
+    if (this.isStorageAvailable()) {
+      try {
+        const val = window.localStorage.getItem(this.SITUATION_KEY);
+        if (val) return val;
+      } catch (e) {}
+    }
+    return this._memorySituation || '';
+  }
+
+  static setActiveSituation(situationText) {
+    const text = (typeof situationText === 'string') ? situationText.trim() : '';
+    this._memorySituation = text;
+    if (this.isStorageAvailable()) {
+      try {
+        if (text) {
+          window.localStorage.setItem(this.SITUATION_KEY, text);
+        } else {
+          window.localStorage.removeItem(this.SITUATION_KEY);
+        }
+      } catch (e) {}
+    }
+    return text;
+  }
+
+  static clearActiveSituation() {
+    return this.setActiveSituation('');
+  }
 
   static isStorageAvailable() {
     try {
@@ -178,9 +209,11 @@ class ActionLedger {
 
   static clear() {
     this._memoryStore = [];
+    this._memorySituation = '';
     if (this.isStorageAvailable()) {
       try {
         window.localStorage.removeItem(this.STORAGE_KEY);
+        window.localStorage.removeItem(this.SITUATION_KEY);
       } catch (e) {}
     }
   }
@@ -1680,7 +1713,7 @@ class AdvisorEngine {
   /**
    * Generate bespoke tactical decision advice
    */
-  static generateAdvice(userQuery, bazi, luck, currentYear = 2026, lang = 'zh', sessionContext = null) {
+  static generateAdvice(userQuery, bazi, luck, currentYear = 2026, lang = 'zh', sessionContext = null, userSituation = null) {
     const isEn = (lang === 'en');
     const ctx = this.buildContext(bazi, luck, currentYear, null, lang) || {
       dayMaster: '甲',
@@ -1700,6 +1733,21 @@ class AdvisorEngine {
       primaryArchetype: '技术人员'
     };
 
+    // Extract situation context if provided directly or embedded in query
+    let effectiveSituation = (typeof userSituation === 'string' && userSituation.trim()) ? userSituation.trim() : '';
+    if (!effectiveSituation && userQuery) {
+      const mZh = userQuery.match(/【现实处境补充与深度定制】[：:]\s*(.+)$/);
+      const mEn = userQuery.match(/\[Situational Context\][：:]\s*(.+)$/i);
+      const mGen = userQuery.match(/^(?:我的)?(?:现实)?处境(?:是|补充)?[：:]\s*(.+)$/);
+      if (mZh && mZh[1]) effectiveSituation = mZh[1].trim();
+      else if (mEn && mEn[1]) effectiveSituation = mEn[1].trim();
+      else if (mGen && mGen[1]) effectiveSituation = mGen[1].trim();
+    }
+    if (effectiveSituation) {
+      if (typeof ActionLedger !== 'undefined') ActionLedger.setActiveSituation(effectiveSituation);
+      if (sessionContext) sessionContext.activeSituation = effectiveSituation;
+    }
+
     const isWeak = (ctx.vigorScore < 50);
     const category = this.detectIntent(userQuery, sessionContext);
     const subcategory = this.detectSubcategory(userQuery);
@@ -1715,10 +1763,18 @@ class AdvisorEngine {
       : null;
 
     let advice;
-    if (isEn) {
-      advice = this._generateAdviceEn(category, ctx, isWeak, userQuery, bazi, luck, subcategory, feedbackSummary);
+    if (effectiveSituation) {
+      if (isEn) {
+        advice = this._generateSituationalAdviceEn(effectiveSituation, userQuery, ctx, bazi, luck, feedbackSummary);
+      } else {
+        advice = this._generateSituationalAdviceZh(effectiveSituation, userQuery, ctx, bazi, luck, feedbackSummary);
+      }
     } else {
-      advice = this._generateAdviceZh(category, ctx, isWeak, userQuery, bazi, luck, subcategory, feedbackSummary);
+      if (isEn) {
+        advice = this._generateAdviceEn(category, ctx, isWeak, userQuery, bazi, luck, subcategory, feedbackSummary);
+      } else {
+        advice = this._generateAdviceZh(category, ctx, isWeak, userQuery, bazi, luck, subcategory, feedbackSummary);
+      }
     }
 
     if (advice) {
@@ -1727,6 +1783,302 @@ class AdvisorEngine {
     }
 
     return advice;
+  }
+
+  static _generateSituationalAdviceZh(userSituation, query, ctx, bazi, luck, feedbackSummary = null) {
+    const isWeak = (ctx.vigorScore < 50);
+    const cleanSituation = userSituation.trim();
+
+    // Specific situation markers analysis
+    const hasMoney = /存款|资金|现金|负债|房贷|车贷|没钱|经济|生活费|生活成本|省钱|预算|断粮|借钱|还款|经济压力|分期/.test(cleanSituation);
+    const hasPolitics = /领导|上级|老板|主管|抢功|推诿|甩锅|打压|pua|小人|同事|排挤|站队|背锅|背锅侠|苛刻|难缠|部门/.test(cleanSituation);
+    const hasExamCareer = /考公|考编|事业单位|编制|公务员|考研|面试|找工作|跳槽|转行|简历|裁员|失业|下岗|离职|辞职|被辞|毕业|论文/.test(cleanSituation);
+    const hasSomatic = /累|疲惫|失眠|焦虑|内耗|崩溃|头痛|精力|身体|家庭|父母|催婚|催促|伴侣吵架|冷战/.test(cleanSituation);
+
+    const title = '【因地制宜 · 现实处境定制军师令】';
+    let directAnswer = `【军师直陈 · 因地制宜】：回禀命主，审视您坦陈之现实处境——“${cleanSituation}”。\n\n此等具体处境绝非单纯依靠空洞的命理谶语所能化解。军师已将命主生克原局（${ctx.dayMaster}木${ctx.vigorTier}）、十四字岁运时空场能（${ctx.activeAnnualGanzhi}流年·值年卦【${ctx.activeHexagram}】）与眼前的资金、人事与精力制约深度锚定。在多重现实约束之下，上策非盲目硬碰硬，而在于“因地制宜、避锐就虚、分阶突围”。下方为您量身定制专属的现实处境破局预案：`;
+
+    let diagnosis = `【现实处境痛点与底层因果穿透】：\n1. 能量与时空交感：当前岁运逢【${ctx.activeAnnualGanzhi}】流年，火土乘旺，而您原局处于${ctx.vigorTier}。在现实中，这种气机最直接的投影就是外部生存竞争与消耗加剧，导致心理负荷与外部阻抗急剧攀升。\n2. 矛盾焦点解构：您所面临的${hasPolitics ? '“职场人事摩擦/领导抢功推诿”' : '“外部人事纷扰”'}${hasMoney ? '与“资金储备/生活现金流底线”' : ''}${hasExamCareer ? '及“备考跳槽时间精力不足”' : ''}，表面是外部环境严峻，实则是命主原局气数与当前环境微气候产生了硬性摩擦。\n3. 破局关键枢纽：越是处境逼仄，越不可乱了阵脚。核心破局点在于“严守底线、切片推进、借力打力”，把有限的精力和资金锁死在最具长期翻盘确定性的事项上。`;
+
+    const tactics = [];
+
+    // 1. 权宜之策（短期止血/避坑/即刻自保）
+    let tacticalDefense = '';
+    if (hasMoney) {
+      tacticalDefense = '【锁定6个月绝对生存基线】：立即盘点手头一切活期与应急资金，严格缩减一切非核心支出。在未拿到确定性书面Offer或完成平稳过渡前，坚决不裸辞、不冲动加杠杆，确保现金流能从容对冲外部动荡。';
+    } else if (hasPolitics) {
+      tacticalDefense = '【职场全链条留痕防护】：严格遵循《荣枯鉴·守卷》要义。一切核心交付均以邮件或文字备忘录抄送关键协同人留痕；汇报突出“在领导指导与指示下落实”，把锋芒收敛进领导政绩中，让领导无法甩锅、无需防备。';
+    } else {
+      tacticalDefense = '【收缩战线，立足生存底盘】：面对当前现实多重挤压，首先做减法。砍掉80%低价值应酬与无谓内耗，仅保留维持核心基本盘的20%关键任务，以静制动。';
+    }
+    tactics.push({
+      badge: '权宜之策 · 即刻止血',
+      text: tacticalDefense,
+      isKey: true
+    });
+
+    // 2. 进取之策（中期蓄势/低阻突围）
+    let tacticalOffense = '';
+    if (hasExamCareer) {
+      tacticalOffense = '【时间物理切片与低阻突围】：在职备考或求职切忌“全天候紧绷”。工作时间内按部就班合格交付不惹是非，将备考时间绝对切片：早晨6:30-8:00专注刷行测或专业题，晚间20:30-22:00专攻申论与复盘。日拱一卒，不受白天琐事人事干扰。';
+    } else if (hasPolitics) {
+      tacticalOffense = '【暗中铺设救生艇，精准点对点出击】：借《荣枯鉴·微卷》之术，利用同僚校友或可靠猎头进行非公开简历推荐；每周定点探寻3-5家最契合的核心机会，以战养战，在外部交流中持续校准市场溢价。';
+    } else {
+      tacticalOffense = '【单核聚焦，培育不可替代性】：在现有缝隙中打磨一项能直接带来变现或破圈的硬核成果，用小作品或小成果持续建立外部背书。';
+    }
+    tactics.push({
+      badge: '进取之策 · 蓄势借力',
+      text: tacticalOffense,
+      isKey: true
+    });
+
+    // 3. 治本之策（长期立身/顺运跃迁）
+    let tacticalLongTerm = '';
+    if (ctx.lookahead) {
+      if (ctx.lookahead.mode === 'preemptive_defense') {
+        tacticalLongTerm = `【顺应岁运节奏 · 提前防险跨周期】：因次年（${ctx.lookahead.nextYear}）值年卦逢【${ctx.lookahead.nextHexZh}】暗藏风控阻力，当年应对策略为“高筑墙、广积粮、稳扎稳打”。眼前的现实处境正是锻炼您风险对冲与极限抗压能力的关键磨刀石，待平稳度过风浪，自成坚不可摧之势。`;
+      } else if (ctx.lookahead.mode === 'preemptive_layout') {
+        tacticalLongTerm = `【顺应岁运节奏 · 提前起势迎爆发】：次年（${ctx.lookahead.nextYear}）值年卦逢【${ctx.lookahead.nextHexZh}】乃重大爆发之吉年（能级 ${ctx.lookahead.nextScore}%）。当前所承受的处境委屈皆为破茧前夕之蛰伏；以年为尺度保持战略耐性，今年积攒弹药与人脉，次年窗口一开必乘风扶摇直上！`;
+      } else {
+        tacticalLongTerm = `【顺应岁运节奏 · 平稳质变复利成长】：次年时空场能平稳过渡。以平常心对待眼前得失，建立抗周期的专业壁垒与被动资产储备，实现人生命运底盘的根本跃迁。`;
+      }
+    } else {
+      tacticalLongTerm = '【借时空势能，长线结构质变】：以3年为战略周期，从根源上跳出当前的狭窄生态位，完成从被动受制于人到拥有自主选择权的结构跃迁。';
+    }
+    tactics.push({
+      badge: '治本之策 · 根本跃迁',
+      text: tacticalLongTerm,
+      isKey: true
+    });
+
+    // Customized Micro-Actions
+    const microActions = [];
+    if (hasMoney) {
+      microActions.push({
+        id: 'situation_runway',
+        badge: '处境定制',
+        text: '【精算现金流底线】：今晚盘点全部流动资产，列出未来6个月每月不可减除的硬性支出，计算出确切的生存缓冲天数，并坚决冻结非必要大额开支。'
+      });
+    }
+    if (hasPolitics) {
+      microActions.push({
+        id: 'situation_politics',
+        badge: '处境定制',
+        text: '【工作成果文字留痕】：自明日起，凡涉及方案确认、进度节点及跨部门协同，一律在口头沟通后15分钟内发送结构化邮件或工作群记录，抄送关键干系人，彻底杜绝推诿与抢功。'
+      });
+    }
+    if (hasExamCareer) {
+      microActions.push({
+        id: 'situation_study',
+        badge: '处境定制',
+        text: '【设立雷打不动备考结界】：将每日精力分为“生存工作时段”与“升学冲刺时段”，在手机中设定早晨6:30与晚间20:30闹钟，期间进入完全飞行模式专心刷题，绝不内耗。'
+      });
+    }
+    if (hasSomatic) {
+      microActions.push({
+        id: 'situation_somatic',
+        badge: '处境定制',
+        text: '【切断晚间信息过载】：晚间22:00强行退出工作群消息通知，用温水沐足15分钟，不带任何未完困境入眠，确保次日有清晰的大脑精力应对博弈。'
+      });
+    }
+    if (microActions.length < 3) {
+      microActions.push({
+        id: 'situation_anchor',
+        badge: '处境定制',
+        text: '【恪守言语界限】：面对刁难或挑衅时，心中默数5秒再作答，只说客观事实，绝不说带情绪的对抗字眼，借规则与程序保全自己。'
+      });
+    }
+
+    // Auto-record to ActionLedger
+    microActions.forEach(act => {
+      if (typeof ActionLedger !== 'undefined') {
+        ActionLedger.recordAction({
+          id: act.id,
+          category: 'situational',
+          subcategory: 'customized',
+          badge: '处境定制',
+          text: act.text,
+          status: 'pending'
+        });
+      }
+    });
+
+    const mentalAnchor = '《荣枯鉴·知止卷》：“知足不辱，知止不殆。智者不与时争，达者因势利导。势逆则隐，势顺则进，从容处困，终莫能害。”';
+
+    const smartFollowUps = [
+      { id: 'f1', icon: '🛡️', title: '职场留痕防甩锅模板', query: '针对强势爱抢功的领导，请军师给出一套既不得罪人又能滴水不漏留痕的邮件回复话术模板。' },
+      { id: 'f2', icon: '💰', title: '6个月现金流极简预算', query: '请军师指导如何做极简生存预算规划，在现有存款下把安全垫拉长至9个月？' },
+      { id: 'f3', icon: '⏱️', title: '在职备考每日日程切片', query: '请军师为在职备考制定一套工作日与周末的无痛高效日程表。' },
+      { id: 'f4', icon: '🚀', title: '何时是主动摊牌跳槽的最佳时机', query: '结合我的大运流年，我何时能彻底跳出目前的困境生态位？' }
+    ];
+
+    if (feedbackSummary && feedbackSummary.lead) {
+      directAnswer = `${feedbackSummary.lead}\n\n${directAnswer}`;
+    }
+
+    return {
+      title,
+      directAnswer,
+      diagnosis,
+      tactics,
+      microActions,
+      mentalAnchor,
+      smartFollowUps,
+      isSituational: true,
+      userSituation: cleanSituation,
+      category: 'situational',
+      subcategory: 'customized'
+    };
+  }
+
+  static _generateSituationalAdviceEn(userSituation, query, ctx, bazi, luck, feedbackSummary = null) {
+    const isWeak = (ctx.vigorScore < 50);
+    const cleanSituation = userSituation.trim();
+
+    const hasMoney = /money|saving|cash|debt|mortgage|runway|pay|budget|unemployment|finance/i.test(cleanSituation);
+    const hasPolitics = /boss|manager|lead|credit|toxic|politic|blame|scapegoat|undermine|colleague|coworker/i.test(cleanSituation);
+    const hasExamCareer = /exam|study|phd|master|test|interview|job|career|layoff|fired|unemployed|transition/i.test(cleanSituation);
+    const hasSomatic = /stress|burnout|exhaust|sleep|anxiety|family|parent|pressure|tired/i.test(cleanSituation);
+
+    const enDm = this._stemToEn ? this._stemToEn(ctx.dayMaster) : ctx.dayMaster;
+    const enGz = this._ganzhiToEn ? this._ganzhiToEn(ctx.activeAnnualGanzhi) : ctx.activeAnnualGanzhi;
+    const cleanHex = (ctx.activeHexagram || 'The Creative').replace(/[\u4e00-\u9fa5]/g, '').trim() || 'The Creative';
+    const cleanTier = (ctx.vigorTier || 'Moderately Strong').replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Moderately Strong';
+
+    const title = 'Bespoke Situational Strategy Directive';
+    let directAnswer = `[Advisor Tactical Verdict - Bespoke Real-World Alignment]: Acknowledging your specific circumstances: "${cleanSituation}".\n\nTheoretical aphorisms fail when real-world pressures mount. The Advisor has aligned your natal Day Master vigor (${enDm} ${cleanTier}), 14-character temporal transit (${enGz} / Hexagram ${cleanHex}), and your active situational constraints. In this dilemma, the optimal path is not reckless frontal confrontation, but adaptive terrain navigation: defensive triage, low-friction leverage, and structured breakout. Below is your tailored tactical playbook:`;
+
+    let diagnosis = `[Situational Root-Cause Diagnosis & Dynamic Tension]:\n1. Temporal Pressure Field: Current transit under ${enGz} and Hexagram ${cleanHex} manifests as institutional friction and resource contraction, elevating cognitive and financial burn rates.\n2. Friction Nodes: The confluence of ${hasPolitics ? 'workplace political hostility and credit-stealing' : 'environmental friction'}${hasMoney ? ' with limited cash runway' : ''}${hasExamCareer ? ' and competing time commitments' : ''} represents acute environmental resistance.\n3. Sovereign Pivot: In acute dilemmas, maintain unshakeable discipline. Anchor defensive baselines first, compartmentalize mental energy, and direct scarce hours exclusively toward high-probability leverage.`;
+
+    const tactics = [];
+
+    // 1. Triage & Immediate Defense
+    let tacticalDefense = '';
+    if (hasMoney) {
+      tacticalDefense = '[Lock 6-Month Liquidity Runway]: Immediately audit all liquid accounts and freeze discretionary capital burn. Under no circumstances resign impulsively without a written agreement; protect month-to-month cash flow above all else.';
+    } else if (hasPolitics) {
+      tacticalDefense = '[Immutable Audit Trail Defense]: Follow the Classical Codex of Self-Preservation. Summarize verbal discussions in structured written memos within 15 minutes; frame milestones under managerial direction to disarm hostility and prevent credit theft.';
+    } else {
+      tacticalDefense = '[Perimeter Consolidation & De-escalation]: Pare down peripheral commitments. Eliminate 80% of low-yield obligations to defend the 20% core survival operational base.';
+    }
+    tactics.push({
+      badge: 'Immediate Triage & Defense',
+      text: tacticalDefense,
+      isKey: true
+    });
+
+    // 2. Mid-Term Tactical Compounding
+    let tacticalOffense = '';
+    if (hasExamCareer) {
+      tacticalOffense = '[Temporal Compartmentalization]: Compartmentalize daytime duties to baseline acceptable delivery. Protect an untouchable morning focus window (6:30-8:00 AM) and evening module (8:30-10:00 PM) solely for test and interview preparation.';
+    } else if (hasPolitics) {
+      tacticalOffense = '[Discreet Network Expansion]: Establish discrete off-market inquiries through trusted alumni and mentors; target 3-5 high-match openings to calibrate market value without tipping off your current team.';
+    } else {
+      tacticalOffense = '[Single-Core Competence Focus]: Polish a demonstrable portfolio milestone or technical asset that produces undeniable external validation.';
+    }
+    tactics.push({
+      badge: 'Mid-Term Tactical Leverage',
+      text: tacticalOffense,
+      isKey: true
+    });
+
+    // 3. Long-Term Structural Leap
+    let tacticalLongTerm = '';
+    if (ctx.lookahead) {
+      if (ctx.lookahead.mode === 'preemptive_defense') {
+        tacticalLongTerm = `[Preemptive Caution for ${ctx.lookahead.nextYear}]: Next year arrives under Hexagram ${ctx.lookahead.nextHexEn} signaling external headwinds. Treat current friction as an essential hardening crucible; consolidate liquidity and avoid high-leverage gambles.`;
+      } else if (ctx.lookahead.mode === 'preemptive_layout') {
+        tacticalLongTerm = `[Preemptive Strategic Layout for ${ctx.lookahead.nextYear}]: Next year brings Hexagram ${ctx.lookahead.nextHexEn} with a major breakout inflection (score ${ctx.lookahead.nextScore}%). Endure current constraints with patience; assemble credentials now to seize the open breakout window next year!`;
+      } else {
+        tacticalLongTerm = `[Steady Compounding for ${ctx.lookahead.nextYear}]: Next year transitions smoothly into balanced equilibrium. Compound core competencies quietly to build unassailable career sovereignty.`;
+      }
+    } else {
+      tacticalLongTerm = '[Structural Ecosystem Leap]: Over a 3-year horizon, fundamentally exit this constrained operating bracket to establish complete professional agency.';
+    }
+    tactics.push({
+      badge: 'Long-Term Structural Leap',
+      text: tacticalLongTerm,
+      isKey: true
+    });
+
+    // Customized Micro-Actions
+    const microActions = [];
+    if (hasMoney) {
+      microActions.push({
+        id: 'situation_runway',
+        badge: 'Situational',
+        text: '[Calculate True Runway]: Audit liquid assets tonight and divide total reserves by mandatory non-discretionary monthly burn to establish precise baseline runway days.'
+      });
+    }
+    if (hasPolitics) {
+      microActions.push({
+        id: 'situation_politics',
+        badge: 'Situational',
+        text: '[Deploy Written Follow-Up Protocol]: Send structured email confirmation memos within 15 minutes of any verbal briefing, copying essential stakeholders to eliminate credit theft.'
+      });
+    }
+    if (hasExamCareer) {
+      microActions.push({
+        id: 'situation_study',
+        badge: 'Situational',
+        text: '[Establish Untouchable Study Sandbox]: Configure smartphone airplane mode during morning 6:30-8:00 AM study sessions, completing one test section daily before work emails begin.'
+      });
+    }
+    if (hasSomatic) {
+      microActions.push({
+        id: 'situation_somatic',
+        badge: 'Situational',
+        text: '[Sever Late-Night Notifications]: Disable all workplace communication apps at 22:00; implement a 15-minute warm water soak to reset autonomic nervous system tone.'
+      });
+    }
+    if (microActions.length < 3) {
+      microActions.push({
+        id: 'situation_anchor',
+        badge: 'Situational',
+        text: '[Practice 5-Second Response Delay]: Count 5 seconds before answering confrontational questions; state objective facts without defensive emotional inflection.'
+      });
+    }
+
+    // Auto-record to ActionLedger
+    microActions.forEach(act => {
+      if (typeof ActionLedger !== 'undefined') {
+        ActionLedger.recordAction({
+          id: act.id,
+          category: 'situational',
+          subcategory: 'customized',
+          badge: 'Situational',
+          text: act.text,
+          status: 'pending'
+        });
+      }
+    });
+
+    const mentalAnchor = 'Classical Codex of Preservation: "He who knows when to stop meets no danger. The sage does not contend against temporal waves, but channels momentum. In adversity, maintain composure."';
+
+    const smartFollowUps = [
+      { id: 'f1', icon: '🛡️', title: 'Paper-Trail Memo Script', query: 'Provide a diplomatic, audit-proof email memo template to follow up with a credit-stealing manager without causing overt conflict.' },
+      { id: 'f2', icon: '💰', title: 'Runway Extension Plan', query: 'How should I structure a lean survival budget to stretch 6 months of reserves into 9 months?' },
+      { id: 'f3', icon: '⏱️', title: 'Daily Study Schedule', query: 'Design an efficient daily schedule balancing full-time corporate duties with dedicated exam preparation.' },
+      { id: 'f4', icon: '🚀', title: 'Optimal Exit Timing', query: 'Based on my annual transit and Four Pillars vigor, when is the optimal calendar window to execute a career pivot?' }
+    ];
+
+    if (feedbackSummary && feedbackSummary.lead) {
+      directAnswer = `${feedbackSummary.lead}\n\n${directAnswer}`;
+    }
+
+    return {
+      title,
+      directAnswer,
+      diagnosis,
+      tactics,
+      microActions,
+      mentalAnchor,
+      smartFollowUps,
+      isSituational: true,
+      userSituation: cleanSituation,
+      category: 'situational',
+      subcategory: 'customized'
+    };
   }
 
   static _generateAdviceZh(category, ctx, isWeak, query, bazi, luck, subcategory = 'comprehensive', feedbackSummary = null) {

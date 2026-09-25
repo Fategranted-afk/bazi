@@ -743,6 +743,54 @@ if (!document.getElementById('advisorChatView').classList.contains('hidden')) th
 window.switchAdvisorView('chat');
 if (!document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to hide in chat mode");
 if (document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to show in chat mode");
+
+// 6c. Verify Situational Alignment, Context Input & Bespoke Situational Strategy
+if (!chatHtml.includes("现实处境贴合度校准") && !chatHtml.includes("Situational Reality Alignment")) {
+  throw new Error("Chat stream missing situational alignment prompt card");
+}
+
+var testSituation = "部门正在裁员，手头只有5个月存款，直属领导推诿抢功严重，准备考公但精力不够";
+ActionLedger.setActiveSituation(testSituation);
+if (ActionLedger.getActiveSituation() !== testSituation) throw new Error("ActionLedger failed to save active situation");
+
+var sitAdviceZh = AdvisorEngine.generateAdvice(
+  "【现实处境补充与深度定制】：" + testSituation,
+  sampleProfile,
+  null,
+  2026,
+  'zh',
+  null,
+  testSituation
+);
+if (!sitAdviceZh.isSituational || !sitAdviceZh.title.includes("因地制宜")) {
+  throw new Error("Situational advice failed to generate with custom title in Chinese");
+}
+var sitAction = sitAdviceZh.microActions.find(function(m) { return m.badge === '处境定制'; });
+if (!sitAction) throw new Error("Missing bespoke situational micro-action in Chinese");
+
+var sitAdviceEn = AdvisorEngine.generateAdvice(
+  "[Situational Context]: Dept is laying off people, 5 months savings left, toxic manager...",
+  sampleProfile,
+  null,
+  2026,
+  'en',
+  null,
+  "Dept is laying off people, 5 months savings left, toxic manager..."
+);
+if (!sitAdviceEn.isSituational || sitAdviceEn.title !== 'Bespoke Situational Strategy Directive') {
+  throw new Error("Situational advice failed in English");
+}
+if (/[\u4e00-\u9fa5]/.test(sitAdviceEn.directAnswer)) {
+  throw new Error("Chinese leaked into English situational advice directAnswer");
+}
+
+// Check ledger drawer rendering of situational card
+window.switchAdvisorView('ledger');
+var sitCardHtml = document.getElementById('advisorLedgerSituationCard')?.innerHTML || '';
+if (!sitCardHtml.includes("当前已对齐现实处境") && !sitCardHtml.includes("Active Real-World Situation Context")) {
+  throw new Error("Ledger drawer missing active situation context display");
+}
+window.switchAdvisorView('chat');
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")
