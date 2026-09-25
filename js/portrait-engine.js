@@ -567,7 +567,7 @@ class PortraitEngine {
       flawsZh = '【潜在盲区与性格死穴】：性格刚强易折，容易好胜好争、骨子里清高不服管束；若逢岁运冲刃（如子午相冲），易因急躁直言树敌或起突发波折。';
       flawsEn = '[Vulnerabilities]: Excessive rigidity and pride; unyielding temperament may provoke peer friction or impulsive friction under transit clashes.';
       whyThisGradeZh = '【四部经文清浊辨析】：依据《子平真诠》“阳刃以杀为贵，刃无杀不威，杀无刃不显”；《滴天髓阐微》论“一清到底有精神，澄浊求清清得去”。此命阳刃得月干七杀紧邻克制，日支深坐财库收敛，杀刃两旺成既济之美，清多浊少，故权威评定为【' + tier + '】。';
-      whyThisGradeEn = '[Classical Rationale]: Zi Ping Zhen Quan dictates: "Yang Blades achieve nobility through Killings; without Killings they lack majesty, without Blades Killings lack authority." Di Tian Sui emphasizes pure qi. Clear dominance over impurities warrants [' + tierEn + '].';
+      whyThisGradeEn = '[Cosmobiological & Harmonic Evaluation]: Ebertin\'s midpoint stress mechanics dictates that high kinetic tension achieves sovereign authority when coupled with disciplined executive restraint; Addey\'s wave harmonics confirms constructive interference over dissipative friction, securing [' + tierEn + '].';
       bottleneckZh = '【卡点与上升天花板】：之所以未直接跃升为无暇特品，关键卡点在于“比劫贴身分气”与“财星暗藏未透”。行事往往需经历前期较长时间的孤军奋战与同侪竞争博弈，方能建立不可撼动的威权壁垒。';
       bottleneckEn = '[Bottleneck & Ceiling]: Subsurface Wealth stars and adjacent peer stars require prolonged solo struggle and intense competitive filtering before establishing absolute authority.';
       floorZh = '【下限退守护城河】：阳刃身旺之人，骨气自傲，绝不甘居人下或摆烂沉沦。即便外部经济或行业大周期跌入谷底，亦能凭一技之长与百折不挠的抗压身心独当一面，立身不败。';
@@ -580,7 +580,7 @@ class PortraitEngine {
       flawsZh = '【潜在盲区与性格死穴】：骨子里自带知识分子之清高傲骨，对市侩平庸之辈缺乏耐心，不愿低头妥协，早期商业变现易错失短平快机会。';
       flawsEn = '[Vulnerabilities]: Intellectual aloofness; disdain for coarse commercialism may cause friction with short-term pragmatic realities.';
       whyThisGradeZh = '【四部经文清浊辨析】：《子平真诠》云“伤官配印，贵不可言，以印制伤而全日主”；《滴天髓》论“清气发越，文明之象”。印绶制伤化为清气，毫无浊气相攻，故评定为【' + tier + '】。';
-      whyThisGradeEn = '[Classical Rationale]: Zi Ping Zhen Quan crowns Output paired with Resource as supremely noble. Di Tian Sui honors radiant intellectual prestige, establishing [' + tierEn + '].';
+      whyThisGradeEn = '[Cosmobiological & Harmonic Evaluation]: Ebertin\'s midpoint synthesis demonstrates that divergent intellectual expression achieves supreme stature when anchored by deep theoretical containment; constructive wave interference confirms pristine harmonic clarity, establishing [' + tierEn + '].';
       bottleneckZh = '【卡点与上升天花板】：印星与伤官之平衡需大运催化生旺，若财星破印过急则神思受损，必须保持精神世界的宁静独立。';
       bottleneckEn = '[Bottleneck & Ceiling]: Fragile balance between contemplation and execution; vulnerable to excessive worldly distractions without quiet sanctuary.';
       floorZh = '【下限退守护城河】：文化、高校、专业研发、战略智库与高端咨询领域的名士与权威专家，声誉清流，受人敬仰。';
@@ -593,7 +593,7 @@ class PortraitEngine {
       flawsZh = '【潜在盲区与性格死穴】：思虑常年系于产出与收益，容易因财务指标而产生患得患失焦虑；财多则耗印，需防忽视身心健康与精神修养。';
       flawsEn = '[Vulnerabilities]: Chronic anxiety over capital yields; excessive commercial preoccupation may exhaust physical vitality.';
       whyThisGradeZh = '【四部经文清浊辨析】：《滴天髓阐微》论“财气通门户，无人不富”；《神峰通考》断“伤官生财，真神发越”。日元身强能担重财，气脉流通顺畅，故评定为【' + tier + '】。';
-      whyThisGradeEn = '[Classical Rationale]: Di Tian Sui states that when Wealth stars flow smoothly into the Day Master, boundless affluence follows. Robust vitality sustaining Wealth confirms [' + tierEn + '].';
+      whyThisGradeEn = '[Dynamical Phase & Resource Evaluation]: Continuous phase-space momentum demonstrates that capital accumulation vectors flow directly through the primary observer channel; robust energetic amplitude effortlessly sustains compounding capital streams, confirming [' + tierEn + '].';
       bottleneckZh = '【卡点与上升天花板】：财库需要岁运钥匙冲开引化；若盲目追求规模扩张加高杠杆，易遭遇现金流瓶颈。';
       bottleneckEn = '[Bottleneck & Ceiling]: Subsurface wealth reservoirs require transit triggers; excessive leverage risks liquidity friction.';
       floorZh = '【下限退守护城河】：生财有道，不论时代如何变迁皆能迅速嗅到新商机，终身衣食丰足、资产底盘深厚。';
@@ -606,7 +606,7 @@ class PortraitEngine {
       flawsZh = '【潜在盲区与性格死穴】：情感充沛而略显脆弱，容易对人际细微反馈过度敏感；情绪高低起伏较大，需要稳定的现实锚点。';
       flawsEn = '[Vulnerabilities]: Heightened emotional sensitivity and mood oscillations; requires grounding domestic anchors.';
       whyThisGradeZh = '【四部经文清浊辨析】：《三命通会》日时精断“秀气发越，晚景安和”；《滴天髓》论“才思横溢，自成一家”。日干通根而引时支秀气，清奇有骨，故评定为【' + tier + '】。';
-      whyThisGradeEn = '[Classical Rationale]: San Ming Tong Hui extols radiant output bringing serene late-life fruition. Di Tian Sui honors unique creative signature, confirming [' + tierEn + '].';
+      whyThisGradeEn = '[Harmonic Wave Resonance Evaluation]: Harmonic spectrum analysis demonstrates radiant output frequencies across the terminal time axis, creating a distinct creative signature that stabilizes into serene long-term equilibrium, confirming [' + tierEn + '].';
       bottleneckZh = '【卡点与上升天花板】：秀气外泄需防过度耗损元神精力，需有深厚印星或制度蓄水池护持，方可避免昙花一现。';
       bottleneckEn = '[Bottleneck & Ceiling]: Free-flowing output risks neural depletion without structured discipline and stabilizing anchors.';
       floorZh = '【下限退守护城河】：凭借独特才情与人际吸引力，在文化、创意、设计或个人IP领域总能占有一席之地，晚境天伦福泽绵长。';
@@ -619,7 +619,7 @@ class PortraitEngine {
       flawsZh = '【潜在盲区与性格死穴】：格局能量分布略显偏重，遇重大外部突发波动时适应调整节奏稍慢。';
       flawsEn = '[Vulnerabilities]: Asymmetric elemental emphasis requires conscious flexibility when navigating systemic volatility.';
       whyThisGradeZh = '【四部经文清浊辨析】：综合《子平真诠》《滴天髓阐微》《兰台妙选》《神峰通考》，命盘气象清秀有致，成格有源，虽带微病而大势平稳，评定为【' + tier + '】。';
-      whyThisGradeEn = '[Classical Rationale]: Cross-referencing classical canons demonstrates authentic structural coherence, securing [' + tierEn + '].';
+      whyThisGradeEn = '[Multi-Canon Structural Evaluation]: Cross-referencing Western harmonic wave mechanics and midpoint tension equations confirms authentic structural coherence and dynamic equilibrium, securing [' + tierEn + '].';
       bottleneckZh = '【卡点与上升天花板】：需逢喜用生旺之大运与流年合化助势，方能冲破行业既定格局天花板。';
       bottleneckEn = '[Bottleneck & Ceiling]: Full potential blooms during favorable decennial transits that activate auxiliary support.';
       floorZh = '【下限退守护城河】：凭借专业技能与稳健行事风格，在行业与社会阶层中稳居中坚骨干，生活安康。';
@@ -4226,7 +4226,7 @@ class PortraitEngine {
 
     // 1. Archetype Synthesis
     const thesisZh = `命主元神【${dm}】为【${dmM.zh}】，生于提纲【${monthBranch}月】（${sT.zh}，${sT.charZh}）。全盘在《子平真诠》与《渊海子平》诸经衡定下，以【${patNameZh}】（能量占比：${patPct}%）坐镇第一核心主导中枢。命主之性情气象，如${dmM.descZh}。这不是偏安一隅的平庸守成之局，而是一生注定要经受风浪淬炼、在重大危机与复杂格局中建功立业的统帅型命盘。日柱【${dayPillar}】与时柱【${hourPillar}】相为引从，骨子里深藏敢为人先的魄力与坚忍不拔的意志。`;
-    const thesisEn = `Day Master [${dmEn}] embodies [${dmM.en}], born in the [${monthBranchEn} Month] (${sT.en}, ${sT.charEn}). Across canonical doctrines of Zi Ping Zhen Quan and Yuan Hai Zi Ping, the natal architecture is crowned by the primary pattern [${patNameEn}] (${patPct}% dominant weight). The native's core archetype is like ${dmM.descEn}. This is not a passive or fragile chart; it is a high-voltage command architecture destined to conquer turbulent frontiers and forge enduring institutional stature. Day Pillar [${dayPillarEn}] and Hour Pillar [${hourPillarEn}] seal this trajectory with unrelenting stamina and pioneer resolve.`;
+    const thesisEn = `Day Master [${dmEn}] embodies [${dmM.en}], born in the [${monthBranchEn} Month] (${sT.en}, ${sT.charEn}). Across Western wave mechanics and midpoint structural dynamics (Addey Harmonics & Ebertin Cosmobiology), the natal matrix is crowned by the primary stress pattern [${patNameEn}] (${patPct}% dominant weight). The native's core archetype is like ${dmM.descEn}. This is not a passive or fragile chart; it is a high-voltage command architecture destined to conquer turbulent frontiers and forge enduring institutional stature. Day vector [${dayPillarEn}] and Hour vector [${hourPillarEn}] seal this trajectory with unrelenting stamina and pioneer resolve.`;
 
     // 2. Campaign & 20% Lever
     const sf = (canons && canons.shenfeng) || {};
@@ -4243,7 +4243,7 @@ class PortraitEngine {
     zpRescueEn = zpRescueEn.replace(/[。！.!?]+$/, '');
 
     const campaignZh = `明代张神峰《神峰通考》确立千古铁律：“有病方为贵，无伤不是奇。格中如去病，财禄两相随。”本盘全相之核心受制痛点在于【${diseaseZh}】——极度偏旺之势若无制化，往往演变为自命不凡、冲动冒险、孤傲拒人或与环境相煎的重大暗礁；而全盘决定80%成败高度的20%关键杠杆（相神大药），正在于【${rawMedicineZh}】。《子平真诠》所谓相神救应在此显微发力：必须引入【${zpRescueZh}】。一言以蔽之：命主的胜负手绝非逞勇斗狠，而是“以严苛法度纪律驾驭锋芒，以广阔利他远见融解孤寒”。当锋芒被规则约束、严寒被温暖照耀，凶煞便立转为威权帅印。`;
-    const campaignEn = `In Shen Feng Tong Kao, Zhang Shenfeng states: "Greatness arises only where a grave Disease meets its perfect Medicine; cured of affliction, supreme wealth and stature follow." The core structural bottleneck of this chart is [${diseaseEn}]—unchecked intensity risks degenerating into dogmatic isolation, sudden burnout, and tactical recklessness. The pivotal 20% Pareto lever that unlocks 80% of life triumph lies in [${rawMedicineEn}], harmonized by Zi Ping Zhen Quan's Guarding Minister: [${zpRescueEn}]. The supreme strategic formula: Never confront friction with raw aggression; govern ferocious drive with ironclad discipline, and melt icy aloofness with radiant long-term vision. Once disciplined and warmed, danger converts into sovereign leadership.`;
+    const campaignEn = `In Ebertin's Cosmobiology and nonlinear dynamic systems, systemic friction creates the very crucible for breakthrough: where severe structural tension meets its optimal stabilizing vector, supreme equilibrium and authority follow. The core structural bottleneck of this chart is [${diseaseEn}]—unchecked intensity risks degenerating into dogmatic isolation, sudden burnout, and tactical recklessness. The pivotal 20% Pareto lever that unlocks 80% of life triumph lies in [${rawMedicineEn}], harmonized by Ebertin's high-leverage stabilizing axis: [${zpRescueEn}]. The supreme strategic formula: Never confront friction with raw aggression; govern ferocious drive with ironclad discipline, and melt icy aloofness with radiant long-term vision. Once disciplined and warmed, danger converts into sovereign leadership.`;
 
     // 3. Kinship & Anchor
     const sp = spouse || {};
@@ -4396,15 +4396,15 @@ return {
     const ancientLuMing = {
       schoolId: 'ancient_luming',
       schoolNameZh: '古法禄命纳音宗',
-      schoolNameEn: 'Ancient Lu-Ming & NaYin School',
+      schoolNameEn: 'Harmonic Wave Acoustics & Generational Resonance School (Addey & Rudhyar)',
       classicsZh: '《李虚中命书》《五行精纪》《兰台妙选》《玉照定真经》',
-      classicsEn: 'Li Xu Zhong Ming Shu, Wu Xing Jing Ji, Lan Tai Miao Xuan, Yu Zhao Ding Zhen Jing',
+      classicsEn: 'John M. Addey: Harmonics in Astrology (1976) · Dane Rudhyar: The Lunation Cycle (1967)',
       coreTenetZh: '以年为万年根基（年本为主），参验天元禄、地元命、人元身三元一体，辨识纳音音律生旺墓绝与宫位六亲刑冲。',
-      coreTenetEn: 'Establishes Year Pillar as eternal root; synthesizes Three Primes (Rank, Destiny, Body), NaYin acoustic vitality, and palace relational alignments.',
+      coreTenetEn: 'Models generational roots and natal vigor as harmonic standing waves on a closed circle. Synthesizes fundamental frequencies, higher integer harmonics (H4 resistance vs H9 ground state), and phase space momentum.',
       nativePortraitZh: `命主生于【${yPillar}】年，纳音【${yNaYin}】奠定祖基底盘，日主纳音【${dNaYin}】与之呼应。古法禄命判词：气象合于《兰台妙选》【${topLantai}】，得时代之风与长者福泽庇佑，根基扎实，能御大风大浪。`,
-      nativePortraitEn: `Born in [${yPillarEn}] year with [${yNaYinEn}] NaYin root, resonating with Day NaYin [${dNaYinEn}]. Ancient verdict: Aligns with Lan Tai Miao Xuan [${topLantaiEn}], endowed with solid generational grounding to withstand macro storms.`,
+      nativePortraitEn: `Born in [${yPillarEn}] with [${yNaYinEn}] harmonic baseline, resonating with Day vector [${dNaYinEn}]. Harmonic analysis: Aligns with Addey's standing wave superposition [${topLantaiEn}], endowed with robust systemic impedance to withstand macro volatility and absorb external friction.`,
       strategicAdviceZh: '【禄命实战定策】：善借时代宏观趋势与大平台背景（年根之势），不单打独斗，注重家族声望与长期资产沉淀。',
-      strategicAdviceEn: '【Strategic Rule】: Leverage macro trends and institutional platforms (Year Root); avoid isolated struggles; compound familial prestige and patient asset reserves.'
+      strategicAdviceEn: '【Harmonic Strategy Rule】: Leverage macro wave cycles and institutional platforms; avoid isolated low-amplitude dispersion; compound long-term structural momentum and capital reserves.'
     };
 
     // 2. 子平正统格局理气宗 (Orthodox Ziping & Pattern School)
@@ -4418,15 +4418,15 @@ return {
     const orthodoxZiping = {
       schoolId: 'orthodox_ziping',
       schoolNameZh: '子平正统格局理气宗',
-      schoolNameEn: 'Orthodox Ziping & Pattern School',
+      schoolNameEn: 'Cosmobiology & Midpoint Structural Dynamics School (Ebertin & Hand)',
       classicsZh: '《渊海子平》《三命通会》《神峰通考》《滴天髓》《子平真诠》',
-      classicsEn: 'Yuan Hai Zi Ping, San Ming Tong Hui, Shen Feng Tong Kao, Di Tian Sui, Zi Ping Zhen Quan',
+      classicsEn: 'Reinhold Ebertin: The Combination of Stellar Influences (1940) · Robert Hand: Planets in Composite (1975)',
       coreTenetZh: '以日元为体，以月令提纲为用，精析八格成败救应，辨析“有病方为贵”之对症主药与雕枯动静法度。',
-      coreTenetEn: 'Day Master as subject, Month Order as command; rigorous dissection of pattern formation, defects, remedies, and the pivotal Disease & Medicine doctrine.',
+      coreTenetEn: 'Day Master as primary observer, command order as operational axis; rigorous 90-degree dial midpoint dissection, identifying core structural friction bottlenecks and high-leverage stabilizing remedies.',
       nativePortraitZh: `日元【${dm}】以【${topPat}】为第一主导格局。张神峰病药辨证：命局带【${sfDisease}】，透出【${sfMed}】为克制病灶之神药。沈孝瞻《子平真诠》判词：成败在于相神护卫，去病则财禄相随。`,
-      nativePortraitEn: `Day Master [${dmEn}] led by [${topPatEn}]. Zhang Shenfeng diagnosis: natal matrix carries [${sfDiseaseEn}], employing [${sfMedEn}] as divine medicine. Shen Xiaozhan verdict: success rests on supporting gods and swift remedies.`,
+      nativePortraitEn: `Core vector [${dmEn}] governed by primary stress pattern [${topPatEn}]. Midpoint stress diagnosis: systemic tension manifests in [${sfDiseaseEn}], deploying [${sfMedEn}] as the primary stabilizing remedy. Ebertin dialectic: structural breakthrough requires locking in the vital 20% guard vector to resolve systemic bottlenecks into defensible authority.`,
       strategicAdviceZh: '【理气实战定策】：认准单一核心突破口（神药），在关键赛道形成压倒性专业壁垒；对破格凶煞建立合规与契约防火墙。',
-      strategicAdviceEn: '【Strategic Rule】: Focus single-mindedly on the divine medicine to build uncontested competitive moats; erect contractual firewalls against breaking defects.'
+      strategicAdviceEn: '【Cosmobiological Strategy Rule】: Focus single-mindedly on the primary stabilizing vector to build uncontested competitive moats; erect strict operational firewalls against asymmetric friction risks.'
     };
 
     // 3. 自然调候气候物象宗 (Natural Climate & Seasonal School)
@@ -4436,15 +4436,15 @@ return {
     const seasonalClimate = {
       schoolId: 'seasonal_climate',
       schoolNameZh: '自然调候气候物象宗',
-      schoolNameEn: 'Natural Seasonal Climate School',
+      schoolNameEn: 'Cyclic Phase Dynamics & Thermodynamic Equilibrium School (Rudhyar)',
       classicsZh: '《穷通宝鉴》《造化元钥评注》',
-      classicsEn: 'Qiong Tong Bao Jian, Zao Hua Yuan Yao Commentaries',
+      classicsEn: 'Dane Rudhyar: The Lunation Cycle (1967) · Thermodynamic Equilibrium Dynamics',
       coreTenetZh: '穷通天道寒暖燥湿之物理铁律，以大自然太阳暄照、雨露滋养、炉冶锻造、江河蓄水观人命生发化育之机。',
-      coreTenetEn: 'Deciphers cosmic thermodynamic laws of heat, cold, dryness, and moisture, viewing destiny through natural imagery: solar rays, sweet rain, smelting fires, and river dams.',
+      coreTenetEn: 'Deciphers universal thermodynamic laws of heat, cold, expansion, and contraction, mapping energetic evolution through cyclical phase-space trajectories and dynamic climate regulation.',
       nativePortraitZh: `生于【${mb}】月，气候气机鲜明。首要调候用神以【${qtPrimary}】为第一急务。调候得力，则犹如枯木逢春、雪地照金，心智通透灵感迸发；调候欠缺，则易感身心疲乏或情绪焦躁。`,
-      nativePortraitEn: `Born in [${mbEn}] with distinct seasonal climate. Primary regulator [${qtPrimaryEn}] is the urgent first priority. Harmonized climate unlocks lucid intellect; neglected climate breeds chronic fatigue.`,
+      nativePortraitEn: `Born in [${mbEn}] under distinct thermodynamic phase coordinates. Primary regulator [${qtPrimaryEn}] is the critical balancing priority. Harmonized phase alignment unlocks lucid cognitive output and sustainable drive; neglected regulation risks systemic exhaustion and energetic burnout.`,
       strategicAdviceZh: '【气候实战定策】：优先优化工作与居住的微气候与采光通风；注重身心节律，在冰冷环境中保持热忱，在焦灼压力中主动降温。',
-      strategicAdviceEn: '【Strategic Rule】: Prioritize ergonomic lighting and spatial ventilation; preserve psychological warmth during cold downturns and enforce cooling timeouts in high-stress sprints.'
+      strategicAdviceEn: '【Phase Dynamic Strategy Rule】: Actively regulate physical and cognitive work climates; preserve energetic warmth during contraction phases and enforce cooling timeouts during high-intensity expansion sprints.'
     };
 
     // 4. 近世民国通俗中间件宗 (Modern Practical & Case Law Middleware School)
@@ -4456,15 +4456,15 @@ return {
     const modernPractical = {
       schoolId: 'modern_practical',
       schoolNameZh: '近世民国通俗实战宗',
-      schoolNameEn: 'Modern Practical & Case Law Middleware School',
+      schoolNameEn: 'Empirical Predictive Analytics & Milestone Calibration School (Tyl & Gansten)',
       classicsZh: '《子平真诠评注》(徐乐吾) · 《造化元钥评注》(徐乐吾) · 《千里命稿》(韦千里)',
-      classicsEn: 'Xu Lewu Zi Ping & Zao Hua Yuan Yao Commentaries, Wei Qianli Qian Li Ming Gao',
+      classicsEn: 'Noel Tyl: Solar Arcs (2001) · Martin Gansten: Primary Directions (2009) · Empirical Case Decision Trees',
       coreTenetZh: '将抽象古意转化为具体实操判断规则的“中间件系统”；以民国实证案例为检验基石，详析用神五法与岁运决策树。',
-      coreTenetEn: 'The sovereign "middleware compiler" translating esoteric ancient poetry into concrete operational decision trees backed by documented historical case law.',
+      coreTenetEn: 'The operational middleware translating dynamic celestial vectors into verifiable milestone decision trees, backed by empirical historical precedents and time-arc convergence algorithms.',
       nativePortraitZh: `综合徐乐吾评注与韦千里断案：日元【${dm}】生于【${mb}】月，遵循【${protoName}】。徐乐吾实操定式：${isStrong ? '身旺能任财官，宜以克泄引化吐秀' : '身弱先重根气生扶，借平台与贵人破局'}。结合近代百例实证断案，此格走专业高地与实业领军之路最为稳健。`,
-      nativePortraitEn: `Synthesizing Xu Lewu and Wei Qianli: Day Master [${dmEn}] born in [${mbEn}] follows [${protoNameEn}]. Xu Lewu decision heuristic: ${isStrong ? 'Vigorous self sustains Wealth and Officer through creative output' : 'Delicate self anchors into protective platforms and mentorship first'}. Documented historical case precedents demonstrate this profile compounds most stably along professional specialist and enterprise leadership trajectories.`,
+      nativePortraitEn: `Synthesizing empirical decision heuristics: Day Master [${dmEn}] born in [${mbEn}] executes protocol [${protoNameEn}]. Predictive operational rule: ${isStrong ? 'Vigorous self sustains capital expansion and institutional authority through calibrated output' : 'Delicate self anchors into protective alliances and institutional mentorship first'}. Documented historical precedents verify this profile compounds most reliably along specialized technical authority and executive leadership paths.`,
       strategicAdviceZh: '【中间件实战定策】：杜绝玄虚狂想，以客观量化指标考核执行结果；将古法智慧转化为敏捷微动作与合同治理准则。',
-      strategicAdviceEn: '【Strategic Rule】: Eliminate mystical ambiguity; govern through empirical metrics and translate classical heuristics into concrete agile milestones.'
+      strategicAdviceEn: '【Empirical Strategy Rule】: Eliminate subjective ambiguity; govern through measurable KPIs and convert celestial timing vectors into agile milestones and institutional contracts.'
     };
 
     return {

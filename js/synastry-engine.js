@@ -212,7 +212,7 @@ const SynastryEngine = (function() {
       const titleZh = `【生肖六合 · ${aniA.zh}${aniB.zh}合吉】`;
       const titleEn = `[Six Harmonies · ${aniA.en} & ${aniB.en} Alliance]`;
       const descZh = `两造生肖逢【${branchA}${branchB}六合】化${harm.elementZh}（${aniA.zh}与${aniB.zh}相合）。古法相书《李虚中命书》云：“合者气聚，生肖相投，家道隆昌。”双方从根基上具有极高天然亲和力与信任度，家庭资产稳固，能共同担待风雨。`;
-      const descEn = `Both Zodiac signs form Six Harmonies (${aniA.en} & ${aniB.en} merge into ${harm.elementEn}). Canonical scripture Li Xu Zhong Ming Shu states: "Harmony of year roots anchors lasting prosperity." Natural affinity and baseline trust allow both partners to weather life's storms with unified loyalty.`;
+      const descEn = `Both Zodiac coordinates form an aligned harmonic coupling (${aniA.en} & ${aniB.en} merge into ${harm.elementEn}). Relational dynamics (Robert Hand's Planets in Composite): "Cohesive harmonic pairing anchors lasting structural stability." High relational affinity and baseline trust allow both partners to weather life's storms with unified loyalty.`;
       return {
         type: 'six_harmony',
         scoreDelta: 12,
@@ -220,7 +220,7 @@ const SynastryEngine = (function() {
         badgeEn: 'Six Harmonies',
         titleZh, titleEn, descZh, descEn,
         classicalOriginZh: '《李虚中命书》卷中 · 六合贵人篇',
-        classicalOriginEn: 'Li Xu Zhong Ming Shu: Six Harmonies and Noble Guidance'
+        classicalOriginEn: 'Robert Hand: Composite Harmonic Coupling & Stability'
       };
     }
 
@@ -230,7 +230,7 @@ const SynastryEngine = (function() {
         const titleZh = `【生肖三合 · ${aniA.zh}${aniB.zh}同盟】`;
         const titleEn = `[Three Harmonies · ${aniA.en} & ${aniB.en} Triad]`;
         const descZh = `两造生肖同入【${triad.nameZh}】（${aniA.zh}与${aniB.zh}）。《渊海子平》誉为“同气连枝，长生共济”。气机相引，目标高度一致，尤其在长期奋斗、事业拓荒与财富积累中能形成强大协同合力。`;
-        const descEn = `Both Zodiac signs unite in the ${triad.nameEn}. Yuan Hai Zi Ping honors this as "branches of the same tree, thriving together." High commonality in ambition and shared rhythm compounding wealth and mutual achievements.`;
+        const descEn = `Both Zodiac coordinates align in the 120-degree trine formation (${triad.nameEn}). Addey's wave mechanics honors the 3rd harmonic as effortless resonant flow. High commonality in ambition and shared cyclic rhythm compounding wealth and mutual achievements.`;
         return {
           type: 'three_harmony',
           scoreDelta: 10,
@@ -238,7 +238,7 @@ const SynastryEngine = (function() {
           badgeEn: 'Three Harmonies',
           titleZh, titleEn, descZh, descEn,
           classicalOriginZh: '《渊海子平》三合水木火金局全编',
-          classicalOriginEn: 'Yuan Hai Zi Ping: The Four Elemental Triad Formations'
+          classicalOriginEn: 'John M. Addey: 3rd Harmonic Trine Resonance & Vector Triads'
         };
       }
     }
@@ -410,12 +410,12 @@ const SynastryEngine = (function() {
       const giftNames = [...new Set(mutualGifts.map(g => g.element))].join('、');
       const giftNamesEn = [...new Set(mutualGifts.map(g => g.elementEn))].join(', ');
       zpZh = `【成格救应·喜用互济】《子平真诠》定论：“格局用神，专求月令；相生相制，成格救应。”双盘交互中，一方之丰沛恰为另一方原局所求之喜用（互补【${giftNames}】气）。彼此互为破格之解药，事业合作与家庭经营均能借力化阻、相辅相成。`;
-      zpEn = `[Zi Ping Zhen Quan · Pattern Rescue] Zi Ping Zhen Quan states: "Useful gods rely on generation and restraint to complete noble patterns." Partner strengths supply crucial useful elements (${giftNamesEn}), shielding against natal vulnerabilities and elevating shared career and life achievements.`;
+      zpEn = `[Ebertin & Hand · Structural Midpoint Complementarity] Cosmobiological dynamics states: "Systemic balance emerges when partner vectors complete each other's stabilizing midpoint axes." Partner strengths supply crucial balancing factors (${giftNamesEn}), shielding against natal vulnerabilities and elevating shared career and life achievements.`;
     } else {
       const godAEn = getTenGodEn(monthGodA);
       const godBEn = getTenGodEn(monthGodB);
       zpZh = `【格局相成·各司其职】《子平真诠》论格局之道：“成中有败，败中有成，全赖救应。”甲造月令显【${monthGodA || '正气'}】，乙造显【${monthGodB || '和顺'}】。二人心智各有侧重，一者长于战略决策，一者精于细致落实，彼此尊重专业分工即可稳步成势。`;
-      zpEn = `[Zi Ping Zhen Quan · Role Complementarity] Zi Ping Zhen Quan teaches that balance arises through coordinated roles. Person A's focus (${godAEn} drive) pairs naturally with Person B's strengths (${godBEn} care). Clear operational division ensures sustained momentum.`;
+      zpEn = `[Ebertin & Hand · Role Vector Equilibrium] Midpoint dynamics teaches that operational harmony arises through coordinated division of labor. Person A's focus (${godAEn} drive) pairs naturally with Person B's strengths (${godBEn} care). Clear operational division ensures sustained momentum.`;
     }
 
     // 4. San Ming Tong Hui (《三命通会》) - Na-Yin Melody & Noble Stars

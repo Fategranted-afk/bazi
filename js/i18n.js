@@ -1779,8 +1779,8 @@ const I18N = (function() {
       canon_qianli_protocols_desc: "Republican master Wei Qianli's modern masterwork: Supporting, Regulation, Bridging, Disease-Medicine, and Specialized Dominance:",
       canon_qianli_cases_title: "Republican Era Historical Case Law & Verdicts",
 
-      canon_schools_title: "🏛️ Four Classical Metaphysical Schools Holographic Synthesis",
-      canon_schools_desc: "Synthesizing Ancient Lu-Ming NaYin, Orthodox Ziping Patterns, Seasonal Climate Regulation, and Modern Practical Case Middleware:",
+      canon_schools_title: "🏛️ Western Wave Mechanics & Cosmobiological Dynamic Synthesis",
+      canon_schools_desc: "Synthesizing Addey Harmonic Waves, Ebertin Midpoint Cosmobiology, Rudhyar Phase Dynamics, and Empirical Predictive Analytics:",
 
       canon_sanming_auto: "Natal Day-Hour Combination Reading (4D Analysis: Meaning, Source, Formation, Usage):",
       canon_sanming_exp_title: "📖 Explore 60 JiaZi Day-Hour Combinations (720 Pairs)",

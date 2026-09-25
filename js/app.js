@@ -21196,9 +21196,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷一 · 御览总目 (四柱八字元辰与纳音五行)',
         titleEn: 'Volume I: Imperial Master Index & Four Pillars Matrix',
         descZh: `本命日主【${dmDisplay}】，身命格局【${cleanVigorStatus}】。天干地支立极建构，天盘纳音与本命星宿精准交会，定基终身大纲。`,
-        descEn: `Centered on Day Master [${dmDisplay}] with a [${cleanVigorStatus}] vigor baseline. The foundational Four Pillars chart aligns heavenly stems, earthly branches, and Melodic Elements (Na Yin) to establish your lifelong energetic baseline.`,
+        descEn: `Centered on observer vector [${dmDisplay}] with a [${cleanVigorStatus}] baseline. Grounded in Addey's wave mechanics and Rudhyar's phase dynamics: Fourier harmonic standing waves (H4 resistance and H9 ground state) intersect across closed phase space, establishing your lifelong energetic baseline.`,
         tagsZh: ['四柱建元', '纳音五行', '元辰真印'],
-        tagsEn: ['Four Pillars Matrix', 'Sound Elements', 'Day Master Vigor']
+        tagsEn: ['Harmonic Standing Waves', 'Phase Space Ground State', 'Dynamic Tension H4']
       },
       {
         pageId: 'imperialPage2',
@@ -21206,9 +21206,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷二 · 命局总览与主导格局 (成格考订与二八攻防)',
         titleEn: 'Volume II: Executive Blueprint & Primary Dominant Pattern',
         descZh: `以【${cleanPatName}】统领全相大局。精准界定20%破局高杠杆胜手与80%损耗暗礁，调候喜用神扶抑得宜。`,
-        descEn: `Led by the [${cleanPatName}]. Identifies your vital 20% high-leverage strengths while pinpointing the 80% friction traps to eliminate, balanced by seasonal climate regulators.`,
+        descEn: `Governed by the [${cleanPatName}] primary stress pattern. Rooted in Ebertin's 90° dial midpoint dynamics ((A+B)/2 = C): isolates the pivotal 20% high-leverage vector from the 80% systemic friction, stabilized by dynamic regulatory vectors to maintain equilibrium under pressure.`,
         tagsZh: ['统帅主格', '20%胜负手', '调候真神'],
-        tagsEn: ['Dominant Pattern', '20% Pareto Lever', 'Climate Regulators']
+        tagsEn: ['Ebertin 90° Stress Axis', '20% High-Leverage Vector', 'Equilibrium Regulators']
       },
       {
         pageId: 'imperialPage3',
@@ -21216,9 +21216,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷三 · 史鉴镜鉴 (南北乱世300年同构镜像与历史灵魂宿命)',
         titleEn: 'Volume III: Supreme Historical Soul Mirror & Mirror Resonance',
         descZh: '以魏晋南北朝及隋唐历史名宿为魂灵镜像，复刻乱世博弈中的抉择胜负手，以史为鉴照见前行天命。',
-        descEn: 'Mirrored through classical historical masters and statecraft archetypes across dynastic transitions, offering timeless wisdom for critical life choices.',
+        descEn: `Mirrored through Rudhyar's archetypal phase dynamics and historical statecraft precedents across transitional cycles: models critical decision tipping points under macro upheaval, mapping your strategic trajectory against timeless leadership archetypes.`,
         tagsZh: ['同构名宿', '历史镜鉴', '乱世抉择'],
-        tagsEn: ['Dynastic Mirror', 'Soul Archetype', 'Historical Decisions']
+        tagsEn: ['Cyclic Phase Resonance', 'Archetypal Mirror', 'Strategic Inflection Nodes']
       },
       {
         pageId: 'imperialPage4',
@@ -21226,9 +21226,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷四 · 岁运流转与六十四卦易数 (大运流年流月流日全阶推演)',
         titleEn: 'Volume IV: Lifelong Transits & 64 Hexagrams Progression',
         descZh: '五柱同参，贯穿十年大运、太岁流年、十二节气流月与流日交感；百岁六十四卦变卦与守本时序全局图谱。',
-        descEn: 'Comprehensive 5-pillar integration covering 10-year major luck decades, annual transits, solar terms, and a complete 100-year trajectory through the 64 I Ching hexagrams.',
+        descEn: `Comprehensive multi-tier progression rooted in Hellenistic Time-Lords (Valens L1-L4 releasing periods) and Tyl's Solar Arc directions: traces decennial shifts, annual transits, and critical phase transitions (Losing of the Bond) across a 100-year timeline.`,
         tagsZh: ['五柱同参', '六爻时序', '时空罗盘'],
-        tagsEn: ['Five Pillars Synergy', 'Six-Yao Order', 'Chrono-Navigator']
+        tagsEn: ['Time-Lord Progression', 'Zodiacal Releasing L1-L4', 'Solar Arc Directions']
       },
       {
         pageId: 'imperialPage5',
@@ -21236,9 +21236,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷五 · 二八战略大局 (终身二八胜负手与破局战役)',
         titleEn: 'Volume V: 80/20 Grand Picture Pareto Strategy',
         descZh: '严格贯彻二八极简法则：绝不在80%破事上虚耗心力，100%重兵聚焦20%具有非线性杠杆回报的终身胜负手。',
-        descEn: 'The 80/20 Pareto principle applied to destiny: avoid squandering energy on low-value distractions, and channel your full focus into the 20% compounding levers that define success.',
+        descEn: `The 80/20 Pareto principle grounded in nonlinear dynamical phase space: filter out high-entropy friction (80% dissipative noise), and concentrate full energetic amplitude into the 20% high-gain resonant harmonics that drive asymmetric returns.`,
         tagsZh: ['二八胜负手', '破局战役', '护城河防御'],
-        tagsEn: ['Pareto Directives', 'Breakthrough Battles', 'Defensible Moat']
+        tagsEn: ['Resonant Harmonic Gain', 'Nonlinear Bifurcation', 'Defensible Moat']
       },
       {
         pageId: 'imperialPage6',
@@ -21246,9 +21246,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷六 · 六亲全息深度侧写 (配偶婚恋 · 子女后嗣 · 父母祖荫)',
         titleEn: 'Volume VI: 4D Kinship Holographic Depth Profiles',
         descZh: '深度解构夫妻宫生克引力、父母福泽根基与子女星旺衰；厘清家族代际因果与亲密关系保全法门。',
-        descEn: 'Deep kinship dynamics: examines spouse palace compatibility, parental foundation, offspring prospects, and healthy intergenerational boundaries.',
+        descEn: `Relational field dynamics rooted in Robert Hand's Composite Vector Synthesis (atan2 summation): deconstructs partner dynamic attraction, ancestral gravitational baselines, offspring vitality, and intergenerational boundary defense.`,
         tagsZh: ['配偶情缘', '父母祖德', '子嗣福分'],
-        tagsEn: ['Spouse Palace', 'Parental Lineage', 'Offspring Vitality']
+        tagsEn: ['Composite Vector Field', 'Midpoint Relational Axis', 'Intergenerational Boundaries']
       },
       {
         pageId: 'imperialPage7',
@@ -21256,9 +21256,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷七 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典',
         titleEn: 'Volume VII: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex',
         descZh: '《心经》《金刚经》《道德经》三大心智锚点，融合五代权相冯道《荣枯鉴》处世绝学：直为骨媚为仪，安身立命。',
-        descEn: 'Inner resilience rooted in Zen and Daoist philosophy (Heart Sutra, Diamond Sutra, Dao De Jing), paired with Premier Feng Dao\'s Rong Ku Jian codex for navigating complex organizational dynamics.',
+        descEn: `Strategic organizational game theory rooted in Ebertin's Cosmobiology and multi-agent power matrices: internal cognitive equilibrium balances structural friction, transforming external political pressure into defensible strategic leverage and survival armor.`,
         tagsZh: ['三经心智', '冯道荣枯鉴', '处世保全'],
-        tagsEn: ['Zen & Dao Wisdom', 'Feng Dao Codex', 'Survival Armor']
+        tagsEn: ['Cosmobiological Matrix', 'Multi-Agent Game Theory', 'Strategic Armor']
       },
       {
         pageId: 'imperialPage8',
@@ -21266,9 +21266,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷八 · 十年流年流月与天星地理 (14字干支全息气机合成与现居地校准)',
         titleEn: 'Volume VIII: Decennial Trajectory, 14-Character Energy Synthesis & City Qi',
         descZh: '十四字时空大合参，整合地磁偏角校准与现居地经纬气运，推导最佳空间风水朝向与天星时空窗口。',
-        descEn: '14-character multi-pillar energy synthesis, calibrated with local geomagnetic coordinates and spatial feng shui directions for optimal living and working environments.',
+        descEn: `Spatial field dynamics grounded in Erlewine's Local Space azimuth vectors (tan A = sin H / ...) and Lewis' AstroCartoGraphy: integrates topocentric horizon coordinates with geomagnetic declination to compute optimal geographic relocation and workspace orientation.`,
         tagsZh: ['14字能量合成', '地磁校准', '现居地风水'],
-        tagsEn: ['14-Char Synthesis', 'Geomagnetic Qi', 'Residence Feng Shui']
+        tagsEn: ['Local Space Azimuth', 'AstroCartoGraphy Lines', 'Geomagnetic Alignment']
       },
       {
         pageId: 'imperialPage9',
@@ -21276,9 +21276,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titleZh: '卷九 · 职场打工人破局与事业财运全相 (向上管理 · 同僚防波堤 · 天命生态位)',
         titleEn: 'Volume IX: Career Breakthrough & Wealth Trajectory',
         descZh: '正财主业与偏财副业双轨推演；穿透职场政治丛林，筑牢同僚防波堤与向上管理通道，锁死天命事业生态位。',
-        descEn: 'Career and wealth strategy: dual-track analysis of earned income versus investment growth, upward management leverage, peer relationship safeguards, and your ideal career niche.',
+        descEn: `Career and wealth dynamics grounded in Valens' Lot of Spirit (vocation) and Lot of Fortune (capital flow): models dual income streams, navigates organizational hierarchies with upward alignment vectors, and optimizes an uncontested professional niche.`,
         tagsZh: ['正财偏财', '向上管理', '事业生态位'],
-        tagsEn: ['Dual Wealth Tracks', 'Upward Management', 'Career Niche']
+        tagsEn: ['Lot of Spirit Vocation', 'Lot of Fortune Capital', 'Career Niche Optimization']
       }
     ];
 

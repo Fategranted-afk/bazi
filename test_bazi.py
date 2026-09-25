@@ -13674,11 +13674,24 @@ jsc_check113_cmd = [
           !s.strategicAdviceZh || !s.strategicAdviceEn) {
         throw new Error("School " + k + " missing required bilingual fields");
       }
-      var enLeaks = (s.schoolNameEn + " " + s.classicsEn + " " + s.coreTenetEn + " " + s.nativePortraitEn + " " + s.strategicAdviceEn).match(/[\\u4e00-\\u9fa5]/g);
+      var enLeaks = (s.schoolNameEn + " " + s.classicsEn + " " + s.coreTenetEn + " " + s.nativePortraitEn + " " + s.strategicAdviceEn).match(/[\u4e00-\u9fa5]/g);
       if (enLeaks && enLeaks.length > 0) {
         throw new Error("Residual Chinese in English school " + k + ": " + enLeaks.join(""));
       }
     });
+
+    if (!schools.ancientLuMing.schoolNameEn.includes("Harmonic Wave Acoustics & Generational Resonance School")) {
+      throw new Error("ancientLuMing schoolNameEn missing Harmonic Wave Acoustics");
+    }
+    if (!schools.orthodoxZiping.schoolNameEn.includes("Cosmobiology & Midpoint Structural Dynamics School")) {
+      throw new Error("orthodoxZiping schoolNameEn missing Cosmobiology & Midpoint");
+    }
+    if (!schools.seasonalClimate.schoolNameEn.includes("Cyclic Phase Dynamics & Thermodynamic Equilibrium School")) {
+      throw new Error("seasonalClimate schoolNameEn missing Cyclic Phase Dynamics");
+    }
+    if (!schools.modernPractical.schoolNameEn.includes("Empirical Predictive Analytics & Milestone Calibration School")) {
+      throw new Error("modernPractical schoolNameEn missing Empirical Predictive Analytics");
+    }
 
     // 6. Universal 12-Classics Search Integration
     var allResults = [
@@ -18607,6 +18620,10 @@ jsc_check138_cmd = [
     if (!impEn.includes("Volume I: Imperial Master Index & Four Pillars Matrix")) throw new Error("renderMasterProfileImperial EN missing Volume I");
     if (!impEn.includes("Volume IX: Career Breakthrough & Wealth Trajectory")) throw new Error("renderMasterProfileImperial EN missing Volume IX");
     if (!impEn.includes("Inspect Volume 1")) throw new Error("renderMasterProfileImperial EN missing Inspect Volume 1");
+    if (!impEn.includes("Addey's wave mechanics and Rudhyar's phase dynamics")) throw new Error("renderMasterProfileImperial EN missing Addey & Rudhyar in Volume I");
+    if (!impEn.includes("Ebertin's 90° dial midpoint dynamics")) throw new Error("renderMasterProfileImperial EN missing Ebertin midpoint in Volume II");
+    if (!impEn.includes("Robert Hand's Composite Vector Synthesis")) throw new Error("renderMasterProfileImperial EN missing Hand composite in Volume VI");
+    if (!impEn.includes("Erlewine's Local Space azimuth vectors")) throw new Error("renderMasterProfileImperial EN missing Erlewine Local Space in Volume VIII");
 
     var impEnLeaks = impEn.match(/[\u4e00-\u9fa5]/g);
     if (impEnLeaks && impEnLeaks.length > 0) {
