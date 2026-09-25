@@ -230,6 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpenSocialCard = document.getElementById('btnOpenSocialCard');
   const btnOpenSimulatorPage = document.getElementById('btnOpenSimulatorPage');
   const btnOpenAdvisorFloating = document.getElementById('btnOpenAdvisorFloating');
+  const btnOpenLedgerFloating = document.getElementById('btnOpenLedgerFloating');
+  const advisorFloatingToolbar = document.getElementById('advisorFloatingToolbar');
   const landingQuickPreviewBox = document.getElementById('landingQuickPreviewBox');
   const landingPreviewMeta = document.getElementById('landingPreviewMeta');
   const landingPreviewStatusBadge = document.getElementById('landingPreviewStatusBadge');
@@ -835,8 +837,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnOpenSimulatorPage) {
       btnOpenSimulatorPage.classList.remove('hidden');
     }
+    if (advisorFloatingToolbar) {
+      advisorFloatingToolbar.classList.remove('hidden');
+    }
     if (btnOpenAdvisorFloating) {
       btnOpenAdvisorFloating.classList.remove('hidden');
+    }
+    if (btnOpenLedgerFloating) {
+      btnOpenLedgerFloating.classList.remove('hidden');
     }
     updateDashboardSummaryBar();
     if (targetView && typeof switchPrimaryView === 'function') {
@@ -875,13 +883,28 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnOpenSimulatorPage) {
       btnOpenSimulatorPage.classList.add('hidden');
     }
+    if (advisorFloatingToolbar) {
+      advisorFloatingToolbar.classList.add('hidden');
+    }
     if (btnOpenAdvisorFloating) {
-      btnOpenAdvisorFloating.classList.remove('hidden');
+      btnOpenAdvisorFloating.classList.add('hidden');
+    }
+    if (btnOpenLedgerFloating) {
+      btnOpenLedgerFloating.classList.add('hidden');
     }
     updateLandingPreview();
     if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.switchToLandingView = switchToLandingView;
+    window.switchToDashboardView = switchToDashboardView;
+  }
+  if (typeof globalThis !== 'undefined') {
+    globalThis.switchToLandingView = switchToLandingView;
+    globalThis.switchToDashboardView = switchToDashboardView;
   }
 
   // Live Natal Preview on Landing Page
@@ -15747,8 +15770,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openAdvisorSafely() {
       if (!currentBaziResult) {
-        triggerCalculate();
-        if (typeof updateDashboardSummaryBar === 'function') updateDashboardSummaryBar();
+        return;
       }
       openAdvisorModal();
     }
@@ -15997,6 +16019,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openAdvisorModal() {
+    if (!currentBaziResult) return;
     const modal = document.getElementById('advisorModal');
     if (!modal) return;
     modal.classList.remove('hidden');

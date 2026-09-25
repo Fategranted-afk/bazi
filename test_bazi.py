@@ -822,6 +822,17 @@ advisorLedgerFilter = 'all';
 window.renderAdvisorLedgerDrawer();
 
 window.switchAdvisorView('chat');
+
+// Test that switching to landing view hides the floating advisor toolbar
+window.switchToLandingView();
+if (!document.getElementById('advisorFloatingToolbar').classList.contains('hidden')) {
+  throw new Error("advisorFloatingToolbar must be hidden on landing view");
+}
+// Test that switching to dashboard view unhides the floating advisor toolbar
+window.switchToDashboardView();
+if (document.getElementById('advisorFloatingToolbar').classList.contains('hidden')) {
+  throw new Error("advisorFloatingToolbar must be visible on dashboard view");
+}
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 
@@ -835,6 +846,11 @@ if 'id="advisorLedgerFilterBar"' not in index_html_src:
   raise AssertionError("Missing #advisorLedgerFilterBar in index.html")
 if 'id="advisorLedgerCustomActionDrawer"' not in index_html_src:
   raise AssertionError("Missing #advisorLedgerCustomActionDrawer in index.html")
+if 'id="portalCardAdvisor"' in index_html_src:
+  raise AssertionError("portalCardAdvisor should be completely removed from initial landing page")
+if 'id="advisorFloatingToolbar"' not in index_html_src or 'hidden' not in index_html_src:
+  raise AssertionError("advisorFloatingToolbar must be present and hidden by default in index.html")
+
 
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")
 check_pass("Advisor Closed-Loop DOM, Tool Dispatch Stream & Ledger Drawer", "Interactive E2E Dialogue, 1-Click Outcome Buttons & Telemetry Drawer")
