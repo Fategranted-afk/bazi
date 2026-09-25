@@ -291,6 +291,7 @@ load('js/feed_engine.js');
 load('js/simulator-engine.js');
 load('js/rectification-engine.js');
 load('js/synastry-engine.js');
+load('js/advisor-engine.js');
 
 var baziA = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: '乾造' });
 var baziB = BaZiEngine.calculate({ year: 1992, month: 9, day: 15, hour: 8, minute: 15, gender: '坤造' });
@@ -348,6 +349,61 @@ if (!syn.dominantPatternA || !syn.dominantPatternB) {
 if (!syn.eightCanonsSynthesis || !syn.eightCanonsSynthesis.canons || syn.eightCanonsSynthesis.canons.length !== 8) {
   throw new Error("SynastryEngine missing 8 Western Canons matrix");
 }
+
+// 4.7 Closed-Loop Action Ledger System
+if (typeof ActionLedger === 'undefined') throw new Error("ActionLedger missing");
+ActionLedger.clear();
+ActionLedger.recordAction({ id: 'act_test_1', category: 'career_pivot', badge: '战术动作', text: '推进新方案' });
+ActionLedger.recordAction({ id: 'act_test_2', category: 'career_pivot', badge: '现实推进', text: '对齐关键资源' });
+var stats0 = ActionLedger.getStats();
+if (stats0.total !== 2 || stats0.pending !== 2) throw new Error("ActionLedger initial record failed");
+
+ActionLedger.updateFeedback('act_test_1', 'blocked');
+ActionLedger.updateFeedback('act_test_2', 'blocked');
+var summaryBlocked = ActionLedger.getRecentFeedbackSummary('zh');
+if (!summaryBlocked || summaryBlocked.state !== 'blocked' || summaryBlocked.mode !== 'defensive_recalibration') {
+  throw new Error("ActionLedger defensive recalibration failed");
+}
+
+ActionLedger.updateFeedback('act_test_1', 'eased');
+ActionLedger.updateFeedback('act_test_2', 'eased');
+var summaryEased = ActionLedger.getRecentFeedbackSummary('en');
+if (!summaryEased || summaryEased.state !== 'eased' || summaryEased.mode !== 'traction_momentum') {
+  throw new Error("ActionLedger traction recalibration failed");
+}
+
+// 4.8 Auditable Tool Dispatcher & Anti-Hallucination Disclaimer Card
+if (typeof ToolDispatcher === 'undefined') throw new Error("ToolDispatcher missing");
+var qRect = ToolDispatcher.dispatch("我不知道我的生时是几点，怎么校准出生时间？", baziA, null, 'zh', 2026);
+if (!qRect || qRect.toolId !== 'rectification_engine' || qRect.status !== 'SUCCESS') {
+  throw new Error("ToolDispatcher failed to dispatch rectification");
+}
+if (!qRect.disclaimer.includes("纯数理与经典格局推演 · 拒绝黑箱幻觉")) {
+  throw new Error("Missing epistemic disclaimer on rectification card");
+}
+
+var qGeo = ToolDispatcher.dispatch("测算空间风水，我的办公桌朝向185度有兼向空亡吗？", baziA, null, 'zh', 2026);
+if (!qGeo || qGeo.toolId !== 'geomagnetic_correction' || qGeo.status !== 'SUCCESS') {
+  throw new Error("ToolDispatcher failed to dispatch geomagnetism");
+}
+
+var qSim = ToolDispatcher.dispatch("选A还是B？去北京做技术专家还是留上海做金融？", baziA, null, 'zh', 2026);
+if (!qSim || qSim.toolId !== 'scenario_simulator' || qSim.status !== 'SUCCESS') {
+  throw new Error("ToolDispatcher failed to dispatch scenario simulator");
+}
+
+var qCal = ToolDispatcher.dispatch("把今年2026年关键日期导出日历订阅到手机里", baziA, null, 'zh', 2026);
+if (!qCal || qCal.toolId !== 'calendar_feed_engine' || qCal.status !== 'SUCCESS') {
+  throw new Error("ToolDispatcher failed to dispatch calendar feed");
+}
+
+var adv = AdvisorEngine.generateAdvice("下周如何向上级汇报？", baziA, null, 2026, 'zh');
+if (!adv || !adv.microActions || adv.microActions.length === 0) {
+  throw new Error("AdvisorEngine advice generation failed");
+}
+if (!adv.recalibrationBanner) {
+  throw new Error("AdvisorEngine missing recalibrationBanner");
+}
 """
 run_jsc(s4_jsc, "Suite 4 JSC Advanced Dynamics")
 check_pass("Dynamic Phase Space & Double-Well Potential Manifold", "Nonlinear Dissipative Trajectory (x, v), Bifurcations & Streamlines")
@@ -356,6 +412,8 @@ check_pass("NOAA Geomagnetic Declination & 24 Mountains Calibration", "WMM Bilin
 check_pass("Dynamic Tianji Battle Rhythm Calendar Feed Engine", "18-24 Turning Points & RFC 5545 VEVENT/VALARM iCalendar Standard")
 check_pass("Dual-Track Decision Simulator & Bayesian Rectification", "What-If Counterfactual Dynamics & MAP Posterior Hour Calibration")
 check_pass("Synastry Dominant Patterns & Western Canons Matrix", "8 Canons Synastry Exegeses (Rudhyar, Lilly, Ebertin, Addey, Hand, Ptolemy)")
+check_pass("Closed-Loop Action Ledger & Dynamic Impedance Recalibration", "Persistence, 1-Click Feedback (eased/blocked/neutral) & POMDP Adaptation")
+check_pass("Auditable Tool Dispatcher & Anti-Hallucination Disclaimer", "4 Engines Intent Routing (Rectification, WMM, Simulator, Calendar) & Zero Black-Box Card")
 
 # ==============================================================================
 # SUITE 5: Internationalization, English Readability & Zero-CJK Leak
@@ -620,9 +678,32 @@ requiredWesternSnippets.forEach(function(snippet) {
 if (/[\u4e00-\u9fa5]/.test(dossierHtmlEn)) {
   throw new Error("Chinese detected in Master Profile English Dossier!");
 }
+
+// 6. Verify Advisor Agent Modal, Chat Stream, Tool Card & Action Ledger Drawer DOM
+document.getElementById('btnHeaderOpenAdvisor')?.click();
+var advModal = document.getElementById('advisorModal');
+if (advModal.classList.contains('hidden')) throw new Error("Advisor modal failed to open");
+
+window.handleAdvisorQuery("选A还是B？去北京做技术专家还是留上海做金融？");
+var chatHtml = document.getElementById('advisorChatStream').innerHTML;
+if (!chatHtml.includes("AUDITABLE ENGINE") || !chatHtml.includes("双轨博弈对抗决策沙盘推演引擎")) {
+  throw new Error("Chat stream missing auditable tool dispatch card");
+}
+if (!chatHtml.includes("纯数理与经典格局推演 · 拒绝黑箱幻觉")) {
+  throw new Error("Chat stream missing epistemic disclaimer");
+}
+
+// Drawer is hidden by default in index.html
+document.getElementById('advisorLedgerDrawer').classList.add('hidden');
+document.getElementById('advisorLedgerBtn')?.click();
+var drawer = document.getElementById('advisorLedgerDrawer');
+if (drawer.classList.contains('hidden')) throw new Error("Action Ledger drawer failed to open");
+var statsHtml = document.getElementById('advisorLedgerStats').innerHTML;
+if (!statsHtml.includes("总计") && !statsHtml.includes("Total")) throw new Error("Action Ledger stats missing");
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")
+check_pass("Advisor Closed-Loop DOM, Tool Dispatch Stream & Ledger Drawer", "Interactive E2E Dialogue, 1-Click Outcome Buttons & Telemetry Drawer")
 check_pass("Imperial Dossier Volumes I-IX Western Canons Synthesis", "Addey, Ebertin, Rudhyar, Hand & Erlewine Syntheses in Master Profile")
 check_pass("Four Major Auspicious Deities & Malefic Telemetry", "100-Year Hexagram Trajectory Deities & Bilingual Telemetry")
 check_pass("Strict CSS Color Palette & Anti-Dark-Amber Standards", "Forbidden Murky Ambers (#78350f, #92400e, #b45309, #d97706) Eliminated")

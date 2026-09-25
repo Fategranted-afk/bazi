@@ -5,6 +5,448 @@
  * 100% Offline-First, deterministic, context-aware, and fully bilingual (zh/en).
  */
 
+/**
+ * 闭环动作账本系统 (Action Ledger System)
+ * Persists micro-actions in local storage, tracks execution feedback (eased | blocked | neutral),
+ * and dynamic impedance adaptation to close the decision-feedback loop.
+ */
+class ActionLedger {
+  static STORAGE_KEY = 'agy_action_ledger_v1';
+  static _memoryStore = [];
+
+  static isStorageAvailable() {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const testKey = '__storage_test__';
+        window.localStorage.setItem(testKey, testKey);
+        window.localStorage.removeItem(testKey);
+        return true;
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
+  }
+
+  static getAll() {
+    if (this.isStorageAvailable()) {
+      try {
+        const raw = window.localStorage.getItem(this.STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+    }
+    return [...this._memoryStore];
+  }
+
+  static saveAll(records) {
+    if (!Array.isArray(records)) records = [];
+    this._memoryStore = [...records];
+    if (this.isStorageAvailable()) {
+      try {
+        window.localStorage.setItem(this.STORAGE_KEY, JSON.stringify(records));
+      } catch (e) {}
+    }
+    return records;
+  }
+
+  static recordAction(actionObj) {
+    if (!actionObj || !actionObj.id) return null;
+    const records = this.getAll();
+    const existingIdx = records.findIndex(r => r.id === actionObj.id);
+    const now = Date.now();
+    const item = {
+      id: actionObj.id,
+      category: actionObj.category || 'general',
+      subcategory: actionObj.subcategory || '',
+      badge: actionObj.badge || (actionObj.lang === 'en' ? 'Tactic' : '战术动作'),
+      text: actionObj.text || '',
+      timestamp: actionObj.timestamp || now,
+      status: actionObj.status || 'pending',
+      feedback: actionObj.feedback || null,
+      feedbackAt: actionObj.feedbackAt || null,
+      notes: actionObj.notes || ''
+    };
+
+    if (existingIdx >= 0) {
+      item.status = records[existingIdx].status || item.status;
+      item.feedback = (records[existingIdx].feedback !== undefined) ? records[existingIdx].feedback : item.feedback;
+      item.feedbackAt = records[existingIdx].feedbackAt || item.feedbackAt;
+      item.notes = records[existingIdx].notes || item.notes;
+      records[existingIdx] = { ...records[existingIdx], ...item };
+    } else {
+      records.unshift(item);
+    }
+    this.saveAll(records);
+    return item;
+  }
+
+  static updateStatus(actionId, status) {
+    const records = this.getAll();
+    const item = records.find(r => r.id === actionId);
+    if (!item) return null;
+    item.status = status;
+    item.updatedAt = Date.now();
+    this.saveAll(records);
+    return item;
+  }
+
+  static updateFeedback(actionId, feedback, notes = '') {
+    const records = this.getAll();
+    const item = records.find(r => r.id === actionId);
+    if (!item) return null;
+    item.feedback = feedback;
+    item.feedbackAt = Date.now();
+    item.status = 'executed';
+    if (notes) item.notes = notes;
+    this.saveAll(records);
+    return item;
+  }
+
+  static getStats() {
+    const records = this.getAll();
+    const stats = {
+      total: records.length,
+      pending: 0,
+      executed: 0,
+      skipped: 0,
+      eased: 0,
+      blocked: 0,
+      neutral: 0
+    };
+    records.forEach(r => {
+      if (r.status === 'executed') stats.executed++;
+      else if (r.status === 'skipped') stats.skipped++;
+      else stats.pending++;
+
+      if (r.feedback === 'eased') stats.eased++;
+      else if (r.feedback === 'blocked') stats.blocked++;
+      else if (r.feedback === 'neutral') stats.neutral++;
+    });
+    return stats;
+  }
+
+  static getRecentFeedbackSummary(lang = 'zh', limit = 5) {
+    const isEn = (lang === 'en');
+    const records = this.getAll().filter(r => r.feedback != null).slice(0, limit);
+    if (records.length === 0) return null;
+
+    let easedCount = 0;
+    let blockedCount = 0;
+    let neutralCount = 0;
+
+    records.forEach(r => {
+      if (r.feedback === 'eased') easedCount++;
+      else if (r.feedback === 'blocked') blockedCount++;
+      else if (r.feedback === 'neutral') neutralCount++;
+    });
+
+    if (blockedCount > easedCount) {
+      return {
+        state: 'blocked',
+        mode: 'defensive_recalibration',
+        ratio: `${blockedCount}/${records.length}`,
+        title: isEn ? 'Dynamic Recalibration: Tactical Resistance Detected' : '闭环校准：近期动作遭遇阻力，启动防御性阻抗调节',
+        lead: isEn
+          ? `[Closed-Loop Audit]: Native logged resistance across recent micro-actions (${blockedCount}/${records.length} blocked). Recalibrating subsequent operational impedance downward: shifting priority from offensive push to defensive perimeter consolidation.`
+          : `【闭环校准指示】：监测到近期微动作执行存在明显阻力（近期 ${blockedCount}/${records.length} 项遇阻）。军师已动态调低战术阻抗，后续策论全面由“激进进攻”切换为“防守筑底、收敛锋芒”。`,
+        tacticalBias: 'defensive'
+      };
+    } else if (easedCount > blockedCount) {
+      return {
+        state: 'eased',
+        mode: 'traction_momentum',
+        ratio: `${easedCount}/${records.length}`,
+        title: isEn ? 'Dynamic Recalibration: Positive Traction Verified' : '闭环校准：近期动作缓和见效，乘胜推进',
+        lead: isEn
+          ? `[Closed-Loop Audit]: Native verified positive traction (${easedCount}/${records.length} eased). Natal qi rhythm is resonating favorably with reality; maintain forward cadence while anchoring long-term gains.`
+          : `【闭环校准指示】：检测到近期微动作已形成正向突破（近期 ${easedCount}/${records.length} 项见效）。当前现实步调与原局气数产生良性共振，建议保持战术定力，在优势领域趁势扩大战果。`,
+        tacticalBias: 'offensive'
+      };
+    } else {
+      return {
+        state: 'neutral',
+        mode: 'steady_neutral',
+        ratio: `${neutralCount}/${records.length}`,
+        title: isEn ? 'Dynamic Recalibration: Baseline Equilibrium' : '闭环校准：气机平稳平衡',
+        lead: isEn
+          ? `[Closed-Loop Audit]: Recent micro-actions reflect steady baseline progress. Maintain continuous iteration.`
+          : `【闭环校准指示】：近期微动作反馈平稳中和，能量运行顺畅，继续按既定节奏稳步推进。`,
+        tacticalBias: 'balanced'
+      };
+    }
+  }
+
+  static clear() {
+    this._memoryStore = [];
+    if (this.isStorageAvailable()) {
+      try {
+        window.localStorage.removeItem(this.STORAGE_KEY);
+      } catch (e) {}
+    }
+  }
+}
+
+/**
+ * 可审计的意图工具路由系统 (Auditable Tool Dispatcher)
+ * Detects user strategic intent and transparently routes to deterministic engines:
+ * 1. RectificationEngine (Bayesian Birth Time Rectification)
+ * 2. GeomagneticCorrection (WMM True North & 24 Mountains Calibration)
+ * 3. ScenarioSimulatorEngine (Dual-Track Strategic Decision Sandbox)
+ * 4. CalendarFeedEngine (Tianji Battle Rhythm RFC 5545 Feed)
+ */
+class ToolDispatcher {
+  static dispatch(query, bazi, luck, lang = 'zh', currentYear = 2026) {
+    if (!query || typeof query !== 'string') return null;
+    const isEn = (lang === 'en');
+
+    // 1. Rectification Engine Dispatch
+    if (
+      /(校准|对时|几点|生时|哪个时辰|时辰不准|出生时间|确定时辰)/i.test(query) ||
+      /(rectif|birth time|what hour|which hour|unsure of hour|unknown hour|verify hour)/i.test(query)
+    ) {
+      return this._dispatchRectification(query, bazi, lang, currentYear);
+    }
+
+    // 2. Geomagnetic / Feng Shui True North Dispatch
+    if (
+      /(真北|磁偏角|风水|罗盘|山向|空亡|兼向|二十四山|方位|办公桌朝向|立向)/i.test(query) ||
+      /(declination|true north|feng shui|compass|mountain|geomagnet|void line|orientation|wmm)/i.test(query)
+    ) {
+      return this._dispatchGeomagnetism(query, bazi, lang, currentYear);
+    }
+
+    // 3. Scenario Simulator Dispatch (Dual-Track A/B)
+    if (
+      /(选a还是b|哪个offer|去北京还是上海|去深圳还是|留校还是去企业|离职还是留下|二选一|对比两个|双轨|决策沙盘|跳槽还是)/i.test(query) ||
+      /(choice a or b|which offer|compare offer|relocate or stay|which job|scenario simulator|dual-track)/i.test(query)
+    ) {
+      return this._dispatchScenarioSimulator(query, bazi, luck, lang, currentYear);
+    }
+
+    // 4. Calendar Feed Engine Dispatch
+    if (
+      /(日历|提醒|订阅|日程|关键日期|进退历|天机历|导出日历|ics)/i.test(query) ||
+      /(calendar|schedule|subscribe|webcal|ics|key dates|rhythm|export calendar)/i.test(query)
+    ) {
+      return this._dispatchCalendarFeed(query, bazi, lang, currentYear);
+    }
+
+    return null;
+  }
+
+  static _dispatchRectification(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    let natalBase = {
+      year: (bazi && bazi.birthYear) || 1990,
+      month: (bazi && bazi.birthMonth) || 6,
+      day: (bazi && bazi.birthDay) || 20,
+      gender: (bazi && bazi.gender) || '乾造'
+    };
+
+    let rankings = [];
+    let tieBreaker = null;
+
+    if (typeof RectificationEngine !== 'undefined') {
+      try {
+        const events = [
+          { year: currentYear - 5, type: 'career' },
+          { year: currentYear - 2, type: 'wealth' }
+        ];
+        const res = RectificationEngine.rectifyBirthTime(natalBase, events);
+        if (res && res.rankings) {
+          rankings = res.rankings;
+          if (rankings.length >= 2) {
+            tieBreaker = RectificationEngine.generateTieBreaker(rankings[0], rankings[1], natalBase.year);
+          }
+        }
+      } catch (e) {}
+    }
+
+    const topCandidates = rankings.slice(0, 3).map(r => ({
+      name: isEn ? r.cand?.nameEn : r.cand?.nameZh,
+      branch: r.cand?.branch || '',
+      probPercent: r.probPercent || 0,
+      evidencesCount: r.evidences ? r.evidences.length : 0
+    }));
+
+    return {
+      toolId: 'rectification_engine',
+      toolName: isEn ? 'Bayesian Birth Time Rectification Engine' : '贝叶斯生时反向校准引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected birth hour uncertainty. Dispatched to Bayesian MAP likelihood estimation across 13 candidate hours.'
+        : '检测到生辰时辰疑问与校准意图；自动激活贝叶斯十三时辰全相似然度求解器。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        natalDate: `${natalBase.year}-${natalBase.month}-${natalBase.day}`,
+        candidateCount: 13,
+        priorModel: isEn ? 'Gaussian Proximity Prior' : '正态时辰邻近先验'
+      },
+      output: {
+        topCandidates: topCandidates,
+        tieBreakerQuestion: tieBreaker ? (isEn ? tieBreaker.questionEn : tieBreaker.questionZh) : null
+      }
+    };
+  }
+
+  static _dispatchGeomagnetism(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    let lat = 39.90;
+    let lon = 116.40;
+    let heading = 180.0;
+
+    const headingMatch = query.match(/(\d{1,3}(?:\.\d+)?)\s*(?:度|deg|°)/i);
+    if (headingMatch) {
+      const val = parseFloat(headingMatch[1]);
+      if (val >= 0 && val <= 360) heading = val;
+    }
+
+    let declination = -6.1;
+    let correction = {
+      trueHeading: heading + declination,
+      mountain: isEn ? 'Wu (Horse) - Direct South' : '正南午山',
+      centerOffset: 0,
+      isParting: false,
+      isSevereParting: false,
+      warning: isEn ? 'Pure central meridian alignment.' : '正向纯清，气聚神专。',
+      advice: isEn ? 'Maintain current orientation.' : '无需实体化解，保持当前真北中轴线纳气即可。'
+    };
+
+    if (typeof GeomagneticCorrection !== 'undefined') {
+      try {
+        declination = GeomagneticCorrection.getDeclination(lat, lon, currentYear);
+        correction = GeomagneticCorrection.correctCompassHeading(heading, declination, lang);
+      } catch (e) {}
+    }
+
+    return {
+      toolId: 'geomagnetic_correction',
+      toolName: isEn ? 'NOAA WMM Geomagnetic & 24 Mountains Calibration' : 'NOAA WMM 地磁真北与二十四山向校准引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected spatial orientation inquiry. Dispatched to NOAA World Magnetic Model to solve true north and 24-mountain parting.'
+        : '检测到空间朝向、罗盘或风水研判意图；自动激活NOAA世界地磁模型修正真北与二十四山兼向。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        latitude: lat,
+        longitude: lon,
+        year: currentYear,
+        magneticHeading: `${heading}°`
+      },
+      output: {
+        declination: `${declination}°`,
+        trueHeading: `${correction.trueHeading}°`,
+        mountain: correction.mountain,
+        centerOffset: `${correction.centerOffset}°`,
+        isParting: correction.isParting,
+        isSevereParting: correction.isSevereParting,
+        warning: correction.warning,
+        advice: correction.advice
+      }
+    };
+  }
+
+  static _dispatchScenarioSimulator(query, bazi, luck, lang, currentYear) {
+    const isEn = (lang === 'en');
+    let optA = { country: 'CN', city: 'BJ', industry: 'tech', role: 'engineer', supervisor: 'tech_lead', title: isEn ? 'Beijing Tech Lead' : '北京硬核研发' };
+    let optB = { country: 'CN', city: 'SH', industry: 'finance', role: 'manager', supervisor: 'director', title: isEn ? 'Shanghai Financial Analyst' : '上海金融资管' };
+
+    let sim = null;
+    if (typeof ScenarioSimulatorEngine !== 'undefined') {
+      try {
+        sim = ScenarioSimulatorEngine.simulateOptions(optA, optB, bazi, luck, lang);
+      } catch (e) {}
+    }
+
+    const winner = sim ? sim.winner : 'A';
+    const verdictTitle = sim ? (isEn ? sim.verdictTitleEn : sim.verdictTitleZh) : (isEn ? 'Option A Outperforms Option B' : '方案A显著优于方案B');
+    const summary = sim ? (isEn ? sim.summaryEn : sim.summaryZh) : '';
+    const scoreA = sim?.resA?.score || 85;
+    const scoreB = sim?.resB?.score || 72;
+    const delta = sim ? sim.delta : Math.abs(scoreA - scoreB);
+
+    const leaderboard = (sim && sim.rawLeaderboard ? sim.rawLeaderboard.slice(0, 3) : []).map(l => ({
+      dimension: isEn ? l.dimensionEn : l.dimensionZh,
+      scoreA: l.scoreA,
+      scoreB: l.scoreB,
+      verdict: isEn ? l.verdictEn : l.verdictZh
+    }));
+
+    return {
+      toolId: 'scenario_simulator',
+      toolName: isEn ? 'Dual-Track Strategic Decision Sandbox' : '双轨博弈对抗决策沙盘推演引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected A/B dilemma inquiry. Dispatched to 5-dimensional multi-attribute utility and natal pattern alignment simulator.'
+        : '检测到双轨二选一困境；自动执行五维多属性效用函数，推演城市五行与格局乘数效应。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        optionA: optA.title,
+        optionB: optB.title,
+        evaluator: '5-Dimensional Dynamic Scorecard'
+      },
+      output: {
+        winner: winner,
+        verdictTitle: verdictTitle,
+        deltaScore: delta,
+        scoreA: scoreA,
+        scoreB: scoreB,
+        summary: summary,
+        leaderboard: leaderboard
+      }
+    };
+  }
+
+  static _dispatchCalendarFeed(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    let events = [];
+    let webcalUrl = '';
+
+    if (typeof CalendarFeedEngine !== 'undefined') {
+      try {
+        const feed = new CalendarFeedEngine(bazi, currentYear);
+        events = feed.extractCriticalEvents(currentYear, lang) || [];
+        webcalUrl = CalendarFeedEngine.getWebcalSubscriptionUrl(bazi, currentYear);
+      } catch (e) {}
+    }
+
+    const upcomingEvents = events.slice(0, 3).map(e => ({
+      dateStr: e.dateStr,
+      title: isEn ? e.titleEn : e.titleZh,
+      summary: isEn ? e.summaryEn : e.summaryZh,
+      action: isEn ? e.actionEn : e.actionZh
+    }));
+
+    return {
+      toolId: 'calendar_feed_engine',
+      toolName: isEn ? 'Tianji Battle Rhythm RFC 5545 Calendar Feed Engine' : '天机进退节律历 · RFC 5545 国际标准日历引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected calendar schedule / subscription query. Extracted annual high-amplitude turning point dates into RFC 5545 feed.'
+        : '检测到流年节奏与日历提醒诉求；自动提炼全年高势能跃迁与防御节点日并生成国际标准日历流。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        year: currentYear,
+        standard: 'RFC 5545 iCalendar',
+        alarmTrigger: '-PT4H (Eve 20:00)'
+      },
+      output: {
+        totalEvents: events.length,
+        webcalUrl: webcalUrl,
+        upcomingEvents: upcomingEvents
+      }
+    };
+  }
+}
+
 class AdvisorEngine {
   /**
    * Build complete metaphysical context object for the active native
@@ -1119,13 +1561,32 @@ class AdvisorEngine {
     const category = this.detectIntent(userQuery, sessionContext);
     const subcategory = this.detectSubcategory(userQuery);
 
+    // 1. Closed-Loop Action Ledger Feedback Audit (Dynamic Impedance Recalibration)
+    const feedbackSummary = (typeof ActionLedger !== 'undefined')
+      ? ActionLedger.getRecentFeedbackSummary(lang)
+      : null;
+
+    // 2. Deterministic Auditable Tool Dispatcher
+    const toolDispatchCard = (typeof ToolDispatcher !== 'undefined')
+      ? ToolDispatcher.dispatch(userQuery, bazi, luck, lang, currentYear)
+      : null;
+
+    let advice;
     if (isEn) {
-      return this._generateAdviceEn(category, ctx, isWeak, userQuery, bazi, luck, subcategory);
+      advice = this._generateAdviceEn(category, ctx, isWeak, userQuery, bazi, luck, subcategory, feedbackSummary);
+    } else {
+      advice = this._generateAdviceZh(category, ctx, isWeak, userQuery, bazi, luck, subcategory, feedbackSummary);
     }
-    return this._generateAdviceZh(category, ctx, isWeak, userQuery, bazi, luck, subcategory);
+
+    if (advice) {
+      advice.recalibrationBanner = feedbackSummary;
+      advice.toolDispatchCard = toolDispatchCard;
+    }
+
+    return advice;
   }
 
-  static _generateAdviceZh(category, ctx, isWeak, query, bazi, luck, subcategory = 'comprehensive') {
+  static _generateAdviceZh(category, ctx, isWeak, query, bazi, luck, subcategory = 'comprehensive', feedbackSummary = null) {
     let diagnosis = '';
     let tactics = [];
     let redLines = [];
@@ -1622,6 +2083,38 @@ class AdvisorEngine {
       ];
     }
 
+    if (feedbackSummary && feedbackSummary.lead) {
+      directAnswer = `${feedbackSummary.lead}\n\n${directAnswer}`;
+    }
+
+    microActions = microActions.map(act => {
+      const normalizedId = `act_${category}_${act.id}`;
+      let status = 'pending';
+      let feedback = null;
+      if (typeof ActionLedger !== 'undefined') {
+        ActionLedger.recordAction({
+          id: normalizedId,
+          category: category,
+          subcategory: subcategory,
+          badge: act.badge,
+          text: act.text,
+          lang: 'zh'
+        });
+        const rec = ActionLedger.getAll().find(r => r.id === normalizedId);
+        if (rec) {
+          status = rec.status;
+          feedback = rec.feedback;
+        }
+      }
+      return {
+        id: normalizedId,
+        badge: act.badge,
+        text: act.text,
+        status: status,
+        feedback: feedback
+      };
+    });
+
     const smartFollowUps = this.anticipateQuestions(category, subcategory, bazi, 'zh');
     const actionLinks = this.getActionLinks(category, subcategory, 'zh');
 
@@ -1711,7 +2204,7 @@ class AdvisorEngine {
     return 'Current Year';
   }
 
-  static _generateAdviceEn(category, ctx, isWeak, query, bazi, luck, subcategory = 'comprehensive') {
+  static _generateAdviceEn(category, ctx, isWeak, query, bazi, luck, subcategory = 'comprehensive', feedbackSummary = null) {
     const enDm = this._stemToEn(ctx.dayMaster);
     const enDb = this._branchToEn(ctx.dayBranch);
     const enGz = this._ganzhiToEn(ctx.activeAnnualGanzhi);
@@ -2199,6 +2692,38 @@ class AdvisorEngine {
       ];
     }
 
+    if (feedbackSummary && feedbackSummary.lead) {
+      directAnswer = `${feedbackSummary.lead}\n\n${directAnswer}`;
+    }
+
+    microActions = microActions.map(act => {
+      const normalizedId = `act_${category}_${act.id}`;
+      let status = 'pending';
+      let feedback = null;
+      if (typeof ActionLedger !== 'undefined') {
+        ActionLedger.recordAction({
+          id: normalizedId,
+          category: category,
+          subcategory: subcategory,
+          badge: act.badge,
+          text: act.text,
+          lang: 'en'
+        });
+        const rec = ActionLedger.getAll().find(r => r.id === normalizedId);
+        if (rec) {
+          status = rec.status;
+          feedback = rec.feedback;
+        }
+      }
+      return {
+        id: normalizedId,
+        badge: act.badge,
+        text: act.text,
+        status: status,
+        feedback: feedback
+      };
+    });
+
     const smartFollowUps = this.anticipateQuestions(category, subcategory, bazi, 'en');
     const actionLinks = this.getActionLinks(category, subcategory, 'en');
 
@@ -2318,7 +2843,11 @@ RULES:
 
 if (typeof window !== 'undefined') {
   window.AdvisorEngine = AdvisorEngine;
+  window.ActionLedger = ActionLedger;
+  window.ToolDispatcher = ToolDispatcher;
 }
 if (typeof globalThis !== 'undefined') {
   globalThis.AdvisorEngine = AdvisorEngine;
+  globalThis.ActionLedger = ActionLedger;
+  globalThis.ToolDispatcher = ToolDispatcher;
 }

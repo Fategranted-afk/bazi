@@ -15451,7 +15451,15 @@ document.addEventListener('DOMContentLoaded', () => {
         advisorChatHistory[msgIdx].advice.checkedActions = {};
       }
       advisorChatHistory[msgIdx].advice.checkedActions[actId] = isChecked;
+      if (advisorChatHistory[msgIdx].advice.microActions) {
+        const item = advisorChatHistory[msgIdx].advice.microActions.find(m => m.id === actId);
+        if (item) item.status = isChecked ? 'executed' : 'pending';
+      }
       saveAdvisorChatToStorage();
+    }
+
+    if (typeof ActionLedger !== 'undefined') {
+      ActionLedger.updateStatus(actId, isChecked ? 'executed' : 'pending');
     }
 
     const textSpan = el.closest('label') ? el.closest('label').querySelector('.micro-action-text') : null;
@@ -15461,6 +15469,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         textSpan.classList.remove('line-through', 'opacity-60', 'text-emerald-400');
       }
+    }
+    updateAdvisorBadgeCount();
+    if (!document.getElementById('advisorLedgerDrawer')?.classList.contains('hidden')) {
+      renderAdvisorLedgerDrawer();
     }
   }
 
@@ -15803,6 +15815,31 @@ document.addEventListener('DOMContentLoaded', () => {
         clearAdvisorChatHistory();
       });
     }
+
+    const btnLedger = document.getElementById('advisorLedgerBtn');
+    const btnLedgerClose = document.getElementById('advisorLedgerCloseBtn');
+    const btnLedgerClear = document.getElementById('advisorLedgerClearBtn');
+
+    if (btnLedger) {
+      btnLedger.addEventListener('click', () => {
+        toggleAdvisorLedgerDrawer();
+      });
+    }
+    if (btnLedgerClose) {
+      btnLedgerClose.addEventListener('click', () => {
+        document.getElementById('advisorLedgerDrawer')?.classList.add('hidden');
+      });
+    }
+    if (btnLedgerClear) {
+      btnLedgerClear.addEventListener('click', () => {
+        if (typeof ActionLedger !== 'undefined') {
+          ActionLedger.clear();
+        }
+        renderAdvisorLedgerDrawer();
+        updateAdvisorBadgeCount();
+        renderAdvisorChatStream();
+      });
+    }
   }
 
   function openAdvisorModal() {
@@ -15811,6 +15848,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('hidden');
     refreshAdvisorContextBadges();
     renderAdvisorPromptChips();
+    updateAdvisorBadgeCount();
     if (advisorChatHistory.length === 0) {
       const isEn = (currentLang === 'en');
       const initialFollowUps = (typeof AdvisorEngine !== 'undefined' && typeof AdvisorEngine.anticipateQuestions === 'function')
@@ -16011,6 +16049,60 @@ document.addEventListener('DOMContentLoaded', () => {
                   <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-900/80 text-indigo-200 font-mono tracking-wider">${a.llmModel || 'GEMINI NANO'}</span>
                 </div>
                 <div class="text-xs sm:text-sm text-indigo-100 font-medium leading-relaxed">${(a.llmNarrative || '').replace(/\*\*(.*?)\*\*/g, '<strong class="text-indigo-200 font-bold">$1</strong>')}</div>
+              </div>
+            ` : ''}
+
+            <!-- Closed-Loop Dynamic Recalibration Banner -->
+            ${a.recalibrationBanner ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-r ${a.recalibrationBanner.state === 'blocked' ? 'from-rose-950/70 via-red-950/40' : (a.recalibrationBanner.state === 'eased' ? 'from-emerald-950/70 via-teal-950/40' : 'from-slate-900 via-indigo-950/40')} to-black/60 border ${a.recalibrationBanner.state === 'blocked' ? 'border-rose-500/60' : (a.recalibrationBanner.state === 'eased' ? 'border-emerald-500/60' : 'border-slate-700/60')} shadow-lg space-y-1.5">
+                <div class="text-[11px] font-bold ${a.recalibrationBanner.state === 'blocked' ? 'text-rose-300' : (a.recalibrationBanner.state === 'eased' ? 'text-emerald-300' : 'text-slate-300')} flex items-center justify-between font-serif-sc">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm">${a.recalibrationBanner.state === 'blocked' ? '🛡️' : (a.recalibrationBanner.state === 'eased' ? '🚀' : '⚖️')}</span>
+                    <span>${a.recalibrationBanner.title}</span>
+                  </div>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/60 font-mono tracking-wider">${a.recalibrationBanner.mode.toUpperCase()} (${a.recalibrationBanner.ratio})</span>
+                </div>
+                <div class="text-xs text-slate-200 font-medium leading-relaxed">${a.recalibrationBanner.lead}</div>
+              </div>
+            ` : ''}
+
+            <!-- Auditable Tool Dispatch Card (可审计意图路由中枢) -->
+            ${a.toolDispatchCard ? `
+              <div class="p-3.5 rounded-xl bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950/50 border border-indigo-500/60 space-y-2.5 shadow-xl">
+                <div class="flex items-center justify-between border-b border-indigo-800/40 pb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">⚙️</span>
+                    <span class="text-xs sm:text-sm font-bold text-indigo-200 font-serif-sc">${a.toolDispatchCard.toolName}</span>
+                  </div>
+                  <span class="text-[9px] px-2 py-0.5 rounded-full bg-indigo-900/80 text-indigo-300 border border-indigo-600/40 font-mono tracking-wider">AUDITABLE ENGINE</span>
+                </div>
+
+                <!-- Epistemic Anti-Hallucination Disclaimer -->
+                <div class="text-[10px] text-indigo-300/90 bg-indigo-950/50 border border-indigo-700/40 px-2.5 py-1 rounded font-mono flex items-center justify-between">
+                  <span>🛡️ ${a.toolDispatchCard.disclaimer}</span>
+                  <span class="text-emerald-400 font-bold">${a.toolDispatchCard.status}</span>
+                </div>
+
+                <!-- Routing Rationale -->
+                <div class="text-xs text-slate-300 leading-relaxed">
+                  <strong class="text-indigo-300 font-medium">${isEn ? 'Audit Rationale:' : '意图路由依据：'}</strong>
+                  <span>${a.toolDispatchCard.rationale}</span>
+                </div>
+
+                <!-- Input Parameters Audited -->
+                <div class="p-2 rounded bg-black/50 border border-gray-800 text-[11px] font-mono text-gray-300 space-y-1">
+                  <div class="text-[10px] text-gray-400 uppercase tracking-wider">${isEn ? 'Audited Parameters' : '审计输入参数'}</div>
+                  <div class="flex flex-wrap gap-x-4 gap-y-1 text-slate-200">
+                    ${Object.entries(a.toolDispatchCard.parameters || {}).map(([k, v]) => `
+                      <div><span class="text-indigo-400">${k}:</span> <span class="text-gray-100">${v}</span></div>
+                    `).join('')}
+                  </div>
+                </div>
+
+                <!-- Deterministic Output Presentation -->
+                <div class="p-2.5 rounded-lg bg-black/60 border border-indigo-900/50 text-xs text-slate-200 space-y-2">
+                  ${renderToolDispatchOutput(a.toolDispatchCard, isEn)}
+                </div>
               </div>
             ` : ''}
 
@@ -16265,15 +16357,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="space-y-1.5">
                   ${a.microActions.map(act => {
-                    const isChecked = a.checkedActions && a.checkedActions[act.id];
+                    const isChecked = (a.checkedActions && a.checkedActions[act.id]) || (act.status === 'executed');
                     return `
-                      <label class="flex items-start gap-2.5 p-2 rounded-lg bg-black/30 hover:bg-black/40 cursor-pointer transition text-xs text-slate-200">
-                        <input type="checkbox" class="advisor-micro-checkbox mt-0.5 rounded border-amber-400 text-amber-500 focus:ring-amber-400 cursor-pointer" data-msg-idx="${idx}" data-act-id="${act.id}" ${isChecked ? 'checked' : ''}>
-                        <div>
-                          <span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-500/20 text-amber-300 font-semibold mr-1.5">${act.badge}</span>
-                          <span class="micro-action-text ${isChecked ? 'line-through opacity-60 text-emerald-400' : ''}">${act.text}</span>
+                      <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 space-y-2 text-xs text-slate-200">
+                        <label class="flex items-start gap-2.5 cursor-pointer">
+                          <input type="checkbox" class="advisor-micro-checkbox mt-0.5 rounded border-amber-400 text-amber-500 focus:ring-amber-400 cursor-pointer" data-msg-idx="${idx}" data-act-id="${act.id}" ${isChecked ? 'checked' : ''}>
+                          <div class="flex-1">
+                            <span class="px-1.5 py-0.5 text-[10px] rounded bg-amber-500/20 text-amber-300 font-semibold mr-1.5">${act.badge}</span>
+                            <span class="micro-action-text ${isChecked ? 'line-through opacity-60 text-emerald-400' : ''}">${act.text}</span>
+                          </div>
+                        </label>
+                        <!-- 1-Click Feedback Strip -->
+                        <div class="pt-1.5 border-t border-gray-800/60 flex items-center justify-between text-[10px]">
+                          <span class="text-gray-400 font-mono">${isEn ? '1-Click Feedback:' : '1-Click执行反馈:'}</span>
+                          <div class="flex items-center gap-1.5">
+                            <button type="button" class="advisor-feedback-btn px-2 py-0.5 rounded border ${act.feedback === 'eased' ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-emerald-300'} transition active:scale-95 cursor-pointer flex items-center gap-1" data-msg-idx="${idx}" data-act-id="${act.id}" data-feedback="eased" title="${isEn ? 'Eased / Positive Traction' : '缓和见效 · 顺势突破'}">
+                              <span>🟢</span> <span>${isEn ? 'Eased' : '缓和见效'}</span>
+                            </button>
+                            <button type="button" class="advisor-feedback-btn px-2 py-0.5 rounded border ${act.feedback === 'blocked' ? 'bg-rose-950 border-rose-500 text-rose-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-rose-300'} transition active:scale-95 cursor-pointer flex items-center gap-1" data-msg-idx="${idx}" data-act-id="${act.id}" data-feedback="blocked" title="${isEn ? 'Blocked / High Friction' : '遭遇阻力 · 阻抗过高'}">
+                              <span>🔴</span> <span>${isEn ? 'Blocked' : '遭遇阻力'}</span>
+                            </button>
+                            <button type="button" class="advisor-feedback-btn px-2 py-0.5 rounded border ${act.feedback === 'neutral' ? 'bg-slate-800 border-slate-500 text-slate-200 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-slate-200'} transition active:scale-95 cursor-pointer flex items-center gap-1" data-msg-idx="${idx}" data-act-id="${act.id}" data-feedback="neutral" title="${isEn ? 'Neutral / Baseline Equilibrium' : '平稳中和 · 无明显变化'}">
+                              <span>⚪</span> <span>${isEn ? 'Neutral' : '平稳中和'}</span>
+                            </button>
+                          </div>
                         </div>
-                      </label>
+                      </div>
                     `;
                   }).join('')}
                 </div>
@@ -16385,7 +16494,284 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Bind click listeners on 1-click feedback buttons
+    stream.querySelectorAll('.advisor-feedback-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const actId = btn.getAttribute('data-act-id');
+        const fb = btn.getAttribute('data-feedback');
+        const msgIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        handleAdvisorActionFeedback(actId, fb, msgIdx);
+      });
+    });
+
     stream.scrollTop = stream.scrollHeight;
+  }
+
+  function renderToolDispatchOutput(card, isEn) {
+    if (!card || !card.output) return '';
+    const out = card.output;
+
+    if (card.toolId === 'rectification_engine') {
+      return `
+        <div class="space-y-1.5">
+          <div class="text-[11px] font-bold text-indigo-300 font-mono">${isEn ? 'MAP Posterior Candidate Hours:' : '最大后验候选时辰分布：'}</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            ${(out.topCandidates || []).map((c, i) => `
+              <div class="p-2 rounded bg-indigo-950/40 border border-indigo-700/40 text-center">
+                <div class="text-[10px] text-indigo-400 font-mono">#${i + 1} Candidate</div>
+                <div class="text-xs font-bold text-white">${c.name}</div>
+                <div class="text-[11px] text-emerald-300 font-mono font-bold">${c.probPercent}%</div>
+              </div>
+            `).join('')}
+          </div>
+          ${out.tieBreakerQuestion ? `
+            <div class="p-2 rounded bg-amber-950/30 border border-amber-600/40 text-[11px] text-amber-200">
+              <span class="font-bold">🎯 ${isEn ? 'Discriminatory Tie-Breaker:' : '双峰鉴别性对题：'}</span>
+              <span>${out.tieBreakerQuestion}</span>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'geomagnetic_correction') {
+      return `
+        <div class="space-y-2">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-[11px]">
+            <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/40">
+              <div class="text-gray-400 text-[10px]">${isEn ? 'Declination' : '地磁偏角'}</div>
+              <div class="font-mono font-bold text-amber-300">${out.declination}</div>
+            </div>
+            <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/40">
+              <div class="text-gray-400 text-[10px]">${isEn ? 'True Heading' : '真北方位角'}</div>
+              <div class="font-mono font-bold text-emerald-300">${out.trueHeading}</div>
+            </div>
+            <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/40">
+              <div class="text-gray-400 text-[10px]">${isEn ? '24 Mountains' : '二十四山向'}</div>
+              <div class="font-bold text-indigo-200">${out.mountain}</div>
+            </div>
+            <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/40">
+              <div class="text-gray-400 text-[10px]">${isEn ? 'Meridian Offset' : '中心线偏角'}</div>
+              <div class="font-mono font-bold ${out.isParting ? 'text-rose-400' : 'text-cyan-300'}">${out.centerOffset}</div>
+            </div>
+          </div>
+          <div class="p-2 rounded ${out.isSevereParting ? 'bg-rose-950/40 border-rose-600/50 text-rose-200' : 'bg-slate-900/60 border-slate-700/50 text-slate-200'} border text-xs">
+            <div class="font-bold mb-0.5">⚠️ ${out.warning}</div>
+            <div class="text-[11px] text-gray-300 font-normal">💡 ${out.advice}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'scenario_simulator') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-300">${out.verdictTitle}</span>
+            <span class="px-2 py-0.5 rounded bg-amber-900/60 text-amber-200 font-mono font-bold text-[10px]">DELTA: +${out.deltaScore} PTS</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-xs">
+            <div class="p-2 rounded bg-slate-900/80 border ${out.winner === 'A' ? 'border-emerald-500 bg-emerald-950/30' : 'border-gray-800'}">
+              <div class="text-[10px] text-gray-400">${card.parameters?.optionA || 'Option A'}</div>
+              <div class="text-sm font-bold text-white font-mono">${out.scoreA} ${isEn ? 'pts' : '分'}</div>
+            </div>
+            <div class="p-2 rounded bg-slate-900/80 border ${out.winner === 'B' ? 'border-emerald-500 bg-emerald-950/30' : 'border-gray-800'}">
+              <div class="text-[10px] text-gray-400">${card.parameters?.optionB || 'Option B'}</div>
+              <div class="text-sm font-bold text-white font-mono">${out.scoreB} ${isEn ? 'pts' : '分'}</div>
+            </div>
+          </div>
+          ${out.summary ? `<div class="text-[11px] text-slate-300 leading-relaxed">${out.summary}</div>` : ''}
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'calendar_feed_engine') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-gray-300">${isEn ? 'Total High-Amplitude Turning Points:' : '全年高势能转折节点：'} <strong class="text-emerald-400 font-mono">${out.totalEvents} ${isEn ? 'dates' : '天'}</strong></span>
+            ${out.webcalUrl ? `
+              <a href="${out.webcalUrl}" class="px-2 py-0.5 rounded bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-500/50 text-emerald-200 text-[10px] font-mono transition">
+                🔗 ${isEn ? 'Subscribe Webcal' : '订阅系统日历流'}
+              </a>
+            ` : ''}
+          </div>
+          <div class="space-y-1.5">
+            ${(out.upcomingEvents || []).map(e => `
+              <div class="p-2 rounded bg-slate-900/70 border border-gray-800 text-[11px]">
+                <div class="flex items-center justify-between font-bold text-amber-300">
+                  <span>${e.dateStr} · ${e.title}</span>
+                </div>
+                <div class="text-gray-300 mt-0.5">${e.summary}</div>
+                <div class="text-emerald-300 mt-0.5">🎯 ${e.action}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    return `<div class="text-xs text-gray-300 font-mono">${JSON.stringify(out)}</div>`;
+  }
+
+  function handleAdvisorActionFeedback(actId, feedback, msgIdx) {
+    if (typeof ActionLedger !== 'undefined') {
+      ActionLedger.updateFeedback(actId, feedback);
+    }
+    if (advisorChatHistory[msgIdx] && advisorChatHistory[msgIdx].advice) {
+      const adv = advisorChatHistory[msgIdx].advice;
+      if (adv.microActions) {
+        const item = adv.microActions.find(m => m.id === actId);
+        if (item) {
+          item.feedback = feedback;
+          item.status = 'executed';
+        }
+      }
+      if (!adv.checkedActions) adv.checkedActions = {};
+      adv.checkedActions[actId] = true;
+      saveAdvisorChatToStorage();
+    }
+    updateAdvisorBadgeCount();
+    renderAdvisorChatStream();
+    if (!document.getElementById('advisorLedgerDrawer')?.classList.contains('hidden')) {
+      renderAdvisorLedgerDrawer();
+    }
+  }
+
+  function toggleAdvisorLedgerDrawer() {
+    const drawer = document.getElementById('advisorLedgerDrawer');
+    if (!drawer) return;
+    if (drawer.classList.contains('hidden')) {
+      drawer.classList.remove('hidden');
+      renderAdvisorLedgerDrawer();
+    } else {
+      drawer.classList.add('hidden');
+    }
+  }
+
+  function renderAdvisorLedgerDrawer() {
+    const drawer = document.getElementById('advisorLedgerDrawer');
+    if (!drawer || typeof ActionLedger === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const stats = ActionLedger.getStats();
+    const statsEl = document.getElementById('advisorLedgerStats');
+    const recalcEl = document.getElementById('advisorLedgerRecalibration');
+    const listEl = document.getElementById('advisorLedgerList');
+
+    if (statsEl) {
+      statsEl.innerHTML = `
+        <div class="p-2 rounded bg-black/60 border border-gray-800">
+          <div class="text-[10px] text-gray-400">${isEn ? 'Total' : '总计'}</div>
+          <div class="text-sm font-bold text-white font-mono">${stats.total}</div>
+        </div>
+        <div class="p-2 rounded bg-amber-950/30 border border-amber-800/40">
+          <div class="text-[10px] text-amber-400">${isEn ? 'Pending' : '待办'}</div>
+          <div class="text-sm font-bold text-amber-200 font-mono">${stats.pending}</div>
+        </div>
+        <div class="p-2 rounded bg-indigo-950/30 border border-indigo-800/40">
+          <div class="text-[10px] text-indigo-400">${isEn ? 'Executed' : '已办'}</div>
+          <div class="text-sm font-bold text-indigo-200 font-mono">${stats.executed}</div>
+        </div>
+        <div class="p-2 rounded bg-emerald-950/30 border border-emerald-800/40">
+          <div class="text-[10px] text-emerald-400">🟢 ${isEn ? 'Eased' : '见效'}</div>
+          <div class="text-sm font-bold text-emerald-300 font-mono">${stats.eased}</div>
+        </div>
+        <div class="p-2 rounded bg-rose-950/30 border border-rose-800/40">
+          <div class="text-[10px] text-rose-400">🔴 ${isEn ? 'Blocked' : '遇阻'}</div>
+          <div class="text-sm font-bold text-rose-300 font-mono">${stats.blocked}</div>
+        </div>
+        <div class="p-2 rounded bg-slate-800/40 border border-slate-700/40">
+          <div class="text-[10px] text-slate-300">⚪ ${isEn ? 'Neutral' : '平稳'}</div>
+          <div class="text-sm font-bold text-slate-200 font-mono">${stats.neutral}</div>
+        </div>
+      `;
+    }
+
+    const summary = ActionLedger.getRecentFeedbackSummary(currentLang);
+    if (recalcEl) {
+      if (summary) {
+        recalcEl.className = `p-2.5 rounded-lg border text-xs ${
+          summary.state === 'blocked'
+            ? 'bg-rose-950/40 border-rose-500/50 text-rose-200'
+            : (summary.state === 'eased' ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200' : 'bg-slate-900/60 border-slate-700/50 text-slate-200')
+        }`;
+        recalcEl.innerHTML = `
+          <div class="font-bold flex items-center justify-between mb-1">
+            <span>${summary.title}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-black/50 font-mono">${summary.ratio}</span>
+          </div>
+          <div class="text-[11px] opacity-90">${summary.lead}</div>
+        `;
+      } else {
+        recalcEl.className = 'p-2 rounded-lg bg-slate-900/60 border border-gray-800 text-xs text-gray-400';
+        recalcEl.innerHTML = `<div>${isEn ? 'Dynamic Recalibration: Awaiting micro-action outcome feedback to adapt tactical impedance.' : '动态闭环校准：等待微动作反馈，以动态校准战术阻抗。'}</div>`;
+      }
+    }
+
+    if (listEl) {
+      const records = ActionLedger.getAll();
+      if (records.length === 0) {
+        listEl.innerHTML = `<div class="text-center py-4 text-gray-500 text-xs">${isEn ? 'No micro-actions recorded yet. Actions generated by the advisor will appear here.' : '暂无微动作记录。军师每次参谋生成的微动作将自动收录于此。'}</div>`;
+      } else {
+        listEl.innerHTML = records.map(r => {
+          const isDone = (r.status === 'executed');
+          const timeStr = r.timestamp ? new Date(r.timestamp).toLocaleDateString([], { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+          return `
+            <div class="p-2.5 rounded-lg bg-black/40 border ${isDone ? 'border-gray-800/60' : 'border-amber-900/40'} space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="px-1.5 py-0.5 text-[9px] rounded bg-amber-500/20 text-amber-300 font-semibold">${r.badge}</span>
+                  <span class="text-gray-400 font-mono text-[10px]">${timeStr}</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  ${r.feedback === 'eased' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold border border-emerald-700/40">🟢 见效</span>' : ''}
+                  ${r.feedback === 'blocked' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold border border-rose-700/40">🔴 遇阻</span>' : ''}
+                  ${r.feedback === 'neutral' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-bold border border-slate-600/40">⚪ 平稳</span>' : ''}
+                  <span class="text-[10px] px-1.5 py-0.5 rounded font-mono ${isDone ? 'bg-indigo-950/70 text-indigo-300' : 'bg-amber-950/70 text-amber-300'}">${isDone ? (isEn ? 'DONE' : '已执行') : (isEn ? 'PENDING' : '待办')}</span>
+                </div>
+              </div>
+              <div class="text-xs text-slate-200 ${isDone ? 'opacity-80' : ''}">${r.text}</div>
+              <div class="pt-1 border-t border-gray-800/40 flex items-center justify-between text-[10px]">
+                <span class="text-gray-500">${isEn ? 'Feedback:' : '反馈调校:'}</span>
+                <div class="flex items-center gap-1">
+                  <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'eased' ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-emerald-300'}" data-act-id="${r.id}" data-feedback="eased">🟢 ${isEn ? 'Eased' : '见效'}</button>
+                  <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'blocked' ? 'bg-rose-950 border-rose-500 text-rose-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-rose-300'}" data-act-id="${r.id}" data-feedback="blocked">🔴 ${isEn ? 'Blocked' : '遇阻'}</button>
+                  <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'neutral' ? 'bg-slate-800 border-slate-500 text-slate-200 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-slate-200'}" data-act-id="${r.id}" data-feedback="neutral">⚪ ${isEn ? 'Neutral' : '平稳'}</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        listEl.querySelectorAll('.advisor-drawer-fb-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const actId = btn.getAttribute('data-act-id');
+            const fb = btn.getAttribute('data-feedback');
+            ActionLedger.updateFeedback(actId, fb);
+            renderAdvisorLedgerDrawer();
+            updateAdvisorBadgeCount();
+            renderAdvisorChatStream();
+          });
+        });
+      }
+    }
+  }
+
+  function updateAdvisorBadgeCount() {
+    const badge = document.getElementById('advisorLedgerBadge');
+    if (!badge) return;
+    if (typeof ActionLedger === 'undefined') {
+      badge.textContent = '0';
+      return;
+    }
+    const stats = ActionLedger.getStats();
+    badge.textContent = stats.pending > 0 ? `${stats.pending}` : `${stats.total}`;
+    if (stats.total > 0) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
   }
 
   if (typeof window !== 'undefined') {
@@ -16394,6 +16780,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleAdvisorMicroAction = toggleAdvisorMicroAction;
     window.clearAdvisorChatHistory = clearAdvisorChatHistory;
     window.handleAdvisorQuery = handleAdvisorQuery;
+    window.toggleAdvisorLedgerDrawer = toggleAdvisorLedgerDrawer;
+    window.renderAdvisorLedgerDrawer = renderAdvisorLedgerDrawer;
+    window.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
+    window.updateAdvisorBadgeCount = updateAdvisorBadgeCount;
   }
   if (typeof globalThis !== 'undefined') {
     globalThis.exportAdvisorTimingToIcs = exportAdvisorTimingToIcs;
@@ -16401,6 +16791,10 @@ document.addEventListener('DOMContentLoaded', () => {
     globalThis.toggleAdvisorMicroAction = toggleAdvisorMicroAction;
     globalThis.clearAdvisorChatHistory = clearAdvisorChatHistory;
     globalThis.handleAdvisorQuery = handleAdvisorQuery;
+    globalThis.toggleAdvisorLedgerDrawer = toggleAdvisorLedgerDrawer;
+    globalThis.renderAdvisorLedgerDrawer = renderAdvisorLedgerDrawer;
+    globalThis.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
+    globalThis.updateAdvisorBadgeCount = updateAdvisorBadgeCount;
   }
 
   // ==========================================================================

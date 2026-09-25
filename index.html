@@ -3787,6 +3787,11 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
+          <button id="advisorLedgerBtn" type="button" class="px-2.5 py-1.5 rounded-lg bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 text-xs transition cursor-pointer flex items-center gap-1 font-medium" title="查看闭环微动作战术账本">
+            <span>📋</span>
+            <span data-i18n="advisor_ledger_btn">动作账本</span>
+            <span id="advisorLedgerBadge" class="ml-1 px-1.5 py-0.2 rounded-full bg-amber-500/30 text-amber-200 text-[10px] font-mono">0</span>
+          </button>
           <button id="advisorHeaderClearBtn" class="px-2.5 py-1.5 rounded-lg bg-gray-800/90 hover:bg-rose-900/40 text-gray-300 hover:text-rose-200 text-xs transition border border-gray-700 cursor-pointer flex items-center gap-1" title="清空对话" data-i18n="advisor_clear_btn">
             <span>🧹</span>
             <span data-i18n="advisor_clear_btn">清空问对</span>
@@ -3794,6 +3799,42 @@
           <button id="advisorCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="advisor_close_btn">
             关闭参谋
           </button>
+        </div>
+      </div>
+
+      <!-- Action Ledger Drawer (闭环战术账本抽屉) -->
+      <div id="advisorLedgerDrawer" class="hidden bg-[#0d0f17] border-b border-amber-600/40 p-4 space-y-3 transition-all duration-300">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">📋</span>
+            <div>
+              <div class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc" data-i18n="advisor_ledger_title">闭环微动作战术账本</div>
+              <div class="text-[10px] text-gray-400" data-i18n="advisor_ledger_sub">追踪微动作执行闭环，实时动态反哺军师决策阻抗</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="advisorLedgerClearBtn" type="button" class="px-2 py-1 rounded bg-rose-950/40 hover:bg-rose-900/60 border border-rose-700/40 text-rose-300 text-[10px] font-medium transition cursor-pointer" data-i18n="advisor_ledger_clear">
+              清空账本
+            </button>
+            <button id="advisorLedgerCloseBtn" type="button" class="text-gray-400 hover:text-white text-xs px-2 py-1">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Telemetry Stats Strip -->
+        <div id="advisorLedgerStats" class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-xs">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Dynamic Recalibration Banner -->
+        <div id="advisorLedgerRecalibration" class="p-2.5 rounded-lg bg-indigo-950/40 border border-indigo-500/40 text-xs text-indigo-200">
+          <!-- Recalibration status -->
+        </div>
+
+        <!-- Action Items List -->
+        <div id="advisorLedgerList" class="max-h-60 overflow-y-auto space-y-2 text-xs pr-1">
+          <!-- Action list items -->
         </div>
       </div>
 
