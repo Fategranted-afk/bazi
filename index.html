@@ -563,6 +563,11 @@
             <span data-i18n="btn_ribbon_advisor_text">呼出军师问对</span>
             <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           </button>
+          <button id="btnRibbonOpenLedger" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-800 via-indigo-900 to-purple-900 hover:from-indigo-700 hover:to-purple-800 text-amber-200 font-bold text-xs shadow-md transition flex items-center gap-1.5 border border-indigo-500/40 active:scale-95 cursor-pointer" data-i18n="btn_ribbon_ledger" title="查看战术打卡账本 · 待办微动作清单">
+            <span>📋</span>
+            <span data-i18n="btn_ribbon_ledger_text">待办打卡清单</span>
+            <span id="ribbonLedgerCountBadge" class="hidden px-1.5 py-0.2 rounded-full bg-amber-400 text-gray-950 font-bold text-[10px] font-mono">0</span>
+          </button>
           <button id="btnReturnToPortal" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold text-xs shadow-md transition flex items-center gap-1.5 border border-amber-500/40 active:scale-95 cursor-pointer" data-i18n="btn_edit_natal">
             ✏️ 重新排盘 / 修改八字
           </button>
@@ -3762,12 +3767,19 @@
     </div>
   </div>
 
-  <!-- Floating Advisor Trigger Button (Always Accessible) -->
-  <button id="btnOpenAdvisorFloating" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-600 text-white font-bold shadow-2xl border border-amber-400/50 flex items-center gap-2 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer shadow-amber-950/60 ring-2 ring-amber-500/40" title="呼出钦天监随身军师 · 交互式天机问对">
-    <span class="text-xl">🧙</span>
-    <span class="text-xs sm:text-sm font-serif-sc font-bold" data-i18n="floating_advisor_btn">军师问对</span>
-    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-  </button>
+  <!-- Floating Advisor & Checklist Trigger Buttons (Always Accessible) -->
+  <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5">
+    <button id="btnOpenLedgerFloating" class="px-3.5 py-3 rounded-full bg-gradient-to-r from-indigo-800 via-indigo-900 to-purple-900 hover:from-indigo-700 hover:to-purple-800 text-amber-200 font-bold shadow-2xl border border-indigo-400/50 flex items-center gap-1.5 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer shadow-purple-950/60 ring-2 ring-indigo-500/30" title="打开待办打卡清单 · 战术账本">
+      <span class="text-base sm:text-lg">📋</span>
+      <span class="text-xs sm:text-sm font-serif-sc font-bold" data-i18n="floating_ledger_btn">待办打卡</span>
+      <span id="floatingLedgerCountBadge" class="hidden px-1.5 py-0.2 rounded-full bg-amber-400 text-gray-950 text-[10px] font-bold font-mono">0</span>
+    </button>
+    <button id="btnOpenAdvisorFloating" class="px-4 py-3 rounded-full bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-500 hover:to-amber-600 text-white font-bold shadow-2xl border border-amber-400/50 flex items-center gap-2 transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer shadow-amber-950/60 ring-2 ring-amber-500/40" title="呼出钦天监随身军师 · 交互式天机问对">
+      <span class="text-xl">🧙</span>
+      <span class="text-xs sm:text-sm font-serif-sc font-bold" data-i18n="floating_advisor_btn">军师问对</span>
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    </button>
+  </div>
 
   <!-- Interactive Advisor Agent Modal (天机军师 · 钦天监随身参谋) -->
   <div id="advisorModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">
@@ -3890,6 +3902,62 @@
         <!-- Situational Reality Calibration & Alignment Card -->
         <div id="advisorLedgerSituationCard" class="p-2.5 rounded-lg bg-slate-900/60 border border-amber-600/30 text-xs">
           <!-- Dynamically populated situational context -->
+        </div>
+
+        <!-- Filter & Batch Action Toolbar -->
+        <div id="advisorLedgerFilterBar" class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-black/50 border border-gray-800/80">
+          <div class="flex flex-wrap items-center gap-1.5 text-[11px]" id="advisorLedgerFilters">
+            <button type="button" class="advisor-filter-btn active px-2.5 py-1 rounded-lg font-medium transition cursor-pointer bg-amber-950/80 text-amber-200 border border-amber-600/50" data-filter="all">
+              <span data-i18n="advisor_ledger_filter_all">全部</span>
+              <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountAll">0</span>
+            </button>
+            <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="pending">
+              <span>⏳</span>
+              <span data-i18n="advisor_ledger_filter_pending">待办打卡</span>
+              <span class="filter-count ml-1 px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[10px]" id="filterCountPending">0</span>
+            </button>
+            <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="executed">
+              <span>✅</span>
+              <span data-i18n="advisor_ledger_filter_executed">已完成</span>
+              <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountExecuted">0</span>
+            </button>
+            <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="situational">
+              <span>🎯</span>
+              <span data-i18n="advisor_ledger_filter_situational">处境定制</span>
+              <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountSituational">0</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-1.5 text-[10px]">
+            <button type="button" id="advisorLedgerAddCustomBtn" class="px-2.5 py-1 rounded-lg bg-purple-950/60 hover:bg-purple-900/80 border border-purple-600/40 text-purple-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1" title="增加个性化打卡微动作">
+              <span>➕</span>
+              <span data-i18n="advisor_ledger_add_custom">增订微动作</span>
+            </button>
+            <button type="button" id="advisorLedgerMarkAllBtn" class="px-2 py-1 rounded-lg bg-indigo-950/60 hover:bg-indigo-900 border border-indigo-600/40 text-indigo-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+              <span>✓✓</span>
+              <span data-i18n="advisor_ledger_mark_all_done">一键全选打卡</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Inline Custom Action Creator Drawer in Ledger -->
+        <div id="advisorLedgerCustomActionDrawer" class="hidden p-3 rounded-xl bg-purple-950/30 border border-purple-600/40 space-y-2 text-xs">
+          <div class="flex items-center justify-between text-[11px] font-bold text-purple-300 font-serif-sc">
+            <span data-i18n="advisor_ledger_custom_title">增订个性化微动作（生成专属 Checkbox 待办打卡）</span>
+            <button type="button" id="advisorLedgerCustomCloseBtn" class="text-gray-400 hover:text-white text-xs cursor-pointer">✕</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <select id="advisorLedgerCustomBadgeSelect" class="text-xs p-2 rounded-lg bg-black/70 border border-gray-700 text-purple-300 focus:outline-none focus:border-purple-500">
+              <option value="处境定制">🎯 处境定制</option>
+              <option value="躯体动作">🏃 躯体动作</option>
+              <option value="现实推进">⚡ 现实推进</option>
+              <option value="空间微调">🧭 空间微调</option>
+              <option value="时间切片">⏰ 时间切片</option>
+            </select>
+            <input type="text" id="advisorLedgerCustomInput" class="flex-1 p-2 text-xs rounded-lg bg-black/70 border border-gray-700 text-gray-200 focus:outline-none focus:border-purple-500 placeholder-gray-500 font-sans" placeholder="输入需打卡的个性化微动作（如：每晚加做真题、规避某类会议等）..." />
+            <button type="button" id="advisorLedgerCustomSubmitBtn" class="px-3.5 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition active:scale-95 cursor-pointer whitespace-nowrap">
+              确认添加
+            </button>
+          </div>
         </div>
 
         <!-- Action Items List (Spacious & Clean) -->

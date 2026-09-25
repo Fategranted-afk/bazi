@@ -15404,6 +15404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   let advisorChatHistory = [];
   let advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
+  let advisorLedgerFilter = 'all'; // 'all' | 'pending' | 'executed' | 'situational'
   const ADVISOR_STORAGE_KEY = 'bazi_advisor_history_v2';
   const ADVISOR_CTX_KEY = 'bazi_advisor_context_v2';
 
@@ -15438,6 +15439,25 @@ document.addEventListener('DOMContentLoaded', () => {
     advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
     saveAdvisorChatToStorage();
     renderAdvisorChatStream();
+  }
+
+  function syncAdvisorChatActionStatus(actId, newStatus) {
+    if (Array.isArray(advisorChatHistory)) {
+      let changed = false;
+      const isDone = (newStatus === 'executed');
+      advisorChatHistory.forEach(msg => {
+        if (msg.advice && Array.isArray(msg.advice.microActions)) {
+          const it = msg.advice.microActions.find(m => m.id === actId);
+          if (it) {
+            it.status = newStatus;
+            if (!msg.advice.checkedActions) msg.advice.checkedActions = {};
+            msg.advice.checkedActions[actId] = isDone;
+            changed = true;
+          }
+        }
+      });
+      if (changed) saveAdvisorChatToStorage();
+    }
   }
 
   function toggleAdvisorMicroAction(el) {
@@ -15753,6 +15773,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const btnRibbonOpenLedger = document.getElementById('btnRibbonOpenLedger');
+    if (btnRibbonOpenLedger) {
+      btnRibbonOpenLedger.addEventListener('click', () => {
+        openAdvisorSafely();
+        switchAdvisorView('ledger');
+      });
+    }
+
+    const btnOpenLedgerFloating = document.getElementById('btnOpenLedgerFloating');
+    if (btnOpenLedgerFloating) {
+      btnOpenLedgerFloating.addEventListener('click', () => {
+        openAdvisorSafely();
+        switchAdvisorView('ledger');
+      });
+    }
+
     const btnDeitiesAskAdvisor = document.getElementById('btnDeitiesAskAdvisor');
     if (btnDeitiesAskAdvisor) {
       btnDeitiesAskAdvisor.addEventListener('click', () => {
@@ -15886,6 +15922,78 @@ document.addEventListener('DOMContentLoaded', () => {
         renderAdvisorChatStream();
       });
     }
+
+    const btnAddCustom = document.getElementById('advisorLedgerAddCustomBtn');
+    const drawerCustom = document.getElementById('advisorLedgerCustomActionDrawer');
+    const btnCustomClose = document.getElementById('advisorLedgerCustomCloseBtn');
+    const btnCustomSubmit = document.getElementById('advisorLedgerCustomSubmitBtn');
+    const markAllBtn = document.getElementById('advisorLedgerMarkAllBtn');
+
+    if (btnAddCustom && drawerCustom) {
+      btnAddCustom.addEventListener('click', () => {
+        drawerCustom.classList.toggle('hidden');
+        const inp = document.getElementById('advisorLedgerCustomInput');
+        if (inp && !drawerCustom.classList.contains('hidden')) inp.focus();
+      });
+    }
+
+    if (btnCustomClose && drawerCustom) {
+      btnCustomClose.addEventListener('click', () => {
+        drawerCustom.classList.add('hidden');
+      });
+    }
+
+    if (btnCustomSubmit) {
+      btnCustomSubmit.addEventListener('click', () => {
+        const inp = document.getElementById('advisorLedgerCustomInput');
+        const sel = document.getElementById('advisorLedgerCustomBadgeSelect');
+        const text = inp ? inp.value.trim() : '';
+        if (!text) return;
+        const isEn = (currentLang === 'en');
+        const badge = sel ? sel.value : (isEn ? 'Situational' : '处境定制');
+        const newId = `act_custom_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+        if (typeof ActionLedger !== 'undefined') {
+          ActionLedger.recordAction({
+            id: newId,
+            badge: badge,
+            text: text,
+            category: 'custom',
+            status: 'pending',
+            feedback: null,
+            notes: 'Added from Action Ledger Checklist'
+          });
+        }
+        if (inp) inp.value = '';
+        if (drawerCustom) drawerCustom.classList.add('hidden');
+        updateAdvisorBadgeCount();
+        renderAdvisorLedgerDrawer();
+      });
+    }
+
+    if (markAllBtn) {
+      markAllBtn.addEventListener('click', () => {
+        if (typeof ActionLedger !== 'undefined') {
+          const records = ActionLedger.getAll();
+          records.forEach(r => {
+            if (r.status !== 'executed') {
+              ActionLedger.updateStatus(r.id, 'executed');
+              syncAdvisorChatActionStatus(r.id, 'executed');
+            }
+          });
+        }
+        updateAdvisorBadgeCount();
+        renderAdvisorLedgerDrawer();
+        renderAdvisorChatStream();
+      });
+    }
+
+    const filterBtns = document.querySelectorAll('#advisorLedgerFilters .advisor-filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        advisorLedgerFilter = btn.getAttribute('data-filter') || 'all';
+        renderAdvisorLedgerDrawer();
+      });
+    });
   }
 
   function openAdvisorModal() {
@@ -16453,6 +16561,81 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                   }).join('')}
                 </div>
+
+                <!-- User Verifier for Micro-Actions (用户处境校验与增订微动作) -->
+                <div class="advisor-micro-verifier mt-2.5 pt-2.5 border-t border-amber-800/40 space-y-2">
+                  <div class="flex items-center justify-between text-[11px]">
+                    <div class="flex items-center gap-1.5 font-bold text-amber-300 font-serif-sc">
+                      <span>🔍</span>
+                      <span>${isEn ? 'Micro-Action Reality Verifier' : '微动作处境校验 · 用户审定与增补'}</span>
+                    </div>
+                    <span class="text-[9px] px-1.5 py-0.2 rounded bg-purple-950/80 text-purple-300 border border-purple-700/50 font-mono">USER VERIFIER</span>
+                  </div>
+                  <div class="text-[11px] text-gray-300 leading-relaxed font-sans">
+                    ${isEn
+                      ? 'These action items may not 100% reflect your current situation. Have anything you want to add, adjust, or refine?'
+                      : '以上行动项未必100%切合您当前的即时处境。您是否有想要增加、调整或个性化补充的行动项？'}
+                  </div>
+
+                  ${msg.verifierConfirmed ? `
+                    <div class="p-2 rounded-lg bg-emerald-950/40 border border-emerald-600/40 text-[11px] text-emerald-200 flex items-center gap-1.5">
+                      <span>✅</span>
+                      <span>${isEn ? 'Confirmed aligned with current reality, proceeding in order.' : '已确认契合现状，正有序推进。'}</span>
+                    </div>
+                  ` : ''}
+
+                  ${msg.verifierAddedActions && msg.verifierAddedActions.length ? `
+                    <div class="p-2 rounded-lg bg-purple-950/30 border border-purple-600/40 text-[11px] text-purple-200">
+                      <span class="font-bold">✨ ${isEn ? 'Verified & Added Actions:' : '已校验增补自定义动作：'}</span>
+                      <span class="font-medium">${escapeHtml(msg.verifierAddedActions.map(x => `【${x.badge}】${x.text}`).join('； '))}</span>
+                    </div>
+                  ` : ''}
+
+                  ${!msg.verifierConfirmed ? `
+                    <div class="flex flex-wrap items-center gap-2 pt-0.5">
+                      <button type="button" class="advisor-verifier-confirm-btn px-2.5 py-1 rounded-lg border border-emerald-600/40 bg-emerald-950/40 hover:bg-emerald-900/60 text-emerald-300 hover:text-white transition text-[11px] font-medium flex items-center gap-1 cursor-pointer active:scale-95" data-msg-idx="${idx}">
+                        <span>✓</span>
+                        <span>${isEn ? 'Matches Reality, No Additions Needed' : '契合现状，无需增补'}</span>
+                      </button>
+                      <button type="button" class="advisor-verifier-add-btn px-2.5 py-1 rounded-lg border border-amber-500/50 bg-amber-950/50 hover:bg-amber-900/70 text-amber-200 hover:text-white transition text-[11px] font-medium flex items-center gap-1 cursor-pointer active:scale-95" data-msg-idx="${idx}">
+                        <span>➕</span>
+                        <span>${isEn ? 'Add / Modify Custom Action' : '增加 / 自定义微动作'}</span>
+                      </button>
+                    </div>
+
+                    <!-- Expandable Drawer to Add Custom Action -->
+                    <div id="advisorVerifierDrawer_${idx}" class="advisor-verifier-drawer hidden pt-2 space-y-2 border-t border-gray-800/60">
+                      <label class="block text-[11px] text-amber-300 font-medium">
+                        ${isEn ? 'Enter custom micro-action to add to your checklist:' : '请输入您想要补充的具体打卡行动项（生成专属 Checkbox）：'}
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <select id="advisorVerifierBadge_${idx}" class="text-xs p-1.5 rounded-lg bg-black/70 border border-gray-700 text-amber-300 focus:outline-none">
+                          <option value="${isEn ? 'Situational' : '处境定制'}">${isEn ? '🎯 Situational' : '🎯 处境定制'}</option>
+                          <option value="${isEn ? 'Somatic' : '躯体动作'}">${isEn ? '🏃 Somatic' : '🏃 躯体动作'}</option>
+                          <option value="${isEn ? 'Real-World' : '现实推进'}">${isEn ? '⚡ Real-World' : '⚡ 现实推进'}</option>
+                          <option value="${isEn ? 'Spatial' : '空间微调'}">${isEn ? '🧭 Spatial' : '🧭 空间微调'}</option>
+                          <option value="${isEn ? 'Time Slot' : '时间切片'}">${isEn ? '⏰ Time Slot' : '⏰ 时间切片'}</option>
+                        </select>
+                        <input type="text" id="advisorVerifierInput_${idx}" class="flex-1 p-2 text-xs rounded-lg bg-black/70 border border-gray-700 text-gray-200 focus:outline-none focus:border-amber-500 placeholder-gray-500 font-sans" placeholder="${isEn ? 'e.g. Schedule 45-min mock interview every Tuesday...' : '例如：每晚10点后加练真题1套，或每周四前向导师汇报进度...'}" />
+                      </div>
+                      <div class="flex items-center justify-between pt-1">
+                        <label class="flex items-center gap-1.5 text-[11px] text-gray-400 cursor-pointer select-none">
+                          <input type="checkbox" id="advisorVerifierNotifyAdvisor_${idx}" class="rounded border-gray-700 bg-gray-900 text-amber-500 focus:ring-amber-400 cursor-pointer" checked />
+                          <span>${isEn ? 'Ask advisor to recalibrate strategy around this' : '同步让军师基于此增订项微调后续战策'}</span>
+                        </label>
+                        <div class="flex items-center gap-2">
+                          <button type="button" class="advisor-verifier-cancel-btn px-2.5 py-1 rounded border border-gray-700 bg-gray-800/60 text-gray-400 hover:text-gray-200 text-[11px] cursor-pointer" data-msg-idx="${idx}">
+                            ${isEn ? 'Cancel' : '取消'}
+                          </button>
+                          <button type="button" class="advisor-verifier-submit-btn px-3 py-1 rounded border border-purple-500/60 bg-gradient-to-r from-purple-800 to-indigo-800 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-[11px] shadow-sm cursor-pointer flex items-center gap-1 active:scale-95" data-msg-idx="${idx}">
+                            <span>➕</span>
+                            <span>${isEn ? 'Add Action & Update Checklist' : '确认添加并更新清单'}</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
               </div>
             ` : ''}
 
@@ -16689,6 +16872,100 @@ document.addEventListener('DOMContentLoaded', () => {
           ? `[Situational Context]: ${situationText}`
           : `【现实处境补充与深度定制】：${situationText}`;
         handleAdvisorQuery(queryText, situationText);
+      });
+    });
+
+    // Bind User Verifier buttons
+    stream.querySelectorAll('.advisor-verifier-confirm-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        if (advisorChatHistory[mIdx]) {
+          advisorChatHistory[mIdx].verifierConfirmed = true;
+          saveAdvisorChatToStorage();
+          renderAdvisorChatStream();
+        }
+      });
+    });
+
+    stream.querySelectorAll('.advisor-verifier-add-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        const drawer = document.getElementById(`advisorVerifierDrawer_${mIdx}`);
+        if (drawer) {
+          drawer.classList.toggle('hidden');
+          const input = document.getElementById(`advisorVerifierInput_${mIdx}`);
+          if (input && !drawer.classList.contains('hidden')) input.focus();
+        }
+      });
+    });
+
+    stream.querySelectorAll('.advisor-verifier-cancel-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        const drawer = document.getElementById(`advisorVerifierDrawer_${mIdx}`);
+        if (drawer) drawer.classList.add('hidden');
+      });
+    });
+
+    stream.querySelectorAll('.advisor-verifier-submit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mIdx = parseInt(btn.getAttribute('data-msg-idx'), 10);
+        const input = document.getElementById(`advisorVerifierInput_${mIdx}`);
+        const badgeSel = document.getElementById(`advisorVerifierBadge_${mIdx}`);
+        const notifyCb = document.getElementById(`advisorVerifierNotifyAdvisor_${mIdx}`);
+        const customText = input ? input.value.trim() : '';
+        if (!customText) return;
+        const customBadge = badgeSel ? badgeSel.value : (isEn ? 'Situational' : '处境定制');
+        const shouldNotify = notifyCb ? notifyCb.checked : false;
+
+        const newId = `act_usr_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+        const newAction = {
+          id: newId,
+          badge: customBadge,
+          text: customText,
+          category: 'custom',
+          status: 'pending',
+          feedback: null
+        };
+
+        const msg = advisorChatHistory[mIdx];
+        if (msg && msg.advice) {
+          if (!msg.advice.microActions) msg.advice.microActions = [];
+          msg.advice.microActions.push(newAction);
+          if (!msg.verifierAddedActions) msg.verifierAddedActions = [];
+          msg.verifierAddedActions.push(newAction);
+        }
+
+        if (typeof ActionLedger !== 'undefined') {
+          ActionLedger.recordAction({
+            id: newId,
+            badge: customBadge,
+            text: customText,
+            category: 'custom',
+            status: 'pending',
+            feedback: null,
+            notes: 'Added via User Verifier'
+          });
+        }
+
+        saveAdvisorChatToStorage();
+        updateAdvisorBadgeCount();
+
+        if (shouldNotify) {
+          const queryText = isEn
+            ? `[User Action Verified & Added]: "${customText}" (${customBadge}). Please recalibrate strategy and provide supporting tips.`
+            : `【用户处境校验与增订微动作】：已添加【${customBadge}】“${customText}”。请军师基于此补充动作微调后续战略部署与破局指引。`;
+          handleAdvisorQuery(queryText, customText);
+        } else {
+          renderAdvisorChatStream();
+          if (!document.getElementById('advisorLedgerDrawer')?.classList.contains('hidden')) {
+            renderAdvisorLedgerDrawer();
+          }
+        }
       });
     });
 
@@ -17134,29 +17411,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (listEl) {
-      const records = ActionLedger.getAll();
+      const allRecords = ActionLedger.getAll();
+      const countAll = allRecords.length;
+      const countPending = allRecords.filter(r => r.status !== 'executed').length;
+      const countExecuted = allRecords.filter(r => r.status === 'executed').length;
+      const countSituational = allRecords.filter(r => r.badge === '处境定制' || r.badge === 'Situational' || r.category === 'custom').length;
+
+      const elCountAll = document.getElementById('filterCountAll');
+      const elCountPending = document.getElementById('filterCountPending');
+      const elCountExecuted = document.getElementById('filterCountExecuted');
+      const elCountSituational = document.getElementById('filterCountSituational');
+      if (elCountAll) elCountAll.textContent = `${countAll}`;
+      if (elCountPending) elCountPending.textContent = `${countPending}`;
+      if (elCountExecuted) elCountExecuted.textContent = `${countExecuted}`;
+      if (elCountSituational) elCountSituational.textContent = `${countSituational}`;
+
+      // Update active filter button styling
+      document.querySelectorAll('#advisorLedgerFilters .advisor-filter-btn').forEach(btn => {
+        const f = btn.getAttribute('data-filter');
+        if (f === advisorLedgerFilter) {
+          btn.classList.add('active', 'bg-amber-950/80', 'text-amber-200', 'border-amber-600/50');
+          btn.classList.remove('text-gray-400', 'border-transparent');
+        } else {
+          btn.classList.remove('active', 'bg-amber-950/80', 'text-amber-200', 'border-amber-600/50');
+          btn.classList.add('text-gray-400', 'border-transparent');
+        }
+      });
+
+      let records = allRecords;
+      if (advisorLedgerFilter === 'pending') {
+        records = allRecords.filter(r => r.status !== 'executed');
+      } else if (advisorLedgerFilter === 'executed') {
+        records = allRecords.filter(r => r.status === 'executed');
+      } else if (advisorLedgerFilter === 'situational') {
+        records = allRecords.filter(r => r.badge === '处境定制' || r.badge === 'Situational' || r.category === 'custom');
+      }
+
       if (records.length === 0) {
-        listEl.innerHTML = `<div class="text-center py-4 text-gray-500 text-xs">${isEn ? 'No micro-actions recorded yet. Actions generated by the advisor will appear here.' : '暂无微动作记录。军师每次参谋生成的微动作将自动收录于此。'}</div>`;
+        let emptyMsg = isEn ? 'No micro-actions recorded yet. Actions generated by the advisor will appear here.' : '暂无微动作记录。军师每次参谋生成的微动作将自动收录于此。';
+        if (allRecords.length > 0) {
+          if (advisorLedgerFilter === 'pending') {
+            emptyMsg = isEn ? '✨ All caught up! Zero pending actions. Outstanding execution.' : '✨ 太棒了！当前没有待办打卡微动作，所有事项已全部完成。';
+          } else if (advisorLedgerFilter === 'executed') {
+            emptyMsg = isEn ? 'No executed actions yet. Check off items as you complete them.' : '暂无已完成打卡记录。完成行动后即可勾选打卡。';
+          } else if (advisorLedgerFilter === 'situational') {
+            emptyMsg = isEn ? 'No custom situational actions yet. Use "Add Custom Action" above to add one.' : '暂无个性化处境定制动作。点击上方“增订微动作”即可添加专属打卡项。';
+          }
+        }
+        listEl.innerHTML = `<div class="text-center py-6 text-gray-400 text-xs">${emptyMsg}</div>`;
       } else {
         listEl.innerHTML = records.map(r => {
           const isDone = (r.status === 'executed');
           const timeStr = r.timestamp ? new Date(r.timestamp).toLocaleDateString([], { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
           return `
-            <div class="p-2.5 rounded-lg bg-black/40 border ${isDone ? 'border-gray-800/60' : 'border-amber-900/40'} space-y-1.5">
-              <div class="flex items-center justify-between text-[11px]">
-                <div class="flex items-center gap-1.5">
-                  <span class="px-1.5 py-0.5 text-[9px] rounded font-semibold ${r.badge === '处境定制' || r.badge === 'Situational' ? 'bg-purple-950/80 text-purple-300 border border-purple-600/40' : 'bg-amber-500/20 text-amber-300'}">${r.badge}</span>
-                  <span class="text-gray-400 font-mono text-[10px]">${timeStr}</span>
-                </div>
-                <div class="flex items-center gap-1">
+            <div class="p-3 rounded-xl bg-black/40 border ${isDone ? 'border-gray-800/60 bg-gray-950/30' : 'border-amber-900/50 bg-[#141622]/90'} transition-all duration-200 space-y-2">
+              <div class="flex items-start justify-between gap-2.5">
+                <label class="flex items-start gap-3 cursor-pointer flex-1 min-w-0 select-none">
+                  <input type="checkbox" class="advisor-ledger-checkbox mt-1 w-4 h-4 rounded border-amber-500/60 bg-gray-900 text-amber-500 focus:ring-amber-500/50 cursor-pointer accent-amber-500 shrink-0" data-act-id="${r.id}" ${isDone ? 'checked' : ''} />
+                  <div class="flex-1 min-w-0">
+                    <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                      <span class="px-1.5 py-0.5 text-[9px] rounded font-semibold ${r.badge === '处境定制' || r.badge === 'Situational' || r.category === 'custom' ? 'bg-purple-950/80 text-purple-300 border border-purple-600/40' : 'bg-amber-500/20 text-amber-300'}">${escapeHtml(r.badge)}</span>
+                      <span class="text-gray-400 font-mono text-[10px]">${timeStr}</span>
+                      <span class="text-[9px] px-1.5 py-0.2 rounded font-mono ${isDone ? 'bg-indigo-950/80 text-indigo-300 border border-indigo-700/40' : 'bg-amber-950/80 text-amber-300 border border-amber-700/40'}">${isDone ? (isEn ? '✓ COMPLETED' : '✓ 已打卡') : (isEn ? '⏳ TO-DO' : '⏳ 待办打卡')}</span>
+                    </div>
+                    <div class="text-xs ${isDone ? 'line-through text-gray-500' : 'text-slate-100 font-medium leading-relaxed'}">${escapeHtml(r.text)}</div>
+                  </div>
+                </label>
+                <div class="flex items-center gap-1 shrink-0 pt-0.5">
                   ${r.feedback === 'eased' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-bold border border-emerald-700/40">🟢 见效</span>' : ''}
                   ${r.feedback === 'blocked' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-rose-950 text-rose-300 font-bold border border-rose-700/40">🔴 遇阻</span>' : ''}
                   ${r.feedback === 'neutral' ? '<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-bold border border-slate-600/40">⚪ 平稳</span>' : ''}
-                  <span class="text-[10px] px-1.5 py-0.5 rounded font-mono ${isDone ? 'bg-indigo-950/70 text-indigo-300' : 'bg-amber-950/70 text-amber-300'}">${isDone ? (isEn ? 'DONE' : '已执行') : (isEn ? 'PENDING' : '待办')}</span>
                 </div>
               </div>
-              <div class="text-xs text-slate-200 ${isDone ? 'opacity-80' : ''}">${r.text}</div>
-              <div class="pt-1 border-t border-gray-800/40 flex flex-wrap items-center justify-between gap-1.5 text-[10px]">
+              <div class="pt-2 border-t border-gray-800/50 flex flex-wrap items-center justify-between gap-1.5 text-[10px]">
                 <div class="flex items-center gap-1.5">
                   <span class="text-gray-500">${isEn ? 'Feedback:' : '反馈调校:'}</span>
                   <div class="flex items-center gap-1">
@@ -17173,6 +17500,20 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           `;
         }).join('');
+
+        listEl.querySelectorAll('.advisor-ledger-checkbox').forEach(cb => {
+          cb.addEventListener('change', () => {
+            const actId = cb.getAttribute('data-act-id');
+            const newStatus = cb.checked ? 'executed' : 'pending';
+            if (typeof ActionLedger !== 'undefined') {
+              ActionLedger.updateStatus(actId, newStatus);
+            }
+            syncAdvisorChatActionStatus(actId, newStatus);
+            renderAdvisorLedgerDrawer();
+            updateAdvisorBadgeCount();
+            renderAdvisorChatStream();
+          });
+        });
 
         listEl.querySelectorAll('.advisor-drawer-fb-btn').forEach(btn => {
           btn.addEventListener('click', () => {
@@ -17205,17 +17546,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateAdvisorBadgeCount() {
     const badge = document.getElementById('advisorLedgerBadge');
-    if (!badge) return;
+    const ribbonBadge = document.getElementById('ribbonLedgerCountBadge');
+    const floatingBadge = document.getElementById('floatingLedgerCountBadge');
     if (typeof ActionLedger === 'undefined') {
-      badge.textContent = '0';
+      if (badge) badge.textContent = '0';
+      if (ribbonBadge) ribbonBadge.classList.add('hidden');
+      if (floatingBadge) floatingBadge.classList.add('hidden');
       return;
     }
     const stats = ActionLedger.getStats();
-    badge.textContent = stats.pending > 0 ? `${stats.pending}` : `${stats.total}`;
-    if (stats.total > 0) {
-      badge.classList.remove('hidden');
-    } else {
-      badge.classList.add('hidden');
+    const count = stats.pending > 0 ? stats.pending : stats.total;
+    if (badge) {
+      badge.textContent = `${count}`;
+      if (stats.total > 0) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+    if (ribbonBadge) {
+      ribbonBadge.textContent = `${stats.pending}`;
+      if (stats.pending > 0) {
+        ribbonBadge.classList.remove('hidden');
+      } else {
+        ribbonBadge.classList.add('hidden');
+      }
+    }
+    if (floatingBadge) {
+      floatingBadge.textContent = `${stats.pending}`;
+      if (stats.pending > 0) {
+        floatingBadge.classList.remove('hidden');
+      } else {
+        floatingBadge.classList.add('hidden');
+      }
     }
   }
 

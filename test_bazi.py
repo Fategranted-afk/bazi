@@ -790,9 +790,52 @@ var sitCardHtml = document.getElementById('advisorLedgerSituationCard')?.innerHT
 if (!sitCardHtml.includes("当前已对齐现实处境") && !sitCardHtml.includes("Active Real-World Situation Context")) {
   throw new Error("Ledger drawer missing active situation context display");
 }
+
+// 6d. Verify Action Ledger Interactive Checkboxes, User Verifier & Filtering
+if (!chatHtml.includes("USER VERIFIER") && !chatHtml.includes("微动作处境校验")) {
+  throw new Error("Chat stream missing User Verifier for micro-actions");
+}
+
+var ledgerHtml = document.getElementById('advisorLedgerList')?.innerHTML || '';
+if (!ledgerHtml.includes("advisor-ledger-checkbox")) {
+  throw new Error("Ledger list missing interactive checkboxes");
+}
+
+var firstAct = ActionLedger.getAll()[0];
+if (firstAct) {
+  ActionLedger.updateStatus(firstAct.id, 'executed');
+  window.renderAdvisorLedgerDrawer();
+  var updatedLedgerHtml = document.getElementById('advisorLedgerList')?.innerHTML || '';
+  if (!updatedLedgerHtml.includes("COMPLETED") && !updatedLedgerHtml.includes("已打卡")) {
+    throw new Error("Ledger list failed to update executed status");
+  }
+}
+
+// Test filter modes in ledger
+advisorLedgerFilter = 'pending';
+window.renderAdvisorLedgerDrawer();
+advisorLedgerFilter = 'executed';
+window.renderAdvisorLedgerDrawer();
+advisorLedgerFilter = 'situational';
+window.renderAdvisorLedgerDrawer();
+advisorLedgerFilter = 'all';
+window.renderAdvisorLedgerDrawer();
+
 window.switchAdvisorView('chat');
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
+
+# Verify index.html contains direct entry buttons and filter bar
+index_html_src = open("index.html", "r", encoding="utf-8").read()
+if 'id="btnRibbonOpenLedger"' not in index_html_src:
+  raise AssertionError("Missing #btnRibbonOpenLedger in index.html")
+if 'id="btnOpenLedgerFloating"' not in index_html_src:
+  raise AssertionError("Missing #btnOpenLedgerFloating in index.html")
+if 'id="advisorLedgerFilterBar"' not in index_html_src:
+  raise AssertionError("Missing #advisorLedgerFilterBar in index.html")
+if 'id="advisorLedgerCustomActionDrawer"' not in index_html_src:
+  raise AssertionError("Missing #advisorLedgerCustomActionDrawer in index.html")
+
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")
 check_pass("Advisor Closed-Loop DOM, Tool Dispatch Stream & Ledger Drawer", "Interactive E2E Dialogue, 1-Click Outcome Buttons & Telemetry Drawer")
 check_pass("Imperial Dossier Volumes I-IX Western Canons Synthesis", "Addey, Ebertin, Rudhyar, Hand & Erlewine Syntheses in Master Profile")
