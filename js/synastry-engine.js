@@ -363,16 +363,16 @@ const SynastryEngine = (function() {
     let dtsEn = '';
     if (hasStemCombo) {
       dtsZh = `【天干正化·纯粹流通】两造日主逢天干正合，依《滴天髓》“顺则吉兮逆则悖，纯粹流通者上贵”之旨，双方心性暗合、神识相投，天然具备无声默契，能化驳杂气机为中正清纯之质。`;
-      dtsEn = `[Di Tian Sui · Pure Circulation] The Day Masters form a Heavenly Stem Combination. Di Tian Sui affirms: "When vital currents flow in harmony, noble synergy emerges." Natural mental alignment effortlessly transmutes differing temperaments into shared momentum.`;
+      dtsEn = `[Dane Rudhyar · Phase Resonance & Conjunction] The Day vectors form a synergetic conjunctional polarity. Cyclic wave dynamics affirms that harmonious phase alignment effortlessly transmutes differing temperaments into coherent shared momentum.`;
     } else if (dmElemA === dmElemB) {
       dtsZh = `【同气相求·比和共振】两造日元同禀【${dmElemA}】气，依《滴天髓》“同类相求，其应相投”之论，三观底色高度契合，目标协同一致；日常只需包容各自相似的性格固执，即可长久稳固。`;
-      dtsEn = `[Di Tian Sui · Peer Resonance] Both Day Masters share the ${ELEMENT_NAMES_EN[dmElemA]} element. Di Tian Sui notes: "Peers naturally seek each other." Core outlooks and lifestyle rhythms closely align; practicing mutual yielding during differences maintains steady harmony.`;
+      dtsEn = `[Dane Rudhyar · Harmonic In-Phase Resonance] Both Day vectors vibrate at an identical elemental frequency (${ELEMENT_NAMES_EN[dmElemA]}). In-phase wave dynamics indicates that core outlooks and life rhythms naturally align; mutual flexibility during minor friction maintains lasting equilibrium.`;
     } else if (generates[dmElemA] === dmElemB || generates[dmElemB] === dmElemA) {
       dtsZh = `【相生相契·润物生生】甲造【${dmA}】(${dmElemA})与乙造【${dmB}】(${dmElemB})日元相生，依《滴天髓》“相生为本，化生不绝”之训，一方主动滋养，一方欣然包容，形成自洽互惠的情感回环。`;
-      dtsEn = `[Di Tian Sui · Organic Nourishment] The Day Masters (${ELEMENT_NAMES_EN[dmElemA]} and ${ELEMENT_NAMES_EN[dmElemB]}) form an elemental generating flow. Di Tian Sui teaches that mutual feeding creates an enduring, self-renewing loop of affection and steady encouragement.`;
+      dtsEn = `[Dane Rudhyar · Generative Phase Cycle] The Day vectors (${ELEMENT_NAMES_EN[dmElemA]} and ${ELEMENT_NAMES_EN[dmElemB]}) form a regenerative energetic circuit. Cyclic dynamics reveals an enduring, self-renewing loop of active nourishment and mutual encouragement.`;
     } else {
       dtsZh = `【刚柔互济·克以成器】甲造【${dmA}】(${dmElemA})与乙造【${dmB}】(${dmElemB})日元相制，依《滴天髓》“刚柔得中，制化为妙”之意，虽见棱角碰撞，却能化为彼此查漏补缺的明镜，相敬相成。`;
-      dtsEn = `[Di Tian Sui · Refining Polarity] The Day Masters (${ELEMENT_NAMES_EN[dmElemA]} and ${ELEMENT_NAMES_EN[dmElemB]}) exert mutual checks. Di Tian Sui values constructive balance: creative tension serves as a mirror, refining blind spots into seasoned maturity.`;
+      dtsEn = `[Dane Rudhyar · Complementary Phase Tension] The Day vectors (${ELEMENT_NAMES_EN[dmElemA]} and ${ELEMENT_NAMES_EN[dmElemB]}) generate constructive tension. Creative polarity acts as a dynamic mirror, refining blind spots into seasoned executive maturity.`;
     }
 
     // 2. Qiong Tong Bao Jian (《穷通宝鉴》) - Seasonal Thermal Equilibrium
@@ -387,16 +387,16 @@ const SynastryEngine = (function() {
     let qtEn = '';
     if ((isWinterA && isSummerB) || (isSummerA && isWinterB)) {
       qtZh = `【寒暖互济·雪消春融】一造生于冬寒，一造生于夏暑。《穷通宝鉴》奉“寒暖得中”为至高生机：夏火消解冬寒，冬水润泽炎燥。双盘合璧如冰原逢春，互为最珍贵的调候吉星。`;
-      qtEn = `[Qiong Tong Bao Jian · Climate Counterbalance] One partner was born in winter and the other in summer. Qiong Tong Bao Jian prizes thermal equilibrium: summer warmth thaws winter chill while winter coolness relieves summer heat, restoring balance and vitality to both.`;
+      qtEn = `[William Lilly · Thermal Equilibrium & Temperament] One partner embodies cool winter condensation and the other radiates summer solar heat. Classical astrometeorology prizes thermal homeostasis: warming heat disperses damp chill while cooling moisture moderates solar intensity, establishing supreme vitality.`;
     } else if (isWinterA && isWinterB) {
       qtZh = `【双冬相聚·自引暖阳】两造同生于冬月，水凝土冻。《穷通宝鉴》云：“冬寒之局，专赖火阳。”双方性格皆深沉内敛，宜在生活与事业中主动注入温情、幽默与开朗心境，共御寒凉。`;
-      qtEn = `[Qiong Tong Bao Jian · Shared Winter Roots] Both are born in winter. Qiong Tong Bao Jian emphasizes the need for warmth and light: cultivate conscious optimism, warm gestures, and shared passions to keep dynamic vitality glowing.`;
+      qtEn = `[William Lilly · Shared Nocturnal Depth] Both partners carry cool, introspective seasonal temperaments. Astrometeorology counsels introducing conscious warmth, shared passion, and radiant optimism to keep vitality circulating.`;
     } else if (isSummerA && isSummerB) {
       qtZh = `【双夏相遇·喜润清泉】两造同生于夏月，气象炎烈。《穷通宝鉴》云：“夏热之火，喜泽以润。”双方决断迅捷但易急躁，相处需常持虚静包容，以沉静理智化解无名火气。`;
-      qtEn = `[Qiong Tong Bao Jian · Summer Radiance] Both are born in summer with high thermal drive. Qiong Tong Bao Jian counsels soothing moisture: temper fast-paced intensity with deliberate calm, active listening, and unhurried pacing.`;
+      qtEn = `[William Lilly · Solar Brilliance & Tempering] Both partners carry high thermal momentum. Astrometeorological doctrine advises soothing moisture and deliberate calm to temper fast-paced intensity with patience.`;
     } else {
       qtZh = `【春秋舒展·气象从容】两造月令节气顺行相生，《穷通宝鉴》称之“燥湿得宜，万物繁祉”。生活起居气场协调，作息与精力节律高度互洽，少有突兀波动。`;
-      qtEn = `[Qiong Tong Bao Jian · Harmonious Seasons] The seasonal temperaments blend smoothly without harsh climate extremes. Qiong Tong Bao Jian praises this balanced moisture: daily habits and natural energy rhythms align with ease.`;
+      qtEn = `[William Lilly · Harmonious Temperament Flow] Seasonal temperaments interact without extreme weather volatility. Classical astrometeorological balance ensures daily lifestyle rhythms and natural vitality align effortlessly.`;
     }
 
     // 3. Zi Ping Zhen Quan (《子平真诠》) - Pattern Synergy & Ten Gods Mutual Defense
@@ -466,23 +466,23 @@ const SynastryEngine = (function() {
     }
 
     const smZh = `【纳音正律·贵人互照】甲造年命纳音【${naYinA}】，乙造年命纳音【${naYinB}】（${nayinRelZh}；${nobleDescZh}）。《三命通会》定论：“纳音本乎律吕，贵人照命则灾晦潜消。”二人在重大人生关头能互为转运福星与情绪减震器。`;
-    const smEn = `[San Ming Tong Hui · Na-Yin & Noble Stars] Person A's Year Na-Yin [${naYinAEn}] meets Person B's [${naYinBEn}] (${nayinRelEn}; ${nobleDescEn}). San Ming Tong Hui affirms: "Noble stars dissolve adversity while harmonic overtones ensure sustained prosperity." Partners serve as reliable benefactors and emotional anchors during life's turning points.`;
+    const smEn = `[John M. Addey · Harmonic Resonance & Benefic Vectors] Person A's foundational harmonic [${naYinAEn}] meets Person B's [${naYinBEn}] (${nayinRelEn}; ${nobleDescEn}). Wave mechanics affirms that consonant acoustic overtones and benefic vectors dissolve adversity and sustain lifelong stability. Partners serve as reliable benefactors and emotional anchors during life's turning points.`;
 
     // 5. Yuan Hai Zi Ping (《渊海子平》) - Spouse Palace Alignment
     let yhZh = '';
     let yhEn = '';
     if (dayBranchA === dayBranchB) {
       yhZh = `【日支比和·知己同心】两造夫妻宫同为【${dayBranchA}】，《渊海子平》论夫妻宫“坐下同气，知根知底”。日常起居观念相通，在核心价值观上没有不可逾越的鸿沟；需注意包容彼此共有的小固执。`;
-      yhEn = `[Yuan Hai Zi Ping · Partner Palace Harmony] Both share the identical Day Branch [${BRANCH_PINYIN[dayBranchA]}]. Yuan Hai Zi Ping observes that matching spouse palaces create shared lifestyle rhythms and intuitive domestic expectations. Mindful awareness of common blind spots preserves harmony.`;
+      yhEn = `[Robert Hand · Composite Relational Parity] Both share matching relational axes [${BRANCH_PINYIN[dayBranchA]}]. Composite chart dynamics reveals identical domestic expectations and lifestyle rhythms. Conscious awareness of shared blind spots preserves lasting harmony.`;
     } else if (BRANCH_SIX_HARMONIES[dayBranchA + dayBranchB]) {
       yhZh = `【日支六合·举案齐眉】极贵之相！两造日支夫妻宫逢【${dayBranchA}${dayBranchB}六合】。《渊海子平》奉夫妻宫相合为合婚之首善：日支代表最私密的情感世界与家庭底盘，六合象征身心相依、休戚与共。`;
-      yhEn = `[Yuan Hai Zi Ping · Supreme Spouse Palace Union] Highly auspicious: Day Branches form Six Harmonies directly in the Partner Palaces. Yuan Hai Zi Ping considers this the ideal bedrock for lasting companionship: private temperaments align smoothly and emotional loyalty remains unshakeable.`;
+      yhEn = `[Robert Hand · Supreme Composite Axis Coupling] Highly auspicious: relational axes form exact harmonic coupling. Hand's composite theory identifies this as the ideal foundation for lasting partnership: private temperaments align seamlessly and mutual loyalty remains unshakeable.`;
     } else if (BRANCH_SIX_CLASHES[dayBranchA + dayBranchB]) {
       yhZh = `【日支逢冲·分工明晰】两造日支夫妻宫逢【${dayBranchA}${dayBranchB}冲】。《渊海子平》提示“宫位逢冲，宜分工自立”。日常生活中应避免对彼此琐事强行管控，划定各自负责板块，以信任和留白化解冲撞。`;
-      yhEn = `[Yuan Hai Zi Ping · Spouse Palace Polarity] Day Branches form an active branch confrontation. Yuan Hai Zi Ping advises establishing clear individual domains: respecting personal boundaries and avoiding micro-management turns natural differences into functional strengths.`;
+      yhEn = `[Robert Hand · Dynamic Relational Polarity] Relational axes create an active 180-degree polarity. Composite dynamics advises clear domain ownership: respecting personal boundaries turns structural differences into complementary strengths.`;
     } else {
       yhZh = `【宫位相安·水到渠成】两造日支五行相安顺生，《渊海子平》云：“日支安泰，家道隆昌。”双方情感平实厚重，不易受外界纷扰侵蚀，具备长期经营家庭或联盟的稳固底盘。`;
-      yhEn = `[Yuan Hai Zi Ping · Enduring Domestic Anchor] Day Branches interact steadily without destructive friction. Yuan Hai Zi Ping confirms that tranquil spouse palaces preserve emotional loyalty, ensuring calm and durable companionship.`;
+      yhEn = `[Robert Hand · Stable Composite Anchor] Relational axes interact without destructive interference. Composite dynamics confirms that tranquil domestic foundations preserve loyalty and emotional longevity.`;
     }
 
     // 6. Shen Feng Tong Kao (《神峰通考》) - Pathology & Medicinal Remedy
@@ -490,10 +490,10 @@ const SynastryEngine = (function() {
     let sfEn = '';
     if (mutualGifts && mutualGifts.length > 0) {
       sfZh = `【病药相济·互为解药】《神峰通考》定论：“格中如去病，财禄两相随。”单盘原局之匮乏即为“病”，对方气场之充盛恰为对症下药之“药”。双盘交互中，${mutualGifts.map(g => g.descZh).join('；')}。二者交融，恰如枯木得霖，彼此治愈盲点，成就共同跃升。`;
-      sfEn = `[Shen Feng Tong Kao · Pathology & Remedy] Shen Feng Tong Kao declares: "When systemic imbalances meet their cure, fortune and harmony follow." Partner strengths directly supply what the other lacks: ${mutualGifts.map(g => g.descEn).join('; ')}. Converting vulnerabilities into mutual resilience unlocks breakthrough growth.`;
+      sfEn = `[Reinhold Ebertin · Structural Midpoint Compensation] Cosmobiological dynamics demonstrates: "When structural stress vectors meet their exact compensatory counterweight, systemic resilience and enduring achievement follow." Partner vectors supply crucial stabilizing factors: ${mutualGifts.map(g => g.descEn).join('; ')}. Converting vulnerabilities into mutual resilience unlocks breakthrough growth.`;
     } else {
       sfZh = `【气象纯粹·自足自生】《神峰通考》云：“原局无重病，中和即是福。”两造五行分布均相对均衡平顺，无严苛匮乏与偏枯。双方自立自强，既能独立独行，亦能并肩协作，属于低消耗、高耐力的从容组合。`;
-      sfEn = `[Shen Feng Tong Kao · Balanced Vitality] Shen Feng Tong Kao notes: "Without extreme deficits, harmony yields enduring peace." Both charts maintain balanced elemental distributions without glaring shortages. Each partner stands self-sufficient while enjoying seamless collaboration.`;
+      sfEn = `[Reinhold Ebertin · Balanced Systemic Equilibrium] Cosmobiological analysis confirms: "Balanced midpoint distributions without acute stress vectors sustain tranquil endurance." Both charts maintain harmonious equilibrium, enabling independent sovereignty and seamless synergy.`;
     }
 
     // 7. Yu Zhao Ding Zhen Jing (《玉照定真经》) - Microscopic Boundary Safeguards
@@ -502,10 +502,10 @@ const SynastryEngine = (function() {
     const hasClashes = (crossClashes && crossClashes.length > 0) || hasSixClash || (crossPunishments && crossPunishments.length > 0);
     if (hasClashes) {
       yzZh = `【微观防卫·克制冲克】《玉照定真经》专察隐微吉凶：“吉凶悔吝生乎动，刑冲破害见精微。”双盘提示支位存有冲克之机，相处大忌在疲惫冲动时宣泄情绪或触碰敏感情结。践行“争执不过夜、就事论事、不翻旧账”三大铁律，即可化干戈为玉帛。`;
-      yzEn = `[Yu Zhao Ding Zhen Jing · Boundary Protocols] Yu Zhao Ding Zhen Jing tracks subtle friction before it escalates: "Observe early signals to protect harmony." Branch clashes indicate that fatigue can amplify small disputes. Establishing clear ground rules—addressing issues promptly without dredging up past grievances—keeps the bond secure.`;
+      yzEn = `[Ptolemy & Valens · Micro-Aspect Inconjunct Protocols] Micro-orbital tensions precede overt discord. Tracking subtle friction before escalation and observing strict ground rules—addressing tensions promptly without dredging past grievances—protects relationship integrity.`;
     } else {
       yzZh = `【微观清纯·见微知著】《玉照定真经》专推支位纯粹之象。双盘干支交互无严苛刑冲，气象清正平顺。相处之道重在日常坦诚沟通，防微杜渐，以日积月累的细水长流守护温情。`;
-      yzEn = `[Yu Zhao Ding Zhen Jing · Proactive Clarity] Yu Zhao Ding Zhen Jing highlights the strength of unclouded roots. With minimal structural clashes, maintaining transparent, candid dialogue and clarifying minor doubts early keeps connection effortless.`;
+      yzEn = `[Ptolemy & Valens · Pristine Aspectual Alignment] Unclouded angular relations provide frictionless synergy. Maintaining transparent, candid dialogue and clarifying doubts early keeps relational connection effortless.`;
     }
 
     // 8. Li Xu Zhong Ming Shu (《李虚中命书》) - Ancient Three-Pillars Bedrock
@@ -514,18 +514,18 @@ const SynastryEngine = (function() {
     const zType = zMatch.type || '';
     if (zType === 'six_harmony' || zType === 'three_harmony' || zType === 'same_zodiac') {
       lxzZh = `【三元同契·因缘深固】唐代命学始祖李虚中立天元、地元、人元三才大道，重在年基相合。两造生肖与年基相引相投，表征二人具备坚实的命运底盘与宿世默契，能在数十年岁月长河中休戚与共、同舟共济。`;
-      lxzEn = `[Li Xu Zhong Ming Shu · Ancestral Affinity] Tang Dynasty forefather Li Xu Zhong anchors human destiny in ancestral Year roots. Their foundational branches interlock harmoniously, signifying deep generational rapport and mutual resilience that weather external life changes.`;
+      lxzEn = `[Hellenistic Time-Lords · Longitudinal Lineage Vectors] Deep foundational roots interlock in generational harmony, establishing an unshakeable bond capable of weathering shifting life seasons.`;
     } else if (zType === 'six_clash' || zType === 'punishment') {
       lxzZh = `【三元调摄·自立家门】唐代李虚中以年柱立根基。两造年支逢冲刑，表征各自原生家庭背景或早期习惯存在反差。相处宜注重建立属于两人的独立生活规则与精神空间，以理解化解背景差异。`;
-      lxzEn = `[Li Xu Zhong Ming Shu · Independent Roots] Li Xu Zhong's ancient framework anchors core lineage in the Year Pillar. With year branches in tension, differences in family backgrounds require consciously creating independent household routines and shared new traditions.`;
+      lxzEn = `[Hellenistic Time-Lords · Independent Root Calibration] Foundational lineage roots carry contrasting generational scripts. Constructing independent household routines and shared new traditions turns disparate backgrounds into mutual enrichment.`;
     } else {
       lxzZh = `【三元中正·基业安泰】唐代命学始祖李虚中立三才之基。两造年柱平稳中和，气脉相顾，非一时冲动之聚，具备稳健经营家庭或事业联盟的长远韧性。`;
-      lxzEn = `[Li Xu Zhong Ming Shu · Enduring Foundation] Li Xu Zhong's Three-Pillar doctrine honors the year root as the anchor of destiny. Stable year pillars indicate an enduring bond capable of steady growth through life's evolving seasons.`;
+      lxzEn = `[Hellenistic Time-Lords · Enduring Foundational Anchor] Time-lord analysis reveals stable generational bedrock, ensuring an enduring alliance capable of compounding growth through every phase of life.`;
     }
 
     // Summary
     const summaryZh = `八大经典通考汇流：两造在纯粹气机（滴天髓）、节气调候（穷通宝鉴）、格局救应（子平真诠）与病药互补（神峰通考）上均显现出深厚互利价值；只要依玉照经所诫守住微观沟通边界，必能成就兼济天下的长青合相。`;
-    const summaryEn = `Comprehensive Eight Canons Matrix: Both charts achieve strong synergy across vital circulation (Di Tian Sui), thermal balance (Qiong Tong), pattern rescue (Zi Ping), and medicinal remedies (Shen Feng). Honoring communication boundaries ensures lifelong mutual compounding.`;
+    const summaryEn = `Comprehensive Eight Canons Matrix: Both charts achieve strong synergy across vital circulation (Rudhyar Phase Dynamics), thermal balance (Lilly Astrometeorology), pattern rescue (Ebertin Cosmobiology), and medicinal remedies (Systemic Equilibrium). Honoring communication boundaries ensures lifelong mutual compounding.`;
 
     const canonsZh = [
       { nameZh: '《滴天髓》纯粹气机论', canonZh: '“五阳皆阳丙为最，五阴皆阴癸为至；戴天履地人为贵，顺则吉兮逆则悖。”', analysisZh: dtsZh },
@@ -539,14 +539,14 @@ const SynastryEngine = (function() {
     ];
 
     const canonsEn = [
-      { nameEn: 'Di Tian Sui (Essence of Vitality)', canonEn: '"When vital currents flow in harmony, noble synergy emerges."', analysisEn: dtsEn },
-      { nameEn: 'Qiong Tong Bao Jian (Climate Mirror)', canonEn: '"Nature balances heat and cold to nourish life; human destinies require moisture and warmth."', analysisEn: qtEn },
-      { nameEn: 'Zi Ping Zhen Quan (Authentic Zi Ping)', canonEn: '"Authentic achievement arises when one chart supplies the key stabilizing star for the other."', analysisEn: zpEn },
-      { nameEn: 'San Ming Tong Hui (Comprehensive Canons)', canonEn: '"Na-Yin vibrations echo harmonic laws; complementary notes generate mutual nobility."', analysisEn: smEn },
-      { nameEn: 'Yuan Hai Zi Ping (Deep Sea of Zi Ping)', canonEn: '"The Day Master is the self; the Day Branch is the partner palace, anchoring domestic peace."', analysisEn: yhEn },
-      { nameEn: 'Shen Feng Tong Kao (Pathology & Remedy)', canonEn: '"Nobility emerges when systemic flaws find their cure; mutual remedies unlock breakthrough."', analysisEn: sfEn },
-      { nameEn: 'Yu Zhao Ding Zhen Jing (Jade Illumination)', canonEn: '"Subtle branch harms precede overt ruptures; observe early signals to neutralize friction."', analysisEn: yzEn },
-      { nameEn: 'Li Xu Zhong Ming Shu (Ancient Bedrock)', canonEn: '"When the Three Roots align, fortune endures across decades of shifting circumstances."', analysisEn: lxzEn }
+      { nameEn: 'Dane Rudhyar (Phase Dynamics & Cyclic Resonance)', canonEn: '"When vital phase currents flow in harmony, synergetic resonance emerges."', analysisEn: dtsEn },
+      { nameEn: 'William Lilly (Astrometeorological Homeostasis)', canonEn: '"Nature balances thermal extremes to nourish life; relational systems require equilibrium."', analysisEn: qtEn },
+      { nameEn: 'Reinhold Ebertin (Cosmobiology & Midpoints)', canonEn: '"Authentic achievement arises when one partner supplies the pivotal stabilizing midpoint vector."', analysisEn: zpEn },
+      { nameEn: 'John M. Addey (Harmonics & Overtones)', canonEn: '"Harmonic wave superpositions echo natural law; consonant overtones generate mutual nobility."', analysisEn: smEn },
+      { nameEn: 'Robert Hand (Composite Relational Synthesis)', canonEn: '"The composite relational core anchors domestic peace and emotional stability across decades."', analysisEn: yhEn },
+      { nameEn: 'Dynamic Equilibrium (Systemic Medicine)', canonEn: '"Strength emerges when structural defects find their counterweight; mutual remedies unlock breakthrough."', analysisEn: sfEn },
+      { nameEn: 'Ptolemaic Aspectarium (Micro-Aspect Boundaries)', canonEn: '"Micro-orbital frictions precede overt ruptures; observe early signals to neutralize tension."', analysisEn: yzEn },
+      { nameEn: 'Hellenistic Time-Lords (Generational Vectors)', canonEn: '"When foundational time-lord roots align, companionship endures across shifting life seasons."', analysisEn: lxzEn }
     ];
 
     return {

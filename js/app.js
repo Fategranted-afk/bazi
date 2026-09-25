@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof document !== 'undefined') {
       document.documentElement.lang = (lang === 'en' ? 'en' : 'zh-CN');
       document.title = (lang === 'en')
-        ? 'BaZi Charting & Classical Canons System · Di Tian Sui & San Ming Tong Hui'
+        ? 'BaZi Charting & Classical Canons System · Wave Dynamics & Structural Cosmobiology'
         : '八字排盘与典籍研索系统 · 滴天髓 & 三命通会';
 
       if (langZhBtn && langEnBtn) {
@@ -17900,7 +17900,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const watermarkText = isEn ? 'QIN TIAN JIAN · IMPERIAL CELESTIAL BLUEPRINT' : '钦天监 · 御制天机';
     const mainTitle = isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机';
-    const subTitle = isEn ? 'Canonical Synthesis from Di Tian Sui, San Ming, Qiong Tong, Zi Ping & Yuan Hai' : '《滴天髓》·《三命通会》·《穷通宝鉴》·《子平真诠》·《渊海子平》五典全相集成';
+    const subTitle = isEn ? 'Western Wave Mechanics & Cosmobiology Synthesis (Addey, Ebertin, Rudhyar & Hand)' : '《滴天髓》·《三命通会》·《穷通宝鉴》·《子平真诠》·《渊海子平》五典全相集成';
 
     const p = bazi.pillars;
 
