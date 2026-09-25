@@ -653,6 +653,41 @@ var zhTelemetry = window.renderShenShaTelemetryContent(samplePt, false);
 var enTelemetry = window.renderShenShaTelemetryContent(samplePt, true);
 if (/[\u4e00-\u9fa5]/.test(enTelemetry)) throw new Error("Chinese leaked in enTelemetry: " + enTelemetry);
 
+// 4b. Verify t -> t+1 anticipatory look-ahead linkage in 100-year trajectory
+var sampleLookahead = cycle[0].lookahead;
+if (!sampleLookahead || !sampleLookahead.directiveZh || !sampleLookahead.directiveEn) {
+  throw new Error("Missing anticipatory lookahead in cycle point 0");
+}
+if (/[\u4e00-\u9fa5]/.test(sampleLookahead.directiveEn)) {
+  throw new Error("Chinese leaked into lookahead directiveEn: " + sampleLookahead.directiveEn);
+}
+var defensePt = cycle.find(function(p) { return p.lookahead && p.lookahead.mode === 'preemptive_defense'; });
+var layoutPt = cycle.find(function(p) { return p.lookahead && p.lookahead.mode === 'preemptive_layout'; });
+if (!defensePt) throw new Error("Expected at least one preemptive_defense year in 100-year cycle");
+if (!layoutPt) throw new Error("Expected at least one preemptive_layout year in 100-year cycle");
+if (!defensePt.optimalDirectiveZh.includes("风控前瞻预警") && !defensePt.optimalDirectiveZh.includes("防线")) {
+  throw new Error("Preemptive defense missing required risk directive in optimalDirectiveZh");
+}
+if (!layoutPt.optimalDirectiveZh.includes("胜势前瞻布局") && !layoutPt.optimalDirectiveZh.includes("布局")) {
+  throw new Error("Preemptive layout missing required layout directive in optimalDirectiveZh");
+}
+
+// 4c. Verify Western Dynamics shared calculation engine
+var dynZh = WesternCanonsDB.computeSharedDynamics(testBazi, 2026, 'zh');
+var dynEn = WesternCanonsDB.computeSharedDynamics(testBazi, 2026, 'en');
+if (!dynZh.harmonics || !dynZh.midpoints || !dynZh.spatial || !dynZh.cycle || !dynZh.homeostatic) {
+  throw new Error("Missing shared dynamics domains in Chinese output");
+}
+if (!dynEn.harmonics || !dynEn.midpoints || !dynEn.spatial || !dynEn.cycle || !dynEn.homeostatic) {
+  throw new Error("Missing shared dynamics domains in English output");
+}
+if (!dynZh.harmonics.takeaway || !dynZh.midpoints.takeaway) {
+  throw new Error("Missing plain-language takeaway in Chinese shared dynamics");
+}
+if (/[\u4e00-\u9fa5]/.test(dynEn.harmonics.takeaway) || /[\u4e00-\u9fa5]/.test(dynEn.midpoints.takeaway)) {
+  throw new Error("Chinese leaked into English shared dynamics takeaways");
+}
+
 // 5. Verify Master Profile Imperial Dossier Volumes I-IX Western Canons
 var sampleProfile = BaZiEngine.calculate({
   year: 1990,
@@ -700,6 +735,14 @@ var drawer = document.getElementById('advisorLedgerDrawer');
 if (drawer.classList.contains('hidden')) throw new Error("Action Ledger drawer failed to open");
 var statsHtml = document.getElementById('advisorLedgerStats').innerHTML;
 if (!statsHtml.includes("总计") && !statsHtml.includes("Total")) throw new Error("Action Ledger stats missing");
+
+// 6b. Verify Segmented Tab Switcher (Chat vs Ledger) and screen lockup prevention
+window.switchAdvisorView('ledger');
+if (document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to show");
+if (!document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to hide in ledger mode");
+window.switchAdvisorView('chat');
+if (!document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to hide in chat mode");
+if (document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to show in chat mode");
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")

@@ -15812,13 +15812,59 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnHeaderClear) {
       btnHeaderClear.addEventListener('click', () => {
-        clearAdvisorChatHistory();
+        const ledgerDrawer = document.getElementById('advisorLedgerDrawer');
+        if (ledgerDrawer && !ledgerDrawer.classList.contains('hidden')) {
+          if (typeof ActionLedger !== 'undefined') ActionLedger.clear();
+          renderAdvisorLedgerDrawer();
+          updateAdvisorBadgeCount();
+          renderAdvisorChatStream();
+        } else {
+          clearAdvisorChatHistory();
+        }
       });
     }
 
+    const tabChat = document.getElementById('advisorTabChat');
+    const tabLedger = document.getElementById('advisorTabLedger');
     const btnLedger = document.getElementById('advisorLedgerBtn');
     const btnLedgerClose = document.getElementById('advisorLedgerCloseBtn');
     const btnLedgerClear = document.getElementById('advisorLedgerClearBtn');
+    const btnBackToChat = document.getElementById('advisorBackToChatBtn');
+    const btnBackToChatBottom = document.getElementById('advisorBackToChatBtnBottom');
+    const btnTogglePrompts = document.getElementById('advisorTogglePromptsBtn');
+
+    if (tabChat) {
+      tabChat.addEventListener('click', () => {
+        switchAdvisorView('chat');
+      });
+    }
+    if (tabLedger) {
+      tabLedger.addEventListener('click', () => {
+        switchAdvisorView('ledger');
+      });
+    }
+    if (btnBackToChat) {
+      btnBackToChat.addEventListener('click', () => {
+        switchAdvisorView('chat');
+      });
+    }
+    if (btnBackToChatBottom) {
+      btnBackToChatBottom.addEventListener('click', () => {
+        switchAdvisorView('chat');
+      });
+    }
+    if (btnTogglePrompts) {
+      btnTogglePrompts.addEventListener('click', () => {
+        const coll = document.getElementById('advisorPromptChipsCollapsible');
+        const icon = document.getElementById('advisorPromptToggleIcon');
+        if (coll) {
+          coll.classList.toggle('hidden');
+          if (icon) {
+            icon.textContent = coll.classList.contains('hidden') ? '▲' : '▼';
+          }
+        }
+      });
+    }
 
     if (btnLedger) {
       btnLedger.addEventListener('click', () => {
@@ -15827,7 +15873,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (btnLedgerClose) {
       btnLedgerClose.addEventListener('click', () => {
-        document.getElementById('advisorLedgerDrawer')?.classList.add('hidden');
+        switchAdvisorView('chat');
       });
     }
     if (btnLedgerClear) {
@@ -15846,6 +15892,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('advisorModal');
     if (!modal) return;
     modal.classList.remove('hidden');
+    switchAdvisorView('chat');
     refreshAdvisorContextBadges();
     renderAdvisorPromptChips();
     updateAdvisorBadgeCount();
@@ -16353,7 +16400,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span>⚡</span>
                     <span>${isEn ? 'Tactical Micro-Actions (Execute Now)' : '三阶落地微动作 · 即刻破局清单'}</span>
                   </div>
-                  <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'CHECKLIST' : '实战打卡'}</span>
+                  <div class="flex items-center gap-2">
+                    <button type="button" class="advisor-jump-ledger-btn px-2 py-0.5 rounded text-[10px] font-mono text-amber-300 bg-amber-950/60 border border-amber-600/40 hover:bg-amber-900/70 hover:text-white transition cursor-pointer flex items-center gap-1 active:scale-95" title="${isEn ? 'Open Full Ledger Dashboard' : '切换至战术账本大盘'}">
+                      <span>📋</span>
+                      <span>${isEn ? 'Ledger' : '转入账本'}</span>
+                    </button>
+                    <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'CHECKLIST' : '实战打卡'}</span>
+                  </div>
                 </div>
                 <div class="space-y-1.5">
                   ${a.microActions.map(act => {
@@ -16505,6 +16558,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Bind click listeners on jump-to-ledger buttons
+    stream.querySelectorAll('.advisor-jump-ledger-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        switchAdvisorView('ledger');
+      });
+    });
+
     stream.scrollTop = stream.scrollHeight;
   }
 
@@ -16612,6 +16673,131 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    if (card.toolId === 'cycle_dynamics') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-indigo-300">${out.title || (isEn ? 'Cyclic Aphesis Breakout' : '周期解纽跃迁')}</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-200 border border-indigo-700/50 font-mono font-bold text-[10px]">${out.badge || ''}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+            <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/40">
+              <div class="text-gray-400 text-[10px]">${out.indexLabel || (isEn ? 'Breakout Window' : '跃迁窗口')}</div>
+              <div class="font-mono font-bold text-amber-300 text-xs">${out.indexValue || '16 Months'}</div>
+            </div>
+            <div class="p-2 rounded bg-indigo-950/40 border border-indigo-800/40">
+              <div class="text-gray-400 text-[10px]">${out.metricKey || (isEn ? 'Phase State' : '周期态势')}</div>
+              <div class="font-bold text-emerald-300 text-xs">${out.state || out.metricVal || ''}</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-indigo-950/30 border border-indigo-600/30 text-xs text-indigo-200 leading-relaxed font-sans">
+            <span class="font-bold block mb-0.5 text-amber-300">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思 / 实操指引：'}</span>
+            <span>${out.takeaway || ''}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'homeostatic_dynamics') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-300">${out.title || (isEn ? 'Thermodynamic Balance' : '物候稳态调节')}</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-200 border border-emerald-700/50 font-mono font-bold text-[10px]">${out.badge || ''}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+            <div class="p-2 rounded bg-emerald-950/40 border border-emerald-800/40">
+              <div class="text-gray-400 text-[10px]">${out.indexLabel || (isEn ? 'Thermal Index' : '热燥度')}</div>
+              <div class="font-mono font-bold text-rose-300 text-xs">${out.indexValue || '76%'}</div>
+            </div>
+            <div class="p-2 rounded bg-emerald-950/40 border border-emerald-800/40">
+              <div class="text-gray-400 text-[10px]">${out.metricKey || (isEn ? 'Somatic Indicator' : '主导表征')}</div>
+              <div class="font-bold text-amber-200 text-xs">${out.metricVal || out.state || ''}</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-600/30 text-xs text-emerald-200 leading-relaxed font-sans">
+            <span class="font-bold block mb-0.5 text-emerald-300">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思 / 实操指引：'}</span>
+            <span>${out.takeaway || ''}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'midpoint_game_matrix') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-amber-300">${out.title || (isEn ? 'Midpoint Stress Axis' : '中点博弈应力轴')}</span>
+            <span class="px-2 py-0.5 rounded bg-amber-950 text-amber-200 border border-amber-700/50 font-mono font-bold text-[10px]">${out.badge || ''}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+            <div class="p-2 rounded bg-amber-950/40 border border-amber-800/40">
+              <div class="text-gray-400 text-[10px]">${out.indexLabel || (isEn ? 'Dial Stress Angle' : '应力交角')}</div>
+              <div class="font-mono font-bold text-amber-300 text-xs">${out.indexValue || '45°/90°'}</div>
+            </div>
+            <div class="p-2 rounded bg-amber-950/40 border border-amber-800/40">
+              <div class="text-gray-400 text-[10px]">${out.metricKey || (isEn ? 'Primary Node' : '主应力节点')}</div>
+              <div class="font-bold text-indigo-200 text-xs">${out.metricVal || out.state || ''}</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-600/30 text-xs text-amber-200 leading-relaxed font-sans">
+            <span class="font-bold block mb-0.5 text-amber-300">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思 / 实操指引：'}</span>
+            <span>${out.takeaway || ''}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'harmonics_dynamics') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-sky-300">${out.title || (isEn ? 'Harmonic Resistance' : '泛音驻波阻抗')}</span>
+            <span class="px-2 py-0.5 rounded bg-sky-950 text-sky-200 border border-sky-700/50 font-mono font-bold text-[10px]">${out.badge || ''}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+            <div class="p-2 rounded bg-sky-950/40 border border-sky-800/40">
+              <div class="text-gray-400 text-[10px]">${out.indexLabel || (isEn ? 'Impedance Index' : '阻抗系数')}</div>
+              <div class="font-mono font-bold text-sky-300 text-xs">${out.indexValue || '78%'}</div>
+            </div>
+            <div class="p-2 rounded bg-sky-950/40 border border-sky-800/40">
+              <div class="text-gray-400 text-[10px]">${out.metricKey || (isEn ? 'Spectrum Power' : '驻波态势')}</div>
+              <div class="font-bold text-emerald-300 text-xs">${out.state || out.metricVal || ''}</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-sky-950/30 border border-sky-600/30 text-xs text-sky-200 leading-relaxed font-sans">
+            <span class="font-bold block mb-0.5 text-sky-300">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思 / 实操指引：'}</span>
+            <span>${out.takeaway || ''}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    if (card.toolId === 'spatial_dynamics') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-emerald-300">${out.title || (isEn ? 'Horizon Azimuth' : '地平方位场能')}</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-200 border border-emerald-700/50 font-mono font-bold text-[10px]">${out.badge || ''}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+            <div class="p-2 rounded bg-emerald-950/40 border border-emerald-800/40">
+              <div class="text-gray-400 text-[10px]">${out.indexLabel || (isEn ? 'Optimal Bearing' : '最佳方位')}</div>
+              <div class="font-mono font-bold text-emerald-300 text-xs">${out.indexValue || '135°'}</div>
+            </div>
+            <div class="p-2 rounded bg-emerald-950/40 border border-emerald-800/40">
+              <div class="text-gray-400 text-[10px]">${out.metricKey || (isEn ? 'Field Gain' : '环境势能增益')}</div>
+              <div class="font-bold text-amber-300 text-xs">${out.metricVal || '+35%'}</div>
+            </div>
+          </div>
+          <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-600/30 text-xs text-emerald-200 leading-relaxed font-sans">
+            <span class="font-bold block mb-0.5 text-emerald-300">${isEn ? '💡 Plain-Language Meaning & Takeaway:' : '💡 最直接最重要的意思 / 实操指引：'}</span>
+            <span>${out.takeaway || ''}</span>
+          </div>
+        </div>
+      `;
+    }
+
     return `<div class="text-xs text-gray-300 font-mono">${JSON.stringify(out)}</div>`;
   }
 
@@ -16639,14 +16825,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function toggleAdvisorLedgerDrawer() {
+  function scrollAdvisorChatToBottom() {
+    const stream = document.getElementById('advisorChatStream');
+    if (stream) {
+      stream.scrollTop = stream.scrollHeight;
+    }
+  }
+
+  function switchAdvisorView(viewName) {
+    const chatView = document.getElementById('advisorChatView');
+    const ledgerDrawer = document.getElementById('advisorLedgerDrawer');
+    const tabChat = document.getElementById('advisorTabChat');
+    const tabLedger = document.getElementById('advisorTabLedger');
+    const headerClearBtn = document.getElementById('advisorHeaderClearBtn');
+
+    if (viewName === 'ledger') {
+      if (chatView) chatView.classList.add('hidden');
+      if (ledgerDrawer) {
+        ledgerDrawer.classList.remove('hidden');
+        renderAdvisorLedgerDrawer();
+      }
+      if (tabChat) {
+        tabChat.classList.remove('active', 'bg-amber-950/80', 'border-amber-600/40', 'text-amber-200');
+        tabChat.classList.add('text-gray-400');
+      }
+      if (tabLedger) {
+        tabLedger.classList.add('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
+        tabLedger.classList.remove('text-gray-400');
+      }
+      if (headerClearBtn) {
+        headerClearBtn.setAttribute('title', currentLang === 'en' ? 'Clear Ledger' : '清空账本');
+      }
+    } else {
+      if (ledgerDrawer) ledgerDrawer.classList.add('hidden');
+      if (chatView) {
+        chatView.classList.remove('hidden');
+        scrollAdvisorChatToBottom();
+      }
+      if (tabLedger) {
+        tabLedger.classList.remove('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
+        tabLedger.classList.add('text-gray-400');
+      }
+      if (tabChat) {
+        tabChat.classList.add('active', 'bg-amber-950/80', 'border-amber-600/40', 'text-amber-200');
+        tabChat.classList.remove('text-gray-400');
+      }
+      if (headerClearBtn) {
+        headerClearBtn.setAttribute('title', currentLang === 'en' ? 'Clear Dialogue' : '清空对话');
+      }
+    }
+  }
+
+  function toggleAdvisorLedgerDrawer(target) {
     const drawer = document.getElementById('advisorLedgerDrawer');
     if (!drawer) return;
-    if (drawer.classList.contains('hidden')) {
-      drawer.classList.remove('hidden');
-      renderAdvisorLedgerDrawer();
+    if (target === true || (target === undefined && drawer.classList.contains('hidden'))) {
+      switchAdvisorView('ledger');
     } else {
-      drawer.classList.add('hidden');
+      switchAdvisorView('chat');
     }
   }
 
@@ -16732,13 +16968,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
               </div>
               <div class="text-xs text-slate-200 ${isDone ? 'opacity-80' : ''}">${r.text}</div>
-              <div class="pt-1 border-t border-gray-800/40 flex items-center justify-between text-[10px]">
-                <span class="text-gray-500">${isEn ? 'Feedback:' : '反馈调校:'}</span>
-                <div class="flex items-center gap-1">
-                  <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'eased' ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-emerald-300'}" data-act-id="${r.id}" data-feedback="eased">🟢 ${isEn ? 'Eased' : '见效'}</button>
-                  <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'blocked' ? 'bg-rose-950 border-rose-500 text-rose-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-rose-300'}" data-act-id="${r.id}" data-feedback="blocked">🔴 ${isEn ? 'Blocked' : '遇阻'}</button>
-                  <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'neutral' ? 'bg-slate-800 border-slate-500 text-slate-200 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-slate-200'}" data-act-id="${r.id}" data-feedback="neutral">⚪ ${isEn ? 'Neutral' : '平稳'}</button>
+              <div class="pt-1 border-t border-gray-800/40 flex flex-wrap items-center justify-between gap-1.5 text-[10px]">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-gray-500">${isEn ? 'Feedback:' : '反馈调校:'}</span>
+                  <div class="flex items-center gap-1">
+                    <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'eased' ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-emerald-300'}" data-act-id="${r.id}" data-feedback="eased">🟢 ${isEn ? 'Eased' : '见效'}</button>
+                    <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'blocked' ? 'bg-rose-950 border-rose-500 text-rose-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-rose-300'}" data-act-id="${r.id}" data-feedback="blocked">🔴 ${isEn ? 'Blocked' : '遇阻'}</button>
+                    <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'neutral' ? 'bg-slate-800 border-slate-500 text-slate-200 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-slate-200'}" data-act-id="${r.id}" data-feedback="neutral">⚪ ${isEn ? 'Neutral' : '平稳'}</button>
+                  </div>
                 </div>
+                <button type="button" class="advisor-drawer-review-btn px-2 py-0.5 rounded border border-amber-700/50 bg-amber-950/60 hover:bg-amber-900/70 text-amber-300 hover:text-amber-100 font-medium transition cursor-pointer flex items-center gap-1 active:scale-95" data-act-id="${r.id}" title="${isEn ? 'Review this action with Imperial Advisor' : '携带此微动作向军师发起复盘问策'}">
+                  <span>💬</span>
+                  <span>${isEn ? 'Review' : '向军师复盘'}</span>
+                </button>
               </div>
             </div>
           `;
@@ -16752,6 +16994,21 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAdvisorLedgerDrawer();
             updateAdvisorBadgeCount();
             renderAdvisorChatStream();
+          });
+        });
+
+        listEl.querySelectorAll('.advisor-drawer-review-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const actId = btn.getAttribute('data-act-id');
+            const records = (typeof ActionLedger !== 'undefined') ? ActionLedger.getAll() : [];
+            const item = records.find(x => x.id === actId);
+            const actText = item ? item.text : '';
+            switchAdvisorView('chat');
+            const input = document.getElementById('advisorUserInput');
+            if (input) {
+              input.value = isEn ? `Recalibrate tactical execution on: ${actText}` : `请军师针对微动作【${actText}】给出进一步调校与执行预案：`;
+              input.focus();
+            }
           });
         });
       }
@@ -16781,6 +17038,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.clearAdvisorChatHistory = clearAdvisorChatHistory;
     window.handleAdvisorQuery = handleAdvisorQuery;
     window.toggleAdvisorLedgerDrawer = toggleAdvisorLedgerDrawer;
+    window.switchAdvisorView = switchAdvisorView;
     window.renderAdvisorLedgerDrawer = renderAdvisorLedgerDrawer;
     window.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
     window.updateAdvisorBadgeCount = updateAdvisorBadgeCount;
@@ -16792,6 +17050,7 @@ document.addEventListener('DOMContentLoaded', () => {
     globalThis.clearAdvisorChatHistory = clearAdvisorChatHistory;
     globalThis.handleAdvisorQuery = handleAdvisorQuery;
     globalThis.toggleAdvisorLedgerDrawer = toggleAdvisorLedgerDrawer;
+    globalThis.switchAdvisorView = switchAdvisorView;
     globalThis.renderAdvisorLedgerDrawer = renderAdvisorLedgerDrawer;
     globalThis.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
     globalThis.updateAdvisorBadgeCount = updateAdvisorBadgeCount;

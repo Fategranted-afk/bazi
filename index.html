@@ -3786,15 +3786,24 @@
             </p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <button id="advisorLedgerBtn" type="button" class="px-2.5 py-1.5 rounded-lg bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 text-xs transition cursor-pointer flex items-center gap-1 font-medium" title="查看闭环微动作战术账本">
-            <span>📋</span>
-            <span data-i18n="advisor_ledger_btn">动作账本</span>
-            <span id="advisorLedgerBadge" class="ml-1 px-1.5 py-0.2 rounded-full bg-amber-500/30 text-amber-200 text-[10px] font-mono">0</span>
-          </button>
+        <div class="flex items-center gap-1.5 sm:gap-2">
+          <!-- Segmented Tab Switcher (军师策问 vs 战术账本) -->
+          <div class="inline-flex p-0.5 rounded-xl bg-black/60 border border-gray-800 text-xs">
+            <button id="advisorTabChat" type="button" class="advisor-tab-btn active px-2.5 sm:px-3 py-1 rounded-lg text-amber-200 font-bold transition flex items-center gap-1 bg-amber-950/80 border border-amber-600/40">
+              <span>💬</span>
+              <span data-i18n="advisor_tab_chat">军师策问</span>
+            </button>
+            <button id="advisorTabLedger" type="button" class="advisor-tab-btn px-2.5 sm:px-3 py-1 rounded-lg text-gray-400 hover:text-gray-200 font-medium transition flex items-center gap-1 cursor-pointer">
+              <span>📋</span>
+              <span data-i18n="advisor_tab_ledger">战术账本</span>
+              <span id="advisorLedgerBadge" class="ml-0.5 px-1.5 py-0.2 rounded-full bg-amber-500/30 text-amber-200 text-[10px] font-mono">0</span>
+            </button>
+          </div>
+          <!-- Compatibility button for existing scripts and tests -->
+          <button id="advisorLedgerBtn" type="button" class="hidden"></button>
           <button id="advisorHeaderClearBtn" class="px-2.5 py-1.5 rounded-lg bg-gray-800/90 hover:bg-rose-900/40 text-gray-300 hover:text-rose-200 text-xs transition border border-gray-700 cursor-pointer flex items-center gap-1" title="清空对话" data-i18n="advisor_clear_btn">
             <span>🧹</span>
-            <span data-i18n="advisor_clear_btn">清空问对</span>
+            <span class="hidden sm:inline" data-i18n="advisor_clear_btn">清空问对</span>
           </button>
           <button id="advisorCloseBtn" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 cursor-pointer" data-i18n="advisor_close_btn">
             关闭参谋
@@ -3802,8 +3811,50 @@
         </div>
       </div>
 
-      <!-- Action Ledger Drawer (闭环战术账本抽屉) -->
-      <div id="advisorLedgerDrawer" class="hidden bg-[#0d0f17] border-b border-amber-600/40 p-4 space-y-3 transition-all duration-300">
+      <!-- Tab Pane 1: Chat Stream View (全屏流畅军师问对) -->
+      <div id="advisorChatView" class="flex-1 flex flex-col min-h-0 overflow-hidden">
+        <!-- Native Context Badges Strip -->
+        <div id="advisorContextBadges" class="px-3.5 py-2 bg-black/40 border-b border-gray-800 flex items-center gap-2 overflow-x-auto text-xs whitespace-nowrap scrollbar-none">
+          <!-- Dynamically injected via AdvisorEngine -->
+        </div>
+
+        <!-- Curated Prompt Chips (Collapsible / Compact) -->
+        <div class="border-b border-gray-800/80 bg-gray-950/40">
+          <div class="px-3.5 py-1.5 flex items-center justify-between">
+            <button id="advisorTogglePromptsBtn" type="button" class="flex items-center gap-1.5 text-[11px] font-bold text-amber-300/90 hover:text-amber-200 cursor-pointer">
+              <span>⚔️</span>
+              <span data-i18n="advisor_quick_prompts_title">临场参谋锦囊 (点击即问)</span>
+              <span id="advisorPromptToggleIcon" class="text-[9px] text-gray-400">▼</span>
+            </button>
+            <span class="text-[10px] text-gray-500 hidden sm:inline" data-i18n="advisor_prompts_hint">点击锦囊直击现实核心困境</span>
+          </div>
+          <div id="advisorPromptChipsCollapsible" class="px-3.5 py-2 bg-gray-900/20 max-h-28 overflow-y-auto border-t border-gray-800/40">
+            <div id="advisorPromptChips" class="flex flex-wrap gap-1.5 text-xs">
+              <!-- Injected via AdvisorEngine.getCuratedPrompts -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Dialogue Stream Body (Full Height, Silky Smooth) -->
+        <div id="advisorChatStream" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm min-h-0">
+          <!-- Message bubbles dynamically injected -->
+        </div>
+
+        <!-- Bottom Query Input Bar -->
+        <div class="p-3 sm:p-4 border-t border-gray-800 bg-[#0d0f17] flex items-center gap-2">
+          <input id="advisorQueryInput" type="text" class="flex-1 text-xs sm:text-sm p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-gray-100 placeholder-gray-500 focus:border-amber-500 focus:outline-none" placeholder="输入你面临的具体现实职场或抉择困境（如：下周如何向上级汇报/要资源，跳槽去哪...）" data-i18n-placeholder="advisor_input_placeholder" />
+          <button id="advisorSendBtn" type="button" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs sm:text-sm shadow-md transition active:scale-95 cursor-pointer flex items-center gap-1.5" data-i18n="advisor_send_btn">
+            <span>⚡</span>
+            <span>参谋请策</span>
+          </button>
+          <button id="advisorClearBtn" type="button" class="px-3 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 text-xs transition border border-gray-700 cursor-pointer" title="清空对话" data-i18n="advisor_clear_btn">
+            <span>🗑️</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Pane 2: Action Ledger Dedicated Dashboard (闭环战术账本专区，独立全屏滚动，彻底不挤压聊天) -->
+      <div id="advisorLedgerDrawer" class="hidden flex-1 flex flex-col min-h-0 overflow-y-auto bg-[#0d0f17] p-4 sm:p-5 space-y-4">
         <div class="flex items-center justify-between border-b border-gray-800 pb-2">
           <div class="flex items-center gap-2">
             <span class="text-base">📋</span>
@@ -3813,8 +3864,12 @@
             </div>
           </div>
           <div class="flex items-center gap-2">
-            <button id="advisorLedgerClearBtn" type="button" class="px-2 py-1 rounded bg-rose-950/40 hover:bg-rose-900/60 border border-rose-700/40 text-rose-300 text-[10px] font-medium transition cursor-pointer" data-i18n="advisor_ledger_clear">
+            <button id="advisorLedgerClearBtn" type="button" class="px-2.5 py-1 rounded-lg bg-rose-950/40 hover:bg-rose-900/60 border border-rose-700/40 text-rose-300 text-[10px] font-medium transition cursor-pointer" data-i18n="advisor_ledger_clear">
               清空账本
+            </button>
+            <button id="advisorBackToChatBtn" type="button" class="px-2.5 py-1 rounded-lg bg-amber-950/50 hover:bg-amber-900/70 border border-amber-600/40 text-amber-200 text-[10px] font-medium transition cursor-pointer flex items-center gap-1">
+              <span>←</span>
+              <span data-i18n="advisor_back_to_chat">返回问对</span>
             </button>
             <button id="advisorLedgerCloseBtn" type="button" class="text-gray-400 hover:text-white text-xs px-2 py-1">
               ✕
@@ -3832,42 +3887,18 @@
           <!-- Recalibration status -->
         </div>
 
-        <!-- Action Items List -->
-        <div id="advisorLedgerList" class="max-h-60 overflow-y-auto space-y-2 text-xs pr-1">
+        <!-- Action Items List (Spacious & Clean) -->
+        <div id="advisorLedgerList" class="space-y-2.5 text-xs pr-1">
           <!-- Action list items -->
         </div>
-      </div>
 
-      <!-- Native Context Badges Strip -->
-      <div id="advisorContextBadges" class="p-3 bg-black/50 border-b border-gray-800 flex flex-wrap gap-2 text-xs">
-        <!-- Dynamically injected via AdvisorEngine -->
-      </div>
-
-      <!-- Curated Prompt Chips (Click-to-Ask) -->
-      <div class="p-3.5 bg-gray-900/40 border-b border-gray-800 space-y-1.5">
-        <div class="text-[11px] font-bold text-amber-300/80 uppercase tracking-wider flex items-center gap-1.5" data-i18n="advisor_quick_prompts_title">
-          <span>⚔️ 临场参谋锦囊 (点击即问)</span>
+        <!-- Bottom Return Banner -->
+        <div class="pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-400">
+          <span>💡 勾选或反馈动作后，军师对策将动态自适应调校决策阻抗。</span>
+          <button id="advisorBackToChatBtnBottom" type="button" class="px-3 py-1.5 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+            <span>💬 返回军师策问</span>
+          </button>
         </div>
-        <div id="advisorPromptChips" class="flex flex-wrap gap-2 text-xs">
-          <!-- Injected via AdvisorEngine.getCuratedPrompts -->
-        </div>
-      </div>
-
-      <!-- Dialogue Stream Body -->
-      <div id="advisorChatStream" class="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 text-xs sm:text-sm">
-        <!-- Message bubbles dynamically injected -->
-      </div>
-
-      <!-- Bottom Query Input Bar -->
-      <div class="p-3 sm:p-4 border-t border-gray-800 bg-[#0d0f17] flex items-center gap-2">
-        <input id="advisorQueryInput" type="text" class="flex-1 text-xs sm:text-sm p-2.5 rounded-xl bg-gray-900 border border-gray-700 text-gray-100 placeholder-gray-500 focus:border-amber-500 focus:outline-none" placeholder="输入你面临的具体现实职场或抉择困境（如：下周如何向上级汇报/要资源，跳槽去哪...）" data-i18n-placeholder="advisor_input_placeholder" />
-        <button id="advisorSendBtn" type="button" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold text-xs sm:text-sm shadow-md transition active:scale-95 cursor-pointer flex items-center gap-1.5" data-i18n="advisor_send_btn">
-          <span>⚡</span>
-          <span>参谋请策</span>
-        </button>
-        <button id="advisorClearBtn" type="button" class="px-3 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 text-xs transition border border-gray-700 cursor-pointer" title="清空对话" data-i18n="advisor_clear_btn">
-          <span>🗑️</span>
-        </button>
       </div>
     </div>
   </div>

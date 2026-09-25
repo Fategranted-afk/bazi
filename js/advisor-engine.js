@@ -231,6 +231,38 @@ class ToolDispatcher {
       return this._dispatchCalendarFeed(query, bazi, lang, currentYear);
     }
 
+    // 5. Hierarchical Cyclic Aphesis & Career Breakout
+    if (
+      /(跳槽|转轨|换工作|换赛道|跃迁|何时爆发|大运交接|解纽|转型|何时转运|突破窗口|周期|明年规划|提前布局)/i.test(query) ||
+      /(career pivot|breakout|leap|transition|aphesis|time-lord|releasing|track jump|change job|preemptive layout)/i.test(query)
+    ) {
+      return this._dispatchCycleDynamics(query, bazi, lang, currentYear);
+    }
+
+    // 6. Homeostatic Thermodynamics & Somatic Health
+    if (
+      /(身心|气血|五脏|调摄|失眠|内耗|焦虑|疲惫|精力|体虚|上火|除湿|寒热|作息)/i.test(query) ||
+      /(health|vitality|somatic|insomnia|anxiety|homeostasis|fatigue|organ|qi blood|sleep)/i.test(query)
+    ) {
+      return this._dispatchHomeostaticDynamics(query, bazi, lang, currentYear);
+    }
+
+    // 7. Cosmobiology Midpoint Game Matrix (Upward Management & Negotiation)
+    if (
+      /(向上管理|汇报|要资源|领导挑刺|合伙|博弈|攻心|多方矛盾|站队|权力|制衡|合伙人)/i.test(query) ||
+      /(manage up|reporting|negotiat|midpoint|friction|stakeholder|power dynamic|game matrix|partnership)/i.test(query)
+    ) {
+      return this._dispatchMidpointGameMatrix(query, bazi, lang, currentYear);
+    }
+
+    // 8. Harmonic Wave & Financial Risk Dynamics
+    if (
+      /(投资|理财|炒股|偏财|副业|做生意|现金流|风险控制|亏损|加杠杆|资金)/i.test(query) ||
+      /(invest|wealth|portfolio|side hustle|capital|financial risk|harmonic resistance|cash flow)/i.test(query)
+    ) {
+      return this._dispatchHarmonicsDynamics(query, bazi, lang, currentYear);
+    }
+
     return null;
   }
 
@@ -445,6 +477,102 @@ class ToolDispatcher {
       }
     };
   }
+
+  static _dispatchCycleDynamics(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    const data = (typeof WesternCanonsDB !== 'undefined' && typeof WesternCanonsDB.computeCycleDynamics === 'function')
+      ? WesternCanonsDB.computeCycleDynamics(bazi, currentYear, lang)
+      : null;
+
+    return {
+      toolId: 'cycle_dynamics',
+      toolName: isEn ? 'Hierarchical Cyclic Aphesis & Breakout Engine' : '宏观跃迁周期与解纽时序递推引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected career pivot / milestone breakthrough intent. Dispatched to multi-tier cyclic aphesis and decennial transition model.'
+        : '检测到跳槽转轨、职业换道与重大跃迁诉求；自动激活多层级周期解纽律与岁运交接时序递推模型。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        evaluationHorizon: isEn ? 'Hierarchical Aphesis (L1-L4)' : '多层级周期递归',
+        currentYear: currentYear
+      },
+      output: data
+    };
+  }
+
+  static _dispatchHomeostaticDynamics(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    const data = (typeof WesternCanonsDB !== 'undefined' && typeof WesternCanonsDB.computeHomeostaticDynamics === 'function')
+      ? WesternCanonsDB.computeHomeostaticDynamics(bazi, lang)
+      : null;
+
+    return {
+      toolId: 'homeostatic_dynamics',
+      toolName: isEn ? 'Quadripartite Thermodynamic Balance Engine' : '寒暖燥湿物候稳态调节引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected health, somatic vitality, or anxiety management intent. Dispatched to quadripartite temperature-moisture homeostatic balance matrix.'
+        : '检测到身心气血、睡眠焦虑与精力调摄诉求；自动执行寒暖燥湿物候四相稳态调节矩阵。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        matrix: isEn ? '4-Element Thermodynamic Model' : '寒暖燥湿四相矩阵',
+        evaluator: isEn ? 'Somatic Equilibrium' : '体液物候自洽度'
+      },
+      output: data
+    };
+  }
+
+  static _dispatchMidpointGameMatrix(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    const data = (typeof WesternCanonsDB !== 'undefined' && typeof WesternCanonsDB.computeMidpointDynamics === 'function')
+      ? WesternCanonsDB.computeMidpointDynamics(bazi, lang)
+      : null;
+
+    return {
+      toolId: 'midpoint_game_matrix',
+      toolName: isEn ? 'Cosmobiology 90-Degree Midpoint Stress Matrix' : '多方博弈中点应力轴决策引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected stakeholder negotiation / upward management dilemma. Dispatched to 90-degree dial midpoint stress and power leverage matrix.'
+        : '检测到向上管理、跨部门协商或合伙人博弈困境；自动执行90°刻度盘中点对称应力轴解算。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        dialAngle: '90-degree Symmetry',
+        stressType: isEn ? 'Resource vs Output Tension' : '印伤利益交叠'
+      },
+      output: data
+    };
+  }
+
+  static _dispatchHarmonicsDynamics(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    const data = (typeof WesternCanonsDB !== 'undefined' && typeof WesternCanonsDB.computeHarmonicsDynamics === 'function')
+      ? WesternCanonsDB.computeHarmonicsDynamics(bazi, lang)
+      : null;
+
+    return {
+      toolId: 'harmonics_dynamics',
+      toolName: isEn ? 'Harmonic Standing Wave & Kinetic Risk Engine' : '能量驻波律动与抗压阻抗引擎',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected financial timing / side-hustle risk query. Dispatched to Fourier harmonic standing wave and kinetic impedance evaluation.'
+        : '检测到财富时机、投资风控与副业变现诉求；自动执行傅里叶多频谐波分解与动能阻抗评估。',
+      disclaimer: isEn
+        ? 'Deterministic mathematical computation · Zero black-box hallucination'
+        : '【确定性工具审计】纯数理与经典格局推演 · 拒绝黑箱幻觉',
+      parameters: {
+        waveModel: 'Fourier H4/H9 Superposition',
+        riskVector: isEn ? 'Kinetic Dissipation' : '动能耗散阻抗'
+      },
+      output: data
+    };
+  }
 }
 
 class AdvisorEngine {
@@ -532,6 +660,20 @@ class AdvisorEngine {
       else tierStr = 'Balanced';
     }
 
+    let lookahead = null;
+    let traj = (bazi && (bazi.hexTrajectory || bazi.hundredYearsTrajectory)) || null;
+    if (!traj && typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function') {
+      try {
+        traj = IChingEngine.calculateLifelongCycle(bazi);
+      } catch (e) {}
+    }
+    if (traj && traj.length > 0) {
+      const curPt = traj.find(p => p.year === currentYear);
+      if (curPt && curPt.lookahead) {
+        lookahead = curPt.lookahead;
+      }
+    }
+
     return {
       dayMaster: dm,
       element: dmElem,
@@ -547,7 +689,8 @@ class AdvisorEngine {
       activeAnnualGanzhi: annualStr,
       activeHexagram: hexName,
       firstScroll: firstScroll || defaultFirstScroll,
-      primaryArchetype: primaryArchetype || defaultArchetype
+      primaryArchetype: primaryArchetype || defaultArchetype,
+      lookahead: lookahead
     };
   }
 
@@ -2087,6 +2230,23 @@ class AdvisorEngine {
       directAnswer = `${feedbackSummary.lead}\n\n${directAnswer}`;
     }
 
+    if (ctx && ctx.lookahead && ctx.lookahead.directiveZh) {
+      tactics.unshift({
+        badge: ctx.lookahead.shortBadgeZh,
+        text: ctx.lookahead.directiveZh,
+        isKey: true
+      });
+      microActions.push({
+        id: 'lookahead_preemptive',
+        badge: ctx.lookahead.shortBadgeZh.replace(/[^\u4e00-\u9fa5]/g, ''),
+        text: ctx.lookahead.mode === 'preemptive_defense'
+          ? `【基于次年（${ctx.lookahead.nextYear}）流年卦风控预警】：提前一年筑牢防线，盘点并固守现金流底盘，暂缓大额激进负债或高风险单飞，勿轻举妄动。`
+          : (ctx.lookahead.mode === 'preemptive_layout'
+            ? `【基于次年（${ctx.lookahead.nextYear}）流年卦胜势布局】：提前一年主动接触关键人脉与破圈资源，打磨核心技能底牌，做好次年起飞蓄能。`
+            : `【基于次年（${ctx.lookahead.nextYear}）平稳过渡】：保持身心与财务自洽节律，按部就班推进核心技能复利积累。`)
+      });
+    }
+
     microActions = microActions.map(act => {
       const normalizedId = `act_${category}_${act.id}`;
       let status = 'pending';
@@ -2694,6 +2854,19 @@ class AdvisorEngine {
 
     if (feedbackSummary && feedbackSummary.lead) {
       directAnswer = `${feedbackSummary.lead}\n\n${directAnswer}`;
+    }
+
+    if (ctx && ctx.lookahead && ctx.lookahead.directiveEn) {
+      tactics.unshift({
+        badge: ctx.lookahead.shortBadgeEn,
+        text: ctx.lookahead.directiveEn,
+        isKey: true
+      });
+      microActions.push({
+        id: 'lookahead_preemptive',
+        badge: ctx.lookahead.mode === 'preemptive_defense' ? 'Preemptive Defense' : (ctx.lookahead.mode === 'preemptive_layout' ? 'Preemptive Layout' : 'Steady Compounding'),
+        text: ctx.lookahead.directiveEn
+      });
     }
 
     microActions = microActions.map(act => {

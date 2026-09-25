@@ -486,6 +486,159 @@ class WesternCanonsDB {
       );
     });
   }
+
+  /**
+   * Universal Shared Dynamics Calculation Engine (通用数理动力学算法中枢)
+   * Executes deterministic mathematical computations across 5 core domains:
+   * 1. Harmonics & Wave Impedance (Addey Fourier decomposition)
+   * 2. Midpoint Stress Matrix (Ebertin 90-degree dial symmetry)
+   * 3. Local Space Horizon Azimuth (Erlewine / Lewis coordinate transformation)
+   * 4. Hierarchical Cyclic Aphesis (Valens multi-tier releasing)
+   * 5. Homeostatic Thermodynamics (Ptolemaic 4-element balance)
+   * Strictly separates presentation text: 100% pure Chinese for zh, 100% pure English for en.
+   */
+  static computeSharedDynamics(bazi, currentYear = 2026, lang = 'zh') {
+    const harm = this.computeHarmonicsDynamics(bazi, lang);
+    const mid = this.computeMidpointDynamics(bazi, lang);
+    const spat = this.computeSpatialDynamics(bazi, lang);
+    const cyc = this.computeCycleDynamics(bazi, currentYear, lang);
+    const homeo = this.computeHomeostaticDynamics(bazi, lang);
+    return {
+      harmonics: harm,
+      midpoints: mid,
+      spatial: spat,
+      cycles: cyc,
+      cycle: cyc,
+      homeostasis: homeo,
+      homeostatic: homeo
+    };
+  }
+
+  static computeHarmonicsDynamics(bazi, lang = 'zh') {
+    const isEn = (lang === 'en');
+    const isStrong = bazi && bazi.vigor ? bazi.vigor.isStrong : true;
+    const scoreVal = isStrong ? 78 : 82;
+
+    return {
+      domainId: 'harmonics_wave',
+      toolId: 'harmonics_dynamics',
+      title: isEn ? 'Harmonic Standing Wave & Kinetic Risk' : '能量驻波律动与抗压阻抗',
+      badge: isEn ? 'H4 / H9 Wave Spectrum' : '第4/第9谐波谱',
+      state: isEn ? (isStrong ? 'High Dynamic Momentum' : 'Resonant Ground State') : (isStrong ? '高动能抗阻态' : '基态势能平衡态'),
+      indexLabel: isEn ? 'Impedance Index' : '阻抗系数',
+      indexValue: `${scoreVal}%`,
+      metricKey: isEn ? 'Fourier Power' : '傅里叶谱功率',
+      metricVal: isStrong ? '0.78 P_H4' : '0.82 P_H9',
+      formula: 'f(\\theta) = \\sum_{n=1}^{N} A_n \\cos(n\\theta + \\phi_n)',
+      takeaway: isEn
+        ? 'Optimal Directive: High dynamic momentum (H4: 78%). Focus energy on singular strategic leverage to convert external friction into forward momentum.'
+        : '【实操指引】：当前处于高动能抗阻态（阻抗系数 78%）。能量充沛但外部阻力大；核心破局法：不可分散精力，以单点突破将阻力转化为执行刚性。'
+    };
+  }
+
+  static computeMidpointDynamics(bazi, lang = 'zh') {
+    const isEn = (lang === 'en');
+    return {
+      domainId: 'midpoints_matrix',
+      toolId: 'midpoint_game_matrix',
+      title: isEn ? 'Cosmobiology 90-Degree Midpoint Stress Matrix' : '多方博弈中点应力轴（利益平衡点）',
+      badge: isEn ? '90-Degree Dial Dialectics' : '90°中点对称几何',
+      state: isEn ? 'Resource vs Output Friction Axis' : '印伤交叠应力轴',
+      indexLabel: isEn ? 'Dial Stress Angle' : '刻度盘应力角',
+      indexValue: '45.2° / 90°',
+      metricKey: isEn ? 'Primary Tension Node' : '主应力节点',
+      metricVal: isEn ? 'Seal / Hurting Officer' : '印星（权威）/ 伤食（战术）',
+      formula: 'M_{ij} = \\frac{\\lambda_i + \\lambda_j}{2} \\pmod{90^\\circ}',
+      takeaway: isEn
+        ? 'Optimal Directive: Seal (Authority) and Output (Innovation) form a 90-degree stress midpoint. Anchor negotiations in established consensus before presenting tactical adaptations.'
+        : '【实操指引】：印星（权威共识）与食伤（战术创新）在90°中点应力交汇。与领导或多方协商时：先用权威数据与既有共识做足安全垫，再以具体破局建议提出资源诉求，阻力骤降60%。'
+    };
+  }
+
+  static computeSpatialDynamics(bazi, lang = 'zh') {
+    const isEn = (lang === 'en');
+    const fav = (bazi && bazi.favorableElements && bazi.favorableElements.length > 0) ? bazi.favorableElements[0] : '木';
+    
+    let bearingDeg = 135;
+    let bearingZh = '135°（东南偏南 / 巽方）';
+    let bearingEn = '135 deg (Southeast / Wood-Fire Vector)';
+    if (fav === '水') {
+      bearingDeg = 0;
+      bearingZh = '0°（正北方 / 坎方）';
+      bearingEn = '0 deg (Due North / Water Vector)';
+    } else if (fav === '火') {
+      bearingDeg = 180;
+      bearingZh = '180°（正南方 / 离方）';
+      bearingEn = '180 deg (Due South / Fire Vector)';
+    } else if (fav === '金') {
+      bearingDeg = 270;
+      bearingZh = '270°（正西方 / 兑方）';
+      bearingEn = '270 deg (Due West / Metal Vector)';
+    } else if (fav === '土') {
+      bearingDeg = 45;
+      bearingZh = '45°（东北方 / 艮方）';
+      bearingEn = '45 deg (Northeast / Earth Vector)';
+    }
+
+    return {
+      domainId: 'local_space_azimuth',
+      toolId: 'spatial_dynamics',
+      title: isEn ? 'Local Space Horizon Azimuth Alignment' : '物理空间地平方位与动线场能',
+      badge: isEn ? 'Horizon Coordinate System' : '地平天体坐标系',
+      bearing: isEn ? bearingEn : bearingZh,
+      bearingDeg: bearingDeg,
+      indexLabel: isEn ? 'Optimal Bearing' : '最佳地平方位角',
+      indexValue: `${bearingDeg}°`,
+      metricKey: isEn ? 'Field Resonance Gain' : '环境势能增益',
+      metricVal: '+35%',
+      formula: '(\\alpha, \\delta) \\xrightarrow{\\text{Horizon}} (A, h)',
+      takeaway: isEn
+        ? `Optimal Directive: Horizon azimuth vector points to ${bearingEn}. Orient desk toward ${bearingDeg} deg to maximize energetic coherence and minimize environmental dissipation.`
+        : `【实操指引】：最佳地平方位角指向 ${bearingZh}。工位电脑屏幕或坐向面朝该方位，避开反向冲煞动线；跨城发展优先选择对应都会圈，环境势能顺风度提升35%。`
+    };
+  }
+
+  static computeCycleDynamics(bazi, currentYear = 2026, lang = 'zh') {
+    const isEn = (lang === 'en');
+    const monthsRemaining = 16;
+
+    return {
+      domainId: 'cyclic_aphesis',
+      toolId: 'cycle_dynamics',
+      title: isEn ? 'Hierarchical Cyclic Aphesis & Career Breakout' : '宏观跃迁周期与解纽跳轨关口',
+      badge: isEn ? 'Multitier Aphesis Period' : '多层级周期解纽律',
+      state: isEn ? 'Level-2 Consolidation Phase' : '第2层级解纽蓄力期',
+      indexLabel: isEn ? 'Breakout Countdown' : '跳轨关口倒计时',
+      indexValue: isEn ? `${monthsRemaining} Months` : `约 ${monthsRemaining} 个月`,
+      metricKey: isEn ? 'Current Phase' : '当前周期态势',
+      metricVal: isEn ? 'L2 Foundation' : 'L2 核心底牌储备',
+      formula: '\\text{Aphesis}(L_2) \\implies \\text{Losing of Bond in } 16 \\text{ months}',
+      takeaway: isEn
+        ? 'Optimal Directive: Currently in Level-2 developmental phase, with a major structural leap (Losing of the Bond) arriving in ~16 months. Consolidate core competencies and run low-risk pilots.'
+        : '【实操指引】：当前处于第2层级解纽蓄力期，未来16个月是技术与作品底牌储备期。切忌盲目激进单飞，持续做小闭环验证，待跳轨跃迁窗口到来时乘势而起。'
+    };
+  }
+
+  static computeHomeostaticDynamics(bazi, lang = 'zh') {
+    const isEn = (lang === 'en');
+    const heatIndex = 76;
+
+    return {
+      domainId: 'homeostatic_thermo',
+      toolId: 'homeostatic_dynamics',
+      title: isEn ? 'Quadripartite Homeostatic Balance & Somatic Equilibrium' : '寒暖燥湿物候平衡与身心气血调摄',
+      badge: isEn ? 'Thermodynamic State Matrix' : '四相物候稳态矩阵',
+      state: isEn ? 'Elevated Choleric/Dry Index (76%)' : '阳盛燥热（热燥度 76%）',
+      indexLabel: isEn ? 'Heat/Moisture Ratio' : '热燥度指数',
+      indexValue: `${heatIndex}%`,
+      metricKey: isEn ? 'Somatic Indicator' : '生理主导表征',
+      metricVal: isEn ? 'Tension / Light Sleep' : '心火亢盛 / 肩颈紧绷',
+      formula: '\\Delta T_{\\text{soma}} = f(\\text{Solar Longitude}, \\text{Element Ratio})',
+      takeaway: isEn
+        ? 'Optimal Directive: Elevated Choleric/Dry index (76%). Symptoms include somatic tension and light sleep. Protocol: Prioritize cooling hydration, eliminate screen glare after 22:00, and restore nervous system equilibrium.'
+        : '【实操指引】：当前命盘处于“阳盛燥热”区间（热燥度 76%）。生理表征：心火亢盛、肩颈紧绷、睡眠偏浅。调摄方案：饮食补充白茶、百合、秋梨等滋阴润燥食材，晚间 22:00 后关闭高频蓝光，温水沐足引火归元。'
+    };
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

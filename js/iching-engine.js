@@ -1533,6 +1533,61 @@ class IChingEngine {
         score: baziAdjustedScore
       });
     }
+
+    // Second pass: Cross-temporal look-ahead linkage (t -> t+1 前瞻时序推演与提前布局对策)
+    // 核心对策：若次年有坑/波折，在当年提前做预防固守、勿有轻动；若次年大吉/跃迁，在当年提前布局、拓展人脉积累实力。
+    for (let i = 0; i < points.length; i++) {
+      const currentPt = points[i];
+      if (i < points.length - 1) {
+        const nextPt = points[i + 1];
+        const nextHex = nextPt.annualHex || {};
+        const nextScore = nextPt.score || 50;
+        const nextHexNum = nextHex.number || 1;
+        
+        // Pitfall/friction triggers (有坑、波折、消耗、阻抗高)
+        const isNextRisk = [29, 47, 39, 36, 23, 12, 18, 3, 25, 43, 44, 6, 10].includes(nextHexNum) || nextScore <= 48 || nextPt.hasMalefic;
+        // Auspicious/breakthrough triggers (大展宏图、飞龙在天、贵人提拔、跃迁胜势)
+        const isNextOpp = [1, 14, 35, 46, 19, 7, 34, 49, 50, 55, 13, 26, 42, 24, 8, 11].includes(nextHexNum) || nextScore >= 72 || nextPt.hasAuspicious;
+
+        let lookahead = {
+          nextYear: nextPt.year,
+          nextAge: nextPt.age,
+          nextHexZh: nextHex.nameZh || '',
+          nextHexEn: nextHex.nameEn || '',
+          nextScore: nextScore,
+          mode: isNextRisk ? 'preemptive_defense' : (isNextOpp ? 'preemptive_layout' : 'steady_growth'),
+          shortBadgeZh: isNextRisk ? '⚠️ 提前防险' : (isNextOpp ? '🚀 提前布局' : '⚖️ 稳健蓄力'),
+          shortBadgeEn: isNextRisk ? '⚠️ Preemptive Caution' : (isNextOpp ? '🚀 Preemptive Layout' : '⚖️ Steady Compounding'),
+          directiveZh: '',
+          directiveEn: ''
+        };
+
+        if (isNextRisk) {
+          lookahead.directiveZh = `【次年（${nextPt.year}）风控前瞻预警】：次年逢【${nextHex.nameZh}】气数暗藏波折与消耗风险（能级评分为 ${nextScore}%）。因此在当年（${currentPt.year}），切忌盲目激进扩张或穷尽资源；核心对策是“提前一年筑牢防线”：收紧战线与预算、深筑现金流护城河、不盲目跳槽或强行加杠杆，做到‘高筑墙、广积粮、勿轻举妄动’，以万全之策从容平稳对冲次年风浪。`;
+          lookahead.directiveEn = `[Preemptive Risk Alert for ${nextPt.year}]: Next year arrives under Hexagram ${nextHex.nameEn} with potential friction and energy depletion (score ${nextScore}%). In ${currentPt.year}, avoid overextending capital or rash career gambles. Consolidate cash reserves, tighten operating overhead, and fortify defensive perimeters one year in advance.`;
+        } else if (isNextOpp) {
+          lookahead.directiveZh = `【次年（${nextPt.year}）胜势前瞻布局】：次年逢【${nextHex.nameZh}】将迎战略爆发与重大跃迁大年（能级评分为 ${nextScore}%）。因此在当年（${currentPt.year}），切不可消极守成或只顾眼前小利；核心对策是“提前一年起势布局”：主动多接触破圈贵人与高阶人脉、积极拉通资源、打磨核心技术作品底牌、储备充沛弹药，做好起跑蓄势，待次年风口到来时乘胜腾飞！`;
+          lookahead.directiveEn = `[Preemptive Strategic Layout for ${nextPt.year}]: Next year ushers in Hexagram ${nextHex.nameEn}, signaling an auspicious breakthrough and major growth inflection (score ${nextScore}%). In ${currentPt.year}, do not rest on laurels. Expand strategic networks, cultivate valuable alliances, and refine core competencies one year in advance to seize maximum momentum when the breakout window opens.`;
+        } else {
+          lookahead.directiveZh = `【次年（${nextPt.year}）中和过渡提示】：次年逢【${nextHex.nameZh}】气数平稳中和。当年（${currentPt.year}）宜按部就班厚积薄发，保持良好作息与身心节律，稳步推进既定目标。`;
+          lookahead.directiveEn = `[Transition Continuity for ${nextPt.year}]: Next year brings Hexagram ${nextHex.nameEn} with balanced equilibrium. Maintain disciplined, steady compounding and regular daily rhythms.`;
+        }
+
+        currentPt.lookahead = lookahead;
+
+        // Enrich optimalAction with lookahead
+        if (currentPt.optimalAction) {
+          currentPt.optimalAction.lookahead = lookahead;
+          const origZh = currentPt.optimalAction.actionZh || '';
+          const origEn = currentPt.optimalAction.actionEn || '';
+          currentPt.optimalAction.actionZh = `${origZh} ｜ 🔮 ${lookahead.directiveZh}`;
+          currentPt.optimalAction.actionEn = `${origEn} | 🔮 ${lookahead.directiveEn}`;
+          currentPt.optimalDirectiveZh = currentPt.optimalAction.actionZh;
+          currentPt.optimalDirectiveEn = currentPt.optimalAction.actionEn;
+        }
+      }
+    }
+
     return points;
   }
 
