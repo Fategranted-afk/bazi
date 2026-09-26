@@ -833,6 +833,22 @@ window.switchToDashboardView();
 if (document.getElementById('advisorFloatingToolbar').classList.contains('hidden')) {
   throw new Error("advisorFloatingToolbar must be visible on dashboard view");
 }
+
+// Test Career Sub-tabs Switching
+window.switchCareerSubTab('view-simulator');
+if (document.getElementById('view-simulator').classList.contains('hidden')) {
+  throw new Error("view-simulator subpage should be visible");
+}
+if (!document.getElementById('career-tab-overview').classList.contains('hidden')) {
+  throw new Error("career-tab-overview subpage should be hidden");
+}
+window.switchCareerSubTab('career-tab-overview');
+if (!document.getElementById('view-simulator').classList.contains('hidden')) {
+  throw new Error("view-simulator subpage should be hidden");
+}
+if (document.getElementById('career-tab-overview').classList.contains('hidden')) {
+  throw new Error("career-tab-overview subpage should be visible");
+}
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 
@@ -850,6 +866,10 @@ if 'id="portalCardAdvisor"' in index_html_src:
   raise AssertionError("portalCardAdvisor should be completely removed from initial landing page")
 if 'id="advisorFloatingToolbar"' not in index_html_src or 'hidden' not in index_html_src:
   raise AssertionError("advisorFloatingToolbar must be present and hidden by default in index.html")
+if 'id="careerSubTabsContainer"' not in index_html_src:
+  raise AssertionError("Missing #careerSubTabsContainer in index.html")
+if 'data-career-tab="view-simulator"' not in index_html_src:
+  raise AssertionError("Missing data-career-tab for simulator in index.html")
 
 
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")

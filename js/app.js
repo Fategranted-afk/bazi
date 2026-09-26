@@ -11341,14 +11341,18 @@ document.addEventListener('DOMContentLoaded', () => {
           el.classList.add('hidden');
         }
       } else if (targetViewId === 'view-simulator') {
-        if (vId === 'view-career' || vId === 'view-simulator') {
+        if (vId === 'view-career') {
           el.classList.remove('hidden');
+        } else if (vId === 'view-simulator') {
+          // Subpage pane state handled by switchCareerSubTab
         } else {
           el.classList.add('hidden');
         }
       } else if (targetViewId === 'view-career') {
-        if (vId === 'view-career' || vId === 'view-simulator') {
+        if (vId === 'view-career') {
           el.classList.remove('hidden');
+        } else if (vId === 'view-simulator') {
+          // Subpage pane state handled by switchCareerSubTab
         } else {
           el.classList.add('hidden');
         }
@@ -11378,9 +11382,17 @@ document.addEventListener('DOMContentLoaded', () => {
         switchFrictionTab(activeFrictionTab || 'tab-fric-specs');
       }
     } else if (targetViewId === 'view-simulator') {
-      const simSec = document.getElementById('scenarioSimulatorSection') || document.getElementById('view-simulator');
-      if (simSec && typeof simSec.scrollIntoView === 'function') {
-        setTimeout(() => simSec.scrollIntoView({ behavior: 'smooth' }), 50);
+      if (typeof switchCareerSubTab === 'function') {
+        switchCareerSubTab('view-simulator');
+      }
+      if (typeof window !== 'undefined' && typeof window.scrollTo === 'function') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    } else if (targetViewId === 'view-career') {
+      const activeCareerSubTab = document.querySelector('.career-sub-tab-btn.active');
+      const activeTabId = activeCareerSubTab ? activeCareerSubTab.getAttribute('data-career-tab') : 'career-tab-overview';
+      if (typeof switchCareerSubTab === 'function') {
+        switchCareerSubTab(activeTabId || 'career-tab-overview');
       }
     }
 
@@ -11818,6 +11830,73 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Career Dedicated Sub-Tabs Switching Logic (职场三大破局中枢)
+  const careerSubTabBtns = document.querySelectorAll('.career-sub-tab-btn');
+  const careerSubPanes = document.querySelectorAll('.career-subpage-pane');
+
+  function switchCareerSubTab(targetTabId) {
+    const btns = document.querySelectorAll('.career-sub-tab-btn');
+    if (btns && btns.length) {
+      btns.forEach(b => {
+        const isMatch = (b.getAttribute('data-career-tab') === targetTabId);
+        if (isMatch) {
+          b.classList.add('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
+          b.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+        } else {
+          b.classList.remove('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
+          b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+        }
+      });
+    }
+
+    const paneIds = ['career-tab-overview', 'view-simulator', 'career-tab-matrix'];
+    paneIds.forEach(pId => {
+      const p = document.getElementById(pId);
+      if (p) {
+        if (pId === targetTabId) {
+          p.classList.remove('hidden');
+        } else {
+          p.classList.add('hidden');
+        }
+      }
+    });
+
+    if (targetTabId === 'career-tab-overview' && currentBaziResult) {
+      if (typeof renderCareerWealth === 'function') {
+        renderCareerWealth(currentBaziResult, currentLuckResult);
+      }
+    } else if (targetTabId === 'view-simulator' && currentBaziResult) {
+      const simContainer = document.getElementById('simResultsContainer');
+      if (simContainer && (!simContainer.children || !simContainer.children.length) && typeof executeScenarioSimulation === 'function') {
+        executeScenarioSimulation();
+      }
+      if (typeof renderEcologicalResonance === 'function') {
+        renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
+      }
+      if (typeof renderSpatialFengShui === 'function') {
+        renderSpatialFengShui(currentBaziResult, currentLuckResult);
+      }
+      if (typeof renderGeomagneticCalibrator === 'function') {
+        renderGeomagneticCalibrator(currentBaziResult);
+      }
+    } else if (targetTabId === 'career-tab-matrix' && currentBaziResult) {
+      if (typeof renderPoliticalGameMatrix === 'function') {
+        renderPoliticalGameMatrix(currentBaziResult, currentLuckResult);
+      }
+    }
+  }
+  window.switchCareerSubTab = switchCareerSubTab;
+  if (typeof globalThis !== 'undefined') {
+    globalThis.switchCareerSubTab = switchCareerSubTab;
+  }
+
+  careerSubTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTab = btn.getAttribute('data-career-tab');
+      if (targetTab) switchCareerSubTab(targetTab);
+    });
+  });
 
   // Simulator Dedicated Subpages Switching Logic (对标12大典专属副页面架构)
   const simSubTabBtns = document.querySelectorAll('.sim-sub-tab-btn');

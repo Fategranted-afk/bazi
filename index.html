@@ -3038,135 +3038,66 @@
       <span data-i18n="btn_exit_fullscreen_career">退出全屏</span>
     </button>
 
-    <!-- Content Container for Career & Wealth Trajectory -->
-    <div id="careerContentContainer" class="space-y-6">
-      <!-- Injected via JS -->
+    <!-- Career Dedicated Sub-Tabs Navigation Toolbar (职场三大高维破局中枢) -->
+    <div class="px-5 py-3 border border-indigo-900/60 bg-[#121422] rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xl">
+      <div class="flex items-center space-x-2">
+        <span class="text-xs font-bold text-indigo-400 font-serif-sc" data-i18n="career_subpage_nav_label">💼 职场三大破局中枢：</span>
+        <div id="careerSubTabsContainer" class="flex flex-wrap gap-2 text-xs">
+          <button type="button" class="career-sub-tab-btn active px-3.5 py-1.5 rounded-xl border border-indigo-500/60 bg-indigo-950/70 text-indigo-200 font-medium transition cursor-pointer flex items-center gap-1.5 shadow-sm" data-career-tab="career-tab-overview">
+            <span>👔</span>
+            <span data-i18n="career_tab_title_overview">职场全相与财运推演</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono" data-i18n="career_tab_badge_overview">身命破局</span>
+          </button>
+          <button type="button" class="career-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-career-tab="view-simulator">
+            <span>⚖️</span>
+            <span data-i18n="career_tab_title_simulator">现实决策 · 双轨对抗推演沙盘</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono" data-i18n="career_tab_badge_simulator">胜负对决</span>
+          </button>
+          <button type="button" class="career-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-career-tab="career-tab-matrix">
+            <span>♟️</span>
+            <span data-i18n="career_tab_title_matrix">组织多方博弈政治矩阵</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-mono" data-i18n="career_tab_badge_matrix">权力克应</span>
+          </button>
+        </div>
+      </div>
+      <div class="text-[11px] text-gray-400 font-mono" data-i18n="career_subpage_note">对标十二大典独立副页面架构 · 快捷直达</div>
     </div>
 
-    <!-- View 9: Political Game Matrix Section -->
-    <div id="politicalGameSection" class="p-6 rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#0c0e1a] via-[#12162a] to-[#0a0c16] shadow-2xl space-y-6">
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-indigo-900/50 pb-4">
-        <div>
-          <div class="flex items-center space-x-2 mb-1">
-            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300">博弈网络</span>
-            <h3 class="text-lg font-bold font-serif-sc text-indigo-200" data-i18n="game_matrix_title">
-              组织多方博弈政治矩阵 (Multi-Party Political Game Network)
-            </h3>
+    <!-- Career Sub-Pane 1: 职场全相与财运推演 -->
+    <div id="career-tab-overview" class="career-subpage-pane space-y-6">
+      <!-- Content Container for Career & Wealth Trajectory -->
+      <div id="careerContentContainer" class="space-y-6">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Dual-Track Scenario Simulator Portal Banner in Career View -->
+      <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-[#0b0d18] shadow-xl flex flex-wrap items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center space-x-2">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300" data-i18n="seal_view_simulator">推演对决</span>
+            <h4 class="text-base font-bold text-indigo-200 font-serif-sc" data-i18n="career_sim_banner_title">
+              职业发展与现实抉择 · 双轨对抗推演联动
+            </h4>
           </div>
-          <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="game_matrix_sub">
-            将双轨推演升级为 3~5 人非零和博弈网络，十神有向图权力克应与流年破局战法
+          <p class="text-xs text-gray-400 max-w-xl" data-i18n="career_sim_banner_sub">
+            将当前职场生态位与不同行业/城市参数无缝载入胜负沙盘，测算综合胜率与能耗比
           </p>
         </div>
-        <div class="text-xs font-mono text-indigo-400 bg-indigo-950/60 px-3 py-1.5 rounded-lg border border-indigo-800/60">
-          N×N TEN GODS DIRECTED GRAPH
+        <div class="flex items-center gap-3">
+          <button id="btnJumpToSimulatorFromCareer" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center gap-1.5">
+            <span>⚖️</span>
+            <span data-i18n="btn_goto_simulator_view">前往推演沙盘</span>
+          </button>
+          <a href="simulator.html" target="_blank" class="px-3.5 py-2 rounded-xl border border-indigo-500/40 bg-gray-800/80 hover:bg-gray-700 text-indigo-200 text-xs font-medium transition flex items-center gap-1 cursor-pointer">
+            <span>🚀</span>
+            <span data-i18n="btn_open_standalone_simulator">独立大页</span>
+          </a>
         </div>
-      </div>
-
-      <!-- Actors Configuration -->
-      <div class="bg-black/30 p-4 rounded-xl border border-indigo-900/30">
-        <h4 class="text-xs font-bold text-indigo-300 mb-3" data-i18n="game_matrix_role_select">参与者日主配置</h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_me">我 (命主)</label>
-            <select id="gameStemMe" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-amber-300 font-bold focus:outline-none focus:border-indigo-400">
-              <option value="甲">甲 (Yang Wood)</option>
-              <option value="乙">乙 (Yin Wood)</option>
-              <option value="丙">丙 (Yang Fire)</option>
-              <option value="丁">丁 (Yin Fire)</option>
-              <option value="戊">戊 (Yang Earth)</option>
-              <option value="己">己 (Yin Earth)</option>
-              <option value="庚">庚 (Yang Metal)</option>
-              <option value="辛">辛 (Yin Metal)</option>
-              <option value="壬">壬 (Yang Water)</option>
-              <option value="癸">癸 (Yin Water)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_boss">直属领导 (决策者)</label>
-            <select id="gameStemBoss" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
-              <option value="甲">甲 (Yang Wood)</option>
-              <option value="乙">乙 (Yin Wood)</option>
-              <option value="丙">丙 (Yang Fire)</option>
-              <option value="丁">丁 (Yin Fire)</option>
-              <option value="戊">戊 (Yang Earth)</option>
-              <option value="己">己 (Yin Earth)</option>
-              <option value="庚" selected>庚 (Yang Metal)</option>
-              <option value="辛">辛 (Yin Metal)</option>
-              <option value="壬">壬 (Yang Water)</option>
-              <option value="癸">癸 (Yin Water)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_rival">竞争对手 (同侪)</label>
-            <select id="gameStemRival" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
-              <option value="甲">甲 (Yang Wood)</option>
-              <option value="乙">乙 (Yin Wood)</option>
-              <option value="丙">丙 (Yang Fire)</option>
-              <option value="丁">丁 (Yin Fire)</option>
-              <option value="戊">戊 (Yang Earth)</option>
-              <option value="己">己 (Yin Earth)</option>
-              <option value="庚">庚 (Yang Metal)</option>
-              <option value="辛" selected>辛 (Yin Metal)</option>
-              <option value="壬">壬 (Yang Water)</option>
-              <option value="癸">癸 (Yin Water)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_ally">核心技术骨干 (潜在同盟)</label>
-            <select id="gameStemAlly" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
-              <option value="甲">甲 (Yang Wood)</option>
-              <option value="乙">乙 (Yin Wood)</option>
-              <option value="丙">丙 (Yang Fire)</option>
-              <option value="丁">丁 (Yin Fire)</option>
-              <option value="戊">戊 (Yang Earth)</option>
-              <option value="己">己 (Yin Earth)</option>
-              <option value="庚">庚 (Yang Metal)</option>
-              <option value="辛">辛 (Yin Metal)</option>
-              <option value="壬" selected>壬 (Yang Water)</option>
-              <option value="癸">癸 (Yin Water)</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Matrix Table Container -->
-      <div id="gameMatrixTblContainer" class="overflow-x-auto rounded-xl border border-indigo-900/40 bg-black/40 p-4">
-        <!-- Rendered via JS -->
-      </div>
-
-      <!-- Transit Year Strategy Card -->
-      <div id="gameTransitStrategyCard" class="p-4 rounded-xl border border-amber-600/30 bg-amber-950/15">
-        <!-- Rendered via JS -->
       </div>
     </div>
 
-    <!-- Dual-Track Scenario Simulator Portal Banner in Career View -->
-    <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-[#0b0d18] shadow-xl flex flex-wrap items-center justify-between gap-4">
-      <div class="space-y-1">
-        <div class="flex items-center space-x-2">
-          <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300" data-i18n="seal_view_simulator">推演对决</span>
-          <h4 class="text-base font-bold text-indigo-200 font-serif-sc" data-i18n="career_sim_banner_title">
-            职业发展与现实抉择 · 双轨对抗推演联动
-          </h4>
-        </div>
-        <p class="text-xs text-gray-400 max-w-xl" data-i18n="career_sim_banner_sub">
-          将当前职场生态位与不同行业/城市参数无缝载入胜负沙盘，测算综合胜率与能耗比
-        </p>
-      </div>
-      <div class="flex items-center gap-3">
-        <button id="btnJumpToSimulatorFromCareer" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center gap-1.5">
-          <span>⚖️</span>
-          <span data-i18n="btn_goto_simulator_view">前往推演沙盘</span>
-        </button>
-        <a href="simulator.html" target="_blank" class="px-3.5 py-2 rounded-xl border border-indigo-500/40 bg-gray-800/80 hover:bg-gray-700 text-indigo-200 text-xs font-medium transition flex items-center gap-1 cursor-pointer">
-          <span>🚀</span>
-          <span data-i18n="btn_open_standalone_simulator">独立大页</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- View 12: Scenario Simulator Sandbox (胜负沙盘 · 双轨全息决策对抗 · 内嵌于职场破局) -->
-    <div id="view-simulator" class="space-y-6 pt-4 border-t border-indigo-900/50">
+    <!-- Career Sub-Pane 2: 现实决策 · 双轨对抗推演沙盘 (内嵌专属子页) -->
+    <div id="view-simulator" class="career-subpage-pane space-y-6 hidden pt-2">
     <!-- Header Banner -->
     <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-slate-950/40 shadow-2xl relative overflow-hidden">
       <div class="flex flex-wrap items-center justify-between gap-4">
@@ -3536,6 +3467,106 @@
     </div>
   </div>
   <!-- End of view-simulator -->
+
+  <!-- Career Sub-Pane 3: 组织多方博弈政治矩阵 -->
+  <div id="career-tab-matrix" class="career-subpage-pane space-y-6 hidden">
+    <!-- View 9: Political Game Matrix Section -->
+    <div id="politicalGameSection" class="p-6 rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#0c0e1a] via-[#12162a] to-[#0a0c16] shadow-2xl space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-indigo-900/50 pb-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300">博弈网络</span>
+            <h3 class="text-lg font-bold font-serif-sc text-indigo-200" data-i18n="game_matrix_title">
+              组织多方博弈政治矩阵 (Multi-Party Political Game Network)
+            </h3>
+          </div>
+          <p class="text-xs text-gray-400 max-w-3xl leading-relaxed" data-i18n="game_matrix_sub">
+            将双轨推演升级为 3~5 人非零和博弈网络，十神有向图权力克应与流年破局战法
+          </p>
+        </div>
+        <div class="text-xs font-mono text-indigo-400 bg-indigo-950/60 px-3 py-1.5 rounded-lg border border-indigo-800/60">
+          N×N TEN GODS DIRECTED GRAPH
+        </div>
+      </div>
+
+      <!-- Actors Configuration -->
+      <div class="bg-black/30 p-4 rounded-xl border border-indigo-900/30">
+        <h4 class="text-xs font-bold text-indigo-300 mb-3" data-i18n="game_matrix_role_select">参与者日主配置</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_me">我 (命主)</label>
+            <select id="gameStemMe" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-amber-300 font-bold focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚">庚 (Yang Metal)</option>
+              <option value="辛">辛 (Yin Metal)</option>
+              <option value="壬">壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_boss">直属领导 (决策者)</label>
+            <select id="gameStemBoss" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚" selected>庚 (Yang Metal)</option>
+              <option value="辛">辛 (Yin Metal)</option>
+              <option value="壬">壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_rival">竞争对手 (同侪)</label>
+            <select id="gameStemRival" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚">庚 (Yang Metal)</option>
+              <option value="辛" selected>辛 (Yin Metal)</option>
+              <option value="壬">壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1" data-i18n="game_matrix_player_ally">核心技术骨干 (潜在同盟)</label>
+            <select id="gameStemAlly" class="w-full bg-[#161824] border border-indigo-700/50 rounded-lg p-2 text-xs text-gray-200 focus:outline-none focus:border-indigo-400">
+              <option value="甲">甲 (Yang Wood)</option>
+              <option value="乙">乙 (Yin Wood)</option>
+              <option value="丙">丙 (Yang Fire)</option>
+              <option value="丁">丁 (Yin Fire)</option>
+              <option value="戊">戊 (Yang Earth)</option>
+              <option value="己">己 (Yin Earth)</option>
+              <option value="庚">庚 (Yang Metal)</option>
+              <option value="辛">辛 (Yin Metal)</option>
+              <option value="壬" selected>壬 (Yang Water)</option>
+              <option value="癸">癸 (Yin Water)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matrix Table Container -->
+      <div id="gameMatrixTblContainer" class="overflow-x-auto rounded-xl border border-indigo-900/40 bg-black/40 p-4">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Transit Year Strategy Card -->
+      <div id="gameTransitStrategyCard" class="p-4 rounded-xl border border-amber-600/30 bg-amber-950/15">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
   </div>
   <!-- End of view-career -->
 
