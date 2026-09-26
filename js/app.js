@@ -11845,11 +11845,6 @@ document.addEventListener('DOMContentLoaded', () => {
       activeBorder: 'border-amber-400',
       activeBg: 'bg-amber-950/80',
       activeText: 'text-white'
-    },
-    'career-tab-matrix': {
-      activeBorder: 'border-purple-400',
-      activeBg: 'bg-purple-950/80',
-      activeText: 'text-white'
     }
   };
 
@@ -11865,7 +11860,7 @@ document.addEventListener('DOMContentLoaded', () => {
           b.classList.add('active', 'border-2', theme.activeBorder, theme.activeBg, theme.activeText);
           b.classList.remove('border-gray-700/80', 'bg-gray-900/80', 'text-gray-300');
         } else {
-          b.classList.remove('active', 'border-indigo-400', 'bg-indigo-950/80', 'border-amber-400', 'bg-amber-950/80', 'border-purple-400', 'bg-purple-950/80', 'text-white');
+          b.classList.remove('active', 'border-indigo-400', 'bg-indigo-950/80', 'border-amber-400', 'bg-amber-950/80', 'text-white');
           b.classList.add('border-2', 'border-gray-700/80', 'bg-gray-900/80', 'text-gray-300');
         }
       });
@@ -11895,16 +11890,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof renderEcologicalResonance === 'function') {
         renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
       }
-      if (typeof renderSpatialFengShui === 'function') {
-        renderSpatialFengShui(currentBaziResult, currentLuckResult);
-      }
-      if (typeof renderGeomagneticCalibrator === 'function') {
-        renderGeomagneticCalibrator(currentBaziResult);
-      }
-    } else if (targetTabId === 'career-tab-matrix' && currentBaziResult) {
-      if (typeof renderPoliticalGameMatrix === 'function') {
-        renderPoliticalGameMatrix(currentBaziResult, currentLuckResult);
-      }
     }
   }
   window.switchCareerSubTab = switchCareerSubTab;
@@ -11923,19 +11908,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const simSubTabBtns = document.querySelectorAll('.sim-sub-tab-btn');
   const simSubPanes = document.querySelectorAll('.sim-subpage-pane');
 
+  const simSubTabThemes = {
+    'sim-tab-sandbox': {
+      activeBorder: 'border-indigo-400',
+      activeBg: 'bg-indigo-950/80',
+      activeText: 'text-white'
+    },
+    'sim-tab-georesonance': {
+      activeBorder: 'border-blue-400',
+      activeBg: 'bg-blue-950/80',
+      activeText: 'text-white'
+    }
+  };
+
   function switchSimulatorSubpage(targetTabId) {
-    if (!simSubTabBtns.length) return;
-    simSubTabBtns.forEach(b => {
-      const isMatch = (b.getAttribute('data-sim-tab') === targetTabId);
+    const btns = document.querySelectorAll('.sim-sub-tab-btn');
+    if (!btns || !btns.length) return;
+    btns.forEach(b => {
+      const tabKey = b.getAttribute('data-sim-tab');
+      const isMatch = (tabKey === targetTabId);
+      const theme = simSubTabThemes[tabKey] || simSubTabThemes['sim-tab-sandbox'];
       if (isMatch) {
-        b.classList.add('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
-        b.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+        b.classList.add('active', 'border-2', theme.activeBorder, theme.activeBg, theme.activeText);
+        b.classList.remove('border-gray-700/80', 'bg-gray-900/80', 'text-gray-300');
       } else {
-        b.classList.remove('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
-        b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+        b.classList.remove('active', 'border-indigo-400', 'bg-indigo-950/80', 'border-blue-400', 'bg-blue-950/80', 'text-white');
+        b.classList.add('border-2', 'border-gray-700/80', 'bg-gray-900/80', 'text-gray-300');
       }
     });
-    simSubPanes.forEach(p => {
+    const panes = document.querySelectorAll('.sim-subpage-pane');
+    panes.forEach(p => {
       if (p.id === targetTabId) {
         p.classList.remove('hidden');
       } else {
@@ -11945,13 +11947,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetTabId === 'sim-tab-georesonance' && currentBaziResult) {
       if (typeof renderEcologicalResonance === 'function') {
         renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
-      }
-    } else if (targetTabId === 'sim-tab-fengshui' && currentBaziResult) {
-      if (typeof renderSpatialFengShui === 'function') {
-        renderSpatialFengShui(currentBaziResult, currentLuckResult);
-      }
-      if (typeof renderGeomagneticCalibrator === 'function') {
-        renderGeomagneticCalibrator(currentBaziResult);
       }
     }
   }
