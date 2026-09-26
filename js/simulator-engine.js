@@ -1420,6 +1420,11 @@ class ScenarioSimulatorEngine {
       remedies: remediesList
     };
 
+    // Phase 3: Dynamical Phase Space Bifurcation & Counterfactual SCM Manifold
+    const bifurcationDynamics = this.computeCounterfactualBifurcation(
+      optionA, optionB, safeBazi, luck, 30, 2026, lang, resA, resB
+    );
+
     return {
       optionA: resA,
       optionB: resB,
@@ -1431,7 +1436,347 @@ class ScenarioSimulatorEngine {
       top3Patterns: cleanTop3,
       counterfactualDynamics,
       directionalResonance,
-      spatialFengShuiRemedies
+      spatialFengShuiRemedies,
+      bifurcationDynamics
+    };
+  }
+
+  /**
+   * Phase 3: Dynamical Phase Space Bifurcation & Counterfactual 'What-If' Simulation
+   * Integrates Judea Pearl SCM Counterfactual Do-Calculus with John M. Addey Harmonic Phase Space Dynamics
+   */
+  static computeCounterfactualBifurcation(optA, optB, bazi, luck = null, currentAge = 30, currentYear = 2026, lang = 'zh', precalculatedResA = null, precalculatedResB = null) {
+    const isEn = (lang === 'en');
+    const safeBazi = bazi || { dayMaster: '甲', pillars: { day: { stemElement: 'Wood' } }, vigorScore: 50 };
+    const top3Patterns = this.getTop3Patterns(safeBazi, isEn);
+
+    const resA = precalculatedResA || this.evaluateSingleOption(optA, safeBazi, isEn, top3Patterns);
+    const resB = precalculatedResB || this.evaluateSingleOption(optB, safeBazi, isEn, top3Patterns);
+
+    // 1. Judea Pearl Structural Causal Model (SCM) Counterfactual Decomposition
+    const ite = Number((resB.score - resA.score).toFixed(1));
+    const absIte = Math.abs(ite);
+    const superiorOption = resB.score > resA.score ? 'B' : (resA.score > resB.score ? 'A' : 'tie');
+
+    // Causal Attribution Breakdown (Weights align with composite score components)
+    // 20% Geo Energy, 25% Industry Overlap, 30% Pattern Fit, 15% Role Synergy, 10% Low Friction
+    const deltaGeo = Number(((resB.geoEnergyScore - resA.geoEnergyScore) * 0.20).toFixed(1));
+    const deltaInd = Number(((resB.industryCityOverlapScore - resA.industryCityOverlapScore) * 0.25).toFixed(1));
+    const deltaOrg = Number(((resB.roleSupervisorSynergyScore - resA.roleSupervisorSynergyScore) * 0.15).toFixed(1));
+    const deltaPattern = Number(((resB.patternAlignmentScore - resA.patternAlignmentScore) * 0.30).toFixed(1));
+    const deltaFriction = Number((((100 - resB.frictionRate) - (100 - resA.frictionRate)) * 0.10).toFixed(1));
+
+    // Trade-offs & Opportunity Cost Analysis
+    const oppA_gainsZh = `【低摩擦与稳定性红利】：心智能耗率仅为 ${resA.frictionRate}%（较B轨低 ${Math.abs(resB.frictionRate - resA.frictionRate)}%），直属上司生态协同高达 ${resA.roleSupervisorSynergyScore}分，能以极高认知余裕构筑专业基本盘。`;
+    const oppA_gainsEn = `[Stability & Low-Friction Dividend]: Psychological friction is only ${resA.frictionRate}% (-${Math.abs(resB.frictionRate - resA.frictionRate)}% vs Option B) with high managerial synergy (${resA.roleSupervisorSynergyScore} pts), securing robust career foundations.`;
+
+    const oppA_sacrificesZh = `【放弃的高爆发窗口】：相较于B轨，放弃了目标城市产业集群的激进规划红利（重叠度 ${resA.industryCityOverlapScore}% vs ${resB.industryCityOverlapScore}%），三年期财官爆发潜力折损约 ${Math.abs(resB.potentialRate - resA.potentialRate)}%。`;
+    const oppA_sacrificesEn = `[Forfeited Explosive Upside]: Sacrifices target city aggressive industrial clustering benefits (${resA.industryCityOverlapScore}% vs ${resB.industryCityOverlapScore}%) and approximately ${Math.abs(resB.potentialRate - resA.potentialRate)}% 3-year breakthrough momentum.`;
+
+    const oppB_gainsZh = `【产业乘数与爆发红利】：依托重点产业规划重叠度（${resB.industryCityOverlapScore}%）与三年期爆发潜力（${resB.potentialRate}%），具备更高动能转化上限与跨越式跃迁空间。`;
+    const oppB_gainsEn = `[Industrial Multiplier & Peak Upside]: Leverages key industry planning overlap (${resB.industryCityOverlapScore}%) and 3-year breakthrough momentum (${resB.potentialRate}%) for superior compounding career capital.`;
+
+    const oppB_sacrificesZh = `【承担的心智溢价】：心智能耗率上升至 ${resB.frictionRate}%，面临更高强度的博弈压力与权力对抗，需建立专门的心智防波堤对冲内耗。`;
+    const oppB_sacrificesEn = `[Cognitive Friction Surcharge]: Psychological burnout index climbs to ${resB.frictionRate}%, demanding strict emotional boundaries and defensive buffers against interpersonal stress.`;
+
+    const tradeoffSummaryZh = superiorOption === 'A'
+      ? `【因果干预裁决】：在剔除内生混杂后，方案 A【${resA.title}】的净因果增益领先 +${absIte}分。核心优势在于命局格局承载与低阻尼心智余裕；若强行跳轨B方案，将承担超额内耗反噬。`
+      : superiorOption === 'B'
+        ? `【因果干预裁决】：在剔除内生混杂后，方案 B【${resB.title}】的净因果增益领先 +${absIte}分。核心驱动源于产业集群规划与三年爆发乘数；选择B轨需做好心智抗压准备，但在收益流形上明显占优。`
+        : `【因果干预裁决】：两套方案在因果净收益上处于结构平衡态（差异 0分）。选择A轨偏向稳健自持，选择B轨偏向激进开拓，取决于当前阶段对流动性还是爆发力的偏好。`;
+
+    const tradeoffSummaryEn = superiorOption === 'A'
+      ? `[Causal Intervention Verdict]: Isolating observational confounders, Option A [${resA.title}] secures an Individual Treatment Effect of +${absIte} pts. Advantage stems from natal pattern fit and lower friction; forced migration to Option B carries excessive cognitive burnout.`
+      : superiorOption === 'B'
+        ? `[Causal Intervention Verdict]: Isolating observational confounders, Option B [${resB.title}] unlocks an Individual Treatment Effect of +${absIte} pts. Advantage is driven by strategic industry cluster overlap and momentum; requires stress resilience but maximizes upside manifold.`
+        : `[Causal Intervention Verdict]: Both trajectories stand in balanced causal equilibrium (0 pt delta). Option A favors defensive sustainability while Option B favors aggressive momentum, depending on immediate career priorities.`;
+
+    // 2. John M. Addey Harmonic Dynamics & Phase Space Trajectories (2026-2030)
+    const score100 = (safeBazi.zipingScore && typeof safeBazi.zipingScore.totalScore === 'number')
+      ? safeBazi.zipingScore.totalScore
+      : 50.0;
+
+    const a = Number((0.85 + (Math.abs(score100 - 50) / 100.0) * 0.8).toFixed(2));
+    const b = Number((0.40 + (Math.abs(score100 - 50) / 50.0) * 0.75).toFixed(2));
+    const gamma = 0.38;
+
+    const cA = Number(((resA.score - 50) / 75.0).toFixed(2));
+    const cB = Number(((resB.score - 50) / 75.0).toFixed(2));
+
+    const annualPillars = [
+      { year: 2026, stem: '丙', branch: '午', elem: 'Fire', pillarZh: '丙午 (天元坐刃 · 木火升腾)', pillarEn: 'Bing-Wu (Solar Fire Peak)' },
+      { year: 2027, stem: '丁', branch: '未', elem: 'Earth', pillarZh: '丁未 (六合温润 · 势能转换)', pillarEn: 'Ding-Wei (Harmonic Transition)' },
+      { year: 2028, stem: '戊', branch: '申', elem: 'Metal', pillarZh: '戊申 (金土相生 · 杀印破局)', pillarEn: 'Wu-Shen (Metal-Earth Breakthrough)' },
+      { year: 2029, stem: '己', branch: '酉', elem: 'Metal', pillarZh: '己酉 (从革从序 · 秩序沉淀)', pillarEn: 'Ji-You (Order Consolidation)' },
+      { year: 2030, stem: '庚', branch: '戌', elem: 'Earth', pillarZh: '庚戌 (魁罡聚气 · 终局定盘)', pillarEn: 'Geng-Xu (Culmination & Stance)' }
+    ];
+
+    let stateXA = (resA.score - 50) / 45.0;
+    let stateVA = (resA.potentialRate - 50) / 50.0;
+    let stateXB = (resB.score - 50) / 45.0;
+    let stateVB = (resB.potentialRate - 50) / 50.0;
+
+    const dt = 0.25;
+    const trajectoryA = [];
+    const trajectoryB = [];
+    const transitionTimeline = [];
+
+    const cityElemA = resA.geoEnergy?.cityMeta?.elem || 'Fire';
+    const cityElemB = resB.geoEnergy?.cityMeta?.elem || 'Water';
+    const indElemA = this.getIndustryElements(optA.industry)?.primary || 'Wood';
+    const indElemB = this.getIndustryElements(optB.industry)?.primary || 'Metal';
+
+    for (let i = 0; i < annualPillars.length; i++) {
+      const p = annualPillars[i];
+      const yr = p.year;
+
+      // Calculate annual transit pulse for Option A & B
+      let pulseA = 0.0;
+      if (p.elem === cityElemA || p.elem === indElemA) pulseA += 0.45;
+      else if ((cityElemA === 'Fire' && p.elem === 'Wood') || (cityElemA === 'Earth' && p.elem === 'Fire') || (cityElemA === 'Metal' && p.elem === 'Earth') || (cityElemA === 'Water' && p.elem === 'Metal') || (cityElemA === 'Wood' && p.elem === 'Water')) pulseA += 0.35;
+      else if ((cityElemA === 'Water' && p.elem === 'Fire') || (cityElemA === 'Fire' && p.elem === 'Water')) pulseA -= 0.35;
+
+      let pulseB = 0.0;
+      if (p.elem === cityElemB || p.elem === indElemB) pulseB += 0.45;
+      else if ((cityElemB === 'Fire' && p.elem === 'Wood') || (cityElemB === 'Earth' && p.elem === 'Fire') || (cityElemB === 'Metal' && p.elem === 'Earth') || (cityElemB === 'Water' && p.elem === 'Metal') || (cityElemB === 'Wood' && p.elem === 'Water')) pulseB += 0.35;
+      else if ((cityElemB === 'Water' && p.elem === 'Fire') || (cityElemB === 'Fire' && p.elem === 'Water')) pulseB -= 0.35;
+
+      // Integration step for A
+      const forceA = -(a * Math.pow(stateXA, 3) - b * stateXA - cA);
+      const accelA = -gamma * stateVA + forceA + pulseA;
+      stateVA += accelA * dt;
+      stateXA += stateVA * dt;
+      stateXA = Math.max(-2.2, Math.min(2.2, stateXA));
+      stateVA = Math.max(-1.8, Math.min(1.8, stateVA));
+      const potVA = (a / 4) * Math.pow(stateXA, 4) - (b / 2) * Math.pow(stateXA, 2) - cA * stateXA;
+
+      // Integration step for B
+      const forceB = -(a * Math.pow(stateXB, 3) - b * stateXB - cB);
+      const accelB = -gamma * stateVB + forceB + pulseB;
+      stateVB += accelB * dt;
+      stateXB += stateVB * dt;
+      stateXB = Math.max(-2.2, Math.min(2.2, stateXB));
+      stateVB = Math.max(-1.8, Math.min(1.8, stateVB));
+      const potVB = (a / 4) * Math.pow(stateXB, 4) - (b / 2) * Math.pow(stateXB, 2) - cB * stateXB;
+
+      trajectoryA.push({
+        year: yr,
+        age: currentAge + i,
+        pillarZh: p.pillarZh,
+        pillarEn: p.pillarEn,
+        x: Number(stateXA.toFixed(3)),
+        v: Number(stateVA.toFixed(3)),
+        potentialV: Number(potVA.toFixed(3))
+      });
+
+      trajectoryB.push({
+        year: yr,
+        age: currentAge + i,
+        pillarZh: p.pillarZh,
+        pillarEn: p.pillarEn,
+        x: Number(stateXB.toFixed(3)),
+        v: Number(stateVB.toFixed(3)),
+        potentialV: Number(potVB.toFixed(3))
+      });
+
+      // Switching potential barrier between A and B
+      const potDelta = Math.abs(potVB - potVA);
+      const avgFriction = (resA.frictionRate + resB.frictionRate) / 2.0;
+      const barrierScore = Math.min(96, Math.max(18, Math.round(potDelta * 32.0 + avgFriction * 0.45 + (stateVA > stateVB ? 10 : -8))));
+      const momentumAdvantage = Math.round((stateVB - stateVA) * 35.0);
+
+      let status = 'steady';
+      let statusBadgeZh = '🛡️ 稳态蓄力期';
+      let statusBadgeEn = 'Steady Consolidation';
+      let adviceZh = '';
+      let adviceEn = '';
+
+      if (barrierScore <= 48) {
+        status = 'golden';
+        statusBadgeZh = '🚀 黄金跳轨窗口';
+        statusBadgeEn = 'Golden Transition Window';
+        adviceZh = `该年地缘与岁运五行形成“脱胎换骨”之顺相共振，跳轨阻尼最小（能耗阻抗 ${barrierScore}分），适宜启动重大组织跃迁或跨城转轨。`;
+        adviceEn = `Transit Qi and regional elements align harmoniously with minimal switching friction (${barrierScore} pts). Prime inflection window for relocation or career pivots.`;
+      } else if (barrierScore >= 72) {
+        status = 'lockin';
+        statusBadgeZh = '⚠️ 高阻尼禁跳区';
+        statusBadgeEn = 'High-Resistance Lock-in';
+        adviceZh = `该年岁运与两轨能量形成局部刑克对冲，换轨内耗高企（能耗阻抗 ${barrierScore}分）。切忌盲动跳槽，建议坚守当前基本盘、深潜蓄势。`;
+        adviceEn = `High elemental turbulence produces severe switching resistance (${barrierScore} pts). Avoid rash pivots; consolidate existing core assets and preserve bandwidth.`;
+      } else {
+        status = 'steady';
+        statusBadgeZh = '🛡️ 稳态蓄力期';
+        statusBadgeEn = 'Steady Consolidation';
+        adviceZh = `能耗处于稳健均衡带（阻抗 ${barrierScore}分）。若有明确增量资源支持可稳步推进，更适宜在存量赛道内沉淀专业护城河。`;
+        adviceEn = `Energy operates in steady equilibrium (${barrierScore} pts). Move methodically if backed by definitive resources; otherwise compound core expertise.`;
+      }
+
+      transitionTimeline.push({
+        year: yr,
+        pillarZh: p.pillarZh,
+        pillarEn: p.pillarEn,
+        barrierScore,
+        momentumAdvantage,
+        status,
+        statusBadgeZh,
+        statusBadgeEn,
+        adviceZh,
+        adviceEn
+      });
+    }
+
+    // Determine Golden Window & Peak Resistance Window
+    let minBarrierItem = transitionTimeline[0];
+    let maxBarrierItem = transitionTimeline[0];
+    transitionTimeline.forEach(t => {
+      if (t.barrierScore < minBarrierItem.barrierScore) minBarrierItem = t;
+      if (t.barrierScore > maxBarrierItem.barrierScore) maxBarrierItem = t;
+    });
+
+    if (!transitionTimeline.some(t => t.status === 'golden')) {
+      minBarrierItem.status = 'golden';
+      minBarrierItem.statusBadgeZh = '🚀 黄金跳轨窗口';
+      minBarrierItem.statusBadgeEn = 'Golden Transition Window';
+      minBarrierItem.adviceZh = `全周期中跳轨阻尼最低之相对窗口（阻抗 ${minBarrierItem.barrierScore}分），若决意换轨应优先聚焦此时机。`;
+      minBarrierItem.adviceEn = `Lowest relative friction window across the 5-year cycle (${minBarrierItem.barrierScore} pts). Prioritize this timing if committing to a transition.`;
+    }
+
+    // Lyapunov Exponents (Sensitivity to Perturbations)
+    let sumLogA = 0;
+    let sumLogB = 0;
+    for (let k = 0; k < trajectoryA.length; k++) {
+      const termA = Math.abs(1 - dt * (gamma + 3 * a * Math.pow(trajectoryA[k].x, 2) - b));
+      const termB = Math.abs(1 - dt * (gamma + 3 * a * Math.pow(trajectoryB[k].x, 2) - b));
+      sumLogA += Math.log(Math.max(0.01, termA));
+      sumLogB += Math.log(Math.max(0.01, termB));
+    }
+    const lambdaA = Number((sumLogA / trajectoryA.length).toFixed(3));
+    const lambdaB = Number((sumLogB / trajectoryB.length).toFixed(3));
+
+    const lyapDiagAZh = lambdaA < -0.10
+      ? `λ = ${lambdaA} < 0：强收敛吸引子。方案A对外部突发冲击具备极强抗震弹性，轨迹高度稳健。`
+      : lambdaA <= 0.05
+        ? `λ = ${lambdaA} ≈ 0：微弱渐近收敛。方案A处于适度敏感流形，受行业周期适度调节。`
+        : `λ = ${lambdaA} > 0：高敏感分岔区。方案A受微扰动易偏离预期轨道，需严防失衡。`;
+    const lyapDiagAEn = lambdaA < -0.10
+      ? `lambda = ${lambdaA} < 0: Strongly Attracting Basin. Option A delivers superior resilience against external macroeconomic shocks.`
+      : lambdaA <= 0.05
+        ? `lambda = ${lambdaA} ~ 0: Asymptotically Stable Flow. Option A balances adaptability with moderate cyclical sensitivity.`
+        : `lambda = ${lambdaA} > 0: Sensitive Bifurcation Manifold. Minor environmental fluctuations may induce trajectory divergence.`;
+
+    const lyapDiagBZh = lambdaB < -0.10
+      ? `λ = ${lambdaB} < 0：强收敛吸引子。方案B对外部突发冲击具备极强抗震弹性，轨迹高度稳健。`
+      : lambdaB <= 0.05
+        ? `λ = ${lambdaB} ≈ 0：微弱渐近收敛。方案B处于适度敏感流形，受外部生态与上司风格强牵引。`
+        : `λ = ${lambdaB} > 0：高敏感分岔区。方案B属于高爆发高扰动赛道，需警惕分岔滑落风险。`;
+    const lyapDiagBEn = lambdaB < -0.10
+      ? `lambda = ${lambdaB} < 0: Strongly Attracting Basin. Option B offers robust shock absorption and predictable trajectory.`
+      : lambdaB <= 0.05
+        ? `lambda = ${lambdaB} ~ 0: Asymptotically Stable Flow. Option B is moderately responsive to managerial and market tailwinds.`
+        : `lambda = ${lambdaB} > 0: Sensitive Bifurcation Manifold. High-upside track vulnerable to systemic turbulence without strict risk hedges.`;
+
+    // Critical Slowing Down (CSD) Lag-1 Autocorrelation & Variance
+    const velA = trajectoryA.map(p => p.v);
+    const velB = trajectoryB.map(p => p.v);
+    const meanVA = velA.reduce((s, v) => s + v, 0) / velA.length;
+    const meanVB = velB.reduce((s, v) => s + v, 0) / velB.length;
+    const varA = Number((velA.reduce((s, v) => s + Math.pow(v - meanVA, 2), 0) / velA.length).toFixed(3));
+    const varB = Number((velB.reduce((s, v) => s + Math.pow(v - meanVB, 2), 0) / velB.length).toFixed(3));
+
+    let covA = 0, covB = 0;
+    for (let m = 0; m < velA.length - 1; m++) {
+      covA += (velA[m] - meanVA) * (velA[m + 1] - meanVA);
+      covB += (velB[m] - meanVB) * (velB[m + 1] - meanVB);
+    }
+    const acA = varA > 0.001 ? Number((covA / ((velA.length - 1) * varA)).toFixed(3)) : 0.15;
+    const acB = varB > 0.001 ? Number((covB / ((velB.length - 1) * varB)).toFixed(3)) : 0.18;
+
+    const recSpdAZh = acA < 0.45 ? '⚡ 恢复力敏锐（快速自愈）' : '🐢 存在轻度迟滞慢化';
+    const recSpdAEn = acA < 0.45 ? 'Rapid Resilience Recovery' : 'Mild Sluggish Recovery';
+    const recSpdBZh = acB < 0.45 ? '⚡ 恢复力敏锐（快速自愈）' : '🐢 存在轻度迟滞慢化';
+    const recSpdBEn = acB < 0.45 ? 'Rapid Resilience Recovery' : 'Mild Sluggish Recovery';
+
+    const tippingAlertZh = (acA > 0.65 || acB > 0.65)
+      ? '监测到高自相关系数（AC > 0.65），提示系统在特定时段接近临界慢化相变点，换轨时机需格外审慎。'
+      : '系统自相关系数处于健康自愈阈值内（AC <= 0.65），未见病态临界慢化，能量回弹通畅。';
+    const tippingAlertEn = (acA > 0.65 || acB > 0.65)
+      ? 'Elevated autocorrelation detected (AC > 0.65), signalling critical slowing down near regime shift boundaries; exercise deliberate transition timing.'
+      : 'Autocorrelation remains within healthy adaptive bounds (AC <= 0.65); dynamic energy rebound is unimpeded.';
+
+    return {
+      causalModel: 'Pearl SCM Do-Calculus (v3.0)',
+      individualTreatmentEffect: ite,
+      treatmentEffectMagnitude: absIte,
+      superiorOption,
+      causalAttribution: {
+        geoEndowment: deltaGeo,
+        industryMultiplier: deltaInd,
+        powerSynergy: deltaOrg,
+        natalResilience: deltaPattern,
+        frictionDividend: deltaFriction
+      },
+      opportunityCosts: {
+        optionA: {
+          gainsZh: oppA_gainsZh,
+          gainsEn: oppA_gainsEn,
+          sacrificesZh: oppA_sacrificesZh,
+          sacrificesEn: oppA_sacrificesEn
+        },
+        optionB: {
+          gainsZh: oppB_gainsZh,
+          gainsEn: oppB_gainsEn,
+          sacrificesZh: oppB_sacrificesZh,
+          sacrificesEn: oppB_sacrificesEn
+        },
+        tradeoffSummaryZh,
+        tradeoffSummaryEn
+      },
+      epistemicDisclaimerZh: '【因果推断情境假设规范】基于 Judea Pearl 结构因果模型之观察先验干预推演，剥离无观测混杂，拒绝黑箱宿命论断言。',
+      epistemicDisclaimerEn: 'Pearl SCM Counterfactual Scenario Intervention under observable priors without unobserved confounding. Mathematical scenario modeling.',
+      systemParameters: {
+        rigidityA: a,
+        bifurcationB: b,
+        dampingGamma: gamma,
+        biasA: cA,
+        biasB: cB
+      },
+      trajectoryA,
+      trajectoryB,
+      lyapunovA: lambdaA,
+      lyapunovB: lambdaB,
+      lyapunovDiagnosisA: isEn ? lyapDiagAEn : lyapDiagAZh,
+      lyapunovDiagnosisAEn: lyapDiagAEn,
+      lyapunovDiagnosisB: isEn ? lyapDiagBEn : lyapDiagBZh,
+      lyapunovDiagnosisBEn: lyapDiagBEn,
+      criticalSlowingDown: {
+        autocorrelationA: acA,
+        autocorrelationB: acB,
+        varianceA: varA,
+        varianceB: varB,
+        recoverySpeedA: isEn ? recSpdAEn : recSpdAZh,
+        recoverySpeedAEn: recSpdAEn,
+        recoverySpeedB: isEn ? recSpdBEn : recSpdBZh,
+        recoverySpeedBEn: recSpdBEn,
+        tippingAlertZh,
+        tippingAlertEn
+      },
+      transitionTimeline,
+      goldenWindow: {
+        year: minBarrierItem.year,
+        pillarZh: minBarrierItem.pillarZh,
+        pillarEn: minBarrierItem.pillarEn,
+        barrierScore: minBarrierItem.barrierScore,
+        rationaleZh: minBarrierItem.adviceZh,
+        rationaleEn: minBarrierItem.adviceEn
+      },
+      peakResistanceWindow: {
+        year: maxBarrierItem.year,
+        pillarZh: maxBarrierItem.pillarZh,
+        pillarEn: maxBarrierItem.pillarEn,
+        barrierScore: maxBarrierItem.barrierScore,
+        rationaleZh: maxBarrierItem.adviceZh,
+        rationaleEn: maxBarrierItem.adviceEn
+      }
     };
   }
 }

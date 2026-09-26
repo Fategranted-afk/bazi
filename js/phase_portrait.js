@@ -444,6 +444,217 @@ class PhasePortraitEngine {
       summaryEn: `System rigidity a=${a}, bifurcation b=${b}, transit bias c=${c}. Current age ${currentAge} is in [${isAscending ? 'Spiral Ascending Phase' : 'Consolidation & Grounding Phase'}] (x=${currentPt.x}, v=${currentPt.v}).`
     };
   }
+
+  /**
+   * Phase 3: 绘制双轨相空间分岔与黄金跳轨窗口流形 (Dual-Track Bifurcation & Transition Manifold)
+   * @param {HTMLCanvasElement|string} canvasOrId 
+   * @param {Object} bifurcationData - output of ScenarioSimulatorEngine.computeCounterfactualBifurcation
+   * @param {boolean} isDark - Dark mode theme flag
+   * @param {string} lang - 'zh' or 'en'
+   */
+  static renderDualTrackBifurcation(canvasOrId, bifurcationData, isDark = true, lang = 'zh') {
+    if (!bifurcationData) return;
+    const canvas = (typeof canvasOrId === 'string' && typeof document !== 'undefined')
+      ? document.getElementById(canvasOrId)
+      : canvasOrId;
+    if (!canvas || typeof canvas.getContext !== 'function') return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width || 800;
+    const height = canvas.height || 360;
+    ctx.clearRect(0, 0, width, height);
+
+    const isEn = (lang === 'en');
+    const trajA = bifurcationData.trajectoryA || [];
+    const trajB = bifurcationData.trajectoryB || [];
+    const golden = bifurcationData.goldenWindow || {};
+
+    // 1. 深邃时空底色渐变
+    if (typeof ctx.createLinearGradient === 'function') {
+      const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+      if (isDark) {
+        bgGrad.addColorStop(0, '#090b14');
+        bgGrad.addColorStop(0.5, '#0d1122');
+        bgGrad.addColorStop(1, '#06080f');
+      } else {
+        bgGrad.addColorStop(0, '#f8fafc');
+        bgGrad.addColorStop(0.5, '#f1f5f9');
+        bgGrad.addColorStop(1, '#e2e8f0');
+      }
+      ctx.fillStyle = bgGrad;
+    } else {
+      ctx.fillStyle = isDark ? '#090b14' : '#f8fafc';
+    }
+    if (typeof ctx.fillRect === 'function') ctx.fillRect(0, 0, width, height);
+
+    // 2. 坐标转换映射: x in [-2.2, 2.2], v in [-1.8, 1.8]
+    const marginX = 70;
+    const marginY = 45;
+    const toScreen = (pt) => {
+      const sx = marginX + ((pt.x + 2.2) / 4.4) * (width - marginX * 2);
+      const sy = (height - marginY) - ((pt.v + 1.8) / 3.6) * (height - marginY * 2);
+      return { sx, sy, x: pt.x, v: pt.v, year: pt.year };
+    };
+
+    // 3. 辅助网格与零速度平衡线 (v = 0)
+    ctx.save();
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.06)';
+    ctx.lineWidth = 1;
+    for (let gx = marginX; gx <= width - marginX; gx += (width - marginX * 2) / 6) {
+      ctx.beginPath();
+      ctx.moveTo(gx, marginY);
+      ctx.lineTo(gx, height - marginY);
+      ctx.stroke();
+    }
+
+    const midY = (height - marginY) - (1.8 / 3.6) * (height - marginY * 2);
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.22)' : 'rgba(217, 119, 6, 0.25)';
+    ctx.beginPath();
+    ctx.moveTo(marginX - 20, midY);
+    ctx.lineTo(width - marginX + 20, midY);
+    ctx.stroke();
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+    // 坐标轴说明
+    ctx.font = '9px monospace';
+    ctx.fillStyle = isDark ? 'rgba(148, 163, 184, 0.6)' : 'rgba(100, 116, 139, 0.8)';
+    ctx.textAlign = 'right';
+    ctx.fillText(isEn ? 'Ascent (+v)' : '动量上升 (+v)', marginX - 8, marginY + 12);
+    ctx.fillText(isEn ? 'Descent (-v)' : '阻尼下探 (-v)', marginX - 8, height - marginY - 6);
+    ctx.fillText(isEn ? 'Parity (v=0)' : '平衡态 (v=0)', marginX - 8, midY + 3);
+
+    ctx.textAlign = 'center';
+    ctx.fillText(isEn ? 'Displacement / Pattern Space (x)' : '势能位移与格局投射位 (x)', width / 2, height - 12);
+
+    // 4. 绘制 Track A 轨迹 (青蓝光弧 Cyan-Indigo)
+    if (trajA.length > 0) {
+      const ptsA = trajA.map(toScreen);
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.moveTo(ptsA[0].sx, ptsA[0].sy);
+      for (let i = 1; i < ptsA.length; i++) ctx.lineTo(ptsA[i].sx, ptsA[i].sy);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.5;
+      ctx.moveTo(ptsA[0].sx, ptsA[0].sy);
+      for (let i = 1; i < ptsA.length; i++) ctx.lineTo(ptsA[i].sx, ptsA[i].sy);
+      ctx.stroke();
+
+      ptsA.forEach((p, idx) => {
+        ctx.beginPath();
+        ctx.fillStyle = idx === 0 ? '#38bdf8' : (isDark ? '#e0f2fe' : '#0369a1');
+        ctx.arc(p.sx, p.sy, idx === 0 ? 5 : 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = isDark ? '#7dd3fc' : '#0284c7';
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText(`'${String(p.year).slice(2)}`, p.sx, p.sy - 8);
+      });
+    }
+
+    // 5. 绘制 Track B 轨迹 (紫罗兰光弧 Purple-Fuchsia)
+    if (trajB.length > 0) {
+      const ptsB = trajB.map(toScreen);
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(192, 132, 252, 0.25)';
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.moveTo(ptsB[0].sx, ptsB[0].sy);
+      for (let i = 1; i < ptsB.length; i++) ctx.lineTo(ptsB[i].sx, ptsB[i].sy);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#c084fc';
+      ctx.lineWidth = 2.5;
+      ctx.moveTo(ptsB[0].sx, ptsB[0].sy);
+      for (let i = 1; i < ptsB.length; i++) ctx.lineTo(ptsB[i].sx, ptsB[i].sy);
+      ctx.stroke();
+
+      ptsB.forEach((p, idx) => {
+        ctx.beginPath();
+        ctx.fillStyle = idx === 0 ? '#c084fc' : (isDark ? '#fae8ff' : '#7e22ce');
+        ctx.arc(p.sx, p.sy, idx === 0 ? 5 : 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = isDark ? '#d8b4fe' : '#9333ea';
+        ctx.font = 'bold 9px monospace';
+        ctx.fillText(`'${String(p.year).slice(2)}`, p.sx, p.sy + 14);
+      });
+    }
+
+    // 6. 绘制黄金跳轨分岔窗口 (Golden Bifurcation Fork Bridge)
+    if (golden && golden.year && trajA.length > 0 && trajB.length > 0) {
+      const nodeA = trajA.find(p => p.year === golden.year) || trajA[0];
+      const nodeB = trajB.find(p => p.year === golden.year) || trajB[0];
+      const pA = toScreen(nodeA);
+      const pB = toScreen(nodeB);
+
+      const cpx = (pA.sx + pB.sx) / 2 + 25;
+      const cpy = (pA.sy + pB.sy) / 2 - 35;
+
+      ctx.save();
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2;
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([5, 3]);
+      ctx.beginPath();
+      ctx.moveTo(pA.sx, pA.sy);
+      ctx.quadraticCurveTo(cpx, cpy, pB.sx, pB.sy);
+      ctx.stroke();
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+      if (typeof ctx.createRadialGradient === 'function') {
+        const haloGrad = ctx.createRadialGradient(cpx, cpy, 2, cpx, cpy, 16);
+        haloGrad.addColorStop(0, 'rgba(251, 191, 36, 0.9)');
+        haloGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.35)');
+        haloGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+        ctx.fillStyle = haloGrad;
+      } else {
+        ctx.fillStyle = 'rgba(251, 191, 36, 0.5)';
+      }
+      ctx.beginPath();
+      ctx.arc(cpx, cpy, 16, 0, Math.PI * 2);
+      ctx.fill();
+
+      const badgeText = isEn
+        ? `[Golden Transition Window (${golden.year}) · Friction ${golden.barrierScore} pts]`
+        : `【黄金跳轨分岔 (${golden.year}) · 阻抗 ${golden.barrierScore}分】`;
+      ctx.font = 'bold 10px "Noto Serif SC", serif';
+      ctx.fillStyle = '#fef08a';
+      ctx.textAlign = 'center';
+      ctx.fillText(badgeText, cpx, cpy - 8);
+      ctx.restore();
+    }
+
+    // 7. 顶部图例说明 (Legend)
+    ctx.save();
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath();
+    ctx.arc(marginX + 8, 22, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.textAlign = 'left';
+    ctx.fillText(isEn ? `Option A Track (λ=${bifurcationData.lyapunovA})` : `方案 A 轨迹 (λ=${bifurcationData.lyapunovA})`, marginX + 18, 25);
+
+    ctx.fillStyle = '#c084fc';
+    ctx.beginPath();
+    ctx.arc(marginX + (isEn ? 210 : 190), 22, 4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillText(isEn ? `Option B Track (λ=${bifurcationData.lyapunovB})` : `方案 B 轨迹 (λ=${bifurcationData.lyapunovB})`, marginX + (isEn ? 220 : 200), 25);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.7)' : 'rgba(217, 119, 6, 0.8)';
+    ctx.font = '9px monospace';
+    ctx.fillText(isEn ? 'Pearl SCM · Addey Wave Bifurcation' : 'Judea Pearl SCM · Addey 谐波分岔流形', width - marginX + 15, 25);
+    ctx.restore();
+  }
 }
 
 if (typeof module !== 'undefined' && module.exports) {

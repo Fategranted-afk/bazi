@@ -248,10 +248,10 @@ class ToolDispatcher {
       return this._dispatchGeomagnetism(query, bazi, lang, currentYear);
     }
 
-    // 3. Scenario Simulator Dispatch (Dual-Track A/B)
+    // 3. Scenario Simulator Dispatch (Dual-Track A/B & Phase 3 Bifurcation)
     if (
-      /(选a还是b|哪个offer|去北京还是上海|去深圳还是|留校还是去企业|离职还是留下|二选一|对比两个|双轨|决策沙盘|跳槽还是)/i.test(query) ||
-      /(choice a or b|which offer|compare offer|relocate or stay|which job|scenario simulator|dual-track)/i.test(query)
+      /(选a还是b|哪个offer|去北京还是上海|去深圳还是|留校还是去企业|离职还是留下|二选一|对比两个|双轨|决策沙盘|跳槽还是|跳轨分岔|分岔窗口|反事实|哪一年跳槽|何时换轨)/i.test(query) ||
+      /(choice a or b|which offer|compare offer|relocate or stay|which job|scenario simulator|dual-track|bifurcation|counterfactual|what-if|golden transition window)/i.test(query)
     ) {
       return this._dispatchScenarioSimulator(query, bazi, luck, lang, currentYear);
     }
@@ -463,7 +463,15 @@ class ToolDispatcher {
         scoreA: scoreA,
         scoreB: scoreB,
         summary: summary,
-        leaderboard: leaderboard
+        leaderboard: leaderboard,
+        goldenWindow: sim?.bifurcationDynamics ? {
+          year: sim.bifurcationDynamics.goldenWindow.year,
+          pillar: isEn ? sim.bifurcationDynamics.goldenWindow.pillarEn : sim.bifurcationDynamics.goldenWindow.pillarZh,
+          barrierScore: sim.bifurcationDynamics.goldenWindow.barrierScore,
+          rationale: isEn ? sim.bifurcationDynamics.goldenWindow.rationaleEn : sim.bifurcationDynamics.goldenWindow.rationaleZh
+        } : null,
+        causalAttribution: sim?.bifurcationDynamics ? sim.bifurcationDynamics.causalAttribution : null,
+        individualTreatmentEffect: sim?.bifurcationDynamics ? sim.bifurcationDynamics.individualTreatmentEffect : 0
       }
     };
   }

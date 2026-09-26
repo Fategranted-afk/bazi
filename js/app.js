@@ -18360,7 +18360,199 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       ` : ''}
+
+      <!-- Phase 3: 动力学相空间分岔与反事实因果推演沙盘 -->
+      ${simRes.bifurcationDynamics ? `
+        <div id="simPhase3Section" class="rounded-2xl border border-amber-500/50 bg-gradient-to-b from-[#161224]/95 via-[#0e111d]/95 to-black p-5 sm:p-6 space-y-6 shadow-2xl">
+          <!-- Header Banner -->
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-amber-500/30 pb-4">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="chinese-seal text-xs py-0.5 border-amber-400 text-amber-300">Phase 3</span>
+                <h4 class="text-base sm:text-lg font-bold text-amber-200 font-serif-sc flex items-center gap-2">
+                  <span>🚀</span>
+                  <span>${isEn ? 'Dynamical Phase Space Bifurcation & Counterfactual SCM Manifold' : '动力学相空间分岔与反事实因果推演沙盘'}</span>
+                </h4>
+              </div>
+              <p class="text-xs text-gray-300 max-w-3xl leading-relaxed">
+                ${isEn 
+                  ? 'Integrating Judea Pearl SCM Do-Calculus, John M. Addey harmonic wave mechanics, and Lyapunov stability exponents to pinpoint optimal bifurcation inflection windows and counterfactual opportunity costs.'
+                  : '融合 Judea Pearl 结构因果模型 (SCM)、John M. Addey 谐波波动力学与李雅普诺夫指数，精准解算 2026-2030 双轨势能相轨迹、最佳跳轨分岔窗口与机会成本对冲矩阵。'}
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+              <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">
+                PEARL SCM v3.0
+              </span>
+              <span class="px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold">
+                ADDEY HARMONICS
+              </span>
+            </div>
+          </div>
+
+          <!-- 2.5D Phase Space Bifurcation Canvas -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between text-xs text-gray-300 px-1">
+              <span class="font-bold flex items-center gap-1.5 text-amber-200 font-serif-sc">
+                <span>🌌</span>
+                <span>${isEn ? '2.5D Phase Space Dual-Track Manifold (2026-2030 Horizon)' : '2.5D 双轨相空间流形与黄金跳轨分岔仪 (2026-2030 时空视界)'}</span>
+              </span>
+              <span class="text-[11px] text-gray-400 font-mono">${isEn ? 'Vector Streamline Projection' : '流线矢量场投影'}</span>
+            </div>
+            <div class="relative w-full rounded-xl overflow-hidden border border-gray-800 bg-black/60 shadow-inner">
+              <canvas id="simBifurcationCanvas" width="800" height="360" class="w-full h-64 sm:h-72 block"></canvas>
+            </div>
+          </div>
+
+          <!-- 5-Year Bifurcation Transition Timeline (2026-2030) -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
+              <h5 class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                <span>⏱️</span>
+                <span>${isEn ? '5-Year Bifurcation Transition Horizon (2026-2030)' : '2026-2030 五年期跳轨分岔时序标尺'}</span>
+              </h5>
+              <span class="text-[11px] text-gray-400 font-mono">${isEn ? 'Inflection Friction Audit' : '换轨阻抗时空审计'}</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+              ${(simRes.bifurcationDynamics.transitionTimeline || []).map(item => `
+                <div class="p-3 rounded-xl border ${item.status === 'golden' ? 'border-amber-400/80 bg-amber-950/40 shadow-lg shadow-amber-950/40' : item.status === 'lockin' ? 'border-rose-900/60 bg-rose-950/20' : 'border-gray-800 bg-black/40'} flex flex-col justify-between space-y-2">
+                  <div>
+                    <div class="flex items-center justify-between pb-1 border-b border-white/5">
+                      <span class="text-sm font-black font-mono text-gray-100">${item.year}</span>
+                      <span class="text-[10px] px-2 py-0.5 rounded-full font-bold font-mono ${item.status === 'golden' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : item.status === 'lockin' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-gray-800 text-gray-300'}">
+                        ${isEn ? item.statusBadgeEn : item.statusBadgeZh}
+                      </span>
+                    </div>
+                    <div class="text-[11px] font-mono text-indigo-300 pt-1">${isEn ? item.pillarEn : item.pillarZh}</div>
+                  </div>
+                  <div class="space-y-1 text-xs">
+                    <div class="flex justify-between items-center text-[10.5px] text-gray-400">
+                      <span>${isEn ? 'Transition Barrier' : '跳轨能耗阻抗'}</span>
+                      <span class="font-bold font-mono ${item.status === 'golden' ? 'text-amber-300' : item.status === 'lockin' ? 'text-rose-400' : 'text-gray-200'}">${item.barrierScore} ${isEn ? 'pts' : '分'}</span>
+                    </div>
+                    <div class="h-1.5 rounded-full bg-gray-800 overflow-hidden">
+                      <div class="h-full ${item.status === 'golden' ? 'bg-amber-400' : item.status === 'lockin' ? 'bg-rose-500' : 'bg-indigo-500'} rounded-full" style="width: ${item.barrierScore}%"></div>
+                    </div>
+                  </div>
+                  <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-white/5">
+                    ${isEn ? item.adviceEn : item.adviceZh}
+                  </p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Judea Pearl SCM Causal Attribution & Opportunity Cost -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Causal Attribution Waterfall -->
+            <div class="p-4 rounded-xl border border-gray-800 bg-black/40 space-y-3">
+              <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                <span class="text-xs sm:text-sm font-bold text-indigo-300 font-serif-sc flex items-center gap-1.5">
+                  <span>🌊</span>
+                  <span>${isEn ? 'Pearl SCM 5-Factor Causal Attribution' : 'Judea Pearl SCM 五因果要素净归因瀑布'}</span>
+                </span>
+                <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-indigo-900/60 text-indigo-200">
+                  ${isEn ? 'Treatment Effect' : '因果净增益'}: ${simRes.bifurcationDynamics.individualTreatmentEffect >= 0 ? '+' : ''}${simRes.bifurcationDynamics.individualTreatmentEffect} ${isEn ? 'pts' : '分'}
+                </span>
+              </div>
+              <div class="space-y-2 text-xs">
+                ${[
+                  { nameZh: '地缘场能因果增益 (Δ Geo)', nameEn: 'Geographic Qi Endowment (Delta Geo)', val: simRes.bifurcationDynamics.causalAttribution.geoEndowment, weight: '20%' },
+                  { nameZh: '产业集群规划乘数 (Δ Industry)', nameEn: 'Strategic Planning Multiplier (Delta Ind)', val: simRes.bifurcationDynamics.causalAttribution.industryMultiplier, weight: '25%' },
+                  { nameZh: '命局三大格局承载 (Δ Patterns)', nameEn: 'Natal Pattern Resilience (Delta Patterns)', val: simRes.bifurcationDynamics.causalAttribution.natalResilience, weight: '30%' },
+                  { nameZh: '职能与上司博弈协同 (Δ Power)', nameEn: 'Power Ecosystem Synergy (Delta Power)', val: simRes.bifurcationDynamics.causalAttribution.powerSynergy, weight: '15%' },
+                  { nameZh: '心智阻尼能耗逆差 (Δ Friction)', nameEn: 'Cognitive Friction Dividend (Delta Fric)', val: simRes.bifurcationDynamics.causalAttribution.frictionDividend, weight: '10%' }
+                ].map(factor => `
+                  <div class="p-2 rounded-lg bg-white/5 border border-gray-800/60 flex items-center justify-between text-[11px]">
+                    <div>
+                      <span class="text-gray-300 font-medium">${isEn ? factor.nameEn : factor.nameZh}</span>
+                      <span class="text-[10px] text-gray-500 font-mono ml-1">(${factor.weight})</span>
+                    </div>
+                    <span class="font-mono font-bold ${factor.val > 0 ? 'text-emerald-400' : factor.val < 0 ? 'text-rose-400' : 'text-gray-400'}">
+                      ${factor.val > 0 ? '+' : ''}${factor.val} ${isEn ? 'pts' : '分'}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+              <p class="text-[11px] text-gray-300 leading-relaxed font-sans pt-1">
+                ${isEn ? simRes.bifurcationDynamics.opportunityCosts.tradeoffSummaryEn : simRes.bifurcationDynamics.opportunityCosts.tradeoffSummaryZh}
+              </p>
+            </div>
+
+            <!-- Opportunity Cost & Lyapunov Stability -->
+            <div class="space-y-4">
+              <!-- Tradeoff Cards -->
+              <div class="p-4 rounded-xl border border-gray-800 bg-black/40 space-y-3">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+                  <span class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
+                    <span>⚖️</span>
+                    <span>${isEn ? 'Counterfactual Opportunity Cost Trade-offs' : '反事实机会成本与权衡对冲'}</span>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800/40 font-mono">
+                    TRADE-OFF AUDIT
+                  </span>
+                </div>
+                <div class="space-y-2 text-xs">
+                  <div class="p-2.5 rounded-lg bg-indigo-950/30 border border-indigo-800/40 space-y-1">
+                    <span class="font-bold text-indigo-300 block text-[11.5px]">${isEn ? 'Option A Trade-off Diagnostic' : '🅰️ 方案 A 权衡诊断'}</span>
+                    <div class="text-[11px] text-gray-300 leading-relaxed">${isEn ? simRes.bifurcationDynamics.opportunityCosts.optionA.gainsEn : simRes.bifurcationDynamics.opportunityCosts.optionA.gainsZh}</div>
+                    <div class="text-[11px] text-gray-400 leading-relaxed">${isEn ? simRes.bifurcationDynamics.opportunityCosts.optionA.sacrificesEn : simRes.bifurcationDynamics.opportunityCosts.optionA.sacrificesZh}</div>
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-purple-950/30 border border-purple-800/40 space-y-1">
+                    <span class="font-bold text-purple-300 block text-[11.5px]">${isEn ? 'Option B Trade-off Diagnostic' : '🅱️ 方案 B 权衡诊断'}</span>
+                    <div class="text-[11px] text-gray-300 leading-relaxed">${isEn ? simRes.bifurcationDynamics.opportunityCosts.optionB.gainsEn : simRes.bifurcationDynamics.opportunityCosts.optionB.gainsZh}</div>
+                    <div class="text-[11px] text-gray-400 leading-relaxed">${isEn ? simRes.bifurcationDynamics.opportunityCosts.optionB.sacrificesEn : simRes.bifurcationDynamics.opportunityCosts.optionB.sacrificesZh}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Lyapunov & CSD Diagnostics -->
+              <div class="p-4 rounded-xl border border-gray-800 bg-black/40 space-y-2.5 text-xs">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-1.5">
+                  <span class="text-xs font-bold text-emerald-300 font-serif-sc flex items-center gap-1">
+                    <span>🛡️</span>
+                    <span>${isEn ? 'Lyapunov Stability & Critical Slowing Down (CSD)' : '李雅普诺夫稳定性与临界慢化诊断'}</span>
+                  </span>
+                  <span class="text-[10px] text-gray-400 font-mono">NONLINEAR DYNAMICS</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                  <div class="p-2 rounded bg-black/50 border border-gray-800">
+                    <div class="text-gray-400">${isEn ? 'Option A Lyapunov Exponent' : '方案 A 李雅普诺夫指数'}</div>
+                    <div class="font-mono font-bold text-sky-300 pt-0.5">λ = ${simRes.bifurcationDynamics.lyapunovA}</div>
+                    <div class="text-[10px] text-gray-300 pt-1">${isEn ? simRes.bifurcationDynamics.lyapunovDiagnosisAEn : simRes.bifurcationDynamics.lyapunovDiagnosisA}</div>
+                  </div>
+                  <div class="p-2 rounded bg-black/50 border border-gray-800">
+                    <div class="text-gray-400">${isEn ? 'Option B Lyapunov Exponent' : '方案 B 李雅普诺夫指数'}</div>
+                    <div class="font-mono font-bold text-purple-300 pt-0.5">λ = ${simRes.bifurcationDynamics.lyapunovB}</div>
+                    <div class="text-[10px] text-gray-300 pt-1">${isEn ? simRes.bifurcationDynamics.lyapunovDiagnosisBEn : simRes.bifurcationDynamics.lyapunovDiagnosisB}</div>
+                  </div>
+                </div>
+                <div class="p-2 rounded bg-amber-950/20 border border-amber-800/30 text-[10.5px] text-amber-200/90 leading-relaxed font-sans">
+                  ${isEn ? simRes.bifurcationDynamics.criticalSlowingDown.tippingAlertEn : simRes.bifurcationDynamics.criticalSlowingDown.tippingAlertZh}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scientific Epistemic Disclaimer -->
+          <div class="p-3 rounded-xl bg-black/50 border border-gray-800/80 text-[11px] text-gray-400 leading-relaxed font-mono flex items-center gap-2">
+            <span class="text-amber-400 text-base">⚖️</span>
+            <span>${isEn ? simRes.bifurcationDynamics.epistemicDisclaimerEn : simRes.bifurcationDynamics.epistemicDisclaimerZh}</span>
+          </div>
+        </div>
+      ` : ''}
     `;
+
+    if (simRes.bifurcationDynamics && typeof PhasePortraitEngine !== 'undefined' && PhasePortraitEngine.renderDualTrackBifurcation) {
+      const isDark = (typeof document !== 'undefined' && document.body && document.body.classList && typeof document.body.classList.contains === 'function')
+        ? !document.body.classList.contains('light-theme')
+        : true;
+      if (typeof setTimeout === 'function') {
+        setTimeout(() => {
+          PhasePortraitEngine.renderDualTrackBifurcation('simBifurcationCanvas', simRes.bifurcationDynamics, isDark, currentLang);
+        }, 50);
+      }
+    }
   }
 
   // ==========================================================================

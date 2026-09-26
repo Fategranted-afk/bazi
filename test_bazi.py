@@ -333,6 +333,62 @@ var sim = ScenarioSimulatorEngine.simulateOptions(
   baziA, null, 'zh'
 );
 if (!sim || !sim.counterfactualDynamics) throw new Error("ScenarioSimulatorEngine simulation failed");
+if (!sim.bifurcationDynamics) throw new Error("ScenarioSimulatorEngine missing bifurcationDynamics");
+if (typeof sim.bifurcationDynamics.individualTreatmentEffect !== 'number') throw new Error("Invalid treatment effect");
+if (!sim.bifurcationDynamics.transitionTimeline || sim.bifurcationDynamics.transitionTimeline.length !== 5) {
+  throw new Error("Transition timeline must have 5 years (2026-2030)");
+}
+if (!sim.bifurcationDynamics.goldenWindow || typeof sim.bifurcationDynamics.goldenWindow.year !== 'number') {
+  throw new Error("Missing goldenWindow in bifurcationDynamics");
+}
+if (typeof sim.bifurcationDynamics.lyapunovA !== 'number' || typeof sim.bifurcationDynamics.lyapunovB !== 'number') {
+  throw new Error("Missing Lyapunov exponents");
+}
+if (typeof sim.bifurcationDynamics.criticalSlowingDown.autocorrelationA !== 'number') {
+  throw new Error("Missing CSD autocorrelation");
+}
+if (typeof PhasePortraitEngine.renderDualTrackBifurcation !== 'function') {
+  throw new Error("PhasePortraitEngine missing renderDualTrackBifurcation");
+}
+
+// Test PhasePortraitEngine.renderDualTrackBifurcation in headless context
+var mockCanvasObj = {
+  width: 800, height: 360,
+  getContext: function() {
+    return {
+      clearRect: function(){}, beginPath: function(){}, closePath: function(){},
+      moveTo: function(){}, lineTo: function(){}, stroke: function(){}, fill: function(){},
+      fillRect: function(){}, quadraticCurveTo: function(){}, setLineDash: function(){},
+      createLinearGradient: function(){ return { addColorStop: function(){} }; },
+      createRadialGradient: function(){ return { addColorStop: function(){} }; },
+      arc: function(){}, fillText: function(){}, measureText: function(){ return { width: 10 }; },
+      save: function(){}, restore: function(){}
+    };
+  }
+};
+PhasePortraitEngine.renderDualTrackBifurcation(mockCanvasObj, sim.bifurcationDynamics, true, 'zh');
+PhasePortraitEngine.renderDualTrackBifurcation(mockCanvasObj, sim.bifurcationDynamics, false, 'en');
+
+// Test English mode has zero CJK in bifurcationDynamics
+var simEn = ScenarioSimulatorEngine.simulateOptions(
+  { country: 'CN', city: 'BJ', industry: 'tech', role: 'engineer', supervisor: 'tech_lead' },
+  { country: 'CN', city: 'SH', industry: 'finance', role: 'manager', supervisor: 'director' },
+  baziA, null, 'en'
+);
+var cjkPattern = /[\u4e00-\u9fa5]/;
+function verifyNoCJK(obj, path) {
+  if (!obj) return;
+  for (var k in obj) {
+    var v = obj[k];
+    if (k.endsWith('Zh')) continue;
+    if (typeof v === 'string') {
+      if (cjkPattern.test(v)) throw new Error("CJK leak in bifurcationDynamics at " + path + "." + k + ": " + v);
+    } else if (typeof v === 'object' && v !== null) {
+      verifyNoCJK(v, path + "." + k);
+    }
+  }
+}
+verifyNoCJK(simEn.bifurcationDynamics, 'bifurcationDynamics');
 
 var rect = RectificationEngine.rectifyBirthTime({ year: 1990, month: 6, day: 20 }, [{ year: 2015, type: 'career' }]);
 if (!rect || !rect.rankings || rect.rankings.length === 0) {
@@ -550,6 +606,9 @@ var document = {
           return {
             clearRect: function(){}, beginPath: function(){}, closePath: function(){},
             moveTo: function(){}, lineTo: function(){}, stroke: function(){}, fill: function(){},
+            fillRect: function(){}, quadraticCurveTo: function(){}, setLineDash: function(){},
+            createLinearGradient: function(){ return { addColorStop: function(){} }; },
+            createRadialGradient: function(){ return { addColorStop: function(){} }; },
             arc: function(){}, fillText: function(){}, measureText: function(){ return { width: 10 }; },
             save: function(){}, restore: function(){}, translate: function(){}, rotate: function(){}
           };
