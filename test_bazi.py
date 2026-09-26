@@ -358,11 +358,12 @@ var mockCanvasObj = {
     return {
       clearRect: function(){}, beginPath: function(){}, closePath: function(){},
       moveTo: function(){}, lineTo: function(){}, stroke: function(){}, fill: function(){},
-      fillRect: function(){}, quadraticCurveTo: function(){}, setLineDash: function(){},
+      fillRect: function(){}, rect: function(){}, roundRect: function(){},
+      quadraticCurveTo: function(){}, setLineDash: function(){},
       createLinearGradient: function(){ return { addColorStop: function(){} }; },
       createRadialGradient: function(){ return { addColorStop: function(){} }; },
       arc: function(){}, fillText: function(){}, measureText: function(){ return { width: 10 }; },
-      save: function(){}, restore: function(){}
+      save: function(){}, restore: function(){}, scale: function(){}
     };
   }
 };

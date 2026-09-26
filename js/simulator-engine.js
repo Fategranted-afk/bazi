@@ -1559,6 +1559,9 @@ class ScenarioSimulatorEngine {
       stateVB = Math.max(-1.8, Math.min(1.8, stateVB));
       const potVB = (a / 4) * Math.pow(stateXB, 4) - (b / 2) * Math.pow(stateXB, 2) - cB * stateXB;
 
+      const yrScoreA = Math.min(98, Math.max(45, Math.round(resA.score + stateVA * 5.0 + pulseA * 6.0)));
+      const yrScoreB = Math.min(98, Math.max(45, Math.round(resB.score + stateVB * 5.0 + pulseB * 6.0)));
+
       trajectoryA.push({
         year: yr,
         age: currentAge + i,
@@ -1566,6 +1569,7 @@ class ScenarioSimulatorEngine {
         pillarEn: p.pillarEn,
         x: Number(stateXA.toFixed(3)),
         v: Number(stateVA.toFixed(3)),
+        score: yrScoreA,
         potentialV: Number(potVA.toFixed(3))
       });
 
@@ -1576,6 +1580,7 @@ class ScenarioSimulatorEngine {
         pillarEn: p.pillarEn,
         x: Number(stateXB.toFixed(3)),
         v: Number(stateVB.toFixed(3)),
+        score: yrScoreB,
         potentialV: Number(potVB.toFixed(3))
       });
 
@@ -1615,11 +1620,16 @@ class ScenarioSimulatorEngine {
         year: yr,
         pillarZh: p.pillarZh,
         pillarEn: p.pillarEn,
+        scoreA: yrScoreA,
+        scoreB: yrScoreB,
+        scoreDelta: yrScoreB - yrScoreA,
         barrierScore,
         momentumAdvantage,
         status,
         statusBadgeZh,
         statusBadgeEn,
+        actionZh: status === 'golden' ? '顺势跳轨 (最佳时机)' : (status === 'lockin' ? '坚守本轨 (忌跳槽)' : '存量深耕 (稳态蓄力)'),
+        actionEn: status === 'golden' ? 'Execute Leap (Prime)' : (status === 'lockin' ? 'Hold Steady (Avoid)' : 'Consolidate Assets'),
         adviceZh,
         adviceEn
       });
@@ -1637,9 +1647,17 @@ class ScenarioSimulatorEngine {
       minBarrierItem.status = 'golden';
       minBarrierItem.statusBadgeZh = '🚀 黄金跳轨窗口';
       minBarrierItem.statusBadgeEn = 'Golden Transition Window';
+      minBarrierItem.actionZh = '顺势跳轨 (最佳时机)';
+      minBarrierItem.actionEn = 'Execute Leap (Prime)';
       minBarrierItem.adviceZh = `全周期中跳轨阻尼最低之相对窗口（阻抗 ${minBarrierItem.barrierScore}分），若决意换轨应优先聚焦此时机。`;
       minBarrierItem.adviceEn = `Lowest relative friction window across the 5-year cycle (${minBarrierItem.barrierScore} pts). Prioritize this timing if committing to a transition.`;
     }
+
+    const goldenYear = minBarrierItem.year;
+    const goldenBarrier = minBarrierItem.barrierScore;
+    const strategicPlaybookZh = `【战略军师 · 终极破局路线图】：方案 A【${resA.title}】胜在心智能耗低（内耗仅 ${resA.frictionRate}%）、稳定性极高；方案 B【${resB.title}】胜在产业规划重叠度高、中长期爆发力极强。系统终极推演给出【先 A 后 B · 锁定 ${goldenYear} 借势跳轨】之最优部署：① 2026-2027年切忌盲动跳槽，两轨阻抗高企，应先在 A 轨低内耗深耕核心专业基本盘；② ${goldenYear}年（黄金跳轨窗口）地缘与岁运五行形成大吉共振，换轨阻尼骤降至全周期最低（${goldenBarrier}分），此时蓄势跳入 B 轨可斩获最大动能跃迁红利；③ 2029-2030年在 B 轨产业高地建立核心护城河，享受长程资产复利。`;
+
+    const strategicPlaybookEn = `[Executive Strategy Playbook]: Option A [${resA.title}] excels in low cognitive friction (${resA.frictionRate}%) and institutional stability, while Option B [${resB.title}] commands superior industry strategic overlap and peak upside. Optimal Deployment: [Consolidate on Track A -> Leap to Track B in ${goldenYear}]: (1) In 2026-2027, avoid rash transitions; consolidate core credentials on Track A under low burnout; (2) In ${goldenYear} (Golden Transition Window), regional Qi and annual transits align to drop switching friction to cycle-low (${goldenBarrier} pts), delivering maximum kinetic yield; (3) In 2029-2030, anchor competitive moats on Track B to capture compounding long-term returns.`;
 
     // Lyapunov Exponents (Sensitivity to Perturbations)
     let sumLogA = 0;
@@ -1776,7 +1794,9 @@ class ScenarioSimulatorEngine {
         barrierScore: maxBarrierItem.barrierScore,
         rationaleZh: maxBarrierItem.adviceZh,
         rationaleEn: maxBarrierItem.adviceEn
-      }
+      },
+      strategicPlaybookZh,
+      strategicPlaybookEn
     };
   }
 }

@@ -461,199 +461,415 @@ class PhasePortraitEngine {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = canvas.width || 800;
-    const height = canvas.height || 360;
-    ctx.clearRect(0, 0, width, height);
+    // 1. High-DPI Retina Display Handling (Fixes blurry canvas on Mac Retina)
+    const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) ? Math.max(1, window.devicePixelRatio) : 1;
+    let cssWidth = canvas.clientWidth || (canvas.parentElement && canvas.parentElement.clientWidth) || 800;
+    let cssHeight = canvas.clientHeight || 360;
+    if (cssWidth < 320) cssWidth = 800;
+    if (cssHeight < 240) cssHeight = 360;
+
+    if (canvas.width !== Math.round(cssWidth * dpr) || canvas.height !== Math.round(cssHeight * dpr)) {
+      canvas.width = Math.round(cssWidth * dpr);
+      canvas.height = Math.round(cssHeight * dpr);
+    }
+    ctx.save();
+    if (typeof ctx.scale === 'function') {
+      ctx.scale(dpr, dpr);
+    }
+    ctx.clearRect(0, 0, cssWidth, cssHeight);
 
     const isEn = (lang === 'en');
     const trajA = bifurcationData.trajectoryA || [];
     const trajB = bifurcationData.trajectoryB || [];
+    const timeline = bifurcationData.transitionTimeline || [];
     const golden = bifurcationData.goldenWindow || {};
 
-    // 1. 深邃时空底色渐变
-    if (typeof ctx.createLinearGradient === 'function') {
-      const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-      if (isDark) {
-        bgGrad.addColorStop(0, '#090b14');
-        bgGrad.addColorStop(0.5, '#0d1122');
-        bgGrad.addColorStop(1, '#06080f');
-      } else {
-        bgGrad.addColorStop(0, '#f8fafc');
-        bgGrad.addColorStop(0.5, '#f1f5f9');
-        bgGrad.addColorStop(1, '#e2e8f0');
-      }
-      ctx.fillStyle = bgGrad;
-    } else {
-      ctx.fillStyle = isDark ? '#090b14' : '#f8fafc';
-    }
-    if (typeof ctx.fillRect === 'function') ctx.fillRect(0, 0, width, height);
-
-    // 2. 坐标转换映射: x in [-2.2, 2.2], v in [-1.8, 1.8]
-    const marginX = 70;
-    const marginY = 45;
-    const toScreen = (pt) => {
-      const sx = marginX + ((pt.x + 2.2) / 4.4) * (width - marginX * 2);
-      const sy = (height - marginY) - ((pt.v + 1.8) / 3.6) * (height - marginY * 2);
-      return { sx, sy, x: pt.x, v: pt.v, year: pt.year };
+    // 2. High-contrast theme color palettes (Tailored for both Dark and Light modes)
+    const palette = isDark ? {
+      bgGradStart: '#0d1120',
+      bgGradEnd: '#060810',
+      cardBorder: 'rgba(255, 255, 255, 0.08)',
+      gridLine: 'rgba(255, 255, 255, 0.06)',
+      textMain: '#f8fafc',
+      textMuted: '#94a3b8',
+      trackA: '#38bdf8',
+      trackAGlow: 'rgba(56, 189, 248, 0.18)',
+      trackB: '#c084fc',
+      trackBGlow: 'rgba(192, 132, 252, 0.18)',
+      bandPeak: 'rgba(16, 185, 129, 0.08)',
+      bandGrowth: 'rgba(14, 165, 233, 0.06)',
+      bandConsol: 'rgba(245, 158, 11, 0.04)',
+      goldenBoxBg: 'rgba(28, 20, 10, 0.92)',
+      goldenBoxBorder: '#fbbf24',
+      goldenText: '#fef08a',
+      goldenSubText: '#fde68a'
+    } : {
+      bgGradStart: '#ffffff',
+      bgGradEnd: '#f8fafc',
+      cardBorder: 'rgba(0, 0, 0, 0.08)',
+      gridLine: 'rgba(0, 0, 0, 0.06)',
+      textMain: '#0f172a',
+      textMuted: '#475569',
+      trackA: '#0284c7',
+      trackAGlow: 'rgba(2, 132, 199, 0.15)',
+      trackB: '#7c3aed',
+      trackBGlow: 'rgba(124, 58, 237, 0.15)',
+      bandPeak: 'rgba(16, 185, 129, 0.08)',
+      bandGrowth: 'rgba(14, 165, 233, 0.06)',
+      bandConsol: 'rgba(245, 158, 11, 0.05)',
+      goldenBoxBg: '#fef3c7',
+      goldenBoxBorder: '#b45309',
+      goldenText: '#78350f',
+      goldenSubText: '#92400e'
     };
 
-    // 3. 辅助网格与零速度平衡线 (v = 0)
-    ctx.save();
-    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.06)';
-    ctx.lineWidth = 1;
-    for (let gx = marginX; gx <= width - marginX; gx += (width - marginX * 2) / 6) {
-      ctx.beginPath();
-      ctx.moveTo(gx, marginY);
-      ctx.lineTo(gx, height - marginY);
-      ctx.stroke();
+    // 3. Crisp Background
+    if (typeof ctx.createLinearGradient === 'function') {
+      const bgGrad = ctx.createLinearGradient(0, 0, cssWidth, cssHeight);
+      bgGrad.addColorStop(0, palette.bgGradStart);
+      bgGrad.addColorStop(1, palette.bgGradEnd);
+      ctx.fillStyle = bgGrad;
+    } else {
+      ctx.fillStyle = palette.bgGradStart;
+    }
+    if (typeof ctx.fillRect === 'function') ctx.fillRect(0, 0, cssWidth, cssHeight);
+
+    // Layout margins
+    const plotLeft = 65;
+    const plotRight = cssWidth - 45;
+    const plotTop = 48;
+    const plotBottom = cssHeight - 72;
+    const plotWidth = plotRight - plotLeft;
+    const plotHeight = plotBottom - plotTop;
+
+    // Helper: Coordinate projections
+    const colCount = Math.max(1, (timeline.length || 5) - 1);
+    const getColX = (index) => plotLeft + index * (plotWidth / colCount);
+    const getY = (score) => {
+      const clamped = Math.max(40, Math.min(100, score || 70));
+      return plotBottom - ((clamped - 40) / 60) * plotHeight;
+    };
+
+    // 4. Horizontal Momentum Bands (40 - 100 pts)
+    const y85 = getY(85);
+    const y70 = getY(70);
+    const y55 = getY(55);
+
+    if (typeof ctx.fillRect === 'function') {
+      // 85 - 100 Peak zone
+      ctx.fillStyle = palette.bandPeak;
+      ctx.fillRect(plotLeft, plotTop, plotWidth, y85 - plotTop);
+
+      // 70 - 85 Optimal growth zone
+      ctx.fillStyle = palette.bandGrowth;
+      ctx.fillRect(plotLeft, y85, plotWidth, y70 - y85);
+
+      // 55 - 70 Consolidation zone
+      ctx.fillStyle = palette.bandConsol;
+      ctx.fillRect(plotLeft, y70, plotWidth, y55 - y70);
     }
 
-    const midY = (height - marginY) - (1.8 / 3.6) * (height - marginY * 2);
-    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 4]);
-    ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.22)' : 'rgba(217, 119, 6, 0.25)';
-    ctx.beginPath();
-    ctx.moveTo(marginX - 20, midY);
-    ctx.lineTo(width - marginX + 20, midY);
-    ctx.stroke();
-    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+    // Horizontal gridlines & Y-axis labels
+    const gridYLevels = [
+      { score: 85, label: isEn ? '85 Peak' : '85分 爆发', y: y85 },
+      { score: 70, label: isEn ? '70 Growth' : '70分 顺风', y: y70 },
+      { score: 55, label: isEn ? '55 Steady' : '55分 蓄势', y: y55 }
+    ];
 
-    // 坐标轴说明
-    ctx.font = '9px monospace';
-    ctx.fillStyle = isDark ? 'rgba(148, 163, 184, 0.6)' : 'rgba(100, 116, 139, 0.8)';
-    ctx.textAlign = 'right';
-    ctx.fillText(isEn ? 'Ascent (+v)' : '动量上升 (+v)', marginX - 8, marginY + 12);
-    ctx.fillText(isEn ? 'Descent (-v)' : '阻尼下探 (-v)', marginX - 8, height - marginY - 6);
-    ctx.fillText(isEn ? 'Parity (v=0)' : '平衡态 (v=0)', marginX - 8, midY + 3);
-
-    ctx.textAlign = 'center';
-    ctx.fillText(isEn ? 'Displacement / Pattern Space (x)' : '势能位移与格局投射位 (x)', width / 2, height - 12);
-
-    // 4. 绘制 Track A 轨迹 (青蓝光弧 Cyan-Indigo)
-    if (trajA.length > 0) {
-      const ptsA = trajA.map(toScreen);
+    gridYLevels.forEach(lvl => {
+      ctx.save();
+      ctx.strokeStyle = palette.gridLine;
+      ctx.lineWidth = 1;
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 4]);
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
-      ctx.lineWidth = 6;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.moveTo(ptsA[0].sx, ptsA[0].sy);
-      for (let i = 1; i < ptsA.length; i++) ctx.lineTo(ptsA[i].sx, ptsA[i].sy);
+      ctx.moveTo(plotLeft - 10, lvl.y);
+      ctx.lineTo(plotRight, lvl.y);
       ctx.stroke();
+      ctx.restore();
 
+      ctx.font = 'bold 10px monospace';
+      ctx.fillStyle = palette.textMuted;
+      ctx.textAlign = 'right';
+      ctx.fillText(lvl.label, plotLeft - 12, lvl.y + 3);
+    });
+
+    // 5. Vertical Year Guidelines and Bottom Timeline
+    timeline.forEach((item, idx) => {
+      const cx = getColX(idx);
+
+      // Vertical guide line
+      ctx.save();
+      ctx.strokeStyle = palette.gridLine;
+      ctx.lineWidth = 1;
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([2, 4]);
       ctx.beginPath();
-      ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 2.5;
-      ctx.moveTo(ptsA[0].sx, ptsA[0].sy);
-      for (let i = 1; i < ptsA.length; i++) ctx.lineTo(ptsA[i].sx, ptsA[i].sy);
+      ctx.moveTo(cx, plotTop);
+      ctx.lineTo(cx, plotBottom);
       ctx.stroke();
+      ctx.restore();
 
-      ptsA.forEach((p, idx) => {
-        ctx.beginPath();
-        ctx.fillStyle = idx === 0 ? '#38bdf8' : (isDark ? '#e0f2fe' : '#0369a1');
-        ctx.arc(p.sx, p.sy, idx === 0 ? 5 : 3.5, 0, Math.PI * 2);
-        ctx.fill();
+      // Year Title (e.g. 2028 戊申)
+      ctx.font = 'bold 12px monospace';
+      ctx.fillStyle = palette.textMain;
+      ctx.textAlign = 'center';
+      const yrText = String(item.year);
+      ctx.fillText(yrText, cx, plotBottom + 18);
 
-        ctx.fillStyle = isDark ? '#7dd3fc' : '#0284c7';
-        ctx.font = 'bold 9px monospace';
-        ctx.fillText(`'${String(p.year).slice(2)}`, p.sx, p.sy - 8);
-      });
-    }
+      const subStem = isEn ? (item.pillarEn ? item.pillarEn.split(' ')[0] : '') : (item.pillarZh ? item.pillarZh.split(' ')[0] : '');
+      ctx.font = '10px font-sans';
+      ctx.fillStyle = palette.textMuted;
+      ctx.fillText(subStem, cx, plotBottom + 31);
 
-    // 5. 绘制 Track B 轨迹 (紫罗兰光弧 Purple-Fuchsia)
-    if (trajB.length > 0) {
-      const ptsB = trajB.map(toScreen);
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(192, 132, 252, 0.25)';
-      ctx.lineWidth = 6;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.moveTo(ptsB[0].sx, ptsB[0].sy);
-      for (let i = 1; i < ptsB.length; i++) ctx.lineTo(ptsB[i].sx, ptsB[i].sy);
-      ctx.stroke();
+      // Action Status Badge Pill
+      const isGold = (item.status === 'golden');
+      const isLock = (item.status === 'lockin');
 
-      ctx.beginPath();
-      ctx.strokeStyle = '#c084fc';
-      ctx.lineWidth = 2.5;
-      ctx.moveTo(ptsB[0].sx, ptsB[0].sy);
-      for (let i = 1; i < ptsB.length; i++) ctx.lineTo(ptsB[i].sx, ptsB[i].sy);
-      ctx.stroke();
-
-      ptsB.forEach((p, idx) => {
-        ctx.beginPath();
-        ctx.fillStyle = idx === 0 ? '#c084fc' : (isDark ? '#fae8ff' : '#7e22ce');
-        ctx.arc(p.sx, p.sy, idx === 0 ? 5 : 3.5, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = isDark ? '#d8b4fe' : '#9333ea';
-        ctx.font = 'bold 9px monospace';
-        ctx.fillText(`'${String(p.year).slice(2)}`, p.sx, p.sy + 14);
-      });
-    }
-
-    // 6. 绘制黄金跳轨分岔窗口 (Golden Bifurcation Fork Bridge)
-    if (golden && golden.year && trajA.length > 0 && trajB.length > 0) {
-      const nodeA = trajA.find(p => p.year === golden.year) || trajA[0];
-      const nodeB = trajB.find(p => p.year === golden.year) || trajB[0];
-      const pA = toScreen(nodeA);
-      const pB = toScreen(nodeB);
-
-      const cpx = (pA.sx + pB.sx) / 2 + 25;
-      const cpy = (pA.sy + pB.sy) / 2 - 35;
+      const pillW = isEn ? 92 : 82;
+      const pillH = 20;
+      const pillX = cx - pillW / 2;
+      const pillY = plotBottom + 38;
 
       ctx.save();
-      ctx.strokeStyle = '#fbbf24';
-      ctx.lineWidth = 2;
-      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([5, 3]);
       ctx.beginPath();
-      ctx.moveTo(pA.sx, pA.sy);
-      ctx.quadraticCurveTo(cpx, cpy, pB.sx, pB.sy);
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(pillX, pillY, pillW, pillH, 10);
+      } else if (typeof ctx.rect === 'function') {
+        ctx.rect(pillX, pillY, pillW, pillH);
+      }
+
+      if (isGold) {
+        ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.3)' : '#fef3c7';
+        ctx.fill();
+        ctx.strokeStyle = isDark ? '#fbbf24' : '#b45309';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.fillStyle = isDark ? '#fef08a' : '#78350f';
+        ctx.font = 'bold 9.5px font-sans';
+        ctx.fillText(isEn ? 'Leap Window' : '🚀 黄金跳轨', cx, pillY + 13);
+      } else if (isLock) {
+        ctx.fillStyle = isDark ? 'rgba(239, 68, 68, 0.25)' : '#fee2e2';
+        ctx.fill();
+        ctx.strokeStyle = isDark ? '#f87171' : '#dc2626';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = isDark ? '#fca5a5' : '#991b1b';
+        ctx.font = 'bold 9.5px font-sans';
+        ctx.fillText(isEn ? 'Hold Steady' : '⚠️ 坚守本轨', cx, pillY + 13);
+      } else {
+        ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : '#f1f5f9';
+        ctx.fill();
+        ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.15)' : '#cbd5e1';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = isDark ? '#cbd5e1' : '#475569';
+        ctx.font = '9.5px font-sans';
+        ctx.fillText(isEn ? 'Consolidate' : '🛡️ 稳态蓄力', cx, pillY + 13);
+      }
+      ctx.restore();
+    });
+
+    // 6. Helper to draw smooth curves
+    const drawTrackCurve = (points, strokeColor, fillColor) => {
+      if (!points || points.length === 0) return;
+      ctx.save();
+
+      // Translucent Area Fill
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, plotBottom);
+      ctx.lineTo(points[0].x, points[0].y);
+      for (let i = 0; i < points.length - 1; i++) {
+        const mx = (points[i].x + points[i + 1].x) / 2;
+        const my = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, mx, my);
+      }
+      ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+      ctx.lineTo(points[points.length - 1].x, plotBottom);
+      ctx.closePath();
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+
+      // Main Crisp Curve Line
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 0; i < points.length - 1; i++) {
+        const mx = (points[i].x + points[i + 1].x) / 2;
+        const my = (points[i].y + points[i + 1].y) / 2;
+        ctx.quadraticCurveTo(points[i].x, points[i].y, mx, my);
+      }
+      ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = 3.2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+      ctx.restore();
+    };
+
+    // Calculate node coordinates for Track A and Track B
+    const ptsA = trajA.map((pt, idx) => ({
+      x: getColX(idx),
+      y: getY(pt.score || (75 + (pt.v || 0) * 8)),
+      score: pt.score || Math.round(75 + (pt.v || 0) * 8),
+      year: pt.year
+    }));
+
+    const ptsB = trajB.map((pt, idx) => ({
+      x: getColX(idx),
+      y: getY(pt.score || (78 + (pt.v || 0) * 8)),
+      score: pt.score || Math.round(78 + (pt.v || 0) * 8),
+      year: pt.year
+    }));
+
+    // Draw Track A (Blue)
+    drawTrackCurve(ptsA, palette.trackA, palette.trackAGlow);
+
+    // Draw Track B (Purple)
+    drawTrackCurve(ptsB, palette.trackB, palette.trackBGlow);
+
+    // 7. Node Markers & Score Labels
+    // Track A Nodes
+    ptsA.forEach((p, idx) => {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = palette.trackA;
+      ctx.stroke();
+
+      // Score Text
+      ctx.font = 'bold 11px monospace';
+      ctx.fillStyle = palette.trackA;
+      ctx.textAlign = 'center';
+      // Shift text slightly above or below to prevent collision
+      const yOffset = (ptsB[idx] && Math.abs(ptsB[idx].y - p.y) < 18 && p.y > ptsB[idx].y) ? 16 : -10;
+      ctx.fillText(`${p.score}${isEn ? 'pts' : '分'}`, p.x, p.y + yOffset);
+      ctx.restore();
+    });
+
+    // Track B Nodes
+    ptsB.forEach((p, idx) => {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = palette.trackB;
+      ctx.stroke();
+
+      // Score Text
+      ctx.font = 'bold 11px monospace';
+      ctx.fillStyle = palette.trackB;
+      ctx.textAlign = 'center';
+      const yOffset = (ptsA[idx] && Math.abs(ptsA[idx].y - p.y) < 18 && p.y > ptsA[idx].y) ? 16 : -10;
+      ctx.fillText(`${p.score}${isEn ? 'pts' : '分'}`, p.x, p.y + yOffset);
+      ctx.restore();
+    });
+
+    // 8. Golden Bifurcation Leap Bridge (黄金跳轨天桥)
+    const goldenIdx = timeline.findIndex(t => t.status === 'golden');
+    if (goldenIdx !== -1 && ptsA[goldenIdx] && ptsB[goldenIdx]) {
+      const pA = ptsA[goldenIdx];
+      const pB = ptsB[goldenIdx];
+      const gx = pA.x;
+
+      ctx.save();
+      // Golden vertical dashed leap beam
+      ctx.strokeStyle = isDark ? '#fbbf24' : '#b45309';
+      ctx.lineWidth = 2.5;
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(gx, pA.y);
+      ctx.lineTo(gx, pB.y);
       ctx.stroke();
       if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
 
-      if (typeof ctx.createRadialGradient === 'function') {
-        const haloGrad = ctx.createRadialGradient(cpx, cpy, 2, cpx, cpy, 16);
-        haloGrad.addColorStop(0, 'rgba(251, 191, 36, 0.9)');
-        haloGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.35)');
-        haloGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
-        ctx.fillStyle = haloGrad;
-      } else {
-        ctx.fillStyle = 'rgba(251, 191, 36, 0.5)';
-      }
+      // Leap Arrowhead pointing toward the higher score
+      const isBHigher = (pB.score >= pA.score);
+      const targetY = isBHigher ? pB.y : pA.y;
+      const arrowDir = isBHigher ? -1 : 1;
+
       ctx.beginPath();
-      ctx.arc(cpx, cpy, 16, 0, Math.PI * 2);
+      ctx.moveTo(gx, targetY);
+      ctx.lineTo(gx - 5, targetY - arrowDir * 9);
+      ctx.lineTo(gx + 5, targetY - arrowDir * 9);
+      ctx.closePath();
+      ctx.fillStyle = isDark ? '#fbbf24' : '#b45309';
       ctx.fill();
 
-      const badgeText = isEn
-        ? `[Golden Transition Window (${golden.year}) · Friction ${golden.barrierScore} pts]`
-        : `【黄金跳轨分岔 (${golden.year}) · 阻抗 ${golden.barrierScore}分】`;
-      ctx.font = 'bold 10px "Noto Serif SC", serif';
-      ctx.fillStyle = '#fef08a';
-      ctx.textAlign = 'center';
-      ctx.fillText(badgeText, cpx, cpy - 8);
+      // Pulsing golden beacon ring on the winning node
+      ctx.beginPath();
+      ctx.arc(gx, targetY, 9, 0, Math.PI * 2);
+      ctx.strokeStyle = isDark ? 'rgba(251, 191, 36, 0.6)' : 'rgba(180, 83, 9, 0.6)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Floating Callout Badge next to leap arrow
+      const badgeW = isEn ? 190 : 160;
+      const badgeH = 46;
+      // Position to the left or right depending on column
+      const badgeX = goldenIdx >= 3 ? (gx - badgeW - 14) : (gx + 14);
+      const badgeY = Math.min(pA.y, pB.y) + Math.abs(pB.y - pA.y) / 2 - badgeH / 2;
+
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 8);
+      } else if (typeof ctx.rect === 'function') {
+        ctx.rect(badgeX, badgeY, badgeW, badgeH);
+      }
+      ctx.fillStyle = palette.goldenBoxBg;
+      ctx.fill();
+      ctx.strokeStyle = palette.goldenBoxBorder;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Badge Text Content
+      ctx.textAlign = 'left';
+      ctx.font = 'bold 11px font-sans';
+      ctx.fillStyle = palette.goldenText;
+      const yrHeader = isEn ? `Golden Leap Window (${golden.year})` : `🚀 黄金跳轨窗口 (${golden.year})`;
+      ctx.fillText(yrHeader, badgeX + 8, badgeY + 16);
+
+      ctx.font = '10px font-sans';
+      ctx.fillStyle = palette.goldenSubText;
+      const scoreDiff = Math.abs(pB.score - pA.score);
+      const subInfo = isEn ? `Lowest Friction (${golden.barrierScore}pts) · Delta +${scoreDiff}pts` : `阻抗最低 (${golden.barrierScore}分) · 动能跃迁 +${scoreDiff}分`;
+      ctx.fillText(subInfo, badgeX + 8, badgeY + 31);
       ctx.restore();
     }
 
-    // 7. 顶部图例说明 (Legend)
+    // 9. Top Navigation & Legend Bar
     ctx.save();
-    ctx.font = 'bold 10px sans-serif';
-    ctx.fillStyle = '#38bdf8';
+    // Track A Legend
     ctx.beginPath();
-    ctx.arc(marginX + 8, 22, 4, 0, Math.PI * 2);
+    ctx.arc(plotLeft + 6, 20, 5, 0, Math.PI * 2);
+    ctx.fillStyle = palette.trackA;
     ctx.fill();
+    ctx.font = 'bold 11px font-sans';
+    ctx.fillStyle = palette.trackA;
     ctx.textAlign = 'left';
-    ctx.fillText(isEn ? `Option A Track (λ=${bifurcationData.lyapunovA})` : `方案 A 轨迹 (λ=${bifurcationData.lyapunovA})`, marginX + 18, 25);
+    ctx.fillText(isEn ? 'Track A: Option A (Steady Base)' : '方案 A 轨迹 (稳健保底型)', plotLeft + 16, 23);
 
-    ctx.fillStyle = '#c084fc';
+    // Track B Legend
+    const midLegX = plotLeft + (isEn ? 210 : 180);
     ctx.beginPath();
-    ctx.arc(marginX + (isEn ? 210 : 190), 22, 4, 0, Math.PI * 2);
+    ctx.arc(midLegX + 6, 20, 5, 0, Math.PI * 2);
+    ctx.fillStyle = palette.trackB;
     ctx.fill();
-    ctx.fillText(isEn ? `Option B Track (λ=${bifurcationData.lyapunovB})` : `方案 B 轨迹 (λ=${bifurcationData.lyapunovB})`, marginX + (isEn ? 220 : 200), 25);
+    ctx.fillStyle = palette.trackB;
+    ctx.fillText(isEn ? 'Track B: Option B (Peak Upside)' : '方案 B 轨迹 (爆发成长型)', midLegX + 16, 23);
 
+    // Right-aligned strategic takeaway
     ctx.textAlign = 'right';
-    ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.7)' : 'rgba(217, 119, 6, 0.8)';
-    ctx.font = '9px monospace';
-    ctx.fillText(isEn ? 'Pearl SCM · Addey Wave Bifurcation' : 'Judea Pearl SCM · Addey 谐波分岔流形', width - marginX + 15, 25);
+    ctx.font = 'bold 11px font-sans';
+    ctx.fillStyle = isDark ? '#fbbf24' : '#b45309';
+    const topTip = isEn ? `Deployment: Consolidate in A -> Leap in ${golden.year || 2028}` : `🌟 推荐部署：先在 A 轨蓄力 ➔ ${golden.year || 2028} 顺势跳入 B 轨`;
+    ctx.fillText(topTip, plotRight, 23);
+
     ctx.restore();
+    ctx.restore(); // Restore high-dpi scale
   }
 }
 

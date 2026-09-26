@@ -3802,6 +3802,82 @@ body.light-theme .western-analysis-box .analysis-lbl-inference {
   color: #047857 !important;
 }
 
+/* Phase 3 Dual-Track Evolution & Bifurcation Panorama Light Mode Styling */
+[data-theme="light"] #simPhase3Section,
+html.light #simPhase3Section,
+body.light-theme #simPhase3Section {
+  background: #ffffff !important;
+  background-image: linear-gradient(to bottom, #ffffff, #fafaf9, #f8fafc) !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+}
 
+[data-theme="light"] #simPhase3Section .bg-black\/60,
+[data-theme="light"] #simPhase3Section .bg-black\/50,
+[data-theme="light"] #simPhase3Section .bg-black\/40,
+html.light #simPhase3Section .bg-black\/60,
+html.light #simPhase3Section .bg-black\/50,
+html.light #simPhase3Section .bg-black\/40,
+body.light-theme #simPhase3Section .bg-black\/60,
+body.light-theme #simPhase3Section .bg-black\/50,
+body.light-theme #simPhase3Section .bg-black\/40 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
 
+[data-theme="light"] #simPhase3Section .text-gray-300,
+[data-theme="light"] #simPhase3Section .text-gray-400,
+html.light #simPhase3Section .text-gray-300,
+html.light #simPhase3Section .text-gray-400,
+body.light-theme #simPhase3Section .text-gray-300,
+body.light-theme #simPhase3Section .text-gray-400 {
+  color: #475569 !important;
+}
 
+[data-theme="light"] #simPhase3Section .text-gray-100,
+html.light #simPhase3Section .text-gray-100,
+body.light-theme #simPhase3Section .text-gray-100 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] #simPhase3Section .text-amber-200,
+[data-theme="light"] #simPhase3Section .text-amber-300,
+html.light #simPhase3Section .text-amber-200,
+html.light #simPhase3Section .text-amber-300,
+body.light-theme #simPhase3Section .text-amber-200,
+body.light-theme #simPhase3Section .text-amber-300 {
+  color: #a16207 !important;
+}
+
+[data-theme="light"] #simPhase3Section .bg-amber-950\/40,
+[data-theme="light"] #simPhase3Section .bg-amber-950\/20,
+html.light #simPhase3Section .bg-amber-950\/40,
+html.light #simPhase3Section .bg-amber-950\/20,
+body.light-theme #simPhase3Section .bg-amber-950\/40,
+body.light-theme #simPhase3Section .bg-amber-950\/20 {
+  background-color: #fef3c7 !important;
+  border-color: #fde68a !important;
+}
+
+[data-theme="light"] #simPhase3Section .text-amber-200\/90,
+[data-theme="light"] #simPhase3Section .text-amber-100\/90,
+html.light #simPhase3Section .text-amber-200\/90,
+html.light #simPhase3Section .text-amber-100\/90,
+body.light-theme #simPhase3Section .text-amber-200\/90,
+body.light-theme #simPhase3Section .text-amber-100\/90 {
+  color: #854d0e !important;
+}
+
+[data-theme="light"] #simPhase3Section .bg-indigo-950\/30,
+html.light #simPhase3Section .bg-indigo-950\/30,
+body.light-theme #simPhase3Section .bg-indigo-950\/30 {
+  background-color: #eef2ff !important;
+  border-color: #c7d2fe !important;
+}
+
+[data-theme="light"] #simPhase3Section .bg-purple-950\/30,
+html.light #simPhase3Section .bg-purple-950\/30,
+body.light-theme #simPhase3Section .bg-purple-950\/30 {
+  background-color: #faf5ff !important;
+  border-color: #e9d5ff !important;
+}

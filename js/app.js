@@ -630,6 +630,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof currentLuckResult !== 'undefined' && currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
         drawChronoTimelineChart(currentLuckResult.timeline, typeof activeChronoAge !== 'undefined' ? activeChronoAge : 1);
       }
+      if (typeof window !== 'undefined' && window.__lastSimulationResult && window.__lastSimulationResult.bifurcationDynamics && typeof PhasePortraitEngine !== 'undefined' && typeof PhasePortraitEngine.renderDualTrackBifurcation === 'function') {
+        PhasePortraitEngine.renderDualTrackBifurcation('simBifurcationCanvas', window.__lastSimulationResult.bifurcationDynamics, newTheme === 'dark', currentLang);
+      }
     });
   }
 
@@ -11517,6 +11520,12 @@ document.addEventListener('DOMContentLoaded', () => {
           drawHexagramCycleChart(cachedIChingCycleData, fourPillarsActiveAge);
         }
       }
+      if (window.__lastSimulationResult && window.__lastSimulationResult.bifurcationDynamics && typeof PhasePortraitEngine !== 'undefined' && typeof PhasePortraitEngine.renderDualTrackBifurcation === 'function' && document.getElementById('simBifurcationCanvas')) {
+        const isDark = (typeof document !== 'undefined' && document.body && document.body.classList && typeof document.body.classList.contains === 'function')
+          ? !document.body.classList.contains('light-theme')
+          : true;
+        PhasePortraitEngine.renderDualTrackBifurcation('simBifurcationCanvas', window.__lastSimulationResult.bifurcationDynamics, isDark, currentLang);
+      }
     });
   }
 
@@ -18390,14 +18399,30 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
 
-          <!-- 2.5D Phase Space Bifurcation Canvas -->
+          <!-- Plain-Language Strategic Takeaway Banner -->
+          <div class="p-4 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-950/40 via-amber-900/20 to-black/50 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs sm:text-sm font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                <span>💡</span>
+                <span>${isEn ? 'Strategic Advisory · Executive Action Roadmap' : '战略军师 · 终极破局路线图（白话直接指令）'}</span>
+              </span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
+                ${isEn ? 'ACTIONABLE PLAYBOOK' : '实操执行指令'}
+              </span>
+            </div>
+            <p class="text-xs sm:text-[13px] text-amber-100/90 leading-relaxed font-sans font-medium">
+              ${isEn ? (simRes.bifurcationDynamics.strategicPlaybookEn || '') : (simRes.bifurcationDynamics.strategicPlaybookZh || '')}
+            </p>
+          </div>
+
+          <!-- Dual-Track 5-Year Evolution & Bifurcation Leap Panorama Canvas -->
           <div class="space-y-2">
             <div class="flex items-center justify-between text-xs text-gray-300 px-1">
               <span class="font-bold flex items-center gap-1.5 text-amber-200 font-serif-sc">
                 <span>🌌</span>
-                <span>${isEn ? '2.5D Phase Space Dual-Track Manifold (2026-2030 Horizon)' : '2.5D 双轨相空间流形与黄金跳轨分岔仪 (2026-2030 时空视界)'}</span>
+                <span>${isEn ? 'Dual-Track 5-Year Evolution & Bifurcation Leap Panorama (2026-2030 Horizon)' : '双轨五年时空演化与分岔跃迁全景仪 (2026-2030 时空视界)'}</span>
               </span>
-              <span class="text-[11px] text-gray-400 font-mono">${isEn ? 'Vector Streamline Projection' : '流线矢量场投影'}</span>
+              <span class="text-[11px] text-gray-400 font-mono">${isEn ? 'Momentum Trajectory & Golden Leap' : '双轨势能走势与黄金跃迁窗口'}</span>
             </div>
             <div class="relative w-full rounded-xl overflow-hidden border border-gray-800 bg-black/60 shadow-inner">
               <canvas id="simBifurcationCanvas" width="800" height="360" class="w-full h-64 sm:h-72 block"></canvas>
@@ -18542,6 +18567,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       ` : ''}
     `;
+
+    if (typeof window !== 'undefined') {
+      window.__lastSimulationResult = simRes;
+    }
 
     if (simRes.bifurcationDynamics && typeof PhasePortraitEngine !== 'undefined' && PhasePortraitEngine.renderDualTrackBifurcation) {
       const isDark = (typeof document !== 'undefined' && document.body && document.body.classList && typeof document.body.classList.contains === 'function')
