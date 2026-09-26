@@ -3038,29 +3038,71 @@
       <span data-i18n="btn_exit_fullscreen_career">退出全屏</span>
     </button>
 
-    <!-- Career Dedicated Sub-Tabs Navigation Toolbar (职场三大高维破局中枢) -->
-    <div class="px-5 py-3 border border-indigo-900/60 bg-[#121422] rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xl">
-      <div class="flex items-center space-x-2">
-        <span class="text-xs font-bold text-indigo-400 font-serif-sc" data-i18n="career_subpage_nav_label">💼 职场三大破局中枢：</span>
-        <div id="careerSubTabsContainer" class="flex flex-wrap gap-2 text-xs">
-          <button type="button" class="career-sub-tab-btn active px-3.5 py-1.5 rounded-xl border border-indigo-500/60 bg-indigo-950/70 text-indigo-200 font-medium transition cursor-pointer flex items-center gap-1.5 shadow-sm" data-career-tab="career-tab-overview">
-            <span>👔</span>
-            <span data-i18n="career_tab_title_overview">职场全相与财运推演</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-indigo-500/20 text-indigo-300 font-mono" data-i18n="career_tab_badge_overview">身命破局</span>
-          </button>
-          <button type="button" class="career-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-career-tab="view-simulator">
-            <span>⚖️</span>
-            <span data-i18n="career_tab_title_simulator">现实决策 · 双轨对抗推演沙盘</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 font-mono" data-i18n="career_tab_badge_simulator">胜负对决</span>
-          </button>
-          <button type="button" class="career-sub-tab-btn px-3.5 py-1.5 rounded-xl border border-gray-800 bg-gray-900/60 text-gray-400 hover:text-gray-200 transition cursor-pointer flex items-center gap-1.5" data-career-tab="career-tab-matrix">
-            <span>♟️</span>
-            <span data-i18n="career_tab_title_matrix">组织多方博弈政治矩阵</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-mono" data-i18n="career_tab_badge_matrix">权力克应</span>
-          </button>
+    <!-- Career Dedicated Sub-Tabs Navigation Toolbar (职场三大高维破局中枢 · 高显色卡片式中枢) -->
+    <div class="p-4 sm:p-5 border-2 border-indigo-500/50 bg-gradient-to-r from-[#111425] via-[#161a33] to-[#121427] rounded-2xl shadow-2xl relative overflow-hidden ring-1 ring-indigo-400/30 space-y-4">
+      <!-- Glow ambient backdrop -->
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Hub Header Title Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-indigo-900/60 relative z-10">
+        <div class="flex items-center space-x-2.5">
+          <span class="chinese-seal text-xs py-0.5 border-amber-400 text-amber-300 font-bold shadow-sm">破局中枢</span>
+          <h3 class="text-sm sm:text-base font-bold font-serif-sc text-indigo-100 flex items-center gap-1.5">
+            <span class="text-base sm:text-lg">💼</span>
+            <span data-i18n="career_subpage_nav_label">职场三大高维破局中枢：</span>
+          </h3>
+          <span class="hidden sm:inline-flex items-center gap-1 text-[11px] text-emerald-400 bg-emerald-950/70 border border-emerald-600/40 px-2 py-0.5 rounded-full font-mono">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>DIRECT ACCESS</span>
+          </span>
         </div>
+        <div class="text-[11px] sm:text-xs text-indigo-300/80 font-mono" data-i18n="career_subpage_note">三大高维决策中枢 · 毫秒级直达推演</div>
       </div>
-      <div class="text-[11px] text-gray-400 font-mono" data-i18n="career_subpage_note">对标十二大典独立副页面架构 · 快捷直达</div>
+
+      <!-- Prominent 3-Column Card Subtabs -->
+      <div id="careerSubTabsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-3.5 relative z-10">
+        <!-- Card 1: 职场全相与财运推演 -->
+        <button type="button" class="career-sub-tab-btn active text-left p-3.5 sm:p-4 rounded-xl border-2 border-indigo-400 bg-gradient-to-br from-indigo-900/90 via-indigo-950 to-blue-950 text-white shadow-xl shadow-indigo-950/80 ring-2 ring-indigo-500/50 transition-all duration-200 cursor-pointer flex flex-col justify-between gap-2 group hover:scale-[1.01]" data-career-tab="career-tab-overview">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl sm:text-2xl p-1.5 rounded-lg bg-indigo-950 border border-indigo-700/50">👔</span>
+              <span class="text-xs sm:text-sm font-bold font-serif-sc text-indigo-100 group-hover:text-white" data-i18n="career_tab_title_overview">职场全相与财运推演</span>
+            </div>
+            <span class="career-tab-badge text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 border border-indigo-400/40 font-mono font-bold whitespace-nowrap" data-i18n="career_tab_badge_overview">身命破局</span>
+          </div>
+          <p class="text-[11px] text-indigo-200/80 leading-relaxed font-sans line-clamp-1" data-i18n="career_tab_desc_overview">
+            向上管理 · 同僚防火墙 · 正偏财时序
+          </p>
+        </button>
+
+        <!-- Card 2: 现实决策 · 双轨对抗推演沙盘 -->
+        <button type="button" class="career-sub-tab-btn text-left p-3.5 sm:p-4 rounded-xl border border-indigo-900/60 bg-[#0f1222]/90 text-gray-300 hover:text-white hover:border-amber-500/50 hover:bg-[#181d36] shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between gap-2 group hover:scale-[1.01]" data-career-tab="view-simulator">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl sm:text-2xl p-1.5 rounded-lg bg-amber-950/60 border border-amber-700/40">⚖️</span>
+              <span class="text-xs sm:text-sm font-bold font-serif-sc text-amber-200 group-hover:text-amber-100" data-i18n="career_tab_title_simulator">现实决策 · 双轨对抗推演沙盘</span>
+            </div>
+            <span class="career-tab-badge text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono font-bold whitespace-nowrap" data-i18n="career_tab_badge_simulator">胜负对决</span>
+          </div>
+          <p class="text-[11px] text-gray-400 group-hover:text-amber-200/80 leading-relaxed font-sans line-clamp-1" data-i18n="career_tab_desc_simulator">
+            方案A/B胜负对抗 · 胜率能耗比 · 地理风水
+          </p>
+        </button>
+
+        <!-- Card 3: 组织多方博弈政治矩阵 -->
+        <button type="button" class="career-sub-tab-btn text-left p-3.5 sm:p-4 rounded-xl border border-indigo-900/60 bg-[#0f1222]/90 text-gray-300 hover:text-white hover:border-purple-500/50 hover:bg-[#181d36] shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between gap-2 group hover:scale-[1.01]" data-career-tab="career-tab-matrix">
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl sm:text-2xl p-1.5 rounded-lg bg-purple-950/60 border border-purple-700/40">♟️</span>
+              <span class="text-xs sm:text-sm font-bold font-serif-sc text-purple-200 group-hover:text-purple-100" data-i18n="career_tab_title_matrix">组织多方博弈政治矩阵</span>
+            </div>
+            <span class="career-tab-badge text-[10px] px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-mono font-bold whitespace-nowrap" data-i18n="career_tab_badge_matrix">权力克应</span>
+          </div>
+          <p class="text-[11px] text-gray-400 group-hover:text-purple-200/80 leading-relaxed font-sans line-clamp-1" data-i18n="career_tab_desc_matrix">
+            3~5人非零和网络 · 十神有向权力图
+          </p>
+        </button>
+      </div>
     </div>
 
     <!-- Career Sub-Pane 1: 职场全相与财运推演 -->

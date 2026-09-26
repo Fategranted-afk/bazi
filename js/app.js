@@ -11835,17 +11835,60 @@ document.addEventListener('DOMContentLoaded', () => {
   const careerSubTabBtns = document.querySelectorAll('.career-sub-tab-btn');
   const careerSubPanes = document.querySelectorAll('.career-subpage-pane');
 
+  const careerSubTabThemes = {
+    'career-tab-overview': {
+      activeBorder: 'border-indigo-400',
+      activeBg: 'bg-gradient-to-br from-indigo-900/90 via-indigo-950 to-blue-950',
+      activeRing: 'ring-2 ring-indigo-500/50 shadow-xl shadow-indigo-950/80',
+      activeText: 'text-white',
+      badgeActive: 'bg-indigo-500/40 text-indigo-100 border-indigo-300 font-bold',
+      badgeInactive: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30'
+    },
+    'view-simulator': {
+      activeBorder: 'border-amber-400',
+      activeBg: 'bg-gradient-to-br from-amber-950/90 via-indigo-950 to-amber-900/80',
+      activeRing: 'ring-2 ring-amber-500/50 shadow-xl shadow-amber-950/80',
+      activeText: 'text-white',
+      badgeActive: 'bg-amber-500/40 text-amber-100 border-amber-300 font-bold animate-pulse',
+      badgeInactive: 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+    },
+    'career-tab-matrix': {
+      activeBorder: 'border-purple-400',
+      activeBg: 'bg-gradient-to-br from-purple-900/90 via-indigo-950 to-purple-950',
+      activeRing: 'ring-2 ring-purple-500/50 shadow-xl shadow-purple-950/80',
+      activeText: 'text-white',
+      badgeActive: 'bg-purple-500/40 text-purple-100 border-purple-300 font-bold',
+      badgeInactive: 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+    }
+  };
+
   function switchCareerSubTab(targetTabId) {
     const btns = document.querySelectorAll('.career-sub-tab-btn');
     if (btns && btns.length) {
       btns.forEach(b => {
-        const isMatch = (b.getAttribute('data-career-tab') === targetTabId);
+        const tabKey = b.getAttribute('data-career-tab');
+        const isMatch = (tabKey === targetTabId);
+        const theme = careerSubTabThemes[tabKey] || careerSubTabThemes['career-tab-overview'];
+        const badgeEl = b.querySelector ? b.querySelector('.career-tab-badge') : null;
+
         if (isMatch) {
-          b.classList.add('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
-          b.classList.remove('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+          b.classList.add('active', 'border-2', theme.activeBorder, theme.activeText);
+          theme.activeBg.split(' ').forEach(cls => b.classList.add(cls));
+          theme.activeRing.split(' ').forEach(cls => b.classList.add(cls));
+          b.classList.remove('border-indigo-900/60', 'bg-[#0f1222]/90', 'text-gray-300');
+          if (badgeEl && badgeEl.classList) {
+            theme.badgeInactive.split(' ').forEach(c => badgeEl.classList.remove(c));
+            theme.badgeActive.split(' ').forEach(c => badgeEl.classList.add(c));
+          }
         } else {
-          b.classList.remove('active', 'border-indigo-500/60', 'bg-indigo-950/70', 'text-indigo-200');
-          b.classList.add('border-gray-800', 'bg-gray-900/60', 'text-gray-400');
+          b.classList.remove('active', 'border-2', theme.activeBorder, theme.activeText);
+          theme.activeBg.split(' ').forEach(cls => b.classList.remove(cls));
+          theme.activeRing.split(' ').forEach(cls => b.classList.remove(cls));
+          b.classList.add('border-indigo-900/60', 'bg-[#0f1222]/90', 'text-gray-300');
+          if (badgeEl && badgeEl.classList) {
+            theme.badgeActive.split(' ').forEach(c => badgeEl.classList.remove(c));
+            theme.badgeInactive.split(' ').forEach(c => badgeEl.classList.add(c));
+          }
         }
       });
     }
