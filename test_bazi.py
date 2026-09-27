@@ -1065,6 +1065,15 @@ if 'data-filter="offensive"' not in index_html_src:
   raise AssertionError("Missing data-filter=offensive in index.html")
 if 'data-filter="defensive"' not in index_html_src:
   raise AssertionError("Missing data-filter=defensive in index.html")
+if 'id="homeTianjiCalendarPortal"' not in index_html_src:
+  raise AssertionError("Missing #homeTianjiCalendarPortal in index.html")
+if 'id="btnJumpToTianjiFromHome"' not in index_html_src:
+  raise AssertionError("Missing #btnJumpToTianjiFromHome in index.html")
+
+tianji_pos = index_html_src.find('id="tianjiCalendarFeedSection"')
+chrono_pos = index_html_src.find('id="masterProfileChronoSection"')
+if tianji_pos == -1 or chrono_pos == -1 or tianji_pos >= chrono_pos:
+  raise AssertionError(f"Expected #tianjiCalendarFeedSection ({tianji_pos}) to precede #masterProfileChronoSection ({chrono_pos}) in index.html")
 
 
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")

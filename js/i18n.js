@@ -334,6 +334,9 @@ const I18N = (function() {
       feed_btn_google: "Google 日历",
       feed_btn_single_ics: "导入日历 (.ics)",
       feed_label_directive: "战术行持：",
+      feed_home_portal_title: "天机·个人进退节律历已就绪 (RFC 5545)",
+      feed_home_portal_desc: "全年精选 24 个高势能跃迁拐点日与攻防决策窗口，已生成于「👑 主画像」推演系统上方",
+      feed_btn_jump_to_master: "前往主画像查看节律历 ➔",
 
       // Chrono-Navigator
       chrono_title: "百岁运势时空罗盘 (Lifelong Chrono-Navigator)",
@@ -1339,6 +1342,9 @@ const I18N = (function() {
       feed_btn_google: "Google Cal",
       feed_btn_single_ics: "Add to Cal (.ics)",
       feed_label_directive: "Tactical Directive: ",
+      feed_home_portal_title: "Tianji Battle Rhythm Calendar Ready (RFC 5545)",
+      feed_home_portal_desc: "Curated 24 high-amplitude turning points & decision windows, placed directly above Progression System in Master Profile",
+      feed_btn_jump_to_master: "Go to Master Profile Calendar ➔",
 
       // Chrono-Navigator
       chrono_title: "Lifelong Chrono-Navigator (Age 1-100 Interactive Fortune Compass)",

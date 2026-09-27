@@ -10227,6 +10227,22 @@ document.addEventListener('DOMContentLoaded', () => {
   let cachedTianjiEvents = null;
   let activeTianjiFilter = 'all';
 
+  function ensureTianjiCalendarPlacement(targetViewId) {
+    const calendarEl = document.getElementById('tianjiCalendarFeedSection');
+    if (!calendarEl) return;
+    if (targetViewId === 'view-master-profile') {
+      const chronoSec = document.getElementById('masterProfileChronoSection');
+      if (chronoSec && chronoSec.parentNode && calendarEl.nextSibling !== chronoSec) {
+        chronoSec.parentNode.insertBefore(calendarEl, chronoSec);
+      }
+    } else if (targetViewId === 'view-luck') {
+      const luckSec = document.getElementById('luckCyclesSection');
+      if (luckSec && luckSec.parentNode && calendarEl.nextSibling !== luckSec) {
+        luckSec.parentNode.insertBefore(calendarEl, luckSec);
+      }
+    }
+  }
+
   function renderTianjiCalendarFeed(res, luckRes) {
     if (typeof CalendarFeedEngine === 'undefined') return;
     const isEn = (currentLang === 'en');
@@ -11534,12 +11550,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // If switching to master profile view, refresh master profile & chrono canvas
-    if (targetViewId === 'view-master-profile' && currentBaziResult) {
-      if (typeof renderMasterProfile === 'function') {
-        renderMasterProfile(currentBaziResult);
+    if (targetViewId === 'view-master-profile') {
+      if (typeof ensureTianjiCalendarPlacement === 'function') {
+        ensureTianjiCalendarPlacement('view-master-profile');
       }
-      if (currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
-        setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
+      if (currentBaziResult) {
+        if (typeof renderMasterProfile === 'function') {
+          renderMasterProfile(currentBaziResult);
+        }
+        if (typeof renderTianjiCalendarFeed === 'function') {
+          renderTianjiCalendarFeed(currentBaziResult, currentLuckResult);
+        }
+        if (currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
+          setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
+        }
       }
     }
 
@@ -11562,6 +11586,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If switching to luck view, refresh Chrono-Navigator canvas, Phase Portrait, Tianji Feed, & Four Pillars Hexagrams / Cycle Progression
     if (targetViewId === 'view-luck') {
+      if (typeof ensureTianjiCalendarPlacement === 'function') {
+        ensureTianjiCalendarPlacement('view-luck');
+      }
       if (currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
         setTimeout(() => drawChronoTimelineChart(currentLuckResult.timeline, activeChronoAge), 60);
       }
@@ -11730,6 +11757,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnJumpToHomeFromSimulator = document.getElementById('btnJumpToHomeFromSimulator');
   if (btnJumpToHomeFromSimulator) {
     btnJumpToHomeFromSimulator.addEventListener('click', () => switchPrimaryView('view-home'));
+  }
+
+  // Jump from Home view portal to Master Profile Tianji Battle Rhythm Calendar
+  const btnJumpToTianjiFromHome = document.getElementById('btnJumpToTianjiFromHome');
+  if (btnJumpToTianjiFromHome && !btnJumpToTianjiFromHome._hasClickListener) {
+    btnJumpToTianjiFromHome._hasClickListener = true;
+    btnJumpToTianjiFromHome.addEventListener('click', () => {
+      switchPrimaryView('view-master-profile');
+      setTimeout(() => {
+        const feedSec = document.getElementById('tianjiCalendarFeedSection');
+        if (feedSec && typeof feedSec.scrollIntoView === 'function') {
+          feedSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 80);
+    });
   }
 
   // Geographic & Workplace Resonance Jump Buttons
@@ -22273,6 +22315,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Section 1: Primary Dominant Pattern (第一主要的格局 · 简单描述与二八攻防)
     renderMasterProfilePattern(activeRes, isEn);
+
+    // Tianji Battle Rhythm Calendar · RFC 5545 (天机·个人进退节律历 · 放在岁运流转上方)
+    if (typeof ensureTianjiCalendarPlacement === 'function') {
+      ensureTianjiCalendarPlacement('view-master-profile');
+    }
+    if (typeof renderTianjiCalendarFeed === 'function') {
+      renderTianjiCalendarFeed(activeRes, currentLuckResult);
+    }
 
     // Section 2: Time-Space Progression System (岁运流转 · 大运流年流月流日全阶推演系统)
     renderMasterProfileChrono(activeRes, isEn);

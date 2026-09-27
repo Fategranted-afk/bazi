@@ -662,6 +662,82 @@
         <!-- Dynamically injected via JavaScript: renderMasterProfile -->
       </section>
 
+      <!-- Tianji Battle Rhythm Calendar · RFC 5545 (天机·个人进退节律历) -->
+      <section id="tianjiCalendarFeedSection" class="bg-card rounded-2xl border border-indigo-500/40 p-5 sm:p-6 shadow-2xl space-y-4 bg-gradient-to-br from-[#121424] via-[#0f101c] to-black">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">📅</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold font-serif-sc text-indigo-300 flex items-center gap-2">
+                <span data-i18n="feed_title">天机·个人进退节律历 (Tianji Battle Rhythm Calendar · RFC 5545)</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">RFC 5545</span>
+              </h3>
+              <p class="text-xs text-gray-400 mt-0.5" data-i18n="feed_sub">
+                全年精选 24 个高势能跃迁拐点日与攻防决策窗口，原生支持导入 iPhone / Mac / Google Calendar
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnDownloadTianjiICS" type="button" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs shadow-md transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+              <span data-i18n="feed_btn_download_ics">📥 下载全年生效日历 (.ics)</span>
+            </button>
+            <button id="btnCopyWebcalUrl" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-indigo-300 border border-indigo-500/40 text-xs font-bold transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+              <span data-i18n="feed_btn_copy_webcal">📲 复制订阅链接</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Calendar Energy Stat Badges -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+          <div class="p-3 rounded-xl bg-indigo-950/30 border border-indigo-500/30 text-center">
+            <span class="text-xs text-indigo-300 block" data-i18n="feed_stat_total">全年决策拐点</span>
+            <span id="feedStatTotal" class="text-xl font-bold font-mono text-indigo-200">24</span>
+          </div>
+          <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-center">
+            <span class="text-xs text-emerald-300 block" data-i18n="feed_stat_offensive">顺势进取窗口</span>
+            <span id="feedStatOffensive" class="text-xl font-bold font-mono text-emerald-200">6</span>
+          </div>
+          <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-center">
+            <span class="text-xs text-rose-300 block" data-i18n="feed_stat_defensive">防御避险关口</span>
+            <span id="feedStatDefensive" class="text-xl font-bold font-mono text-rose-200">6</span>
+          </div>
+          <div class="p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 text-center">
+            <span class="text-xs text-purple-300 block" data-i18n="feed_stat_wisdom_wealth">慧光与财运流</span>
+            <span id="feedStatWisdomWealth" class="text-xl font-bold font-mono text-purple-200">12</span>
+          </div>
+        </div>
+
+        <!-- Category Filter Tabs Toolbar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gray-800/80">
+          <div id="tianjiFilterTabs" class="flex flex-wrap gap-1.5 text-xs">
+            <button type="button" data-filter="all" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold shadow transition cursor-pointer">
+              <span data-i18n="feed_filter_all">全部</span> (<span id="tianjiCountAll">24</span>)
+            </button>
+            <button type="button" data-filter="offensive" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-emerald-500/30 font-semibold transition cursor-pointer">
+              <span data-i18n="feed_filter_offensive">🟢 顺势进取</span> (<span id="tianjiCountOffensive">6</span>)
+            </button>
+            <button type="button" data-filter="defensive" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-rose-500/30 font-semibold transition cursor-pointer">
+              <span data-i18n="feed_filter_defensive">🔴 防御避险</span> (<span id="tianjiCountDefensive">6</span>)
+            </button>
+            <button type="button" data-filter="wisdom" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-purple-500/30 font-semibold transition cursor-pointer">
+              <span data-i18n="feed_filter_wisdom">💡 文昌贵人</span> (<span id="tianjiCountWisdom">6</span>)
+            </button>
+            <button type="button" data-filter="wealth" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-amber-500/30 font-semibold transition cursor-pointer">
+              <span data-i18n="feed_filter_wealth">💰 财运转化</span> (<span id="tianjiCountWealth">6</span>)
+            </button>
+          </div>
+          <div class="text-[11px] text-gray-400 flex items-center gap-1 font-mono">
+            <span>🔔</span>
+            <span data-i18n="feed_alarm_hint">晚 20:00 自动推送次日战术锦囊 (VALARM)</span>
+          </div>
+        </div>
+
+        <!-- Critical Events List Container -->
+        <div id="tianjiEventsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
+          <!-- Injected via JS -->
+        </div>
+      </section>
+
       <!-- Section 2: Time-Space Progression System (岁运流转 · 大运流年流月流日全阶推演系统) -->
       <section id="masterProfileChronoSection" class="space-y-6">
         <!-- Five Pillars Synergy Bar & Progression Header -->
@@ -780,6 +856,28 @@
           <!-- Injected via JavaScript -->
         </div>
       </section>
+
+      <!-- Tianji Battle Rhythm Calendar Quick Portal Bar (天机·进退节律历快捷入口) -->
+      <div id="homeTianjiCalendarPortal" class="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-black/60 border border-indigo-500/40 shadow-xl flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">📅</span>
+          <div>
+            <div class="flex items-center gap-2">
+              <h4 class="text-xs sm:text-sm font-bold text-indigo-300 font-serif-sc" data-i18n="feed_home_portal_title">
+                天机·个人进退节律历已就绪 (RFC 5545)
+              </h4>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono">24 拐点</span>
+            </div>
+            <p class="text-[11px] text-gray-400 mt-0.5" data-i18n="feed_home_portal_desc">
+              全年精选 24 个高势能跃迁拐点日与攻防决策窗口，已生成于「👑 主画像」推演系统上方
+            </p>
+          </div>
+        </div>
+        <button id="btnJumpToTianjiFromHome" type="button" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs shadow-md transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+          <span>👑</span>
+          <span data-i18n="feed_btn_jump_to_master">前往主画像查看节律历 ➔</span>
+        </button>
+      </div>
 
       <!-- Birth Time Sensitivity & Structural Stability Section (生时临界微扰与结构稳定性) -->
       <section id="sensitivityStatusSection" class="p-4 sm:p-5 rounded-2xl bg-card border border-amber-600/30 shadow-lg transition space-y-3">
@@ -1641,81 +1739,8 @@
 
   <!-- View 4: Luck & Fortune Cycles (大运 / 流年 / 流月 / 流日) -->
   <div id="view-luck" class="space-y-6 hidden">
-    <!-- Tianji Battle Rhythm Calendar · RFC 5545 (天机·个人进退节律历) -->
-    <section id="tianjiCalendarFeedSection" class="bg-card rounded-2xl border border-indigo-500/40 p-5 sm:p-6 shadow-2xl space-y-4 bg-gradient-to-br from-[#121424] via-[#0f101c] to-black">
-      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
-        <div class="flex items-center space-x-2.5">
-          <span class="text-2xl">📅</span>
-          <div>
-            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-indigo-300 flex items-center gap-2">
-              <span data-i18n="feed_title">天机·个人进退节律历 (Tianji Battle Rhythm Calendar · RFC 5545)</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">RFC 5545</span>
-            </h3>
-            <p class="text-xs text-gray-400 mt-0.5" data-i18n="feed_sub">
-              全年精选 24 个高势能跃迁拐点日与攻防决策窗口，原生支持导入 iPhone / Mac / Google Calendar
-            </p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="btnDownloadTianjiICS" type="button" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs shadow-md transition cursor-pointer active:scale-95 flex items-center gap-1.5">
-            <span data-i18n="feed_btn_download_ics">📥 下载全年生效日历 (.ics)</span>
-          </button>
-          <button id="btnCopyWebcalUrl" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-indigo-300 border border-indigo-500/40 text-xs font-bold transition cursor-pointer active:scale-95 flex items-center gap-1.5">
-            <span data-i18n="feed_btn_copy_webcal">📲 复制订阅链接</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Calendar Energy Stat Badges -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-        <div class="p-3 rounded-xl bg-indigo-950/30 border border-indigo-500/30 text-center">
-          <span class="text-xs text-indigo-300 block" data-i18n="feed_stat_total">全年决策拐点</span>
-          <span id="feedStatTotal" class="text-xl font-bold font-mono text-indigo-200">24</span>
-        </div>
-        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-center">
-          <span class="text-xs text-emerald-300 block" data-i18n="feed_stat_offensive">顺势进取窗口</span>
-          <span id="feedStatOffensive" class="text-xl font-bold font-mono text-emerald-200">6</span>
-        </div>
-        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-center">
-          <span class="text-xs text-rose-300 block" data-i18n="feed_stat_defensive">防御避险关口</span>
-          <span id="feedStatDefensive" class="text-xl font-bold font-mono text-rose-200">6</span>
-        </div>
-        <div class="p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 text-center">
-          <span class="text-xs text-purple-300 block" data-i18n="feed_stat_wisdom_wealth">慧光与财运流</span>
-          <span id="feedStatWisdomWealth" class="text-xl font-bold font-mono text-purple-200">12</span>
-        </div>
-      </div>
-
-      <!-- Category Filter Tabs Toolbar -->
-      <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gray-800/80">
-        <div id="tianjiFilterTabs" class="flex flex-wrap gap-1.5 text-xs">
-          <button type="button" data-filter="all" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold shadow transition cursor-pointer">
-            <span data-i18n="feed_filter_all">全部</span> (<span id="tianjiCountAll">24</span>)
-          </button>
-          <button type="button" data-filter="offensive" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-emerald-500/30 font-semibold transition cursor-pointer">
-            <span data-i18n="feed_filter_offensive">🟢 顺势进取</span> (<span id="tianjiCountOffensive">6</span>)
-          </button>
-          <button type="button" data-filter="defensive" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-rose-500/30 font-semibold transition cursor-pointer">
-            <span data-i18n="feed_filter_defensive">🔴 防御避险</span> (<span id="tianjiCountDefensive">6</span>)
-          </button>
-          <button type="button" data-filter="wisdom" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-purple-500/30 font-semibold transition cursor-pointer">
-            <span data-i18n="feed_filter_wisdom">💡 文昌贵人</span> (<span id="tianjiCountWisdom">6</span>)
-          </button>
-          <button type="button" data-filter="wealth" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-amber-500/30 font-semibold transition cursor-pointer">
-            <span data-i18n="feed_filter_wealth">💰 财运转化</span> (<span id="tianjiCountWealth">6</span>)
-          </button>
-        </div>
-        <div class="text-[11px] text-gray-400 flex items-center gap-1 font-mono">
-          <span>🔔</span>
-          <span data-i18n="feed_alarm_hint">晚 20:00 自动推送次日战术锦囊 (VALARM)</span>
-        </div>
-      </div>
-
-      <!-- Critical Events List Container -->
-      <div id="tianjiEventsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-1">
-        <!-- Injected via JS -->
-      </div>
-    </section>
+    <!-- Dynamic Tianji Calendar Anchor for View Luck -->
+    <div id="luckTianjiCalendarAnchor"></div>
 
     <!-- Luck & Fortune Cycles Section (大运、流年、流月、流日 四阶全息推演) -->
     <section id="luckCyclesSection" class="bg-card rounded-2xl border border-border-color p-5 shadow-2xl space-y-6">
