@@ -1899,6 +1899,29 @@
             <div id="phaseTrajectorySummary" class="p-2.5 rounded-lg bg-[#161824] border border-amber-900/30 text-[11px] text-gray-300 leading-relaxed font-sans">
               动力学参数根据原局子平量化评分与当值大运自动绑定，相轨迹平滑穿行于势能井。
             </div>
+
+            <!-- Mathematical & Metaphysical Rationale Collapsible -->
+            <details class="rounded-lg bg-black/40 border border-gray-800/80 p-2.5 text-[11px] text-gray-400 group">
+              <summary class="font-bold text-amber-300/90 hover:text-amber-200 cursor-pointer flex items-center justify-between select-none">
+                <span class="flex items-center gap-1.5">
+                  <span>📐</span>
+                  <span data-i18n="phase_rationale_title">基准推导与数理命理映射全解</span>
+                </span>
+                <span class="text-[10px] font-mono text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <div class="mt-2 space-y-2 leading-relaxed border-t border-gray-800/60 pt-2 text-[10.5px]">
+                <div>
+                  <span class="text-amber-400 font-mono font-bold">V(x) = (a/4)x⁴ - (b/2)x² - cx</span>
+                  <p class="mt-0.5 text-gray-300" data-i18n="phase_rationale_formula">达芬双稳态振子与朗道相变势能井模型，x以子平50分中和为基准原点 (x₀=(Score-50)/35)。</p>
+                </div>
+                <div class="space-y-1">
+                  <div><strong class="text-amber-300" data-i18n="phase_rationale_a_lbl">a (刚度):</strong> <span data-i18n="phase_rationale_a_val">0.85 + (|Score-50|/100)×0.80。偏离中和越大抗形变自持力越强，井壁越陡峭。</span></div>
+                  <div><strong class="text-amber-300" data-i18n="phase_rationale_b_lbl">b (分岔):</strong> <span data-i18n="phase_rationale_b_val">0.40 + (|Score-50|/50)×0.75。自发对称破缺产生双井吸引子，决定跃迁爆发潜质。</span></div>
+                  <div><strong class="text-amber-300" data-i18n="phase_rationale_c_lbl">c (偏压):</strong> <span data-i18n="phase_rationale_c_val">喜用运+0.45，忌神运-0.45。破坏双井对称性，决定顺水推舟或承压筑底。</span></div>
+                  <div><strong class="text-amber-300" data-i18n="phase_rationale_g_lbl">γ (阻尼):</strong> <span data-i18n="phase_rationale_g_val">基准常数 0.38。对应印星护城河与耗散自愈比，确保能量收敛不发散。</span></div>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
       </section>

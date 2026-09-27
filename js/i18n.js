@@ -278,6 +278,16 @@ const I18N = (function() {
       phase_legend_winter: "76~100y 归真",
       phase_legend_ascend: "螺旋上升 (势能跃迁)",
       phase_legend_descend: "螺旋下探 (蓄能筑底)",
+      phase_rationale_title: "基准推导与数理命理映射全解",
+      phase_rationale_formula: "达芬双稳态振子与朗道相变势能井模型，x以子平50分中和为基准原点 (x₀=(Score-50)/35)。",
+      phase_rationale_a_lbl: "a (刚度):",
+      phase_rationale_a_val: "0.85 + (|Score-50|/100)×0.80。偏离中和越大抗形变自持力越强，井壁越陡峭。",
+      phase_rationale_b_lbl: "b (分岔):",
+      phase_rationale_b_val: "0.40 + (|Score-50|/50)×0.75。自发对称破缺产生双井吸引子，决定跃迁爆发潜质。",
+      phase_rationale_c_lbl: "c (偏压):",
+      phase_rationale_c_val: "喜用运+0.45，忌神运-0.45。破坏双井对称性，决定顺水推舟或承压筑底。",
+      phase_rationale_g_lbl: "γ (阻尼):",
+      phase_rationale_g_val: "基准常数 0.38。对应印星护城河与耗散自愈比，确保能量收敛不发散。",
 
       // Political Game Matrix (组织多方博弈政治矩阵)
       game_matrix_title: "组织多方博弈政治矩阵 (Multi-Party Political Game Network)",
@@ -1257,6 +1267,16 @@ const I18N = (function() {
       phase_legend_winter: "76-100y Zenith",
       phase_legend_ascend: "Spiral Ascent (Momentum Leap)",
       phase_legend_descend: "Spiral Grounding (Consolidation)",
+      phase_rationale_title: "Baseline Derivation & Mathematical Physics Mapping",
+      phase_rationale_formula: "Duffing bistable oscillator & Landau phase-transition potential. Origin x=0 at Ziping neutral 50 pts (x₀=(Score-50)/35).",
+      phase_rationale_a_lbl: "a (Rigidity):",
+      phase_rationale_a_val: "0.85 + (|Score-50|/100)×0.80. Greater departure from neutral yields steeper well walls and higher resilience.",
+      phase_rationale_b_lbl: "b (Bifurcation):",
+      phase_rationale_b_val: "0.40 + (|Score-50|/50)×0.75. Spontaneous symmetry breaking generates double-well attractors for career phase leaps.",
+      phase_rationale_c_lbl: "c (Decadal Bias):",
+      phase_rationale_c_val: "+0.45 for favorable transit, -0.45 for adverse transit. Tilts potential well toward expansion or consolidation.",
+      phase_rationale_g_lbl: "γ (Damping):",
+      phase_rationale_g_val: "Baseline constant 0.38. Represents resource sanctuary damping ensuring bounded energy convergence without divergence.",
 
       // Political Game Matrix
       game_matrix_title: "Multi-Party Organizational Game Network",
