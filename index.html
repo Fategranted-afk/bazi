@@ -3112,6 +3112,27 @@
           </a>
         </div>
       </div>
+
+      <!-- POMDP Adaptive Policy & Recalibration Portal Banner in Career View -->
+      <div class="p-5 rounded-2xl border border-indigo-500/40 bg-gradient-to-r from-[#101426] via-[#161a32] to-[#0c0e1a] shadow-xl flex flex-wrap items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center space-x-2">
+            <span class="chinese-seal text-xs py-0.5 border-indigo-400 text-indigo-300">自适应闭环</span>
+            <h4 class="text-base font-bold text-indigo-200 font-serif-sc" data-i18n="career_pomdp_banner_title">
+              职场隐状态跟踪与贝尔曼最优决策迭代 (Bellman POMDP)
+            </h4>
+          </div>
+          <p class="text-xs text-gray-400 max-w-xl" data-i18n="career_pomdp_banner_sub">
+            将职场现实环境（顺风扩张、暗涌重组、承压防御、换轨窗口）建模为部分可观测马尔可夫决策过程，基于动作执行反馈实时求解 Next Best Action。
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnOpenPomdpFromCareer" type="button" class="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-lg transition active:scale-95 cursor-pointer flex items-center gap-1.5">
+            <span>🎲</span>
+            <span data-i18n="btn_open_pomdp_console">打开自适应决策中枢</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Career Sub-Pane 2: 现实决策 · 双轨对抗推演沙盘 (内嵌专属子页) -->
@@ -3931,6 +3952,11 @@
           <!-- Recalibration status -->
         </div>
 
+        <!-- POMDP Adaptive Policy & Belief State Manifold Console (Phase 4 贝尔曼自适应决策迭代中枢) -->
+        <div id="advisorPomdpConsole" class="rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#101322] via-[#14182c] to-[#0c0e18] p-3.5 sm:p-4 shadow-xl space-y-3 text-xs">
+          <!-- Dynamically populated via renderAdvisorPomdpConsole() in app.js -->
+        </div>
+
         <!-- Situational Reality Calibration & Alignment Card -->
         <div id="advisorLedgerSituationCard" class="p-2.5 rounded-lg bg-slate-900/60 border border-amber-600/30 text-xs">
           <!-- Dynamically populated situational context -->
@@ -4220,6 +4246,7 @@
   <script src="js/career-engine.js"></script>
   <script src="data/historical_figures.js"></script>
   <script src="js/history-engine.js"></script>
+  <script src="js/pomdp-engine.js"></script>
   <script src="js/advisor-engine.js"></script>
   <script src="data/institutions.js"></script>
   <script src="data/enterprises.js"></script>

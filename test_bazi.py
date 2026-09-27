@@ -291,6 +291,7 @@ load('js/feed_engine.js');
 load('js/simulator-engine.js');
 load('js/rectification-engine.js');
 load('js/synastry-engine.js');
+load('js/pomdp-engine.js');
 load('js/advisor-engine.js');
 
 var baziA = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: '乾造' });
@@ -429,8 +430,39 @@ if (!summaryEased || summaryEased.state !== 'eased' || summaryEased.mode !== 'tr
   throw new Error("ActionLedger traction recalibration failed");
 }
 
+// 4.7b POMDP Adaptive Recalibration Engine & Bellman Policy Iteration
+if (typeof PomdpEngine === 'undefined') throw new Error("PomdpEngine missing");
+PomdpEngine.resetBelief();
+var b0 = PomdpEngine.getBelief();
+var b0Sum = b0.expansion + b0.undercurrent + b0.defense + b0.inflection;
+if (Math.abs(b0Sum - 1.0) > 0.01) throw new Error("POMDP belief vector sum must equal 1.0");
+
+// Verify blocked action updates belief toward defense
+var bBlocked = PomdpEngine.updateBelief('breakthrough', 'blocked');
+if (bBlocked.defense <= b0.defense) throw new Error("POMDP blocked feedback must shift belief toward defense");
+
+// Verify Bellman optimal policy solving
+var policyZh = PomdpEngine.solveOptimalPolicy(null, 'zh');
+if (!policyZh || !policyZh.optimalAction || typeof policyZh.optimalQ !== 'number') {
+  throw new Error("POMDP failed to solve Bellman optimal policy in Chinese");
+}
+var policyEn = PomdpEngine.solveOptimalPolicy(null, 'en');
+if (!policyEn || !policyEn.optimalAction || typeof policyEn.optimalQ !== 'number') {
+  throw new Error("POMDP failed to solve Bellman optimal policy in English");
+}
+if (/[\u4e00-\u9fa5]/.test(JSON.stringify(policyEn))) {
+  throw new Error("Chinese leaked into English POMDP policy output");
+}
+
 // 4.8 Auditable Tool Dispatcher & Anti-Hallucination Disclaimer Card
 if (typeof ToolDispatcher === 'undefined') throw new Error("ToolDispatcher missing");
+var qPomdp = ToolDispatcher.dispatch("贝尔曼自适应策略迭代与POMDP隐状态推演", baziA, null, 'zh', 2026);
+if (!qPomdp || qPomdp.toolId !== 'pomdp_adaptive_policy' || qPomdp.status !== 'SUCCESS') {
+  throw new Error("ToolDispatcher failed to dispatch POMDP adaptive policy");
+}
+if (!qPomdp.disclaimer.includes("纯数理与经典格局推演 · 拒绝黑箱幻觉")) {
+  throw new Error("Missing epistemic disclaimer on POMDP card");
+}
 var qRect = ToolDispatcher.dispatch("我不知道我的生时是几点，怎么校准出生时间？", baziA, null, 'zh', 2026);
 if (!qRect || qRect.toolId !== 'rectification_engine' || qRect.status !== 'SUCCESS') {
   throw new Error("ToolDispatcher failed to dispatch rectification");
@@ -526,7 +558,16 @@ assert "Robert Hand's Composite Vector Synthesis" in i18n_text or "Robert Hand" 
 assert "Martin Gansten's Primary Directions" in i18n_text
 assert "Four Sovereign Benefic Vectors Matrix (Archetypal Resonances)" in i18n_text
 
-check_pass("100% Zero-CJK Leakage Across English Dictionaries", "All English Properties in i18n.js, western_canons.js & tengods.js Pass /[一-龥]/")
+# 5.6 PomdpEngine English Policy Zero CJK Check
+s5_pomdp_jsc = """
+load('js/pomdp-engine.js');
+var policyEn = PomdpEngine.solveOptimalPolicy(null, 'en');
+var enStr = JSON.stringify(policyEn);
+if (/[\\u4e00-\\u9fa5]/.test(enStr)) throw new Error("Chinese characters detected in PomdpEngine English policy: " + enStr);
+"""
+run_jsc(s5_pomdp_jsc, "POMDP English Policy Zero CJK Check")
+
+check_pass("100% Zero-CJK Leakage Across English Dictionaries", "All English Properties in i18n.js, western_canons.js, tengods.js & pomdp-engine.js Pass /[一-龥]/")
 check_pass("100% Preservation of Chinese Metaphysics (*Zh)", "Pure Traditional Metaphysics Maintained with Zero Western Infiltration")
 check_pass("Western Canons English Exegesis Alignment", "Ten Gods & Synastry Canons Formulated with Ebertin, Addey, Rudhyar, Hand & Lilly")
 check_pass("Supreme Natural English Readability Standards", "Synthesized Psychological Archetypes, C.G. Jung Typologies & Operational Directives")
@@ -658,6 +699,7 @@ load('js/fengshui-engine.js');
 load('js/career-engine.js');
 load('data/historical_figures.js');
 load('js/history-engine.js');
+load('js/pomdp-engine.js');
 load('js/advisor-engine.js');
 load('data/institutions.js');
 load('data/enterprises.js');
@@ -799,6 +841,10 @@ if (!statsHtml.includes("总计") && !statsHtml.includes("Total")) throw new Err
 // 6b. Verify Segmented Tab Switcher (Chat vs Ledger) and screen lockup prevention
 window.switchAdvisorView('ledger');
 if (document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to show");
+var pomdpHtml = document.getElementById('advisorPomdpConsole')?.innerHTML || '';
+if (!pomdpHtml.includes("POMDP") || (!pomdpHtml.includes("贝尔曼") && !pomdpHtml.includes("Bellman"))) {
+  throw new Error("Advisor ledger drawer missing POMDP console");
+}
 if (!document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to hide in ledger mode");
 window.switchAdvisorView('chat');
 if (!document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to hide in chat mode");
@@ -930,6 +976,8 @@ if 'id="careerSubTabsContainer"' not in index_html_src:
   raise AssertionError("Missing #careerSubTabsContainer in index.html")
 if 'data-career-tab="view-simulator"' not in index_html_src:
   raise AssertionError("Missing data-career-tab for simulator in index.html")
+if 'id="advisorPomdpConsole"' not in index_html_src:
+  raise AssertionError("Missing #advisorPomdpConsole in index.html")
 
 
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")

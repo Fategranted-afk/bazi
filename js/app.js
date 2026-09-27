@@ -11589,6 +11589,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnJumpToSimulatorFromCareer) {
     btnJumpToSimulatorFromCareer.addEventListener('click', () => switchPrimaryView('view-simulator'));
   }
+  const btnOpenPomdpFromCareer = document.getElementById('btnOpenPomdpFromCareer');
+  if (btnOpenPomdpFromCareer) {
+    btnOpenPomdpFromCareer.addEventListener('click', () => {
+      openAdvisorModal();
+      switchAdvisorView('ledger');
+      const pomdpEl = document.getElementById('advisorPomdpConsole');
+      if (pomdpEl && typeof pomdpEl.scrollIntoView === 'function') {
+        pomdpEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
   const btnJumpToHomeFromSimulator = document.getElementById('btnJumpToHomeFromSimulator');
   if (btnJumpToHomeFromSimulator) {
     btnJumpToHomeFromSimulator.addEventListener('click', () => switchPrimaryView('view-home'));
@@ -17426,6 +17437,172 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function renderAdvisorPomdpConsole(baziContext) {
+    const container = document.getElementById('advisorPomdpConsole');
+    if (!container || typeof PomdpEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const policy = PomdpEngine.solveOptimalPolicy(baziContext || currentBaziResult, currentLang);
+    if (!policy) return;
+
+    const { belief, dominantState, dominantStateProb, entropy, optimalAction, optimalQ, confidencePct, rankedActions, exegesis } = policy;
+
+    const stateLabels = {
+      expansion:   { zh: '顺风扩张态', en: 'Favorable Expansion', icon: '🟢', color: 'emerald' },
+      undercurrent:{ zh: '暗涌重组态', en: 'Hidden Undercurrent', icon: '🟣', color: 'purple' },
+      defense:     { zh: '承压防御态', en: 'Pressure Defense', icon: '🔴', color: 'rose' },
+      inflection:  { zh: '换轨窗口态', en: 'Leap Inflection', icon: '🔵', color: 'cyan' }
+    };
+
+    const actionIcons = {
+      breakthrough: '⚡',
+      coalition: '🤝',
+      consolidation: '🛡️',
+      defense: '🏰',
+      leap: '🚀'
+    };
+
+    const actionNames = {
+      breakthrough: { zh: '攻坚破局', en: 'Breakthrough' },
+      coalition: { zh: '纵横结盟', en: 'Coalition' },
+      consolidation: { zh: '沉潜深耕', en: 'Consolidation' },
+      defense: { zh: '筑壁防守', en: 'Defense' },
+      leap: { zh: '顺势跃迁', en: 'Leap' }
+    };
+
+    container.innerHTML = `
+      <!-- Console Header -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-indigo-500/30 pb-2.5">
+        <div class="flex items-center space-x-2">
+          <span class="chinese-seal text-[10px] py-0.2 border-indigo-400 text-indigo-300">POMDP</span>
+          <div>
+            <h4 class="text-xs sm:text-sm font-bold text-indigo-200 font-serif-sc flex items-center gap-1.5">
+              <span>${isEn ? 'Bellman POMDP Adaptive Recalibration Engine' : '自适应策略迭代与POMDP隐状态引擎'}</span>
+            </h4>
+            <div class="text-[10px] text-gray-400">
+              ${isEn ? 'Bayesian Belief State Tracking & Bellman Value Iteration' : '基于动作反馈的贝叶斯隐状态滤波与贝尔曼值迭代求解'}
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-950/80 text-indigo-300 border border-indigo-500/40 font-mono" title="${isEn ? 'Epistemic Shannon Entropy of current belief distribution' : '当前信念分布的香农信息熵'}">
+            H(b) = ${entropy} bits
+          </span>
+          <button type="button" id="btnResetPomdpBelief" class="text-[10px] px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 transition cursor-pointer active:scale-95 flex items-center gap-1" title="${isEn ? 'Reset belief vector to natal prior' : '将隐状态信念重置为原局先验'}">
+            <span>🔄</span>
+            <span>${isEn ? 'Reset Prior' : '重置先验'}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4-State Belief Distribution Grid -->
+      <div class="space-y-1.5 pt-1">
+        <div class="flex justify-between text-[11px] font-bold text-gray-300">
+          <span>${isEn ? 'Hidden Environmental State Probabilities b(s):' : '当前现实环境隐状态概率分布 b(s):'}</span>
+          <span class="font-mono text-indigo-300">${isEn ? 'Dominant: ' : '主导态: '} <strong class="text-white">${exegesis.stateTitle} (${dominantStateProb}%)</strong></span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+          ${PomdpEngine.STATES.map(st => {
+            const p = belief[st] || 0;
+            const pct = (p * 100).toFixed(1);
+            const isDom = (st === dominantState);
+            const meta = stateLabels[st];
+            const name = isEn ? meta.en : meta.zh;
+            return `
+              <div class="p-2 rounded-xl bg-black/40 border ${isDom ? 'border-indigo-400/80 bg-indigo-950/30' : 'border-gray-800/80'} space-y-1">
+                <div class="flex items-center justify-between text-[10.5px]">
+                  <span class="font-bold flex items-center gap-1 text-gray-200">
+                    <span>${meta.icon}</span>
+                    <span>${name}</span>
+                    ${isDom ? `<span class="ml-1 px-1 py-0.2 rounded text-[9px] bg-indigo-500/30 text-indigo-200 font-mono">${isEn ? 'DOMINANT' : '主导'}</span>` : ''}
+                  </span>
+                  <span class="font-mono font-bold ${isDom ? 'text-amber-300' : 'text-gray-400'}">${pct}%</span>
+                </div>
+                <div class="w-full bg-gray-900 rounded-full h-1.5 overflow-hidden">
+                  <div class="h-1.5 rounded-full ${isDom ? 'bg-gradient-to-r from-amber-500 to-indigo-400' : 'bg-gray-600'}" style="width: ${pct}%"></div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- Optimal Policy Directive (NBA: Next Best Action) Card -->
+      <div class="p-3 rounded-xl bg-gradient-to-br from-indigo-950/50 via-purple-950/30 to-black/60 border border-indigo-500/50 space-y-2 shadow-lg">
+        <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-indigo-800/40 pb-1.5">
+          <div class="flex items-center gap-2">
+            <span class="text-sm">🎯</span>
+            <span class="font-bold text-amber-300 font-serif-sc text-xs sm:text-sm">${exegesis.actionTitle}</span>
+            <span class="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold">
+              NBA · ${isEn ? 'Bellman Optimal' : '贝尔曼最优'}
+            </span>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-[10.5px]">
+            <span class="text-indigo-300">Q* = <strong class="text-amber-400">${optimalQ > 0 ? '+' + optimalQ : optimalQ}</strong></span>
+            <span class="text-gray-400">(${confidencePct}% ${isEn ? 'Confidence' : '确定度'})</span>
+          </div>
+        </div>
+        <p class="text-[11px] text-gray-300 leading-relaxed font-sans">
+          ${exegesis.actionSummary}
+        </p>
+        <div class="space-y-1 bg-black/40 p-2.5 rounded-lg border border-indigo-900/40 text-[10.5px]">
+          <div class="text-[10px] text-indigo-300 font-bold uppercase tracking-wider mb-1">
+            ${isEn ? '⚡ 3-Step Tactical Execution Roadmap:' : '⚡ 三阶闭环战术落地细则:'}
+          </div>
+          ${exegesis.actionSteps.map((step, idx) => `
+            <div class="flex items-start gap-1.5 text-gray-200">
+              <span class="text-amber-400 font-mono font-bold">${idx + 1}.</span>
+              <span class="leading-relaxed">${step}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="text-[10.5px] text-rose-300/90 bg-rose-950/30 border border-rose-900/40 p-2 rounded-lg flex items-start gap-1.5">
+          <span>⚠️</span>
+          <span><strong>${isEn ? 'Risk Hedge: ' : '前瞻防险: '}</strong>${exegesis.riskMitigation}</span>
+        </div>
+      </div>
+
+      <!-- 5-Action Bellman Q-Value Ranking Matrix -->
+      <div class="space-y-1.5 pt-1">
+        <div class="text-[10.5px] font-bold text-gray-300 flex items-center justify-between">
+          <span>${isEn ? '5-Action Expected Payoff Ranking Q(b, a):' : '五大战术期望收益矩阵与Q值排位 Q(b, a):'}</span>
+          <span class="text-[10px] text-gray-500 font-mono">Discount γ = 0.85</span>
+        </div>
+        <div class="space-y-1">
+          ${rankedActions.map((ra, idx) => {
+            const isWinner = (idx === 0);
+            const aIcon = actionIcons[ra.action] || '📌';
+            const aName = isEn ? actionNames[ra.action].en : actionNames[ra.action].zh;
+            const qStr = (ra.qValue > 0 ? '+' : '') + ra.qValue.toFixed(2);
+            const widthPct = Math.max(10, Math.min(100, Math.round(((ra.qValue + 12) / 24) * 100)));
+            return `
+              <div class="p-1.5 rounded-lg ${isWinner ? 'bg-indigo-950/60 border border-indigo-400/60' : 'bg-black/30 border border-gray-800/60'} flex items-center justify-between gap-2 text-[10px]">
+                <div class="flex items-center gap-1.5 w-28 sm:w-36 shrink-0">
+                  <span class="font-mono text-gray-400 text-[9px]">#${idx + 1}</span>
+                  <span>${aIcon}</span>
+                  <span class="font-bold ${isWinner ? 'text-amber-300' : 'text-gray-300'}">${aName}</span>
+                </div>
+                <div class="flex-1 bg-gray-900 rounded-full h-1.5 overflow-hidden">
+                  <div class="h-1.5 rounded-full ${isWinner ? 'bg-gradient-to-r from-indigo-500 to-amber-400' : 'bg-gray-600'}" style="width: ${widthPct}%"></div>
+                </div>
+                <div class="w-14 text-right font-mono font-bold ${ra.qValue >= 0 ? 'text-emerald-400' : 'text-rose-400'}">
+                  ${qStr}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    const btnReset = document.getElementById('btnResetPomdpBelief');
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        PomdpEngine.resetBelief(baziContext || currentBaziResult);
+        renderAdvisorPomdpConsole(baziContext || currentBaziResult);
+      });
+    }
+  }
+
   function renderAdvisorLedgerDrawer() {
     const drawer = document.getElementById('advisorLedgerDrawer');
     if (!drawer || typeof ActionLedger === 'undefined') return;
@@ -17434,6 +17611,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const statsEl = document.getElementById('advisorLedgerStats');
     const recalcEl = document.getElementById('advisorLedgerRecalibration');
     const listEl = document.getElementById('advisorLedgerList');
+
+    // Render Phase 4 POMDP Adaptive Policy & Belief State Console
+    renderAdvisorPomdpConsole(currentBaziResult);
 
     if (statsEl) {
       statsEl.innerHTML = `
@@ -17728,10 +17908,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleAdvisorLedgerDrawer = toggleAdvisorLedgerDrawer;
     window.switchAdvisorView = switchAdvisorView;
     window.renderAdvisorLedgerDrawer = renderAdvisorLedgerDrawer;
+    window.renderAdvisorPomdpConsole = renderAdvisorPomdpConsole;
     window.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
     window.updateAdvisorBadgeCount = updateAdvisorBadgeCount;
   }
   if (typeof globalThis !== 'undefined') {
+    globalThis.renderAdvisorPomdpConsole = renderAdvisorPomdpConsole;
     globalThis.exportAdvisorTimingToIcs = exportAdvisorTimingToIcs;
     globalThis.exportAdvisorEdictPoster = exportAdvisorEdictPoster;
     globalThis.toggleAdvisorMicroAction = toggleAdvisorMicroAction;
@@ -23286,6 +23468,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.handleHomeRunRectification = handleHomeRunRectification;
   window.renderHomeRectificationResults = renderHomeRectificationResults;
   window.renderPhasePortrait = renderPhasePortrait;
+  window.renderAdvisorPomdpConsole = renderAdvisorPomdpConsole;
   window.renderTianjiCalendarFeed = renderTianjiCalendarFeed;
   window.renderPoliticalGameMatrix = renderPoliticalGameMatrix;
   window.renderGeomagneticCalibrator = renderGeomagneticCalibrator;
