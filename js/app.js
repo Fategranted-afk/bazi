@@ -11567,11 +11567,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // If switching to strategy view, refresh grand strategy
-    if (targetViewId === 'view-strategy' && currentBaziResult) {
-      if (typeof renderStrategyView === 'function' && typeof currentPortraitData !== 'undefined') {
-        renderStrategyView(currentPortraitData, currentBaziResult, currentLang === 'en');
-      }
+    // If switching to strategy view, redirect to unified home pareto section
+    if (targetViewId === 'view-strategy') {
+      switchPrimaryView('view-home');
+      setTimeout(() => {
+        const paretoEl = document.getElementById('paretoCoreContainer');
+        if (paretoEl && typeof paretoEl.scrollIntoView === 'function') {
+          paretoEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 60);
+      return;
     }
 
     // If switching to home view, refresh radar canvas & ziping score
@@ -11705,7 +11710,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Portal Jump Buttons & Back Buttons
   const portalBtnStrategy = document.getElementById('portalBtnStrategy');
   if (portalBtnStrategy) {
-    portalBtnStrategy.addEventListener('click', () => switchPrimaryView('view-strategy'));
+    portalBtnStrategy.addEventListener('click', () => {
+      switchPrimaryView('view-home');
+      setTimeout(() => {
+        const paretoEl = document.getElementById('paretoCoreContainer');
+        if (paretoEl && typeof paretoEl.scrollIntoView === 'function') {
+          paretoEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 60);
+    });
   }
   const portalBtnFriction = document.getElementById('portalBtnFriction');
   if (portalBtnFriction) {
