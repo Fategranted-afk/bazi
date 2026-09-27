@@ -317,10 +317,23 @@ const I18N = (function() {
 
       // Calendar Feed Engine (天机·个人进退节律历)
       feed_title: "天机·个人进退节律历 (Tianji Battle Rhythm Calendar · RFC 5545)",
-      feed_sub: "全年精选 18~24 个高势能跃迁拐点日，原生支持导入 iPhone / Mac / Google Calendar",
+      feed_sub: "全年精选 24 个高势能跃迁拐点日与攻防决策窗口，原生支持导入 iPhone / Mac / Google Calendar",
       feed_btn_download_ics: "📥 下载全年生效日历 (.ics)",
       feed_btn_copy_webcal: "📲 复制 Apple/Google 日历订阅链接",
       feed_copy_success: "订阅链接已复制到剪贴板！可在日历应用中添加订阅。",
+      feed_stat_total: "全年决策拐点",
+      feed_stat_offensive: "顺势进取窗口",
+      feed_stat_defensive: "防御避险关口",
+      feed_stat_wisdom_wealth: "慧光与财运流",
+      feed_filter_all: "全部",
+      feed_filter_offensive: "🟢 顺势进取",
+      feed_filter_defensive: "🔴 防御避险",
+      feed_filter_wisdom: "💡 文昌贵人",
+      feed_filter_wealth: "💰 财运转化",
+      feed_alarm_hint: "晚 20:00 自动推送次日战术锦囊 (VALARM)",
+      feed_btn_google: "Google 日历",
+      feed_btn_single_ics: "导入日历 (.ics)",
+      feed_label_directive: "战术行持：",
 
       // Chrono-Navigator
       chrono_title: "百岁运势时空罗盘 (Lifelong Chrono-Navigator)",
@@ -1309,10 +1322,23 @@ const I18N = (function() {
 
       // Calendar Feed Engine
       feed_title: "Tianji Battle Rhythm Calendar (RFC 5545)",
-      feed_sub: "Curated 18-24 critical energy transition dates per year, natively exportable to iPhone, Mac, and Google Calendar",
+      feed_sub: "Curated 24 high-amplitude turning point dates and decision windows, natively exportable to iPhone, Mac, and Google Calendar",
       feed_btn_download_ics: "📥 Download Calendar (.ics)",
       feed_btn_copy_webcal: "📲 Copy Calendar Subscribe Link",
       feed_copy_success: "Calendar subscription link copied! Paste into Apple or Google Calendar.",
+      feed_stat_total: "Critical Turning Points",
+      feed_stat_offensive: "Offensive Leap Windows",
+      feed_stat_defensive: "Defensive Risk Horizons",
+      feed_stat_wisdom_wealth: "Wisdom & Wealth Conduits",
+      feed_filter_all: "All",
+      feed_filter_offensive: "🟢 Offensive",
+      feed_filter_defensive: "🔴 Defensive",
+      feed_filter_wisdom: "💡 Wisdom & Noble",
+      feed_filter_wealth: "💰 Wealth Vectors",
+      feed_alarm_hint: "Eve 20:00 Tactical Directive Alert (VALARM)",
+      feed_btn_google: "Google Cal",
+      feed_btn_single_ics: "Add to Cal (.ics)",
+      feed_label_directive: "Tactical Directive: ",
 
       // Chrono-Navigator
       chrono_title: "Lifelong Chrono-Navigator (Age 1-100 Interactive Fortune Compass)",

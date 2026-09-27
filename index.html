@@ -2279,7 +2279,7 @@
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono border border-indigo-500/30">RFC 5545</span>
             </h3>
             <p class="text-xs text-gray-400 mt-0.5" data-i18n="feed_sub">
-              全年精选 18~24 个高势能跃迁拐点日，原生支持导入 iPhone / Mac / Google Calendar
+              全年精选 24 个高势能跃迁拐点日与攻防决策窗口，原生支持导入 iPhone / Mac / Google Calendar
             </p>
           </div>
         </div>
@@ -2290,6 +2290,51 @@
           <button id="btnCopyWebcalUrl" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-indigo-300 border border-indigo-500/40 text-xs font-bold transition cursor-pointer active:scale-95 flex items-center gap-1.5">
             <span data-i18n="feed_btn_copy_webcal">📲 复制订阅链接</span>
           </button>
+        </div>
+      </div>
+
+      <!-- Calendar Energy Stat Badges -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+        <div class="p-3 rounded-xl bg-indigo-950/30 border border-indigo-500/30 text-center">
+          <span class="text-xs text-indigo-300 block" data-i18n="feed_stat_total">全年决策拐点</span>
+          <span id="feedStatTotal" class="text-xl font-bold font-mono text-indigo-200">24</span>
+        </div>
+        <div class="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-center">
+          <span class="text-xs text-emerald-300 block" data-i18n="feed_stat_offensive">顺势进取窗口</span>
+          <span id="feedStatOffensive" class="text-xl font-bold font-mono text-emerald-200">6</span>
+        </div>
+        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-center">
+          <span class="text-xs text-rose-300 block" data-i18n="feed_stat_defensive">防御避险关口</span>
+          <span id="feedStatDefensive" class="text-xl font-bold font-mono text-rose-200">6</span>
+        </div>
+        <div class="p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 text-center">
+          <span class="text-xs text-purple-300 block" data-i18n="feed_stat_wisdom_wealth">慧光与财运流</span>
+          <span id="feedStatWisdomWealth" class="text-xl font-bold font-mono text-purple-200">12</span>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs Toolbar -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-gray-800/80">
+        <div id="tianjiFilterTabs" class="flex flex-wrap gap-1.5 text-xs">
+          <button type="button" data-filter="all" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold shadow transition cursor-pointer">
+            <span data-i18n="feed_filter_all">全部</span> (<span id="tianjiCountAll">24</span>)
+          </button>
+          <button type="button" data-filter="offensive" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-emerald-500/30 font-semibold transition cursor-pointer">
+            <span data-i18n="feed_filter_offensive">🟢 顺势进取</span> (<span id="tianjiCountOffensive">6</span>)
+          </button>
+          <button type="button" data-filter="defensive" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-rose-500/30 font-semibold transition cursor-pointer">
+            <span data-i18n="feed_filter_defensive">🔴 防御避险</span> (<span id="tianjiCountDefensive">6</span>)
+          </button>
+          <button type="button" data-filter="wisdom" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-purple-500/30 font-semibold transition cursor-pointer">
+            <span data-i18n="feed_filter_wisdom">💡 文昌贵人</span> (<span id="tianjiCountWisdom">6</span>)
+          </button>
+          <button type="button" data-filter="wealth" class="tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-amber-500/30 font-semibold transition cursor-pointer">
+            <span data-i18n="feed_filter_wealth">💰 财运转化</span> (<span id="tianjiCountWealth">6</span>)
+          </button>
+        </div>
+        <div class="text-[11px] text-gray-400 flex items-center gap-1 font-mono">
+          <span>🔔</span>
+          <span data-i18n="feed_alarm_hint">晚 20:00 自动推送次日战术锦囊 (VALARM)</span>
         </div>
       </div>
 

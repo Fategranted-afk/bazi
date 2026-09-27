@@ -318,12 +318,53 @@ if (typeof GeomagneticCorrection === 'undefined') throw new Error("GeomagneticCo
 var dec = GeomagneticCorrection.getDeclination(39.9, 116.4, 2026);
 if (typeof dec !== 'number' || isNaN(dec)) throw new Error("Geomagnetic declination calculation failed");
 
-// 4.4 Calendar Feed Engine (RFC 5545 iCalendar)
+// 4.4 Calendar Feed Engine (RFC 5545 iCalendar & Dynamic Turning Points)
 if (typeof CalendarFeedEngine === 'undefined') throw new Error("CalendarFeedEngine missing");
 var feed = new CalendarFeedEngine(baziA, 2026);
-var ics = feed.generateICSContent([], 'zh');
+var evsZh = feed.extractCriticalEvents(2026, 'zh');
+if (!evsZh || evsZh.length !== 24) {
+  throw new Error("CalendarFeedEngine must extract exactly 24 critical events in Chinese, got " + (evsZh ? evsZh.length : 0));
+}
+var evsEn = feed.extractCriticalEvents(2026, 'en');
+if (!evsEn || evsEn.length !== 24) {
+  throw new Error("CalendarFeedEngine must extract exactly 24 critical events in English, got " + (evsEn ? evsEn.length : 0));
+}
+
+// Verify authentic astrological clash & harmony calculation for baziA (Bing Chen day master)
+var hasClash = evsZh.some(function(e) { return e.type === 'crisis_defense' && e.dayPillar === '壬戌'; });
+if (!hasClash) throw new Error("CalendarFeedEngine missing authentic Day Pillar clash (壬戌) for Bing Chen");
+var hasHarmony = evsZh.some(function(e) { return e.type === 'harmony_union' && e.dayPillar === '辛酉'; });
+if (!hasHarmony) throw new Error("CalendarFeedEngine missing authentic Day Pillar harmony (辛酉) for Bing Chen");
+
+// Verify RFC 5545 standard compliance: VCALENDAR, VEVENT, VALARM evening alert at 20:00, PRODID
+var ics = feed.generateICSContent(evsZh, 'zh');
 if (!ics || !ics.includes('BEGIN:VCALENDAR') || !ics.includes('END:VCALENDAR')) {
   throw new Error("CalendarFeedEngine failed to generate valid RFC 5545 iCalendar feed");
+}
+if (!ics.includes('BEGIN:VEVENT') || !ics.includes('END:VEVENT')) {
+  throw new Error("CalendarFeedEngine missing VEVENT blocks");
+}
+if (!ics.includes('BEGIN:VALARM') || !ics.includes('END:VALARM') || !ics.includes('TRIGGER:-PT4H')) {
+  throw new Error("CalendarFeedEngine missing VALARM -PT4H evening alert standard");
+}
+if (!ics.includes('PRODID:-//Metaphysics Engine//Tianji Calendar Feed//EN')) {
+  throw new Error("CalendarFeedEngine missing PRODID metadata");
+}
+
+// Verify single-event .ics generation
+var singleIcs = feed.generateSingleEventICS(evsZh[0], 'zh');
+if (!singleIcs.includes('BEGIN:VCALENDAR') || !singleIcs.includes('END:VCALENDAR') || !singleIcs.includes('BEGIN:VALARM')) {
+  throw new Error("CalendarFeedEngine failed to generate single event ICS");
+}
+
+// Verify Google Calendar direct URL builder
+var gUrlZh = CalendarFeedEngine.getGoogleCalendarUrl(evsZh[0], 'zh');
+var gUrlEn = CalendarFeedEngine.getGoogleCalendarUrl(evsEn[0], 'en');
+if (!gUrlZh.startsWith('https://calendar.google.com/calendar/render?action=TEMPLATE')) {
+  throw new Error("CalendarFeedEngine invalid Google Calendar URL format: " + gUrlZh);
+}
+if (/[\u4e00-\u9fa5]/.test(gUrlEn)) {
+  throw new Error("Chinese characters leaked into English Google Calendar URL");
 }
 
 // 4.5 Scenario Simulator & Bayesian Rectification
@@ -567,7 +608,34 @@ if (/[\\u4e00-\\u9fa5]/.test(enStr)) throw new Error("Chinese characters detecte
 """
 run_jsc(s5_pomdp_jsc, "POMDP English Policy Zero CJK Check")
 
-check_pass("100% Zero-CJK Leakage Across English Dictionaries", "All English Properties in i18n.js, western_canons.js, tengods.js & pomdp-engine.js Pass /[一-龥]/")
+# 5.7 CalendarFeedEngine 24 Events English Zero CJK Check
+s5_feed_jsc = """
+load('js/bazi-engine.js');
+load('js/feed_engine.js');
+var testCharts = [
+  { dayMaster: '甲', pillars: { day: { stem: '甲', branch: '子' }, year: { branch: '辰' } } },
+  { dayMaster: '丙', pillars: { day: { stem: '丙', branch: '辰' }, year: { branch: '寅' } } },
+  { dayMaster: '庚', pillars: { day: { stem: '庚', branch: '申' }, year: { branch: '午' } } },
+  { dayMaster: '癸', pillars: { day: { stem: '癸', branch: '亥' }, year: { branch: '酉' } } }
+];
+for (var i = 0; i < testCharts.length; i++) {
+  var eng = new CalendarFeedEngine(testCharts[i], 2026);
+  var evs = eng.extractCriticalEvents(2026, 'en');
+  if (evs.length !== 24) throw new Error('Expected 24 events, got ' + evs.length);
+  for (var j = 0; j < evs.length; j++) {
+    var e = evs[j];
+    var fields = [e.title, e.summary, e.actionRule, e.titleEn, e.summaryEn, e.actionEn, e.pillarEn];
+    for (var k = 0; k < fields.length; k++) {
+      if (/[\\u4e00-\\u9fa5]/.test(fields[k])) {
+        throw new Error('CJK leak in chart ' + i + ' event ' + j + ': ' + fields[k]);
+      }
+    }
+  }
+}
+"""
+run_jsc(s5_feed_jsc, "CalendarFeedEngine English Zero CJK Check")
+
+check_pass("100% Zero-CJK Leakage Across English Dictionaries", "All English Properties in i18n.js, western_canons.js, tengods.js, pomdp-engine.js & feed_engine.js Pass /[一-龥]/")
 check_pass("100% Preservation of Chinese Metaphysics (*Zh)", "Pure Traditional Metaphysics Maintained with Zero Western Infiltration")
 check_pass("Western Canons English Exegesis Alignment", "Ten Gods & Synastry Canons Formulated with Ebertin, Addey, Rudhyar, Hand & Lilly")
 check_pass("Supreme Natural English Readability Standards", "Synthesized Psychological Archetypes, C.G. Jung Typologies & Operational Directives")
@@ -955,6 +1023,17 @@ if (!document.getElementById('view-simulator').classList.contains('hidden')) {
 if (document.getElementById('career-tab-overview').classList.contains('hidden')) {
   throw new Error("career-tab-overview subpage should be visible");
 }
+
+// Test Tianji Calendar Feed DOM rendering & Category stats
+if (typeof renderTianjiCalendarFeed === 'function') {
+  renderTianjiCalendarFeed(sampleProfile, null);
+  var statTot = document.getElementById('feedStatTotal') ? document.getElementById('feedStatTotal').textContent : null;
+  if (String(statTot) !== '24') throw new Error("Expected #feedStatTotal to be '24', got " + statTot);
+  var evListHtml = document.getElementById('tianjiEventsList') ? document.getElementById('tianjiEventsList').innerHTML : '';
+  if (!evListHtml.includes('btn-single-ics') || (!evListHtml.includes('Google Cal') && !evListHtml.includes('Google 日历'))) {
+    throw new Error("tianjiEventsList missing single-event actions or Google Cal buttons");
+  }
+}
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 
@@ -978,6 +1057,14 @@ if 'data-career-tab="view-simulator"' not in index_html_src:
   raise AssertionError("Missing data-career-tab for simulator in index.html")
 if 'id="advisorPomdpConsole"' not in index_html_src:
   raise AssertionError("Missing #advisorPomdpConsole in index.html")
+if 'id="feedStatTotal"' not in index_html_src:
+  raise AssertionError("Missing #feedStatTotal in index.html")
+if 'id="tianjiFilterTabs"' not in index_html_src:
+  raise AssertionError("Missing #tianjiFilterTabs in index.html")
+if 'data-filter="offensive"' not in index_html_src:
+  raise AssertionError("Missing data-filter=offensive in index.html")
+if 'data-filter="defensive"' not in index_html_src:
+  raise AssertionError("Missing data-filter=defensive in index.html")
 
 
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")

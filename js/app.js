@@ -10225,6 +10225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 📅 天机·个人进退节律历 (Tianji Battle Rhythm Calendar · RFC 5545)
   // ==========================================================================
   let cachedTianjiEvents = null;
+  let activeTianjiFilter = 'all';
 
   function renderTianjiCalendarFeed(res, luckRes) {
     if (typeof CalendarFeedEngine === 'undefined') return;
@@ -10239,38 +10240,163 @@ document.addEventListener('DOMContentLoaded', () => {
     const events = feedEngine.extractCriticalEvents(year, currentLang);
     cachedTianjiEvents = events;
 
-    const typeBadge = (type) => {
-      switch(type) {
-        case 'noble_mentor': return { text: isEn ? 'Noble Mentor' : '贵人', cls: 'bg-amber-950 text-amber-300 border-amber-600' };
-        case 'wenchang_focus': return { text: isEn ? 'Wen Chang' : '文昌', cls: 'bg-purple-950 text-purple-300 border-purple-600' };
-        case 'wealth_pivot': return { text: isEn ? 'Wealth' : '财星', cls: 'bg-emerald-950 text-emerald-300 border-emerald-600' };
-        case 'crisis_defense': return { text: isEn ? 'Defense' : '化煞', cls: 'bg-rose-950 text-rose-300 border-rose-600' };
-        case 'romance_union': return { text: isEn ? 'Romance' : '桃花', cls: 'bg-pink-950 text-pink-300 border-pink-600' };
-        case 'travel_move': return { text: isEn ? 'Post Horse' : '驿马', cls: 'bg-cyan-950 text-cyan-300 border-cyan-600' };
-        default: return { text: isEn ? 'Pivot' : '转折', cls: 'bg-indigo-950 text-indigo-300 border-indigo-600' };
+    // 1. Calculate dynamic category counts
+    const totalCount = events.length;
+    const offensiveCount = events.filter(e => e.category === 'offensive').length;
+    const defensiveCount = events.filter(e => e.category === 'defensive').length;
+    const wisdomCount = events.filter(e => e.category === 'wisdom').length;
+    const wealthCount = events.filter(e => e.category === 'wealth').length;
+    const wisdomWealthCount = wisdomCount + wealthCount;
+
+    // 2. Update KPI Stat Badges
+    const elTotal = document.getElementById('feedStatTotal');
+    const elOff = document.getElementById('feedStatOffensive');
+    const elDef = document.getElementById('feedStatDefensive');
+    const elWW = document.getElementById('feedStatWisdomWealth');
+    if (elTotal) elTotal.textContent = totalCount;
+    if (elOff) elOff.textContent = offensiveCount;
+    if (elDef) elDef.textContent = defensiveCount;
+    if (elWW) elWW.textContent = wisdomWealthCount;
+
+    // 3. Update Category Filter Tab Counter Badges
+    const elCountAll = document.getElementById('tianjiCountAll');
+    const elCountOff = document.getElementById('tianjiCountOffensive');
+    const elCountDef = document.getElementById('tianjiCountDefensive');
+    const elCountWisdom = document.getElementById('tianjiCountWisdom');
+    const elCountWealth = document.getElementById('tianjiCountWealth');
+    if (elCountAll) elCountAll.textContent = totalCount;
+    if (elCountOff) elCountOff.textContent = offensiveCount;
+    if (elCountDef) elCountDef.textContent = defensiveCount;
+    if (elCountWisdom) elCountWisdom.textContent = wisdomCount;
+    if (elCountWealth) elCountWealth.textContent = wealthCount;
+
+    // 4. Render Event Cards based on Active Filter
+    const renderFilteredCards = () => {
+      const filtered = (activeTianjiFilter === 'all')
+        ? events
+        : events.filter(e => e.category === activeTianjiFilter);
+
+      const typeBadge = (type, cat) => {
+        switch(type) {
+          case 'crisis_defense':
+            return { text: isEn ? 'Double Clash' : '天克地冲', cls: 'bg-rose-950/80 text-rose-300 border-rose-500/50' };
+          case 'harmony_union':
+            return { text: isEn ? 'Double Harmony' : '天地德合', cls: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50' };
+          case 'blade_clash':
+            return { text: isEn ? 'Blade Clash' : '羊刃逢冲', cls: 'bg-red-950/80 text-red-300 border-red-500/50' };
+          case 'noble_mentor':
+            return { text: isEn ? 'Noble Mentor' : '天乙贵人', cls: 'bg-indigo-950/80 text-indigo-300 border-indigo-500/50' };
+          case 'wenchang_focus':
+            return { text: isEn ? 'Wen Chang' : '文昌贵人', cls: 'bg-purple-950/80 text-purple-300 border-purple-500/50' };
+          case 'wealth_triad':
+          case 'wealth_pivot':
+            return { text: isEn ? 'Wealth Triad' : '三合财局', cls: 'bg-amber-950/80 text-amber-300 border-amber-500/50' };
+          case 'yima_surge':
+            return { text: isEn ? 'Post Horse' : '驿马星动', cls: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/50' };
+          case 'solar_shift':
+            return { text: isEn ? 'Solar Pivot' : '节气交节', cls: 'bg-blue-950/80 text-blue-300 border-blue-500/50' };
+          default:
+            return { text: isEn ? 'Strategic Pivot' : '战略拐点', cls: 'bg-gray-800 text-gray-300 border-gray-600' };
+        }
+      };
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-8 text-center text-gray-400 text-xs">
+            ${isEn ? 'No events found in this category for the selected year.' : '当前所选类别下本年度无特定拐点日。'}
+          </div>
+        `;
+        return;
       }
+
+      container.innerHTML = filtered.map(e => {
+        const badge = typeBadge(e.type, e.category);
+        const title = isEn ? (e.titleEn || e.title) : (e.titleZh || e.title);
+        const summary = isEn ? (e.summaryEn || e.summary) : (e.summaryZh || e.summary);
+        const action = isEn ? (e.actionEn || e.actionRule) : (e.actionZh || e.actionRule);
+        const pillar = isEn ? (e.pillarEn || e.dayPillar) : (e.pillarZh || e.dayPillar);
+        const gUrl = e.googleCalendarUrl || CalendarFeedEngine.getGoogleCalendarUrl(e, currentLang);
+
+        const cardBorderCls = (e.category === 'defensive')
+          ? 'border-rose-900/40 hover:border-rose-500/70'
+          : (e.category === 'offensive')
+            ? 'border-emerald-900/40 hover:border-emerald-500/70'
+            : (e.category === 'wisdom')
+              ? 'border-purple-900/40 hover:border-purple-500/70'
+              : 'border-amber-900/40 hover:border-amber-500/70';
+
+        return `
+          <div class="p-3.5 rounded-xl bg-black/50 border ${cardBorderCls} transition space-y-2 text-xs shadow-md flex flex-col justify-between group">
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-1.5">
+                  <span class="font-mono text-indigo-300 font-bold tracking-tight">${e.isoDate || e.dateStr}</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded font-mono bg-gray-800/80 text-gray-300 border border-gray-700/60">${pillar}</span>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded border font-mono ${badge.cls}">${badge.text}</span>
+              </div>
+              <h5 class="font-bold text-gray-100 font-serif-sc text-xs sm:text-sm leading-snug" title="${title}">${title}</h5>
+              <p class="text-[11px] text-gray-400 line-clamp-3 leading-relaxed">${summary}</p>
+            </div>
+
+            <div class="pt-2 border-t border-gray-800/60 space-y-2">
+              <div class="text-[11px] text-emerald-400/90 leading-tight bg-emerald-950/20 p-2 rounded-lg border border-emerald-900/30">
+                <strong class="text-emerald-300">${isEn ? 'Tactical Directive: ' : '战术行持：'}</strong>${action}
+              </div>
+              <div class="flex items-center justify-between pt-1 gap-1.5">
+                <a href="${gUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-1 px-2 rounded-lg bg-gray-800/80 hover:bg-gray-700 text-indigo-300 border border-indigo-500/30 text-[10px] font-semibold transition active:scale-95 flex items-center justify-center gap-1">
+                  <span>📅</span>
+                  <span>${isEn ? 'Google Cal' : 'Google 日历'}</span>
+                </a>
+                <button type="button" data-event-id="${e.id}" class="btn-single-ics flex-1 text-center py-1 px-2 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-200 border border-indigo-500/40 text-[10px] font-semibold transition cursor-pointer active:scale-95 flex items-center justify-center gap-1">
+                  <span>📥</span>
+                  <span>${isEn ? 'Add to Cal (.ics)' : '导入日历 (.ics)'}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Bind single-event .ics download buttons
+      container.querySelectorAll('.btn-single-ics').forEach(btn => {
+        btn.addEventListener('click', (ev) => {
+          const evId = btn.getAttribute('data-event-id');
+          const targetEvent = events.find(e => e.id === evId);
+          if (targetEvent) {
+            feedEngine.downloadSingleEventICS(targetEvent, `tianji_${targetEvent.isoDate || targetEvent.dateStr}.ics`, currentLang);
+          }
+        });
+      });
     };
 
-    container.innerHTML = events.slice(0, 12).map(e => {
-      const badge = typeBadge(e.type);
-      const title = isEn ? e.titleEn : e.titleZh;
-      const summary = isEn ? e.summaryEn : e.summaryZh;
-      const action = isEn ? e.actionEn : e.actionZh;
-      return `
-        <div class="p-3 rounded-xl bg-black/40 border border-indigo-950 hover:border-indigo-700/60 transition space-y-1.5 text-xs shadow">
-          <div class="flex items-center justify-between">
-            <span class="font-mono text-indigo-400 font-bold">${e.dateStr}</span>
-            <span class="text-[10px] px-1.5 py-0.5 rounded border font-mono ${badge.cls}">${badge.text}</span>
-          </div>
-          <h5 class="font-bold text-gray-200 font-serif-sc truncate" title="${title}">${title}</h5>
-          <p class="text-[11px] text-gray-400 line-clamp-2 leading-relaxed">${summary}</p>
-          <div class="pt-1 text-[11px] text-emerald-400/90 leading-tight">
-            <strong>${isEn ? 'Directive: ' : '战术行持：'}</strong>${action}
-          </div>
-        </div>
-      `;
-    }).join('');
+    // 5. Initial render of cards
+    renderFilteredCards();
 
+    // 6. Bind Category Filter Tab buttons
+    const filterButtons = document.querySelectorAll('.tianji-filter-btn');
+    filterButtons.forEach(btn => {
+      if (btn.hasAttribute('data-bound-filter')) return;
+      btn.setAttribute('data-bound-filter', 'true');
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter') || 'all';
+        activeTianjiFilter = filter;
+
+        // Update active style
+        filterButtons.forEach(b => {
+          const f = b.getAttribute('data-filter');
+          if (f === filter) {
+            b.className = 'tianji-filter-btn px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-semibold shadow transition cursor-pointer';
+          } else {
+            b.className = 'tianji-filter-btn px-3 py-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-700/80 text-gray-300 border border-gray-700 font-semibold transition cursor-pointer';
+          }
+        });
+
+        renderFilteredCards();
+      });
+    });
+
+    // 7. Bind Download Full Year .ics Button
     if (btnDownload && !btnDownload.hasAttribute('data-bound')) {
       btnDownload.setAttribute('data-bound', 'true');
       btnDownload.addEventListener('click', () => {
@@ -10279,6 +10405,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    // 8. Bind Copy Webcal Subscription Link Button
     if (btnCopyWebcal && !btnCopyWebcal.hasAttribute('data-bound')) {
       btnCopyWebcal.setAttribute('data-bound', 'true');
       btnCopyWebcal.addEventListener('click', () => {
