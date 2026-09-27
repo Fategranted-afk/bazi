@@ -626,6 +626,9 @@ document.addEventListener('DOMContentLoaded', () => {
       themeToggle.textContent = newTheme === 'dark' ? '🌙 暗夜' : '☀️ 浅昼';
       if (currentBaziResult) {
         ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
+        if (typeof renderPhasePortrait === 'function') {
+          renderPhasePortrait(currentBaziResult, currentLuckResult);
+        }
       }
       if (typeof currentLuckResult !== 'undefined' && currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
         drawChronoTimelineChart(currentLuckResult.timeline, typeof activeChronoAge !== 'undefined' ? activeChronoAge : 1);
@@ -10149,7 +10152,9 @@ document.addEventListener('DOMContentLoaded', () => {
       summaryBox.textContent = isEn ? derived.summaryEn : derived.summaryZh;
     }
 
-    const isDark = !document.documentElement.classList.contains('light-theme');
+    const isDark = (typeof document !== 'undefined' && document.body && document.body.classList && typeof document.body.classList.contains === 'function')
+      ? !document.body.classList.contains('light-theme')
+      : true;
     cachedPhaseEngine.renderVectorField(derived.a, derived.b, derived.c, derived.gamma, isDark);
     cachedPhaseEngine.renderTrajectory(derived.trajectoryPoints, currentAge, isDark);
   }
@@ -10180,7 +10185,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lblC) lblC.textContent = c.toFixed(2);
       if (lblGamma) lblGamma.textContent = gamma.toFixed(2);
 
-      const isDark = !document.documentElement.classList.contains('light-theme');
+      const isDark = (typeof document !== 'undefined' && document.body && document.body.classList && typeof document.body.classList.contains === 'function')
+        ? !document.body.classList.contains('light-theme')
+        : true;
       cachedPhaseEngine.renderVectorField(a, b, c, gamma, isDark);
 
       const score100 = (currentBaziResult && currentBaziResult.zipingScore && typeof currentBaziResult.zipingScore.totalScore === 'number')
@@ -11525,6 +11532,9 @@ document.addEventListener('DOMContentLoaded', () => {
           ? !document.body.classList.contains('light-theme')
           : true;
         PhasePortraitEngine.renderDualTrackBifurcation('simBifurcationCanvas', window.__lastSimulationResult.bifurcationDynamics, isDark, currentLang);
+      }
+      if (currentBaziResult && typeof renderPhasePortrait === 'function' && document.getElementById('phasePortraitCanvas')) {
+        renderPhasePortrait(currentBaziResult, currentLuckResult);
       }
     });
   }

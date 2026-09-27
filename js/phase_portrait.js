@@ -15,6 +15,91 @@ class PhasePortraitEngine {
       this.canvas = canvasOrId;
     }
     this.ctx = this.canvas && typeof this.canvas.getContext === 'function' ? this.canvas.getContext('2d') : null;
+    this.hoverPos = null;
+    this.hoverNearestAge = null;
+    this._eventsBound = false;
+    this.bindEvents();
+  }
+
+  /**
+   * 绑定鼠标交互事件 (实时探针与点击聚焦)
+   */
+  bindEvents() {
+    if (!this.canvas || this._eventsBound || typeof this.canvas.addEventListener !== 'function') return;
+    this._eventsBound = true;
+
+    this.canvas.addEventListener('mousemove', (e) => {
+      const rect = this.canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      this.hoverPos = { x: mx, y: my };
+      this.redraw();
+    });
+
+    this.canvas.addEventListener('mouseleave', () => {
+      this.hoverPos = null;
+      this.hoverNearestAge = null;
+      this.redraw();
+    });
+
+    this.canvas.addEventListener('click', () => {
+      if (!this.hoverNearestAge) return;
+      const clickedAge = this.hoverNearestAge;
+      if (typeof window !== 'undefined') {
+        window.fourPillarsActiveAge = clickedAge;
+        if (typeof window.setIChingActiveAge === 'function') {
+          window.setIChingActiveAge(clickedAge);
+        }
+      }
+      this.lastCurrentAge = clickedAge;
+      this.redraw();
+
+      const summaryBox = typeof document !== 'undefined' ? document.getElementById('phaseTrajectorySummary') : null;
+      if (summaryBox && this.lastTrajectory) {
+        const curPt = this.lastTrajectory.find(p => p.age === clickedAge) || this.lastTrajectory[0];
+        const isAsc = curPt && curPt.v >= 0;
+        const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
+        summaryBox.textContent = isEn
+          ? `Focused on Age ${clickedAge}: ${isAsc ? 'Spiral Ascending Phase 🔺 (Momentum Expansion)' : 'Consolidation Phase 🔻 (Grounding & Sanctuary)'} (x=${curPt.x}, v=${curPt.v}).`
+          : `已聚焦选择【${clickedAge}岁】：处于【${isAsc ? '螺旋上升跃迁期 🔺 · 木火升腾' : '筑底蓄能修整期 🔻 · 印比固本'}】(位移 x=${curPt.x}, 动量 v=${curPt.v})。`;
+      }
+    });
+  }
+
+  /**
+   * High-DPI Retina 4K 自适应分辨率配置 (Fixes canvas blurriness)
+   */
+  setupDPI() {
+    if (!this.canvas) return { width: 640, height: 360, dpr: 1 };
+    const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) ? Math.max(1, window.devicePixelRatio) : 1;
+    let cssWidth = this.canvas.clientWidth || (this.canvas.parentElement && this.canvas.parentElement.clientWidth) || 640;
+    let cssHeight = this.canvas.clientHeight || 360;
+    if (cssWidth < 320) cssWidth = 640;
+    if (cssHeight < 240) cssHeight = 360;
+
+    const targetW = Math.round(cssWidth * dpr);
+    const targetH = Math.round(cssHeight * dpr);
+
+    if (this.canvas.width !== targetW || this.canvas.height !== targetH) {
+      this.canvas.width = targetW;
+      this.canvas.height = targetH;
+    }
+    this.cssWidth = cssWidth;
+    this.cssHeight = cssHeight;
+    this.dpr = dpr;
+    return { width: cssWidth, height: cssHeight, dpr };
+  }
+
+  /**
+   * 重绘当前已缓存参数与轨迹
+   */
+  redraw() {
+    if (this.lastParams) {
+      this.renderVectorField(this.lastParams.a, this.lastParams.b, this.lastParams.c, this.lastParams.gamma, this.lastParams.isDark);
+    }
+    if (this.lastTrajectory) {
+      this.renderTrajectory(this.lastTrajectory, this.lastCurrentAge, this.lastParams ? this.lastParams.isDark : true);
+    }
   }
 
   /**
@@ -29,106 +114,194 @@ class PhasePortraitEngine {
    */
   renderVectorField(a, b, c, gamma, isDark = true) {
     if (!this.ctx || !this.canvas) return;
-    const width = this.canvas.width;
-    const height = this.canvas.height;
+    this.lastParams = { a, b, c, gamma, isDark };
+
+    const { width, height, dpr } = this.setupDPI();
+    this.ctx.save();
+    if (typeof this.ctx.scale === 'function') {
+      this.ctx.scale(dpr, dpr);
+    }
     this.ctx.clearRect(0, 0, width, height);
 
     // 1. 深邃时空底色渐变
     const bgGrad = this.ctx.createLinearGradient(0, 0, width, height);
     if (isDark) {
-      bgGrad.addColorStop(0, '#0a0d16');
-      bgGrad.addColorStop(0.5, '#0e1220');
-      bgGrad.addColorStop(1, '#06080e');
+      bgGrad.addColorStop(0, '#090d1a');
+      bgGrad.addColorStop(0.5, '#0d1224');
+      bgGrad.addColorStop(1, '#05070e');
     } else {
-      bgGrad.addColorStop(0, '#f8fafc');
-      bgGrad.addColorStop(0.5, '#f1f5f9');
-      bgGrad.addColorStop(1, '#e2e8f0');
+      bgGrad.addColorStop(0, '#ffffff');
+      bgGrad.addColorStop(0.5, '#f8fafc');
+      bgGrad.addColorStop(1, '#f1f5f9');
     }
     this.ctx.fillStyle = bgGrad;
     this.ctx.fillRect(0, 0, width, height);
 
-    // 2. 绘制透视时间轴基座与导轨 (Perspective Timeline Rails)
+    // 2. 暗夜模式绘制星辰微尘背景 (Deterministic Celestial Stars)
+    if (isDark) {
+      this.ctx.save();
+      const starSeeds = [
+        [0.12, 0.18, 1.2, 0.4], [0.24, 0.28, 0.8, 0.2], [0.38, 0.12, 1.5, 0.5],
+        [0.52, 0.22, 1.0, 0.3], [0.68, 0.15, 1.4, 0.45], [0.82, 0.25, 1.1, 0.35],
+        [0.18, 0.72, 1.3, 0.4], [0.35, 0.82, 0.9, 0.25], [0.62, 0.78, 1.2, 0.35],
+        [0.79, 0.85, 1.0, 0.3], [0.91, 0.65, 1.4, 0.4]
+      ];
+      starSeeds.forEach(([rx, ry, r, alpha]) => {
+        this.ctx.beginPath();
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        this.ctx.arc(rx * width, ry * height, r, 0, Math.PI * 2);
+        this.ctx.fill();
+      });
+      this.ctx.restore();
+    }
+
+    // 3. 绘制透视时间轴基座与导轨 (Perspective Timeline Rails)
     const floorY = height - 26;
     const midY = height / 2;
 
     this.ctx.save();
-    this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+    this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.10)';
     this.ctx.lineWidth = 1;
 
-    // 底部时间标尺轨
-    this.ctx.beginPath();
-    this.ctx.moveTo(60, floorY);
-    this.ctx.lineTo(width - 40, floorY);
-    this.ctx.stroke();
+    // 3D 纵深透视网格线 (Perspective floor grid receding to horizon)
+    const gridAges = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+    const plotLeft = 70;
+    const plotRight = width - 50;
+    const plotWidth = plotRight - plotLeft;
 
-    // 中轴平衡基准线 (v = 0 平衡态)
-    this.ctx.setLineDash([4, 4]);
-    this.ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.16)' : 'rgba(217, 119, 6, 0.2)';
-    this.ctx.beginPath();
-    this.ctx.moveTo(60, midY);
-    this.ctx.lineTo(width - 40, midY);
-    this.ctx.stroke();
-    this.ctx.setLineDash([]);
-
-    // 绘制底部岁月刻度 (1y, 20y, 40y, 60y, 80y, 100y)
-    const tickAges = [1, 20, 40, 60, 80, 100];
-    this.ctx.fillStyle = isDark ? 'rgba(148, 163, 184, 0.6)' : 'rgba(100, 116, 139, 0.8)';
-    this.ctx.font = '10px monospace';
-    this.ctx.textAlign = 'center';
-
-    tickAges.forEach(age => {
+    gridAges.forEach(age => {
       const u = (age - 1) / 99.0;
-      const tx = 80 + u * (width - 160);
+      const tx = plotLeft + u * plotWidth;
+
+      // 从底部向中轴延伸的透视网格线
       this.ctx.beginPath();
-      this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)';
+      this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)';
+      this.ctx.moveTo(tx, floorY);
+      this.ctx.lineTo(tx + (tx - width / 2) * 0.08, midY + 30);
+      this.ctx.stroke();
+
+      // 底部时间标尺刻度
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.22)' : 'rgba(0, 0, 0, 0.22)';
       this.ctx.moveTo(tx, floorY - 3);
       this.ctx.lineTo(tx, floorY + 4);
       this.ctx.stroke();
-      this.ctx.fillText(`${age}y`, tx, floorY + 16);
+
+      if (age === 1 || age % 20 === 0 || age === 100) {
+        this.ctx.fillStyle = isDark ? 'rgba(203, 213, 225, 0.85)' : '#475569';
+        this.ctx.font = 'bold 10px monospace';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText(`${age}y`, tx, floorY + 16);
+      }
     });
 
-    // 3. 四象限动力学象态隐式印记 (Subtle Zone Watermarks)
+    // 底部时间基准导轨
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)';
+    this.ctx.moveTo(plotLeft - 10, floorY);
+    this.ctx.lineTo(plotRight + 10, floorY);
+    this.ctx.stroke();
+
+    // 中轴平衡基准线 (v = 0 平衡态)
+    this.ctx.save();
+    if (typeof this.ctx.setLineDash === 'function') this.ctx.setLineDash([4, 4]);
+    this.ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.25)' : 'rgba(180, 83, 9, 0.30)';
+    this.ctx.lineWidth = 1.2;
+    this.ctx.beginPath();
+    this.ctx.moveTo(plotLeft - 10, midY);
+    this.ctx.lineTo(plotRight + 10, midY);
+    this.ctx.stroke();
+    this.ctx.restore();
+
+    // 中轴平衡态文字标注
     const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
-    this.ctx.font = '10px "Noto Serif SC", serif';
-    this.ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.15)' : 'rgba(217, 119, 6, 0.22)';
-    
-    // 右上: 顺风破局 / 木火升腾
-    this.ctx.textAlign = 'right';
-    this.ctx.fillText(isEn ? '[Ascent · Momentum Expansion]' : '【木火升腾 · 顺风破局象】', width - 45, 32);
-
-    // 右下: 承压过载 / 财官克耗
-    this.ctx.fillText(isEn ? '[Overload · Societal Load Tension]' : '【财官克耗 · 承压过载象】', width - 45, floorY - 14);
-
-    // 左上: 稳步蓄力 / 印比固本
+    this.ctx.font = 'bold 9.5px monospace';
+    this.ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.5)' : '#854d0e';
     this.ctx.textAlign = 'left';
-    this.ctx.fillText(isEn ? '[Resource · Stable Accumulation]' : '【印比固本 · 稳步蓄力象】', 65, 32);
+    this.ctx.fillText(isEn ? '[v = 0 Equilibrium]' : '[v = 0 平衡基准态]', plotLeft - 10, midY - 6);
 
-    // 左下: 筑底自修 / 思虑收敛
-    this.ctx.fillText(isEn ? '[Defense · Grounding & Sanctuary]' : '【内修敛藏 · 筑底自持象】', 65, floorY - 14);
+    // 4. 四象限动力学象态 HUD 铭牌 (High-Contrast Elegantly Bordered HUD Badges)
+    const drawHudBadge = (text, x, y, align, colorTheme) => {
+      this.ctx.save();
+      this.ctx.font = 'bold 10px "Noto Serif SC", serif';
+      const textW = this.ctx.measureText(text).width;
+      const padX = 8;
+      const padY = 4;
+      const boxW = textW + padX * 2;
+      const boxH = 20;
+      const boxX = align === 'right' ? (x - boxW) : x;
+      const boxY = y - 14;
 
-    // 4. 绘制优雅流畅的背景等势流动线 (Graceful Vector Streamlines)
-    const streamlineCount = 9;
+      this.ctx.beginPath();
+      if (typeof this.ctx.roundRect === 'function') {
+        this.ctx.roundRect(boxX, boxY, boxW, boxH, 4);
+      } else {
+        this.ctx.rect(boxX, boxY, boxW, boxH);
+      }
+      this.ctx.fillStyle = isDark ? colorTheme.darkBg : colorTheme.lightBg;
+      this.ctx.fill();
+      this.ctx.strokeStyle = isDark ? colorTheme.darkBorder : colorTheme.lightBorder;
+      this.ctx.lineWidth = 1;
+      this.ctx.stroke();
+
+      this.ctx.fillStyle = isDark ? colorTheme.darkText : colorTheme.lightText;
+      this.ctx.textAlign = 'left';
+      this.ctx.fillText(text, boxX + padX, boxY + 14);
+      this.ctx.restore();
+    };
+
+    // 右上: 顺风破局 / 木火升腾 (+v, +x)
+    drawHudBadge(
+      isEn ? '🚀 [Ascent · Momentum Expansion]' : '🚀 顺风破局区 (势能爆发 · 木火升腾)',
+      width - 35, 32, 'right',
+      { darkBg: 'rgba(16, 185, 129, 0.15)', darkBorder: 'rgba(16, 185, 129, 0.35)', darkText: '#34d399', lightBg: '#ecfdf5', lightBorder: '#a7f3d0', lightText: '#047857' }
+    );
+
+    // 右下: 承压克耗 / 财官制化 (-v, +x)
+    drawHudBadge(
+      isEn ? '⚡ [Overload · Tension & Friction]' : '⚡ 承压克耗区 (防守自持 · 逆风求稳)',
+      width - 35, floorY - 10, 'right',
+      { darkBg: 'rgba(239, 68, 68, 0.15)', darkBorder: 'rgba(239, 68, 68, 0.35)', darkText: '#fca5a5', lightBg: '#fee2e2', lightBorder: '#fca5a5', lightText: '#b91c1c' }
+    );
+
+    // 左上: 稳步蓄力 / 印比固本 (+v, -x)
+    drawHudBadge(
+      isEn ? '🛡️ [Resource · Stable Accumulation]' : '🛡️ 稳步蓄力区 (印比固本 · 资源沉淀)',
+      plotLeft - 10, 32, 'left',
+      { darkBg: 'rgba(245, 158, 11, 0.15)', darkBorder: 'rgba(245, 158, 11, 0.35)', darkText: '#fbbf24', lightBg: '#fef3c7', lightBorder: '#fde68a', lightText: '#854d0e' }
+    );
+
+    // 左下: 筑底自修 / 战略收敛 (-v, -x)
+    drawHudBadge(
+      isEn ? '🧘 [Sanctuary · Deep Grounding]' : '🧘 内修自持区 (战略收敛 · 筑底重塑)',
+      plotLeft - 10, floorY - 10, 'left',
+      { darkBg: 'rgba(99, 102, 241, 0.15)', darkBorder: 'rgba(99, 102, 241, 0.35)', darkText: '#a5b4fc', lightBg: '#eef2ff', lightBorder: '#c7d2fe', lightText: '#4338ca' }
+    );
+
+    // 5. 绘制背景等势流动线与动力学矢量 (Graceful Vector Streamlines with Energy Force)
+    const streamlineCount = 10;
     for (let s = 0; s < streamlineCount; s++) {
-      const startX = 65 + s * ((width - 130) / (streamlineCount - 1));
+      const startX = plotLeft + s * (plotWidth / (streamlineCount - 1));
       const phaseNorm = (startX - width / 2) / (width / 2.5);
       const forceVal = this.computeForce(phaseNorm, a, b, c);
 
       this.ctx.beginPath();
-      this.ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.08)' : 'rgba(217, 119, 6, 0.12)';
+      this.ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.08)' : 'rgba(180, 83, 9, 0.12)';
       this.ctx.lineWidth = 1;
 
-      const yControl = midY - forceVal * 32;
-      this.ctx.moveTo(startX - 20, midY + 45);
-      this.ctx.quadraticCurveTo(startX, yControl, startX + 25, midY - 45);
+      const yControl = midY - forceVal * 36;
+      this.ctx.moveTo(startX - 22, midY + 48);
+      this.ctx.quadraticCurveTo(startX, yControl, startX + 26, midY - 48);
       this.ctx.stroke();
 
       // 小流向微箭头
-      const arrowX = startX + 10;
+      const arrowX = startX + 8;
       const arrowY = midY - 20;
-      this.drawMiniArrow(arrowX, arrowY, 6, -forceVal * 3, isDark ? 'rgba(245, 158, 11, 0.18)' : 'rgba(217, 119, 6, 0.25)');
+      this.drawMiniArrow(arrowX, arrowY, 6, -forceVal * 3.2, isDark ? 'rgba(245, 158, 11, 0.20)' : 'rgba(180, 83, 9, 0.25)');
     }
 
     this.ctx.restore();
+    this.ctx.restore(); // restore high-dpi scaling
   }
 
   /**
@@ -136,38 +309,90 @@ class PhasePortraitEngine {
    */
   renderTrajectory(trajectoryPoints, currentAge = null, isDark = true) {
     if (!this.ctx || !this.canvas || !trajectoryPoints || trajectoryPoints.length === 0) return;
-    const width = this.canvas.width;
-    const height = this.canvas.height;
-    const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
+    this.lastTrajectory = trajectoryPoints;
+    this.lastCurrentAge = currentAge;
 
-    // 坐标映射: 时间 Z 轴沿水平推进展开，相空间 (x, v) 投射为空间椭圆环与升降高程
+    const { width, height, dpr } = this.setupDPI();
+    this.ctx.save();
+    if (typeof this.ctx.scale === 'function') {
+      this.ctx.scale(dpr, dpr);
+    }
+
+    const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
+    const plotLeft = 70;
+    const plotRight = width - 50;
+    const plotWidth = plotRight - plotLeft;
+    const floorY = height - 26;
+    const midY = height / 2;
+
+    // 1. 动态自适应动量高程缩放 (Dynamic Amplitude Normalization)
+    const maxV = Math.max(...trajectoryPoints.map(p => Math.abs(p.v || 0)), 0.35);
+    const vScale = Math.min(80 / maxV, 110);
+
+    // 2. 坐标投射: 真实 3D 螺旋流形空间展开 (3D Helical Coil on Spatiotemporal Streamline)
     const toScreen = (pt) => {
       const u = (pt.age - 1) / 99.0;
-      const xBase = 80 + u * (width - 160);
-      const sx = xBase + (pt.x * 16.0);
-      const sy = (height / 2) - (pt.v * 46.0) - (pt.x * 15.0);
-      // 安全视口高度限制
-      const clampedSy = Math.max(48, Math.min(height - 48, sy));
-      return { sx, sy: clampedSy, age: pt.age, x: pt.x, v: pt.v, isFront: pt.x >= 0 };
+      const xBase = plotLeft + u * plotWidth;
+      const phi = ((pt.age - 1) * Math.PI * 2) / 6.5 + (pt.x || 0) * 1.4;
+      const coilR = 13.0; // 3D 螺旋线柱半径
+
+      const dx = Math.cos(phi) * 8.5;
+      const dy = Math.sin(phi) * coilR;
+      const sx = xBase + dx;
+      const sy = Math.max(42, Math.min(height - 42, midY - (pt.v * vScale) + dy));
+      const isFront = Math.cos(phi) >= -0.15; // 深度分层 (前卷/后卷)
+      return { sx, sy, age: pt.age, x: pt.x, v: pt.v, isFront, phi };
     };
 
     const screenPoints = trajectoryPoints.map(toScreen);
 
-    // 1. 绘制底层发光氛围光带 (Ambient Glow Ribbon)
+    // 3. 空间进深投影虚线 (Milestone Ground Projection Anchors)
+    this.ctx.save();
+    screenPoints.forEach(pt => {
+      if (pt.age === 1 || pt.age % 20 === 0 || pt.age === 100) {
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.07)' : 'rgba(0, 0, 0, 0.06)';
+        this.ctx.lineWidth = 1;
+        if (typeof this.ctx.setLineDash === 'function') this.ctx.setLineDash([2, 4]);
+        this.ctx.moveTo(pt.sx, pt.sy);
+        this.ctx.lineTo(pt.sx, floorY);
+        this.ctx.stroke();
+      }
+    });
+    this.ctx.restore();
+
+    // 4. 第一层通道: 绘制空间背向螺旋线段 (Back Helical Loops - Depth Illusion)
+    this.ctx.save();
+    for (let i = 0; i < screenPoints.length - 1; i++) {
+      const p1 = screenPoints[i];
+      const p2 = screenPoints[i + 1];
+      if (!p1.isFront && !p2.isFront) {
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = isDark ? 'rgba(148, 163, 184, 0.35)' : 'rgba(100, 116, 139, 0.35)';
+        this.ctx.lineWidth = 1.8;
+        this.ctx.lineCap = 'round';
+        this.ctx.moveTo(p1.sx, p1.sy);
+        this.ctx.lineTo(p2.sx, p2.sy);
+        this.ctx.stroke();
+      }
+    }
+    this.ctx.restore();
+
+    // 5. 第二层通道: 绘制底层发光氛围光带 (Ambient Glow Ribbon)
     this.ctx.save();
     for (let i = 0; i < screenPoints.length - 1; i++) {
       const p1 = screenPoints[i];
       const p2 = screenPoints[i + 1];
       const age = p1.age;
 
-      let glowColor = 'rgba(16, 185, 129, 0.25)'; // 1~25y 翠绿萌芽
-      if (age >= 26 && age <= 50) glowColor = 'rgba(245, 158, 11, 0.32)'; // 26~50y 金橙鼎盛
-      else if (age >= 51 && age <= 75) glowColor = 'rgba(234, 179, 8, 0.28)'; // 51~75y 赤金沉淀
-      else if (age > 75) glowColor = 'rgba(99, 102, 241, 0.30)'; // 76~100y 玄蓝深邃
+      let glowColor = 'rgba(16, 185, 129, 0.28)'; // 1~25y 翠绿萌芽
+      if (age >= 26 && age <= 50) glowColor = 'rgba(245, 158, 11, 0.35)'; // 26~50y 金橙鼎盛
+      else if (age >= 51 && age <= 75) glowColor = 'rgba(234, 179, 8, 0.30)'; // 51~75y 赤金沉淀
+      else if (age > 75) glowColor = 'rgba(56, 189, 248, 0.32)'; // 76~100y 玄蓝深邃
 
       this.ctx.beginPath();
       this.ctx.strokeStyle = glowColor;
-      this.ctx.lineWidth = 6;
+      this.ctx.lineWidth = 7;
       this.ctx.lineCap = 'round';
       this.ctx.moveTo(p1.sx, p1.sy);
       this.ctx.lineTo(p2.sx, p2.sy);
@@ -175,105 +400,173 @@ class PhasePortraitEngine {
     }
     this.ctx.restore();
 
-    // 2. 绘制前景清晰立体螺旋主体线 (Crisp 3D Helical Spiral)
+    // 6. 第三层通道: 绘制空间前向主体螺旋线 (Front Helical Loops - Vivid 3D Foreground)
     this.ctx.save();
     for (let i = 0; i < screenPoints.length - 1; i++) {
       const p1 = screenPoints[i];
       const p2 = screenPoints[i + 1];
       const age = p1.age;
 
-      // 四阶段生命光色
-      let strokeColor = '#10b981';
-      if (age >= 26 && age <= 50) strokeColor = p1.v > 0 ? '#f43f5e' : '#f59e0b';
-      else if (age >= 51 && age <= 75) strokeColor = '#eab308';
-      else if (age > 75) strokeColor = '#38bdf8';
+      let strokeColor = '#10b981'; // 萌芽期
+      if (age >= 26 && age <= 50) {
+        strokeColor = p1.v > 0 ? '#f43f5e' : '#f59e0b'; // 鼎盛期
+      } else if (age >= 51 && age <= 75) {
+        strokeColor = '#eab308'; // 沉淀期
+      } else if (age > 75) {
+        strokeColor = '#38bdf8'; // 归真期
+      }
 
       this.ctx.beginPath();
       this.ctx.strokeStyle = strokeColor;
-      // 空间进深感: 朝向视点前侧稍粗(3.2px)，背向视点稍细(2.0px)
-      this.ctx.lineWidth = p1.isFront ? 3.0 : 2.0;
+      this.ctx.lineWidth = p1.isFront ? 3.4 : 2.2;
+      this.ctx.lineCap = 'round';
+      this.ctx.lineJoin = 'round';
       this.ctx.moveTo(p1.sx, p1.sy);
       this.ctx.lineTo(p2.sx, p2.sy);
       this.ctx.stroke();
     }
     this.ctx.restore();
 
-    // 3. 绘制岁运节点珠 (Decade Milestone Nodes)
+    // 7. 一生重大动能峰值点与筑底转折点自动标注 (Peak & Trough Landmark Badges)
+    let peakPt = screenPoints[0];
+    let troughPt = screenPoints[0];
+    screenPoints.forEach(p => {
+      if (p.v > peakPt.v) peakPt = p;
+      if (p.v < troughPt.v) troughPt = p;
+    });
+
+    // 绘制一生动能顶峰徽章 (Lifetime Peak Momentum)
+    if (peakPt && peakPt.v > 0.1) {
+      this.ctx.save();
+      // 竖向金光投影
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = isDark ? 'rgba(251, 191, 36, 0.4)' : 'rgba(180, 83, 9, 0.4)';
+      this.ctx.lineWidth = 1.5;
+      if (typeof this.ctx.setLineDash === 'function') this.ctx.setLineDash([3, 3]);
+      this.ctx.moveTo(peakPt.sx, peakPt.sy);
+      this.ctx.lineTo(peakPt.sx, floorY);
+      this.ctx.stroke();
+      if (typeof this.ctx.setLineDash === 'function') this.ctx.setLineDash([]);
+
+      // 顶峰金冠圆环
+      this.ctx.beginPath();
+      this.ctx.arc(peakPt.sx, peakPt.sy, 6, 0, Math.PI * 2);
+      this.ctx.fillStyle = '#fbbf24';
+      this.ctx.fill();
+      this.ctx.strokeStyle = '#ffffff';
+      this.ctx.lineWidth = 2;
+      this.ctx.stroke();
+
+      // 悬浮顶峰标签
+      const peakText = isEn ? `🚀 Peak ${peakPt.age}y` : `🚀 动能巅峰 ${peakPt.age}岁`;
+      this.ctx.font = 'bold 9.5px sans-serif';
+      const textW = this.ctx.measureText(peakText).width;
+      const bX = Math.max(10, Math.min(width - textW - 20, peakPt.sx - (textW + 16) / 2));
+      const bY = Math.max(22, peakPt.sy - 22);
+
+      this.ctx.beginPath();
+      if (typeof this.ctx.roundRect === 'function') {
+        this.ctx.roundRect(bX, bY, textW + 16, 18, 9);
+      } else {
+        this.ctx.rect(bX, bY, textW + 16, 18);
+      }
+      this.ctx.fillStyle = isDark ? 'rgba(30, 20, 10, 0.92)' : '#fef3c7';
+      this.ctx.fill();
+      this.ctx.strokeStyle = isDark ? '#fbbf24' : '#854d0e';
+      this.ctx.lineWidth = 1;
+      this.ctx.stroke();
+
+      this.ctx.fillStyle = isDark ? '#fef08a' : '#854d0e';
+      this.ctx.textAlign = 'left';
+      this.ctx.fillText(peakText, bX + 8, bY + 12);
+      this.ctx.restore();
+    }
+
+    // 8. 绘制岁运节点珠 (Decade Milestone Nodes: 20y, 40y, 60y, 80y)
     screenPoints.forEach(pt => {
-      if (pt.age % 20 === 0) {
+      if (pt.age % 20 === 0 && pt.age !== 100) {
+        this.ctx.save();
         this.ctx.beginPath();
         this.ctx.fillStyle = isDark ? '#ffffff' : '#0f172a';
-        this.ctx.arc(pt.sx, pt.sy, 3.2, 0, Math.PI * 2);
+        this.ctx.arc(pt.sx, pt.sy, 3.5, 0, Math.PI * 2);
         this.ctx.fill();
+        this.ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.8)' : '#854d0e';
+        this.ctx.lineWidth = 1.5;
+        this.ctx.stroke();
 
-        this.ctx.fillStyle = isDark ? '#cbd5e1' : '#334155';
-        this.ctx.font = '9px monospace';
-        this.ctx.fillText(`${pt.age}y`, pt.sx + 4, pt.sy - 6);
+        this.ctx.fillStyle = isDark ? '#e2e8f0' : '#1e293b';
+        this.ctx.font = 'bold 9.5px monospace';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText(`${pt.age}y`, pt.sx, pt.sy - 8);
+        this.ctx.restore();
       }
     });
 
-    // 4. 🌟 起点标定 (1y 起点 · 元神初生)
+    // 9. 🌟 起点标定 (1y 起点 · 元神初生)
     const originPt = screenPoints[0];
     if (originPt) {
       this.ctx.save();
-      // 外层光晕
-      const haloGrad = this.ctx.createRadialGradient(originPt.sx, originPt.sy, 2, originPt.sx, originPt.sy, 14);
+      const haloGrad = this.ctx.createRadialGradient(originPt.sx, originPt.sy, 2, originPt.sx, originPt.sy, 16);
       haloGrad.addColorStop(0, 'rgba(251, 191, 36, 0.9)');
-      haloGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.4)');
+      haloGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.35)');
       haloGrad.addColorStop(1, 'rgba(245, 158, 11, 0.0)');
       this.ctx.fillStyle = haloGrad;
       this.ctx.beginPath();
-      this.ctx.arc(originPt.sx, originPt.sy, 14, 0, Math.PI * 2);
+      this.ctx.arc(originPt.sx, originPt.sy, 16, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // 中心璀璨金星
       this.ctx.fillStyle = '#fbbf24';
       this.ctx.beginPath();
-      this.ctx.arc(originPt.sx, originPt.sy, 4.5, 0, Math.PI * 2);
+      this.ctx.arc(originPt.sx, originPt.sy, 5, 0, Math.PI * 2);
       this.ctx.fill();
+      this.ctx.strokeStyle = '#ffffff';
+      this.ctx.lineWidth = 2;
+      this.ctx.stroke();
 
-      // 起点说明徽章
       const originText = isEn ? '🌟 1y Origin · Natal Dawn' : '🌟 1y 起点 · 元神初生';
       this.ctx.font = 'bold 10px font-sans';
       this.ctx.fillStyle = isDark ? '#fef08a' : '#854d0e';
       this.ctx.textAlign = 'left';
-      this.ctx.fillText(originText, originPt.sx - 12, originPt.sy - 15);
+      this.ctx.fillText(originText, originPt.sx + 10, originPt.sy + 18);
       this.ctx.restore();
     }
 
-    // 5. 100y 归真终点标定
+    // 10. 100y 归真终点标定
     const endPt = screenPoints[screenPoints.length - 1];
     if (endPt) {
       this.ctx.save();
       this.ctx.fillStyle = '#38bdf8';
       this.ctx.beginPath();
-      this.ctx.arc(endPt.sx, endPt.sy, 4, 0, Math.PI * 2);
+      this.ctx.arc(endPt.sx, endPt.sy, 5, 0, Math.PI * 2);
       this.ctx.fill();
+      this.ctx.strokeStyle = '#ffffff';
+      this.ctx.lineWidth = 2;
+      this.ctx.stroke();
 
-      const endText = isEn ? '100y Zenith' : '100y 归真';
+      const endText = isEn ? '🌌 100y Zenith' : '🌌 100y 归真';
       this.ctx.font = 'bold 10px font-sans';
       this.ctx.fillStyle = isDark ? '#93c5fd' : '#1e40af';
       this.ctx.textAlign = 'right';
-      this.ctx.fillText(endText, endPt.sx + 8, endPt.sy - 12);
+      this.ctx.fillText(endText, endPt.sx - 8, endPt.sy + 18);
       this.ctx.restore();
     }
 
-    // 6. 📍 命主当前岁数脉冲信标 (Current Age Pulsing Beacon)
-    const targetAge = currentAge || 30;
-    const currentPt = screenPoints.find(p => p.age === targetAge) || screenPoints[29];
+    // 11. 📍 命主当前岁数脉冲信标 (Current Age Pulsing Beacon)
+    const targetAge = (currentAge !== null && currentAge !== undefined) ? currentAge : 30;
+    const currentPt = screenPoints.find(p => p.age === targetAge) || screenPoints[Math.min(29, screenPoints.length - 1)];
     if (currentPt) {
       this.ctx.save();
-      // 双重发光波纹
+      // 双重同心发光雷达波纹
       this.ctx.beginPath();
       this.ctx.strokeStyle = 'rgba(16, 185, 129, 0.45)';
       this.ctx.lineWidth = 1.5;
-      this.ctx.arc(currentPt.sx, currentPt.sy, 13, 0, Math.PI * 2);
+      this.ctx.arc(currentPt.sx, currentPt.sy, 14, 0, Math.PI * 2);
       this.ctx.stroke();
 
       this.ctx.beginPath();
-      this.ctx.strokeStyle = 'rgba(16, 185, 129, 0.8)';
-      this.ctx.lineWidth = 2;
-      this.ctx.arc(currentPt.sx, currentPt.sy, 8, 0, Math.PI * 2);
+      this.ctx.strokeStyle = 'rgba(16, 185, 129, 0.85)';
+      this.ctx.lineWidth = 2.2;
+      this.ctx.arc(currentPt.sx, currentPt.sy, 8.5, 0, Math.PI * 2);
       this.ctx.stroke();
 
       // 核心碧玉星点
@@ -281,6 +574,9 @@ class PhasePortraitEngine {
       this.ctx.beginPath();
       this.ctx.arc(currentPt.sx, currentPt.sy, 5, 0, Math.PI * 2);
       this.ctx.fill();
+      this.ctx.strokeStyle = '#ffffff';
+      this.ctx.lineWidth = 1.8;
+      this.ctx.stroke();
 
       // 悬浮气泡标签 (Pill Badge)
       const isAscending = currentPt.v >= 0;
@@ -290,23 +586,122 @@ class PhasePortraitEngine {
 
       this.ctx.font = 'bold 11px sans-serif';
       const textMetrics = this.ctx.measureText(badgeText);
-      const badgeW = textMetrics.width + 16;
-      const badgeH = 22;
-      const badgeX = Math.max(10, Math.min(width - badgeW - 10, currentPt.sx - badgeW / 2));
-      const badgeY = currentPt.sy - 34;
+      const badgeW = textMetrics.width + 18;
+      const badgeH = 24;
+
+      // 智能边界与左右对齐，防止在两端或边缘时截断溢出
+      let badgeX = currentPt.sx - badgeW / 2;
+      let badgeY = currentPt.sy - 36;
+      if (currentPt.sx < 120) {
+        badgeX = currentPt.sx + 14;
+        badgeY = currentPt.sy - 12;
+      } else if (currentPt.sx > width - 130) {
+        badgeX = currentPt.sx - badgeW - 14;
+        badgeY = currentPt.sy - 12;
+      }
+      if (badgeY < 20) badgeY = currentPt.sy + 16;
 
       // 气泡底板
-      this.ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.92)' : 'rgba(255, 255, 255, 0.95)';
+      this.ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.98)';
       this.ctx.strokeStyle = isAscending ? '#10b981' : '#f59e0b';
-      this.ctx.lineWidth = 1.2;
+      this.ctx.lineWidth = 1.5;
       this.roundRect(badgeX, badgeY, badgeW, badgeH, 6, true, true);
 
       // 气泡文字
-      this.ctx.fillStyle = isAscending ? '#34d399' : '#fbbf24';
+      this.ctx.fillStyle = isAscending ? (isDark ? '#34d399' : '#047857') : (isDark ? '#fbbf24' : '#854d0e');
       this.ctx.textAlign = 'left';
-      this.ctx.fillText(badgeText, badgeX + 8, badgeY + 15);
+      this.ctx.fillText(badgeText, badgeX + 9, badgeY + 16);
       this.ctx.restore();
     }
+
+    // 12. 交互式鼠标探针与悬浮卡片 (Interactive Hover Scan Laser & Glassmorphic HUD)
+    if (this.hoverPos) {
+      let nearestPt = screenPoints[0];
+      let minDist = 999999;
+      screenPoints.forEach(p => {
+        const dist = Math.abs(p.sx - this.hoverPos.x);
+        if (dist < minDist) {
+          minDist = dist;
+          nearestPt = p;
+        }
+      });
+
+      if (nearestPt && minDist < 60) {
+        this.hoverNearestAge = nearestPt.age;
+        this.ctx.save();
+
+        // 竖向激光扫描虚线 (Scanning Laser Line)
+        this.ctx.beginPath();
+        this.ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.7)' : 'rgba(2, 132, 199, 0.7)';
+        this.ctx.lineWidth = 1.5;
+        if (typeof this.ctx.setLineDash === 'function') this.ctx.setLineDash([3, 3]);
+        this.ctx.moveTo(nearestPt.sx, 24);
+        this.ctx.lineTo(nearestPt.sx, floorY);
+        this.ctx.stroke();
+
+        // 目标十字准心圆 (Target Reticle)
+        this.ctx.beginPath();
+        this.ctx.arc(nearestPt.sx, nearestPt.sy, 8, 0, Math.PI * 2);
+        this.ctx.strokeStyle = '#38bdf8';
+        this.ctx.lineWidth = 2.5;
+        this.ctx.stroke();
+
+        // 悬浮玻璃拟态探针卡片 (Glassmorphic HUD Card)
+        const hudW = isEn ? 210 : 180;
+        const hudH = 76;
+        let hudX = nearestPt.sx + 16;
+        let hudY = nearestPt.sy - hudH / 2;
+        if (hudX + hudW > width - 15) hudX = nearestPt.sx - hudW - 16;
+        if (hudY < 24) hudY = 24;
+        if (hudY + hudH > height - 24) hudY = height - hudH - 24;
+
+        this.ctx.beginPath();
+        if (typeof this.ctx.roundRect === 'function') {
+          this.ctx.roundRect(hudX, hudY, hudW, hudH, 8);
+        } else {
+          this.ctx.rect(hudX, hudY, hudW, hudH);
+        }
+        this.ctx.fillStyle = isDark ? 'rgba(11, 15, 25, 0.94)' : 'rgba(255, 255, 255, 0.98)';
+        this.ctx.fill();
+        this.ctx.strokeStyle = isDark ? '#38bdf8' : '#0284c7';
+        this.ctx.lineWidth = 1.5;
+        this.ctx.stroke();
+
+        const isAsc = nearestPt.v >= 0;
+        this.ctx.textAlign = 'left';
+
+        // Title Line
+        this.ctx.font = 'bold 11px sans-serif';
+        this.ctx.fillStyle = isDark ? '#f8fafc' : '#0f172a';
+        const titleStr = isEn ? `Age ${nearestPt.age} Horizon Scan` : `🧭 【${nearestPt.age}岁 · 时空动力探针】`;
+        this.ctx.fillText(titleStr, hudX + 10, hudY + 18);
+
+        // Momentum Line
+        this.ctx.font = '10px font-mono';
+        this.ctx.fillStyle = isAsc ? (isDark ? '#34d399' : '#047857') : (isDark ? '#fbbf24' : '#854d0e');
+        const vSign = nearestPt.v >= 0 ? '+' : '';
+        const vText = isEn
+          ? `Momentum: v = ${vSign}${nearestPt.v} (${isAsc ? 'Ascent 🔺' : 'Grounding 🔻'})`
+          : `动能势位: v = ${vSign}${nearestPt.v} (${isAsc ? '上升跃迁期 🔺' : '筑底自持期 🔻'})`;
+        this.ctx.fillText(vText, hudX + 10, hudY + 36);
+
+        // Displacement Line
+        this.ctx.font = '10px font-mono';
+        this.ctx.fillStyle = isDark ? '#94a3b8' : '#475569';
+        const xText = isEn ? `Displacement: x = ${nearestPt.x}` : `能量自持位移: x = ${nearestPt.x}`;
+        this.ctx.fillText(xText, hudX + 10, hudY + 52);
+
+        // Interaction Prompt
+        this.ctx.font = '9.5px sans-serif';
+        this.ctx.fillStyle = isDark ? '#38bdf8' : '#0284c7';
+        const clickPrompt = isEn ? '💡 Click to focus & sync charts' : '💡 点击可聚焦排盘与周流推演';
+        this.ctx.fillText(clickPrompt, hudX + 10, hudY + 68);
+
+        this.ctx.restore();
+      }
+    }
+
+    this.ctx.restore(); // restore high-dpi scaling
   }
 
   /**
@@ -315,16 +710,20 @@ class PhasePortraitEngine {
   roundRect(x, y, w, h, r, fill, stroke) {
     if (!this.ctx) return;
     this.ctx.beginPath();
-    this.ctx.moveTo(x + r, y);
-    this.ctx.lineTo(x + w - r, y);
-    this.ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-    this.ctx.lineTo(x + w, y + h - r);
-    this.ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    this.ctx.lineTo(x + r, y + h);
-    this.ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-    this.ctx.lineTo(x, y + r);
-    this.ctx.quadraticCurveTo(x, y, x + r, y);
-    this.ctx.closePath();
+    if (typeof this.ctx.roundRect === 'function') {
+      this.ctx.roundRect(x, y, w, h, r);
+    } else {
+      this.ctx.moveTo(x + r, y);
+      this.ctx.lineTo(x + w - r, y);
+      this.ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      this.ctx.lineTo(x + w, y + h - r);
+      this.ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      this.ctx.lineTo(x + r, y + h);
+      this.ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      this.ctx.lineTo(x, y + r);
+      this.ctx.quadraticCurveTo(x, y, x + r, y);
+      this.ctx.closePath();
+    }
     if (fill) this.ctx.fill();
     if (stroke) this.ctx.stroke();
   }
@@ -344,7 +743,7 @@ class PhasePortraitEngine {
     this.ctx.stroke();
 
     const angle = Math.atan2(dy, dx);
-    const headLen = 3;
+    const headLen = 3.5;
     this.ctx.beginPath();
     this.ctx.moveTo(x + dx, y + dy);
     this.ctx.lineTo(x + dx - headLen * Math.cos(angle - Math.PI / 6), y + dy - headLen * Math.sin(angle - Math.PI / 6));
