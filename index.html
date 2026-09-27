@@ -1810,6 +1810,99 @@
         </div>
       </section>
 
+      <!-- Dynamic Phase Space & Double-Well Potential Manifold (动力学相空间与势能井流形) -->
+      <section id="phasePortraitSection" class="bg-card rounded-2xl border border-amber-500/40 p-5 sm:p-6 shadow-2xl space-y-5 bg-gradient-to-br from-[#141724] via-[#0f111a] to-black">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">🌀</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                <span data-i18n="phase_portrait_title">时空动力学相空间与生命螺旋流形 (Life-Chrono Spiral Manifold)</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">SPIRAL DYNAMICS</span>
+              </h3>
+              <p class="text-xs text-gray-400 mt-0.5" data-i18n="phase_portrait_sub">
+                以用户日主为固定衡量系展开的 3D 时空动力学螺旋轨迹：从 1 岁起点出发，洞察一生的势能起伏、螺旋上升与筑底跃迁
+              </p>
+            </div>
+          </div>
+          <button id="btnResetPhaseParams" type="button" class="px-3 py-1.5 rounded-xl bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 text-xs font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+            <span>🔄</span>
+            <span data-i18n="phase_btn_reset">重置动力学参数</span>
+          </button>
+        </div>
+
+        <!-- Canvas & Controls Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <!-- Canvas Arena (8 cols) -->
+          <div class="lg:col-span-8 flex flex-col items-center justify-center p-3 rounded-xl bg-black/50 border border-gray-800">
+            <canvas id="phasePortraitCanvas" width="640" height="360" class="w-full h-auto max-h-[360px] rounded-lg shadow-inner"></canvas>
+            <!-- Intuitive 3D Spiral Legend & Life Stages -->
+            <div class="flex flex-wrap items-center justify-between w-full pt-2.5 px-1.5 gap-2 text-[11px] text-gray-300 font-sans border-t border-gray-800/80 mt-1">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <span class="flex items-center gap-1 font-medium text-amber-300"><span>🌟</span> <span data-i18n="phase_legend_origin">1y 起点 · 元神初生</span></span>
+                <span class="flex items-center gap-1 text-emerald-400"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> <span data-i18n="phase_legend_spring">1~25y 萌芽</span></span>
+                <span class="flex items-center gap-1 text-amber-400"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> <span data-i18n="phase_legend_summer">26~50y 鼎盛</span></span>
+                <span class="flex items-center gap-1 text-yellow-400"><span class="w-2 h-2 rounded-full bg-yellow-500 inline-block"></span> <span data-i18n="phase_legend_autumn">51~75y 沉淀</span></span>
+                <span class="flex items-center gap-1 text-sky-400"><span class="w-2 h-2 rounded-full bg-sky-500 inline-block"></span> <span data-i18n="phase_legend_winter">76~100y 归真</span></span>
+              </div>
+              <div class="flex items-center gap-2.5 text-gray-400 font-mono text-[10px]">
+                <span class="flex items-center gap-1 text-emerald-400 font-medium"><span>🔺</span><span data-i18n="phase_legend_ascend">螺旋上升 (势能跃迁)</span></span>
+                <span class="flex items-center gap-1 text-amber-400 font-medium"><span>🔻</span><span data-i18n="phase_legend_descend">螺旋下探 (蓄能筑底)</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Parameter Tuning Sliders (4 cols) -->
+          <div class="lg:col-span-4 p-4 rounded-xl bg-black/30 border border-gray-800 space-y-3.5 text-xs">
+            <div class="text-xs font-bold text-amber-200 font-serif-sc border-b border-gray-800/80 pb-1.5 flex items-center justify-between">
+              <span>⚙️ 势函数参数调谐 (V(x) Manifold)</span>
+              <span id="phaseStateBadge" class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 font-mono">ATTRACTOR</span>
+            </div>
+
+            <!-- Parameter a: Rigidity -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span data-i18n="phase_param_rigidity">格局刚性 (a · 日元抗压自持力):</span>
+                <span id="labelParamA" class="font-mono text-amber-400 font-bold">1.20</span>
+              </div>
+              <input type="range" id="paramA" min="0.2" max="3.0" step="0.05" value="1.20" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Parameter b: Bifurcation -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span data-i18n="phase_param_bifurcation">双稳态分岔 (b · 势能跃迁潜质):</span>
+                <span id="labelParamB" class="font-mono text-amber-400 font-bold">0.80</span>
+              </div>
+              <input type="range" id="paramB" min="0.0" max="2.5" step="0.05" value="0.80" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Parameter c: Decadal Bias -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span data-i18n="phase_param_bias">大运偏压 (c · 岁运外部推力):</span>
+                <span id="labelParamC" class="font-mono text-amber-400 font-bold">0.00</span>
+              </div>
+              <input type="range" id="paramC" min="-2.0" max="2.0" step="0.05" value="0.00" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Parameter gamma: Damping -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span data-i18n="phase_param_damping">耗散阻尼 (γ · 印星缓冲护城河):</span>
+                <span id="labelParamGamma" class="font-mono text-amber-400 font-bold">0.38</span>
+              </div>
+              <input type="range" id="paramGamma" min="0.1" max="1.0" step="0.02" value="0.38" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Summary Diagnosis Box -->
+            <div id="phaseTrajectorySummary" class="p-2.5 rounded-lg bg-[#161824] border border-amber-900/30 text-[11px] text-gray-300 leading-relaxed font-sans">
+              动力学参数根据原局子平量化评分与当值大运自动绑定，相轨迹平滑穿行于势能井。
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Four Pillars Natal Hexagrams & Master Ni Haisha Tian Ji Exegesis (四柱命卦与倪海厦《天纪》全相推命) -->
       <section id="fourPillarsHexSection" class="bg-card rounded-2xl border border-border-color shadow-2xl p-5 md:p-6 space-y-5">
         <div id="fourPillarsHexCard" class="space-y-5">
@@ -2149,99 +2242,6 @@
       </div>
       <div id="ecologicalResonanceContainer" class="space-y-4">
         <!-- Injected dynamically via JavaScript -->
-      </div>
-    </section>
-
-    <!-- Dynamic Phase Space & Double-Well Potential Manifold (动力学相空间与势能井流形) -->
-    <section id="phasePortraitSection" class="bg-card rounded-2xl border border-amber-500/40 p-5 sm:p-6 shadow-2xl space-y-5 bg-gradient-to-br from-[#141724] via-[#0f111a] to-black">
-      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
-        <div class="flex items-center space-x-2.5">
-          <span class="text-2xl">🌀</span>
-          <div>
-            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
-              <span data-i18n="phase_portrait_title">时空动力学相空间与生命螺旋流形 (Life-Chrono Spiral Manifold)</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">SPIRAL DYNAMICS</span>
-            </h3>
-            <p class="text-xs text-gray-400 mt-0.5" data-i18n="phase_portrait_sub">
-              以用户日主为固定衡量系展开的 3D 时空动力学螺旋轨迹：从 1 岁起点出发，洞察一生的势能起伏、螺旋上升与筑底跃迁
-            </p>
-          </div>
-        </div>
-        <button id="btnResetPhaseParams" type="button" class="px-3 py-1.5 rounded-xl bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 text-xs font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
-          <span>🔄</span>
-          <span data-i18n="phase_btn_reset">重置动力学参数</span>
-        </button>
-      </div>
-
-      <!-- Canvas & Controls Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-        <!-- Canvas Arena (8 cols) -->
-        <div class="lg:col-span-8 flex flex-col items-center justify-center p-3 rounded-xl bg-black/50 border border-gray-800">
-          <canvas id="phasePortraitCanvas" width="640" height="360" class="w-full h-auto max-h-[360px] rounded-lg shadow-inner"></canvas>
-          <!-- Intuitive 3D Spiral Legend & Life Stages -->
-          <div class="flex flex-wrap items-center justify-between w-full pt-2.5 px-1.5 gap-2 text-[11px] text-gray-300 font-sans border-t border-gray-800/80 mt-1">
-            <div class="flex flex-wrap items-center gap-2.5">
-              <span class="flex items-center gap-1 font-medium text-amber-300"><span>🌟</span> <span data-i18n="phase_legend_origin">1y 起点 · 元神初生</span></span>
-              <span class="flex items-center gap-1 text-emerald-400"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> <span data-i18n="phase_legend_spring">1~25y 萌芽</span></span>
-              <span class="flex items-center gap-1 text-amber-400"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> <span data-i18n="phase_legend_summer">26~50y 鼎盛</span></span>
-              <span class="flex items-center gap-1 text-yellow-400"><span class="w-2 h-2 rounded-full bg-yellow-500 inline-block"></span> <span data-i18n="phase_legend_autumn">51~75y 沉淀</span></span>
-              <span class="flex items-center gap-1 text-sky-400"><span class="w-2 h-2 rounded-full bg-sky-500 inline-block"></span> <span data-i18n="phase_legend_winter">76~100y 归真</span></span>
-            </div>
-            <div class="flex items-center gap-2.5 text-gray-400 font-mono text-[10px]">
-              <span class="flex items-center gap-1 text-emerald-400 font-medium"><span>🔺</span><span data-i18n="phase_legend_ascend">螺旋上升 (势能跃迁)</span></span>
-              <span class="flex items-center gap-1 text-amber-400 font-medium"><span>🔻</span><span data-i18n="phase_legend_descend">螺旋下探 (蓄能筑底)</span></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Dynamic Parameter Tuning Sliders (4 cols) -->
-        <div class="lg:col-span-4 p-4 rounded-xl bg-black/30 border border-gray-800 space-y-3.5 text-xs">
-          <div class="text-xs font-bold text-amber-200 font-serif-sc border-b border-gray-800/80 pb-1.5 flex items-center justify-between">
-            <span>⚙️ 势函数参数调谐 (V(x) Manifold)</span>
-            <span id="phaseStateBadge" class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 font-mono">ATTRACTOR</span>
-          </div>
-
-          <!-- Parameter a: Rigidity -->
-          <div class="space-y-1">
-            <div class="flex justify-between text-gray-300">
-              <span data-i18n="phase_param_rigidity">格局刚性 (a · 日元抗压自持力):</span>
-              <span id="labelParamA" class="font-mono text-amber-400 font-bold">1.20</span>
-            </div>
-            <input type="range" id="paramA" min="0.2" max="3.0" step="0.05" value="1.20" class="w-full accent-amber-500 cursor-pointer">
-          </div>
-
-          <!-- Parameter b: Bifurcation -->
-          <div class="space-y-1">
-            <div class="flex justify-between text-gray-300">
-              <span data-i18n="phase_param_bifurcation">双稳态分岔 (b · 势能跃迁潜质):</span>
-              <span id="labelParamB" class="font-mono text-amber-400 font-bold">0.80</span>
-            </div>
-            <input type="range" id="paramB" min="0.0" max="2.5" step="0.05" value="0.80" class="w-full accent-amber-500 cursor-pointer">
-          </div>
-
-          <!-- Parameter c: Decadal Bias -->
-          <div class="space-y-1">
-            <div class="flex justify-between text-gray-300">
-              <span data-i18n="phase_param_bias">大运偏压 (c · 岁运外部推力):</span>
-              <span id="labelParamC" class="font-mono text-amber-400 font-bold">0.00</span>
-            </div>
-            <input type="range" id="paramC" min="-2.0" max="2.0" step="0.05" value="0.00" class="w-full accent-amber-500 cursor-pointer">
-          </div>
-
-          <!-- Parameter gamma: Damping -->
-          <div class="space-y-1">
-            <div class="flex justify-between text-gray-300">
-              <span data-i18n="phase_param_damping">耗散阻尼 (γ · 印星缓冲护城河):</span>
-              <span id="labelParamGamma" class="font-mono text-amber-400 font-bold">0.38</span>
-            </div>
-            <input type="range" id="paramGamma" min="0.1" max="1.0" step="0.02" value="0.38" class="w-full accent-amber-500 cursor-pointer">
-          </div>
-
-          <!-- Summary Diagnosis Box -->
-          <div id="phaseTrajectorySummary" class="p-2.5 rounded-lg bg-[#161824] border border-amber-900/30 text-[11px] text-gray-300 leading-relaxed font-sans">
-            动力学参数根据原局子平量化评分与当值大运自动绑定，相轨迹平滑穿行于势能井。
-          </div>
-        </div>
       </div>
     </section>
 
