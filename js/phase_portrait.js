@@ -1272,6 +1272,46 @@ class PhasePortraitEngine {
   }
 
   /**
+   * 提取指定年龄区间 (默认 30~70岁 黄金生命期) 的相对极值点 (高点与低点)
+   * @param {Array} trajectoryPoints - 100岁轨迹点数组
+   * @param {number} minAge - 区间起始岁数 (默认 30)
+   * @param {number} maxAge - 区间结束岁数 (默认 70)
+   * @returns {Object} { peak, trough, lifetimePeak, lifetimeTrough, minAge, maxAge }
+   */
+  static findKeyExtrema(trajectoryPoints, minAge = 30, maxAge = 70) {
+    if (!trajectoryPoints || !trajectoryPoints.length) {
+      const fallback = { age: 30, x: 0, v: 0 };
+      return { peak: fallback, trough: fallback, lifetimePeak: fallback, lifetimeTrough: fallback, minAge, maxAge };
+    }
+
+    let lifetimePeak = trajectoryPoints[0];
+    let lifetimeTrough = trajectoryPoints[0];
+    trajectoryPoints.forEach(p => {
+      if (p.v > lifetimePeak.v) lifetimePeak = p;
+      if (p.v < lifetimeTrough.v) lifetimeTrough = p;
+    });
+
+    const primePoints = trajectoryPoints.filter(p => p.age >= minAge && p.age <= maxAge);
+    const pool = primePoints.length > 0 ? primePoints : trajectoryPoints;
+
+    let peak = pool[0];
+    let trough = pool[0];
+    pool.forEach(p => {
+      if (p.v > peak.v) peak = p;
+      if (p.v < trough.v) trough = p;
+    });
+
+    return {
+      peak,
+      trough,
+      lifetimePeak,
+      lifetimeTrough,
+      minAge,
+      maxAge
+    };
+  }
+
+  /**
    * Dual Synastry: 求解甲乙双人动力学参数与轨迹
    */
   static deriveDualSpiralTrajectories(chartA, luckCyclesA, currentAgeA, chartB, luckCyclesB, currentAgeB) {
@@ -1280,6 +1320,11 @@ class PhasePortraitEngine {
 
     const derivedA = this.deriveParametersAndTrajectory(chartA, luckCyclesA || [], ageA);
     const derivedB = this.deriveParametersAndTrajectory(chartB, luckCyclesB || [], ageB);
+
+    const extremaA = this.findKeyExtrema(derivedA.trajectoryPoints, 30, 70);
+    const extremaB = this.findKeyExtrema(derivedB.trajectoryPoints, 30, 70);
+    derivedA.extrema = extremaA;
+    derivedB.extrema = extremaB;
 
     const ascA = derivedA.currentPt.v >= 0;
     const ascB = derivedB.currentPt.v >= 0;
@@ -1318,6 +1363,8 @@ class PhasePortraitEngine {
     return {
       derivedA,
       derivedB,
+      extremaA,
+      extremaB,
       synergyType,
       synergyTitleZh,
       synergyTitleEn,
@@ -1441,6 +1488,44 @@ class PhasePortraitEngine {
       ctx.textAlign = 'center';
       ctx.fillText(`${age}y`, tx, floorY + 16);
     });
+
+    // Prime 30~70 Age Corridor Highlight (30~70岁 黄金主升与攻守核心带)
+    const u30 = (30 - 1) / 99.0;
+    const u70 = (70 - 1) / 99.0;
+    const x30 = plotLeft + u30 * plotWidth;
+    const x70 = plotLeft + u70 * plotWidth;
+
+    ctx.save();
+    const corridorGrad = ctx.createLinearGradient(x30, 0, x70, 0);
+    if (isDark) {
+      corridorGrad.addColorStop(0, 'rgba(245, 158, 11, 0.05)');
+      corridorGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.06)');
+      corridorGrad.addColorStop(1, 'rgba(245, 158, 11, 0.05)');
+    } else {
+      corridorGrad.addColorStop(0, 'rgba(245, 158, 11, 0.04)');
+      corridorGrad.addColorStop(0.5, 'rgba(168, 85, 247, 0.05)');
+      corridorGrad.addColorStop(1, 'rgba(245, 158, 11, 0.04)');
+    }
+    ctx.fillStyle = corridorGrad;
+    ctx.fillRect(x30, 24, x70 - x30, floorY - 24);
+
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([3, 3]);
+    ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.28)' : 'rgba(202, 138, 4, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(x30, 24);
+    ctx.lineTo(x30, floorY);
+    ctx.moveTo(x70, 24);
+    ctx.lineTo(x70, floorY);
+    ctx.stroke();
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+    const corridorLabel = isEn ? '✨ [Age 30–70 Prime Dynamic Corridor]' : '✨ [30~70岁 黄金主升与攻守核心带]';
+    ctx.font = 'bold 8.5px sans-serif';
+    ctx.fillStyle = isDark ? 'rgba(251, 191, 36, 0.75)' : '#854d0e';
+    ctx.textAlign = 'center';
+    ctx.fillText(corridorLabel, (x30 + x70) / 2, 20);
+    ctx.restore();
 
     // Floor rail
     ctx.beginPath();
@@ -1614,7 +1699,106 @@ class PhasePortraitEngine {
     drawSpiralHelicalLayer(screenPointsB, false);
     drawSpiralHelicalLayer(screenPointsA, true);
 
-    // 7. Dynamic Moving Beacons for Both Person A and Person B
+    // 7. Relative High & Low Points (Extrema Badges) for Person A & Person B (30~70 Stage Focus)
+    const extremaA = PhasePortraitEngine.findKeyExtrema(trajA, 30, 70);
+    const extremaB = PhasePortraitEngine.findKeyExtrema(trajB, 30, 70);
+
+    const sPeakA = screenPointsA.find(p => p.age === extremaA.peak.age) || toScreenA(extremaA.peak);
+    const sTroughA = screenPointsA.find(p => p.age === extremaA.trough.age) || toScreenA(extremaA.trough);
+    const sPeakB = screenPointsB.find(p => p.age === extremaB.peak.age) || toScreenB(extremaB.peak);
+    const sTroughB = screenPointsB.find(p => p.age === extremaB.trough.age) || toScreenB(extremaB.trough);
+
+    // Stagger heights if X coordinates are close to avoid visual overlap
+    let yOffPeakA = -22;
+    let yOffPeakB = -22;
+    if (sPeakA && sPeakB && Math.abs(sPeakA.sx - sPeakB.sx) < 65) {
+      yOffPeakA = -36;
+      yOffPeakB = -18;
+    }
+    let yOffTroughA = 15;
+    let yOffTroughB = 15;
+    if (sTroughA && sTroughB && Math.abs(sTroughA.sx - sTroughB.sx) < 65) {
+      yOffTroughA = 12;
+      yOffTroughB = 30;
+    }
+
+    const drawExtremaPin = (pt, isPeak, isPersonA, yOffset) => {
+      if (!pt) return;
+      ctx.save();
+      const isAmber = isPersonA;
+      const mainCol = isAmber ? '#fbbf24' : '#c084fc';
+      const borderCol = isAmber ? '#f59e0b' : '#a855f7';
+      const textColDark = isAmber ? '#fbbf24' : '#e9d5ff';
+      const textColLight = isAmber ? '#854d0e' : '#6b21a8';
+      const lineCol = isAmber
+        ? (isDark ? 'rgba(245, 158, 11, 0.45)' : 'rgba(202, 138, 4, 0.45)')
+        : (isDark ? 'rgba(168, 85, 247, 0.45)' : 'rgba(147, 51, 234, 0.45)');
+
+      // Dropline to floor
+      ctx.beginPath();
+      ctx.strokeStyle = lineCol;
+      ctx.lineWidth = 1.1;
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([2.5, 2.5]);
+      ctx.moveTo(pt.sx, pt.sy);
+      ctx.lineTo(pt.sx, floorY);
+      ctx.stroke();
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+      // Star / Ring marker on trajectory
+      ctx.beginPath();
+      ctx.arc(pt.sx, pt.sy, isPeak ? 5 : 4, 0, Math.PI * 2);
+      ctx.fillStyle = mainCol;
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.6;
+      ctx.stroke();
+
+      // Floating Tag
+      const icon = isPeak ? '👑' : '⚓';
+      const personName = isPersonA ? nameA : nameB;
+      const typeStr = isPeak ? (isEn ? 'Peak' : '高点') : (isEn ? 'Trough' : '低点');
+      const sign = pt.v >= 0 ? '+' : '';
+      const tagText = isEn
+        ? `${icon} ${personName} ${typeStr} ${pt.age}y (${sign}${pt.v})`
+        : `${icon} ${personName}${typeStr} ${pt.age}岁 (${sign}${pt.v})`;
+
+      ctx.font = 'bold 8.5px sans-serif';
+      const tw = ctx.measureText(tagText).width;
+      const bW = tw + 10;
+      const bH = 17;
+      let bX = pt.sx - bW / 2;
+      let bY = pt.sy + yOffset;
+
+      if (bX < 10) bX = 10;
+      if (bX + bW > cssWidth - 10) bX = cssWidth - bW - 10;
+      if (bY < 20) bY = 20;
+      if (bY + bH > floorY) bY = floorY - bH - 2;
+
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(bX, bY, bW, bH, 4);
+      } else if (typeof ctx.rect === 'function') {
+        ctx.rect(bX, bY, bW, bH);
+      }
+      ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.94)' : 'rgba(255, 255, 255, 0.96)';
+      ctx.fill();
+      ctx.strokeStyle = borderCol;
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? textColDark : textColLight;
+      ctx.textAlign = 'left';
+      ctx.fillText(tagText, bX + 5, bY + 11.5);
+      ctx.restore();
+    };
+
+    // Draw extrema pins
+    drawExtremaPin(sPeakA, true, true, yOffPeakA);
+    drawExtremaPin(sTroughA, false, true, yOffTroughA);
+    drawExtremaPin(sPeakB, true, false, yOffPeakB);
+    drawExtremaPin(sTroughB, false, false, yOffTroughB);
+
+    // 8. Dynamic Moving Beacons for Both Person A and Person B
     const ptA = screenPointsA.find(p => p.age === activeAgeA) || screenPointsA[Math.min(activeAgeA - 1, screenPointsA.length - 1)] || screenPointsA[0];
     const ptB = screenPointsB.find(p => p.age === activeAgeB) || screenPointsB[Math.min(activeAgeB - 1, screenPointsB.length - 1)] || screenPointsB[0];
 

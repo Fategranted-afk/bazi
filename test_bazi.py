@@ -307,6 +307,20 @@ if (typeof phaseData.trajectoryPoints[0].x !== 'number' || typeof phaseData.traj
   throw new Error("Invalid phase coordinates (x, v)");
 }
 
+// 4.1b Dual Trajectories and 30-70 Key Extrema Verification
+var dualTraj = PhasePortraitEngine.deriveDualSpiralTrajectories(baziA, [], 30, baziB, [], 30);
+if (!dualTraj || !dualTraj.extremaA || !dualTraj.extremaB) {
+  throw new Error("Missing dual spiral trajectories or extrema");
+}
+var ext3070A = PhasePortraitEngine.findKeyExtrema(dualTraj.derivedA.trajectoryPoints, 30, 70);
+if (!ext3070A.peak || !ext3070A.trough || ext3070A.peak.age < 30 || ext3070A.peak.age > 70) {
+  throw new Error("Invalid 30-70 extrema calculation for A");
+}
+var ext3070B = PhasePortraitEngine.findKeyExtrema(dualTraj.derivedB.trajectoryPoints, 30, 70);
+if (!ext3070B.peak || !ext3070B.trough || ext3070B.peak.age < 30 || ext3070B.peak.age > 70) {
+  throw new Error("Invalid 30-70 extrema calculation for B");
+}
+
 // 4.2 Political Game Matrix
 if (typeof PoliticalGameMatrix === 'undefined') throw new Error("PoliticalGameMatrix missing");
 var pgm = new PoliticalGameMatrix();
@@ -1055,10 +1069,23 @@ if (typeof window.initDualPhaseManifold === 'function') {
   var nlA = document.getElementById('synastryPhaseLabelParamAName') ? document.getElementById('synastryPhaseLabelParamAName').textContent : '';
   if (!nlA.includes('乙造')) throw new Error('Target switcher failed to update label for Person B: ' + nlA);
 
+  var extCardZh = document.getElementById('synastryPhaseExtremaCard') ? document.getElementById('synastryPhaseExtremaCard').innerHTML : '';
+  if (!extCardZh.includes('30~70岁') || !extCardZh.includes('相对高点') || !extCardZh.includes('图形解读指南')) {
+    throw new Error('synastryPhaseExtremaCard missing required 30-70 exegesis in Chinese');
+  }
+
   window.initDualPhaseManifold(synChartA, synChartB, true, 'Person A', 'Person B');
   var enSummary = document.getElementById('synastryPhaseSummaryBox') ? document.getElementById('synastryPhaseSummaryBox').innerHTML : '';
   if (!enSummary.includes('System rigidity') || /[\\u4e00-\\u9fa5]/.test(enSummary)) {
     throw new Error('English synastry phase summary box has CJK leakage or missing text');
+  }
+
+  var extCardEn = document.getElementById('synastryPhaseExtremaCard') ? document.getElementById('synastryPhaseExtremaCard').innerHTML : '';
+  if (!extCardEn.includes('Age 30–70 Prime') || !extCardEn.includes('Prime Peak') || !extCardEn.includes('Graphical Reading Guide')) {
+    throw new Error('synastryPhaseExtremaCard missing required 30-70 exegesis in English');
+  }
+  if (/[\\u4e00-\\u9fa5]/.test(extCardEn)) {
+    throw new Error('English synastryPhaseExtremaCard has CJK leakage!');
   }
 }
 """

@@ -15311,6 +15311,18 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
           </div>
+          ${(cachedSynastryPhaseDerived && cachedSynastryPhaseDerived.derivedA?.extrema && cachedSynastryPhaseDerived.derivedB?.extrema) ? `
+          <div class="p-2.5 rounded-lg bg-black/50 border border-amber-500/20 grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10.5px] font-mono text-gray-300">
+            <div class="flex items-center justify-between">
+              <span class="text-amber-300 font-serif-sc font-bold">👑 ${labelA} (30~70y):</span>
+              <span class="text-amber-400 font-semibold">${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedA.extrema.peak.v}) · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-purple-300 font-serif-sc font-bold">👑 ${labelB} (30~70y):</span>
+              <span class="text-purple-400 font-semibold">${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedB.extrema.peak.v}) · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y</span>
+            </div>
+          </div>
+          ` : ''}
           <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
             ${isEn
               ? 'By mapping Ziping vitality scores onto non-linear Duffing potential wells, the dual phase trajectories reveal how both parties exchange kinetic and potential energy across 100 years. Their dynamic coupling prevents catastrophic bifurcations while preserving autonomous momentum.'
@@ -15662,6 +15674,11 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </details>
           </div>
+        </div>
+
+        <!-- Annotated Graphical Interpretation: 30-70 Prime Corridor & Extrema Exegesis -->
+        <div id="synastryPhaseExtremaCard" class="mt-4 pt-4 border-t border-gray-800/80 space-y-4">
+          <!-- Dynamically populated via drawCurrentDualPhaseManifold -->
         </div>
       </div>
       `;
@@ -16743,6 +16760,236 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="text-[10.5px] text-gray-400 leading-snug">${isEn ? jointDescEn : jointDescZh}</div>
       `;
     }
+
+    // Update Prime 30~70 Corridor & Extrema Graphical Exegesis Card
+    const extremaCard = document.getElementById('synastryPhaseExtremaCard');
+    if (extremaCard) {
+      const extremaA = (cachedSynastryPhaseDerived.derivedA && cachedSynastryPhaseDerived.derivedA.extrema)
+        || PhasePortraitEngine.findKeyExtrema(trajA, 30, 70);
+      const extremaB = (cachedSynastryPhaseDerived.derivedB && cachedSynastryPhaseDerived.derivedB.extrema)
+        || PhasePortraitEngine.findKeyExtrema(trajB, 30, 70);
+
+      const pkA = extremaA.peak;
+      const trA = extremaA.trough;
+      const pkB = extremaB.peak;
+      const trB = extremaB.trough;
+
+      const deltaPeak = Math.abs(pkA.age - pkB.age);
+      const isPeakResonant = deltaPeak <= 5;
+
+      const ptBatAPeak = trajB.find(p => p.age === pkA.age) || { v: 0, x: 0 };
+      const ptBatATrough = trajB.find(p => p.age === trA.age) || { v: 0, x: 0 };
+      const ptAatBPeak = trajA.find(p => p.age === pkB.age) || { v: 0, x: 0 };
+      const ptAatBTrough = trajA.find(p => p.age === trB.age) || { v: 0, x: 0 };
+
+      let synergyBadgeZh = '';
+      let synergyBadgeEn = '';
+      let synergyBadgeCls = '';
+      let synergyTitleZh = '';
+      let synergyTitleEn = '';
+      let synergyBodyZh = '';
+      let synergyBodyEn = '';
+      let troughBodyZh = '';
+      let troughBodyEn = '';
+
+      if (isPeakResonant) {
+        synergyBadgeZh = '🌟 双星共振 · 黄金齐飞';
+        synergyBadgeEn = '🌟 Resonance Co-Ascent';
+        synergyBadgeCls = 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40';
+        synergyTitleZh = `30~70岁 黄金运势同频共振期 (峰值相距仅 ${deltaPeak} 岁)`;
+        synergyTitleEn = `Ages 30–70 Prime Resonance Co-Ascent (Apex Gap: ${deltaPeak} Year${deltaPeak > 1 ? 's' : ''})`;
+        synergyBodyZh = `${nameA} 相对峰值位于 ${pkA.age} 岁 (v=+${pkA.v})，${nameB} 相对峰值位于 ${pkB.age} 岁 (v=+${pkB.v})，两造巅峰动能高度重合！在此黄金窗口期内，双方进取雄心与外部机缘形成强烈的共振放大效应，极利携手开拓重大事业增量、资产跃迁或共建基业。`;
+        synergyBodyEn = `${nameA}'s apex occurs at age ${pkA.age} (v=+${pkA.v}), while ${nameB}'s apex arrives at age ${pkB.age} (v=+${pkB.v})—an extraordinary synchrony! During this golden era, mutual ambition and external luck align, creating high-leverage compound synergy for monumental breakthroughs.`;
+      } else {
+        synergyBadgeZh = '🛡️ 错峰交替 · 攻守托底';
+        synergyBadgeEn = '🛡️ Staggered Counterbalance';
+        synergyBadgeCls = 'bg-sky-950/80 text-sky-300 border-sky-600/40';
+        synergyTitleZh = `30~70岁 错峰交替掌舵格局 (峰值相距 ${deltaPeak} 岁)`;
+        synergyTitleEn = `Ages 30–70 Staggered Counterbalance (Apex Gap: ${deltaPeak} Years)`;
+        synergyBodyZh = `${nameA} 相对高点在 ${pkA.age} 岁 (v=+${pkA.v})，${nameB} 相对高点在 ${pkB.age} 岁 (v=+${pkB.v})，呈现经典的“轮流领跑、错峰减震”动力学生态。当一方处于全力攻坚冲刺期时，另一方恰好处于稳盘守成期；随后双方交替接力，极大平抑了单人周期的波谷震荡。`;
+        synergyBodyEn = `${nameA} peaks at age ${pkA.age} (v=+${pkA.v}), whereas ${nameB} peaks at age ${pkB.age} (v=+${pkB.v}), forming a textbook staggered dynamic shock-absorber. When one partner spearheads forward expansion, the other stabilizes operational foundations, seamlessly alternating leadership across decades.`;
+      }
+
+      if (ptBatATrough.v >= 0) {
+        troughBodyZh += `当 ${nameA} 于 ${trA.age} 岁步入筑底修整谷期 (v=${trA.v}) 时，${nameB} 此时运行于上升势能通道 (v=+${ptBatATrough.v})，${nameB} 天然化作稳定避风港与资源压舱石，托举 ${nameA} 稳健度过修整期。`;
+        troughBodyEn += `When ${nameA} enters the consolidation trough at age ${trA.age} (v=${trA.v}), ${nameB} cruises in positive ascent (v=+${ptBatATrough.v}), serving as a steadfast anchor and buffer. `;
+      } else {
+        troughBodyZh += `${nameA} 筑底期位于 ${trA.age} 岁 (v=${trA.v})，彼时 ${nameB} 亦处于蓄能深潜阶段 (v=${ptBatATrough.v})，此时宜以守正为本、互予情绪宽容，严防过度杠杆。`;
+        troughBodyEn += `${nameA}'s trough at age ${trA.age} (v=${trA.v}) coincides with a consolidation phase for ${nameB} (v=${ptBatATrough.v}). Prioritize mutual forbearance and conservative risk exposure. `;
+      }
+
+      if (ptAatBTrough.v >= 0) {
+        troughBodyZh += ` 反之，当 ${nameB} 于 ${trB.age} 岁处于筑底期 (v=${trB.v}) 时，${nameA} 正值上升期 (v=+${ptAatBTrough.v})，形成互逆托底回路。`;
+        troughBodyEn += `Conversely, when ${nameB} grounds at age ${trB.age} (v=${trB.v}), ${nameA} surges on an ascending vector (v=+${ptAatBTrough.v}), closing the mutual protection loop.`;
+      } else {
+        troughBodyZh += ` ${nameB} 的整固筑底点在 ${trB.age} 岁 (v=${trB.v})，需合理规划中长期战略节奏。`;
+        troughBodyEn += ` ${nameB}'s consolidation nadir occurs at age ${trB.age} (v=${trB.v}), recommending disciplined strategic pacing.`;
+      }
+
+      extremaCard.innerHTML = `
+        <!-- Section Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-xl">📊</span>
+            <div>
+              <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                <span>${isEn ? 'Age 30–70 Prime Life-Chrono Manifold Graphical Exegesis & Extrema Interactions' : '30~70岁 黄金生命期流形图解与双人峰谷对撞批注'}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full ${synergyBadgeCls} font-mono font-bold">${isEn ? synergyBadgeEn : synergyBadgeZh}</span>
+              </h4>
+              <p class="text-xs text-gray-400 mt-0.5">
+                ${isEn
+                  ? 'Deciphering prime momentum peaks, consolidation troughs, and mutual buffering mechanics across the vital 40-year career & wealth zenith'
+                  : '以 30~70 岁人生社会价值与财富爆发核心期为视窗，标定甲乙两造相对高点（动能跃迁峰）与相对低点（蓄势筑底谷），透视双螺旋交错的共振放大与攻守托底机制'}
+              </p>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-gray-500 hidden sm:inline">[V(x) Dynamic Extrema]</span>
+        </div>
+
+        <!-- 4-Grid Key Extrema Compass Badges -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <!-- Person A Peak -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/30 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                <span>👑</span>
+                <span>${nameA} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${pkA.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-amber-400 font-semibold">v = +${pkA.v} · x = ${pkA.x}</div>
+            <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `${nameA}'s transit bias aligns with system rigidity to maximize kinetic velocity, marking the prime window for leadership breakthroughs, asset accumulation, and outward expansion.`
+                : `${nameA} 岁运外部推力与格局刚性形成最强正向合力，螺旋线冲至30-70岁最高位，为事业突破、重大决策、资源整合与社会地位跃升的最强动能窗口。`}
+            </p>
+          </div>
+
+          <!-- Person A Trough -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/20 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
+                <span>⚓</span>
+                <span>${nameA} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950/60 text-amber-300 border border-amber-600/40">${trA.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-amber-300/80 font-semibold">v = ${trA.v} · x = ${trA.x}</div>
+            <div class="text-[10px] text-amber-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `Marks the deepest velocity deceleration within ages 30–70. Focus on de-leveraging, wellness preservation, and consolidating reserves—recharging potential for the next upward cycle.`
+                : `30-70岁区间动能降速最深节点，螺旋线收敛于势能井底。此时核心要务在于去杠杆、守正固本与资源沉淀，避免盲目冒进扩张，属于“深蹲蓄力以待腾飞”的修整期。`}
+            </p>
+          </div>
+
+          <!-- Person B Peak -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/30 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5">
+                <span>👑</span>
+                <span>${nameB} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">${pkB.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-purple-400 font-semibold">v = +${pkB.v} · x = ${pkB.x}</div>
+            <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `${nameB} commands peak ascendancy velocity, breaching previous equilibrium barriers to unlock exceptional creative, financial, or strategic advances.`
+                : `${nameB} 迎来30-70岁生命螺旋动能峰值，破局冲力达到最高点，打破既有平衡井壁，展现最强的开拓与抗压势能。`}
+            </p>
+          </div>
+
+          <!-- Person B Trough -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/20 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
+                <span>⚓</span>
+                <span>${nameB} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-600/40">${trB.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-purple-300/80 font-semibold">v = ${trB.v} · x = ${trB.x}</div>
+            <div class="text-[10px] text-purple-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `Crucial stabilization stage. Cultivate wellness, optimize internal operating systems, and rely on favorable resources to fortify resilience against external friction.`
+                : `30-70岁区间的稳固修养带，动量降速内敛。宜强化身心健康管理、夯实安全垫，善用印星与食伤化解外部摩擦，为下一轮生命升腾筑牢地基。`}
+            </p>
+          </div>
+        </div>
+
+        <!-- Graphical Reading Guide -->
+        <div class="p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">🧭</span>
+              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Graphical Reading Guide · Phase Manifold Dynamics' : '图形解读指南 · 生命螺旋流形数理透视'}</span>
+            </div>
+            <span class="text-[10px] font-mono text-gray-400">${isEn ? 'How to Read 3D Manifolds' : '如何读懂本流形图'}</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="space-y-1">
+              <div class="flex items-center gap-1.5 font-bold text-amber-300 font-serif-sc">
+                <span>1. ${isEn ? 'Vertical Axis (Velocity v)' : '纵向高度 (动能速度 v)'}</span>
+              </div>
+              <p class="text-[10.5px] text-gray-300 leading-relaxed">
+                ${isEn
+                  ? 'Vertical position reflects kinetic ascendancy rate (v). Points above the central axis (v > 0) signify ascent & phase transitions; points below (v < 0) represent consolidation & grounding.'
+                  : '中轴线上方 (v > 0) 为螺旋上升期，动能克服阻尼做功，代表顺风顺水、顺势开拓；中轴线下方 (v < 0) 为螺旋下探期，动能向势能井底收缩，代表逆风求稳、战略深潜。'}
+              </p>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-1.5 font-bold text-purple-300 font-serif-sc">
+                <span>2. ${isEn ? 'Displacement (Position x)' : '盘径摆幅 (位移偏离 x)'}</span>
+              </div>
+              <p class="text-[10.5px] text-gray-300 leading-relaxed">
+                ${isEn
+                  ? 'Horizontal deviation from the center reflects departure from neutrality (x = 0). Higher deviation indicates intense bifurcation tension and stronger potential for phase leaps.'
+                  : 'x = 0 对应子平 50 分中和基准点。偏离原点越大 (|x| → 2.0)，受命局刚度与双稳态吸引子牵引越强烈，代表打破稳态旧局、实现人生相变跃迁的张力越充沛。'}
+              </p>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center gap-1.5 font-bold text-emerald-300 font-serif-sc">
+                <span>3. ${isEn ? 'Prime Corridor (Ages 30–70)' : '30~70岁黄金带 (核心区间)'}</span>
+              </div>
+              <p class="text-[10.5px] text-gray-300 leading-relaxed">
+                ${isEn
+                  ? 'The highlighted central corridor (30y–70y) isolates the 40-year prime career & asset creation corridor where dual helical coupling and mutual buffering are most decisive.'
+                  : '画面中 30y~70y 发光通道截取了一生社会价值变现、财富积累与家族基业构建的最关键40年。两道螺旋线在此区间的相对高度与交织形态决定合盘的攻守节奏。'}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Deep Peak-Trough Alignment Exegesis -->
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/20 via-purple-950/20 to-black/40 border border-amber-500/30 space-y-2 text-xs">
+          <div class="flex items-center justify-between border-b border-gray-800/80 pb-1.5">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">🧬</span>
+              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Dual Peak-Trough Alignment Exegesis & Joint Strategic Directives' : '双人峰谷对撞深度命理批注与合盘操盘锦囊'}</span>
+            </div>
+            <span class="text-[10px] font-mono font-bold text-amber-400">${isEn ? synergyTitleEn : synergyTitleZh}</span>
+          </div>
+          <div class="space-y-2 text-[11px] text-gray-200 leading-relaxed font-sans">
+            <div>
+              <strong class="text-amber-300 font-serif-sc">${isEn ? 'Apex Dynamics:' : '【高点动能共振】'}</strong>
+              <span>${isEn ? synergyBodyEn : synergyBodyZh}</span>
+            </div>
+            <div>
+              <strong class="text-purple-300 font-serif-sc">${isEn ? 'Trough Interlock:' : '【低谷托底闭环】'}</strong>
+              <span>${isEn ? troughBodyEn : troughBodyZh}</span>
+            </div>
+            <div class="pt-2 border-t border-gray-800/60 flex flex-wrap items-center justify-between gap-2 text-[10.5px]">
+              <span class="text-amber-300/90 font-medium">${isEn ? '💡 Joint Directive: Harmonize high-risk investments during peak windows; maintain emotional sanctuary and avoid excessive financial leverage during troughs.' : '💡 合盘操盘锦囊：在高峰期乘胜追击锁定胜果，在波谷期互为心理与资源避风港，严控杠杆，共筑常青基业。'}</span>
+              <span class="text-[10px] font-mono text-gray-400">${isEn ? 'Calculated via Duffing Bifurcation Mechanics' : '源自达芬非线性双稳态分岔动力学求解'}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
   }
 
   if (typeof window !== 'undefined') {
@@ -17166,6 +17413,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div><b class="text-amber-950">${labelA}:</b> a=${(0.85 + Math.abs((cachedChartA?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}, b=${(0.40 + Math.abs((cachedChartA?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}, γ=0.38</div>
                 <div><b class="text-purple-950">${labelB}:</b> a=${(0.85 + Math.abs((cachedChartB?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}, b=${(0.40 + Math.abs((cachedChartB?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}, γ=0.38</div>
               </div>
+              ${(cachedSynastryPhaseDerived && cachedSynastryPhaseDerived.derivedA?.extrema && cachedSynastryPhaseDerived.derivedB?.extrema) ? `
+              <div class="pt-0.5 border-t border-amber-900/10 grid grid-cols-2 gap-1 text-[7px] font-mono text-gray-700">
+                <div><b class="text-amber-950">${labelA} (30~70y):</b> ${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedA.extrema.peak.v}) / ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y</div>
+                <div><b class="text-purple-950">${labelB} (30~70y):</b> ${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedB.extrema.peak.v}) / ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y</div>
+              </div>
+              ` : ''}
               <p class="text-[7.5px] text-gray-700 leading-tight">
                 ${isEn
                   ? 'Non-linear potential manifold confirms synergistic equilibrium: complementary dissipation buffers systemic risks while preserving dynamic autonomy.'
