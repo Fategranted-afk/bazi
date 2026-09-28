@@ -14553,7 +14553,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       });
-      ctx.strokeStyle = isLight ? '#d97706' : '#f59e0b';
+      ctx.strokeStyle = isLight ? '#ca8a04' : '#f59e0b';
       ctx.lineWidth = 2.2;
       ctx.stroke();
 
@@ -14582,7 +14582,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.setLineDash([3, 3]);
       ctx.moveTo(ax, padT);
       ctx.lineTo(ax, h - padB);
-      ctx.strokeStyle = isLight ? '#b45309' : '#fef08a';
+      ctx.strokeStyle = isLight ? '#ca8a04' : '#fef08a';
       ctx.lineWidth = 1.8;
       ctx.stroke();
       ctx.setLineDash([]);
@@ -14592,7 +14592,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       ctx.beginPath();
       ctx.arc(ax, ey, 4.5, 0, Math.PI * 2);
-      ctx.fillStyle = isLight ? '#d97706' : '#f59e0b';
+      ctx.fillStyle = isLight ? '#ca8a04' : '#f59e0b';
       ctx.strokeStyle = isLight ? '#f5f0e4' : '#ffffff';
       ctx.lineWidth = 1.5;
       ctx.fill();
@@ -14606,7 +14606,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = isLight ? '#78350f' : '#fef08a';
+      ctx.fillStyle = isLight ? '#854d0e' : '#fef08a';
       ctx.font = 'bold 10px monospace';
       ctx.textAlign = 'center';
       const chartRealAge = (item.realAge !== undefined) ? item.realAge : (item.age - 1);
@@ -15223,7 +15223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Section 10: Lifelong Trajectory Overlap & Decennial Synchronization -->
       ${data.trajectoryOverlap ? `
-      <div id="synastryChronoNavigatorSection" class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
+      <div id="synastryTrajectoryReportSection" class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-800/40 pb-2.5">
           <div class="flex items-center gap-2">
             <span class="text-xl">⏳</span>
@@ -15237,91 +15237,27 @@ document.addEventListener('DOMContentLoaded', () => {
               </p>
             </div>
           </div>
-          <div class="flex flex-wrap items-center gap-2">
-            <div class="inline-flex rounded-lg bg-black/60 p-0.5 border border-emerald-500/30 text-xs">
-              <button id="synastryChronoModeYear" type="button" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition bg-emerald-600 text-white shadow-xs cursor-pointer">
-                📅 ${isEn ? 'By Calendar Year' : '历年同频'}
-              </button>
-              <button id="synastryChronoModeAge" type="button" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer">
-                🎂 ${isEn ? 'By Same Age' : '同龄阶段'}
-              </button>
-            </div>
-            <button id="synastryChronoPlayBtn" type="button" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1 cursor-pointer active:scale-95">
-              ▶️ ${isEn ? 'Auto Play' : '连续推演'}
-            </button>
-            <div id="synastryChronoAgeValueBadge" class="px-2.5 py-1.5 rounded-lg bg-black/50 text-emerald-300 font-mono text-xs font-bold border border-emerald-600/40">
-              --
-            </div>
-          </div>
+          <button type="button" onclick="document.getElementById('synastryChronoDirectSection')?.scrollIntoView({behavior: 'smooth'})" class="px-3 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <span>🕹️</span>
+            <span>${isEn ? 'Interactive Navigator Above' : '前往顶部交互推演操控台'}</span>
+          </button>
         </div>
 
         <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${data.trajectoryOverlap.summary}</p>
 
-        <!-- Master Slider & Quick Jump Controls -->
-        <div class="space-y-2 bg-black/30 p-3 rounded-xl border border-gray-800/80">
-          <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-400">
-            <span id="synastryChronoMinLabel" class="font-mono text-[11px] text-gray-300">--</span>
-            <div class="flex flex-wrap items-center gap-1.5">
-              <button id="synastryChronoJumpCurrent" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-amber-300 border border-gray-700 transition cursor-pointer">
-                ${isEn ? 'Current Year' : '当年'}
-              </button>
-              <button id="synastryChronoJumpPeak" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-emerald-300 border border-gray-700 transition cursor-pointer">
-                🌟 ${isEn ? 'Dual Peak' : '双星高光'}
-              </button>
-              <button id="synastryChronoJumpSupport" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-blue-300 border border-gray-700 transition cursor-pointer">
-                🛡️ ${isEn ? 'Counterbalance' : '互补托底'}
-              </button>
-              <span class="text-gray-600">|</span>
-              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="0">20s</button>
-              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="1">30s</button>
-              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="2">40s</button>
-              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="3">50s</button>
-              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="4">60s</button>
-              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="5">70s</button>
-            </div>
-            <span id="synastryChronoMaxLabel" class="font-mono text-[11px] text-gray-300">--</span>
+        <!-- Static High-Definition Trajectory Sparkline Curve In Full Dossier -->
+        <div class="p-3 rounded-xl bg-black/40 border border-gray-800 space-y-2">
+          <div class="flex items-center justify-between text-xs text-emerald-300 font-serif-sc">
+            <span>${isEn ? 'Unified 100-Year Life Trajectory & Wealth Waves' : '百岁双人运势轨迹与财富潮汐全景曲线'}</span>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Person A (Solid) vs Person B (Dashed)' : `${labelA} (实线) vs ${labelB} (虚线)`}</span>
           </div>
-          <input type="range" id="synastryChronoSlider" min="0" max="100" value="30" class="w-full chrono-slider cursor-pointer">
-        </div>
-
-        <!-- Dual Trendline Canvas Chart -->
-        <div class="relative bg-black/40 rounded-xl p-3 border border-gray-800/80 overflow-hidden space-y-2">
-          <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-400 px-1 border-b border-gray-800/60 pb-2">
-            <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block shadow-xs"></span>
-                <span class="text-amber-200 font-bold">${labelA} ${isEn ? 'Energy:' : '能量活力:'}</span>
-              </span>
-              <span class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block shadow-xs"></span>
-                <span class="text-emerald-200 font-bold">${labelA} ${isEn ? 'Wealth:' : '财富潮汐:'}</span>
-              </span>
-              <span class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block shadow-xs"></span>
-                <span class="text-purple-200 font-bold">${labelB} ${isEn ? 'Energy:' : '能量活力:'}</span>
-              </span>
-              <span class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block shadow-xs"></span>
-                <span class="text-cyan-200 font-bold">${labelB} ${isEn ? 'Wealth:' : '财富潮汐:'}</span>
-              </span>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <div class="inline-flex rounded bg-black/60 p-0.5 border border-gray-700/60 text-[10px]">
-                <button id="synastryCurveFilterAll" type="button" class="px-2 py-0.5 rounded font-bold bg-emerald-600 text-white cursor-pointer">${isEn ? 'All 4' : '全部'}</button>
-                <button id="synastryCurveFilterEnergy" type="button" class="px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer">⚡ ${isEn ? 'Energy Only' : '仅能量'}</button>
-                <button id="synastryCurveFilterWealth" type="button" class="px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer">💰 ${isEn ? 'Wealth Only' : '仅财富'}</button>
-              </div>
-              <span class="text-gray-500 font-mono text-[10px] hidden sm:inline">${isEn ? 'Click chart or drag slider to explore any year' : '滑动上方滑块或点击趋势图自由探索任意年份'}</span>
-            </div>
-          </div>
-
-          <canvas id="synastryChronoTimelineCanvas" class="w-full h-36 block cursor-crosshair"></canvas>
-        </div>
-
-        <!-- Active Timepoint Spotlight Card -->
-        <div id="synastryChronoSpotlightCard" class="space-y-3">
-          <!-- Dynamically populated via updateDualChronoDisplay -->
+          ${generateDualTrajectorySvg(
+            data.trajectoryOverlap.timelineA || (typeof LuckEngine !== 'undefined' && chartA ? LuckEngine.calculateLuck(chartA).timeline : []),
+            data.trajectoryOverlap.timelineB || (typeof LuckEngine !== 'undefined' && chartB ? LuckEngine.calculateLuck(chartB).timeline : []),
+            labelA,
+            labelB,
+            isEn
+          )}
         </div>
 
         <!-- Decennial Milestones Table -->
@@ -15426,6 +15362,116 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       ` : ''}
     `;
+
+    // Populate direct Chrono Navigator section placed right below calculate button
+    const directChronoEl = document.getElementById('synastryChronoDirectSection');
+    if (directChronoEl && data.trajectoryOverlap) {
+      directChronoEl.innerHTML = `
+      <div id="synastryChronoNavigatorSection" class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-800/40 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">⏳</span>
+            <div>
+              <h5 class="text-sm sm:text-base font-bold text-emerald-200 font-serif-sc flex items-center gap-2">
+                <span>${isEn ? 'Dual Lifelong Trajectory & Energy Comparison' : '双人百岁岁运能量活力与财富潮汐全景对比'}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono font-bold">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Overlap' : '轨迹重合'}</span>
+              </h5>
+              <p class="text-xs text-gray-400 mt-0.5">
+                ${isEn ? 'Dual 100-year continuous energy deduction & wealth tide comparison in a unified temporal coordinate space' : '先后推演甲乙两造百岁能量与财富潮汐，并在同一时空坐标系下同频对照，洞悉彼此高光共振与托底互补'}
+              </p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="inline-flex rounded-lg bg-black/60 p-0.5 border border-emerald-500/30 text-xs">
+              <button id="synastryChronoModeYear" type="button" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition bg-emerald-600 text-white shadow-xs cursor-pointer">
+                📅 ${isEn ? 'By Calendar Year' : '历年同频'}
+              </button>
+              <button id="synastryChronoModeAge" type="button" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer">
+                🎂 ${isEn ? 'By Same Age' : '同龄阶段'}
+              </button>
+            </div>
+            <button id="synastryChronoPlayBtn" type="button" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1 cursor-pointer active:scale-95">
+              ▶️ ${isEn ? 'Auto Play' : '连续推演'}
+            </button>
+            <div id="synastryChronoAgeValueBadge" class="px-2.5 py-1.5 rounded-lg bg-black/50 text-emerald-300 font-mono text-xs font-bold border border-emerald-600/40">
+              --
+            </div>
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${data.trajectoryOverlap.summary}</p>
+
+        <!-- Master Slider & Quick Jump Controls -->
+        <div class="space-y-2 bg-black/30 p-3 rounded-xl border border-gray-800/80">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-400">
+            <span id="synastryChronoMinLabel" class="font-mono text-[11px] text-gray-300">--</span>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button id="synastryChronoJumpCurrent" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-amber-300 border border-gray-700 transition cursor-pointer">
+                ${isEn ? 'Current Year' : '当年'}
+              </button>
+              <button id="synastryChronoJumpPeak" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-emerald-300 border border-gray-700 transition cursor-pointer">
+                🌟 ${isEn ? 'Dual Peak' : '双星高光'}
+              </button>
+              <button id="synastryChronoJumpSupport" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-blue-300 border border-gray-700 transition cursor-pointer">
+                🛡️ ${isEn ? 'Counterbalance' : '互补托底'}
+              </button>
+              <span class="text-gray-600">|</span>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="0">20s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="1">30s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="2">40s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="3">50s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="4">60s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="5">70s</button>
+            </div>
+            <span id="synastryChronoMaxLabel" class="font-mono text-[11px] text-gray-300">--</span>
+          </div>
+          <input type="range" id="synastryChronoSlider" min="0" max="100" value="30" class="w-full chrono-slider cursor-pointer">
+        </div>
+
+        <!-- Dual Trendline Canvas Chart -->
+        <div class="relative bg-black/40 rounded-xl p-3 border border-gray-800/80 overflow-hidden space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-400 px-1 border-b border-gray-800/60 pb-2">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block shadow-xs"></span>
+                <span class="text-amber-200 font-bold">${labelA} ${isEn ? 'Energy:' : '能量活力:'}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block shadow-xs"></span>
+                <span class="text-emerald-200 font-bold">${labelA} ${isEn ? 'Wealth:' : '财富潮汐:'}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block shadow-xs"></span>
+                <span class="text-purple-200 font-bold">${labelB} ${isEn ? 'Energy:' : '能量活力:'}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block shadow-xs"></span>
+                <span class="text-cyan-200 font-bold">${labelB} ${isEn ? 'Wealth:' : '财富潮汐:'}</span>
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="inline-flex rounded bg-black/60 p-0.5 border border-gray-700/60 text-[10px]">
+                <button id="synastryCurveFilterAll" type="button" class="px-2 py-0.5 rounded font-bold bg-emerald-600 text-white cursor-pointer">${isEn ? 'All 4' : '全部'}</button>
+                <button id="synastryCurveFilterEnergy" type="button" class="px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer">⚡ ${isEn ? 'Energy Only' : '仅能量'}</button>
+                <button id="synastryCurveFilterWealth" type="button" class="px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer">💰 ${isEn ? 'Wealth Only' : '仅财富'}</button>
+              </div>
+              <span class="text-gray-500 font-mono text-[10px] hidden sm:inline">${isEn ? 'Click chart or drag slider to explore any year' : '滑动上方滑块或点击趋势图自由探索任意年份'}</span>
+            </div>
+          </div>
+
+          <canvas id="synastryChronoTimelineCanvas" class="w-full h-36 block cursor-crosshair"></canvas>
+        </div>
+
+        <!-- Active Timepoint Spotlight Card -->
+        <div id="synastryChronoSpotlightCard" class="space-y-3">
+          <!-- Dynamically populated via updateDualChronoDisplay -->
+        </div>
+      </div>
+      `;
+    } else if (directChronoEl) {
+      directChronoEl.innerHTML = '';
+    }
 
     const btnExportPdf = document.getElementById('btnSynastryDownloadPDF');
     if (btnExportPdf) {
@@ -16921,7 +16967,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillRect(0, 0, 900, 1250);
 
       // Decorative Double Borders
-      ctx.strokeStyle = '#d97706'; // Imperial Amber / Gold
+      ctx.strokeStyle = '#eab308'; // Imperial Amber / Gold
       ctx.lineWidth = 4;
       ctx.strokeRect(28, 28, 844, 1194);
 
@@ -16930,7 +16976,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.strokeRect(36, 36, 828, 1178);
 
       // Corner Ornaments
-      ctx.fillStyle = '#d97706';
+      ctx.fillStyle = '#eab308';
       const corners = [[36, 36], [864, 36], [36, 1214], [864, 1214]];
       corners.forEach(([cx, cy]) => {
         ctx.fillRect(cx - 5, cy - 5, 10, 10);
@@ -16947,7 +16993,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText(isEn ? 'IMPERIAL METAPHYSICS COURT ADVISOR DIRECTIVE' : '順天應勢 · 借權成事 · 處世決策秘策', 450, 115);
 
       // Dividing Gold Line
-      ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)';
+      ctx.strokeStyle = 'rgba(234, 179, 8, 0.4)';
       ctx.beginPath();
       ctx.moveTo(80, 135);
       ctx.lineTo(820, 135);
@@ -17007,9 +17053,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Classical Anchor
       if (a.mentalAnchor) {
         curY += 20;
-        ctx.fillStyle = 'rgba(217, 119, 6, 0.15)';
+        ctx.fillStyle = 'rgba(234, 179, 8, 0.15)';
         ctx.fillRect(80, curY, 740, 90);
-        ctx.strokeStyle = '#d97706';
+        ctx.strokeStyle = '#eab308';
         ctx.lineWidth = 1;
         ctx.strokeRect(80, curY, 740, 90);
 
