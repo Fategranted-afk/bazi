@@ -189,6 +189,16 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentSynastryResult = null;
   let cachedChartA = null;
   let cachedChartB = null;
+  let synastryTimelineA = [];
+  let synastryTimelineB = [];
+  let synastryTimepoints = [];
+  let activeSynastryIndex = 0;
+  let activeSynastryMode = 'year'; // 'year' | 'age'
+  let activeSynastryFilter = 'all'; // 'all' | 'energy' | 'wealth'
+  let isSynastryChronoPlaying = false;
+  let synastryChronoPlayTimer = null;
+  let synastryLabelACached = '甲造';
+  let synastryLabelBCached = '乙造';
   let deferredPwaPrompt = null;
   let fourPillarsActiveAge = 35;
   let activeIChingCycleTab = 'timeline'; // 'timeline' | 'yaoStages' | 'cosmic'
@@ -632,6 +642,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (typeof currentLuckResult !== 'undefined' && currentLuckResult && currentLuckResult.timeline && typeof drawChronoTimelineChart === 'function') {
         drawChronoTimelineChart(currentLuckResult.timeline, typeof activeChronoAge !== 'undefined' ? activeChronoAge : 1);
+      }
+      if (typeof drawDualSynastryTimelineChart === 'function' && typeof synastryTimelineA !== 'undefined' && synastryTimelineA.length > 0) {
+        drawDualSynastryTimelineChart(currentLang === 'en');
       }
       if (typeof window !== 'undefined' && window.__lastSimulationResult && window.__lastSimulationResult.bifurcationDynamics && typeof PhasePortraitEngine !== 'undefined' && typeof PhasePortraitEngine.renderDualTrackBifurcation === 'function') {
         PhasePortraitEngine.renderDualTrackBifurcation('simBifurcationCanvas', window.__lastSimulationResult.bifurcationDynamics, newTheme === 'dark', currentLang);
@@ -11616,11 +11629,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 60);
     }
 
-    // If switching to synastry view, calculate if empty with progress bar
-    if (targetViewId === 'view-synastry' && !currentSynastryResult && typeof triggerCalculateSynastry === 'function') {
-      showDynamicCalculationProgress('synastry', () => {
-        triggerCalculateSynastry();
-      });
+    // If switching to synastry view, calculate if empty with progress bar or refresh dual chart
+    if (targetViewId === 'view-synastry') {
+      if (!currentSynastryResult && typeof triggerCalculateSynastry === 'function') {
+        showDynamicCalculationProgress('synastry', () => {
+          triggerCalculateSynastry();
+        });
+      } else if (typeof drawDualSynastryTimelineChart === 'function' && typeof synastryTimelineA !== 'undefined' && synastryTimelineA.length > 0) {
+        setTimeout(() => drawDualSynastryTimelineChart(currentLang === 'en'), 60);
+      }
     }
 
     // If switching to fengshui view, render if chart exists
@@ -11694,6 +11711,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (currentBaziResult && typeof renderPhasePortrait === 'function' && document.getElementById('phasePortraitCanvas')) {
         renderPhasePortrait(currentBaziResult, currentLuckResult);
+      }
+      if (typeof drawDualSynastryTimelineChart === 'function' && typeof synastryTimelineA !== 'undefined' && synastryTimelineA.length > 0 && document.getElementById('synastryChronoTimelineCanvas')) {
+        drawDualSynastryTimelineChart(currentLang === 'en');
       }
     });
   }
@@ -15203,45 +15223,141 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <!-- Section 10: Lifelong Trajectory Overlap & Decennial Synchronization -->
       ${data.trajectoryOverlap ? `
-      <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
-        <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2.5">
+      <div id="synastryChronoNavigatorSection" class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-800/40 pb-2.5">
           <div class="flex items-center gap-2">
-            <span class="text-base">📈</span>
-            <h5 class="text-sm font-bold text-emerald-200 font-serif-sc">${isEn ? '10. Lifelong Trajectory Overlap & Decennial Synchronization' : '10. 人生轨迹推演重合度与岁运同频表'}</h5>
-            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Overlap' : '轨迹重合'}</span>
+            <span class="text-xl">⏳</span>
+            <div>
+              <h5 class="text-sm sm:text-base font-bold text-emerald-200 font-serif-sc flex items-center gap-2">
+                <span>${isEn ? '10. Dual Lifelong Trajectory & Energy Comparison' : '10. 双人百岁岁运能量活力与财富潮汐全景对比'}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono font-bold">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Overlap' : '轨迹重合'}</span>
+              </h5>
+              <p class="text-xs text-gray-400 mt-0.5">
+                ${isEn ? 'Dual 100-year continuous energy deduction & wealth tide comparison in a unified temporal coordinate space' : '先后推演甲乙两造百岁能量与财富潮汐，并在同一时空坐标系下同频对照，洞悉彼此高光共振与托底互补'}
+              </p>
+            </div>
           </div>
-          <span class="chinese-seal text-[10px] py-0 border-emerald-500 text-emerald-300">${isEn ? 'TRAJECTORY' : '岁运同频'}</span>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="inline-flex rounded-lg bg-black/60 p-0.5 border border-emerald-500/30 text-xs">
+              <button id="synastryChronoModeYear" type="button" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition bg-emerald-600 text-white shadow-xs cursor-pointer">
+                📅 ${isEn ? 'By Calendar Year' : '历年同频'}
+              </button>
+              <button id="synastryChronoModeAge" type="button" class="px-2.5 py-1 rounded-md text-[11px] font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer">
+                🎂 ${isEn ? 'By Same Age' : '同龄阶段'}
+              </button>
+            </div>
+            <button id="synastryChronoPlayBtn" type="button" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition flex items-center gap-1 cursor-pointer active:scale-95">
+              ▶️ ${isEn ? 'Auto Play' : '连续推演'}
+            </button>
+            <div id="synastryChronoAgeValueBadge" class="px-2.5 py-1.5 rounded-lg bg-black/50 text-emerald-300 font-mono text-xs font-bold border border-emerald-600/40">
+              --
+            </div>
+          </div>
         </div>
 
         <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${data.trajectoryOverlap.summary}</p>
 
-        <div class="overflow-x-auto">
-          <table class="w-full text-xs text-center border-collapse">
-            <thead>
-              <tr class="text-gray-400 border-b border-gray-800">
-                <th class="py-2 text-left">${isEn ? 'Age Span' : '年龄跨度'}</th>
-                <th class="py-2">${labelA} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
-                <th class="py-2 border-l border-gray-800">${labelB} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
-                <th class="py-2 border-l border-gray-800">${isEn ? 'Synergy Phase' : '同频评级'}</th>
-                <th class="py-2 text-left border-l border-gray-800 pl-3">${isEn ? 'Decennial Strategic Directive' : '岁运共振推演定论'}</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-800/60 font-serif-sc">
-              ${data.trajectoryOverlap.milestones.map(m => `
-                <tr class="hover:bg-white/5 transition">
-                  <td class="py-2.5 text-left font-bold text-amber-200/90 whitespace-nowrap">${m.ageSpan}</td>
-                  <td class="py-2.5 font-mono text-amber-300">${m.pillarA.text} <span class="text-[10px] text-gray-400">(${m.pillarA.score}${isEn ? 'pts' : '分'})</span></td>
-                  <td class="py-2.5 border-l border-gray-800 font-mono text-purple-300">${m.pillarB.text} <span class="text-[10px] text-gray-400">(${m.pillarB.score}${isEn ? 'pts' : '分'})</span></td>
-                  <td class="py-2.5 border-l border-gray-800 whitespace-nowrap">
-                    <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.phaseType === 'peak_resonance' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : (m.phaseType === 'counterbalance_support' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40' : 'bg-gray-700/40 text-gray-300 border border-gray-600/40')}">
-                      ${m.phaseBadge}
-                    </span>
-                  </td>
-                  <td class="py-2.5 text-left border-l border-gray-800 pl-3 text-gray-300 text-[11px] leading-tight">${m.verdict}</td>
+        <!-- Master Slider & Quick Jump Controls -->
+        <div class="space-y-2 bg-black/30 p-3 rounded-xl border border-gray-800/80">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-400">
+            <span id="synastryChronoMinLabel" class="font-mono text-[11px] text-gray-300">--</span>
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button id="synastryChronoJumpCurrent" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-amber-300 border border-gray-700 transition cursor-pointer">
+                ${isEn ? 'Current Year' : '当年'}
+              </button>
+              <button id="synastryChronoJumpPeak" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-emerald-300 border border-gray-700 transition cursor-pointer">
+                🌟 ${isEn ? 'Dual Peak' : '双星高光'}
+              </button>
+              <button id="synastryChronoJumpSupport" type="button" class="px-2 py-0.5 rounded bg-gray-800 hover:bg-gray-700 text-[11px] text-blue-300 border border-gray-700 transition cursor-pointer">
+                🛡️ ${isEn ? 'Counterbalance' : '互补托底'}
+              </button>
+              <span class="text-gray-600">|</span>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="0">20s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="1">30s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="2">40s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="3">50s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="4">60s</button>
+              <button type="button" class="synastry-chrono-quick-step px-1.5 py-0.5 rounded bg-gray-900/60 hover:bg-gray-800 text-[10px] text-gray-300 border border-gray-800 cursor-pointer" data-step="5">70s</button>
+            </div>
+            <span id="synastryChronoMaxLabel" class="font-mono text-[11px] text-gray-300">--</span>
+          </div>
+          <input type="range" id="synastryChronoSlider" min="0" max="100" value="30" class="w-full chrono-slider cursor-pointer">
+        </div>
+
+        <!-- Dual Trendline Canvas Chart -->
+        <div class="relative bg-black/40 rounded-xl p-3 border border-gray-800/80 overflow-hidden space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-gray-400 px-1 border-b border-gray-800/60 pb-2">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block shadow-xs"></span>
+                <span class="text-amber-200 font-bold">${labelA} ${isEn ? 'Energy:' : '能量活力:'}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block shadow-xs"></span>
+                <span class="text-emerald-200 font-bold">${labelA} ${isEn ? 'Wealth:' : '财富潮汐:'}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-purple-400 inline-block shadow-xs"></span>
+                <span class="text-purple-200 font-bold">${labelB} ${isEn ? 'Energy:' : '能量活力:'}</span>
+              </span>
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block shadow-xs"></span>
+                <span class="text-cyan-200 font-bold">${labelB} ${isEn ? 'Wealth:' : '财富潮汐:'}</span>
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="inline-flex rounded bg-black/60 p-0.5 border border-gray-700/60 text-[10px]">
+                <button id="synastryCurveFilterAll" type="button" class="px-2 py-0.5 rounded font-bold bg-emerald-600 text-white cursor-pointer">${isEn ? 'All 4' : '全部'}</button>
+                <button id="synastryCurveFilterEnergy" type="button" class="px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer">⚡ ${isEn ? 'Energy Only' : '仅能量'}</button>
+                <button id="synastryCurveFilterWealth" type="button" class="px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer">💰 ${isEn ? 'Wealth Only' : '仅财富'}</button>
+              </div>
+              <span class="text-gray-500 font-mono text-[10px] hidden sm:inline">${isEn ? 'Click chart or drag slider to explore any year' : '滑动上方滑块或点击趋势图自由探索任意年份'}</span>
+            </div>
+          </div>
+
+          <canvas id="synastryChronoTimelineCanvas" class="w-full h-36 block cursor-crosshair"></canvas>
+        </div>
+
+        <!-- Active Timepoint Spotlight Card -->
+        <div id="synastryChronoSpotlightCard" class="space-y-3">
+          <!-- Dynamically populated via updateDualChronoDisplay -->
+        </div>
+
+        <!-- Decennial Milestones Table -->
+        <div class="pt-2 border-t border-gray-800/80">
+          <div class="text-xs font-bold text-emerald-300 font-serif-sc mb-2 flex items-center justify-between">
+            <span>${isEn ? 'Decennial Synchronization Milestones Ledger' : '岁运大运交接共振全景表'}</span>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? '6 Key Life Phases' : '六大人生命运阶梯'}</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-center border-collapse">
+              <thead>
+                <tr class="text-gray-400 border-b border-gray-800">
+                  <th class="py-2 text-left">${isEn ? 'Age Span' : '年龄跨度'}</th>
+                  <th class="py-2">${labelA} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
+                  <th class="py-2 border-l border-gray-800">${labelB} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
+                  <th class="py-2 border-l border-gray-800">${isEn ? 'Synergy Phase' : '同频评级'}</th>
+                  <th class="py-2 text-left border-l border-gray-800 pl-3">${isEn ? 'Decennial Strategic Directive' : '岁运共振推演定论'}</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="divide-y divide-gray-800/60 font-serif-sc">
+                ${data.trajectoryOverlap.milestones.map(m => `
+                  <tr class="hover:bg-white/5 transition">
+                    <td class="py-2.5 text-left font-bold text-amber-200/90 whitespace-nowrap">${m.ageSpan}</td>
+                    <td class="py-2.5 font-mono text-amber-300">${m.pillarA.text} <span class="text-[10px] text-gray-400">(${m.pillarA.score}${isEn ? 'pts' : '分'})</span></td>
+                    <td class="py-2.5 border-l border-gray-800 font-mono text-purple-300">${m.pillarB.text} <span class="text-[10px] text-gray-400">(${m.pillarB.score}${isEn ? 'pts' : '分'})</span></td>
+                    <td class="py-2.5 border-l border-gray-800 whitespace-nowrap">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.phaseType === 'peak_resonance' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : (m.phaseType === 'counterbalance_support' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40' : 'bg-gray-700/40 text-gray-300 border border-gray-600/40')}">
+                        ${m.phaseBadge}
+                      </span>
+                    </td>
+                    <td class="py-2.5 text-left border-l border-gray-800 pl-3 text-gray-300 text-[11px] leading-tight">${m.verdict}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       ` : ''}
@@ -15315,6 +15431,737 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnExportPdf) {
       btnExportPdf.classList.remove('hidden');
     }
+
+    // Initialize Dual Chrono Navigator (100-year dual trajectory & tidal energy comparison)
+    const tlA = (data.trajectoryOverlap && data.trajectoryOverlap.timelineA && data.trajectoryOverlap.timelineA.length)
+      ? data.trajectoryOverlap.timelineA
+      : ((typeof LuckEngine !== 'undefined' && chartA) ? LuckEngine.calculateLuck(chartA).timeline : []);
+    const tlB = (data.trajectoryOverlap && data.trajectoryOverlap.timelineB && data.trajectoryOverlap.timelineB.length)
+      ? data.trajectoryOverlap.timelineB
+      : ((typeof LuckEngine !== 'undefined' && chartB) ? LuckEngine.calculateLuck(chartB).timeline : []);
+    if (typeof initDualChronoNavigator === 'function') {
+      initDualChronoNavigator(tlA, tlB, chartA, chartB, isEn, labelA, labelB);
+    }
+  }
+
+  // ==========================================================================
+  // Feature 3B: Dual Synastry Lifelong Chrono-Navigator & Energy Comparison
+  // ==========================================================================
+  function buildSynastryTimepoints(tlA, tlB, chartA, chartB, mode) {
+    if (!tlA || !tlB || tlA.length === 0 || tlB.length === 0) return [];
+    const pts = [];
+    if (mode === 'year') {
+      const minYear = Math.min(tlA[0].year, tlB[0].year);
+      const maxYear = Math.max(tlA[tlA.length - 1].year, tlB[tlB.length - 1].year);
+      for (let y = minYear; y <= maxYear; y++) {
+        const itemA = tlA.find(d => d.year === y) || null;
+        const itemB = tlB.find(d => d.year === y) || null;
+        pts.push({
+          type: 'year',
+          year: y,
+          itemA,
+          itemB
+        });
+      }
+    } else {
+      // mode === 'age'
+      for (let a = 1; a <= 100; a++) {
+        const itemA = tlA[a - 1] || null;
+        const itemB = tlB[a - 1] || null;
+        pts.push({
+          type: 'age',
+          age: a,
+          itemA,
+          itemB
+        });
+      }
+    }
+    return pts;
+  }
+
+  function initDualChronoNavigator(tlA, tlB, chartA, chartB, isEn, labelA, labelB) {
+    synastryTimelineA = tlA || [];
+    synastryTimelineB = tlB || [];
+    synastryLabelACached = labelA || (isEn ? 'Person A' : '甲造');
+    synastryLabelBCached = labelB || (isEn ? 'Person B' : '乙造');
+
+    if (!synastryTimelineA.length || !synastryTimelineB.length) return;
+
+    synastryTimepoints = buildSynastryTimepoints(synastryTimelineA, synastryTimelineB, chartA, chartB, activeSynastryMode);
+    if (!synastryTimepoints.length) return;
+
+    const curYear = new Date().getFullYear();
+    if (activeSynastryMode === 'year') {
+      const idx = synastryTimepoints.findIndex(p => p.year === curYear);
+      activeSynastryIndex = (idx !== -1) ? idx : Math.min(30, synastryTimepoints.length - 1);
+    } else {
+      const curItemA = synastryTimelineA.find(d => d.year === curYear);
+      const targetAge = curItemA ? curItemA.age : 35;
+      const idx = synastryTimepoints.findIndex(p => p.age === targetAge);
+      activeSynastryIndex = (idx !== -1) ? idx : 34;
+    }
+
+    setupDualChronoControls(isEn);
+    updateDualChronoDisplay(isEn);
+    drawDualSynastryTimelineChart(isEn);
+  }
+
+  function setupDualChronoControls(isEn) {
+    const slider = document.getElementById('synastryChronoSlider');
+    const minLbl = document.getElementById('synastryChronoMinLabel');
+    const maxLbl = document.getElementById('synastryChronoMaxLabel');
+
+    if (slider && synastryTimepoints.length > 0) {
+      slider.min = '0';
+      slider.max = String(synastryTimepoints.length - 1);
+      slider.value = String(activeSynastryIndex);
+
+      if (minLbl && maxLbl) {
+        if (activeSynastryMode === 'year') {
+          minLbl.textContent = isEn ? `Year ${synastryTimepoints[0].year}` : `${synastryTimepoints[0].year}年`;
+          maxLbl.textContent = isEn ? `Year ${synastryTimepoints[synastryTimepoints.length - 1].year}` : `${synastryTimepoints[synastryTimepoints.length - 1].year}年`;
+        } else {
+          minLbl.textContent = isEn ? 'Age 1' : '1岁';
+          maxLbl.textContent = isEn ? 'Age 100' : '100岁';
+        }
+      }
+
+      if (!slider._hasListener) {
+        slider._hasListener = true;
+        slider.addEventListener('input', (e) => {
+          activeSynastryIndex = parseInt(e.target.value, 10);
+          updateDualChronoDisplay(currentLang === 'en');
+          drawDualSynastryTimelineChart(currentLang === 'en');
+        });
+      }
+    }
+
+    const playBtn = document.getElementById('synastryChronoPlayBtn');
+    if (playBtn && !playBtn._hasListener) {
+      playBtn._hasListener = true;
+      playBtn.addEventListener('click', () => {
+        if (isSynastryChronoPlaying) {
+          stopSynastryChronoPlay();
+        } else {
+          startSynastryChronoPlay();
+        }
+      });
+    }
+
+    const modeYearBtn = document.getElementById('synastryChronoModeYear');
+    const modeAgeBtn = document.getElementById('synastryChronoModeAge');
+    if (modeYearBtn && !modeYearBtn._hasListener) {
+      modeYearBtn._hasListener = true;
+      modeYearBtn.addEventListener('click', () => {
+        if (activeSynastryMode === 'year') return;
+        activeSynastryMode = 'year';
+        modeYearBtn.className = 'px-2.5 py-1 rounded-md text-[11px] font-bold transition bg-emerald-600 text-white shadow-xs cursor-pointer';
+        if (modeAgeBtn) modeAgeBtn.className = 'px-2.5 py-1 rounded-md text-[11px] font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer';
+        synastryTimepoints = buildSynastryTimepoints(synastryTimelineA, synastryTimelineB, cachedChartA, cachedChartB, 'year');
+        const curYear = new Date().getFullYear();
+        const idx = synastryTimepoints.findIndex(p => p.year === curYear);
+        activeSynastryIndex = (idx !== -1) ? idx : Math.min(30, synastryTimepoints.length - 1);
+        setupDualChronoControls(currentLang === 'en');
+        updateDualChronoDisplay(currentLang === 'en');
+        drawDualSynastryTimelineChart(currentLang === 'en');
+      });
+    }
+    if (modeAgeBtn && !modeAgeBtn._hasListener) {
+      modeAgeBtn._hasListener = true;
+      modeAgeBtn.addEventListener('click', () => {
+        if (activeSynastryMode === 'age') return;
+        activeSynastryMode = 'age';
+        modeAgeBtn.className = 'px-2.5 py-1 rounded-md text-[11px] font-bold transition bg-emerald-600 text-white shadow-xs cursor-pointer';
+        if (modeYearBtn) modeYearBtn.className = 'px-2.5 py-1 rounded-md text-[11px] font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer';
+        synastryTimepoints = buildSynastryTimepoints(synastryTimelineA, synastryTimelineB, cachedChartA, cachedChartB, 'age');
+        activeSynastryIndex = Math.min(34, synastryTimepoints.length - 1);
+        setupDualChronoControls(currentLang === 'en');
+        updateDualChronoDisplay(currentLang === 'en');
+        drawDualSynastryTimelineChart(currentLang === 'en');
+      });
+    }
+
+    const fAll = document.getElementById('synastryCurveFilterAll');
+    const fEnergy = document.getElementById('synastryCurveFilterEnergy');
+    const fWealth = document.getElementById('synastryCurveFilterWealth');
+    const updateFilterUI = () => {
+      const activeCls = 'px-2 py-0.5 rounded font-bold bg-emerald-600 text-white cursor-pointer';
+      const inactiveCls = 'px-2 py-0.5 rounded font-bold text-gray-400 hover:text-gray-200 cursor-pointer';
+      if (fAll) fAll.className = (activeSynastryFilter === 'all') ? activeCls : inactiveCls;
+      if (fEnergy) fEnergy.className = (activeSynastryFilter === 'energy') ? activeCls : inactiveCls;
+      if (fWealth) fWealth.className = (activeSynastryFilter === 'wealth') ? activeCls : inactiveCls;
+    };
+    if (fAll && !fAll._hasListener) {
+      fAll._hasListener = true;
+      fAll.addEventListener('click', () => {
+        activeSynastryFilter = 'all';
+        updateFilterUI();
+        drawDualSynastryTimelineChart(currentLang === 'en');
+      });
+    }
+    if (fEnergy && !fEnergy._hasListener) {
+      fEnergy._hasListener = true;
+      fEnergy.addEventListener('click', () => {
+        activeSynastryFilter = 'energy';
+        updateFilterUI();
+        drawDualSynastryTimelineChart(currentLang === 'en');
+      });
+    }
+    if (fWealth && !fWealth._hasListener) {
+      fWealth._hasListener = true;
+      fWealth.addEventListener('click', () => {
+        activeSynastryFilter = 'wealth';
+        updateFilterUI();
+        drawDualSynastryTimelineChart(currentLang === 'en');
+      });
+    }
+
+    const btnCur = document.getElementById('synastryChronoJumpCurrent');
+    if (btnCur && !btnCur._hasListener) {
+      btnCur._hasListener = true;
+      btnCur.addEventListener('click', () => {
+        const curY = new Date().getFullYear();
+        if (activeSynastryMode === 'year') {
+          const idx = synastryTimepoints.findIndex(p => p.year === curY);
+          if (idx !== -1) jumpToSynastryIndex(idx);
+        } else {
+          const curItem = synastryTimelineA.find(d => d.year === curY);
+          if (curItem) {
+            const idx = synastryTimepoints.findIndex(p => p.age === curItem.age);
+            if (idx !== -1) jumpToSynastryIndex(idx);
+          }
+        }
+      });
+    }
+
+    const btnPeak = document.getElementById('synastryChronoJumpPeak');
+    if (btnPeak && !btnPeak._hasListener) {
+      btnPeak._hasListener = true;
+      btnPeak.addEventListener('click', () => {
+        let bestIdx = 0;
+        let maxJoint = -1;
+        synastryTimepoints.forEach((pt, i) => {
+          if (pt.itemA && pt.itemB) {
+            const s = pt.itemA.energyScore + pt.itemB.energyScore;
+            if (s > maxJoint) {
+              maxJoint = s;
+              bestIdx = i;
+            }
+          }
+        });
+        jumpToSynastryIndex(bestIdx);
+      });
+    }
+
+    const btnSupport = document.getElementById('synastryChronoJumpSupport');
+    if (btnSupport && !btnSupport._hasListener) {
+      btnSupport._hasListener = true;
+      btnSupport.addEventListener('click', () => {
+        let bestIdx = 0;
+        let maxDelta = -1;
+        synastryTimepoints.forEach((pt, i) => {
+          if (pt.itemA && pt.itemB) {
+            const d = Math.abs(pt.itemA.energyScore - pt.itemB.energyScore);
+            if (d > maxDelta && (pt.itemA.energyScore >= 65 || pt.itemB.energyScore >= 65)) {
+              maxDelta = d;
+              bestIdx = i;
+            }
+          }
+        });
+        jumpToSynastryIndex(bestIdx);
+      });
+    }
+
+    document.querySelectorAll('.synastry-chrono-quick-step').forEach(btn => {
+      if (!btn._hasListener) {
+        btn._hasListener = true;
+        btn.addEventListener('click', () => {
+          const step = parseInt(btn.getAttribute('data-step'), 10) || 0;
+          const targetStepAge = 20 + step * 10;
+          if (activeSynastryMode === 'age') {
+            const idx = synastryTimepoints.findIndex(p => p.age === targetStepAge);
+            if (idx !== -1) jumpToSynastryIndex(idx);
+          } else {
+            const item = synastryTimelineA.find(d => d.age === targetStepAge);
+            if (item) {
+              const idx = synastryTimepoints.findIndex(p => p.year === item.year);
+              if (idx !== -1) jumpToSynastryIndex(idx);
+            }
+          }
+        });
+      }
+    });
+
+    const canvas = document.getElementById('synastryChronoTimelineCanvas');
+    if (canvas && !canvas._hasListener) {
+      canvas._hasListener = true;
+      const handleCanvasClick = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const padL = 36;
+        const padR = 24;
+        const chartW = rect.width - padL - padR;
+        if (chartW > 0 && synastryTimepoints.length > 1) {
+          const ratio = Math.max(0, Math.min(1, (clickX - padL) / chartW));
+          const idx = Math.round(ratio * (synastryTimepoints.length - 1));
+          jumpToSynastryIndex(idx);
+        }
+      };
+      canvas.addEventListener('click', handleCanvasClick);
+    }
+  }
+
+  function jumpToSynastryIndex(idx) {
+    if (!synastryTimepoints.length) return;
+    activeSynastryIndex = Math.max(0, Math.min(synastryTimepoints.length - 1, idx));
+    const slider = document.getElementById('synastryChronoSlider');
+    if (slider) slider.value = String(activeSynastryIndex);
+    updateDualChronoDisplay(currentLang === 'en');
+    drawDualSynastryTimelineChart(currentLang === 'en');
+  }
+
+  function startSynastryChronoPlay() {
+    if (isSynastryChronoPlaying) return;
+    isSynastryChronoPlaying = true;
+    const playBtn = document.getElementById('synastryChronoPlayBtn');
+    if (playBtn) {
+      playBtn.textContent = (currentLang === 'en') ? '⏸️ Pause' : '⏸️ 暂停推演';
+      playBtn.classList.remove('bg-emerald-600');
+      playBtn.classList.add('bg-amber-600');
+    }
+    synastryChronoPlayTimer = setInterval(() => {
+      if (!synastryTimepoints.length) return;
+      activeSynastryIndex = (activeSynastryIndex + 1) % synastryTimepoints.length;
+      const slider = document.getElementById('synastryChronoSlider');
+      if (slider) slider.value = String(activeSynastryIndex);
+      updateDualChronoDisplay(currentLang === 'en');
+      drawDualSynastryTimelineChart(currentLang === 'en');
+    }, 380);
+  }
+
+  function stopSynastryChronoPlay() {
+    isSynastryChronoPlaying = false;
+    const playBtn = document.getElementById('synastryChronoPlayBtn');
+    if (playBtn) {
+      playBtn.textContent = (currentLang === 'en') ? '▶️ Auto Play' : '▶️ 连续推演';
+      playBtn.classList.remove('bg-amber-600');
+      playBtn.classList.add('bg-emerald-600');
+    }
+    if (synastryChronoPlayTimer) {
+      clearInterval(synastryChronoPlayTimer);
+      synastryChronoPlayTimer = null;
+    }
+  }
+
+  function updateDualChronoDisplay(isEn) {
+    if (!synastryTimepoints || synastryTimepoints.length === 0) return;
+    const pt = synastryTimepoints[activeSynastryIndex];
+    if (!pt) return;
+
+    const labelA = synastryLabelACached || (isEn ? 'Person A' : '甲造');
+    const labelB = synastryLabelBCached || (isEn ? 'Person B' : '乙造');
+
+    const itA = pt.itemA;
+    const itB = pt.itemB;
+
+    const badge = document.getElementById('synastryChronoAgeValueBadge');
+    if (badge) {
+      if (pt.type === 'year') {
+        const gz = itA ? itA.ganZhi : (itB ? itB.ganZhi : '');
+        const gzEn = itA ? itA.ganZhiEn : (itB ? itB.ganZhiEn : '');
+        const ageAStr = itA ? (isEn ? `Age ${itA.realAge || itA.age}` : `${itA.age}岁`) : (isEn ? 'Pre-birth' : '尚未出生');
+        const ageBStr = itB ? (isEn ? `Age ${itB.realAge || itB.age}` : `${itB.age}岁`) : (isEn ? 'Pre-birth' : '尚未出生');
+        badge.textContent = isEn
+          ? `${pt.year} (${gzEn}) · ${labelA} ${ageAStr} / ${labelB} ${ageBStr}`
+          : `${pt.year}年 (${gz}) · ${labelA} ${ageAStr} / ${labelB} ${ageBStr}`;
+      } else {
+        const yA = itA ? itA.year : '--';
+        const yB = itB ? itB.year : '--';
+        badge.textContent = isEn
+          ? `Age ${pt.age} · ${labelA} (${yA}) / ${labelB} (${yB})`
+          : `${pt.age}岁 · ${labelA} (${yA}年) / ${labelB} (${yB}年)`;
+      }
+    }
+
+    const cardContainer = document.getElementById('synastryChronoSpotlightCard');
+    if (!cardContainer) return;
+
+    const renderPersonCol = (it, label, colorBorder, colorAccent, colorText, colorBg) => {
+      if (!it) {
+        return `
+          <div class="p-4 rounded-xl bg-black/40 border border-gray-800 flex flex-col justify-center items-center text-gray-500 text-xs py-8">
+            <span class="text-2xl mb-1">⏳</span>
+            <span>${isEn ? `${label} not in active life phase in this period` : `${label} 此阶段尚未出生或已超百岁`}</span>
+          </div>
+        `;
+      }
+      const ageHeading = isEn
+        ? `Age ${it.realAge || it.age} · ${it.year}`
+        : `${it.age}岁 (周岁${it.realAge || (it.age - 1)}) · ${it.year}年`;
+      const gzBadge = isEn ? it.ganZhiEn : it.ganZhi;
+      const decText = isEn ? it.decadeSpanEn : `${it.decade}大运 (${it.decadeSpanZh})`;
+      const godText = isEn ? it.tenGodEn : it.tenGod;
+
+      return `
+        <div class="p-4 rounded-xl bg-gradient-to-b from-[#141724] to-[#0c0e17] border ${colorBorder} space-y-3">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-base">${colorAccent}</span>
+              <div>
+                <span class="font-bold text-sm ${colorText} font-serif-sc">${label}</span>
+                <span class="text-xs text-gray-300 font-mono ml-1.5">${ageHeading}</span>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded ${colorBg} text-xs font-mono font-bold">${gzBadge}</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-[11px] text-gray-400">
+            <div>
+              <span>${isEn ? 'Major Luck:' : '所属大运:'}</span>
+              <span class="text-gray-200 font-mono font-bold block">${decText}</span>
+            </div>
+            <div>
+              <span>${isEn ? 'Ten God:' : '流年十神:'}</span>
+              <span class="${colorText} font-mono font-bold block">${godText}</span>
+            </div>
+          </div>
+
+          <div class="space-y-2 pt-1 border-t border-gray-800/60">
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-400 flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  <span>${isEn ? 'Vitality Energy:' : '能量活力指数:'}</span>
+                </span>
+                <span class="font-bold font-mono text-amber-300">${it.energyScore} / 100</span>
+              </div>
+              <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-amber-400 h-1.5 rounded-full" style="width: ${it.energyScore}%"></div>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex justify-between text-xs">
+                <span class="text-gray-400 flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span>${isEn ? 'Wealth Tide:' : '财富机遇潮汐:'}</span>
+                </span>
+                <span class="font-bold font-mono text-emerald-300">${it.wealthScore} / 100</span>
+              </div>
+              <div class="w-full bg-gray-800 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-emerald-400 h-1.5 rounded-full" style="width: ${it.wealthScore}%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-1.5 border-t border-gray-800/60 text-xs text-gray-300 leading-relaxed font-serif-sc">
+            <div class="text-[10px] text-gray-400 mb-0.5">${isEn ? 'Yearly Directive:' : '流年行持锦囊：'}</div>
+            <p class="text-[11px] text-gray-200">${isEn ? it.directiveEn : it.directiveZh}</p>
+          </div>
+        </div>
+      `;
+    };
+
+    const colAHtml = renderPersonCol(itA, labelA, 'border-amber-500/30', '👤', 'text-amber-300', 'bg-amber-500/20 text-amber-300 border border-amber-500/40');
+    const colBHtml = renderPersonCol(itB, labelB, 'border-purple-500/30', '👥', 'text-purple-300', 'bg-purple-500/20 text-purple-300 border border-purple-500/40');
+
+    let verdictHtml = '';
+    if (itA && itB) {
+      const eA = itA.energyScore;
+      const eB = itB.energyScore;
+      const deltaE = eA - eB;
+
+      let badgeIcon = '✨';
+      let badgeTitle = '';
+      let badgeCls = '';
+      let verdictAnalysis = '';
+
+      if (eA >= 72 && eB >= 72) {
+        badgeIcon = '🌟';
+        badgeTitle = isEn ? 'Synchronized Apex Resonance' : '双星合耀 · 协同爆发';
+        badgeCls = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+        verdictAnalysis = isEn
+          ? `Both individuals operate at prime energetic peak (${labelA} ${eA}pts / ${labelB} ${eB}pts). Superb window for bold cooperative expansion, decisive business investments, and mutually amplified breakthroughs.`
+          : `两造生命能量同入黄金巅峰期（${labelA} ${eA}分 / ${labelB} ${eB}分），岁运气场交相辉映。此年极度适宜二人并肩作战、全力拓荒、推进重资本战略运作，倍增红利水到渠成。`;
+      } else if (Math.abs(deltaE) >= 18) {
+        badgeIcon = '🛡️';
+        badgeTitle = isEn ? 'Shock-Absorber Counterbalance' : '一进一退 · 攻守托底';
+        badgeCls = 'bg-blue-500/20 text-blue-300 border-blue-500/40';
+        if (deltaE > 0) {
+          verdictAnalysis = isEn
+            ? `${labelA} commands peak vigor (${eA}pts) to push front-line objectives, while ${labelB} operates in deep consolidation (${eB}pts) to fortify risk management, cash reserves, and domestic harmony.`
+            : `${labelA} 能量势能高涨（${eA}分 vs ${eB}分）适宜担任前锋重拳出击；${labelB} 逢蓄势整备期，宜把控法务财务底线与后方防守，形成“一冲锋一固本”的无懈防波堤。`;
+        } else {
+          verdictAnalysis = isEn
+            ? `${labelB} commands peak vigor (${eB}pts) to push front-line objectives, while ${labelA} operates in deep consolidation (${eA}pts) to fortify risk management, cash reserves, and domestic harmony.`
+            : `${labelB} 能量势能高涨（${eB}分 vs ${eA}分）适宜挂帅主导外拓；${labelA} 处于休养盘整阶段，宜严控风险、筑牢资金安全垫，互为压舱石与避风港。`;
+        }
+      } else if (eA < 60 && eB < 60) {
+        badgeIcon = '🌱';
+        badgeTitle = isEn ? 'Joint Prudence & Inward Cultivation' : '从容守正 · 养晦蓄力';
+        badgeCls = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+        verdictAnalysis = isEn
+          ? `Both charts navigate decennial consolidation (${labelA} ${eA}pts / ${labelB} ${eB}pts). Strictly avoid speculative leverage or hasty pivots; invest in physical rejuvenation, operational refinement, and mutual trust.`
+          : `双方此时能量均逢岁运换甲蓄势期（${labelA} ${eA}分 / ${labelB} ${eB}分），切忌盲目扩大杠杆或激进冒进。宜守正休整、专注打磨核心技能、筑牢健康防线，静候下一轮破茧之机。`;
+      } else {
+        badgeIcon = '✨';
+        badgeTitle = isEn ? 'Harmonious Equilibrium' : '气运平和 · 步调相谐';
+        badgeCls = 'bg-purple-500/20 text-purple-300 border-purple-500/40';
+        verdictAnalysis = isEn
+          ? `Both individuals maintain balanced and steady momentum (${labelA} ${eA}pts / ${labelB} ${eB}pts). Communication friction is minimized, fostering steady compounding progress.`
+          : `两造能量平稳中正（${labelA} ${eA}分 / ${labelB} ${eB}分），协作阻抗极低，沟通默契如春风化雨，宜按部就班扎实推进中长期协同规划。`;
+      }
+
+      verdictHtml = `
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-emerald-950/30 via-black/50 to-purple-950/30 border border-emerald-500/30 space-y-2">
+          <div class="flex items-center justify-between border-b border-gray-800/60 pb-1.5">
+            <div class="flex items-center gap-1.5 font-bold text-xs text-amber-200 font-serif-sc">
+              <span>⚖️</span>
+              <span>${isEn ? 'Dual Dynamic Interaction Verdict' : '双人时空能量对撞互动定论'}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeCls}">${badgeIcon} ${badgeTitle}</span>
+          </div>
+          <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${verdictAnalysis}</p>
+        </div>
+      `;
+    }
+
+    cardContainer.innerHTML = `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        ${colAHtml}
+        ${colBHtml}
+      </div>
+      ${verdictHtml}
+    `;
+  }
+
+  function drawDualSynastryTimelineChart(isEn) {
+    const canvas = document.getElementById('synastryChronoTimelineCanvas');
+    if (!canvas || !synastryTimepoints || synastryTimepoints.length === 0) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    const rect = (typeof canvas.getBoundingClientRect === 'function') ? canvas.getBoundingClientRect() : { width: 700, height: 144 };
+    const w = rect.width || 700;
+    const h = rect.height || 144;
+
+    const targetW = Math.round(w * dpr);
+    const targetH = Math.round(h * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+    if (typeof ctx.setTransform === 'function') {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    } else if (typeof ctx.scale === 'function') {
+      ctx.scale(dpr, dpr);
+    }
+
+    ctx.clearRect(0, 0, w, h);
+
+    const padL = 36;
+    const padR = 24;
+    const padT = 20;
+    const padB = 22;
+    const chartW = w - padL - padR;
+    const chartH = h - padT - padB;
+
+    const isLight = (document.documentElement && typeof document.documentElement.getAttribute === 'function' && document.documentElement.getAttribute('data-theme') === 'light') || 
+                    (document.documentElement && document.documentElement.classList && typeof document.documentElement.classList.contains === 'function' && document.documentElement.classList.contains('light')) || 
+                    (document.body && document.body.classList && typeof document.body.classList.contains === 'function' && document.body.classList.contains('light-theme'));
+
+    ctx.strokeStyle = isLight ? 'rgba(120, 80, 40, 0.12)' : 'rgba(255, 255, 255, 0.05)';
+    ctx.lineWidth = 1;
+    [0, 25, 50, 75, 100].forEach(val => {
+      const y = padT + chartH - (val / 100) * chartH;
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(w - padR, y);
+      ctx.stroke();
+
+      ctx.fillStyle = isLight ? 'rgba(80, 50, 20, 0.75)' : 'rgba(255, 255, 255, 0.25)';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(val), padL - 4, y);
+    });
+
+    const ptsLen = synastryTimepoints.length;
+    const getX = (idx) => padL + (idx / (ptsLen - 1)) * chartW;
+    const getY = (score) => padT + chartH - (score / 100) * chartH;
+
+    const drawCurve = (prop, color, lineWidth, lineDash = []) => {
+      ctx.beginPath();
+      ctx.setLineDash(lineDash);
+      let isDrawing = false;
+      synastryTimepoints.forEach((pt, i) => {
+        const item = (prop === 'energyA' || prop === 'wealthA') ? pt.itemA : pt.itemB;
+        if (item) {
+          const score = (prop === 'energyA' || prop === 'energyB') ? item.energyScore : item.wealthScore;
+          const x = getX(i);
+          const y = getY(score);
+          if (!isDrawing) {
+            ctx.moveTo(x, y);
+            isDrawing = true;
+          } else {
+            ctx.lineTo(x, y);
+          }
+        } else {
+          isDrawing = false;
+        }
+      });
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    };
+
+    if (activeSynastryFilter === 'all' || activeSynastryFilter === 'wealth') {
+      drawCurve('wealthA', '#10b981', 2.0);
+      drawCurve('wealthB', isLight ? '#0284c7' : '#06b6d4', 2.0, [4, 2]);
+    }
+    if (activeSynastryFilter === 'all' || activeSynastryFilter === 'energy') {
+      drawCurve('energyA', isLight ? '#ca8a04' : '#f59e0b', 2.2);
+      drawCurve('energyB', isLight ? '#9333ea' : '#a855f7', 2.2, [5, 2.5]);
+    }
+
+    synastryTimepoints.forEach((pt, i) => {
+      if (pt.itemA && pt.itemB) {
+        const eA = pt.itemA.energyScore;
+        const eB = pt.itemB.energyScore;
+        if (eA >= 75 && eB >= 75) {
+          const x = getX(i);
+          const y = Math.min(getY(eA), getY(eB)) - 5;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = '#10b981';
+          ctx.fill();
+        } else if (Math.abs(eA - eB) >= 22 && (eA >= 70 || eB >= 70)) {
+          const x = getX(i);
+          const y = Math.min(getY(eA), getY(eB)) - 5;
+          ctx.beginPath();
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#38bdf8';
+          ctx.fill();
+        }
+      }
+    });
+
+    const activeIdx = Math.max(0, Math.min(ptsLen - 1, activeSynastryIndex));
+    const ax = getX(activeIdx);
+    const activePt = synastryTimepoints[activeIdx];
+
+    ctx.beginPath();
+    ctx.setLineDash([3, 3]);
+    ctx.moveTo(ax, padT);
+    ctx.lineTo(ax, h - padB);
+    ctx.strokeStyle = isLight ? '#854d0e' : '#fde047';
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    const drawDot = (score, color) => {
+      const y = getY(score);
+      ctx.beginPath();
+      ctx.arc(ax, y, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.strokeStyle = isLight ? '#f5f0e4' : '#ffffff';
+      ctx.lineWidth = 1.5;
+      ctx.fill();
+      ctx.stroke();
+    };
+
+    if (activePt.itemA) {
+      if (activeSynastryFilter === 'all' || activeSynastryFilter === 'energy') {
+        drawDot(activePt.itemA.energyScore, isLight ? '#ca8a04' : '#f59e0b');
+      }
+      if (activeSynastryFilter === 'all' || activeSynastryFilter === 'wealth') {
+        drawDot(activePt.itemA.wealthScore, '#10b981');
+      }
+    }
+    if (activePt.itemB) {
+      if (activeSynastryFilter === 'all' || activeSynastryFilter === 'energy') {
+        drawDot(activePt.itemB.energyScore, isLight ? '#9333ea' : '#a855f7');
+      }
+      if (activeSynastryFilter === 'all' || activeSynastryFilter === 'wealth') {
+        drawDot(activePt.itemB.wealthScore, isLight ? '#0284c7' : '#06b6d4');
+      }
+    }
+
+    ctx.fillStyle = isLight ? '#451a03' : '#fde047';
+    ctx.font = 'bold 9.5px monospace';
+    ctx.textAlign = 'center';
+    let topText = '';
+    const labelA = synastryLabelACached || (isEn ? 'A' : '甲');
+    const labelB = synastryLabelBCached || (isEn ? 'B' : '乙');
+    if (activePt.type === 'year') {
+      const aAge = activePt.itemA ? activePt.itemA.age : '-';
+      const bAge = activePt.itemB ? activePt.itemB.age : '-';
+      topText = `${activePt.year}y (${labelA}${aAge}y / ${labelB}${bAge}y)`;
+    } else {
+      const aYr = activePt.itemA ? activePt.itemA.year : '-';
+      const bYr = activePt.itemB ? activePt.itemB.year : '-';
+      topText = `${activePt.age}y (${labelA}${aYr} / ${labelB}${bYr})`;
+    }
+    ctx.fillText(topText, ax, padT - 6);
+  }
+
+  function generateDualTrajectorySvg(tlA, tlB, labelA, labelB, isEn) {
+    if (!tlA || !tlB || !tlA.length || !tlB.length) return '';
+    const padL = 24;
+    const padR = 16;
+    const chartW = 540 - padL - padR;
+    const chartH = 26;
+    const padT = 6;
+    const padB = 6;
+
+    const getX = (idx, total) => (padL + (idx / (total - 1)) * chartW).toFixed(1);
+    const getY = (score) => (padT + chartH - (score / 100) * chartH).toFixed(1);
+
+    const makePath = (timeline, prop) => {
+      let d = '';
+      timeline.forEach((it, i) => {
+        const x = getX(i, timeline.length);
+        const y = getY(it[prop]);
+        d += (i === 0 ? `M ${x} ${y}` : ` L ${x} ${y}`);
+      });
+      return d;
+    };
+
+    const dAe = makePath(tlA, 'energyScore');
+    const dAw = makePath(tlA, 'wealthScore');
+    const dBe = makePath(tlB, 'energyScore');
+    const dBw = makePath(tlB, 'wealthScore');
+
+    return `
+      <div class="p-1 rounded bg-white/70 border border-emerald-900/20 space-y-0.5">
+        <div class="flex items-center justify-between text-[7.5px] text-gray-700">
+          <div class="flex items-center gap-2">
+            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span><b class="text-amber-950">${labelA} ${isEn ? 'Energy' : '能量'}</b></span>
+            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span><b class="text-emerald-900">${labelA} ${isEn ? 'Wealth' : '财富'}</b></span>
+            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-purple-500 inline-block"></span><b class="text-purple-950">${labelB} ${isEn ? 'Energy' : '能量'}</b></span>
+            <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 inline-block"></span><b class="text-blue-900">${labelB} ${isEn ? 'Wealth' : '财富'}</b></span>
+          </div>
+          <span class="font-mono text-[7px] text-gray-500">${isEn ? '100-Year Life Energy Comparison' : '1~100岁连续气数演进'}</span>
+        </div>
+        <svg viewBox="0 0 540 38" class="w-full h-8 block">
+          <line x1="${padL}" y1="${padT}" x2="${540 - padR}" y2="${padT}" stroke="rgba(120,80,40,0.12)" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <line x1="${padL}" y1="${padT + chartH / 2}" x2="${540 - padR}" y2="${padT + chartH / 2}" stroke="rgba(120,80,40,0.12)" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <line x1="${padL}" y1="${padT + chartH}" x2="${540 - padR}" y2="${padT + chartH}" stroke="rgba(120,80,40,0.2)" stroke-width="0.8"/>
+          <path d="${dAw}" stroke="#10b981" stroke-width="1.1" fill="none"/>
+          <path d="${dBw}" stroke="#0284c7" stroke-width="1.1" stroke-dasharray="2.5,1.5" fill="none"/>
+          <path d="${dAe}" stroke="#ca8a04" stroke-width="1.5" fill="none"/>
+          <path d="${dBe}" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="3,1.5" fill="none"/>
+        </svg>
+      </div>
+    `;
+  }
+
+  if (typeof window !== 'undefined') {
+    window.drawDualSynastryTimelineChart = drawDualSynastryTimelineChart;
+    window.initDualChronoNavigator = initDualChronoNavigator;
   }
 
   // ==========================================================================
@@ -15700,6 +16547,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <span>📈 ${isEn ? 'Lifelong Trajectory Overlap & Decennial Synchronization' : '终身轨迹推演重合度与岁运同频表'}</span>
               <span class="text-[9px] font-mono text-emerald-900 font-bold">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Synchronization' : '同频指数'}</span>
             </div>
+            ${generateDualTrajectorySvg(data.trajectoryOverlap.timelineA, data.trajectoryOverlap.timelineB, labelA, labelB, isEn)}
             <table class="w-full text-[8.5px] text-center border-collapse">
               <thead>
                 <tr class="text-gray-600 border-b border-amber-900/20">

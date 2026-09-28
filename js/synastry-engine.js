@@ -1946,7 +1946,9 @@ const SynastryEngine = (function() {
       supportWindowsCount: supportCount,
       jointDefenseWindowsCount: jointDefenseCount,
       summary: isEn ? summaryEn : summaryZh,
-      milestones: milestoneDecades
+      milestones: milestoneDecades,
+      timelineA: (luckA && luckA.timeline) ? luckA.timeline : [],
+      timelineB: (luckB && luckB.timeline) ? luckB.timeline : []
     };
     if (!isEn) {
       trajObj.summaryZh = summaryZh;
