@@ -14911,12 +14911,47 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.zodiacMatch.description}</p>
         </div>
 
-        <div class="p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-2">
+        <div class="md:col-span-2 p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-3">
           <div class="flex items-center justify-between border-b border-gray-800 pb-1.5 font-bold font-serif-sc text-amber-300">
-            <span class="flex items-center gap-1.5"><span>🌱</span><span>${isEn ? '2. Five Elements Symbiosis Architecture' : '2. 五行气机交融图谱'}</span></span>
+            <span class="flex items-center gap-1.5"><span>🌱</span><span>${isEn ? '2. Dual Five Elements Breakdown & Mutual Complementarity' : '2. 双人命盘五行元素含量对照与气机互补'}</span></span>
             <span class="chinese-seal text-[9px] py-0">${isEn ? 'ELEMENTS' : '相生相养'}</span>
           </div>
+          ${data.elementComparison ? `
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-xs">
+            ${data.elementComparison.breakdown.map(item => `
+              <div class="p-2.5 rounded-lg bg-black/40 border border-amber-900/20 space-y-1.5 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between font-bold text-amber-200">
+                    <span>${isEn ? item.elementEn : item.element}</span>
+                    <span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30">${item.statusTag}</span>
+                  </div>
+                  <div class="space-y-1 pt-1 font-mono text-[10px]">
+                    <div class="flex justify-between text-gray-400">
+                      <span>${labelA}:</span>
+                      <span class="text-amber-300 font-bold">${item.pctA}%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 rounded-full h-1">
+                      <div class="bg-amber-400 h-1 rounded-full" style="width: ${Math.min(100, item.pctA * 2)}%"></div>
+                    </div>
+                    <div class="flex justify-between text-gray-400">
+                      <span>${labelB}:</span>
+                      <span class="text-purple-300 font-bold">${item.pctB}%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 rounded-full h-1">
+                      <div class="bg-purple-400 h-1 rounded-full" style="width: ${Math.min(100, item.pctB * 2)}%"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-[9.5px] text-gray-400 font-serif-sc leading-tight pt-1 border-t border-gray-800">${item.synergyNote}</p>
+              </div>
+            `).join('')}
+          </div>
+          <p class="text-xs text-gray-300 font-serif-sc leading-relaxed bg-amber-950/20 p-2.5 rounded-lg border border-amber-500/20">
+            <b>${isEn ? 'Ecological Verdict: ' : '大生态结论：'}</b>${data.elementComparison.balanceVerdict}
+          </p>
+          ` : `
           <p class="text-gray-200 leading-relaxed font-serif-sc whitespace-pre-line">${data.elementalSynergy.diagnosis}</p>
+          `}
         </div>
 
         <div class="p-4 rounded-xl bg-card border border-border-color shadow-lg space-y-2">
@@ -15035,42 +15070,38 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="flex items-center justify-between border-b border-indigo-800/40 pb-2.5">
           <div class="flex items-center gap-2">
             <span class="text-base">⚔️</span>
-            <h5 class="text-sm font-bold text-indigo-200 font-serif-sc">${isEn ? '9. Dual-Chart Structural Pattern Comparison & Engine Interaction' : '9. 双人格局对比与结构性互动深度推演'}</h5>
+            <h5 class="text-sm font-bold text-indigo-200 font-serif-sc">${isEn ? '9. Dual-Chart Structural Pattern Comparison & Engine Interaction' : '9. 双人主导格局对比与结构性互动深度推演'}</h5>
             <span class="px-2 py-0.5 rounded text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">${isEn ? 'Pattern Matrix' : '格局对撞'}</span>
           </div>
           <span class="chinese-seal text-[10px] py-0 border-indigo-500 text-indigo-300">${isEn ? 'PATTERNS' : '格局合参'}</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <!-- Person A Pattern Card -->
           <div class="p-3.5 rounded-xl bg-black/40 border border-amber-500/30 space-y-2">
             <div class="flex items-center justify-between border-b border-amber-900/30 pb-1 text-amber-300 font-bold font-serif-sc">
-              <span>👤 ${labelA} ${isEn ? 'Dominant Pattern Triad' : '主导格局三联'}</span>
-              <span class="text-[10px] text-amber-400 font-mono">${data.patternComparison.dominantA.role}</span>
+              <span>👤 ${labelA} · ${isEn ? 'Primary Dominant Pattern' : '第一核心主格'}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">${data.dominantPatternA.tier || (isEn ? 'Superior Pattern' : '上等格局')}</span>
             </div>
-            <div class="text-amber-200 font-bold text-sm">${data.patternComparison.dominantA.name}</div>
-            <div class="space-y-1 pt-1">
-              ${data.patternComparison.top3PatternsA.map(p => `
-                <div class="flex items-center justify-between text-[11px] text-gray-300 bg-amber-950/20 px-2 py-0.5 rounded">
-                  <span>#${p.rank} ${p.name}</span>
-                  <span class="font-mono text-amber-300">${p.weightPct}%</span>
-                </div>
-              `).join('')}
+            <div class="text-amber-200 font-bold text-sm">${data.dominantPatternA.name}</div>
+            <p class="text-gray-300 text-xs leading-relaxed font-serif-sc"><b>${isEn ? 'Mindset & Drive: ' : '格物心性：'}</b>${data.dominantPatternA.essence}</p>
+            <div class="space-y-1 text-xs font-serif-sc pt-1 border-t border-amber-900/20">
+              <div class="text-emerald-300"><b>✨ ${isEn ? 'Core Advantage: ' : '核心优势：'}</b>${data.dominantPatternA.strengths}</div>
+              <div class="text-rose-300"><b>⚠️ ${isEn ? 'Blindspot Risk: ' : '防范盲区：'}</b>${data.dominantPatternA.blindspots}</div>
             </div>
           </div>
 
+          <!-- Person B Pattern Card -->
           <div class="p-3.5 rounded-xl bg-black/40 border border-purple-500/30 space-y-2">
             <div class="flex items-center justify-between border-b border-purple-900/30 pb-1 text-purple-300 font-bold font-serif-sc">
-              <span>👥 ${labelB} ${isEn ? 'Dominant Pattern Triad' : '主导格局三联'}</span>
-              <span class="text-[10px] text-purple-400 font-mono">${data.patternComparison.dominantB.role}</span>
+              <span>👥 ${labelB} · ${isEn ? 'Primary Dominant Pattern' : '第一核心主格'}</span>
+              <span class="text-[10px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40">${data.dominantPatternB.tier || (isEn ? 'Superior Pattern' : '上等格局')}</span>
             </div>
-            <div class="text-purple-200 font-bold text-sm">${data.patternComparison.dominantB.name}</div>
-            <div class="space-y-1 pt-1">
-              ${data.patternComparison.top3PatternsB.map(p => `
-                <div class="flex items-center justify-between text-[11px] text-gray-300 bg-purple-950/20 px-2 py-0.5 rounded">
-                  <span>#${p.rank} ${p.name}</span>
-                  <span class="font-mono text-purple-300">${p.weightPct}%</span>
-                </div>
-              `).join('')}
+            <div class="text-purple-200 font-bold text-sm">${data.dominantPatternB.name}</div>
+            <p class="text-gray-300 text-xs leading-relaxed font-serif-sc"><b>${isEn ? 'Mindset & Drive: ' : '格物心性：'}</b>${data.dominantPatternB.essence}</p>
+            <div class="space-y-1 text-xs font-serif-sc pt-1 border-t border-purple-900/20">
+              <div class="text-emerald-300"><b>✨ ${isEn ? 'Core Advantage: ' : '核心优势：'}</b>${data.dominantPatternB.strengths}</div>
+              <div class="text-rose-300"><b>⚠️ ${isEn ? 'Blindspot Risk: ' : '防范盲区：'}</b>${data.dominantPatternB.blindspots}</div>
             </div>
           </div>
         </div>
@@ -15093,6 +15124,78 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="font-bold text-blue-300 font-serif-sc">🤝 ${isEn ? 'Business Directive:' : '商业合伙战略纲要：'}</span>
               <p class="text-gray-300 leading-tight font-serif-sc">${data.patternComparison.interaction.businessDirective}</p>
             </div>
+          </div>
+        </div>
+      </div>
+      ` : ''}
+
+      <!-- Merged Relationship Dynamics & Behavioral Portrait -->
+      ${data.mergedRelationship ? `
+      <div class="p-5 rounded-2xl bg-gradient-to-br from-amber-950/25 via-black/50 to-indigo-950/25 border border-amber-500/40 shadow-xl space-y-3">
+        <div class="flex items-center justify-between border-b border-amber-800/40 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-base">🌌</span>
+            <h5 class="text-sm font-bold text-amber-200 font-serif-sc">${isEn ? 'Merged Relationship Dynamic & Behavioral Portrait' : '合盘复合全相 · 双人关系本质与动力学画像'}</h5>
+          </div>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono">${data.mergedRelationship.title}</span>
+        </div>
+        <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-serif-sc"><b>${isEn ? 'Relational Essence: ' : '关系本质定调：'}</b>${data.mergedRelationship.nature}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs pt-1">
+          <div class="p-3 rounded-xl bg-black/40 border border-amber-900/30 space-y-1">
+            <span class="font-bold text-amber-300 font-serif-sc">🕊️ ${isEn ? 'Emotional Pacing & Chemistry:' : '情志互动调性与心理默契：'}</span>
+            <p class="text-gray-300 leading-relaxed font-serif-sc">${data.mergedRelationship.emotionalTone}</p>
+          </div>
+          <div class="p-3 rounded-xl bg-black/40 border border-indigo-900/30 space-y-1">
+            <span class="font-bold text-indigo-300 font-serif-sc">⚖️ ${isEn ? 'Joint Governance & Decision Model:' : '协同决策模式与博弈机制：'}</span>
+            <p class="text-gray-300 leading-relaxed font-serif-sc">${data.mergedRelationship.decisionMode}</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 font-serif-sc leading-relaxed pt-1 border-t border-gray-800">
+          <b>⏳ ${isEn ? 'Long-Term Evolution: ' : '长期岁月演进：'}</b>${data.mergedRelationship.longTermEvolution}
+        </p>
+      </div>
+      ` : ''}
+
+      <!-- Core Advantages vs Hidden Hazards & Actionable Protocols -->
+      ${data.advantagesAndHazards ? `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <!-- Left: Core Advantages -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-emerald-800/40 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-base">💎</span>
+              <h5 class="text-sm font-bold text-emerald-200 font-serif-sc">${isEn ? 'Core Advantages & Compounding Dividends' : '合璧之长 · 核心优势与倍增红利'}</h5>
+            </div>
+            <span class="chinese-seal text-[10px] py-0 border-emerald-500 text-emerald-300">${isEn ? 'SYNERGY' : '天作合璧'}</span>
+          </div>
+          <div class="space-y-2.5">
+            ${data.advantagesAndHazards.advantages.map((adv, idx) => `
+              <div class="p-3 rounded-xl bg-black/40 border border-emerald-900/30 space-y-1">
+                <div class="font-bold text-emerald-300 font-serif-sc text-xs">${idx + 1}. ${adv.title}</div>
+                <p class="text-gray-300 leading-relaxed font-serif-sc text-[11px]">${adv.desc}</p>
+                <div class="text-[10.5px] text-emerald-400 font-bold font-serif-sc">✨ ${isEn ? 'Compound Impact: ' : '合力红利：'}${adv.impact}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Right: Hidden Hazards & Actionable Protocols -->
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-950/30 via-black/50 to-amber-950/20 border border-rose-500/40 shadow-xl space-y-3">
+          <div class="flex items-center justify-between border-b border-rose-800/40 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-base">⚠️</span>
+              <h5 class="text-sm font-bold text-rose-200 font-serif-sc">${isEn ? 'Hidden Hazards & Actionable Protocols' : '暗涌隐患 · 潜在风险与落地规避锦囊'}</h5>
+            </div>
+            <span class="chinese-seal text-[10px] py-0 border-rose-500 text-rose-300">${isEn ? 'HAZARDS' : '防微杜渐'}</span>
+          </div>
+          <div class="space-y-2.5">
+            ${data.advantagesAndHazards.hazards.map((haz, idx) => `
+              <div class="p-3 rounded-xl bg-black/40 border border-rose-900/30 space-y-1">
+                <div class="font-bold text-rose-300 font-serif-sc text-xs">${idx + 1}. ${haz.title}</div>
+                <p class="text-gray-300 leading-relaxed font-serif-sc text-[11px]">${haz.desc}</p>
+                <div class="text-[10.5px] text-amber-200 bg-amber-950/40 p-2 rounded border border-amber-500/30 font-serif-sc leading-relaxed">${haz.remedy}</div>
+              </div>
+            `).join('')}
           </div>
         </div>
       </div>
@@ -15430,42 +15533,75 @@ document.addEventListener('DOMContentLoaded', () => {
             </table>
           </div>
 
-          <!-- Five Elements Symbiosis & Soul Resonance -->
-          <div class="grid grid-cols-2 gap-2 text-[10px] font-serif-sc">
-            <div class="imperial-card imperial-card-emerald p-2 space-y-0.5">
-              <div class="font-bold text-emerald-950 border-b border-amber-900/15 pb-0.5 flex justify-between">
-                <span>🌱 ${isEn ? 'Five Elements Symbiosis' : '五行气机交融图谱'}</span>
-                <span class="font-mono text-emerald-800">${data.elementalSynergy.score}%</span>
-              </div>
-              <p class="text-gray-800 leading-tight line-clamp-3">${data.elementalSynergy.diagnosis}</p>
+          <!-- Dual Five Elements Breakdown & Mutual Complementarity -->
+          ${data.elementComparison ? `
+          <div class="imperial-card imperial-card-emerald p-1.5 space-y-1 font-serif-sc text-xs">
+            <div class="font-bold text-emerald-950 border-b border-amber-900/20 pb-0.5 flex justify-between text-[10px]">
+              <span>🌱 ${isEn ? 'Dual Five Elements Breakdown & Mutual Complementarity' : '双人命盘五行元素含量对照与气机互补'}</span>
+              <span class="font-mono text-emerald-800 text-[9px]">${data.elementComparison.dominantElement} ${isEn ? 'Rich' : '最盛'} | ${data.elementComparison.leanElement} ${isEn ? 'Lean' : '最虚'}</span>
             </div>
-            <div class="imperial-card imperial-card-accent p-2 space-y-0.5">
-              <div class="font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
-                <span>✨ ${isEn ? 'Soul Resonance & Pillar Chemistry' : '柱位交互与情志默契'}</span>
-              </div>
-              <p class="text-gray-800 leading-tight line-clamp-3">${data.pillarResonance.diagnosis}</p>
-            </div>
-          </div>
-
-          <!-- Section 11: 5D Life Priorities & Core Values Comparative Table -->
-          ${data.lifePriorities ? `
-          <div class="imperial-card imperial-card-rose p-2 text-[10px] space-y-1 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span>🧭 ${isEn ? '5D Life Focal Priorities & Core Values Profile' : '人生侧重点与核心价值观五维图谱'}</span>
-              <span class="text-rose-900 font-mono">${data.lifePriorities.alignmentScore}% ${isEn ? 'Alignment' : '共鸣度'}</span>
-            </div>
-            <div class="grid grid-cols-5 gap-1.5 text-center text-[9px] pt-0.5">
-              ${data.lifePriorities.dimensions.map(dim => `
-                <div class="p-1 rounded bg-white/70 border border-amber-900/15">
-                  <div class="font-bold text-amber-950 truncate">${dim.name}</div>
-                  <div class="font-mono text-gray-700 text-[8.5px] mt-0.5">${labelA}: ${dim.scoreA}% | ${labelB}: ${dim.scoreB}%</div>
-                  <div class="text-[8px] text-rose-800 truncate mt-0.5">${dim.status}</div>
-                </div>
-              `).join('')}
-            </div>
-            <p class="text-[9.5px] text-amber-950 leading-tight pt-0.5"><b>${isEn ? 'Harmony Protocol: ' : '价值观调和总则：'}</b>${data.lifePriorities.harmonyProtocol}</p>
+            <table class="w-full text-[9px] text-center border-collapse">
+              <thead>
+                <tr class="text-gray-600 border-b border-amber-900/20 font-sans">
+                  <th class="py-0.5 text-left">${isEn ? 'Element' : '五行元素'}</th>
+                  <th class="py-0.5">${labelA} (%)</th>
+                  <th class="py-0.5 border-l border-amber-900/15">${labelB} (%)</th>
+                  <th class="py-0.5 border-l border-amber-900/15">${isEn ? 'Combined' : '综合平均'}</th>
+                  <th class="py-0.5 border-l border-amber-900/15">${isEn ? 'Synergy Tag' : '互补评级'}</th>
+                  <th class="py-0.5 text-left border-l border-amber-900/15 pl-1.5">${isEn ? 'Metabolic Interchange Note' : '气机交融评注'}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-amber-900/15 font-mono">
+                ${data.elementComparison.breakdown.map(item => `
+                  <tr>
+                    <td class="py-0.5 text-left font-serif-sc text-amber-950 font-bold">${isEn ? item.elementEn : item.element}</td>
+                    <td class="py-0.5 text-amber-900">${item.pctA}%</td>
+                    <td class="py-0.5 border-l border-amber-900/15 text-purple-900">${item.pctB}%</td>
+                    <td class="py-0.5 border-l border-amber-900/15 font-bold">${item.combinedPct}%</td>
+                    <td class="py-0.5 border-l border-amber-900/15">
+                      <span class="px-1 py-0.2 rounded text-[8px] font-bold ${item.statusTagZh === '良性互补' || item.statusTag === 'Mutual Complement' ? 'bg-emerald-100 text-emerald-900 border border-emerald-500/30' : (item.statusTagZh === '双旺共振' || item.statusTag === 'Dual Strong' ? 'bg-amber-100 text-amber-900 border border-amber-500/30' : 'bg-gray-100 text-gray-800')}">${item.statusTag}</span>
+                    </td>
+                    <td class="py-0.5 text-left border-l border-amber-900/15 pl-1.5 font-serif-sc text-[8.5px] text-gray-800 truncate max-w-[200px]">${item.synergyNote}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+            <p class="text-[8.5px] text-emerald-950 font-serif-sc leading-tight pt-0.5 border-t border-amber-900/15">
+              <b>${isEn ? 'Ecological Verdict: ' : '大生态结论：'}</b>${data.elementComparison.balanceVerdict}
+            </p>
           </div>
           ` : ''}
+
+          <!-- Primary Dominant Patterns of Both Individuals -->
+          <div class="grid grid-cols-2 gap-2 text-[9px] font-serif-sc">
+            <!-- Person A Primary Pattern Card -->
+            <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5">
+              <div class="font-bold text-amber-950 border-b border-amber-900/20 pb-0.5 flex justify-between items-center text-[10px]">
+                <span class="flex items-center gap-1"><span>👑</span><span>${labelA} · ${isEn ? 'Primary Dominant Pattern' : '第一核心主格'}</span></span>
+                <span class="text-[8px] px-1 py-0.2 rounded bg-amber-200 text-amber-950 font-bold border border-amber-500/30">${data.dominantPatternA.tier || (isEn ? 'Superior Pattern' : '上等格局')}</span>
+              </div>
+              <div class="font-bold text-amber-900 text-[10px] pt-0.5">${data.dominantPatternA.name}</div>
+              <p class="text-gray-800 leading-tight"><b>${isEn ? 'Mindset & Drive: ' : '格物心性：'}</b>${data.dominantPatternA.essence}</p>
+              <div class="text-[8.5px] text-gray-700 leading-tight pt-0.5">
+                <div class="text-emerald-900"><b>${isEn ? 'Core Advantage: ' : '核心优势：'}</b>${data.dominantPatternA.strengths}</div>
+                <div class="text-rose-900"><b>${isEn ? 'Blindspot Risk: ' : '防范盲区：'}</b>${data.dominantPatternA.blindspots}</div>
+              </div>
+            </div>
+
+            <!-- Person B Primary Pattern Card -->
+            <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5">
+              <div class="font-bold text-purple-950 border-b border-amber-900/20 pb-0.5 flex justify-between items-center text-[10px]">
+                <span class="flex items-center gap-1"><span>👑</span><span>${labelB} · ${isEn ? 'Primary Dominant Pattern' : '第一核心主格'}</span></span>
+                <span class="text-[8px] px-1 py-0.2 rounded bg-purple-200 text-purple-950 font-bold border border-purple-500/30">${data.dominantPatternB.tier || (isEn ? 'Superior Pattern' : '上等格局')}</span>
+              </div>
+              <div class="font-bold text-purple-900 text-[10px] pt-0.5">${data.dominantPatternB.name}</div>
+              <p class="text-gray-800 leading-tight"><b>${isEn ? 'Mindset & Drive: ' : '格物心性：'}</b>${data.dominantPatternB.essence}</p>
+              <div class="text-[8.5px] text-gray-700 leading-tight pt-0.5">
+                <div class="text-emerald-900"><b>${isEn ? 'Core Advantage: ' : '核心优势：'}</b>${data.dominantPatternB.strengths}</div>
+                <div class="text-rose-900"><b>${isEn ? 'Blindspot Risk: ' : '防范盲区：'}</b>${data.dominantPatternB.blindspots}</div>
+              </div>
+            </div>
+          </div>
 
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
@@ -15498,30 +15634,60 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-[10px] text-amber-900/85 font-serif-sc">${isEn ? 'Structural Pattern Interaction · Lifelong Decennial Overlap · Zen Trinity Counsel & Mutual Remedies' : '格局对撞互动 · 终身岁运推演同频表 · 三经调和智慧与共生锦囊'}</p>
           </div>
 
-          <!-- Section 9: Dual-Chart Structural Pattern Comparison & Engine Interaction -->
-          ${data.patternComparison ? `
-          <div class="imperial-card imperial-card-gold p-2 text-[10px] space-y-1 font-serif-sc">
+          <!-- Merged Relationship Dynamics & Behavioral Portrait -->
+          ${data.mergedRelationship ? `
+          <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 font-serif-sc text-xs">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span>⚔️ ${isEn ? 'Dual-Chart Structural Pattern Comparison & Interaction' : '主导格局对比与结构性互动深度推演'}</span>
-              <span class="text-[9px] px-2 py-0.2 rounded bg-amber-200/80 text-amber-950 font-mono font-bold">${data.patternComparison.interaction.title} (${data.patternComparison.interaction.score}%)</span>
+              <span class="text-[10px]">🌌 ${isEn ? 'Merged Relationship Dynamic & Behavioral Portrait' : '合盘复合全相 · 双人关系本质与动力学画像'}</span>
+              <span class="text-[8.5px] px-2 py-0.2 rounded bg-amber-200/80 text-amber-950 font-mono font-bold">${data.mergedRelationship.title}</span>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-[9px] font-mono py-0.5 border-b border-amber-900/15">
-              <div class="flex justify-between items-center bg-amber-100/70 p-1 rounded border border-amber-500/30">
-                <span class="font-serif-sc text-amber-950 font-bold">👤 ${labelA} ${isEn ? 'Pattern:' : '统帅格局:'}</span>
-                <span class="text-amber-900 font-bold">${patA}</span>
-              </div>
-              <div class="flex justify-between items-center bg-purple-100/70 p-1 rounded border border-purple-500/30">
-                <span class="font-serif-sc text-purple-950 font-bold">👥 ${labelB} ${isEn ? 'Pattern:' : '统帅格局:'}</span>
-                <span class="text-purple-900 font-bold">${patB}</span>
-              </div>
-            </div>
-            <p class="text-gray-800 leading-tight text-[9.5px]">${data.patternComparison.interaction.dynamic}</p>
-            <div class="grid grid-cols-2 gap-2 text-[9px] text-gray-800 pt-0.5">
+            <p class="text-gray-800 text-[9px] leading-tight font-serif-sc"><b>${isEn ? 'Relational Essence: ' : '关系本质定调：'}</b>${data.mergedRelationship.nature}</p>
+            <div class="grid grid-cols-2 gap-1.5 text-[8.5px] pt-0.5">
               <div class="p-1 bg-white/70 rounded border border-amber-900/15">
-                <b>💍 ${isEn ? 'Romantic Directive: ' : '婚恋相处：'}</b>${data.patternComparison.interaction.romanticDirective}
+                <b>🕊️ ${isEn ? 'Emotional Pacing: ' : '情志互动调性：'}</b>${data.mergedRelationship.emotionalTone}
               </div>
               <div class="p-1 bg-white/70 rounded border border-amber-900/15">
-                <b>🤝 ${isEn ? 'Business Directive: ' : '商业合伙：'}</b>${data.patternComparison.interaction.businessDirective}
+                <b>⚖️ ${isEn ? 'Governance Model: ' : '协同决策模式：'}</b>${data.mergedRelationship.decisionMode}
+              </div>
+            </div>
+            <p class="text-[8.5px] text-gray-700 leading-tight pt-0.5"><b>⏳ ${isEn ? 'Long-Term Evolution: ' : '长期岁月演进：'}</b>${data.mergedRelationship.longTermEvolution}</p>
+          </div>
+          ` : ''}
+
+          <!-- Core Advantages vs Hidden Hazards & Actionable Protocols -->
+          ${data.advantagesAndHazards ? `
+          <div class="grid grid-cols-2 gap-2 text-[9px] font-serif-sc">
+            <!-- Left Column: Core Advantages -->
+            <div class="imperial-card imperial-card-emerald p-1.5 space-y-1">
+              <div class="font-bold text-emerald-950 border-b border-amber-900/20 pb-0.5 flex justify-between items-center text-[10px]">
+                <span>💎 ${isEn ? 'Core Advantages & Compounding Dividends' : '合璧之长 · 核心优势与倍增红利'}</span>
+                <span class="chinese-seal text-[8px] py-0 border-emerald-600 text-emerald-700">${isEn ? 'SYNERGY' : '天作合璧'}</span>
+              </div>
+              <div class="space-y-1 pt-0.5">
+                ${data.advantagesAndHazards.advantages.map((adv, idx) => `
+                  <div class="p-1 rounded bg-white/60 border border-emerald-900/15 space-y-0.5">
+                    <div class="font-bold text-emerald-900 text-[9px]">${idx + 1}. ${adv.title}</div>
+                    <p class="text-gray-800 text-[8px] leading-tight">${adv.desc}</p>
+                    <div class="text-[8px] text-emerald-800 font-bold">✨ ${isEn ? 'Impact: ' : '红利：'}${adv.impact}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Right Column: Hidden Hazards & Actionable Protocols -->
+            <div class="imperial-card imperial-card-rose p-1.5 space-y-1">
+              <div class="font-bold text-rose-950 border-b border-amber-900/20 pb-0.5 flex justify-between items-center text-[10px]">
+                <span>⚠️ ${isEn ? 'Hidden Hazards & Actionable Protocols' : '暗涌隐患 · 潜在风险与落地规避锦囊'}</span>
+                <span class="chinese-seal text-[8px] py-0 border-rose-600 text-rose-700">${isEn ? 'HAZARDS' : '防微杜渐'}</span>
+              </div>
+              <div class="space-y-1 pt-0.5">
+                ${data.advantagesAndHazards.hazards.map((haz, idx) => `
+                  <div class="p-1 rounded bg-white/60 border border-rose-900/15 space-y-0.5">
+                    <div class="font-bold text-rose-900 text-[9px]">${idx + 1}. ${haz.title}</div>
+                    <p class="text-gray-800 text-[8px] leading-tight">${haz.desc}</p>
+                    <div class="text-[8px] text-rose-950 font-bold bg-rose-50/80 p-0.5 rounded border border-rose-400/30">${haz.remedy}</div>
+                  </div>
+                `).join('')}
               </div>
             </div>
           </div>
@@ -15529,12 +15695,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
           <!-- Section 10: Lifelong Trajectory Overlap & Decennial Synchronization Table -->
           ${data.trajectoryOverlap ? `
-          <div class="imperial-card imperial-card-emerald p-2 text-[9.5px] space-y-1 font-serif-sc">
+          <div class="imperial-card imperial-card-emerald p-1.5 text-[9px] space-y-1 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
               <span>📈 ${isEn ? 'Lifelong Trajectory Overlap & Decennial Synchronization' : '终身轨迹推演重合度与岁运同频表'}</span>
               <span class="text-[9px] font-mono text-emerald-900 font-bold">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Synchronization' : '同频指数'}</span>
             </div>
-            <table class="w-full text-[9px] text-center border-collapse">
+            <table class="w-full text-[8.5px] text-center border-collapse">
               <thead>
                 <tr class="text-gray-600 border-b border-amber-900/20">
                   <th class="py-0.5 text-left">${isEn ? 'Age Span' : '年龄阶段'}</th>
@@ -15547,35 +15713,17 @@ document.addEventListener('DOMContentLoaded', () => {
               <tbody class="divide-y divide-amber-900/15">
                 ${data.trajectoryOverlap.milestones.map(m => `
                   <tr>
-                    <td class="py-1 text-left font-serif-sc text-amber-950 font-bold whitespace-nowrap">${m.ageSpan}</td>
-                    <td class="py-1 font-mono text-amber-900">${m.pillarA.text} (${m.pillarA.score})</td>
-                    <td class="py-1 border-l border-amber-900/20 font-mono text-purple-900">${m.pillarB.text} (${m.pillarB.score})</td>
-                    <td class="py-1 border-l border-amber-900/20 whitespace-nowrap"><span class="px-1 py-0.2 rounded text-[8.5px] font-bold bg-amber-100 text-amber-950 border border-amber-600/30">${m.phaseBadge}</span></td>
-                    <td class="py-1 text-left border-l border-amber-900/20 pl-2 text-gray-800 text-[8.5px] leading-tight">${m.verdict}</td>
+                    <td class="py-0.5 text-left font-serif-sc text-amber-950 font-bold whitespace-nowrap">${m.ageSpan}</td>
+                    <td class="py-0.5 font-mono text-amber-900">${m.pillarA.text} (${m.pillarA.score})</td>
+                    <td class="py-0.5 border-l border-amber-900/20 font-mono text-purple-900">${m.pillarB.text} (${m.pillarB.score})</td>
+                    <td class="py-0.5 border-l border-amber-900/20 whitespace-nowrap"><span class="px-1 py-0.2 rounded text-[8px] font-bold bg-amber-100 text-amber-950 border border-amber-600/30">${m.phaseBadge}</span></td>
+                    <td class="py-0.5 text-left border-l border-amber-900/20 pl-2 text-gray-800 text-[8px] leading-tight">${m.verdict}</td>
                   </tr>
                 `).join('')}
               </tbody>
             </table>
           </div>
           ` : ''}
-
-          <!-- Clash Points & Financial Trust -->
-          <div class="grid grid-cols-2 gap-2 text-[9.5px] font-serif-sc">
-            <div class="imperial-card imperial-card-rose p-1.5 space-y-0.5">
-              <div class="font-bold text-rose-950 border-b border-amber-900/15 pb-0.5 flex justify-between">
-                <span>⚡ ${isEn ? 'Clash Points & Stress Vectors' : '潜在雷区与刑冲预警'}</span>
-                <span class="chinese-seal text-[8px] py-0 border-rose-600 text-rose-700">${isEn ? 'CLASHES' : '刑冲克害'}</span>
-              </div>
-              <p class="text-gray-800 leading-tight line-clamp-3">${data.clashPoints.diagnosis}</p>
-            </div>
-            <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5">
-              <div class="font-bold text-amber-950 border-b border-amber-900/15 pb-0.5 flex justify-between">
-                <span>💰 ${isEn ? 'Financial Trust & Game Theory' : '财富合力与商业资产博弈'}</span>
-                <span class="chinese-seal text-[8px] py-0">${isEn ? 'WEALTH' : '财星博弈'}</span>
-              </div>
-              <p class="text-gray-800 leading-tight line-clamp-3">${data.financialTrust.diagnosis}</p>
-            </div>
-          </div>
 
           <!-- Zen & Dao Trinity Relationship Counsel & Mutual Remedies -->
           <div class="imperial-card imperial-card-accent p-2 text-[9.5px] space-y-1 font-serif-sc relative overflow-hidden">

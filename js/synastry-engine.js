@@ -935,29 +935,62 @@ const SynastryEngine = (function() {
     // 12. Structural Pattern Comparison & Engine Interaction (格局对比与结构性互动)
     const patternComparison = evaluatePatternComparison(chartA, chartB, isRomantic, isEn);
 
+    const archA = getPatternArchetype(patternComparison.dominantA.nameZh || patternComparison.dominantA.name);
+    const archB = getPatternArchetype(patternComparison.dominantB.nameZh || patternComparison.dominantB.name);
+
     const dominantPatternA = {
       rank: 1,
-      name: isEn ? (patternComparison.dominantA.nameEn || patternComparison.dominantA.name) : (patternComparison.dominantA.nameZh || patternComparison.dominantA.name),
+      name: isEn ? (patternComparison.dominantA.nameEn || archA.nameEn) : (patternComparison.dominantA.nameZh || archA.nameZh),
       role: isEn ? (patternComparison.dominantA.roleEn || patternComparison.dominantA.role) : (patternComparison.dominantA.roleZh || patternComparison.dominantA.role),
       weightPct: patternComparison.dominantA.weightPct || 45,
-      nameEn: patternComparison.dominantA.nameEn || patternComparison.dominantA.name,
+      tier: isEn ? archA.tierEn : archA.tierZh,
+      essence: isEn ? archA.essenceEn : archA.essenceZh,
+      strengths: isEn ? archA.strengthsEn : archA.strengthsZh,
+      blindspots: isEn ? archA.blindspotsEn : archA.blindspotsZh,
+      behaviorModel: isEn ? archA.behaviorModelEn : archA.behaviorModelZh,
+      nameEn: patternComparison.dominantA.nameEn || archA.nameEn,
       roleEn: patternComparison.dominantA.roleEn || patternComparison.dominantA.role,
+      tierEn: archA.tierEn,
+      essenceEn: archA.essenceEn,
+      strengthsEn: archA.strengthsEn,
+      blindspotsEn: archA.blindspotsEn,
+      behaviorModelEn: archA.behaviorModelEn,
       ...(!isEn ? {
-        nameZh: patternComparison.dominantA.nameZh || patternComparison.dominantA.name,
-        roleZh: patternComparison.dominantA.roleZh || patternComparison.dominantA.role
+        nameZh: patternComparison.dominantA.nameZh || archA.nameZh,
+        roleZh: patternComparison.dominantA.roleZh || patternComparison.dominantA.role,
+        tierZh: archA.tierZh,
+        essenceZh: archA.essenceZh,
+        strengthsZh: archA.strengthsZh,
+        blindspotsZh: archA.blindspotsZh,
+        behaviorModelZh: archA.behaviorModelZh
       } : {})
     };
 
     const dominantPatternB = {
       rank: 1,
-      name: isEn ? (patternComparison.dominantB.nameEn || patternComparison.dominantB.name) : (patternComparison.dominantB.nameZh || patternComparison.dominantB.name),
+      name: isEn ? (patternComparison.dominantB.nameEn || archB.nameEn) : (patternComparison.dominantB.nameZh || archB.nameZh),
       role: isEn ? (patternComparison.dominantB.roleEn || patternComparison.dominantB.role) : (patternComparison.dominantB.roleZh || patternComparison.dominantB.role),
       weightPct: patternComparison.dominantB.weightPct || 45,
-      nameEn: patternComparison.dominantB.nameEn || patternComparison.dominantB.name,
+      tier: isEn ? archB.tierEn : archB.tierZh,
+      essence: isEn ? archB.essenceEn : archB.essenceZh,
+      strengths: isEn ? archB.strengthsEn : archB.strengthsZh,
+      blindspots: isEn ? archB.blindspotsEn : archB.blindspotsZh,
+      behaviorModel: isEn ? archB.behaviorModelEn : archB.behaviorModelZh,
+      nameEn: patternComparison.dominantB.nameEn || archB.nameEn,
       roleEn: patternComparison.dominantB.roleEn || patternComparison.dominantB.role,
+      tierEn: archB.tierEn,
+      essenceEn: archB.essenceEn,
+      strengthsEn: archB.strengthsEn,
+      blindspotsEn: archB.blindspotsEn,
+      behaviorModelEn: archB.behaviorModelEn,
       ...(!isEn ? {
-        nameZh: patternComparison.dominantB.nameZh || patternComparison.dominantB.name,
-        roleZh: patternComparison.dominantB.roleZh || patternComparison.dominantB.role
+        nameZh: patternComparison.dominantB.nameZh || archB.nameZh,
+        roleZh: patternComparison.dominantB.roleZh || patternComparison.dominantB.role,
+        tierZh: archB.tierZh,
+        essenceZh: archB.essenceZh,
+        strengthsZh: archB.strengthsZh,
+        blindspotsZh: archB.blindspotsZh,
+        behaviorModelZh: archB.behaviorModelZh
       } : {})
     };
 
@@ -966,6 +999,15 @@ const SynastryEngine = (function() {
 
     // 14. Life Focal Priorities & Core Values (人生侧重点与核心价值观五维图谱)
     const lifePriorities = evaluateLifePriorities(chartA, chartB, isRomantic, isEn);
+
+    // 15. Dual Five Elements Breakdown & Comparison (双人五行元素含量与能量互补)
+    const elementComparison = evaluateElementComparison(elA, elB, dmElemA, dmElemB, isEn);
+
+    // 16. Merged Relationship Synthesis & Dynamics Portrait (合盘复合全相与关系画像)
+    const mergedRelationship = generateMergedRelationshipPortrait(chartA, chartB, overallScore, archetype, hasStemCombo, hasSixHarmony, hasSixClash, isRomantic, isEn);
+
+    // 17. Core Advantages vs Hidden Hazards & Tactical Actionable Protocols (合璧优点与暗涌隐患及落地规避锦囊)
+    const advantagesAndHazards = generateAdvantagesAndHazards(chartA, chartB, overallScore, elementComparison, isRomantic, isEn);
 
     return {
       mode,
@@ -977,6 +1019,9 @@ const SynastryEngine = (function() {
       dominantPatternB,
       primaryPatternA: dominantPatternA.name,
       primaryPatternB: dominantPatternB.name,
+      elementComparison,
+      mergedRelationship,
+      advantagesAndHazards,
       zodiacMatch: {
         type: zMatch.type,
         title: isEn ? zMatch.titleEn : zMatch.titleZh,
@@ -1302,6 +1347,146 @@ const SynastryEngine = (function() {
         `2. 议事决策协议：推行“书面提案制”，重大战略分歧严禁口头争吵，须形成数据化商业计划书提交董事会或专家顾问团裁决。\n` +
         `3. 事业不败三则：对外口径绝对高度统一；对内权责界限寸土不让；以业务增长与客户价值为唯一检验真理的标准，超越个人情绪。`;
     }
+  }
+
+  // Canonical Pattern Archetypes and Structural Engine Exegeses
+  const PATTERN_ARCHETYPES = {
+    '七杀': {
+      nameZh: '七杀格 · 偏官统帅', nameEn: 'Seven Killings Pattern · Vanguard Commander',
+      tierZh: '上等权威格', tierEn: 'Superior Authority Pattern',
+      essenceZh: '命带威权与不屈斗志，崇尚以实力突破僵局。行事雷厉风行、敢冒风险、极具魄力与危机应对本能。',
+      essenceEn: 'Commands formidable executive willpower and unyielding determination; thrives in pioneering breakthroughs, taking calculated risks, and conquering high-stakes crises.',
+      strengthsZh: '破局能力顶尖，绝境反击，极富前瞻魄力与执行力。',
+      strengthsEn: 'Supreme pioneering velocity, high crisis resilience, and fearless execution.',
+      blindspotsZh: '容易刚愎自用、脾气急躁，给伴侣或搭档施加无形压迫感。',
+      blindspotsEn: 'Prone to impatience and autocracy, potentially imposing overwhelming pressure on partners.',
+      behaviorModelZh: '进攻型破局者，遇难越勇，习惯把控大局战略方向。',
+      behaviorModelEn: 'Offensive vanguard who thrives under pressure and demands sovereign strategic direction.'
+    },
+    '正官': {
+      nameZh: '正官格 · 正气立身', nameEn: 'Direct Officer Pattern · Institutional Order',
+      tierZh: '上等清贵格', tierEn: 'Superior Noble Pattern',
+      essenceZh: '崇尚社会公信、纲常秩序与契约信义。行事光明磊落、自律甚严、恪守边界与程序正义。',
+      essenceEn: 'Dedicated to institutional reputation, procedural discipline, and ethical integrity; exercises unyielding self-mastery and honors commitments.',
+      strengthsZh: '长线定力极强，合规风控严谨，声誉卓著，组织治理能力一流。',
+      strengthsEn: 'Enduring strategic patience, impeccable risk containment, and institutional governance.',
+      blindspotsZh: '墨守成规、缺乏变通巧劲，过分在意外界评价与虚礼。',
+      blindspotsEn: 'Can become overly rigid or bureaucratic, placing excessive weight on formal etiquette.',
+      behaviorModelZh: '合规治理者，重视程序规则与声望积累，步步为营。',
+      behaviorModelEn: 'Fiduciary governor who anchors progress in structured rules and institutional stature.'
+    },
+    '食神': {
+      nameZh: '食神格 · 独门天工', nameEn: 'Eating God Pattern · Master Artisan',
+      tierZh: '上等福寿格', tierEn: 'Superior Serenity Pattern',
+      essenceZh: '禀赋温润从容，追求精神富足与专业极致。深谙生活雅趣与技艺淬炼，善于以柔克刚、化繁为简。',
+      essenceEn: 'Embodies gentle serenity and artistic depth, seeking perfection in craft and living aesthetics while dissolving tension through subtle elegance.',
+      strengthsZh: '专业技艺精湛，情商极高，极富审美创造力与长寿福慧。',
+      strengthsEn: 'Exquisite craftsmanship, emotional intelligence, and enduring creative longevity.',
+      blindspotsZh: '随遇而安、进取野心稍逊，在重大商战冲突中容易被动退让。',
+      blindspotsEn: 'May lack aggressive commercial hunger, sometimes yielding too quickly in competitive showdowns.',
+      behaviorModelZh: '从容匠人型，以专业作品与独特审美立身，温和包容。',
+      behaviorModelEn: 'Serene artisan who leads through mastery, aesthetic distinction, and patient empathy.'
+    },
+    '伤官': {
+      nameZh: '伤官格 · 锐意革新', nameEn: 'Hurting Officer Pattern · Disruptive Maverick',
+      tierZh: '奇秀智谋格', tierEn: 'Exceptional Intellect Pattern',
+      essenceZh: '智商超群、才华横溢，具天生反骨与颠覆性创造力。极度崇尚自由与独创，对平庸与虚伪绝不妥协。',
+      essenceEn: 'Possesses brilliant intellectual agility and disruptive iconoclasm; fiercely honors creative authenticity and refuses bureaucratic mediocrity.',
+      strengthsZh: '商业嗅觉与创新能力顶尖，口才敏捷，破旧立新无人能及。',
+      strengthsEn: 'Unmatched commercial intuition, disruptive innovation, and electrifying persuasion.',
+      blindspotsZh: '言语犀利锋芒毕露，易伤人自尊，耐受琐碎繁杂事务度较低。',
+      blindspotsEn: 'Sharp tongue may wound interpersonal rapport; struggles with tedious administrative routines.',
+      behaviorModelZh: '颠覆式革新者，以反常规思路打破僵局，追求卓越与与众不同。',
+      behaviorModelEn: 'Disruptive innovator who shatters conventions and pursues non-consensus breakthroughs.'
+    },
+    '偏财': {
+      nameZh: '偏财格 · 雄图开拓', nameEn: 'Indirect Wealth Pattern · Venture Visionary',
+      tierZh: '上等富贵格', tierEn: 'Superior Abundance Pattern',
+      essenceZh: '胸襟开阔、商机敏锐，具极强资本杠杆与跨界资源整合本领。重情重义而不拘小节，深谙人性与利益博弈。',
+      essenceEn: 'Magnanimous and commercially astute with supreme resource leverage; navigates strategic partnerships and market liquidity with natural charisma.',
+      strengthsZh: '现金流调动与商业变现本领顶尖，善聚人脉，开拓新版图雷厉风行。',
+      strengthsEn: 'Mastery of capital liquidity, magnetic networking, and rapid frontier monetization.',
+      blindspotsZh: '风险偏好过高、易豪赌大项目，在琐细风控与储蓄上略显疏漏。',
+      blindspotsEn: 'Aggressive risk appetite may induce speculative overextension; lacks patience for tedious penny-pinching.',
+      behaviorModelZh: '资本操盘者与商业破局者，善于借势整合外部优质资源。',
+      behaviorModelEn: 'Venture strategist who orchestrates capital, alliances, and market momentum.'
+    },
+    '正财': {
+      nameZh: '正财格 · 稳健司库', nameEn: 'Direct Wealth Pattern · Fiduciary Anchor',
+      tierZh: '中上丰裕格', tierEn: 'Upper-Middle Fiduciary Pattern',
+      essenceZh: '脚踏实地、精打细算，视资产确权与复利积累为安全感之基石。恪尽职守、行事审慎，绝不涉险妄动。',
+      essenceEn: 'Pragmatic, disciplined, and detail-oriented, anchoring security in capital compounding and balance-sheet safety without unnecessary exposure.',
+      strengthsZh: '风控防线牢不可破，资产雪球越滚越大，家庭或企业现金流基石极其坚实。',
+      strengthsEn: 'Impenetrable risk management, steady balance-sheet compounding, and unwavering fiscal reliability.',
+      blindspotsZh: '格局偏于保守狭窄，对高赔率新机会易瞻前顾后、错失先机。',
+      blindspotsEn: 'Tendency toward risk aversion can result in missed generational asymmetric opportunities.',
+      behaviorModelZh: '稳健操盘手，精细化管理收支，以复利和安全边际为最高准则。',
+      behaviorModelEn: 'Disciplined steward who optimizes cash reserves and insists on margins of safety.'
+    },
+    '正印': {
+      nameZh: '正印格 · 仁厚柱石', nameEn: 'Direct Resource Pattern · Sovereign Mentor',
+      tierZh: '上等仁寿格', tierEn: 'Superior Benevolence Pattern',
+      essenceZh: '慈厚博爱、学识通达，具极高精神包容力与道德感召力。视精神品格与声誉重于世俗利益，能化暴戾为祥和。',
+      essenceEn: 'Deeply benevolent, scholarly, and emotionally expansive; exercises profound moral authority, transforming hostility into mutual peace.',
+      strengthsZh: '化解危机压舱石，团队精神导师，具极佳贵人运与长线名望口碑。',
+      strengthsEn: 'Ultimate crisis stabilizer, cultural anchor, and magnetic attractor of institutional mentors.',
+      blindspotsZh: '行动力与变现速度偏慢，有时过分心慈手软、纵容下属或伴侣犯错。',
+      blindspotsEn: 'Pacing may be contemplative and deliberate; prone to excessive leniency toward underperforming peers.',
+      behaviorModelZh: '精神导师与守护者，以深厚学养与长远声誉护航组织与家庭。',
+      behaviorModelEn: 'Noble mentor who safeguards collective stability through wisdom and moral stature.'
+    },
+    '偏印': {
+      nameZh: '偏印格 · 洞微奇士', nameEn: 'Indirect Resource Pattern · Strategic Seer',
+      tierZh: '幽深智谋格', tierEn: 'Esoteric Insight Pattern',
+      essenceZh: '深沉内敛、冷眼观世，具洞穿事物底层逻辑与人性幽微的独门洞见。喜独处研磨深层学问，不喜迎合庸俗。',
+      essenceEn: 'Profoundly intuitive, solitary, and penetrating; effortlessly deciphers underlying systemic mechanics and psychological undercurrents.',
+      strengthsZh: '战略洞察极具穿透力，危机预警雷达顶尖，在冷门尖端领域独占鳌头。',
+      strengthsEn: 'Uncanny strategic foresight, sharp anomaly detection, and dominance in specialized complex domains.',
+      blindspotsZh: '生性多疑防备心重，不易彻底敞开信任，情绪容易陷入孤僻冷淡。',
+      blindspotsEn: 'Hyper-vigilant skepticism can hinder baseline intimacy; prone to emotional detachment.',
+      behaviorModelZh: '幕后首席智囊，冷静剖析隐性风险，出奇制胜。',
+      behaviorModelEn: 'Behind-the-scenes master strategist who anticipates hidden vulnerabilities.'
+    },
+    '建禄': {
+      nameZh: '建禄格 · 刚健自立', nameEn: 'Established Lu Pattern · Self-Reliant Sovereign',
+      tierZh: '中上刚直格', tierEn: 'Upper-Middle Fortitude Pattern',
+      essenceZh: '自立自强、骨鲠正气，不屑依附权贵或他人恩赐。凡事亲力亲为、信奉一分耕耘一分收获，人格极具独立尊严。',
+      essenceEn: 'Fiercely self-reliant, resilient, and honorable; refuses subservience and builds success purely through disciplined labor and integrity.',
+      strengthsZh: '意志坚定如铁，独立作战能力极强，抗压抗挫能力首屈一指。',
+      strengthsEn: 'Iron will, autonomous execution, and unmatched resilience against exhaustion.',
+      blindspotsZh: '分权与合作意识偏弱，不擅迂回借力，遇挫易硬抗而累及自身。',
+      blindspotsEn: 'Reluctant to delegate or leverage external capital, tending to bear all burdens alone.',
+      behaviorModelZh: '硬汉实干家，以身作则冲锋在前，信守承诺绝不轻言放弃。',
+      behaviorModelEn: 'Steadfast executor who leads by personal example and perseveres through sheer grit.'
+    },
+    '阳刃': {
+      nameZh: '阳刃格 · 破阵死士', nameEn: 'Yang Blade Pattern · Resolute Warrior',
+      tierZh: '上等霸业格', tierEn: 'Superior Conqueror Pattern',
+      essenceZh: '气魄雄沉、敢打硬仗，在最凶险残酷的环境中爆发力极强。重同袍情义、视死如归，具强烈争胜心与英雄主义。',
+      essenceEn: 'Audacious, battle-tested, and fiercely loyal; exhibits explosive power under extreme adversity with an unyielding warrior ethos.',
+      strengthsZh: '极险关头能力挽狂澜，带领团队打赢不可能赢的战役，气场威慑群雄。',
+      strengthsEn: 'Turns impossible odds into decisive victories during existential crises with overwhelming presence.',
+      blindspotsZh: '刚烈过甚、容易伤及亲近之人，金钱财务上易大手大脚或遭小人劫夺。',
+      blindspotsEn: 'Excessive intensity risks collateral friction; prone to financial leakage through impulsive generosity.',
+      behaviorModelZh: '战场破阵统帅，关键时刻挺身而出以铁血手腕力挽狂澜。',
+      behaviorModelEn: 'Battlefield champion who rises decisively in make-or-break crises with sheer command.'
+    }
+  };
+
+  function getPatternArchetype(patternName) {
+    if (!patternName) return PATTERN_ARCHETYPES['正官'];
+    const pStr = String(patternName);
+    if (/七杀|偏官/.test(pStr)) return PATTERN_ARCHETYPES['七杀'];
+    if (/正官/.test(pStr)) return PATTERN_ARCHETYPES['正官'];
+    if (/食神/.test(pStr)) return PATTERN_ARCHETYPES['食神'];
+    if (/伤官/.test(pStr)) return PATTERN_ARCHETYPES['伤官'];
+    if (/偏财/.test(pStr)) return PATTERN_ARCHETYPES['偏财'];
+    if (/正财/.test(pStr)) return PATTERN_ARCHETYPES['正财'];
+    if (/正印/.test(pStr)) return PATTERN_ARCHETYPES['正印'];
+    if (/偏印|枭神/.test(pStr)) return PATTERN_ARCHETYPES['偏印'];
+    if (/建禄|比肩/.test(pStr)) return PATTERN_ARCHETYPES['建禄'];
+    if (/阳刃|羊刃|劫财/.test(pStr)) return PATTERN_ARCHETYPES['阳刃'];
+    return PATTERN_ARCHETYPES['正官'];
   }
 
   // Helper: Determine Chart Dominant Patterns Triad
@@ -1899,13 +2084,305 @@ const SynastryEngine = (function() {
     return lifeObj;
   }
 
+  // 15. Dual Five Elements Breakdown & Comparative Assessment
+  function evaluateElementComparison(elA, elB, dmA, dmB, isEn) {
+    const elements = ['木', '火', '土', '金', '水'];
+    const breakdown = elements.map(el => {
+      const valA = parseFloat(elA[el] || 0);
+      const valB = parseFloat(elB[el] || 0);
+      const combinedVal = Math.round(((valA + valB) / 2) * 10) / 10;
+      const diff = Math.round((valA - valB) * 10) / 10;
+      const elEn = ELEMENT_NAMES_EN[el] || el;
+
+      function getStatus(val, isEnglish) {
+        if (val >= 35) return isEnglish ? 'Surplus' : '过旺';
+        if (val >= 22) return isEnglish ? 'Abundant' : '充沛';
+        if (val >= 14) return isEnglish ? 'Balanced' : '适中';
+        if (val >= 6) return isEnglish ? 'Deficient' : '偏弱';
+        return isEnglish ? 'Depleted' : '匮乏';
+      }
+
+      const statusA = getStatus(valA, false);
+      const statusB = getStatus(valB, false);
+      const statusAEn = getStatus(valA, true);
+      const statusBEn = getStatus(valB, true);
+
+      let synergyNoteZh = '';
+      let synergyNoteEn = '';
+
+      if (valA < 14 && valB >= 22) {
+        synergyNoteZh = `乙造${el}气充沛，自然弥补甲造匮乏，形成生机互济之势。`;
+        synergyNoteEn = `Person B supplies abundant ${elEn}, replenishing Person A's deficiency and creating natural equilibrium.`;
+      } else if (valB < 14 && valA >= 22) {
+        synergyNoteZh = `甲造${el}气盈满，源源滋养乙造不足，构成良性能量滋润。`;
+        synergyNoteEn = `Person A provides rich ${elEn}, nourishing Person B's shortfall and sustaining metabolic harmony.`;
+      } else if (valA >= 22 && valB >= 22) {
+        synergyNoteZh = `双盘${el}气皆旺，势能强劲，宜设泄秀与引导通道以防过亢。`;
+        synergyNoteEn = `Both charts carry robust ${elEn}, creating formidable momentum that benefits from intentional grounding channels.`;
+      } else if (valA < 12 && valB < 12) {
+        synergyNoteZh = `双盘${el}气皆偏少，属于共同薄弱板块，需在岁运逢此五行时借势调补。`;
+        synergyNoteEn = `Both charts show leaner ${elEn}, identifying a shared growth sector that thrives through cyclical seasonal support.`;
+      } else {
+        synergyNoteZh = `双盘${el}气适度均衡，气运流通稳定，维持自足平顺。`;
+        synergyNoteEn = `Both charts sustain balanced ${elEn}, maintaining steady self-contained equilibrium.`;
+      }
+
+      const statusTagZh = (valA < 14 && valB >= 22) || (valB < 14 && valA >= 22)
+        ? '良性互补'
+        : (valA >= 22 && valB >= 22)
+          ? '双旺共振'
+          : (valA < 12 && valB < 12)
+            ? '同需待济'
+            : '平顺中和';
+
+      const statusTagEn = (valA < 14 && valB >= 22) || (valB < 14 && valA >= 22)
+        ? 'Mutual Complement'
+        : (valA >= 22 && valB >= 22)
+          ? 'Dual Strong'
+          : (valA < 12 && valB < 12)
+            ? 'Shared Lean'
+            : 'Harmonious';
+
+      return {
+        element: isEn ? elEn : el,
+        elementEn: elEn,
+        pctA: valA,
+        pctB: valB,
+        combinedPct: combinedVal,
+        diff,
+        statusA: isEn ? statusAEn : statusA,
+        statusB: isEn ? statusBEn : statusB,
+        statusAEn,
+        statusBEn,
+        statusTag: isEn ? statusTagEn : statusTagZh,
+        statusTagZh,
+        statusTagEn,
+        synergyNote: isEn ? synergyNoteEn : synergyNoteZh,
+        synergyNoteZh,
+        synergyNoteEn,
+        ...(!isEn ? {
+          elementZh: el,
+          statusAZh: statusA,
+          statusBZh: statusB
+        } : {})
+      };
+    });
+
+    const dominantEl = breakdown.reduce((max, cur) => cur.combinedPct > max.combinedPct ? cur : max, breakdown[0]);
+    const leanEl = breakdown.reduce((min, cur) => cur.combinedPct < min.combinedPct ? cur : min, breakdown[0]);
+
+    const balanceVerdictZh = `双盘五行能量合参：两盘汇聚后最富集元素为【${dominantEl.element}】（平均占比 ${dominantEl.combinedPct}%），最需关注补益元素为【${leanEl.element}】（平均占比 ${leanEl.combinedPct}%）。整体气机呈现“互有盈缺、生化有情”之大生态，能够有效对冲单一命局的五行偏颇，形成更具抗压韧性的生命共同体。`;
+    const balanceVerdictEn = `Composite Elemental Diagnostics: The most abundant shared element is ${dominantEl.elementEn} (${dominantEl.combinedPct}%), while the primary development element is ${leanEl.elementEn} (${leanEl.combinedPct}%). Combined energetics form a complementary circuit where individual excesses and deficits balance naturally, fostering shared psychological resilience and vitality.`;
+
+    return {
+      breakdown,
+      dominantElement: isEn ? dominantEl.elementEn : dominantEl.element,
+      leanElement: isEn ? leanEl.elementEn : leanEl.element,
+      balanceVerdict: isEn ? balanceVerdictEn : balanceVerdictZh,
+      balanceVerdictZh,
+      balanceVerdictEn
+    };
+  }
+
+  // 16. Merged Relationship Synthesis & Dynamics Portrait
+  function generateMergedRelationshipPortrait(chartA, chartB, score, archetype, hasStemCombo, hasSixHarmony, hasSixClash, isRomantic, isEn) {
+    const dmA = chartA.dayMaster || '甲';
+    const dmB = chartB.dayMaster || '乙';
+    const dmAEn = STEM_NAMES_EN[dmA] || dmA;
+    const dmBEn = STEM_NAMES_EN[dmB] || dmB;
+
+    let titleZh = isRomantic ? '【合盘复合全相 · 关系定调与动力学画像】' : '【合伙复合全相 · 战略共生与博弈画像】';
+    let titleEn = isRomantic ? '[Composite Union · Core Dynamics & Relational Synthesis]' : '[Executive Partnership · Strategic Synthesis & Dynamics]';
+
+    let natureZh = '';
+    let natureEn = '';
+    let emotionalToneZh = '';
+    let emotionalToneEn = '';
+    let decisionModeZh = '';
+    let decisionModeEn = '';
+    let longTermEvolutionZh = '';
+    let longTermEvolutionEn = '';
+
+    if (isRomantic) {
+      if (score >= 80) {
+        natureZh = `双造命盘合参，气机融洽而神魂相依。并非单向依附的偏颇组合，而是两套成熟引力系统在深层心灵轨道上的同频共振。甲造日元【${dmA}】与乙造日元【${dmB}】在精神深处极易形成心照不宣的信任托底，日常如细雨润物，遇风浪则合抱如磐石。`;
+        natureEn = `The composite chart exhibits profound harmonic resonance and mutual elevation. Rather than one-way dependence, two mature gravitational fields synchronize in shared orbital alignment. Day Masters [${dmAEn}] and [${dmBEn}] foster instinctive emotional sanctuary, tranquil in calm periods and unshakeable amidst external storms.`;
+        emotionalToneZh = `情感底色温厚而坚定，相处少有歇斯底里的情绪内耗。彼此能敏锐察觉对方未言说的倦意与隐忧，以恰如其分的体谅给予包容空间。`;
+        emotionalToneEn = `The emotional atmosphere is grounded and reassuring with negligible drama; both partners perceive subtle unspoken fatigue and provide spacious, restorative empathy.`;
+        decisionModeZh = `天然形成“内外协同、商量共进”的双轨决策机制。一方长于大方向直觉定调，另一方长于细节推敲与稳妥落地，极少因个人意志凌驾对方。`;
+        decisionModeEn = `Natural dual-track governance: intuitive directional vision integrates smoothly with prudent operational validation, avoiding autocratic unilateralism.`;
+        longTermEvolutionZh = `随着岁月演进，彼此性格棱角自发被岁月温润磨平，共同资产与精神家园呈现持续复利累积，越老越见情深。`;
+        longTermEvolutionEn = `Long-term trajectory compounds mutual domestic and psychological ballast, gracefully softening sharp edges into enduring warmth and shared security.`;
+      } else {
+        natureZh = `双造命盘交汇，属于典型的“水火激荡 · 砥砺共生”格局。性格底色鲜明迥异，既能碰撞出惊艳的灵感火花与深刻吸引力，又对各自的独立边界提出极高修炼要求。相处的关键在于“视差异为礼物而非威胁”。`;
+        natureEn = `The composite union embodies dynamic polarity and transformative growth. Contrasting constitutional temperaments generate profound creative chemistry alongside distinct personal boundaries, thriving when differences are embraced as gifts rather than threats.`;
+        emotionalToneZh = `情绪互动张力十足，热烈时如胶似漆，执拗时各不相让。需谨防在日常疲惫时将工作生活压力转嫁到伴侣身上，宜以幽默化解刚硬。`;
+        emotionalToneEn = `Emotional dynamics carry high creative voltage; passionate rapport requires conscious mindfulness during high fatigue to prevent stress displacement onto each other.`;
+        decisionModeZh = `建议确立明确的家庭领域分工，避免在同一微观事务上争夺谁对谁错，各自在其擅长的版块拥有最终决策权，大宗支出共同签署。`;
+        decisionModeEn = `Clear domain demarcation is essential: designate sovereign spheres of authority for domestic and financial matters, reserving joint sign-off strictly for major capital outlays.`;
+        longTermEvolutionZh = `经过前期磨合与规则确立后，双方将成为彼此生命中最不可替代的“破局合伙人与灵魂解药”，同甘共苦，历久弥坚。`;
+        longTermEvolutionEn = `Following early alignment and structured communication bylaws, the partnership evolves into an irreplaceable anchor of mutual growth and resilience.`;
+      }
+    } else {
+      // Business mode
+      if (score >= 80) {
+        natureZh = `商业合伙之王炸组合，属于典型的“将相和鸣 · 攻守闭环”。甲造日元【${dmA}】与乙造日元【${dmB}】在战略决策与商业嗅觉上形成天然闭环：一人决断如雷主攻外部市场拓展，一人周密严谨主掌内部运营与风控底线。`;
+        natureEn = `An elite commercial co-founding alliance characterized by unified executive vision and closed-loop execution. Day Masters [${dmAEn}] and [${dmBEn}] create seamless attack-and-defense leverage: external market velocity integrates with ironclad fiduciary risk containment.`;
+        emotionalToneZh = `以高度职业化信任与共赢契约为基底，能把彼此最真实的战略疑虑摊开辩论而不伤私交，重大危机时具备无条件把后背交托对方的默契。`;
+        emotionalToneEn = `Anchored in rigorous professional fiduciary trust; allows uninhibited intellectual debate without interpersonal friction, backed by unwavering loyalty in high-stakes crises.`;
+        decisionModeZh = `推行“双首席联席制”：前台拓展与商业模式由领军者定调，中后台运营合规与资金清算由稳健者一票否决，权责分明无内耗。`;
+        decisionModeEn = `Dual-Chief Protocol: commercial expansion and strategy rest with the frontier lead, while capital allocation and compliance are safeguarded by the operational fiduciary.`;
+        longTermEvolutionZh = `商业价值呈几何级数放大，随着企业规模扩张，双人组合将形成难以被竞争对手复制的复合护城河，合伙基业长青。`;
+        longTermEvolutionEn = `Commercial valuation scales geometrically; as operations expand, the dual-helm apparatus builds an impenetrable institutional moat.`;
+      } else {
+        natureZh = `属于“契约筑基 · 职能分明”的务实博弈型搭档。双方皆具备极强专业才能与主见，但由于气机存在一定制衡摩擦，绝不能靠情感或口头承诺维系，必须依托冰冷的契约条款与透明的治理机制。`;
+        natureEn = `A pragmatic, contract-fortified operational partnership. Both founders carry pronounced expertise and ambition; enduring success depends entirely on explicit bylaws and transparent equity covenants rather than informal verbal understandings.`;
+        emotionalToneZh = `理性克制、公私分明。在商言商，以KPI与实际交付成果为衡量标尺，避免情感绑架与模糊妥协。`;
+        emotionalToneEn = `Pragmatic, rational, and objective. Performance metrics and measurable deliverables anchor the collaboration, eliminating emotional ambiguity.`;
+        decisionModeZh = `必须建立刚性表决章程与第三方独立董事仲裁机制，并在创业初期明确股权动态兑现机制（Vesting）与争议退出清算通道。`;
+        decisionModeEn = `Mandates explicit governance voting rules, equity vesting schedules, and fair-value buyback clauses to arbitrate deadlock cleanly.`;
+        longTermEvolutionZh = `只要权责与利益分配机制公正透明，双方能在既定业务赛道上持续稳健推进，打造经得起资本市场检验的合规企业。`;
+        longTermEvolutionEn = `Protected by transparent cap tables and defined boundaries, the venture steadily captures market share and sustains institutional durability.`;
+      }
+    }
+
+    return {
+      title: isEn ? titleEn : titleZh,
+      nature: isEn ? natureEn : natureZh,
+      emotionalTone: isEn ? emotionalToneEn : emotionalToneZh,
+      decisionMode: isEn ? decisionModeEn : decisionModeZh,
+      longTermEvolution: isEn ? longTermEvolutionEn : longTermEvolutionZh,
+      titleZh, titleEn,
+      natureZh, natureEn,
+      emotionalToneZh, emotionalToneEn,
+      decisionModeZh, decisionModeEn,
+      longTermEvolutionZh, longTermEvolutionEn
+    };
+  }
+
+  // 17. Core Advantages vs Hidden Hazards & Tactical Actionable Protocols
+  function generateAdvantagesAndHazards(chartA, chartB, score, elComp, isRomantic, isEn) {
+    const adv1Zh = {
+      title: '五行气机交融 · 天然死角补齐',
+      titleEn: 'Complementary Elemental Circuit & Vitality Balancing',
+      desc: '双盘五行能量交汇后，单一原局的匮乏元素在合盘后自发获得充沛滋养，使身体精力、情绪稳定性与抗压阈值大幅提升。',
+      descEn: 'Merged elemental energetics replenish individual constitutional deficits naturally, boosting stamina, emotional stability, and baseline stress tolerance.',
+      impact: '大幅减轻长期单打独斗的疲劳透支感，日常相处自发带来身心舒展与安全感。',
+      impactEn: 'Eliminates chronic burnout and fosters effortless mutual restorative calm.'
+    };
+
+    const adv2Zh = {
+      title: isRomantic ? '格局攻守兼备 · 家庭事业双轮驱动' : '战略与执行闭环 · 商业价值成倍放大',
+      titleEn: isRomantic ? 'Dual-Engine Leverage · Holistic Life Prosperity' : 'Strategic & Operational Synergy · Compounding Commercial Leverage',
+      desc: isRomantic
+        ? '两造主导格局分工明晰，一人擅长对外破局开拓或立足社会门楣，另一人擅长深耕内在秩序、财富风控与生活审美，形成“外有战力、内有静气”的良性稳态。'
+        : '一人掌舵战略视野与商业模式拓荒，一人筑牢中后台交付、财务清算与合规防火墙。分工不重叠、能力互为杠杆，形成商业攻防闭环。',
+      descEn: isRomantic
+        ? 'Clear operational archetypes eliminate rivalry: one excels in external career conquest while the other anchors domestic governance and asset stewardship.'
+        : 'One leads visionary growth and dealmaking while the other reinforces execution and compliance, multiplying collective commercial effectiveness.',
+      impact: isRomantic ? '家庭整体抗周期风浪能力极强，兼顾物质丰盈与精神归宿。' : '大幅降低创业试错成本，决策周密，企业在竞争红海中脱颖而出。',
+      impactEn: isRomantic ? 'Robust household antifragility balancing wealth growth with domestic peace.' : 'Significantly reduces venture failure risk and builds an enduring institutional moat.'
+    };
+
+    const adv3Zh = {
+      title: '关键时刻不离不弃 · 逆境压舱石效应',
+      titleEn: 'Adversity Resilience & Joint Crisis Ballast',
+      desc: '合盘根基与岁运同频度经受得住现实考验。在面对大环境经济周期波动、职业转换或家庭重大变故时，双方天然具备高度认同的底层价值观，能迅速协同御敌。',
+      descEn: 'High structural baseline stability and decennial synchronization provide unshakeable solidarity during economic downturns, health challenges, or career shifts.',
+      impact: '越是在狂风骤雨的艰难关头，双人合力越显从容强大，不易被世俗困难击溃。',
+      impactEn: 'The partnership strengthens under pressure, transforming volatile adversity into shared triumph.'
+    };
+
+    // Hazards with actionable remedies
+    const haz1Zh = {
+      title: '意志碰撞与主导权边界摩擦',
+      titleEn: 'Ego Contention & Sovereign Territory Friction',
+      desc: '两盘命格均带有一方统领之气，各自在擅长领域极有原则与掌控欲。若在具体事务上边界模糊，容易在无意识中干涉对方主权，引发隐蔽对抗。',
+      descEn: 'Both charts possess pronounced executive wills; without clear division of responsibilities, boundary overlap can trigger unspoken power struggles.',
+      remedy: '【落地规避锦囊】推行“领域绝对自治法则”：在生活或商业中严格划定各自全权负责的独立领地，彼此在对方领域内只提供参谋建议，不作强制干涉。',
+      remedyEn: 'Actionable Protocol: Implement the Sovereign Domain Rule—grant absolute final veto to each partner in their designated domain, restricting the other to advisory input.'
+    };
+
+    const haz2Zh = {
+      title: '刑冲气机潜伏 · 疲惫期沟通冷战风险',
+      titleEn: 'Latent Friction Vectors & Communication Withdrawal',
+      desc: '地支刑冲或五行对激之处，往往在生理精力透支或工作压力极大时被引动。此时双方容易开启防御机制，一人习惯理性冷处理，另一人易感被冷落，积累心结。',
+      descEn: 'Latent cross-pillar clashes tend to surface during periods of extreme exhaustion; one partner may withdraw into silence while the other feels invalidated.',
+      remedy: '【落地规避锦囊】建立“情绪安全复盘机制”：遇严重分歧时启动24小时情绪冷静期，之后以“就事论事、核对感受、不翻旧账”十二字原则复盘沟通。',
+      remedyEn: 'Actionable Protocol: Deploy a 24-hour emotional cooling-off period during heated deadlock, followed by structured dialogue focused strictly on present facts without historical dredging.'
+    };
+
+    const haz3Zh = {
+      title: '资源配置与风险偏好认知差异',
+      titleEn: 'Capital Allocation & Risk Tolerance Misalignment',
+      desc: '双方在金钱消费、投资冒险度与长远储蓄规划上可能存在天然节奏差。一方追求高确定性防守，另一方渴望抓大放小博取赔率，若缺乏透明账目易生猜忌。',
+      descEn: 'Divergence in financial pacing—such as one partner favoring capital preservation while the other pursues high-risk growth—can create unspoken financial anxiety.',
+      remedy: '【落地规避锦囊】建立“三轨制家庭/合伙资金池”：刚性安全储备底仓（不可擅动）、进取型成长专项池（专人负责）与个人完全支配账户，杜绝账目模糊。',
+      remedyEn: 'Actionable Protocol: Structure a three-tier capital architecture: immutable security reserve, dynamic growth fund, and personal autonomous discretionary accounts.'
+    };
+
+    const advantages = [
+      {
+        title: isEn ? adv1Zh.titleEn : adv1Zh.title,
+        desc: isEn ? adv1Zh.descEn : adv1Zh.desc,
+        impact: isEn ? adv1Zh.impactEn : adv1Zh.impact,
+        titleEn: adv1Zh.titleEn, descEn: adv1Zh.descEn, impactEn: adv1Zh.impactEn,
+        ...(!isEn ? { titleZh: adv1Zh.title, descZh: adv1Zh.desc, impactZh: adv1Zh.impact } : {})
+      },
+      {
+        title: isEn ? adv2Zh.titleEn : adv2Zh.title,
+        desc: isEn ? adv2Zh.descEn : adv2Zh.desc,
+        impact: isEn ? adv2Zh.impactEn : adv2Zh.impact,
+        titleEn: adv2Zh.titleEn, descEn: adv2Zh.descEn, impactEn: adv2Zh.impactEn,
+        ...(!isEn ? { titleZh: adv2Zh.title, descZh: adv2Zh.desc, impactZh: adv2Zh.impact } : {})
+      },
+      {
+        title: isEn ? adv3Zh.titleEn : adv3Zh.title,
+        desc: isEn ? adv3Zh.descEn : adv3Zh.desc,
+        impact: isEn ? adv3Zh.impactEn : adv3Zh.impact,
+        titleEn: adv3Zh.titleEn, descEn: adv3Zh.descEn, impactEn: adv3Zh.impactEn,
+        ...(!isEn ? { titleZh: adv3Zh.title, descZh: adv3Zh.desc, impactZh: adv3Zh.impact } : {})
+      }
+    ];
+
+    const hazards = [
+      {
+        title: isEn ? haz1Zh.titleEn : haz1Zh.title,
+        desc: isEn ? haz1Zh.descEn : haz1Zh.desc,
+        remedy: isEn ? haz1Zh.remedyEn : haz1Zh.remedy,
+        titleEn: haz1Zh.titleEn, descEn: haz1Zh.descEn, remedyEn: haz1Zh.remedyEn,
+        ...(!isEn ? { titleZh: haz1Zh.title, descZh: haz1Zh.desc, remedyZh: haz1Zh.remedy } : {})
+      },
+      {
+        title: isEn ? haz2Zh.titleEn : haz2Zh.title,
+        desc: isEn ? haz2Zh.descEn : haz2Zh.desc,
+        remedy: isEn ? haz2Zh.remedyEn : haz2Zh.remedy,
+        titleEn: haz2Zh.titleEn, descEn: haz2Zh.descEn, remedyEn: haz2Zh.remedyEn,
+        ...(!isEn ? { titleZh: haz2Zh.title, descZh: haz2Zh.desc, remedyZh: haz2Zh.remedy } : {})
+      },
+      {
+        title: isEn ? haz3Zh.titleEn : haz3Zh.title,
+        desc: isEn ? haz3Zh.descEn : haz3Zh.desc,
+        remedy: isEn ? haz3Zh.remedyEn : haz3Zh.remedy,
+        titleEn: haz3Zh.titleEn, descEn: haz3Zh.descEn, remedyEn: haz3Zh.remedyEn,
+        ...(!isEn ? { titleZh: haz3Zh.title, descZh: haz3Zh.desc, remedyZh: haz3Zh.remedy } : {})
+      }
+    ];
+
+    return { advantages, hazards };
+  }
+
   return {
     analyze,
     evaluateZodiacMatch,
     evaluatePatternComparison,
     evaluateTrajectoryOverlap,
     evaluateLifePriorities,
+    evaluateElementComparison,
+    generateMergedRelationshipPortrait,
+    generateAdvantagesAndHazards,
     getChartDominantPatterns,
+    getPatternArchetype,
     ZODIAC_ANIMALS,
     STEM_COMBINATIONS,
     BRANCH_SIX_HARMONIES,
