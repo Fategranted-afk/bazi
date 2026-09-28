@@ -16783,6 +16783,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const extremaB = (cachedSynastryPhaseDerived.derivedB && cachedSynastryPhaseDerived.derivedB.extrema)
         || PhasePortraitEngine.findKeyExtrema(trajB, 30, 70);
 
+      const pkA = extremaA.peak;
+      const trA = extremaA.trough;
+      const pkB = extremaB.peak;
+      const trB = extremaB.trough;
+
       const pairsA = (extremaA.pairs && extremaA.pairs.length) ? extremaA.pairs : [
         { wave: 1, ageSpan: '30~43y', titleZh: '第一波峰谷 · 青年立业破局', titleEn: 'Wave I · Early Career Breakthrough', peak: extremaA.peak, trough: extremaA.trough }
       ];
@@ -16856,9 +16861,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       ];
 
-      // Build Wave Cards HTML
+      // Build 3-Wave Matrix Table and Narratives
       const waveCount = Math.min(3, Math.max(pairsA.length, pairsB.length));
-      let waveCardsHtml = '';
       let tableRowsHtml = '';
       let waveNarrativesHtml = '';
 
@@ -16880,104 +16884,20 @@ document.addEventListener('DOMContentLoaded', () => {
           ? 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40'
           : 'bg-sky-950/80 text-sky-300 border-sky-600/40';
 
-        const waveBadgeText = isEn
-          ? (isResonant_w ? `🌟 Resonance Co-Ascent (Gap: ${deltaPk_w}y)` : `🛡️ Staggered Counterbalance (Gap: ${deltaPk_w}y)`)
-          : (isResonant_w ? `🌟 双星共振 · 黄金齐飞 (相距 ${deltaPk_w} 岁)` : `🛡️ 错峰交替 · 攻守托底 (相距 ${deltaPk_w} 岁)`);
-
-        waveCardsHtml += `
-          <!-- Wave ${w + 1} Container -->
-          <div class="p-3.5 rounded-xl bg-black/30 border border-gray-800 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
-              <div class="flex items-center gap-2">
-                <span class="text-base">${['🚀', '👑', '⚓'][w] || '🌊'}</span>
-                <div>
-                  <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300 flex items-center gap-2">
-                    <span>${isEn ? mEn.numStr : mZh.numStr} · ${isEn ? mEn.period : mZh.period}</span>
-                  </h5>
-                  <div class="text-[10px] text-gray-400 font-sans">${isEn ? mEn.focusEn : mZh.focusZh}</div>
-                </div>
-              </div>
-              <span class="text-[10px] px-2 py-0.5 rounded-full ${waveBadgeCls} font-mono font-bold">${waveBadgeText}</span>
-            </div>
-
-            <!-- 4-Grid Extrema Items for Wave ${w + 1} -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-              <!-- Person A Peak -->
-              <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/30 space-y-1.5 shadow-sm">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
-                    <span>👑</span>
-                    <span>${nameA} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
-                  </span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${pkA_w.age} ${isEn ? 'years' : '岁'}</span>
-                </div>
-                <div class="text-[10.5px] font-mono text-amber-400 font-semibold">v = +${pkA_w.v} · x = ${pkA_w.x}</div>
-                <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
-                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-                  ${isEn ? mEn.peakDescA : mZh.peakDescA}
-                </p>
-              </div>
-
-              <!-- Person A Trough -->
-              <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/20 space-y-1.5 shadow-sm">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
-                    <span>⚓</span>
-                    <span>${nameA} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
-                  </span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950/60 text-amber-300 border border-amber-600/40">${trA_w.age} ${isEn ? 'years' : '岁'}</span>
-                </div>
-                <div class="text-[10.5px] font-mono text-amber-300/80 font-semibold">v = ${trA_w.v} · x = ${trA_w.x}</div>
-                <div class="text-[10px] text-amber-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
-                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-                  ${isEn ? mEn.troughDescA : mZh.troughDescA}
-                </p>
-              </div>
-
-              <!-- Person B Peak -->
-              <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/30 space-y-1.5 shadow-sm">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5">
-                    <span>👑</span>
-                    <span>${nameB} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
-                  </span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">${pkB_w.age} ${isEn ? 'years' : '岁'}</span>
-                </div>
-                <div class="text-[10.5px] font-mono text-purple-400 font-semibold">v = +${pkB_w.v} · x = ${pkB_w.x}</div>
-                <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
-                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-                  ${isEn ? mEn.peakDescB : mZh.peakDescB}
-                </p>
-              </div>
-
-              <!-- Person B Trough -->
-              <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/20 space-y-1.5 shadow-sm">
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
-                    <span>⚓</span>
-                    <span>${nameB} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
-                  </span>
-                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-600/40">${trB_w.age} ${isEn ? 'years' : '岁'}</span>
-                </div>
-                <div class="text-[10.5px] font-mono text-purple-300/80 font-semibold">v = ${trB_w.v} · x = ${trB_w.x}</div>
-                <div class="text-[10px] text-purple-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
-                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-                  ${isEn ? mEn.troughDescB : mZh.troughDescB}
-                </p>
-              </div>
-            </div>
-          </div>
-        `;
+        const isCoreA = (pkA_w.age === pkA.age);
+        const isCoreB = (pkB_w.age === pkB.age);
+        const coreBadgeA = isCoreA ? `<span class="ml-1 px-1 py-0.2 rounded text-[8.5px] bg-amber-500/25 text-amber-300 border border-amber-500/40">${isEn ? 'Core' : '核心'}</span>` : '';
+        const coreBadgeB = isCoreB ? `<span class="ml-1 px-1 py-0.2 rounded text-[8.5px] bg-purple-500/25 text-purple-300 border border-purple-500/40">${isEn ? 'Core' : '核心'}</span>` : '';
 
         tableRowsHtml += `
           <tr class="hover:bg-gray-800/30 transition">
             <td class="py-2 px-2.5 font-bold font-serif-sc text-amber-200">${isEn ? mEn.numStr : mZh.numStr}</td>
             <td class="py-2 px-2.5 font-mono text-gray-400">${pA.ageSpan || (isEn ? '30~70y' : '30~70岁')}</td>
             <td class="py-2 px-2.5 font-mono text-amber-300">
-              <span class="font-bold">👑 ${pkA_w.age}${isEn ? 'y' : '岁'} (+${pkA_w.v})</span> / <span class="text-amber-400/80">⚓ ${trA_w.age}${isEn ? 'y' : '岁'} (${trA_w.v})</span>
+              <span class="font-bold">👑 ${pkA_w.age}${isEn ? 'y' : '岁'} (+${pkA_w.v})</span>${coreBadgeA} / <span class="text-amber-400/80">⚓ ${trA_w.age}${isEn ? 'y' : '岁'} (${trA_w.v})</span>
             </td>
             <td class="py-2 px-2.5 font-mono text-purple-300">
-              <span class="font-bold">👑 ${pkB_w.age}${isEn ? 'y' : '岁'} (+${pkB_w.v})</span> / <span class="text-purple-400/80">⚓ ${trB_w.age}${isEn ? 'y' : '岁'} (${trB_w.v})</span>
+              <span class="font-bold">👑 ${pkB_w.age}${isEn ? 'y' : '岁'} (+${pkB_w.v})</span>${coreBadgeB} / <span class="text-purple-400/80">⚓ ${trB_w.age}${isEn ? 'y' : '岁'} (${trB_w.v})</span>
             </td>
             <td class="py-2 px-2.5 font-mono font-bold ${isResonant_w ? 'text-emerald-400' : 'text-sky-400'}">
               Δ = ${deltaPk_w} ${isEn ? 'yr' : '岁'}
@@ -16999,7 +16919,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans">
               ${isEn
                 ? `${nameA}'s wave apex occurs at age ${pkA_w.age} (v=+${pkA_w.v}) with nadir at ${trA_w.age}y (v=${trA_w.v}); ${nameB}'s apex arrives at age ${pkB_w.age} (v=+${pkB_w.v}) with nadir at ${trB_w.age}y (v=${trB_w.v}). ${isResonant_w ? 'Both charts command aligned kinetic surges, compounding risk-taking velocity.' : 'Staggered wave crests create natural dynamic damping, where one party spearheads outward expansion while the other stabilizes core foundations.'} ${mEn.jointEn}`
-                : `${nameA} 相对高点在 ${pkA_w.age} 岁 (v=+${pkA_w.v})、相对低点在 ${trA_w.age} 岁 (v=${trA_w.v})；${nameB} 相对高点在 ${pkB_w.age} 岁 (v=+${pkB_w.v})、相对低点在 ${trB_w.age} 岁 (v=${trB_w.v})。${isResonant_w ? '两造巅峰动能高度重合，形成共振放大乘数效应。' : '两造峰谷错落有致，一方全力攻坚时另一方守正托底，形成天然的动态减震回路。'} ${mZh.jointZh}`}
+                : `${nameA} 相对高点在 ${pkA_w.age} 岁 (v=+${pkA_w.v})、相对低点在 ${trA_w.age} 岁 (v=${trA_w.v})；${nameB} 相对高点在 ${pkB_w.age} 岁 (v=+${pkB.v})、相对低点在 ${trB_w.age} 岁 (v=${trB_w.v})。${isResonant_w ? '两造巅峰动能高度重合，形成共振放大乘数效应。' : '两造峰谷错落有致，一方全力攻坚时另一方守正托底，形成天然的动态减震回路。'} ${mZh.jointZh}`}
             </p>
           </div>
         `;
@@ -17010,8 +16930,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const isPeakResonantMaster = deltaPeakMaster <= 5;
       const masterBadgeCls = isPeakResonantMaster ? 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40' : 'bg-sky-950/80 text-sky-300 border-sky-600/40';
       const masterBadgeText = isEn
-        ? (isPeakResonantMaster ? '🌟 Multi-Wave Prime Co-Ascent' : '🛡️ Multi-Wave Counterbalance')
-        : (isPeakResonantMaster ? '🌟 三波共振 · 黄金齐飞' : '🛡️ 三波错峰 · 攻守托底');
+        ? (isPeakResonantMaster ? '🌟 Prime Co-Ascent' : '🛡️ Staggered Counterbalance')
+        : (isPeakResonantMaster ? '🌟 核心共振 · 黄金齐飞' : '🛡️ 核心错峰 · 攻守托底');
 
       extremaCard.innerHTML = `
         <!-- Section Header -->
@@ -17020,22 +16940,92 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="text-xl">📊</span>
             <div>
               <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
-                <span>${isEn ? 'Age 30–70 Prime Life-Chrono Manifold: 3-Wave Extrema Matrix & Dual Trajectory Exegesis' : '30~70岁 黄金生命期三波峰谷流形图解与双人相对高低点全景批注'}</span>
+                <span>${isEn ? 'Age 30–70 Prime Life-Chrono Manifold Graphical Exegesis & Extrema Interactions' : '30~70岁 黄金生命期流形图解与双人峰谷对撞批注'}</span>
                 <span class="text-[10px] px-2 py-0.5 rounded-full ${masterBadgeCls} font-mono font-bold">${masterBadgeText}</span>
               </h4>
               <p class="text-xs text-gray-400 mt-0.5">
                 ${isEn
-                  ? 'Covering the vital 40-year prime career & wealth zenith (ages 30–70), partitioned into three natural 12-year wave cycles (Early Breakthrough, Mid-Life Apex, Mature Harvest). Pinpoints 3 pairs of kinetic peaks and grounding troughs for both parties to decode multi-cycle resonance and mutual buffering.'
-                  : '以 30~70 岁人生社会价值与财富爆发核心期为视窗，划分为三波自然运势生命周期（青年立业破局 · 中年鼎盛交棒 · 功成持重压舱），全息标定甲乙两造各3对相对高点（动能跃迁峰）与相对低点（蓄势筑底谷），透视三阶螺旋交错的共振放大与攻守托底机制。'}
+                  ? 'Covering the vital 40-year prime career & wealth zenith (ages 30–70), evaluating the 3 natural wave cycles to spotlight the single most decisive peak and trough for both parties.'
+                  : '以 30~70 岁人生社会价值与财富爆发核心期为视窗，纵览三波自然运势生命周期，全息提炼并锁定甲乙两造最具决断力的一对相对高点（动能跃迁峰）与相对低点（蓄势筑底谷），透视合盘的共振放大与攻守托底机制。'}
               </p>
             </div>
           </div>
-          <span class="text-[10px] font-mono text-gray-500 hidden sm:inline">[V(x) 3-Wave Manifold Extrema]</span>
+          <span class="text-[10px] font-mono text-gray-500 hidden sm:inline">[V(x) Dynamic Extrema]</span>
         </div>
 
-        <!-- 3 Wave Cards Section -->
-        <div class="space-y-3.5">
-          ${waveCardsHtml}
+        <!-- 4-Grid Key Extrema Compass Badges (Single Most Important Peak & Trough) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <!-- Person A Core Peak -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/30 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                <span>👑</span>
+                <span>${nameA} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${pkA.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-amber-400 font-semibold">v = +${pkA.v} · x = ${pkA.x}</div>
+            <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `${nameA}'s transit bias aligns with system rigidity to maximize kinetic velocity, marking the prime window for leadership breakthroughs, asset accumulation, and outward expansion.`
+                : `${nameA} 岁运外部推力与格局刚性形成最强正向合力，螺旋线冲至30-70岁最高位，为事业突破、重大决策、资源整合与社会地位跃升的最强动能窗口。`}
+            </p>
+          </div>
+
+          <!-- Person A Core Trough -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/20 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
+                <span>⚓</span>
+                <span>${nameA} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950/60 text-amber-300 border border-amber-600/40">${trA.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-amber-300/80 font-semibold">v = ${trA.v} · x = ${trA.x}</div>
+            <div class="text-[10px] text-amber-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `Marks the deepest velocity deceleration within ages 30–70. Focus on de-leveraging, wellness preservation, and consolidating reserves—recharging potential for the next upward cycle.`
+                : `30-70岁区间动能降速最深节点，螺旋线收敛于势能井底。此时核心要务在于去杠杆、守正固本与资源沉淀，避免盲目冒进扩张，属于“深蹲蓄力以待腾飞”的修整期。`}
+            </p>
+          </div>
+
+          <!-- Person B Core Peak -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/30 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5">
+                <span>👑</span>
+                <span>${nameB} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">${pkB.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-purple-400 font-semibold">v = +${pkB.v} · x = ${pkB.x}</div>
+            <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `${nameB} commands peak ascendancy velocity, breaching previous equilibrium barriers to unlock exceptional creative, financial, or strategic advances.`
+                : `${nameB} 迎来30-70岁生命螺旋动能峰值，破局冲力达到最高点，打破既有平衡井壁，展现最强的开拓与抗压势能。`}
+            </p>
+          </div>
+
+          <!-- Person B Core Trough -->
+          <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/20 space-y-1.5 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
+                <span>⚓</span>
+                <span>${nameB} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-600/40">${trB.age} ${isEn ? 'years' : '岁'}</span>
+            </div>
+            <div class="text-[10.5px] font-mono text-purple-300/80 font-semibold">v = ${trB.v} · x = ${trB.x}</div>
+            <div class="text-[10px] text-purple-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+              ${isEn
+                ? `Crucial stabilization stage across ages 30–70. Cultivate wellness, optimize internal operating systems, and rely on favorable resources to fortify resilience against external friction.`
+                : `30-70岁区间的稳固修养带，动量降速内敛。宜强化身心健康管理、夯实安全垫，善用印星与食伤化解外部摩擦，为下一轮生命升腾筑牢地基。`}
+            </p>
+          </div>
         </div>
 
         <!-- Master 3-Wave Comparison Matrix Table -->
@@ -17043,9 +17033,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
             <div class="flex items-center gap-2">
               <span class="text-sm">📋</span>
-              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Master 3-Wave Extrema Matrix & Phase Comparison' : '三波生命周期峰谷对撞总览矩阵表'}</span>
+              <div>
+                <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Master 3-Wave Extrema Matrix & Phase Comparison' : '三波生命周期峰谷对撞总览矩阵表'}</span>
+                <span class="text-[10px] text-gray-400 block sm:inline sm:ml-2">${isEn ? '(Multi-Cycle Evolution & Selected Prime Extrema)' : '(三波全周期演进与已提炼核心极值)'}</span>
+              </div>
             </div>
-            <span class="text-[10px] font-mono text-gray-400">${isEn ? 'Multi-Cycle Dynamics Overview' : '全景多周期演进透视'}</span>
+            <span class="text-[10px] font-mono text-gray-400">[3 Waves Evaluated]</span>
           </div>
           <table class="w-full text-[11px] text-left">
             <thead>

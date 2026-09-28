@@ -1735,10 +1735,12 @@ class PhasePortraitEngine {
     drawSpiralHelicalLayer(screenPointsA, true);
 
     // 7. Relative High & Low Points (Extrema Badges) for Person A & Person B (30~70 Stage Focus)
+    // Pin ONLY the single most important peak and trough for each person (4 pins total)
+    // to preserve visual clarity and eliminate messy tag overlap across the prime corridor.
     const extremaA = PhasePortraitEngine.findKeyExtrema(trajA, 30, 70);
     const extremaB = PhasePortraitEngine.findKeyExtrema(trajB, 30, 70);
 
-    const drawExtremaPin = (pt, isPeak, isPersonA, yOffset, waveIdx = 1) => {
+    const drawExtremaPin = (pt, isPeak, isPersonA, yOffset) => {
       if (!pt) return;
       ctx.save();
       const isAmber = isPersonA;
@@ -1762,7 +1764,7 @@ class PhasePortraitEngine {
 
       // Star / Ring marker on trajectory
       ctx.beginPath();
-      ctx.arc(pt.sx, pt.sy, isPeak ? 4.5 : 3.8, 0, Math.PI * 2);
+      ctx.arc(pt.sx, pt.sy, isPeak ? 4.8 : 4.0, 0, Math.PI * 2);
       ctx.fillStyle = mainCol;
       ctx.fill();
       ctx.strokeStyle = '#ffffff';
@@ -1772,12 +1774,11 @@ class PhasePortraitEngine {
       // Floating Tag
       const icon = isPeak ? '👑' : '⚓';
       const personName = isPersonA ? nameA : nameB;
-      const waveCircle = waveIdx === 1 ? '①' : (waveIdx === 2 ? '②' : (waveIdx === 3 ? '③' : ''));
-      const typeStr = isPeak ? (isEn ? 'Peak' : '高点') : (isEn ? 'Trough' : '低点');
+      const typeStr = isPeak ? (isEn ? 'Prime Peak' : '相对高点') : (isEn ? 'Prime Trough' : '相对低点');
       const sign = pt.v >= 0 ? '+' : '';
       const tagText = isEn
-        ? `${icon} ${personName} ${typeStr}${waveCircle} ${pt.age}y (${sign}${pt.v})`
-        : `${icon} ${personName}${typeStr}${waveCircle} ${pt.age}岁 (${sign}${pt.v})`;
+        ? `${icon} ${personName} · ${typeStr} ${pt.age}y (${sign}${pt.v})`
+        : `${icon} ${personName} · ${typeStr} ${pt.age}岁 (${sign}${pt.v})`;
 
       ctx.font = 'bold 8.5px sans-serif';
       const tw = ctx.measureText(tagText).width;
@@ -1809,40 +1810,30 @@ class PhasePortraitEngine {
       ctx.restore();
     };
 
-    // Draw all 3 wave pairs
-    const pairsA = (extremaA.pairs && extremaA.pairs.length) ? extremaA.pairs : [{ wave: 1, peak: extremaA.peak, trough: extremaA.trough }];
-    const pairsB = (extremaB.pairs && extremaB.pairs.length) ? extremaB.pairs : [{ wave: 1, peak: extremaB.peak, trough: extremaB.trough }];
-    const waveCount = Math.min(3, Math.max(pairsA.length, pairsB.length));
+    // Draw ONLY the single most important peak and trough for each person (4 pins total)
+    const sPeakA = screenPointsA.find(p => p.age === extremaA.peak.age) || toScreenA(extremaA.peak);
+    const sTroughA = screenPointsA.find(p => p.age === extremaA.trough.age) || toScreenA(extremaA.trough);
+    const sPeakB = screenPointsB.find(p => p.age === extremaB.peak.age) || toScreenB(extremaB.peak);
+    const sTroughB = screenPointsB.find(p => p.age === extremaB.trough.age) || toScreenB(extremaB.trough);
 
-    for (let w = 0; w < waveCount; w++) {
-      const pA = pairsA[w] || pairsA[0];
-      const pB = pairsB[w] || pairsB[0];
-      const waveIdx = w + 1;
-
-      const sPeakA = screenPointsA.find(p => p.age === pA.peak.age) || toScreenA(pA.peak);
-      const sTroughA = screenPointsA.find(p => p.age === pA.trough.age) || toScreenA(pA.trough);
-      const sPeakB = screenPointsB.find(p => p.age === pB.peak.age) || toScreenB(pB.peak);
-      const sTroughB = screenPointsB.find(p => p.age === pB.trough.age) || toScreenB(pB.trough);
-
-      // Stagger heights if X coordinates are close to avoid visual overlap
-      let yOffPeakA = -22;
-      let yOffPeakB = -22;
-      if (sPeakA && sPeakB && Math.abs(sPeakA.sx - sPeakB.sx) < 65) {
-        yOffPeakA = -35;
-        yOffPeakB = -18;
-      }
-      let yOffTroughA = 14;
-      let yOffTroughB = 14;
-      if (sTroughA && sTroughB && Math.abs(sTroughA.sx - sTroughB.sx) < 65) {
-        yOffTroughA = 10;
-        yOffTroughB = 27;
-      }
-
-      drawExtremaPin(sPeakA, true, true, yOffPeakA, waveIdx);
-      drawExtremaPin(sTroughA, false, true, yOffTroughA, waveIdx);
-      drawExtremaPin(sPeakB, true, false, yOffPeakB, waveIdx);
-      drawExtremaPin(sTroughB, false, false, yOffTroughB, waveIdx);
+    // Stagger heights if X coordinates are close to avoid visual overlap
+    let yOffPeakA = -22;
+    let yOffPeakB = -22;
+    if (sPeakA && sPeakB && Math.abs(sPeakA.sx - sPeakB.sx) < 65) {
+      yOffPeakA = -35;
+      yOffPeakB = -18;
     }
+    let yOffTroughA = 12;
+    let yOffTroughB = 12;
+    if (sTroughA && sTroughB && Math.abs(sTroughA.sx - sTroughB.sx) < 65) {
+      yOffTroughA = 10;
+      yOffTroughB = 28;
+    }
+
+    drawExtremaPin(sPeakA, true, true, yOffPeakA);
+    drawExtremaPin(sTroughA, false, true, yOffTroughA);
+    drawExtremaPin(sPeakB, true, false, yOffPeakB);
+    drawExtremaPin(sTroughB, false, false, yOffTroughB);
 
     // 8. Dynamic Moving Beacons for Both Person A and Person B
     const ptA = screenPointsA.find(p => p.age === activeAgeA) || screenPointsA[Math.min(activeAgeA - 1, screenPointsA.length - 1)] || screenPointsA[0];
