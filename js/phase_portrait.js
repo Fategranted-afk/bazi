@@ -1272,16 +1272,24 @@ class PhasePortraitEngine {
   }
 
   /**
-   * 提取指定年龄区间 (默认 30~70岁 黄金生命期) 的相对极值点 (高点与低点)
+   * 提取指定年龄区间 (默认 30~70岁 黄金生命期) 的 3 对相对极值点 (高点与低点) 及全区间极值
    * @param {Array} trajectoryPoints - 100岁轨迹点数组
    * @param {number} minAge - 区间起始岁数 (默认 30)
    * @param {number} maxAge - 区间结束岁数 (默认 70)
-   * @returns {Object} { peak, trough, lifetimePeak, lifetimeTrough, minAge, maxAge }
+   * @returns {Object} { peak, trough, pairs, lifetimePeak, lifetimeTrough, minAge, maxAge }
    */
   static findKeyExtrema(trajectoryPoints, minAge = 30, maxAge = 70) {
     if (!trajectoryPoints || !trajectoryPoints.length) {
       const fallback = { age: 30, x: 0, v: 0 };
-      return { peak: fallback, trough: fallback, lifetimePeak: fallback, lifetimeTrough: fallback, minAge, maxAge };
+      const fallbackPairs = [1, 2, 3].map(w => ({
+        wave: w,
+        ageSpan: '30~70y',
+        titleZh: `第${w}波峰谷`,
+        titleEn: `Wave ${w}`,
+        peak: fallback,
+        trough: fallback
+      }));
+      return { peak: fallback, trough: fallback, pairs: fallbackPairs, lifetimePeak: fallback, lifetimeTrough: fallback, minAge, maxAge };
     }
 
     let lifetimePeak = trajectoryPoints[0];
@@ -1301,9 +1309,36 @@ class PhasePortraitEngine {
       if (p.v < trough.v) trough = p;
     });
 
+    // 划分为 3 波核心运势生命期 (Wave I: 30~43y, Wave II: 44~56y, Wave III: 57~70y)
+    const waveWindows = [
+      { wave: 1, start: 30, end: 43, titleZh: '第一波峰谷 · 青年立业破局', titleEn: 'Wave I · Early Career Breakthrough' },
+      { wave: 2, start: 44, end: 56, titleZh: '第二波峰谷 · 中年鼎盛交棒', titleEn: 'Wave II · Mid-Life Prime Apex' },
+      { wave: 3, start: 57, end: 70, titleZh: '第三波峰谷 · 功成持重压舱', titleEn: 'Wave III · Mature Harvest & Ballast' }
+    ];
+
+    const pairs = waveWindows.map(win => {
+      const winPts = pool.filter(p => p.age >= win.start && p.age <= win.end);
+      const subPool = winPts.length > 0 ? winPts : pool;
+      let wPeak = subPool[0];
+      let wTrough = subPool[0];
+      subPool.forEach(p => {
+        if (p.v > wPeak.v) wPeak = p;
+        if (p.v < wTrough.v) wTrough = p;
+      });
+      return {
+        wave: win.wave,
+        ageSpan: `${win.start}~${win.end}y`,
+        titleZh: win.titleZh,
+        titleEn: win.titleEn,
+        peak: wPeak,
+        trough: wTrough
+      };
+    });
+
     return {
       peak,
       trough,
+      pairs,
       lifetimePeak,
       lifetimeTrough,
       minAge,
@@ -1703,26 +1738,7 @@ class PhasePortraitEngine {
     const extremaA = PhasePortraitEngine.findKeyExtrema(trajA, 30, 70);
     const extremaB = PhasePortraitEngine.findKeyExtrema(trajB, 30, 70);
 
-    const sPeakA = screenPointsA.find(p => p.age === extremaA.peak.age) || toScreenA(extremaA.peak);
-    const sTroughA = screenPointsA.find(p => p.age === extremaA.trough.age) || toScreenA(extremaA.trough);
-    const sPeakB = screenPointsB.find(p => p.age === extremaB.peak.age) || toScreenB(extremaB.peak);
-    const sTroughB = screenPointsB.find(p => p.age === extremaB.trough.age) || toScreenB(extremaB.trough);
-
-    // Stagger heights if X coordinates are close to avoid visual overlap
-    let yOffPeakA = -22;
-    let yOffPeakB = -22;
-    if (sPeakA && sPeakB && Math.abs(sPeakA.sx - sPeakB.sx) < 65) {
-      yOffPeakA = -36;
-      yOffPeakB = -18;
-    }
-    let yOffTroughA = 15;
-    let yOffTroughB = 15;
-    if (sTroughA && sTroughB && Math.abs(sTroughA.sx - sTroughB.sx) < 65) {
-      yOffTroughA = 12;
-      yOffTroughB = 30;
-    }
-
-    const drawExtremaPin = (pt, isPeak, isPersonA, yOffset) => {
+    const drawExtremaPin = (pt, isPeak, isPersonA, yOffset, waveIdx = 1) => {
       if (!pt) return;
       ctx.save();
       const isAmber = isPersonA;
@@ -1737,7 +1753,7 @@ class PhasePortraitEngine {
       // Dropline to floor
       ctx.beginPath();
       ctx.strokeStyle = lineCol;
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 1.0;
       if (typeof ctx.setLineDash === 'function') ctx.setLineDash([2.5, 2.5]);
       ctx.moveTo(pt.sx, pt.sy);
       ctx.lineTo(pt.sx, floorY);
@@ -1746,32 +1762,33 @@ class PhasePortraitEngine {
 
       // Star / Ring marker on trajectory
       ctx.beginPath();
-      ctx.arc(pt.sx, pt.sy, isPeak ? 5 : 4, 0, Math.PI * 2);
+      ctx.arc(pt.sx, pt.sy, isPeak ? 4.5 : 3.8, 0, Math.PI * 2);
       ctx.fillStyle = mainCol;
       ctx.fill();
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 1.6;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
       // Floating Tag
       const icon = isPeak ? '👑' : '⚓';
       const personName = isPersonA ? nameA : nameB;
+      const waveCircle = waveIdx === 1 ? '①' : (waveIdx === 2 ? '②' : (waveIdx === 3 ? '③' : ''));
       const typeStr = isPeak ? (isEn ? 'Peak' : '高点') : (isEn ? 'Trough' : '低点');
       const sign = pt.v >= 0 ? '+' : '';
       const tagText = isEn
-        ? `${icon} ${personName} ${typeStr} ${pt.age}y (${sign}${pt.v})`
-        : `${icon} ${personName}${typeStr} ${pt.age}岁 (${sign}${pt.v})`;
+        ? `${icon} ${personName} ${typeStr}${waveCircle} ${pt.age}y (${sign}${pt.v})`
+        : `${icon} ${personName}${typeStr}${waveCircle} ${pt.age}岁 (${sign}${pt.v})`;
 
       ctx.font = 'bold 8.5px sans-serif';
       const tw = ctx.measureText(tagText).width;
-      const bW = tw + 10;
-      const bH = 17;
+      const bW = tw + 8;
+      const bH = 16;
       let bX = pt.sx - bW / 2;
       let bY = pt.sy + yOffset;
 
-      if (bX < 10) bX = 10;
-      if (bX + bW > cssWidth - 10) bX = cssWidth - bW - 10;
-      if (bY < 20) bY = 20;
+      if (bX < 6) bX = 6;
+      if (bX + bW > cssWidth - 6) bX = cssWidth - bW - 6;
+      if (bY < 18) bY = 18;
       if (bY + bH > floorY) bY = floorY - bH - 2;
 
       ctx.beginPath();
@@ -1783,20 +1800,49 @@ class PhasePortraitEngine {
       ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.94)' : 'rgba(255, 255, 255, 0.96)';
       ctx.fill();
       ctx.strokeStyle = borderCol;
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 1.0;
       ctx.stroke();
 
       ctx.fillStyle = isDark ? textColDark : textColLight;
       ctx.textAlign = 'left';
-      ctx.fillText(tagText, bX + 5, bY + 11.5);
+      ctx.fillText(tagText, bX + 4, bY + 11);
       ctx.restore();
     };
 
-    // Draw extrema pins
-    drawExtremaPin(sPeakA, true, true, yOffPeakA);
-    drawExtremaPin(sTroughA, false, true, yOffTroughA);
-    drawExtremaPin(sPeakB, true, false, yOffPeakB);
-    drawExtremaPin(sTroughB, false, false, yOffTroughB);
+    // Draw all 3 wave pairs
+    const pairsA = (extremaA.pairs && extremaA.pairs.length) ? extremaA.pairs : [{ wave: 1, peak: extremaA.peak, trough: extremaA.trough }];
+    const pairsB = (extremaB.pairs && extremaB.pairs.length) ? extremaB.pairs : [{ wave: 1, peak: extremaB.peak, trough: extremaB.trough }];
+    const waveCount = Math.min(3, Math.max(pairsA.length, pairsB.length));
+
+    for (let w = 0; w < waveCount; w++) {
+      const pA = pairsA[w] || pairsA[0];
+      const pB = pairsB[w] || pairsB[0];
+      const waveIdx = w + 1;
+
+      const sPeakA = screenPointsA.find(p => p.age === pA.peak.age) || toScreenA(pA.peak);
+      const sTroughA = screenPointsA.find(p => p.age === pA.trough.age) || toScreenA(pA.trough);
+      const sPeakB = screenPointsB.find(p => p.age === pB.peak.age) || toScreenB(pB.peak);
+      const sTroughB = screenPointsB.find(p => p.age === pB.trough.age) || toScreenB(pB.trough);
+
+      // Stagger heights if X coordinates are close to avoid visual overlap
+      let yOffPeakA = -22;
+      let yOffPeakB = -22;
+      if (sPeakA && sPeakB && Math.abs(sPeakA.sx - sPeakB.sx) < 65) {
+        yOffPeakA = -35;
+        yOffPeakB = -18;
+      }
+      let yOffTroughA = 14;
+      let yOffTroughB = 14;
+      if (sTroughA && sTroughB && Math.abs(sTroughA.sx - sTroughB.sx) < 65) {
+        yOffTroughA = 10;
+        yOffTroughB = 27;
+      }
+
+      drawExtremaPin(sPeakA, true, true, yOffPeakA, waveIdx);
+      drawExtremaPin(sTroughA, false, true, yOffTroughA, waveIdx);
+      drawExtremaPin(sPeakB, true, false, yOffPeakB, waveIdx);
+      drawExtremaPin(sTroughB, false, false, yOffTroughB, waveIdx);
+    }
 
     // 8. Dynamic Moving Beacons for Both Person A and Person B
     const ptA = screenPointsA.find(p => p.age === activeAgeA) || screenPointsA[Math.min(activeAgeA - 1, screenPointsA.length - 1)] || screenPointsA[0];

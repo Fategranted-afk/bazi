@@ -316,9 +316,15 @@ var ext3070A = PhasePortraitEngine.findKeyExtrema(dualTraj.derivedA.trajectoryPo
 if (!ext3070A.peak || !ext3070A.trough || ext3070A.peak.age < 30 || ext3070A.peak.age > 70) {
   throw new Error("Invalid 30-70 extrema calculation for A");
 }
+if (!ext3070A.pairs || ext3070A.pairs.length !== 3) {
+  throw new Error("extremaA must contain exactly 3 wave pairs");
+}
 var ext3070B = PhasePortraitEngine.findKeyExtrema(dualTraj.derivedB.trajectoryPoints, 30, 70);
 if (!ext3070B.peak || !ext3070B.trough || ext3070B.peak.age < 30 || ext3070B.peak.age > 70) {
   throw new Error("Invalid 30-70 extrema calculation for B");
+}
+if (!ext3070B.pairs || ext3070B.pairs.length !== 3) {
+  throw new Error("extremaB must contain exactly 3 wave pairs");
 }
 
 // 4.2 Political Game Matrix
@@ -1070,8 +1076,8 @@ if (typeof window.initDualPhaseManifold === 'function') {
   if (!nlA.includes('乙造')) throw new Error('Target switcher failed to update label for Person B: ' + nlA);
 
   var extCardZh = document.getElementById('synastryPhaseExtremaCard') ? document.getElementById('synastryPhaseExtremaCard').innerHTML : '';
-  if (!extCardZh.includes('30~70岁') || !extCardZh.includes('相对高点') || !extCardZh.includes('图形解读指南')) {
-    throw new Error('synastryPhaseExtremaCard missing required 30-70 exegesis in Chinese');
+  if (!extCardZh.includes('30~70岁') || !extCardZh.includes('相对高点') || !extCardZh.includes('图形解读指南') || !extCardZh.includes('第①波') || !extCardZh.includes('第②波') || !extCardZh.includes('第③波') || !extCardZh.includes('三波生命周期峰谷对撞总览矩阵表')) {
+    throw new Error('synastryPhaseExtremaCard missing required 3-wave exegesis in Chinese');
   }
 
   window.initDualPhaseManifold(synChartA, synChartB, true, 'Person A', 'Person B');
@@ -1081,8 +1087,8 @@ if (typeof window.initDualPhaseManifold === 'function') {
   }
 
   var extCardEn = document.getElementById('synastryPhaseExtremaCard') ? document.getElementById('synastryPhaseExtremaCard').innerHTML : '';
-  if (!extCardEn.includes('Age 30–70 Prime') || !extCardEn.includes('Prime Peak') || !extCardEn.includes('Graphical Reading Guide')) {
-    throw new Error('synastryPhaseExtremaCard missing required 30-70 exegesis in English');
+  if (!extCardEn.includes('Age 30–70 Prime') || !extCardEn.includes('Prime Peak') || !extCardEn.includes('Graphical Reading Guide') || !extCardEn.includes('Wave I') || !extCardEn.includes('Wave II') || !extCardEn.includes('Wave III') || !extCardEn.includes('Master 3-Wave Extrema Matrix')) {
+    throw new Error('synastryPhaseExtremaCard missing required 3-wave exegesis in English');
   }
   if (/[\\u4e00-\\u9fa5]/.test(extCardEn)) {
     throw new Error('English synastryPhaseExtremaCard has CJK leakage!');

@@ -15313,13 +15313,27 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           ${(cachedSynastryPhaseDerived && cachedSynastryPhaseDerived.derivedA?.extrema && cachedSynastryPhaseDerived.derivedB?.extrema) ? `
           <div class="p-2.5 rounded-lg bg-black/50 border border-amber-500/20 grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10.5px] font-mono text-gray-300">
-            <div class="flex items-center justify-between">
-              <span class="text-amber-300 font-serif-sc font-bold">👑 ${labelA} (30~70y):</span>
-              <span class="text-amber-400 font-semibold">${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedA.extrema.peak.v}) · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y</span>
+            <div class="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-300 font-serif-sc font-bold">👑 ${labelA} (30~70y):</span>
+                <span class="text-[9.5px] text-gray-400 font-sans">${isEn ? '3 Wave Cycles' : '三波峰谷'}</span>
+              </div>
+              <div class="text-[10px] text-amber-400 font-semibold leading-tight">
+                ${cachedSynastryPhaseDerived.derivedA.extrema.pairs
+                  ? cachedSynastryPhaseDerived.derivedA.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'Pk' : '高'}${p.peak.age}y/${isEn ? 'Tr' : '低'}${p.trough.age}y]`).join(' ')
+                  : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y`}
+              </div>
             </div>
-            <div class="flex items-center justify-between">
-              <span class="text-purple-300 font-serif-sc font-bold">👑 ${labelB} (30~70y):</span>
-              <span class="text-purple-400 font-semibold">${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedB.extrema.peak.v}) · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y</span>
+            <div class="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <span class="text-purple-300 font-serif-sc font-bold">👑 ${labelB} (30~70y):</span>
+                <span class="text-[9.5px] text-gray-400 font-sans">${isEn ? '3 Wave Cycles' : '三波峰谷'}</span>
+              </div>
+              <div class="text-[10px] text-purple-400 font-semibold leading-tight">
+                ${cachedSynastryPhaseDerived.derivedB.extrema.pairs
+                  ? cachedSynastryPhaseDerived.derivedB.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'Pk' : '高'}${p.peak.age}y/${isEn ? 'Tr' : '低'}${p.trough.age}y]`).join(' ')
+                  : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y`}
+              </div>
             </div>
           </div>
           ` : ''}
@@ -16769,62 +16783,235 @@ document.addEventListener('DOMContentLoaded', () => {
       const extremaB = (cachedSynastryPhaseDerived.derivedB && cachedSynastryPhaseDerived.derivedB.extrema)
         || PhasePortraitEngine.findKeyExtrema(trajB, 30, 70);
 
-      const pkA = extremaA.peak;
-      const trA = extremaA.trough;
-      const pkB = extremaB.peak;
-      const trB = extremaB.trough;
+      const pairsA = (extremaA.pairs && extremaA.pairs.length) ? extremaA.pairs : [
+        { wave: 1, ageSpan: '30~43y', titleZh: '第一波峰谷 · 青年立业破局', titleEn: 'Wave I · Early Career Breakthrough', peak: extremaA.peak, trough: extremaA.trough }
+      ];
+      const pairsB = (extremaB.pairs && extremaB.pairs.length) ? extremaB.pairs : [
+        { wave: 1, ageSpan: '30~43y', titleZh: '第一波峰谷 · 青年立业破局', titleEn: 'Wave I · Early Career Breakthrough', peak: extremaB.peak, trough: extremaB.trough }
+      ];
 
-      const deltaPeak = Math.abs(pkA.age - pkB.age);
-      const isPeakResonant = deltaPeak <= 5;
+      const waveMetaZh = [
+        {
+          numStr: '第①波',
+          period: '青年开拓破局期 (30~43岁)',
+          focusZh: '立业奠基 · 资本原始积累与第一曲线确立',
+          peakDescA: `${nameA} 岁运外部推力与格局刚性形成最强正向合力，螺旋线冲至青年期最高位，为事业破局、重大跨界、资源整合与社会地位跃升的最强动能窗口。`,
+          troughDescA: `30~43岁区间动能降速最深节点，螺旋线收敛于势能井底。此时核心要务在于去杠杆、守正固本与专业沉淀，避免盲目冒进扩张，属于“深蹲蓄力以待腾飞”的修整期。`,
+          peakDescB: `${nameB} 迎来青年期生命螺旋动能峰值，破局冲力达到最高点，打破既有平衡井壁，展现最强的开拓进取与抗压势能。`,
+          troughDescB: `青年区间的稳固修养带，动量降速内敛。宜强化身心健康管理、夯实安全垫，善用印星与食伤化解外部摩擦，为下一轮生命升腾筑牢地基。`,
+          jointZh: `此阶段为两造事业奠基与协同磨合关键期。峰谷交错提供了第一层抗风险安全垫，一方冲锋破局时另一方稳盘，共同完成第一曲线跨越。`
+        },
+        {
+          numStr: '第②波',
+          period: '中年鼎盛交棒期 (44~56岁)',
+          focusZh: '巅峰统御 · 核心资产跃迁与中流砥柱定局',
+          peakDescA: `${nameA} 进入中年黄金统治力巅峰，经验、声誉与资本势能高度凝聚，为打造第二增长曲线、确立行业领导地位及重大家族布局的最高势能极值点。`,
+          troughDescA: `中年阶段的动能换挡整固期。面对外部周期波动，主动降低激进敞口，由“进攻型开拓”转向“精细化运营与合规防守”，守护既有战果。`,
+          peakDescB: `${nameB} 攀升至中年掌控力顶峰，个人势能与社会资源深度共振，开拓魄力与资源调度能力拉满，处于重任担当与战略丰收极佳窗口。`,
+          troughDescB: `中年阶段的重要蓄势缓冲区。宜注意节奏张弛有度，优化团队与家庭治理结构，避免透支精力，实现从战术冲锋向战略定力的稳健过渡。`,
+          jointZh: `此阶段两造步入人生权力与财富峰值，承担最重的家庭与社会责任。错峰互补可确保在行业周期换挡中始终有一方掌舵稳舵，形成常青堡垒。`
+        },
+        {
+          numStr: '第③波',
+          period: '功成持重压舱期 (57~70岁)',
+          focusZh: '化境收官 · 家族传承与经验压舱石角色',
+          peakDescA: `${nameA} 达成熟年期声望与智慧峰值，由台前直接操盘转向幕后导师与战略压舱，德望化境，为家族传承、资本守成及社会影响力输出的最高峰。`,
+          troughDescA: `步入资深涵养阶段，动能自然收敛。核心在于固本培元、颐养天年、平衡身心节奏，以超然守正之心赋能后辈，实现人生势能的长效自洽。`,
+          peakDescB: `${nameB} 迎来熟年期能量高光时刻，综合运势平稳持重，威信素著，为资源反哺、提携传承与社会公益构建的关键高地。`,
+          troughDescB: `熟年阶段的静心修养期，生命螺旋悠然归本。宜注重健康养生与生活从容度，以静制动，安享丰硕人生沉淀。`,
+          jointZh: `此阶段合盘重心全面由“向外攻城略地”转向“向内守成传承与身心同修”。两造互为最深厚的陪伴者与精神压舱石，共绘从容圆满蓝图。`
+        }
+      ];
 
-      const ptBatAPeak = trajB.find(p => p.age === pkA.age) || { v: 0, x: 0 };
-      const ptBatATrough = trajB.find(p => p.age === trA.age) || { v: 0, x: 0 };
-      const ptAatBPeak = trajA.find(p => p.age === pkB.age) || { v: 0, x: 0 };
-      const ptAatBTrough = trajA.find(p => p.age === trB.age) || { v: 0, x: 0 };
+      const waveMetaEn = [
+        {
+          numStr: 'Wave I',
+          period: 'Early Career Breakthrough (Ages 30–43)',
+          focusEn: 'Foundation & Initial Wealth Accumulation',
+          peakDescA: `${nameA}'s transit bias aligns with system rigidity to maximize kinetic velocity, marking the prime window for leadership breakthroughs, asset accumulation, and outward expansion.`,
+          troughDescA: `Marks the deepest velocity deceleration within ages 30–43. Focus on de-leveraging, skill consolidation, and preserving reserves—recharging potential for the next upward cycle.`,
+          peakDescB: `${nameB} commands peak ascendancy velocity, breaching previous equilibrium barriers to unlock exceptional creative, financial, or strategic advances.`,
+          troughDescB: `Crucial early stabilization stage. Cultivate wellness, optimize internal operating systems, and rely on favorable resources to fortify resilience against external friction.`,
+          jointEn: `Critical era for laying foundations and aligning long-term synergy. Peak-trough dynamics create an agile safety buffer, enabling bold moves while maintaining operational solvency.`
+        },
+        {
+          numStr: 'Wave II',
+          period: 'Mid-Life Prime Apex (Ages 44–56)',
+          focusEn: 'Apex Leadership & Sovereign Wealth Zenith',
+          peakDescA: `${nameA} enters the mid-life peak of authority and influence, where seasoned experience and capital reserves synergize for enterprise expansion and durable legacy creation.`,
+          troughDescA: `Strategic consolidation phase in mid-life. Mitigate systemic risks, transition from aggressive scaling to operational defense, and protect hard-won gains.`,
+          peakDescB: `${nameB} surges to the mid-career ascendancy crest, maximizing operational leverage and resource allocation across professional and family domains.`,
+          troughDescB: `Essential buffering threshold. Modulate work-life tempo, refine organizational and family governance, and recharge vital reserves for sustainable longevity.`,
+          jointEn: `Both parties command maximum social influence and family leadership. Staggered peaks ensure uninterrupted strategic guidance, transforming external volatility into durable gains.`
+        },
+        {
+          numStr: 'Wave III',
+          period: 'Mature Harvest & Ballast (Ages 57–70)',
+          focusEn: 'Wisdom Transmission & Generational Heritage',
+          peakDescA: `${nameA} reaches the zenith of prestige and strategic mentorship, smoothly transitioning from front-line execution to executive council and generational stewardship.`,
+          troughDescA: `A time for deep serenity and preservation. Focus on holistic wellness, harmonious pacing, and mentoring future leaders to achieve enduring equilibrium.`,
+          peakDescB: `${nameB} achieves mature renown and authoritative gravitas, ideally positioned for legacy transmission, capital preservation, and community leadership.`,
+          troughDescB: `A period of quiet reflection and life consolidation. Prioritize personal health, contemplative pursuits, and enjoying lifelong achievements in tranquil harmony.`,
+          jointEn: `The partnership shifts from outward conquests to inward fulfillment and generational legacy. Partners act as mutual anchors, ensuring a fulfilling and dignified golden harvest.`
+        }
+      ];
 
-      let synergyBadgeZh = '';
-      let synergyBadgeEn = '';
-      let synergyBadgeCls = '';
-      let synergyTitleZh = '';
-      let synergyTitleEn = '';
-      let synergyBodyZh = '';
-      let synergyBodyEn = '';
-      let troughBodyZh = '';
-      let troughBodyEn = '';
+      // Build Wave Cards HTML
+      const waveCount = Math.min(3, Math.max(pairsA.length, pairsB.length));
+      let waveCardsHtml = '';
+      let tableRowsHtml = '';
+      let waveNarrativesHtml = '';
 
-      if (isPeakResonant) {
-        synergyBadgeZh = '🌟 双星共振 · 黄金齐飞';
-        synergyBadgeEn = '🌟 Resonance Co-Ascent';
-        synergyBadgeCls = 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40';
-        synergyTitleZh = `30~70岁 黄金运势同频共振期 (峰值相距仅 ${deltaPeak} 岁)`;
-        synergyTitleEn = `Ages 30–70 Prime Resonance Co-Ascent (Apex Gap: ${deltaPeak} Year${deltaPeak > 1 ? 's' : ''})`;
-        synergyBodyZh = `${nameA} 相对峰值位于 ${pkA.age} 岁 (v=+${pkA.v})，${nameB} 相对峰值位于 ${pkB.age} 岁 (v=+${pkB.v})，两造巅峰动能高度重合！在此黄金窗口期内，双方进取雄心与外部机缘形成强烈的共振放大效应，极利携手开拓重大事业增量、资产跃迁或共建基业。`;
-        synergyBodyEn = `${nameA}'s apex occurs at age ${pkA.age} (v=+${pkA.v}), while ${nameB}'s apex arrives at age ${pkB.age} (v=+${pkB.v})—an extraordinary synchrony! During this golden era, mutual ambition and external luck align, creating high-leverage compound synergy for monumental breakthroughs.`;
-      } else {
-        synergyBadgeZh = '🛡️ 错峰交替 · 攻守托底';
-        synergyBadgeEn = '🛡️ Staggered Counterbalance';
-        synergyBadgeCls = 'bg-sky-950/80 text-sky-300 border-sky-600/40';
-        synergyTitleZh = `30~70岁 错峰交替掌舵格局 (峰值相距 ${deltaPeak} 岁)`;
-        synergyTitleEn = `Ages 30–70 Staggered Counterbalance (Apex Gap: ${deltaPeak} Years)`;
-        synergyBodyZh = `${nameA} 相对高点在 ${pkA.age} 岁 (v=+${pkA.v})，${nameB} 相对高点在 ${pkB.age} 岁 (v=+${pkB.v})，呈现经典的“轮流领跑、错峰减震”动力学生态。当一方处于全力攻坚冲刺期时，另一方恰好处于稳盘守成期；随后双方交替接力，极大平抑了单人周期的波谷震荡。`;
-        synergyBodyEn = `${nameA} peaks at age ${pkA.age} (v=+${pkA.v}), whereas ${nameB} peaks at age ${pkB.age} (v=+${pkB.v}), forming a textbook staggered dynamic shock-absorber. When one partner spearheads forward expansion, the other stabilizes operational foundations, seamlessly alternating leadership across decades.`;
+      for (let w = 0; w < waveCount; w++) {
+        const pA = pairsA[w] || pairsA[0];
+        const pB = pairsB[w] || pairsB[0];
+        const pkA_w = pA.peak;
+        const trA_w = pA.trough;
+        const pkB_w = pB.peak;
+        const trB_w = pB.trough;
+
+        const deltaPk_w = Math.abs(pkA_w.age - pkB_w.age);
+        const isResonant_w = deltaPk_w <= 5;
+
+        const mZh = waveMetaZh[w] || waveMetaZh[0];
+        const mEn = waveMetaEn[w] || waveMetaEn[0];
+
+        const waveBadgeCls = isResonant_w
+          ? 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40'
+          : 'bg-sky-950/80 text-sky-300 border-sky-600/40';
+
+        const waveBadgeText = isEn
+          ? (isResonant_w ? `🌟 Resonance Co-Ascent (Gap: ${deltaPk_w}y)` : `🛡️ Staggered Counterbalance (Gap: ${deltaPk_w}y)`)
+          : (isResonant_w ? `🌟 双星共振 · 黄金齐飞 (相距 ${deltaPk_w} 岁)` : `🛡️ 错峰交替 · 攻守托底 (相距 ${deltaPk_w} 岁)`);
+
+        waveCardsHtml += `
+          <!-- Wave ${w + 1} Container -->
+          <div class="p-3.5 rounded-xl bg-black/30 border border-gray-800 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-base">${['🚀', '👑', '⚓'][w] || '🌊'}</span>
+                <div>
+                  <h5 class="text-xs sm:text-sm font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                    <span>${isEn ? mEn.numStr : mZh.numStr} · ${isEn ? mEn.period : mZh.period}</span>
+                  </h5>
+                  <div class="text-[10px] text-gray-400 font-sans">${isEn ? mEn.focusEn : mZh.focusZh}</div>
+                </div>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full ${waveBadgeCls} font-mono font-bold">${waveBadgeText}</span>
+            </div>
+
+            <!-- 4-Grid Extrema Items for Wave ${w + 1} -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+              <!-- Person A Peak -->
+              <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/30 space-y-1.5 shadow-sm">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                    <span>👑</span>
+                    <span>${nameA} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${pkA_w.age} ${isEn ? 'years' : '岁'}</span>
+                </div>
+                <div class="text-[10.5px] font-mono text-amber-400 font-semibold">v = +${pkA_w.v} · x = ${pkA_w.x}</div>
+                <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
+                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+                  ${isEn ? mEn.peakDescA : mZh.peakDescA}
+                </p>
+              </div>
+
+              <!-- Person A Trough -->
+              <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/20 space-y-1.5 shadow-sm">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
+                    <span>⚓</span>
+                    <span>${nameA} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950/60 text-amber-300 border border-amber-600/40">${trA_w.age} ${isEn ? 'years' : '岁'}</span>
+                </div>
+                <div class="text-[10.5px] font-mono text-amber-300/80 font-semibold">v = ${trA_w.v} · x = ${trA_w.x}</div>
+                <div class="text-[10px] text-amber-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
+                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+                  ${isEn ? mEn.troughDescA : mZh.troughDescA}
+                </p>
+              </div>
+
+              <!-- Person B Peak -->
+              <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/30 space-y-1.5 shadow-sm">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5">
+                    <span>👑</span>
+                    <span>${nameB} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">${pkB_w.age} ${isEn ? 'years' : '岁'}</span>
+                </div>
+                <div class="text-[10.5px] font-mono text-purple-400 font-semibold">v = +${pkB_w.v} · x = ${pkB_w.x}</div>
+                <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
+                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+                  ${isEn ? mEn.peakDescB : mZh.peakDescB}
+                </p>
+              </div>
+
+              <!-- Person B Trough -->
+              <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/20 space-y-1.5 shadow-sm">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
+                    <span>⚓</span>
+                    <span>${nameB} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
+                  </span>
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-600/40">${trB_w.age} ${isEn ? 'years' : '岁'}</span>
+                </div>
+                <div class="text-[10.5px] font-mono text-purple-300/80 font-semibold">v = ${trB_w.v} · x = ${trB_w.x}</div>
+                <div class="text-[10px] text-purple-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
+                <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
+                  ${isEn ? mEn.troughDescB : mZh.troughDescB}
+                </p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        tableRowsHtml += `
+          <tr class="hover:bg-gray-800/30 transition">
+            <td class="py-2 px-2.5 font-bold font-serif-sc text-amber-200">${isEn ? mEn.numStr : mZh.numStr}</td>
+            <td class="py-2 px-2.5 font-mono text-gray-400">${pA.ageSpan || (isEn ? '30~70y' : '30~70岁')}</td>
+            <td class="py-2 px-2.5 font-mono text-amber-300">
+              <span class="font-bold">👑 ${pkA_w.age}${isEn ? 'y' : '岁'} (+${pkA_w.v})</span> / <span class="text-amber-400/80">⚓ ${trA_w.age}${isEn ? 'y' : '岁'} (${trA_w.v})</span>
+            </td>
+            <td class="py-2 px-2.5 font-mono text-purple-300">
+              <span class="font-bold">👑 ${pkB_w.age}${isEn ? 'y' : '岁'} (+${pkB_w.v})</span> / <span class="text-purple-400/80">⚓ ${trB_w.age}${isEn ? 'y' : '岁'} (${trB_w.v})</span>
+            </td>
+            <td class="py-2 px-2.5 font-mono font-bold ${isResonant_w ? 'text-emerald-400' : 'text-sky-400'}">
+              Δ = ${deltaPk_w} ${isEn ? 'yr' : '岁'}
+            </td>
+            <td class="py-2 px-2.5">
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${waveBadgeCls}">${isEn ? (isResonant_w ? 'Co-Ascent' : 'Counterbalance') : (isResonant_w ? '双星共振' : '错峰托底')}</span>
+            </td>
+            <td class="py-2 px-2.5 text-gray-300 text-[10.5px]">
+              ${isEn ? mEn.focusEn : mZh.focusZh}
+            </td>
+          </tr>
+        `;
+
+        waveNarrativesHtml += `
+          <div class="space-y-1">
+            <div class="flex items-center gap-1.5 font-bold font-serif-sc ${w === 0 ? 'text-amber-300' : (w === 1 ? 'text-purple-300' : 'text-emerald-300')}">
+              <span>${['①', '②', '③'][w]} ${isEn ? mEn.period : mZh.period}</span>
+            </div>
+            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans">
+              ${isEn
+                ? `${nameA}'s wave apex occurs at age ${pkA_w.age} (v=+${pkA_w.v}) with nadir at ${trA_w.age}y (v=${trA_w.v}); ${nameB}'s apex arrives at age ${pkB_w.age} (v=+${pkB_w.v}) with nadir at ${trB_w.age}y (v=${trB_w.v}). ${isResonant_w ? 'Both charts command aligned kinetic surges, compounding risk-taking velocity.' : 'Staggered wave crests create natural dynamic damping, where one party spearheads outward expansion while the other stabilizes core foundations.'} ${mEn.jointEn}`
+                : `${nameA} 相对高点在 ${pkA_w.age} 岁 (v=+${pkA_w.v})、相对低点在 ${trA_w.age} 岁 (v=${trA_w.v})；${nameB} 相对高点在 ${pkB_w.age} 岁 (v=+${pkB_w.v})、相对低点在 ${trB_w.age} 岁 (v=${trB_w.v})。${isResonant_w ? '两造巅峰动能高度重合，形成共振放大乘数效应。' : '两造峰谷错落有致，一方全力攻坚时另一方守正托底，形成天然的动态减震回路。'} ${mZh.jointZh}`}
+            </p>
+          </div>
+        `;
       }
 
-      if (ptBatATrough.v >= 0) {
-        troughBodyZh += `当 ${nameA} 于 ${trA.age} 岁步入筑底修整谷期 (v=${trA.v}) 时，${nameB} 此时运行于上升势能通道 (v=+${ptBatATrough.v})，${nameB} 天然化作稳定避风港与资源压舱石，托举 ${nameA} 稳健度过修整期。`;
-        troughBodyEn += `When ${nameA} enters the consolidation trough at age ${trA.age} (v=${trA.v}), ${nameB} cruises in positive ascent (v=+${ptBatATrough.v}), serving as a steadfast anchor and buffer. `;
-      } else {
-        troughBodyZh += `${nameA} 筑底期位于 ${trA.age} 岁 (v=${trA.v})，彼时 ${nameB} 亦处于蓄能深潜阶段 (v=${ptBatATrough.v})，此时宜以守正为本、互予情绪宽容，严防过度杠杆。`;
-        troughBodyEn += `${nameA}'s trough at age ${trA.age} (v=${trA.v}) coincides with a consolidation phase for ${nameB} (v=${ptBatATrough.v}). Prioritize mutual forbearance and conservative risk exposure. `;
-      }
-
-      if (ptAatBTrough.v >= 0) {
-        troughBodyZh += ` 反之，当 ${nameB} 于 ${trB.age} 岁处于筑底期 (v=${trB.v}) 时，${nameA} 正值上升期 (v=+${ptAatBTrough.v})，形成互逆托底回路。`;
-        troughBodyEn += `Conversely, when ${nameB} grounds at age ${trB.age} (v=${trB.v}), ${nameA} surges on an ascending vector (v=+${ptAatBTrough.v}), closing the mutual protection loop.`;
-      } else {
-        troughBodyZh += ` ${nameB} 的整固筑底点在 ${trB.age} 岁 (v=${trB.v})，需合理规划中长期战略节奏。`;
-        troughBodyEn += ` ${nameB}'s consolidation nadir occurs at age ${trB.age} (v=${trB.v}), recommending disciplined strategic pacing.`;
-      }
+      // Master resonance status across entire 30~70 corridor
+      const deltaPeakMaster = Math.abs(extremaA.peak.age - extremaB.peak.age);
+      const isPeakResonantMaster = deltaPeakMaster <= 5;
+      const masterBadgeCls = isPeakResonantMaster ? 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40' : 'bg-sky-950/80 text-sky-300 border-sky-600/40';
+      const masterBadgeText = isEn
+        ? (isPeakResonantMaster ? '🌟 Multi-Wave Prime Co-Ascent' : '🛡️ Multi-Wave Counterbalance')
+        : (isPeakResonantMaster ? '🌟 三波共振 · 黄金齐飞' : '🛡️ 三波错峰 · 攻守托底');
 
       extremaCard.innerHTML = `
         <!-- Section Header -->
@@ -16833,92 +17020,49 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="text-xl">📊</span>
             <div>
               <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
-                <span>${isEn ? 'Age 30–70 Prime Life-Chrono Manifold Graphical Exegesis & Extrema Interactions' : '30~70岁 黄金生命期流形图解与双人峰谷对撞批注'}</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-full ${synergyBadgeCls} font-mono font-bold">${isEn ? synergyBadgeEn : synergyBadgeZh}</span>
+                <span>${isEn ? 'Age 30–70 Prime Life-Chrono Manifold: 3-Wave Extrema Matrix & Dual Trajectory Exegesis' : '30~70岁 黄金生命期三波峰谷流形图解与双人相对高低点全景批注'}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full ${masterBadgeCls} font-mono font-bold">${masterBadgeText}</span>
               </h4>
               <p class="text-xs text-gray-400 mt-0.5">
                 ${isEn
-                  ? 'Deciphering prime momentum peaks, consolidation troughs, and mutual buffering mechanics across the vital 40-year career & wealth zenith'
-                  : '以 30~70 岁人生社会价值与财富爆发核心期为视窗，标定甲乙两造相对高点（动能跃迁峰）与相对低点（蓄势筑底谷），透视双螺旋交错的共振放大与攻守托底机制'}
+                  ? 'Covering the vital 40-year prime career & wealth zenith (ages 30–70), partitioned into three natural 12-year wave cycles (Early Breakthrough, Mid-Life Apex, Mature Harvest). Pinpoints 3 pairs of kinetic peaks and grounding troughs for both parties to decode multi-cycle resonance and mutual buffering.'
+                  : '以 30~70 岁人生社会价值与财富爆发核心期为视窗，划分为三波自然运势生命周期（青年立业破局 · 中年鼎盛交棒 · 功成持重压舱），全息标定甲乙两造各3对相对高点（动能跃迁峰）与相对低点（蓄势筑底谷），透视三阶螺旋交错的共振放大与攻守托底机制。'}
               </p>
             </div>
           </div>
-          <span class="text-[10px] font-mono text-gray-500 hidden sm:inline">[V(x) Dynamic Extrema]</span>
+          <span class="text-[10px] font-mono text-gray-500 hidden sm:inline">[V(x) 3-Wave Manifold Extrema]</span>
         </div>
 
-        <!-- 4-Grid Key Extrema Compass Badges -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-          <!-- Person A Peak -->
-          <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/30 space-y-1.5 shadow-sm">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
-                <span>👑</span>
-                <span>${nameA} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
-              </span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">${pkA.age} ${isEn ? 'years' : '岁'}</span>
-            </div>
-            <div class="text-[10.5px] font-mono text-amber-400 font-semibold">v = +${pkA.v} · x = ${pkA.x}</div>
-            <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
-            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-              ${isEn
-                ? `${nameA}'s transit bias aligns with system rigidity to maximize kinetic velocity, marking the prime window for leadership breakthroughs, asset accumulation, and outward expansion.`
-                : `${nameA} 岁运外部推力与格局刚性形成最强正向合力，螺旋线冲至30-70岁最高位，为事业突破、重大决策、资源整合与社会地位跃升的最强动能窗口。`}
-            </p>
-          </div>
+        <!-- 3 Wave Cards Section -->
+        <div class="space-y-3.5">
+          ${waveCardsHtml}
+        </div>
 
-          <!-- Person A Trough -->
-          <div class="p-3 rounded-xl bg-[#141724] border border-amber-500/20 space-y-1.5 shadow-sm">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-amber-200 font-serif-sc flex items-center gap-1.5">
-                <span>⚓</span>
-                <span>${nameA} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
-              </span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-950/60 text-amber-300 border border-amber-600/40">${trA.age} ${isEn ? 'years' : '岁'}</span>
+        <!-- Master 3-Wave Comparison Matrix Table -->
+        <div class="overflow-x-auto p-3.5 rounded-xl bg-black/40 border border-gray-800 space-y-2.5">
+          <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-sm">📋</span>
+              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Master 3-Wave Extrema Matrix & Phase Comparison' : '三波生命周期峰谷对撞总览矩阵表'}</span>
             </div>
-            <div class="text-[10.5px] font-mono text-amber-300/80 font-semibold">v = ${trA.v} · x = ${trA.x}</div>
-            <div class="text-[10px] text-amber-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
-            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-              ${isEn
-                ? `Marks the deepest velocity deceleration within ages 30–70. Focus on de-leveraging, wellness preservation, and consolidating reserves—recharging potential for the next upward cycle.`
-                : `30-70岁区间动能降速最深节点，螺旋线收敛于势能井底。此时核心要务在于去杠杆、守正固本与资源沉淀，避免盲目冒进扩张，属于“深蹲蓄力以待腾飞”的修整期。`}
-            </p>
+            <span class="text-[10px] font-mono text-gray-400">${isEn ? 'Multi-Cycle Dynamics Overview' : '全景多周期演进透视'}</span>
           </div>
-
-          <!-- Person B Peak -->
-          <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/30 space-y-1.5 shadow-sm">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5">
-                <span>👑</span>
-                <span>${nameB} · ${isEn ? 'Prime Peak' : '相对高点'}</span>
-              </span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">${pkB.age} ${isEn ? 'years' : '岁'}</span>
-            </div>
-            <div class="text-[10.5px] font-mono text-purple-400 font-semibold">v = +${pkB.v} · x = ${pkB.x}</div>
-            <div class="text-[10px] text-emerald-400 font-medium">🚀 ${isEn ? 'Momentum Apex Surge' : '动能爆发顶峰 · 势能跃迁极值'}</div>
-            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-              ${isEn
-                ? `${nameB} commands peak ascendancy velocity, breaching previous equilibrium barriers to unlock exceptional creative, financial, or strategic advances.`
-                : `${nameB} 迎来30-70岁生命螺旋动能峰值，破局冲力达到最高点，打破既有平衡井壁，展现最强的开拓与抗压势能。`}
-            </p>
-          </div>
-
-          <!-- Person B Trough -->
-          <div class="p-3 rounded-xl bg-[#141724] border border-purple-500/20 space-y-1.5 shadow-sm">
-            <div class="flex items-center justify-between">
-              <span class="font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
-                <span>⚓</span>
-                <span>${nameB} · ${isEn ? 'Prime Trough' : '相对低点'}</span>
-              </span>
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-950/60 text-purple-300 border border-purple-600/40">${trB.age} ${isEn ? 'years' : '岁'}</span>
-            </div>
-            <div class="text-[10.5px] font-mono text-purple-300/80 font-semibold">v = ${trB.v} · x = ${trB.x}</div>
-            <div class="text-[10px] text-purple-400 font-medium">🧘 ${isEn ? 'Strategic Grounding & Sanctuary' : '深度整固筑底 · 势能井内修蓄势'}</div>
-            <p class="text-[10.5px] text-gray-300 leading-relaxed font-sans pt-1 border-t border-gray-800">
-              ${isEn
-                ? `Crucial stabilization stage. Cultivate wellness, optimize internal operating systems, and rely on favorable resources to fortify resilience against external friction.`
-                : `30-70岁区间的稳固修养带，动量降速内敛。宜强化身心健康管理、夯实安全垫，善用印星与食伤化解外部摩擦，为下一轮生命升腾筑牢地基。`}
-            </p>
-          </div>
+          <table class="w-full text-[11px] text-left">
+            <thead>
+              <tr class="text-gray-400 border-b border-gray-800 text-[10.5px]">
+                <th class="py-1.5 px-2.5 font-serif-sc">${isEn ? 'Wave Cycle' : '周期阶梯'}</th>
+                <th class="py-1.5 px-2.5 font-serif-sc">${isEn ? 'Age Window' : '年龄视窗'}</th>
+                <th class="py-1.5 px-2.5 font-serif-sc text-amber-300">${nameA} · ${isEn ? 'Peak / Trough' : '高点 / 低点'}</th>
+                <th class="py-1.5 px-2.5 font-serif-sc text-purple-300">${nameB} · ${isEn ? 'Peak / Trough' : '高点 / 低点'}</th>
+                <th class="py-1.5 px-2.5 font-serif-sc">${isEn ? 'Apex Gap' : '峰值差'}</th>
+                <th class="py-1.5 px-2.5 font-serif-sc">${isEn ? 'Dynamic Pattern' : '动力性格局'}</th>
+                <th class="py-1.5 px-2.5 font-serif-sc">${isEn ? 'Strategic Core' : '核心战略导向'}</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-800/60 font-sans">
+              ${tableRowsHtml}
+            </tbody>
+          </table>
         </div>
 
         <!-- Graphical Reading Guide -->
@@ -16937,7 +17081,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <p class="text-[10.5px] text-gray-300 leading-relaxed">
                 ${isEn
-                  ? 'Vertical position reflects kinetic ascendancy rate (v). Points above the central axis (v > 0) signify ascent & phase transitions; points below (v < 0) represent consolidation & grounding.'
+                  ? 'Vertical position reflects kinetic ascendancy rate (v). Points above the central axis (v > 0) signify upward momentum, breakthroughs, and phase transitions; points below (v < 0) represent consolidation, grounding, and resource accumulation.'
                   : '中轴线上方 (v > 0) 为螺旋上升期，动能克服阻尼做功，代表顺风顺水、顺势开拓；中轴线下方 (v < 0) 为螺旋下探期，动能向势能井底收缩，代表逆风求稳、战略深潜。'}
               </p>
             </div>
@@ -16953,37 +17097,30 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="space-y-1">
               <div class="flex items-center gap-1.5 font-bold text-emerald-300 font-serif-sc">
-                <span>3. ${isEn ? 'Prime Corridor (Ages 30–70)' : '30~70岁黄金带 (核心区间)'}</span>
+                <span>3. ${isEn ? 'Three-Wave Architecture (Ages 30–70)' : '黄金三浪 (30~70岁全景三波)'}</span>
               </div>
               <p class="text-[10.5px] text-gray-300 leading-relaxed">
                 ${isEn
-                  ? 'The highlighted central corridor (30y–70y) isolates the 40-year prime career & asset creation corridor where dual helical coupling and mutual buffering are most decisive.'
-                  : '画面中 30y~70y 发光通道截取了一生社会价值变现、财富积累与家族基业构建的最关键40年。两道螺旋线在此区间的相对高度与交织形态决定合盘的攻守节奏。'}
+                  ? 'The highlighted corridor (30y–70y) captures the 40-year prime career & asset creation corridor partitioned into three 12-year natural cycles (Early Breakthrough, Mid-Life Apex, Mature Harvest) to trace long-term partner ballast.'
+                  : '画面中 30y~70y 发光通道截取了一生社会价值变现、财富积累与家族基业构建的关键40年。细分为青年、中年、熟年三波峰谷，两道螺旋线在三波中的相对高度与交织形态决定合盘的攻守节奏。'}
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Deep Peak-Trough Alignment Exegesis -->
-        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/20 via-purple-950/20 to-black/40 border border-amber-500/30 space-y-2 text-xs">
+        <!-- Deep Wave-by-Wave Comparative Synergy & Joint Strategic Directives -->
+        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/20 via-purple-950/20 to-black/40 border border-amber-500/30 space-y-2.5 text-xs">
           <div class="flex items-center justify-between border-b border-gray-800/80 pb-1.5">
             <div class="flex items-center gap-2">
               <span class="text-sm">🧬</span>
-              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Dual Peak-Trough Alignment Exegesis & Joint Strategic Directives' : '双人峰谷对撞深度命理批注与合盘操盘锦囊'}</span>
+              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? 'Three-Wave Comparative Synergy & Joint Strategic Directives' : '双人三阶峰谷对撞深度命理批注与合盘操盘锦囊'}</span>
             </div>
-            <span class="text-[10px] font-mono font-bold text-amber-400">${isEn ? synergyTitleEn : synergyTitleZh}</span>
+            <span class="text-[10px] font-mono font-bold text-amber-400">${isEn ? 'Multi-Wave Synchronization Exegesis' : '三波跨周期同步批注'}</span>
           </div>
-          <div class="space-y-2 text-[11px] text-gray-200 leading-relaxed font-sans">
-            <div>
-              <strong class="text-amber-300 font-serif-sc">${isEn ? 'Apex Dynamics:' : '【高点动能共振】'}</strong>
-              <span>${isEn ? synergyBodyEn : synergyBodyZh}</span>
-            </div>
-            <div>
-              <strong class="text-purple-300 font-serif-sc">${isEn ? 'Trough Interlock:' : '【低谷托底闭环】'}</strong>
-              <span>${isEn ? troughBodyEn : troughBodyZh}</span>
-            </div>
+          <div class="space-y-2.5 text-[11px] text-gray-200 leading-relaxed font-sans">
+            ${waveNarrativesHtml}
             <div class="pt-2 border-t border-gray-800/60 flex flex-wrap items-center justify-between gap-2 text-[10.5px]">
-              <span class="text-amber-300/90 font-medium">${isEn ? '💡 Joint Directive: Harmonize high-risk investments during peak windows; maintain emotional sanctuary and avoid excessive financial leverage during troughs.' : '💡 合盘操盘锦囊：在高峰期乘胜追击锁定胜果，在波谷期互为心理与资源避风港，严控杠杆，共筑常青基业。'}</span>
+              <span class="text-amber-300/90 font-medium">${isEn ? '💡 Master Joint Directive: Harmonize high-risk investments during peak windows; maintain emotional sanctuary and avoid excessive financial leverage during troughs.' : '💡 合盘操盘锦囊：在高峰期乘胜追击锁定胜果，在波谷期互为心理与资源避风港，严控杠杆，共筑常青基业。'}</span>
               <span class="text-[10px] font-mono text-gray-400">${isEn ? 'Calculated via Duffing Bifurcation Mechanics' : '源自达芬非线性双稳态分岔动力学求解'}</span>
             </div>
           </div>
@@ -17415,8 +17552,8 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               ${(cachedSynastryPhaseDerived && cachedSynastryPhaseDerived.derivedA?.extrema && cachedSynastryPhaseDerived.derivedB?.extrema) ? `
               <div class="pt-0.5 border-t border-amber-900/10 grid grid-cols-2 gap-1 text-[7px] font-mono text-gray-700">
-                <div><b class="text-amber-950">${labelA} (30~70y):</b> ${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedA.extrema.peak.v}) / ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y</div>
-                <div><b class="text-purple-950">${labelB} (30~70y):</b> ${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y (v=+${cachedSynastryPhaseDerived.derivedB.extrema.peak.v}) / ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y</div>
+                <div><b class="text-amber-950">${labelA} (30~70y):</b> ${cachedSynastryPhaseDerived.derivedA.extrema.pairs ? cachedSynastryPhaseDerived.derivedA.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'P' : '高'}${p.peak.age}/${isEn ? 'T' : '低'}${p.trough.age}]`).join(' ') : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y / ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y`}</div>
+                <div><b class="text-purple-950">${labelB} (30~70y):</b> ${cachedSynastryPhaseDerived.derivedB.extrema.pairs ? cachedSynastryPhaseDerived.derivedB.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'P' : '高'}${p.peak.age}/${isEn ? 'T' : '低'}${p.trough.age}]`).join(' ') : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y / ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y`}</div>
               </div>
               ` : ''}
               <p class="text-[7.5px] text-gray-700 leading-tight">
