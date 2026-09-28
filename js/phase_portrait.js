@@ -917,9 +917,9 @@ class PhasePortraitEngine {
       bandGrowth: 'rgba(14, 165, 233, 0.06)',
       bandConsol: 'rgba(245, 158, 11, 0.05)',
       goldenBoxBg: '#fef3c7',
-      goldenBoxBorder: '#b45309',
-      goldenText: '#78350f',
-      goldenSubText: '#92400e'
+      goldenBoxBorder: '#ca8a04',
+      goldenText: '#854d0e',
+      goldenSubText: '#a16207'
     };
 
     // 3. Crisp Background
@@ -1039,10 +1039,10 @@ class PhasePortraitEngine {
       if (isGold) {
         ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.3)' : '#fef3c7';
         ctx.fill();
-        ctx.strokeStyle = isDark ? '#fbbf24' : '#b45309';
+        ctx.strokeStyle = isDark ? '#fbbf24' : '#ca8a04';
         ctx.lineWidth = 1.5;
         ctx.stroke();
-        ctx.fillStyle = isDark ? '#fef08a' : '#78350f';
+        ctx.fillStyle = isDark ? '#fef08a' : '#854d0e';
         ctx.font = 'bold 9.5px font-sans';
         ctx.fillText(isEn ? 'Leap Window' : '🚀 黄金跳轨', cx, pillY + 13);
       } else if (isLock) {
@@ -1176,7 +1176,7 @@ class PhasePortraitEngine {
 
       ctx.save();
       // Golden vertical dashed leap beam
-      ctx.strokeStyle = isDark ? '#fbbf24' : '#b45309';
+      ctx.strokeStyle = isDark ? '#fbbf24' : '#ca8a04';
       ctx.lineWidth = 2.5;
       if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 3]);
       ctx.beginPath();
@@ -1195,7 +1195,7 @@ class PhasePortraitEngine {
       ctx.lineTo(gx - 5, targetY - arrowDir * 9);
       ctx.lineTo(gx + 5, targetY - arrowDir * 9);
       ctx.closePath();
-      ctx.fillStyle = isDark ? '#fbbf24' : '#b45309';
+      ctx.fillStyle = isDark ? '#fbbf24' : '#ca8a04';
       ctx.fill();
 
       // Pulsing golden beacon ring on the winning node
@@ -1263,12 +1263,571 @@ class PhasePortraitEngine {
     // Right-aligned strategic takeaway
     ctx.textAlign = 'right';
     ctx.font = 'bold 11px font-sans';
-    ctx.fillStyle = isDark ? '#fbbf24' : '#b45309';
+    ctx.fillStyle = isDark ? '#fbbf24' : '#854d0e';
     const topTip = isEn ? `Deployment: Consolidate in A -> Leap in ${golden.year || 2028}` : `🌟 推荐部署：先在 A 轨蓄力 ➔ ${golden.year || 2028} 顺势跳入 B 轨`;
     ctx.fillText(topTip, plotRight, 23);
 
     ctx.restore();
     ctx.restore(); // Restore high-dpi scale
+  }
+
+  /**
+   * Dual Synastry: 求解甲乙双人动力学参数与轨迹
+   */
+  static deriveDualSpiralTrajectories(chartA, luckCyclesA, currentAgeA, chartB, luckCyclesB, currentAgeB) {
+    const ageA = (currentAgeA !== null && currentAgeA !== undefined) ? currentAgeA : 30;
+    const ageB = (currentAgeB !== null && currentAgeB !== undefined) ? currentAgeB : 30;
+
+    const derivedA = this.deriveParametersAndTrajectory(chartA, luckCyclesA || [], ageA);
+    const derivedB = this.deriveParametersAndTrajectory(chartB, luckCyclesB || [], ageB);
+
+    const ascA = derivedA.currentPt.v >= 0;
+    const ascB = derivedB.currentPt.v >= 0;
+
+    let synergyType = 'counterbalance';
+    let synergyTitleZh = '一进一退 · 互为压舱石';
+    let synergyTitleEn = 'Counterbalance Anchor · Dynamic Balance';
+    let synergyDescZh = '';
+    let synergyDescEn = '';
+
+    if (ascA && ascB) {
+      synergyType = 'dual_ascent';
+      synergyTitleZh = '双星合耀 · 协同爆发';
+      synergyTitleEn = 'Dual Apex Surge · Resonance Ascent';
+      synergyDescZh = '两造当前均处于螺旋势能上升跃迁期，动能丰沛，攻守兼备，适宜同心合力大举开拓战略增量空间。';
+      synergyDescEn = 'Both charts command prime positive momentum; optimal window for high-ambition joint ventures.';
+    } else if (!ascA && !ascB) {
+      synergyType = 'joint_grounding';
+      synergyTitleZh = '同舟共济 · 蓄能守成';
+      synergyTitleEn = 'Joint Consolidation · Defensive Grounding';
+      synergyDescZh = '两造岁运均处于内修蓄能与筑底阶段，宜守正笃实，严控杠杆，深筑护城河，静候下一次螺旋升腾。';
+      synergyDescEn = 'Both charts favor strategic patience and defensive consolidation; reinforce core assets and wellness.';
+    } else {
+      synergyType = 'counterbalance';
+      synergyTitleZh = '一进一退 · 互为压舱石';
+      synergyTitleEn = 'Counterbalance Anchor · Complementary Dynamics';
+      if (ascA) {
+        synergyDescZh = '甲造处于高势能跃迁开拓期，乙造处于内修筑底稳固期，前攻后守，互为避风港与压舱石。';
+        synergyDescEn = 'Person A commands prime momentum to advance, while Person B provides domestic and operational ballast.';
+      } else {
+        synergyDescZh = '乙造处于高势能跃迁开拓期，甲造处于内修筑底稳固期，前攻后守，互为避风港与压舱石。';
+        synergyDescEn = 'Person B commands prime momentum to advance, while Person A provides steadfast stability and resource protection.';
+      }
+    }
+
+    return {
+      derivedA,
+      derivedB,
+      synergyType,
+      synergyTitleZh,
+      synergyTitleEn,
+      synergyDescZh,
+      synergyDescEn
+    };
+  }
+
+  /**
+   * Dual Synastry: 绘制时空动力学相空间双人生命螺旋流形
+   * @param {HTMLCanvasElement|string} canvasOrId 
+   * @param {Object} dataA - output of deriveParametersAndTrajectory or { trajectoryPoints }
+   * @param {Object} dataB - output of deriveParametersAndTrajectory or { trajectoryPoints }
+   * @param {number} activeAgeA - Current age for Person A
+   * @param {number} activeAgeB - Current age for Person B
+   * @param {string} labelA - Label for Person A
+   * @param {string} labelB - Label for Person B
+   * @param {boolean} isDark - Dark theme flag
+   * @param {string} lang - 'zh' or 'en'
+   * @param {Object|null} hoverPos - Optional { x, y } hover position
+   */
+  static renderDualSpiralManifold(canvasOrId, dataA, dataB, activeAgeA, activeAgeB, labelA, labelB, isDark = true, lang = 'zh', hoverPos = null) {
+    if (!dataA || !dataB) return;
+    const canvas = (typeof canvasOrId === 'string' && typeof document !== 'undefined')
+      ? document.getElementById(canvasOrId)
+      : canvasOrId;
+    if (!canvas || typeof canvas.getContext !== 'function') return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const isEn = (lang === 'en');
+    const nameA = labelA || (isEn ? 'Person A' : '甲造');
+    const nameB = labelB || (isEn ? 'Person B' : '乙造');
+
+    const trajA = dataA.trajectoryPoints || [];
+    const trajB = dataB.trajectoryPoints || [];
+    if (!trajA.length || !trajB.length) return;
+
+    // 1. High-DPI Retina Display Handling
+    const dpr = (typeof window !== 'undefined' && window.devicePixelRatio) ? Math.max(1, window.devicePixelRatio) : 1;
+    let cssWidth = canvas.clientWidth || (canvas.parentElement && canvas.parentElement.clientWidth) || 680;
+    let cssHeight = canvas.clientHeight || 360;
+    if (cssWidth < 320) cssWidth = 680;
+    if (cssHeight < 240) cssHeight = 360;
+
+    const targetW = Math.round(cssWidth * dpr);
+    const targetH = Math.round(cssHeight * dpr);
+    if (canvas.width !== targetW || canvas.height !== targetH) {
+      canvas.width = targetW;
+      canvas.height = targetH;
+    }
+
+    ctx.save();
+    if (typeof ctx.scale === 'function') {
+      ctx.scale(dpr, dpr);
+    }
+    ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+    // 2. Background Gradient
+    const bgGrad = ctx.createLinearGradient(0, 0, cssWidth, cssHeight);
+    if (isDark) {
+      bgGrad.addColorStop(0, '#090d1a');
+      bgGrad.addColorStop(0.5, '#0d1224');
+      bgGrad.addColorStop(1, '#05070e');
+    } else {
+      bgGrad.addColorStop(0, '#ffffff');
+      bgGrad.addColorStop(0.5, '#f8fafc');
+      bgGrad.addColorStop(1, '#f1f5f9');
+    }
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, cssWidth, cssHeight);
+
+    // Stars in dark mode
+    if (isDark) {
+      ctx.save();
+      const starSeeds = [
+        [0.10, 0.16, 1.2, 0.4], [0.22, 0.26, 0.8, 0.2], [0.36, 0.14, 1.5, 0.5],
+        [0.50, 0.20, 1.0, 0.3], [0.66, 0.16, 1.4, 0.45], [0.80, 0.24, 1.1, 0.35],
+        [0.16, 0.74, 1.3, 0.4], [0.33, 0.84, 0.9, 0.25], [0.60, 0.80, 1.2, 0.35],
+        [0.78, 0.86, 1.0, 0.3], [0.90, 0.66, 1.4, 0.4]
+      ];
+      starSeeds.forEach(([rx, ry, r, alpha]) => {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+        ctx.arc(rx * cssWidth, ry * cssHeight, r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    // 3. Layout geometry
+    const plotLeft = 65;
+    const plotRight = cssWidth - 45;
+    const plotWidth = plotRight - plotLeft;
+    const floorY = cssHeight - 26;
+    const midY = cssHeight / 2;
+
+    // Timeline scale & floor grid
+    ctx.save();
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(0, 0, 0, 0.10)';
+    ctx.lineWidth = 1;
+    const gridAges = [1, 20, 40, 60, 80, 100];
+    gridAges.forEach(age => {
+      const u = (age - 1) / 99.0;
+      const tx = plotLeft + u * plotWidth;
+
+      ctx.beginPath();
+      ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)';
+      ctx.moveTo(tx, floorY);
+      ctx.lineTo(tx + (tx - cssWidth / 2) * 0.08, midY + 30);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.22)' : 'rgba(0, 0, 0, 0.22)';
+      ctx.moveTo(tx, floorY - 3);
+      ctx.lineTo(tx, floorY + 4);
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? 'rgba(203, 213, 225, 0.85)' : '#475569';
+      ctx.font = 'bold 9.5px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${age}y`, tx, floorY + 16);
+    });
+
+    // Floor rail
+    ctx.beginPath();
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.18)';
+    ctx.moveTo(plotLeft - 10, floorY);
+    ctx.lineTo(plotRight + 10, floorY);
+    ctx.stroke();
+
+    // Central Equilibrium v=0
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = isDark ? 'rgba(245, 158, 11, 0.22)' : 'rgba(180, 83, 9, 0.25)';
+    ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    ctx.moveTo(plotLeft - 10, midY);
+    ctx.lineTo(plotRight + 10, midY);
+    ctx.stroke();
+    if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+    ctx.font = 'bold 9px monospace';
+    ctx.fillStyle = isDark ? 'rgba(245, 158, 11, 0.5)' : '#854d0e';
+    ctx.textAlign = 'left';
+    ctx.fillText(isEn ? '[v = 0 Equilibrium]' : '[v = 0 平衡基准态]', plotLeft - 10, midY - 6);
+    ctx.restore();
+
+    // 4. Four HUD Quadrants
+    const drawHudBadge = (text, x, y, align, colorTheme) => {
+      ctx.save();
+      ctx.font = 'bold 9.5px "Noto Serif SC", serif';
+      const textW = ctx.measureText(text).width;
+      const padX = 7;
+      const padY = 3.5;
+      const boxW = textW + padX * 2;
+      const boxH = 18;
+      const boxX = align === 'right' ? (x - boxW) : x;
+      const boxY = y - 13;
+
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(boxX, boxY, boxW, boxH, 4);
+      } else if (typeof ctx.rect === 'function') {
+        ctx.rect(boxX, boxY, boxW, boxH);
+      }
+      ctx.fillStyle = isDark ? colorTheme.darkBg : colorTheme.lightBg;
+      ctx.fill();
+      ctx.strokeStyle = isDark ? colorTheme.darkBorder : colorTheme.lightBorder;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? colorTheme.darkText : colorTheme.lightText;
+      ctx.textAlign = 'left';
+      ctx.fillText(text, boxX + padX, boxY + 13);
+      ctx.restore();
+    };
+
+    drawHudBadge(
+      isEn ? '🚀 [Ascent · Expansion]' : '🚀 顺风破局区 (势能爆发 · 木火升腾)',
+      cssWidth - 30, 26, 'right',
+      { darkBg: 'rgba(16, 185, 129, 0.15)', darkBorder: 'rgba(16, 185, 129, 0.35)', darkText: '#34d399', lightBg: '#ecfdf5', lightBorder: '#a7f3d0', lightText: '#047857' }
+    );
+    drawHudBadge(
+      isEn ? '⚡ [Friction · Resistance]' : '⚡ 承压克耗区 (防守自持 · 逆风求稳)',
+      cssWidth - 30, floorY - 10, 'right',
+      { darkBg: 'rgba(239, 68, 68, 0.15)', darkBorder: 'rgba(239, 68, 68, 0.35)', darkText: '#fca5a5', lightBg: '#fee2e2', lightBorder: '#fca5a5', lightText: '#b91c1c' }
+    );
+    drawHudBadge(
+      isEn ? '🛡️ [Resource · Accumulation]' : '🛡️ 稳步蓄力区 (印比固本 · 资源沉淀)',
+      plotLeft - 10, 26, 'left',
+      { darkBg: 'rgba(245, 158, 11, 0.15)', darkBorder: 'rgba(245, 158, 11, 0.35)', darkText: '#fbbf24', lightBg: '#fef3c7', lightBorder: '#fde68a', lightText: '#854d0e' }
+    );
+    drawHudBadge(
+      isEn ? '🧘 [Sanctuary · Grounding]' : '🧘 内修自持区 (战略收敛 · 筑底重塑)',
+      plotLeft - 10, floorY - 10, 'left',
+      { darkBg: 'rgba(99, 102, 241, 0.15)', darkBorder: 'rgba(99, 102, 241, 0.35)', darkText: '#a5b4fc', lightBg: '#eef2ff', lightBorder: '#c7d2fe', lightText: '#4338ca' }
+    );
+
+    // 5. Amplitude normalization
+    const allV = [...trajA.map(p => Math.abs(p.v || 0)), ...trajB.map(p => Math.abs(p.v || 0))];
+    const maxV = Math.max(...allV, 0.35);
+    const vScale = Math.min(75 / maxV, 100);
+
+    // Coordinate projections for A & B
+    const toScreenA = (pt) => {
+      const u = (pt.age - 1) / 99.0;
+      const xBase = plotLeft + u * plotWidth;
+      const phi = ((pt.age - 1) * Math.PI * 2) / 6.5 + (pt.x || 0) * 1.4;
+      const coilR = 12.0;
+      const dx = Math.cos(phi) * 7.5;
+      const dy = Math.sin(phi) * coilR;
+      const sx = xBase + dx;
+      const sy = Math.max(38, Math.min(cssHeight - 38, midY - (pt.v * vScale) + dy));
+      const isFront = Math.cos(phi) >= -0.15;
+      return { sx, sy, age: pt.age, x: pt.x, v: pt.v, isFront, phi };
+    };
+
+    const toScreenB = (pt) => {
+      const u = (pt.age - 1) / 99.0;
+      const xBase = plotLeft + u * plotWidth;
+      const phi = ((pt.age - 1) * Math.PI * 2) / 6.5 + (pt.x || 0) * 1.4 + Math.PI;
+      const coilR = 11.0;
+      const dx = Math.cos(phi) * 7.0;
+      const dy = Math.sin(phi) * coilR;
+      const sx = xBase + dx;
+      const sy = Math.max(38, Math.min(cssHeight - 38, midY - (pt.v * vScale) + dy));
+      const isFront = Math.cos(phi) >= -0.15;
+      return { sx, sy, age: pt.age, x: pt.x, v: pt.v, isFront, phi };
+    };
+
+    const screenPointsA = trajA.map(toScreenA);
+    const screenPointsB = trajB.map(toScreenB);
+
+    // 6. Draw Helixes
+    const drawSpiralHelicalLayer = (pts, isPersonA) => {
+      // Glow ribbon
+      ctx.save();
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        ctx.beginPath();
+        ctx.strokeStyle = isPersonA
+          ? 'rgba(245, 158, 11, 0.22)'
+          : 'rgba(168, 85, 247, 0.22)';
+        ctx.lineWidth = 5.5;
+        ctx.lineCap = 'round';
+        ctx.moveTo(p1.sx, p1.sy);
+        ctx.lineTo(p2.sx, p2.sy);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Back loops
+      ctx.save();
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        if (!p1.isFront && !p2.isFront) {
+          ctx.beginPath();
+          ctx.strokeStyle = isPersonA
+            ? (isDark ? 'rgba(202, 138, 4, 0.35)' : 'rgba(180, 83, 9, 0.35)')
+            : (isDark ? 'rgba(147, 51, 234, 0.35)' : 'rgba(126, 34, 206, 0.35)');
+          ctx.lineWidth = 1.6;
+          ctx.lineCap = 'round';
+          ctx.moveTo(p1.sx, p1.sy);
+          ctx.lineTo(p2.sx, p2.sy);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+
+      // Front loops
+      ctx.save();
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const age = p1.age;
+        let strokeColor = isPersonA
+          ? (age >= 26 && age <= 50 ? '#f59e0b' : (age > 75 ? '#ca8a04' : '#10b981'))
+          : (age >= 26 && age <= 50 ? '#a855f7' : (age > 75 ? '#06b6d4' : '#8b5cf6'));
+
+        ctx.beginPath();
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = p1.isFront ? 3.0 : 1.8;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.moveTo(p1.sx, p1.sy);
+        ctx.lineTo(p2.sx, p2.sy);
+        ctx.stroke();
+      }
+      ctx.restore();
+    };
+
+    drawSpiralHelicalLayer(screenPointsB, false);
+    drawSpiralHelicalLayer(screenPointsA, true);
+
+    // 7. Dynamic Moving Beacons for Both Person A and Person B
+    const ptA = screenPointsA.find(p => p.age === activeAgeA) || screenPointsA[Math.min(activeAgeA - 1, screenPointsA.length - 1)] || screenPointsA[0];
+    const ptB = screenPointsB.find(p => p.age === activeAgeB) || screenPointsB[Math.min(activeAgeB - 1, screenPointsB.length - 1)] || screenPointsB[0];
+
+    // Connecting Resonance Vector Chord between A and B
+    if (ptA && ptB) {
+      ctx.save();
+      ctx.beginPath();
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([3, 3]);
+      ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.55)' : 'rgba(2, 132, 199, 0.6)';
+      ctx.lineWidth = 1.6;
+      ctx.moveTo(ptA.sx, ptA.sy);
+      ctx.lineTo(ptB.sx, ptB.sy);
+      ctx.stroke();
+      if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+      // Midpoint Dynamic Synergy Chip
+      const midX = (ptA.sx + ptB.sx) / 2;
+      const midYCoord = (ptA.sy + ptB.sy) / 2;
+      const ascA = ptA.v >= 0;
+      const ascB = ptB.v >= 0;
+      let tagText = '';
+      if (ascA && ascB) tagText = isEn ? '🌟 Dual Apex Surge' : '🌟 双星跃迁';
+      else if (!ascA && !ascB) tagText = isEn ? '🧘 Joint Grounding' : '🧘 同舟筑底';
+      else tagText = isEn ? '🛡️ Counterbalance' : '🛡️ 互补托底';
+
+      ctx.font = 'bold 9px sans-serif';
+      const tagW = ctx.measureText(tagText).width + 12;
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') {
+        ctx.roundRect(midX - tagW / 2, midYCoord - 9, tagW, 18, 9);
+      } else if (typeof ctx.rect === 'function') {
+        ctx.rect(midX - tagW / 2, midYCoord - 9, tagW, 18);
+      }
+      ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(255, 255, 255, 0.95)';
+      ctx.fill();
+      ctx.strokeStyle = isDark ? '#38bdf8' : '#0284c7';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? '#7dd3fc' : '#0369a1';
+      ctx.textAlign = 'center';
+      ctx.fillText(tagText, midX, midYCoord + 3.5);
+      ctx.restore();
+    }
+
+    // Beacon A (甲造)
+    if (ptA) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.arc(ptA.sx, ptA.sy, 13, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.85)';
+      ctx.lineWidth = 2.2;
+      ctx.arc(ptA.sx, ptA.sy, 8, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(ptA.sx, ptA.sy, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      const isAscA = ptA.v >= 0;
+      const textA = isEn
+        ? `👤 ${nameA} ${ptA.age}y · ${isAscA ? 'Ascent 🔺' : 'Grounding 🔻'} (x=${ptA.x}, v=${ptA.v})`
+        : `👤 ${nameA} ${ptA.age}岁 · ${isAscA ? '跃迁期 🔺' : '蓄能期 🔻'} (x=${ptA.x}, v=${ptA.v})`;
+
+      ctx.font = 'bold 10px sans-serif';
+      const twA = ctx.measureText(textA).width;
+      const bW = twA + 16;
+      const bH = 22;
+      let bX = ptA.sx - bW / 2;
+      let bY = ptA.sy - 34;
+      if (bX < 15) bX = 15;
+      if (bX + bW > cssWidth - 15) bX = cssWidth - bW - 15;
+      if (bY < 18) bY = ptA.sy + 16;
+
+      ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.98)';
+      ctx.strokeStyle = '#f59e0b';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') ctx.roundRect(bX, bY, bW, bH, 6);
+      else if (typeof ctx.rect === 'function') ctx.rect(bX, bY, bW, bH);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? '#fbbf24' : '#854d0e';
+      ctx.textAlign = 'left';
+      ctx.fillText(textA, bX + 8, bY + 15);
+      ctx.restore();
+    }
+
+    // Beacon B (乙造)
+    if (ptB) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.arc(ptB.sx, ptB.sy, 13, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(168, 85, 247, 0.85)';
+      ctx.lineWidth = 2.2;
+      ctx.arc(ptB.sx, ptB.sy, 8, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.fillStyle = '#a855f7';
+      ctx.beginPath();
+      ctx.arc(ptB.sx, ptB.sy, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      const isAscB = ptB.v >= 0;
+      const textB = isEn
+        ? `👥 ${nameB} ${ptB.age}y · ${isAscB ? 'Ascent 🔺' : 'Grounding 🔻'} (x=${ptB.x}, v=${ptB.v})`
+        : `👥 ${nameB} ${ptB.age}岁 · ${isAscB ? '跃迁期 🔺' : '蓄能期 🔻'} (x=${ptB.x}, v=${ptB.v})`;
+
+      ctx.font = 'bold 10px sans-serif';
+      const twB = ctx.measureText(textB).width;
+      const bW = twB + 16;
+      const bH = 22;
+      let bX = ptB.sx - bW / 2;
+      let bY = ptB.sy + 14;
+      if (bX < 15) bX = 15;
+      if (bX + bW > cssWidth - 15) bX = cssWidth - bW - 15;
+      if (bY + bH > floorY) bY = ptB.sy - 34;
+
+      ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.98)';
+      ctx.strokeStyle = '#a855f7';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      if (typeof ctx.roundRect === 'function') ctx.roundRect(bX, bY, bW, bH, 6);
+      else if (typeof ctx.rect === 'function') ctx.rect(bX, bY, bW, bH);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = isDark ? '#c084fc' : '#6b21a8';
+      ctx.textAlign = 'left';
+      ctx.fillText(textB, bX + 8, bY + 15);
+      ctx.restore();
+    }
+
+    // 8. Interactive Hover Laser Probe (optional)
+    if (hoverPos) {
+      let nearestA = screenPointsA[0];
+      let nearestB = screenPointsB[0];
+      let minDist = 999999;
+      screenPointsA.forEach(p => {
+        const dist = Math.abs(p.sx - hoverPos.x);
+        if (dist < minDist) {
+          minDist = dist;
+          nearestA = p;
+        }
+      });
+      nearestB = screenPointsB.find(p => p.age === nearestA.age) || screenPointsB[0];
+
+      if (nearestA && minDist < 60) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.7)' : 'rgba(2, 132, 199, 0.7)';
+        ctx.lineWidth = 1.5;
+        if (typeof ctx.setLineDash === 'function') ctx.setLineDash([3, 3]);
+        ctx.moveTo(nearestA.sx, 24);
+        ctx.lineTo(nearestA.sx, floorY);
+        ctx.stroke();
+        if (typeof ctx.setLineDash === 'function') ctx.setLineDash([]);
+
+        const hudW = isEn ? 220 : 190;
+        const hudH = 80;
+        let hudX = nearestA.sx + 16;
+        let hudY = Math.min(nearestA.sy, nearestB.sy) - 20;
+        if (hudX + hudW > cssWidth - 15) hudX = nearestA.sx - hudW - 16;
+        if (hudY < 24) hudY = 24;
+        if (hudY + hudH > cssHeight - 24) hudY = cssHeight - hudH - 24;
+
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') ctx.roundRect(hudX, hudY, hudW, hudH, 8);
+        else if (typeof ctx.rect === 'function') ctx.rect(hudX, hudY, hudW, hudH);
+        ctx.fillStyle = isDark ? 'rgba(11, 15, 25, 0.94)' : 'rgba(255, 255, 255, 0.98)';
+        ctx.fill();
+        ctx.strokeStyle = isDark ? '#38bdf8' : '#0284c7';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        ctx.font = 'bold 11px sans-serif';
+        ctx.fillStyle = isDark ? '#f8fafc' : '#0f172a';
+        ctx.fillText(isEn ? `Age ${nearestA.age} Dual Scan` : `🧭 【${nearestA.age}岁 · 双人时空动力探针】`, hudX + 10, hudY + 18);
+
+        ctx.font = '10px font-mono';
+        ctx.fillStyle = isDark ? '#fbbf24' : '#854d0e';
+        ctx.fillText(`${nameA}: v=${nearestA.v >= 0 ? '+' : ''}${nearestA.v}, x=${nearestA.x}`, hudX + 10, hudY + 36);
+
+        ctx.fillStyle = isDark ? '#c084fc' : '#6b21a8';
+        ctx.fillText(`${nameB}: v=${nearestB.v >= 0 ? '+' : ''}${nearestB.v}, x=${nearestB.x}`, hudX + 10, hudY + 52);
+
+        ctx.font = '9px sans-serif';
+        ctx.fillStyle = isDark ? '#38bdf8' : '#0284c7';
+        ctx.fillText(isEn ? '💡 Synced with Life-Chrono Navigator' : '💡 与上方岁运潮汐推演器实时联动', hudX + 10, hudY + 68);
+        ctx.restore();
+      }
+    }
+
+    ctx.restore();
   }
 }
 

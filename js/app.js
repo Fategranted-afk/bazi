@@ -199,6 +199,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let synastryChronoPlayTimer = null;
   let synastryLabelACached = '甲造';
   let synastryLabelBCached = '乙造';
+  let cachedSynastryPhaseDerived = null;
+  let synastryActivePhaseTarget = 'A'; // 'A' | 'B'
+  let synastryParamsA = { a: 1.2, b: 0.8, c: 0.0, gamma: 0.38 };
+  let synastryParamsB = { a: 1.2, b: 0.8, c: 0.0, gamma: 0.38 };
+  let synastryPhaseHoverPos = null;
   let deferredPwaPrompt = null;
   let fourPillarsActiveAge = 35;
   let activeIChingCycleTab = 'timeline'; // 'timeline' | 'yaoStages' | 'cosmic'
@@ -645,6 +650,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (typeof drawDualSynastryTimelineChart === 'function' && typeof synastryTimelineA !== 'undefined' && synastryTimelineA.length > 0) {
         drawDualSynastryTimelineChart(currentLang === 'en');
+      }
+      if (typeof drawCurrentDualPhaseManifold === 'function' && cachedSynastryPhaseDerived && document.getElementById('synastryPhaseCanvas')) {
+        drawCurrentDualPhaseManifold(currentLang === 'en');
       }
       if (typeof window !== 'undefined' && window.__lastSimulationResult && window.__lastSimulationResult.bifurcationDynamics && typeof PhasePortraitEngine !== 'undefined' && typeof PhasePortraitEngine.renderDualTrackBifurcation === 'function') {
         PhasePortraitEngine.renderDualTrackBifurcation('simBifurcationCanvas', window.__lastSimulationResult.bifurcationDynamics, newTheme === 'dark', currentLang);
@@ -11636,7 +11644,12 @@ document.addEventListener('DOMContentLoaded', () => {
           triggerCalculateSynastry();
         });
       } else if (typeof drawDualSynastryTimelineChart === 'function' && typeof synastryTimelineA !== 'undefined' && synastryTimelineA.length > 0) {
-        setTimeout(() => drawDualSynastryTimelineChart(currentLang === 'en'), 60);
+        setTimeout(() => {
+          drawDualSynastryTimelineChart(currentLang === 'en');
+          if (typeof drawCurrentDualPhaseManifold === 'function' && cachedSynastryPhaseDerived && document.getElementById('synastryPhaseCanvas')) {
+            drawCurrentDualPhaseManifold(currentLang === 'en');
+          }
+        }, 60);
       }
     }
 
@@ -11714,6 +11727,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (typeof drawDualSynastryTimelineChart === 'function' && typeof synastryTimelineA !== 'undefined' && synastryTimelineA.length > 0 && document.getElementById('synastryChronoTimelineCanvas')) {
         drawDualSynastryTimelineChart(currentLang === 'en');
+      }
+      if (typeof drawCurrentDualPhaseManifold === 'function' && cachedSynastryPhaseDerived && document.getElementById('synastryPhaseCanvas')) {
+        drawCurrentDualPhaseManifold(currentLang === 'en');
       }
     });
   }
@@ -15260,6 +15276,48 @@ document.addEventListener('DOMContentLoaded', () => {
           )}
         </div>
 
+        <!-- 10.2 Spacetime Dynamics & Dual Potential Well Coupling -->
+        <div class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🌀</span>
+              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? '10.2 Dual Life-Chrono Phase Space & Potential Well Coupling' : '10.2 双人时空动力学相空间与势能流形耦合分析'}</span>
+            </div>
+            <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">V(x) = (a/4)x⁴ - (b/2)x² - cx</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-lg bg-[#141724] border border-amber-500/20 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5"><span>👤</span><span>${labelA}</span></span>
+                <span class="text-[10px] font-mono text-gray-400">Score: ${(chartA?.zipingScore?.totalScore || 50).toFixed(1)}</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-300 font-mono">
+                <div>a (${isEn ? 'Rigidity' : '刚度'}): <b class="text-amber-400">${(0.85 + Math.abs((chartA?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}</b></div>
+                <div>b (${isEn ? 'Bifurcation' : '分岔'}): <b class="text-amber-400">${(0.40 + Math.abs((chartA?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}</b></div>
+                <div>c (${isEn ? 'Transit' : '偏压'}): <b class="text-amber-400">±0.45</b></div>
+                <div>γ (${isEn ? 'Damping' : '阻尼'}): <b class="text-amber-400">0.38</b></div>
+              </div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#141724] border border-purple-500/20 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5"><span>👥</span><span>${labelB}</span></span>
+                <span class="text-[10px] font-mono text-gray-400">Score: ${(chartB?.zipingScore?.totalScore || 50).toFixed(1)}</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-300 font-mono">
+                <div>a (${isEn ? 'Rigidity' : '刚度'}): <b class="text-purple-400">${(0.85 + Math.abs((chartB?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}</b></div>
+                <div>b (${isEn ? 'Bifurcation' : '分岔'}): <b class="text-purple-400">${(0.40 + Math.abs((chartB?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}</b></div>
+                <div>c (${isEn ? 'Transit' : '偏压'}): <b class="text-purple-400">±0.45</b></div>
+                <div>γ (${isEn ? 'Damping' : '阻尼'}): <b class="text-purple-400">0.38</b></div>
+              </div>
+            </div>
+          </div>
+          <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+            ${isEn
+              ? 'By mapping Ziping vitality scores onto non-linear Duffing potential wells, the dual phase trajectories reveal how both parties exchange kinetic and potential energy across 100 years. Their dynamic coupling prevents catastrophic bifurcations while preserving autonomous momentum.'
+              : '将子平五行旺衰映射至非线性达芬双稳态势能井，两造生命相轨迹在同一时空相空间中交织运行。势能井的刚度与分岔深度决定了两造在重大外部冲击下的系统自持力，互补阻尼确保整体协作不出现发散性共振崩溃。'}
+          </p>
+        </div>
+
         <!-- Decennial Milestones Table -->
         <div class="pt-2 border-t border-gray-800/80">
           <div class="text-xs font-bold text-emerald-300 font-serif-sc mb-2 flex items-center justify-between">
@@ -15468,6 +15526,144 @@ document.addEventListener('DOMContentLoaded', () => {
           <!-- Dynamically populated via updateDualChronoDisplay -->
         </div>
       </div>
+
+      <!-- Card 2: Dual Life-Chrono Phase Space & 3D Spiral Manifold (双人时空动力学相空间与生命螺旋流形) -->
+      <div id="synastryPhaseManifoldSection" class="p-5 rounded-2xl bg-gradient-to-br from-[#141724] via-[#0f111a] to-black border border-amber-500/40 shadow-xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-gray-800">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">🌀</span>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                <span>${isEn ? 'Spacetime Phase Space & Life-Chrono Spiral Manifold' : '时空动力学相空间与生命螺旋流形 (Life-Chrono Spiral Manifold)'}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30">SPIRAL DYNAMICS</span>
+              </h3>
+              <p class="text-xs text-gray-400 mt-0.5">
+                ${isEn ? 'Dual 3D dynamic spiral trajectories anchored on Day Master baselines: tracing lifetime potential, double-helix resonance, transitions and grounding' : '以用户日主为固定衡量系展开的 3D 时空动力学螺旋轨迹：先后推演甲乙两造百岁势能起伏、双螺旋缠绕共振、跃迁与筑底同频动态'}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnResetSynastryPhaseParams" type="button" class="px-3 py-1.5 rounded-xl bg-amber-950/60 hover:bg-amber-900/80 text-amber-300 border border-amber-600/40 text-xs font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+              <span>🔄</span>
+              <span>${isEn ? 'Reset Dynamics' : '重置动力学参数'}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Canvas & Controls Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          <!-- Canvas Arena (8 cols) -->
+          <div class="lg:col-span-8 flex flex-col items-center justify-center p-3 rounded-xl bg-black/50 border border-gray-800">
+            <canvas id="synastryPhaseCanvas" width="640" height="360" class="w-full h-auto max-h-[360px] rounded-lg shadow-inner cursor-crosshair"></canvas>
+            <!-- Intuitive 3D Spiral Legend & Life Stages -->
+            <div class="flex flex-wrap items-center justify-between w-full pt-2.5 px-1.5 gap-2 text-[11px] text-gray-300 font-sans border-t border-gray-800/80 mt-1">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <span class="flex items-center gap-1 font-medium text-amber-400">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-xs"></span>
+                  <span>${labelA}</span>
+                </span>
+                <span class="flex items-center gap-1 font-medium text-purple-400">
+                  <span class="w-2.5 h-2.5 rounded-full bg-purple-500 inline-block shadow-xs"></span>
+                  <span>${labelB}</span>
+                </span>
+                <span class="text-gray-600">|</span>
+                <span class="flex items-center gap-1 font-medium text-amber-300"><span>🌟</span> <span>${isEn ? '1y Origin' : '1y 起点 · 元神初生'}</span></span>
+                <span class="flex items-center gap-1 text-emerald-400"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> <span>${isEn ? '1~25y Spring' : '1~25y 萌芽'}</span></span>
+                <span class="flex items-center gap-1 text-amber-400"><span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> <span>${isEn ? '26~50y Prime' : '26~50y 鼎盛'}</span></span>
+                <span class="flex items-center gap-1 text-yellow-400"><span class="w-2 h-2 rounded-full bg-yellow-500 inline-block"></span> <span>${isEn ? '51~75y Harvest' : '51~75y 沉淀'}</span></span>
+                <span class="flex items-center gap-1 text-sky-400"><span class="w-2 h-2 rounded-full bg-sky-500 inline-block"></span> <span>${isEn ? '76~100y Zenith' : '76~100y 归真'}</span></span>
+              </div>
+              <div class="flex items-center gap-2.5 text-gray-400 font-mono text-[10px]">
+                <span class="flex items-center gap-1 text-emerald-400 font-medium"><span>🔺</span><span>${isEn ? 'Ascent' : '螺旋上升 (势能跃迁)'}</span></span>
+                <span class="flex items-center gap-1 text-amber-400 font-medium"><span>🔻</span><span>${isEn ? 'Grounding' : '螺旋下探 (蓄能筑底)'}</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Parameter Tuning Sliders (4 cols) -->
+          <div class="lg:col-span-4 p-4 rounded-xl bg-black/30 border border-gray-800 space-y-3.5 text-xs">
+            <!-- Target Switcher Tabs: Person A vs Person B -->
+            <div class="flex items-center justify-between border-b border-gray-800/80 pb-2">
+              <div class="flex items-center gap-1.5 font-bold text-amber-200 font-serif-sc">
+                <span>⚙️</span>
+                <span>${isEn ? 'V(x) Potential Manifold Tuning' : '势函数参数调谐 (V(x) Manifold)'}</span>
+              </div>
+              <div class="inline-flex rounded-lg bg-black/70 p-0.5 border border-gray-700/80 text-[11px]">
+                <button id="synastryPhaseTargetA" type="button" class="px-2.5 py-0.5 rounded font-bold transition bg-amber-600 text-white shadow-xs cursor-pointer">
+                  👤 ${labelA}
+                </button>
+                <button id="synastryPhaseTargetB" type="button" class="px-2.5 py-0.5 rounded font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer">
+                  👥 ${labelB}
+                </button>
+              </div>
+            </div>
+
+            <!-- Parameter a: Rigidity -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span id="synastryPhaseLabelParamAName">${isEn ? `Rigidity (a · ${labelA} Resilience):` : `格局刚性 (a · ${labelA}抗压自持力):`}</span>
+                <span id="synastryPhaseLabelParamA" class="font-mono text-amber-400 font-bold">1.20</span>
+              </div>
+              <input type="range" id="synastryPhaseParamA" min="0.2" max="3.0" step="0.05" value="1.20" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Parameter b: Bifurcation -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span id="synastryPhaseLabelParamBName">${isEn ? `Bistability (b · ${labelA} Phase Leap):` : `双稳态分岔 (b · ${labelA}势能跃迁潜质):`}</span>
+                <span id="synastryPhaseLabelParamB" class="font-mono text-amber-400 font-bold">0.80</span>
+              </div>
+              <input type="range" id="synastryPhaseParamB" min="0.0" max="2.5" step="0.05" value="0.80" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Parameter c: Decadal Bias -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span id="synastryPhaseLabelParamCName">${isEn ? `Transit Bias (c · ${labelA} Momentum):` : `大运偏压 (c · ${labelA}岁运外部推力):`}</span>
+                <span id="synastryPhaseLabelParamC" class="font-mono text-amber-400 font-bold">0.00</span>
+              </div>
+              <input type="range" id="synastryPhaseParamC" min="-2.0" max="2.0" step="0.05" value="0.00" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Parameter gamma: Damping -->
+            <div class="space-y-1">
+              <div class="flex justify-between text-gray-300">
+                <span id="synastryPhaseLabelParamGammaName">${isEn ? `Damping (γ · ${labelA} Sanctuary):` : `耗散阻尼 (γ · ${labelA}印星缓冲护城河):`}</span>
+                <span id="synastryPhaseLabelParamGamma" class="font-mono text-amber-400 font-bold">0.38</span>
+              </div>
+              <input type="range" id="synastryPhaseParamGamma" min="0.1" max="1.0" step="0.02" value="0.38" class="w-full accent-amber-500 cursor-pointer">
+            </div>
+
+            <!-- Summary Diagnosis Box -->
+            <div id="synastryPhaseSummaryBox" class="p-2.5 rounded-lg bg-[#161824] border border-amber-900/30 text-[11px] text-gray-300 leading-relaxed font-sans space-y-1.5">
+              <!-- Dynamically populated via drawCurrentDualPhaseManifold -->
+            </div>
+
+            <!-- Mathematical & Metaphysical Rationale Collapsible -->
+            <details class="rounded-lg bg-black/40 border border-gray-800/80 p-2.5 text-[11px] text-gray-400 group">
+              <summary class="font-bold text-amber-300/90 hover:text-amber-200 cursor-pointer flex items-center justify-between select-none">
+                <span class="flex items-center gap-1.5">
+                  <span>📐</span>
+                  <span>${isEn ? 'Baseline Derivation & Mathematical Physics Mapping' : '基准推导与数理命理映射全解'}</span>
+                </span>
+                <span class="text-[10px] font-mono text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <div class="mt-2 space-y-2 leading-relaxed border-t border-gray-800/60 pt-2 text-[10.5px]">
+                <div>
+                  <span class="text-amber-400 font-mono font-bold">V(x) = (a/4)x⁴ - (b/2)x² - cx</span>
+                  <p class="mt-0.5 text-gray-300">${isEn ? 'Duffing bistable oscillator & Landau phase-transition potential. Origin x=0 at Ziping neutral 50 pts (x₀=(Score-50)/35).' : '达芬双稳态振子与朗道相变势能井模型，x以子平50分中和为基准原点 (x₀=(Score-50)/35)。'}</p>
+                </div>
+                <div class="space-y-1">
+                  <div><strong class="text-amber-300">a (${isEn ? 'Rigidity' : '刚度'}):</strong> <span>${isEn ? '0.85 + (|Score-50|/100)×0.80. Greater departure from neutral yields steeper well walls and higher resilience.' : '0.85 + (|Score-50|/100)×0.80。偏离中和越大抗形变自持力越强，井壁越陡峭。'}</span></div>
+                  <div><strong class="text-amber-300">b (${isEn ? 'Bifurcation' : '分岔'}):</strong> <span>${isEn ? '0.40 + (|Score-50|/50)×0.75. Spontaneous symmetry breaking generates double-well attractors for phase leaps.' : '0.40 + (|Score-50|/50)×0.75。自发对称破缺产生双井吸引子，决定跃迁爆发潜质。'}</span></div>
+                  <div><strong class="text-amber-300">c (${isEn ? 'Transit Bias' : '偏压'}):</strong> <span>${isEn ? '+0.45 for favorable transit, -0.45 for adverse transit. Tilts potential well toward expansion or consolidation.' : '喜用运+0.45，忌神运-0.45。破坏双井对称性，决定顺水推舟或承压筑底。'}</span></div>
+                  <div><strong class="text-amber-300">γ (${isEn ? 'Damping' : '阻尼'}):</strong> <span>${isEn ? 'Baseline constant 0.38. Represents resource sanctuary damping ensuring bounded energy convergence.' : '基准常数 0.38。对应印星护城河与耗散自愈比，确保能量收敛不发散。'}</span></div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
       `;
     } else if (directChronoEl) {
       directChronoEl.innerHTML = '';
@@ -15485,6 +15681,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const tlB = (data.trajectoryOverlap && data.trajectoryOverlap.timelineB && data.trajectoryOverlap.timelineB.length)
       ? data.trajectoryOverlap.timelineB
       : ((typeof LuckEngine !== 'undefined' && chartB) ? LuckEngine.calculateLuck(chartB).timeline : []);
+
+    // Initialize Dual Life-Chrono 3D Phase Space & Spiral Manifold
+    if (typeof initDualPhaseManifold === 'function') {
+      initDualPhaseManifold(chartA, chartB, isEn, labelA, labelB);
+    }
     if (typeof initDualChronoNavigator === 'function') {
       initDualChronoNavigator(tlA, tlB, chartA, chartB, isEn, labelA, labelB);
     }
@@ -15979,6 +16180,11 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       ${verdictHtml}
     `;
+
+    // Synchronize 3D Life-Chrono Spiral Manifold (Card 2)
+    if (typeof drawCurrentDualPhaseManifold === 'function' && cachedSynastryPhaseDerived) {
+      drawCurrentDualPhaseManifold(isEn);
+    }
   }
 
   function drawDualSynastryTimelineChart(isEn) {
@@ -16208,6 +16414,340 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof window !== 'undefined') {
     window.drawDualSynastryTimelineChart = drawDualSynastryTimelineChart;
     window.initDualChronoNavigator = initDualChronoNavigator;
+  }
+
+  // ==========================================================================
+  // Feature 3C: Dual Life-Chrono Phase Space & 3D Spiral Manifold (双人时空动力学相空间与生命螺旋流形)
+  // ==========================================================================
+
+  function initDualPhaseManifold(chartA, chartB, isEn, labelA, labelB) {
+    if (!chartA || !chartB || typeof PhasePortraitEngine === 'undefined') return;
+    cachedChartA = chartA;
+    cachedChartB = chartB;
+
+    if (labelA) synastryLabelACached = labelA;
+    else if (isEn) synastryLabelACached = 'Person A';
+    else synastryLabelACached = '甲造';
+
+    if (labelB) synastryLabelBCached = labelB;
+    else if (isEn) synastryLabelBCached = 'Person B';
+    else synastryLabelBCached = '乙造';
+
+    const nameA = (isEn && synastryLabelACached === '甲造') ? 'Person A' : synastryLabelACached;
+    const nameB = (isEn && synastryLabelBCached === '乙造') ? 'Person B' : synastryLabelBCached;
+
+    const luckA = (chartA._luckDecades && chartA._luckDecades.length)
+      ? chartA._luckDecades
+      : (typeof LuckEngine !== 'undefined' ? LuckEngine.calculateLuck(chartA).decades : []);
+    const luckB = (chartB._luckDecades && chartB._luckDecades.length)
+      ? chartB._luckDecades
+      : (typeof LuckEngine !== 'undefined' ? LuckEngine.calculateLuck(chartB).decades : []);
+
+    const curYear = new Date().getFullYear();
+    const ageA = (chartA.solarDate && chartA.solarDate.year) ? Math.max(1, Math.min(100, curYear - chartA.solarDate.year + 1)) : 30;
+    const ageB = (chartB.solarDate && chartB.solarDate.year) ? Math.max(1, Math.min(100, curYear - chartB.solarDate.year + 1)) : 30;
+
+    // 1. Derive both A and B 100-year trajectories and potential manifold parameters
+    cachedSynastryPhaseDerived = PhasePortraitEngine.deriveDualSpiralTrajectories(chartA, luckA, ageA, chartB, luckB, ageB);
+    if (!cachedSynastryPhaseDerived) return;
+
+    synastryParamsA = {
+      a: cachedSynastryPhaseDerived.derivedA.a,
+      b: cachedSynastryPhaseDerived.derivedA.b,
+      c: cachedSynastryPhaseDerived.derivedA.c,
+      gamma: cachedSynastryPhaseDerived.derivedA.gamma
+    };
+    synastryParamsB = {
+      a: cachedSynastryPhaseDerived.derivedB.a,
+      b: cachedSynastryPhaseDerived.derivedB.b,
+      c: cachedSynastryPhaseDerived.derivedB.c,
+      gamma: cachedSynastryPhaseDerived.derivedB.gamma
+    };
+
+    synastryActivePhaseTarget = 'A';
+
+    setupDualPhaseManifoldControls(isEn);
+    updateSynastryPhaseSlidersUI(isEn);
+    drawCurrentDualPhaseManifold(isEn);
+  }
+
+  function setupDualPhaseManifoldControls(isEn) {
+    const btnTargetA = document.getElementById('synastryPhaseTargetA');
+    const btnTargetB = document.getElementById('synastryPhaseTargetB');
+    const btnReset = document.getElementById('btnResetSynastryPhaseParams');
+
+    const sliderA = document.getElementById('synastryPhaseParamA');
+    const sliderB = document.getElementById('synastryPhaseParamB');
+    const sliderC = document.getElementById('synastryPhaseParamC');
+    const sliderGamma = document.getElementById('synastryPhaseParamGamma');
+
+    if (btnTargetA && !btnTargetA._hasListener) {
+      btnTargetA._hasListener = true;
+      btnTargetA.addEventListener('click', () => {
+        if (synastryActivePhaseTarget === 'A') return;
+        synastryActivePhaseTarget = 'A';
+        btnTargetA.className = 'px-2.5 py-0.5 rounded font-bold transition bg-amber-600 text-white shadow-xs cursor-pointer';
+        if (btnTargetB) btnTargetB.className = 'px-2.5 py-0.5 rounded font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer';
+        updateSynastryPhaseSlidersUI(currentLang === 'en');
+        drawCurrentDualPhaseManifold(currentLang === 'en');
+      });
+    }
+
+    if (btnTargetB && !btnTargetB._hasListener) {
+      btnTargetB._hasListener = true;
+      btnTargetB.addEventListener('click', () => {
+        if (synastryActivePhaseTarget === 'B') return;
+        synastryActivePhaseTarget = 'B';
+        btnTargetB.className = 'px-2.5 py-0.5 rounded font-bold transition bg-purple-600 text-white shadow-xs cursor-pointer';
+        if (btnTargetA) btnTargetA.className = 'px-2.5 py-0.5 rounded font-bold transition text-gray-400 hover:text-gray-200 cursor-pointer';
+        updateSynastryPhaseSlidersUI(currentLang === 'en');
+        drawCurrentDualPhaseManifold(currentLang === 'en');
+      });
+    }
+
+    const handleSliderChange = () => {
+      if (!cachedSynastryPhaseDerived) return;
+      const valA = parseFloat(sliderA?.value || 1.2);
+      const valB = parseFloat(sliderB?.value || 0.8);
+      const valC = parseFloat(sliderC?.value || 0.0);
+      const valGamma = parseFloat(sliderGamma?.value || 0.38);
+
+      const lblA = document.getElementById('synastryPhaseLabelParamA');
+      const lblB = document.getElementById('synastryPhaseLabelParamB');
+      const lblC = document.getElementById('synastryPhaseLabelParamC');
+      const lblGamma = document.getElementById('synastryPhaseLabelParamGamma');
+      if (lblA) lblA.textContent = valA.toFixed(2);
+      if (lblB) lblB.textContent = valB.toFixed(2);
+      if (lblC) lblC.textContent = valC.toFixed(2);
+      if (lblGamma) lblGamma.textContent = valGamma.toFixed(2);
+
+      if (synastryActivePhaseTarget === 'A') {
+        synastryParamsA = { a: valA, b: valB, c: valC, gamma: valGamma };
+        const scoreA = (cachedChartA && cachedChartA.zipingScore && typeof cachedChartA.zipingScore.totalScore === 'number')
+          ? cachedChartA.zipingScore.totalScore : 50.0;
+        const luckCyclesA = (cachedChartA && cachedChartA._luckDecades) || ((typeof LuckEngine !== 'undefined' && cachedChartA) ? ((LuckEngine.calculateLuck(cachedChartA) && LuckEngine.calculateLuck(cachedChartA).decades) || []) : []);
+        cachedSynastryPhaseDerived.derivedA.trajectoryPoints = PhasePortraitEngine.integrateTrajectory(valA, valB, valC, valGamma, scoreA, luckCyclesA);
+        cachedSynastryPhaseDerived.derivedA.a = valA;
+        cachedSynastryPhaseDerived.derivedA.b = valB;
+        cachedSynastryPhaseDerived.derivedA.c = valC;
+        cachedSynastryPhaseDerived.derivedA.gamma = valGamma;
+      } else {
+        synastryParamsB = { a: valA, b: valB, c: valC, gamma: valGamma };
+        const scoreB = (cachedChartB && cachedChartB.zipingScore && typeof cachedChartB.zipingScore.totalScore === 'number')
+          ? cachedChartB.zipingScore.totalScore : 50.0;
+        const luckCyclesB = (cachedChartB && cachedChartB._luckDecades) || ((typeof LuckEngine !== 'undefined' && cachedChartB) ? ((LuckEngine.calculateLuck(cachedChartB) && LuckEngine.calculateLuck(cachedChartB).decades) || []) : []);
+        cachedSynastryPhaseDerived.derivedB.trajectoryPoints = PhasePortraitEngine.integrateTrajectory(valA, valB, valC, valGamma, scoreB, luckCyclesB);
+        cachedSynastryPhaseDerived.derivedB.a = valA;
+        cachedSynastryPhaseDerived.derivedB.b = valB;
+        cachedSynastryPhaseDerived.derivedB.c = valC;
+        cachedSynastryPhaseDerived.derivedB.gamma = valGamma;
+      }
+
+      drawCurrentDualPhaseManifold(currentLang === 'en');
+    };
+
+    [sliderA, sliderB, sliderC, sliderGamma].forEach(slider => {
+      if (slider && !slider._hasListener) {
+        slider._hasListener = true;
+        slider.addEventListener('input', handleSliderChange);
+      }
+    });
+
+    if (btnReset && !btnReset._hasListener) {
+      btnReset._hasListener = true;
+      btnReset.addEventListener('click', () => {
+        if (cachedChartA && cachedChartB) {
+          initDualPhaseManifold(cachedChartA, cachedChartB, currentLang === 'en', synastryLabelACached, synastryLabelBCached);
+        }
+      });
+    }
+
+    const canvas = document.getElementById('synastryPhaseCanvas');
+    if (canvas && !canvas._hasListener) {
+      canvas._hasListener = true;
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        synastryPhaseHoverPos = {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+        drawCurrentDualPhaseManifold(currentLang === 'en');
+      });
+      canvas.addEventListener('mouseleave', () => {
+        synastryPhaseHoverPos = null;
+        drawCurrentDualPhaseManifold(currentLang === 'en');
+      });
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const plotLeft = 65;
+        const plotRight = rect.width - 45;
+        if (clickX >= plotLeft && clickX <= plotRight && synastryTimepoints && synastryTimepoints.length > 1) {
+          const u = (clickX - plotLeft) / (plotRight - plotLeft);
+          const targetAge = Math.max(1, Math.min(100, Math.round(1 + u * 99)));
+          let targetIdx = -1;
+          if (activeSynastryMode === 'age') {
+            targetIdx = synastryTimepoints.findIndex(p => p.age === targetAge);
+          } else {
+            const it = synastryTimelineA.find(d => d.age === targetAge);
+            if (it) targetIdx = synastryTimepoints.findIndex(p => p.year === it.year);
+          }
+          if (targetIdx !== -1 && typeof jumpToSynastryIndex === 'function') {
+            jumpToSynastryIndex(targetIdx);
+          }
+        }
+      });
+    }
+  }
+
+  function updateSynastryPhaseSlidersUI(isEn) {
+    const params = (synastryActivePhaseTarget === 'A') ? synastryParamsA : synastryParamsB;
+    const nameA = (isEn && (!synastryLabelACached || synastryLabelACached === '甲造')) ? 'Person A' : (synastryLabelACached || '甲造');
+    const nameB = (isEn && (!synastryLabelBCached || synastryLabelBCached === '乙造')) ? 'Person B' : (synastryLabelBCached || '乙造');
+    const activeLabel = (synastryActivePhaseTarget === 'A') ? nameA : nameB;
+
+    const sliderA = document.getElementById('synastryPhaseParamA');
+    const sliderB = document.getElementById('synastryPhaseParamB');
+    const sliderC = document.getElementById('synastryPhaseParamC');
+    const sliderGamma = document.getElementById('synastryPhaseParamGamma');
+
+    const lblA = document.getElementById('synastryPhaseLabelParamA');
+    const lblB = document.getElementById('synastryPhaseLabelParamB');
+    const lblC = document.getElementById('synastryPhaseLabelParamC');
+    const lblGamma = document.getElementById('synastryPhaseLabelParamGamma');
+
+    if (sliderA) sliderA.value = String(params.a);
+    if (sliderB) sliderB.value = String(params.b);
+    if (sliderC) sliderC.value = String(params.c);
+    if (sliderGamma) sliderGamma.value = String(params.gamma);
+
+    if (lblA) lblA.textContent = params.a.toFixed(2);
+    if (lblB) lblB.textContent = params.b.toFixed(2);
+    if (lblC) lblC.textContent = params.c.toFixed(2);
+    if (lblGamma) lblGamma.textContent = params.gamma.toFixed(2);
+
+    const lblNameA = document.getElementById('synastryPhaseLabelParamAName');
+    const lblNameB = document.getElementById('synastryPhaseLabelParamBName');
+    const lblNameC = document.getElementById('synastryPhaseLabelParamCName');
+    const lblNameG = document.getElementById('synastryPhaseLabelParamGammaName');
+
+    if (lblNameA) lblNameA.textContent = isEn ? `Rigidity (a · ${activeLabel} Resilience):` : `格局刚性 (a · ${activeLabel}抗压自持力):`;
+    if (lblNameB) lblNameB.textContent = isEn ? `Bistability (b · ${activeLabel} Phase Leap):` : `双稳态分岔 (b · ${activeLabel}势能跃迁潜质):`;
+    if (lblNameC) lblNameC.textContent = isEn ? `Transit Bias (c · ${activeLabel} Momentum):` : `大运偏压 (c · ${activeLabel}岁运外部推力):`;
+    if (lblNameG) lblNameG.textContent = isEn ? `Damping (γ · ${activeLabel} Sanctuary):` : `耗散阻尼 (γ · ${activeLabel}印星缓冲护城河):`;
+  }
+
+  function drawCurrentDualPhaseManifold(isEn) {
+    if (!cachedSynastryPhaseDerived || typeof PhasePortraitEngine === 'undefined') return;
+    const canvas = document.getElementById('synastryPhaseCanvas');
+    if (!canvas) return;
+
+    const pt = (synastryTimepoints && synastryTimepoints[activeSynastryIndex]) || null;
+    let activeAgeA = 30;
+    let activeAgeB = 30;
+
+    if (pt) {
+      if (pt.type === 'year') {
+        if (pt.itemA && pt.itemA.age) {
+          activeAgeA = pt.itemA.age;
+        } else if (cachedChartA && cachedChartA.solarDate && cachedChartA.solarDate.year) {
+          activeAgeA = Math.max(1, Math.min(100, pt.year - cachedChartA.solarDate.year + 1));
+        }
+        if (pt.itemB && pt.itemB.age) {
+          activeAgeB = pt.itemB.age;
+        } else if (cachedChartB && cachedChartB.solarDate && cachedChartB.solarDate.year) {
+          activeAgeB = Math.max(1, Math.min(100, pt.year - cachedChartB.solarDate.year + 1));
+        }
+      } else {
+        activeAgeA = pt.age || 30;
+        activeAgeB = pt.age || 30;
+      }
+    }
+
+    const isDark = (typeof document !== 'undefined' && document.body && document.body.classList && typeof document.body.classList.contains === 'function')
+      ? !document.body.classList.contains('light-theme')
+      : true;
+
+    const nameA = (isEn && (!synastryLabelACached || synastryLabelACached === '甲造')) ? 'Person A' : (synastryLabelACached || '甲造');
+    const nameB = (isEn && (!synastryLabelBCached || synastryLabelBCached === '乙造')) ? 'Person B' : (synastryLabelBCached || '乙造');
+
+    PhasePortraitEngine.renderDualSpiralManifold(
+      canvas,
+      cachedSynastryPhaseDerived.derivedA,
+      cachedSynastryPhaseDerived.derivedB,
+      activeAgeA,
+      activeAgeB,
+      nameA,
+      nameB,
+      isDark,
+      isEn ? 'en' : 'zh',
+      synastryPhaseHoverPos
+    );
+
+    // Update diagnosis summary box
+    const trajA = cachedSynastryPhaseDerived.derivedA.trajectoryPoints;
+    const trajB = cachedSynastryPhaseDerived.derivedB.trajectoryPoints;
+    const ptA = trajA.find(p => p.age === activeAgeA) || trajA[Math.min(activeAgeA - 1, trajA.length - 1)] || trajA[0];
+    const ptB = trajB.find(p => p.age === activeAgeB) || trajB[Math.min(activeAgeB - 1, trajB.length - 1)] || trajB[0];
+
+    const isAscA = ptA.v >= 0;
+    const isAscB = ptB.v >= 0;
+
+    const isTargetA = (synastryActivePhaseTarget === 'A');
+    const curTargetParams = isTargetA ? synastryParamsA : synastryParamsB;
+    const curTargetName = isTargetA ? nameA : nameB;
+    const curTargetAge = isTargetA ? activeAgeA : activeAgeB;
+    const curTargetPt = isTargetA ? ptA : ptB;
+    const curTargetAsc = isTargetA ? isAscA : isAscB;
+
+    const summaryBox = document.getElementById('synastryPhaseSummaryBox');
+    if (summaryBox) {
+      const singleDiagnose = isEn
+        ? `System rigidity a=${curTargetParams.a.toFixed(2)}, bifurcation b=${curTargetParams.b.toFixed(2)}, transit bias c=${curTargetParams.c.toFixed(2)}. ${curTargetName} is currently age ${curTargetAge}, situated in [${curTargetAsc ? 'Spiral Ascent 🔺' : 'Grounding & Consolidation 🔻'}] (x=${curTargetPt.x}, v=${curTargetPt.v}).`
+        : `系统刚度 a=${curTargetParams.a.toFixed(2)}，双稳态分岔 b=${curTargetParams.b.toFixed(2)}，岁运外场 c=${curTargetParams.c.toFixed(2)}。${curTargetName}当前 ${curTargetAge}岁，处于【${curTargetAsc ? '螺旋上升跃迁期 🔺' : '筑底蓄势修整期 🔻'}】(x=${curTargetPt.x}, v=${curTargetPt.v})。`;
+
+      let jointBadgeZh = '';
+      let jointBadgeEn = '';
+      let jointBadgeCls = '';
+      let jointDescZh = '';
+      let jointDescEn = '';
+
+      if (isAscA && isAscB) {
+        jointBadgeZh = '🌟 双星合耀 · 协同爆发';
+        jointBadgeEn = '🌟 Dual Apex Surge';
+        jointBadgeCls = 'bg-emerald-950/80 text-emerald-300 border-emerald-600/40';
+        jointDescZh = `两造此阶段同时处于螺旋势能上升轨道（${nameA} v=+${Math.abs(ptA.v).toFixed(3)} / ${nameB} v=+${Math.abs(ptB.v).toFixed(3)}），双井势能同频共振，极利并肩开拓攻坚。`;
+        jointDescEn = `Both charts ascend their potential spirals simultaneously (${nameA} v=+${Math.abs(ptA.v).toFixed(3)} / ${nameB} v=+${Math.abs(ptB.v).toFixed(3)}), producing optimal resonant propulsion for mutual breakthroughs.`;
+      } else if (!isAscA && !isAscB) {
+        jointBadgeZh = '🧘 同舟共济 · 蓄能守成';
+        jointBadgeEn = '🧘 Joint Grounding';
+        jointBadgeCls = 'bg-indigo-950/80 text-indigo-300 border-indigo-600/40';
+        jointDescZh = `两造此时双双运行至势能井底部蓄能区间（${nameA} v=-${Math.abs(ptA.v).toFixed(3)} / ${nameB} v=-${Math.abs(ptB.v).toFixed(3)}），宜守正内修，互予情绪支持与安全垫，静待下一轮周期破局。`;
+        jointDescEn = `Both charts navigate the consolidation trough (${nameA} v=-${Math.abs(ptA.v).toFixed(3)} / ${nameB} v=-${Math.abs(ptB.v).toFixed(3)}). Fortify internal reserves and mutual security before the next ascent.`;
+      } else {
+        jointBadgeZh = '🛡️ 一进一退 · 攻守托底';
+        jointBadgeEn = '🛡️ Dynamic Counterbalance';
+        jointBadgeCls = 'bg-sky-950/80 text-sky-300 border-sky-600/40';
+        const advName = isAscA ? nameA : nameB;
+        const supName = isAscA ? nameB : nameA;
+        jointDescZh = `${advName} 处于螺旋跃迁破局位，${supName} 处于筑底防守压舱位，形成天然的动力吸振与风险缓冲护城河。`;
+        jointDescEn = `${advName} surges on the ascendant wave while ${supName} secures the foundation, creating a natural dynamic absorber and risk buffer.`;
+      }
+
+      summaryBox.innerHTML = `
+        <div class="leading-relaxed text-gray-200">${singleDiagnose}</div>
+        <div class="pt-1.5 border-t border-amber-900/30 flex items-center justify-between text-[10px]">
+          <span class="text-amber-400 font-bold">${isEn ? 'Dual Dynamic Resonance:' : '双星时空动力态势:'}</span>
+          <span class="px-1.5 py-0.5 rounded font-bold border ${jointBadgeCls}">${isEn ? jointBadgeEn : jointBadgeZh}</span>
+        </div>
+        <div class="text-[10.5px] text-gray-400 leading-snug">${isEn ? jointDescEn : jointDescZh}</div>
+      `;
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.initDualPhaseManifold = initDualPhaseManifold;
+    window.drawCurrentDualPhaseManifold = drawCurrentDualPhaseManifold;
   }
 
   // ==========================================================================
@@ -16616,6 +17156,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('')}
               </tbody>
             </table>
+            <!-- 10.2 Phase Space & Potential Well Coupling in Dossier -->
+            <div class="mt-1 p-1 rounded bg-white/70 border border-amber-900/20 text-[8px] space-y-0.5">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span>🌀 ${isEn ? 'Dual Life-Chrono Phase Space & Potential Well Coupling' : '双人时空动力学相空间与势能流形耦合分析'}</span>
+                <span class="font-mono text-[7px] text-amber-900 font-bold">V(x) = (a/4)x⁴ - (b/2)x² - cx</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1 text-[7.5px] font-mono text-gray-800">
+                <div><b class="text-amber-950">${labelA}:</b> a=${(0.85 + Math.abs((cachedChartA?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}, b=${(0.40 + Math.abs((cachedChartA?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}, γ=0.38</div>
+                <div><b class="text-purple-950">${labelB}:</b> a=${(0.85 + Math.abs((cachedChartB?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}, b=${(0.40 + Math.abs((cachedChartB?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}, γ=0.38</div>
+              </div>
+              <p class="text-[7.5px] text-gray-700 leading-tight">
+                ${isEn
+                  ? 'Non-linear potential manifold confirms synergistic equilibrium: complementary dissipation buffers systemic risks while preserving dynamic autonomy.'
+                  : '双井势能流形显示两造具有稳健的非线性耦合基底，互补阻尼形成动态减振护城河，避免双双陷入势能极值陷阱。'}
+              </p>
+            </div>
           </div>
           ` : ''}
 

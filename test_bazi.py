@@ -716,7 +716,7 @@ var document = {
           return {
             clearRect: function(){}, beginPath: function(){}, closePath: function(){},
             moveTo: function(){}, lineTo: function(){}, stroke: function(){}, fill: function(){},
-            fillRect: function(){}, quadraticCurveTo: function(){}, setLineDash: function(){},
+            fillRect: function(){}, rect: function(){}, roundRect: function(){}, quadraticCurveTo: function(){}, setLineDash: function(){},
             createLinearGradient: function(){ return { addColorStop: function(){} }; },
             createRadialGradient: function(){ return { addColorStop: function(){} }; },
             arc: function(){}, fillText: function(){}, measureText: function(){ return { width: 10 }; },
@@ -1032,6 +1032,33 @@ if (typeof renderTianjiCalendarFeed === 'function') {
   var evListHtml = document.getElementById('tianjiEventsList') ? document.getElementById('tianjiEventsList').innerHTML : '';
   if (!evListHtml.includes('btn-single-ics') || (!evListHtml.includes('Google Cal') && !evListHtml.includes('Google 日历'))) {
     throw new Error("tianjiEventsList missing single-event actions or Google Cal buttons");
+  }
+}
+
+// Test Synastry Dual 3D Phase Space & Spiral Manifold (Feature 3C)
+if (typeof window.initDualPhaseManifold === 'function') {
+  var synChartA = BaZiEngine.calculate({ year: 1988, month: 10, day: 24, hour: 14, minute: 30, gender: '乾造', useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+  var synChartB = BaZiEngine.calculate({ year: 1990, month: 5, day: 15, hour: 10, minute: 0, gender: '坤造', useTrueSolarTime: false, isLateRatNextDay: false, longitude: 116.4, timezone: 8.0 });
+  window.initDualPhaseManifold(synChartA, synChartB, false, '甲造', '乙造');
+  var synSummary = document.getElementById('synastryPhaseSummaryBox') ? document.getElementById('synastryPhaseSummaryBox').innerHTML : '';
+  if (!synSummary.includes('系统刚度') || !synSummary.includes('双稳态分岔')) {
+    throw new Error('Synastry phase summary box failed to populate with dynamic system diagnosis');
+  }
+  var pA = document.getElementById('synastryPhaseParamA');
+  pA.value = '1.85';
+  if (pA._h && pA._h['input']) pA._h['input'].forEach(function(fn) { fn(); });
+  var lA = document.getElementById('synastryPhaseLabelParamA') ? document.getElementById('synastryPhaseLabelParamA').textContent : '';
+  if (lA !== '1.85') throw new Error('Synastry param A label failed to update: ' + lA);
+
+  var tB = document.getElementById('synastryPhaseTargetB');
+  if (tB && typeof tB.click === 'function') tB.click();
+  var nlA = document.getElementById('synastryPhaseLabelParamAName') ? document.getElementById('synastryPhaseLabelParamAName').textContent : '';
+  if (!nlA.includes('乙造')) throw new Error('Target switcher failed to update label for Person B: ' + nlA);
+
+  window.initDualPhaseManifold(synChartA, synChartB, true, 'Person A', 'Person B');
+  var enSummary = document.getElementById('synastryPhaseSummaryBox') ? document.getElementById('synastryPhaseSummaryBox').innerHTML : '';
+  if (!enSummary.includes('System rigidity') || /[\\u4e00-\\u9fa5]/.test(enSummary)) {
+    throw new Error('English synastry phase summary box has CJK leakage or missing text');
   }
 }
 """
