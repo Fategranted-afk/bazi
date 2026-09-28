@@ -15236,216 +15236,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
       ` : ''}
-
-      <!-- Section 10: Lifelong Trajectory Overlap & Decennial Synchronization -->
-      ${data.trajectoryOverlap ? `
-      <div id="synastryTrajectoryReportSection" class="p-5 rounded-2xl bg-gradient-to-br from-emerald-950/30 via-black/50 to-teal-950/20 border border-emerald-500/40 shadow-xl space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-emerald-800/40 pb-2.5">
-          <div class="flex items-center gap-2">
-            <span class="text-xl">⏳</span>
-            <div>
-              <h5 class="text-sm sm:text-base font-bold text-emerald-200 font-serif-sc flex items-center gap-2">
-                <span>${isEn ? '10. Dual Lifelong Trajectory & Energy Comparison' : '10. 双人百岁岁运能量活力与财富潮汐全景对比'}</span>
-                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono font-bold">${data.trajectoryOverlap.synchronizationIndex}% ${isEn ? 'Overlap' : '轨迹重合'}</span>
-              </h5>
-              <p class="text-xs text-gray-400 mt-0.5">
-                ${isEn ? 'Dual 100-year continuous energy deduction & wealth tide comparison in a unified temporal coordinate space' : '先后推演甲乙两造百岁能量与财富潮汐，并在同一时空坐标系下同频对照，洞悉彼此高光共振与托底互补'}
-              </p>
-            </div>
-          </div>
-          <button type="button" onclick="document.getElementById('synastryChronoDirectSection')?.scrollIntoView({behavior: 'smooth'})" class="px-3 py-1.5 rounded-lg bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-200 border border-emerald-500/40 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
-            <span>🕹️</span>
-            <span>${isEn ? 'Interactive Navigator Above' : '前往顶部交互推演操控台'}</span>
-          </button>
-        </div>
-
-        <p class="text-xs text-gray-200 leading-relaxed font-serif-sc">${data.trajectoryOverlap.summary}</p>
-
-        <!-- Static High-Definition Trajectory Sparkline Curve In Full Dossier -->
-        <div class="p-3 rounded-xl bg-black/40 border border-gray-800 space-y-2">
-          <div class="flex items-center justify-between text-xs text-emerald-300 font-serif-sc">
-            <span>${isEn ? 'Unified 100-Year Life Trajectory & Wealth Waves' : '百岁双人运势轨迹与财富潮汐全景曲线'}</span>
-            <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Person A (Solid) vs Person B (Dashed)' : `${labelA} (实线) vs ${labelB} (虚线)`}</span>
-          </div>
-          ${generateDualTrajectorySvg(
-            data.trajectoryOverlap.timelineA || (typeof LuckEngine !== 'undefined' && chartA ? LuckEngine.calculateLuck(chartA).timeline : []),
-            data.trajectoryOverlap.timelineB || (typeof LuckEngine !== 'undefined' && chartB ? LuckEngine.calculateLuck(chartB).timeline : []),
-            labelA,
-            labelB,
-            isEn
-          )}
-        </div>
-
-        <!-- 10.2 Spacetime Dynamics & Dual Potential Well Coupling -->
-        <div class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
-            <div class="flex items-center gap-2">
-              <span class="text-base">🌀</span>
-              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? '10.2 Dual Life-Chrono Phase Space & Potential Well Coupling' : '10.2 双人时空动力学相空间与势能流形耦合分析'}</span>
-            </div>
-            <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">V(x) = (a/4)x⁴ - (b/2)x² - cx</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 rounded-lg bg-[#141724] border border-amber-500/20 space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5"><span>👤</span><span>${labelA}</span></span>
-                <span class="text-[10px] font-mono text-gray-400">Score: ${(chartA?.zipingScore?.totalScore || 50).toFixed(1)}</span>
-              </div>
-              <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-300 font-mono">
-                <div>a (${isEn ? 'Rigidity' : '刚度'}): <b class="text-amber-400">${(0.85 + Math.abs((chartA?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}</b></div>
-                <div>b (${isEn ? 'Bifurcation' : '分岔'}): <b class="text-amber-400">${(0.40 + Math.abs((chartA?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}</b></div>
-                <div>c (${isEn ? 'Transit' : '偏压'}): <b class="text-amber-400">±0.45</b></div>
-                <div>γ (${isEn ? 'Damping' : '阻尼'}): <b class="text-amber-400">0.38</b></div>
-              </div>
-            </div>
-            <div class="p-3 rounded-lg bg-[#141724] border border-purple-500/20 space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5"><span>👥</span><span>${labelB}</span></span>
-                <span class="text-[10px] font-mono text-gray-400">Score: ${(chartB?.zipingScore?.totalScore || 50).toFixed(1)}</span>
-              </div>
-              <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-300 font-mono">
-                <div>a (${isEn ? 'Rigidity' : '刚度'}): <b class="text-purple-400">${(0.85 + Math.abs((chartB?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}</b></div>
-                <div>b (${isEn ? 'Bifurcation' : '分岔'}): <b class="text-purple-400">${(0.40 + Math.abs((chartB?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}</b></div>
-                <div>c (${isEn ? 'Transit' : '偏压'}): <b class="text-purple-400">±0.45</b></div>
-                <div>γ (${isEn ? 'Damping' : '阻尼'}): <b class="text-purple-400">0.38</b></div>
-              </div>
-            </div>
-          </div>
-          ${(cachedSynastryPhaseDerived && cachedSynastryPhaseDerived.derivedA?.extrema && cachedSynastryPhaseDerived.derivedB?.extrema) ? `
-          <div class="p-2.5 rounded-lg bg-black/50 border border-amber-500/20 grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10.5px] font-mono text-gray-300">
-            <div class="space-y-0.5">
-              <div class="flex items-center justify-between">
-                <span class="text-amber-300 font-serif-sc font-bold">👑 ${labelA} (30~70y):</span>
-                <span class="text-[9.5px] text-gray-400 font-sans">${isEn ? '3 Wave Cycles' : '三波峰谷'}</span>
-              </div>
-              <div class="text-[10px] text-amber-400 font-semibold leading-tight">
-                ${cachedSynastryPhaseDerived.derivedA.extrema.pairs
-                  ? cachedSynastryPhaseDerived.derivedA.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'Pk' : '高'}${p.peak.age}y/${isEn ? 'Tr' : '低'}${p.trough.age}y]`).join(' ')
-                  : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y`}
-              </div>
-            </div>
-            <div class="space-y-0.5">
-              <div class="flex items-center justify-between">
-                <span class="text-purple-300 font-serif-sc font-bold">👑 ${labelB} (30~70y):</span>
-                <span class="text-[9.5px] text-gray-400 font-sans">${isEn ? '3 Wave Cycles' : '三波峰谷'}</span>
-              </div>
-              <div class="text-[10px] text-purple-400 font-semibold leading-tight">
-                ${cachedSynastryPhaseDerived.derivedB.extrema.pairs
-                  ? cachedSynastryPhaseDerived.derivedB.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'Pk' : '高'}${p.peak.age}y/${isEn ? 'Tr' : '低'}${p.trough.age}y]`).join(' ')
-                  : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y`}
-              </div>
-            </div>
-          </div>
-          ` : ''}
-          <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
-            ${isEn
-              ? 'By mapping Ziping vitality scores onto non-linear Duffing potential wells, the dual phase trajectories reveal how both parties exchange kinetic and potential energy across 100 years. Their dynamic coupling prevents catastrophic bifurcations while preserving autonomous momentum.'
-              : '将子平五行旺衰映射至非线性达芬双稳态势能井，两造生命相轨迹在同一时空相空间中交织运行。势能井的刚度与分岔深度决定了两造在重大外部冲击下的系统自持力，互补阻尼确保整体协作不出现发散性共振崩溃。'}
-          </p>
-        </div>
-
-        <!-- Decennial Milestones Table -->
-        <div class="pt-2 border-t border-gray-800/80">
-          <div class="text-xs font-bold text-emerald-300 font-serif-sc mb-2 flex items-center justify-between">
-            <span>${isEn ? 'Decennial Synchronization Milestones Ledger' : '岁运大运交接共振全景表'}</span>
-            <span class="text-[10px] text-gray-400 font-mono">${isEn ? '6 Key Life Phases' : '六大人生命运阶梯'}</span>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-xs text-center border-collapse">
-              <thead>
-                <tr class="text-gray-400 border-b border-gray-800">
-                  <th class="py-2 text-left">${isEn ? 'Age Span' : '年龄跨度'}</th>
-                  <th class="py-2">${labelA} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
-                  <th class="py-2 border-l border-gray-800">${labelB} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
-                  <th class="py-2 border-l border-gray-800">${isEn ? 'Synergy Phase' : '同频评级'}</th>
-                  <th class="py-2 text-left border-l border-gray-800 pl-3">${isEn ? 'Decennial Strategic Directive' : '岁运共振推演定论'}</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-800/60 font-serif-sc">
-                ${data.trajectoryOverlap.milestones.map(m => `
-                  <tr class="hover:bg-white/5 transition">
-                    <td class="py-2.5 text-left font-bold text-amber-200/90 whitespace-nowrap">${m.ageSpan}</td>
-                    <td class="py-2.5 font-mono text-amber-300">${m.pillarA.text} <span class="text-[10px] text-gray-400">(${m.pillarA.score}${isEn ? 'pts' : '分'})</span></td>
-                    <td class="py-2.5 border-l border-gray-800 font-mono text-purple-300">${m.pillarB.text} <span class="text-[10px] text-gray-400">(${m.pillarB.score}${isEn ? 'pts' : '分'})</span></td>
-                    <td class="py-2.5 border-l border-gray-800 whitespace-nowrap">
-                      <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.phaseType === 'peak_resonance' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : (m.phaseType === 'counterbalance_support' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40' : 'bg-gray-700/40 text-gray-300 border border-gray-600/40')}">
-                        ${m.phaseBadge}
-                      </span>
-                    </td>
-                    <td class="py-2.5 text-left border-l border-gray-800 pl-3 text-gray-300 text-[11px] leading-tight">${m.verdict}</td>
-                  </tr>
-                `).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      ` : ''}
-
-      <!-- Section 11: Life Focal Priorities & Core Values 5D Profile -->
-      ${data.lifePriorities ? `
-      <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-950/30 via-black/50 to-amber-950/20 border border-rose-500/40 shadow-xl space-y-4">
-        <div class="flex items-center justify-between border-b border-rose-800/40 pb-2.5">
-          <div class="flex items-center gap-2">
-            <span class="text-base">🧭</span>
-            <h5 class="text-sm font-bold text-rose-200 font-serif-sc">${isEn ? '11. Life Focal Priorities & Core Values 5D Profile' : '11. 人生侧重点与核心价值观五维图谱'}</h5>
-            <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">${data.lifePriorities.alignmentScore}% ${isEn ? 'Alignment' : '共鸣契合'}</span>
-          </div>
-          <span class="chinese-seal text-[10px] py-0 border-rose-500 text-rose-300">${isEn ? 'VALUES' : '五维取向'}</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-          <div class="p-3 rounded-xl bg-black/40 border border-amber-500/30 flex items-center justify-between">
-            <span class="text-gray-300">👤 ${labelA} ${isEn ? 'Top Priority Anchor' : '第一核心人生侧重点'}:</span>
-            <b class="text-amber-300 font-serif-sc">${data.lifePriorities.topPriorityA.name} (${data.lifePriorities.topPriorityA.score}${isEn ? 'pts' : '分'})</b>
-          </div>
-          <div class="p-3 rounded-xl bg-black/40 border border-purple-500/30 flex items-center justify-between">
-            <span class="text-gray-300">👥 ${labelB} ${isEn ? 'Top Priority Anchor' : '第一核心人生侧重点'}:</span>
-            <b class="text-purple-300 font-serif-sc">${data.lifePriorities.topPriorityB.name} (${data.lifePriorities.topPriorityB.score}${isEn ? 'pts' : '分'})</b>
-          </div>
-        </div>
-
-        <div class="space-y-2.5 text-xs">
-          ${data.lifePriorities.dimensions.map(dim => `
-            <div class="p-3 rounded-xl bg-black/40 border border-gray-800 space-y-1.5">
-              <div class="flex flex-wrap items-center justify-between gap-1 text-[11px]">
-                <span class="font-bold text-gray-200 font-serif-sc">${dim.name}</span>
-                <span class="px-2 py-0.2 rounded text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/30 font-mono">${dim.status}</span>
-              </div>
-              <p class="text-[10px] text-gray-400 font-serif-sc">${dim.desc}</p>
-              <div class="grid grid-cols-2 gap-3 pt-1">
-                <div>
-                  <div class="flex justify-between text-[10px] text-gray-400 font-mono">
-                    <span>${labelA}</span>
-                    <span>${dim.scoreA}%</span>
-                  </div>
-                  <div class="w-full bg-gray-800 rounded-full h-1.5 mt-0.5">
-                    <div class="bg-amber-500 h-1.5 rounded-full" style="width: ${dim.scoreA}%"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between text-[10px] text-gray-400 font-mono">
-                    <span>${labelB}</span>
-                    <span>${dim.scoreB}%</span>
-                  </div>
-                  <div class="w-full bg-gray-800 rounded-full h-1.5 mt-0.5">
-                    <div class="bg-purple-500 h-1.5 rounded-full" style="width: ${dim.scoreB}%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/30 to-black/50 border border-amber-500/30 text-xs font-serif-sc space-y-1">
-          <div class="font-bold text-amber-200 flex items-center gap-1.5">
-            <span>⚖️</span><span>${isEn ? 'Core Value Harmony Protocol & Demarcation Rule' : '价值观调和总则与相处协议'}</span>
-          </div>
-          <p class="text-gray-200 leading-relaxed">${data.lifePriorities.harmonyProtocol}</p>
-        </div>
-      </div>
-      ` : ''}
     `;
+
+    // Ensure phase parameters are derived so that 10.2 card has extrema data
+    if (!cachedSynastryPhaseDerived && typeof PhasePortraitEngine !== 'undefined' && chartA && chartB) {
+      const luckA = (typeof LuckEngine !== 'undefined' ? LuckEngine.calculateLuck(chartA).decades : []);
+      const luckB = (typeof LuckEngine !== 'undefined' ? LuckEngine.calculateLuck(chartB).decades : []);
+      const curYear = new Date().getFullYear();
+      const ageA = (chartA.solarDate && chartA.solarDate.year) ? Math.max(1, Math.min(100, curYear - chartA.solarDate.year + 1)) : 30;
+      const ageB = (chartB.solarDate && chartB.solarDate.year) ? Math.max(1, Math.min(100, curYear - chartB.solarDate.year + 1)) : 30;
+      cachedSynastryPhaseDerived = PhasePortraitEngine.deriveDualSpiralTrajectories(chartA, luckA, ageA, chartB, luckB, ageB);
+    }
 
     // Populate direct Chrono Navigator section placed right below calculate button
     const directChronoEl = document.getElementById('synastryChronoDirectSection');
@@ -15551,6 +15352,174 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="synastryChronoSpotlightCard" class="space-y-3">
           <!-- Dynamically populated via updateDualChronoDisplay -->
         </div>
+
+        <!-- 10.2 Spacetime Dynamics & Dual Potential Well Coupling -->
+        <div id="synastryTrajectoryReportSection" class="p-4 rounded-xl bg-black/40 border border-amber-500/30 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🌀</span>
+              <span class="text-xs font-bold text-amber-200 font-serif-sc">${isEn ? '10.2 Dual Life-Chrono Phase Space & Potential Well Coupling' : '10.2 双人时空动力学相空间与势能流形耦合分析'}</span>
+            </div>
+            <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">V(x) = (a/4)x⁴ - (b/2)x² - cx</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-lg bg-[#141724] border border-amber-500/20 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-amber-300 font-serif-sc flex items-center gap-1.5"><span>👤</span><span>${labelA}</span></span>
+                <span class="text-[10px] font-mono text-gray-400">Score: ${(chartA?.zipingScore?.totalScore || 50).toFixed(1)}</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-300 font-mono">
+                <div>a (${isEn ? 'Rigidity' : '刚度'}): <b class="text-amber-400">${(0.85 + Math.abs((chartA?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}</b></div>
+                <div>b (${isEn ? 'Bifurcation' : '分岔'}): <b class="text-amber-400">${(0.40 + Math.abs((chartA?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}</b></div>
+                <div>c (${isEn ? 'Transit' : '偏压'}): <b class="text-amber-400">±0.45</b></div>
+                <div>γ (${isEn ? 'Damping' : '阻尼'}): <b class="text-amber-400">0.38</b></div>
+              </div>
+            </div>
+            <div class="p-3 rounded-lg bg-[#141724] border border-purple-500/20 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-purple-300 font-serif-sc flex items-center gap-1.5"><span>👥</span><span>${labelB}</span></span>
+                <span class="text-[10px] font-mono text-gray-400">Score: ${(chartB?.zipingScore?.totalScore || 50).toFixed(1)}</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[10.5px] text-gray-300 font-mono">
+                <div>a (${isEn ? 'Rigidity' : '刚度'}): <b class="text-purple-400">${(0.85 + Math.abs((chartB?.zipingScore?.totalScore || 50) - 50) * 0.008).toFixed(2)}</b></div>
+                <div>b (${isEn ? 'Bifurcation' : '分岔'}): <b class="text-purple-400">${(0.40 + Math.abs((chartB?.zipingScore?.totalScore || 50) - 50) * 0.015).toFixed(2)}</b></div>
+                <div>c (${isEn ? 'Transit' : '偏压'}): <b class="text-purple-400">±0.45</b></div>
+                <div>γ (${isEn ? 'Damping' : '阻尼'}): <b class="text-purple-400">0.38</b></div>
+              </div>
+            </div>
+          </div>
+          ${(cachedSynastryPhaseDerived && cachedSynastryPhaseDerived.derivedA?.extrema && cachedSynastryPhaseDerived.derivedB?.extrema) ? `
+          <div class="p-2.5 rounded-lg bg-black/50 border border-amber-500/20 grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10.5px] font-mono text-gray-300">
+            <div class="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <span class="text-amber-300 font-serif-sc font-bold">👑 ${labelA} (30~70y):</span>
+                <span class="text-[9.5px] text-gray-400 font-sans">${isEn ? '3 Wave Cycles' : '三波峰谷'}</span>
+              </div>
+              <div class="text-[10px] text-amber-400 font-semibold leading-tight">
+                ${cachedSynastryPhaseDerived.derivedA.extrema.pairs
+                  ? cachedSynastryPhaseDerived.derivedA.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'Pk' : '高'}${p.peak.age}y/${isEn ? 'Tr' : '低'}${p.trough.age}y]`).join(' ')
+                  : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedA.extrema.peak.age}y · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedA.extrema.trough.age}y`}
+              </div>
+            </div>
+            <div class="space-y-0.5">
+              <div class="flex items-center justify-between">
+                <span class="text-purple-300 font-serif-sc font-bold">👑 ${labelB} (30~70y):</span>
+                <span class="text-[9.5px] text-gray-400 font-sans">${isEn ? '3 Wave Cycles' : '三波峰谷'}</span>
+              </div>
+              <div class="text-[10px] text-purple-400 font-semibold leading-tight">
+                ${cachedSynastryPhaseDerived.derivedB.extrema.pairs
+                  ? cachedSynastryPhaseDerived.derivedB.extrema.pairs.map((p, idx) => `[${['①','②','③'][idx] || ''}${isEn ? 'Pk' : '高'}${p.peak.age}y/${isEn ? 'Tr' : '低'}${p.trough.age}y]`).join(' ')
+                  : `${isEn ? 'Peak' : '高点'} ${cachedSynastryPhaseDerived.derivedB.extrema.peak.age}y · ${isEn ? 'Trough' : '低点'} ${cachedSynastryPhaseDerived.derivedB.extrema.trough.age}y`}
+              </div>
+            </div>
+          </div>
+          ` : ''}
+          <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+            ${isEn
+              ? 'By mapping Ziping vitality scores onto non-linear Duffing potential wells, the dual phase trajectories reveal how both parties exchange kinetic and potential energy across 100 years. Their dynamic coupling prevents catastrophic bifurcations while preserving autonomous momentum.'
+              : '将子平五行旺衰映射至非线性达芬双稳态势能井，两造生命相轨迹在同一时空相空间中交织运行。势能井的刚度与分岔深度决定了两造在重大外部冲击下的系统自持力，互补阻尼确保整体协作不出现发散性共振崩溃。'}
+          </p>
+        </div>
+
+        <!-- Decennial Milestones Table -->
+        <div class="p-4 rounded-xl bg-black/40 border border-emerald-500/30 space-y-3">
+          <div class="text-xs font-bold text-emerald-300 font-serif-sc flex items-center justify-between border-b border-gray-800/80 pb-2">
+            <span class="flex items-center gap-1.5"><span>📅</span><span>${isEn ? 'Decennial Synchronization Milestones Ledger' : '岁运大运交接共振全景表'}</span></span>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? '6 Key Life Phases' : '六大人生命运阶梯'}</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-center border-collapse">
+              <thead>
+                <tr class="text-gray-400 border-b border-gray-800">
+                  <th class="py-2 text-left">${isEn ? 'Age Span' : '年龄跨度'}</th>
+                  <th class="py-2">${labelA} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
+                  <th class="py-2 border-l border-gray-800">${labelB} (${isEn ? 'Decade / Score' : '大运 / 气数'})</th>
+                  <th class="py-2 border-l border-gray-800">${isEn ? 'Synergy Phase' : '同频评级'}</th>
+                  <th class="py-2 text-left border-l border-gray-800 pl-3">${isEn ? 'Decennial Strategic Directive' : '岁运共振推演定论'}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-800/60 font-serif-sc">
+                ${data.trajectoryOverlap.milestones.map(m => `
+                  <tr class="hover:bg-white/5 transition">
+                    <td class="py-2.5 text-left font-bold text-amber-200/90 whitespace-nowrap">${m.ageSpan}</td>
+                    <td class="py-2.5 font-mono text-amber-300">${m.pillarA.text} <span class="text-[10px] text-gray-400">(${m.pillarA.score}${isEn ? 'pts' : '分'})</span></td>
+                    <td class="py-2.5 border-l border-gray-800 font-mono text-purple-300">${m.pillarB.text} <span class="text-[10px] text-gray-400">(${m.pillarB.score}${isEn ? 'pts' : '分'})</span></td>
+                    <td class="py-2.5 border-l border-gray-800 whitespace-nowrap">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.phaseType === 'peak_resonance' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : (m.phaseType === 'counterbalance_support' ? 'bg-blue-500/20 text-blue-300 border border-blue-500/40' : 'bg-gray-700/40 text-gray-300 border border-gray-600/40')}">
+                        ${m.phaseBadge}
+                      </span>
+                    </td>
+                    <td class="py-2.5 text-left border-l border-gray-800 pl-3 text-gray-300 text-[11px] leading-tight">${m.verdict}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 11: Life Focal Priorities & Core Values 5D Profile -->
+        ${data.lifePriorities ? `
+        <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-950/30 via-black/50 to-amber-950/20 border border-rose-500/40 shadow-xl space-y-4">
+          <div class="flex items-center justify-between border-b border-rose-800/40 pb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="text-base">🧭</span>
+              <h5 class="text-sm font-bold text-rose-200 font-serif-sc">${isEn ? '11. Life Focal Priorities & Core Values 5D Profile' : '11. 人生侧重点与核心价值观五维图谱'}</h5>
+              <span class="px-2 py-0.5 rounded text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono font-bold">${data.lifePriorities.alignmentScore}% ${isEn ? 'Alignment' : '共鸣契合'}</span>
+            </div>
+            <span class="chinese-seal text-[10px] py-0 border-rose-500 text-rose-300">${isEn ? 'VALUES' : '五维取向'}</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-black/40 border border-amber-500/30 flex items-center justify-between">
+              <span class="text-gray-300">👤 ${labelA} ${isEn ? 'Top Priority Anchor' : '第一核心人生侧重点'}:</span>
+              <b class="text-amber-300 font-serif-sc">${data.lifePriorities.topPriorityA.name} (${data.lifePriorities.topPriorityA.score}${isEn ? 'pts' : '分'})</b>
+            </div>
+            <div class="p-3 rounded-xl bg-black/40 border border-purple-500/30 flex items-center justify-between">
+              <span class="text-gray-300">👥 ${labelB} ${isEn ? 'Top Priority Anchor' : '第一核心人生侧重点'}:</span>
+              <b class="text-purple-300 font-serif-sc">${data.lifePriorities.topPriorityB.name} (${data.lifePriorities.topPriorityB.score}${isEn ? 'pts' : '分'})</b>
+            </div>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            ${data.lifePriorities.dimensions.map(dim => `
+              <div class="p-3 rounded-xl bg-black/40 border border-gray-800 space-y-1.5">
+                <div class="flex flex-wrap items-center justify-between gap-1 text-[11px]">
+                  <span class="font-bold text-gray-200 font-serif-sc">${dim.name}</span>
+                  <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/10 text-amber-300 border border-amber-500/30 font-mono">${dim.status}</span>
+                </div>
+                <p class="text-[10px] text-gray-400 font-serif-sc">${dim.desc}</p>
+                <div class="grid grid-cols-2 gap-3 pt-1">
+                  <div>
+                    <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                      <span>${labelA}</span>
+                      <span>${dim.scoreA}%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 rounded-full h-1.5 mt-0.5">
+                      <div class="bg-amber-500 h-1.5 rounded-full" style="width: ${dim.scoreA}%"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                      <span>${labelB}</span>
+                      <span>${dim.scoreB}%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 rounded-full h-1.5 mt-0.5">
+                      <div class="bg-purple-500 h-1.5 rounded-full" style="width: ${dim.scoreB}%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-gradient-to-r from-amber-950/30 to-black/50 border border-amber-500/30 text-xs font-serif-sc space-y-1">
+            <div class="font-bold text-amber-200 flex items-center gap-1.5">
+              <span>⚖️</span><span>${isEn ? 'Core Value Harmony Protocol & Demarcation Rule' : '价值观调和总则与相处协议'}</span>
+            </div>
+            <p class="text-gray-200 leading-relaxed">${data.lifePriorities.harmonyProtocol}</p>
+          </div>
+        </div>
+        ` : ''}
       </div>
 
       <!-- Card 2: Dual Life-Chrono Phase Space & 3D Spiral Manifold (双人时空动力学相空间与生命螺旋流形) -->

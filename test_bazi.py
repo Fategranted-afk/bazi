@@ -1093,6 +1093,31 @@ if (typeof window.initDualPhaseManifold === 'function') {
   if (/[\\u4e00-\\u9fa5]/.test(extCardEn)) {
     throw new Error('English synastryPhaseExtremaCard has CJK leakage!');
   }
+
+  // Test Synastry Unified Chrono Navigator and Merged Modules
+  if (typeof window.renderSynastryResult === 'function') {
+    var synDataZh = SynastryEngine.analyze(synChartA, synChartB, 'romantic', 'zh');
+    window.renderSynastryResult(synDataZh, synChartA, synChartB, false);
+    var dElZh = document.getElementById('synastryChronoDirectSection');
+    var dHtmlZh = dElZh ? dElZh.innerHTML : '';
+    if (!dHtmlZh.includes('10.2 双人时空动力学相空间与势能流形耦合分析') || !dHtmlZh.includes('岁运大运交接共振全景表') || !dHtmlZh.includes('11. 人生侧重点与核心价值观五维图谱') || !dHtmlZh.includes('价值观调和总则与相处协议')) {
+      throw new Error('synastryChronoDirectSection missing merged 10.2, decennial milestones table, or section 11 in Chinese');
+    }
+    var rElZh = document.getElementById('synastryResultContainer');
+    var rHtmlZh = rElZh ? rElZh.innerHTML : '';
+    if (rHtmlZh.includes('前往顶部交互推演操控台') || rHtmlZh.includes('10.2 双人时空动力学相空间与势能流形耦合分析')) {
+      throw new Error('synastryResultContainer has duplicate section 10/11 or obsolete top navigator button');
+    }
+
+    // English mode
+    var synDataEn = SynastryEngine.analyze(synChartA, synChartB, 'romantic', 'en');
+    window.renderSynastryResult(synDataEn, synChartA, synChartB, true);
+    var dElEn = document.getElementById('synastryChronoDirectSection');
+    var dHtmlEn = dElEn ? dElEn.innerHTML : '';
+    if (!dHtmlEn.includes('10.2 Dual Life-Chrono Phase Space') || !dHtmlEn.includes('Decennial Synchronization Milestones Ledger') || !dHtmlEn.includes('11. Life Focal Priorities & Core Values 5D Profile') || !dHtmlEn.includes('Core Value Harmony Protocol')) {
+      throw new Error('synastryChronoDirectSection missing merged 10.2, decennial milestones table, or section 11 in English');
+    }
+  }
 }
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
