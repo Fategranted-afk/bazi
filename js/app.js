@@ -8367,45 +8367,64 @@ document.addEventListener('DOMContentLoaded', () => {
     // Milestone buttons
     const activePtsForBtns = (cachedIChingCycleData && cachedIChingCycleData.length > 0) ? cachedIChingCycleData : points;
     if (activePtsForBtns && activePtsForBtns.length > 0) {
+      const activeRes = currentBaziResult || res;
+      const activeBYear = (activeRes && activeRes.input && activeRes.input.year) || (activeRes && activeRes.birthYear) || 1990;
+      const currentYear = new Date().getFullYear();
+      const realAge = Math.max(1, Math.min(100, Math.abs(currentYear - activeBYear)));
       const peakPt = activePtsForBtns.reduce((best, curr) => (curr.score > best.score ? curr : best), activePtsForBtns[0]);
       const troughPt = activePtsForBtns.reduce((lowest, curr) => (curr.score < lowest.score ? curr : lowest), activePtsForBtns[0]);
+      const xtYears = (activePtsForBtns[0] && activePtsForBtns[0].governingHex) ? (activePtsForBtns.find(p => !p.isXianTian) ? activePtsForBtns.find(p => !p.isXianTian).age : 48) : 48;
+
       const btnPeak = document.getElementById('ichingBtnPeak');
       const btnTrough = document.getElementById('ichingBtnTrough');
+      const btnEpoch = document.getElementById('ichingBtnEpochHandover');
+      const btnRealAge = document.getElementById('ichingBtnRealAge');
+
       if (btnPeak) {
-        btnPeak.innerHTML = `🏆 <span data-i18n="ms_peak">${isEn ? `Apex Peak (${peakPt.age})` : `人生巅峰 (${peakPt.age}岁)`}</span>`;
+        btnPeak.setAttribute('data-age', peakPt.age);
+        btnPeak.innerHTML = `🏆 <span data-i18n="ms_peak">${isEn ? `Apex Peak (${peakPt.age}y)` : `人生巅峰 (${peakPt.age}岁)`}</span>`;
       }
       if (btnTrough) {
-        btnTrough.innerHTML = `⚓ <span data-i18n="ms_trough">${isEn ? `Valley Crucible (${troughPt.age})` : `人生低谷 (${troughPt.age}岁)`}</span>`;
+        btnTrough.setAttribute('data-age', troughPt.age);
+        btnTrough.innerHTML = `⚓ <span data-i18n="ms_trough">${isEn ? `Valley Crucible (${troughPt.age}y)` : `人生低谷 (${troughPt.age}岁)`}</span>`;
+      }
+      if (btnEpoch) {
+        btnEpoch.setAttribute('data-age', xtYears);
+        btnEpoch.innerHTML = `🔄 <span data-i18n="ms_epoch">${isEn ? `Epoch Handover (${xtYears}y)` : `先后天交接 (${xtYears}岁)`}</span>`;
+      }
+      if (btnRealAge) {
+        btnRealAge.setAttribute('data-age', realAge);
+        btnRealAge.innerHTML = `📍 <span data-i18n="ms_current_age">${isEn ? `Current Age (${realAge}y)` : `当下虚岁 (${realAge}岁)`}</span>`;
+      }
+
+      // Dynamically rearrange milestone buttons in strictly ascending chronological order along the timeline
+      const mContainer = document.getElementById('ichingMilestoneButtonsContainer');
+      if (mContainer) {
+        const btns = Array.from(mContainer.querySelectorAll('.iching-milestone-btn'));
+        btns.sort((a, b) => {
+          const ageA = parseInt(a.getAttribute('data-age') || '0', 10);
+          const ageB = parseInt(b.getAttribute('data-age') || '0', 10);
+          return ageA - ageB;
+        });
+        btns.forEach(btn => mContainer.appendChild(btn));
       }
     }
 
+    // Update active highlight and click listeners on milestone buttons
     document.querySelectorAll('.iching-milestone-btn').forEach(btn => {
+      const bAge = parseInt(btn.getAttribute('data-age'), 10);
+      if (bAge === fourPillarsActiveAge) {
+        btn.classList.add('ring-2', 'ring-white', 'shadow-lg');
+      } else {
+        btn.classList.remove('ring-2', 'ring-white', 'shadow-lg');
+      }
+
       if (!btn._hooked) {
         btn._hooked = true;
         btn.addEventListener('click', () => {
-          const activeRes = currentBaziResult || res;
-          const activeBYear = (activeRes && activeRes.input && activeRes.input.year) || (activeRes && activeRes.birthYear) || 1990;
           const ageAttr = btn.getAttribute('data-age');
-          const activePts = (cachedIChingCycleData && cachedIChingCycleData.length > 0) ? cachedIChingCycleData : points;
           if (ageAttr) {
             setIChingActiveAge(parseInt(ageAttr, 10));
-          } else if (btn.id === 'ichingBtnEpochHandover') {
-            const xtYears = (activePts[0] && activePts[0].governingHex) ? (activePts.find(p => !p.isXianTian) ? activePts.find(p => !p.isXianTian).age : 48) : 48;
-            setIChingActiveAge(xtYears);
-          } else if (btn.id === 'ichingBtnRealAge') {
-            const currentYear = new Date().getFullYear();
-            const realAge = Math.max(1, Math.min(100, Math.abs(currentYear - activeBYear)));
-            setIChingActiveAge(realAge);
-          } else if (btn.id === 'ichingBtnPeak') {
-            if (activePts && activePts.length > 0) {
-              const peakPt = activePts.reduce((best, curr) => (curr.score > best.score ? curr : best), activePts[0]);
-              setIChingActiveAge(peakPt.age);
-            }
-          } else if (btn.id === 'ichingBtnTrough') {
-            if (activePts && activePts.length > 0) {
-              const troughPt = activePts.reduce((lowest, curr) => (curr.score < lowest.score ? curr : lowest), activePts[0]);
-              setIChingActiveAge(troughPt.age);
-            }
           }
         });
       }
@@ -8430,6 +8449,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ageDisplay) ageDisplay.textContent = (currentLang === 'en') ? `${fourPillarsActiveAge} yrs` : `${fourPillarsActiveAge} 岁`;
     const ageBadge = document.getElementById('ichingCycleAgeBadge');
     if (ageBadge) ageBadge.textContent = (currentLang === 'en') ? `Age ${fourPillarsActiveAge}` : `${fourPillarsActiveAge}岁`;
+
+    document.querySelectorAll('.iching-milestone-btn').forEach(btn => {
+      const bAge = parseInt(btn.getAttribute('data-age'), 10);
+      if (bAge === fourPillarsActiveAge) {
+        btn.classList.add('ring-2', 'ring-white', 'shadow-lg');
+      } else {
+        btn.classList.remove('ring-2', 'ring-white', 'shadow-lg');
+      }
+    });
 
     if (currentBaziResult) {
       renderFourPillarsHexagrams(currentBaziResult);
