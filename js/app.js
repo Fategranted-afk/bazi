@@ -3928,6 +3928,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const canonsDom = document.getElementById('view-canons');
+    if (canonsDom && canonsDom.parentElement && canonsDom.parentElement !== document.body) {
+      document.body.appendChild(canonsDom);
+      canonsDom.classList.add('hidden');
+    }
+
     container.innerHTML = '';
     const mf = pData.mentalFriction;
     const fs = mf.factorySpecs || {};
@@ -4006,6 +4012,33 @@ document.addEventListener('DOMContentLoaded', () => {
           <b class="text-rose-400">${isEn ? 'Natal BaZi Triggers: ' : '八字触发特征：'}</b>${mf.triggers ? mf.triggers.join(isEn ? '; ' : '；') : ''}
         </div>
       </div>
+
+      <!-- Factory Recommendations / Antidote Directives (出厂破局对症建议与反内耗定式) -->
+      <div class="p-4 rounded-xl bg-emerald-950/25 border border-emerald-900/50 text-xs sm:text-sm text-emerald-200 leading-relaxed font-serif-sc space-y-3">
+        <div class="flex items-center justify-between border-b border-emerald-900/40 pb-2">
+          <div class="font-bold text-emerald-300 flex items-center gap-1.5">
+            <span>🛡️</span>
+            <span>${isEn ? 'Prescribed Cognitive Antidotes & Reset Directives:' : '【出厂破局对症建议与反内耗定式】'}</span>
+          </div>
+          <button type="button" class="btn-ask-fric-advisor text-[10px] px-2.5 py-1 rounded-lg bg-emerald-900/40 hover:bg-emerald-800/60 border border-emerald-500/40 text-emerald-200 transition flex items-center gap-1 cursor-pointer active:scale-95" data-fric-query="${encodeURIComponent(isEn ? 'Based on my natal chart, how do I break my core mental friction loop and execute the recommended directives?' : '针对我命盘的核心内耗根源剖析，请给出当下流月最具体的破局落地动作与实操细则。')}">
+            <span>🧙</span> <span>${isEn ? 'Ask Advisor on This' : '就此问对军师'}</span>
+          </button>
+        </div>
+        <div class="space-y-2 text-xs text-gray-200">
+          <div class="flex items-start gap-2">
+            <span class="text-amber-400 font-bold shrink-0">1. ${isEn ? 'Cognitive Detachment: ' : '认知解离：'}</span>
+            <span class="text-gray-300">${isEn ? 'Recognize excess rumination as an uncalibrated output star firing into a vacuum. Immediately step outside internal mental chatter.' : '将反刍内耗视为食伤/官杀过度空转的假象。凡遇焦虑反刍，立刻默念“此乃出厂硬件特性，非我本体”，强行将意识抽离为旁观者。'}</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-amber-400 font-bold shrink-0">2. ${isEn ? 'Bandwidth Convergence: ' : '算力收敛：'}</span>
+            <span class="text-gray-300">${isEn ? 'Confine mental bandwidth to a single concrete deliverable today; decline peripheral multitasking.' : '每日仅圈定1个核心硬核交付物，严禁单日多线并行内卷。利用本命喜用神五行强制阻断无效社交消耗。'}</span>
+          </div>
+          <div class="flex items-start gap-2">
+            <span class="text-amber-400 font-bold shrink-0">3. ${isEn ? 'Somatic Grounding: ' : '躯体着陆：'}</span>
+            <span class="text-gray-300">${isEn ? 'Execute 3 minutes of physical displacement (brisk walk, cold water splash) to reset neuro-elemental voltage.' : '内耗发作时，严禁用大脑去思考“为什么内耗”。唯一解药是物理动作：起身快走3分钟、冷水洗脸或整理桌面，以躯体位移重置电压。'}</span>
+          </div>
+        </div>
+      </div>
     `;
 
     // Directory navigation strip inside specs card
@@ -4025,8 +4058,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Diamond·Platform·Zhuangzi' : '金刚·坛经·庄子'}</div>
         </button>
         <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-blue-500/30 bg-blue-950/20 hover:bg-blue-900/40 text-blue-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-canons">
-          <div class="font-bold flex items-center gap-1"><span>📜</span> <span>${isEn ? '8 Canons' : '八典细注'}</span></div>
-          <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Canonical Exegesis' : '正统赋文出厂'}</div>
+          <div class="font-bold flex items-center gap-1"><span>📜</span> <span>${isEn ? '12 Canons' : '十二大典'}</span></div>
+          <div class="text-[10px] text-gray-400 font-mono">${isEn ? 'Twelve Canons & Commentaries' : '经文细注全库'}</div>
         </button>
         <button type="button" class="btn-goto-fric-tab p-2.5 rounded-lg border border-purple-500/30 bg-purple-950/20 hover:bg-purple-900/40 text-purple-200 transition text-left space-y-0.5 cursor-pointer" data-target-tab="tab-fric-triggers">
           <div class="font-bold flex items-center gap-1"><span>⚡</span> <span>${isEn ? 'Red Lines' : '压力红线'}</span></div>
@@ -4329,13 +4362,18 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-800/50 text-xs text-emerald-200 leading-relaxed font-serif-sc mt-2">
-          ${isEn ? c.remedyEn : c.remedyZh}
+        <div class="flex items-center justify-between pt-2 border-t border-gray-800/80 mt-2">
+          <div class="p-2.5 rounded-lg bg-emerald-950/25 border border-emerald-800/50 text-xs text-emerald-200 leading-relaxed font-serif-sc flex-1 mr-2">
+            ${isEn ? c.remedyEn : c.remedyZh}
+          </div>
+          <button type="button" class="btn-ask-fric-advisor text-[10px] px-2.5 py-1.5 rounded-lg bg-amber-950/60 hover:bg-amber-900/80 border border-amber-500/40 text-amber-200 transition flex items-center gap-1 cursor-pointer shrink-0 active:scale-95" data-fric-query="${encodeURIComponent(isEn ? `Based on the classical canon quote from ${c.canonNameEn || 'the classics'}: \"${c.quoteEn || ''}\", what is the concrete tactical advice for my situation?` : `结合《${c.canonNameZh}》所论“${c.quoteZh || ''}”，针对我当前命盘格局与岁运，请军师给出具体的破局行动建议与避险要点。`)}">
+            <span>💬</span> <span>${isEn ? 'Ask Advisor' : '就此问对'}</span>
+          </button>
         </div>
       </div>
     `).join('');
 
-    // Tab Pane 3: Eight Canons
+    // Tab Pane 3: Eight Canons & Full Classical Canons Library
     const paneCanons = document.createElement('div');
     paneCanons.id = 'tab-fric-canons';
     paneCanons.className = 'fric-tab-pane space-y-6 hidden';
@@ -4346,7 +4384,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="text-2xl">📜</span>
             <div>
               <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
-                <span>${isEn ? 'Eight Classical Canons Scripture Manual & Factory Tuning' : '八大典籍正统经文细注与出厂心智调律'}</span>
+                <span>${isEn ? 'Natal Canons Exegesis & Factory Tuning' : '命盘直配：八大典籍正统经文细注与出厂心智调律'}</span>
               </h4>
               <p class="text-xs text-gray-400 mt-0.5">
                 ${isEn ? 'Sanming, Qiongtong, Ziping Zhenquan, Ditiansui, Yuanhai, Shenfeng, Yuzhao, Lixuzhong Psychological Exegesis' : '三命通会、穷通宝鉴、子平真诠、滴天髓、渊海子平、神峰通考、玉照定真经、李虚中命书八大典籍正统赋文出厂调律'}
@@ -4354,14 +4392,39 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
           <span class="chinese-seal text-xs py-0.5 border-amber-500 text-amber-300 font-serif-sc">
-            ${isEn ? 'ALL 8 CANONS' : '八典全息'}
+            ${isEn ? '8 CANONS' : '八典全息'}
           </span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           ${canonsCardsHtml}
         </div>
+
+        <div class="mt-8 pt-4 border-t border-amber-500/40">
+          <div class="flex items-center justify-between pb-3">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">🏛️</span>
+              <div>
+                <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc">
+                  ${isEn ? 'Twelve Classical Canons & Modern Canons Library' : '经典全通：十二东方大典与十部西方数理动力学全库研析'}
+                </h4>
+                <p class="text-xs text-gray-400 mt-0.5">
+                  ${isEn ? 'Complete 22 Canonical Archives · School Taxonomy · 60 JiaZi Trajectory · Advanced Search' : '二十二大典库全景收录 · 四大流派门类导引 · 六十甲子日时全断 · 经典全库搜索'}
+                </p>
+              </div>
+            </div>
+            <span class="chinese-seal text-xs py-0.5 border-blue-500 text-blue-300 font-serif-sc">
+              ${isEn ? '22 CANONS' : '十二典通'}
+            </span>
+          </div>
+        </div>
       </div>
     `;
+
+    // Append full Classical Canons repository (view-canons) into paneCanons
+    if (canonsDom) {
+      canonsDom.classList.remove('hidden');
+      paneCanons.appendChild(canonsDom);
+    }
 
     // ==========================================
     // 3. ⚡ 极端压力触发开关与认知红线 (Stress Triggers)
@@ -4601,6 +4664,49 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof switchFrictionTab === 'function') {
       switchFrictionTab(activeFrictionTab || 'tab-fric-specs');
     }
+
+    // Wire up all "Ask Advisor" buttons inside friction view
+    container.querySelectorAll('.btn-ask-fric-advisor').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const q = decodeURIComponent(btn.getAttribute('data-fric-query') || '');
+        if (q && typeof window.openAdvisorWithPrompt === 'function') {
+          window.openAdvisorWithPrompt(q);
+        }
+      });
+    });
+
+    // Wire up direct friction console
+    const fricConsoleInput = document.getElementById('frictionDirectQueryInput');
+    const fricConsoleBtn = document.getElementById('btnFrictionDirectQuerySubmit');
+    if (fricConsoleBtn && fricConsoleInput && !fricConsoleBtn.hasAttribute('data-bound')) {
+      fricConsoleBtn.setAttribute('data-bound', 'true');
+      const submitFricDirectQuery = () => {
+        const q = fricConsoleInput.value.trim();
+        if (q) {
+          fricConsoleInput.value = '';
+          if (typeof window.openAdvisorWithPrompt === 'function') {
+            window.openAdvisorWithPrompt(q);
+          }
+        }
+      };
+      fricConsoleBtn.addEventListener('click', submitFricDirectQuery);
+      fricConsoleInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitFricDirectQuery();
+      });
+    }
+
+    document.querySelectorAll('.btn-direct-fric-ask').forEach(btn => {
+      if (!btn.hasAttribute('data-bound')) {
+        btn.setAttribute('data-bound', 'true');
+        btn.addEventListener('click', () => {
+          const q = btn.getAttribute('data-fric-query');
+          if (q && typeof window.openAdvisorWithPrompt === 'function') {
+            window.openAdvisorWithPrompt(q);
+          }
+        });
+      }
+    });
   }
 
   // Render Classical Literature Modules (Five Canons Integration)
@@ -11497,7 +11603,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     viewNavBtns.forEach(btn => {
       const v = btn.getAttribute('data-view');
-      if (v === targetViewId || (targetViewId === 'view-iching' && v === 'view-friction') || (targetViewId === 'view-simulator' && v === 'view-career')) {
+      if (v === targetViewId || ((targetViewId === 'view-iching' || targetViewId === 'view-canons') && v === 'view-friction') || (targetViewId === 'view-simulator' && v === 'view-career')) {
         btn.classList.add('active', 'bg-gradient-to-r', 'from-amber-500', 'to-orange-500', 'text-white', 'border-amber-400/50', 'shadow-lg');
         btn.classList.remove('text-gray-400', 'hover:text-gray-200', 'border-transparent');
       } else {
@@ -11510,6 +11616,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!el) return;
       if (targetViewId === 'view-iching') {
         if (vId === 'view-friction' || vId === 'view-iching') {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      } else if (targetViewId === 'view-canons') {
+        if (vId === 'view-friction' || vId === 'view-canons') {
           el.classList.remove('hidden');
         } else {
           el.classList.add('hidden');
@@ -11550,6 +11662,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetViewId === 'view-iching') {
       if (typeof switchFrictionTab === 'function') {
         switchFrictionTab('tab-fric-iching');
+      }
+    } else if (targetViewId === 'view-canons') {
+      if (typeof switchFrictionTab === 'function') {
+        switchFrictionTab('tab-fric-canons');
       }
     } else if (targetViewId === 'view-friction') {
       if (typeof switchFrictionTab === 'function') {

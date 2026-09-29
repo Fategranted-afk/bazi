@@ -585,17 +585,17 @@
           <span data-i18n="nav_view_strategy">战略大局与六亲全息</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-amber-950/60 text-amber-300 border border-amber-800/30 font-normal" data-i18n="seal_view_strategy">大局破局</span>
         </button>
-        <button id="navBtnFriction" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-friction">
+        <button id="navBtnFriction" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent cursor-pointer" data-view="view-friction">
           <span class="text-base">🧘</span>
-          <span data-i18n="nav_view_friction">精神内耗与禅道心智</span>
-          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-950/60 text-rose-300 border border-rose-800/30 font-normal" data-i18n="seal_view_friction">禅道心智</span>
+          <span data-i18n="nav_view_friction">精神内耗 · 经文细注与禅道心智</span>
+          <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-950/60 text-rose-300 border border-rose-800/30 font-normal" data-i18n="seal_view_friction">经注心智</span>
         </button>
         <button id="navBtnLuck" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-luck">
           <span class="text-base">⏳</span>
           <span data-i18n="nav_view_luck">岁运推演 (大运 / 流年 / 流月 / 流日)</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-purple-950/60 text-purple-300 border border-purple-800/30 font-normal" data-i18n="seal_view_luck">动态时空</span>
         </button>
-        <button id="navBtnCanons" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
+        <button id="navBtnCanons" class="hidden view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent" data-view="view-canons">
           <span class="text-base">📜</span>
           <span data-i18n="nav_view_canons">十二大典与经文细注</span>
           <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-blue-950/60 text-blue-300 border border-blue-800/30 font-normal" data-i18n="seal_view_canons">十二典通</span>
@@ -1466,13 +1466,46 @@
               <span class="chinese-seal text-[10px] py-0.2 border-rose-500 text-rose-400" data-i18n="seal_view_friction">原厂说明</span>
             </h3>
             <p class="text-xs text-gray-400 mt-0.5" data-i18n="sec_friction_view_subtitle">
-              八大典籍正统经文细注 · 极端压力触发开关 · 出厂自救降维心法 · 五行微习惯
+              十二东方大典与十部西方数理动力学 · 原厂自救破局针对性建议 · 临场参谋即时问对
             </p>
           </div>
         </div>
         <div class="flex items-center gap-2">
           <button id="btnJumpToHomeFromFriction" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs transition border border-gray-700 flex items-center gap-1 cursor-pointer">
             <span>←</span> <span data-i18n="lbl_back_home">返回核心主盘</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Direct Advisor Q&A Console (临场参谋 · 内耗出厂建议与经文直问台) -->
+      <div id="frictionDirectAdvisorConsole" class="p-4 sm:p-5 rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-950/30 via-black/60 to-purple-950/30 shadow-xl space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🧙</span>
+            <span class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc" data-i18n="fric_advisor_title">临场参谋 · 精神内耗对策与经文细注直问台</span>
+            <span class="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-300 border border-emerald-700/40 font-mono">LIVE ADVISOR</span>
+          </div>
+          <span class="text-[11px] text-gray-400" data-i18n="fric_advisor_hint">研读内耗建议或经典经文有疑？随时直问军师，即刻生成闭环战术</span>
+        </div>
+
+        <!-- Quick 1-Click Prompt Chips -->
+        <div class="flex flex-wrap gap-1.5 text-xs">
+          <button type="button" class="btn-direct-fric-ask px-2.5 py-1 rounded-lg bg-gray-800/80 hover:bg-amber-900/40 border border-gray-700 hover:border-amber-500/50 text-gray-300 hover:text-amber-200 transition text-[11px] flex items-center gap-1 cursor-pointer active:scale-95" data-fric-query="结合我命盘的核心内耗根源与当下岁运，请给出针对性的破局落地动作与实操细则。">
+            <span>💡</span> <span data-i18n="fric_chip_1">针对我的内耗根源，当下流月最宜采取什么实操动作？</span>
+          </button>
+          <button type="button" class="btn-direct-fric-ask px-2.5 py-1 rounded-lg bg-gray-800/80 hover:bg-amber-900/40 border border-gray-700 hover:border-amber-500/50 text-gray-300 hover:text-amber-200 transition text-[11px] flex items-center gap-1 cursor-pointer active:scale-95" data-fric-query="结合《滴天髓》与《子平真诠》对我的经文细注，现实中如何借势破局、规避反噬？">
+            <span>📜</span> <span data-i18n="fric_chip_2">经典赋文对我的现实破局具体指引是什么？</span>
+          </button>
+          <button type="button" class="btn-direct-fric-ask px-2.5 py-1 rounded-lg bg-gray-800/80 hover:bg-amber-900/40 border border-gray-700 hover:border-amber-500/50 text-gray-300 hover:text-amber-200 transition text-[11px] flex items-center gap-1 cursor-pointer active:scale-95" data-fric-query="近期精神反刍严重、内耗过度，如何将多余的神经算力转化为现实世界的硬核交付作品？">
+            <span>🗡️</span> <span data-i18n="fric_chip_3">如何将我脑中多余的内耗算力转化为现实作品？</span>
+          </button>
+        </div>
+
+        <!-- Direct Ask Input Bar -->
+        <div class="flex items-center gap-2 pt-1">
+          <input type="text" id="frictionDirectQueryInput" class="flex-1 bg-black/60 border border-gray-700 rounded-xl px-3.5 py-2 text-xs text-gray-200 placeholder-gray-500 focus:outline-none focus:border-amber-500 transition" placeholder="就内耗建议、心智法门或经典大典，直接输入您想垂询的问题..." data-i18n-placeholder="fric_query_placeholder">
+          <button type="button" id="btnFrictionDirectQuerySubmit" class="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-md shadow-amber-950/40 whitespace-nowrap active:scale-95">
+            <span>🧙</span> <span data-i18n="btn_ask_advisor">向军师提问</span>
           </button>
         </div>
       </div>
@@ -1488,8 +1521,8 @@
           <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_zen_badge">金刚·坛经·庄子</span>
         </button>
         <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-canons">
-          <span data-i18n="tab_fric_canons">📜 《八典对症细注》</span>
-          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_canons_badge">正统赋文</span>
+          <span data-i18n="tab_fric_canons">📜 《十二大典与经文细注》</span>
+          <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1 py-0.2 rounded font-mono" data-i18n="tab_fric_canons_badge">十二典通</span>
         </button>
         <button type="button" class="fric-tab-btn text-xs sm:text-sm font-semibold flex items-center space-x-1.5 px-3 py-2 rounded-lg transition text-gray-400 hover:text-gray-200" data-fric-tab="tab-fric-triggers">
           <span data-i18n="tab_fric_triggers">⚡ 《极端压力红线》</span>
