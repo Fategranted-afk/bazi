@@ -501,6 +501,40 @@ if (pred2005.candidateYearRange[1] > 2008) {
   throw new Error("predictIdealPartner exceeded maxLegalAdultYear for 2005 user: " + pred2005.candidateYearRange[1]);
 }
 
+// User born in 1993 (坤造, age 33 in 2026) -> strictly +/-10 yrs [1983, 2003], Adult >= 18
+var user1993Chart = BaZiEngine.calculate({ year: 1993, month: 8, day: 16, hour: 9, minute: 30, gender: '坤造' });
+var pred1993 = SynastryEngine.predictIdealPartner(user1993Chart, { variant: 0, lang: 'zh' });
+if (pred1993.userBirthYear !== 1993) throw new Error("predictIdealPartner 1993 userBirthYear mismatch");
+if (pred1993.candidateYearRange[0] !== 1983 || pred1993.candidateYearRange[1] !== 2003) {
+  throw new Error("predictIdealPartner 1993 candidate range mismatch: " + JSON.stringify(pred1993.candidateYearRange));
+}
+if (pred1993.partnerBirthYear < 1983 || pred1993.partnerBirthYear > 2003) {
+  throw new Error("predictIdealPartner 1993 partner year outside range: " + pred1993.partnerBirthYear);
+}
+if (pred1993.partnerAge < 18) throw new Error("predictIdealPartner 1993 partner is underage");
+if (pred1993.partnerGender !== '乾造') throw new Error("predictIdealPartner 1993 expected Qian Zao partner for Kun Zao user");
+
+// Test float parsing accuracy in 5-element balance diagnostics
+// Ensure that 5.0% is not falsely considered greater than 38.8%
+var testChartWithPcts = {
+  pillars: user1993Chart.pillars,
+  dayMaster: user1993Chart.dayMaster,
+  dayMasterElement: user1993Chart.dayMasterElement,
+  gender: '坤造',
+  birthYear: 1993,
+  elements: {
+    percentages: { '木': '5.0', '火': '17.5', '土': '35.0', '金': '3.8', '水': '38.8' },
+    counts: { '木': 1, '火': 2, '土': 3, '金': 1, '水': 3 }
+  }
+};
+var predFloatTest = SynastryEngine.predictIdealPartner(testChartWithPcts, { variant: 0, lang: 'zh' });
+if (predFloatTest.elementalBalance.excessSoftenedZh.includes('木') && predFloatTest.elementalBalance.excessSoftenedZh.includes('5.0%')) {
+  throw new Error("Float comparison bug detected: 5.0% Wood reported as excess instead of 38.8% Water!");
+}
+if (!predFloatTest.elementalBalance.excessSoftenedZh.includes('水') || !predFloatTest.elementalBalance.excessSoftenedZh.includes('38.8%')) {
+  throw new Error("Expected Water 38.8% to be reported as excess: " + predFloatTest.elementalBalance.excessSoftenedZh);
+}
+
 // 16-Character Joint Resonance & Non-Oppression Safeguard
 if (!pred1990.sixteenCharacters || pred1990.sixteenCharacters.totalCharacters !== 16) {
   throw new Error("predictIdealPartner sixteenCharacters missing or not 16 characters");
@@ -885,7 +919,7 @@ var document = {
             save: function(){}, restore: function(){}, translate: function(){}, rotate: function(){}
           };
         },
-        innerHTML: '', value: '', textContent: ''
+        innerHTML: '', value: '', textContent: '', dataset: {}
       };
     }
     return this._elements[id];
@@ -1335,6 +1369,29 @@ if (typeof window.initDualPhaseManifold === 'function') {
     var predHtmlZh = predOut.innerHTML;
     if (!predHtmlZh.includes('8+8=16') || !predHtmlZh.includes('仅限成年人测算') || !predHtmlZh.includes('防压迫制衡总纲')) {
       throw new Error('synastryPredictOutputContainer missing 16-char matrix, adult badge, or non-oppression safeguard in Chinese');
+    }
+    if (!predHtmlZh.includes('已锚定甲造命主（您的输入八字）')) {
+      throw new Error('synastryPredictOutputContainer missing anchored user natal banner');
+    }
+
+    // Verify auto-sync from main chart calculation into Synastry Chart A
+    var bDatePicker = document.getElementById('birthDate');
+    var bTimePicker = document.getElementById('birthTime');
+    var genSelect = document.getElementById('gender');
+    if (bDatePicker && bTimePicker && genSelect && typeof triggerCalculate === 'function') {
+      bDatePicker.value = '1993-08-16';
+      bTimePicker.value = '09:30';
+      genSelect.value = '坤造';
+      triggerCalculate();
+      var synA = document.getElementById('synastryDateA');
+      if (!synA || synA.value !== '1993-08-16') {
+        throw new Error('triggerCalculate failed to auto-sync to synastryDateA: ' + (synA ? synA.value : 'null'));
+      }
+      window.runPartnerPredictSimulation(0);
+      var updatedHtml = document.getElementById('synastryPredictOutputContainer').innerHTML;
+      if (!updatedHtml.includes('1993年出生') || !updatedHtml.includes('坤造')) {
+        throw new Error('Partner prediction card failed to reflect user 1993 Kun Zao input: ' + updatedHtml);
+      }
     }
 
     // Test 1-click loading into Chart B

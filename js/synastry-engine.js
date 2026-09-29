@@ -2660,7 +2660,8 @@ const SynastryEngine = (function() {
     let minElA = '木', minValA = 999;
     let maxElA = '木', maxValA = -1;
     elementsList.forEach(el => {
-      const p = (chartA.elements && chartA.elements.percentages && chartA.elements.percentages[el]) || 0;
+      const raw = (chartA.elements && chartA.elements.percentages && chartA.elements.percentages[el]);
+      const p = (raw !== undefined && raw !== null) ? parseFloat(raw) : 0;
       if (p < minValA) { minValA = p; minElA = el; }
       if (p > maxValA) { maxValA = p; maxElA = el; }
     });
@@ -2766,10 +2767,10 @@ const SynastryEngine = (function() {
         chartA: (chartA.elements && chartA.elements.percentages) || {},
         chartB: (chartB && chartB.elements && chartB.elements.percentages) || {},
         combined16: combinedPercentages,
-        deficitHealedZh: `甲造原局${elNamesZh[minElA]}气较弱（约${minValA}%），合入乙造${chartB ? chartB.pillars.day.stemElement : '补益'}后，16字共振场域将${elNamesZh[minElA]}气温润补齐至${combinedPercentages[minElA]}%，填补命宫短板。`,
-        deficitHealedEn: `Chart A deficit in ${elNamesEn[minElA]} (${minValA}%) is replenished in the 16-character resonance to ${combinedPercentages[minElA]}%, establishing holistic energetic equilibrium.`,
-        excessSoftenedZh: `甲造原局${elNamesZh[maxElA]}气过旺（约${maxValA}%），经乙造通关化泄，16字联合能量中${elNamesZh[maxElA]}气平缓降至${combinedPercentages[maxElA]}%，化刚烈激荡为恒久深情。`,
-        excessSoftenedEn: `Chart A excess in ${elNamesEn[maxElA]} (${maxValA}%) is channeled and buffered in the 16-character matrix to ${combinedPercentages[maxElA]}%, transforming volatile intensity into lasting devotion.`
+        deficitHealedZh: `甲造原局【${elNamesZh[minElA]}】气最为匮乏（仅占约${minValA.toFixed(1)}%），在16字联合共振场中，合入乙造五行能量后，将【${elNamesZh[minElA]}】气有效补足至${combinedPercentages[minElA]}%，填补命宫短板。`,
+        deficitHealedEn: `Chart A deficit in ${elNamesEn[minElA]} (${minValA.toFixed(1)}%) is replenished in the 16-character resonance to ${combinedPercentages[minElA]}%, establishing holistic energetic equilibrium.`,
+        excessSoftenedZh: `甲造原局【${elNamesZh[maxElA]}】气独旺偏亢（高达约${maxValA.toFixed(1)}%），经乙造通关化泄，16字联合能量中【${elNamesZh[maxElA]}】气平缓调和至${combinedPercentages[maxElA]}%，化刚烈激荡为恒久深情。`,
+        excessSoftenedEn: `Chart A excess in ${elNamesEn[maxElA]} (${maxValA.toFixed(1)}%) is channeled and buffered in the 16-character matrix to ${combinedPercentages[maxElA]}%, transforming volatile intensity into lasting devotion.`
       },
 
       nonOppressionSafeguard: {

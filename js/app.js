@@ -1288,6 +1288,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       updateDashboardSummaryBar();
       updateLandingPreview();
+      if (typeof syncUserChartAToSynastry === 'function') {
+        syncUserChartAToSynastry(false);
+      }
+      if (typeof updateSynastryPredictSourceBanner === 'function') {
+        updateSynastryPredictSourceBanner();
+      }
 
       // Measure calculation duration
       const tEnd = (typeof performance !== 'undefined') ? performance.now() : Date.now();
@@ -11785,6 +11791,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If switching to synastry view, calculate if empty with progress bar or refresh dual chart
     if (targetViewId === 'view-synastry') {
+      if (typeof syncUserChartAToSynastry === 'function') {
+        syncUserChartAToSynastry(false);
+      }
+      if (typeof updateSynastryPredictSourceBanner === 'function') {
+        updateSynastryPredictSourceBanner();
+      }
       if (!currentSynastryResult && typeof triggerCalculateSynastry === 'function') {
         showDynamicCalculationProgress('synastry', () => {
           triggerCalculateSynastry();
@@ -14820,6 +14832,26 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const btnSyncFromMain = document.getElementById('btnSynastrySyncFromMain');
+    if (btnSyncFromMain) {
+      btnSyncFromMain.addEventListener('click', () => {
+        syncUserChartAToSynastry(true);
+        runPartnerPredictSimulation(currentPredictVariantIndex);
+      });
+    }
+
+    const synDateAInput = document.getElementById('synastryDateA');
+    const synTimeAInput = document.getElementById('synastryTimeA');
+    const synGenAInput = document.getElementById('synastryGenderA');
+    [synDateAInput, synTimeAInput, synGenAInput].forEach(inp => {
+      if (inp) {
+        inp.addEventListener('change', () => {
+          if (synDateAInput) synDateAInput.dataset.userEdited = 'true';
+          updateSynastryPredictSourceBanner();
+        });
+      }
+    });
+
     if (btnCalc) {
       btnCalc.addEventListener('click', () => {
         showDynamicCalculationProgress('synastry', () => {
@@ -14877,22 +14909,134 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statusEl) statusEl.classList.add('hidden');
       });
     }
+
+    // Auto-sync user chart on controller init
+    syncUserChartAToSynastry(false);
   }
+
+  function syncUserChartAToSynastry(force = false) {
+    const bDate = document.getElementById('birthDate')?.value;
+    const bTime = document.getElementById('birthTime')?.value;
+    const bGen = document.getElementById('gender')?.value;
+    const sDateA = document.getElementById('synastryDateA');
+    const sTimeA = document.getElementById('synastryTimeA');
+    const sGenA = document.getElementById('synastryGenderA');
+
+    if (!sDateA) return;
+
+    let targetDate = bDate;
+    let targetTime = bTime;
+    let targetGen = bGen;
+
+    if (currentBaziResult && currentBaziResult.input) {
+      const inp = currentBaziResult.input;
+      targetDate = `${inp.year}-${String(inp.month).padStart(2, '0')}-${String(inp.day).padStart(2, '0')}`;
+      targetTime = `${String(inp.hour).padStart(2, '0')}:${String(inp.minute).padStart(2, '0')}`;
+      targetGen = currentBaziResult.gender || inp.gender || bGen;
+    }
+
+    const isEdited = (sDateA.dataset && sDateA.dataset.userEdited === 'true');
+    if (targetDate) {
+      if (force || !sDateA.value || sDateA.value === '1988-10-24' || !isEdited) {
+        sDateA.value = targetDate;
+        if (targetTime && sTimeA) sTimeA.value = targetTime;
+        if (targetGen && sGenA) sGenA.value = targetGen;
+      }
+    }
+    updateSynastryPredictSourceBanner();
+  }
+
+  function updateSynastryPredictSourceBanner() {
+    const bannerPillars = document.getElementById('synastryPredictSourcePillars');
+    const bannerMeta = document.getElementById('synastryPredictSourceMeta');
+    if (!bannerPillars) return;
+
+    const sDateA = document.getElementById('synastryDateA')?.value;
+    const sTimeA = document.getElementById('synastryTimeA')?.value;
+    const sGenA = document.getElementById('synastryGenderA')?.value || '乾造';
+
+    if (!sDateA || !sTimeA || typeof BaZiEngine === 'undefined') {
+      bannerPillars.textContent = (currentLang === 'en' ? 'Awaiting Natal Input' : '尚未输入命盘');
+      if (bannerMeta) bannerMeta.textContent = '--';
+      return;
+    }
+
+    let cA = null;
+    if (currentBaziResult && currentBaziResult.input && currentBaziResult.pillars) {
+      const inp = currentBaziResult.input;
+      const bDateStr = `${inp.year}-${String(inp.month).padStart(2, '0')}-${String(inp.day).padStart(2, '0')}`;
+      const bTimeStr = `${String(inp.hour).padStart(2, '0')}:${String(inp.minute).padStart(2, '0')}`;
+      if (bDateStr === sDateA && (bTimeStr === sTimeA || bTimeStr.startsWith(sTimeA)) && currentBaziResult.gender === sGenA) {
+        cA = currentBaziResult;
+      }
+    }
+
+    if (!cA) {
+      const [yA, mA, dA] = sDateA.split('-').map(Number);
+      const [hA, minA] = sTimeA.split(':').map(Number);
+      cA = BaZiEngine.calculate({
+        year: yA, month: mA, day: dA, hour: hA, minute: minA,
+        gender: sGenA, useTrueSolarTime: false, isLateRatNextDay: false,
+        longitude: 116.4, timezone: 8.0
+      });
+    }
+
+    if (cA && cA.pillars) {
+      const p = cA.pillars;
+      bannerPillars.textContent = `${p.year.text}  ${p.month.text}  ${p.day.text}  ${p.hour.text}`;
+      const isEn = (currentLang === 'en');
+      const bYear = (cA.input && cA.input.year) || cA.birthYear || sDateA.split('-')[0];
+      const dm = cA.dayMaster || p.day.stem;
+      const dmEl = cA.dayMasterElement || p.day.stemElement;
+      if (bannerMeta) {
+        bannerMeta.textContent = isEn
+          ? `(${sGenA === '乾造' ? 'Male' : 'Female'} · Born ${bYear} · Day Master [${dm}] ${dmEl})`
+          : `(${sGenA} · ${bYear}年出生 · 日主【${dm}】${dmEl})`;
+      }
+    }
+  }
+
+  window.syncUserChartAToSynastry = syncUserChartAToSynastry;
+  window.updateSynastryPredictSourceBanner = updateSynastryPredictSourceBanner;
 
   function runPartnerPredictSimulation(variantIdx = 0) {
     if (typeof SynastryEngine === 'undefined' || typeof BaZiEngine === 'undefined') return;
-    const dateA = document.getElementById('synastryDateA')?.value;
-    const timeA = document.getElementById('synastryTimeA')?.value;
-    const genderA = document.getElementById('synastryGenderA')?.value || '乾造';
-    if (!dateA || !timeA) return;
 
-    const [yA, mA, dA] = dateA.split('-').map(Number);
-    const [hA, minA] = timeA.split(':').map(Number);
-    const chartA = BaZiEngine.calculate({
-      year: yA, month: mA, day: dA, hour: hA, minute: minA,
-      gender: genderA, useTrueSolarTime: false, isLateRatNextDay: false,
-      longitude: 116.4, timezone: 8.0
-    });
+    // Ensure we sync from user's current chart if user hasn't manually edited synastryDateA
+    syncUserChartAToSynastry(false);
+
+    const sDateA = document.getElementById('synastryDateA');
+    const isEdited = (sDateA && sDateA.dataset && sDateA.dataset.userEdited === 'true');
+
+    let chartA = null;
+    if (!isEdited && currentBaziResult && currentBaziResult.pillars) {
+      chartA = currentBaziResult;
+    } else {
+      const dateA = sDateA?.value;
+      const timeA = document.getElementById('synastryTimeA')?.value;
+      const genderA = document.getElementById('synastryGenderA')?.value || '乾造';
+      if (!dateA || !timeA) return;
+
+      const [yA, mA, dA] = dateA.split('-').map(Number);
+      const [hA, minA] = timeA.split(':').map(Number);
+
+      if (currentBaziResult && currentBaziResult.input) {
+        const inp = currentBaziResult.input;
+        const bDateStr = `${inp.year}-${String(inp.month).padStart(2, '0')}-${String(inp.day).padStart(2, '0')}`;
+        const bTimeStr = `${String(inp.hour).padStart(2, '0')}:${String(inp.minute).padStart(2, '0')}`;
+        if (bDateStr === dateA && (bTimeStr === timeA || bTimeStr.startsWith(timeA)) && currentBaziResult.gender === genderA) {
+          chartA = currentBaziResult;
+        }
+      }
+
+      if (!chartA) {
+        chartA = BaZiEngine.calculate({
+          year: yA, month: mA, day: dA, hour: hA, minute: minA,
+          gender: genderA, useTrueSolarTime: false, isLateRatNextDay: false,
+          longitude: 116.4, timezone: 8.0
+        });
+      }
+    }
 
     const isEn = (currentLang === 'en');
     currentPredictVariantIndex = (variantIdx % 3 + 3) % 3;
@@ -14902,6 +15046,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     lastPartnerPredictResult = result;
     renderPartnerPredictOutput(result, isEn);
+    updateSynastryPredictSourceBanner();
   }
 
   function renderPartnerPredictOutput(data, isEn) {
@@ -14979,7 +15124,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="p-5 rounded-2xl border border-rose-500/40 bg-black/60 shadow-2xl space-y-5 animate-fade-in">
         <!-- Header Banner -->
         <div class="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-gray-800">
-          <div>
+          <div class="space-y-2.5">
             <div class="flex flex-wrap items-center gap-2">
               <span class="text-lg">💖</span>
               <h3 class="text-base font-bold font-serif-sc text-rose-300">${title}</h3>
@@ -14987,16 +15132,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 🔞 ${isEn ? 'Adults 18+ Only' : '仅限成年人测算'}
               </span>
             </div>
-            <p class="text-xs text-gray-400 mt-1 italic">${tagline}</p>
-            <div class="flex flex-wrap items-center gap-2 mt-2 text-[11px] text-gray-300">
-              <span class="px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
-                📅 ${isEn ? `Born ${data.partnerBirthYear} (Age ${data.partnerAge})` : `${data.partnerBirthYear}年出生 (时年${data.partnerAge}岁)`}
+            <p class="text-xs text-gray-400 italic">${tagline}</p>
+
+            <!-- Prominently displayed user natal anchor banner -->
+            <div class="p-2.5 rounded-xl bg-amber-950/40 border border-amber-500/40 text-xs flex flex-wrap items-center gap-2 shadow-sm">
+              <span class="text-amber-300 font-bold font-serif-sc flex items-center gap-1">
+                <span>👤</span>
+                <span>${isEn ? 'Anchored User Natal (Your Input):' : '已锚定甲造命主（您的输入八字）:'}</span>
+              </span>
+              <span class="font-mono text-gray-100 font-bold px-2 py-0.5 rounded bg-gray-900 border border-gray-700">
+                ${cA.year.text}  ${cA.month.text}  ${cA.day.text}  ${cA.hour.text}
+              </span>
+              <span class="text-gray-300 text-[11px]">
+                (${isEn ? (data.chartA.gender === '乾造' ? 'Male' : 'Female') : data.chartA.gender} · ${isEn ? `Born ${data.userBirthYear}` : `${data.userBirthYear}年出生`} · ${isEn ? `Day Master [${data.chartA.dayMaster || cA.day.stem}] ${data.chartA.dayMasterElement || cA.day.stemElement}` : `日主【${data.chartA.dayMaster || cA.day.stem}】${data.chartA.dayMasterElement || cA.day.stemElement}`})
+              </span>
+            </div>
+
+            <!-- Predicted Match Metadata -->
+            <div class="flex flex-wrap items-center gap-2 text-[11px] text-gray-300">
+              <span class="px-2.5 py-0.5 rounded bg-purple-950/70 text-purple-200 border border-purple-500/40 font-bold">
+                🎯 ${isEn ? `Predicted Match: ${data.partnerGender === '乾造' ? 'Male' : 'Female'} · Born ${data.partnerBirthYear} (Age ${data.partnerAge})` : `推演理想正缘: ${data.partnerGender} · ${data.partnerBirthYear}年出生 (时年${data.partnerAge}岁)`}
               </span>
               <span class="px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
-                ⏳ ${isEn ? `Window: ${data.candidateYearRange[0]}–${data.candidateYearRange[1]}` : `严格限定区间: ${data.candidateYearRange[0]}～${data.candidateYearRange[1]}年 (±10岁)`}
-              </span>
-              <span class="px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
-                🧬 ${data.partnerGender}
+                ⏳ ${isEn ? `Search Window: ${data.candidateYearRange[0]}–${data.candidateYearRange[1]} (±10 yrs, Adults 18+)` : `限定寻缘区间: ${data.candidateYearRange[0]}～${data.candidateYearRange[1]}年 (±10岁，严格成年人)`}
               </span>
               <span class="px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-500/30">
                 ✨ ${isEn ? `Archetype ${data.variant + 1} of ${data.variantTotal}` : `正缘格局 ${data.variant + 1} / ${data.variantTotal}`}
@@ -15030,14 +15188,14 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Hour' : '时柱 (归宿默契)'}</div>
 
               <!-- Row Chart A -->
-              <div class="text-xs font-bold text-amber-300 self-center">${isEn ? 'Person A (Self)' : '甲造命主'}</div>
+              <div class="text-xs font-bold text-amber-300 self-center">${isEn ? `Person A · Your Input (${data.userBirthYear})` : `甲造命主 · 您的输入 (${data.userBirthYear}年)`}</div>
               <div>${elBadge(cA.year.stem, cA.year.branch, cA.year.stemElement)}</div>
               <div>${elBadge(cA.month.stem, cA.month.branch, cA.month.stemElement)}</div>
               <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${elBadge(cA.day.stem, cA.day.branch, cA.day.stemElement)}</div>
               <div>${elBadge(cA.hour.stem, cA.hour.branch, cA.hour.stemElement)}</div>
 
               <!-- Row Chart B -->
-              <div class="text-xs font-bold text-rose-300 self-center">${isEn ? 'Person B (Match)' : '乙造正缘'}</div>
+              <div class="text-xs font-bold text-rose-300 self-center">${isEn ? `Person B · Ideal Partner (${data.partnerBirthYear})` : `乙造正缘 · 理想推演 (${data.partnerBirthYear}年)`}</div>
               <div>${cB ? elBadge(cB.year.stem, cB.year.branch, cB.year.stemElement) : '-'}</div>
               <div>${cB ? elBadge(cB.month.stem, cB.month.branch, cB.month.stemElement) : '-'}</div>
               <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${cB ? elBadge(cB.day.stem, cB.day.branch, cB.day.stemElement) : '-'}</div>

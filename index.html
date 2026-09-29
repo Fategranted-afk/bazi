@@ -2955,6 +2955,24 @@
               <span data-i18n="synastry_predict_btn">逆推理想正缘 (16字推演)</span>
             </button>
           </div>
+        <!-- Active User Natal Source Display for Prediction -->
+        <div id="synastryPredictSourceBanner" class="flex flex-wrap items-center justify-between gap-2.5 p-3 rounded-xl bg-black/50 border border-amber-500/30 text-xs">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-amber-300 font-bold font-serif-sc flex items-center gap-1.5">
+              <span>👤</span>
+              <span data-i18n="synastry_predict_source_lbl">甲造基准命盘 (用户输入):</span>
+            </span>
+            <span id="synastryPredictSourcePillars" class="font-mono text-gray-100 font-bold tracking-wide px-2 py-0.5 rounded bg-gray-900 border border-gray-700">
+              --
+            </span>
+            <span id="synastryPredictSourceMeta" class="text-gray-400 text-[11px]">
+              --
+            </span>
+          </div>
+          <button id="btnSynastrySyncFromMain" class="text-[11px] px-3 py-1 rounded-lg bg-amber-950/60 hover:bg-amber-900/60 text-amber-300 border border-amber-700/50 transition cursor-pointer flex items-center gap-1.5 active:scale-95">
+            <span>🔄</span>
+            <span data-i18n="synastry_predict_sync_btn">重新同步命主八字</span>
+          </button>
         </div>
 
         <!-- Dynamic Output Container for 16-Character Joint Resonance Simulator -->
@@ -2979,11 +2997,11 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_birth_date">出生日期 (公历)</label>
-              <input type="date" id="synastryDateA" value="1988-10-24" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+              <input type="date" id="synastryDateA" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
             </div>
             <div>
               <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_birth_time">出生时间</label>
-              <input type="time" id="synastryTimeA" value="14:30" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+              <input type="time" id="synastryTimeA" class="w-full bg-black/50 border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-gray-100 focus:outline-none focus:border-amber-500">
             </div>
             <div>
               <label class="block text-[11px] text-gray-400 mb-1" data-i18n="lbl_gender">造化属性 (性别)</label>

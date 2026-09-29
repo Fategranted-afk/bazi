@@ -456,6 +456,8 @@ const I18N = (function() {
       synastry_predict_balance_title: "五行能量场调和与缺陷补全对比",
       synastry_predict_safeguard_title: "刚柔相济与防压迫制衡心法",
       synastry_predict_profile_title: "正缘现实画像与相知结缘场域",
+      synastry_predict_source_lbl: "甲造基准命盘 (用户输入):",
+      synastry_predict_sync_btn: "重新同步命主八字",
 
       // Imperial Dossier
       dossier_modal_title: "钦天监 · 御制天机 · 皇家绝美珍藏册 (A4 级导出)",
@@ -1528,6 +1530,8 @@ const I18N = (function() {
       synastry_predict_balance_title: "Five Elements Energy Harmonization & Deficit Healing",
       synastry_predict_safeguard_title: "Non-Oppressive Polarity & Psychological Dignity Safeguard",
       synastry_predict_profile_title: "Real-World Partner Profile & Resonance Environments",
+      synastry_predict_source_lbl: "Subject A Anchor Natal Chart (User Input):",
+      synastry_predict_sync_btn: "Re-sync from Current User Chart",
 
       // Imperial Dossier
       dossier_modal_title: "Qin Tian Jian · Imperial Celestial Blueprint (A4 Export)",
