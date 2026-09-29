@@ -22559,8 +22559,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'Requires patience with steady organic growth rather than rapid title spikes',
             'Demands psychological discipline to tune out peer comparisons and social noise'
           ],
-          pilotZh: '【30-60天低成本验证】：在当前部门内主动认领一项流程优化或跨部门协调攻坚任务。不改动劳动关系，用2个月时间测试自己在既有组织阻力下推进事情并拿到正向反馈的实际能力。',
-          pilotEn: '[30-60 Day Low-Cost Pilot]: Volunteer for an internal operational improvement task within your existing team. Test your ability to navigate organizational friction and deliver verifiable results without altering job security.'
+          pilotZh: '【30-60天低成本验证】：在当前部门内主动认领一项流程优化或跨部门协调攻坚任务。不改动劳动关系，用2个月时间测试自己在既有组织阻力下推进事情并拿到正向反馈的实际能力。【周期推演依据与适用前提】：依干支历法，一月（30天）为一建星流月气机闭环，两月（60天）为阴阳进退之阶。因此以30-60天为最小验证周期，正好检验流月气机对现实行动的正向承托力；【适用前提】：必须在主业不松懈、保底收入不断流的前提下利用碎片化精力试错。',
+          pilotEn: '[30-60 Day Low-Cost Pilot]: Volunteer for an internal operational improvement task within your existing team. Test your ability to deliver verifiable results without altering job security. [Cycle Rationale & Precondition]: 30-60 days maps to 1-2 solar month cycles to test real traction. Valid only while baseline employment income remains unbroken.'
         },
         switch_job: {
           badgeZh: '【伺机跳槽 · 职级跃迁】',
@@ -22587,8 +22587,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'Incurs onboarding friction, relationship rebuild costs, and high-intensity probation pressure',
             'Temporarily compresses personal and domestic bandwidth, requiring advance alignment'
           ],
-          pilotZh: '【30-45天低成本验证】：绝不裸辞！悄悄梳理一份极具案例说服力的作品集，定向参与2-3场目标公司的中高层面试。用真实offer与猎头反馈，客观丈量自己在当前劳动力市场上的真实议价权。',
-          pilotEn: '[30-45 Day Low-Cost Pilot]: Never quit prematurely. Refine an evidence-backed project portfolio and discreetly attend 2-3 targeted interviews to measure your true market value and recruiter demand.'
+          pilotZh: '【30-45天低成本验证】：绝不裸辞！悄悄梳理一份极具案例说服力的作品集，定向参与2-3场目标公司的中高层面试。用真实offer与猎头反馈，客观丈量自己在当前劳动力市场上的真实议价权。【周期推演依据与适用前提】：依干支历法，一月（30天）为一建星流月气机闭环，正好客观检验市场对自身专业技能的真实定价；【适用前提】：新机会必须具备书面契约与明确对等保障，忌轻信口头画饼。',
+          pilotEn: '[30-45 Day Low-Cost Pilot]: Never quit prematurely. Refine an evidence-backed project portfolio and discreetly attend 2-3 targeted interviews to measure your true market value and recruiter demand. [Cycle Rationale & Precondition]: 30-45 days covers an empirical hiring feedback loop. Precondition: Valid offers must be backed by formal contracts, not verbal promises.'
         },
         upskill_study: {
           badgeZh: '【进修深造 · 蓄势打磨】',
@@ -22615,8 +22615,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'Demands enduring disciplined, solitary study routines and sacrificing leisure downtime',
             'Involves upfront tuition and time commitments whose tangible career payoff matures in 1-2 years'
           ],
-          pilotZh: '【30天低成本验证】：选取目标考试中最核心的一个难点章节，制定为期4周、每天固定60-90分钟的学习冲刺计划，并在月末完成一次严格闭卷模考，检验自己的时间自律与理解耐受度。',
-          pilotEn: '[30-Day Low-Cost Pilot]: Select a challenging module from your target curriculum and commit to a 4-week, 60-90 minute daily study block. Complete a timed mock exam to test sustained cognitive discipline.'
+          pilotZh: '【30天低成本验证】：选取目标考试中最核心的一个难点章节，制定为期4周、每天固定60-90分钟的学习冲刺计划，并在月末完成一次严格闭卷模考，检验自己的时间自律与理解耐受度。【周期推演依据与适用前提】：依干支历法，一月（30天）为一建星流月气机闭环，正好检验学习精力与认知吸收率；【适用前提】：必须在保证本职工作质量的前提下利用夜间或周末精细时间块。',
+          pilotEn: '[30-Day Low-Cost Pilot]: Select a challenging module from your target curriculum and commit to a 4-week, 60-90 minute daily study block. Complete a timed mock exam to test sustained cognitive discipline. [Cycle Rationale & Precondition]: 30 days provides an empirical test of focus and retention. Precondition: Protect core job performance without disruption.'
         },
         venture_new: {
           badgeZh: '【主动拓荒 · 试水新局】',
@@ -22643,8 +22643,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'Requires weathering ambiguity, early rejection, and uneven revenue cycles',
             'Demands rigorous time-boxing to prevent side ventures from eroding core career performance'
           ],
-          pilotZh: '【60天低成本验证】：绝不裸辞、不投巨资！利用周末搭建最小可行产品（MVP）或发布一项标准化技术服务包，测试能否在2个月内获得3位非亲友关系的真实付费种子客户。',
-          pilotEn: '[60-Day Low-Cost Pilot]: Never quit your main job or risk capital prematurely. Build a Minimum Viable Product (MVP) in spare hours, testing if you can acquire 3 paying clients within 60 days.'
+          pilotZh: '【60天低成本验证】：绝不裸辞、不投巨资！利用周末搭建最小可行产品（MVP）或发布一项标准化技术服务包，测试能否在2个月内获得3位非亲友关系的真实付费种子客户。【周期推演依据与适用前提】：依干支历法，两月（60天）为阴阳进退之阶，足以检验市场真实购买意愿；【适用前提】：自有闲置资本试水封顶在15%以内，严禁借贷或挪用家庭应急款项。',
+          pilotEn: '[60-Day Low-Cost Pilot]: Never quit your main job or risk capital prematurely. Build a Minimum Viable Product (MVP) in spare hours, testing if you can acquire 3 paying clients within 60 days. [Cycle Rationale & Precondition]: 60 days tests real market willingness to pay. Precondition: Risk capital strictly capped under 15% liquid net worth; no debt.'
         }
       };
 
@@ -22730,6 +22730,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Concrete Wealth Guardrails & Asset Firewall: 财富风控与资产防火墙
     evaluateWealthGuardrails: function(bazi, luck, crTt, isEn) {
+      const dm = (bazi && bazi.dayMaster) || '甲';
+      const isStrong = bazi && bazi.isStrong !== undefined ? bazi.isStrong : (bazi && bazi.vigor ? (bazi.vigor.status.indexOf('旺') !== -1) : true);
       const activeAnnual = (luck && luck.activeAnnual) || { stemGod: '食神' };
       const aGod = activeAnnual.stemGod || '食神';
       const isClash = aGod === '劫财' || aGod === '比肩';
@@ -22737,14 +22739,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const resMonths = isClash ? '9~12' : '6~9';
       const resMonthsEn = isClash ? '9-12' : '6-9';
 
+      const dmEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en').split(' ')[0] : 'Bing';
+      const aGodEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(aGod, 'en') : 'Companion';
+
+      const derivationPrefixZh = `【命理底层推演依据与适用前提】：依日主【${dm}】身${isStrong ? '旺' : '弱'}与岁运${aGod}交感，原局财星${isClash ? '受比劫逼近克夺，抗穿透性较弱' : '生克平稳'}。此配置决定个人不可承受大额流动性断裂。`;
+      const derivationPrefixEn = `[Astrological Rationale & Conditions]: Derived from Day Master [${dmEn}] (${isStrong ? 'Strong' : 'Delicate'}) under ${aGodEn} transit currents. Natal wealth stars ${isClash ? 'face peer friction, lowering volatility tolerance' : 'remain stable but require liquidity shielding'}.`;
+
       const reserve = {
-        zh: `【刚性应急储备金安全垫】：本命财富安全的首要抓手，是账户中永远保有抵御 ${resMonths} 个月固定刚性开销的无风险高流动性现金（货币基金或大额存单）。无论外界如何鼓动诱惑，此笔款项严禁挪作任何投资。`,
-        en: `[Rigid Emergency Reserve Buffer]: Anchor financial resilience by maintaining ${resMonthsEn} months of non-negotiable living expenses in liquid, capital-protected assets. Never allocate this core liquidity to risk investments.`
+        zh: `【刚性应急储备金安全垫】：账户中永远保有抵御 ${resMonths} 个月固定刚性开销的无风险高流动性现金（货币基金或大额存单）。无论外界如何鼓动诱惑，此笔款项严禁挪作任何投资。${derivationPrefixZh}【适用前提】：以维持当前基本生存底盘测算，若已背负刚性负债，储备须追加20%。`,
+        en: `[Rigid Emergency Reserve Buffer]: Maintain ${resMonthsEn} months of non-negotiable living expenses in liquid, capital-protected assets. Never allocate this core liquidity to risk investments. ${derivationPrefixEn} [Precondition]: Assumes current living baseline; if servicing debt, expand buffer by 20%.`
       };
 
       const allocation = {
-        zh: '【投资与副业资本硬约束】：高风险权益类投资、副业创业试错资金，严格锁定在总流动资产的 15% 警戒线以内。杜绝任何形式的配资加杠杆、高息理财诱惑与口头入股承诺；守住本金即是最大胜利。',
-        en: '[Capital Allocation Boundary]: Cap speculative equities and entrepreneurial trial capital strictly below 15% of net liquid worth. Prohibit unhedged leverage and unverified yield schemes; preserving principal is victory.'
+        zh: '【投资与副业资本硬约束】：高风险权益类投资与副业试错资金，严格锁定在总流动资产的 15% 警戒线以内。杜绝任何形式的配资加杠杆、高息理财诱惑与口头入股承诺；守住本金即是最大胜利。【适用前提】：仅限个人独立自有闲置资金，严禁借贷或挪用家庭应急款项。',
+        en: '[Capital Allocation Boundary]: Cap speculative equities and entrepreneurial trial capital strictly below 15% of net liquid worth. Prohibit unhedged leverage and unverified yield schemes; preserving principal is victory. [Precondition]: Strict usage of unencumbered personal savings only; never use borrowed capital.'
       };
 
       const leakages = {
@@ -22767,44 +22775,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Near-Term Tactical Timing & 1-2 Year Action Roadmap: 未来1-2年时机节律与行动筹备表
     generateNearTermRoadmap: function(bazi, luck, currentYear, isEn) {
-      const curYr = currentYear || new Date().getFullYear();
+      // Always anchor near-term roadmap to real-world present (2026 ~ 2027)
+      const realNowYear = new Date().getFullYear(); // 2026
+      const curYr = (currentYear && Math.abs(currentYear - realNowYear) <= 1) ? currentYear : realNowYear;
       const y1 = curYr;
       const y2 = curYr + 1;
 
-      const activeAnnual = (luck && luck.activeAnnual) || { year: y1, text: '丙午', stem: '丙', branch: '午', stemGod: '食神' };
-      const y1GanzhiZh = activeAnnual.text || (activeAnnual.stem + activeAnnual.branch) || '丙午';
-      const y1GodZh = activeAnnual.stemGod || '食神';
-
+      const dm = (bazi && bazi.dayMaster) || '甲';
       const stems = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
       const branches = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
-      const sIdx = (stems.indexOf(activeAnnual.stem || '丙') + 1) % 10;
-      const bIdx = (branches.indexOf(activeAnnual.branch || '午') + 1) % 12;
-      const y2Stem = stems[sIdx >= 0 ? sIdx : 3];
-      const y2Branch = branches[bIdx >= 0 ? bIdx : 7];
+      
+      const y1StemIdx = ((y1 - 4) % 10 + 10) % 10;
+      const y1BranchIdx = ((y1 - 4) % 12 + 12) % 12;
+      const y1Stem = stems[y1StemIdx];
+      const y1Branch = branches[y1BranchIdx];
+      const y1GanzhiZh = y1Stem + y1Branch;
+
+      const y2StemIdx = ((y2 - 4) % 10 + 10) % 10;
+      const y2BranchIdx = ((y2 - 4) % 12 + 12) % 12;
+      const y2Stem = stems[y2StemIdx];
+      const y2Branch = branches[y2BranchIdx];
       const y2GanzhiZh = y2Stem + y2Branch;
+
+      const getGodFn = (typeof CareerEngine !== 'undefined' && CareerEngine.getTenGod)
+        ? CareerEngine.getTenGod
+        : ((typeof LuckEngine !== 'undefined' && LuckEngine.getTenGod) ? LuckEngine.getTenGod : () => '食神');
+
+      const y1GodZh = getGodFn(dm, y1Stem) || '食神';
+      const y2GodZh = getGodFn(dm, y2Stem) || '伤官';
 
       const stemEnMap = { '甲': 'Jia', '乙': 'Yi', '丙': 'Bing', '丁': 'Ding', '戊': 'Wu', '己': 'Ji', '庚': 'Geng', '辛': 'Xin', '壬': 'Ren', '癸': 'Gui' };
       const branchEnMap = { '子': 'Zi', '丑': 'Chou', '寅': 'Yin', '卯': 'Mao', '辰': 'Chen', '巳': 'Si', '午': 'Wu', '未': 'Wei', '申': 'Shen', '酉': 'You', '戌': 'Xu', '亥': 'Hai' };
-      const y1GanzhiEn = (stemEnMap[activeAnnual.stem] || 'Bing') + '-' + (branchEnMap[activeAnnual.branch] || 'Wu');
+      const y1GanzhiEn = (stemEnMap[y1Stem] || 'Bing') + '-' + (branchEnMap[y1Branch] || 'Wu');
       const y2GanzhiEn = (stemEnMap[y2Stem] || 'Ding') + '-' + (branchEnMap[y2Branch] || 'Wei');
+
+      const y1GodEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(y1GodZh, 'en') : 'Governing Star';
+      const y2GodEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(y2GodZh, 'en') : 'Evolving Star';
 
       const y1Card = {
         year: y1,
         ganzhi: isEn ? y1GanzhiEn : y1GanzhiZh,
-        god: isEn ? ((typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(y1GodZh, 'en') : 'Governing Star') : y1GodZh,
-        phaseBadge: isEn ? 'Year 1 · Focused Deepening' : '第一年 · 沉淀筑基与闭环求证',
+        god: isEn ? y1GodEn : y1GodZh,
+        phaseBadge: isEn ? `Year 1 (${y1}) · Focused Deepening` : `第一年 (${y1}年) · 沉淀筑基与闭环求证`,
         tone: isEn
-          ? 'A cycle of stabilizing foundations and refining operational discipline. Focus energy on building verifiable competence while eliminating wasteful distraction.'
-          : '当前岁运交感平稳通畅，宜内修而不宜外耗。当前重心在于做透手头核心交付物，建立极具说服力的成果案例库，夯实职场不可替代性。',
+          ? `Current year [${y1GanzhiEn} · ${y1GodEn}] favors consolidating baseline competence. Align daily execution with your core strengths and eliminate wasteful distraction.`
+          : `当下流年【${y1GanzhiZh} · ${y1GodZh}】当值，岁运交感平稳通畅，宜内修而不宜外耗。当前重心在于做透手头核心交付物，建立极具说服力的成果案例库，夯实职场不可替代性。`,
         prepare: isEn
           ? '[Advance Preparation]: Systematically catalog your key project milestones and measurable metrics over the past 3 years to create an unassailable portfolio.'
           : '【提前筹备】：系统梳理过去三年最具代表性的项目交付与量化数据，形成一套结构化、可复用的个人方法论案例库。',
         verify: isEn
           ? '[Low-Cost Trial]: Initiate a lightweight process improvement pilot within your team; validate real operational leverage within 30-45 days.'
-          : '【低成本试错】：在现有团队内主动发起或承接一项流程微改造，用45天闭环周期验证自己调动跨部门资源的能力。',
+          : '【低成本试错】：在现有团队内主动发起或承接一项流程微改造，用30-45天闭环周期验证自己调动跨部门资源的能力。',
         avoid: isEn
           ? '[Strict Prohibitions]: Avoid emotional resignation or starting capital-heavy unhedged ventures; strictly decline personal loans and debt co-signing.'
           : '【坚决规避】：切忌因一时人际情绪冲动裸辞；严禁重资产投入或加杠杆投机；凡口头人情承诺一律不作资金兜底。',
+        rationale: isEn
+          ? '[Natal Rationale & Precondition]: 30-45 days matches the solar term Qi transition cycle. Valid only while core salary cash flow remains unbroken.'
+          : '【命理依据与适用前提】：依干支历法，一月（30天）为一建星流月气机闭环，正好检验现实世界正向反馈。前提是主业收入不断流、不盲目借贷。',
         windows: isEn
           ? 'First half emphasizes internal consolidation and skill building; second half favors launching measured experimental trials.'
           : '上半年重点在内功修炼与职场对齐，下半年契机成熟时可伺机展开小规模实验性试水。'
@@ -22813,11 +22840,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const y2Card = {
         year: y2,
         ganzhi: isEn ? y2GanzhiEn : y2GanzhiZh,
-        god: isEn ? 'Ascending Pivot' : '承启转化',
-        phaseBadge: isEn ? 'Year 2 · Value Realization' : '第二年 · 拐点兑现与成果变现',
+        god: isEn ? y2GodEn : y2GodZh,
+        phaseBadge: isEn ? `Year 2 (${y2}) · Value Realization` : `第二年 (${y2}年) · 拐点兑现与成果变现`,
         tone: isEn
-          ? 'An inflection window where prior preparations begin translating into tangible reputation, career leverage, or strategic elevation.'
-          : '岁运深化交感，前期沉淀的知识与口碑迎来关键外溢窗口。适合在明确目标的前提下，果断收割前期布局的红利，完成身价与角色的结构性跃迁。',
+          ? `Subsequent year [${y2GanzhiEn} · ${y2GodEn}] brings dynamic external articulation. Accumulated capabilities begin translating into market reputation and upward leverage.`
+          : `次年流年【${y2GanzhiZh} · ${y2GodZh}】进气，岁运深化交感，前期沉淀的知识与口碑迎来关键外溢窗口。适合在明确目标的前提下，果断收割前期布局的红利，完成身价与角色的结构性跃迁。`,
         prepare: isEn
           ? '[Advance Preparation]: Build an executive referral shortlist 6 months prior; finalize strategic alignment on whether to seek internal elevation or an external leap.'
           : '【提前筹备】：提前半年盘点外部同行与高端猎头人脉，在上半年完成“内部晋升”与“外部跳槽”的二选一战略定夺。',
@@ -22826,7 +22853,10 @@ document.addEventListener('DOMContentLoaded', () => {
           : '【低成本试错】：以咨询顾问或项目评测形式介入目标平台，深入探查组织实际健康度后再做不可撤销的签约。',
         avoid: isEn
           ? '[Strict Prohibitions]: Avoid cognitive overextension across too many simultaneous initiatives; do not sacrifice long-term reputation for short-term vanity.'
-          : '【坚决规避】：切忌多线开火导致精力瘫痪；切忌为了短期虚名虚衔承担无限无限连带责任。',
+          : '【坚决规避】：切忌多线开火导致精力瘫痪；切忌为了短期虚名虚衔承担无限连带责任。',
+        rationale: isEn
+          ? '[Natal Rationale & Precondition]: Transitions require favorable transit support; pre-condition is that written contracts and downside stop-losses are signed.'
+          : '【命理依据与适用前提】：太岁干支交替引动角色换代；前提是新机会必须具备书面契约与明确对等保障，忌轻信口头画饼。',
         windows: isEn
           ? 'Spring transition triggers fresh opportunities; autumn serves as the decisive closing window for structural agreements.'
           : '春季交节易现转机与调动信号，夏秋之交为拍板定案、锁定胜势的黄金兑现窗口。'
@@ -22837,6 +22867,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Interpersonal Collaboration & Support System: 人际协作、外部支撑网络与防波堤系统
     evaluateInterpersonalSupport: function(bazi, pc, isEn) {
+      const dm = (bazi && bazi.dayMaster) || '甲';
+      const isStrong = bazi && bazi.isStrong !== undefined ? bazi.isStrong : true;
+
       const intimate = {
         titleZh: '亲密关系动力学与情感防波堤功能',
         titleEn: 'Intimate Partnership Dynamics & Emotional Ballast',
@@ -22855,11 +22888,29 @@ document.addEventListener('DOMContentLoaded', () => {
         firewallEn: 'Formalize contracts and operational milestones in writing prior to collaboration. Maintain audit trails for strategic contributions to protect attribution.'
       };
 
+      const charter = {
+        titleZh: '职场与合伙协作刚性权责分配法则（权责利对等闭环）',
+        titleEn: 'Equitable Collaboration & Responsibility Allocation Charter',
+        rule1Zh: '【权责利1:1对称死绑定】：重大业务与合伙中，决策权与兜底责任必须绝对绑定。严禁“他人拍脑门指挥、命主负责买单背锅”的不对称格局；谁主张谁负责，凡无兜底能力者的指挥坚决不盲从。',
+        rule1En: 'Equitable Power & Risk Binding: Decision authority must bind 1:1 to financial liability. Reject arrangements where partners direct strategy without bearing downside risk.',
+        rule2Zh: '【丑话开局与利益前置契约】：合作之始必须立下白纸黑字的分润比例与清算条款，杜绝“先做起来再说”的人情模糊。原局比劫若遇利益不清，必生暗鬼破耗，唯制度可保长久合作。',
+        rule2En: 'Upfront Commercial Formalization: Draft equity, attribution, and liquidation terms in writing before project initiation. Never rely on informal agreements that breed conflict.',
+        rule3Zh: '【阶段性退出与止损清算机制】：设立明确的里程碑考核（如3~6个月验证窗口），未达预定交付或盈利指标则启动无痛解约退出机制，绝不拖泥带水，防止被沉没成本拖垮。',
+        rule3En: 'Milestone-Based Stop-Loss Exit: Institute 3-6 month milestone checkpoints; if key targets fail, trigger pre-agreed liquidation without personal resentment or sunk-cost traps.'
+      };
+
       const family = {
         titleZh: '原生家庭关系与健康成人边界确立',
         titleEn: 'Family Heritage Dynamics & Adult Boundary Governance',
         boundaryZh: '【边界治理心法】：以“敬重感恩而不盲从依附”的成熟心智确立家庭边界。吸纳家族长辈的仁爱福泽底蕴，但在个人的职业发展、财务决策与婚恋选择上，必须由自己承担终局责任，坚决拒绝人情式绑架与无休止的经济填坑。',
         boundaryEn: 'Honor ancestral heritage with gratitude while establishing unwavering sovereign autonomy. Retain ultimate governance over career, financial, and relational choices.'
+      };
+
+      const dmEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en').split(' ')[0] : 'Bing';
+
+      const rationale = {
+        zh: `【命理推演依据与适用前提】：依命主日主【${dm}】身${isStrong ? '旺' : '弱'}与比劫配置，天性重诺守义但易在利益模糊中吃暗亏。此法则专用于职场商事与对外合伙场景（不适用于直系亲属无条件照拂），在双方具备契约精神的前提下保障合伙长青。`,
+        en: `[Natal Rationale & Preconditions]: Tailored for Day Master [${dmEn}] (${isStrong ? 'Strong' : 'Delicate'}) with companion star influences that risk boundary blur. Applies strictly to professional and commercial partnerships.`
       };
 
       return {
@@ -22873,10 +22924,17 @@ document.addEventListener('DOMContentLoaded', () => {
           mentor: isEn ? allies.mentorEn : allies.mentorZh,
           firewall: isEn ? allies.firewallEn : allies.firewallZh
         },
+        charter: {
+          title: isEn ? charter.titleEn : charter.titleZh,
+          rule1: isEn ? charter.rule1En : charter.rule1Zh,
+          rule2: isEn ? charter.rule2En : charter.rule2Zh,
+          rule3: isEn ? charter.rule3En : charter.rule3Zh
+        },
         family: {
           title: isEn ? family.titleEn : family.titleZh,
           boundary: isEn ? family.boundaryEn : family.boundaryZh
-        }
+        },
+        rationale: isEn ? rationale.en : rationale.zh
       };
     },
 
@@ -23045,9 +23103,27 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
       : `${aPillar.year || ''}年 ${aPillar.text || (aPillar.stem + aPillar.branch)} (${aPillar.stemGod})`;
     const annualNaYinStr = isEn ? I18N.getNaYin(aPillar.naYin, 'en') : aPillar.naYin;
 
-    const targetCalYear = (aPillar && aPillar.year) || new Date().getFullYear();
+    const realCurrentYear = new Date().getFullYear();
+    const targetCalYear = (aPillar && aPillar.year) || realCurrentYear;
     const birthYr = (bazi.input && bazi.input.year) || bazi.birthYear || 1990;
     const currentAge = Math.max(1, Math.min(100, targetCalYear - birthYr + 1));
+    const currentAgeAtRealNow = Math.max(1, Math.min(100, realCurrentYear - birthYr + 1));
+
+    const stemsArr = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+    const branchesArr = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+    const realYrStemIdx = ((realCurrentYear - 4) % 10 + 10) % 10;
+    const realYrBranchIdx = ((realCurrentYear - 4) % 12 + 12) % 12;
+    const realYrStem = stemsArr[realYrStemIdx];
+    const realYrBranch = branchesArr[realYrBranchIdx];
+    const realYrGodZh = ((typeof CareerEngine !== 'undefined' && CareerEngine.getTenGod)
+      ? CareerEngine.getTenGod(bazi.dayMaster || '甲', realYrStem)
+      : ((typeof LuckEngine !== 'undefined' && LuckEngine.getTenGod) ? LuckEngine.getTenGod(bazi.dayMaster || '甲', realYrStem) : '偏官')) || '偏官';
+    const realYrGodEn = (typeof I18N !== 'undefined' && I18N.getGod) ? I18N.getGod(realYrGodZh, 'en') : 'Governing Star';
+    const realYrStemEn = (typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(realYrStem, 'en').split(' ')[0] : 'Bing';
+    const realYrBranchEn = (typeof I18N !== 'undefined' && I18N.getBranch) ? I18N.getBranch(realYrBranch, 'en').split(' ')[0] : 'Wu';
+    const currentAnnualPillarStr = isEn
+      ? `${realCurrentYear} ${realYrStemEn}-${realYrBranchEn} (${realYrGodEn})`
+      : `${realCurrentYear}年 ${realYrStem}${realYrBranch} (${realYrGodZh})`;
 
     const careerReport = (typeof CareerEngine !== 'undefined' && typeof CareerEngine.generateCareerReport === 'function')
       ? CareerEngine.generateCareerReport(bazi, luck, targetCalYear)
@@ -23359,25 +23435,25 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
     const decisionStance = ImperialDecisionEngine.evaluateStrategicStance(bazi, luck, currentAge, targetCalYear, isEn);
     const cognitiveBlindspots = ImperialDecisionEngine.evaluateCognitiveBlindspots(bazi, isEn);
     const wealthGuardrails = ImperialDecisionEngine.evaluateWealthGuardrails(bazi, luck, crTt, isEn);
-    const nearTermRoadmap = ImperialDecisionEngine.generateNearTermRoadmap(bazi, luck, targetCalYear, isEn);
+    const nearTermRoadmap = ImperialDecisionEngine.generateNearTermRoadmap(bazi, luck, realCurrentYear, isEn);
     const interpersonalSupport = ImperialDecisionEngine.evaluateInterpersonalSupport(bazi, pc, isEn);
     const epistemicGuide = ImperialDecisionEngine.getEpistemicModestyGuide(bazi, isEn);
 
-    // Active Year Hexagram Details
+    // Active Year Hexagram Details (strictly anchored to present calendar year)
     let hexTrajectoryList = (luck && luck.hexTrajectory && luck.hexTrajectory.length > 0)
       ? luck.hexTrajectory
       : ((typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function')
         ? IChingEngine.calculateLifelongCycle(bazi)
         : []);
 
-    let activeHexItem = hexTrajectoryList.find(p => p.year === targetCalYear) || hexTrajectoryList.find(p => p.age === currentAge) || hexTrajectoryList[0] || null;
+    let activeHexItem = hexTrajectoryList.find(p => p.year === realCurrentYear) || hexTrajectoryList.find(p => p.age === currentAgeAtRealNow) || hexTrajectoryList[0] || null;
     if (!activeHexItem && typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
-      const hCalc = IChingEngine.calculateFourPillarsHexagrams(bazi, currentAge, targetCalYear);
+      const hCalc = IChingEngine.calculateFourPillarsHexagrams(bazi, currentAgeAtRealNow, realCurrentYear);
       if (hCalc && hCalc.zhiNian) {
         const znObj = hCalc.zhiNian;
         activeHexItem = {
-          age: currentAge,
-          year: targetCalYear,
+          age: currentAgeAtRealNow,
+          year: realCurrentYear,
           annualHex: znObj.hexagram || { number: 14, nameZh: '火天大有', nameEn: 'Great Possession' },
           ruleInteractionZh: znObj.ruleInteractionZh || '阴阳相合守本卦【火天大有】',
           ruleInteractionEn: znObj.ruleInteractionEn || 'Opposite Polarities Harmonize -> Retain Base Hexagram (Great Possession)',
@@ -23521,7 +23597,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
                 </span>
                 <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P4</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? '24-Month Roadmap: ' : '近两年节律：'}</b>${targetCalYear}~${targetCalYear + 1}${isEn ? ' Year-by-year action preparation checklist' : '年时机节律与提前筹备清单'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? '24-Month Roadmap: ' : '近两年节律：'}</b>${realCurrentYear}~${realCurrentYear + 1}${isEn ? ' Year-by-year action preparation checklist' : '年时机节律与提前筹备清单'}</p>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Annual Hexagram: ' : '易数决策：'}</b>${isEn ? 'I-Ching annual hexagram decision guidance' : '当年值年卦经纶与行动取舍指引'}</p>
             </div>
 
@@ -23799,30 +23875,53 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
                 <div class="text-[10px] text-amber-900 font-serif-sc mt-0.5">${isEn ? topMatch.positionEn : topMatch.positionZh}</div>
               </div>
               <div class="text-right">
-                <div class="text-[9.5px] text-gray-500 font-serif-sc">${isEn ? 'Resonance Tier' : '天命契合层级'}</div>
-                <div class="text-sm font-black font-serif-sc text-emerald-800">${isEn ? '#1 · Top Celestial Resonance' : '#1 · 至高天命共鸣'}</div>
+                <div class="text-[9.5px] text-gray-500 font-serif-sc">${isEn ? 'Resonance Alignment' : '多维特征同频指数'}</div>
+                <div class="text-sm font-black font-serif-sc text-emerald-800">${isEn ? `#1 · ${Math.round(topMatch.similarityScore || 95)} / 100 Pts` : `#1 · ${Math.round(topMatch.similarityScore || 95)}分 / 100分`}</div>
               </div>
             </div>
 
             <!-- 4D Dimension Breakdown Badges -->
             <div class="grid grid-cols-4 gap-1 text-center text-[9px] font-mono">
               <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
-                <div class="text-gray-600 font-serif-sc">${isEn ? 'Element' : '五行气机'}</div>
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Element Vector (25%)' : '五行气机矢量 (25%)'}</div>
                 <div class="font-bold text-amber-950">${isEn ? 'High Resonance' : '高度同频'}</div>
               </div>
               <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
-                <div class="text-gray-600 font-serif-sc">${isEn ? 'Pattern' : '格局共鸣'}</div>
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Pattern Resonance (30%)' : '月令格局共振 (30%)'}</div>
                 <div class="font-bold text-amber-950">${isEn ? 'Core Echo' : '核心呼应'}</div>
               </div>
               <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
-                <div class="text-gray-600 font-serif-sc">${isEn ? 'Archetype' : '职场择位'}</div>
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Archetype Concord (25%)' : '实战原型契合 (25%)'}</div>
                 <div class="font-bold text-amber-950">${isEn ? 'Prime Concord' : '高度契合'}</div>
               </div>
               <div class="p-1 rounded bg-amber-100/60 border border-amber-900/20">
-                <div class="text-gray-600 font-serif-sc">${isEn ? 'Energy' : '心性能量'}</div>
+                <div class="text-gray-600 font-serif-sc">${isEn ? 'Energy Temper (20%)' : '意志能量韧性 (20%)'}</div>
                 <div class="font-bold text-amber-950">${isEn ? 'Sovereign Tone' : '威严深稳'}</div>
               </div>
             </div>
+          </div>
+
+          <!-- Epistemic Methodology & Disclaimer Box (Eliminates Pseudo-Precision) -->
+          <div class="p-1.5 rounded bg-amber-50/80 border border-amber-900/20 text-[8.5px] leading-tight font-serif-sc space-y-0.5">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/10 pb-0.5">
+              <span class="flex items-center gap-1">
+                <span>📐</span>
+                <span>${isEn ? '4D Cosine Similarity Vector Methodology & Epistemic Scope' : '四维余弦相似度算法机制与自省镜鉴说明'}</span>
+              </span>
+              <span class="text-[8px] font-mono text-amber-900 px-1 py-0.1 rounded bg-amber-100/80 border border-amber-400/40">
+                ${isEn ? 'REFLECTIVE MIRROR · NOT FATALISM' : '认知反思镜像 · 非宿命定论'}
+              </span>
+            </div>
+            <p class="text-gray-700 font-sans">
+              <b>${isEn ? 'Methodology: ' : '算法原理与验证机制：'}</b>${isEn
+                ? 'Alignment is computed via multi-dimensional cosine similarity across 549 historical figures, synthesizing Elemental Qi (25%), Monthly Commander Pattern (30%), Career Archetype (25%), and Crisis Adversity Resilience (20%).'
+                : '同频指数系对乱世 549 位历史人物数据库构建多维特征向量，涵盖五行气机分布(25%)、月令格局权重(30%)、职场实操原型(25%)与逆境意志能量(20%)四维坐标计算归一化余弦相似度。'}
+            </p>
+            <p class="text-amber-950 font-sans">
+              <b>${isEn ? 'Epistemic Scope: ' : '分寸感定位声明：'}</b>${isEn
+                ? 'This score reflects behavioral patterns, decision heuristics, and structural predicaments to serve as a strategic self-reflection mirror, NOT an empirical claim of fatalistic certainty.'
+                : '本指标表征处境同构性与决策心智镜像，用作审视个人盲区与战法启示之决策反思坐标，绝非预测未来人生必然命中的宿命定论。'}
+            </p>
           </div>
 
           <!-- Section 1: Personality Traits & Historical Feats -->
@@ -23952,12 +24051,12 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
                 <span>${isEn ? 'Macro Decennial & Annual Navigation Coordinate' : '宏观时空罗盘 · 当运岁序坐标定调'}</span>
               </span>
               <span class="font-mono text-amber-900 bg-amber-100 px-1 py-0.1 rounded border border-amber-400">
-                ${isEn ? `Age ${currentAge} · Decade [${decadeShortStr}]` : `虚岁${currentAge}岁 · 当行【${decadeShortStr}】大运`}
+                ${isEn ? `Age ${currentAgeAtRealNow} · Decade [${decadeShortStr}]` : `虚岁${currentAgeAtRealNow}岁 · 当行【${decadeShortStr}】大运`}
               </span>
             </div>
             <div class="grid grid-cols-3 gap-1 text-[8.5px] text-gray-700 bg-amber-50/60 p-1 rounded font-sans">
               <div><span class="text-gray-500">${isEn ? 'Decade Pillar:' : '所属十年大运:'}</span> <b class="text-gray-900 ml-0.5">${decadePillarStr}</b></div>
-              <div><span class="text-gray-500">${isEn ? 'Annual Tai Sui:' : '当值流年太岁:'}</span> <b class="text-amber-900 ml-0.5">${annualPillarStr}</b></div>
+              <div><span class="text-gray-500">${isEn ? 'Annual Tai Sui:' : '当值流年太岁:'}</span> <b class="text-amber-900 ml-0.5">${currentAnnualPillarStr}</b></div>
               <div><span class="text-gray-500">${isEn ? 'Macro Lifecycle Phase:' : '宏观生命阶段:'}</span> <b class="text-amber-950 ml-0.5">${isEn ? fivePhases[1].nameEn : fivePhases[1].nameZh}</b></div>
             </div>
           </div>
@@ -23969,7 +24068,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
                 <span>📅</span>
                 <span>${isEn ? 'NEAR-TERM 24-MONTH ACTION ROADMAP (CURRENT & NEXT YEAR)' : '未来 1~2 年关键行动筹备与试错攻防全景表'}</span>
               </h3>
-              <span class="text-[8.5px] font-mono text-amber-900">${targetCalYear} ~ ${targetCalYear + 1}</span>
+              <span class="text-[8.5px] font-mono text-amber-900">${realCurrentYear} ~ ${realCurrentYear + 1}</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-1.5 text-xs">
@@ -23995,6 +24094,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
                     <div class="p-1 rounded bg-emerald-50/80 border border-emerald-700/20 text-emerald-950 font-bold">
                       <b class="text-emerald-900">🎯 ${isEn ? 'Low-Cost Trial: ' : '低成本试错：'}</b>${rm.verify.replace(/^【低成本试错】：|^\[Low-Cost Trial\]:\s*/, '')}
                     </div>
+                    <div class="p-1 rounded bg-amber-50/80 border border-amber-700/20 text-amber-950">
+                      <b class="text-amber-900">${isEn ? 'Natal Rationale & Precondition: ' : '命理依据与适用前提：'}</b>${rm.rationale ? rm.rationale.replace(/^【命理依据与适用前提】：|^\[Natal Rationale & Precondition\]:\s*/, '') : (isEn ? 'Solar month Qi cycles dictate empirical validation. Valid while core salary income is unbroken.' : '依干支历法，一月为一建星流月气机闭环，前提是主业收入不断流、不盲目借贷。')}
+                    </div>
                     <div class="p-1 rounded bg-rose-50/80 border border-rose-700/20 text-rose-950">
                       <b class="text-rose-900">⚠️ ${isEn ? 'Strict Prohibitions: ' : '坚决规避：'}</b>${rm.avoid.replace(/^【坚决规避】：|^\[Strict Prohibitions\]:\s*/, '')}
                     </div>
@@ -24008,12 +24110,48 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
             </div>
           </div>
 
-          <!-- Module 2: I-Ching Annual Hexagram Decision Middleware & Action Guidance -->
+          <!-- Module 2: Four-Quarter Near-Term Execution Schedule -->
+          <div class="imperial-card imperial-card-gold p-1.5 space-y-1 font-serif-sc">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <span class="flex items-center gap-1 font-bold text-[10px] text-amber-950">
+                <span>📊</span>
+                <span>${isEn ? 'Four-Quarter Near-Term Execution Schedule (Milestones & Checkpoints)' : '未来四季度行动推进节律与阶段性验收里程碑'}</span>
+              </span>
+              <span class="text-[8px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">
+                ${isEn ? 'MILESTONES' : '季调节律'}
+              </span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-1 text-[8.5px] leading-tight font-sans">
+              <div class="p-1.5 rounded bg-white/75 border border-amber-900/10 space-y-0.5">
+                <div class="font-bold text-amber-950 flex items-center justify-between">
+                  <span>${isEn ? 'Q1-Q2 (2026 H2): Internal Audit' : '第一阶段 (2026下半年)：内部筑基与复盘'}</span>
+                  <span class="text-[7.5px] font-mono text-emerald-800 font-bold">${isEn ? 'CONSOLIDATE' : '修内功'}</span>
+                </div>
+                <p class="text-gray-700">${isEn ? 'Catalog key deliverables and quantitative metrics from the past 3 years into a reusable case library. Launch 30-day internal process improvement trials without disrupting baseline salary.' : '系统梳理过去三年核心交付产出与量化成果，固化个人方法论案例库；在团队内部发起30天微创新试点，不影响主业基本盘。'}</p>
+              </div>
+              <div class="p-1.5 rounded bg-white/75 border border-amber-900/10 space-y-0.5">
+                <div class="font-bold text-amber-950 flex items-center justify-between">
+                  <span>${isEn ? 'Q3 (2027 H1): External Recon' : '第二阶段 (2027上半年)：契机侦测与轻试水'}</span>
+                  <span class="text-[7.5px] font-mono text-amber-800 font-bold">${isEn ? 'EXPLORE' : '探契机'}</span>
+                </div>
+                <p class="text-gray-700">${isEn ? 'Audit industry networks and executive channels. Deploy lightweight advisory or MVP testing to evaluate genuine market demand before making any irreversible commitments.' : '盘点外部高端猎头与行业伙伴人脉，以兼职咨询或MVP轻量试水探查目标平台真实健康度；提前6个月完成跳槽与晋升的二选一战略定调。'}</p>
+              </div>
+              <div class="p-1.5 rounded bg-white/75 border border-amber-900/10 space-y-0.5">
+                <div class="font-bold text-amber-950 flex items-center justify-between">
+                  <span>${isEn ? 'Q4 (2027 H2): Decisive Closing' : '第三阶段 (2027下半年)：拐点兑现与决断定鼎'}</span>
+                  <span class="text-[7.5px] font-mono text-rose-800 font-bold">${isEn ? 'HARVEST' : '定大局'}</span>
+                </div>
+                <p class="text-gray-700">${isEn ? 'Autumn harvest window: close strategic agreements with signed contracts and explicit downside protection. Realize accumulated leverage for step-function career elevation.' : '夏秋兑现黄金窗口：锁定胜势；在白纸黑字合同与完备兜底机制保障下，果断收割前期沉淀红利，完成身价与角色的结构性跃迁。'}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: I-Ching Annual Hexagram Decision Middleware & Action Guidance -->
           <div class="imperial-card imperial-card-accent p-2 space-y-1 font-serif-sc">
             <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
               <span class="flex items-center gap-1 font-bold text-[10.5px] text-amber-950">
                 <span>☯️</span>
-                <span>${isEn ? `Annual Hexagram Decision Middleware · ${targetCalYear} (${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.nameEn : 'Great Possession'})` : `当年易数值年卦经纶与行动取舍指引 · ${targetCalYear}年 (${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.nameZh : '火天大有'})`}</span>
+                <span>${isEn ? `Annual Hexagram Decision Middleware · ${realCurrentYear} (${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.nameEn : 'Great Possession'})` : `当年易数值年卦经纶与行动取舍指引 · ${realCurrentYear}年 (${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.nameZh : '火天大有'})`}</span>
               </span>
               <span class="text-[8.5px] font-mono text-amber-900">
                 ${isEn ? `Hexagram #${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.number : 14}` : `第${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.number : 14}卦`}
@@ -24032,6 +24170,33 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
               <div class="p-1.5 rounded bg-white/75 border border-amber-900/10 space-y-0.5">
                 <b class="text-amber-950">${isEn ? 'Action Decision Rule:' : '行动决策取舍准则：'}</b>
                 <p class="text-gray-700">${isEn ? (activeHexItem.dynamicInterpretationEn || 'Dissolve stagnation through open channels and flexibility.') : (activeHexItem.dynamicInterpretationZh || '气机生发，利于稳健开拓；打破惯性思维，宜以实学成事。')}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 4: Three Non-Negotiable Operational Red Lines -->
+          <div class="imperial-card imperial-card-rose p-1.5 space-y-0.5 font-serif-sc">
+            <div class="flex items-center justify-between border-b border-rose-900/20 pb-0.5">
+              <span class="flex items-center gap-1 font-bold text-[10px] text-rose-950">
+                <span>🛑</span>
+                <span>${isEn ? 'Three Non-Negotiable Operational Red Lines (Downside Circuit Breakers)' : '未来两年三大不可逾越的避险熔断红线（底线风控）'}</span>
+              </span>
+              <span class="text-[8px] font-mono px-1 py-0.2 rounded bg-rose-100 text-rose-950 border border-rose-400">
+                ${isEn ? 'CIRCUIT BREAKERS' : '刚性红线'}
+              </span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-1 text-[8.5px] leading-tight font-sans">
+              <div class="p-1 rounded bg-white/75 border border-rose-900/10 space-y-0.5">
+                <div class="font-bold text-rose-950">${isEn ? '1. No Unhedged Debt or Bare Resignation' : '一、严禁盲目裸辞与杠杆投机'}</div>
+                <p class="text-gray-700">${isEn ? 'Core salary cash flow must remain continuous. Strictly cap exploratory investment capital under 15% liquid net worth; zero debt leverage.' : '主业薪资现金流绝不断流；个人探索性资金严格封顶在15%流动净资产以内，坚决杜绝任何借贷配资。'}</p>
+              </div>
+              <div class="p-1 rounded bg-white/75 border border-rose-900/10 space-y-0.5">
+                <div class="font-bold text-rose-950">${isEn ? '2. No Informal Peer Underwriting' : '二、拒绝口头画饼与人情担保'}</div>
+                <p class="text-gray-700">${isEn ? 'Never accept informal promises without signed legal contracts. Decline personal loans to acquaintances and refuse joint liability for others.' : '合作必须白纸黑字前置利益与权责条款；坚决拒绝为人情背书担保或提供无合同借款，谁决策谁买单。'}</p>
+              </div>
+              <div class="p-1 rounded bg-white/75 border border-rose-900/10 space-y-0.5">
+                <div class="font-bold text-rose-950">${isEn ? '3. Strict 30-60 Day Stop-Loss Exit' : '三、刚性执行30~60天止损离场'}</div>
+                <p class="text-gray-700">${isEn ? 'If an experimental initiative shows no verifiable positive traction within 30-60 days, terminate it immediately. Never cling to sunk costs.' : '试点项目若在1~2个月内无法获得真实正向反馈，立刻无条件清算离场，坚决不被前期沉没成本绑架。'}</p>
               </div>
             </div>
           </div>
@@ -24138,51 +24303,80 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           </div>
 
           <!-- Module 1: Intimate Partnership Dynamics -->
-          <div class="imperial-card imperial-card-rose p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <div class="imperial-card imperial-card-rose p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[11px]">
+              <span class="flex items-center gap-1.5 text-[10.5px]">
                 <span>💍</span>
                 <span>${interpersonalSupport.intimate.title}</span>
               </span>
-              <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-rose-100 text-rose-950 border border-rose-300 font-mono">
+              <span class="text-[8px] px-1.5 py-0.2 rounded bg-rose-100 text-rose-950 border border-rose-300 font-mono">
                 ${isEn ? 'EMOTIONAL BALLAST' : '情感压舱石'}
               </span>
             </div>
-            <p class="text-[9.5px] leading-relaxed font-sans">${interpersonalSupport.intimate.model}</p>
-            <div class="p-1 rounded bg-rose-50/80 border border-rose-600/20 text-[9px] text-rose-950 leading-snug font-sans">
+            <p class="text-[9px] leading-snug font-sans">${interpersonalSupport.intimate.model}</p>
+            <div class="p-1 rounded bg-rose-50/80 border border-rose-600/20 text-[8.5px] text-rose-950 leading-tight font-sans">
               ${interpersonalSupport.intimate.blindspot}
             </div>
           </div>
 
-          <!-- Module 2: Professional Allies, Mentorship & Collaboration Firewalls -->
-          <div class="imperial-card imperial-card-emerald p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <!-- Module 2: Equitable Collaboration & Responsibility Allocation Charter -->
+          <div class="imperial-card imperial-card-gold p-2 space-y-1 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[11px]">
+              <span class="flex items-center gap-1.5 text-[10.5px]">
+                <span>⚖️</span>
+                <span>${interpersonalSupport.charter.title}</span>
+              </span>
+              <span class="text-[8px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400 font-mono">
+                ${isEn ? 'RIGID CHARTER' : '刚性法则'}
+              </span>
+            </div>
+            <div class="space-y-1 text-[8.5px] leading-tight font-sans">
+              <div class="p-1 rounded bg-white/75 border border-amber-900/10">
+                <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule1}</p>
+              </div>
+              <div class="p-1 rounded bg-white/75 border border-amber-900/10">
+                <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule2}</p>
+              </div>
+              <div class="p-1 rounded bg-white/75 border border-amber-900/10">
+                <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule3}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: Professional Mentorship & Boundary Firewalls -->
+          <div class="imperial-card imperial-card-emerald p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
+            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
+              <span class="flex items-center gap-1.5 text-[10.5px]">
                 <span>🤝</span>
                 <span>${interpersonalSupport.allies.title}</span>
               </span>
-              <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-300 font-mono">
+              <span class="text-[8px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-300 font-mono">
                 ${isEn ? 'MENTORSHIP & FIREWALL' : '贵人与防火墙'}
               </span>
             </div>
-            <p class="text-[9.5px] leading-relaxed font-sans">${interpersonalSupport.allies.mentor}</p>
-            <div class="p-1 rounded bg-emerald-50/80 border border-emerald-600/20 text-[9px] text-emerald-950 leading-snug font-sans">
+            <p class="text-[9px] leading-snug font-sans">${interpersonalSupport.allies.mentor}</p>
+            <div class="p-1 rounded bg-emerald-50/80 border border-emerald-600/20 text-[8.5px] text-emerald-950 leading-tight font-sans">
               ${interpersonalSupport.allies.firewall}
             </div>
           </div>
 
-          <!-- Module 3: Family Heritage Dynamics & Adult Boundary Governance -->
-          <div class="imperial-card imperial-card-gold p-2.5 space-y-1 text-xs text-gray-800 font-serif-sc">
+          <!-- Module 4: Family Heritage Dynamics & Adult Boundary Governance -->
+          <div class="imperial-card imperial-card-accent p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
             <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[11px]">
+              <span class="flex items-center gap-1.5 text-[10.5px]">
                 <span>🏛️</span>
                 <span>${interpersonalSupport.family.title}</span>
               </span>
-              <span class="text-[8.5px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-300 font-mono">
+              <span class="text-[8px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-300 font-mono">
                 ${isEn ? 'ADULT BOUNDARIES' : '成人边界'}
               </span>
             </div>
-            <p class="text-[9.5px] leading-relaxed font-sans">${interpersonalSupport.family.boundary}</p>
+            <p class="text-[9px] leading-snug font-sans">${interpersonalSupport.family.boundary}</p>
+          </div>
+
+          <!-- Module 5: Natal Astrological Rationale & Commercial Preconditions -->
+          <div class="p-1.5 rounded bg-amber-50/80 border border-amber-900/20 text-[8.5px] leading-tight font-sans text-amber-950">
+            ${interpersonalSupport.rationale}
           </div>
 
           <!-- Footer -->

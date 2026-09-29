@@ -979,6 +979,28 @@ if (/[\u4e00-\u9fa5]/.test(dossierHtmlEn)) {
   throw new Error("Chinese detected in Master Profile English Dossier!");
 }
 
+window.renderImperialDossierPages('en');
+var imperialPagesHtmlEn = document.getElementById('imperialDossierContainer').innerHTML;
+var sample = [];
+for (var ci = 0; ci < imperialPagesHtmlEn.length; ci++) {
+  var code = imperialPagesHtmlEn.charCodeAt(ci);
+  if (code >= 0x4e00 && code <= 0x9fa5) {
+    var start = Math.max(0, ci - 25);
+    var end = Math.min(imperialPagesHtmlEn.length, ci + 25);
+    sample.push(imperialPagesHtmlEn.substring(start, end));
+    if (sample.length >= 6) break;
+  }
+}
+if (sample.length > 0) {
+  throw new Error("Chinese detected in 9-Page Imperial Dossier English: " + sample.join(" | "));
+}
+
+window.renderImperialDossierPages('zh');
+var imperialPagesHtmlZh = document.getElementById('imperialDossierContainer').innerHTML;
+if (!imperialPagesHtmlZh.includes("职场与合伙协作刚性权责分配法则") || !imperialPagesHtmlZh.includes("四季度行动推进节律")) {
+  throw new Error("Missing required modules in Chinese 9-Page Imperial Dossier!");
+}
+
 // 6. Verify Advisor Agent Modal, Chat Stream, Tool Card & Action Ledger Drawer DOM
 document.getElementById('btnHeaderOpenAdvisor')?.click();
 var advModal = document.getElementById('advisorModal');
