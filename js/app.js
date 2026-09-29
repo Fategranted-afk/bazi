@@ -17685,6 +17685,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let advisorChatHistory = [];
   let advisorSessionContext = { lastCategory: null, lastSubcategory: null, history: [] };
   let advisorLedgerFilter = 'all'; // 'all' | 'pending' | 'executed' | 'situational'
+  let advisorLedgerSubTab = 'actions'; // 'actions' | 'calibration'
+  let advisorSelectedFeedbackScore = 4; // 1 to 5
   const ADVISOR_STORAGE_KEY = 'bazi_advisor_history_v2';
   const ADVISOR_CTX_KEY = 'bazi_advisor_context_v2';
 
@@ -18273,6 +18275,113 @@ document.addEventListener('DOMContentLoaded', () => {
         renderAdvisorLedgerDrawer();
       });
     });
+
+    // Phase 6 Sub-Tab Navigation inside Ledger Drawer
+    const subTabActions = document.getElementById('advisorLedgerSubTabActions');
+    const subTabCalib = document.getElementById('advisorLedgerSubTabCalibration');
+    if (subTabActions) {
+      subTabActions.addEventListener('click', () => {
+        advisorLedgerSubTab = 'actions';
+        renderAdvisorLedgerDrawer();
+      });
+    }
+    if (subTabCalib) {
+      subTabCalib.addEventListener('click', () => {
+        advisorLedgerSubTab = 'calibration';
+        renderAdvisorLedgerDrawer();
+      });
+    }
+
+    // Phase 6 Modals Close Buttons
+    const btnAuditClose = document.getElementById('advisorAuditModalCloseBtn');
+    const btnAuditDismiss = document.getElementById('advisorAuditModalDismissBtn');
+    const auditModal = document.getElementById('advisorTraceableAuditModal');
+    if (btnAuditClose && auditModal) {
+      btnAuditClose.addEventListener('click', () => auditModal.classList.add('hidden'));
+    }
+    if (btnAuditDismiss && auditModal) {
+      btnAuditDismiss.addEventListener('click', () => auditModal.classList.add('hidden'));
+    }
+
+    const btn3DClose = document.getElementById('advisor3DModalCloseBtn');
+    const btn3DCancel = document.getElementById('advisor3DModalCancelBtn');
+    const modal3D = document.getElementById('advisor3DFeedbackModal');
+    if (btn3DClose && modal3D) {
+      btn3DClose.addEventListener('click', () => modal3D.classList.add('hidden'));
+    }
+    if (btn3DCancel && modal3D) {
+      btn3DCancel.addEventListener('click', () => modal3D.classList.add('hidden'));
+    }
+
+    // Phase 6 3D Modal Subjective Score Buttons
+    document.querySelectorAll('#feedbackSubjectiveStars .sub-score-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const s = parseInt(btn.getAttribute('data-score'), 10) || 4;
+        advisorSelectedFeedbackScore = s;
+        document.querySelectorAll('#feedbackSubjectiveStars .sub-score-btn').forEach(b => {
+          if (b === btn) {
+            b.classList.add('bg-purple-950/80', 'border-purple-600', 'text-purple-200');
+            b.classList.remove('border-gray-700', 'text-gray-300');
+          } else {
+            b.classList.remove('bg-purple-950/80', 'border-purple-600', 'text-purple-200');
+            b.classList.add('border-gray-700', 'text-gray-300');
+          }
+        });
+        const scoreDisplay = document.getElementById('feedbackSubjectiveScoreDisplay');
+        if (scoreDisplay) scoreDisplay.textContent = `${s} / 5`;
+      });
+    });
+
+    // Phase 6 3D Modal Fidelity Radio Attribution Toggle
+    document.querySelectorAll('input[name="feedbackFidelity"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const attrRow = document.getElementById('feedbackAttributionRow');
+        if (attrRow) {
+          if (r.value !== 'executed_fully') {
+            attrRow.classList.remove('hidden');
+          } else {
+            attrRow.classList.add('hidden');
+          }
+        }
+      });
+    });
+
+    // Phase 6 3D Modal Submit Button
+    const btn3DSubmit = document.getElementById('advisor3DModalSubmitBtn');
+    if (btn3DSubmit && modal3D) {
+      btn3DSubmit.addEventListener('click', () => {
+        const targetInput = document.getElementById('feedback3DTargetActId');
+        const actId = targetInput ? targetInput.value : '';
+        if (!actId || typeof CalibrationEngine === 'undefined') return;
+
+        const checkedFidelity = modal3D.querySelector('input[name="feedbackFidelity"]:checked');
+        const fidelity = checkedFidelity ? checkedFidelity.value : 'executed_fully';
+
+        const attrSel = document.getElementById('feedbackAttributionSelect');
+        const attribution = (fidelity !== 'executed_fully' && attrSel) ? attrSel.value : null;
+
+        const subjective = advisorSelectedFeedbackScore || 4;
+
+        const checkedObjective = modal3D.querySelector('input[name="feedbackObjective"]:checked');
+        const objective = checkedObjective ? checkedObjective.value : 'resolved';
+
+        const notesInp = document.getElementById('feedback3DNotes');
+        const notes = notesInp ? notesInp.value.trim() : '';
+
+        CalibrationEngine.submit3DFeedback(actId, {
+          executionFidelity: fidelity,
+          attributionReason: attribution,
+          subjectiveExperience: subjective,
+          objectiveGroundTruth: objective,
+          notes: notes
+        });
+
+        modal3D.classList.add('hidden');
+        renderAdvisorLedgerDrawer();
+        updateAdvisorBadgeCount();
+        renderAdvisorChatStream();
+      });
+    }
   }
 
   function openAdvisorModal() {
@@ -19739,6 +19848,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const drawer = document.getElementById('advisorLedgerDrawer');
     if (!drawer || typeof ActionLedger === 'undefined') return;
     const isEn = (currentLang === 'en');
+
+    const actionsPane = document.getElementById('advisorLedgerActionsPane');
+    const calibPane = document.getElementById('advisorLedgerCalibrationPane');
+    const subTabActions = document.getElementById('advisorLedgerSubTabActions');
+    const subTabCalib = document.getElementById('advisorLedgerSubTabCalibration');
+
+    if (subTabActions && subTabCalib) {
+      if (advisorLedgerSubTab === 'calibration') {
+        subTabCalib.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition cursor-pointer flex items-center justify-center gap-1.5 bg-cyan-950/80 text-cyan-200 border border-cyan-600/50';
+        subTabActions.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition cursor-pointer flex items-center justify-center gap-1.5 text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent';
+        if (actionsPane) actionsPane.classList.add('hidden');
+        if (calibPane) {
+          calibPane.classList.remove('hidden');
+          renderAdvisorCalibrationDashboard(currentLang, currentBaziResult);
+        }
+        return;
+      } else {
+        subTabActions.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition cursor-pointer flex items-center justify-center gap-1.5 bg-amber-950/80 text-amber-200 border border-amber-600/50';
+        subTabCalib.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition cursor-pointer flex items-center justify-center gap-1.5 text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent';
+        if (calibPane) calibPane.classList.add('hidden');
+        if (actionsPane) actionsPane.classList.remove('hidden');
+      }
+    }
+
     const stats = ActionLedger.getStats();
     const statsEl = document.getElementById('advisorLedgerStats');
     const recalcEl = document.getElementById('advisorLedgerRecalibration');
@@ -19912,6 +20045,9 @@ document.addEventListener('DOMContentLoaded', () => {
         listEl.innerHTML = records.map(r => {
           const isDone = (r.status === 'executed');
           const timeStr = r.timestamp ? new Date(r.timestamp).toLocaleDateString([], { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+          const calibRec = (typeof CalibrationEngine !== 'undefined') ? CalibrationEngine.getRecordById(r.id) : null;
+          const dynConf = calibRec ? Math.round((calibRec.expectedOutcome.confidenceScore || 0.75) * 100) : 78;
+
           return `
             <div class="p-3 rounded-xl bg-black/40 border ${isDone ? 'border-gray-800/60 bg-gray-950/30' : 'border-amber-900/50 bg-[#141622]/90'} transition-all duration-200 space-y-2">
               <div class="flex items-start justify-between gap-2.5">
@@ -19922,6 +20058,10 @@ document.addEventListener('DOMContentLoaded', () => {
                       <span class="px-1.5 py-0.5 text-[9px] rounded font-semibold ${r.badge === '处境定制' || r.badge === 'Situational' || r.category === 'custom' ? 'bg-purple-950/80 text-purple-300 border border-purple-600/40' : 'bg-amber-500/20 text-amber-300'}">${escapeHtml(r.badge)}</span>
                       <span class="text-gray-400 font-mono text-[10px]">${timeStr}</span>
                       <span class="text-[9px] px-1.5 py-0.2 rounded font-mono ${isDone ? 'bg-indigo-950/80 text-indigo-300 border border-indigo-700/40' : 'bg-amber-950/80 text-amber-300 border border-amber-700/40'}">${isDone ? (isEn ? '✓ COMPLETED' : '✓ 已打卡') : (isEn ? '⏳ TO-DO' : '⏳ 待办打卡')}</span>
+                      <button type="button" class="advisor-drawer-audit-btn text-[9px] px-1.5 py-0.2 rounded font-mono bg-cyan-950/80 text-cyan-300 border border-cyan-700/40 hover:bg-cyan-900/90 cursor-pointer transition active:scale-95 flex items-center gap-1" data-act-id="${r.id}" title="${isEn ? 'View Traceable Audit Snapshot' : '查看可追踪审计快照'}">
+                        <span>🎯</span>
+                        <span>${isEn ? `Audit · ${dynConf}%` : `审计链 · ${dynConf}%`}</span>
+                      </button>
                     </div>
                     <div class="text-xs ${isDone ? 'line-through text-gray-500' : 'text-slate-100 font-medium leading-relaxed'}">${escapeHtml(r.text)}</div>
                   </div>
@@ -19939,6 +20079,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'eased' ? 'bg-emerald-950 border-emerald-500 text-emerald-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-emerald-300'}" data-act-id="${r.id}" data-feedback="eased">🟢 ${isEn ? 'Eased' : '见效'}</button>
                     <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'blocked' ? 'bg-rose-950 border-rose-500 text-rose-300 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-rose-300'}" data-act-id="${r.id}" data-feedback="blocked">🔴 ${isEn ? 'Blocked' : '遇阻'}</button>
                     <button type="button" class="advisor-drawer-fb-btn px-1.5 py-0.5 rounded border ${r.feedback === 'neutral' ? 'bg-slate-800 border-slate-500 text-slate-200 font-bold' : 'border-gray-800 bg-gray-900/60 text-gray-400 hover:text-slate-200'}" data-act-id="${r.id}" data-feedback="neutral">⚪ ${isEn ? 'Neutral' : '平稳'}</button>
+                    <button type="button" class="advisor-drawer-3d-btn px-2 py-0.5 rounded border border-purple-700/50 bg-purple-950/60 hover:bg-purple-900/70 text-purple-300 hover:text-purple-100 font-medium transition cursor-pointer flex items-center gap-1 active:scale-95" data-act-id="${r.id}" title="${isEn ? '3D Decoupled Feedback' : '三维解耦深度评估'}">
+                      <span>🔬</span>
+                      <span>${isEn ? '3D Feedback' : '3D评估'}</span>
+                    </button>
                   </div>
                 </div>
                 <button type="button" class="advisor-drawer-review-btn px-2 py-0.5 rounded border border-amber-700/50 bg-amber-950/60 hover:bg-amber-900/70 text-amber-300 hover:text-amber-100 font-medium transition cursor-pointer flex items-center gap-1 active:scale-95" data-act-id="${r.id}" title="${isEn ? 'Review this action with Imperial Advisor' : '携带此微动作向军师发起复盘问策'}">
@@ -19975,6 +20119,24 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
 
+        listEl.querySelectorAll('.advisor-drawer-3d-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const actId = btn.getAttribute('data-act-id');
+            openAdvisor3DFeedbackModal(actId, currentLang);
+          });
+        });
+
+        listEl.querySelectorAll('.advisor-drawer-audit-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const actId = btn.getAttribute('data-act-id');
+            openAdvisorAuditModal(actId, currentLang);
+          });
+        });
+
         listEl.querySelectorAll('.advisor-drawer-review-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             const actId = btn.getAttribute('data-act-id');
@@ -19991,6 +20153,478 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     }
+  }
+
+  function renderAdvisorCalibrationDashboard(lang = 'zh', baziContext = null) {
+    const pane = document.getElementById('advisorLedgerCalibrationPane');
+    if (!pane || typeof CalibrationEngine === 'undefined') return;
+    const isEn = (lang === 'en');
+    const metrics = CalibrationEngine.computeMetrics();
+    const records = CalibrationEngine.getAllRecords();
+    const opMode = metrics.operatingMode;
+
+    pane.innerHTML = `
+      <!-- 1. Header & Operating Mode Strip -->
+      <div class="p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-[#0e111a] via-[#121624] to-[#0a0d14] border border-cyan-500/40 shadow-xl space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/70 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🔬</span>
+            <div>
+              <div class="text-xs sm:text-sm font-bold text-cyan-300 font-serif-sc flex items-center gap-2">
+                <span>${isEn ? 'Phase 6 Evaluation & Calibration Platform' : 'Phase 6 前瞻评估与校准平台'}</span>
+                <span class="px-2 py-0.5 rounded-full text-[9px] font-mono ${opMode === 'active' ? 'bg-cyan-950/90 text-cyan-300 border border-cyan-600/50' : 'bg-purple-950/90 text-purple-300 border border-purple-600/50'}">
+                  ${opMode === 'active' ? (isEn ? 'ACTIVE (Dynamic Leading)' : 'ACTIVE (动态引擎主导)') : (isEn ? 'SHADOW (Baseline Leading)' : 'SHADOW (古典基线主导)')}
+                </span>
+              </div>
+              <div class="text-[10px] text-gray-400">
+                ${opMode === 'active'
+                  ? (isEn ? 'Dynamic POMDP potential well engine serves recommendations; classical canons run as shadow benchmark.' : '动态 POMDP 势能井引擎作为前台推荐主体，古典静态大典在影子后台对标校验。')
+                  : (isEn ? 'Classical canons serve recommendations; dynamic POMDP potential well engine runs as shadow benchmark.' : '古典静态大典作为前台推荐主体，动态 POMDP 势能井引擎在影子后台对标监控。')}
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
+            <button type="button" id="advisorCalibToggleModeBtn" class="px-2.5 py-1 rounded-lg bg-cyan-950/70 hover:bg-cyan-900 border border-cyan-600/40 text-cyan-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+              <span>🔀</span> <span>${isEn ? 'Toggle Mode' : '切换双轨模式'}</span>
+            </button>
+            <button type="button" id="advisorCalibRollbackBtn" class="px-2.5 py-1 rounded-lg bg-rose-950/60 hover:bg-rose-900 border border-rose-700/40 text-rose-300 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1" title="${isEn ? 'Rollback recommendations to classical baseline rules' : '一键强力回滚至传统静态大典基线'}">
+              <span>↩️</span> <span>${isEn ? 'Rollback to Baseline' : '一键回滚至基线'}</span>
+            </button>
+            <button type="button" id="advisorCalibResetBtn" class="px-2 py-1 rounded-lg bg-gray-800/80 hover:bg-gray-700 border border-gray-700 text-gray-300 transition cursor-pointer active:scale-95" title="${isEn ? 'Reset evaluation cohort to reference baseline' : '重置评测群组数据'}">
+              <span>🔄</span> <span>${isEn ? 'Reset Cohort' : '重置数据'}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Version & Isolation Notice -->
+        <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] text-gray-400">
+          <div class="flex items-center gap-2 font-mono">
+            <span>Model: <b class="text-cyan-300">${metrics.modelVersion}</b></span>
+            <span>|</span>
+            <span>Baseline: <b class="text-purple-300">${metrics.baselineModelVersion}</b></span>
+          </div>
+          <div class="text-amber-300/80 flex items-center gap-1">
+            <span>🛡️</span>
+            <span>${isEn ? 'Quarantined Isolation: Daily feedback strictly quarantined from natal parameters.' : '绝对隔离原则：现实反馈严格隔离，绝不篡改命盘先天参数（日主强弱、格局先验）。'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Quantified Telemetry Scorecard -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+        <!-- Card 1: Brier Score (BS) -->
+        <div class="p-3 rounded-xl bg-gradient-to-br from-[#0c101d] to-[#121626] border border-cyan-500/30 space-y-1">
+          <div class="text-[10px] text-cyan-400 font-semibold flex items-center justify-between">
+            <span>${isEn ? 'Brier Score (BS)' : '布里尔评分 (BS)'}</span>
+            <span class="text-[9px] px-1 rounded bg-cyan-950 text-cyan-300 font-mono">Lower is Better</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-bold text-white font-mono">${metrics.brierScoreDynamic}</span>
+            <span class="text-[10px] text-gray-400">vs Base: <b class="font-mono text-purple-300">${metrics.brierScoreBaseline}</b></span>
+          </div>
+          <div class="text-[10px] text-emerald-400 font-mono font-bold flex items-center gap-1">
+            <span>▲ +${metrics.superiorPct}%</span>
+            <span class="text-gray-400 font-normal">(${isEn ? 'Superiority' : '动态超额胜率'})</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Expected Calibration Error (ECE) -->
+        <div class="p-3 rounded-xl bg-gradient-to-br from-[#0c101d] to-[#121626] border border-cyan-500/30 space-y-1">
+          <div class="text-[10px] text-cyan-400 font-semibold flex items-center justify-between">
+            <span>${isEn ? 'Expected Calib. Error' : '预期校准误差 (ECE)'}</span>
+            <span class="text-[9px] px-1 rounded bg-cyan-950 text-cyan-300 font-mono">5 Bins</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-bold text-white font-mono">${metrics.eceDynamic}</span>
+            <span class="text-[10px] text-gray-400">vs Base: <b class="font-mono text-purple-300">${metrics.eceBaseline}</b></span>
+          </div>
+          <div class="text-[10px] text-cyan-300 font-mono">
+            Δ ECE: <b class="text-emerald-400">-${(metrics.eceBaseline - metrics.eceDynamic).toFixed(3)}</b>
+          </div>
+        </div>
+
+        <!-- Card 3: Utility Grounding Rate (UGR) -->
+        <div class="p-3 rounded-xl bg-gradient-to-br from-[#0c101d] to-[#121626] border border-indigo-500/30 space-y-1">
+          <div class="text-[10px] text-indigo-400 font-semibold flex items-center justify-between">
+            <span>${isEn ? 'Utility Grounding (UGR)' : '效用着陆率 (UGR)'}</span>
+            <span class="text-[9px] px-1 rounded bg-indigo-950 text-indigo-300 font-mono">Fidelity</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-bold text-white font-mono">${metrics.utilityGroundingRate}%</span>
+            <span class="text-[10px] text-gray-400 font-mono">${metrics.executedCount}/${metrics.totalRecommended}</span>
+          </div>
+          <div class="text-[10px] text-indigo-300">
+            ${isEn ? `${metrics.notExecutedCount} unexecuted quarantined` : `${metrics.notExecutedCount}条未执行免责隔离`}
+          </div>
+        </div>
+
+        <!-- Card 4: Net Helpful Ratio (NHR) -->
+        <div class="p-3 rounded-xl bg-gradient-to-br from-[#0c101d] to-[#121626] border border-emerald-500/30 space-y-1">
+          <div class="text-[10px] text-emerald-400 font-semibold flex items-center justify-between">
+            <span>${isEn ? 'Net Helpful Ratio (NHR)' : '净有效率 (NHR)'}</span>
+            <span class="text-[9px] px-1 rounded bg-emerald-950 text-emerald-300 font-mono">Ground Truth</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-lg font-bold text-white font-mono">${metrics.netHelpfulRatio}%</span>
+            <span class="text-[10px] text-gray-400">(${metrics.evaluatedCount} eval)</span>
+          </div>
+          <div class="text-[10px] text-gray-300 flex items-center gap-1.5 font-mono">
+            <span class="text-emerald-400">🟢${metrics.resolvedCount}</span>
+            <span class="text-slate-400">⚪${metrics.neutralCount}</span>
+            <span class="text-rose-400">🔴${metrics.blockedCount}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anti-Drift Cap Notice Strip -->
+      <div class="p-2.5 rounded-xl bg-black/50 border border-gray-800 flex items-center justify-between text-[11px] text-gray-300">
+        <div class="flex items-center gap-1.5">
+          <span>⚖️</span>
+          <span>${isEn ? 'Anti-Drift Sample Cap: Max 10 evaluations/day per session to prevent single-cohort overfitting.' : '群组防偏限流机制：每日最多计入10条有效评测，隔离极端个体样本偏差。'}</span>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-gray-900 border border-gray-700 text-cyan-300">Cap: 10 / Day</span>
+      </div>
+
+      <!-- 3. Dual-Track Calibration Reliability Diagram (5-Bin Curve) -->
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-black/60 border border-gray-800 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800 pb-2">
+          <div class="font-bold text-slate-200 flex items-center gap-1.5">
+            <span>📈</span>
+            <span>${isEn ? 'Dual-Track Calibration Reliability Curve (5-Bin Diagram)' : '双轨置信度 vs 观测胜率校准曲线 (5-Bin 标尺)'}</span>
+          </div>
+          <div class="flex items-center gap-3 text-[10px] font-mono">
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span><span class="text-cyan-300">Dynamic Model</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span><span class="text-purple-300">Classical Baseline</span></div>
+            <div class="flex items-center gap-1"><span class="w-2.5 h-0.5 bg-gray-500"></span><span class="text-gray-400">Perfect Line (y=x)</span></div>
+          </div>
+        </div>
+
+        <!-- Visual Bar Comparison for 5 Bins -->
+        <div class="space-y-2 pt-1">
+          ${metrics.calibrationCurveDynamic.map((bin, idx) => {
+            const baseBin = metrics.calibrationCurveBaseline[idx];
+            const idealPct = (idx * 20 + 10);
+            const dynPct = Math.round(bin.observed * 100);
+            const basePct = Math.round(baseBin.observed * 100);
+            const confPct = Math.round(bin.confidence * 100);
+            return `
+              <div class="p-2 rounded-lg bg-gray-950/60 border border-gray-800/80 space-y-1">
+                <div class="flex items-center justify-between text-[10px]">
+                  <span class="font-mono text-gray-300 font-bold">Bin ${bin.range}</span>
+                  <span class="text-gray-400">Count: <b class="text-white font-mono">${bin.count}</b> | Pred Conf: <b class="text-cyan-300 font-mono">${confPct}%</b></span>
+                </div>
+                <!-- Dynamic Bar -->
+                <div class="flex items-center gap-2 text-[10px]">
+                  <span class="w-14 shrink-0 text-cyan-400 font-mono">Dynamic</span>
+                  <div class="flex-1 bg-gray-900 rounded-full h-2 relative overflow-hidden">
+                    <div class="bg-cyan-500 h-2 rounded-full transition-all duration-300" style="width: ${Math.min(100, dynPct)}%"></div>
+                    <div class="absolute top-0 bottom-0 w-0.5 bg-white/60 z-10" style="left: ${idealPct}%" title="Ideal ${idealPct}%"></div>
+                  </div>
+                  <span class="w-10 text-right font-mono text-cyan-300">${dynPct}%</span>
+                </div>
+                <!-- Baseline Bar -->
+                <div class="flex items-center gap-2 text-[10px]">
+                  <span class="w-14 shrink-0 text-purple-400 font-mono">Baseline</span>
+                  <div class="flex-1 bg-gray-900 rounded-full h-2 relative overflow-hidden">
+                    <div class="bg-purple-500 h-2 rounded-full transition-all duration-300" style="width: ${Math.min(100, basePct)}%"></div>
+                    <div class="absolute top-0 bottom-0 w-0.5 bg-white/60 z-10" style="left: ${idealPct}%" title="Ideal ${idealPct}%"></div>
+                  </div>
+                  <span class="w-10 text-right font-mono text-purple-300">${basePct}%</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+
+      <!-- 4. Three-Dimensional Decoupled Feedback Architecture Card -->
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-black/60 border border-gray-800 space-y-3">
+        <div class="font-bold text-slate-200 flex items-center gap-1.5 border-b border-gray-800 pb-2">
+          <span>🔬</span>
+          <span>${isEn ? 'Three-Dimensional Decoupled Feedback Architecture' : '三维反馈解耦架构'}</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+          <!-- Dim 1 -->
+          <div class="p-2.5 rounded-xl bg-indigo-950/30 border border-indigo-700/40 space-y-1">
+            <div class="font-bold text-indigo-300 flex items-center gap-1 text-[11px]">
+              <span>1️⃣</span> <span>${isEn ? 'Execution Fidelity' : '维度一：执行忠实度'}</span>
+            </div>
+            <div class="text-[10px] text-gray-300 leading-relaxed">
+              ${isEn
+                ? 'Tracks whether the tactic was executed fully, partially, or blocked by reality. If unexecuted due to external friction, prediction error is quarantined and not penalized.'
+                : '严格区分“算法失准”还是“未予执行”。因现实不可抗力、遗忘未做者，触发免责隔离，不扣罚模型准确率。'}
+            </div>
+          </div>
+          <!-- Dim 2 -->
+          <div class="p-2.5 rounded-xl bg-purple-950/30 border border-purple-700/40 space-y-1">
+            <div class="font-bold text-purple-300 flex items-center gap-1 text-[11px]">
+              <span>2️⃣</span> <span>${isEn ? 'Subjective Comfort' : '维度二：主观舒适度'}</span>
+            </div>
+            <div class="text-[10px] text-gray-300 leading-relaxed">
+              ${isEn
+                ? 'Scores psychological friction and cognitive load on a 1-5 scale. Measures mental ease and alignment with user temperament.'
+                : '量化心理摩擦度与认知负荷（1~5分）。评估锦囊战策在心智层面的顺畅感，避免因心力交瘁导致半途而废。'}
+            </div>
+          </div>
+          <!-- Dim 3 -->
+          <div class="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-700/40 space-y-1">
+            <div class="font-bold text-emerald-300 flex items-center gap-1 text-[11px]">
+              <span>3️⃣</span> <span>${isEn ? 'Objective Ground Truth' : '维度三：客观真实结局'}</span>
+            </div>
+            <div class="text-[10px] text-gray-300 leading-relaxed">
+              ${isEn
+                ? 'Binary/ternary factual outcome (Resolved 1.0, Neutral 0.5, Blocked 0.0) at the prediction horizon. Feeds Brier Score and ECE computation.'
+                : '到达预测周期（7~21天）时真实的客观成败（化解1.0 / 平稳0.5 / 遇阻0.0）。这是计算 Brier Score 与 ECE 曲线的唯一量化输入。'}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Traceable Recommendation Audit Registry Table -->
+      <div class="p-3.5 sm:p-4 rounded-2xl bg-black/60 border border-gray-800 space-y-3">
+        <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+          <div class="font-bold text-slate-200 flex items-center gap-1.5">
+            <span>📋</span>
+            <span>${isEn ? 'Traceable Recommendation Audit Registry' : '可追踪审计日志台账'}</span>
+            <span class="text-[10px] font-mono text-gray-400">(${records.length} records)</span>
+          </div>
+        </div>
+        <div class="space-y-2 max-h-96 overflow-y-auto pr-1">
+          ${records.map(rec => {
+            const timeStr = rec.timestamp ? new Date(rec.timestamp).toLocaleDateString([], { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
+            const dynConf = Math.round((rec.expectedOutcome.confidenceScore || 0.75) * 100);
+            const baseConf = Math.round(((rec.baselinePrediction && rec.baselinePrediction.confidenceScore) || 0.55) * 100);
+            const fb = rec.feedback3D || {};
+            let objBadge = `<span class="px-1.5 py-0.5 rounded text-[9px] bg-gray-800 text-gray-400">Pending Eval</span>`;
+            if (fb.objectiveGroundTruth === 'resolved') {
+              objBadge = `<span class="px-1.5 py-0.5 rounded text-[9px] bg-emerald-950 text-emerald-300 border border-emerald-700/50">🟢 Resolved</span>`;
+            } else if (fb.objectiveGroundTruth === 'blocked') {
+              objBadge = `<span class="px-1.5 py-0.5 rounded text-[9px] bg-rose-950 text-rose-300 border border-rose-700/50">🔴 Blocked</span>`;
+            } else if (fb.objectiveGroundTruth === 'neutral') {
+              objBadge = `<span class="px-1.5 py-0.5 rounded text-[9px] bg-slate-800 text-slate-300 border border-slate-600/50">⚪ Neutral</span>`;
+            }
+            return `
+              <div class="p-2.5 rounded-xl bg-gray-950/70 border border-gray-800/80 hover:border-cyan-500/40 transition space-y-1.5">
+                <div class="flex items-center justify-between text-[10px]">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-mono text-cyan-300 font-semibold">${rec.recommendationId}</span>
+                    <span class="px-1.5 py-0.2 rounded font-mono bg-amber-500/20 text-amber-300 text-[9px]">${escapeHtml(rec.prescribedAction.badge)}</span>
+                    <span class="text-gray-400 font-mono">${timeStr}</span>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    ${objBadge}
+                    <button type="button" class="advisor-audit-view-btn px-2 py-0.5 rounded bg-cyan-950 hover:bg-cyan-900 border border-cyan-600/40 text-cyan-200 text-[10px] cursor-pointer transition active:scale-95" data-rec-id="${rec.recommendationId}">
+                      ${isEn ? 'View Audit Trail' : '查看审计快照'}
+                    </button>
+                  </div>
+                </div>
+                <div class="text-[11px] text-slate-200 font-medium">${escapeHtml(rec.prescribedAction.microDirective)}</div>
+                <div class="flex flex-wrap items-center justify-between gap-1 text-[10px] text-gray-400 pt-1 border-t border-gray-800/60 font-mono">
+                  <span>Dyn Conf: <b class="text-cyan-300">${dynConf}%</b> vs Base: <b class="text-purple-300">${baseConf}%</b></span>
+                  <span>Horizon: <b class="text-slate-300">${rec.expectedOutcome.predictionHorizonDays}d</b></span>
+                  <span>Fidelity: <b class="text-indigo-300">${fb.executionFidelity || 'pending'}</b></span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    // Wire Event Listeners inside Calibration Pane
+    const btnToggle = document.getElementById('advisorCalibToggleModeBtn');
+    if (btnToggle) {
+      btnToggle.addEventListener('click', () => {
+        const curMode = CalibrationEngine.getOperatingMode();
+        CalibrationEngine.setOperatingMode(curMode === 'active' ? 'shadow' : 'active');
+        renderAdvisorCalibrationDashboard(lang, baziContext);
+      });
+    }
+
+    const btnRollback = document.getElementById('advisorCalibRollbackBtn');
+    if (btnRollback) {
+      btnRollback.addEventListener('click', () => {
+        CalibrationEngine.rollbackToBaseline();
+        renderAdvisorCalibrationDashboard(lang, baziContext);
+      });
+    }
+
+    const btnReset = document.getElementById('advisorCalibResetBtn');
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        CalibrationEngine.resetUserData();
+        renderAdvisorCalibrationDashboard(lang, baziContext);
+      });
+    }
+
+    pane.querySelectorAll('.advisor-audit-view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const recId = btn.getAttribute('data-rec-id');
+        openAdvisorAuditModal(recId, lang);
+      });
+    });
+  }
+
+  function openAdvisorAuditModal(recOrActId, lang = 'zh') {
+    const modal = document.getElementById('advisorTraceableAuditModal');
+    const content = document.getElementById('advisorAuditModalContent');
+    const idEl = document.getElementById('auditModalRecId');
+    if (!modal || !content || typeof CalibrationEngine === 'undefined') return;
+
+    let rec = CalibrationEngine.getRecordById(recOrActId);
+    if (!rec) {
+      if (typeof ActionLedger !== 'undefined') {
+        const act = ActionLedger.getAll().find(a => a.id === recOrActId);
+        if (act) {
+          rec = CalibrationEngine.registerRecommendation(act, currentBaziResult);
+        }
+      }
+    }
+    if (!rec) return;
+
+    const isEn = (lang === 'en');
+    if (idEl) idEl.textContent = rec.recommendationId;
+
+    const dynConf = Math.round((rec.expectedOutcome.confidenceScore || 0.75) * 100);
+    const baseConf = Math.round(((rec.baselinePrediction && rec.baselinePrediction.confidenceScore) || 0.55) * 100);
+    const fb = rec.feedback3D || {};
+
+    content.innerHTML = `
+      <!-- Basic Meta -->
+      <div class="p-3 rounded-xl bg-black/50 border border-gray-800 space-y-1.5 font-mono text-[11px]">
+        <div class="flex items-center justify-between text-gray-400">
+          <span>Rec ID: <b class="text-cyan-300 font-bold">${rec.recommendationId}</b></span>
+          <span>Chart ID: <b class="text-cyan-300">${rec.chartId}</b></span>
+        </div>
+        <div class="flex items-center justify-between text-gray-400">
+          <span>Timestamp: <b class="text-white">${rec.timestamp}</b></span>
+          <span>Mode: <b class="text-purple-300">${rec.operatingMode}</b> (${rec.modelVersion})</span>
+        </div>
+      </div>
+
+      <!-- Evidence Base -->
+      <div class="p-3 rounded-xl bg-gray-950/80 border border-cyan-800/40 space-y-2">
+        <div class="font-bold text-cyan-300 flex items-center gap-1.5 text-xs font-serif-sc">
+          <span>🔍</span> <span>${isEn ? 'Evidence Base' : '证据链基准 (Evidence Base)'}</span>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <div><span class="text-gray-400">${isEn ? 'Dominant Pattern:' : '主导格局:'}</span> <span class="text-white font-semibold">${escapeHtml(rec.evidenceBase.dominantPattern)}</span></div>
+          <div><span class="text-gray-400">${isEn ? 'Active Vigor Score:' : '十神气数分:'}</span> <span class="text-amber-300 font-mono font-bold">${rec.evidenceBase.activeTenGodVigor}</span></div>
+          <div class="col-span-2"><span class="text-gray-400">${isEn ? 'Transit Vector:' : '岁运流转向量:'}</span> <span class="text-indigo-300 font-medium">${escapeHtml(rec.evidenceBase.transitVector)}</span></div>
+          <div class="col-span-2"><span class="text-gray-400">${isEn ? 'Situational Context:' : '现实处境锚定:'}</span> <span class="text-slate-200">${escapeHtml(rec.evidenceBase.realWorldContext || (isEn ? 'Standard Workplace Context' : '常态职场协同场景'))}</span></div>
+        </div>
+      </div>
+
+      <!-- Prescribed Action -->
+      <div class="p-3 rounded-xl bg-gray-950/80 border border-amber-800/40 space-y-2">
+        <div class="font-bold text-amber-300 flex items-center gap-1.5 text-xs font-serif-sc">
+          <span>⚡</span> <span>${isEn ? 'Prescribed Tactical Micro-Action' : '开具战术微动作 (Prescribed Action)'}</span>
+        </div>
+        <div class="p-2.5 rounded-lg bg-black/60 border border-gray-800 text-xs text-slate-100 font-medium leading-relaxed">
+          <span class="px-1.5 py-0.5 rounded font-mono bg-amber-500/20 text-amber-300 text-[10px] mr-1.5">${escapeHtml(rec.prescribedAction.badge)}</span>
+          ${escapeHtml(rec.prescribedAction.microDirective)}
+        </div>
+      </div>
+
+      <!-- Dynamic Prediction vs Baseline Prediction -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <!-- Dynamic Model -->
+        <div class="p-3 rounded-xl bg-cyan-950/20 border border-cyan-600/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-cyan-300 text-xs font-serif-sc">${isEn ? 'Dynamic Model (Active)' : '动态 POMDP 势能井预测'}</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 font-mono font-bold text-[11px]">${dynConf}% Conf</span>
+          </div>
+          <div class="text-[11px] text-gray-300 leading-relaxed">
+            <b>${isEn ? 'Hypothesis:' : '核心假说:'}</b> ${isEn ? (rec.expectedOutcome.hypothesisEn || rec.expectedOutcome.hypothesis) : rec.expectedOutcome.hypothesis}
+          </div>
+          <div class="text-[10px] text-amber-300/90 border-t border-cyan-800/40 pt-1.5">
+            <b>${isEn ? 'Counterfactual Risk:' : '反事实反噬风险:'}</b> ${isEn ? (rec.expectedOutcome.counterfactualRiskEn || rec.expectedOutcome.counterfactualRisk) : rec.expectedOutcome.counterfactualRisk}
+          </div>
+        </div>
+
+        <!-- Classical Baseline -->
+        <div class="p-3 rounded-xl bg-purple-950/20 border border-purple-600/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-purple-300 text-xs font-serif-sc">${isEn ? 'Classical Baseline (Shadow)' : '古典静态大典基准'}</span>
+            <span class="px-2 py-0.5 rounded bg-purple-950 text-purple-300 font-mono font-bold text-[11px]">${baseConf}% Conf</span>
+          </div>
+          <div class="text-[11px] text-gray-300 leading-relaxed">
+            <b>${isEn ? 'Canon Rule:' : '经典范式:'}</b> ${isEn ? ((rec.baselinePrediction && rec.baselinePrediction.canonRuleEn) || 'Classical Canon Rule') : (rec.baselinePrediction && rec.baselinePrediction.canonRule)}
+          </div>
+          <div class="text-[10px] text-gray-400 border-t border-purple-800/40 pt-1.5">
+            <b>${isEn ? 'Hypothesis:' : '预设断语:'}</b> ${isEn ? ((rec.baselinePrediction && rec.baselinePrediction.hypothesisEn) || 'Maintain status quo') : (rec.baselinePrediction && rec.baselinePrediction.hypothesis)}
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Decoupled Feedback Snapshot -->
+      <div class="p-3 rounded-xl bg-black/60 border border-gray-800 space-y-2">
+        <div class="font-bold text-slate-200 flex items-center justify-between text-xs">
+          <span class="flex items-center gap-1.5"><span>🔬</span> <span>${isEn ? 'Decoupled Feedback Snapshot' : '三维解耦反馈快照'}</span></span>
+          <span class="font-mono text-[10px] text-gray-400">${fb.submittedAt ? (isEn ? 'Submitted' : '已提交评测') : (isEn ? 'Awaiting Feedback' : '待评估')}</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-[10px]">
+          <div class="p-1.5 rounded bg-gray-900 border border-gray-800">
+            <div class="text-gray-400 mb-0.5">Dim 1: Fidelity</div>
+            <div class="font-bold text-indigo-300 font-mono">${fb.executionFidelity || 'pending'}</div>
+          </div>
+          <div class="p-1.5 rounded bg-gray-900 border border-gray-800">
+            <div class="text-gray-400 mb-0.5">Dim 2: Comfort</div>
+            <div class="font-bold text-purple-300 font-mono">${fb.subjectiveExperience ? `${fb.subjectiveExperience} / 5` : 'pending'}</div>
+          </div>
+          <div class="p-1.5 rounded bg-gray-900 border border-gray-800">
+            <div class="text-gray-400 mb-0.5">Dim 3: Objective</div>
+            <div class="font-bold text-emerald-300 font-mono">${fb.objectiveGroundTruth || 'pending'}</div>
+          </div>
+        </div>
+        ${fb.notes ? `<div class="text-[10px] text-gray-300 pt-1 border-t border-gray-800 italic">“${escapeHtml(fb.notes)}”</div>` : ''}
+      </div>
+    `;
+
+    modal.classList.remove('hidden');
+  }
+
+  function openAdvisor3DFeedbackModal(actionId, lang = 'zh') {
+    const modal = document.getElementById('advisor3DFeedbackModal');
+    const targetInput = document.getElementById('feedback3DTargetActId');
+    const actTextEl = document.getElementById('feedback3DModalActionText');
+    if (!modal || typeof ActionLedger === 'undefined') return;
+
+    const allActions = ActionLedger.getAll();
+    const action = allActions.find(a => a.id === actionId);
+    if (!action) return;
+
+    if (targetInput) targetInput.value = actionId;
+    if (actTextEl) actTextEl.textContent = action.text;
+
+    // Reset default selections
+    const radioFull = modal.querySelector('input[name="feedbackFidelity"][value="executed_fully"]');
+    if (radioFull) radioFull.checked = true;
+
+    const attrRow = document.getElementById('feedbackAttributionRow');
+    if (attrRow) attrRow.classList.add('hidden');
+
+    advisorSelectedFeedbackScore = 4;
+    modal.querySelectorAll('.sub-score-btn').forEach(btn => {
+      const s = parseInt(btn.getAttribute('data-score'), 10);
+      if (s === 4) {
+        btn.classList.add('bg-purple-950/80', 'border-purple-600', 'text-purple-200');
+        btn.classList.remove('border-gray-700', 'text-gray-300');
+      } else {
+        btn.classList.remove('bg-purple-950/80', 'border-purple-600', 'text-purple-200');
+        btn.classList.add('border-gray-700', 'text-gray-300');
+      }
+    });
+    const scoreDisplay = document.getElementById('feedbackSubjectiveScoreDisplay');
+    if (scoreDisplay) scoreDisplay.textContent = '4 / 5';
+
+    const radioResolved = modal.querySelector('input[name="feedbackObjective"][value="resolved"]');
+    if (radioResolved) radioResolved.checked = true;
+
+    const notesInp = document.getElementById('feedback3DNotes');
+    if (notesInp) notesInp.value = action.notes || '';
+
+    modal.classList.remove('hidden');
   }
 
   function updateAdvisorBadgeCount() {
@@ -20041,11 +20675,17 @@ document.addEventListener('DOMContentLoaded', () => {
     window.switchAdvisorView = switchAdvisorView;
     window.renderAdvisorLedgerDrawer = renderAdvisorLedgerDrawer;
     window.renderAdvisorPomdpConsole = renderAdvisorPomdpConsole;
+    window.renderAdvisorCalibrationDashboard = renderAdvisorCalibrationDashboard;
+    window.openAdvisorAuditModal = openAdvisorAuditModal;
+    window.openAdvisor3DFeedbackModal = openAdvisor3DFeedbackModal;
     window.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
     window.updateAdvisorBadgeCount = updateAdvisorBadgeCount;
   }
   if (typeof globalThis !== 'undefined') {
     globalThis.renderAdvisorPomdpConsole = renderAdvisorPomdpConsole;
+    globalThis.renderAdvisorCalibrationDashboard = renderAdvisorCalibrationDashboard;
+    globalThis.openAdvisorAuditModal = openAdvisorAuditModal;
+    globalThis.openAdvisor3DFeedbackModal = openAdvisor3DFeedbackModal;
     globalThis.exportAdvisorTimingToIcs = exportAdvisorTimingToIcs;
     globalThis.exportAdvisorEdictPoster = exportAdvisorEdictPoster;
     globalThis.toggleAdvisorMicroAction = toggleAdvisorMicroAction;

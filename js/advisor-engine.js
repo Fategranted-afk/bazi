@@ -108,6 +108,16 @@ class ActionLedger {
       records.unshift(item);
     }
     this.saveAll(records);
+
+    // Phase 6: Hook into CalibrationEngine Traceable Audit Record
+    if (typeof CalibrationEngine !== 'undefined') {
+      try {
+        const bCtx = (typeof currentBaziContext !== 'undefined') ? currentBaziContext : ((typeof window !== 'undefined' && window.currentBaziData) || null);
+        const sit = this.getActiveSituation();
+        CalibrationEngine.registerRecommendation(item, bCtx, sit);
+      } catch (e) {}
+    }
+
     return item;
   }
 
@@ -137,6 +147,33 @@ class ActionLedger {
         PomdpEngine.updateBelief(item, feedback);
       } catch (e) {}
     }
+
+    // Phase 6: Hook into CalibrationEngine 3D Decoupled Feedback
+    if (typeof CalibrationEngine !== 'undefined') {
+      try {
+        const calibRec = CalibrationEngine.getRecordById(actionId);
+        if (calibRec) {
+          let objGround = 'neutral';
+          if (feedback === 'eased') objGround = 'resolved';
+          else if (feedback === 'blocked') objGround = 'blocked';
+          const existingFidelity = (calibRec.feedback3D && calibRec.feedback3D.executionFidelity) || 'executed_fully';
+          const existingAttr = (calibRec.feedback3D && calibRec.feedback3D.attributionReason) || null;
+          calibRec.feedback3D = {
+            executionFidelity: existingFidelity,
+            attributionReason: existingAttr,
+            subjectiveExperience: feedback === 'eased' ? 5 : (feedback === 'blocked' ? 2 : 3),
+            objectiveGroundTruth: objGround,
+            notes: notes || (calibRec.feedback3D && calibRec.feedback3D.notes) || '',
+            submittedAt: Date.now()
+          };
+          const allRecs = CalibrationEngine.getAllRecords();
+          const idx = allRecs.findIndex(r => r.recommendationId === calibRec.recommendationId);
+          if (idx >= 0) allRecs[idx] = calibRec;
+          CalibrationEngine.saveAllRecords(allRecs);
+        }
+      } catch (e) {}
+    }
+
     return item;
   }
 

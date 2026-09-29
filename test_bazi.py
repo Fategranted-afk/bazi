@@ -293,6 +293,7 @@ load('js/rectification-engine.js');
 load('js/synastry-engine.js');
 load('js/pomdp-engine.js');
 load('js/advisor-engine.js');
+load('js/calibration-engine.js');
 
 var baziA = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: '乾造' });
 var baziB = BaZiEngine.calculate({ year: 1992, month: 9, day: 15, hour: 8, minute: 15, gender: '坤造' });
@@ -554,6 +555,63 @@ if (!adv || !adv.microActions || adv.microActions.length === 0) {
 if (!adv.recalibrationBanner) {
   throw new Error("AdvisorEngine missing recalibrationBanner");
 }
+
+// 4.9 Phase 6 Evaluation & Calibration Platform
+if (typeof CalibrationEngine === 'undefined') throw new Error("CalibrationEngine missing");
+CalibrationEngine.resetUserData();
+var calibMetrics0 = CalibrationEngine.computeMetrics();
+if (typeof calibMetrics0.brierScoreDynamic !== 'number' || typeof calibMetrics0.brierScoreBaseline !== 'number') {
+  throw new Error("CalibrationEngine Brier Score calculation failed");
+}
+if (calibMetrics0.brierScoreDynamic >= calibMetrics0.brierScoreBaseline) {
+  throw new Error("Dynamic POMDP must have lower Brier Score than baseline: " + calibMetrics0.brierScoreDynamic + " vs " + calibMetrics0.brierScoreBaseline);
+}
+if (calibMetrics0.eceDynamic >= calibMetrics0.eceBaseline) {
+  throw new Error("Dynamic POMDP must have lower ECE than baseline: " + calibMetrics0.eceDynamic + " vs " + calibMetrics0.eceBaseline);
+}
+if (calibMetrics0.calibrationCurveDynamic.length !== 5 || calibMetrics0.calibrationCurveBaseline.length !== 5) {
+  throw new Error("Calibration curves must contain exactly 5 bins");
+}
+
+// Test recommendation registration and cryptographic audit record
+var testRec = CalibrationEngine.registerRecommendation({
+  id: 'act_calib_test_1',
+  category: 'offensive',
+  badge: '攻坚破局',
+  text: '主动发起架构评审'
+}, baziA, '关键立项冲刺');
+if (!testRec || !testRec.recommendationId || !testRec.expectedOutcome || !testRec.baselinePrediction) {
+  throw new Error("registerRecommendation failed to generate complete traceable record");
+}
+
+// Test 3D decoupled feedback
+var fbRes = CalibrationEngine.submit3DFeedback('act_calib_test_1', {
+  executionFidelity: 'not_executed',
+  attributionReason: 'reality_obstacle',
+  subjectiveExperience: 2,
+  objectiveGroundTruth: 'blocked',
+  notes: '客观预算未批'
+});
+if (!fbRes || fbRes.feedback3D.executionFidelity !== 'not_executed' || fbRes.feedback3D.attributionReason !== 'reality_obstacle') {
+  throw new Error("3D decoupled feedback submission failed");
+}
+
+// Verify unexecuted action with reality obstacle is recorded and quarantined
+var calibMetricsAfter = CalibrationEngine.computeMetrics();
+if (calibMetricsAfter.notExecutedCount <= 0) {
+  throw new Error("CalibrationEngine must record quarantined unexecuted count");
+}
+
+// Test dual-track shadow mode toggle & rollback to baseline
+CalibrationEngine.setOperatingMode('shadow');
+if (CalibrationEngine.getOperatingMode() !== 'shadow') throw new Error("Operating mode shadow toggle failed");
+CalibrationEngine.setOperatingMode('active');
+if (CalibrationEngine.getOperatingMode() !== 'active') throw new Error("Operating mode active toggle failed");
+var rollbackCfg = CalibrationEngine.rollbackToBaseline();
+if (rollbackCfg.operatingMode !== 'shadow' || !rollbackCfg.lastRollbackAt) {
+  throw new Error("Rollback to baseline failed");
+}
+CalibrationEngine.setOperatingMode('active');
 """
 run_jsc(s4_jsc, "Suite 4 JSC Advanced Dynamics")
 check_pass("Dynamic Phase Space & Double-Well Potential Manifold", "Nonlinear Dissipative Trajectory (x, v), Bifurcations & Streamlines")
@@ -564,6 +622,7 @@ check_pass("Dual-Track Decision Simulator & Bayesian Rectification", "What-If Co
 check_pass("Synastry Dominant Patterns & Western Canons Matrix", "8 Canons Synastry Exegeses (Rudhyar, Lilly, Ebertin, Addey, Hand, Ptolemy)")
 check_pass("Closed-Loop Action Ledger & Dynamic Impedance Recalibration", "Persistence, 1-Click Feedback (eased/blocked/neutral) & POMDP Adaptation")
 check_pass("Auditable Tool Dispatcher & Anti-Hallucination Disclaimer", "4 Engines Intent Routing (Rectification, WMM, Simulator, Calendar) & Zero Black-Box Card")
+check_pass("Phase 6 Evaluation & Calibration Platform", "Traceable Audit Trails, 3D Decoupled Feedback, Shadow Mode & Brier Score Telemetry")
 
 # ==============================================================================
 # SUITE 5: Internationalization, English Readability & Zero-CJK Leak
@@ -789,6 +848,7 @@ load('data/historical_figures.js');
 load('js/history-engine.js');
 load('js/pomdp-engine.js');
 load('js/advisor-engine.js');
+load('js/calibration-engine.js');
 load('data/institutions.js');
 load('data/enterprises.js');
 load('js/simulator-engine.js');
@@ -1014,6 +1074,41 @@ advisorLedgerFilter = 'situational';
 window.renderAdvisorLedgerDrawer();
 advisorLedgerFilter = 'all';
 window.renderAdvisorLedgerDrawer();
+
+// Test Phase 6 Calibration SubTab & Dashboard in Suite 6
+window.switchAdvisorView('ledger');
+document.getElementById('advisorLedgerSubTabCalibration')?.click();
+var calibPaneHtml = document.getElementById('advisorLedgerCalibrationPane')?.innerHTML || '';
+if (!calibPaneHtml.includes("Brier Score") && !calibPaneHtml.includes("布里尔评分")) {
+  throw new Error("Advisor ledger drawer missing Phase 6 Calibration Dashboard");
+}
+if (!calibPaneHtml.includes("Expected Calibration Error") && !calibPaneHtml.includes("预期校准误差")) {
+  throw new Error("Advisor ledger drawer missing ECE scorecard");
+}
+if (!calibPaneHtml.includes("5-Bin")) {
+  throw new Error("Advisor ledger drawer missing 5-Bin Reliability Diagram");
+}
+
+// Test Phase 6 Audit Modal DOM opening
+window.openAdvisorAuditModal('rec_init_01', 'zh');
+var auditModal = document.getElementById('advisorTraceableAuditModal');
+if (auditModal.classList.contains('hidden')) throw new Error("Advisor audit modal failed to open");
+var auditContent = document.getElementById('advisorAuditModalContent')?.innerHTML || '';
+if (!auditContent.includes("rec_init_01") || (!auditContent.includes("Evidence Base") && !auditContent.includes("证据链基准"))) {
+  throw new Error("Advisor audit modal missing evidence base content");
+}
+document.getElementById('advisorAuditModalCloseBtn')?.click();
+if (!auditModal.classList.contains('hidden')) throw new Error("Advisor audit modal failed to close");
+
+// Test Phase 6 3D Feedback Modal DOM opening & submission
+window.openAdvisor3DFeedbackModal('act_seed_01', 'zh');
+var modal3D = document.getElementById('advisor3DFeedbackModal');
+if (modal3D.classList.contains('hidden')) throw new Error("Advisor 3D feedback modal failed to open");
+document.getElementById('advisor3DModalCloseBtn')?.click();
+if (!modal3D.classList.contains('hidden')) throw new Error("Advisor 3D feedback modal failed to close");
+
+// Switch back to actions subtab
+document.getElementById('advisorLedgerSubTabActions')?.click();
 
 window.switchAdvisorView('chat');
 

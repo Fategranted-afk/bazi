@@ -3993,94 +3993,256 @@
           </div>
         </div>
 
-        <!-- Telemetry Stats Strip -->
-        <div id="advisorLedgerStats" class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-xs">
-          <!-- Dynamically populated -->
-        </div>
-
-        <!-- Dynamic Recalibration Banner -->
-        <div id="advisorLedgerRecalibration" class="p-2.5 rounded-lg bg-indigo-950/40 border border-indigo-500/40 text-xs text-indigo-200">
-          <!-- Recalibration status -->
-        </div>
-
-        <!-- POMDP Adaptive Policy & Belief State Manifold Console (Phase 4 贝尔曼自适应决策迭代中枢) -->
-        <div id="advisorPomdpConsole" class="rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#101322] via-[#14182c] to-[#0c0e18] p-3.5 sm:p-4 shadow-xl space-y-3 text-xs">
-          <!-- Dynamically populated via renderAdvisorPomdpConsole() in app.js -->
-        </div>
-
-        <!-- Situational Reality Calibration & Alignment Card -->
-        <div id="advisorLedgerSituationCard" class="p-2.5 rounded-lg bg-slate-900/60 border border-amber-600/30 text-xs">
-          <!-- Dynamically populated situational context -->
-        </div>
-
-        <!-- Filter & Batch Action Toolbar -->
-        <div id="advisorLedgerFilterBar" class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-black/50 border border-gray-800/80">
-          <div class="flex flex-wrap items-center gap-1.5 text-[11px]" id="advisorLedgerFilters">
-            <button type="button" class="advisor-filter-btn active px-2.5 py-1 rounded-lg font-medium transition cursor-pointer bg-amber-950/80 text-amber-200 border border-amber-600/50" data-filter="all">
-              <span data-i18n="advisor_ledger_filter_all">全部</span>
-              <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountAll">0</span>
-            </button>
-            <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="pending">
-              <span>⏳</span>
-              <span data-i18n="advisor_ledger_filter_pending">待办打卡</span>
-              <span class="filter-count ml-1 px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[10px]" id="filterCountPending">0</span>
-            </button>
-            <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="executed">
-              <span>✅</span>
-              <span data-i18n="advisor_ledger_filter_executed">已完成</span>
-              <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountExecuted">0</span>
-            </button>
-            <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="situational">
-              <span>🎯</span>
-              <span data-i18n="advisor_ledger_filter_situational">处境定制</span>
-              <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountSituational">0</span>
-            </button>
-          </div>
-          <div class="flex items-center gap-1.5 text-[10px]">
-            <button type="button" id="advisorLedgerAddCustomBtn" class="px-2.5 py-1 rounded-lg bg-purple-950/60 hover:bg-purple-900/80 border border-purple-600/40 text-purple-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1" title="增加个性化打卡微动作">
-              <span>➕</span>
-              <span data-i18n="advisor_ledger_add_custom">增订微动作</span>
-            </button>
-            <button type="button" id="advisorLedgerMarkAllBtn" class="px-2 py-1 rounded-lg bg-indigo-950/60 hover:bg-indigo-900 border border-indigo-600/40 text-indigo-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
-              <span>✓✓</span>
-              <span data-i18n="advisor_ledger_mark_all_done">一键全选打卡</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Inline Custom Action Creator Drawer in Ledger -->
-        <div id="advisorLedgerCustomActionDrawer" class="hidden p-3 rounded-xl bg-purple-950/30 border border-purple-600/40 space-y-2 text-xs">
-          <div class="flex items-center justify-between text-[11px] font-bold text-purple-300 font-serif-sc">
-            <span data-i18n="advisor_ledger_custom_title">增订个性化微动作（生成专属 Checkbox 待办打卡）</span>
-            <button type="button" id="advisorLedgerCustomCloseBtn" class="text-gray-400 hover:text-white text-xs cursor-pointer">✕</button>
-          </div>
-          <div class="flex items-center gap-2">
-            <select id="advisorLedgerCustomBadgeSelect" class="text-xs p-2 rounded-lg bg-black/70 border border-gray-700 text-purple-300 focus:outline-none focus:border-purple-500">
-              <option value="处境定制">🎯 处境定制</option>
-              <option value="躯体动作">🏃 躯体动作</option>
-              <option value="现实推进">⚡ 现实推进</option>
-              <option value="空间微调">🧭 空间微调</option>
-              <option value="时间切片">⏰ 时间切片</option>
-            </select>
-            <input type="text" id="advisorLedgerCustomInput" class="flex-1 p-2 text-xs rounded-lg bg-black/70 border border-gray-700 text-gray-200 focus:outline-none focus:border-purple-500 placeholder-gray-500 font-sans" placeholder="输入需打卡的个性化微动作（如：每晚加做真题、规避某类会议等）..." />
-            <button type="button" id="advisorLedgerCustomSubmitBtn" class="px-3.5 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition active:scale-95 cursor-pointer whitespace-nowrap">
-              确认添加
-            </button>
-          </div>
-        </div>
-
-        <!-- Action Items List (Spacious & Clean) -->
-        <div id="advisorLedgerList" class="space-y-2.5 text-xs pr-1">
-          <!-- Action list items -->
-        </div>
-
-        <!-- Bottom Return Banner -->
-        <div class="pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-400">
-          <span>💡 勾选或反馈动作后，军师对策将动态自适应调校决策阻抗。</span>
-          <button id="advisorBackToChatBtnBottom" type="button" class="px-3 py-1.5 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
-            <span>💬 返回军师策问</span>
+        <!-- Phase 6 Sub-Tab Navigation Bar -->
+        <div class="flex items-center gap-2 p-1 rounded-xl bg-black/60 border border-gray-800 text-xs">
+          <button type="button" id="advisorLedgerSubTabActions" class="flex-1 py-1.5 px-3 rounded-lg font-bold transition cursor-pointer flex items-center justify-center gap-1.5 bg-amber-950/80 text-amber-200 border border-amber-600/50">
+            <span data-i18n="advisor_subtab_actions">📋 闭环战术账本</span>
+          </button>
+          <button type="button" id="advisorLedgerSubTabCalibration" class="flex-1 py-1.5 px-3 rounded-lg font-bold transition cursor-pointer flex items-center justify-center gap-1.5 text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent">
+            <span data-i18n="advisor_subtab_calibration">🔬 前瞻评估与校准 (Phase 6)</span>
+            <span class="px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 font-mono text-[9px]">v6.0</span>
           </button>
         </div>
+
+        <!-- SubPane 1: Actions Ledger Dedicated Dashboard -->
+        <div id="advisorLedgerActionsPane" class="space-y-4">
+          <!-- Telemetry Stats Strip -->
+          <div id="advisorLedgerStats" class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-xs">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Dynamic Recalibration Banner -->
+          <div id="advisorLedgerRecalibration" class="p-2.5 rounded-lg bg-indigo-950/40 border border-indigo-500/40 text-xs text-indigo-200">
+            <!-- Recalibration status -->
+          </div>
+
+          <!-- POMDP Adaptive Policy & Belief State Manifold Console (Phase 4 贝尔曼自适应决策迭代中枢) -->
+          <div id="advisorPomdpConsole" class="rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#101322] via-[#14182c] to-[#0c0e18] p-3.5 sm:p-4 shadow-xl space-y-3 text-xs">
+            <!-- Dynamically populated via renderAdvisorPomdpConsole() in app.js -->
+          </div>
+
+          <!-- Situational Reality Calibration & Alignment Card -->
+          <div id="advisorLedgerSituationCard" class="p-2.5 rounded-lg bg-slate-900/60 border border-amber-600/30 text-xs">
+            <!-- Dynamically populated situational context -->
+          </div>
+
+          <!-- Filter & Batch Action Toolbar -->
+          <div id="advisorLedgerFilterBar" class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-black/50 border border-gray-800/80">
+            <div class="flex flex-wrap items-center gap-1.5 text-[11px]" id="advisorLedgerFilters">
+              <button type="button" class="advisor-filter-btn active px-2.5 py-1 rounded-lg font-medium transition cursor-pointer bg-amber-950/80 text-amber-200 border border-amber-600/50" data-filter="all">
+                <span data-i18n="advisor_ledger_filter_all">全部</span>
+                <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountAll">0</span>
+              </button>
+              <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="pending">
+                <span>⏳</span>
+                <span data-i18n="advisor_ledger_filter_pending">待办打卡</span>
+                <span class="filter-count ml-1 px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[10px]" id="filterCountPending">0</span>
+              </button>
+              <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="executed">
+                <span>✅</span>
+                <span data-i18n="advisor_ledger_filter_executed">已完成</span>
+                <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountExecuted">0</span>
+              </button>
+              <button type="button" class="advisor-filter-btn px-2.5 py-1 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 hover:bg-gray-800/50 border border-transparent" data-filter="situational">
+                <span>🎯</span>
+                <span data-i18n="advisor_ledger_filter_situational">处境定制</span>
+                <span class="filter-count ml-1 font-mono text-[10px] opacity-80" id="filterCountSituational">0</span>
+              </button>
+            </div>
+            <div class="flex items-center gap-1.5 text-[10px]">
+              <button type="button" id="advisorLedgerAddCustomBtn" class="px-2.5 py-1 rounded-lg bg-purple-950/60 hover:bg-purple-900/80 border border-purple-600/40 text-purple-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1" title="增加个性化打卡微动作">
+                <span>➕</span>
+                <span data-i18n="advisor_ledger_add_custom">增订微动作</span>
+              </button>
+              <button type="button" id="advisorLedgerMarkAllBtn" class="px-2 py-1 rounded-lg bg-indigo-950/60 hover:bg-indigo-900 border border-indigo-600/40 text-indigo-200 font-medium transition cursor-pointer active:scale-95 flex items-center gap-1">
+                <span>✓✓</span>
+                <span data-i18n="advisor_ledger_mark_all_done">一键全选打卡</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Inline Custom Action Creator Drawer in Ledger -->
+          <div id="advisorLedgerCustomActionDrawer" class="hidden p-3 rounded-xl bg-purple-950/30 border border-purple-600/40 space-y-2 text-xs">
+            <div class="flex items-center justify-between text-[11px] font-bold text-purple-300 font-serif-sc">
+              <span data-i18n="advisor_ledger_custom_title">增订个性化微动作（生成专属 Checkbox 待办打卡）</span>
+              <button type="button" id="advisorLedgerCustomCloseBtn" class="text-gray-400 hover:text-white text-xs cursor-pointer">✕</button>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="advisorLedgerCustomBadgeSelect" class="text-xs p-2 rounded-lg bg-black/70 border border-gray-700 text-purple-300 focus:outline-none focus:border-purple-500">
+                <option value="处境定制">🎯 处境定制</option>
+                <option value="躯体动作">🏃 躯体动作</option>
+                <option value="现实推进">⚡ 现实推进</option>
+                <option value="空间微调">🧭 空间微调</option>
+                <option value="时间切片">⏰ 时间切片</option>
+              </select>
+              <input type="text" id="advisorLedgerCustomInput" class="flex-1 p-2 text-xs rounded-lg bg-black/70 border border-gray-700 text-gray-200 focus:outline-none focus:border-purple-500 placeholder-gray-500 font-sans" placeholder="输入需打卡的个性化微动作（如：每晚加做真题、规避某类会议等）..." />
+              <button type="button" id="advisorLedgerCustomSubmitBtn" class="px-3.5 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 text-white font-bold text-xs shadow-sm transition active:scale-95 cursor-pointer whitespace-nowrap">
+                确认添加
+              </button>
+            </div>
+          </div>
+
+          <!-- Action Items List (Spacious & Clean) -->
+          <div id="advisorLedgerList" class="space-y-2.5 text-xs pr-1">
+            <!-- Action list items -->
+          </div>
+
+          <!-- Bottom Return Banner -->
+          <div class="pt-3 border-t border-gray-800 flex items-center justify-between text-xs text-gray-400">
+            <span>💡 勾选或反馈动作后，军师对策将动态自适应调校决策阻抗。</span>
+            <button id="advisorBackToChatBtnBottom" type="button" class="px-3 py-1.5 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 border border-amber-500/40 text-amber-300 text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+              <span>💬 返回军师策问</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SubPane 2: Phase 6 Evaluation & Calibration Platform Pane -->
+        <div id="advisorLedgerCalibrationPane" class="hidden space-y-4 text-xs">
+          <!-- Dynamically populated via renderAdvisorCalibrationDashboard() -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 6: Traceable Recommendation Audit Modal (可追踪审计日志快照) -->
+  <div id="advisorTraceableAuditModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">
+    <div class="relative w-full max-w-2xl rounded-2xl bg-gradient-to-br from-[#0e111a] via-[#141724] to-[#0a0c14] border border-cyan-500/40 p-4 sm:p-6 shadow-2xl space-y-4 text-xs">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🎯</span>
+          <div>
+            <div class="text-sm sm:text-base font-bold text-cyan-300 font-serif-sc" data-i18n="advisor_audit_modal_title">可追踪审计日志详情</div>
+            <div class="text-[10px] text-gray-400 font-mono" id="auditModalRecId">rec_audit_trail_v6</div>
+          </div>
+        </div>
+        <button id="advisorAuditModalCloseBtn" type="button" class="w-7 h-7 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white flex items-center justify-center text-sm cursor-pointer transition">✕</button>
+      </div>
+
+      <div id="advisorAuditModalContent" class="space-y-3.5 max-h-[70vh] overflow-y-auto pr-1">
+        <!-- Dynamically populated by renderAdvisorAuditModal(recId) -->
+      </div>
+
+      <div class="pt-3 border-t border-gray-800 flex justify-end">
+        <button id="advisorAuditModalDismissBtn" type="button" class="px-4 py-1.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900 border border-cyan-600/40 text-cyan-200 font-medium cursor-pointer transition active:scale-95" data-i18n="advisor_audit_close_btn">关闭审计快照</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 6: Three-Dimensional Decoupled Feedback Assessment Modal (三维解耦反馈评测模态窗) -->
+  <div id="advisor3DFeedbackModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3 sm:p-6 flex flex-col items-center justify-center">
+    <div class="relative w-full max-w-xl rounded-2xl bg-gradient-to-br from-[#0f121d] via-[#161a29] to-[#0c0e17] border border-amber-500/40 p-4 sm:p-6 shadow-2xl space-y-4 text-xs">
+      <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🔬</span>
+          <div>
+            <div class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc" data-i18n="advisor_3d_modal_title">三维解耦反馈评测</div>
+            <div class="text-[10px] text-gray-400" id="feedback3DModalActionText">评测微动作执行结果</div>
+          </div>
+        </div>
+        <button id="advisor3DModalCloseBtn" type="button" class="w-7 h-7 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white flex items-center justify-center text-sm cursor-pointer transition">✕</button>
+      </div>
+
+      <input type="hidden" id="feedback3DTargetActId" value="" />
+
+      <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+        <!-- Dimension 1: Execution Fidelity -->
+        <div class="p-3 rounded-xl bg-black/40 border border-indigo-700/40 space-y-2">
+          <div class="font-bold text-indigo-300 flex items-center gap-1.5" data-i18n="advisor_3d_fidelity_label">
+            <span>⚡</span> <span>维度一：执行忠实度 (Execution Fidelity)</span>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="p-2 rounded-lg border border-gray-700 hover:border-indigo-500 bg-gray-900/50 cursor-pointer flex flex-col items-center text-center transition">
+              <input type="radio" name="feedbackFidelity" value="executed_fully" class="mb-1 text-indigo-500" checked />
+              <span class="font-semibold text-slate-200" data-i18n="advisor_3d_fidelity_full">完全执行</span>
+            </label>
+            <label class="p-2 rounded-lg border border-gray-700 hover:border-indigo-500 bg-gray-900/50 cursor-pointer flex flex-col items-center text-center transition">
+              <input type="radio" name="feedbackFidelity" value="executed_partially" class="mb-1 text-indigo-500" />
+              <span class="font-semibold text-slate-200" data-i18n="advisor_3d_fidelity_partial">部分执行</span>
+            </label>
+            <label class="p-2 rounded-lg border border-gray-700 hover:border-indigo-500 bg-gray-900/50 cursor-pointer flex flex-col items-center text-center transition">
+              <input type="radio" name="feedbackFidelity" value="not_executed" class="mb-1 text-indigo-500" />
+              <span class="font-semibold text-slate-200" data-i18n="advisor_3d_fidelity_none">未予执行</span>
+            </label>
+          </div>
+
+          <!-- Attribution dropdown (visible when partially or not executed) -->
+          <div id="feedbackAttributionRow" class="hidden pt-2 border-t border-gray-800 space-y-1">
+            <div class="text-[11px] text-gray-400" data-i18n="advisor_3d_attribution_label">未完全执行归因 (Attribution Mode)：</div>
+            <select id="feedbackAttributionSelect" class="w-full p-2 rounded-lg bg-black/70 border border-gray-700 text-indigo-200 text-xs focus:outline-none focus:border-indigo-500">
+              <option value="reality_obstacle" data-i18n="advisor_3d_attr_reality">现实不可抗力 / 资源匮乏</option>
+              <option value="low_willingness" data-i18n="advisor_3d_attr_willingness">主观意愿低 / 心理阻力</option>
+              <option value="forgot" data-i18n="advisor_3d_attr_forgot">遗忘或日程冲突</option>
+              <option value="not_applicable" data-i18n="advisor_3d_attr_na">场景不再适用</option>
+              <option value="other" data-i18n="advisor_3d_attr_other">其他客观原由</option>
+            </select>
+            <div class="text-[10px] text-amber-400/80">🛡️ 归因非策略缺陷时，绝不惩罚算法预测误差（免责隔离原则）</div>
+          </div>
+        </div>
+
+        <!-- Dimension 2: Subjective Experience -->
+        <div class="p-3 rounded-xl bg-black/40 border border-purple-700/40 space-y-2">
+          <div class="font-bold text-purple-300 flex items-center justify-between">
+            <span class="flex items-center gap-1.5" data-i18n="advisor_3d_subjective_label">
+              <span>🧠</span> <span>维度二：主观舒适度与心智负荷 (1~5分)</span>
+            </span>
+            <span id="feedbackSubjectiveScoreDisplay" class="font-mono text-purple-300 font-bold">4 / 5</span>
+          </div>
+          <div class="flex items-center justify-between gap-1 text-center" id="feedbackSubjectiveStars">
+            <button type="button" class="sub-score-btn flex-1 py-1.5 rounded-lg border border-gray-700 bg-gray-900/60 hover:bg-purple-900/40 text-gray-300 font-bold cursor-pointer transition" data-score="1">1</button>
+            <button type="button" class="sub-score-btn flex-1 py-1.5 rounded-lg border border-gray-700 bg-gray-900/60 hover:bg-purple-900/40 text-gray-300 font-bold cursor-pointer transition" data-score="2">2</button>
+            <button type="button" class="sub-score-btn flex-1 py-1.5 rounded-lg border border-gray-700 bg-gray-900/60 hover:bg-purple-900/40 text-gray-300 font-bold cursor-pointer transition" data-score="3">3</button>
+            <button type="button" class="sub-score-btn flex-1 py-1.5 rounded-lg border border-purple-600 bg-purple-950/80 text-purple-200 font-bold cursor-pointer transition active" data-score="4">4</button>
+            <button type="button" class="sub-score-btn flex-1 py-1.5 rounded-lg border border-gray-700 bg-gray-900/60 hover:bg-purple-900/40 text-gray-300 font-bold cursor-pointer transition" data-score="5">5</button>
+          </div>
+          <div class="text-[10px] text-gray-400 flex justify-between">
+            <span>极高摩擦/焦虑</span>
+            <span>从容自洽/低负荷</span>
+          </div>
+        </div>
+
+        <!-- Dimension 3: Objective Ground Truth -->
+        <div class="p-3 rounded-xl bg-black/40 border border-emerald-700/40 space-y-2">
+          <div class="font-bold text-emerald-300 flex items-center gap-1.5" data-i18n="advisor_3d_objective_label">
+            <span>🎯</span> <span>维度三：客观真实结局 (核心标尺)</span>
+          </div>
+          <div class="space-y-1.5">
+            <label class="p-2.5 rounded-lg border border-gray-700 hover:border-emerald-500 bg-gray-900/40 cursor-pointer flex items-center justify-between transition">
+              <div class="flex items-center gap-2">
+                <input type="radio" name="feedbackObjective" value="resolved" class="text-emerald-500" checked />
+                <span class="font-semibold text-emerald-300" data-i18n="advisor_3d_obj_resolved">🟢 危机化解 / 达成预期目标</span>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded border border-emerald-800">Score 1.0</span>
+            </label>
+            <label class="p-2.5 rounded-lg border border-gray-700 hover:border-slate-500 bg-gray-900/40 cursor-pointer flex items-center justify-between transition">
+              <div class="flex items-center gap-2">
+                <input type="radio" name="feedbackObjective" value="neutral" class="text-slate-400" />
+                <span class="font-semibold text-slate-300" data-i18n="advisor_3d_obj_neutral">⚪ 局面平稳 / 无显著波澜</span>
+              </div>
+              <span class="text-[10px] font-mono text-slate-300 bg-slate-800/60 px-1.5 py-0.5 rounded border border-slate-700">Score 0.5</span>
+            </label>
+            <label class="p-2.5 rounded-lg border border-gray-700 hover:border-rose-500 bg-gray-900/40 cursor-pointer flex items-center justify-between transition">
+              <div class="flex items-center gap-2">
+                <input type="radio" name="feedbackObjective" value="blocked" class="text-rose-500" />
+                <span class="font-semibold text-rose-300" data-i18n="advisor_3d_obj_blocked">🔴 遭遇挫折 / 次生损耗加剧</span>
+              </div>
+              <span class="text-[10px] font-mono text-rose-400 bg-rose-950/60 px-1.5 py-0.5 rounded border border-rose-800">Score 0.0</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="space-y-1">
+          <label class="text-[11px] font-medium text-gray-300" data-i18n="advisor_3d_notes_label">评测复盘手记 (可选)：</label>
+          <input type="text" id="feedback3DNotes" class="w-full p-2 text-xs rounded-lg bg-black/70 border border-gray-700 text-gray-200 focus:outline-none focus:border-amber-500 placeholder-gray-500" placeholder="记录现实反馈细节（如：对方妥协、会议通过、遇到意外阻力等）..." />
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-gray-800 flex items-center justify-between">
+        <button id="advisor3DModalCancelBtn" type="button" class="px-3.5 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 font-medium cursor-pointer transition" data-i18n="advisor_3d_cancel_btn">取消</button>
+        <button id="advisor3DModalSubmitBtn" type="button" class="px-4 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-black font-bold cursor-pointer transition active:scale-95 shadow-md flex items-center gap-1.5" data-i18n="advisor_3d_submit_btn">
+          <span>✓</span>
+          <span>提交 3D 解耦评估</span>
+        </button>
       </div>
     </div>
   </div>
@@ -4299,6 +4461,7 @@
   <script src="js/history-engine.js"></script>
   <script src="js/pomdp-engine.js"></script>
   <script src="js/advisor-engine.js"></script>
+  <script src="js/calibration-engine.js"></script>
   <script src="data/institutions.js"></script>
   <script src="data/enterprises.js"></script>
   <script src="js/simulator-engine.js"></script>
