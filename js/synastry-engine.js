@@ -2374,8 +2374,422 @@ const SynastryEngine = (function() {
     return { advantages, hazards };
   }
 
+  /**
+   * Predict Ideal Partner Natal Chart & 16-Character Joint Resonance Simulation
+   * (单身寻缘 · 逆推理想正缘八字与16字推演模拟)
+   *
+   * Constraints & Metaphysical Safeguards:
+   * 1. Target partner birth year strictly within +/- 10 years of Chart A's birth year.
+   * 2. Guaranteed legal adult (currentYear - birthYear >= 18; if 2026, birthYear <= 2008).
+   * 3. Year compatibility prioritized: Six Harmonies (六合) or Three Harmonies (三合), avoiding clashes & punishments.
+   * 4. Non-Oppressive Complementarity (刚柔互补与防压迫制衡心法):
+   *    - Tong Guan mediating element (通关化泄，贪生忘克)
+   *    - Rooted sovereignty & psychological boundaries (柔而有根，暗藏禄库，保有自主权)
+   *    - Spouse palace harmony (天地双合 / 天干相合 / 六合三合)
+   * 5. Synthesizes 16 characters (8 of Chart A + 8 of Chart B) into real astronomical birth time.
+   * 6. Provides 3 distinct archetypal variants for cycling.
+   */
+  function predictIdealPartner(chartA, options = {}) {
+    if (!chartA || !chartA.pillars) return null;
+    const isEn = (options.lang === 'en');
+    const variant = (typeof options.variant === 'number' && options.variant >= 0) ? (options.variant % 3) : 0;
+
+    const STEM_LIST = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const BRANCH_LIST = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const STEM_EL = ['木', '木', '火', '火', '土', '土', '金', '金', '水', '水'];
+    const STEM_POL = ['阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴'];
+    const BRANCH_POL = ['阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴', '阳', '阴'];
+    const BRANCH_EL = ['水', '土', '木', '木', '土', '火', '火', '土', '金', '金', '土', '水'];
+
+    // 1. Current Year and Legal Adult Constraints
+    const currentYear = new Date().getFullYear(); // 2026
+    const minAdultAge = 18;
+    const maxLegalAdultYear = currentYear - minAdultAge; // 2008
+
+    const userYear = (chartA.input && chartA.input.year) || chartA.birthYear || 1990;
+
+    // User adulthood check
+    if (userYear > maxLegalAdultYear) {
+      return {
+        isEligible: false,
+        reason: 'underage_user',
+        userYear,
+        currentYear,
+        minAdultAge,
+        errorZh: '🔞 仅限成年人测算：依据伦理合规与主权自决准则，理想正缘推演功能仅对已满18周岁的成年人开放。',
+        errorEn: 'Adults 18+ Only: Relationship synastry prediction is strictly restricted to legal adults aged 18 and above.'
+      };
+    }
+
+    // Candidate Birth Year Window: strictly +/- 10 years, capped at legal adult year (<= 2008)
+    const minCandidateYear = userYear - 10;
+    const maxCandidateYear = Math.min(userYear + 10, maxLegalAdultYear);
+
+    // 2. Determine Partner Gender
+    const defaultGenderB = (chartA.gender === '乾造') ? '坤造' : '乾造';
+    const genderB = options.genderB || defaultGenderB;
+
+    // 3. User BaZi Metrics
+    const dmA = chartA.dayMaster || chartA.pillars.day.stem;
+    const dmIdxA = STEM_LIST.indexOf(dmA);
+    const dmElA = chartA.dayMasterElement || STEM_EL[dmIdxA];
+    const dmPolA = chartA.dayMasterYinYang || STEM_POL[dmIdxA];
+    const zipingScoreA = (chartA.zipingScore && chartA.zipingScore.totalScore) ?? 50;
+    const yearBranchA = chartA.pillars.year.branch;
+    const dayBranchA = chartA.pillars.day.branch;
+
+    const isYangStrong = (dmPolA === '阳' && zipingScoreA >= 45) || (zipingScoreA >= 60);
+
+    // 4. Candidate Year Selection based on Year Branch
+    const sixHarmonyYearBranchMap = {
+      '子': '丑', '丑': '子', '寅': '亥', '亥': '寅',
+      '卯': '戌', '戌': '卯', '辰': '酉', '酉': '辰',
+      '巳': '申', '申': '巳', '午': '未', '未': '午'
+    };
+    const targetSixHarmonyYearBranch = sixHarmonyYearBranchMap[yearBranchA];
+
+    const sanHeGroups = [
+      ['申', '子', '辰'], ['亥', '卯', '未'], ['寅', '午', '戌'], ['巳', '酉', '丑']
+    ];
+    let targetSanHeBranches = [];
+    for (let grp of sanHeGroups) {
+      if (grp.includes(yearBranchA)) {
+        targetSanHeBranches = grp.filter(b => b !== yearBranchA);
+        break;
+      }
+    }
+
+    const clashYearBranchMap = {
+      '子': '午', '午': '子', '丑': '未', '未': '丑',
+      '寅': '申', '申': '寅', '卯': '酉', '酉': '卯',
+      '辰': '戌', '戌': '辰', '巳': '亥', '亥': '巳'
+    };
+    const forbiddenClashBranch = clashYearBranchMap[yearBranchA];
+
+    const scoredYears = [];
+    for (let y = minCandidateYear; y <= maxCandidateYear; y++) {
+      const bIdx = (y - 4 + 60000) % 12;
+      const b = BRANCH_LIST[bIdx];
+      let score = 50;
+      if (b === targetSixHarmonyYearBranch) score += 50;
+      else if (targetSanHeBranches.includes(b)) score += 35;
+      else if (BRANCH_EL[bIdx] === STEM_EL[dmIdxA]) score += 15;
+
+      if (b === forbiddenClashBranch) score -= 80;
+      score -= Math.abs(y - userYear) * 2;
+      scoredYears.push({ year: y, branch: b, score });
+    }
+    scoredYears.sort((a, b) => b.score - a.score);
+
+    let candidateYear0 = scoredYears[0]?.year || userYear;
+    let candidateYear1 = scoredYears.find(sy => sy.year !== candidateYear0 && sy.year >= userYear)?.year || (scoredYears[1]?.year || userYear);
+    let candidateYear2 = scoredYears.find(sy => sy.year !== candidateYear0 && sy.year !== candidateYear1)?.year || (scoredYears[2]?.year || userYear);
+
+    let selectedYear = candidateYear0;
+    if (variant === 1) selectedYear = candidateYear1;
+    else if (variant === 2) selectedYear = candidateYear2;
+    if (options.targetYear && options.targetYear >= minCandidateYear && options.targetYear <= maxCandidateYear) {
+      selectedYear = options.targetYear;
+    }
+
+    // 5. Determine Day Master and Day Branch for Chart B
+    const stemComboMap = {
+      '甲': '己', '己': '甲',
+      '乙': '庚', '庚': '乙',
+      '丙': '辛', '辛': '丙',
+      '丁': '壬', '壬': '丁',
+      '戊': '癸', '癸': '戊'
+    };
+
+    const branchComboMap = {
+      '子': '丑', '丑': '子', '寅': '亥', '亥': '寅',
+      '卯': '戌', '戌': '卯', '辰': '酉', '酉': '辰',
+      '巳': '申', '申': '巳', '午': '未', '未': '午'
+    };
+
+    let targetDayStem = stemComboMap[dmA] || '辛';
+    let targetDayBranch = branchComboMap[dayBranchA] || '酉';
+
+    // Verify polarity match in 60 Jiazi
+    let sIdxTarget = STEM_LIST.indexOf(targetDayStem);
+    let sPolTarget = STEM_POL[sIdxTarget];
+    let bIdxTarget = BRANCH_LIST.indexOf(targetDayBranch);
+    let bPolTarget = BRANCH_POL[bIdxTarget];
+
+    if (sPolTarget !== bPolTarget) {
+      const compatibleYinBranches = ['丑', '卯', '巳', '未', '酉', '亥'];
+      const compatibleYangBranches = ['子', '寅', '辰', '午', '申', '戌'];
+      const searchPool = (sPolTarget === '阴') ? compatibleYinBranches : compatibleYangBranches;
+      targetDayBranch = searchPool.find(b => targetSanHeBranches.includes(b)) || searchPool[0];
+    }
+
+    let archetypeKey = 'double_harmony';
+    let archetypeTitleZh = '';
+    let archetypeTitleEn = '';
+    let archetypeTaglineZh = '';
+    let archetypeTaglineEn = '';
+
+    if (variant === 0) {
+      archetypeKey = 'double_harmony';
+      archetypeTitleZh = '天地双合 · 柔性通关型正缘';
+      archetypeTitleEn = 'Heaven-Earth Double Harmony · Gentle Channeling';
+      archetypeTaglineZh = '刚柔相济而绝无压迫 · 贪生忘克以润万物';
+      archetypeTaglineEn = 'Harmonious polarity with non-oppressive dignity and fluid mediation';
+    } else if (variant === 1) {
+      archetypeKey = 'favorable_mediating';
+      archetypeTitleZh = '喜用通关 · 智勇并肩型正缘';
+      archetypeTitleEn = 'Favorable Mediating · Strategic Empowerment & Wealth Synergy';
+      archetypeTaglineZh = '同频共振 · 事业托举与资源循环';
+      archetypeTaglineEn = 'Intellectual resonance, mutual empowerment, and shared prosperity';
+
+      const favorableStemMap = {
+        '木': isYangStrong ? '丙' : '癸',
+        '火': isYangStrong ? '戊' : '乙',
+        '土': isYangStrong ? '庚' : '丁',
+        '金': isYangStrong ? '壬' : '己',
+        '水': isYangStrong ? '甲' : '辛'
+      };
+      targetDayStem = favorableStemMap[dmElA] || stemComboMap[dmA] || '庚';
+      const sPol1 = STEM_POL[STEM_LIST.indexOf(targetDayStem)];
+      const pool1 = (sPol1 === '阴') ? ['丑', '卯', '巳', '未', '酉', '亥'] : ['子', '寅', '辰', '午', '申', '戌'];
+      targetDayBranch = pool1.find(b => targetSanHeBranches.includes(b) || b === targetSixHarmonyYearBranch) || pool1[1];
+    } else {
+      archetypeKey = 'mutual_nobleman';
+      archetypeTitleZh = '互为贵人 · 精神契合型正缘';
+      archetypeTitleEn = 'Mutual Nobleman · Soul Affinity & Intellectual Sanctuary';
+      archetypeTaglineZh = '相敬如宾 · 灵犀互通与情感避风港';
+      archetypeTaglineEn = 'Quiet emotional sanctuary, unshakeable mutual respect, and soulful resonance';
+
+      const noblemanStemMap = {
+        '木': '丁',
+        '火': '辛',
+        '土': '癸',
+        '金': '乙',
+        '水': '己'
+      };
+      targetDayStem = noblemanStemMap[dmElA] || stemComboMap[dmA] || '癸';
+      const sPol2 = STEM_POL[STEM_LIST.indexOf(targetDayStem)];
+      const pool2 = (sPol2 === '阴') ? ['酉', '亥', '丑', '卯', '巳', '未'] : ['申', '戌', '子', '寅', '辰', '午'];
+      targetDayBranch = pool2.find(b => b === targetSixHarmonyYearBranch || targetSanHeBranches.includes(b)) || pool2[0];
+    }
+
+    // 6. Find Real Calendar Date for (selectedYear, targetDayStem, targetDayBranch)
+    function calcJDN(y, m, d) {
+      const a = Math.floor((14 - m) / 12);
+      const yr = y + 4800 - a;
+      const mo = m + 12 * a - 3;
+      return d + Math.floor((153 * mo + 2) / 5) + 365 * yr + Math.floor(yr / 4) - Math.floor(yr / 100) + Math.floor(yr / 400) - 32045;
+    }
+
+    function findRealDate(y, s, b) {
+      const jdn1 = calcJDN(y, 1, 1);
+      const cycle1 = (jdn1 + 49) % 60;
+      const sIdx = STEM_LIST.indexOf(s);
+      let bIdx = BRANCH_LIST.indexOf(b);
+      let targetCycle = -1;
+      for (let i = 0; i < 60; i++) {
+        if (i % 10 === sIdx && i % 12 === bIdx) {
+          targetCycle = i;
+          break;
+        }
+      }
+      if (targetCycle === -1) {
+        const isYin = (STEM_POL[sIdx] === '阴');
+        const validBranches = isYin ? ['丑', '卯', '巳', '未', '酉', '亥'] : ['子', '寅', '辰', '午', '申', '戌'];
+        bIdx = BRANCH_LIST.indexOf(validBranches[0]);
+        for (let i = 0; i < 60; i++) {
+          if (i % 10 === sIdx && i % 12 === bIdx) {
+            targetCycle = i;
+            break;
+          }
+        }
+      }
+      const offset = (targetCycle - cycle1 + 60) % 60;
+      const isLeap = ((y % 4 === 0 && y % 100 !== 0) || y % 400 === 0);
+      const daysInYear = isLeap ? 366 : 365;
+      const occurrences = [];
+      for (let d = offset; d < daysInYear; d += 60) {
+        occurrences.push(d);
+      }
+      const chosenOffset = occurrences.length > 2 ? occurrences[2] : (occurrences[1] || occurrences[0]);
+      const base = new Date(Date.UTC(y, 0, 1));
+      const resDate = new Date(base.getTime() + chosenOffset * 86400000);
+      return {
+        year: resDate.getUTCFullYear(),
+        month: resDate.getUTCMonth() + 1,
+        day: resDate.getUTCDate()
+      };
+    }
+
+    const realDate = findRealDate(selectedYear, targetDayStem, targetDayBranch);
+    const chosenHour = 10;
+
+    // 7. Calculate Chart B using BaZiEngine
+    let chartB = null;
+    if (typeof BaZiEngine !== 'undefined' && typeof BaZiEngine.calculate === 'function') {
+      chartB = BaZiEngine.calculate({
+        year: realDate.year,
+        month: realDate.month,
+        day: realDate.day,
+        hour: chosenHour,
+        minute: 0,
+        gender: genderB,
+        useTrueSolarTime: false,
+        isLateRatNextDay: false,
+        longitude: 116.4,
+        timezone: 8.0
+      });
+    }
+
+    // 8. Analyze Combined 16-Character Elemental Distribution
+    const elScoreA = (chartA.elements && chartA.elements.scores) || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
+    const elScoreB = (chartB && chartB.elements && chartB.elements.scores) || { '木': 20, '火': 20, '土': 20, '金': 20, '水': 20 };
+
+    const combinedScores = {};
+    const elementsList = ['木', '火', '土', '金', '水'];
+    let combinedTotal = 0;
+    elementsList.forEach(el => {
+      combinedScores[el] = (elScoreA[el] || 0) + (elScoreB[el] || 0);
+      combinedTotal += combinedScores[el];
+    });
+    const combinedPercentages = {};
+    elementsList.forEach(el => {
+      combinedPercentages[el] = combinedTotal > 0 ? Math.round((combinedScores[el] / combinedTotal) * 100) : 20;
+    });
+
+    let minElA = '木', minValA = 999;
+    let maxElA = '木', maxValA = -1;
+    elementsList.forEach(el => {
+      const p = (chartA.elements && chartA.elements.percentages && chartA.elements.percentages[el]) || 0;
+      if (p < minValA) { minValA = p; minElA = el; }
+      if (p > maxValA) { maxValA = p; maxElA = el; }
+    });
+
+    const elNamesZh = { '木': '木', '火': '火', '土': '土', '金': '金', '水': '水' };
+    const elNamesEn = { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' };
+
+    // 9. Non-Oppressive Complementarity Exegesis (防压迫制衡心法)
+    const mediatingElementMap = {
+      '木': { mediatorZh: '火', mediatorEn: 'Fire', descZh: '木生火、火生土（贪生忘克），阳刚木气化为温暖慷慨之火，滋养温厚之土', descEn: 'Wood generates Fire, Fire nourishes Earth; strong assertiveness transforms into generous creative warmth' },
+      '火': { mediatorZh: '土', mediatorEn: 'Earth', descZh: '火生土、土生金（贪生忘克），烈火化为包容敦厚之土，徐徐孕育纯粹坚毅之金', descEn: 'Fire generates Earth, Earth nurtures Metal; intense passion transforms into grounded protective stability' },
+      '土': { mediatorZh: '金', mediatorEn: 'Metal', descZh: '土生金、金生水（贪生忘克），厚重土性化为清晰规范之金，清冽化生智慧灵动之水', descEn: 'Earth generates Metal, Metal nourishes Water; heavy steadiness transforms into clear rational guidance' },
+      '金': { mediatorZh: '水', mediatorEn: 'Water', descZh: '金生水、水生木（贪生忘克），肃杀金气化为柔润智慧之水，长青灌溉生机勃发之木', descEn: 'Metal generates Water, Water nourishes Wood; sharp decisive executive force transforms into empathetic wisdom' },
+      '水': { mediatorZh: '木', mediatorEn: 'Wood', descZh: '水生木、木生火（贪生忘克），澎湃水势化为欣欣向荣之木，点亮照亮人心的温存之火', descEn: 'Water generates Wood, Wood sparks Fire; expansive depth transforms into thriving growth and warm illumination' }
+    };
+    const medInfo = mediatingElementMap[dmElA] || mediatingElementMap['火'];
+
+    const rootInfoMap = {
+      '己': { rootZh: '丑/未土库与巳中禄旺', rootEn: 'Chou/Wei Earth repositories and Si strong support', descZh: '外表温润谦和，内心厚重有恒，底线坚固，绝不妥协原则', descEn: 'Gentle exterior with unshakeable inner boundaries and principled endurance' },
+      '辛': { rootZh: '酉之专禄与申丑印根', rootEn: 'You Lu star and Shen/Chou resource roots', descZh: '外显优雅纤细，内具金石骨力与高维审美，拥有强大的主权尊严', descEn: 'Graceful aesthetic exterior with firm internal sovereignty and moral backbone' },
+      '乙': { rootZh: '卯辰通根与亥水长生', rootEn: 'Mao/Chen roots and Hai water generative support', descZh: '如修竹摇风，柔韧敏捷，看似随和实则主见极强，遇事极有韧性', descEn: 'Resilient and agile like bamboo; highly adaptable yet deeply sovereign' },
+      '丁': { rootZh: '午巳真火与寅木印绶', rootEn: 'Wu/Si true fire and Yin wood resource support', descZh: '如幽微明烛，照亮心灵，拥有细腻的洞察力和坚韧的精神世界', descEn: 'Insightful emotional illumination with resilient spirit and clear boundaries' },
+      '癸': { rootZh: '子辰水库与申金长生', rootEn: 'Zi/Chen water repositories and Shen metal generative support', descZh: '如山间清泉，润物无声，极具灵性与情商，在亲密关系中掌握润滑主动权', descEn: 'Fluid emotional intelligence with clear psychic boundaries and sovereign dignity' },
+      '甲': { rootZh: '寅卯禄旺与亥水生扶', rootEn: 'Yin/Mao vigorous roots and Hai generative flow', descZh: '立身正直，宽仁大度，兼具担当与自律，恪守君子之道', descEn: 'Upright leadership with noble integrity, generous protection, and deep self-discipline' },
+      '庚': { rootZh: '申酉顽金与辰戌土厚', rootEn: 'Shen/You sturdy metal and Chen/Xu solid earth', descZh: '决断果敢，信义深重，行事磊落，在关系中极重契约与互敬', descEn: 'Decisive executive clarity, unwavering loyalty, and deep respect for mutual autonomy' },
+      '丙': { rootZh: '巳午帝旺与寅中真火', rootEn: 'Si/Wu peak vigor and Yin true solar fire', descZh: '光明磊落，热情慷慨，具有极强的包容力与主动保护欲', descEn: 'Radiant generosity, noble magnanimity, and active protective instincts' },
+      '壬': { rootZh: '亥子汪洋与申金发源', rootEn: 'Hai/Zi deep waters and Shen origin stream', descZh: '格局宏大，机敏通达，胸怀宽广，善于为伴侣提供坚实靠山', descEn: 'Expansive vision, profound adaptability, and protective emotional breadth' },
+      '戊': { rootZh: '辰戌坚土与巳午之生', rootEn: 'Chen/Xu firm earth and Si/Wu generative warmth', descZh: '如泰山磐石，沉稳可靠，遇风浪不惊，是家庭与事业最坚固的基石', descEn: 'Steadfast rock-solid reliability, calm through volatility, providing unwavering safety' }
+    };
+    const rootPartner = rootInfoMap[targetDayStem] || rootInfoMap['辛'];
+
+    const personas = {
+      'double_harmony': {
+        temperamentZh: '温婉优雅，清雅知性，善于倾听解惑；外圆内方，看似随和谦逊，实则原则分明，底气深沉。',
+        temperamentEn: 'Gentle, intellectually perceptive, and an active listener; soft on the exterior yet possessing crystal-clear personal principles.',
+        cadenceZh: '刚柔相济，有商有量；遇大事共同拍板，遇小事互相体谅。刚烈者自发产生怜惜欲，柔美者安心释放才华。',
+        cadenceEn: 'Natural complementarity and mutual respect; major life decisions are co-created with deep appreciation for mutual boundaries.',
+        encounterScenariosZh: '文化艺术展、高品质行业沙龙、安静典雅的书店咖啡馆、高校校友会或优质师友引荐。',
+        encounterScenariosEn: 'Cultural art exhibitions, specialized intellectual forums, quiet boutique libraries, or high-caliber alumni networks.'
+      },
+      'favorable_mediating': {
+        temperamentZh: '敏锐干练，极具商业与生活智慧，善于规划整合；既有浪漫情怀，更有务实落地的执行魄力。',
+        temperamentEn: 'Sharp, strategically minded, and deeply grounded; balancing emotional warmth with practical executive competence.',
+        cadenceZh: '智勇并肩，并驾齐驱；在事业上彼此赋能，在财富上相互借力，既是灵魂伴侣，亦是人生最高合伙人。',
+        cadenceEn: 'Dynamic equal partnership; co-empowering each other in career ambitions and asset growth as true life co-founders.',
+        encounterScenariosZh: '高端商业论坛、创新项目路演、跨界交流峰会、深度专业培训或志同道合的创业社群。',
+        encounterScenariosEn: 'Strategic industry summits, innovation workshops, executive seminars, or visionary venture communities.'
+      },
+      'mutual_nobleman': {
+        temperamentZh: '神清气爽，涵养深厚，自带松弛感与治愈力；不争不抢却极受周围人敬重，拥有极高情商与精神境界。',
+        temperamentEn: 'Tranquil, deeply cultured, and naturally comforting; commanding organic respect through gracious emotional intelligence.',
+        cadenceZh: '相敬如宾，润物无声；无需多言即可心领神会，给予彼此最安全的情绪港湾与纯粹的精神滋养。',
+        cadenceEn: 'Unspoken intuitive rapport and psychological sanctuary; providing an unshakeable haven of warmth and emotional safety.',
+        encounterScenariosZh: '自然采风静修地、古典音乐会、静谧茶道空间、心理学或哲思交流沙龙、公益慈善活动。',
+        encounterScenariosEn: 'Nature retreats, classical symphony concerts, mindful tea sanctuaries, or philosophical study circles.'
+      }
+    };
+    const currentPersona = personas[archetypeKey] || personas['double_harmony'];
+
+    const partnerDayBranchActual = chartB ? chartB.pillars.day.branch : targetDayBranch;
+    const partnerDayStemActual = chartB ? chartB.pillars.day.stem : targetDayStem;
+
+    return {
+      isEligible: true,
+      variant,
+      variantTotal: 3,
+      archetypeKey,
+      titleZh: archetypeTitleZh,
+      titleEn: archetypeTitleEn,
+      taglineZh: archetypeTaglineZh,
+      taglineEn: archetypeTaglineEn,
+
+      userBirthYear: userYear,
+      candidateYearRange: [minCandidateYear, maxCandidateYear],
+      partnerBirthYear: selectedYear,
+      partnerAge: currentYear - selectedYear,
+      partnerGender: genderB,
+      partnerBirthDateStr: `${realDate.year}-${String(realDate.month).padStart(2, '0')}-${String(realDate.day).padStart(2, '0')}`,
+      partnerBirthTimeStr: `${String(chosenHour).padStart(2, '0')}:00`,
+
+      chartA,
+      chartB,
+
+      sixteenCharacters: {
+        chartA: [
+          { pillar: 'year', stem: chartA.pillars.year.stem, branch: chartA.pillars.year.branch, element: chartA.pillars.year.stemElement },
+          { pillar: 'month', stem: chartA.pillars.month.stem, branch: chartA.pillars.month.branch, element: chartA.pillars.month.stemElement },
+          { pillar: 'day', stem: chartA.pillars.day.stem, branch: chartA.pillars.day.branch, element: chartA.pillars.day.stemElement },
+          { pillar: 'hour', stem: chartA.pillars.hour.stem, branch: chartA.pillars.hour.branch, element: chartA.pillars.hour.stemElement }
+        ],
+        chartB: chartB ? [
+          { pillar: 'year', stem: chartB.pillars.year.stem, branch: chartB.pillars.year.branch, element: chartB.pillars.year.stemElement },
+          { pillar: 'month', stem: chartB.pillars.month.stem, branch: chartB.pillars.month.branch, element: chartB.pillars.month.stemElement },
+          { pillar: 'day', stem: chartB.pillars.day.stem, branch: chartB.pillars.day.branch, element: chartB.pillars.day.stemElement },
+          { pillar: 'hour', stem: chartB.pillars.hour.stem, branch: chartB.pillars.hour.branch, element: chartB.pillars.hour.stemElement }
+        ] : [],
+        totalStems: 8,
+        totalBranches: 8,
+        totalCharacters: 16
+      },
+
+      elementalBalance: {
+        chartA: (chartA.elements && chartA.elements.percentages) || {},
+        chartB: (chartB && chartB.elements && chartB.elements.percentages) || {},
+        combined16: combinedPercentages,
+        deficitHealedZh: `甲造原局${elNamesZh[minElA]}气较弱（约${minValA}%），合入乙造${chartB ? chartB.pillars.day.stemElement : '补益'}后，16字共振场域将${elNamesZh[minElA]}气温润补齐至${combinedPercentages[minElA]}%，填补命宫短板。`,
+        deficitHealedEn: `Chart A deficit in ${elNamesEn[minElA]} (${minValA}%) is replenished in the 16-character resonance to ${combinedPercentages[minElA]}%, establishing holistic energetic equilibrium.`,
+        excessSoftenedZh: `甲造原局${elNamesZh[maxElA]}气过旺（约${maxValA}%），经乙造通关化泄，16字联合能量中${elNamesZh[maxElA]}气平缓降至${combinedPercentages[maxElA]}%，化刚烈激荡为恒久深情。`,
+        excessSoftenedEn: `Chart A excess in ${elNamesEn[maxElA]} (${maxValA}%) is channeled and buffered in the 16-character matrix to ${combinedPercentages[maxElA]}%, transforming volatile intensity into lasting devotion.`
+      },
+
+      nonOppressionSafeguard: {
+        corePrincipleZh: '刚柔相济 · 防压迫制衡总纲',
+        corePrincipleEn: 'Non-Oppressive Polarity & Psychological Dignity Safeguard',
+        tongGuanMechanismZh: `【五行通关与贪生忘克】：${medInfo.descZh}。即便命主原局阳刚强盛，在此格局下亦转化为深情托举与守护，绝无居高临下之克伐。`,
+        tongGuanMechanismEn: `Elemental Mediating & Channeling: ${medInfo.descEn}. Even if one chart possesses intense masculine vigor, intermediate elements channel it into nurturing care rather than domination.`,
+        rootedSovereigntyZh: `【柔而有根与主权界限】：乙造配偶日主虽取温润柔和之态，然地支暗藏【${rootPartner.rootZh}】；${rootPartner.descZh}。拥有平等的决策权与心理边界，绝非被动顺从。`,
+        rootedSovereigntyEn: `Rooted Autonomy & Sovereign Boundaries: Partner B embraces gentle grace while remaining fortified by [${rootPartner.rootEn}]; ${rootPartner.descEn}. Mutual equality and personal sovereignty are fully preserved.`,
+        spousePalaceResonanceZh: `【夫妻宫双合与怜惜共鸣】：日柱干支形成【${chartA.pillars.day.stem + partnerDayStemActual}合、${chartA.pillars.day.branch + partnerDayBranchActual}合】天地相顾；心意互通，彼此自然产生倾听欲与珍惜感，令阳刚者主动收敛锋芒，令温婉者安心绽放。`,
+        spousePalaceResonanceEn: 'Spouse Palace Double Harmony: Day pillars form celestial stem and earthly branch combinations; intuitive empathy inspires natural tenderness and attentive listening without power friction.'
+      },
+
+      partnerProfile: currentPersona
+    };
+  }
+
   return {
     analyze,
+    predictIdealPartner,
     evaluateZodiacMatch,
     evaluatePatternComparison,
     evaluateTrajectoryOverlap,

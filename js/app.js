@@ -204,6 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let synastryParamsA = { a: 1.2, b: 0.8, c: 0.0, gamma: 0.38 };
   let synastryParamsB = { a: 1.2, b: 0.8, c: 0.0, gamma: 0.38 };
   let synastryPhaseHoverPos = null;
+  let lastPartnerPredictResult = null;
+  let currentPredictVariantIndex = 0;
   let deferredPwaPrompt = null;
   let fourPillarsActiveAge = 35;
   let activeIChingCycleTab = 'timeline'; // 'timeline' | 'yaoStages' | 'cosmic'
@@ -14811,6 +14813,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const btnPredict = document.getElementById('btnSynastryPredictPartner');
+    if (btnPredict) {
+      btnPredict.addEventListener('click', () => {
+        runPartnerPredictSimulation(currentPredictVariantIndex);
+      });
+    }
+
     if (btnCalc) {
       btnCalc.addEventListener('click', () => {
         showDynamicCalculationProgress('synastry', () => {
@@ -14870,6 +14879,331 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function runPartnerPredictSimulation(variantIdx = 0) {
+    if (typeof SynastryEngine === 'undefined' || typeof BaZiEngine === 'undefined') return;
+    const dateA = document.getElementById('synastryDateA')?.value;
+    const timeA = document.getElementById('synastryTimeA')?.value;
+    const genderA = document.getElementById('synastryGenderA')?.value || '乾造';
+    if (!dateA || !timeA) return;
+
+    const [yA, mA, dA] = dateA.split('-').map(Number);
+    const [hA, minA] = timeA.split(':').map(Number);
+    const chartA = BaZiEngine.calculate({
+      year: yA, month: mA, day: dA, hour: hA, minute: minA,
+      gender: genderA, useTrueSolarTime: false, isLateRatNextDay: false,
+      longitude: 116.4, timezone: 8.0
+    });
+
+    const isEn = (currentLang === 'en');
+    currentPredictVariantIndex = (variantIdx % 3 + 3) % 3;
+    const result = SynastryEngine.predictIdealPartner(chartA, {
+      variant: currentPredictVariantIndex,
+      lang: currentLang
+    });
+    lastPartnerPredictResult = result;
+    renderPartnerPredictOutput(result, isEn);
+  }
+
+  function renderPartnerPredictOutput(data, isEn) {
+    const container = document.getElementById('synastryPredictOutputContainer');
+    if (!container || !data) return;
+    container.classList.remove('hidden');
+
+    if (!data.isEligible) {
+      container.innerHTML = `
+        <div class="p-4 rounded-xl border border-red-500/40 bg-red-950/20 text-red-200 text-xs space-y-2">
+          <div class="flex items-center gap-2 font-bold text-red-300 text-sm">
+            <span>🔞</span>
+            <span>${isEn ? data.errorEn : data.errorZh}</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed">
+            ${isEn
+              ? `Current subject birth year: ${data.userYear} (Age: ${data.currentYear - data.userYear}). Prediction strictly requires legal adult status (age >= 18).`
+              : `当前主盘出生年份为 ${data.userYear} 年（时年 ${data.currentYear - data.userYear} 岁），依据伦理准则，命理合婚推演功能仅对已满 18 周岁的成年人开放。`}
+          </p>
+        </div>
+      `;
+      return;
+    }
+
+    const title = isEn ? data.titleEn : data.titleZh;
+    const tagline = isEn ? data.taglineEn : data.taglineZh;
+    const cA = data.chartA.pillars;
+    const cB = data.chartB ? data.chartB.pillars : null;
+
+    const elColor = {
+      '木': 'text-emerald-400 bg-emerald-950/50 border-emerald-500/30',
+      '火': 'text-rose-400 bg-rose-950/50 border-rose-500/30',
+      '土': 'text-amber-300 bg-amber-950/50 border-amber-500/30',
+      '金': 'text-zinc-200 bg-zinc-900 border-zinc-500/30',
+      '水': 'text-sky-400 bg-sky-950/50 border-sky-500/30'
+    };
+
+    const elBadge = (stem, branch, stemEl) => {
+      const cls = elColor[stemEl] || 'text-gray-300 bg-gray-900 border-gray-700';
+      return `<div class="flex flex-col items-center justify-center p-2 rounded-lg border ${cls} min-w-[54px] shadow-sm">
+        <span class="text-base font-bold font-serif-sc">${stem}${branch}</span>
+        <span class="text-[10px] opacity-80">${stemEl}</span>
+      </div>`;
+    };
+
+    const elementsList = ['木', '火', '土', '金', '水'];
+    const elNames = isEn
+      ? { '木': 'Wood', '火': 'Fire', '土': 'Earth', '金': 'Metal', '水': 'Water' }
+      : { '木': '木', '火': '火', '土': '土', '金': '金', '水': '水' };
+
+    let balanceBarsHtml = '';
+    elementsList.forEach(el => {
+      const pctA = (data.elementalBalance.chartA && data.elementalBalance.chartA[el]) || 0;
+      const pct16 = (data.elementalBalance.combined16 && data.elementalBalance.combined16[el]) || 0;
+      const colorBar = el === '木' ? 'bg-emerald-500' : (el === '火' ? 'bg-rose-500' : (el === '土' ? 'bg-amber-500' : (el === '金' ? 'bg-zinc-400' : 'bg-sky-500')));
+      balanceBarsHtml += `
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="font-medium text-gray-300">${elNames[el]}</span>
+            <span class="text-gray-400">${isEn ? 'Chart A' : '甲造'}: <strong class="text-gray-200">${pctA}%</strong> → ${isEn ? '16-Char Sim' : '16字联合'}: <strong class="text-rose-300">${pct16}%</strong></span>
+          </div>
+          <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden flex">
+            <div class="${colorBar} h-full rounded-full transition-all duration-500" style="width: ${Math.min(pct16, 100)}%"></div>
+          </div>
+        </div>
+      `;
+    });
+
+    const dayStemA = cA.day.stem;
+    const dayStemB = cB ? cB.day.stem : '';
+    const dayBranchA = cA.day.branch;
+    const dayBranchB = cB ? cB.day.branch : '';
+
+    container.innerHTML = `
+      <div class="p-5 rounded-2xl border border-rose-500/40 bg-black/60 shadow-2xl space-y-5 animate-fade-in">
+        <!-- Header Banner -->
+        <div class="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-gray-800">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-lg">💖</span>
+              <h3 class="text-base font-bold font-serif-sc text-rose-300">${title}</h3>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono font-bold">
+                🔞 ${isEn ? 'Adults 18+ Only' : '仅限成年人测算'}
+              </span>
+            </div>
+            <p class="text-xs text-gray-400 mt-1 italic">${tagline}</p>
+            <div class="flex flex-wrap items-center gap-2 mt-2 text-[11px] text-gray-300">
+              <span class="px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
+                📅 ${isEn ? `Born ${data.partnerBirthYear} (Age ${data.partnerAge})` : `${data.partnerBirthYear}年出生 (时年${data.partnerAge}岁)`}
+              </span>
+              <span class="px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
+                ⏳ ${isEn ? `Window: ${data.candidateYearRange[0]}–${data.candidateYearRange[1]}` : `严格限定区间: ${data.candidateYearRange[0]}～${data.candidateYearRange[1]}年 (±10岁)`}
+              </span>
+              <span class="px-2 py-0.5 rounded bg-gray-800 border border-gray-700">
+                🧬 ${data.partnerGender}
+              </span>
+              <span class="px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-500/30">
+                ✨ ${isEn ? `Archetype ${data.variant + 1} of ${data.variantTotal}` : `正缘格局 ${data.variant + 1} / ${data.variantTotal}`}
+              </span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="btnCycleNextPredictVariant" class="px-3 py-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 text-xs font-bold transition active:scale-95 flex items-center gap-1 cursor-pointer">
+              <span>🔄</span>
+              <span>${isEn ? `Next Archetype (${(data.variant + 1) % 3 + 1}/3)` : `切换下一组推演 (${(data.variant + 1) % 3 + 1}/3)`}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 16-Character Joint Resonance Matrix (8+8=16字联合矩阵) -->
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider font-serif-sc flex items-center gap-1.5">
+              <span>🧬</span>
+              <span>${isEn ? '8+8=16 Character Dual-Matrix Resonance Field' : '8+8=16 字双盘联合共振矩阵'}</span>
+            </h4>
+            <span class="text-[11px] text-gray-400">${isEn ? 'Heavenly Stems 5-Combinations & Earthly Branches Harmonies' : '干支化合 · 互通关窍'}</span>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 overflow-x-auto">
+            <div class="grid grid-cols-5 gap-2 text-center min-w-[420px]">
+              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Subject' : '合盘对象'}</div>
+              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Year' : '年柱 (祖业根基)'}</div>
+              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Month' : '月柱 (事业格局)'}</div>
+              <div class="text-[11px] text-gray-400 font-bold self-center text-rose-300">${isEn ? 'Day (Spouse)' : '日柱 (夫妻宫)'}</div>
+              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Hour' : '时柱 (归宿默契)'}</div>
+
+              <!-- Row Chart A -->
+              <div class="text-xs font-bold text-amber-300 self-center">${isEn ? 'Person A (Self)' : '甲造命主'}</div>
+              <div>${elBadge(cA.year.stem, cA.year.branch, cA.year.stemElement)}</div>
+              <div>${elBadge(cA.month.stem, cA.month.branch, cA.month.stemElement)}</div>
+              <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${elBadge(cA.day.stem, cA.day.branch, cA.day.stemElement)}</div>
+              <div>${elBadge(cA.hour.stem, cA.hour.branch, cA.hour.stemElement)}</div>
+
+              <!-- Row Chart B -->
+              <div class="text-xs font-bold text-rose-300 self-center">${isEn ? 'Person B (Match)' : '乙造正缘'}</div>
+              <div>${cB ? elBadge(cB.year.stem, cB.year.branch, cB.year.stemElement) : '-'}</div>
+              <div>${cB ? elBadge(cB.month.stem, cB.month.branch, cB.month.stemElement) : '-'}</div>
+              <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${cB ? elBadge(cB.day.stem, cB.day.branch, cB.day.stemElement) : '-'}</div>
+              <div>${cB ? elBadge(cB.hour.stem, cB.hour.branch, cB.hour.stemElement) : '-'}</div>
+            </div>
+
+            <div class="mt-3 pt-2.5 border-t border-gray-800 flex flex-wrap items-center justify-around gap-2 text-[11px]">
+              <span class="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-300 border border-rose-500/20">
+                🔗 ${isEn ? `Day Stems Combination: ${dayStemA} + ${dayStemB}` : `日干合化: 【${dayStemA + dayStemB}】天干相合`}
+              </span>
+              <span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">
+                🤝 ${isEn ? `Spouse Palace Harmony: ${dayBranchA} + ${dayBranchB}` : `夫妻宫和合: 【${dayBranchA + dayBranchB}】地支六合/相生`}
+              </span>
+              <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                🌿 ${isEn ? 'Mediating Bridge Active' : '五行生生不息 · 贪生忘克'}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Five Elements Synthesis & Deficit Fulfillment -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 space-y-3">
+            <h4 class="text-xs font-bold text-gray-200 flex items-center gap-1.5 font-serif-sc">
+              <span>⚖️</span>
+              <span>${isEn ? 'Five Elements Energy Harmonization (16-Char)' : '五行能量场调和与缺陷补全对比'}</span>
+            </h4>
+            <div class="space-y-2">
+              ${balanceBarsHtml}
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 flex flex-col justify-between space-y-3">
+            <div class="space-y-2.5">
+              <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200">
+                <span class="font-bold block mb-1">✅ ${isEn ? 'Deficit Replenished' : '命宫短板补齐'}</span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">
+                  ${isEn ? data.elementalBalance.deficitHealedEn : data.elementalBalance.deficitHealedZh}
+                </p>
+              </div>
+              <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+                <span class="font-bold block mb-1">🛡️ ${isEn ? 'Excess Channeled & Softened' : '刚烈化泄与深情守护'}</span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">
+                  ${isEn ? data.elementalBalance.excessSoftenedEn : data.elementalBalance.excessSoftenedZh}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Non-Oppressive Complementarity & Sovereignty Safeguard (防压迫制衡心法) -->
+        <div class="p-4 rounded-xl bg-gradient-to-r from-rose-950/30 via-black to-purple-950/30 border border-rose-500/30 space-y-3">
+          <div class="flex items-center justify-between border-b border-rose-900/30 pb-2">
+            <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider font-serif-sc flex items-center gap-1.5">
+              <span>🛡️</span>
+              <span>${isEn ? data.nonOppressionSafeguard.corePrincipleEn : data.nonOppressionSafeguard.corePrincipleZh}</span>
+            </h4>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Equal Sovereignty & Protection' : '主权独立 · 拒绝压迫'}</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+              <span class="font-bold text-amber-300 flex items-center gap-1">
+                <span>🕊️</span>
+                <span>${isEn ? 'Channeling Mechanism' : '通关化泄机制'}</span>
+              </span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">
+                ${isEn ? data.nonOppressionSafeguard.tongGuanMechanismEn : data.nonOppressionSafeguard.tongGuanMechanismZh}
+              </p>
+            </div>
+            <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+              <span class="font-bold text-rose-300 flex items-center gap-1">
+                <span>🛡️</span>
+                <span>${isEn ? 'Rooted Sovereignty' : '柔而有根与主权界限'}</span>
+              </span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">
+                ${isEn ? data.nonOppressionSafeguard.rootedSovereigntyEn : data.nonOppressionSafeguard.rootedSovereigntyZh}
+              </p>
+            </div>
+            <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+              <span class="font-bold text-sky-300 flex items-center gap-1">
+                <span>💍</span>
+                <span>${isEn ? 'Spouse Palace Synergy' : '夫妻宫双合与怜惜共鸣'}</span>
+              </span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">
+                ${isEn ? data.nonOppressionSafeguard.spousePalaceResonanceEn : data.nonOppressionSafeguard.spousePalaceResonanceZh}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-World Archetype & Encounters (正缘现实画像) -->
+        <div class="p-4 rounded-xl bg-gray-900/70 border border-gray-800 space-y-3">
+          <h4 class="text-xs font-bold text-gray-200 flex items-center gap-1.5 font-serif-sc">
+            <span>🎭</span>
+            <span>${isEn ? 'Real-World Partner Profile & Resonance Environments' : '正缘现实画像与相知结缘场域'}</span>
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="p-2.5 rounded-lg bg-black/30 border border-gray-800/80">
+              <span class="text-gray-400 block mb-1 font-bold">✨ ${isEn ? 'Temperament' : '性格气质特征'}</span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.temperamentEn : data.partnerProfile.temperamentZh}</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-black/30 border border-gray-800/80">
+              <span class="text-gray-400 block mb-1 font-bold">⏱️ ${isEn ? 'Interaction Cadence' : '相处节奏与默契机制'}</span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.cadenceEn : data.partnerProfile.cadenceZh}</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-black/30 border border-gray-800/80">
+              <span class="text-gray-400 block mb-1 font-bold">📍 ${isEn ? 'Where to Meet' : '推荐相遇与社交场域'}</span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.encounterScenariosEn : data.partnerProfile.encounterScenariosZh}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+          <span class="text-[11px] text-gray-400">
+            ${isEn ? 'Generated authentic astronomical birth chart ready for synastry cross-analysis.' : '已生成天文历法真实对位出生盘，可一键导入并启动全息合盘推演。'}
+          </span>
+          <button id="btnLoadPredictedPartnerIntoChartB" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-purple-600 to-rose-700 hover:from-rose-500 hover:to-purple-500 text-white font-bold text-xs shadow-xl transition active:scale-95 flex items-center gap-2 border border-rose-400/40 cursor-pointer">
+            <span>📥</span>
+            <span>${isEn ? 'Load Subject B & Generate Synastry Dossier' : '一键载入乙造并生成全盘合婚战报'}</span>
+          </button>
+        </div>
+      </div>
+    `;
+
+    const btnLoad = document.getElementById('btnLoadPredictedPartnerIntoChartB') || (container.querySelector ? container.querySelector('#btnLoadPredictedPartnerIntoChartB') : null);
+    if (btnLoad) {
+      btnLoad.addEventListener('click', () => {
+        const inputDateB = document.getElementById('synastryDateB');
+        const inputTimeB = document.getElementById('synastryTimeB');
+        const selectGenderB = document.getElementById('synastryGenderB');
+        const inputLabelB = document.getElementById('synastryLabelB');
+
+        if (inputDateB) inputDateB.value = data.partnerBirthDateStr;
+        if (inputTimeB) inputTimeB.value = data.partnerBirthTimeStr;
+        if (selectGenderB) selectGenderB.value = data.partnerGender;
+        if (inputLabelB) inputLabelB.value = isEn ? 'Predicted Partner' : '推演正缘 (乙造)';
+
+        [inputDateB, inputTimeB, selectGenderB, inputLabelB].forEach(el => {
+          if (el) {
+            el.classList.add('ring-2', 'ring-rose-500');
+            setTimeout(() => el.classList.remove('ring-2', 'ring-rose-500'), 1500);
+          }
+        });
+
+        triggerCalculateSynastry();
+
+        const resEl = document.getElementById('synastryResultContainer');
+        if (resEl) {
+          resEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    const btnCycle = document.getElementById('btnCycleNextPredictVariant') || (container.querySelector ? container.querySelector('#btnCycleNextPredictVariant') : null);
+    if (btnCycle) {
+      btnCycle.addEventListener('click', () => {
+        runPartnerPredictSimulation(data.variant + 1);
+      });
+    }
+  }
+
+  window.runPartnerPredictSimulation = runPartnerPredictSimulation;
+  window.renderPartnerPredictOutput = renderPartnerPredictOutput;
+
   function triggerCalculateSynastry() {
     if (typeof SynastryEngine === 'undefined' || typeof BaZiEngine === 'undefined') return;
     const dateA = document.getElementById('synastryDateA')?.value;
@@ -14908,6 +15242,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const isEn = (currentLang === 'en');
       currentSynastryResult = SynastryEngine.analyze(cachedChartA, cachedChartB, currentSynastryMode, currentLang);
       renderSynastryResult(currentSynastryResult, cachedChartA, cachedChartB, isEn);
+    }
+    if (lastPartnerPredictResult) {
+      const isEn = (currentLang === 'en');
+      renderPartnerPredictOutput(lastPartnerPredictResult, isEn);
     }
   }
 

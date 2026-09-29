@@ -470,6 +470,73 @@ if (!syn.eightCanonsSynthesis || !syn.eightCanonsSynthesis.canons || syn.eightCa
   throw new Error("SynastryEngine missing 8 Western Canons matrix");
 }
 
+// 4.6.1 Ideal Partner Natal Prediction & 16-Character Joint Resonance Simulator
+if (typeof SynastryEngine.predictIdealPartner !== 'function') {
+  throw new Error("SynastryEngine.predictIdealPartner function missing");
+}
+
+// Underage check (User born in 2012 -> Age 14 in 2026)
+var underageChart = BaZiEngine.calculate({ year: 2012, month: 5, day: 1, hour: 12, minute: 0, gender: '乾造' });
+var underagePred = SynastryEngine.predictIdealPartner(underageChart, { lang: 'zh' });
+if (underagePred.isEligible !== false || underagePred.reason !== 'underage_user') {
+  throw new Error("predictIdealPartner failed to enforce underage adult protection");
+}
+
+// Adult user (1990) -> Year range strictly +/- 10 years [1980, 2000]
+var user1990Chart = BaZiEngine.calculate({ year: 1990, month: 6, day: 20, hour: 14, minute: 30, gender: '乾造' });
+var pred1990 = SynastryEngine.predictIdealPartner(user1990Chart, { variant: 0, lang: 'zh' });
+if (!pred1990 || !pred1990.isEligible) throw new Error("predictIdealPartner failed for valid adult user");
+if (pred1990.candidateYearRange[0] !== 1980 || pred1990.candidateYearRange[1] !== 2000) {
+  throw new Error("predictIdealPartner year window mismatch: " + JSON.stringify(pred1990.candidateYearRange));
+}
+if (pred1990.partnerBirthYear < 1980 || pred1990.partnerBirthYear > 2000) {
+  throw new Error("predictIdealPartner chosen year outside +/- 10 year range: " + pred1990.partnerBirthYear);
+}
+if (pred1990.partnerAge < 18) throw new Error("predictIdealPartner generated underage partner");
+
+// User born in 2005 (Age 21 in 2026) -> Candidate range [1995, 2008] (capped at 2008 for adult >= 18)
+var user2005Chart = BaZiEngine.calculate({ year: 2005, month: 3, day: 15, hour: 8, minute: 0, gender: '坤造' });
+var pred2005 = SynastryEngine.predictIdealPartner(user2005Chart, { variant: 0, lang: 'zh' });
+if (pred2005.candidateYearRange[1] > 2008) {
+  throw new Error("predictIdealPartner exceeded maxLegalAdultYear for 2005 user: " + pred2005.candidateYearRange[1]);
+}
+
+// 16-Character Joint Resonance & Non-Oppression Safeguard
+if (!pred1990.sixteenCharacters || pred1990.sixteenCharacters.totalCharacters !== 16) {
+  throw new Error("predictIdealPartner sixteenCharacters missing or not 16 characters");
+}
+if (!pred1990.elementalBalance || !pred1990.elementalBalance.deficitHealedZh || !pred1990.elementalBalance.excessSoftenedZh) {
+  throw new Error("predictIdealPartner elementalBalance missing deficit/excess diagnostics");
+}
+if (!pred1990.nonOppressionSafeguard || !pred1990.nonOppressionSafeguard.tongGuanMechanismZh || !pred1990.nonOppressionSafeguard.rootedSovereigntyZh) {
+  throw new Error("predictIdealPartner nonOppressionSafeguard missing required exegesis");
+}
+
+// English Mode Zero CJK Check in predictIdealPartner output
+var predEn = SynastryEngine.predictIdealPartner(user1990Chart, { variant: 0, lang: 'en' });
+var enFields = [
+  predEn.titleEn, predEn.taglineEn,
+  predEn.nonOppressionSafeguard.corePrincipleEn,
+  predEn.nonOppressionSafeguard.tongGuanMechanismEn,
+  predEn.nonOppressionSafeguard.rootedSovereigntyEn,
+  predEn.nonOppressionSafeguard.spousePalaceResonanceEn,
+  predEn.partnerProfile.temperamentEn,
+  predEn.partnerProfile.cadenceEn,
+  predEn.partnerProfile.encounterScenariosEn
+];
+for (var fi = 0; fi < enFields.length; fi++) {
+  if (/[\\u4e00-\\u9fa5]/.test(enFields[fi])) {
+    throw new Error("CJK leak in predictIdealPartner English field: " + enFields[fi]);
+  }
+}
+
+// Cycling Variants (0, 1, 2)
+var predVar1 = SynastryEngine.predictIdealPartner(user1990Chart, { variant: 1, lang: 'zh' });
+var predVar2 = SynastryEngine.predictIdealPartner(user1990Chart, { variant: 2, lang: 'zh' });
+if (pred1990.archetypeKey === predVar1.archetypeKey || predVar1.archetypeKey === predVar2.archetypeKey) {
+  throw new Error("predictIdealPartner variants are not distinct");
+}
+
 // 4.7 Closed-Loop Action Ledger System
 if (typeof ActionLedger === 'undefined') throw new Error("ActionLedger missing");
 ActionLedger.clear();
@@ -635,6 +702,7 @@ check_pass("NOAA Geomagnetic Declination & 24 Mountains Calibration", "WMM Bilin
 check_pass("Dynamic Tianji Battle Rhythm Calendar Feed Engine", "18-24 Turning Points & RFC 5545 VEVENT/VALARM iCalendar Standard")
 check_pass("Dual-Track Decision Simulator & Bayesian Rectification", "What-If Counterfactual Dynamics & MAP Posterior Hour Calibration")
 check_pass("Synastry Dominant Patterns & Western Canons Matrix", "8 Canons Synastry Exegeses (Rudhyar, Lilly, Ebertin, Addey, Hand, Ptolemy)")
+check_pass("Single Seeker Ideal Partner Prediction & 16-Character Joint Resonance Simulator", "Adults 18+ Boundary, +/-10 Yr Window, Non-Oppression Safeguard, Real Calendar Date & 3 Archetypes")
 check_pass("Closed-Loop Action Ledger & Dynamic Impedance Recalibration", "Persistence, 1-Click Feedback (eased/blocked/neutral) & POMDP Adaptation")
 check_pass("Auditable Tool Dispatcher & Anti-Hallucination Disclaimer", "4 Engines Intent Routing (Rectification, WMM, Simulator, Calendar) & Zero Black-Box Card")
 check_pass("Phase 6 Evaluation & Calibration Platform", "Traceable Audit Trails, 3D Decoupled Feedback, Shadow Mode & Brier Score Telemetry")
@@ -801,7 +869,7 @@ var document = {
           }
         },
         querySelectorAll: function() { return []; },
-        querySelector: function() { return null; },
+        querySelector: function(sel) { if (sel && sel.charAt(0) === '#') return document.getElementById(sel.slice(1)); return null; },
         appendChild: function(c) { return c; },
         removeChild: function(c) { return c; },
         scrollIntoView: function() {},
@@ -1250,12 +1318,51 @@ if (typeof window.initDualPhaseManifold === 'function') {
       throw new Error('synastryChronoDirectSection missing merged 10.2, decennial milestones table, or section 11 in English');
     }
   }
+
+  // Test Single Seeker Ideal Partner Prediction & 16-Character Simulator DOM
+  if (typeof window.runPartnerPredictSimulation === 'function') {
+    var dtA = document.getElementById('synastryDateA');
+    var tmA = document.getElementById('synastryTimeA');
+    if (dtA) dtA.value = '1990-06-20';
+    if (tmA) tmA.value = '14:30';
+
+    window.runPartnerPredictSimulation(0);
+
+    var predOut = document.getElementById('synastryPredictOutputContainer');
+    if (!predOut || predOut.classList.contains('hidden')) {
+      throw new Error('synastryPredictOutputContainer failed to show after runPartnerPredictSimulation');
+    }
+    var predHtmlZh = predOut.innerHTML;
+    if (!predHtmlZh.includes('8+8=16') || !predHtmlZh.includes('仅限成年人测算') || !predHtmlZh.includes('防压迫制衡总纲')) {
+      throw new Error('synastryPredictOutputContainer missing 16-char matrix, adult badge, or non-oppression safeguard in Chinese');
+    }
+
+    // Test 1-click loading into Chart B
+    var btnLoadB = predOut.querySelector('#btnLoadPredictedPartnerIntoChartB');
+    if (!btnLoadB) throw new Error('Missing #btnLoadPredictedPartnerIntoChartB in prediction card');
+    if (btnLoadB._h && btnLoadB._h['click']) {
+      btnLoadB._h['click'].forEach(function(fn) { fn(); });
+    } else if (typeof btnLoadB.click === 'function') {
+      btnLoadB.click();
+    }
+
+    var dtB = document.getElementById('synastryDateB') ? document.getElementById('synastryDateB').value : '';
+    if (!dtB || !dtB.startsWith('19')) {
+      throw new Error('1-click load into Chart B failed to populate synastryDateB: ' + dtB);
+    }
+  }
 }
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
 
 # Verify index.html contains direct entry buttons and filter bar
 index_html_src = open("index.html", "r", encoding="utf-8").read()
+if 'id="synastryPartnerPredictSection"' not in index_html_src:
+  raise AssertionError("Missing #synastryPartnerPredictSection in index.html")
+if 'id="btnSynastryPredictPartner"' not in index_html_src:
+  raise AssertionError("Missing #btnSynastryPredictPartner in index.html")
+if 'id="synastryPredictOutputContainer"' not in index_html_src:
+  raise AssertionError("Missing #synastryPredictOutputContainer in index.html")
 if 'id="btnRibbonOpenLedger"' not in index_html_src:
   raise AssertionError("Missing #btnRibbonOpenLedger in index.html")
 if 'id="btnOpenLedgerFloating"' not in index_html_src:
