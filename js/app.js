@@ -20299,10 +20299,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <!-- Visual Bar Comparison for 5 Bins -->
+        <!-- Visual Bar Comparison for Active 60%+ Bins -->
         <div class="space-y-2 pt-1">
-          ${metrics.calibrationCurveDynamic.map((bin, idx) => {
-            const baseBin = metrics.calibrationCurveBaseline[idx];
+          ${metrics.calibrationCurveDynamic
+            .map((bin, idx) => ({ bin, idx, baseBin: metrics.calibrationCurveBaseline[idx] }))
+            .filter(item => item.idx >= 3)
+            .map(({ bin, idx, baseBin }) => {
             const idealPct = (idx * 20 + 10);
             const dynPct = Math.round(bin.observed * 100);
             const basePct = Math.round(baseBin.observed * 100);
