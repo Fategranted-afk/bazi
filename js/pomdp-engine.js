@@ -638,20 +638,20 @@ class PomdpEngine {
       leap: {
         zhTitle: '顺势跃迁 · 金蝉脱壳',
         enTitle: 'Strategic Leap · Career Vector Transition',
-        zhSummary: '原局生态位已达收益天花板或组织存量枯竭，外部换轨窗口已开，宜果断跳出存量内卷。',
-        enSummary: 'Current platform ceiling reached. External trajectory window is open; execute a decisive career track pivot.',
+        zhSummary: '原局生态位已达边际收益天花板或组织存量枯竭，外部换轨窗口处于高动能期，宜果断跳出存量内卷，执行保密换轨跃迁。',
+        enSummary: 'Current organizational platform has hit diminishing marginal returns. The external transition window is optimal; execute a confidential career vector pivot to escape negative-sum friction.',
         stepsZh: [
-          '更新全套专业档案与战果背书，启动猎头接触与目标机构定向触达',
-          '将现有业务平稳收尾或安排交接闭环，确保职业声誉与行业背书完好无损',
-          '在拿到具有实质性确定性的外部Offer或资源对齐后，从容完成轨道切换'
+          '【成果脱敏封存】将过去18个月主导项目提炼为量化ROI白皮书（技术架构/产值贡献），仅使用个人非公司设备与私人网络更新履历，定向触达2~3家头部猎头，严禁求职软件开启公开看机会。',
+          '【盟友背调预埋】私下锁定原单位1~2位非直属的高信誉合作方或已离职领导达成背调默契；在职工作维持80分基准交付，绝不主动承接跨越下半年的长周期烂摊子，平稳收缩存量职责。',
+          '【三证锁死切换】必须以「加盖公章且无保留条件的正式聘用书 + 薪酬期权架构书面确认 + 第三方合规背调圆满通过」三重要件齐全为唯一换轨动能点，坚决不凭口头许诺提前离场。'
         ],
         stepsEn: [
-          'Refresh your portfolio and discreetly activate target industry and search firm networks.',
-          'Bring ongoing commitments to an orderly close to protect your long-term reputation and references.',
-          'Execute the transition only upon securing verified contractual terms and high-certainty alignment.'
+          '[Sanitized Portfolio Packaging] Synthesize the past 18 months of deliverables into an anonymized ROI dossier using private devices and personal networks only; discreetly engage top-tier headhunters while keeping public job profiles strictly private.',
+          '[Pre-emptive Reference Alignment] Quietly align backchannel references with 1-2 reputable former supervisors or cross-functional peers; maintain an 80% baseline delivery on current KPIs while politely declining multi-quarter legacy commitments.',
+          '[Triple-Condition Lockdown] Transition only when all three gates clear: a formally stamped written offer, fully verified compensation/equity schedules, and successfully completed third-party background checks—never act on verbal promises.'
         ],
-        riskZh: '未见确定性落地点前切忌提前暴露跳轨意图，保持原岗体面与日常节奏。',
-        riskEn: 'Never telegraph your exit intentions prematurely; maintain flawless daily composure until formal closing.'
+        riskZh: '【绝密隔离红线】严禁在办公内网、企业通讯工具留存跳槽沟通记录；离职前30天严控敏感文档与批量代码导出，谨防竞业限制借题发挥与恶意扣发离职证明。',
+        riskEn: 'Maintain strict information hygiene: zero job-search footprints on corporate networks or devices. Avoid mass file downloads in the final 30 days to preempt non-compete harassment or bad-faith severance disputes.'
       }
     };
 
