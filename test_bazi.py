@@ -612,6 +612,21 @@ if (rollbackCfg.operatingMode !== 'shadow' || !rollbackCfg.lastRollbackAt) {
   throw new Error("Rollback to baseline failed");
 }
 CalibrationEngine.setOperatingMode('active');
+
+// Verify Anti-Drift Cap (SAMPLE_CAP_PER_DAY = 10)
+var mockDayList = [];
+for (var mi = 0; mi < 15; mi++) {
+  mockDayList.push({
+    timestamp: '2026-09-29T10:00:00.000Z',
+    expectedOutcome: { confidenceScore: 0.8 },
+    baselinePrediction: { confidenceScore: 0.5 },
+    feedback3D: { executionFidelity: 'executed_fully', objectiveGroundTruth: 'resolved' }
+  });
+}
+var cappedRes = CalibrationEngine.computeMetrics(mockDayList);
+if (cappedRes.driftCapExceededCount !== 5 || cappedRes.totalRecommended !== 10) {
+  throw new Error("Anti-drift cap failed: expected 5 exceeded, got " + cappedRes.driftCapExceededCount);
+}
 """
 run_jsc(s4_jsc, "Suite 4 JSC Advanced Dynamics")
 check_pass("Dynamic Phase Space & Double-Well Potential Manifold", "Nonlinear Dissipative Trajectory (x, v), Bifurcations & Streamlines")
