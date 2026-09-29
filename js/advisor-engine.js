@@ -848,128 +848,56 @@ class AdvisorEngine {
     if (lang === 'en') {
       return [
         {
-          id: 'romance_timing',
-          icon: '💍',
-          title: 'Romance Timing & Destiny Spouse',
-          query: 'When will my destiny partner arrive? What are their personality archetype, spatial peach blossom activation, and key relationship red lines?'
-        },
-        {
-          id: 'academic_exam',
-          icon: '🎓',
-          title: 'Academic & Exam Advancement',
-          query: 'Evaluating my Resource and Output stars with Wen Chang nobility, should I pursue graduate research, overseas study, or industry? What is my exam timing window?'
-        },
-        {
-          id: 'manage_up',
-          icon: '💼',
-          title: 'Managing Up & Superiors',
-          query: 'How should I communicate and report to my manager/supervisor without triggering friction, based on my chart archetype?'
-        },
-        {
           id: 'career_pivot',
-          icon: '⚔️',
-          title: 'Stay vs. Pivot Crossroads',
-          query: 'Facing a career crossroads: stay in my current track or pivot to an ambitious new opportunity? How does my vigor favor this?'
-        },
-        {
-          id: 'overthinking',
-          icon: '🧘',
-          title: 'Defeating Mental Friction',
-          query: 'Dealing with excessive overthinking and self-doubt lately. What is my optimal cognitive reframing anchor and physical reset?'
-        },
-        {
-          id: 'health_vitality',
-          icon: '🫁',
-          title: 'Health & Five-Element Vitality',
-          query: 'Evaluating my Five Elements balance and current transit, what are my organ vulnerabilities, sleep remedies, and wellness rhythm?'
-        },
-        {
-          id: 'synastry_inquiry',
-          icon: '👥',
-          title: 'Partner & Peer Synastry Match',
-          query: 'Evaluate compatibility between my chart and my partner/colleague: what are our elemental friction zones and alliance tactics?'
+          icon: '💼',
+          title: 'Career Strategy & Workplace Pivot',
+          query: 'Facing a career crossroads and upward management dynamics: based on my chart archetype and transit, should I aggressively advance/pivot, or fortify my defensive moat? What about advanced study or exam timing?'
         },
         {
           id: 'wealth_window',
           icon: '💰',
-          title: 'Wealth & Initiative Timing',
-          query: 'Is the current temporal transit favorable for aggressive wealth expansion (side-projects/investments) or consolidation?'
+          title: 'Wealth Timing & Strategic Allocation',
+          query: 'Evaluating my dominant Wealth stars, transit windows, and hidden state dynamics: should I pursue aggressive business/investment expansion or capital preservation? How to solve optimal Bellman timing?'
         },
         {
-          id: 'pomdp_adaptive_policy',
-          icon: '🎲',
-          title: 'POMDP Adaptive Recalibration',
-          query: 'Evaluate hidden organizational state with POMDP Bayesian belief tracking and Bellman adaptive policy iteration for my Next Best Action.'
+          id: 'romance_timing',
+          icon: '💍',
+          title: 'Destiny Romance & Synastry Dynamics',
+          query: 'When will my destiny partner arrive based on my spouse palace and transits? In partner synastry, what are our elemental synergies and key conflict zones to avoid?'
         },
         {
-          id: 'pattern_metaphysics',
-          icon: '🔮',
-          title: 'Pattern Dialectics & Hidden Wealth/Wife',
-          query: 'What is the deep difference between Hurting Officer expressing talent vs harnessing Seven Killings, and does the Mao-Xu combination into fire count as Wife and Wealth?'
+          id: 'overthinking',
+          icon: '🧘',
+          title: 'Mind-Body Vitality & Cognitive Reset',
+          query: 'Evaluating my Five Elements balance and current transits: what are my physical vitality weak points, and how can I break cognitive overthinking for a hard mind-body reset?'
         }
       ];
     }
 
     return [
       {
-        id: 'romance_timing',
-        icon: '💍',
-        title: '世俗婚恋与正缘应期',
-        query: '结合我的日支配偶宫、桃花星与当下岁运，我命定正缘何时出现？对方相貌心性与相处避坑红线是什么？'
-      },
-      {
-        id: 'academic_exam',
-        icon: '🎓',
-        title: '学业考学与文昌深造',
-        query: '结合本命印星、食伤秀气与文昌贵人，我适合考研升学、出国留学还是博士深造？考运应期如何？'
-      },
-      {
-        id: 'manage_up',
-        icon: '💼',
-        title: '向上管理与汇报策略',
-        query: '结合我命盘的格局与性格，向严苛或强势上级汇报工作/争取资源时，如何精准切中要害且绝不踩雷？'
-      },
-      {
         id: 'career_pivot',
-        icon: '⚔️',
-        title: '跳槽转轨 vs 留任守成',
-        query: '目前面临职业转轨与留任十字路口：依我本命身旺衰与当前岁运，是宜主动进击还是深筑护城河？'
-      },
-      {
-        id: 'overthinking',
-        icon: '🧘',
-        title: '斩断反刍与内耗重置',
-        query: '近期精神内耗反刍严重、怀疑自我算力，如何用我命造最适宜的禅道心法与躯体动作实现硬重启？'
-      },
-      {
-        id: 'health_vitality',
-        icon: '🫁',
-        title: '身心气血与五脏调摄',
-        query: '结合我八字五行旺衰与当下岁运，我的五脏气血弱项在哪里？如何通过作息食疗与空间调养进行身心硬重启？'
-      },
-      {
-        id: 'synastry_inquiry',
-        icon: '👥',
-        title: '双人合盘与博弈攻心',
-        query: '评测我与伴侣/领导的命盘相处合化：对方气场对我是否补益用神？相处有哪些必须避开的克伐雷区？'
+        icon: '💼',
+        title: '职场破局 · 向上汇报与转轨进退',
+        query: '目前面临职业转轨/留任与向上汇报十字路口：结合我命盘身旺衰与当前岁运，是宜主动进击、向上争取资源，还是深筑护城河？考学深造契机如何？'
       },
       {
         id: 'wealth_window',
         icon: '💰',
-        title: '财运时机与投资攻守',
-        query: '当下岁运流月逢何神司权？我适宜开拓副业与商业变现，还是当收拢现金流、以沉淀绝技为先？'
+        title: '财运商机 · 投资攻守与自适应决策',
+        query: '当下岁运流月逢何神司权？我适宜开拓副业与投资变现，还是当收拢现金流？如何运用贝尔曼最优策略求解商业攻守时机？'
       },
       {
-        id: 'pomdp_adaptive_policy',
-        icon: '🎲',
-        title: 'POMDP隐状态与自适应策略',
-        query: '基于闭环反馈与POMDP贝叶斯信念滤波，推演当前职场隐状态分布并使用贝尔曼方程求解最优Next Best Action。'
+        id: 'romance_timing',
+        icon: '💍',
+        title: '正缘婚恋 · 应期推演与合盘攻心',
+        query: '结合我的日支配偶宫、桃花星与当下岁运，命定正缘何时显化？与特定伴侣/伙伴合盘时，相处有哪些互补优势与必须规避的克伐雷区？'
       },
       {
-        id: 'pattern_metaphysics',
-        icon: '🔮',
-        title: '格局辩证与暗财妻财推演',
-        query: '伤官吐秀与伤官驾杀有何本质差别？水旺加戌土遇卯木加持，卯戌六合化火算在妻财里面吗？'
+        id: 'overthinking',
+        icon: '🧘',
+        title: '身心气血 · 斩断内耗与能量重启',
+        query: '结合我八字五行旺衰与当下岁运，我的五脏气血弱项在哪里？近期精神内耗反刍严重，如何用契合我本命的作息食疗与禅道心法实现身心硬重启？'
       }
     ];
   }
