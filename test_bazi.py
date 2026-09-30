@@ -1552,6 +1552,39 @@ if (distQianTongren !== 1) throw new Error("Expected distance 1 for Qian-Tongren
 var geodesic = GroupTheoryCore.hexagramGeodesicPath(63, 0);
 if (geodesic.length !== 7) throw new Error("Expected geodesic length 7 (6 transitions), got " + geodesic.length);
 
+// Test 1.5: Dynamic BaZi-to-Hexagram Q6 Mapping Verification
+load('data/iching.js');
+load('data/tianji.js');
+load('js/iching-engine.js');
+load('js/bazi-engine.js');
+var bazi1988Test = BaZiEngine.calculate({
+  year: 1988, month: 11, day: 18, hour: 9, minute: 40,
+  gender: '坤造', useTrueSolarTime: false, longitude: 116.4, timezone: 8
+});
+var hex1988 = IChingEngine.calculateFourPillarsHexagrams(bazi1988Test, 39, 2026);
+var xt1988Idx = hex1988.xianTian.binary.reduce(function(acc, b, i) { return acc + (b ? (1 << i) : 0); }, 0);
+var zn1988Idx = hex1988.zhiNian.binary.reduce(function(acc, b, i) { return acc + (b ? (1 << i) : 0); }, 0);
+if (xt1988Idx !== 2 || zn1988Idx !== 61) {
+  throw new Error("Expected 1988 Bazi natal=2 (Shi) and 2026=61 (Tongren), got natal=" + xt1988Idx + ", 2026=" + zn1988Idx);
+}
+var testBazi2026 = {
+  dayMaster: '己',
+  gender: '乾造',
+  birthYear: 2026,
+  pillars: {
+    year: { stem: '丙', branch: '午' },
+    month: { stem: '丁', branch: '酉' },
+    day: { stem: '己', branch: '亥' },
+    hour: { stem: '乙', branch: '亥' }
+  }
+};
+var hex2026 = IChingEngine.calculateFourPillarsHexagrams(testBazi2026, 1, 2026);
+var xt2026Idx = hex2026.xianTian.binary.reduce(function(acc, b, i) { return acc + (b ? (1 << i) : 0); }, 0);
+var zn2026Idx = hex2026.zhiNian.binary.reduce(function(acc, b, i) { return acc + (b ? (1 << i) : 0); }, 0);
+if (xt2026Idx !== 44 || zn2026Idx !== 44 || hex2026.zhiNian.hexagram.number !== 56) {
+  throw new Error("Expected 2026 testBazi natal=44 (Lv) and 2026=44 (Lv), got natal=" + xt2026Idx + ", 2026=" + zn2026Idx);
+}
+
 // 2. Empirical Bayes Hierarchical Shrinkage Tests
 load('js/empirical-bayes.js');
 

@@ -12381,6 +12381,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Phase 7 & 8: High-Dimensional Strategy War Room Dashboard Controller
   let phase78Initialized = false;
+  let renderQ6HypercubeDynamic = null;
 
   function initPhase78Dashboard() {
     const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
@@ -12438,39 +12439,149 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    renderQ6HypercubeDynamic = function() {
+      const container = document.getElementById('hypercubeVisualizerContainer');
+      const wrapper = document.getElementById('hypercubeSvgWrapper');
+      if (!container || !wrapper) return;
+
+      if (container.classList.contains('hidden')) {
+        container.classList.remove('hidden');
+      }
+
+      // Determine active Bazi
+      let bazi = currentBaziResult;
+      if (!bazi && typeof BaZiEngine !== 'undefined') {
+        const dateVal = birthDatePicker ? birthDatePicker.value : '1988-11-18';
+        const timeVal = birthTimePicker ? birthTimePicker.value : '09:40';
+        const gVal = genderSelect ? genderSelect.value : '坤造';
+        const parts = (dateVal || '1988-11-18').split('-').map(Number);
+        const tparts = (timeVal || '09:40').split(':').map(Number);
+        try {
+          bazi = BaZiEngine.calculate({
+            year: parts[0] || 1988,
+            month: parts[1] || 11,
+            day: parts[2] || 18,
+            hour: tparts[0] || 9,
+            minute: tparts[1] || 40,
+            gender: gVal,
+            useTrueSolarTime: false,
+            longitude: 116.4,
+            timezone: 8
+          });
+        } catch (e) {}
+      }
+
+      const birthYear = (bazi && bazi.input && bazi.input.year) || (bazi && bazi.birthYear) || 1988;
+      const targetYear = 2026;
+      const targetAge = Math.max(1, targetYear - birthYear + 1);
+
+      let hexRes = null;
+      if (bazi && typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateFourPillarsHexagrams === 'function') {
+        try {
+          hexRes = IChingEngine.calculateFourPillarsHexagrams(bazi, targetAge, targetYear);
+        } catch (e) {}
+      }
+
+      let natalIdx = 7;
+      let annualIdx = 44;
+      let natalNameZh = '地天泰';
+      let natalNameEn = 'Peace';
+      let natalHexNum = 11;
+      let annualNameZh = '火山旅';
+      let annualNameEn = 'The Wanderer';
+      let annualHexNum = 56;
+      let annualBinaryArr = [0, 0, 1, 1, 0, 1];
+      let annualBinaryStr = '001101';
+      let natalBinaryStr = '111000';
+      const baziStr = bazi && bazi.pillars ? `${bazi.pillars.year.stem}${bazi.pillars.year.branch} ${bazi.pillars.month.stem}${bazi.pillars.month.branch} ${bazi.pillars.day.stem}${bazi.pillars.day.branch} ${bazi.pillars.hour.stem}${bazi.pillars.hour.branch}` : '四柱全盘';
+
+      if (hexRes && hexRes.xianTian && hexRes.zhiNian) {
+        const xtBin = hexRes.xianTian.binary || [1, 1, 1, 0, 0, 0];
+        const znBin = hexRes.zhiNian.binary || [0, 0, 1, 1, 0, 1];
+        annualBinaryArr = znBin;
+        natalIdx = xtBin.reduce((acc, bit, idx) => acc + (bit ? (1 << idx) : 0), 0);
+        annualIdx = znBin.reduce((acc, bit, idx) => acc + (bit ? (1 << idx) : 0), 0);
+        natalBinaryStr = xtBin.join('');
+        annualBinaryStr = znBin.join('');
+
+        if (hexRes.xianTian.hexagram) {
+          natalNameZh = hexRes.xianTian.hexagram.nameZh;
+          natalNameEn = hexRes.xianTian.hexagram.nameEn;
+          natalHexNum = hexRes.xianTian.hexagram.number;
+        }
+        if (hexRes.zhiNian.hexagram) {
+          annualNameZh = hexRes.zhiNian.hexagram.nameZh;
+          annualNameEn = hexRes.zhiNian.hexagram.nameEn;
+          annualHexNum = hexRes.zhiNian.hexagram.number;
+        }
+      }
+
+      const geodesic = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramGeodesic)
+        ? GroupTheoryCore.hexagramGeodesic(natalIdx, annualIdx).geodesicPath
+        : [natalIdx, annualIdx];
+
+      const hammingDist = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramHammingDistance)
+        ? GroupTheoryCore.hexagramHammingDistance(natalIdx, annualIdx)
+        : geodesic.length - 1;
+
+      const hammingWeight = annualBinaryArr.filter(b => b === 1).length;
+
+      if (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.generateHypercubeSvgMarkup) {
+        wrapper.innerHTML = GroupTheoryCore.generateHypercubeSvgMarkup({
+          width: 480,
+          height: 340,
+          radius: 130,
+          highlightNodes: [natalIdx, annualIdx],
+          highlightPath: geodesic,
+          activeHexIdx: annualIdx,
+          activeHexName: isEn ? `2026 Transit: #${annualHexNum} ${annualNameEn}` : `2026值年·第${annualHexNum}卦 ${annualNameZh}`,
+          natalHexName: isEn ? `Natal: #${natalHexNum} ${natalNameEn}` : `命基·第${natalHexNum}卦 ${natalNameZh}`,
+          isEn: isEn
+        });
+      }
+
+      // Update dynamic badges and explanations in DOM
+      const badgeHeader = document.getElementById('q6BadgeHeader');
+      if (badgeHeader) {
+        badgeHeader.textContent = `Q6 = (V=64, E=192), 2026值年: ${annualNameZh} [${annualBinaryStr}] (汉明距 d=${hammingDist})`;
+      }
+
+      const mechEl = document.getElementById('q6MechExplanation');
+      if (mechEl) {
+        mechEl.innerHTML = isEn
+          ? `<strong>[Homomorphic Mapping Mechanism from Bazi to 64 Hexagrams]</strong>: A single pillar (s, b) is merely in the order-60 subgroup &lang;(1,1)&rang;. Due to gcd(60,64)=4, it cannot surjectively map to 64 hexagrams. The system takes the joint 4-pillar space (Z10 &times; Z12)&sup4; (${baziStr}), derives Luo Shu heaven/earth numbers into a 6-bit natal foundation [${natalBinaryStr}] (green node: #${natalHexNum} ${natalNameEn}), and steps through time as an injective path (blue geodesic, length ${hammingDist}), dynamically anchoring in the 2026 transit hexagram <strong>[#${annualHexNum} ${annualNameEn}]</strong> (pulsing red node, Hamming weight k=${hammingWeight}).`
+          : `<strong>【八字全盘到 64 卦的同态演化机理】</strong>：单柱 (s, b) 仅为 60 甲子循环子群 &lang;(1,1)&rang;，阶数 60 与 64 互质约束 gcd(60,64)=4，无法直接同态满射至 64 卦。系统遵从《河洛理数》全盘八字四柱联合空间 (Z10 &times; Z12)&sup4;（当前盘：<strong>${baziStr}</strong>），以洛书天数与河图地数映射生成 6-bit 命基【${natalNameZh}】（绿点），流年时间序列作为单射演化步进（蓝线，测地跨度 ${hammingDist} 步），当前精准锚定于 2026 丙午值年卦【<strong>${annualNameZh}</strong>】（红圈闪烁点，汉明重量 k=${hammingWeight} 动态平衡态）。`;
+      }
+
+      const plainEl = document.getElementById('q6PlainExplanation');
+      if (plainEl) {
+        plainEl.innerHTML = isEn
+          ? `Imagine the 64 hexagrams as a <strong>time-space labyrinth of 64 rooms and 192 corridors</strong>: Your natal four pillars (${baziStr}) determine your entry portal (<span class="text-emerald-400 font-bold">Green: Natal #${natalHexNum} ${natalNameEn}</span>). As years advance, you travel through the corridors (<span class="text-sky-400 font-bold">Cyan: Geodesic Trajectory</span>), and in 2026 you arrive precisely at <strong>Room #${annualHexNum}: ${annualNameEn}</strong> (<span class="text-rose-400 font-bold">Pulsing Red</span>).`
+          : `把周易 64 卦想象成一座<strong>“拥有 64 个房间、192 条走廊”的时空迷宫</strong>：你出生时的生辰八字（${baziStr}）决定了你从哪扇门进（<span class="text-emerald-400 font-bold">绿点 · 先天命基【${natalNameZh}】</span>），随着岁月流逝你一路穿行（<span class="text-sky-400 font-bold">青蓝线 · 时运轨迹</span>），当前在 2026 年刚好走到了<strong>“第 ${annualHexNum} 号房间 · ${annualNameZh}”</strong>（<span class="text-rose-400 font-bold">红圈闪烁点</span>）。`;
+      }
+
+      const p3 = document.getElementById('q6Point3');
+      if (p3) {
+        p3.innerHTML = isEn
+          ? `<span class="text-indigo-300 font-bold">3. What does the 2026 Red Node [${annualNameEn}] indicate?</span><br/>Binary switch state [${annualBinaryStr}]. It marks your exact 2026 temporal coordinate in the hypercube, revealing situational dynamics and timing strategy.`
+          : `<span class="text-indigo-300 font-bold">3. 2026 红点【${annualNameZh}】代表什么？</span><br/>二进制开关状态为 <code>[${annualBinaryStr}]</code>。红点是您当前八字命造在 2026 年的绝对时空坐标，明示您今年的天时处境与行动节律。`;
+      }
+
+      const p4 = document.getElementById('q6Point4');
+      if (p4) {
+        const balanceDesc = (hammingWeight === 3)
+          ? '3阳3阴（50%对50%），处于正态分布最密集的动态平衡中庸枢纽层，进可攻退可守。'
+          : (hammingWeight > 3 ? `${hammingWeight}阳${6 - hammingWeight}阴，阳能充沛，重在顺势导引、防范过刚亢极。` : `${hammingWeight}阳${6 - hammingWeight}阴，阴柔蓄势，宜修身沉潜、广积粮缓称王。`);
+        p4.innerHTML = isEn
+          ? `<span class="text-indigo-300 font-bold">4. Hamming Weight k=${hammingWeight} Dynamics:</span><br/>Active state has ${hammingWeight} Yang lines and ${6 - hammingWeight} Yin lines, quantifying your energetic polar balance on the Q6 hypercube.`
+          : `<span class="text-indigo-300 font-bold">4. 汉明重量 k=${hammingWeight} 状态意味：</span><br/><code>[${annualBinaryStr}]</code> 拥有 ${hammingWeight} 根阳爻、${6 - hammingWeight} 根阴爻。${balanceDesc}`;
+      }
+    }
+
     const btnRenderQ6Hypercube = document.getElementById('btnRenderQ6Hypercube');
     if (btnRenderQ6Hypercube) {
       btnRenderQ6Hypercube.addEventListener('click', () => {
-        const container = document.getElementById('hypercubeVisualizerContainer');
-        const wrapper = document.getElementById('hypercubeSvgWrapper');
-        if (!container || !wrapper) return;
-
-        if (container.classList.contains('hidden')) {
-          container.classList.remove('hidden');
-        }
-
-        // Active 2026 Annual Hexagram: #56 Huoshan Lv
-        // Binary lines: [0, 0, 1, 1, 0, 1] -> integer index: 44
-        const annualIdx = 44;
-        // Natal Hexagram (e.g. #11 Tai: [1, 1, 1, 0, 0, 0] -> 7 or derived)
-        const natalIdx = 7;
-        const geodesic = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramGeodesic)
-          ? GroupTheoryCore.hexagramGeodesic(natalIdx, annualIdx).geodesicPath
-          : [natalIdx, annualIdx];
-
-        if (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.generateHypercubeSvgMarkup) {
-          wrapper.innerHTML = GroupTheoryCore.generateHypercubeSvgMarkup({
-            width: 480,
-            height: 340,
-            radius: 130,
-            highlightNodes: [natalIdx, annualIdx],
-            highlightPath: geodesic,
-            activeHexIdx: annualIdx,
-            activeHexName: isEn ? '2026 Transit: #56 Lv' : '2026值年·火山旅',
-            natalHexName: isEn ? 'Natal Base' : '命基·先天卦',
-            isEn: isEn
-          });
-        }
+        renderQ6HypercubeDynamic();
       });
     }
 
@@ -12817,9 +12928,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+  const triggerQ6RenderSafe = function() {
+    if (typeof initPhase78Dashboard === 'function') initPhase78Dashboard();
+    if (typeof renderQ6HypercubeDynamic === 'function') renderQ6HypercubeDynamic();
+  };
   window.initPhase78Dashboard = initPhase78Dashboard;
+  window.renderQ6HypercubeDynamic = triggerQ6RenderSafe;
   if (typeof globalThis !== 'undefined') {
     globalThis.initPhase78Dashboard = initPhase78Dashboard;
+    globalThis.renderQ6HypercubeDynamic = triggerQ6RenderSafe;
   }
 
   // Friction & Zen-Dao Dedicated Sub-Tabs Switching Logic (类似于8经架构 · 一经一页)
