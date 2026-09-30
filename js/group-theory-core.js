@@ -243,6 +243,17 @@
         }
       }
 
+      // 6 Incident Decision Branches radiating from activeHexIdx (Degree-6 Neighbors)
+      const decisionBranchSet = new Set();
+      if (activeHexIdx >= 0 && activeHexIdx < 64) {
+        for (let bit = 0; bit < 6; bit++) {
+          const neighbor = activeHexIdx ^ (1 << bit);
+          const u = Math.min(activeHexIdx, neighbor);
+          const v = Math.max(activeHexIdx, neighbor);
+          decisionBranchSet.add(`${u}-${v}`);
+        }
+      }
+
       const layerColors = ['#6366f1', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b', '#f97316', '#ef4444'];
 
       let svg = `<svg viewBox="0 0 ${width} ${height}" class="w-full h-auto select-none" xmlns="http://www.w3.org/2000/svg">`;
@@ -251,45 +262,79 @@
           <feGaussianBlur stdDeviation="3" result="blur" />
           <feComposite in="SourceGraphic" in2="blur" operator="over" />
         </filter>
+        <linearGradient id="lattice-path-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#38bdf8" />
+          <stop offset="50%" stop-color="#818cf8" />
+          <stop offset="100%" stop-color="#f43f5e" />
+        </linearGradient>
       </defs>`;
 
-      // Regular edges
+      // 1. Regular hypercube edges
       proj.edges.forEach(e => {
         const key = `${e.source}-${e.target}`;
-        if (!pathEdgeSet.has(key)) {
+        if (!pathEdgeSet.has(key) && !decisionBranchSet.has(key)) {
           const n1 = nodeMap[e.source];
           const n2 = nodeMap[e.target];
-          svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#312e81" stroke-opacity="0.25" stroke-width="0.8" />`;
+          svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#312e81" stroke-opacity="0.22" stroke-width="0.8" />`;
         }
       });
 
-      // Highlighted geodesic path
+      // 2. 6 Decision branch corridors from active node (Degree-6 mutation neighbors)
+      if (decisionBranchSet.size > 0) {
+        decisionBranchSet.forEach(key => {
+          if (!pathEdgeSet.has(key)) {
+            const parts = key.split('-').map(Number);
+            const n1 = nodeMap[parts[0]];
+            const n2 = nodeMap[parts[1]];
+            if (n1 && n2) {
+              svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#c084fc" stroke-dasharray="3,3" stroke-width="1.6" stroke-opacity="0.65" />`;
+            }
+          }
+        });
+      }
+
+      // 3. Highlighted continuous Lattice Path (格路线条)
       if (highlightPath.length > 1) {
         for (let i = 0; i < highlightPath.length - 1; i++) {
           const n1 = nodeMap[highlightPath[i]];
           const n2 = nodeMap[highlightPath[i + 1]];
           if (n1 && n2) {
-            svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" filter="url(#glow-q6)" />`;
+            svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round" filter="url(#glow-q6)" />`;
+            const midX = (n1.x + n2.x) / 2;
+            const midY = (n1.y + n2.y) / 2;
+            svg += `<circle cx="${midX}" cy="${midY}" r="1.8" fill="#e0f2fe" opacity="0.9" />`;
           }
         }
       }
 
-      // Nodes
+      // 4. Hypercube Nodes
       proj.nodes.forEach(n => {
         const isNatal = highlightNodes[0] === n.index;
         const isAnnual = (activeHexIdx === n.index) || (highlightNodes[1] === n.index);
+        const isBoth = isNatal && isAnnual;
         const isPathNode = highlightPath.includes(n.index);
+        const pathStepLabel = (options.pathLabels && options.pathLabels[n.index]) || null;
         const col = layerColors[n.hammingWeight] || '#94a3b8';
 
-        if (isAnnual) {
+        if (isBoth) {
+          // When natal base and annual hexagram coincide at same vertex
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="11" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="3,2" opacity="0.9" />`;
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="8" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0.85" />`;
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="6.5" fill="#f43f5e" stroke="#ffffff" stroke-width="1.8" filter="url(#glow-q6)" />`;
+          svg += `<text x="${n.x}" y="${n.y - 13}" fill="#fda4af" font-size="9" font-family="sans-serif" font-weight="bold" text-anchor="middle">${activeHexName}</text>`;
+          svg += `<text x="${n.x}" y="${n.y + 20}" fill="#6ee7b7" font-size="8" font-family="sans-serif" font-weight="bold" text-anchor="middle">${natalHexName}（同位起步）</text>`;
+        } else if (isAnnual) {
           svg += `<circle cx="${n.x}" cy="${n.y}" r="8" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0.8" />`;
           svg += `<circle cx="${n.x}" cy="${n.y}" r="6.5" fill="#f43f5e" stroke="#ffffff" stroke-width="1.8" filter="url(#glow-q6)" />`;
           svg += `<text x="${n.x}" y="${n.y - 10}" fill="#fda4af" font-size="9" font-family="sans-serif" font-weight="bold" text-anchor="middle">${activeHexName}</text>`;
         } else if (isNatal) {
-          svg += `<circle cx="${n.x}" cy="${n.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="1.5" filter="url(#glow-q6)" />`;
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="6.5" fill="#10b981" stroke="#ffffff" stroke-width="1.5" filter="url(#glow-q6)" />`;
           svg += `<text x="${n.x}" y="${n.y - 9}" fill="#6ee7b7" font-size="8.5" font-family="sans-serif" font-weight="bold" text-anchor="middle">${natalHexName}</text>`;
         } else if (isPathNode) {
-          svg += `<circle cx="${n.x}" cy="${n.y}" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1" />`;
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="4.8" fill="#38bdf8" stroke="#ffffff" stroke-width="1.2" filter="url(#glow-q6)" />`;
+          if (pathStepLabel) {
+            svg += `<text x="${n.x}" y="${n.y - 8}" fill="#bae6fd" font-size="7.5" font-family="sans-serif" font-weight="bold" text-anchor="middle">${pathStepLabel}</text>`;
+          }
         } else {
           svg += `<circle cx="${n.x}" cy="${n.y}" r="2.8" fill="${col}" opacity="0.75" />`;
         }

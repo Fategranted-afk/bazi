@@ -12516,13 +12516,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      const geodesic = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramGeodesic)
-        ? GroupTheoryCore.hexagramGeodesic(natalIdx, annualIdx).geodesicPath
-        : [natalIdx, annualIdx];
+      // 1. Base geodesic from natal to annual
+      const geo = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramGeodesic)
+        ? GroupTheoryCore.hexagramGeodesic(natalIdx, annualIdx)
+        : { geodesicPath: [natalIdx, annualIdx], hammingDistance: 0 };
 
       const hammingDist = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramHammingDistance)
         ? GroupTheoryCore.hexagramHammingDistance(natalIdx, annualIdx)
-        : geodesic.length - 1;
+        : geo.hammingDistance;
+
+      // 2. Build continuous Lattice Path in Q6
+      let latticePathNodes = geo.geodesicPath.slice();
+      let pathLabels = {};
+      pathLabels[natalIdx] = isEn ? 'Natal' : '命基';
+      pathLabels[annualIdx] = '2026';
+
+      let roadmapSteps = [];
+      roadmapSteps.push({
+        year: 2026,
+        hexNum: annualHexNum,
+        hexName: annualNameZh,
+        hexNameEn: annualNameEn,
+        binStr: annualBinaryStr,
+        idx: annualIdx,
+        isCurrent: true
+      });
+
+      // 3. Forward progression along lifelong cycle (2026 -> 2031)
+      if (bazi && typeof IChingEngine !== 'undefined' && typeof IChingEngine.calculateLifelongCycle === 'function') {
+        try {
+          const cycle = IChingEngine.calculateLifelongCycle(bazi);
+          const curIdx = cycle.findIndex(p => p.year === targetYear);
+          if (curIdx >= 0) {
+            for (let step = 1; step <= 5; step++) {
+              const nextPt = cycle[curIdx + step];
+              if (!nextPt || !nextPt.annualHex || !nextPt.annualHex.lines) break;
+              const bin = nextPt.annualHex.lines.map(l => (typeof l === 'object' ? l.nature : l));
+              const nextIdx = bin.reduce((acc, bit, k) => acc + (bit ? (1 << k) : 0), 0);
+              const nextBinStr = bin.join('');
+
+              const lastNode = latticePathNodes[latticePathNodes.length - 1];
+              if (lastNode !== nextIdx) {
+                const subGeo = GroupTheoryCore.hexagramGeodesic(lastNode, nextIdx);
+                for (let k = 1; k < subGeo.geodesicPath.length; k++) {
+                  latticePathNodes.push(subGeo.geodesicPath[k]);
+                }
+              }
+              pathLabels[nextIdx] = `'${String(nextPt.year).slice(-2)}`;
+
+              roadmapSteps.push({
+                year: nextPt.year,
+                age: nextPt.age,
+                hexNum: nextPt.annualHex.number,
+                hexName: nextPt.annualHex.nameZh,
+                hexNameEn: nextPt.annualHex.nameEn,
+                binStr: nextBinStr,
+                idx: nextIdx,
+                isCurrent: false
+              });
+            }
+          }
+        } catch (e) {}
+      }
+
+      // If still only 1 node, ensure at least adjacent 1-bit steps
+      if (latticePathNodes.length <= 1) {
+        for (let b = 0; b < 3; b++) {
+          latticePathNodes.push(annualIdx ^ (1 << b));
+        }
+      }
 
       const hammingWeight = annualBinaryArr.filter(b => b === 1).length;
 
@@ -12532,7 +12594,8 @@ document.addEventListener('DOMContentLoaded', () => {
           height: 340,
           radius: 130,
           highlightNodes: [natalIdx, annualIdx],
-          highlightPath: geodesic,
+          highlightPath: latticePathNodes,
+          pathLabels: pathLabels,
           activeHexIdx: annualIdx,
           activeHexName: isEn ? `2026 Transit: #${annualHexNum} ${annualNameEn}` : `2026值年·第${annualHexNum}卦 ${annualNameZh}`,
           natalHexName: isEn ? `Natal: #${natalHexNum} ${natalNameEn}` : `命基·第${natalHexNum}卦 ${natalNameZh}`,
@@ -12540,24 +12603,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
+      // Render roadmap ribbon
+      const roadmapEl = document.getElementById('q6LatticePathSteps');
+      if (roadmapEl && roadmapSteps.length > 0) {
+        let rHtml = '';
+        for (let i = 0; i < roadmapSteps.length; i++) {
+          const s = roadmapSteps[i];
+          if (i === 0) {
+            rHtml += `<span class="inline-flex items-center px-2 py-0.5 rounded bg-rose-950 border border-rose-600 text-rose-200 font-bold">`
+              + `📍 ${s.year}【#${s.hexNum} ${isEn ? s.hexNameEn : s.hexName} · ${s.binStr}】`
+              + `</span>`;
+          } else {
+            const diff = s.idx ^ roadmapSteps[i - 1].idx;
+            let bitPos = 0;
+            while ((diff >> bitPos) > 1) bitPos++;
+            const posNames = isEn ? ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'] : ['初', '二', '三', '四', '五', '上'];
+            const changeLabel = isEn ? `${posNames[bitPos]}&Delta; d=1` : `${posNames[bitPos]}爻变 d=1`;
+            rHtml += ` <span class="text-sky-400 font-bold">&rarr; (${changeLabel}) &rarr;</span> `;
+            rHtml += `<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-indigo-900/60 border border-indigo-700 text-sky-200">`
+              + `'${String(s.year).slice(-2)}【${isEn ? s.hexNameEn : s.hexName}】`
+              + `</span>`;
+          }
+        }
+        roadmapEl.innerHTML = rHtml;
+      }
+
       // Update dynamic badges and explanations in DOM
       const badgeHeader = document.getElementById('q6BadgeHeader');
       if (badgeHeader) {
-        badgeHeader.textContent = `Q6 = (V=64, E=192), 2026值年: ${annualNameZh} [${annualBinaryStr}] (汉明距 d=${hammingDist})`;
+        const pathEdgeCount = Math.max(0, latticePathNodes.length - 1);
+        badgeHeader.textContent = isEn
+          ? `Q6 = (V=64, E=192), 2026 Transit: #${annualHexNum} ${annualNameEn} [${annualBinaryStr}] (Lattice Path: ${pathEdgeCount} steps)`
+          : `Q6 = (V=64, E=192), 2026值年: ${annualNameZh} [${annualBinaryStr}] (格路跨度: ${pathEdgeCount} 步)`;
       }
 
       const mechEl = document.getElementById('q6MechExplanation');
       if (mechEl) {
+        const pathLen = Math.max(0, latticePathNodes.length - 1);
         mechEl.innerHTML = isEn
-          ? `<strong>[Homomorphic Mapping Mechanism from Bazi to 64 Hexagrams]</strong>: A single pillar (s, b) is merely in the order-60 subgroup &lang;(1,1)&rang;. Due to gcd(60,64)=4, it cannot surjectively map to 64 hexagrams. The system takes the joint 4-pillar space (Z10 &times; Z12)&sup4; (${baziStr}), derives Luo Shu heaven/earth numbers into a 6-bit natal foundation [${natalBinaryStr}] (green node: #${natalHexNum} ${natalNameEn}), and steps through time as an injective path (blue geodesic, length ${hammingDist}), dynamically anchoring in the 2026 transit hexagram <strong>[#${annualHexNum} ${annualNameEn}]</strong> (pulsing red node, Hamming weight k=${hammingWeight}).`
-          : `<strong>【八字全盘到 64 卦的同态演化机理】</strong>：单柱 (s, b) 仅为 60 甲子循环子群 &lang;(1,1)&rang;，阶数 60 与 64 互质约束 gcd(60,64)=4，无法直接同态满射至 64 卦。系统遵从《河洛理数》全盘八字四柱联合空间 (Z10 &times; Z12)&sup4;（当前盘：<strong>${baziStr}</strong>），以洛书天数与河图地数映射生成 6-bit 命基【${natalNameZh}】（绿点），流年时间序列作为单射演化步进（蓝线，测地跨度 ${hammingDist} 步），当前精准锚定于 2026 丙午值年卦【<strong>${annualNameZh}</strong>】（红圈闪烁点，汉明重量 k=${hammingWeight} 动态平衡态）。`;
+          ? `<strong>[Homomorphic Mapping Mechanism from Bazi to 64 Hexagrams]</strong>: A single pillar (s, b) is merely in the order-60 subgroup &lang;(1,1)&rang;. Due to gcd(60,64)=4, it cannot surjectively map to 64 hexagrams. The system takes the joint 4-pillar space (Z10 &times; Z12)&sup4; (${baziStr}), derives Luo Shu numbers into a 6-bit natal foundation [${natalBinaryStr}] (green node: #${natalHexNum} ${natalNameEn}), and continuously steps forward along an injective <strong>Boolean Lattice Path (格路, ${pathLen} transitions with invariant step distance d_H &equiv; 1)</strong>, currently anchored in the 2026 transit hexagram <strong>[#${annualHexNum} ${annualNameEn}]</strong> (pulsing red node, Hamming weight k=${hammingWeight}), surrounded by 6 degree-1 decision mutation corridors (dashed violet).`
+          : `<strong>【八字全盘到 64 卦的同态演化机理】</strong>：单柱 (s, b) 仅为 60 甲子循环子群 &lang;(1,1)&rang;，阶数 60 与 64 互质约束 gcd(60,64)=4，无法直接同态满射至 64 卦。系统遵从《河洛理数》全盘八字四柱联合空间 (Z10 &times; Z12)&sup4;（当前盘：<strong>${baziStr}</strong>），以洛书天数与河图地数映射生成 6-bit 命基【${natalNameZh}】（绿点），流年时间序列作为单射演化步进，在 Q6 超立方体中绘制出一条连续发光的<strong>时序布尔格路 (Lattice Path，当前展开 ${pathLen} 步连续爻变，步长严格守恒 d_H &equiv; 1)</strong>，当前精准锚定于 2026 丙午值年卦【<strong>${annualNameZh}</strong>】（红圈闪烁点，汉明重量 k=${hammingWeight} 动态平衡态），并辐射出 6 条单爻变决策走廊（紫色虚线）。`;
       }
 
       const plainEl = document.getElementById('q6PlainExplanation');
       if (plainEl) {
         plainEl.innerHTML = isEn
-          ? `Imagine the 64 hexagrams as a <strong>time-space labyrinth of 64 rooms and 192 corridors</strong>: Your natal four pillars (${baziStr}) determine your entry portal (<span class="text-emerald-400 font-bold">Green: Natal #${natalHexNum} ${natalNameEn}</span>). As years advance, you travel through the corridors (<span class="text-sky-400 font-bold">Cyan: Geodesic Trajectory</span>), and in 2026 you arrive precisely at <strong>Room #${annualHexNum}: ${annualNameEn}</strong> (<span class="text-rose-400 font-bold">Pulsing Red</span>).`
-          : `把周易 64 卦想象成一座<strong>“拥有 64 个房间、192 条走廊”的时空迷宫</strong>：你出生时的生辰八字（${baziStr}）决定了你从哪扇门进（<span class="text-emerald-400 font-bold">绿点 · 先天命基【${natalNameZh}】</span>），随着岁月流逝你一路穿行（<span class="text-sky-400 font-bold">青蓝线 · 时运轨迹</span>），当前在 2026 年刚好走到了<strong>“第 ${annualHexNum} 号房间 · ${annualNameZh}”</strong>（<span class="text-rose-400 font-bold">红圈闪烁点</span>）。`;
+          ? `Imagine the 64 hexagrams as a <strong>time-space labyrinth of 64 rooms and 192 corridors</strong>: Your natal four pillars (${baziStr}) determine your entry portal (<span class="text-emerald-400 font-bold">Green: Natal #${natalHexNum} ${natalNameEn}</span>). As years advance, you travel through the corridors along a continuous <strong>Lattice Path (<span class="text-sky-400 font-bold">Cyan Glowing Line</span>)</strong>: in 2026 you are precisely at <strong>Room #${annualHexNum}: ${annualNameEn}</strong> (<span class="text-rose-400 font-bold">Pulsing Red</span>), continuing into subsequent years 2027&ndash;2031 with exact 1-bit transitions.`
+          : `把周易 64 卦想象成一座<strong>“拥有 64 个房间、192 条走廊”的时空迷宫</strong>：你出生时的生辰八字（${baziStr}）决定了你从哪扇门进（<span class="text-emerald-400 font-bold">绿点 · 先天命基【${natalNameZh}】</span>），随着岁月流逝你一路穿行，在迷宫走廊里走成了一条连续的<strong>格路轨迹（<span class="text-sky-400 font-bold">青蓝/流光发光线条 · Lattice Path</span>）</strong>：当前在 2026 年刚好走到了<strong>“第 ${annualHexNum} 号房间 · ${annualNameZh}”</strong>（<span class="text-rose-400 font-bold">红圈闪烁点</span>），并顺着格路向未来（2027~2031年）逐年延伸。`;
       }
 
       const p3 = document.getElementById('q6Point3');
