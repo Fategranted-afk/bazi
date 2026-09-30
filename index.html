@@ -3824,13 +3824,26 @@
             </select>
           </div>
         </div>
-        <div class="flex items-center gap-3">
+        <div class="flex flex-wrap items-center gap-3">
           <button id="btnCheckGroupTheory" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
             🔬 验证同余奇偶律与五合对合
+          </button>
+          <button id="btnRenderQ6Hypercube" type="button" class="px-4 py-2 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer flex items-center gap-1.5">
+            🌌 展开八字时空 6 维超立方体 (Q6) 拓扑星盘
           </button>
         </div>
         <div id="groupTheoryOutput" class="p-3 rounded-xl bg-black/50 border border-indigo-900/40 text-xs text-gray-300 font-mono">
           点击按钮运行群论公理判定...
+        </div>
+        <div id="hypercubeVisualizerContainer" class="p-3 rounded-xl bg-black/70 border border-purple-900/50 space-y-2 hidden">
+          <div class="flex items-center justify-between text-xs border-b border-gray-800 pb-2">
+            <span class="text-purple-300 font-bold font-serif-sc">🪐 周易 64 卦之 6 维布尔超立方体 Q6 (考克斯特平面投影星盘)</span>
+            <span class="text-[10px] text-gray-400 font-mono">Q6 = (V=64, E=192), 2026值年: 火山旅 [001101]</span>
+          </div>
+          <div id="hypercubeSvgWrapper" class="w-full flex justify-center py-1"></div>
+          <div class="text-[11px] text-gray-400 leading-relaxed bg-[#0d1020] p-2.5 rounded-lg border border-indigo-900/30">
+            <strong>【八字全盘到 64 卦的同态演化机理】</strong>：单柱 (s, b) 仅为 60 甲子循环子群 &lang;(1,1)&rang;，阶数 60 与 64 互质约束 gcd(60,64)=4，无法直接同态满射至 64 卦。系统遵从《河洛理数》全盘八字四柱联合空间 (Z10 &times; Z12)&sup4;，以洛书天数与河图地数映射生成 6-bit 命基（绿点），流年时间序列作为单射演化步进（蓝线），当前精准锚定于 2026 丙午值年卦【火山旅】（红圈闪烁点，汉明重量 k=3 动态中庸平衡态）。
+          </div>
         </div>
       </div>
 

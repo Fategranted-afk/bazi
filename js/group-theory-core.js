@@ -170,6 +170,134 @@
     static hexagramGeodesicPath(u, v) {
       return this.hexagramGeodesic(u, v).geodesicPath;
     }
+
+    /**
+     * Projects the 6-Dimensional Boolean Hypercube Q6 onto a 2D plane
+     * using perturbed Coxeter projection angles so that all 64 vertices are distinct.
+     */
+    static getHypercubeProjection(width = 480, height = 360, radius = 135) {
+      const centerX = width / 2;
+      const centerY = height / 2;
+      // Perturbed Coxeter angles: ensures all 64 vertices have distinct 2D coordinates
+      const angles = [0, 1, 2, 3, 4, 5].map(k => k * Math.PI / 3 + 0.12 * (k - 2.5));
+      const scale = radius / 3.0;
+
+      const nodes = [];
+      for (let i = 0; i < 64; i++) {
+        const bits = [(i >> 0) & 1, (i >> 1) & 1, (i >> 2) & 1, (i >> 3) & 1, (i >> 4) & 1, (i >> 5) & 1];
+        let x = 0;
+        let y = 0;
+        let hw = 0;
+        for (let k = 0; k < 6; k++) {
+          const val = 2 * bits[k] - 1; // centered {-1, +1}
+          x += val * Math.cos(angles[k]);
+          y += val * Math.sin(angles[k]);
+          if (bits[k] === 1) hw++;
+        }
+        nodes.push({
+          index: i,
+          bits: bits,
+          binaryStr: bits.slice().reverse().join(''),
+          hammingWeight: hw,
+          x: Math.round((centerX + x * scale) * 10) / 10,
+          y: Math.round((centerY + y * scale) * 10) / 10
+        });
+      }
+
+      const edges = [];
+      for (let u = 0; u < 64; u++) {
+        for (let bit = 0; bit < 6; bit++) {
+          const v = u ^ (1 << bit);
+          if (u < v) {
+            edges.push({ source: u, target: v, bitFlipped: bit });
+          }
+        }
+      }
+
+      return { nodes, edges, width, height, centerX, centerY };
+    }
+
+    /**
+     * Generates responsive SVG markup representing the 6D Hypercube Q6 with highlighted geodesic path.
+     */
+    static generateHypercubeSvgMarkup(options = {}) {
+      const width = options.width || 480;
+      const height = options.height || 360;
+      const radius = options.radius || 135;
+      const highlightNodes = options.highlightNodes || [];
+      const highlightPath = options.highlightPath || [];
+      const activeHexIdx = options.activeHexIdx !== undefined ? options.activeHexIdx : -1;
+      const activeHexName = options.activeHexName || (options.isEn ? 'Hexagram #56 Lv' : '2026值年·火山旅');
+      const natalHexName = options.natalHexName || (options.isEn ? 'Natal Hexagram' : '命基·先天卦');
+
+      const proj = this.getHypercubeProjection(width, height, radius);
+      const nodeMap = {};
+      proj.nodes.forEach(n => { nodeMap[n.index] = n; });
+
+      const pathEdgeSet = new Set();
+      if (highlightPath.length > 1) {
+        for (let i = 0; i < highlightPath.length - 1; i++) {
+          const u = Math.min(highlightPath[i], highlightPath[i + 1]);
+          const v = Math.max(highlightPath[i], highlightPath[i + 1]);
+          pathEdgeSet.add(`${u}-${v}`);
+        }
+      }
+
+      const layerColors = ['#6366f1', '#3b82f6', '#06b6d4', '#10b981', '#f59e0b', '#f97316', '#ef4444'];
+
+      let svg = `<svg viewBox="0 0 ${width} ${height}" class="w-full h-auto select-none" xmlns="http://www.w3.org/2000/svg">`;
+      svg += `<defs>
+        <filter id="glow-q6" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>`;
+
+      // Regular edges
+      proj.edges.forEach(e => {
+        const key = `${e.source}-${e.target}`;
+        if (!pathEdgeSet.has(key)) {
+          const n1 = nodeMap[e.source];
+          const n2 = nodeMap[e.target];
+          svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#312e81" stroke-opacity="0.25" stroke-width="0.8" />`;
+        }
+      });
+
+      // Highlighted geodesic path
+      if (highlightPath.length > 1) {
+        for (let i = 0; i < highlightPath.length - 1; i++) {
+          const n1 = nodeMap[highlightPath[i]];
+          const n2 = nodeMap[highlightPath[i + 1]];
+          if (n1 && n2) {
+            svg += `<line x1="${n1.x}" y1="${n1.y}" x2="${n2.x}" y2="${n2.y}" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" filter="url(#glow-q6)" />`;
+          }
+        }
+      }
+
+      // Nodes
+      proj.nodes.forEach(n => {
+        const isNatal = highlightNodes[0] === n.index;
+        const isAnnual = (activeHexIdx === n.index) || (highlightNodes[1] === n.index);
+        const isPathNode = highlightPath.includes(n.index);
+        const col = layerColors[n.hammingWeight] || '#94a3b8';
+
+        if (isAnnual) {
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="8" fill="none" stroke="#f43f5e" stroke-width="2" opacity="0.8" />`;
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="6.5" fill="#f43f5e" stroke="#ffffff" stroke-width="1.8" filter="url(#glow-q6)" />`;
+          svg += `<text x="${n.x}" y="${n.y - 10}" fill="#fda4af" font-size="9" font-family="sans-serif" font-weight="bold" text-anchor="middle">${activeHexName}</text>`;
+        } else if (isNatal) {
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="6" fill="#10b981" stroke="#ffffff" stroke-width="1.5" filter="url(#glow-q6)" />`;
+          svg += `<text x="${n.x}" y="${n.y - 9}" fill="#6ee7b7" font-size="8.5" font-family="sans-serif" font-weight="bold" text-anchor="middle">${natalHexName}</text>`;
+        } else if (isPathNode) {
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="4.5" fill="#38bdf8" stroke="#ffffff" stroke-width="1" />`;
+        } else {
+          svg += `<circle cx="${n.x}" cy="${n.y}" r="2.8" fill="${col}" opacity="0.75" />`;
+        }
+      });
+
+      svg += `</svg>`;
+      return svg;
+    }
   }
 
   if (typeof module !== 'undefined' && module.exports) {

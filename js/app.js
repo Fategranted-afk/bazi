@@ -12438,6 +12438,42 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const btnRenderQ6Hypercube = document.getElementById('btnRenderQ6Hypercube');
+    if (btnRenderQ6Hypercube) {
+      btnRenderQ6Hypercube.addEventListener('click', () => {
+        const container = document.getElementById('hypercubeVisualizerContainer');
+        const wrapper = document.getElementById('hypercubeSvgWrapper');
+        if (!container || !wrapper) return;
+
+        if (container.classList.contains('hidden')) {
+          container.classList.remove('hidden');
+        }
+
+        // Active 2026 Annual Hexagram: #56 Huoshan Lv
+        // Binary lines: [0, 0, 1, 1, 0, 1] -> integer index: 44
+        const annualIdx = 44;
+        // Natal Hexagram (e.g. #11 Tai: [1, 1, 1, 0, 0, 0] -> 7 or derived)
+        const natalIdx = 7;
+        const geodesic = (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.hexagramGeodesic)
+          ? GroupTheoryCore.hexagramGeodesic(natalIdx, annualIdx).geodesicPath
+          : [natalIdx, annualIdx];
+
+        if (typeof GroupTheoryCore !== 'undefined' && GroupTheoryCore.generateHypercubeSvgMarkup) {
+          wrapper.innerHTML = GroupTheoryCore.generateHypercubeSvgMarkup({
+            width: 480,
+            height: 340,
+            radius: 130,
+            highlightNodes: [natalIdx, annualIdx],
+            highlightPath: geodesic,
+            activeHexIdx: annualIdx,
+            activeHexName: isEn ? '2026 Transit: #56 Lv' : '2026值年·火山旅',
+            natalHexName: isEn ? 'Natal Base' : '命基·先天卦',
+            isEn: isEn
+          });
+        }
+      });
+    }
+
     // 2. Empirical Bayes Shrinkage Engine Controller
     function updateEbDisplay() {
       if (typeof EmpiricalBayesEngine === 'undefined') return;
