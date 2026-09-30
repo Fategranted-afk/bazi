@@ -66,15 +66,15 @@
 
       if (physiologicalStressIndex >= 65 || hrvDropPct >= 25) {
         resilienceTier = 'ACUTE_STRAIN';
-        resilienceLabel = isZh ? '显著应激耗损 (交感神经持续高警)' : 'Acute Autonomic Strain';
+        resilienceLabel = isZh ? '指标显著偏离 (HRV偏低 / 睡眠欠账)' : 'Notable Metric Deviation (Elevated Strain)';
         requiresBuffer = true;
       } else if (physiologicalStressIndex >= 40 || hrvDropPct >= 15) {
         resilienceTier = 'MODERATE_FATIGUE';
-        resilienceLabel = isZh ? '中度疲劳累积 (代偿修复期)' : 'Moderate Cumulative Fatigue';
+        resilienceLabel = isZh ? '指标轻度波动 (微幅疲劳累积)' : 'Mild Metric Fluctuation';
         requiresBuffer = true;
       } else if (physiologicalStressIndex >= 25) {
         resilienceTier = 'BALANCED';
-        resilienceLabel = isZh ? '正常平衡态 (日常稳定)' : 'Balanced Homeostasis';
+        resilienceLabel = isZh ? '指标处于平稳区间 (基准波动正常)' : 'Balanced Metric Range';
       }
 
       // 4. Generate Human-in-the-Loop Action Drafts (NOT autonomous executions!)
@@ -95,8 +95,8 @@
           ? '【人在回路安全保障】系统绝不自动执行日历修改或发送邮件。以下事项均为待审阅建议草稿，需经您亲自确认后生效。'
           : '[Human-in-the-Loop Guardrail] Autonomous execution disabled. The following items are editable drafts requiring your explicit confirmation.',
         medicalDisclaimer: isZh
-          ? '【非医疗诊断声明】心率变异性及睡眠趋势仅反映日常精力负荷与恢复状态，绝非临床医学或心理病理学判定。若感持续身体不适，请咨询正规医疗机构。'
-          : '[Non-Medical Disclaimer] Physiological indicators reflect stress resilience and pacing, not clinical medical diagnosis. Consult healthcare professionals if symptoms persist.'
+          ? '【非医疗诊断与传感器边界声明】心率变异性及睡眠趋势仅反映日常生理指标偏离，绝非临床医学、心理学或认知能力判定。研究表明消费级智能手表 HRV 与主观压力关联较弱；若接入 HealthKit，仅按最小必要原则申请 HRV/Sleep 只读权限，数据不上传。'
+          : '[Non-Medical & Wearable Scope Disclaimer] Physiological metrics reflect baseline numerical variations, not medical or cognitive diagnostic determinations. Research indicates weak correlation between consumer wearable HRV and subjective cognitive stress. If HealthKit is authorized, read-only scopes (HRV/Sleep) are kept strictly local.'
       };
     }
 

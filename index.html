@@ -3784,11 +3784,11 @@
           <span class="text-[11px] px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 font-mono">G60 &le; Z10 x Z12</span>
         </div>
         <div class="p-2.5 rounded-xl bg-indigo-950/50 border border-indigo-500/40 text-xs text-indigo-200">
-          💡 <strong>【一句话说明白】</strong>：用现代抽象代数证明古法干支是严格对称守恒系统，从根源杜绝一切“张冠李戴、信口胡诌”的伪命题。
+          💡 <strong>【一句话说明白】</strong>：用抽象代数检验干支符号规则的内部自洽性，杜绝“阳干配阴支”等底层编排错误；但数学自洽仅证明符号体系无内在矛盾，不能据此证明命理能预测现实。
         </div>
         <div class="text-xs text-gray-300 leading-relaxed space-y-1">
           <div class="text-indigo-400 font-bold">【深度解析与数理机制】：</div>
-          <div>传统推命最怕阴阳乱套或生造断语。在数学上，六十甲子是定义在阿贝尔群直积空间 Z10 &times; Z12 上的单循环生成子群 &lang;(1,1)&rang;，严格守恒奇偶同余律 s &equiv; b (mod 2)（绝无阳干配阴支）；天干五合为阶为 2 的对合自同构（&sigma;&sup2; = id）；周易 64 卦爻变则为 6 维超立方体布尔格 Q6 上的汉明距离，任何变卦只能循最短测地线演化。</div>
+          <div>六十甲子在数学上是直积空间 Z10 &times; Z12 中的单循环生成子群 &lang;(1,1)&rang;，严格守恒奇偶同余律 s &equiv; b (mod 2)；天干五合对应置换群 S10 中阶为 2 的对合配对置换（&sigma;&sup2; = id）；周易 64 卦可映射为 6 维布尔超立方体 Q6。代数形式化仅用于验证古代符号规则的内部对称与逻辑自洽，明确区分“形式系统的数学逻辑”与“经验世界的因果预测”。</div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -3839,41 +3839,41 @@
         <div class="flex items-center justify-between border-b border-purple-900/50 pb-3">
           <div class="flex items-center gap-2">
             <span class="text-lg">⚖️</span>
-            <h3 class="text-sm font-bold text-purple-200 font-serif-sc">分层经验贝叶斯收缩引擎 (EmpiricalBayes)</h3>
+            <h3 class="text-sm font-bold text-purple-200 font-serif-sc">启发式先验收缩器 (Heuristic Shrinkage · 收缩估计形式)</h3>
           </div>
           <span class="text-[11px] px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800 font-mono">&theta; = (1-B)y + B&mu;</span>
         </div>
         <div class="p-2.5 rounded-xl bg-purple-950/50 border border-purple-500/40 text-xs text-purple-200">
-          💡 <strong>【一句话说明白】</strong>：你打卡反馈越多系统越懂你，但在样本少于 20 次前坚决依附 90% 古籍经典先验，防止一两次偶然得失导致过拟合，支持随时一键恢复出厂设置。
+          💡 <strong>【一句话说明白】</strong>：借用贝叶斯收缩公式设定阻尼，防止系统因偶尔几次主观打卡而剧烈摆动；样本未充分积累前人为强行锁定基准权重，并提供一键清空还原。
         </div>
         <div class="text-xs text-gray-300 leading-relaxed space-y-1">
-          <div class="text-purple-400 font-bold">【深度解析与数理机制】：</div>
-          <div>人在逆境中容易过度悲观、在顺境中容易盲目自大。分层贝叶斯模型引入收缩因子 B = &sigma;&sup2; / (&sigma;&sup2; + &tau;&sup2;)。冷启动期（N &lt; 20）强制 B &ge; 0.90，90% 依附千年验证的经典基准；唯有沉淀大量真实战术打卡后，个性偏好才稳健显现，且保留绝对数据主权。</div>
+          <div class="text-purple-400 font-bold">【机制边界与统计学说明】：</div>
+          <div>本模块借用经验贝叶斯收缩形式 &theta; = (1-B)y + B&mu; 作为工程平滑器。“样本量 N &lt; 20 强制设定 B &ge; 0.90”属于工程经验阻尼，并非由人群统计观测数据边际似然拟合得出；古典对称权重仅作为初始先验假设，不代表已校准的因果规律。下方按钮仅用于交互演示阻尼曲线，不可视作真实训练数据。</div>
         </div>
         <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-black/40 border border-purple-900/30 text-xs">
           <div>
-            <span class="text-gray-400">当前沉淀反馈数 (N): </span>
+            <span class="text-gray-400">交互演示样本数 (N): </span>
             <span id="ebSampleCount" class="font-bold text-purple-300 font-mono">0</span>
           </div>
           <div>
-            <span class="text-gray-400">收缩保护因子 (B): </span>
+            <span class="text-gray-400">阻尼收缩因子 (B): </span>
             <span id="ebShrinkageFactor" class="font-bold text-emerald-400 font-mono">1.000</span>
           </div>
           <div>
-            <span class="text-gray-400">先验状态: </span>
-            <span id="ebPriorStatus" class="font-bold text-indigo-300 font-mono">纯正经典先验</span>
+            <span class="text-gray-400">基准状态: </span>
+            <span id="ebPriorStatus" class="font-bold text-indigo-300 font-mono">纯初始默认先验</span>
           </div>
         </div>
         <div class="flex flex-wrap items-center gap-3">
           <button id="btnEbSimulateFeedback" type="button" class="px-3.5 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
-            ➕ 注入模拟正向反馈 (N+1)
+            ➕ 演示交互样本 (Demo N+1)
           </button>
           <button id="btnEbFactoryReset" type="button" class="px-3.5 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900/80 text-rose-300 border border-rose-700/50 font-bold text-xs shadow transition active:scale-95 cursor-pointer">
-            🔄 一键恢复纯经典基线 (Factory Reset)
+            🔄 一键清空并重置基准 (Factory Reset)
           </button>
         </div>
         <div id="ebAuditOutput" class="p-3 rounded-xl bg-black/50 border border-purple-900/40 text-xs text-gray-300 font-mono">
-          系统处于初始纯古籍先验状态 (B = 1.000)
+          系统处于初始默认先验状态 (B = 1.000)
         </div>
       </div>
 
@@ -3887,11 +3887,11 @@
           <span class="text-[11px] px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800 font-mono">P(Ruin) &le; &epsilon;</span>
         </div>
         <div class="p-2.5 rounded-xl bg-blue-950/50 border border-blue-500/40 text-xs text-blue-200">
-          💡 <strong>【一句话说明白】</strong>：算命算不出你的银行卡余额——这里直接带入你的真实存款与每月硬性开支，算出在最坏情况下你“第几个月断粮”，守死绝不破产出局的生存底线。
+          💡 <strong>【一句话说明白】</strong>：用你的真实存款与每月硬性开支运行启发式压力测试，测算在演示假设的收入骤降下“第几个月可能触及警戒线”，帮助设定严格的止损断路器。
         </div>
         <div class="text-xs text-gray-300 leading-relaxed space-y-1">
           <div class="text-blue-400 font-bold">【深度解析与应用场景】：</div>
-          <div>很多决策失误不是败在眼光，而是败在“气数未尽，现金先尽”。沙盘将传统“身旺/身弱承财力”映射为物理现实中的现金流跑道与容忍度，推演【基准稳定】、【顺境进取】与【极端承压】三条轨迹。无论时运多么诱人，若承压轨跌破安全阈值（破产概率 P(Ruin) &gt; &epsilon;），系统立即激活断路器，强制转入轻资产防守。</div>
+          <div>将传统“身旺/身弱承财力”置换为真实财务约束（流动储备、月固定开销、亏损底线）。沙盘在演示设定的收入冲击假设下，推演基准、稳健与极端承压三轨。重点是算出在现金流中断时“能撑几个月”，并触发止损防线；输出属于特定参数假设下的情景压力测试，不构成确定性财务或市场预测。</div>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <div>
@@ -3967,11 +3967,11 @@
           <span class="text-[11px] px-2 py-0.5 rounded bg-teal-950 text-teal-300 border border-teal-800 font-mono">Pruning P(Ruin)</span>
         </div>
         <div class="p-2.5 rounded-xl bg-teal-950/50 border border-teal-500/40 text-xs text-teal-200">
-          💡 <strong>【一句话说明白】</strong>：AlphaGo 式的前瞻推演：向未来推演 3~7 年的战略分支，只要某一分支可能导致你现金流断裂出局，就直接一票否决砍掉，只选存活率最高、低谷蛰伏、高光爆发的自适应路径。
+          💡 <strong>【一句话说明白】</strong>：借鉴 MCTS 决策树前瞻搜索思想：在预设的回报模型中推演跨周期策略分支，把模型估算跌破安全资金线的路径一票否决淘汰，寻找存活率相对更高的自适应组合。
         </div>
         <div class="text-xs text-gray-300 leading-relaxed space-y-1">
           <div class="text-teal-400 font-bold">【深度解析与应用场景】：</div>
-          <div>传统规则只会告诉你“今年运势不佳”，却无法解决跨周期的“长程稀疏奖励信用分配”。人生关键飞跃往往需要经历数年低回报的印绶沉淀或伏吟蓄力。MCTS 施加严格的破产概率上界约束（P(Ruin) &le; &epsilon;），剪除一切盲目加杠杆的赌博分支，推导出“何时低欲望沉淀、何时防守蓄力、何时用神到位全力进攻”的全局最优解。</div>
+          <div>传统经验难以评估跨周期的“长程信用分配”。MCTS 依赖于预设的环境模型和回报分布（年化波动率 0.05~0.50），在设定破产概率容忍度 &epsilon; 下剪枝淘汰高危路径。<strong>重要边界说明</strong>：搜索算法仅在给定的人为模型假设空间内寻找最优解，无法证明真实世界环境；输出结果为模型内部模拟结果，绝非现实生存或收益保证。</div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -4011,11 +4011,11 @@
           <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">Drafts Only</span>
         </div>
         <div class="p-2.5 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-xs text-emerald-200">
-          💡 <strong>【一句话说明白】</strong>：智能穿戴监测到你心率变异度骤降、深睡眠塌陷时，智能拦截你的冲动决策，但绝不越权擅作主张，而是为你备好“推迟谈判/委派任务”的高情商邮件草稿，由你亲自决定。
+          💡 <strong>【一句话说明白】</strong>：监测穿戴设备的心率变异度与睡眠指标偏离，在你作息严重透支时为你备好“推迟会议/弹性调整”的日程建议草稿，由你亲自决定是否采纳。
         </div>
         <div class="text-xs text-gray-300 leading-relaxed space-y-1">
           <div class="text-emerald-400 font-bold">【深度解析与应用场景】：</div>
-          <div>传统“气机受挫、五行失衡”在现代医学中直接投射为自主神经紊乱（交感神经过度兴奋、迷走神经抑制）。当滚动 HRV 较基线暴跌超 20%、深睡眠严重不足时，大脑前额叶皮层受抑，决策极易被情绪冲动劫持。系统严守安全红线：绝不静默删除日历或私自发送邮件，而是生成温和合规的战术建议与待审阅草稿，助你在生理高压期避开高危对抗，安度应激期。</div>
+          <div>当 HRV 较个人近期基线显著下降、睡眠欠账增多时，反映身体处于恢复不良或疲劳状态。<strong>科学边界</strong>：消费级穿戴设备的短期 HRV 易受测量体位、咖啡因和昼夜节律干扰，与主观急性压力的关联较弱，不能推断认知状态或谈判胜任力。系统严守安全红线：绝不擅自篡改日历或发信，仅生成可编辑草稿供自主调节节奏；若接入 HealthKit，仅申请只读最小必要权限。</div>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <div>
@@ -4057,11 +4057,11 @@
         <span class="text-[11px] px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 font-mono">Shannon Entropy H</span>
       </div>
       <div class="p-2.5 rounded-xl bg-cyan-950/50 border border-cyan-500/40 text-xs text-cyan-200">
-        💡 <strong>【一句话说明白】</strong>：检查你的高管班子是不是全都在猛踩油门、没人踩刹车；测算团队认知多样性（香农熵），在合规反歧视前提下，诊断战略盲区与决策内耗风险。
+        💡 <strong>【一句话说明白】</strong>：基于团队核心成员的实际职责分工与工作偏好，复盘团队是否存在“全员狂飙做开拓、缺乏合规踩刹车”的职能盲区，严禁用八字或性格给员工贴标签。
       </div>
       <div class="text-xs text-gray-300 leading-relaxed space-y-1">
         <div class="text-cyan-400 font-bold">【深度解析与应用场景】：</div>
-        <div>古典十神映射为现代组织的核心动能：战略开拓（食伤/七杀）、治理合规（正官/正印）、商业变现（正偏财）、组织协同（比劫）。若高管班子全为单一进攻型（香农熵 H &lt; 1.0），极易因认知同质化集体踩坑；若全为防守型，则丧失市场敏锐度。本引擎通过认知向量矩阵诊断盲区，且严格遵循反歧视与劳动合规公理，绝不用作个人评级筛选，仅作团队协同盲区审计。</div>
+        <div>评估管理团队在创新开拓、制度合规、商业变现、交付协同四大职能维度的配置完备度（香农熵 H），识别职能缺位风险。<strong>合规公理</strong>：本模块为组织职责分工复盘工具，传统十神仅作为比喻性文化索引，绝不可用于评定个人真实工作能力，严禁用于招聘筛选、岗位定级或辞退决策。</div>
       </div>
       <div class="flex flex-wrap items-center gap-3">
         <button id="btnRunTeamAudit" type="button" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
@@ -4093,8 +4093,8 @@
           多样性模块仅供团队内部认知对齐，严禁任何组织将本系统作为人事招聘初筛、考核评级或淘汰的工具。
         </div>
         <div>
-          <span class="text-gray-200 font-bold">4. 数据隐私绝对保护：</span>
-          纯本地离线计算架构，用户输入的所有财务、日程与健康数据均保存在本地浏览器沙盒中，绝不上云、绝不出售。
+          <span class="text-gray-200 font-bold">4. 客户端计算与外部资源依赖说明：</span>
+          用户输入的财务、健康与日程数据均在本地浏览器 JavaScript 运行内存中计算，本系统无任何后端服务器接口，不上传、不上云。注意：页面渲染依赖公共 CDN 托管的开源静态库（Tailwind CSS、KaTeX、html2pdf 等），若需完全物理断网离线，需完成前端依赖的本地打包离线化。
         </div>
       </div>
     </div>

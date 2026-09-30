@@ -12414,10 +12414,12 @@ document.addEventListener('DOMContentLoaded', () => {
           let html = `<div class="space-y-1.5">`;
           html += `<div><strong>Axiom 1 (Parity Conservation):</strong> s = ${stemIdx}, b = ${branchIdx} &rArr; s mod 2 = ${stemIdx % 2}, b mod 2 = ${branchIdx % 2} &rArr; <span class="${isValid ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">${isValid ? 'PASSED (Congruence s &equiv; b mod 2)' : 'VIOLATION (Forbidden Jiazi pairing)'}</span></div>`;
           if (isValid) {
-            html += `<div><strong>Axiom 2 (Cyclic Subgroup Index):</strong> Cycle Position in G60 = &lang;(1,1)&rang; is <strong>#${jiaziIdx + 1}</strong> (${GroupTheoryCore.getJiaziFromIndex(jiaziIdx).name})</div>`;
+            const jzObj = GroupTheoryCore.getJiaziFromIndex(jiaziIdx);
+            html += `<div><strong>Axiom 2 (Cyclic Subgroup Index):</strong> Cycle Position in G60 = &lang;(1,1)&rang; is <strong>#${jiaziIdx + 1}</strong> (${jzObj.stem}${jzObj.branch} [${jzObj.stemElement}/${jzObj.branchElement}])</div>`;
           }
-          html += `<div><strong>Axiom 3 (Stem 5-Harmony Involution):</strong> &sigma;(s) = (s + 5) mod 10 = ${fiveHarm.partnerIndex} (${fiveHarm.partnerStem}), &sigma;&sup2; = id (Involution validated)</div>`;
-          html += `<div><strong>Axiom 4 (Branch 6-Harmony Involution):</strong> &tau;(b) = (1 - b + 12) mod 12 = ${sixHarm.partnerIndex} (${sixHarm.partnerBranch}), &tau;&sup2; = id</div>`;
+          html += `<div><strong>Axiom 3 (Stem 5-Harmony Involution Permutation):</strong> &sigma;(s) = (s + 5) mod 10 = ${fiveHarm.partnerIndex} (${fiveHarm.partnerStem}), &sigma;&sup2; = id (Pairing permutation in S10)</div>`;
+          html += `<div><strong>Axiom 4 (Branch 6-Harmony Involution Permutation):</strong> &tau;(b) = (1 - b + 12) mod 12 = ${sixHarm.partnerIndex} (${sixHarm.partnerBranch}), &tau;&sup2; = id</div>`;
+          html += `<div class="text-[11px] text-gray-400 italic pt-1 border-t border-indigo-900/40">Note: Algebraic modeling verifies internal formal consistency of the symbolic rules; it does not validate empirical real-world predictive validity.</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         } else {
@@ -12425,10 +12427,11 @@ document.addEventListener('DOMContentLoaded', () => {
           html += `<div><strong>公理 1 (奇偶同余守恒律):</strong> s = ${stemIdx}, b = ${branchIdx} &rArr; s mod 2 = ${stemIdx % 2}, b mod 2 = ${branchIdx % 2} &rArr; <span class="${isValid ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">${isValid ? '通过检验 (同余守恒成立，纯正干支配对)' : '破坏同余 (非对称破缺：严禁阳干配阴支或阴干配阳支)'}</span></div>`;
           if (isValid) {
             const jzObj = GroupTheoryCore.getJiaziFromIndex(jiaziIdx);
-            html += `<div><strong>公理 2 (单循环生成子群位置):</strong> 在 &Gscr;60 = &lang;(1,1)&rang; 中序号为 <strong>第 ${jiaziIdx + 1} 柱</strong> (${jzObj.stem}${jzObj.branch}，${jzObj.stemElement}${jzObj.branchElement})</div>`;
+            html += `<div><strong>公理 2 (单循环生成子群位置):</strong> 在 &Gscr;60 = &lang;(1,1)&rang; 中序号为 <strong>第 ${jiaziIdx + 1} 柱</strong> (${jzObj.stem}${jzObj.branch}，${jzObj.stemElement} / ${jzObj.branchElement})</div>`;
           }
-          html += `<div><strong>公理 3 (天干五合自同构对合):</strong> &sigma;(${stemIdx}) = (${stemIdx} + 5) mod 10 = ${fiveHarm.partnerIndex} (${fiveHarm.partnerStem})，满足 &sigma;&sup2; = id</div>`;
-          html += `<div><strong>公理 4 (地支六合对偶变换):</strong> &tau;(${branchIdx}) = (1 - ${branchIdx} + 12) mod 12 = ${sixHarm.partnerIndex} (${sixHarm.partnerBranch})，满足 &tau;&sup2; = id</div>`;
+          html += `<div><strong>公理 3 (天干五合对合配对置换):</strong> &sigma;(${stemIdx}) = (${stemIdx} + 5) mod 10 = ${fiveHarm.partnerIndex} (${fiveHarm.partnerStem})，满足 &sigma;&sup2; = id（S10 中阶为 2 的对合置换，保持配对对称）</div>`;
+          html += `<div><strong>公理 4 (地支六合对合置换):</strong> &tau;(${branchIdx}) = (1 - ${branchIdx} + 12) mod 12 = ${sixHarm.partnerIndex} (${sixHarm.partnerBranch})，满足 &tau;&sup2; = id</div>`;
+          html += `<div class="text-[11px] text-gray-400 italic pt-1 border-t border-indigo-900/40">注：代数形式化仅验证传统干支体系内部的逻辑对称性与规则自洽性，不构成对现实客观事件的预测证明。</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         }
@@ -12513,7 +12516,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let html = `<div class="space-y-2">`;
           html += `<div class="flex items-center justify-between border-b border-blue-900/40 pb-1.5">`;
           html += `<span>Safe Runway: <strong>${sim.safeRunwayMonths} Months</strong></span>`;
-          html += `<span>Ruin Probability P(Ruin): <strong class="${sim.stressRuinProbability > 0.15 ? 'text-rose-400' : 'text-emerald-400'}">${(sim.stressRuinProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `<span>Stress Depletion Risk (Model): <strong class="${sim.stressRuinProbability > 0.15 ? 'text-rose-400' : 'text-emerald-400'}">${(sim.stressRuinProbability * 100).toFixed(1)}%</strong></span>`;
           html += `</div>`;
           html += `<div class="grid grid-cols-3 gap-2 text-[11px] pt-1">`;
           html += `<div class="p-2 rounded bg-black/40 border border-gray-800"><strong>${sim.trajectories.base.name}</strong><br/>Net: \$${sim.trajectories.base.netCashFlow.toLocaleString()}<br/>Status: ${sim.trajectories.base.viability}</div>`;
@@ -12521,13 +12524,14 @@ document.addEventListener('DOMContentLoaded', () => {
           html += `<div class="p-2 rounded bg-black/40 border border-rose-900/40"><strong>${sim.trajectories.stress.name}</strong><br/>Breach: Month ${sim.trajectories.stress.cashDepletionMonth}<br/>Status: ${sim.trajectories.stress.viability}</div>`;
           html += `</div>`;
           html += `<div class="text-[11px] text-gray-400 pt-1">${sim.strategicDirectives[0]?.directive || ''}</div>`;
+          html += `<div class="text-[10px] text-gray-500 italic pt-0.5 border-t border-blue-900/30">Demonstration Note: Scenario projects liquidity depletion assuming a 40% sudden top-line drop under sticky overhead. Real outcomes depend on actual AR velocity and variable cost elasticity.</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         } else {
           let html = `<div class="space-y-2">`;
           html += `<div class="flex items-center justify-between border-b border-blue-900/40 pb-1.5">`;
           html += `<span>安全生存跑道: <strong>${sim.safeRunwayMonths} 个月</strong></span>`;
-          html += `<span>极值破产概率 P(Ruin): <strong class="${sim.stressRuinProbability > 0.15 ? 'text-rose-400' : 'text-emerald-400'}">${(sim.stressRuinProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `<span>承压断粮风险估计: <strong class="${sim.stressRuinProbability > 0.15 ? 'text-rose-400' : 'text-emerald-400'}">${(sim.stressRuinProbability * 100).toFixed(1)}%</strong></span>`;
           html += `</div>`;
           html += `<div class="grid grid-cols-3 gap-2 text-[11px] pt-1">`;
           html += `<div class="p-2 rounded bg-black/40 border border-gray-800"><strong>${sim.trajectories.base.name}</strong><br/>净现金流: ￥${sim.trajectories.base.netCashFlow.toLocaleString()}<br/>可行性: ${sim.trajectories.base.viability}</div>`;
@@ -12535,6 +12539,7 @@ document.addEventListener('DOMContentLoaded', () => {
           html += `<div class="p-2 rounded bg-black/40 border border-rose-900/40"><strong>${sim.trajectories.stress.name}</strong><br/>断裂点: 第 ${sim.trajectories.stress.cashDepletionMonth} 月<br/>可行性: ${sim.trajectories.stress.viability}</div>`;
           html += `</div>`;
           html += `<div class="text-[11px] text-amber-300 pt-1">${sim.strategicDirectives[0]?.directive || ''}</div>`;
+          html += `<div class="text-[10px] text-gray-500 italic pt-0.5 border-t border-blue-900/30">演示假设说明：承压轨假设外部收入骤降 40%、支出惯性延续，推算流动资金耗尽月份。真实风险取决于真实业务应收账款与可变成本弹性。</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         }
@@ -12611,9 +12616,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isEn) {
           let html = `<div class="space-y-2">`;
           html += `<div class="flex items-center justify-between border-b border-teal-900/40 pb-1.5">`;
-          html += `<span>Selected Strategy: <strong class="text-teal-300">${res.bestStrategyName}</strong></span>`;
-          html += `<span>Survival Probability: <strong class="text-emerald-400 font-bold">${(res.survivalProbability * 100).toFixed(1)}%</strong></span>`;
-          html += `<span>Ruin-Pruned Branches: <strong>${res.prunedBranchCount}</strong></span>`;
+          html += `<span>Strategy Path: <strong class="text-teal-300">${res.bestStrategyName}</strong></span>`;
+          html += `<span>Simulated Model Survival Rate: <strong class="text-emerald-400 font-bold">${(res.survivalProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `<span>Pruned Paths: <strong>${res.prunedBranchCount}</strong></span>`;
           html += `</div>`;
           html += `<div class="text-[11px] text-gray-300">${res.methodologyNotes}</div>`;
           if (res.optimalTimeline && res.optimalTimeline.length > 0) {
@@ -12623,14 +12628,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             html += `</div>`;
           }
+          html += `<div class="text-[10px] text-gray-500 italic pt-0.5 border-t border-teal-900/30">Methodology Note: MCTS searches strictly within synthetic payoff distributions (volatility 0.05-0.50). Search optimizes within model boundaries; it is not an empirical real-world survival guarantee.</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         } else {
           let html = `<div class="space-y-2">`;
           html += `<div class="flex items-center justify-between border-b border-teal-900/40 pb-1.5">`;
           html += `<span>最优跨周期策略: <strong class="text-teal-300">${res.bestStrategyName}</strong></span>`;
-          html += `<span>全周期存活率: <strong class="text-emerald-400 font-bold">${(res.survivalProbability * 100).toFixed(1)}%</strong></span>`;
-          html += `<span>破产硬剪枝分支数: <strong>${res.prunedBranchCount} 个</strong></span>`;
+          html += `<span>模型假设存活率估计: <strong class="text-emerald-400 font-bold">${(res.survivalProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `<span>破产剪枝路径数: <strong>${res.prunedBranchCount} 个</strong></span>`;
           html += `</div>`;
           html += `<div class="text-[11px] text-gray-300">${res.methodologyNotes}</div>`;
           if (res.optimalTimeline && res.optimalTimeline.length > 0) {
@@ -12640,6 +12646,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             html += `</div>`;
           }
+          html += `<div class="text-[10px] text-gray-500 italic pt-0.5 border-t border-teal-900/30">方法学说明：MCTS 仅在预设的回报分布（年波动率 0.05~0.50）与静态衰减模型空间内剪枝寻优，旨在展示决策推演逻辑，非真实商业存活率保证。</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         }
@@ -12685,6 +12692,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             html += `</div>`;
           }
+          html += `<div class="text-[10px] text-gray-500 italic pt-0.5 border-t border-emerald-900/30">Sensor Limitation Note: Consumer wearable HRV is susceptible to posture, circadian phase, and caffeine, showing weak correlation with acute subjective stress. Computed strictly for personal routine pacing, not medical diagnosis or cognitive assessment.</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         } else {
@@ -12704,6 +12712,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             html += `</div>`;
           }
+          html += `<div class="text-[10px] text-gray-500 italic pt-0.5 border-t border-emerald-900/30">指标科学边界：消费级穿戴设备的短期 HRV 易受测量姿势、昼夜节律与咖啡因干扰，与急性心理压力相关性较弱。本计算仅作个人作息负荷偏离度参考，非医学诊断或认知状态判定。</div>`;
           html += `</div>`;
           outputEl.innerHTML = html;
         }

@@ -54,18 +54,25 @@
      */
     static getJiaziFromIndex(k) {
       const idx = ((k % 60) + 60) % 60;
+      const sIdx = idx % 10;
+      const bIdx = idx % 12;
       return {
-        stemIndex: idx % 10,
-        branchIndex: idx % 12,
-        stem: STEMS[idx % 10],
-        branch: BRANCHES[idx % 12],
-        text: STEMS[idx % 10] + BRANCHES[idx % 12]
+        index: idx,
+        stemIndex: sIdx,
+        branchIndex: bIdx,
+        stem: STEMS[sIdx],
+        branch: BRANCHES[bIdx],
+        stemElement: STEM_ELEMENTS[sIdx],
+        branchElement: BRANCH_ELEMENTS[bIdx],
+        name: STEMS[sIdx] + BRANCHES[bIdx],
+        text: STEMS[sIdx] + BRANCHES[bIdx]
       };
     }
 
     /**
-     * Stem Five-Harmony Involution: sigma(s) = (s + 5) mod 10
-     * Involution property: sigma(sigma(s)) == s
+     * Stem Five-Harmony Involution Permutation: sigma(s) = (s + 5) mod 10
+     * Note: This is an involutive pairing permutation in S_10 (sigma^2 = id),
+     * NOT a group automorphism of (Z10, +) as it does not preserve addition.
      */
     static stemFiveHarmony(sIdx) {
       const s = ((sIdx % 10) + 10) % 10;
@@ -80,11 +87,11 @@
     }
 
     /**
-     * Earthly Branch Six-Harmony Involutive Automorphism:
+     * Earthly Branch Six-Harmony Involutive Permutation (Affine Reflection in S_12):
      * tau(b) = (1 - b + 12) mod 12
      * Zi(0) <-> Chou(1), Yin(2) <-> Hai(11), Mao(3) <-> Xu(10),
      * Chen(4) <-> You(9), Si(5) <-> Shen(8), Wu(6) <-> Wei(7).
-     * Involution property: tau(tau(b)) == b
+     * Involution property: tau(tau(b)) == b (tau^2 = id)
      */
     static branchSixHarmony(bIdx) {
       const b = ((bIdx % 12) + 12) % 12;
