@@ -556,6 +556,11 @@
             <span data-i18n="btn_ribbon_ledger_text">待办打卡清单</span>
             <span id="ribbonLedgerCountBadge" class="hidden px-1.5 py-0.2 rounded-full bg-amber-400 text-gray-950 font-bold text-[10px] font-mono">0</span>
           </button>
+          <button id="btnRibbonOpenPhase78" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-800 via-indigo-900 to-purple-900 hover:from-purple-700 hover:to-indigo-800 text-purple-200 font-bold text-xs shadow-md transition flex items-center gap-1.5 border border-purple-500/40 active:scale-95 cursor-pointer" data-i18n="btn_ribbon_phase78" title="打开高维战略作战室与沙盘群 (Phase 7-8)">
+            <span>🪐</span>
+            <span data-i18n="btn_ribbon_phase78_text">战略作战室</span>
+            <span class="inline-block w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+          </button>
           <button id="btnReturnToPortal" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-100 font-bold text-xs shadow-md transition flex items-center gap-1.5 border border-amber-500/40 active:scale-95 cursor-pointer" data-i18n="btn_edit_natal">
             ✏️ 重新排盘 / 修改八字
           </button>
@@ -3211,6 +3216,11 @@
             <span data-i18n="career_tab_title_simulator">现实决策 · 双轨对抗推演沙盘</span>
             <span class="text-xs px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-bold" data-i18n="career_tab_badge_simulator">胜负对决</span>
           </button>
+          <button type="button" class="career-sub-tab-btn px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl border-2 border-gray-700/80 bg-gray-900/80 text-gray-300 hover:text-white hover:border-purple-400/70 hover:bg-purple-950/40 text-sm sm:text-base font-bold transition-all duration-200 cursor-pointer flex items-center gap-2.5 shadow-sm hover:scale-[1.02] active:scale-95" data-career-tab="career-tab-phase78">
+            <span class="text-lg sm:text-xl">🪐</span>
+            <span data-i18n="career_tab_title_phase78">高维战略作战室与沙盘群 (Phase 7-8)</span>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 font-mono font-bold" data-i18n="career_tab_badge_phase78">战略升维</span>
+          </button>
         </div>
       </div>
       <div class="text-xs sm:text-sm text-indigo-300/80 font-mono" data-i18n="career_subpage_note">对标十二大典独立副页面架构 · 快捷直达</div>
@@ -3733,6 +3743,331 @@
       <!-- Transit Year Strategy Card -->
       <div id="gameTransitStrategyCard" class="p-4 rounded-xl border border-amber-600/30 bg-amber-950/15">
         <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Career Sub-Pane 4: 高维战略作战室与沙盘群 (Phase 7-8: Institutional Strategy War Room & Axiomatic Sandboxes) -->
+  <div id="career-tab-phase78" class="career-subpage-pane space-y-6 hidden pt-2">
+    <!-- Header Banner -->
+    <div class="p-5 rounded-2xl border border-purple-500/40 bg-gradient-to-r from-purple-950/40 via-indigo-950/40 to-slate-950/50 shadow-2xl relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-2 mb-1">
+            <span class="chinese-seal text-xs py-0.5 border-purple-400 text-purple-300">认知跃迁</span>
+            <h2 class="text-xl sm:text-2xl font-bold font-serif-sc text-purple-200">
+              高维战略作战室与象数沙盘群 (Phase 7–8)
+            </h2>
+          </div>
+          <p class="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed">
+            严守“非宿命论、防范性契约、人机协同在回路、反歧视合规”四大公理原则，集成代数群论公理、分层经验贝叶斯收缩、现实硬约束三轨沙盘、多利益相关方博弈 (GFI)、破产约束 MCTS 与体征应激预警。
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1.5 rounded-xl bg-purple-900/60 border border-purple-500/40 text-purple-200 text-xs font-mono font-bold">
+            Axiomatic &amp; Synthetic ABM
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid of Phase 7 & 8 Engines -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+      <!-- Engine 1: Group Theory Axiomatic Core -->
+      <div class="p-5 rounded-2xl border border-indigo-500/30 bg-[#101322] space-y-4">
+        <div class="flex items-center justify-between border-b border-indigo-900/50 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">📐</span>
+            <h3 class="text-sm font-bold text-indigo-200 font-serif-sc">象数代数拓扑与群论公理校验仪 (GroupTheoryCore)</h3>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800 font-mono">G60 &le; Z10 x Z12</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          严格公理化六十甲子为阿贝尔直积生成子群 &lang;(1,1)&rang;，严格守恒同余律 s &equiv; b (mod 2)；映射 64 卦为 6 维超立方体图 Q6 之汉明测地线。
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">天干 (s &isin; Z10)</label>
+            <select id="groupStemSel" class="w-full bg-[#16192b] border border-gray-700 rounded-lg p-2 text-xs text-gray-200">
+              <option value="0">甲 (0, 阳木)</option>
+              <option value="1">乙 (1, 阴木)</option>
+              <option value="2">丙 (2, 阳火)</option>
+              <option value="3">丁 (3, 阴火)</option>
+              <option value="4">戊 (4, 阳土)</option>
+              <option value="5">己 (5, 阴土)</option>
+              <option value="6">庚 (6, 阳金)</option>
+              <option value="7">辛 (7, 阴金)</option>
+              <option value="8">壬 (8, 阳水)</option>
+              <option value="9">癸 (9, 阴水)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">地支 (b &isin; Z12)</label>
+            <select id="groupBranchSel" class="w-full bg-[#16192b] border border-gray-700 rounded-lg p-2 text-xs text-gray-200">
+              <option value="0">子 (0, 阳水)</option>
+              <option value="1">丑 (1, 阴土)</option>
+              <option value="2">寅 (2, 阳木)</option>
+              <option value="3">卯 (3, 阴木)</option>
+              <option value="4">辰 (4, 阳土)</option>
+              <option value="5">巳 (5, 阴火)</option>
+              <option value="6">午 (6, 阳火)</option>
+              <option value="7">未 (7, 阴土)</option>
+              <option value="8">申 (8, 阳金)</option>
+              <option value="9">酉 (9, 阴金)</option>
+              <option value="10">戌 (10, 阳土)</option>
+              <option value="11">亥 (11, 阴水)</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnCheckGroupTheory" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            🔬 验证同余奇偶律与五合对合
+          </button>
+        </div>
+        <div id="groupTheoryOutput" class="p-3 rounded-xl bg-black/50 border border-indigo-900/40 text-xs text-gray-300 font-mono">
+          点击按钮运行群论公理判定...
+        </div>
+      </div>
+
+      <!-- Engine 2: Empirical Bayes Engine -->
+      <div class="p-5 rounded-2xl border border-purple-500/30 bg-[#121024] space-y-4">
+        <div class="flex items-center justify-between border-b border-purple-900/50 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">⚖️</span>
+            <h3 class="text-sm font-bold text-purple-200 font-serif-sc">分层经验贝叶斯收缩引擎 (EmpiricalBayes)</h3>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800 font-mono">&theta; = (1-B)y + B&mu;</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          冷启动防过拟合保护机制：样本量 N &lt; 20 时，收缩因子 B &ge; 0.90，90% 依附古典先验；提供单键回退至纯经典基线数据主权保障。
+        </p>
+        <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-black/40 border border-purple-900/30 text-xs">
+          <div>
+            <span class="text-gray-400">当前沉淀反馈数 (N): </span>
+            <span id="ebSampleCount" class="font-bold text-purple-300 font-mono">0</span>
+          </div>
+          <div>
+            <span class="text-gray-400">收缩保护因子 (B): </span>
+            <span id="ebShrinkageFactor" class="font-bold text-emerald-400 font-mono">1.000</span>
+          </div>
+          <div>
+            <span class="text-gray-400">先验状态: </span>
+            <span id="ebPriorStatus" class="font-bold text-indigo-300 font-mono">纯正经典先验</span>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <button id="btnEbSimulateFeedback" type="button" class="px-3.5 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            ➕ 注入模拟正向反馈 (N+1)
+          </button>
+          <button id="btnEbFactoryReset" type="button" class="px-3.5 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900/80 text-rose-300 border border-rose-700/50 font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            🔄 一键恢复纯经典基线 (Factory Reset)
+          </button>
+        </div>
+        <div id="ebAuditOutput" class="p-3 rounded-xl bg-black/50 border border-purple-900/40 text-xs text-gray-300 font-mono">
+          系统处于初始纯古籍先验状态 (B = 1.000)
+        </div>
+      </div>
+
+      <!-- Engine 3: Scenario Sandbox Engine -->
+      <div class="p-5 rounded-2xl border border-blue-500/30 bg-[#0d1424] space-y-4">
+        <div class="flex items-center justify-between border-b border-blue-900/50 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🛡️</span>
+            <h3 class="text-sm font-bold text-blue-200 font-serif-sc">现实硬约束三轨情景沙盘 (ScenarioSandbox)</h3>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800 font-mono">P(Ruin) &le; &epsilon;</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          以流动储备金、固定月开销、承受亏损底线为现实锚，输出基准、进取、承压三轨演进轨迹与资金断裂月份。
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">流动资金 (元)</label>
+            <input type="number" id="sandboxCash" value="500000" class="w-full bg-[#141b2d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">月固定开销 (元)</label>
+            <input type="number" id="sandboxBurn" value="35000" class="w-full bg-[#141b2d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">最大承受亏损 (元)</label>
+            <input type="number" id="sandboxMaxLoss" value="150000" class="w-full bg-[#141b2d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">每周工时上限 (h)</label>
+            <input type="number" id="sandboxHours" value="48" class="w-full bg-[#141b2d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnRunSandboxSim" type="button" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            ⚡ 运行现实三轨推演
+          </button>
+        </div>
+        <div id="sandboxOutput" class="p-3 rounded-xl bg-black/50 border border-blue-900/40 text-xs text-gray-300 font-mono">
+          点击运行现实硬约束三轨情景沙盘...
+        </div>
+      </div>
+
+      <!-- Engine 4: Stakeholder Game & GFI Engine -->
+      <div class="p-5 rounded-2xl border border-rose-500/30 bg-[#1c0f18] space-y-4">
+        <div class="flex items-center justify-between border-b border-rose-900/50 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">♟️</span>
+            <h3 class="text-sm font-bold text-rose-200 font-serif-sc">多利益相关方博弈与治理阻抗 (GFI Audit)</h3>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800 font-mono">GFI &amp; Rupture</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          模拟创始人、技术CTO、外部领投机构与核心骨干在外部冲击下的博弈应激，测算治理阻抗指数 (GFI) 并输出契约防火墙建议。
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">应激冲击: 业绩下挫 (%)</label>
+            <input type="number" id="gfiRevDecline" value="40" class="w-full bg-[#261522] border border-gray-700 rounded-lg p-2 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">现金流支撑跑道 (月)</label>
+            <input type="number" id="gfiRunwayMonths" value="4" class="w-full bg-[#261522] border border-gray-700 rounded-lg p-2 text-xs text-gray-200">
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnRunGfiSim" type="button" class="px-4 py-2 rounded-xl bg-rose-700 hover:bg-rose-600 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            🔍 测算治理阻抗 (GFI) 与破裂点
+          </button>
+        </div>
+        <div id="gfiOutput" class="p-3 rounded-xl bg-black/50 border border-rose-900/40 text-xs text-gray-300 font-mono">
+          点击运行多利益相关方治理脆弱性审计...
+        </div>
+      </div>
+
+      <!-- Engine 5: Bounded MCTS Planning Engine -->
+      <div class="p-5 rounded-2xl border border-teal-500/30 bg-[#0d1c1a] space-y-4">
+        <div class="flex items-center justify-between border-b border-teal-900/50 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🌲</span>
+            <h3 class="text-sm font-bold text-teal-200 font-serif-sc">破产约束长程决策树寻优 (Bounded MCTS)</h3>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-teal-950 text-teal-300 border border-teal-800 font-mono">Pruning P(Ruin)</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          借鉴蒙特卡洛树搜索，在跨周期寻优中施加资金底线硬剪枝：任何分支跌破 3 个月储备即赋予负无穷回报淘汰，筛选全局最优存活路径。
+        </p>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">跨周期跨度 (年)</label>
+            <select id="mctsYearsSel" class="w-full bg-[#122825] border border-gray-700 rounded-lg p-2 text-xs text-gray-200">
+              <option value="3">3 年战略周期</option>
+              <option value="5" selected>5 年跨越周期</option>
+              <option value="7">7 年宏观大运</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-400 mb-1">破产率上限容忍 (&epsilon;)</label>
+            <select id="mctsRuinSel" class="w-full bg-[#122825] border border-gray-700 rounded-lg p-2 text-xs text-gray-200">
+              <option value="0.02">2% (极度审慎)</option>
+              <option value="0.05" selected>5% (推荐基准)</option>
+              <option value="0.10">10% (进取容忍)</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnRunMctsSim" type="button" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            🧭 展开决策树求解自适应路径
+          </button>
+        </div>
+        <div id="mctsOutput" class="p-3 rounded-xl bg-black/50 border border-teal-900/40 text-xs text-gray-300 font-mono">
+          点击展开长程决策树并执行破产剪枝搜索...
+        </div>
+      </div>
+
+      <!-- Engine 6: Biometric Telemetry & Advisory Guardrails -->
+      <div class="p-5 rounded-2xl border border-emerald-500/30 bg-[#0d1c14] space-y-4">
+        <div class="flex items-center justify-between border-b border-emerald-900/50 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">💓</span>
+            <h3 class="text-sm font-bold text-emerald-200 font-serif-sc">体征趋势遥测与人在回路草稿 (Biometric Guardrails)</h3>
+          </div>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800 font-mono">Drafts Only</span>
+        </div>
+        <p class="text-xs text-gray-400 leading-relaxed">
+          将滚动 HRV、深睡眠与睡眠负债作为应激自检指标。严守安全红线：绝不静默删日程或发邮件，全部以待审阅草稿形式呈现。
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">基准 HRV (ms)</label>
+            <input type="number" id="bioBaseHrv" value="65" class="w-full bg-[#13281d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">今日 HRV (ms)</label>
+            <input type="number" id="bioCurrentHrv" value="48" class="w-full bg-[#13281d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">深睡眠占比 (%)</label>
+            <input type="number" id="bioDeepSleep" value="9" class="w-full bg-[#13281d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+          <div>
+            <label class="block text-[10px] text-gray-400 mb-1">累计睡眠债 (h)</label>
+            <input type="number" id="bioSleepDebt" value="3.5" class="w-full bg-[#13281d] border border-gray-700 rounded-lg p-1.5 text-xs text-gray-200">
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btnRunBiometricAudit" type="button" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+            📋 评估应激负荷并生成草稿
+          </button>
+        </div>
+        <div id="biometricOutput" class="p-3 rounded-xl bg-black/50 border border-emerald-900/40 text-xs text-gray-300 font-mono">
+          点击评估体征负荷并生成待审阅草稿...
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Engine 7: Team Diversity & Blind Spot Audit (Full Width) -->
+    <div class="p-5 rounded-2xl border border-cyan-500/30 bg-[#0a1820] space-y-4">
+      <div class="flex items-center justify-between border-b border-cyan-900/50 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">👥</span>
+          <h3 class="text-sm font-bold text-cyan-200 font-serif-sc">组织认知多样性与盲区审计 (Team Cognitive Diversity)</h3>
+        </div>
+        <span class="text-[11px] px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 font-mono">Shannon Entropy H</span>
+      </div>
+      <p class="text-xs text-gray-400 leading-relaxed">
+        评估高管班子在战略开拓 (食伤/七杀)、合规治理 (正官/正印)、资本商业 (正偏财)、组织协同 (比劫) 四维向量的完备度，及时提示集体单质化冒险或决策内耗风险。
+      </p>
+      <div class="flex flex-wrap items-center gap-3">
+        <button id="btnRunTeamAudit" type="button" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
+          🧭 评估班子认知熵与盲区诊断
+        </button>
+      </div>
+      <div id="teamDiversityOutput" class="p-4 rounded-xl bg-black/50 border border-cyan-900/40 text-xs text-gray-300 font-mono">
+        点击运行高管团队认知多样性与盲区审计...
+      </div>
+    </div>
+
+    <!-- Permanent Ethical & Compliance Whitepaper Footer -->
+    <div class="p-4 rounded-xl border border-gray-700 bg-black/60 space-y-2 text-xs text-gray-400">
+      <div class="flex items-center gap-2 text-purple-300 font-bold font-serif-sc">
+        <span>📜</span>
+        <span>钦天监认知协作系统 · 伦理合规与免责白皮书</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-[11px] leading-relaxed">
+        <div>
+          <span class="text-gray-200 font-bold">1. 非宿命论声明：</span>
+          推演结论为基于传统干支时空模型与现实约束的启发式辅助建议，现实成败取决于环境演变与后天努力，不提供确定性命运担保。
+        </div>
+        <div>
+          <span class="text-gray-200 font-bold">2. 非医疗诊断声明：</span>
+          体征趋势仅用于辅助个人心智应激负荷自我观察，绝非临床医疗或病理判定，若感身体不适请咨询正规医疗机构。
+        </div>
+        <div>
+          <span class="text-gray-200 font-bold">3. 反歧视与劳动合规：</span>
+          多样性模块仅供团队内部认知对齐，严禁任何组织将本系统作为人事招聘初筛、考核评级或淘汰的工具。
+        </div>
+        <div>
+          <span class="text-gray-200 font-bold">4. 数据隐私绝对保护：</span>
+          纯本地离线计算架构，用户输入的所有财务、日程与健康数据均保存在本地浏览器沙盒中，绝不上云、绝不出售。
+        </div>
       </div>
     </div>
   </div>
@@ -4546,6 +4881,13 @@
   <script src="js/pomdp-engine.js"></script>
   <script src="js/advisor-engine.js"></script>
   <script src="js/calibration-engine.js"></script>
+  <script src="js/group-theory-core.js"></script>
+  <script src="js/empirical-bayes.js"></script>
+  <script src="js/scenario-sandbox-engine.js"></script>
+  <script src="js/stakeholder-game.js"></script>
+  <script src="js/bounded-mcts.js"></script>
+  <script src="js/biometric-telemetry.js"></script>
+  <script src="js/team-diversity.js"></script>
   <script src="data/institutions.js"></script>
   <script src="data/enterprises.js"></script>
   <script src="js/simulator-engine.js"></script>

@@ -12251,6 +12251,16 @@ document.addEventListener('DOMContentLoaded', () => {
       activeBorder: 'border-amber-400',
       activeBg: 'bg-amber-950/80',
       activeText: 'text-white'
+    },
+    'career-tab-matrix': {
+      activeBorder: 'border-indigo-400',
+      activeBg: 'bg-indigo-950/80',
+      activeText: 'text-white'
+    },
+    'career-tab-phase78': {
+      activeBorder: 'border-purple-400',
+      activeBg: 'bg-purple-950/80',
+      activeText: 'text-white'
     }
   };
 
@@ -12266,13 +12276,13 @@ document.addEventListener('DOMContentLoaded', () => {
           b.classList.add('active', 'border-2', theme.activeBorder, theme.activeBg, theme.activeText);
           b.classList.remove('border-gray-700/80', 'bg-gray-900/80', 'text-gray-300');
         } else {
-          b.classList.remove('active', 'border-indigo-400', 'bg-indigo-950/80', 'border-amber-400', 'bg-amber-950/80', 'text-white');
+          b.classList.remove('active', 'border-indigo-400', 'bg-indigo-950/80', 'border-amber-400', 'bg-amber-950/80', 'border-purple-400', 'bg-purple-950/80', 'text-white');
           b.classList.add('border-2', 'border-gray-700/80', 'bg-gray-900/80', 'text-gray-300');
         }
       });
     }
 
-    const paneIds = ['career-tab-overview', 'view-simulator', 'career-tab-matrix'];
+    const paneIds = ['career-tab-overview', 'view-simulator', 'career-tab-matrix', 'career-tab-phase78'];
     paneIds.forEach(pId => {
       const p = document.getElementById(pId);
       if (p) {
@@ -12295,6 +12305,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (typeof renderEcologicalResonance === 'function') {
         renderEcologicalResonance(currentBaziResult, currentLuckResult, currentLang === 'en');
+      }
+    } else if (targetTabId === 'career-tab-phase78') {
+      if (typeof initPhase78Dashboard === 'function') {
+        initPhase78Dashboard();
       }
     }
   }
@@ -12364,6 +12378,404 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetTab) switchSimulatorSubpage(targetTab);
     });
   });
+
+  // Phase 7 & 8: High-Dimensional Strategy War Room Dashboard Controller
+  let phase78Initialized = false;
+
+  function initPhase78Dashboard() {
+    const isEn = (typeof currentLang !== 'undefined' && currentLang === 'en');
+    const lang = isEn ? 'en' : 'zh';
+
+    if (phase78Initialized) {
+      return;
+    }
+    phase78Initialized = true;
+
+    // 1. Group Theory Axiomatic Core Tester
+    const btnCheckGroupTheory = document.getElementById('btnCheckGroupTheory');
+    if (btnCheckGroupTheory) {
+      btnCheckGroupTheory.addEventListener('click', () => {
+        const stemIdx = parseInt(document.getElementById('groupStemSel')?.value || '0', 10);
+        const branchIdx = parseInt(document.getElementById('groupBranchSel')?.value || '0', 10);
+        const outputEl = document.getElementById('groupTheoryOutput');
+        if (!outputEl) return;
+
+        if (typeof GroupTheoryCore === 'undefined') {
+          outputEl.innerHTML = isEn ? 'GroupTheoryCore engine loading...' : '象数代数拓扑群论引擎加载中...';
+          return;
+        }
+
+        const isValid = GroupTheoryCore.isValidJiazi(stemIdx, branchIdx);
+        const jiaziIdx = GroupTheoryCore.getJiaziIndex(stemIdx, branchIdx);
+        const fiveHarm = GroupTheoryCore.stemFiveHarmony(stemIdx);
+        const sixHarm = GroupTheoryCore.branchSixHarmony(branchIdx);
+
+        if (isEn) {
+          let html = `<div class="space-y-1.5">`;
+          html += `<div><strong>Axiom 1 (Parity Conservation):</strong> s = ${stemIdx}, b = ${branchIdx} &rArr; s mod 2 = ${stemIdx % 2}, b mod 2 = ${branchIdx % 2} &rArr; <span class="${isValid ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">${isValid ? 'PASSED (Congruence s &equiv; b mod 2)' : 'VIOLATION (Forbidden Jiazi pairing)'}</span></div>`;
+          if (isValid) {
+            html += `<div><strong>Axiom 2 (Cyclic Subgroup Index):</strong> Cycle Position in G60 = &lang;(1,1)&rang; is <strong>#${jiaziIdx + 1}</strong> (${GroupTheoryCore.getJiaziFromIndex(jiaziIdx).name})</div>`;
+          }
+          html += `<div><strong>Axiom 3 (Stem 5-Harmony Involution):</strong> &sigma;(s) = (s + 5) mod 10 = ${fiveHarm.partnerIndex} (${fiveHarm.partnerStem}), &sigma;&sup2; = id (Involution validated)</div>`;
+          html += `<div><strong>Axiom 4 (Branch 6-Harmony Involution):</strong> &tau;(b) = (1 - b + 12) mod 12 = ${sixHarm.partnerIndex} (${sixHarm.partnerBranch}), &tau;&sup2; = id</div>`;
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        } else {
+          let html = `<div class="space-y-1.5">`;
+          html += `<div><strong>公理 1 (奇偶同余守恒律):</strong> s = ${stemIdx}, b = ${branchIdx} &rArr; s mod 2 = ${stemIdx % 2}, b mod 2 = ${branchIdx % 2} &rArr; <span class="${isValid ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}">${isValid ? '通过检验 (同余守恒成立，纯正干支配对)' : '破坏同余 (非对称破缺：严禁阳干配阴支或阴干配阳支)'}</span></div>`;
+          if (isValid) {
+            const jzObj = GroupTheoryCore.getJiaziFromIndex(jiaziIdx);
+            html += `<div><strong>公理 2 (单循环生成子群位置):</strong> 在 &Gscr;60 = &lang;(1,1)&rang; 中序号为 <strong>第 ${jiaziIdx + 1} 柱</strong> (${jzObj.stem}${jzObj.branch}，${jzObj.stemElement}${jzObj.branchElement})</div>`;
+          }
+          html += `<div><strong>公理 3 (天干五合自同构对合):</strong> &sigma;(${stemIdx}) = (${stemIdx} + 5) mod 10 = ${fiveHarm.partnerIndex} (${fiveHarm.partnerStem})，满足 &sigma;&sup2; = id</div>`;
+          html += `<div><strong>公理 4 (地支六合对偶变换):</strong> &tau;(${branchIdx}) = (1 - ${branchIdx} + 12) mod 12 = ${sixHarm.partnerIndex} (${sixHarm.partnerBranch})，满足 &tau;&sup2; = id</div>`;
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        }
+      });
+    }
+
+    // 2. Empirical Bayes Shrinkage Engine Controller
+    function updateEbDisplay() {
+      if (typeof EmpiricalBayesEngine === 'undefined') return;
+      const countEl = document.getElementById('ebSampleCount');
+      const factorEl = document.getElementById('ebShrinkageFactor');
+      const statusEl = document.getElementById('ebPriorStatus');
+      const auditEl = document.getElementById('ebAuditOutput');
+
+      const audit = EmpiricalBayesEngine.getAuditSnapshot(lang);
+      if (countEl) countEl.textContent = audit.totalObservations;
+      if (factorEl) factorEl.textContent = audit.shrinkageFactor.toFixed(3);
+      if (statusEl) {
+        statusEl.textContent = audit.coldStartActive
+          ? (isEn ? 'Cold-Start Protected' : '冷启动保护生效中')
+          : (isEn ? 'Adaptive Posterior' : '自适应后验微调');
+        statusEl.className = audit.coldStartActive ? 'font-bold text-emerald-400 font-mono' : 'font-bold text-purple-300 font-mono';
+      }
+      if (auditEl) {
+        if (isEn) {
+          auditEl.innerHTML = `Audit Trail: Observations N = ${audit.totalObservations}, B = ${audit.shrinkageFactor.toFixed(3)}. ` +
+            (audit.coldStartActive
+              ? `Safety threshold active (N < 20 &rArr; B &ge; 0.90). Reversion to pure classical canon guaranteed upon factory reset.`
+              : `Sample variance verified. Balanced posterior active.`);
+        } else {
+          auditEl.innerHTML = `审计追踪：历史样本量 N = ${audit.totalObservations}，收缩权重因子 B = ${audit.shrinkageFactor.toFixed(3)}。` +
+            (audit.coldStartActive
+              ? `冷启动防过拟合阈值保护中 (N < 20 &rArr; 90% 依附古典先验)。一键回退可秒级清空。`
+              : `样本通过方差稳健检验，已融入适度个性化阻抗微调。`);
+        }
+      }
+    }
+
+    const btnEbSimulateFeedback = document.getElementById('btnEbSimulateFeedback');
+    if (btnEbSimulateFeedback) {
+      btnEbSimulateFeedback.addEventListener('click', () => {
+        if (typeof EmpiricalBayesEngine !== 'undefined') {
+          EmpiricalBayesEngine.recordFeedback({ action: 'OFFENSIVE', outcome: 'positive' });
+          updateEbDisplay();
+        }
+      });
+    }
+
+    const btnEbFactoryReset = document.getElementById('btnEbFactoryReset');
+    if (btnEbFactoryReset) {
+      btnEbFactoryReset.addEventListener('click', () => {
+        if (typeof EmpiricalBayesEngine !== 'undefined') {
+          EmpiricalBayesEngine.resetToFactoryBaseline();
+          updateEbDisplay();
+        }
+      });
+    }
+
+    // 3. Scenario Sandbox 3-Track Simulation
+    const btnRunSandboxSim = document.getElementById('btnRunSandboxSim');
+    if (btnRunSandboxSim) {
+      btnRunSandboxSim.addEventListener('click', () => {
+        const cash = parseFloat(document.getElementById('sandboxCash')?.value || '500000');
+        const burn = parseFloat(document.getElementById('sandboxBurn')?.value || '35000');
+        const maxLoss = parseFloat(document.getElementById('sandboxMaxLoss')?.value || '150000');
+        const hours = parseFloat(document.getElementById('sandboxHours')?.value || '48');
+        const outputEl = document.getElementById('sandboxOutput');
+        if (!outputEl) return;
+
+        if (typeof ScenarioSandboxEngine === 'undefined') {
+          outputEl.textContent = isEn ? 'ScenarioSandboxEngine loading...' : '现实硬约束沙盘引擎加载中...';
+          return;
+        }
+
+        const sim = ScenarioSandboxEngine.simulateScenario({
+          financials: { liquidRunwayCash: cash, monthlyBurnRate: burn, maxCapitalLossTolerance: maxLoss },
+          timeEnergy: { weeklyHoursBudget: hours },
+          lang: lang
+        });
+
+        if (isEn) {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-blue-900/40 pb-1.5">`;
+          html += `<span>Safe Runway: <strong>${sim.safeRunwayMonths} Months</strong></span>`;
+          html += `<span>Ruin Probability P(Ruin): <strong class="${sim.stressRuinProbability > 0.15 ? 'text-rose-400' : 'text-emerald-400'}">${(sim.stressRuinProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `</div>`;
+          html += `<div class="grid grid-cols-3 gap-2 text-[11px] pt-1">`;
+          html += `<div class="p-2 rounded bg-black/40 border border-gray-800"><strong>${sim.trajectories.base.name}</strong><br/>Net: \$${sim.trajectories.base.netCashFlow.toLocaleString()}<br/>Status: ${sim.trajectories.base.viability}</div>`;
+          html += `<div class="p-2 rounded bg-black/40 border border-emerald-900/40"><strong>${sim.trajectories.optimal.name}</strong><br/>Net: +\$${sim.trajectories.optimal.netCashFlow.toLocaleString()}<br/>Status: ${sim.trajectories.optimal.viability}</div>`;
+          html += `<div class="p-2 rounded bg-black/40 border border-rose-900/40"><strong>${sim.trajectories.stress.name}</strong><br/>Breach: Month ${sim.trajectories.stress.cashDepletionMonth}<br/>Status: ${sim.trajectories.stress.viability}</div>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-gray-400 pt-1">${sim.strategicDirectives[0]?.directive || ''}</div>`;
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        } else {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-blue-900/40 pb-1.5">`;
+          html += `<span>安全生存跑道: <strong>${sim.safeRunwayMonths} 个月</strong></span>`;
+          html += `<span>极值破产概率 P(Ruin): <strong class="${sim.stressRuinProbability > 0.15 ? 'text-rose-400' : 'text-emerald-400'}">${(sim.stressRuinProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `</div>`;
+          html += `<div class="grid grid-cols-3 gap-2 text-[11px] pt-1">`;
+          html += `<div class="p-2 rounded bg-black/40 border border-gray-800"><strong>${sim.trajectories.base.name}</strong><br/>净现金流: ￥${sim.trajectories.base.netCashFlow.toLocaleString()}<br/>可行性: ${sim.trajectories.base.viability}</div>`;
+          html += `<div class="p-2 rounded bg-black/40 border border-emerald-900/40"><strong>${sim.trajectories.optimal.name}</strong><br/>净现金流: +￥${sim.trajectories.optimal.netCashFlow.toLocaleString()}<br/>可行性: ${sim.trajectories.optimal.viability}</div>`;
+          html += `<div class="p-2 rounded bg-black/40 border border-rose-900/40"><strong>${sim.trajectories.stress.name}</strong><br/>断裂点: 第 ${sim.trajectories.stress.cashDepletionMonth} 月<br/>可行性: ${sim.trajectories.stress.viability}</div>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-amber-300 pt-1">${sim.strategicDirectives[0]?.directive || ''}</div>`;
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        }
+      });
+    }
+
+    // 4. Stakeholder Game & GFI Audit
+    const btnRunGfiSim = document.getElementById('btnRunGfiSim');
+    if (btnRunGfiSim) {
+      btnRunGfiSim.addEventListener('click', () => {
+        const revDecline = parseFloat(document.getElementById('gfiRevDecline')?.value || '40');
+        const runway = parseFloat(document.getElementById('gfiRunwayMonths')?.value || '4');
+        const outputEl = document.getElementById('gfiOutput');
+        if (!outputEl) return;
+
+        if (typeof StakeholderGameEngine === 'undefined') {
+          outputEl.textContent = isEn ? 'StakeholderGameEngine loading...' : '多利益相关方博弈引擎加载中...';
+          return;
+        }
+
+        const res = StakeholderGameEngine.simulateGovernance({
+          shock: { revenueDeclinePct: revDecline, cashRunwayMonths: runway },
+          lang: lang
+        });
+
+        if (isEn) {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-rose-900/40 pb-1.5">`;
+          html += `<span>Governance Friction Index (GFI): <strong class="text-rose-400 font-bold">${res.governanceFrictionIndex}/100</strong></span>`;
+          html += `<span>Phase Shift: <strong class="${res.isPhaseShiftImminent ? 'text-rose-400' : 'text-emerald-400'}">${res.isPhaseShiftImminent ? 'VULNERABLE (Imminent)' : 'STABLE'}</strong></span>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-gray-300">${res.auditSummary}</div>`;
+          if (res.recommendedSafeguards && res.recommendedSafeguards.length > 0) {
+            html += `<div class="text-[11px] text-indigo-300"><strong>Safeguard:</strong> ${res.recommendedSafeguards[0].clauseName} - ${res.recommendedSafeguards[0].specification}</div>`;
+          }
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        } else {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-rose-900/40 pb-1.5">`;
+          html += `<span>治理阻抗指数 (GFI): <strong class="text-rose-400 font-bold">${res.governanceFrictionIndex}/100</strong> (${res.frictionTierLabel})</span>`;
+          html += `<span>破裂相变: <strong class="${res.isPhaseShiftImminent ? 'text-rose-400' : 'text-emerald-400'}">${res.isPhaseShiftImminent ? '高危临界' : '安全受控'}</strong></span>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-gray-300">${res.auditSummary}</div>`;
+          if (res.recommendedSafeguards && res.recommendedSafeguards.length > 0) {
+            html += `<div class="text-[11px] text-indigo-300"><strong>推荐契约防线:</strong> ${res.recommendedSafeguards[0].clauseName} (${res.recommendedSafeguards[0].specification})</div>`;
+          }
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        }
+      });
+    }
+
+    // 5. Bounded MCTS Planning
+    const btnRunMctsSim = document.getElementById('btnRunMctsSim');
+    if (btnRunMctsSim) {
+      btnRunMctsSim.addEventListener('click', () => {
+        const years = parseInt(document.getElementById('mctsYearsSel')?.value || '5', 10);
+        const maxRuin = parseFloat(document.getElementById('mctsRuinSel')?.value || '0.05');
+        const outputEl = document.getElementById('mctsOutput');
+        if (!outputEl) return;
+
+        if (typeof BoundedMctsEngine === 'undefined') {
+          outputEl.textContent = isEn ? 'BoundedMctsEngine loading...' : '破产约束长程决策树引擎加载中...';
+          return;
+        }
+
+        const res = BoundedMctsEngine.plan({
+          years: years,
+          maxAcceptableRuin: maxRuin,
+          lang: lang
+        });
+
+        if (isEn) {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-teal-900/40 pb-1.5">`;
+          html += `<span>Selected Strategy: <strong class="text-teal-300">${res.bestStrategyName}</strong></span>`;
+          html += `<span>Survival Probability: <strong class="text-emerald-400 font-bold">${(res.survivalProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `<span>Ruin-Pruned Branches: <strong>${res.prunedBranchCount}</strong></span>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-gray-300">${res.methodologyNotes}</div>`;
+          if (res.optimalTimeline && res.optimalTimeline.length > 0) {
+            html += `<div class="grid grid-cols-${Math.min(res.optimalTimeline.length, 5)} gap-1.5 text-[10px] pt-1">`;
+            res.optimalTimeline.forEach(t => {
+              html += `<div class="p-1.5 rounded bg-black/40 border border-teal-900/30 text-center"><strong>${t.year}</strong><br/>${t.actionName}</div>`;
+            });
+            html += `</div>`;
+          }
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        } else {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-teal-900/40 pb-1.5">`;
+          html += `<span>最优跨周期策略: <strong class="text-teal-300">${res.bestStrategyName}</strong></span>`;
+          html += `<span>全周期存活率: <strong class="text-emerald-400 font-bold">${(res.survivalProbability * 100).toFixed(1)}%</strong></span>`;
+          html += `<span>破产硬剪枝分支数: <strong>${res.prunedBranchCount} 个</strong></span>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-gray-300">${res.methodologyNotes}</div>`;
+          if (res.optimalTimeline && res.optimalTimeline.length > 0) {
+            html += `<div class="grid grid-cols-${Math.min(res.optimalTimeline.length, 5)} gap-1.5 text-[10px] pt-1">`;
+            res.optimalTimeline.forEach(t => {
+              html += `<div class="p-1.5 rounded bg-black/40 border border-teal-900/30 text-center"><strong>${t.year}</strong><br/>${t.actionName}</div>`;
+            });
+            html += `</div>`;
+          }
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        }
+      });
+    }
+
+    // 6. Biometric Telemetry & Advisory Guardrails
+    const btnRunBiometricAudit = document.getElementById('btnRunBiometricAudit');
+    if (btnRunBiometricAudit) {
+      btnRunBiometricAudit.addEventListener('click', () => {
+        const baseHrv = parseFloat(document.getElementById('bioBaseHrv')?.value || '65');
+        const currentHrv = parseFloat(document.getElementById('bioCurrentHrv')?.value || '48');
+        const deepSleep = parseFloat(document.getElementById('bioDeepSleep')?.value || '9');
+        const sleepDebt = parseFloat(document.getElementById('bioSleepDebt')?.value || '3.5');
+        const outputEl = document.getElementById('biometricOutput');
+        if (!outputEl) return;
+
+        if (typeof BiometricTelemetryEngine === 'undefined') {
+          outputEl.textContent = isEn ? 'BiometricTelemetryEngine loading...' : '体征遥测引擎加载中...';
+          return;
+        }
+
+        const res = BiometricTelemetryEngine.evaluateTelemetry(
+          { baselineHrvMs: baseHrv, currentHrvMs: currentHrv, deepSleepPct: deepSleep, sleepDebtHours: sleepDebt },
+          {},
+          lang
+        );
+
+        if (isEn) {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-emerald-900/40 pb-1.5">`;
+          html += `<span>Stress Index: <strong class="${res.physiologicalStressIndex > 60 ? 'text-rose-400' : 'text-emerald-400'}">${res.physiologicalStressIndex}/100</strong> (${res.resilienceLabel})</span>`;
+          html += `<span>HRV Deviation: <strong class="text-rose-400">-${res.hrvDropPct}%</strong></span>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-amber-300 font-bold">${res.guardrailNotice}</div>`;
+          if (res.actionDrafts && res.actionDrafts.length > 0) {
+            html += `<div class="space-y-1.5 pt-1">`;
+            res.actionDrafts.forEach(d => {
+              html += `<div class="p-2 rounded bg-black/40 border border-emerald-800/40 text-[11px]">`;
+              html += `<div class="font-bold text-emerald-300">${d.title}</div>`;
+              html += `<div class="text-gray-300 text-[10px] mt-0.5">${d.content}</div>`;
+              html += `</div>`;
+            });
+            html += `</div>`;
+          }
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        } else {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-emerald-900/40 pb-1.5">`;
+          html += `<span>身心负荷指数: <strong class="${res.physiologicalStressIndex > 60 ? 'text-rose-400' : 'text-emerald-400'}">${res.physiologicalStressIndex}/100</strong> (${res.resilienceLabel})</span>`;
+          html += `<span>HRV 偏离基线: <strong class="text-rose-400">-${res.hrvDropPct}%</strong></span>`;
+          html += `</div>`;
+          html += `<div class="text-[11px] text-amber-300 font-bold">${res.guardrailNotice}</div>`;
+          if (res.actionDrafts && res.actionDrafts.length > 0) {
+            html += `<div class="space-y-1.5 pt-1">`;
+            res.actionDrafts.forEach(d => {
+              html += `<div class="p-2 rounded bg-black/40 border border-emerald-800/40 text-[11px]">`;
+              html += `<div class="font-bold text-emerald-300">${d.title}</div>`;
+              html += `<div class="text-gray-300 text-[10px] mt-0.5">${d.content}</div>`;
+              html += `</div>`;
+            });
+            html += `</div>`;
+          }
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        }
+      });
+    }
+
+    // 7. Team Cognitive Diversity & Blind Spot Audit
+    const btnRunTeamAudit = document.getElementById('btnRunTeamAudit');
+    if (btnRunTeamAudit) {
+      btnRunTeamAudit.addEventListener('click', () => {
+        const outputEl = document.getElementById('teamDiversityOutput');
+        if (!outputEl) return;
+
+        if (typeof TeamDiversityEngine === 'undefined') {
+          outputEl.textContent = isEn ? 'TeamDiversityEngine loading...' : '组织认知多样性引擎加载中...';
+          return;
+        }
+
+        const res = TeamDiversityEngine.auditTeam([], lang);
+
+        if (isEn) {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-cyan-900/40 pb-1.5">`;
+          html += `<span>Shannon Cognitive Entropy: <strong class="text-cyan-300 font-mono font-bold">${res.shannonEntropy}</strong> (${res.diversityLabel})</span>`;
+          html += `<span>Roster Size: <strong>${res.memberCount} Executives</strong></span>`;
+          html += `</div>`;
+          html += `<div class="grid grid-cols-4 gap-2 text-center text-[10px] pt-1">`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">Innovation: <strong>${res.vectorDistribution.innovationPct}%</strong></div>`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">Governance: <strong>${res.vectorDistribution.governancePct}%</strong></div>`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">Commercial: <strong>${res.vectorDistribution.commercialPct}%</strong></div>`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">Operations: <strong>${res.vectorDistribution.operationsPct}%</strong></div>`;
+          html += `</div>`;
+          if (res.blindSpots && res.blindSpots.length > 0) {
+            html += `<div class="space-y-1 pt-1">`;
+            res.blindSpots.forEach(b => {
+              html += `<div class="text-[11px] text-cyan-200"><strong>[${b.title}]</strong> ${b.description} <em>(Remedy: ${b.remedy})</em></div>`;
+            });
+            html += `</div>`;
+          }
+          html += `<div class="text-[10px] text-gray-400 pt-1 border-t border-gray-800">${res.antiDiscriminationNotice}</div>`;
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        } else {
+          let html = `<div class="space-y-2">`;
+          html += `<div class="flex items-center justify-between border-b border-cyan-900/40 pb-1.5">`;
+          html += `<span>香农认知多样性熵: <strong class="text-cyan-300 font-mono font-bold">${res.shannonEntropy}</strong> (${res.diversityLabel})</span>`;
+          html += `<span>评估班子规模: <strong>${res.memberCount} 位核心成员</strong></span>`;
+          html += `</div>`;
+          html += `<div class="grid grid-cols-4 gap-2 text-center text-[10px] pt-1">`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">战略开拓: <strong>${res.vectorDistribution.innovationPct}%</strong></div>`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">合规治理: <strong>${res.vectorDistribution.governancePct}%</strong></div>`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">资本商业: <strong>${res.vectorDistribution.commercialPct}%</strong></div>`;
+          html += `<div class="p-1.5 rounded bg-black/40 border border-gray-800">组织协同: <strong>${res.vectorDistribution.operationsPct}%</strong></div>`;
+          html += `</div>`;
+          if (res.blindSpots && res.blindSpots.length > 0) {
+            html += `<div class="space-y-1 pt-1">`;
+            res.blindSpots.forEach(b => {
+              html += `<div class="text-[11px] text-cyan-200"><strong>【${b.title}】</strong> ${b.description} <span class="text-amber-300">(对策：${b.remedy})</span></div>`;
+            });
+            html += `</div>`;
+          }
+          html += `<div class="text-[10px] text-gray-400 pt-1 border-t border-gray-800">${res.antiDiscriminationNotice}</div>`;
+          html += `</div>`;
+          outputEl.innerHTML = html;
+        }
+      });
+    }
+  }
+  window.initPhase78Dashboard = initPhase78Dashboard;
+  if (typeof globalThis !== 'undefined') {
+    globalThis.initPhase78Dashboard = initPhase78Dashboard;
+  }
 
   // Friction & Zen-Dao Dedicated Sub-Tabs Switching Logic (类似于8经架构 · 一经一页)
   const fricTabBtns = document.querySelectorAll('#frictionTabsContainer .fric-tab-btn');
@@ -18908,6 +19320,20 @@ document.addEventListener('DOMContentLoaded', () => {
       btnRibbonOpenLedger.addEventListener('click', () => {
         openAdvisorSafely();
         switchAdvisorView('ledger');
+      });
+    }
+
+    const btnRibbonOpenPhase78 = document.getElementById('btnRibbonOpenPhase78');
+    if (btnRibbonOpenPhase78) {
+      btnRibbonOpenPhase78.addEventListener('click', () => {
+        if (typeof switchToDashboardView === 'function') {
+          switchToDashboardView('view-career');
+        } else if (typeof switchView === 'function') {
+          switchView('view-career');
+        }
+        if (typeof switchCareerSubTab === 'function') {
+          switchCareerSubTab('career-tab-phase78');
+        }
       });
     }
 
