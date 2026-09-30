@@ -283,6 +283,13 @@ class ToolDispatcher {
       return this._dispatchPomdpPolicy(query, bazi, lang, currentYear);
     }
 
+    // 0.1 Empirical Bayes Shrinkage & Action Ledger Philosophy Dispatch
+    if (
+      /(先验收缩|启发式收缩|阻尼因子|阻尼收缩|收缩因子|打卡是干啥|打卡的目的是|为什么打卡|打卡有啥用|打卡有什么用|演示交互样本|一键清空并重置|基准状态.*先验|factory reset|shrinkage|empirical bayes|why check-?in|action ledger purpose)/i.test(query)
+    ) {
+      return this._dispatchShrinkagePhilosophy(query, bazi, lang, currentYear);
+    }
+
     // 1. Rectification Engine Dispatch
     if (
       /(校准|对时|几点|生时|哪个时辰|时辰不准|出生时间|确定时辰)/i.test(query) ||
@@ -717,6 +724,122 @@ class ToolDispatcher {
         confidencePct: policy.confidencePct,
         rankedActions: policy.rankedActions,
         exegesis: policy.exegesis
+      }
+    };
+  }
+
+  static _dispatchShrinkagePhilosophy(query, bazi, lang, currentYear) {
+    const isEn = (lang === 'en');
+    let audit = { totalObservations: 0, shrinkageFactor: 1.0, coldStartActive: true };
+    if (typeof EmpiricalBayesEngine !== 'undefined') {
+      try {
+        audit = EmpiricalBayesEngine.getAuditSnapshot(lang);
+      } catch (e) {}
+    }
+
+    const title = isEn
+      ? 'Heuristic Shrinkage & Action Ledger Architectural Exegesis'
+      : '启发式先验收缩器与待办打卡机制架构解析';
+
+    const items = isEn
+      ? [
+          {
+            term: `Observations (N = ${audit.totalObservations})`,
+            plain: 'Your Logged Real-World Check-ins',
+            value: `${audit.totalObservations}`,
+            meaning: 'Number of micro-actions you checked off. Zero means the agent holds no personal bias yet; database is clean.'
+          },
+          {
+            term: `Shrinkage Factor (B = ${audit.shrinkageFactor.toFixed(3)})`,
+            plain: 'Firmness of Safety Brakes',
+            value: `${audit.shrinkageFactor.toFixed(3)}`,
+            meaning: 'B=1.000 means 100% adherence to classical balanced baseline. Even after 100+ check-ins, a 20% defensive floor (B >= 0.20) is preserved to prevent echo chambers.'
+          },
+          {
+            term: 'Baseline State: Pure Default Prior',
+            plain: 'Clean Factory Standard Mode',
+            value: audit.coldStartActive ? 'Cold-Start Protected' : 'Adaptive Equilibrium',
+            meaning: 'Equal 25% weights across offensive, defensive, wisdom, and pragmatic vectors. Neither reckless nor timid.'
+          },
+          {
+            term: 'Demo N+1 Button',
+            plain: 'Sandbox Simulation Trigger',
+            value: 'Interactive Test',
+            meaning: 'Simulates a positive check-in so you can verify how B dampens noise without wild swings.'
+          },
+          {
+            term: 'Factory Reset Button',
+            plain: 'Instant Reversion Safety Valve',
+            value: 'Zero Latency Purge',
+            meaning: 'Instantly purges all personal biases back to 100% classical baseline. You retain full control over your data.'
+          },
+          {
+            term: 'Audit Footer (B = 1.000)',
+            plain: 'Chassis Safety Indicator',
+            value: 'Zero Overfitting',
+            meaning: 'Real-time telemetry confirming recommendations adhere strictly to robust canonical safety boundaries.'
+          }
+        ]
+      : [
+          {
+            term: `交互演示样本数 (N: ${audit.totalObservations})`,
+            plain: '你给系统的真实打卡记录数',
+            value: `${audit.totalObservations} 次`,
+            meaning: '你在【待办清单】里勾选微动作并反馈的次数。为 0 代表 AI 对你个人尚无偏好，数据库纯白无偏。'
+          },
+          {
+            term: `阻尼收缩因子 (B: ${audit.shrinkageFactor.toFixed(3)})`,
+            plain: '安全刹车片的拉紧程度',
+            value: `${audit.shrinkageFactor.toFixed(3)}`,
+            meaning: 'B=1.000 代表防抖避震拉满，100% 依附千年客观经典基线；样本不足 20 次强行锁定，即便极多也保底留 20% 底线（B ≥ 0.20）。'
+          },
+          {
+            term: '基准状态: 纯初始默认先验',
+            plain: 'AI 的出厂纯净模式',
+            value: audit.coldStartActive ? '冷启动保护中' : '自适应微调中',
+            meaning: '攻守智约各占 25%，不偏激、不冒进，如刚拆封的新手机。'
+          },
+          {
+            term: '➕ 演示交互样本 (Demo N+1)',
+            plain: '沙盘试玩键',
+            value: '模拟打卡演练',
+            meaning: '模拟录入一次打卡，让你亲眼验证系统抗干扰能力，不会因几次好评就推你去赌命。'
+          },
+          {
+            term: '🔄 一键清空重置 (Factory Reset)',
+            plain: '一键洗脑恢复出厂设置',
+            value: '终极后悔药',
+            meaning: '一秒清空所有打卡偏好，阻尼秒回 B=1.000，彻底清除算法标签，告别信息茧房。'
+          },
+          {
+            term: '底部审计状态 (B = 1.000)',
+            plain: '系统底盘安全指示灯',
+            value: '零过拟合风险',
+            meaning: '实时审计日志，证明当前所有排盘和策略输出均处于最安全、最客观的标准状态。'
+          }
+        ];
+
+    return {
+      toolId: 'empirical_bayes_shrinkage_philosophy',
+      toolName: isEn ? 'Heuristic Shrinkage & Action Ledger Exegesis' : '先验收缩与打卡账本架构释义',
+      status: 'SUCCESS',
+      rationale: isEn
+        ? 'Detected query regarding Action Ledger check-in purpose or Empirical Bayes shrinkage mechanics.'
+        : '检测到关于打卡清单实战目的或经验贝叶斯收缩阻尼机制的深度问询，调取白话对照释义。',
+      disclaimer: isEn
+        ? 'Deterministic structural exegesis · 100% mathematically verifiable & reversible'
+        : '【确定性机制解析】白盒算法透明化 · 严守人机在回路与形而上学隔离',
+      parameters: {
+        totalObservations: audit.totalObservations,
+        shrinkageFactor: audit.shrinkageFactor,
+        coldStartActive: audit.coldStartActive
+      },
+      output: {
+        title,
+        items,
+        summary: isEn
+          ? 'Check-ins convert abstract metaphysical trends into tangible, executable micro-actions. The shrinkage dampener acts as a shock absorber, preventing the AI from overfitting on emotional feedback.'
+          : '打卡将虚空时运转化为每日可执行的微动作；收缩器充当防抖避震器，过滤短期情绪噪音，确保 AI 绝不因偶尔几次极端打卡而盲目发疯。'
       }
     };
   }

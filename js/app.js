@@ -21119,6 +21119,38 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }
 
+    if (card.toolId === 'empirical_bayes_shrinkage_philosophy') {
+      return `
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-purple-300 font-serif-sc">${out.title || (isEn ? 'Heuristic Shrinkage Exegesis' : '先验收缩器白话释义')}</span>
+            <span class="px-2 py-0.5 rounded bg-purple-950 text-purple-200 border border-purple-700/50 font-mono font-bold text-[10px]">&theta; = (1-B)y + B&mu;</span>
+          </div>
+          <div class="p-2.5 rounded-lg bg-purple-950/40 border border-purple-800/40 text-[11px] text-purple-200 leading-relaxed">
+            💡 <strong>${isEn ? 'Core Purpose:' : '核心目的：'}</strong> ${out.summary || ''}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+            ${(out.items || []).map(item => `
+              <div class="p-2 rounded bg-black/60 border border-gray-800 space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-purple-300">${item.term}</span>
+                  <span class="font-mono text-[10px] text-emerald-400 font-bold">${item.value}</span>
+                </div>
+                <div class="text-amber-300 font-semibold text-[10.5px]">💡 ${isEn ? 'Plain Translation:' : '大白话：'}${item.plain}</div>
+                <div class="text-gray-400 text-[10px] leading-relaxed">${item.meaning}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="text-[10px] text-gray-400 pt-1 border-t border-gray-800/60">
+            <span class="text-amber-400 font-bold">🎯 ${isEn ? 'Metaphysical Isolation:' : '形而上学隔离保证：'}</span>
+            ${isEn
+              ? 'Shrinkage dampening strictly tunes tactical action recommendation ordering; it NEVER mutates your natal chart pillars or five-element vigor.'
+              : '收缩阻尼仅用于动态调配后天战术微动作的推荐排序，绝对不会篡改您的生辰八字、四柱五行强弱与大运流年。'}
+          </div>
+        </div>
+      `;
+    }
+
     return `<div class="text-xs text-gray-300 font-mono">${JSON.stringify(out)}</div>`;
   }
 
