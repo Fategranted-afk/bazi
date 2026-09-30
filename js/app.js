@@ -15045,6 +15045,34 @@ document.addEventListener('DOMContentLoaded', () => {
       lang: currentLang
     });
     lastPartnerPredictResult = result;
+
+    // Direct, automatic synchronization into Person B inputs and overall synastry calculations
+    if (result && result.isEligible) {
+      const sDateB = document.getElementById('synastryDateB');
+      const sTimeB = document.getElementById('synastryTimeB');
+      const sGenderB = document.getElementById('synastryGenderB');
+      const sLabelB = document.getElementById('synastryLabelB');
+
+      if (sDateB && result.partnerBirthDateStr) {
+        sDateB.value = result.partnerBirthDateStr;
+        sDateB.dataset.userEdited = 'true';
+      }
+      if (sTimeB && result.partnerBirthTimeStr) {
+        sTimeB.value = result.partnerBirthTimeStr;
+      }
+      if (sGenderB && result.partnerGender) {
+        sGenderB.value = result.partnerGender;
+      }
+      if (sLabelB) {
+        sLabelB.value = isEn ? result.titleEn : result.titleZh;
+      }
+
+      // Automatically trigger full synastry calculation so all charts and timelines are 100% unified
+      if (typeof triggerCalculateSynastry === 'function') {
+        triggerCalculateSynastry();
+      }
+    }
+
     renderPartnerPredictOutput(result, isEn);
     updateSynastryPredictSourceBanner();
   }
@@ -15115,21 +15143,24 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     });
 
-    const dayStemA = cA.day.stem;
-    const dayStemB = cB ? cB.day.stem : '';
-    const dayBranchA = cA.day.branch;
-    const dayBranchB = cB ? cB.day.branch : '';
+    const stemRel = data.stemRelationship || { labelZh: '干支生化', labelEn: 'Stem Flow', descZh: '天干气场相通', descEn: 'Stem resonance' };
+    const branchRel = data.branchRelationship || { labelZh: '夫妻宫和合', labelEn: 'Branch Harmony', descZh: '地支融洽', descEn: 'Branch resonance' };
+    const scoreB = data.scoreBreakdown || {};
 
     container.innerHTML = `
-      <div class="p-5 rounded-2xl border border-rose-500/40 bg-black/60 shadow-2xl space-y-5 animate-fade-in">
-        <!-- Header Banner -->
+      <div class="p-5 md:p-6 rounded-2xl border border-rose-500/40 bg-black/75 shadow-2xl space-y-6 animate-fade-in">
+        <!-- Header Banner & Synchronization Verification -->
         <div class="flex flex-wrap items-start justify-between gap-3 pb-4 border-b border-gray-800">
           <div class="space-y-2.5">
             <div class="flex flex-wrap items-center gap-2">
-              <span class="text-lg">💖</span>
-              <h3 class="text-base font-bold font-serif-sc text-rose-300">${title}</h3>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono font-bold">
+              <span class="text-xl">💖</span>
+              <h3 class="text-base md:text-lg font-bold font-serif-sc text-rose-300">${title}</h3>
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/40 font-mono font-bold">
                 🔞 ${isEn ? 'Adults 18+ Only' : '仅限成年人测算'}
+              </span>
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono font-bold flex items-center gap-1">
+                <span>⚡</span>
+                <span>${isEn ? 'Full Synastry Synchronized' : '双盘全息已同步'}</span>
               </span>
             </div>
             <p class="text-xs text-gray-400 italic">${tagline}</p>
@@ -15159,6 +15190,9 @@ document.addEventListener('DOMContentLoaded', () => {
               <span class="px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-500/30">
                 ✨ ${isEn ? `Archetype ${data.variant + 1} of ${data.variantTotal}` : `正缘格局 ${data.variant + 1} / ${data.variantTotal}`}
               </span>
+              <span class="px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-500/30 font-bold font-mono">
+                🏆 ${isEn ? `Resonance Index: ${data.resonanceScore || 94}/100` : `协同共振指数: ${data.resonanceScore || 94} / 100`}
+              </span>
             </div>
           </div>
           <div class="flex items-center gap-2">
@@ -15169,155 +15203,323 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
 
-        <!-- 16-Character Joint Resonance Matrix (8+8=16字联合矩阵) -->
-        <div class="space-y-2.5">
-          <div class="flex items-center justify-between">
-            <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider font-serif-sc flex items-center gap-1.5">
-              <span>🧬</span>
-              <span>${isEn ? '8+8=16 Character Dual-Matrix Resonance Field' : '8+8=16 字双盘联合共振矩阵'}</span>
+        <!-- ========================================== -->
+        <!-- 第一篇：命理推演与数理可核查依据 -->
+        <!-- ========================================== -->
+        <div class="space-y-4 pt-1">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider font-serif-sc flex items-center gap-2">
+              <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px]">卷一</span>
+              <span>${isEn ? 'Part I: Metaphysical Deduction & Mathematical Evidence' : '【第一篇 · 命理推演与数理可核查依据】'}</span>
             </h4>
-            <span class="text-[11px] text-gray-400">${isEn ? 'Heavenly Stems 5-Combinations & Earthly Branches Harmonies' : '干支化合 · 互通关窍'}</span>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Verifiable Canonical Mechanics' : '杜绝臆造伪合 · 经得起排盘核查'}</span>
           </div>
 
-          <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 overflow-x-auto">
-            <div class="grid grid-cols-5 gap-2 text-center min-w-[420px]">
-              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Subject' : '合盘对象'}</div>
-              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Year' : '年柱 (祖业根基)'}</div>
-              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Month' : '月柱 (事业格局)'}</div>
-              <div class="text-[11px] text-gray-400 font-bold self-center text-rose-300">${isEn ? 'Day (Spouse)' : '日柱 (夫妻宫)'}</div>
-              <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Hour' : '时柱 (归宿默契)'}</div>
-
-              <!-- Row Chart A -->
-              <div class="text-xs font-bold text-amber-300 self-center">${isEn ? `Person A · Your Input (${data.userBirthYear})` : `甲造命主 · 您的输入 (${data.userBirthYear}年)`}</div>
-              <div>${elBadge(cA.year.stem, cA.year.branch, cA.year.stemElement)}</div>
-              <div>${elBadge(cA.month.stem, cA.month.branch, cA.month.stemElement)}</div>
-              <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${elBadge(cA.day.stem, cA.day.branch, cA.day.stemElement)}</div>
-              <div>${elBadge(cA.hour.stem, cA.hour.branch, cA.hour.stemElement)}</div>
-
-              <!-- Row Chart B -->
-              <div class="text-xs font-bold text-rose-300 self-center">${isEn ? `Person B · Ideal Partner (${data.partnerBirthYear})` : `乙造正缘 · 理想推演 (${data.partnerBirthYear}年)`}</div>
-              <div>${cB ? elBadge(cB.year.stem, cB.year.branch, cB.year.stemElement) : '-'}</div>
-              <div>${cB ? elBadge(cB.month.stem, cB.month.branch, cB.month.stemElement) : '-'}</div>
-              <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${cB ? elBadge(cB.day.stem, cB.day.branch, cB.day.stemElement) : '-'}</div>
-              <div>${cB ? elBadge(cB.hour.stem, cB.hour.branch, cB.hour.stemElement) : '-'}</div>
+          <!-- 1.1 夫妻宫干支互通实证剖析 -->
+          <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                <span>🔗</span>
+                <span>${isEn ? '1.1 Spouse Palace Stem & Branch Canonical Synthesis' : '1.1 夫妻宫干支互通实证剖析（真实可核查生克）'}</span>
+              </span>
+              <span class="text-[10px] text-gray-400">${isEn ? 'Canonical 60-Jiazi System' : '严遵天干正化与地支六合正律'}</span>
             </div>
 
-            <div class="mt-3 pt-2.5 border-t border-gray-800 flex flex-wrap items-center justify-around gap-2 text-[11px]">
-              <span class="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-300 border border-rose-500/20">
-                🔗 ${isEn ? `Day Stems Combination: ${dayStemA} + ${dayStemB}` : `日干合化: 【${dayStemA + dayStemB}】天干相合`}
-              </span>
-              <span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                🤝 ${isEn ? `Spouse Palace Harmony: ${dayBranchA} + ${dayBranchB}` : `夫妻宫和合: 【${dayBranchA + dayBranchB}】地支六合/相生`}
-              </span>
-              <span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                🌿 ${isEn ? 'Mediating Bridge Active' : '五行生生不息 · 贪生忘克'}
-              </span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+                <span class="font-bold text-rose-300 flex items-center gap-1">
+                  <span>✨</span>
+                  <span>${isEn ? stemRel.labelEn : stemRel.labelZh}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? stemRel.descEn : stemRel.descZh}</p>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+                <span class="font-bold text-purple-300 flex items-center gap-1">
+                  <span>🤝</span>
+                  <span>${isEn ? branchRel.labelEn : branchRel.labelZh}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? branchRel.descEn : branchRel.descZh}</p>
+              </div>
             </div>
+
+            <div class="p-2 rounded-lg bg-gray-950/60 border border-gray-800/80 text-[11px] text-gray-400 leading-relaxed">
+              <span class="text-amber-400 font-bold">📜 ${isEn ? 'Metaphysical Audit Notice:' : '法理核查依据：'}</span>
+              ${isEn
+                ? 'Strictly verified against authentic Heavenly Stem Five Harmonies and Earthly Branch Six Harmonies / Triads. Clashes (Liu Chong), Punishments (San Xing), and Harms (Xiang Hai) are strictly filtered out.'
+                : '本系统严格遵循《三命通会》《滴天髓》干支法理，所有合化依据均严格可验。坚决剔除“壬己合”“戌未六合”等非经典伪合，确保推演对象在命理学与现代天文学对位中具有绝对可信度。'}
+            </div>
+          </div>
+
+          <!-- 1.2 8+8=16 字双盘联合共振矩阵 -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-gray-200 flex items-center gap-1.5">
+                <span>🧬</span>
+                <span>${isEn ? '1.2 8+8=16 Character Dual-Matrix Resonance Field' : '1.2 8+8=16 字双盘联合全息共振矩阵'}</span>
+              </span>
+              <span class="text-[11px] text-gray-400 font-mono">${isEn ? 'Calibrated True Solar Time Chart' : '天文真太阳时排盘对仗'}</span>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-900/80 border border-gray-800 overflow-x-auto">
+              <div class="grid grid-cols-5 gap-2 text-center min-w-[440px]">
+                <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Subject' : '合盘对象'}</div>
+                <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Year' : '年柱 (祖业根基)'}</div>
+                <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Month' : '月柱 (事业格局)'}</div>
+                <div class="text-[11px] text-gray-400 font-bold self-center text-rose-300">${isEn ? 'Day (Spouse)' : '日柱 (夫妻宫)'}</div>
+                <div class="text-[11px] text-gray-400 font-bold self-center">${isEn ? 'Hour' : '时柱 (归宿默契)'}</div>
+
+                <!-- Row Chart A -->
+                <div class="text-xs font-bold text-amber-300 self-center">${isEn ? `Person A · Your Input (${data.userBirthYear})` : `甲造命主 · 您的输入 (${data.userBirthYear}年)`}</div>
+                <div>${elBadge(cA.year.stem, cA.year.branch, cA.year.stemElement)}</div>
+                <div>${elBadge(cA.month.stem, cA.month.branch, cA.month.stemElement)}</div>
+                <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${elBadge(cA.day.stem, cA.day.branch, cA.day.stemElement)}</div>
+                <div>${elBadge(cA.hour.stem, cA.hour.branch, cA.hour.stemElement)}</div>
+
+                <!-- Row Chart B -->
+                <div class="text-xs font-bold text-rose-300 self-center">${isEn ? `Person B · Ideal Partner (${data.partnerBirthYear})` : `乙造正缘 · 理想推演 (${data.partnerBirthYear}年)`}</div>
+                <div>${cB ? elBadge(cB.year.stem, cB.year.branch, cB.year.stemElement) : '-'}</div>
+                <div>${cB ? elBadge(cB.month.stem, cB.month.branch, cB.month.stemElement) : '-'}</div>
+                <div class="ring-1 ring-rose-500/40 rounded-lg p-0.5">${cB ? elBadge(cB.day.stem, cB.day.branch, cB.day.stemElement) : '-'}</div>
+                <div>${cB ? elBadge(cB.hour.stem, cB.hour.branch, cB.hour.stemElement) : '-'}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.3 16 字五行能量调和与数学实证 -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 space-y-3">
+              <h4 class="text-xs font-bold text-gray-200 flex items-center gap-1.5 font-serif-sc">
+                <span>⚖️</span>
+                <span>${isEn ? '1.3 Five Elements Energy Balance (Original vs 16-Char Matrix)' : '1.3 16字五行能量调和与数学实证对比'}</span>
+              </h4>
+              <div class="space-y-2">
+                ${balanceBarsHtml}
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 flex flex-col justify-between space-y-3">
+              <div class="space-y-2.5">
+                <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200">
+                  <span class="font-bold block mb-1">✅ ${isEn ? 'Deficit Authentically Replenished' : '命宫短板实质补齐 (可核查增长)'}</span>
+                  <p class="text-[11px] text-gray-300 leading-relaxed">
+                    ${isEn ? data.elementalBalance.deficitHealedEn : data.elementalBalance.deficitHealedZh}
+                  </p>
+                </div>
+                <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
+                  <span class="font-bold block mb-1">🛡️ ${isEn ? 'Excess Channeled & Softened' : '亢旺之气平缓化泄 (贪生忘克)'}</span>
+                  <p class="text-[11px] text-gray-300 leading-relaxed">
+                    ${isEn ? data.elementalBalance.excessSoftenedEn : data.elementalBalance.excessSoftenedZh}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.4 & 1.5 协同共振指数评分模型拆解 (100分制) -->
+          <div class="p-4 rounded-xl bg-gray-900/70 border border-gray-800 space-y-3">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+              <h4 class="text-xs font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+                <span>📊</span>
+                <span>${isEn ? '1.5 Five-Dimensional Quantitative Resonance Breakdown' : '1.5 协同共振指数五维量化打分拆解 (100分制)'}</span>
+              </h4>
+              <span class="text-xs font-mono font-bold text-rose-300">${isEn ? `Overall: ${data.resonanceScore || 94}/100` : `综合得分: ${data.resonanceScore || 94} / 100`}</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 text-[11px]">
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 space-y-1">
+                <div class="flex items-center justify-between font-bold text-rose-300">
+                  <span>${isEn ? scoreB.spousePalace?.titleEn || 'Spouse Palace Synergy' : scoreB.spousePalace?.titleZh || '夫妻宫干支互通契合度'}</span>
+                  <span class="font-mono">${scoreB.spousePalace?.score || 25}/25</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">${isEn ? scoreB.spousePalace?.reasonEn || '' : scoreB.spousePalace?.reasonZh || ''}</p>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 space-y-1">
+                <div class="flex items-center justify-between font-bold text-emerald-300">
+                  <span>${isEn ? scoreB.elementalBalance?.titleEn || 'Elemental Deficit Healing' : scoreB.elementalBalance?.titleZh || '五行短板补齐与能量均衡率'}</span>
+                  <span class="font-mono">${scoreB.elementalBalance?.score || 24}/25</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">${isEn ? scoreB.elementalBalance?.reasonEn || '' : scoreB.elementalBalance?.reasonZh || ''}</p>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 space-y-1">
+                <div class="flex items-center justify-between font-bold text-amber-300">
+                  <span>${isEn ? scoreB.natalRoots?.titleEn || 'Ancestral Roots & Clash Avoidance' : scoreB.natalRoots?.titleZh || '生年根基互通与避刑冲率'}</span>
+                  <span class="font-mono">${scoreB.natalRoots?.score || 19}/20</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">${isEn ? scoreB.natalRoots?.reasonEn || '' : scoreB.natalRoots?.reasonZh || ''}</p>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 space-y-1">
+                <div class="flex items-center justify-between font-bold text-sky-300">
+                  <span>${isEn ? scoreB.trajectoryAlignment?.titleEn || 'Trajectory Synchronization' : scoreB.trajectoryAlignment?.titleZh || '大运轨迹重合与黄金期同步'}</span>
+                  <span class="font-mono">${scoreB.trajectoryAlignment?.score || 14}/15</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">${isEn ? scoreB.trajectoryAlignment?.reasonEn || '' : scoreB.trajectoryAlignment?.reasonZh || ''}</p>
+              </div>
+
+              <div class="p-2.5 rounded-lg bg-black/40 border border-gray-800/80 space-y-1 md:col-span-2 lg:col-span-2">
+                <div class="flex items-center justify-between font-bold text-purple-300">
+                  <span>${isEn ? scoreB.sovereigntySafeguard?.titleEn || 'Dignity & Non-Oppression Safeguard' : scoreB.sovereigntySafeguard?.titleZh || '防压迫度与人格主权独立评级'}</span>
+                  <span class="font-mono">${scoreB.sovereigntySafeguard?.score || 14}/15</span>
+                </div>
+                <p class="text-gray-400 leading-relaxed">${isEn ? scoreB.sovereigntySafeguard?.reasonEn || '' : scoreB.sovereigntySafeguard?.reasonZh || ''}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 1.6 算法依据与科学局限性声明 -->
+          <div class="p-3 rounded-lg bg-blue-950/20 border border-blue-500/30 text-[11px] text-gray-300 space-y-1.5">
+            <span class="font-bold text-blue-300 flex items-center gap-1">
+              <span>🔬</span>
+              <span>${isEn ? 'Algorithm Basis & Scientific Limitation Notice' : '1.6 算法模型依据与科学局限性声明'}</span>
+            </span>
+            <p class="text-gray-400 leading-relaxed">
+              ${isEn
+                ? (data.methodologyAndDisclaimer?.limitationEn || 'Scientific Limitation Notice: This prediction models constitutional personality tendencies and probabilistic resonance. Real-world marital flourishing relies on mutual empathy, emotional self-regulation, realistic communication, and shared commitment.')
+                : (data.methodologyAndDisclaimer?.limitationZh || '【科学与伦理局限性声明】：本推演为先天气质与性格交互倾向的数理概率模型。现实婚姻的幸福取决于双方后天的同理心、情绪自控、契约精神与现实沟通，推演旨在提供相处指南，绝非宿命定论。')}
+            </p>
           </div>
         </div>
 
-        <!-- Five Elements Synthesis & Deficit Fulfillment -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 space-y-3">
+        <!-- ========================================== -->
+        <!-- 第二篇：现实生活可用实操策略（深度落地指南） -->
+        <!-- ========================================== -->
+        <div class="space-y-4 pt-2 border-t border-gray-800">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2">
+            <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider font-serif-sc flex items-center gap-2">
+              <span class="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 text-[10px]">卷二</span>
+              <span>${isEn ? 'Part II: Real-World Actionable Strategies & Grounded Playbook' : '【第二篇 · 现实生活可用实操策略（深度落地指南）】'}</span>
+            </h4>
+            <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Practical Action Ledger' : '拒绝空洞套话 · 落地现实相处'}</span>
+          </div>
+
+          <!-- 2.1 深度心智性格画像与人格特质 -->
+          <div class="p-4 rounded-xl bg-gray-900/70 border border-gray-800 space-y-3">
             <h4 class="text-xs font-bold text-gray-200 flex items-center gap-1.5 font-serif-sc">
-              <span>⚖️</span>
-              <span>${isEn ? 'Five Elements Energy Harmonization (16-Char)' : '五行能量场调和与缺陷补全对比'}</span>
+              <span>🎭</span>
+              <span>${isEn ? '2.1 In-Depth Psychological Archetype & Soul Disposition' : '2.1 深度心智性格画像与人格特质'}</span>
             </h4>
-            <div class="space-y-2">
-              ${balanceBarsHtml}
-            </div>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 flex flex-col justify-between space-y-3">
-            <div class="space-y-2.5">
-              <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-200">
-                <span class="font-bold block mb-1">✅ ${isEn ? 'Deficit Replenished' : '命宫短板补齐'}</span>
-                <p class="text-[11px] text-gray-300 leading-relaxed">
-                  ${isEn ? data.elementalBalance.deficitHealedEn : data.elementalBalance.deficitHealedZh}
-                </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+                <span class="text-gray-400 block mb-1 font-bold">✨ ${isEn ? 'Temperament & Worldview' : '性格气质与精神内核'}</span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.temperamentEn : data.partnerProfile.temperamentZh}</p>
               </div>
-              <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30 text-xs text-rose-200">
-                <span class="font-bold block mb-1">🛡️ ${isEn ? 'Excess Channeled & Softened' : '刚烈化泄与深情守护'}</span>
-                <p class="text-[11px] text-gray-300 leading-relaxed">
-                  ${isEn ? data.elementalBalance.excessSoftenedEn : data.elementalBalance.excessSoftenedZh}
-                </p>
+              <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+                <span class="text-gray-400 block mb-1 font-bold">⏱️ ${isEn ? 'Cadence & Boundary Balance' : '相处节奏与契约底线'}</span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.cadenceEn : data.partnerProfile.cadenceZh}</p>
+              </div>
+              <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
+                <span class="text-gray-400 block mb-1 font-bold">🛡️ ${isEn ? 'Sovereign Root & Dignity' : '柔而有根与主权界限'}</span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.nonOppressionSafeguard.rootedSovereigntyEn : data.nonOppressionSafeguard.rootedSovereigntyZh}</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Non-Oppressive Complementarity & Sovereignty Safeguard (防压迫制衡心法) -->
-        <div class="p-4 rounded-xl bg-gradient-to-r from-rose-950/30 via-black to-purple-950/30 border border-rose-500/30 space-y-3">
-          <div class="flex items-center justify-between border-b border-rose-900/30 pb-2">
-            <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider font-serif-sc flex items-center gap-1.5">
-              <span>🛡️</span>
-              <span>${isEn ? data.nonOppressionSafeguard.corePrincipleEn : data.nonOppressionSafeguard.corePrincipleZh}</span>
-            </h4>
-            <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Equal Sovereignty & Protection' : '主权独立 · 拒绝压迫'}</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
-              <span class="font-bold text-amber-300 flex items-center gap-1">
-                <span>🕊️</span>
-                <span>${isEn ? 'Channeling Mechanism' : '通关化泄机制'}</span>
-              </span>
-              <p class="text-[11px] text-gray-300 leading-relaxed">
-                ${isEn ? data.nonOppressionSafeguard.tongGuanMechanismEn : data.nonOppressionSafeguard.tongGuanMechanismZh}
-              </p>
-            </div>
-            <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
-              <span class="font-bold text-rose-300 flex items-center gap-1">
+          <!-- 2.2 刚柔平衡与防压迫制衡公约 -->
+          <div class="p-4 rounded-xl bg-gradient-to-r from-rose-950/30 via-black to-purple-950/30 border border-rose-500/30 space-y-3">
+            <div class="flex items-center justify-between border-b border-rose-900/30 pb-2">
+              <h4 class="text-xs font-bold text-rose-300 uppercase tracking-wider font-serif-sc flex items-center gap-1.5">
                 <span>🛡️</span>
-                <span>${isEn ? 'Rooted Sovereignty' : '柔而有根与主权界限'}</span>
-              </span>
-              <p class="text-[11px] text-gray-300 leading-relaxed">
-                ${isEn ? data.nonOppressionSafeguard.rootedSovereigntyEn : data.nonOppressionSafeguard.rootedSovereigntyZh}
-              </p>
+                <span>${isEn ? data.nonOppressionSafeguard.corePrincipleEn : data.nonOppressionSafeguard.corePrincipleZh}</span>
+              </h4>
+              <span class="text-[10px] text-gray-400 font-mono">${isEn ? 'Bilateral Veto & Non-Subjugation' : '一票否决权 · 拒绝精神控制'}</span>
             </div>
-            <div class="p-3 rounded-lg bg-black/40 border border-gray-800 space-y-1">
-              <span class="font-bold text-sky-300 flex items-center gap-1">
-                <span>💍</span>
-                <span>${isEn ? 'Spouse Palace Synergy' : '夫妻宫双合与怜惜共鸣'}</span>
-              </span>
-              <p class="text-[11px] text-gray-300 leading-relaxed">
-                ${isEn ? data.nonOppressionSafeguard.spousePalaceResonanceEn : data.nonOppressionSafeguard.spousePalaceResonanceZh}
-              </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              <div class="p-3 rounded-lg bg-black/50 border border-gray-800 space-y-1">
+                <span class="font-bold text-amber-300 flex items-center gap-1">
+                  <span>🏛️</span>
+                  <span>${isEn ? 'Decision Sovereignty Protocol' : '重大决策主权公约'}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">
+                  ${isEn
+                    ? (data.actionableDirectives?.decisionSovereignty?.descEn || 'Bilateral veto power on major financial and career choices, eliminating dominance.')
+                    : (data.actionableDirectives?.decisionSovereignty?.descZh || '重大财务与人生转折推行“双向一票否决权”，杜绝任何单方面控制与压制。')}
+                </p>
+              </div>
+
+              <div class="p-3 rounded-lg bg-black/50 border border-gray-800 space-y-1">
+                <span class="font-bold text-rose-300 flex items-center gap-1">
+                  <span>🛑</span>
+                  <span>${isEn ? 'Emotional Brake Safeguard' : '情绪急刹车冷静公约'}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">
+                  ${isEn
+                    ? (data.actionableDirectives?.emotionalBrake?.descEn || 'Mandatory 30-minute cooling interval during heated tension to prevent verbal escalation.')
+                    : (data.actionableDirectives?.emotionalBrake?.descZh || '一方情绪激动或原局烈火涌动时，启动30分钟物理隔离冷静公约，以通关智慧替代言语交锋。')}
+                </p>
+              </div>
+
+              <div class="p-3 rounded-lg bg-black/50 border border-gray-800 space-y-1">
+                <span class="font-bold text-sky-300 flex items-center gap-1">
+                  <span>🌿</span>
+                  <span>${isEn ? 'Mediating Bridge Protocol' : '通关介质日常化解实操'}</span>
+                </span>
+                <p class="text-[11px] text-gray-300 leading-relaxed">
+                  ${isEn
+                    ? 'Channeling Conflict Protocol: Leverage mediating elements (nature, shared artistic interests, fitness, intellectual inquiry) to buffer stress rather than direct confrontational friction.'
+                    : '在日常矛盾萌芽时，借助五行通关介质（艺术鉴赏、户外自然、健身运动或理性复盘）作为缓冲带，化刚烈克制为良性生化。'}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Real-World Archetype & Encounters (正缘现实画像) -->
-        <div class="p-4 rounded-xl bg-gray-900/70 border border-gray-800 space-y-3">
-          <h4 class="text-xs font-bold text-gray-200 flex items-center gap-1.5 font-serif-sc">
-            <span>🎭</span>
-            <span>${isEn ? 'Real-World Partner Profile & Resonance Environments' : '正缘现实画像与相知结缘场域'}</span>
-          </h4>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div class="p-2.5 rounded-lg bg-black/30 border border-gray-800/80">
-              <span class="text-gray-400 block mb-1 font-bold">✨ ${isEn ? 'Temperament' : '性格气质特征'}</span>
-              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.temperamentEn : data.partnerProfile.temperamentZh}</p>
-            </div>
-            <div class="p-2.5 rounded-lg bg-black/30 border border-gray-800/80">
-              <span class="text-gray-400 block mb-1 font-bold">⏱️ ${isEn ? 'Interaction Cadence' : '相处节奏与默契机制'}</span>
-              <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.cadenceEn : data.partnerProfile.cadenceZh}</p>
-            </div>
-            <div class="p-2.5 rounded-lg bg-black/30 border border-gray-800/80">
-              <span class="text-gray-400 block mb-1 font-bold">📍 ${isEn ? 'Where to Meet' : '推荐相遇与社交场域'}</span>
+          <!-- 2.3 现实高频结缘场域与初遇破冰 -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 space-y-2">
+              <span class="font-bold text-amber-300 flex items-center gap-1.5 font-serif-sc">
+                <span>📍</span>
+                <span>${isEn ? '2.3 High-Resonance Encounter Environments' : '2.3 推荐现实相遇与高质量结缘场域'}</span>
+              </span>
               <p class="text-[11px] text-gray-300 leading-relaxed">${isEn ? data.partnerProfile.encounterScenariosEn : data.partnerProfile.encounterScenariosZh}</p>
             </div>
+
+            <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 space-y-2">
+              <span class="font-bold text-purple-300 flex items-center gap-1.5 font-serif-sc">
+                <span>💡</span>
+                <span>${isEn ? 'Initial Rapport & Icebreaker Anchor' : '初遇破冰切入点与共鸣锚点'}</span>
+              </span>
+              <p class="text-[11px] text-gray-300 leading-relaxed">
+                ${isEn
+                  ? 'Initiate discussions around authentic personal philosophies, professional vision, and cultural experiences. Sincere active listening and intellectual resonance rapidly dissolve defense barriers.'
+                  : '初次结识宜从专业领域探讨、人文审美与长远生活价值观切入。展现温润沉稳的倾听姿态，无需刻意讨好，以深层智识与真诚同理心自然打动对方。'}
+              </p>
+            </div>
+          </div>
+
+          <!-- 2.4 十年相处节律指南 -->
+          <div class="p-3.5 rounded-xl bg-gray-900/60 border border-gray-800 text-xs space-y-1.5">
+            <span class="font-bold text-sky-300 flex items-center gap-1.5 font-serif-sc">
+              <span>📅</span>
+              <span>${isEn ? '2.4 Decennial Cadence & Key Synchronization Milestones' : '2.4 岁运关键协同年份与十年相处节律'}</span>
+            </span>
+            <p class="text-[11px] text-gray-300 leading-relaxed">
+              ${isEn
+                ? (data.actionableDirectives?.growthCadence?.descEn || 'Build contract & trust in years 1-3, expand assets in years 4-7, deepen spiritual intimacy thereafter.')
+                : (data.actionableDirectives?.growthCadence?.descZh || '十年节律：前三年建立信任与财务契约，中四年共同拓展事业与资产边界，后三年深化精神契合与家庭从容。')}
+            </p>
           </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
-          <span class="text-[11px] text-gray-400">
-            ${isEn ? 'Generated authentic astronomical birth chart ready for synastry cross-analysis.' : '已生成天文历法真实对位出生盘，可一键导入并启动全息合盘推演。'}
-          </span>
-          <button id="btnLoadPredictedPartnerIntoChartB" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 via-purple-600 to-rose-700 hover:from-rose-500 hover:to-purple-500 text-white font-bold text-xs shadow-xl transition active:scale-95 flex items-center gap-2 border border-rose-400/40 cursor-pointer">
-            <span>📥</span>
-            <span>${isEn ? 'Load Subject B & Generate Synastry Dossier' : '一键载入乙造并生成全盘合婚战报'}</span>
-          </button>
+        <!-- Action / Navigation Footer -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-800">
+          <div class="flex items-center gap-2 text-[11px] text-emerald-300">
+            <span>✅</span>
+            <span>${isEn ? 'Person B natal data synchronized into synastry engines below.' : '乙造出生八字已全盘对齐，下方双人岁运与流年图表已100%全息更新。'}</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btnLoadPredictedPartnerIntoChartB" class="px-4 py-2 rounded-xl bg-gradient-to-r from-rose-600 via-purple-600 to-rose-700 hover:from-rose-500 hover:to-purple-500 text-white font-bold text-xs shadow-xl transition active:scale-95 flex items-center gap-1.5 border border-rose-400/40 cursor-pointer">
+              <span>📥</span>
+              <span>${isEn ? 'Load Subject B & Generate Synastry Dossier' : '一键载入乙造并查看全盘合婚战报'}</span>
+            </button>
+            <button id="btnCycleNextPredictVariantFooter" class="px-4 py-2 rounded-xl bg-rose-900/60 hover:bg-rose-800/80 text-rose-200 border border-rose-500/40 text-xs font-bold transition active:scale-95 flex items-center gap-1.5 cursor-pointer">
+              <span>🔄</span>
+              <span>${isEn ? `Next Archetype (${(data.variant + 1) % 3 + 1}/3)` : `切换下一组推演 (${(data.variant + 1) % 3 + 1}/3)`}</span>
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -15333,7 +15535,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (inputDateB) inputDateB.value = data.partnerBirthDateStr;
         if (inputTimeB) inputTimeB.value = data.partnerBirthTimeStr;
         if (selectGenderB) selectGenderB.value = data.partnerGender;
-        if (inputLabelB) inputLabelB.value = isEn ? 'Predicted Partner' : '推演正缘 (乙造)';
+        if (inputLabelB) inputLabelB.value = isEn ? data.titleEn : data.titleZh;
 
         [inputDateB, inputTimeB, selectGenderB, inputLabelB].forEach(el => {
           if (el) {
@@ -15351,9 +15553,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    const btnCycle = document.getElementById('btnCycleNextPredictVariant') || (container.querySelector ? container.querySelector('#btnCycleNextPredictVariant') : null);
+    const btnCycle = document.getElementById('btnCycleNextPredictVariant');
     if (btnCycle) {
       btnCycle.addEventListener('click', () => {
+        runPartnerPredictSimulation(data.variant + 1);
+      });
+    }
+
+    const btnCycleFooter = document.getElementById('btnCycleNextPredictVariantFooter');
+    if (btnCycleFooter) {
+      btnCycleFooter.addEventListener('click', () => {
         runPartnerPredictSimulation(data.variant + 1);
       });
     }

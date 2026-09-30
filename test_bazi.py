@@ -571,6 +571,25 @@ if (pred1990.archetypeKey === predVar1.archetypeKey || predVar1.archetypeKey ===
   throw new Error("predictIdealPartner variants are not distinct");
 }
 
+// Canonical Combinations Anti-Hallucination Assertions
+if (typeof SynastryEngine.evaluateStemRelationship === 'function') {
+  var stemJiaJi = SynastryEngine.evaluateStemRelationship('甲', '己');
+  if (!stemJiaJi || !stemJiaJi.isCombo) throw new Error("Jia-Ji must be evaluated as a valid stem combination");
+  var stemRenJi = SynastryEngine.evaluateStemRelationship('壬', '己');
+  if (stemRenJi.isCombo) throw new Error("Ren-Ji is NOT a combination; evaluateStemRelationship falsely marked it as combination!");
+}
+if (typeof SynastryEngine.evaluateBranchRelationship === 'function') {
+  var branchZiChou = SynastryEngine.evaluateBranchRelationship('子', '丑');
+  if (!branchZiChou || !branchZiChou.isSixHarmony) throw new Error("Zi-Chou must be evaluated as six harmony");
+  var branchXuWei = SynastryEngine.evaluateBranchRelationship('戌', '未');
+  if (branchXuWei.isSixHarmony) throw new Error("Xu-Wei is NOT a six-harmony; evaluateBranchRelationship falsely marked it as six-harmony!");
+}
+
+// Substantial Deficit Replenishment Check (Delta >= 5.0%)
+if (!predFloatTest.elementalBalance || predFloatTest.elementalBalance.deltaMin < 5.0) {
+  throw new Error("Deficit replenishment delta must be substantial (>= 5%), got: " + (predFloatTest.elementalBalance ? predFloatTest.elementalBalance.deltaMin : "none"));
+}
+
 // 4.7 Closed-Loop Action Ledger System
 if (typeof ActionLedger === 'undefined') throw new Error("ActionLedger missing");
 ActionLedger.clear();
@@ -1372,6 +1391,15 @@ if (typeof window.initDualPhaseManifold === 'function') {
     }
     if (!predHtmlZh.includes('已锚定甲造命主（您的输入八字）')) {
       throw new Error('synastryPredictOutputContainer missing anchored user natal banner');
+    }
+    if (!predHtmlZh.includes('第一篇 · 命理推演与数理可核查依据') || !predHtmlZh.includes('第二篇 · 现实生活可用实操策略')) {
+      throw new Error('synastryPredictOutputContainer missing two-part deep structure');
+    }
+
+    // Verify automatic synchronization into Chart B
+    var autoSyncedDateB = document.getElementById('synastryDateB') ? document.getElementById('synastryDateB').value : '';
+    if (!autoSyncedDateB || !autoSyncedDateB.startsWith('19')) {
+      throw new Error('Auto-sync of predicted partner to synastryDateB failed: ' + autoSyncedDateB);
     }
 
     // Verify auto-sync from main chart calculation into Synastry Chart A
