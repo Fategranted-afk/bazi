@@ -12707,6 +12707,25 @@ document.addEventListener('DOMContentLoaded', () => {
               : `样本通过方差稳健检验，已融入适度个性化阻抗微调。`);
         }
       }
+      if (typeof renderAdvisorLedgerShrinkage === 'function') {
+        renderAdvisorLedgerShrinkage();
+      }
+    }
+
+    const btnEbJumpToLedger = document.getElementById('btnEbJumpToLedger');
+    if (btnEbJumpToLedger) {
+      btnEbJumpToLedger.addEventListener('click', () => {
+        openAdvisorSafely();
+        switchAdvisorView('ledger');
+      });
+    }
+
+    const btnEbOpenActionLedger = document.getElementById('btnEbOpenActionLedger');
+    if (btnEbOpenActionLedger) {
+      btnEbOpenActionLedger.addEventListener('click', () => {
+        openAdvisorSafely();
+        switchAdvisorView('ledger');
+      });
     }
 
     const btnEbSimulateFeedback = document.getElementById('btnEbSimulateFeedback');
@@ -21405,6 +21424,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function renderAdvisorLedgerShrinkage() {
+    const container = document.getElementById('advisorLedgerShrinkageConsole');
+    if (!container || typeof EmpiricalBayesEngine === 'undefined') return;
+    const isEn = (currentLang === 'en');
+    const audit = EmpiricalBayesEngine.getAuditSnapshot(currentLang);
+
+    container.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-500/30 pb-2">
+        <div class="flex items-center space-x-2">
+          <span class="chinese-seal text-[10px] py-0.2 border-purple-400 text-purple-300">SHRINKAGE</span>
+          <div>
+            <h4 class="text-xs sm:text-sm font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
+              <span>${isEn ? 'Heuristic Shrinkage Dampener' : '启发式先验收缩阻尼器'}</span>
+              <span class="text-[10px] px-2 py-0.2 rounded bg-purple-950 text-purple-300 border border-purple-800 font-mono">&theta; = (1-B)y + B&mu;</span>
+            </h4>
+            <div class="text-[10px] text-gray-400">
+              ${isEn ? 'Action Ledger Shock Absorber · Prevents overfitting on subjective check-ins' : '待办打卡避震器 · 防止 AI 因少数几次主观情绪反馈而剧烈摆动'}
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="btnLedgerShrinkageReset" class="text-[10px] px-2 py-0.5 rounded bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-700/50 transition cursor-pointer active:scale-95 flex items-center gap-1" title="${isEn ? 'Reset to factory baseline' : '一键恢复出厂中庸基准'}">
+            <span>🔄</span>
+            <span>${isEn ? 'Factory Reset' : '重置基准'}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px]">
+        <div class="p-2 rounded-xl bg-black/40 border border-gray-800 space-y-0.5">
+          <div class="text-[10px] text-gray-400">${isEn ? 'Valid Check-in Samples (N):' : '已积累有效打卡样本 (N):'}</div>
+          <div class="font-mono font-bold text-sm text-purple-300">${audit.totalObservations} ${isEn ? 'records' : '次'}</div>
+        </div>
+        <div class="p-2 rounded-xl bg-black/40 border border-gray-800 space-y-0.5">
+          <div class="text-[10px] text-gray-400">${isEn ? 'Dampening Factor (B):' : '防抖阻尼收缩因子 (B):'}</div>
+          <div class="font-mono font-bold text-sm text-emerald-400">${audit.shrinkageFactor.toFixed(3)}</div>
+        </div>
+        <div class="p-2 rounded-xl bg-black/40 border border-gray-800 space-y-0.5 col-span-2 sm:col-span-1">
+          <div class="text-[10px] text-gray-400">${isEn ? 'Brake Status:' : '防抖安全阀状态:'}</div>
+          <div class="font-bold text-xs ${audit.coldStartActive ? 'text-emerald-300' : 'text-purple-300'}">
+            ${audit.coldStartActive ? (isEn ? '🟢 Cold-Start Protected (B &ge; 0.90)' : '🟢 冷启动强收缩保护 (B &ge; 0.90)') : (isEn ? '🟣 Adaptive Posterior Active' : '🟣 稳健自适应微调中')}
+          </div>
+        </div>
+      </div>
+
+      <div class="p-2 rounded-lg bg-purple-950/30 border border-purple-800/30 text-[10.5px] text-purple-200 leading-relaxed">
+        💡 <strong>${isEn ? 'Telemetry Link:' : '实战打卡联动：'}</strong>
+        ${isEn
+          ? 'Every time you check off an action and click 🟢 Eased or 🔴 Blocked below, it updates this dampener. When N < 20, B remains &ge; 0.90 to anchor on safe canonical wisdom.'
+          : '你在下方勾选完成微动作并点击【🟢见效】或【🔴遇阻】时，会实时累积打卡样本；打卡少于 20 次时阻尼强制锁定 B &ge; 0.90，死死拉住安全底线，防止侥幸偏见。'}
+      </div>
+    `;
+
+    const resetBtn = document.getElementById('btnLedgerShrinkageReset');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        EmpiricalBayesEngine.resetToFactoryBaseline();
+        renderAdvisorLedgerShrinkage();
+        if (typeof updateEbDisplay === 'function') updateEbDisplay();
+      });
+    }
+  }
+
   function renderAdvisorLedgerDrawer() {
     const drawer = document.getElementById('advisorLedgerDrawer');
     if (!drawer || typeof ActionLedger === 'undefined') return;
@@ -21440,6 +21522,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Render Phase 4 POMDP Adaptive Policy & Belief State Console
     renderAdvisorPomdpConsole(currentBaziResult);
+    // Render Phase 7.2 Empirical Bayes Shrinkage Dampener Console
+    renderAdvisorLedgerShrinkage();
 
     if (statsEl) {
       statsEl.innerHTML = `
@@ -21677,6 +21761,9 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAdvisorLedgerDrawer();
             updateAdvisorBadgeCount();
             renderAdvisorChatStream();
+            if (typeof updateEbDisplay === 'function') {
+              updateEbDisplay();
+            }
           });
         });
 

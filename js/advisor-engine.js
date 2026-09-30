@@ -174,6 +174,26 @@ class ActionLedger {
       } catch (e) {}
     }
 
+    // Phase 7.2: Hook into EmpiricalBayesEngine for real-time shrinkage calibration
+    if (typeof EmpiricalBayesEngine !== 'undefined') {
+      try {
+        let cat = (item.category || '').toLowerCase();
+        if (!['offensive', 'defensive', 'wisdom', 'pragmatic'].includes(cat)) {
+          if (item.badge && (item.badge.includes('现实推进') || item.badge.includes('破局'))) cat = 'offensive';
+          else if (item.badge && (item.badge.includes('空间') || item.badge.includes('防守'))) cat = 'defensive';
+          else if (item.badge && (item.badge.includes('处境') || item.badge.includes('智谋'))) cat = 'wisdom';
+          else cat = 'defensive';
+        }
+        const outcome = feedback === 'eased' ? 'positive' : (feedback === 'blocked' ? 'negative' : 'neutral');
+        EmpiricalBayesEngine.recordFeedback({
+          action: cat,
+          category: cat,
+          outcome,
+          notes: notes || item.text || ''
+        });
+      } catch (e) {}
+    }
+
     return item;
   }
 

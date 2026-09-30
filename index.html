@@ -3892,6 +3892,18 @@
           </div>
           <span class="text-[11px] px-2 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800 font-mono">&theta; = (1-B)y + B&mu;</span>
         </div>
+
+        <!-- 与待办打卡清单全局联动指示条 -->
+        <div class="p-2.5 rounded-xl bg-indigo-950/60 border border-indigo-500/40 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div class="flex items-center gap-2 text-indigo-200">
+            <span class="text-base">🔗</span>
+            <span><strong>与【待办打卡清单】全局实时绑定</strong>：本收缩器正是打卡系统的底层“防抖避震器”！你在右下角待办清单中点击【🟢见效】或【🔴遇阻】，此处的真实样本数 N 与阻尼因子 B 将实时更新响应。</span>
+          </div>
+          <button id="btnEbJumpToLedger" type="button" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-[11px] font-bold shadow transition cursor-pointer flex items-center gap-1 active:scale-95 whitespace-nowrap">
+            <span>📋</span> <span>打开待办打卡清单</span>
+          </button>
+        </div>
+
         <div class="p-2.5 rounded-xl bg-purple-950/50 border border-purple-500/40 text-xs text-purple-200">
           💡 <strong>【一句话说明白】</strong>：借用贝叶斯收缩公式设定阻尼，防止系统因偶尔几次主观打卡而剧烈摆动；样本未充分积累前人为强行锁定基准权重，并提供一键清空还原。
         </div>
@@ -3916,6 +3928,9 @@
         <div class="flex flex-wrap items-center gap-3">
           <button id="btnEbSimulateFeedback" type="button" class="px-3.5 py-1.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-bold text-xs shadow transition active:scale-95 cursor-pointer">
             ➕ 演示交互样本 (Demo N+1)
+          </button>
+          <button id="btnEbOpenActionLedger" type="button" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-700/80 to-amber-800/80 hover:from-amber-600 hover:to-amber-700 text-amber-200 border border-amber-500/40 font-bold text-xs shadow transition active:scale-95 cursor-pointer flex items-center gap-1">
+            <span>📋</span> <span>去实战打卡 (Action Ledger)</span>
           </button>
           <button id="btnEbFactoryReset" type="button" class="px-3.5 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900/80 text-rose-300 border border-rose-700/50 font-bold text-xs shadow transition active:scale-95 cursor-pointer">
             🔄 一键清空并重置基准 (Factory Reset)
@@ -4561,6 +4576,11 @@
           <!-- POMDP Adaptive Policy & Belief State Manifold Console (Phase 4 贝尔曼自适应决策迭代中枢) -->
           <div id="advisorPomdpConsole" class="rounded-2xl border border-indigo-500/40 bg-gradient-to-br from-[#101322] via-[#14182c] to-[#0c0e18] p-3.5 sm:p-4 shadow-xl space-y-3 text-xs">
             <!-- Dynamically populated via renderAdvisorPomdpConsole() in app.js -->
+          </div>
+
+          <!-- Empirical Bayes Shrinkage Console (Phase 7.2 启发式先验收缩阻尼器 · 待办打卡避震器) -->
+          <div id="advisorLedgerShrinkageConsole" class="rounded-2xl border border-purple-500/30 bg-gradient-to-br from-[#121024] via-[#15122b] to-[#0c0a18] p-3.5 sm:p-4 shadow-xl space-y-3 text-xs">
+            <!-- Dynamically populated via renderAdvisorLedgerShrinkage() in app.js -->
           </div>
 
           <!-- Situational Reality Calibration & Alignment Card -->
