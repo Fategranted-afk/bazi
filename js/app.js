@@ -21431,27 +21431,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const audit = EmpiricalBayesEngine.getAuditSnapshot(currentLang);
 
     container.innerHTML = `
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-500/30 pb-2">
+      <!-- Console Header -->
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-purple-500/30 pb-2.5">
         <div class="flex items-center space-x-2">
           <span class="chinese-seal text-[10px] py-0.2 border-purple-400 text-purple-300">SHRINKAGE</span>
           <div>
             <h4 class="text-xs sm:text-sm font-bold text-purple-200 font-serif-sc flex items-center gap-1.5">
-              <span>${isEn ? 'Heuristic Shrinkage Dampener' : '启发式先验收缩阻尼器'}</span>
+              <span>${isEn ? 'Action Ledger Heuristic Shrinkage Dampener' : '待办打卡启发式先验收缩阻尼器'}</span>
               <span class="text-[10px] px-2 py-0.2 rounded bg-purple-950 text-purple-300 border border-purple-800 font-mono">&theta; = (1-B)y + B&mu;</span>
             </h4>
             <div class="text-[10px] text-gray-400">
-              ${isEn ? 'Action Ledger Shock Absorber · Prevents overfitting on subjective check-ins' : '待办打卡避震器 · 防止 AI 因少数几次主观情绪反馈而剧烈摆动'}
+              ${isEn ? 'Action Ledger Shock Absorber · Prevents AI from overfitting on emotional check-ins' : '待办打卡避震器 · 防止 AI 因少数几次主观情绪反馈而剧烈摆动'}
             </div>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button type="button" id="btnLedgerShrinkageReset" class="text-[10px] px-2 py-0.5 rounded bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-700/50 transition cursor-pointer active:scale-95 flex items-center gap-1" title="${isEn ? 'Reset to factory baseline' : '一键恢复出厂中庸基准'}">
+          <button type="button" id="btnLedgerSimulateDemo" class="text-[10px] px-2.5 py-1 rounded bg-purple-800 hover:bg-purple-700 text-purple-100 font-bold transition cursor-pointer active:scale-95 flex items-center gap-1" title="${isEn ? 'Simulate check-in observation' : '模拟一次打卡样本'}">
+            <span>➕</span>
+            <span>${isEn ? 'Demo N+1' : '模拟打卡+1'}</span>
+          </button>
+          <button type="button" id="btnLedgerShrinkageReset" class="text-[10px] px-2.5 py-1 rounded bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-700/50 font-bold transition cursor-pointer active:scale-95 flex items-center gap-1" title="${isEn ? 'Reset to factory baseline' : '一键恢复出厂中庸基准'}">
             <span>🔄</span>
             <span>${isEn ? 'Factory Reset' : '重置基准'}</span>
           </button>
         </div>
       </div>
 
+      <!-- Real-Time Metrics Strip -->
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px]">
         <div class="p-2 rounded-xl bg-black/40 border border-gray-800 space-y-0.5">
           <div class="text-[10px] text-gray-400">${isEn ? 'Valid Check-in Samples (N):' : '已积累有效打卡样本 (N):'}</div>
@@ -21469,13 +21475,74 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div class="p-2 rounded-lg bg-purple-950/30 border border-purple-800/30 text-[10.5px] text-purple-200 leading-relaxed">
-        💡 <strong>${isEn ? 'Telemetry Link:' : '实战打卡联动：'}</strong>
+      <!-- Audit Status Strip -->
+      <div class="p-2 rounded-lg bg-black/50 border border-purple-900/40 text-[10.5px] text-gray-300 font-mono">
         ${isEn
-          ? 'Every time you check off an action and click 🟢 Eased or 🔴 Blocked below, it updates this dampener. When N < 20, B remains &ge; 0.90 to anchor on safe canonical wisdom.'
-          : '你在下方勾选完成微动作并点击【🟢见效】或【🔴遇阻】时，会实时累积打卡样本；打卡少于 20 次时阻尼强制锁定 B &ge; 0.90，死死拉住安全底线，防止侥幸偏见。'}
+          ? `Audit Trail: Observations N = ${audit.totalObservations}, B = ${audit.shrinkageFactor.toFixed(3)}. ` + (audit.coldStartActive ? 'Safety threshold active (N < 20 &rArr; B &ge; 0.90).' : 'Balanced posterior active.')
+          : `审计追踪：有效打卡样本量 N = ${audit.totalObservations}，阻尼收缩因子 B = ${audit.shrinkageFactor.toFixed(3)}。` + (audit.coldStartActive ? '冷启动防过拟合阈值保护中 (N < 20 &rArr; 90% 依附古典先验)。一键回退可秒级清空。' : '样本通过方差稳健检验，已融入适度个性化阻抗微调。')}
+      </div>
+
+      <!-- Collapsible Plain-Language Breakdown -->
+      <div class="p-2.5 rounded-xl bg-black/60 border border-purple-900/40 space-y-2 text-xs text-gray-300">
+        <div class="text-amber-300 font-bold flex items-center justify-between cursor-pointer select-none" id="btnToggleShrinkageExplanation">
+          <div class="flex items-center gap-1.5">
+            <span>💡</span>
+            <span>【通俗人话拆解 · 打卡与收缩器到底在表达什么？】</span>
+          </div>
+          <span class="text-xs text-purple-300 font-mono" id="shrinkageExplanationChevron">▼</span>
+        </div>
+        <div id="shrinkageExplanationBody" class="space-y-2">
+          <div class="p-2 rounded bg-purple-950/40 border border-purple-800/40 text-purple-200 text-[11px] leading-relaxed">
+            把这个收缩器想象成打卡账本的<strong>“防抖避震悬挂与透明仪表盘”</strong>：你在下方勾选打卡、点击【🟢见效】或【🔴遇阻】时，系统一边自适应学习你的实战节奏，一边用阻尼器死死拉住安全底线，防止因几次短期情绪带偏整体策略。
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10.5px] leading-relaxed">
+            <div class="p-2 rounded bg-[#101426] border border-gray-800">
+              <span class="text-purple-300 font-bold">1. 交互演示样本数 (N: ${audit.totalObservations})</span><br/>
+              <span class="text-amber-300 font-semibold">大白话：</span><strong>你给系统的真实打卡记录数。</strong><br/>
+              <span class="text-gray-400">实际含义：</span>你在下方清单里打卡并点击反馈的次数。为 0 时 AI 保持出厂中立，绝不妄作主观推断。
+            </div>
+            <div class="p-2 rounded bg-[#101426] border border-gray-800">
+              <span class="text-purple-300 font-bold">2. 阻尼收缩因子 (B: ${audit.shrinkageFactor.toFixed(3)})</span><br/>
+              <span class="text-amber-300 font-semibold">大白话：</span><strong>安全刹车片拉紧程度。</strong><br/>
+              <span class="text-gray-400">实际含义：</span>1.000 代表防抖避震拉满，100% 依附千年客观经典基准；样本少于 20 次强行锁定 B &ge; 0.90，即便打卡上百次也保底留 20% 防守底线（B &ge; 0.20）防茧房。
+            </div>
+            <div class="p-2 rounded bg-[#101426] border border-gray-800">
+              <span class="text-purple-300 font-bold">3. 基准状态: ${audit.coldStartActive ? '冷启动保护中' : '自适应微调中'}</span><br/>
+              <span class="text-amber-300 font-semibold">大白话：</span><strong>AI 当前出厂纯净模式。</strong><br/>
+              <span class="text-gray-400">实际含义：</span>攻守智约各占 25%，如同刚拆封的新手机，无偏见、不偏激、不冒进。
+            </div>
+            <div class="p-2 rounded bg-[#101426] border border-gray-800">
+              <span class="text-purple-300 font-bold">4. ➕ 模拟打卡+1 (Demo N+1)</span><br/>
+              <span class="text-amber-300 font-semibold">大白话：</span><strong>【沙盘试玩键】：模拟打卡一次，看 AI 会不会被带偏。</strong><br/>
+              <span class="text-gray-400">实际含义：</span>模拟录入一条进攻打卡，亲眼验证阻尼 B 如何平滑衰减，验证避震器的抗干扰能力。
+            </div>
+            <div class="p-2 rounded bg-[#101426] border border-gray-800">
+              <span class="text-purple-300 font-bold">5. 🔄 一键重置基准 (Factory Reset)</span><br/>
+              <span class="text-amber-300 font-semibold">大白话：</span><strong>【一键洗脑恢复出厂设置】（终极后悔药）。</strong><br/>
+              <span class="text-gray-400">实际含义：</span>打卡用久了若觉得被短期情绪带偏，点此一秒清空所有打卡偏好，阻尼秒回 B=1.000，彻底清除算法茧房。
+            </div>
+            <div class="p-2 rounded bg-[#101426] border border-gray-800">
+              <span class="text-purple-300 font-bold">6. 底部审计状态</span><br/>
+              <span class="text-amber-300 font-semibold">大白话：</span><strong>系统底盘安全指示灯。</strong><br/>
+              <span class="text-gray-400">实际含义：</span>实时审计日志，证明当前所有排盘和策略输出均处于最安全、最客观的标准状态。
+            </div>
+          </div>
+          <div class="text-[10px] text-gray-400 pt-1 border-t border-gray-800/60">
+            <span class="text-amber-400 font-bold">🎯 核心原则：</span>打卡与收缩器仅用于动态调配后天战术微动作的推荐排序，<strong>绝对不会篡改您的生辰八字、四柱五行强弱与大运流年</strong>（形而上学隔离）。
+          </div>
+        </div>
       </div>
     `;
+
+    // Event listeners inside the ledger console
+    const btnSim = document.getElementById('btnLedgerSimulateDemo');
+    if (btnSim) {
+      btnSim.addEventListener('click', () => {
+        EmpiricalBayesEngine.recordFeedback({ action: 'OFFENSIVE', outcome: 'positive' });
+        renderAdvisorLedgerShrinkage();
+        if (typeof updateEbDisplay === 'function') updateEbDisplay();
+      });
+    }
 
     const resetBtn = document.getElementById('btnLedgerShrinkageReset');
     if (resetBtn) {
@@ -21483,6 +21550,16 @@ document.addEventListener('DOMContentLoaded', () => {
         EmpiricalBayesEngine.resetToFactoryBaseline();
         renderAdvisorLedgerShrinkage();
         if (typeof updateEbDisplay === 'function') updateEbDisplay();
+      });
+    }
+
+    const toggleBtn = document.getElementById('btnToggleShrinkageExplanation');
+    const body = document.getElementById('shrinkageExplanationBody');
+    const chevron = document.getElementById('shrinkageExplanationChevron');
+    if (toggleBtn && body && chevron) {
+      toggleBtn.addEventListener('click', () => {
+        const isHidden = body.classList.toggle('hidden');
+        chevron.textContent = isHidden ? '▶' : '▼';
       });
     }
   }
