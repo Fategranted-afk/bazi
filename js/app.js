@@ -1076,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================================
   // Two-Stage Page Navigation (Page 1: Landing Portal / Page 2: Dashboard)
   // ==========================================================================
-  function switchToDashboardView(targetView = null) {
+  function switchToDashboardView(targetView = 'view-master-profile') {
     activeMainPage = 'dashboard';
     if (landingPortalView) {
       landingPortalView.classList.add('hidden');
@@ -1109,10 +1109,9 @@ document.addEventListener('DOMContentLoaded', () => {
       btnOpenLedgerFloating.classList.remove('hidden');
     }
     updateDashboardSummaryBar();
-    if (targetView && typeof switchPrimaryView === 'function') {
-      switchPrimaryView(targetView);
-    } else if (typeof switchPrimaryView === 'function') {
-      switchPrimaryView(activePrimaryView || 'view-master-profile');
+    const finalTarget = targetView || 'view-master-profile';
+    if (typeof switchPrimaryView === 'function') {
+      switchPrimaryView(finalTarget);
     }
     if (currentBaziResult && typeof ElementChart !== 'undefined') {
       ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
@@ -20189,7 +20188,7 @@ document.addEventListener('DOMContentLoaded', () => {
           triggerCalculate();
         }
         showDynamicCalculationProgress('natal', () => {
-          switchToDashboardView('view-home');
+          switchToDashboardView('view-master-profile');
           openAdvisorModal();
         });
       });
@@ -28669,7 +28668,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         if (e.key === 'Enter') {
           triggerCalculate();
           showDynamicCalculationProgress('natal', () => {
-            switchToDashboardView();
+            switchToDashboardView('view-master-profile');
           });
         }
       });
@@ -28679,7 +28678,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
   calcBtn.addEventListener('click', () => {
     triggerCalculate();
     showDynamicCalculationProgress('natal', () => {
-      switchToDashboardView();
+      switchToDashboardView('view-master-profile');
     });
   });
 
