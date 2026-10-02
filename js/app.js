@@ -20244,6 +20244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
+    const tabHome = document.getElementById('advisorTabHome');
     const tabChat = document.getElementById('advisorTabChat');
     const tabLedger = document.getElementById('advisorTabLedger');
     const btnLedger = document.getElementById('advisorLedgerBtn');
@@ -20253,6 +20254,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBackToChatBottom = document.getElementById('advisorBackToChatBtnBottom');
     const btnTogglePrompts = document.getElementById('advisorTogglePromptsBtn');
 
+    if (tabHome) {
+      tabHome.addEventListener('click', () => {
+        switchAdvisorView('home');
+      });
+    }
     if (tabChat) {
       tabChat.addEventListener('click', () => {
         switchAdvisorView('chat');
@@ -20487,15 +20493,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function openAdvisorModal() {
+  function openAdvisorModal(targetView = 'home') {
     if (!currentBaziResult) return;
     const modal = document.getElementById('advisorModal');
     if (!modal) return;
     modal.classList.remove('hidden');
-    switchAdvisorView('chat');
+    switchAdvisorView(targetView);
     refreshAdvisorContextBadges();
     renderAdvisorPromptChips();
     updateAdvisorBadgeCount();
+    renderAdvisorHomeView(currentBaziResult, currentLang);
     if (advisorChatHistory.length === 0) {
       const isEn = (currentLang === 'en');
       const initialFollowUps = (typeof AdvisorEngine !== 'undefined' && typeof AdvisorEngine.anticipateQuestions === 'function')
@@ -20535,8 +20542,10 @@ document.addEventListener('DOMContentLoaded', () => {
       saveAdvisorChatToStorage();
     }
     renderAdvisorChatStream();
-    const input = document.getElementById('advisorQueryInput');
-    if (input) input.focus();
+    if (targetView === 'chat') {
+      const input = document.getElementById('advisorQueryInput');
+      if (input) input.focus();
+    }
   }
 
   function closeAdvisorModal() {
@@ -20545,7 +20554,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function openAdvisorWithPrompt(promptText) {
-    openAdvisorModal();
+    openAdvisorModal('chat');
     if (promptText) {
       setTimeout(() => {
         handleAdvisorQuery(promptText);
@@ -20611,6 +20620,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleAdvisorQuery(query, userSituation = null) {
     if (!query) return;
+    switchAdvisorView('chat');
     const input = document.getElementById('advisorQueryInput');
     if (input) input.value = '';
 
@@ -21759,18 +21769,360 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function getMasterProfilePatternDetails(res, isEn) {
+    const activeRes = res || currentBaziResult;
+    if (!activeRes) return null;
+
+    let pData = (typeof PortraitEngine !== 'undefined' && PortraitEngine.analyze)
+      ? PortraitEngine.analyze(activeRes, isEn ? 'en' : 'zh')
+      : null;
+    if (isEn && typeof I18N !== 'undefined' && typeof I18N.translatePortrait === 'function' && pData) {
+      pData = I18N.translatePortrait(pData, 'en');
+    }
+
+    const dominant = (pData && pData.patterns && pData.patterns[0]) ? pData.patterns[0] : null;
+    const dm = activeRes.dayMaster || (activeRes.pillars && activeRes.pillars.day && activeRes.pillars.day.stem) || '甲';
+    const dmDisplay = isEn ? ((typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en') : dm) : dm;
+    const vigor = (pData && pData.vigor) ? pData.vigor : { totalScore: 60, isStrong: true };
+    const patNameZh = dominant ? (dominant.nameZh || dominant.name) : '正官格';
+    const patWeight = (dominant && dominant.weightPct) ? dominant.weightPct : 50;
+
+    let exegesis = (dominant && dominant.exegesis)
+      ? dominant.exegesis
+      : ((typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.generatePatternExegesis === 'function')
+          ? PortraitEngine.generatePatternExegesis(patNameZh, dm, vigor, activeRes, 1, patWeight)
+          : null);
+
+    const patNameDisplay = isEn
+      ? (dominant ? (dominant.nameEn || (typeof I18N !== 'undefined' ? I18N.getPatternName(patNameZh, 'en') : patNameZh)) : 'Direct Officer Pattern')
+      : patNameZh;
+
+    const cleanPatNameDisplay = isEn ? String(patNameDisplay).replace(/[\u4e00-\u9fa5]/g, '').trim() : patNameDisplay;
+
+    const sealName = isEn
+      ? (dominant && dominant.isSpecial ? 'Day-Hour Special' : (dominant && dominant.isSynergy ? 'Multi-Star Synergy' : 'Month Regular Pattern'))
+      : (dominant && dominant.isSpecial ? '日时特格' : (dominant && dominant.isSynergy ? '多星复合' : '月令正格'));
+
+    let tierName = dominant ? dominant.tierName : (isEn ? 'Supreme Governing Pattern' : '统领主格');
+    if (isEn && typeof I18N !== 'undefined' && typeof I18N.getTierName === 'function') {
+      tierName = I18N.getTierName(tierName, 'en');
+    }
+    const cleanTierName = isEn ? String(tierName).replace(/[\u4e00-\u9fa5]/g, '').trim() : tierName;
+
+    let gradeTier = (dominant && dominant.gradeEvaluation && dominant.gradeEvaluation.tier) ? dominant.gradeEvaluation.tier : '';
+    if (isEn && gradeTier) {
+      if (gradeTier.includes('特等') || gradeTier.includes('Exceptional')) gradeTier = 'Exceptional Grade';
+      else if (gradeTier.includes('上等') || gradeTier.includes('Superior')) gradeTier = 'Superior Grade';
+      else if (gradeTier.includes('中上') || gradeTier.includes('High-Mid')) gradeTier = 'High-Mid Grade';
+      else if (gradeTier.includes('中等') || gradeTier.includes('Standard') || gradeTier.includes('Medium')) gradeTier = 'Standard Grade';
+      else gradeTier = String(gradeTier).replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Superior Grade';
+    }
+
+    let summaryText = isEn
+      ? ((exegesis && exegesis.summaryEn) || 'The primary structural pattern defines the native\'s core psychological architecture, strategic instincts, and execution leverage.')
+      : ((exegesis && (exegesis.summaryZh || exegesis.summary)) || '本命第一核心主格，坐镇全相中枢，统领命主毕生心智模式与战略取向。');
+
+    let favorableText = isEn
+      ? ((exegesis && exegesis.favorableEn) || 'Core Strengths to Harness (20% Pareto Lever): Exceptional strategic clarity, systemic discipline, and decisive execution.')
+      : ((exegesis && (exegesis.favorableZh || exegesis.favorable)) || '【格之可取 · 20% 核心胜手】强大的大局担当、制度统筹魄力与危机决断力。');
+
+    let tabooText = isEn
+      ? ((exegesis && exegesis.tabooEn) || 'Fatal Taboos to Avoid (80% Waste & Risk): Over-leveraged speculation, petty confrontations, and unhedged liabilities.')
+      : ((exegesis && (exegesis.tabooZh || exegesis.taboo)) || '【需要避讳的地方 · 80% 损耗暗礁】最忌盲目加杠杆、意气用事与缺乏制度防护的无序损耗。');
+
+    let paretoText = isEn
+      ? ((exegesis && exegesis.paretoConclusionEn) || 'Pareto Executive Direct Takeaway: Stop expending 80% of mental bandwidth on petty frictions; focus 100% of energy on the vital 20% high-margin levers.')
+      : ((exegesis && (exegesis.paretoConclusionZh || exegesis.paretoConclusion)) || '【二八法则 · 白话实战定论】绝不把80%精力浪费在无序内耗上，集中攻坚20%高杠杆胜手。');
+
+    if (isEn) {
+      summaryText = String(summaryText).replace(/[\u4e00-\u9fa5]/g, '').trim();
+      favorableText = String(favorableText).replace(/[\u4e00-\u9fa5]/g, '').trim();
+      tabooText = String(tabooText).replace(/[\u4e00-\u9fa5]/g, '').trim();
+      paretoText = String(paretoText).replace(/[\u4e00-\u9fa5]/g, '').trim();
+    }
+
+    return {
+      dominant,
+      dm,
+      dmDisplay,
+      vigor,
+      patNameZh,
+      patWeight,
+      cleanPatNameDisplay,
+      sealName,
+      cleanTierName,
+      gradeTier,
+      summaryText,
+      favorableText,
+      tabooText,
+      paretoText
+    };
+  }
+
+  function renderAdvisorHomeView(res, lang) {
+    const activeRes = res || currentBaziResult;
+    const contentContainer = document.getElementById('advisorHomeViewContent');
+    if (!contentContainer || !activeRes) return;
+
+    const activeLang = lang || (typeof window !== 'undefined' && window.currentLang) || currentLang || 'zh';
+    const isEn = (activeLang === 'en');
+
+    const details = getMasterProfilePatternDetails(activeRes, isEn);
+    if (!details) return;
+
+    const {
+      cleanPatNameDisplay,
+      sealName,
+      cleanTierName,
+      gradeTier,
+      dmDisplay,
+      patWeight,
+      summaryText,
+      favorableText,
+      tabooText,
+      paretoText
+    } = details;
+
+    const curatedPrompts = isEn ? [
+      { text: "How should I report up to leadership to secure resources next week?", icon: "💼" },
+      { text: "Based on my natal pattern, is this year better for aggressive pivots or consolidation?", icon: "⚖️" },
+      { text: "What is my 20% highest-margin career lever versus my 80% friction pitfall?", icon: "🎯" },
+      { text: "How to safeguard against workplace credit-stealing with institutional boundaries?", icon: "🛡️" }
+    ] : [
+      { text: "下周如何向上级汇报争取核心预算与编制资源？", icon: "💼" },
+      { text: "结合我本命主格与今年流年，宜攻坚扩张还是稳健防守？", icon: "⚖️" },
+      { text: "如何发挥我本命20%破局胜手，彻底避开80%内耗暗礁？", icon: "🎯" },
+      { text: "职场遇到同僚推诿与抢功，如何用制度与契约筑起防火墙？", icon: "🛡️" }
+    ];
+
+    contentContainer.innerHTML = `
+      <!-- Hero Banner -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl sm:text-3xl">👑</span>
+          <div>
+            <h3 class="text-base sm:text-lg font-bold font-serif-sc text-amber-200 flex items-center gap-2">
+              <span>${isEn ? 'Imperial Advisor Master Profile' : '军师主画像 · 命主全相精华总览'}</span>
+              <span class="chinese-seal text-[9px] sm:text-xs py-0.5 border-amber-500 text-amber-300 font-mono">${isEn ? 'Sovereign Codex' : '诸卷精萃'}</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5">
+              ${isEn ? 'Governing Natal Blueprint · 20% Strategic Lever · 80% Friction Avoidance' : '统帅全盘气象 · 20% 核心破局胜手 · 80% 致命损耗暗礁 · 随身军师即时问对'}
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="advisorHomeOpenDossierBtn" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95">
+            <span>📜</span>
+            <span>${isEn ? 'Inspect Imperial Dossier' : '开启皇家九卷御览'}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Primary Dominant Pattern Card -->
+      <div class="rounded-xl border border-amber-600/40 bg-card p-4 sm:p-5 space-y-4 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 pb-3">
+          <div class="flex items-center space-x-2.5">
+            <span class="text-2xl">🏛️</span>
+            <div>
+              <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                <span>${isEn ? 'Primary Dominant Structural Pattern' : '第一主要的格局 · 简单描述与二八胜负手'}</span>
+                <span class="chinese-seal text-[10px] py-0 text-amber-400 border-amber-500">${sealName}</span>
+              </h4>
+              <p class="text-xs text-gray-400 mt-0.5">
+                ${isEn ? 'Governing Natal Blueprint · 20% Strategic Lever · 80% Friction Avoidance' : '统帅全盘气象 · 20% 核心破局胜手与 80% 致命损耗暗礁实战定论'}
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center flex-wrap gap-2 text-xs">
+            <span class="px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30 font-bold font-mono">
+              ${isEn ? 'Energy Share: ' : '能量占比：'}${patWeight}%
+            </span>
+            <span class="px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/30 font-mono">
+              ${cleanTierName}
+            </span>
+            ${gradeTier ? `
+              <span class="px-2.5 py-1 rounded-md bg-gradient-to-r from-amber-600/30 to-amber-500/20 text-amber-200 border border-amber-500/40 font-bold font-mono">
+                👑 ${gradeTier}
+              </span>
+            ` : ''}
+            <span class="px-2.5 py-1 rounded-md bg-blue-950/40 text-blue-300 border border-blue-800/50 font-mono">
+              ${isEn ? 'Day Master: ' : '日主：'}${dmDisplay}
+            </span>
+          </div>
+        </div>
+
+        <!-- Pattern Hero Spotlight Inner Card -->
+        <div class="p-4 sm:p-5 rounded-xl bg-gradient-to-br from-amber-950/20 via-black/40 to-black/60 border border-amber-600/40 space-y-4 shadow-xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-amber-900/30 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg sm:text-xl font-serif-sc font-bold text-amber-200">${cleanPatNameDisplay}</span>
+              <span class="text-xs px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono">${isEn ? 'Dominant Engine' : '统帅主心骨'}</span>
+            </div>
+            <div class="w-40 sm:w-48 bg-gray-800/80 rounded-full h-2 overflow-hidden">
+              <div class="bg-gradient-to-r from-amber-500 to-amber-300 h-full rounded-full" style="width: ${patWeight}%"></div>
+            </div>
+          </div>
+
+          <!-- 1. Simple Plain-Language Exegesis -->
+          <div class="p-3 sm:p-3.5 rounded-lg bg-black/40 border border-amber-900/40 space-y-1.5">
+            <div class="flex items-center gap-1.5 text-xs font-bold text-amber-300 font-serif-sc">
+              <span>💡</span>
+              <span>${isEn ? '1. Pattern Essence & Plain-Language Summary (What It Means)' : '一、格局本质 · 简单白话概说 (主格究竟是什么意思)'}</span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-sans">${summaryText}</p>
+          </div>
+
+          <!-- 2. 20% Favorable Levers vs 80% Taboo Sinks -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs">
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-800/40 space-y-1.5 shadow">
+              <div class="flex items-center gap-1.5 font-bold text-emerald-300 font-serif-sc">
+                <span>⚡</span>
+                <span>${isEn ? '2. Vital 20% High-Leverage Strategic Strengths' : '二、格之可取 · 20% 核心胜手 (借势破局)'}</span>
+              </div>
+              <p class="text-xs text-emerald-100/90 leading-relaxed font-sans">${favorableText}</p>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-rose-950/20 border border-rose-800/40 space-y-1.5 shadow">
+              <div class="flex items-center gap-1.5 font-bold text-rose-300 font-serif-sc">
+                <span>🚧</span>
+                <span>${isEn ? '3. Fatal 80% Frictions & Strategic Taboos' : '三、损耗暗礁 · 80% 致命陷阱与避讳 (切忌消耗)'}</span>
+              </div>
+              <p class="text-xs text-rose-100/90 leading-relaxed font-sans">${tabooText}</p>
+            </div>
+          </div>
+
+          <!-- 3. Pareto Direct Takeaway -->
+          <div class="p-3.5 rounded-lg bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-black/60 border border-amber-500/50 space-y-1 shadow">
+            <div class="flex items-center gap-1.5 font-bold text-amber-300 font-serif-sc text-xs">
+              <span>🎯</span>
+              <span>${isEn ? '4. Pareto 80/20 Executive Direct Takeaway (Lifelong Playbook)' : '四、二八实战定论 · 命主终身攻防锦囊 (一句话定乾坤)'}</span>
+            </div>
+            <p class="text-xs text-amber-100 leading-relaxed font-sans">${paretoText}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Advisor Quick Action & Real-World Entry Hub -->
+      <div class="rounded-xl border border-gray-800 bg-gray-950/50 p-4 sm:p-5 space-y-3.5">
+        <div class="flex items-center justify-between border-b border-gray-800/80 pb-2.5">
+          <div class="flex items-center space-x-2">
+            <span class="text-lg">🧙</span>
+            <div>
+              <h4 class="text-xs sm:text-sm font-bold text-amber-200 font-serif-sc">
+                ${isEn ? 'Advisor Command Center · Rapid Tactical Entry' : '钦天监参谋中枢 · 现实决策快速入口'}
+              </h4>
+              <p class="text-[11px] text-gray-400">
+                ${isEn ? 'Instantly launch live dialogue or review your closed-loop action ledger' : '一键开启随身军师即时问对，或检视闭环执行账本'}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Button to Chat -->
+          <button id="advisorHomeJumpToChatBtn" type="button" class="p-3 rounded-xl bg-gradient-to-br from-amber-950/60 to-black/70 border border-amber-600/40 hover:border-amber-500 text-left transition cursor-pointer group flex items-start space-x-3">
+            <span class="text-2xl mt-0.5 group-hover:scale-110 transition-transform">💬</span>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-200">${isEn ? 'Live Advisor Dialogue' : '开启临场策问对答'}</span>
+                <span class="text-[10px] text-amber-400 font-mono">→</span>
+              </div>
+              <p class="text-[11px] text-gray-400 mt-1 leading-normal">
+                ${isEn ? 'Ask direct tactical questions regarding workplace, reporting, career pivots, and timing.' : '输入具体困境或点击锦囊，向军师请教向上管理、跳槽转轨、合伙防雷与岁运应期。'}
+              </p>
+            </div>
+          </button>
+
+          <!-- Button to Ledger -->
+          <button id="advisorHomeJumpToLedgerBtn" type="button" class="p-3 rounded-xl bg-gradient-to-br from-purple-950/40 to-black/70 border border-purple-700/40 hover:border-purple-500 text-left transition cursor-pointer group flex items-start space-x-3">
+            <span class="text-2xl mt-0.5 group-hover:scale-110 transition-transform">📋</span>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-purple-200">${isEn ? 'Closed-Loop Action Ledger' : '检视战术闭环账本'}</span>
+                <span class="text-[10px] text-purple-400 font-mono">→</span>
+              </div>
+              <p class="text-[11px] text-gray-400 mt-1 leading-normal">
+                ${isEn ? 'Track execution of micro-actions and view POMDP adaptive impedance recalibration.' : '打卡记录微动作执行状态，实时动态校准军师决策阻抗与 POMDP 最优策略。'}
+              </p>
+            </div>
+          </button>
+        </div>
+
+        <!-- Quick Question Prompts -->
+        <div class="pt-2 border-t border-gray-800/60 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-amber-300 font-serif-sc flex items-center gap-1.5">
+              <span>⚔️</span>
+              <span>${isEn ? 'High-Frequency Real Dilemmas (Click to Consult)' : '高频现实困境速问 (点击即刻向军师请策)'}</span>
+            </span>
+            <span class="text-[10px] text-gray-500">${isEn ? 'One-click launch into dialogue' : '点击直达问对'}</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${curatedPrompts.map(p => `
+              <button type="button" class="advisor-home-quick-prompt-btn px-3 py-2 rounded-lg bg-gray-900/80 hover:bg-amber-950/40 border border-gray-800 hover:border-amber-600/40 text-left text-xs text-gray-200 transition cursor-pointer flex items-center gap-2 group" data-prompt="${p.text}">
+                <span class="text-sm">${p.icon}</span>
+                <span class="truncate flex-1 group-hover:text-amber-200">${p.text}</span>
+                <span class="text-gray-500 text-[10px] group-hover:text-amber-400">⚡</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Attach Event Listeners
+    const dossierBtn = document.getElementById('advisorHomeOpenDossierBtn');
+    if (dossierBtn) {
+      dossierBtn.addEventListener('click', () => {
+        openImperialDossierModal(currentLang);
+      });
+    }
+
+    const jumpChatBtn = document.getElementById('advisorHomeJumpToChatBtn');
+    if (jumpChatBtn) {
+      jumpChatBtn.addEventListener('click', () => {
+        switchAdvisorView('chat');
+      });
+    }
+
+    const jumpLedgerBtn = document.getElementById('advisorHomeJumpToLedgerBtn');
+    if (jumpLedgerBtn) {
+      jumpLedgerBtn.addEventListener('click', () => {
+        switchAdvisorView('ledger');
+      });
+    }
+
+    const quickBtns = contentContainer.querySelectorAll('.advisor-home-quick-prompt-btn');
+    quickBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const promptText = btn.getAttribute('data-prompt');
+        if (promptText) {
+          switchAdvisorView('chat');
+          handleAdvisorQuery(promptText);
+        }
+      });
+    });
+  }
+
   function switchAdvisorView(viewName) {
+    const homeView = document.getElementById('advisorHomeView');
     const chatView = document.getElementById('advisorChatView');
     const ledgerDrawer = document.getElementById('advisorLedgerDrawer');
+    const tabHome = document.getElementById('advisorTabHome');
     const tabChat = document.getElementById('advisorTabChat');
     const tabLedger = document.getElementById('advisorTabLedger');
     const headerClearBtn = document.getElementById('advisorHeaderClearBtn');
 
     if (viewName === 'ledger') {
+      if (homeView) homeView.classList.add('hidden');
       if (chatView) chatView.classList.add('hidden');
       if (ledgerDrawer) {
         ledgerDrawer.classList.remove('hidden');
         renderAdvisorLedgerDrawer();
+      }
+      if (tabHome) {
+        tabHome.classList.remove('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
+        tabHome.classList.add('text-gray-400');
       }
       if (tabChat) {
         tabChat.classList.remove('active', 'bg-amber-950/80', 'border-amber-600/40', 'text-amber-200');
@@ -21783,11 +22135,38 @@ document.addEventListener('DOMContentLoaded', () => {
       if (headerClearBtn) {
         headerClearBtn.setAttribute('title', currentLang === 'en' ? 'Clear Ledger' : '清空账本');
       }
+    } else if (viewName === 'home') {
+      if (ledgerDrawer) ledgerDrawer.classList.add('hidden');
+      if (chatView) chatView.classList.add('hidden');
+      if (homeView) {
+        homeView.classList.remove('hidden');
+        renderAdvisorHomeView(currentBaziResult, currentLang);
+      }
+      if (tabChat) {
+        tabChat.classList.remove('active', 'bg-amber-950/80', 'border-amber-600/40', 'text-amber-200');
+        tabChat.classList.add('text-gray-400');
+      }
+      if (tabLedger) {
+        tabLedger.classList.remove('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
+        tabLedger.classList.add('text-gray-400');
+      }
+      if (tabHome) {
+        tabHome.classList.add('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
+        tabHome.classList.remove('text-gray-400');
+      }
+      if (headerClearBtn) {
+        headerClearBtn.setAttribute('title', currentLang === 'en' ? 'Clear Dialogue' : '清空对话');
+      }
     } else {
+      if (homeView) homeView.classList.add('hidden');
       if (ledgerDrawer) ledgerDrawer.classList.add('hidden');
       if (chatView) {
         chatView.classList.remove('hidden');
         scrollAdvisorChatToBottom();
+      }
+      if (tabHome) {
+        tabHome.classList.remove('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
+        tabHome.classList.add('text-gray-400');
       }
       if (tabLedger) {
         tabLedger.classList.remove('active', 'bg-amber-950/80', 'border', 'border-amber-600/40', 'text-amber-200');
@@ -22962,8 +23341,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openAdvisor3DFeedbackModal = openAdvisor3DFeedbackModal;
     window.handleAdvisorActionFeedback = handleAdvisorActionFeedback;
     window.updateAdvisorBadgeCount = updateAdvisorBadgeCount;
+    window.renderAdvisorHomeView = renderAdvisorHomeView;
   }
   if (typeof globalThis !== 'undefined') {
+    globalThis.renderAdvisorHomeView = renderAdvisorHomeView;
     globalThis.renderAdvisorPomdpConsole = renderAdvisorPomdpConsole;
     globalThis.renderAdvisorCalibrationDashboard = renderAdvisorCalibrationDashboard;
     globalThis.openAdvisorAuditModal = openAdvisorAuditModal;
@@ -27060,73 +27441,34 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
 
     // Section 3: Imperial 9-Page Dossier Compendium (钦天监 · 皇家九卷精装战报全卷精萃)
     renderMasterProfileImperial(activeRes, isEn);
+
+    // Also update Advisor Home View
+    if (typeof renderAdvisorHomeView === 'function') {
+      renderAdvisorHomeView(activeRes, activeLang);
+    }
   }
 
   function renderMasterProfilePattern(res, isEn) {
     const container = document.getElementById('masterProfilePatternSection');
     if (!container || !res) return;
 
-    let pData = (typeof PortraitEngine !== 'undefined' && PortraitEngine.analyze)
-      ? PortraitEngine.analyze(res, isEn ? 'en' : 'zh')
+    const details = (typeof getMasterProfilePatternDetails === 'function')
+      ? getMasterProfilePatternDetails(res, isEn)
       : null;
-    if (isEn && typeof I18N !== 'undefined' && typeof I18N.translatePortrait === 'function' && pData) {
-      pData = I18N.translatePortrait(pData, 'en');
-    }
+    if (!details) return;
 
-    const dominant = (pData && pData.patterns && pData.patterns[0]) ? pData.patterns[0] : null;
-    const dm = res.dayMaster || (res.pillars && res.pillars.day && res.pillars.day.stem) || '甲';
-    const dmDisplay = isEn ? ((typeof I18N !== 'undefined' && I18N.getStem) ? I18N.getStem(dm, 'en') : dm) : dm;
-    const vigor = (pData && pData.vigor) ? pData.vigor : { totalScore: 60, isStrong: true };
-    const patNameZh = dominant ? (dominant.nameZh || dominant.name) : '正官格';
-    const patWeight = (dominant && dominant.weightPct) ? dominant.weightPct : 50;
-
-    let exegesis = (dominant && dominant.exegesis)
-      ? dominant.exegesis
-      : ((typeof PortraitEngine !== 'undefined' && typeof PortraitEngine.generatePatternExegesis === 'function')
-          ? PortraitEngine.generatePatternExegesis(patNameZh, dm, vigor, res, 1, patWeight)
-          : null);
-
-    const patNameDisplay = isEn
-      ? (dominant ? (dominant.nameEn || (typeof I18N !== 'undefined' ? I18N.getPatternName(patNameZh, 'en') : patNameZh)) : 'Direct Officer Pattern')
-      : patNameZh;
-
-    const cleanPatNameDisplay = isEn ? String(patNameDisplay).replace(/[\u4e00-\u9fa5]/g, '').trim() : patNameDisplay;
-
-    const sealName = isEn
-      ? (dominant && dominant.isSpecial ? 'Day-Hour Special' : (dominant && dominant.isSynergy ? 'Multi-Star Synergy' : 'Month Regular Pattern'))
-      : (dominant && dominant.isSpecial ? '日时特格' : (dominant && dominant.isSynergy ? '多星复合' : '月令正格'));
-
-    let tierName = dominant ? dominant.tierName : (isEn ? 'Supreme Governing Pattern' : '统领主格');
-    if (isEn && typeof I18N !== 'undefined' && typeof I18N.getTierName === 'function') {
-      tierName = I18N.getTierName(tierName, 'en');
-    }
-    const cleanTierName = isEn ? String(tierName).replace(/[\u4e00-\u9fa5]/g, '').trim() : tierName;
-
-    let gradeTier = (dominant && dominant.gradeEvaluation && dominant.gradeEvaluation.tier) ? dominant.gradeEvaluation.tier : '';
-    if (isEn && gradeTier) {
-      if (gradeTier.includes('特等') || gradeTier.includes('Exceptional')) gradeTier = 'Exceptional Grade';
-      else if (gradeTier.includes('上等') || gradeTier.includes('Superior')) gradeTier = 'Superior Grade';
-      else if (gradeTier.includes('中上') || gradeTier.includes('High-Mid')) gradeTier = 'High-Mid Grade';
-      else if (gradeTier.includes('中等') || gradeTier.includes('Standard') || gradeTier.includes('Medium')) gradeTier = 'Standard Grade';
-      else gradeTier = String(gradeTier).replace(/[\u4e00-\u9fa5]/g, '').trim() || 'Superior Grade';
-    }
-
-    // Exegesis texts
-    let summaryText = isEn
-      ? ((exegesis && exegesis.summaryEn) || 'The primary structural pattern defines the native\'s core psychological architecture, strategic instincts, and execution leverage.')
-      : ((exegesis && (exegesis.summaryZh || exegesis.summary)) || '本命第一核心主格，坐镇全相中枢，统领命主毕生心智模式与战略取向。');
-
-    let favorableText = isEn
-      ? ((exegesis && exegesis.favorableEn) || 'Core Strengths to Harness (20% Pareto Lever): Exceptional strategic clarity, systemic discipline, and decisive execution.')
-      : ((exegesis && (exegesis.favorableZh || exegesis.favorable)) || '【格之可取 · 20% 核心胜手】强大的大局担当、制度统筹魄力与危机决断力。');
-
-    let tabooText = isEn
-      ? ((exegesis && exegesis.tabooEn) || 'Fatal Taboos to Avoid (80% Waste & Risk): Over-leveraged speculation, petty confrontations, and unhedged liabilities.')
-      : ((exegesis && (exegesis.tabooZh || exegesis.taboo)) || '【需要避讳的地方 · 80% 损耗暗礁】最忌盲目加杠杆、意气用事与缺乏制度防护的无序损耗。');
-
-    let paretoText = isEn
-      ? ((exegesis && exegesis.paretoConclusionEn) || 'Pareto Executive Direct Takeaway: Stop expending 80% of mental bandwidth on petty frictions; focus 100% of energy on the vital 20% high-margin levers.')
-      : ((exegesis && (exegesis.paretoConclusionZh || exegesis.paretoConclusion)) || '【二八法则 · 白话实战定论】绝不把80%精力浪费在无序内耗上，集中攻坚20%高杠杆胜手。');
+    const {
+      cleanPatNameDisplay,
+      sealName,
+      cleanTierName,
+      gradeTier,
+      dmDisplay,
+      patWeight,
+      summaryText,
+      favorableText,
+      tabooText,
+      paretoText
+    } = details;
 
     container.innerHTML = `
       <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800 pb-3">

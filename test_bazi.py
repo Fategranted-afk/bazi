@@ -1151,7 +1151,7 @@ if (drawer.classList.contains('hidden')) throw new Error("Action Ledger drawer f
 var statsHtml = document.getElementById('advisorLedgerStats').innerHTML;
 if (!statsHtml.includes("总计") && !statsHtml.includes("Total")) throw new Error("Action Ledger stats missing");
 
-// 6b. Verify Segmented Tab Switcher (Chat vs Ledger) and screen lockup prevention
+// 6b. Verify Segmented Tab Switcher (Home vs Chat vs Ledger) and screen lockup prevention
 window.switchAdvisorView('ledger');
 if (document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to show");
 var pomdpHtml = document.getElementById('advisorPomdpConsole')?.innerHTML || '';
@@ -1159,9 +1159,24 @@ if (!pomdpHtml.includes("POMDP") || (!pomdpHtml.includes("贝尔曼") && !pomdpH
   throw new Error("Advisor ledger drawer missing POMDP console");
 }
 if (!document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to hide in ledger mode");
+
+// 6b-2. Verify Advisor Home View (Agent Master Profile Home Page)
+window.switchAdvisorView('home');
+if (document.getElementById('advisorHomeView').classList.contains('hidden')) throw new Error("Advisor home view failed to show");
+if (!document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to hide in home mode");
+if (!document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to hide in home mode");
+var homeContent = document.getElementById('advisorHomeViewContent')?.innerHTML || '';
+if (!homeContent.includes("第一主要的格局") && !homeContent.includes("Primary Dominant")) {
+  throw new Error("Advisor home view missing primary dominant pattern card");
+}
+if (!homeContent.includes("二八") && !homeContent.includes("Pareto")) {
+  throw new Error("Advisor home view missing Pareto 80/20 summary");
+}
+
 window.switchAdvisorView('chat');
 if (!document.getElementById('advisorLedgerDrawer').classList.contains('hidden')) throw new Error("Ledger failed to hide in chat mode");
 if (document.getElementById('advisorChatView').classList.contains('hidden')) throw new Error("Chat view failed to show in chat mode");
+if (!document.getElementById('advisorHomeView').classList.contains('hidden')) throw new Error("Home view failed to hide in chat mode");
 
 // 6c. Verify Situational Alignment, Context Input & Bespoke Situational Strategy
 if (!chatHtml.includes("现实处境贴合度校准") && !chatHtml.includes("Situational Reality Alignment")) {
@@ -1463,6 +1478,10 @@ if 'id="advisorLedgerFilterBar"' not in index_html_src:
   raise AssertionError("Missing #advisorLedgerFilterBar in index.html")
 if 'id="advisorLedgerCustomActionDrawer"' not in index_html_src:
   raise AssertionError("Missing #advisorLedgerCustomActionDrawer in index.html")
+if 'id="advisorTabHome"' not in index_html_src:
+  raise AssertionError("Missing #advisorTabHome in index.html")
+if 'id="advisorHomeView"' not in index_html_src:
+  raise AssertionError("Missing #advisorHomeView in index.html")
 if 'id="portalCardAdvisor"' in index_html_src:
   raise AssertionError("portalCardAdvisor should be completely removed from initial landing page")
 if 'id="advisorFloatingToolbar"' not in index_html_src or 'hidden' not in index_html_src:
