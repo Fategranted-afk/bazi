@@ -3719,8 +3719,119 @@
                 <code>001101</code> 刚好有 3 根阳爻、3 根阴爻（阴阳 50% 对 50%）。这说明你当前处于正态分布最密集的动态平衡枢纽层，不偏不倚，进可攻退可守。
               </div>
             </div>
-            <div id="q6ActionAdvice" class="text-[11px] text-gray-400 pt-1 border-t border-gray-800/60">
-              <span class="text-amber-400 font-bold">🎯 现实决策价值：</span>看清红点周围连接的 6 条分支连线，代表在当前卦象处境下，您拨动不同现实行动（如法务合规、轻资产扩张或稳健留守），明年即可平滑跃迁至具体的相邻卦象，告别盲人摸象。
+            <div id="q6ActionAdvice" class="text-xs text-gray-300 pt-2 border-t border-gray-800/60 space-y-2.5">
+              <div class="flex items-start gap-2 bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-transparent p-2.5 rounded-lg border border-amber-500/30 text-amber-200">
+                <span class="text-base leading-none">🎯</span>
+                <div class="leading-relaxed">
+                  <span class="text-amber-300 font-bold font-serif-sc">【现实决策价值 · 六爻操作矩阵与跳轨罗盘】</span><br/>
+                  看清红点（当前值年卦）周围连接的 <strong>6 条紫色分支虚线</strong>，在代数拓扑上代表汉明距离严格守恒的 6 个单爻变相邻态（d_H &equiv; 1）。这象征着在当前境遇下，您在不同现实维度上施加精准杠杆，明年即可<strong>平滑跃迁至具体的相邻卦象（之卦）</strong>，告别盲人摸象。
+                </div>
+              </div>
+
+              <!-- 6条分支连线现实对齐与跳轨推演卡片网格 -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-[11px]" id="q6CorridorCards">
+                <!-- 1. 初爻变 -->
+                <div class="p-2.5 rounded-lg bg-[#0e1224] border border-emerald-900/40 space-y-1 hover:border-emerald-500/50 transition">
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-300 font-bold font-mono text-[10px]">初爻变 · Bit 0</span>
+                    <span class="text-emerald-400 font-mono text-[10px]">d_H = 1</span>
+                  </div>
+                  <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                    <span>🛡️ 【底层合规 · 物理存续】</span>
+                  </div>
+                  <div class="text-sky-300 font-mono text-[10.5px]">
+                    跳轨至：第30卦 · 【离为火】
+                  </div>
+                  <p class="text-gray-400 leading-snug text-[10.5px]">
+                    <strong class="text-amber-300">现实杠杆：</strong>严把法务内控、劳资合同与财务税务合规，定期体检休整；抱紧大厂或权威平台生态，化解生存危机。
+                  </p>
+                </div>
+
+                <!-- 2. 二爻变 -->
+                <div class="p-2.5 rounded-lg bg-[#0e1224] border border-amber-900/40 space-y-1 hover:border-amber-500/50 transition">
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded bg-amber-950/80 text-amber-300 font-bold font-mono text-[10px]">二爻变 · Bit 1</span>
+                    <span class="text-amber-400 font-mono text-[10px]">d_H = 1</span>
+                  </div>
+                  <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                    <span>🤝 【内部运营 · 核心资产】</span>
+                  </div>
+                  <div class="text-sky-300 font-mono text-[10.5px]">
+                    跳轨至：第50卦 · 【火风鼎】
+                  </div>
+                  <p class="text-gray-400 leading-snug text-[10.5px]">
+                    <strong class="text-amber-300">现实杠杆：</strong>理顺利益分配机制，真金白银善待核心骨干；把控应收账款，守住至少6~12个月经营现金流红线。
+                  </p>
+                </div>
+
+                <!-- 3. 三爻变 -->
+                <div class="p-2.5 rounded-lg bg-[#0e1224] border border-rose-900/40 space-y-1 hover:border-rose-500/50 transition">
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded bg-rose-950/80 text-rose-300 font-bold font-mono text-[10px]">三爻变 · Bit 2</span>
+                    <span class="text-rose-400 font-mono text-[10px]">d_H = 1</span>
+                  </div>
+                  <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                    <span>⚔️ 【业务一线 · 战术攻坚】</span>
+                  </div>
+                  <div class="text-sky-300 font-mono text-[10.5px]">
+                    跳轨至：第35卦 · 【火地晋】
+                  </div>
+                  <p class="text-gray-400 leading-snug text-[10.5px]">
+                    <strong class="text-amber-300">现实杠杆：</strong>一线聚焦单点突破、小步试错；严禁盲目加杠杆与大客户硬碰硬，凡事留退路，防后院起火。
+                  </p>
+                </div>
+
+                <!-- 4. 四爻变 -->
+                <div class="p-2.5 rounded-lg bg-[#0e1224] border border-indigo-900/40 space-y-1 hover:border-indigo-500/50 transition">
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded bg-indigo-950/80 text-indigo-300 font-bold font-mono text-[10px]">四爻变 · Bit 3</span>
+                    <span class="text-indigo-400 font-mono text-[10px]">d_H = 1</span>
+                  </div>
+                  <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                    <span>🏛️ 【管理协同 · 战略深蹲】</span>
+                  </div>
+                  <div class="text-sky-300 font-mono text-[10.5px]">
+                    跳轨至：第52卦 · 【艮为山】
+                  </div>
+                  <p class="text-gray-400 leading-snug text-[10.5px]">
+                    <strong class="text-amber-300">现实杠杆：</strong>强化中层枢纽协作，协调关键合伙人；主动执行业务断舍离，砍掉低毛利边缘冗余，聚焦主业护城河。
+                  </p>
+                </div>
+
+                <!-- 5. 五爻变 -->
+                <div class="p-2.5 rounded-lg bg-[#0e1224] border border-purple-900/40 space-y-1 hover:border-purple-500/50 transition">
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded bg-purple-950/80 text-purple-300 font-bold font-mono text-[10px]">五爻变 · Bit 4</span>
+                    <span class="text-purple-400 font-mono text-[10px]">d_H = 1</span>
+                  </div>
+                  <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                    <span>👑 【顶层战略 · 商业定位】</span>
+                  </div>
+                  <div class="text-sky-300 font-mono text-[10.5px]">
+                    跳轨至：第33卦 · 【天山遁】
+                  </div>
+                  <p class="text-gray-400 leading-snug text-[10.5px]">
+                    <strong class="text-amber-300">现实杠杆：</strong>重构商业模式与品牌心智；大势不佳时果断执行“降维防御”明哲保身，退出红海恶性消耗，保全核心元气。
+                  </p>
+                </div>
+
+                <!-- 6. 上爻变 -->
+                <div class="p-2.5 rounded-lg bg-[#0e1224] border border-cyan-900/40 space-y-1 hover:border-cyan-500/50 transition">
+                  <div class="flex items-center justify-between">
+                    <span class="px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 font-bold font-mono text-[10px]">上爻变 · Bit 5</span>
+                    <span class="text-cyan-400 font-mono text-[10px]">d_H = 1</span>
+                  </div>
+                  <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                    <span>🌌 【周期敬畏 · 退出机制】</span>
+                  </div>
+                  <div class="text-sky-300 font-mono text-[10.5px]">
+                    跳轨至：第62卦 · 【雷山小过】
+                  </div>
+                  <p class="text-gray-400 leading-snug text-[10.5px]">
+                    <strong class="text-amber-300">现实杠杆：</strong>提前设计退出清算防线与容灾预案；知止不殆，敬畏周期规律，防范高位傲慢导致的系统性黑天鹅。
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

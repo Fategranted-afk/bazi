@@ -13222,6 +13222,128 @@ document.addEventListener('DOMContentLoaded', () => {
           ? `<span class="text-indigo-300 font-bold">4. Hamming Weight k=${hammingWeight} Dynamics:</span><br/>Active state has ${hammingWeight} Yang lines and ${6 - hammingWeight} Yin lines, quantifying your energetic polar balance on the Q6 hypercube.`
           : `<span class="text-indigo-300 font-bold">4. 汉明重量 k=${hammingWeight} 状态意味：</span><br/><code>[${annualBinaryStr}]</code> 拥有 ${hammingWeight} 根阳爻、${6 - hammingWeight} 根阴爻。${balanceDesc}`;
       }
+
+      const actionAdviceEl = document.getElementById('q6ActionAdvice');
+      if (actionAdviceEl) {
+        const dimData = [
+          {
+            bit: 0,
+            posZh: '初爻变 · Bit 0',
+            posEn: 'Line 1 · Bit 0',
+            dimZh: '🛡️ 【底层合规 · 物理存续】',
+            dimEn: '🛡️ [Legal Compliance & Ground State]',
+            leverZh: '严把法务内控、劳资合同与财务税务合规，定期体检休整；抱紧大厂或权威平台生态，化解生存危机。',
+            leverEn: 'Enforce legal internal controls, labor compliance, and tax health; anchor into dominant platform ecosystems to secure survival baseline.',
+            colorBorder: 'border-emerald-900/40 hover:border-emerald-500/50',
+            colorBadge: 'bg-emerald-950/80 text-emerald-300',
+            colorDist: 'text-emerald-400'
+          },
+          {
+            bit: 1,
+            posZh: '二爻变 · Bit 1',
+            posEn: 'Line 2 · Bit 1',
+            dimZh: '🤝 【内部运营 · 核心资产】',
+            dimEn: '🤝 [Internal Ops & Capital Reserves]',
+            leverZh: '理顺利益分配机制，真金白银善待核心骨干；把控应收账款，守住至少6~12个月经营现金流红线。',
+            leverEn: 'Align incentive sharing, treat core contributors generously, and enforce a strict 6-12 month runway liquidity buffer.',
+            colorBorder: 'border-amber-900/40 hover:border-amber-500/50',
+            colorBadge: 'bg-amber-950/80 text-amber-300',
+            colorDist: 'text-amber-400'
+          },
+          {
+            bit: 2,
+            posZh: '三爻变 · Bit 2',
+            posEn: 'Line 3 · Bit 2',
+            dimZh: '⚔️ 【业务一线 · 战术攻坚】',
+            dimEn: '⚔️ [Tactical Execution & Frontline Push]',
+            leverZh: '一线聚焦单点突破、小步试错；严禁盲目加杠杆与大客户硬碰硬，凡事留退路，防后院起火。',
+            leverEn: 'Focus on singular tactical breakthroughs and iterative trials; avoid over-leveraging into head-on clashes to prevent systemic burnout.',
+            colorBorder: 'border-rose-900/40 hover:border-rose-500/50',
+            colorBadge: 'bg-rose-950/80 text-rose-300',
+            colorDist: 'text-rose-400'
+          },
+          {
+            bit: 3,
+            posZh: '四爻变 · Bit 3',
+            posEn: 'Line 4 · Bit 3',
+            dimZh: '🏛️ 【管理协同 · 战略深蹲】',
+            dimEn: '🏛️ [Management Synergy & Focus]',
+            leverZh: '强化中层枢纽协作，协调关键合伙人；主动执行业务断舍离，砍掉低毛利边缘冗余，聚焦主业护城河。',
+            leverEn: 'Strengthen middle-management alignment and partner cohesion; prune low-margin peripheral initiatives to deepen your core moat.',
+            colorBorder: 'border-indigo-900/40 hover:border-indigo-500/50',
+            colorBadge: 'bg-indigo-950/80 text-indigo-300',
+            colorDist: 'text-indigo-400'
+          },
+          {
+            bit: 4,
+            posZh: '五爻变 · Bit 4',
+            posEn: 'Line 5 · Bit 4',
+            dimZh: '👑 【顶层战略 · 商业定位】',
+            dimEn: '👑 [Top-Level Strategy & Positioning]',
+            leverZh: '重构商业模式与品牌心智；大势不佳时果断执行“降维防御”明哲保身，退出红海恶性消耗，保全核心元气。',
+            leverEn: 'Reframe business model and brand positioning; execute strategic disengagement if headwinds intensify to preserve core viability.',
+            colorBorder: 'border-purple-900/40 hover:border-purple-500/50',
+            colorBadge: 'bg-purple-950/80 text-purple-300',
+            colorDist: 'text-purple-400'
+          },
+          {
+            bit: 5,
+            posZh: '上爻变 · Bit 5',
+            posEn: 'Top Line · Bit 5',
+            dimZh: '🌌 【周期敬畏 · 退出机制】',
+            dimEn: '🌌 [Cyclic Reverence & Exit Safeguards]',
+            leverZh: '提前设计退出清算防线与容灾预案；知止不殆，敬畏周期规律，防范高位傲慢导致的系统性黑天鹅。',
+            leverEn: 'Design fail-safe contingency plans and exit safeguards; respect macro cycles to prevent overreach or catastrophic late-stage reversals.',
+            colorBorder: 'border-cyan-900/40 hover:border-cyan-500/50',
+            colorBadge: 'bg-cyan-950/80 text-cyan-300',
+            colorDist: 'text-cyan-400'
+          }
+        ];
+
+        let cardsHtml = '';
+        for (let bit = 0; bit < 6; bit++) {
+          const cfg = dimData[bit];
+          const neighborIdx = annualIdx ^ (1 << bit);
+          const neighborBin = [(neighborIdx >> 0) & 1, (neighborIdx >> 1) & 1, (neighborIdx >> 2) & 1, (neighborIdx >> 3) & 1, (neighborIdx >> 4) & 1, (neighborIdx >> 5) & 1];
+          const neighborHex = (typeof IChingDB !== 'undefined') ? IChingDB.getByLines(neighborBin) : null;
+          const targetName = neighborHex
+            ? (isEn ? `#${neighborHex.number} ${neighborHex.nameEn}` : `第${neighborHex.number}卦 · 【${neighborHex.nameZh}】`)
+            : (isEn ? `Neighbor #${neighborIdx}` : `相邻卦 #${neighborIdx}`);
+
+          cardsHtml += `
+            <div class="p-2.5 rounded-lg bg-[#0e1224] border ${cfg.colorBorder} space-y-1 hover:border-purple-400/50 transition">
+              <div class="flex items-center justify-between">
+                <span class="px-1.5 py-0.5 rounded ${cfg.colorBadge} font-bold font-mono text-[10px]">${isEn ? cfg.posEn : cfg.posZh}</span>
+                <span class="${cfg.colorDist} font-mono text-[10px]">d_H = 1</span>
+              </div>
+              <div class="text-gray-200 font-bold flex items-center gap-1 text-[11px]">
+                <span>${isEn ? cfg.dimEn : cfg.dimZh}</span>
+              </div>
+              <div class="text-sky-300 font-mono text-[10.5px]">
+                ${isEn ? `Leap Target: ${targetName}` : `跳轨至：${targetName}`}
+              </div>
+              <p class="text-gray-400 leading-snug text-[10.5px]">
+                <strong class="text-amber-300">${isEn ? 'Leverage Directive: ' : '现实杠杆：'}</strong>${isEn ? cfg.leverEn : cfg.leverZh}
+              </p>
+            </div>
+          `;
+        }
+
+        actionAdviceEl.innerHTML = `
+          <div class="flex items-start gap-2 bg-gradient-to-r from-amber-950/40 via-purple-950/30 to-transparent p-2.5 rounded-lg border border-amber-500/30 text-amber-200">
+            <span class="text-base leading-none">🎯</span>
+            <div class="leading-relaxed">
+              <span class="text-amber-300 font-bold font-serif-sc">${isEn ? '[Decision Value · Hexagram Mutation Matrix & Leap Compass]' : '【现实决策价值 · 六爻操作矩阵与跳轨罗盘】'}</span><br/>
+              ${isEn
+                ? `Examine the <strong>6 purple dashed corridors</strong> surrounding the red node (#${annualHexNum} ${annualNameEn}). In Boolean topology, they represent the 6 Hamming-distance-1 degree-1 adjacent states (d_H &equiv; 1). By applying distinct real-world levers across these six operational dimensions, you smoothly transition your path into a concrete adjacent hexagram next year, eliminating ambiguity.`
+                : `看清红点（当前值年卦【<strong>${annualNameZh}</strong>】）周围连接的 <strong>6 条紫色分支虚线</strong>，在代数拓扑上代表汉明距离严格守恒的 6 个单爻变相邻态（d_H &equiv; 1）。这象征着在当前境遇下，您在不同现实维度上施加精准杠杆，明年即可<strong>平滑跃迁至具体的相邻卦象（之卦）</strong>，告别盲人摸象。`}
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-[11px] pt-1">
+            ${cardsHtml}
+          </div>
+        `;
+      }
     }
 
     const btnRenderQ6Hypercube = document.getElementById('btnRenderQ6Hypercube');
