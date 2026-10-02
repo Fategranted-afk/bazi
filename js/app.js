@@ -13344,6 +13344,23 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
       }
+
+      const detailsSummaryEl = document.getElementById('q6ExtendedDetailsSummary');
+      if (detailsSummaryEl) {
+        detailsSummaryEl.innerHTML = isEn
+          ? `<div class="flex items-center gap-2">
+              <span class="text-purple-400">📖</span>
+              <span class="font-bold text-gray-200 font-serif-sc">[Advanced Mathematical Mechanism &amp; Labyrinth Formalism &middot; Click to Expand]</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-900/50 text-indigo-300 font-mono">Q6 Algebraic Topology</span>
+            </div>
+            <span class="text-xs text-gray-400 group-open:rotate-180 transition-transform duration-200">&#9660;</span>`
+          : `<div class="flex items-center gap-2">
+              <span class="text-purple-400">📖</span>
+              <span class="font-bold text-gray-200 font-serif-sc">【进阶数理机制与通俗迷宫拆解 · 点击展开扩展阅读】</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-900/50 text-indigo-300 font-mono">Q6 代数拓扑 &amp; 原理溯源</span>
+            </div>
+            <span class="text-xs text-gray-400 group-open:rotate-180 transition-transform duration-200">&#9660;</span>`;
+      }
     }
 
     const btnRenderQ6Hypercube = document.getElementById('btnRenderQ6Hypercube');
