@@ -441,12 +441,12 @@
     <!-- Primary View Switcher Navigation Bar -->
     <nav id="primaryViewNav" class="sticky top-[61px] z-40 py-2 bg-[#12141c]/95 backdrop-blur-md rounded-2xl border border-gray-800 shadow-2xl p-2">
       <div class="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5">
-        <button id="navBtnMasterProfile" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent cursor-pointer" data-view="view-master-profile">
+        <button id="navBtnMasterProfile" class="view-nav-btn active flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg bg-gradient-to-r from-amber-600 to-amber-700 text-white border border-amber-500/50 cursor-pointer" data-view="view-master-profile">
           <span class="text-base">👑</span>
           <span data-i18n="nav_view_master_profile">主画像</span>
           <span class="chinese-seal text-[9px] py-0 px-1.5" data-i18n="seal_view_master_profile">全相精华</span>
         </button>
-        <button id="navBtnHome" class="view-nav-btn active flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition shadow-lg bg-gradient-to-r from-amber-600 to-amber-700 text-white border border-amber-500/50" data-view="view-home">
+        <button id="navBtnHome" class="view-nav-btn flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition text-gray-400 hover:text-gray-200 hover:bg-gray-800/60 border border-transparent cursor-pointer" data-view="view-home">
           <span class="text-base">🏛️</span>
           <span data-i18n="nav_view_home">核心主盘与全相基底</span>
           <span class="chinese-seal text-[9px] py-0 px-1.5" data-i18n="seal_view_home">主干命基</span>
@@ -505,7 +505,7 @@
     </nav>
 
     <!-- Master Profile View: Full Panoramic Executive Synthesis (主画像 · 全相命盘精华总览看板) -->
-    <div id="view-master-profile" class="space-y-6 hidden">
+    <div id="view-master-profile" class="space-y-6">
       <!-- Master Profile Hero Banner -->
       <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-950/50 via-purple-950/30 to-black/70 border border-amber-500/40 shadow-2xl flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center space-x-3">
@@ -714,7 +714,7 @@
     </div>
 
     <!-- View 1: Main Core & 20% Pareto (核心主盘与 20% 枢纽) -->
-    <div id="view-home" class="space-y-6">
+    <div id="view-home" class="space-y-6 hidden">
       <!-- Four Pillars Grid -->
       <section>
         <div class="flex items-center justify-between mb-3">

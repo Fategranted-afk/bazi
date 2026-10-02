@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedManualTab = 'canons'; // 'specs' | 'canons' | 'triggers' | 'protocols' | 'habits' | 'zen'
   let currentPortraitData = null;
   let currentLang = (typeof localStorage !== 'undefined' && localStorage.getItem('bazi_lang')) ? localStorage.getItem('bazi_lang') : 'zh';
-  let activePrimaryView = 'view-home';
+  let activePrimaryView = 'view-master-profile';
   let activeFrictionTab = 'tab-fric-specs';
   let lastDivinationResult = null;
   let currentCoinStep = 1;
@@ -1111,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (targetView && typeof switchPrimaryView === 'function') {
       switchPrimaryView(targetView);
     } else if (typeof switchPrimaryView === 'function') {
-      switchPrimaryView(activePrimaryView || 'view-home');
+      switchPrimaryView(activePrimaryView || 'view-master-profile');
     }
     if (currentBaziResult && typeof ElementChart !== 'undefined') {
       ElementChart.renderRadar('elementRadarCanvas', currentBaziResult.elements.percentages);
