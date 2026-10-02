@@ -7956,48 +7956,59 @@ document.addEventListener('DOMContentLoaded', () => {
       : 'Yin Male / Yang Female: Earth Trigram on top, Heaven Trigram below for Early Heaven; Heaven Trigram on top, Earth Trigram below for Later Heaven.';
 
     container.innerHTML = `
-      <!-- Canonical Derivation Box -->
-      <div class="p-3.5 rounded-xl bg-black/40 border border-amber-500/30 text-xs space-y-2">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2">
+      <!-- Canonical Derivation Collapsible Box (默认折叠 · 感兴趣可展开扩展阅读) -->
+      <details class="rounded-xl bg-black/40 border border-amber-500/30 p-3 sm:p-3.5 text-xs text-gray-400 group transition-all duration-200">
+        <summary class="font-bold text-amber-300 hover:text-amber-200 cursor-pointer flex flex-wrap items-center justify-between gap-2 select-none">
           <div class="flex items-center space-x-2">
             <span class="text-amber-400 font-bold">🧮</span>
             <span class="text-amber-300 font-bold font-serif-sc">${isEn ? 'Four Pillars Luo Shu & He Tu Mathematical Derivation' : '四柱天纪数理推演 · 洛书与河图正统算法'}</span>
+            <span class="text-[11px] font-normal text-amber-400/80 font-mono hidden sm:inline">
+              (${isEn ? `Odd ${sumOdds} / Even ${sumEvens} -> Trigrams` : `天数${sumOdds} · 地数${sumEvens} → 相荡起卦`})
+            </span>
+            <span class="text-[10px] text-gray-400 font-normal group-open:hidden">
+              ${isEn ? '(Click to expand derivation)' : '（点击展开扩展阅读）'}
+            </span>
           </div>
-          <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
-            ${isEn ? hexData.genderPolarityEn : hexData.genderPolarityZh}
-          </span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-[11px]">
-          <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
-            <div class="text-gray-400 font-semibold flex items-center justify-between">
-              <span>${isEn ? 'Heaven Number (Odd Sum / Base 25):' : '天数归纳（单数和 / 逢25折算）：'}</span>
-              <span class="text-amber-400 font-bold font-mono">${sumOdds} → ${tianShu} (${tianTriName})</span>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">
+              ${isEn ? hexData.genderPolarityEn : hexData.genderPolarityZh}
+            </span>
+            <span class="text-[11px] font-mono text-amber-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+          </div>
+        </summary>
+        <div class="mt-2.5 pt-2.5 border-t border-gray-800/80 space-y-2.5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px]">
+            <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
+              <div class="text-gray-400 font-semibold flex items-center justify-between">
+                <span>${isEn ? 'Heaven Number (Odd Sum / Base 25):' : '天数归纳（单数和 / 逢25折算）：'}</span>
+                <span class="text-amber-400 font-bold font-mono">${sumOdds} → ${tianShu} (${tianTriName})</span>
+              </div>
+              <p class="text-gray-300 font-mono text-[10px]">${isEn ? tianDerivationEn : tianDerivationZh}</p>
+              <p class="text-gray-400 text-[10px]">${isEn ? 'Heavenly Stems Mapping:' : '干分配数：'} <span class="text-gray-200 font-mono">${stemStr}</span></p>
             </div>
-            <p class="text-gray-300 font-mono text-[10px]">${isEn ? tianDerivationEn : tianDerivationZh}</p>
-            <p class="text-gray-400 text-[10px]">${isEn ? 'Heavenly Stems Mapping:' : '干分配数：'} <span class="text-gray-200 font-mono">${stemStr}</span></p>
-          </div>
-          <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
-            <div class="text-gray-400 font-semibold flex items-center justify-between">
-              <span>${isEn ? 'Earth Number (Even Sum / Base 30):' : '地数归纳（双数和 / 逢30折算）：'}</span>
-              <span class="text-purple-400 font-bold font-mono">${sumEvens} → ${diShu} (${diTriName})</span>
+            <div class="space-y-1 bg-black/30 p-2.5 rounded-lg border border-gray-800/60">
+              <div class="text-gray-400 font-semibold flex items-center justify-between">
+                <span>${isEn ? 'Earth Number (Even Sum / Base 30):' : '地数归纳（双数和 / 逢30折算）：'}</span>
+                <span class="text-purple-400 font-bold font-mono">${sumEvens} → ${diShu} (${diTriName})</span>
+              </div>
+              <p class="text-gray-300 font-mono text-[10px]">${isEn ? diDerivationEn : diDerivationZh}</p>
+              <p class="text-gray-400 text-[10px]">${isEn ? 'Earthly Branches Mapping:' : '支分配数：'} <span class="text-gray-200 font-mono">${branchStr}</span></p>
             </div>
-            <p class="text-gray-300 font-mono text-[10px]">${isEn ? diDerivationEn : diDerivationZh}</p>
-            <p class="text-gray-400 text-[10px]">${isEn ? 'Earthly Branches Mapping:' : '支分配数：'} <span class="text-gray-200 font-mono">${branchStr}</span></p>
           </div>
-        </div>
-        <div class="text-[10px] text-gray-400 bg-black/50 p-2 rounded border border-gray-800/60 flex items-start gap-2">
-          <span class="text-amber-400 font-bold">☯️</span>
-          <div>
-            <span class="text-gray-300 font-semibold">${isEn ? 'Bagua Oscillation Law: ' : '八卦相荡法则：'}</span>
-            <span>${isEn ? oscillationRuleEn : oscillationRuleZh}</span>
-            <div class="text-amber-300/90 font-mono mt-0.5">
-              ${isEn
-                ? `Early Heaven Natal: Upper [${xtUpperName}] + Lower [${xtLowerName}] -> Hexagram ${xtHex.number} · ${xtHex.nameEn} | Later Heaven Mandate: Upper [${htUpperName}] + Lower [${htLowerName}] -> Hexagram ${htHex.number} · ${htHex.nameEn}`
-                : `先天命基：上【${xtUpperName}】+ 下【${xtLowerName}】→ 第${xtHex.number}卦 · 【${xtHex.nameZh}】 ｜ 后天跃升：上【${htUpperName}】+ 下【${htLowerName}】→ 第${htHex.number}卦 · 【${htHex.nameZh}】`}
+          <div class="text-[10px] text-gray-400 bg-black/50 p-2 rounded border border-gray-800/60 flex items-start gap-2">
+            <span class="text-amber-400 font-bold">☯️</span>
+            <div>
+              <span class="text-gray-300 font-semibold">${isEn ? 'Bagua Oscillation Law: ' : '八卦相荡法则：'}</span>
+              <span>${isEn ? oscillationRuleEn : oscillationRuleZh}</span>
+              <div class="text-amber-300/90 font-mono mt-0.5">
+                ${isEn
+                  ? `Early Heaven Natal: Upper [${xtUpperName}] + Lower [${xtLowerName}] -> Hexagram ${xtHex.number} · ${xtHex.nameEn} | Later Heaven Mandate: Upper [${htUpperName}] + Lower [${htLowerName}] -> Hexagram ${htHex.number} · ${htHex.nameEn}`
+                  : `先天命基：上【${xtUpperName}】+ 下【${xtLowerName}】→ 第${xtHex.number}卦 · 【${xtHex.nameZh}】 ｜ 后天跃升：上【${htUpperName}】+ 下【${htLowerName}】→ 第${htHex.number}卦 · 【${htHex.nameZh}】`}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </details>
 
       <!-- Master Ni Haisha Yin-Yang Law Liu Nian Hexagram Audit Box -->
       <div class="p-4 rounded-xl bg-gradient-to-r from-amber-950/40 via-black/60 to-emerald-950/40 border border-amber-500/40 space-y-3 text-xs shadow-xl">
