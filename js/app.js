@@ -70,98 +70,154 @@ if (typeof globalThis !== 'undefined') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Comprehensive Global Regions and Cities Dataset
-  const GLOBAL_REGIONS = [
+  // Comprehensive 3-Tier Global Birth Regions Dataset (Country -> State/Province -> 3 Anchor Cities)
+  const GLOBAL_BIRTH_REGIONS = [
     {
-      group: '中国主要省市 (China)',
-      cities: [
-        { name: '北京 (Beijing)', lon: 116.40, tz: 8 },
-        { name: '上海 (Shanghai)', lon: 121.47, tz: 8 },
-        { name: '广州 (Guangzhou)', lon: 113.26, tz: 8 },
-        { name: '深圳 (Shenzhen)', lon: 114.05, tz: 8 },
-        { name: '成都 (Chengdu)', lon: 104.06, tz: 8 },
-        { name: '重庆 (Chongqing)', lon: 106.55, tz: 8 },
-        { name: '西安 (Xi\'an)', lon: 108.93, tz: 8 },
-        { name: '武汉 (Wuhan)', lon: 114.30, tz: 8 },
-        { name: '杭州 (Hangzhou)', lon: 120.15, tz: 8 },
-        { name: '南京 (Nanjing)', lon: 118.78, tz: 8 },
-        { name: '沈阳 (Shenyang)', lon: 123.43, tz: 8 },
-        { name: '哈尔滨 (Harbin)', lon: 126.63, tz: 8 },
-        { name: '昆明 (Kunming)', lon: 102.71, tz: 8 },
-        { name: '兰州 (Lanzhou)', lon: 103.82, tz: 8 },
-        { name: '乌鲁木齐 (Urumqi)', lon: 87.62, tz: 8 },
-        { name: '拉萨 (Lhasa)', lon: 91.11, tz: 8 },
-        { name: '台北 (Taipei)', lon: 121.50, tz: 8 },
-        { name: '香港 (Hong Kong)', lon: 114.17, tz: 8 },
-        { name: '澳门 (Macau)', lon: 113.54, tz: 8 }
+      countryId: "china", countryNameZh: "中国 (China)", countryNameEn: "China",
+      provinces: [
+        { id: "municipalities", nameZh: "直辖市与特别行政区 (直辖市不算省)", nameEn: "Municipalities & SARs", cities: [{ nameZh: "北京 (Beijing)", nameEn: "Beijing", lon: 116.4, tz: 8 }, { nameZh: "上海 (Shanghai)", nameEn: "Shanghai", lon: 121.47, tz: 8 }, { nameZh: "天津 (Tianjin)", nameEn: "Tianjin", lon: 117.2, tz: 8 }, { nameZh: "重庆 (Chongqing)", nameEn: "Chongqing", lon: 106.55, tz: 8 }, { nameZh: "香港 (Hong Kong)", nameEn: "Hong Kong", lon: 114.17, tz: 8 }, { nameZh: "澳门 (Macau)", nameEn: "Macau", lon: 113.54, tz: 8 }] },
+        { id: "guangdong", nameZh: "广东 (Guangdong)", nameEn: "Guangdong", cities: [{ nameZh: "广州 (Guangzhou)", nameEn: "Guangzhou", lon: 113.26, tz: 8 }, { nameZh: "深圳 (Shenzhen)", nameEn: "Shenzhen", lon: 114.05, tz: 8 }, { nameZh: "佛山 (Foshan)", nameEn: "Foshan", lon: 113.12, tz: 8 }] },
+        { id: "zhejiang", nameZh: "浙江 (Zhejiang)", nameEn: "Zhejiang", cities: [{ nameZh: "杭州 (Hangzhou)", nameEn: "Hangzhou", lon: 120.15, tz: 8 }, { nameZh: "宁波 (Ningbo)", nameEn: "Ningbo", lon: 121.55, tz: 8 }, { nameZh: "温州 (Wenzhou)", nameEn: "Wenzhou", lon: 120.7, tz: 8 }] },
+        { id: "jiangsu", nameZh: "江苏 (Jiangsu)", nameEn: "Jiangsu", cities: [{ nameZh: "南京 (Nanjing)", nameEn: "Nanjing", lon: 118.78, tz: 8 }, { nameZh: "苏州 (Suzhou)", nameEn: "Suzhou", lon: 120.58, tz: 8 }, { nameZh: "无锡 (Wuxi)", nameEn: "Wuxi", lon: 120.31, tz: 8 }] },
+        { id: "shandong", nameZh: "山东 (Shandong)", nameEn: "Shandong", cities: [{ nameZh: "济南 (Jinan)", nameEn: "Jinan", lon: 117, tz: 8 }, { nameZh: "青岛 (Qingdao)", nameEn: "Qingdao", lon: 120.38, tz: 8 }, { nameZh: "烟台 (Yantai)", nameEn: "Yantai", lon: 121.45, tz: 8 }] },
+        { id: "sichuan", nameZh: "四川 (Sichuan)", nameEn: "Sichuan", cities: [{ nameZh: "成都 (Chengdu)", nameEn: "Chengdu", lon: 104.06, tz: 8 }, { nameZh: "绵阳 (Mianyang)", nameEn: "Mianyang", lon: 104.73, tz: 8 }, { nameZh: "宜宾 (Yibin)", nameEn: "Yibin", lon: 104.64, tz: 8 }] },
+        { id: "hubei", nameZh: "湖北 (Hubei)", nameEn: "Hubei", cities: [{ nameZh: "武汉 (Wuhan)", nameEn: "Wuhan", lon: 114.3, tz: 8 }, { nameZh: "襄阳 (Xiangyang)", nameEn: "Xiangyang", lon: 112.12, tz: 8 }, { nameZh: "宜昌 (Yichang)", nameEn: "Yichang", lon: 111.28, tz: 8 }] },
+        { id: "hunan", nameZh: "湖南 (Hunan)", nameEn: "Hunan", cities: [{ nameZh: "长沙 (Changsha)", nameEn: "Changsha", lon: 112.93, tz: 8 }, { nameZh: "株洲 (Zhuzhou)", nameEn: "Zhuzhou", lon: 113.13, tz: 8 }, { nameZh: "衡阳 (Hengyang)", nameEn: "Hengyang", lon: 112.57, tz: 8 }] },
+        { id: "henan", nameZh: "河南 (Henan)", nameEn: "Henan", cities: [{ nameZh: "郑州 (Zhengzhou)", nameEn: "Zhengzhou", lon: 113.66, tz: 8 }, { nameZh: "洛阳 (Luoyang)", nameEn: "Luoyang", lon: 112.45, tz: 8 }, { nameZh: "南阳 (Nanyang)", nameEn: "Nanyang", lon: 112.53, tz: 8 }] },
+        { id: "hebei", nameZh: "河北 (Hebei)", nameEn: "Hebei", cities: [{ nameZh: "石家庄 (Shijiazhuang)", nameEn: "Shijiazhuang", lon: 114.51, tz: 8 }, { nameZh: "唐山 (Tangshan)", nameEn: "Tangshan", lon: 118.18, tz: 8 }, { nameZh: "保定 (Baoding)", nameEn: "Baoding", lon: 115.46, tz: 8 }] },
+        { id: "fujian", nameZh: "福建 (Fujian)", nameEn: "Fujian", cities: [{ nameZh: "福州 (Fuzhou)", nameEn: "Fuzhou", lon: 119.3, tz: 8 }, { nameZh: "厦门 (Xiamen)", nameEn: "Xiamen", lon: 118.08, tz: 8 }, { nameZh: "泉州 (Quanzhou)", nameEn: "Quanzhou", lon: 118.68, tz: 8 }] },
+        { id: "anhui", nameZh: "安徽 (Anhui)", nameEn: "Anhui", cities: [{ nameZh: "合肥 (Hefei)", nameEn: "Hefei", lon: 117.28, tz: 8 }, { nameZh: "芜湖 (Wuhu)", nameEn: "Wuhu", lon: 118.38, tz: 8 }, { nameZh: "蚌埠 (Bengbu)", nameEn: "Bengbu", lon: 117.39, tz: 8 }] },
+        { id: "liaoning", nameZh: "辽宁 (Liaoning)", nameEn: "Liaoning", cities: [{ nameZh: "沈阳 (Shenyang)", nameEn: "Shenyang", lon: 123.43, tz: 8 }, { nameZh: "大连 (Dalian)", nameEn: "Dalian", lon: 121.62, tz: 8 }, { nameZh: "鞍山 (Anshan)", nameEn: "Anshan", lon: 122.99, tz: 8 }] },
+        { id: "jilin", nameZh: "吉林 (Jilin)", nameEn: "Jilin", cities: [{ nameZh: "长春 (Changchun)", nameEn: "Changchun", lon: 125.32, tz: 8 }, { nameZh: "吉林市 (Jilin City)", nameEn: "Jilin City", lon: 126.55, tz: 8 }, { nameZh: "延吉 (Yanji)", nameEn: "Yanji", lon: 129.51, tz: 8 }] },
+        { id: "heilongjiang", nameZh: "黑龙江 (Heilongjiang)", nameEn: "Heilongjiang", cities: [{ nameZh: "哈尔滨 (Harbin)", nameEn: "Harbin", lon: 126.63, tz: 8 }, { nameZh: "大庆 (Daqing)", nameEn: "Daqing", lon: 125.1, tz: 8 }, { nameZh: "齐齐哈尔 (Qiqihar)", nameEn: "Qiqihar", lon: 123.95, tz: 8 }] },
+        { id: "shaanxi", nameZh: "陕西 (Shaanxi)", nameEn: "Shaanxi", cities: [{ nameZh: "西安 (Xi'an)", nameEn: "Xi'an", lon: 108.93, tz: 8 }, { nameZh: "咸阳 (Xianyang)", nameEn: "Xianyang", lon: 108.71, tz: 8 }, { nameZh: "宝鸡 (Baoji)", nameEn: "Baoji", lon: 107.24, tz: 8 }] },
+        { id: "jiangxi", nameZh: "江西 (Jiangxi)", nameEn: "Jiangxi", cities: [{ nameZh: "南昌 (Nanchang)", nameEn: "Nanchang", lon: 115.89, tz: 8 }, { nameZh: "赣州 (Ganzhou)", nameEn: "Ganzhou", lon: 114.93, tz: 8 }, { nameZh: "九江 (Jiujiang)", nameEn: "Jiujiang", lon: 116, tz: 8 }] },
+        { id: "guangxi", nameZh: "广西 (Guangxi)", nameEn: "Guangxi", cities: [{ nameZh: "南宁 (Nanning)", nameEn: "Nanning", lon: 108.37, tz: 8 }, { nameZh: "桂林 (Guilin)", nameEn: "Guilin", lon: 110.29, tz: 8 }, { nameZh: "柳州 (Liuzhou)", nameEn: "Liuzhou", lon: 109.43, tz: 8 }] },
+        { id: "yunnan", nameZh: "云南 (Yunnan)", nameEn: "Yunnan", cities: [{ nameZh: "昆明 (Kunming)", nameEn: "Kunming", lon: 102.71, tz: 8 }, { nameZh: "大理 (Dali)", nameEn: "Dali", lon: 100.27, tz: 8 }, { nameZh: "丽江 (Lijiang)", nameEn: "Lijiang", lon: 100.23, tz: 8 }] },
+        { id: "guizhou", nameZh: "贵州 (Guizhou)", nameEn: "Guizhou", cities: [{ nameZh: "贵阳 (Guiyang)", nameEn: "Guiyang", lon: 106.71, tz: 8 }, { nameZh: "遵义 (Zunyi)", nameEn: "Zunyi", lon: 106.93, tz: 8 }, { nameZh: "六盘水 (Liupanshui)", nameEn: "Liupanshui", lon: 104.83, tz: 8 }] },
+        { id: "shanxi", nameZh: "山西 (Shanxi)", nameEn: "Shanxi", cities: [{ nameZh: "太原 (Taiyuan)", nameEn: "Taiyuan", lon: 112.55, tz: 8 }, { nameZh: "大同 (Datong)", nameEn: "Datong", lon: 113.3, tz: 8 }, { nameZh: "运城 (Yuncheng)", nameEn: "Yuncheng", lon: 111.01, tz: 8 }] },
+        { id: "neimenggu", nameZh: "内蒙古 (Inner Mongolia)", nameEn: "Inner Mongolia", cities: [{ nameZh: "呼和浩特 (Hohhot)", nameEn: "Hohhot", lon: 111.75, tz: 8 }, { nameZh: "包头 (Baotou)", nameEn: "Baotou", lon: 109.84, tz: 8 }, { nameZh: "鄂尔多斯 (Ordos)", nameEn: "Ordos", lon: 109.99, tz: 8 }] },
+        { id: "xinjiang", nameZh: "新疆 (Xinjiang)", nameEn: "Xinjiang", cities: [{ nameZh: "乌鲁木齐 (Urumqi)", nameEn: "Urumqi", lon: 87.62, tz: 8 }, { nameZh: "喀什 (Kashgar)", nameEn: "Kashgar", lon: 75.99, tz: 8 }, { nameZh: "伊宁 (Yining)", nameEn: "Yining", lon: 81.32, tz: 8 }] },
+        { id: "gansu", nameZh: "甘肃 (Gansu)", nameEn: "Gansu", cities: [{ nameZh: "兰州 (Lanzhou)", nameEn: "Lanzhou", lon: 103.82, tz: 8 }, { nameZh: "天水 (Tianshui)", nameEn: "Tianshui", lon: 105.72, tz: 8 }, { nameZh: "酒泉 (Jiuquan)", nameEn: "Jiuquan", lon: 98.51, tz: 8 }] },
+        { id: "hainan", nameZh: "海南 (Hainan)", nameEn: "Hainan", cities: [{ nameZh: "海口 (Haikou)", nameEn: "Haikou", lon: 110.33, tz: 8 }, { nameZh: "三亚 (Sanya)", nameEn: "Sanya", lon: 109.51, tz: 8 }, { nameZh: "儋州 (Danzhou)", nameEn: "Danzhou", lon: 109.58, tz: 8 }] },
+        { id: "ningxia", nameZh: "宁夏 (Ningxia)", nameEn: "Ningxia", cities: [{ nameZh: "银川 (Yinchuan)", nameEn: "Yinchuan", lon: 106.23, tz: 8 }, { nameZh: "石嘴山 (Shizuishan)", nameEn: "Shizuishan", lon: 106.38, tz: 8 }, { nameZh: "吴忠 (Wuzhong)", nameEn: "Wuzhong", lon: 106.2, tz: 8 }] },
+        { id: "qinghai", nameZh: "青海 (Qinghai)", nameEn: "Qinghai", cities: [{ nameZh: "西宁 (Xining)", nameEn: "Xining", lon: 101.78, tz: 8 }, { nameZh: "海东 (Haidong)", nameEn: "Haidong", lon: 102.1, tz: 8 }, { nameZh: "格尔木 (Golmud)", nameEn: "Golmud", lon: 94.9, tz: 8 }] },
+        { id: "xizang", nameZh: "西藏 (Tibet)", nameEn: "Tibet", cities: [{ nameZh: "拉萨 (Lhasa)", nameEn: "Lhasa", lon: 91.11, tz: 8 }, { nameZh: "日喀则 (Shigatse)", nameEn: "Shigatse", lon: 88.88, tz: 8 }, { nameZh: "林芝 (Nyingchi)", nameEn: "Nyingchi", lon: 94.36, tz: 8 }] },
+        { id: "taiwan", nameZh: "台湾 (Taiwan)", nameEn: "Taiwan", cities: [{ nameZh: "台北 (Taipei)", nameEn: "Taipei", lon: 121.5, tz: 8 }, { nameZh: "高雄 (Kaohsiung)", nameEn: "Kaohsiung", lon: 120.3, tz: 8 }, { nameZh: "台中 (Taichung)", nameEn: "Taichung", lon: 120.67, tz: 8 }] }
       ]
     },
     {
-      group: '东亚与东南亚 (East & SE Asia)',
-      cities: [
-        { name: '东京 (Tokyo, 日本)', lon: 139.69, tz: 9 },
-        { name: '大阪 (Osaka, 日本)', lon: 135.50, tz: 9 },
-        { name: '首尔 (Seoul, 韩国)', lon: 126.98, tz: 9 },
-        { name: '新加坡 (Singapore)', lon: 103.82, tz: 8 },
-        { name: '吉隆坡 (Kuala Lumpur, 马来西亚)', lon: 101.69, tz: 8 },
-        { name: '曼谷 (Bangkok, 泰国)', lon: 100.50, tz: 7 },
-        { name: '雅加达 (Jakarta, 印尼)', lon: 106.85, tz: 7 },
-        { name: '马尼拉 (Manila, 菲律宾)', lon: 120.98, tz: 8 },
-        { name: '胡志明市 / 河内 (Vietnam)', lon: 106.63, tz: 7 }
+      countryId: "usa", countryNameZh: "美国 (USA)", countryNameEn: "United States",
+      provinces: [
+        { id: "us_dc", nameZh: "华盛顿特区 (Washington D.C. · 特区不算州)", nameEn: "District of Columbia", cities: [{ nameZh: "华盛顿特区 (Washington D.C.)", nameEn: "Washington D.C.", lon: -77.04, tz: -5 }] },
+        { id: "us_ca", nameZh: "加利福尼亚 (California - CA)", nameEn: "California (CA)", cities: [{ nameZh: "洛杉矶 (Los Angeles)", nameEn: "Los Angeles", lon: -118.24, tz: -8 }, { nameZh: "旧金山 (San Francisco)", nameEn: "San Francisco", lon: -122.42, tz: -8 }, { nameZh: "圣迭戈 (San Diego)", nameEn: "San Diego", lon: -117.16, tz: -8 }] },
+        { id: "us_ny", nameZh: "纽约州 (New York - NY)", nameEn: "New York (NY)", cities: [{ nameZh: "纽约市 (New York City)", nameEn: "New York City", lon: -73.93, tz: -5 }, { nameZh: "水牛城 (Buffalo)", nameEn: "Buffalo", lon: -78.88, tz: -5 }, { nameZh: "奥尔巴尼 (Albany)", nameEn: "Albany", lon: -73.76, tz: -5 }] },
+        { id: "us_tx", nameZh: "德克萨斯 (Texas - TX)", nameEn: "Texas (TX)", cities: [{ nameZh: "休斯敦 (Houston)", nameEn: "Houston", lon: -95.37, tz: -6 }, { nameZh: "达拉斯 (Dallas)", nameEn: "Dallas", lon: -96.8, tz: -6 }, { nameZh: "奥斯汀 (Austin)", nameEn: "Austin", lon: -97.74, tz: -6 }] },
+        { id: "us_wa", nameZh: "华盛顿州 (Washington - WA)", nameEn: "Washington (WA)", cities: [{ nameZh: "西雅图 (Seattle)", nameEn: "Seattle", lon: -122.33, tz: -8 }, { nameZh: "斯波坎 (Spokane)", nameEn: "Spokane", lon: -117.43, tz: -8 }, { nameZh: "塔科马 (Tacoma)", nameEn: "Tacoma", lon: -122.44, tz: -8 }] },
+        { id: "us_il", nameZh: "伊利诺伊 (Illinois - IL)", nameEn: "Illinois (IL)", cities: [{ nameZh: "芝加哥 (Chicago)", nameEn: "Chicago", lon: -87.63, tz: -6 }, { nameZh: "奥罗拉 (Aurora)", nameEn: "Aurora", lon: -88.32, tz: -6 }, { nameZh: "纳珀维尔 (Naperville)", nameEn: "Naperville", lon: -88.15, tz: -6 }] },
+        { id: "us_ma", nameZh: "马萨诸塞 (Massachusetts - MA)", nameEn: "Massachusetts (MA)", cities: [{ nameZh: "波士顿 (Boston)", nameEn: "Boston", lon: -71.06, tz: -5 }, { nameZh: "伍斯特 (Worcester)", nameEn: "Worcester", lon: -71.8, tz: -5 }, { nameZh: "剑桥 (Cambridge)", nameEn: "Cambridge", lon: -71.11, tz: -5 }] },
+        { id: "us_fl", nameZh: "佛罗里达 (Florida - FL)", nameEn: "Florida (FL)", cities: [{ nameZh: "迈阿密 (Miami)", nameEn: "Miami", lon: -80.19, tz: -5 }, { nameZh: "奥兰多 (Orlando)", nameEn: "Orlando", lon: -81.38, tz: -5 }, { nameZh: "坦帕 (Tampa)", nameEn: "Tampa", lon: -82.46, tz: -5 }] },
+        { id: "us_pa", nameZh: "宾夕法尼亚 (Pennsylvania - PA)", nameEn: "Pennsylvania (PA)", cities: [{ nameZh: "费城 (Philadelphia)", nameEn: "Philadelphia", lon: -75.17, tz: -5 }, { nameZh: "匹兹堡 (Pittsburgh)", nameEn: "Pittsburgh", lon: -79.99, tz: -5 }, { nameZh: "阿伦敦 (Allentown)", nameEn: "Allentown", lon: -75.49, tz: -5 }] },
+        { id: "us_ga", nameZh: "乔治亚 (Georgia - GA)", nameEn: "Georgia (GA)", cities: [{ nameZh: "亚特兰大 (Atlanta)", nameEn: "Atlanta", lon: -84.39, tz: -5 }, { nameZh: "奥古斯塔 (Augusta)", nameEn: "Augusta", lon: -81.97, tz: -5 }, { nameZh: "萨凡纳 (Savannah)", nameEn: "Savannah", lon: -81.09, tz: -5 }] },
+        { id: "us_oh", nameZh: "俄亥俄 (Ohio - OH)", nameEn: "Ohio (OH)", cities: [{ nameZh: "哥伦布 (Columbus)", nameEn: "Columbus", lon: -83, tz: -5 }, { nameZh: "克利夫兰 (Cleveland)", nameEn: "Cleveland", lon: -81.69, tz: -5 }, { nameZh: "辛辛那提 (Cincinnati)", nameEn: "Cincinnati", lon: -84.51, tz: -5 }] },
+        { id: "us_nc", nameZh: "北卡罗来纳 (North Carolina - NC)", nameEn: "North Carolina (NC)", cities: [{ nameZh: "夏洛特 (Charlotte)", nameEn: "Charlotte", lon: -80.84, tz: -5 }, { nameZh: "罗利 (Raleigh)", nameEn: "Raleigh", lon: -78.64, tz: -5 }, { nameZh: "格林斯伯勒 (Greensboro)", nameEn: "Greensboro", lon: -79.79, tz: -5 }] },
+        { id: "us_mi", nameZh: "密歇根 (Michigan - MI)", nameEn: "Michigan (MI)", cities: [{ nameZh: "底特律 (Detroit)", nameEn: "Detroit", lon: -83.05, tz: -5 }, { nameZh: "大急流城 (Grand Rapids)", nameEn: "Grand Rapids", lon: -85.67, tz: -5 }, { nameZh: "安娜堡 (Ann Arbor)", nameEn: "Ann Arbor", lon: -83.74, tz: -5 }] },
+        { id: "us_nj", nameZh: "新泽西 (New Jersey - NJ)", nameEn: "New Jersey (NJ)", cities: [{ nameZh: "纽瓦克 (Newark)", nameEn: "Newark", lon: -74.17, tz: -5 }, { nameZh: "泽西市 (Jersey City)", nameEn: "Jersey City", lon: -74.04, tz: -5 }, { nameZh: "普林斯顿 (Princeton)", nameEn: "Princeton", lon: -74.66, tz: -5 }] },
+        { id: "us_va", nameZh: "弗吉尼亚 (Virginia - VA)", nameEn: "Virginia (VA)", cities: [{ nameZh: "弗吉尼亚海滩 (Virginia Beach)", nameEn: "Virginia Beach", lon: -75.98, tz: -5 }, { nameZh: "里士满 (Richmond)", nameEn: "Richmond", lon: -77.44, tz: -5 }, { nameZh: "诺福克 (Norfolk)", nameEn: "Norfolk", lon: -76.29, tz: -5 }] },
+        { id: "us_co", nameZh: "科罗拉多 (Colorado - CO)", nameEn: "Colorado (CO)", cities: [{ nameZh: "丹佛 (Denver)", nameEn: "Denver", lon: -104.99, tz: -7 }, { nameZh: "科罗拉多斯普林斯 (Colorado Springs)", nameEn: "Colorado Springs", lon: -104.82, tz: -7 }, { nameZh: "博尔德 (Boulder)", nameEn: "Boulder", lon: -105.27, tz: -7 }] },
+        { id: "us_az", nameZh: "亚利桑那 (Arizona - AZ)", nameEn: "Arizona (AZ)", cities: [{ nameZh: "凤凰城 (Phoenix)", nameEn: "Phoenix", lon: -112.07, tz: -7 }, { nameZh: "图森 (Tucson)", nameEn: "Tucson", lon: -110.97, tz: -7 }, { nameZh: "梅萨 (Mesa)", nameEn: "Mesa", lon: -111.83, tz: -7 }] },
+        { id: "us_nv", nameZh: "内华达 (Nevada - NV)", nameEn: "Nevada (NV)", cities: [{ nameZh: "拉斯维加斯 (Las Vegas)", nameEn: "Las Vegas", lon: -115.14, tz: -8 }, { nameZh: "雷诺 (Reno)", nameEn: "Reno", lon: -119.81, tz: -8 }, { nameZh: "亨德森 (Henderson)", nameEn: "Henderson", lon: -114.98, tz: -8 }] },
+        { id: "us_ut", nameZh: "犹他 (Utah - UT)", nameEn: "Utah (UT)", cities: [{ nameZh: "盐湖城 (Salt Lake City)", nameEn: "Salt Lake City", lon: -111.89, tz: -7 }, { nameZh: "西谷城 (West Valley City)", nameEn: "West Valley City", lon: -111.94, tz: -7 }, { nameZh: "普若佛 (Provo)", nameEn: "Provo", lon: -111.66, tz: -7 }] },
+        { id: "us_or", nameZh: "俄勒冈 (Oregon - OR)", nameEn: "Oregon (OR)", cities: [{ nameZh: "波特兰 (Portland)", nameEn: "Portland", lon: -122.68, tz: -8 }, { nameZh: "尤金 (Eugene)", nameEn: "Eugene", lon: -123.09, tz: -8 }, { nameZh: "塞勒姆 (Salem)", nameEn: "Salem", lon: -123.04, tz: -8 }] },
+        { id: "us_mn", nameZh: "明尼苏达 (Minnesota - MN)", nameEn: "Minnesota (MN)", cities: [{ nameZh: "明尼阿波利斯 (Minneapolis)", nameEn: "Minneapolis", lon: -93.26, tz: -6 }, { nameZh: "圣保罗 (St. Paul)", nameEn: "St. Paul", lon: -93.1, tz: -6 }, { nameZh: "罗彻斯特 (Rochester)", nameEn: "Rochester", lon: -92.48, tz: -6 }] },
+        { id: "us_mo", nameZh: "密苏里 (Missouri - MO)", nameEn: "Missouri (MO)", cities: [{ nameZh: "堪萨斯城 (Kansas City)", nameEn: "Kansas City", lon: -94.58, tz: -6 }, { nameZh: "圣路易斯 (St. Louis)", nameEn: "St. Louis", lon: -90.2, tz: -6 }, { nameZh: "斯普林菲尔德 (Springfield)", nameEn: "Springfield", lon: -93.29, tz: -6 }] },
+        { id: "us_tn", nameZh: "田纳西 (Tennessee - TN)", nameEn: "Tennessee (TN)", cities: [{ nameZh: "纳什维尔 (Nashville)", nameEn: "Nashville", lon: -86.78, tz: -6 }, { nameZh: "孟菲斯 (Memphis)", nameEn: "Memphis", lon: -90.05, tz: -6 }, { nameZh: "诺克斯维尔 (Knoxville)", nameEn: "Knoxville", lon: -83.92, tz: -5 }] },
+        { id: "us_in", nameZh: "印第安纳 (Indiana - IN)", nameEn: "Indiana (IN)", cities: [{ nameZh: "印第安纳波利斯 (Indianapolis)", nameEn: "Indianapolis", lon: -86.16, tz: -5 }, { nameZh: "韦恩堡 (Fort Wayne)", nameEn: "Fort Wayne", lon: -85.14, tz: -5 }, { nameZh: "埃文斯维尔 (Evansville)", nameEn: "Evansville", lon: -87.57, tz: -6 }] },
+        { id: "us_wi", nameZh: "威斯康星 (Wisconsin - WI)", nameEn: "Wisconsin (WI)", cities: [{ nameZh: "密尔沃基 (Milwaukee)", nameEn: "Milwaukee", lon: -87.91, tz: -6 }, { nameZh: "麦迪逊 (Madison)", nameEn: "Madison", lon: -89.4, tz: -6 }, { nameZh: "绿湾 (Green Bay)", nameEn: "Green Bay", lon: -88.02, tz: -6 }] },
+        { id: "us_md", nameZh: "马里兰 (Maryland - MD)", nameEn: "Maryland (MD)", cities: [{ nameZh: "巴尔的摩 (Baltimore)", nameEn: "Baltimore", lon: -76.61, tz: -5 }, { nameZh: "弗雷德里克 (Frederick)", nameEn: "Frederick", lon: -77.41, tz: -5 }, { nameZh: "洛克维尔 (Rockville)", nameEn: "Rockville", lon: -77.15, tz: -5 }] },
+        { id: "us_ky", nameZh: "肯塔基 (Kentucky - KY)", nameEn: "Kentucky (KY)", cities: [{ nameZh: "路易斯维尔 (Louisville)", nameEn: "Louisville", lon: -85.76, tz: -5 }, { nameZh: "列克星敦 (Lexington)", nameEn: "Lexington", lon: -84.5, tz: -5 }, { nameZh: "鲍灵格林 (Bowling Green)", nameEn: "Bowling Green", lon: -86.44, tz: -6 }] },
+        { id: "us_ct", nameZh: "康涅狄格 (Connecticut - CT)", nameEn: "Connecticut (CT)", cities: [{ nameZh: "布里奇波特 (Bridgeport)", nameEn: "Bridgeport", lon: -73.2, tz: -5 }, { nameZh: "纽黑文 (New Haven)", nameEn: "New Haven", lon: -72.93, tz: -5 }, { nameZh: "哈特福德 (Hartford)", nameEn: "Hartford", lon: -72.68, tz: -5 }] },
+        { id: "us_ok", nameZh: "俄克拉荷马 (Oklahoma - OK)", nameEn: "Oklahoma (OK)", cities: [{ nameZh: "俄克拉荷马城 (Oklahoma City)", nameEn: "Oklahoma City", lon: -97.52, tz: -6 }, { nameZh: "塔尔萨 (Tulsa)", nameEn: "Tulsa", lon: -95.99, tz: -6 }, { nameZh: "诺曼 (Norman)", nameEn: "Norman", lon: -97.44, tz: -6 }] },
+        { id: "us_la", nameZh: "路易斯安那 (Louisiana - LA)", nameEn: "Louisiana (LA)", cities: [{ nameZh: "新奥尔良 (New Orleans)", nameEn: "New Orleans", lon: -90.07, tz: -6 }, { nameZh: "巴吞鲁日 (Baton Rouge)", nameEn: "Baton Rouge", lon: -91.19, tz: -6 }, { nameZh: "什里夫波特 (Shreveport)", nameEn: "Shreveport", lon: -93.75, tz: -6 }] },
+        { id: "us_al", nameZh: "阿拉巴马 (Alabama - AL)", nameEn: "Alabama (AL)", cities: [{ nameZh: "伯明翰 (Birmingham)", nameEn: "Birmingham", lon: -86.81, tz: -6 }, { nameZh: "蒙哥马利 (Montgomery)", nameEn: "Montgomery", lon: -86.3, tz: -6 }, { nameZh: "亨茨维尔 (Huntsville)", nameEn: "Huntsville", lon: -86.59, tz: -6 }] },
+        { id: "us_sc", nameZh: "南卡罗来纳 (South Carolina - SC)", nameEn: "South Carolina (SC)", cities: [{ nameZh: "查尔斯顿 (Charleston)", nameEn: "Charleston", lon: -79.93, tz: -5 }, { nameZh: "哥伦比亚 (Columbia)", nameEn: "Columbia", lon: -81.04, tz: -5 }, { nameZh: "格林维尔 (Greenville)", nameEn: "Greenville", lon: -82.4, tz: -5 }] },
+        { id: "us_ks", nameZh: "堪萨斯 (Kansas - KS)", nameEn: "Kansas (KS)", cities: [{ nameZh: "威奇托 (Wichita)", nameEn: "Wichita", lon: -97.34, tz: -6 }, { nameZh: "奥弗兰帕克 (Overland Park)", nameEn: "Overland Park", lon: -94.67, tz: -6 }, { nameZh: "堪萨斯城 (Kansas City, KS)", nameEn: "Kansas City (KS)", lon: -94.63, tz: -6 }] },
+        { id: "us_ia", nameZh: "艾奥瓦 (Iowa - IA)", nameEn: "Iowa (IA)", cities: [{ nameZh: "得梅因 (Des Moines)", nameEn: "Des Moines", lon: -93.61, tz: -6 }, { nameZh: "锡达拉皮兹 (Cedar Rapids)", nameEn: "Cedar Rapids", lon: -91.67, tz: -6 }, { nameZh: "达文波特 (Davenport)", nameEn: "Davenport", lon: -90.58, tz: -6 }] },
+        { id: "us_ar", nameZh: "阿肯色 (Arkansas - AR)", nameEn: "Arkansas (AR)", cities: [{ nameZh: "小石城 (Little Rock)", nameEn: "Little Rock", lon: -92.29, tz: -6 }, { nameZh: "费耶特维尔 (Fayetteville)", nameEn: "Fayetteville", lon: -94.16, tz: -6 }, { nameZh: "史密斯堡 (Fort Smith)", nameEn: "Fort Smith", lon: -94.42, tz: -6 }] },
+        { id: "us_ne", nameZh: "内布拉斯加 (Nebraska - NE)", nameEn: "Nebraska (NE)", cities: [{ nameZh: "奥马哈 (Omaha)", nameEn: "Omaha", lon: -95.94, tz: -6 }, { nameZh: "林肯 (Lincoln)", nameEn: "Lincoln", lon: -96.7, tz: -6 }, { nameZh: "贝尔维尤 (Bellevue)", nameEn: "Bellevue", lon: -95.92, tz: -6 }] },
+        { id: "us_nm", nameZh: "新墨西哥 (New Mexico - NM)", nameEn: "New Mexico (NM)", cities: [{ nameZh: "阿尔伯克基 (Albuquerque)", nameEn: "Albuquerque", lon: -106.65, tz: -7 }, { nameZh: "拉斯克鲁塞斯 (Las Cruces)", nameEn: "Las Cruces", lon: -106.78, tz: -7 }, { nameZh: "圣达菲 (Santa Fe)", nameEn: "Santa Fe", lon: -105.94, tz: -7 }] },
+        { id: "us_id", nameZh: "爱达荷 (Idaho - ID)", nameEn: "Idaho (ID)", cities: [{ nameZh: "博伊西 (Boise)", nameEn: "Boise", lon: -116.2, tz: -7 }, { nameZh: "梅里迪安 (Meridian)", nameEn: "Meridian", lon: -116.39, tz: -7 }, { nameZh: "南帕 (Nampa)", nameEn: "Nampa", lon: -116.56, tz: -7 }] },
+        { id: "us_hi", nameZh: "夏威夷 (Hawaii - HI)", nameEn: "Hawaii (HI)", cities: [{ nameZh: "火奴鲁鲁 (Honolulu)", nameEn: "Honolulu", lon: -157.86, tz: -10 }, { nameZh: "希洛 (Hilo)", nameEn: "Hilo", lon: -155.08, tz: -10 }, { nameZh: "卡胡卢伊 (Kahului)", nameEn: "Kahului", lon: -156.47, tz: -10 }] },
+        { id: "us_ak", nameZh: "阿拉斯加 (Alaska - AK)", nameEn: "Alaska (AK)", cities: [{ nameZh: "安克雷奇 (Anchorage)", nameEn: "Anchorage", lon: -149.9, tz: -9 }, { nameZh: "费尔班克斯 (Fairbanks)", nameEn: "Fairbanks", lon: -147.72, tz: -9 }, { nameZh: "朱诺 (Juneau)", nameEn: "Juneau", lon: -134.42, tz: -9 }] },
+        { id: "us_ri", nameZh: "罗德岛 (Rhode Island - RI)", nameEn: "Rhode Island (RI)", cities: [{ nameZh: "普罗维登斯 (Providence)", nameEn: "Providence", lon: -71.41, tz: -5 }, { nameZh: "沃里克 (Warwick)", nameEn: "Warwick", lon: -71.42, tz: -5 }, { nameZh: "克兰斯顿 (Cranston)", nameEn: "Cranston", lon: -71.44, tz: -5 }] },
+        { id: "us_nh", nameZh: "新罕布什尔 (New Hampshire - NH)", nameEn: "New Hampshire (NH)", cities: [{ nameZh: "曼彻斯特 (Manchester)", nameEn: "Manchester", lon: -71.45, tz: -5 }, { nameZh: "纳舒厄 (Nashua)", nameEn: "Nashua", lon: -71.47, tz: -5 }, { nameZh: "康科德 (Concord)", nameEn: "Concord", lon: -71.54, tz: -5 }] },
+        { id: "us_me", nameZh: "缅因 (Maine - ME)", nameEn: "Maine (ME)", cities: [{ nameZh: "波特兰 (Portland, ME)", nameEn: "Portland (ME)", lon: -70.26, tz: -5 }, { nameZh: "刘易斯顿 (Lewiston)", nameEn: "Lewiston", lon: -70.21, tz: -5 }, { nameZh: "班戈 (Bangor)", nameEn: "Bangor", lon: -68.78, tz: -5 }] },
+        { id: "us_de", nameZh: "特拉华 (Delaware - DE)", nameEn: "Delaware (DE)", cities: [{ nameZh: "威尔明顿 (Wilmington)", nameEn: "Wilmington", lon: -75.55, tz: -5 }, { nameZh: "多佛 (Dover)", nameEn: "Dover", lon: -75.52, tz: -5 }, { nameZh: "纽瓦克 (Newark, DE)", nameEn: "Newark (DE)", lon: -75.75, tz: -5 }] },
+        { id: "us_mt", nameZh: "蒙大拿 (Montana - MT)", nameEn: "Montana (MT)", cities: [{ nameZh: "比灵斯 (Billings)", nameEn: "Billings", lon: -108.5, tz: -7 }, { nameZh: "米苏拉 (Missoula)", nameEn: "Missoula", lon: -113.99, tz: -7 }, { nameZh: "大瀑布城 (Great Falls)", nameEn: "Great Falls", lon: -111.3, tz: -7 }] },
+        { id: "us_sd", nameZh: "南达科他 (South Dakota - SD)", nameEn: "South Dakota (SD)", cities: [{ nameZh: "苏瀑 (Sioux Falls)", nameEn: "Sioux Falls", lon: -96.73, tz: -6 }, { nameZh: "急流城 (Rapid City)", nameEn: "Rapid City", lon: -103.23, tz: -7 }, { nameZh: "阿伯丁 (Aberdeen)", nameEn: "Aberdeen", lon: -98.49, tz: -6 }] },
+        { id: "us_nd", nameZh: "北达科他 (North Dakota - ND)", nameEn: "North Dakota (ND)", cities: [{ nameZh: "法戈 (Fargo)", nameEn: "Fargo", lon: -96.79, tz: -6 }, { nameZh: "俾斯麦 (Bismarck)", nameEn: "Bismarck", lon: -100.78, tz: -6 }, { nameZh: "大福克斯 (Grand Forks)", nameEn: "Grand Forks", lon: -97.03, tz: -6 }] },
+        { id: "us_vt", nameZh: "佛蒙特 (Vermont - VT)", nameEn: "Vermont (VT)", cities: [{ nameZh: "伯灵顿 (Burlington)", nameEn: "Burlington", lon: -73.21, tz: -5 }, { nameZh: "南伯灵顿 (South Burlington)", nameEn: "South Burlington", lon: -73.17, tz: -5 }, { nameZh: "拉特兰 (Rutland)", nameEn: "Rutland", lon: -72.97, tz: -5 }] },
+        { id: "us_wv", nameZh: "西弗吉尼亚 (West Virginia - WV)", nameEn: "West Virginia (WV)", cities: [{ nameZh: "查尔斯顿 (Charleston, WV)", nameEn: "Charleston (WV)", lon: -81.63, tz: -5 }, { nameZh: "亨廷顿 (Huntington)", nameEn: "Huntington", lon: -82.45, tz: -5 }, { nameZh: "摩根敦 (Morgantown)", nameEn: "Morgantown", lon: -79.96, tz: -5 }] },
+        { id: "us_wy", nameZh: "怀俄明 (Wyoming - WY)", nameEn: "Wyoming (WY)", cities: [{ nameZh: "夏延 (Cheyenne)", nameEn: "Cheyenne", lon: -104.82, tz: -7 }, { nameZh: "卡斯珀 (Casper)", nameEn: "Casper", lon: -106.32, tz: -7 }, { nameZh: "拉勒米 (Laramie)", nameEn: "Laramie", lon: -105.59, tz: -7 }] },
+        { id: "us_ms", nameZh: "密西西比 (Mississippi - MS)", nameEn: "Mississippi (MS)", cities: [{ nameZh: "杰克逊 (Jackson)", nameEn: "Jackson", lon: -90.18, tz: -6 }, { nameZh: "格尔夫波特 (Gulfport)", nameEn: "Gulfport", lon: -89.09, tz: -6 }, { nameZh: "绍斯黑文 (Southaven)", nameEn: "Southaven", lon: -89.99, tz: -6 }] }
       ]
     },
     {
-      group: '北美洲 (North America)',
-      cities: [
-        { name: '纽约 (New York, 美东)', lon: -73.93, tz: -5 },
-        { name: '洛杉矶 (Los Angeles, 美西)', lon: -118.24, tz: -8 },
-        { name: '旧金山 (San Francisco, 美西)', lon: -122.42, tz: -8 },
-        { name: '西雅图 (Seattle, 美西)', lon: -122.33, tz: -8 },
-        { name: '芝加哥 (Chicago, 美中)', lon: -87.63, tz: -6 },
-        { name: '休斯敦 (Houston, 美中)', lon: -95.37, tz: -6 },
-        { name: '波士顿 (Boston, 美东)', lon: -71.06, tz: -5 },
-        { name: '华盛顿 (Washington D.C., 美东)', lon: -77.04, tz: -5 },
-        { name: '多伦多 (Toronto, 加拿大)', lon: -79.38, tz: -5 },
-        { name: '温哥华 (Vancouver, 加拿大)', lon: -123.12, tz: -8 },
-        { name: '蒙特利尔 (Montreal, 加拿大)', lon: -73.57, tz: -5 },
-        { name: '墨西哥城 (Mexico City, 墨西哥)', lon: -99.13, tz: -6 }
+      countryId: "canada", countryNameZh: "加拿大 (Canada)", countryNameEn: "Canada",
+      provinces: [
+        { id: "ca_on", nameZh: "安大略 (Ontario)", nameEn: "Ontario", cities: [{ nameZh: "多伦多 (Toronto)", nameEn: "Toronto", lon: -79.38, tz: -5 }, { nameZh: "渥太华 (Ottawa)", nameEn: "Ottawa", lon: -75.7, tz: -5 }, { nameZh: "密西沙加 (Mississauga)", nameEn: "Mississauga", lon: -79.64, tz: -5 }] },
+        { id: "ca_bc", nameZh: "不列颠哥伦比亚 (British Columbia)", nameEn: "British Columbia", cities: [{ nameZh: "温哥华 (Vancouver)", nameEn: "Vancouver", lon: -123.12, tz: -8 }, { nameZh: "维多利亚 (Victoria)", nameEn: "Victoria", lon: -123.37, tz: -8 }, { nameZh: "素里 (Surrey)", nameEn: "Surrey", lon: -122.85, tz: -8 }] },
+        { id: "ca_qc", nameZh: "魁北克 (Quebec)", nameEn: "Quebec", cities: [{ nameZh: "蒙特利尔 (Montreal)", nameEn: "Montreal", lon: -73.57, tz: -5 }, { nameZh: "魁北克城 (Quebec City)", nameEn: "Quebec City", lon: -71.21, tz: -5 }, { nameZh: "加蒂诺 (Gatineau)", nameEn: "Gatineau", lon: -75.71, tz: -5 }] },
+        { id: "ca_ab", nameZh: "阿尔伯塔 (Alberta)", nameEn: "Alberta", cities: [{ nameZh: "卡尔加里 (Calgary)", nameEn: "Calgary", lon: -114.07, tz: -7 }, { nameZh: "埃德蒙顿 (Edmonton)", nameEn: "Edmonton", lon: -113.49, tz: -7 }, { nameZh: "雷德迪尔 (Red Deer)", nameEn: "Red Deer", lon: -113.81, tz: -7 }] }
       ]
     },
     {
-      group: '欧洲 (Europe)',
-      cities: [
-        { name: '伦敦 (London, 英国)', lon: -0.13, tz: 0 },
-        { name: '巴黎 (Paris, 法国)', lon: 2.35, tz: 1 },
-        { name: '柏林 (Berlin, 德国)', lon: 13.40, tz: 1 },
-        { name: '法兰克福 (Frankfurt, 德国)', lon: 8.68, tz: 1 },
-        { name: '罗马 (Rome, 意大利)', lon: 12.50, tz: 1 },
-        { name: '马德里 (Madrid, 西班牙)', lon: -3.70, tz: 1 },
-        { name: '阿姆斯特丹 (Amsterdam, 荷兰)', lon: 4.90, tz: 1 },
-        { name: '苏黎世 (Zurich, 瑞士)', lon: 8.54, tz: 1 },
-        { name: '莫斯科 (Moscow, 俄罗斯)', lon: 37.62, tz: 3 }
+      countryId: "uk", countryNameZh: "英国 (UK)", countryNameEn: "United Kingdom",
+      provinces: [
+        { id: "uk_all", nameZh: "主要地区 (Major Regions)", nameEn: "Major Regions", cities: [{ nameZh: "伦敦 (London)", nameEn: "London", lon: -0.13, tz: 0 }, { nameZh: "曼彻斯特 (Manchester)", nameEn: "Manchester", lon: -2.24, tz: 0 }, { nameZh: "伯明翰 (Birmingham)", nameEn: "Birmingham", lon: -1.9, tz: 0 }, { nameZh: "爱丁堡 (Edinburgh)", nameEn: "Edinburgh", lon: -3.19, tz: 0 }] }
       ]
     },
     {
-      group: '大洋洲 (Oceania)',
-      cities: [
-        { name: '悉尼 (Sydney, 澳大利亚)', lon: 151.21, tz: 10 },
-        { name: '墨尔本 (Melbourne, 澳大利亚)', lon: 144.96, tz: 10 },
-        { name: '布里斯班 (Brisbane, 澳大利亚)', lon: 153.03, tz: 10 },
-        { name: '珀斯 (Perth, 澳大利亚)', lon: 115.86, tz: 8 },
-        { name: '奥克兰 (Auckland, 新西兰)', lon: 174.76, tz: 12 }
+      countryId: "east_asia", countryNameZh: "东亚与东南亚 (East & SE Asia)", countryNameEn: "East & SE Asia",
+      provinces: [
+        { id: "east_asia_all", nameZh: "主要都会 (Major Metros)", nameEn: "Major Metros", cities: [{ nameZh: "东京 (Tokyo, 日本)", nameEn: "Tokyo (Japan)", lon: 139.69, tz: 9 }, { nameZh: "大阪 (Osaka, 日本)", nameEn: "Osaka (Japan)", lon: 135.5, tz: 9 }, { nameZh: "首尔 (Seoul, 韩国)", nameEn: "Seoul (South Korea)", lon: 126.98, tz: 9 }, { nameZh: "新加坡 (Singapore)", nameEn: "Singapore", lon: 103.82, tz: 8 }, { nameZh: "吉隆坡 (Kuala Lumpur, 马来西亚)", nameEn: "Kuala Lumpur (Malaysia)", lon: 101.69, tz: 8 }, { nameZh: "曼谷 (Bangkok, 泰国)", nameEn: "Bangkok (Thailand)", lon: 100.5, tz: 7 }, { nameZh: "雅加达 (Jakarta, 印尼)", nameEn: "Jakarta (Indonesia)", lon: 106.85, tz: 7 }, { nameZh: "马尼拉 (Manila, 菲律宾)", nameEn: "Manila (Philippines)", lon: 120.98, tz: 8 }, { nameZh: "胡志明市 (Ho Chi Minh City, 越南)", nameEn: "Ho Chi Minh City (Vietnam)", lon: 106.63, tz: 7 }] }
       ]
     },
     {
-      group: '南美、中东与非洲 (Other Global)',
-      cities: [
-        { name: '迪拜 (Dubai, 阿联酋)', lon: 55.27, tz: 4 },
-        { name: '开罗 (Cairo, 埃及)', lon: 31.24, tz: 2 },
-        { name: '约翰内斯堡 (Johannesburg, 南非)', lon: 28.05, tz: 2 },
-        { name: '圣保罗 (Sao Paulo, 巴西)', lon: -46.63, tz: -3 },
-        { name: '布宜诺斯艾利斯 (Buenos Aires, 阿根廷)', lon: -58.38, tz: -3 }
+      countryId: "europe", countryNameZh: "欧洲 (Europe)", countryNameEn: "Europe",
+      provinces: [
+        { id: "europe_all", nameZh: "主要都会 (Major Metros)", nameEn: "Major Metros", cities: [{ nameZh: "巴黎 (Paris, 法国)", nameEn: "Paris (France)", lon: 2.35, tz: 1 }, { nameZh: "柏林 (Berlin, 德国)", nameEn: "Berlin (Germany)", lon: 13.4, tz: 1 }, { nameZh: "法兰克福 (Frankfurt, 德国)", nameEn: "Frankfurt (Germany)", lon: 8.68, tz: 1 }, { nameZh: "罗马 (Rome, 意大利)", nameEn: "Rome (Italy)", lon: 12.5, tz: 1 }, { nameZh: "马德里 (Madrid, 西班牙)", nameEn: "Madrid (Spain)", lon: -3.7, tz: 1 }, { nameZh: "阿姆斯特丹 (Amsterdam, 荷兰)", nameEn: "Amsterdam (Netherlands)", lon: 4.9, tz: 1 }, { nameZh: "苏黎世 (Zurich, 瑞士)", nameEn: "Zurich (Switzerland)", lon: 8.54, tz: 1 }, { nameZh: "莫斯科 (Moscow, 俄罗斯)", nameEn: "Moscow (Russia)", lon: 37.62, tz: 3 }] }
+      ]
+    },
+    {
+      countryId: "oceania", countryNameZh: "大洋洲 (Oceania)", countryNameEn: "Oceania",
+      provinces: [
+        { id: "oceania_all", nameZh: "主要城市 (Major Metros)", nameEn: "Major Metros", cities: [{ nameZh: "悉尼 (Sydney, 澳大利亚)", nameEn: "Sydney (Australia)", lon: 151.21, tz: 10 }, { nameZh: "墨尔本 (Melbourne, 澳大利亚)", nameEn: "Melbourne (Australia)", lon: 144.96, tz: 10 }, { nameZh: "布里斯班 (Brisbane, 澳大利亚)", nameEn: "Brisbane (Australia)", lon: 153.03, tz: 10 }, { nameZh: "珀斯 (Perth, 澳大利亚)", nameEn: "Perth (Australia)", lon: 115.86, tz: 8 }, { nameZh: "奥克兰 (Auckland, 新西兰)", nameEn: "Auckland (New Zealand)", lon: 174.76, tz: 12 }] }
+      ]
+    },
+    {
+      countryId: "other_global", countryNameZh: "其他全球主要城市 (Other Global)", countryNameEn: "Other Global",
+      provinces: [
+        { id: "other_all", nameZh: "主要城市 (Major Metros)", nameEn: "Major Metros", cities: [{ nameZh: "迪拜 (Dubai, 阿联酋)", nameEn: "Dubai (UAE)", lon: 55.27, tz: 4 }, { nameZh: "开罗 (Cairo, 埃及)", nameEn: "Cairo (Egypt)", lon: 31.24, tz: 2 }, { nameZh: "约翰内斯堡 (Johannesburg, 南非)", nameEn: "Johannesburg (South Africa)", lon: 28.05, tz: 2 }, { nameZh: "圣保罗 (Sao Paulo, 巴西)", nameEn: "Sao Paulo (Brazil)", lon: -46.63, tz: -3 }, { nameZh: "布宜诺斯艾利斯 (Buenos Aires, 阿根廷)", nameEn: "Buenos Aires (Argentina)", lon: -58.38, tz: -3 }, { nameZh: "墨西哥城 (Mexico City, 墨西哥)", nameEn: "Mexico City (Mexico)", lon: -99.13, tz: -6 }] }
       ]
     }
   ];
+
+  // Derive Flat GLOBAL_REGIONS Optgroups for Universal Legacy Compatibility
+  const GLOBAL_REGIONS = [];
+  GLOBAL_BIRTH_REGIONS.forEach(country => {
+    country.provinces.forEach(prov => {
+      GLOBAL_REGIONS.push({
+        group: `${country.countryNameZh} · ${prov.nameZh}`,
+        cities: prov.cities.map(c => ({
+          name: c.nameZh,
+          nameEn: c.nameEn,
+          lon: c.lon,
+          tz: c.tz
+        }))
+      });
+    });
+  });
 
   // State
   let currentBaziResult = null;
@@ -222,6 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const birthTimePicker = document.getElementById('birthTime');
   const genderSelect = document.getElementById('gender');
   const citySelect = document.getElementById('citySelect');
+  const birthCountrySelect = document.getElementById('birthCountrySelect');
+  const birthProvinceSelect = document.getElementById('birthProvinceSelect');
+  const birthCitySelect = document.getElementById('birthCitySelect');
   const currentCountrySelect = document.getElementById('currentCountrySelect');
   const currentCitySelect = document.getElementById('currentCitySelect');
   const currentCustomCityInput = document.getElementById('currentCustomCityInput');
@@ -274,6 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('bazi_lang', lang);
+    }
+    if (typeof window !== 'undefined' && window.refreshBirthLocationLabels) {
+      window.refreshBirthLocationLabels(lang);
     }
     if (typeof document !== 'undefined') {
       document.documentElement.lang = (lang === 'en' ? 'en' : 'zh-CN');
@@ -441,39 +503,209 @@ document.addEventListener('DOMContentLoaded', () => {
     timezoneSelect.appendChild(opt);
   }
 
-  // Initialize Global City Dropdown with Optgroups
-  GLOBAL_REGIONS.forEach(reg => {
-    const group = document.createElement('optgroup');
-    group.label = reg.group;
-    reg.cities.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = JSON.stringify({ lon: c.lon, tz: c.tz });
-      const lonStr = c.lon >= 0 ? `${c.lon}°E` : `${Math.abs(c.lon)}°W`;
-      opt.textContent = `${c.name} (${lonStr}, UTC${c.tz >= 0 ? '+' : ''}${c.tz})`;
-      group.appendChild(opt);
+  // Initialize Global City Dropdown and Cascading Birth Location Controller
+  function populateLegacyCitySelect() {
+    if (!citySelect) return;
+    citySelect.innerHTML = '';
+    GLOBAL_REGIONS.forEach(reg => {
+      const group = document.createElement('optgroup');
+      group.label = reg.group;
+      reg.cities.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = JSON.stringify({ lon: c.lon, tz: c.tz });
+        const lonStr = c.lon >= 0 ? `${c.lon.toFixed(2)}°E` : `${Math.abs(c.lon).toFixed(2)}°W`;
+        opt.textContent = `${c.name} (${lonStr}, UTC${c.tz >= 0 ? '+' : ''}${c.tz})`;
+        group.appendChild(opt);
+      });
+      citySelect.appendChild(group);
     });
-    citySelect.appendChild(group);
-  });
+  }
 
-  // Default selection: Beijing
-  citySelect.selectedIndex = 0;
-  customLonInput.value = '116.40';
-  timezoneSelect.value = '8';
+  function initBirthLocationCascader() {
+    populateLegacyCitySelect();
 
-  citySelect.addEventListener('change', () => {
-    try {
-      const val = JSON.parse(citySelect.value);
-      customLonInput.value = val.lon;
-      timezoneSelect.value = val.tz;
+    if (!birthCountrySelect || !birthProvinceSelect || !birthCitySelect) {
+      if (citySelect) {
+        citySelect.selectedIndex = 0;
+        customLonInput.value = '116.40';
+        timezoneSelect.value = '8';
+      }
+      return;
+    }
+
+    // 1. Populate Country Select
+    function populateCountries(selectedCountryId) {
+      birthCountrySelect.innerHTML = '';
+      const isEn = (currentLang === 'en');
+      GLOBAL_BIRTH_REGIONS.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.countryId;
+        opt.textContent = isEn ? c.countryNameEn : c.countryNameZh;
+        if (c.countryId === selectedCountryId) opt.selected = true;
+        birthCountrySelect.appendChild(opt);
+      });
+      if (!selectedCountryId && GLOBAL_BIRTH_REGIONS.length > 0) {
+        birthCountrySelect.value = 'china';
+      }
+    }
+
+    // 2. Populate Province/State Select
+    function populateProvinces(countryId, selectedProvId) {
+      birthProvinceSelect.innerHTML = '';
+      const isEn = (currentLang === 'en');
+      const country = GLOBAL_BIRTH_REGIONS.find(c => c.countryId === countryId) || GLOBAL_BIRTH_REGIONS[0];
+      if (!country) return;
+
+      country.provinces.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = isEn ? p.nameEn : p.nameZh;
+        if (p.id === selectedProvId) opt.selected = true;
+        birthProvinceSelect.appendChild(opt);
+      });
+      if (!selectedProvId && country.provinces.length > 0) {
+        birthProvinceSelect.value = country.provinces[0].id;
+      }
+    }
+
+    // 3. Populate Cities Select (Each Province/State has 3 Anchor Cities; Direct Municipalities listed directly)
+    function populateCities(countryId, provId, selectedCityIdx) {
+      birthCitySelect.innerHTML = '';
+      const isEn = (currentLang === 'en');
+      const country = GLOBAL_BIRTH_REGIONS.find(c => c.countryId === countryId) || GLOBAL_BIRTH_REGIONS[0];
+      if (!country) return;
+      const prov = country.provinces.find(p => p.id === provId) || country.provinces[0];
+      if (!prov) return;
+
+      prov.cities.forEach((c, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        const lonStr = c.lon >= 0 ? `${c.lon.toFixed(2)}°E` : `${Math.abs(c.lon).toFixed(2)}°W`;
+        opt.textContent = isEn ? `${c.nameEn} (${lonStr})` : `${c.nameZh} · ${lonStr}`;
+        if (idx === selectedCityIdx) opt.selected = true;
+        birthCitySelect.appendChild(opt);
+      });
+      if (selectedCityIdx === undefined && prov.cities.length > 0) {
+        birthCitySelect.selectedIndex = 0;
+      }
+    }
+
+    function applySelectedCity() {
+      const countryId = birthCountrySelect.value;
+      const provId = birthProvinceSelect.value;
+      const country = GLOBAL_BIRTH_REGIONS.find(c => c.countryId === countryId);
+      if (!country) return;
+      const prov = country.provinces.find(p => p.id === provId);
+      if (!prov) return;
+      const cityIdx = parseInt(birthCitySelect.value, 10) || 0;
+      const city = prov.cities[cityIdx] || prov.cities[0];
+      if (!city) return;
+
+      if (customLonInput) customLonInput.value = city.lon.toFixed(2);
+      if (timezoneSelect) timezoneSelect.value = String(city.tz);
+
+      if (citySelect) {
+        citySelect.value = JSON.stringify({ lon: city.lon, tz: city.tz });
+      }
+
       if (activeMainPage === 'landing') {
         updateLandingPreview();
       } else {
         triggerCalculate();
       }
-    } catch (e) {
-      // Custom or unparsed
     }
-  });
+
+    // Event listeners for cascading changes
+    birthCountrySelect.addEventListener('change', () => {
+      const countryId = birthCountrySelect.value;
+      populateProvinces(countryId);
+      const provId = birthProvinceSelect.value;
+      populateCities(countryId, provId, 0);
+      applySelectedCity();
+    });
+
+    birthProvinceSelect.addEventListener('change', () => {
+      const countryId = birthCountrySelect.value;
+      const provId = birthProvinceSelect.value;
+      populateCities(countryId, provId, 0);
+      applySelectedCity();
+    });
+
+    birthCitySelect.addEventListener('change', () => {
+      applySelectedCity();
+    });
+
+    // Initial setup: China -> Municipalities -> Beijing
+    populateCountries('china');
+    populateProvinces('china', 'municipalities');
+    populateCities('china', 'municipalities', 0);
+
+    // Initial coordinates
+    if (customLonInput) customLonInput.value = '116.40';
+    if (timezoneSelect) timezoneSelect.value = '8';
+    if (citySelect) {
+      citySelect.value = JSON.stringify({ lon: 116.4, tz: 8 });
+    }
+
+    // Bidirectional sync helper for coordinates
+    window.syncBirthLocationCascader = function(targetLon, targetTz) {
+      if (targetLon === undefined) return;
+      const tLon = parseFloat(targetLon);
+      const tTz = targetTz !== undefined ? parseInt(targetTz, 10) : 8;
+
+      let bestMatch = null;
+      let minDiff = 999999;
+
+      GLOBAL_BIRTH_REGIONS.forEach(c => {
+        c.provinces.forEach(p => {
+          p.cities.forEach((city, cIdx) => {
+            const diff = Math.abs(city.lon - tLon) + Math.abs(city.tz - tTz) * 5;
+            if (diff < minDiff) {
+              minDiff = diff;
+              bestMatch = { countryId: c.countryId, provId: p.id, cityIdx: cIdx };
+            }
+          });
+        });
+      });
+
+      if (bestMatch && minDiff < 3) {
+        birthCountrySelect.value = bestMatch.countryId;
+        populateProvinces(bestMatch.countryId, bestMatch.provId);
+        populateCities(bestMatch.countryId, bestMatch.provId, bestMatch.cityIdx);
+      }
+    };
+
+    window.refreshBirthLocationLabels = function(lang) {
+      const curCountry = birthCountrySelect.value;
+      const curProv = birthProvinceSelect.value;
+      const curCityIdx = parseInt(birthCitySelect.value, 10) || 0;
+      populateCountries(curCountry);
+      populateProvinces(curCountry, curProv);
+      populateCities(curCountry, curProv, curCityIdx);
+    };
+  }
+
+  // Initialize Cascading Birth Location System
+  initBirthLocationCascader();
+
+  // Preserved citySelect listener
+  if (citySelect) {
+    citySelect.addEventListener('change', () => {
+      try {
+        const val = JSON.parse(citySelect.value);
+        if (customLonInput) customLonInput.value = parseFloat(val.lon).toFixed(2);
+        if (timezoneSelect) timezoneSelect.value = val.tz;
+        if (typeof window !== 'undefined' && window.syncBirthLocationCascader) {
+          window.syncBirthLocationCascader(val.lon, val.tz);
+        }
+        if (activeMainPage === 'landing') {
+          updateLandingPreview();
+        } else {
+          triggerCalculate();
+        }
+      } catch (e) {}
+    });
+  }
 
   timezoneSelect.addEventListener('change', () => {
     if (activeMainPage === 'landing') {
@@ -1129,6 +1361,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (genderSelect) genderSelect.value = cfg.gender;
           if (customLonInput) customLonInput.value = cfg.lon.toFixed(2);
           if (timezoneSelect) timezoneSelect.value = String(cfg.tz);
+          if (typeof window !== 'undefined' && window.syncBirthLocationCascader) {
+            window.syncBirthLocationCascader(cfg.lon, cfg.tz);
+          }
           triggerCalculate();
         }
         updateLandingPreview();

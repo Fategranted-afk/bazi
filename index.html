@@ -238,11 +238,22 @@
               </select>
             </div>
 
-            <!-- City & Region Selector (Worldwide) -->
+            <!-- City & Region Selector (Worldwide - Country / Province-State / 3 Major Cities) -->
             <div>
-              <label class="block text-xs font-medium text-gray-300 mb-1" data-i18n="lbl_city">全球出生地区/城市</label>
-              <select id="citySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2.5 py-2 text-sm text-gray-100 focus:outline-none focus:border-amber-500">
-              </select>
+              <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-medium text-gray-300" data-i18n="lbl_city">全球出生地区/城市</label>
+                <span class="text-[10px] text-amber-400/80 font-mono hidden sm:inline" data-i18n="lbl_city_hierarchy_hint">按省/州划分 · 三城定标 (直辖市单列)</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                <select id="birthCountrySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-500" title="国家/地区">
+                </select>
+                <select id="birthProvinceSelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-500" title="省份/州 (直辖市单独划列)">
+                </select>
+                <select id="birthCitySelect" class="w-full bg-black/40 border border-gray-700 rounded-lg px-2 py-2 text-xs text-gray-100 focus:outline-none focus:border-amber-500" title="主要城市 (每省3城市)">
+                </select>
+              </div>
+              <!-- Preserved legacy citySelect for backward compatibility and direct change listeners -->
+              <select id="citySelect" class="hidden"></select>
             </div>
 
             <!-- Current Residence Country -->
