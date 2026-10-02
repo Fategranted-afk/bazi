@@ -1219,81 +1219,58 @@
         </div>
       </div>
 
-      <!-- Holistic Persona Portrait Cards (全息人物画像) -->
-      <div class="space-y-3 pt-2 border-t border-gray-800">
-        <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
-          <span data-i18n="sec_persona_title">👤 五经全息“命理人物画像”</span>
-          <span class="text-xs text-gray-400 font-sans font-normal" data-i18n="persona_subnote">基于本命格局与气象的现代人生与发展蓝图</span>
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- 1. 性格心性 -->
-          <div class="p-4 bg-black/30 rounded-xl border border-indigo-900/40 hover:border-indigo-500/50 transition space-y-2">
-            <div class="flex items-center space-x-2 text-sm font-bold text-indigo-300 font-serif-sc">
-              <span data-i18n="persona_psy_title">🧠 性格特质与心性模型 (Psychological Blueprint)</span>
-            </div>
-            <p id="personaPersonality" class="text-xs text-gray-300 leading-relaxed"></p>
+      <!-- Consolidated Holistic Persona & Strategic Blueprint (五经全息“命理人物画像与全维实战蓝图” · 合并同类项) -->
+      <div id="consolidatedPersonaContainer" class="space-y-4 pt-3 border-t border-gray-800">
+        <!-- Main Section Header & Subtitle -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-2 border-b border-gray-800/80">
+          <div>
+            <h3 class="text-base font-bold text-amber-300 font-serif-sc flex items-center gap-2">
+              <span data-i18n="sec_persona_title">👤 五经全息“命理人物画像与全维实战蓝图”</span>
+              <span class="chinese-seal text-[10px] py-0.2 px-1.5 border-amber-500/60 text-amber-300" data-i18n="seal_consolidated_blueprint">合并同类项</span>
+            </h3>
+            <p class="text-xs text-gray-400 mt-0.5" data-i18n="persona_subnote">
+              基于本命格局与气象：融通性格特质、盲区死穴、精神内耗阻断、职场财富与调补总决
+            </p>
           </div>
-
-          <!-- 2. 事业才华 -->
-          <div class="p-4 bg-black/30 rounded-xl border border-emerald-900/40 hover:border-emerald-500/50 transition space-y-2">
-            <div class="flex items-center space-x-2 text-sm font-bold text-emerald-300 font-serif-sc">
-              <span data-i18n="persona_career_title">💼 才华天赋与事业方向 (Career & Talent Blueprint)</span>
-            </div>
-            <p id="personaCareer" class="text-xs text-gray-300 leading-relaxed"></p>
-          </div>
-
-          <!-- 3. 财富机运 -->
-          <div class="p-4 bg-black/30 rounded-xl border border-amber-900/40 hover:border-amber-500/50 transition space-y-2">
-            <div class="flex items-center space-x-2 text-sm font-bold text-amber-300 font-serif-sc">
-              <span data-i18n="persona_wealth_title">💰 财富格局与进财动力 (Wealth Dynamics)</span>
-            </div>
-            <p id="personaWealth" class="text-xs text-gray-300 leading-relaxed"></p>
-          </div>
-
-          <!-- 4. 修持锦囊 -->
-          <div class="p-4 bg-black/30 rounded-xl border border-rose-900/40 hover:border-rose-500/50 transition space-y-2">
-            <div class="flex items-center space-x-2 text-sm font-bold text-rose-300 font-serif-sc">
-              <span data-i18n="persona_advice_title">🧘 人生修身与行运锦囊 (Strategic Life Coaching)</span>
-            </div>
-            <p id="personaAdvice" class="text-xs text-gray-300 leading-relaxed"></p>
+          <!-- Sub-Tab Navigation Bar -->
+          <div class="flex flex-wrap items-center gap-1.5 p-1 bg-black/40 rounded-xl border border-gray-800/80 text-xs">
+            <button type="button" class="persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer active bg-amber-500/20 text-amber-300 border border-amber-500/40" data-persona-tab="tab-all">
+              <span>⚡</span> <span data-i18n="tab_persona_all">四维全景统览</span>
+            </button>
+            <button type="button" class="persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent" data-persona-tab="tab-mindset">
+              <span>🧠</span> <span data-i18n="tab_persona_mindset">心性与内耗</span>
+            </button>
+            <button type="button" class="persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent" data-persona-tab="tab-career">
+              <span>💼</span> <span data-i18n="tab_persona_career">事业与职场</span>
+            </button>
+            <button type="button" class="persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent" data-persona-tab="tab-wealth">
+              <span>💰</span> <span data-i18n="tab_persona_wealth">财富与商业</span>
+            </button>
+            <button type="button" class="persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent" data-persona-tab="tab-health">
+              <span>🌿</span> <span data-i18n="tab_persona_health">五行与身心</span>
+            </button>
+            <button type="button" class="persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent" data-persona-tab="tab-comparison">
+              <span>⚖️</span> <span data-i18n="tab_comparison">强弱对照总决</span>
+            </button>
           </div>
         </div>
-      </div>
 
-      <!-- Day Master Defect & Vulnerability Analysis (命主缺陷、心性盲区与败局暗礁深度透视) -->
-      <div class="space-y-3 pt-4 border-t border-gray-800">
-        <div class="flex items-center justify-between">
-          <h3 class="text-base font-bold text-rose-400 font-serif-sc flex items-center gap-2">
-            <span data-i18n="sec_defects_title">⚠️ 命主缺陷、心性盲区与败局暗礁深度透视</span>
-            <span class="text-xs text-rose-300/80 font-sans font-normal" data-i18n="defects_subnote">(直面性格死穴、职场雷区、商业败局与五行偏枯，附破局绝密解药)</span>
-          </h3>
+        <!-- Dynamic Consolidated Content Box -->
+        <div id="consolidatedPersonaContent" class="space-y-4 text-xs">
+          <!-- Injected via JavaScript -->
         </div>
-        
-        <div id="defectsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
-          <!-- Injected dynamically via JavaScript -->
-        </div>
-      </div>
 
-      <!-- Mental Internal Friction Detection & Practical Antidotes (精神内耗专项检测与实战彻底改善方案) -->
-      <div id="mentalFrictionSection" class="space-y-3 pt-4 border-t border-gray-800">
-        <!-- Injected dynamically via JavaScript if mental friction is detected -->
-      </div>
-
-      <!-- Day Master Remedy & Balancing Guide (身弱培补 vs 身强疏导 · 现代改运与开运实操方案) -->
-      <div class="space-y-3 pt-4 border-t border-gray-800">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <h3 class="text-base font-bold text-emerald-400 font-serif-sc flex items-center gap-2">
-            <span data-i18n="sec_remedy_title">🌿 命理调补与改运总决 · 身弱培补与身强疏导实战指南</span>
-            <span class="text-xs text-emerald-300/80 font-sans font-normal" data-i18n="remedy_subnote">(涵盖五行理气、心智模型、起居习惯、职场商业全维改善攻略)</span>
-          </h3>
-          <div class="flex rounded-lg bg-black/40 p-0.5 border border-gray-800 text-xs">
-            <button id="remedyTabTailored" class="px-3 py-1 rounded font-medium transition active bg-emerald-500/20 text-emerald-300 border border-emerald-500/40" data-i18n="tab_tailored">🎯 本命定向调补方案</button>
-            <button id="remedyTabComparison" class="px-3 py-1 rounded font-medium transition text-gray-400 hover:text-gray-200" data-i18n="tab_comparison">⚖️ 身弱 vs 身强 完整对照总决</button>
-          </div>
-        </div>
-        
-        <div id="remedyContainer" class="space-y-4 text-xs">
-          <!-- Injected dynamically via JavaScript -->
+        <!-- Fallback Hidden Containers for Seamless Backwards-Compatibility -->
+        <div class="hidden" aria-hidden="true">
+          <p id="personaPersonality"></p>
+          <p id="personaCareer"></p>
+          <p id="personaWealth"></p>
+          <p id="personaAdvice"></p>
+          <div id="defectsContainer"></div>
+          <div id="mentalFrictionSection"></div>
+          <div id="remedyContainer"></div>
+          <button id="remedyTabTailored"></button>
+          <button id="remedyTabComparison"></button>
         </div>
       </div>
 

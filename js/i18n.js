@@ -876,9 +876,15 @@ const I18N = (function() {
       pat_weight_head: "📊 5. 本命能量占比与影响力评估",
       pat_basis_head: "成格赋能依据：",
 
-      // Persona
-      sec_persona_title: "👤 五经全息“命理人物画像”",
-      persona_subnote: "基于本命格局与气象的现代人生与发展蓝图",
+      // Persona & Consolidated Strategic Blueprint
+      sec_persona_title: "👤 五经全息“命理人物画像与全维实战蓝图”",
+      seal_consolidated_blueprint: "合并同类项",
+      persona_subnote: "基于本命格局与气象：融通性格特质、盲区死穴、精神内耗阻断、职场财富与调补总决",
+      tab_persona_all: "四维全景统览",
+      tab_persona_mindset: "心性与内耗",
+      tab_persona_career: "事业与职场",
+      tab_persona_wealth: "财富与商业",
+      tab_persona_health: "五行与身心",
       persona_psy_title: "🧠 性格特质与心性模型 (Psychological Blueprint)",
       persona_career_title: "💼 才华天赋与事业方向 (Career & Talent Blueprint)",
       persona_wealth_title: "💰 财富格局与进财动力 (Wealth Dynamics)",
@@ -1958,9 +1964,15 @@ const I18N = (function() {
       pat_weight_head: "📊 5. Natal Energy Share & Impact Assessment",
       pat_basis_head: "Empowerment Rationale: ",
 
-      // Persona
-      sec_persona_title: "👤 Holistic Persona Portrait (Five Canons)",
-      persona_subnote: "Modern life & career blueprint based on natal pattern and climate",
+      // Persona & Consolidated Strategic Blueprint
+      sec_persona_title: "👤 Holistic Persona Portrait & Consolidated Strategic Blueprint",
+      seal_consolidated_blueprint: "Unified Synthesis",
+      persona_subnote: "Integrated synthesis of persona, mindset blindspots, rumination antidotes, career, wealth & vital regimen",
+      tab_persona_all: "Consolidated Panorama",
+      tab_persona_mindset: "Mindset & Friction",
+      tab_persona_career: "Career & Workplace",
+      tab_persona_wealth: "Wealth & Business",
+      tab_persona_health: "Health & Elements",
       persona_psy_title: "🧠 Psychological Blueprint & Mindset Archetype",
       persona_career_title: "💼 Career & Talent Blueprint",
       persona_wealth_title: "💰 Wealth Dynamics & Financial Drivers",

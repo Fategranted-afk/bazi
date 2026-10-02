@@ -233,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentPortraitData = null;
   let currentLang = (typeof localStorage !== 'undefined' && localStorage.getItem('bazi_lang')) ? localStorage.getItem('bazi_lang') : 'zh';
   let activePrimaryView = 'view-master-profile';
+  let activePersonaTab = 'tab-all'; // 'tab-all' | 'tab-mindset' | 'tab-career' | 'tab-wealth' | 'tab-health' | 'tab-comparison'
   let activeFrictionTab = 'tab-fric-specs';
   let lastDivinationResult = null;
   let currentCoinStep = 1;
@@ -2378,6 +2379,704 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 👤 Consolidated Holistic Persona & Strategic Blueprint (五经全息“命理人物画像与全维实战蓝图” · 合并同类项)
+  function renderConsolidatedPersona(pData, res, isEn) {
+    const container = document.getElementById('consolidatedPersonaContent');
+    if (!container) return;
+
+    // Populate backward-compatible elements
+    const persEl = document.getElementById('personaPersonality');
+    if (persEl) persEl.textContent = (pData && pData.portrait && pData.portrait.personality) || '';
+    const careerEl = document.getElementById('personaCareer');
+    if (careerEl) careerEl.textContent = (pData && pData.portrait && pData.portrait.career) || '';
+    const wealthEl = document.getElementById('personaWealth');
+    if (wealthEl) wealthEl.textContent = (pData && pData.portrait && pData.portrait.wealth) || '';
+    const adviceEl = document.getElementById('personaAdvice');
+    if (adviceEl) adviceEl.textContent = (pData && pData.portrait && pData.portrait.advice) || '';
+
+    if (!pData) {
+      container.innerHTML = '';
+      return;
+    }
+
+    const portrait = pData.portrait || {};
+    const defects = pData.defects || {};
+    const defectCards = defects.cards || [];
+    const cardPers = defectCards.find(c => c.id === 'personality');
+    const cardWork = defectCards.find(c => c.id === 'workplace');
+    const cardFin = defectCards.find(c => c.id === 'finance');
+    const cardHealth = defectCards.find(c => c.id === 'health');
+    const cardRem = defectCards.find(c => c.id === 'remedies');
+    const mf = pData.mentalFriction || null;
+    const remedyGuide = pData.remedyGuide || null;
+    const tailored = remedyGuide ? remedyGuide.tailored : null;
+    const compGuide = remedyGuide ? remedyGuide.comparisonGuide : null;
+
+    const formatPoints = (card, dotColor = 'rose') => {
+      if (!card || !card.points) return '';
+      return card.points.map(pt => `
+        <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
+          <div class="flex items-center space-x-1.5 font-bold text-gray-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-${dotColor}-400 inline-block"></span>
+            <span class="text-amber-300 font-medium">${pt.label}</span>
+          </div>
+          <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${pt.text}</p>
+        </div>
+      `).join('');
+    };
+
+    const formatRootCause = (card, borderColor = 'rose') => {
+      if (!card || !card.rootCause) return '';
+      return `
+        <div class="p-2.5 bg-black/50 rounded-lg text-[11px] text-gray-300 leading-relaxed font-serif-sc border-l-2 border-${borderColor}-500">
+          ${card.rootCause}
+        </div>
+      `;
+    };
+
+    // Dimension 1: Mindset & Friction
+    const renderDimMindsetHtml = () => {
+      const persPoints = formatPoints(cardPers, 'rose');
+      const persRoot = formatRootCause(cardPers, 'rose');
+      const remDecision = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('48小时') || p.label.includes('Decision Cooling')))) || null;
+      const remMindset = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('心性口诀') || p.label.includes('Mindset')))) || null;
+
+      const mentalRemedyHtml = (tailored && tailored.mentalRemedy) ? tailored.mentalRemedy.map(m => `
+        <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/70 space-y-1">
+          <span class="font-bold text-amber-300 block text-xs">【${m.tag}】</span>
+          <p class="text-gray-300 text-[11px] leading-relaxed">${m.text}</p>
+        </div>
+      `).join('') : '';
+
+      const mfSolutionsHtml = (mf && mf.detected && mf.solutions) ? mf.solutions.map(sol => `
+        <div class="p-2.5 rounded-lg border border-gray-800/80 bg-black/50 space-y-1 hover:border-rose-700/50 transition">
+          <div class="flex items-center space-x-1.5">
+            <span class="text-sm">${sol.icon}</span>
+            <span class="font-bold text-gray-200 text-xs truncate">${sol.name}</span>
+          </div>
+          <div class="text-[10px] text-amber-300/90 font-medium">${sol.theme}</div>
+          <div class="p-1.5 rounded bg-black/60 text-[10.5px] text-gray-300 font-serif-sc line-clamp-2">
+            ${(sol.steps && sol.steps[0]) ? sol.steps[0] : ''}
+          </div>
+        </div>
+      `).join('') : '';
+
+      const mentalRechargeHtml = (tailored && tailored.energyRecharge && tailored.energyRecharge.mental) ? `
+        <div class="p-3 bg-black/45 rounded-xl border border-indigo-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-indigo-300 text-xs">${tailored.energyRecharge.mental.title}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono">${isEn ? 'Mental Reset' : '心神修复'}</span>
+          </div>
+          <p class="text-[11px] text-gray-400 font-serif-sc">
+            <b>${isEn ? '【Mental Drain Cause】' : '【耗神根因】'}</b>${tailored.energyRecharge.mental.causes}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            ${tailored.energyRecharge.mental.steps.map(s => `
+              <div class="p-2 bg-black/60 rounded-lg border border-gray-800/80 space-y-0.5">
+                <span class="font-semibold text-amber-300 text-[11px] block">✦ ${s.name}</span>
+                <p class="text-gray-300 text-[10.5px] leading-relaxed pl-2">${s.detail}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      return `
+        <div class="p-4 sm:p-5 rounded-2xl border border-indigo-900/60 bg-gradient-to-br from-indigo-950/25 via-black/40 to-black/60 space-y-4 shadow-xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-indigo-900/50">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-xl">🧠</span>
+              <div>
+                <h4 class="text-sm sm:text-base font-bold font-serif-sc text-indigo-300 flex items-center gap-2">
+                  <span>${isEn ? 'Dimension I · Psychological Blueprint, Mindset Blindspots & Rumination Antidotes' : '维度一 · 心性模型、性格盲区与精神内耗修复'}</span>
+                </h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">${isEn ? 'Spiritual archetype, emotional volatility damping, and mental essence restoration' : '元神性灵赋象 · 避震防抖阻尼 · 心智模型与心神回血'}</p>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-indigo-900/40 text-indigo-300 border border-indigo-700/40 font-mono">
+              ${isEn ? 'Mindset & Friction' : '心性 · 盲区 · 内耗'}
+            </span>
+          </div>
+
+          <div class="p-3.5 bg-black/40 rounded-xl border border-indigo-950/80 space-y-2">
+            <div class="flex items-center space-x-1.5 text-xs font-bold text-indigo-300">
+              <span>🌟</span>
+              <span>${isEn ? 'Natal Endowments & Operating Blueprint (Psychological Baseline)' : '🌟 命基禀赋 · 日元元神与正向心性行事底色'}</span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-serif-sc pl-1">
+              ${portrait.personality || ''}
+            </p>
+          </div>
+
+          <div class="p-3.5 bg-rose-950/15 rounded-xl border border-rose-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-rose-300">
+                <span>⚠️</span>
+                <span>${isEn ? 'Personality Dead-Ends & Emotional Traps' : '⚠️ 性格特质死穴、心性盲区与古法病灶透视'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-rose-800/60 bg-rose-950/30 text-rose-300 font-mono">
+                ${isEn ? 'Vulnerabilities' : '性格死穴'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${persPoints}
+            </div>
+            ${persRoot}
+
+            ${(mf && mf.detected) ? `
+              <div class="p-3 rounded-xl bg-black/50 border border-rose-800/50 space-y-2.5 mt-2">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-base">🌪️</span>
+                    <span class="font-bold text-rose-300 text-xs font-serif-sc">${isEn ? 'Mental Rumination Diagnostic' : '精神内耗专项检测与八字触发特征'}</span>
+                  </div>
+                  <span class="text-[10.5px] px-2.5 py-0.5 rounded-full border ${mf.levelBadge} font-bold font-mono">
+                    ${isEn ? 'Rumination Index: ' : '内耗指数：'}${mf.score}% · ${isEn ? (mf.levelEn || mf.level) : (mf.levelZh || mf.level)}
+                  </span>
+                </div>
+                <div class="text-[11px] text-rose-200 leading-relaxed font-serif-sc">
+                  <b>${isEn ? '【Core Friction Root Cause】' : '【本命核心内耗根源剖析】'}</b>${isEn ? (mf.primaryRootEn || mf.primaryRoot) : (mf.primaryRootZh || mf.primaryRoot)}
+                  <div class="text-[10.5px] text-gray-400 mt-0.5">
+                    <b>${isEn ? 'Natal Triggers: ' : '八字触发特征：'}</b>${mf.triggers.join(isEn ? '; ' : '；')}
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="p-3.5 bg-emerald-950/15 rounded-xl border border-emerald-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-emerald-300">
+                <span>🛡️</span>
+                <span>${isEn ? 'Actionable Antidotes, Cognitive Moats & Mental Recovery' : '🛡️ 实战破局解药、心智蓄能与心神修复指南'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-emerald-800/60 bg-emerald-950/30 text-emerald-300 font-mono">
+                ${isEn ? 'Antidotes' : '破局解药'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${remDecision ? `
+                <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                  <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>${remDecision.label}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remDecision.text}</p>
+                </div>
+              ` : ''}
+              ${remMindset ? `
+                <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                  <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>${remMindset.label}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remMindset.text}</p>
+                </div>
+              ` : ''}
+            </div>
+
+            ${mentalRemedyHtml ? `
+              <div class="space-y-1.5">
+                <div class="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+                  <span>🧠</span> <span>${isEn ? 'Cognitive Moats & Spiritual Energy Preservation' : '心智模型与精神蓄能法则'}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  ${mentalRemedyHtml}
+                </div>
+              </div>
+            ` : ''}
+
+            ${mfSolutionsHtml ? `
+              <div class="space-y-1.5 pt-1">
+                <div class="text-[11px] font-bold text-rose-300 flex items-center gap-1.5">
+                  <span>⚡</span> <span>${isEn ? 'Four Battle-Tested Anti-Rumination Antidotes' : '四大反内耗实战阻断技'}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                  ${mfSolutionsHtml}
+                </div>
+              </div>
+            ` : ''}
+
+            ${mentalRechargeHtml}
+
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-gray-800">
+              <span class="text-[11px] text-gray-400 font-serif-sc">
+                ${isEn ? 'Full original factory manual, stress triggers & Zen-Dao canons consolidated in one page' : '原厂硬件规格、极端压力开关、出厂三阶急救与禅道三经八典已汇通于专栏'}
+              </span>
+              <button type="button" class="btn-jump-to-friction px-3 py-1.5 rounded-xl bg-indigo-950/40 hover:bg-indigo-900/50 text-indigo-300 border border-indigo-500/40 text-xs font-serif-sc font-medium flex items-center gap-1.5 transition cursor-pointer">
+                <span>⚡</span>
+                <span>${isEn ? 'Open Complete Factory Mind Manual (Unified Page) →' : '进入原厂心理使用说明书 (一页统览) →'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    // Dimension 2: Career & Workplace
+    const renderDimCareerHtml = () => {
+      const workPoints = formatPoints(cardWork, 'rose');
+      const workRoot = formatRootCause(cardWork, 'rose');
+      const remFirewall = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('制度防火墙') || p.label.includes('Firewall')))) || null;
+      const remWeakMindset = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('心性口诀') || p.label.includes('Mindset')))) || null;
+
+      const careerRemedyHtml = (tailored && tailored.careerRemedy) ? tailored.careerRemedy.map(c => `
+        <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/70 space-y-1">
+          <span class="font-bold text-purple-300 block text-xs">【${c.tag}】</span>
+          <p class="text-gray-300 text-[11px] leading-relaxed">${c.text}</p>
+        </div>
+      `).join('') : '';
+
+      return `
+        <div class="p-4 sm:p-5 rounded-2xl border border-emerald-900/60 bg-gradient-to-br from-emerald-950/25 via-black/40 to-black/60 space-y-4 shadow-xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-emerald-900/50">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-xl">💼</span>
+              <div>
+                <h4 class="text-sm sm:text-base font-bold font-serif-sc text-emerald-300 flex items-center gap-2">
+                  <span>${isEn ? 'Dimension II · Talents, Career Strategy & Workplace Dynamics' : '维度二 · 才华天赋、职场博弈与生态位'}</span>
+                </h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">${isEn ? 'Pattern governance, organizational niches, partnership dead-ends & contractual firewalls' : '核心格局主纲 · 组织生态位 · 上下级合伙死门与制度防火墙'}</p>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-900/40 text-emerald-300 border border-emerald-700/40 font-mono">
+              ${isEn ? 'Career & Workplace' : '才华 · 职场 · 契约'}
+            </span>
+          </div>
+
+          <div class="p-3.5 bg-black/40 rounded-xl border border-emerald-950/80 space-y-2">
+            <div class="flex items-center space-x-1.5 text-xs font-bold text-emerald-300">
+              <span>🌟</span>
+              <span>${isEn ? 'Talent Endowments & Career Direction (Operational Mainline)' : '🌟 命基禀赋 · 格局主纲与才华事业方向'}</span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-serif-sc pl-1">
+              ${portrait.career || ''}
+            </p>
+          </div>
+
+          <div class="p-3.5 bg-rose-950/15 rounded-xl border border-rose-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-rose-300">
+                <span>⚠️</span>
+                <span>${isEn ? 'Workplace Pitfalls, Governance Hazards & Interpersonal Dead-Ends' : '⚠️ 职场博弈、上下级死门、合伙暗礁与古法透视'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-rose-800/60 bg-rose-950/30 text-rose-300 font-mono">
+                ${isEn ? 'Workplace Traps' : '职场雷区'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${workPoints}
+            </div>
+            ${workRoot}
+          </div>
+
+          <div class="p-3.5 bg-emerald-950/15 rounded-xl border border-emerald-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-emerald-300">
+                <span>🛡️</span>
+                <span>${isEn ? 'Career Niche Positioning, Governance Moats & Contract Firewalls' : '🛡️ 职场生态位定位、借势策略与制度防火墙铁律'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-emerald-800/60 bg-emerald-950/30 text-emerald-300 font-mono">
+                ${isEn ? 'Firewalls' : '制度防火墙'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${remFirewall ? `
+                <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                  <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>${remFirewall.label}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remFirewall.text}</p>
+                </div>
+              ` : ''}
+              ${remWeakMindset ? `
+                <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                  <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>${remWeakMindset.label}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remWeakMindset.text}</p>
+                </div>
+              ` : ''}
+            </div>
+
+            ${careerRemedyHtml ? `
+              <div class="space-y-1.5 pt-1">
+                <div class="text-[11px] font-bold text-purple-300 flex items-center gap-1.5">
+                  <span>💼</span> <span>${isEn ? 'Career Runway & Organizational Ecosphere Strategy' : '职场跑道与商业避坑策略'}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  ${careerRemedyHtml}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    };
+
+    // Dimension 3: Wealth
+    const renderDimWealthHtml = () => {
+      const finPoints = formatPoints(cardFin, 'rose');
+      const finRoot = formatRootCause(cardFin, 'rose');
+      const remFirewall = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('制度防火墙') || p.label.includes('Firewall')))) || null;
+      const remDecision = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('48小时') || p.label.includes('Decision Cooling')))) || null;
+
+      return `
+        <div class="p-4 sm:p-5 rounded-2xl border border-amber-900/60 bg-gradient-to-br from-amber-950/25 via-black/40 to-black/60 space-y-4 shadow-xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-amber-900/50">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-xl">💰</span>
+              <div>
+                <h4 class="text-sm sm:text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                  <span>${isEn ? 'Dimension III · Wealth Dynamics, Commercial Decisions & Financial Risk' : '维度三 · 财富格局、商业决策与破财避坑'}</span>
+                </h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">${isEn ? 'Financial capacity, asset accumulation drivers, capital risk reefs & preservation rules' : '身主承载力 · 知识壁垒求财 · 商业破财暗礁与资产防御铁律'}</p>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-900/40 text-amber-300 border border-amber-700/40 font-mono">
+              ${isEn ? 'Wealth & Capital Risk' : '财富 · 商业 · 守成'}
+            </span>
+          </div>
+
+          <div class="p-3.5 bg-black/40 rounded-xl border border-amber-950/80 space-y-2">
+            <div class="flex items-center space-x-1.5 text-xs font-bold text-amber-300">
+              <span>🌟</span>
+              <span>${isEn ? 'Wealth Dynamics & Endowments (Financial Architecture)' : '🌟 命基禀赋 · 身主胜任力与求财进财通道'}</span>
+            </div>
+            <p class="text-xs text-gray-200 leading-relaxed font-serif-sc pl-1">
+              ${portrait.wealth || ''}
+            </p>
+          </div>
+
+          <div class="p-3.5 bg-rose-950/15 rounded-xl border border-rose-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-rose-300">
+                <span>⚠️</span>
+                <span>${isEn ? 'Commercial Missteps, Over-Leverage & Financial Drain Reefs' : '⚠️ 商业决策误区、盲目杠杆、人情买单与古法破财透视'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-rose-800/60 bg-rose-950/30 text-rose-300 font-mono">
+                ${isEn ? 'Financial Reefs' : '破财暗礁'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${finPoints}
+            </div>
+            ${finRoot}
+          </div>
+
+          <div class="p-3.5 bg-emerald-950/15 rounded-xl border border-emerald-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-emerald-300">
+                <span>🛡️</span>
+                <span>${isEn ? 'Capital Preservation Moats & Investment Firewalls' : '🛡️ 资本风控护城河、投资熔断与资产守成铁律'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-emerald-800/60 bg-emerald-950/30 text-emerald-300 font-mono">
+                ${isEn ? 'Preservation Moats' : '守成铁律'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${remDecision ? `
+                <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                  <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>${remDecision.label}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remDecision.text}</p>
+                </div>
+              ` : ''}
+              ${remFirewall ? `
+                <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                  <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                    <span>${remFirewall.label}</span>
+                  </div>
+                  <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remFirewall.text}</p>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    // Dimension 4: Health
+    const renderDimHealthHtml = () => {
+      const healthPoints = formatPoints(cardHealth, 'rose');
+      const healthRoot = formatRootCause(cardHealth, 'rose');
+      const remHabits = (cardRem && cardRem.points && cardRem.points.find(p => p.label && (p.label.includes('起居指南') || p.label.includes('Habit')))) || null;
+
+      const elementCardsHtml = (tailored && tailored.elementRemedy && tailored.elementRemedy.details) ? tailored.elementRemedy.details.map(d => `
+        <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/70 space-y-1">
+          <span class="font-bold text-cyan-300 block text-xs">${d.name}</span>
+          <p class="text-gray-300 text-[11px] leading-relaxed">${d.content}</p>
+        </div>
+      `).join('') : '';
+
+      const habitCardsHtml = (tailored && tailored.habitRemedy) ? tailored.habitRemedy.map(h => `
+        <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/70 space-y-1">
+          <span class="font-bold text-emerald-300 block text-xs">【${h.tag}】</span>
+          <p class="text-gray-300 text-[11px] leading-relaxed">${h.text}</p>
+        </div>
+      `).join('') : '';
+
+      const physicalRechargeHtml = (tailored && tailored.energyRecharge && tailored.energyRecharge.physical) ? `
+        <div class="p-3 bg-black/45 rounded-xl border border-cyan-900/40 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-cyan-300 text-xs">${tailored.energyRecharge.physical.title}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-mono">${isEn ? 'Physical Recovery' : '肉体回血'}</span>
+          </div>
+          <p class="text-[11px] text-gray-400 font-serif-sc">
+            <b>${isEn ? '【Physical Drain Cause】' : '【耗体根因】'}</b>${tailored.energyRecharge.physical.causes}
+          </p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            ${tailored.energyRecharge.physical.steps.map(s => `
+              <div class="p-2 bg-black/60 rounded-lg border border-gray-800/80 space-y-0.5">
+                <span class="font-semibold text-emerald-300 text-[11px] block">✦ ${s.name}</span>
+                <p class="text-gray-300 text-[10.5px] leading-relaxed pl-2">${s.detail}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      return `
+        <div class="p-4 sm:p-5 rounded-2xl border border-cyan-900/60 bg-gradient-to-br from-cyan-950/25 via-black/40 to-black/60 space-y-4 shadow-xl">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-cyan-900/50">
+            <div class="flex items-center space-x-2.5">
+              <span class="text-xl">🌿</span>
+              <div>
+                <h4 class="text-sm sm:text-base font-bold font-serif-sc text-cyan-300 flex items-center gap-2">
+                  <span>${isEn ? 'Dimension IV · Five Elements Balancing, Health & Vital Regimen' : '维度四 · 五行理气、身心健康与起居改运'}</span>
+                </h4>
+                <p class="text-[11px] text-gray-400 mt-0.5">${isEn ? 'Seasonal climate adjustment, organ vulnerabilities, daily habits & physical recharge' : '调候用神理气 · 脏腑偏枯防患 · 日常起居与气血肉体回血指南'}</p>
+              </div>
+            </div>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-cyan-900/40 text-cyan-300 border border-cyan-700/40 font-mono">
+              ${isEn ? 'Health & Regimen' : '理气 · 脏腑 · 调摄'}
+            </span>
+          </div>
+
+          <div class="p-3.5 bg-black/40 rounded-xl border border-cyan-950/80 space-y-3">
+            <div class="flex items-center space-x-1.5 text-xs font-bold text-cyan-300">
+              <span>🌟</span>
+              <span>${isEn ? 'Five Elements Regulatory Balancing (Climate & Seasonal Needs)' : '🌟 命基禀赋 · 五行生克理气法则与调候借势'}</span>
+            </div>
+            ${(tailored && tailored.elementRemedy) ? `
+              <div class="p-2.5 rounded-lg bg-cyan-950/25 border border-cyan-800/40 text-xs text-cyan-200">
+                <b>${isEn ? '【Regulatory Core】' : '【理气核心】'}</b>${tailored.elementRemedy.mainAction}
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                ${elementCardsHtml}
+              </div>
+            ` : ''}
+            <div class="text-xs text-gray-300 leading-relaxed font-serif-sc pt-1">
+              ${portrait.advice || ''}
+            </div>
+          </div>
+
+          <div class="p-3.5 bg-rose-950/15 rounded-xl border border-rose-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-rose-300">
+                <span>⚠️</span>
+                <span>${isEn ? 'Elemental Imbalance, Organ Vulnerabilities & Traditional Medicine' : '⚠️ 五行偏枯、脏腑神经弱项与黄帝内经病机透视'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-rose-800/60 bg-rose-950/30 text-rose-300 font-mono">
+                ${isEn ? 'Health Vulnerabilities' : '身心弱项'}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              ${healthPoints}
+            </div>
+            ${healthRoot}
+          </div>
+
+          <div class="p-3.5 bg-emerald-950/15 rounded-xl border border-emerald-900/40 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5 text-xs font-bold text-emerald-300">
+                <span>🛡️</span>
+                <span>${isEn ? 'Daily Habits, Movement & Physical Energy Restoration' : '🛡️ 日常作息、运动调养与气血肉体回血急救'}</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full border border-emerald-800/60 bg-emerald-950/30 text-emerald-300 font-mono">
+                ${isEn ? 'Vital Regimen' : '调补指南'}
+              </span>
+            </div>
+
+            ${remHabits ? `
+              <div class="p-2.5 bg-black/45 rounded-lg border border-emerald-800/60 space-y-1">
+                <div class="flex items-center space-x-1.5 font-bold text-emerald-300 text-xs">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
+                  <span>${remHabits.label}</span>
+                </div>
+                <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${remHabits.text}</p>
+              </div>
+            ` : ''}
+
+            ${habitCardsHtml ? `
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                ${habitCardsHtml}
+              </div>
+            ` : ''}
+
+            ${physicalRechargeHtml}
+          </div>
+        </div>
+      `;
+    };
+
+    // Dimension 5: Comparison Guide
+    const renderComparisonGuideHtml = () => {
+      if (!compGuide) return '';
+      const weakHtml = compGuide.weakRules.map(r => `
+        <div class="p-3 bg-black/40 rounded-xl border border-emerald-900/40 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-emerald-300 text-xs">${r.num}. ${r.name}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-300 font-mono">${isEn ? 'Nourishing' : '生身培补'}</span>
+          </div>
+          <div class="text-[11px] text-amber-200/90 font-medium">${isEn ? '【Core】' : '【核心】'}${r.theme}</div>
+          <p class="text-gray-300 text-[11px] leading-relaxed">${r.detail}</p>
+        </div>
+      `).join('');
+
+      const strongHtml = compGuide.strongRules.map(r => `
+        <div class="p-3 bg-black/40 rounded-xl border border-amber-900/40 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-amber-300 text-xs">${r.num}. ${r.name}</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 font-mono">${isEn ? 'Channeling' : '制化疏泄'}</span>
+          </div>
+          <div class="text-[11px] text-cyan-200/90 font-medium">${isEn ? '【Core】' : '【核心】'}${r.theme}</div>
+          <p class="text-gray-300 text-[11px] leading-relaxed">${r.detail}</p>
+        </div>
+      `).join('');
+
+      return `
+        <div class="space-y-4">
+          <div class="p-4 rounded-xl border border-gray-800 bg-gradient-to-r from-emerald-950/20 via-black/40 to-amber-950/20 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h4 class="text-sm font-bold font-serif-sc text-amber-300 flex items-center gap-2">
+                <span>⚖️ ${isEn ? 'Weak vs Strong Canonical Parallel Comparison' : '身弱 vs 身强 东方典籍完整对照总决'}</span>
+              </h4>
+              <p class="text-[11px] text-gray-400 mt-0.5">
+                ${isEn ? 'Six mastery directives for weak day masters (nourish) vs six channeling directives for strong day masters (channel/restrain)' : '生扶守弱与克泄制化两套经典体系并列参详，洞察天地阴阳消长之神机'}
+              </p>
+            </div>
+            <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-gray-800 text-gray-300 border border-gray-700 font-mono">
+              ${isEn ? 'Canonical Rules' : '典籍总决'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl border border-emerald-800/60 bg-gradient-to-br from-emerald-950/20 to-black/40 space-y-3">
+              <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-base">🌱</span>
+                  <h4 class="text-sm font-bold font-serif-sc text-emerald-300">
+                    ${isEn ? 'Six Core Mastery Rules for Weak Day Master (Nourish & Support)' : '身弱六大立身开运总决 (宜生宜扶)'}
+                  </h4>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  ${isEn ? 'Preserve Essence · Win via Leverage' : '守弱蓄元 · 借势致胜'}
+                </span>
+              </div>
+              <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+                ${isEn ? '\"When vital energy is delicate, avoid direct friction and exhaustion; rely on the mother seal for replenishment, overcoming hardness with gentle persistence.\"' : '“元气亏虚，不耐克泄耗；守母慈护，以柔胜刚强”。身弱不是缺陷，而是独特的生存禀赋，顺势生扶即可成就非凡功业。'}
+              </p>
+              <div class="space-y-2.5">
+                ${weakHtml}
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl border border-amber-800/60 bg-gradient-to-br from-amber-950/20 to-black/40 space-y-3">
+              <div class="flex items-center justify-between pb-2 border-b border-gray-800">
+                <div class="flex items-center space-x-2">
+                  <span class="text-base">🔥</span>
+                  <h4 class="text-sm font-bold font-serif-sc text-amber-300">
+                    ${isEn ? 'Six Core Mastery Rules for Strong Day Master (Channel & Restrain)' : '身强六大制化疏导总决 (宜泄宜克)'}
+                  </h4>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  ${isEn ? 'Channel Talent · Share Profits' : '疏泄秀气 · 利出三分'}
+                </span>
+              </div>
+              <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
+                ${isEn ? '\"When energy is at its zenith, it must be channeled; a bow pulled to full tension must not be strung tighter. Share profits, express talent, and respect rules for enduring peace.\"' : '“强极宜泄，旺极宜制；满弦之弓，不可再绷”。身旺之人如烈火狂潮，必须利出三分、以才华泄秀、敬畏规矩，方得圆融善终。'}
+              </p>
+              <div class="space-y-2.5">
+                ${strongHtml}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const renderActiveView = () => {
+      let html = '';
+      if (activePersonaTab === 'tab-mindset') {
+        html = renderDimMindsetHtml();
+      } else if (activePersonaTab === 'tab-career') {
+        html = renderDimCareerHtml();
+      } else if (activePersonaTab === 'tab-wealth') {
+        html = renderDimWealthHtml();
+      } else if (activePersonaTab === 'tab-health') {
+        html = renderDimHealthHtml();
+      } else if (activePersonaTab === 'tab-comparison') {
+        html = renderComparisonGuideHtml();
+      } else {
+        // default 'tab-all' panorama
+        html = `
+          <div class="space-y-6">
+            ${renderDimMindsetHtml()}
+            ${renderDimCareerHtml()}
+            ${renderDimWealthHtml()}
+            ${renderDimHealthHtml()}
+          </div>
+        `;
+      }
+      container.innerHTML = html;
+
+      container.querySelectorAll('.btn-jump-to-friction').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (typeof switchPrimaryView === 'function') {
+            switchPrimaryView('view-friction');
+          }
+        });
+      });
+    };
+
+    const tabBtns = document.querySelectorAll('.persona-tab-btn');
+    tabBtns.forEach(btn => {
+      const tabId = btn.getAttribute('data-persona-tab');
+      if (tabId === activePersonaTab) {
+        btn.className = 'persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer active bg-amber-500/20 text-amber-300 border border-amber-500/40';
+      } else {
+        btn.className = 'persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent';
+      }
+      btn.onclick = () => {
+        activePersonaTab = tabId;
+        tabBtns.forEach(b => {
+          const bTabId = b.getAttribute('data-persona-tab');
+          if (bTabId === activePersonaTab) {
+            b.className = 'persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer active bg-amber-500/20 text-amber-300 border border-amber-500/40';
+          } else {
+            b.className = 'persona-tab-btn px-3 py-1.5 rounded-lg font-medium transition cursor-pointer text-gray-400 hover:text-gray-200 border border-transparent';
+          }
+        });
+        renderActiveView();
+      };
+    });
+
+    renderActiveView();
+  }
+
   // Render Grand Holistic Persona Portrait & Pattern Blueprint (Five Canons Integration)
   function renderPortrait(res) {
     if (typeof PortraitEngine === 'undefined') return;
@@ -2815,404 +3514,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 5. Holistic Persona Portrait
-    const persEl = document.getElementById('personaPersonality');
-    if (persEl) persEl.textContent = pData.portrait.personality;
-
-    const careerEl = document.getElementById('personaCareer');
-    if (careerEl) careerEl.textContent = pData.portrait.career;
-
-    const wealthEl = document.getElementById('personaWealth');
-    if (wealthEl) wealthEl.textContent = pData.portrait.wealth;
-
-    const adviceEl = document.getElementById('personaAdvice');
-    if (adviceEl) adviceEl.textContent = pData.portrait.advice;
-
-    // 5.5 Pareto 80/20 Core Synthesis & Kinship Hologram (👑 全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱)
+    // 5. Pareto 80/20 Core Synthesis & Kinship Hologram (👑 全新独立大相与破局战役 · 帕累托 20% 统帅全息图谱)
     const paretoContainer = document.getElementById('paretoCoreContainer');
     if (paretoContainer && pData.paretoCore) {
       renderStrategyAndKinshipContent(paretoContainer, pData, res, isEn, { includeCanonsDrawer: true });
     }
 
-    // 6. Day Master Defects & Vulnerabilities Rendering
-    const defectsContainer = document.getElementById('defectsContainer');
-    if (defectsContainer && pData.defects && pData.defects.cards) {
-      defectsContainer.innerHTML = '';
-      pData.defects.cards.forEach((card) => {
-        const cardEl = document.createElement('div');
-        const isRemedies = card.id === 'remedies';
-        cardEl.className = `p-4 rounded-xl border ${card.borderColor} bg-black/35 shadow-lg flex flex-col justify-between space-y-3 hover:border-opacity-100 transition ${isRemedies ? 'md:col-span-2 lg:col-span-2 bg-gradient-to-br from-emerald-950/20 to-black/40 border-emerald-700/50' : ''}`;
-
-        const pointsHtml = card.points.map(pt => `
-          <div class="p-2.5 bg-black/40 rounded-lg border border-gray-800/80 space-y-1">
-            <div class="flex items-center space-x-1.5 font-bold text-gray-200">
-              <span class="w-1.5 h-1.5 rounded-full ${isRemedies ? 'bg-emerald-400' : 'bg-rose-400'} inline-block"></span>
-              <span class="${isRemedies ? 'text-emerald-300' : 'text-amber-300'}">${pt.label}</span>
-            </div>
-            <p class="text-gray-300 text-[11px] leading-relaxed pl-3">${pt.text}</p>
-          </div>
-        `).join('');
-
-        cardEl.innerHTML = `
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between pb-2 border-b border-gray-800/80">
-              <div class="flex items-center space-x-2">
-                <span class="text-base">${card.icon}</span>
-                <h4 class="text-sm font-bold font-serif-sc ${isRemedies ? 'text-emerald-300' : 'text-rose-300'}">
-                  ${card.title}
-                </h4>
-              </div>
-              <span class="text-[10px] px-2 py-0.5 rounded-full border ${card.tagColor} font-mono">
-                ${card.subtitle.split(' · ')[0]}
-              </span>
-            </div>
-
-            <div class="space-y-2">
-              ${pointsHtml}
-            </div>
-          </div>
-
-          <div class="pt-2 border-t border-gray-800/60 mt-2">
-            <div class="p-2 bg-black/50 rounded-lg text-[11px] text-gray-400 leading-relaxed font-serif-sc border-l-2 ${isRemedies ? 'border-emerald-500' : 'border-rose-500'}">
-              ${card.rootCause}
-            </div>
-          </div>
-        `;
-        defectsContainer.appendChild(cardEl);
-      });
-    }
-
-    // 7. Mental Internal Friction Detection & Practical Solutions
-    const mfSection = document.getElementById('mentalFrictionSection');
-    if (mfSection && pData.mentalFriction) {
-      const mf = pData.mentalFriction;
-      if (mf.detected) {
-        const solutionsHtml = mf.solutions.map(sol => `
-          <div class="p-3 rounded-xl border border-gray-800/80 bg-black/45 space-y-1.5 hover:border-rose-700/50 transition flex flex-col justify-between">
-            <div class="flex items-center space-x-2">
-              <span class="text-base">${sol.icon}</span>
-              <div class="min-w-0">
-                <span class="font-bold text-gray-200 text-xs truncate block">${sol.name}</span>
-                <span class="text-[10.5px] text-amber-300/90 truncate block">${sol.theme}</span>
-              </div>
-            </div>
-            <div class="p-2 rounded-lg bg-black/60 border border-gray-800/60 text-[11px] text-gray-300 leading-relaxed font-serif-sc line-clamp-2">
-              ${(sol.steps && sol.steps[0]) ? sol.steps[0] : ''}
-            </div>
-          </div>
-        `).join('');
-
-        mfSection.innerHTML = `
-          <div class="p-4 rounded-xl border border-rose-800/60 bg-gradient-to-br from-rose-950/25 via-black/40 to-black/50 space-y-3 shadow-xl">
-            <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800/80">
-              <div class="flex items-center space-x-2">
-                <span class="text-lg">🌪️</span>
-                <h4 class="text-sm font-bold font-serif-sc text-rose-300 flex items-center gap-2">
-                  <span>${isEn ? 'Mental Rumination Diagnostic & Battle-Tested Practical Antidotes' : '精神内耗专项检测与实战彻底改善方案'}</span>
-                </h4>
-              </div>
-              <div class="flex items-center space-x-2">
-                <span class="text-xs px-2.5 py-0.5 rounded-full border ${mf.levelBadge} font-bold font-mono">
-                  ${isEn ? 'Rumination Index: ' : '内耗指数：'}${mf.score}% · ${isEn ? (mf.levelEn || 'Elevated Standby') : (mf.levelZh || mf.level)}
-                </span>
-              </div>
-            </div>
-
-            <div class="p-3 rounded-lg bg-rose-950/20 border border-rose-900/40 text-xs text-rose-200 leading-relaxed font-serif-sc">
-              <b>${isEn ? '【Core Mental Friction Root Cause】' : '【本命核心内耗根源剖析】'}</b>${isEn ? (mf.primaryRootEn || mf.primaryRoot) : (mf.primaryRootZh || mf.primaryRoot)}
-              <div class="text-[11px] text-gray-400 mt-1">
-                <b>${isEn ? 'Natal BaZi Triggers: ' : '八字触发特征：'}</b>${mf.triggers.join(isEn ? '; ' : '；')}
-              </div>
-            </div>
-
-            <!-- 4 Actionable Solutions Streamlined Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
-              ${solutionsHtml}
-            </div>
-
-            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-rose-900/40">
-              <span class="text-[11px] text-gray-400 font-serif-sc">
-                ${isEn ? 'Full original factory manual, stress triggers & Zen-Dao canons consolidated in one page' : '原厂硬件规格、极端压力开关、出厂三阶急救与禅道三经八典已汇通于专栏'}
-              </span>
-              <button type="button" class="btn-jump-to-friction px-3 py-1.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-500/40 text-xs font-serif-sc font-medium flex items-center gap-1.5 transition cursor-pointer">
-                <span>⚡</span>
-                <span>${isEn ? 'Open Complete Factory Mind Manual (Unified Page) →' : '进入原厂心理使用说明书 (一页统览) →'}</span>
-              </button>
-            </div>
-          </div>
-        `;
-        mfSection.style.display = 'block';
-
-        const jumpFricBtn = mfSection.querySelector ? mfSection.querySelector('.btn-jump-to-friction') : null;
-        if (jumpFricBtn && jumpFricBtn.addEventListener) {
-          jumpFricBtn.addEventListener('click', () => switchPrimaryView('view-friction'));
-        }
-      } else {
-        mfSection.innerHTML = '';
-        mfSection.style.display = 'none';
-      }
-    }
-
-    // 8. Day Master Remedy & Balancing Guide Rendering
-    const remedyContainer = document.getElementById('remedyContainer');
-    const tabTailoredBtn = document.getElementById('remedyTabTailored');
-    const tabComparisonBtn = document.getElementById('remedyTabComparison');
-
-    if (remedyContainer && pData.remedyGuide) {
-      const guide = pData.remedyGuide;
-      let activeTab = 'tailored'; // 'tailored' or 'comparison'
-
-      const renderRemedyView = () => {
-        if (activeTab === 'tailored') {
-          const t = guide.tailored;
-          const isWeakType = t.type === 'weak';
-          const isStrongType = t.type === 'strong';
-          const themeColor = isWeakType ? 'emerald' : isStrongType ? 'amber' : 'blue';
-
-          const elementCardsHtml = t.elementRemedy.details.map(d => `
-            <div class="p-3 bg-black/40 rounded-xl border border-gray-800/80 space-y-1">
-              <span class="font-bold text-${themeColor}-300 block text-xs">${d.name}</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${d.content}</p>
-            </div>
-          `).join('');
-
-          const mentalCardsHtml = t.mentalRemedy.map(m => `
-            <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800/60 space-y-1">
-              <span class="font-bold text-amber-300 block text-xs">【${m.tag}】</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${m.text}</p>
-            </div>
-          `).join('');
-
-          const habitCardsHtml = t.habitRemedy.map(h => `
-            <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800/60 space-y-1">
-              <span class="font-bold text-emerald-300 block text-xs">【${h.tag}】</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${h.text}</p>
-            </div>
-          `).join('');
-
-          const careerCardsHtml = t.careerRemedy.map(c => `
-            <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800/60 space-y-1">
-              <span class="font-bold text-purple-300 block text-xs">【${c.tag}】</span>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${c.text}</p>
-            </div>
-          `).join('');
-
-          remedyContainer.innerHTML = `
-            <!-- Tailored Header Banner -->
-            <div class="p-4 rounded-xl border border-${themeColor}-800/60 bg-gradient-to-r from-${themeColor}-950/30 to-black/50 space-y-2">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <div>
-                  <h4 class="text-sm font-bold font-serif-sc text-${themeColor}-300 flex items-center gap-2">
-                    <span>${t.title}</span>
-                  </h4>
-                  <p class="text-[11px] text-gray-400 mt-0.5">${t.subtitle}</p>
-                </div>
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-${themeColor}-500/20 text-${themeColor}-300 border border-${themeColor}-500/30">
-                  ${t.badge}
-                </span>
-              </div>
-              <p class="text-xs text-gray-300 leading-relaxed font-serif-sc pt-1 border-t border-gray-800/80">
-                ${t.philosophy}
-              </p>
-            </div>
-
-            <!-- 4 Actionable Dimension Grids -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-              <!-- Dimension 1: 五行生克理气补法 -->
-              <div class="p-3.5 rounded-xl border border-emerald-900/50 bg-black/30 space-y-2.5">
-                <div class="flex items-center space-x-2 text-xs font-bold text-emerald-300 pb-1.5 border-b border-gray-800">
-                  <span>${isEn ? '🌌 I. Five Elements Regulatory Balancing' : '🌌 一、五行生克理气开运法则'}</span>
-                </div>
-                <div class="p-2 rounded bg-emerald-950/20 border border-emerald-800/40 text-[11px] text-emerald-200">
-                  <b>${isEn ? '【Regulatory Core】' : '【理气核心】'}</b>${t.elementRemedy.mainAction}
-                </div>
-                <div class="space-y-2">
-                  ${elementCardsHtml}
-                </div>
-              </div>
-
-              <!-- Dimension 2: 心智模型与能量护城河 -->
-              <div class="p-3.5 rounded-xl border border-amber-900/50 bg-black/30 space-y-2.5">
-                <div class="flex items-center space-x-2 text-xs font-bold text-amber-300 pb-1.5 border-b border-gray-800">
-                  <span>${isEn ? '🧠 II. Cognitive Models & Mindset Moats' : '🧠 二、心智模型与精神蓄能法则'}</span>
-                </div>
-                <div class="space-y-2">
-                  ${mentalCardsHtml}
-                </div>
-              </div>
-
-              <!-- Dimension 3: 日常起居与能量滋养 -->
-              <div class="p-3.5 rounded-xl border border-cyan-900/50 bg-black/30 space-y-2.5">
-                <div class="flex items-center space-x-2 text-xs font-bold text-cyan-300 pb-1.5 border-b border-gray-800">
-                  <span>${isEn ? '🌿 III. Daily Habits & Energy Nourishment' : '🌿 三、日常作息、运动与能量摄入'}</span>
-                </div>
-                <div class="space-y-2">
-                  ${habitCardsHtml}
-                </div>
-              </div>
-
-              <!-- Dimension 4: 职场跑道与商业避坑策略 -->
-              <div class="p-3.5 rounded-xl border border-purple-900/50 bg-black/30 space-y-2.5">
-                <div class="flex items-center space-x-2 text-xs font-bold text-purple-300 pb-1.5 border-b border-gray-800">
-                  <span>${isEn ? '💼 IV. Career Niches & Financial Firewalls' : '💼 四、职场生态位与财富安全防火墙'}</span>
-                </div>
-                <div class="space-y-2">
-                  ${careerCardsHtml}
-                </div>
-              </div>
-            </div>
-
-            <!-- Dimension 5: 精神消耗与身体消耗专项抢救补充 (Mental & Physical Energy Restoration) -->
-            ${t.energyRecharge ? `
-              <div class="p-4 rounded-xl border border-rose-800/50 bg-gradient-to-br from-rose-950/20 via-black/40 to-black/50 space-y-3">
-                <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-gray-800">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-base">⚡</span>
-                    <h4 class="text-sm font-bold font-serif-sc text-rose-300">
-                      ${isEn ? 'V. Emergency Energy Recharge Protocol (Mental & Physical Restoration)' : '五、气血与心神双耗抢救回血指南 (精神消耗 vs 身体消耗双重修复)'}
-                    </h4>
-                  </div>
-                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
-                    ${isEn ? 'Emergency Recharge · Restore Vital Essence' : '急救补能 · 固本培元'}
-                  </span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
-                  <!-- A. 精神脑力消耗补充 -->
-                  <div class="p-3.5 bg-black/40 rounded-xl border border-rose-900/40 space-y-2">
-                    <div class="flex items-center justify-between">
-                      <span class="font-bold text-rose-300 text-xs">${t.energyRecharge.mental.title}</span>
-                      <span class="text-[10px] text-gray-400">${isEn ? 'Mental Reset' : '心神修复'}</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-relaxed font-serif-sc">
-                      <b>${isEn ? '【Mental Drain Cause】' : '【耗神根因】'}</b>${t.energyRecharge.mental.causes}
-                    </p>
-                    <div class="space-y-1.5 pt-1">
-                      ${t.energyRecharge.mental.steps.map(s => `
-                        <div class="p-2 bg-black/50 rounded-lg border border-gray-800/80 space-y-0.5">
-                          <span class="font-semibold text-amber-300 text-[11px] block">✦ ${s.name}</span>
-                          <p class="text-gray-300 text-[10.5px] leading-relaxed pl-2.5">${s.detail}</p>
-                        </div>
-                      `).join('')}
-                    </div>
-                  </div>
-
-                  <!-- B. 身体肉体消耗补充 -->
-                  <div class="p-3.5 bg-black/40 rounded-xl border border-cyan-900/40 space-y-2">
-                    <div class="flex items-center justify-between">
-                      <span class="font-bold text-cyan-300 text-xs">${t.energyRecharge.physical.title}</span>
-                      <span class="text-[10px] text-gray-400">${isEn ? 'Physical Recovery' : '肉体回血'}</span>
-                    </div>
-                    <p class="text-[11px] text-gray-400 leading-relaxed font-serif-sc">
-                      <b>${isEn ? '【Physical Drain Cause】' : '【耗体根因】'}</b>${t.energyRecharge.physical.causes}
-                    </p>
-                    <div class="space-y-1.5 pt-1">
-                      ${t.energyRecharge.physical.steps.map(s => `
-                        <div class="p-2 bg-black/50 rounded-lg border border-gray-800/80 space-y-0.5">
-                          <span class="font-semibold text-emerald-300 text-[11px] block">✦ ${s.name}</span>
-                          <p class="text-gray-300 text-[10.5px] leading-relaxed pl-2.5">${s.detail}</p>
-                        </div>
-                      `).join('')}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ` : ''}
-          `;
-        } else {
-          // Comparison View
-          const c = guide.comparisonGuide;
-
-          const weakHtml = c.weakRules.map(r => `
-            <div class="p-3 bg-black/40 rounded-xl border border-emerald-900/40 space-y-1">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-emerald-300 text-xs">${r.num}. ${r.name}</span>
-                <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-300 font-mono">${isEn ? 'Nourishing' : '生身培补'}</span>
-              </div>
-              <div class="text-[11px] text-amber-200/90 font-medium">${isEn ? '【Core】' : '【核心】'}${r.theme}</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${r.detail}</p>
-            </div>
-          `).join('');
-
-          const strongHtml = c.strongRules.map(r => `
-            <div class="p-3 bg-black/40 rounded-xl border border-amber-900/40 space-y-1">
-              <div class="flex items-center justify-between">
-                <span class="font-bold text-amber-300 text-xs">${r.num}. ${r.name}</span>
-                <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-300 font-mono">${isEn ? 'Channeling' : '制化疏泄'}</span>
-              </div>
-              <div class="text-[11px] text-cyan-200/90 font-medium">${isEn ? '【Core】' : '【核心】'}${r.theme}</div>
-              <p class="text-gray-300 text-[11px] leading-relaxed">${r.detail}</p>
-            </div>
-          `).join('');
-
-          remedyContainer.innerHTML = `
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <!-- Left Column: 身弱六大立身开运总决 -->
-              <div class="p-4 rounded-xl border border-emerald-800/60 bg-gradient-to-br from-emerald-950/20 to-black/40 space-y-3">
-                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-base">🌱</span>
-                    <h4 class="text-sm font-bold font-serif-sc text-emerald-300">
-                      ${isEn ? 'Six Core Mastery Rules for Weak Day Master (Nourish & Support)' : '身弱六大立身开运总决 (宜生宜扶)'}
-                    </h4>
-                  </div>
-                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    ${isEn ? 'Preserve Essence · Win via Leverage' : '守弱蓄元 · 借势致胜'}
-                  </span>
-                </div>
-                <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
-                  ${isEn ? '\"When vital energy is delicate, avoid direct friction and exhaustion; rely on the mother seal for replenishment, overcoming hardness with gentle persistence.\"' : '“元气亏虚，不耐克泄耗；守母慈护，以柔胜刚强”。身弱不是缺陷，而是独特的生存禀赋，顺势生扶即可成就非凡功业。'}
-                </p>
-                <div class="space-y-2.5">
-                  ${weakHtml}
-                </div>
-              </div>
-
-              <!-- Right Column: 身强六大制化疏导总决 -->
-              <div class="p-4 rounded-xl border border-amber-800/60 bg-gradient-to-br from-amber-950/20 to-black/40 space-y-3">
-                <div class="flex items-center justify-between pb-2 border-b border-gray-800">
-                  <div class="flex items-center space-x-2">
-                    <span class="text-base">🔥</span>
-                    <h4 class="text-sm font-bold font-serif-sc text-amber-300">
-                      ${isEn ? 'Six Core Mastery Rules for Strong Day Master (Channel & Restrain)' : '身强六大制化疏导总决 (宜泄宜克)'}
-                    </h4>
-                  </div>
-                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    ${isEn ? 'Channel Talent · Share Profits' : '疏泄秀气 · 利出三分'}
-                  </span>
-                </div>
-                <p class="text-[11px] text-gray-300 leading-relaxed font-serif-sc">
-                  ${isEn ? '\"When energy is at its zenith, it must be channeled; a bow pulled to full tension must not be strung tighter. Share profits, express talent, and respect rules for enduring peace.\"' : '“强极宜泄，旺极宜制；满弦之弓，不可再绷”。身旺之人如烈火狂潮，必须利出三分、以才华泄秀、敬畏规矩，方得圆融善终。'}
-                </p>
-                <div class="space-y-2.5">
-                  ${strongHtml}
-                </div>
-              </div>
-            </div>
-          `;
-        }
-      };
-
-      // Tab click events
-      if (tabTailoredBtn && tabComparisonBtn) {
-        tabTailoredBtn.onclick = () => {
-          activeTab = 'tailored';
-          tabTailoredBtn.className = 'px-3 py-1 rounded font-medium transition active bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-          tabComparisonBtn.className = 'px-3 py-1 rounded font-medium transition text-gray-400 hover:text-gray-200';
-          renderRemedyView();
-        };
-
-        tabComparisonBtn.onclick = () => {
-          activeTab = 'comparison';
-          tabComparisonBtn.className = 'px-3 py-1 rounded font-medium transition active bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
-          tabTailoredBtn.className = 'px-3 py-1 rounded font-medium transition text-gray-400 hover:text-gray-200';
-          renderRemedyView();
-        };
-      }
-
-      // Initial render
-      renderRemedyView();
-    }
+    // 6. Consolidated Holistic Persona & Strategic Blueprint (五经全息“命理人物画像与全维实战蓝图” · 合并同类项)
+    renderConsolidatedPersona(pData, res, isEn);
 
     currentPortraitData = pData;
 
