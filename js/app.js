@@ -22600,7 +22600,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="flex items-center gap-2">
           <button id="advisorHomeOpenDossierBtn" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white text-xs font-bold shadow-lg transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>📜</span>
-            <span>${isEn ? 'Inspect Imperial Dossier' : '开启皇家九卷御览'}</span>
+            <span>${isEn ? 'Inspect Imperial Dossier' : '开启皇家七卷御览'}</span>
           </button>
         </div>
       </div>
@@ -25128,7 +25128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       printBtnEl.textContent = isEn ? 'System Print / Save as PDF' : '系统打印 / 另存为 PDF';
     }
     if (downloadBtnEl) {
-      downloadBtnEl.textContent = isEn ? 'Direct Download 9-Page PDF' : '直接下载 9 页 PDF 文件';
+      downloadBtnEl.textContent = isEn ? 'Direct Download 7-Page PDF' : '直接下载 7 页 PDF 文件';
     }
     if (downloadSingleBtnEl) {
       downloadSingleBtnEl.textContent = isEn ? 'Export Page 1 PDF' : '导出卷首单页 PDF';
@@ -25215,7 +25215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
 
     showDossierStatus(
-      isEn ? '⏳ Compiling 9-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 9 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
+      isEn ? '⏳ Compiling 7-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 7 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
       'info'
     );
 
@@ -25243,7 +25243,7 @@ document.addEventListener('DOMContentLoaded', () => {
             orientation: 'portrait'
           },
           pagebreak: {
-            mode: [] // Pure 9-page continuous A4 rendering without spurious spacer injections
+            mode: [] // Pure 7-page continuous A4 rendering without spurious spacer injections
           }
         };
 
@@ -26696,7 +26696,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
               <span class="text-[10px] text-amber-950 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · REFLECTION GUIDE' : '天机御览 · 卷首总目与自省导引'}</span>
             </div>
             <h1 class="text-lg sm:text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首总目'}</h1>
-            <p class="text-[10px] text-amber-900 font-serif-sc">${isEn ? 'Master Thematic Directory & Epistemic Reflection Guide Across Imperial Volumes' : '天机御览总目 · 命盘反思导引与钦天八卷直达导航'}</p>
+            <p class="text-[10px] text-amber-900 font-serif-sc">${isEn ? 'Master Thematic Directory & Epistemic Reflection Guide Across 7 Imperial Volumes' : '天机御览总目 · 命盘反思导引与钦天七卷直达导航'}</p>
           </div>
 
           <!-- Subject Quick Metadata Banner -->
@@ -26734,9 +26734,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
             </div>
           </div>
 
-          <!-- Quick Navigation Bar -->
+          <!-- Quick Navigation Bar (6 Pages P2-P7) -->
           <div class="imperial-toc-nav bg-gradient-to-r from-amber-950/10 via-amber-900/5 to-amber-950/10 border border-amber-900/30 rounded px-2 py-0.5 text-[9px] font-serif-sc shadow-xs">
-            <div class="grid grid-cols-4 gap-1 text-[8.5px] text-center">
+            <div class="grid grid-cols-6 gap-1 text-[8.5px] text-center">
               <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
                 <span class="font-bold text-amber-900 mr-0.5">P2</span>${isEn ? 'Decision Blueprint' : '卷首·核心决策'}
               </a>
@@ -26747,24 +26747,18 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
                 <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? '1-2y Roadmap' : '卷一·未来两年'}
               </a>
               <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Pareto Strategy' : '卷二·格局兵法'}
+                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Pareto & Network' : '卷二·兵法协作'}
               </a>
               <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Interpersonal Network' : '卷三·人际协作'}
+                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Zen Mindset' : '卷三·禅道心智'}
               </a>
               <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Zen Mindset' : '卷四·禅道心智'}
-              </a>
-              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P8</span>${isEn ? 'Geo Feng Shui' : '卷五·岁运地缘'}
-              </a>
-              <a href="#imperialPage9" onclick="jumpToImperialPage('imperialPage9'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P9</span>${isEn ? 'Workplace Archetypes' : '卷六·职场实操'}
+                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Workplace Archetypes' : '卷四·职场实操'}
               </a>
             </div>
           </div>
 
-          <!-- Structured 8-Scroll Thematic Directory Cards Grid -->
+          <!-- Structured 6-Scroll Thematic Directory Cards Grid -->
           <div class="grid grid-cols-2 gap-1.5 font-serif-sc">
             <!-- Scroll 1 / Page 2 -->
             <div onclick="jumpToImperialPage('imperialPage2'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
@@ -26805,69 +26799,43 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Annual Hexagram: ' : '易数决策：'}</b>${isEn ? 'I-Ching annual hexagram decision guidance' : '当年值年卦经纶与行动取舍指引'}</p>
             </div>
 
-            <!-- Scroll 4 / Page 5 -->
+            <!-- Scroll 4 / Page 5 (Merged Pareto Strategy & Interpersonal Support) -->
             <div onclick="jumpToImperialPage('imperialPage5'); return false;" class="imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
                   <span>⚔️</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll IV · Pareto Strategy' : '卷二 · 格局兵法与二八关键'}</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll IV · Pareto & Network' : '卷二 · 兵法战略与人际协作'}</span>
                 </span>
                 <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P5</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Dominant Pattern: ' : '统帅格局：'}</b>${domPat} (${domTier})</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Middleware Logic: ' : '推导逻辑：'}</b>${isEn ? 'Xu Lewu Canonical Decision Middleware' : '格局推演白话逻辑桥梁与取用决策'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Pareto Pivot: ' : '战略胜负手：'}</b>${domPat} (${domTier}) · ${isEn ? 'Xu Lewu Middleware' : '子平具象取用'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Interpersonal Network: ' : '人际防波堤：'}</b>${isEn ? 'Emotional ballast, partner firewalls & adult boundaries' : '情感压舱石、刚性合伙权责与成人边界'}</p>
             </div>
 
-            <!-- Scroll 5 / Page 6 -->
-            <div onclick="jumpToImperialPage('imperialPage6'); return false;" class="imperial-card imperial-card-rose p-1.5 text-xs space-y-0.5 hover:border-rose-600 transition cursor-pointer group">
-              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
-                <span class="flex items-center gap-1 text-[10.5px]">
-                  <span>🤝</span>
-                  <span class="group-hover:text-rose-900 transition">${isEn ? 'Scroll V · Interpersonal Network' : '卷三 · 人际协作与支持网络'}</span>
-                </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-rose-100 text-rose-950 border border-rose-400">P6</span>
-              </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Intimate Dynamics: ' : '亲密关系：'}</b>${isEn ? 'Emotional ballast & communication traps' : '情感防波堤动力学与沟通易错盲区'}</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Allies & Firewalls: ' : '贵人与合伙：'}</b>${isEn ? 'Mentor vetting, partner firewalls & boundaries' : '真假贵人鉴别、合伙防坑与成人边界'}</p>
-            </div>
-
-            <!-- Scroll 6 / Page 7 -->
-            <div onclick="jumpToImperialPage('imperialPage7'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
+            <!-- Scroll 5 / Page 6 (Zen Mindset & Rong Ku Jian) -->
+            <div onclick="jumpToImperialPage('imperialPage6'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
                   <span>🧘</span>
-                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll VI · Zen Mindset & Codex' : '卷四 · 禅道心智与认知脱敏'}</span>
+                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll V · Zen Mindset & Codex' : '卷三 · 禅道心智与处世保全'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-400">P7</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-400">P6</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'De-biasing Shields: ' : '内耗破执：'}</b>${isEn ? 'Diamond Sutra, Platform Sutra & Zhuangzi' : '《金刚经》《坛经》《庄子》三大解脱心法'}</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Survival Codex: ' : '处世保全：'}</b>${isEn ? "Prime Minister Feng Dao's Rong Ku Jian" : '五代权相冯道《荣枯鉴》职场生存法门'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Trinity Mindset: ' : '三经破执：'}</b>${isEn ? 'Diamond Sutra, Platform Sutra & Zhuangzi practical protocols' : '金刚经破相、坛经断妄断念、庄子避实就虚'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Survival Codex: ' : '处世保全：'}</b>${isEn ? "Prime Minister Feng Dao's Rong Ku Jian 10 Scrolls" : '五代权相冯道《荣枯鉴》三大刚性职场防身法则'}</p>
             </div>
 
-            <!-- Scroll 7 / Page 8 -->
-            <div onclick="jumpToImperialPage('imperialPage8'); return false;" class="imperial-card imperial-card-gold p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
-              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
-                <span class="flex items-center gap-1 text-[10.5px]">
-                  <span>🧭</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VII · Decennial & Geo' : '卷五 · 岁运十四字与地缘风水'}</span>
-                </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P8</span>
-              </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? '14-Char Dynamic: ' : '十四字气机：'}</b>${isEn ? 'Natal, decennial & annual synthesis' : '原局岁运十四字气机全场统筹'}</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Spatial Remedies: ' : '地缘风水：'}</b>${cityCityDisplay} · ${cityGradeDisplay}</p>
-            </div>
-
-            <!-- Scroll 8 / Page 9 -->
-            <div onclick="jumpToImperialPage('imperialPage9'); return false;" class="imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
+            <!-- Scroll 6 / Page 7 (Workplace Archetypes & Auspicious Seal) -->
+            <div onclick="jumpToImperialPage('imperialPage7'); return false;" class="imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
                   <span>💼</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VIII · Workplace Archetypes' : '卷六 · 职场实操原型与终身宝印'}</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VI · Workplace & Seal' : '卷四 · 职场实操与终身宝印'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P9</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P7</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Execution Pilot: ' : '实战择位：'}</b>${isEn ? 'Workplace archetypes with low-cost pilot actions' : '职场四大实战原型与低成本验证'}</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Auspicious Seal: ' : '终身宝印：'}</b>${isEn ? 'Four major auspicious deities & official seal' : '四大吉神照命与钦天监御制终身宝印'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Career Archetypes: ' : '实操择位：'}</b>${isEn ? 'Upward alignment, peer firewalls & execution pilots' : '向上管理心智、同僚护城河与低成本验证'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Lifelong Matrix: ' : '百岁宏图：'}</b>${isEn ? 'Five grand phases, four deities & imperial seal' : '百岁五阶段、四大吉神照命与钦天监宝印'}</p>
             </div>
           </div>
 
@@ -26879,9 +26847,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
             </div>
             <div class="relative pt-0.5 min-h-[40px]">
               <div class="space-y-0.5 text-[9.5px] text-amber-950 leading-tight" style="padding-right: 30mm;">
-                <p>${isEn ? '1. Ground in Decision Stance: Begin with Page 2 to clarify whether to hold steady, switch jobs, study, or venture into new opportunities.' : '一、以现实抉择立基：先阅卷首攻守定向与认知避坑，弄清当下适合守成、跳槽、进修还是拓荒，明确低成本试错动作。'}</p>
-                <p>${isEn ? '2. Anchor to Near-Term Timing: Focus on the 1-2 year action roadmap on Page 4 to prepare before temporal inflection windows arrive.' : '二、以近两年时机为纲：精研卷一未来1~2年时序节律与筹备清单，兵马未动粮草先行，不打无准备之仗。'}</p>
-                <p>${isEn ? '3. Fortify Self & Boundaries: Use Zen-Dao de-biasing on Page 7 and interpersonal firewalls on Page 6 to maintain long-term sovereignty.' : '三、以内修外防固本：依卷四禅道破相化解内耗焦虑，依卷三人际网络筑牢边界防波堤，知行合一，立于不败之地。'}</p>
+                <p>${isEn ? '1. Ground in Decision Stance: Begin with Page 2 to clarify whether to hold steady, switch jobs, study, or venture into new opportunities.' : '一、以现实抉择立基：先阅卷首三要（第2页）明确攻守定向与低成本试水动作。'}</p>
+                <p>${isEn ? '2. Anchor to Near-Term Timing: Focus on the 1-2 year action roadmap on Page 4 to prepare before temporal inflection windows arrive.' : '二、以近两年时机为纲：精研卷一未来1~2年时序节律与筹备清单（第4页），兵马未动粮草先行。'}</p>
+                <p>${isEn ? '3. Fortify Strategy & Mind: Anchor to Pareto strategy & networks on Page 5 and Zen de-biasing & Rong Ku Jian on Page 6.' : '三、以兵法禅道固本：依卷二二八战略与人际防线（第5页）、卷三禅道心智与处世保全（第6页）知行合一。'}</p>
               </div>
               <div class="imperial-seal-square ${isEn ? 'is-en' : ''}" title="${isEn ? 'Imperial Rescript' : '钦天御批'}">
                 ${isEn ? 'IMPERIAL<br>RESCRIPT' : '钦天<br>御批'}
@@ -26892,7 +26860,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Master Table of Contents' : '大明/大清钦天监 · 卷首 目录总目与自省导引'}</span>
-            <span>Page 1 / 9</span>
+            <span>Page 1 / 7</span>
           </div>
         </div>
       </div>
@@ -27039,7 +27007,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Master Executive Summary' : '大明/大清钦天监 · 卷首 核心决策导向与生命蓝图'}</span>
-            <span>Page 2 / 9</span>
+            <span>Page 2 / 7</span>
           </div>
         </div>
       </div>
@@ -27129,9 +27097,19 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           </div>
 
           <!-- Section 1: Personality Traits & Historical Feats -->
-          <div class="imperial-card p-2 text-xs space-y-0.5 font-serif-sc text-gray-800">
-            <p class="leading-snug"><b>${isEn ? 'Personality Traits: ' : '性格心性特质：'}</b>${isEn ? topMatch.personalityEn : topMatch.personalityZh}</p>
-            <p class="leading-snug"><b>${isEn ? 'Historical Feats: ' : '生平关键立功事迹：'}</b>${isEn ? topMatch.deedsEn : topMatch.deedsZh}</p>
+          <div class="imperial-card p-2 space-y-1 font-serif-sc text-gray-800">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <span class="font-bold text-amber-950 text-[10px] flex items-center gap-1">
+                <span>🏛️</span>
+                <span>${isEn ? 'Soul Archetype Profile & Historical Feats' : '先贤心性气象与生平丰功纪略'}</span>
+              </span>
+              <span class="imperial-seal-stamp text-[8px] py-0 px-1">${isEn ? 'CHRONICLE' : '丰碑本纪'}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-1 text-[8.5px] font-sans">
+              <span class="font-bold text-amber-950 font-serif-sc">${isEn ? 'Personality Traits:' : '性格心性特质：'}</span>
+              ${(isEn ? (topMatch.personalityEn || '') : (topMatch.personalityZh || '')).split(/[、,，]/).filter(Boolean).map(t => `<span class="px-1.5 py-0.2 rounded bg-amber-100/90 text-amber-950 border border-amber-800/30 font-medium text-[8px]">${t.trim()}</span>`).join('')}
+            </div>
+            <p class="leading-snug text-[8.5px] text-gray-700 font-sans pt-0.5"><b class="text-amber-950 font-serif-sc">${isEn ? 'Historical Feats: ' : '生平关键立功事迹：'}</b>${isEn ? topMatch.deedsEn : topMatch.deedsZh}</p>
           </div>
 
           <!-- Section 2: Dual Strategic Columns -->
@@ -27219,7 +27197,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Historical Soul Mirror Prologue' : '大明/大清钦天监 · 卷首附卷 历史照命'}</span>
-            <span>Page 3 / 9</span>
+            <span>Page 3 / 7</span>
           </div>
         </div>
       </div>
@@ -27408,12 +27386,12 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Volume I: Transits & Action Roadmap' : '大明/大清钦天监 · 卷一 未来1-2年时机节律与行动筹备表'}</span>
-            <span>Page 4 / 9</span>
+            <span>Page 4 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 5: Volume I - 80/20 Grand Picture Pareto Strategy -->
+      <!-- Page 5: Volume II - 80/20 Grand Picture Pareto Strategy & Interpersonal Collaboration Safeguards -->
       <div id="imperialPage5" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
@@ -27426,69 +27404,183 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         <div class="imperial-watermark">${watermarkText}</div>
 
         <div class="imperial-frame flex flex-col justify-between p-4 sm:p-5 space-y-1.5">
-          <div class="border-b-2 border-amber-900/60 pb-1.5 flex items-center justify-between">
-            <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume I: 80/20 Grand Picture Pareto Strategy' : '卷二 · 八经全相 80/20 关键枢纽战略战法 (立命定调与胜负大药)'}</h2>
-            <span class="imperial-seal-stamp">${isEn ? 'STRATEGIC PIVOT' : '全盘胜负手'}</span>
-          </div>
-
-          <!-- Outline of Grand Picture with Plain Language Derivation -->
-          <div class="imperial-card imperial-card-gold p-2 space-y-1 text-xs text-gray-800 font-serif-sc">
-            <div class="flex items-center justify-between">
-              <h3 class="font-bold text-amber-950 text-[11px]">${isEn ? 'I. Grand Archetype & Derivation Logic' : '一、命盘大局总相与白话推导逻辑桥梁'}</h3>
-              <span class="text-[8.5px] font-mono text-amber-900">${domPat} · ${domTier}</span>
-            </div>
-            <p class="leading-relaxed text-[9.5px] font-sans">${isEn ? (gp.thesisEn || gp.thesis || '') : (gp.thesisZh || gp.thesis || '')}</p>
-            ${gp.patternAnalysis ? `
-            <div class="pt-1 text-[9.5px] border-t border-amber-900/20 text-gray-700 leading-normal font-sans">
-              <span class="font-bold text-amber-900">${isEn ? 'Pareto 80/20 Mandate:' : '二八法则实战定论:'}</span> ${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion || '') : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion || '')}
-            </div>
-            ` : ''}
-          </div>
-
-          <!-- Strategic Pivot / Medicine of Chart & Xu Lewu Decision Middleware -->
-          <div class="imperial-card imperial-card-accent p-2 space-y-1 text-xs text-gray-800 font-serif-sc">
-            <h3 class="font-bold text-amber-950 text-[11px]">${isEn ? 'II. Strategic Breakthrough & 20% Pareto Lever' : '二、生杀破局与战略胜负手 (20% 关键抓手)'}</h3>
-            <p class="leading-relaxed text-[9.5px] font-sans">${isEn ? (gp.campaignEn || gp.campaign || '') : (gp.campaignZh || gp.campaign || '')}</p>
-            ${xuDossierEx ? `
-            <div class="mt-1 p-1.5 rounded bg-amber-50/85 border border-amber-800/30 text-[9px] leading-relaxed font-sans">
-              <div class="flex items-center justify-between font-bold text-amber-950 mb-0.5 font-serif-sc">
-                <span class="flex items-center gap-1"><span>📜</span><span>${isEn ? 'Xu Lewu Canonical Decision Middleware:' : '徐乐吾《子平真诠评注》具象取用决策中间件：'}</span></span>
-                <span class="text-[8px] px-1.5 py-0.1 rounded bg-amber-100 text-amber-900 font-mono">${isEn ? (xuDossierEx.isVigorous ? 'Vigorous Day Master' : 'Delicate Day Master') : (xuDossierEx.isVigorous ? '身旺取用' : '身弱扶抑')}</span>
+          <!-- Page Header -->
+          <div class="border-b-2 border-amber-900/60 pb-1 flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-base">⚔️</span>
+                <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume II: 80/20 Grand Pareto Strategy & Interpersonal Support System' : '卷二 · 80/20 关键枢纽战略与人际协作防护体系'}</h2>
               </div>
-              <p class="text-gray-800"><b>${isEn ? 'Seasonal Taking: ' : '提纲取用：'}</b>${isEn ? xuDossierEx.abstractRuleEn : xuDossierEx.abstractRuleZh}</p>
-              <p class="text-amber-900 mt-0.5"><b>${isEn ? 'Concrete Exegesis: ' : '实操断语：'}</b>${isEn ? xuDossierEx.finetunedRuleEn : xuDossierEx.finetunedRuleZh}</p>
+              <p class="text-[9px] text-amber-900 font-serif-sc mt-0.5">${isEn ? 'Dual Pillars: 20% Strategic Lever · Canonical Taking · Interpersonal Ballast · Rigid Responsibility Charter' : '双翼兼修：立命定调与胜负大药 · 子平取用决策 · 情感压舱石 · 刚性权责分配法则'}</p>
             </div>
-            ` : ''}
+            <span class="imperial-seal-stamp text-[9px] py-0.5 px-2">${isEn ? 'STRATEGY & ALLIANCES' : '全盘胜负手'}</span>
           </div>
 
-          <!-- Spatial Environment Resonance -->
-          <div class="imperial-card imperial-card-emerald p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
-            <h3 class="font-bold text-amber-950 text-[11px]">${isEn ? 'III. Era Dynamics & Spatial Resonance' : '三、时代大潮与物理空间地缘场能共振'}</h3>
-            <p class="leading-relaxed text-[9.5px] font-sans">${isEn ? (gp.eraEn || gp.era || '') : (gp.eraZh || gp.era || '')}</p>
-          </div>
-
-          <!-- Lifelong 3 Cardinal Rules -->
-          <div class="imperial-card imperial-card-gold p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
-            <h3 class="font-bold text-amber-950 text-[11px]">${isEn ? 'IV. Three Lifelong Invariant Directives' : '四、立身处世终身三大铁律'}</h3>
-            <div class="space-y-0.5 text-[9px] font-sans">
-              ${((isEn ? (gp.rulesEn || gp.rules) : (gp.rulesZh || gp.rules)) || []).map((r, idx) => `
-                <div class="flex gap-1.5 leading-snug">
-                  <span class="font-bold text-amber-900 font-mono">${idx + 1}.</span>
-                  <span><b>${r.label || r.labelZh || ''}</b>: ${r.desc || r.descZh || ''}</span>
+          <!-- Two-Column Grid: Left Strategy | Right Interpersonal Networks -->
+          <div class="grid grid-cols-2 gap-2 text-xs font-serif-sc">
+            <!-- LEFT COLUMN: 80/20 Grand Picture Pareto Strategy -->
+            <div class="space-y-1.5 flex flex-col justify-between">
+              <!-- Module 1: Grand Archetype & Derivation Logic -->
+              <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+                  <h3 class="font-bold text-amber-950 text-[10px] flex items-center gap-1">
+                    <span>👑</span>
+                    <span>${isEn ? 'I. Grand Archetype & Derivation' : '一、命盘大局总相与推导逻辑'}</span>
+                  </h3>
+                  <span class="text-[7.5px] font-mono text-amber-900 px-1 py-0.1 rounded bg-amber-100">${domPat} · ${domTier}</span>
                 </div>
-              `).join('')}
+                <p class="leading-tight text-[8.5px] font-sans">${isEn ? (gp.thesisEn || gp.thesis || '') : (gp.thesisZh || gp.thesis || '')}</p>
+                ${gp.patternAnalysis ? `
+                <div class="pt-0.5 text-[8px] border-t border-amber-900/10 text-gray-700 leading-tight font-sans">
+                  <span class="font-bold text-amber-900">${isEn ? 'Pareto Mandate: ' : '二八实战定论：'}</span>${isEn ? (gp.patternAnalysis.paretoConclusionEn || gp.patternAnalysis.paretoConclusion || '') : (gp.patternAnalysis.paretoConclusionZh || gp.patternAnalysis.paretoConclusion || '')}
+                </div>
+                ` : ''}
+              </div>
+
+              <!-- Module 2: Strategic Breakthrough & Xu Lewu Middleware -->
+              <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+                  <h3 class="font-bold text-amber-950 text-[10px] flex items-center gap-1">
+                    <span>⚡</span>
+                    <span>${isEn ? 'II. Strategic Lever & Canonical Taking' : '二、生杀破局与战略胜负手'}</span>
+                  </h3>
+                  <span class="text-[7.5px] font-mono text-amber-900 px-1 py-0.1 rounded bg-amber-100">${isEn ? '20% LEVER' : '20%关键抓手'}</span>
+                </div>
+                <p class="leading-tight text-[8.5px] font-sans">${isEn ? (gp.campaignEn || gp.campaign || '') : (gp.campaignZh || gp.campaign || '')}</p>
+                ${xuDossierEx ? `
+                <div class="mt-0.5 p-1 rounded bg-amber-50/90 border border-amber-800/30 text-[8px] leading-tight font-sans space-y-0.5">
+                  <div class="flex items-center justify-between font-bold text-amber-950 font-serif-sc">
+                    <span>📜 ${isEn ? 'Xu Lewu Decision Middleware:' : '徐乐吾《评注》具象取用：'}</span>
+                    <span class="text-[7.5px] px-1 py-0.1 rounded bg-amber-100 text-amber-900 font-mono">${isEn ? (xuDossierEx.isVigorous ? 'Vigorous' : 'Delicate') : (xuDossierEx.isVigorous ? '身旺取用' : '身弱扶抑')}</span>
+                  </div>
+                  <p class="text-gray-800"><b>${isEn ? 'Seasonal: ' : '提纲取用：'}</b>${isEn ? xuDossierEx.abstractRuleEn : xuDossierEx.abstractRuleZh}</p>
+                  <p class="text-amber-900"><b>${isEn ? 'Exegesis: ' : '实操断语：'}</b>${isEn ? xuDossierEx.finetunedRuleEn : xuDossierEx.finetunedRuleZh}</p>
+                </div>
+                ` : ''}
+              </div>
+
+              <!-- Module 3: Era Dynamics & Spatial Resonance -->
+              <div class="imperial-card imperial-card-emerald p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between border-b border-emerald-900/15 pb-0.5">
+                  <h3 class="font-bold text-emerald-950 text-[10px] flex items-center gap-1">
+                    <span>🌐</span>
+                    <span>${isEn ? 'III. Era Dynamics & Spatial Field' : '三、时代大潮与空间场能共振'}</span>
+                  </h3>
+                  <span class="text-[7.5px] font-mono text-emerald-900 px-1 py-0.1 rounded bg-emerald-100">${isEn ? 'PERIOD 9' : '九运大势'}</span>
+                </div>
+                <p class="leading-tight text-[8.5px] font-sans text-gray-700">${isEn ? (gp.eraEn || gp.era || '') : (gp.eraZh || gp.era || '')}</p>
+              </div>
+
+              <!-- Module 4: Three Lifelong Invariant Directives -->
+              <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+                  <h3 class="font-bold text-amber-950 text-[10px] flex items-center gap-1">
+                    <span>🛡️</span>
+                    <span>${isEn ? 'IV. Three Lifelong Invariant Directives' : '四、立身处世终身三大铁律'}</span>
+                  </h3>
+                  <span class="text-[7.5px] font-mono text-amber-900 px-1 py-0.1 rounded bg-amber-100">${isEn ? 'IRON RULES' : '刚性戒律'}</span>
+                </div>
+                <div class="space-y-0.5 text-[8px] font-sans">
+                  ${((isEn ? (gp.rulesEn || gp.rules) : (gp.rulesZh || gp.rules)) || []).map((r, idx) => `
+                    <div class="flex gap-1 leading-tight">
+                      <span class="font-bold text-amber-900 font-mono">${idx + 1}.</span>
+                      <span><b>${r.label || r.labelZh || ''}</b>: ${r.desc || r.descZh || ''}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Interpersonal Collaboration & Support Networks -->
+            <div class="space-y-1.5 flex flex-col justify-between">
+              <!-- Module 1: Intimate Partnership Dynamics -->
+              <div class="imperial-card imperial-card-rose p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between font-bold text-rose-950 border-b border-rose-900/15 pb-0.5">
+                  <span class="flex items-center gap-1 text-[10px]">
+                    <span>💍</span>
+                    <span>${interpersonalSupport.intimate.title}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-rose-100 text-rose-950 border border-rose-300 font-mono">
+                    ${isEn ? 'BALLAST' : '情感压舱石'}
+                  </span>
+                </div>
+                <p class="text-[8.5px] leading-tight font-sans text-gray-800">${interpersonalSupport.intimate.model}</p>
+                <div class="p-1 rounded bg-rose-50/90 border border-rose-600/20 text-[8px] text-rose-950 leading-tight font-sans">
+                  ${interpersonalSupport.intimate.blindspot}
+                </div>
+              </div>
+
+              <!-- Module 2: Equitable Collaboration & Responsibility Allocation Charter -->
+              <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                  <span class="flex items-center gap-1 text-[10px]">
+                    <span>⚖️</span>
+                    <span>${interpersonalSupport.charter.title}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-amber-100 text-amber-950 border border-amber-400 font-mono">
+                    ${isEn ? 'RIGID CHARTER' : '刚性权责'}
+                  </span>
+                </div>
+                <div class="space-y-0.5 text-[8px] leading-tight font-sans">
+                  <div class="p-1 rounded bg-white/75 border border-amber-900/10">
+                    <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule1}</p>
+                  </div>
+                  <div class="p-1 rounded bg-white/75 border border-amber-900/10">
+                    <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule2}</p>
+                  </div>
+                  <div class="p-1 rounded bg-white/75 border border-amber-900/10">
+                    <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule3}</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 3: Professional Mentorship & Boundary Firewalls -->
+              <div class="imperial-card imperial-card-emerald p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between font-bold text-emerald-950 border-b border-emerald-900/15 pb-0.5">
+                  <span class="flex items-center gap-1 text-[10px]">
+                    <span>🤝</span>
+                    <span>${interpersonalSupport.allies.title}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-emerald-100 text-emerald-950 border border-emerald-300 font-mono">
+                    ${isEn ? 'FIREWALL' : '贵人与防火墙'}
+                  </span>
+                </div>
+                <p class="text-[8.5px] leading-tight font-sans text-gray-800">${interpersonalSupport.allies.mentor}</p>
+                <div class="p-1 rounded bg-emerald-50/90 border border-emerald-600/20 text-[8px] text-emerald-950 leading-tight font-sans">
+                  ${interpersonalSupport.allies.firewall}
+                </div>
+              </div>
+
+              <!-- Module 4: Family Heritage Dynamics & Adult Boundaries -->
+              <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                  <span class="flex items-center gap-1 text-[10px]">
+                    <span>🏛️</span>
+                    <span>${interpersonalSupport.family.title}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-amber-100 text-amber-950 border border-amber-300 font-mono">
+                    ${isEn ? 'BOUNDARIES' : '成人边界'}
+                  </span>
+                </div>
+                <p class="text-[8.5px] leading-tight font-sans text-gray-800">${interpersonalSupport.family.boundary}</p>
+              </div>
+
+              <!-- Module 5: Natal Astrological Rationale -->
+              <div class="p-1 rounded bg-amber-50/80 border border-amber-900/20 text-[8px] leading-tight font-sans text-amber-950">
+                ${interpersonalSupport.rationale}
+              </div>
             </div>
           </div>
 
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 2' : '大明/大清钦天监 · 卷二'}</span>
-            <span>Page 5 / 9</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 2: Strategy & Support' : '大明/大清钦天监 · 卷二 关键枢纽战略与人际协作防护体系'}</span>
+            <span>Page 5 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 6: Volume III - Interpersonal Collaboration & External Support System -->
+      <!-- Page 6: Volume III - Zen & Dao Trinity Mindset & Rong Ku Jian Survival Codex (Expanded with Real Examples & Core Essence) -->
       <div id="imperialPage6" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
@@ -27501,97 +27593,157 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         <div class="imperial-watermark">${watermarkText}</div>
 
         <div class="imperial-frame flex flex-col justify-between p-4 sm:p-5 space-y-1.5">
-          <div class="border-b-2 border-amber-900/60 pb-1.5 flex items-center justify-between">
-            <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume III: Interpersonal Collaboration & External Support System' : '卷三 · 人际协作、外部支撑网络与防波堤系统'}</h2>
-            <span class="imperial-seal-stamp">${isEn ? 'COLLABORATION' : '和合共荣'}</span>
+          <!-- Page Header -->
+          <div class="border-b-2 border-amber-900/60 pb-1 flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-base">🧘</span>
+                <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume III: Zen & Dao Trinity Mindset & Rong Ku Jian Survival Codex' : '卷三 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典'}</h2>
+              </div>
+              <p class="text-[9px] text-amber-900 font-serif-sc mt-0.5">${isEn ? 'Three Canons of Liberation & Feng Dao Ten Scrolls: Real Dilemmas, Concrete Protocols & Survival Precedents' : '三经解脱与冯道十卷：针对内耗病灶 · 现实案例与实操解法 · 真实历史镜鉴'}</p>
+            </div>
+            <span class="imperial-seal-stamp text-[9px] py-0.5 px-2">${isEn ? 'MIND & SURVIVAL' : '心智保全'}</span>
           </div>
 
-          <!-- Module 1: Intimate Partnership Dynamics -->
-          <div class="imperial-card imperial-card-rose p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[10.5px]">
-                <span>💍</span>
-                <span>${interpersonalSupport.intimate.title}</span>
-              </span>
-              <span class="text-[8px] px-1.5 py-0.2 rounded bg-rose-100 text-rose-950 border border-rose-300 font-mono">
-                ${isEn ? 'EMOTIONAL BALLAST' : '情感压舱石'}
-              </span>
-            </div>
-            <p class="text-[9px] leading-snug font-sans">${interpersonalSupport.intimate.model}</p>
-            <div class="p-1 rounded bg-rose-50/80 border border-rose-600/20 text-[8.5px] text-rose-950 leading-tight font-sans">
-              ${interpersonalSupport.intimate.blindspot}
-            </div>
-          </div>
-
-          <!-- Module 2: Equitable Collaboration & Responsibility Allocation Charter -->
-          <div class="imperial-card imperial-card-gold p-2 space-y-1 text-xs text-gray-800 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[10.5px]">
-                <span>⚖️</span>
-                <span>${interpersonalSupport.charter.title}</span>
-              </span>
-              <span class="text-[8px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400 font-mono">
-                ${isEn ? 'RIGID CHARTER' : '刚性法则'}
-              </span>
-            </div>
-            <div class="space-y-1 text-[8.5px] leading-tight font-sans">
-              <div class="p-1 rounded bg-white/75 border border-amber-900/10">
-                <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule1}</p>
+          <!-- Top Banner: Psychological Diagnostic & Sovereign Mindset Decree -->
+          ${zen && zen.diagnostic ? `
+            <div class="p-1.5 bg-amber-100/90 rounded border border-amber-900/40 text-[8.5px] leading-tight space-y-0.5">
+              <div class="flex items-center justify-between font-bold text-amber-950">
+                <span class="flex items-center gap-1">
+                  <span>🧠</span>
+                  <span>${isEn ? 'Psychological Diagnostic: ' + (zen.diagnostic.archetypeEn || zen.diagnostic.archetype) : '本命精神心理深度诊断：' + (zen.diagnostic.archetypeZh || zen.diagnostic.archetype)}</span>
+                </span>
+                <span class="text-red-900 font-bold">${isEn ? 'Primary Antidote: ' + (zen.diagnostic.primaryCanonTitleEn || zen.diagnostic.primaryCanonTitle) : '第一救应主药：' + (zen.diagnostic.primaryCanonTitleZh || zen.diagnostic.primaryCanonTitle)}</span>
               </div>
-              <div class="p-1 rounded bg-white/75 border border-amber-900/10">
-                <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule2}</p>
-              </div>
-              <div class="p-1 rounded bg-white/75 border border-amber-900/10">
-                <p class="text-amber-950 font-bold">${interpersonalSupport.charter.rule3}</p>
+              <p class="text-gray-800 font-sans">${isEn ? (zen.diagnostic.stateAnalysisEn || zen.diagnostic.stateAnalysis) : (zen.diagnostic.stateAnalysisZh || zen.diagnostic.stateAnalysis)}</p>
+              <div class="pt-0.5 text-gray-900 font-bold border-t border-amber-900/20 flex items-center justify-between font-sans">
+                <span><span class="text-amber-900">${isEn ? 'Decree: ' : '钦天监心智令：'}</span>${isEn ? (zen.diagnostic.decreeEn || zen.diagnostic.decree) : (zen.diagnostic.decreeZh || zen.diagnostic.decree)}</span>
               </div>
             </div>
-          </div>
+          ` : ''}
 
-          <!-- Module 3: Professional Mentorship & Boundary Firewalls -->
-          <div class="imperial-card imperial-card-emerald p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[10.5px]">
-                <span>🤝</span>
-                <span>${interpersonalSupport.allies.title}</span>
-              </span>
-              <span class="text-[8px] px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-300 font-mono">
-                ${isEn ? 'MENTORSHIP & FIREWALL' : '贵人与防火墙'}
-              </span>
-            </div>
-            <p class="text-[9px] leading-snug font-sans">${interpersonalSupport.allies.mentor}</p>
-            <div class="p-1 rounded bg-emerald-50/80 border border-emerald-600/20 text-[8.5px] text-emerald-950 leading-tight font-sans">
-              ${interpersonalSupport.allies.firewall}
-            </div>
-          </div>
+          <!-- Two-Column Grid: Left Zen Trinity | Right Feng Dao Rong Ku Jian -->
+          <div class="grid grid-cols-2 gap-2 text-xs font-serif-sc">
+            <!-- LEFT COLUMN: Zen & Dao Trinity Mindset -->
+            <div class="space-y-1 flex flex-col justify-between">
+              <!-- Diamond Sutra -->
+              <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between pb-0.5 border-b border-amber-900/15">
+                  <span class="font-bold text-amber-950 text-[9.5px] flex items-center gap-1">
+                    <span>💎</span>
+                    <span>${isEn ? 'The Diamond Sutra: De-Biasing & Formlessness' : '《金刚经》：破“相”之执 · 应无所住而生其心'}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-amber-200 text-amber-950 font-bold font-mono">${isEn ? 'Anti-Anxiety Shield' : '焦虑脱敏盾'}</span>
+                </div>
+                <p class="font-bold text-red-900 text-[8px] leading-tight">${isEn ? '“All conditioned forms are illusory. Seeing all forms as non-forms, one perceives the True Self. Arouse the mind without resting on any clinging.”' : '“凡所有相，皆是虚妄。若见诸相非相，则见如来。应无所住而生其心。一切有为法，如梦幻泡影，如露亦如电，应作如是观。”'}</p>
+                <p class="text-[8px] text-gray-700 leading-tight font-sans">${isEn ? (zen && zen.diamond && zen.diamond.mindsetAnalysisEn ? zen.diamond.mindsetAnalysisEn : 'Mental friction stems from clinging to forms—perfectionist ego and catastrophe fantasy.') : (zen && zen.diamond && zen.diamond.mindsetAnalysisZh ? zen.diamond.mindsetAnalysisZh : '内耗病根在于执相：潜意识执着于“我必须完美无瑕”、“外界都在苛责审判我”，交感神经在颅内自编自导恐慌电影。随时以诸相非相照破。')}</p>
+                <div class="p-1 rounded bg-amber-50/90 border border-amber-900/15 text-[8px] text-amber-950 leading-tight font-sans">
+                  <b>🎯 ${isEn ? 'Practical Protocol (Formless De-biasing): ' : '现实痛点破局【破相照空法】：'}</b>${isEn ? (zen && zen.diamond && zen.diamond.practicalPracticeEn ? zen.diamond.practicalPracticeEn : 'Decouple raw facts from narrative drama: write facts on one side, fearful projections on the other, extinguishing cognitive looping instantly.') : (zen && zen.diamond && zen.diamond.practicalPracticeZh ? zen.diamond.practicalPracticeZh : '面对项目受阻、上级质疑或自我怀疑时，在纸上画两栏，左栏写“客观物理事实”，右栏写“脑海编造的恐慌故事”。将事实与故事彻底解耦，故事归虚妄，事实做微调，瞬间脱敏止耗。')}
+                </div>
+              </div>
 
-          <!-- Module 4: Family Heritage Dynamics & Adult Boundary Governance -->
-          <div class="imperial-card imperial-card-accent p-2 space-y-0.5 text-xs text-gray-800 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/20 pb-0.5">
-              <span class="flex items-center gap-1.5 text-[10.5px]">
-                <span>🏛️</span>
-                <span>${interpersonalSupport.family.title}</span>
-              </span>
-              <span class="text-[8px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-300 font-mono">
-                ${isEn ? 'ADULT BOUNDARIES' : '成人边界'}
-              </span>
-            </div>
-            <p class="text-[9px] leading-snug font-sans">${interpersonalSupport.family.boundary}</p>
-          </div>
+              <!-- Platform Sutra -->
+              <div class="imperial-card p-1.5 space-y-0.5 text-gray-800 border-l-3 border-purple-700">
+                <div class="flex items-center justify-between pb-0.5 border-b border-purple-900/15">
+                  <span class="font-bold text-purple-950 text-[9.5px] flex items-center gap-1">
+                    <span>🪷</span>
+                    <span>${isEn ? 'The Platform Sutra: Direct Action & Self-Nature' : '《六祖坛经》：直断妄念 · 本来无一物与顿悟自性'}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-purple-100 text-purple-950 font-bold font-mono">${isEn ? 'Rumination Breaker' : '内耗熔断'}</span>
+                </div>
+                <p class="font-bold text-purple-900 text-[8px] leading-tight">${isEn ? '“Originally there is not a single thing; where can dust alight? Deluded minds speak with mouth; wise minds execute with heart. Self-nature is inherently complete!”' : '“菩提本无树，明镜亦非台。本来无一物，何处惹尘埃！迷人口说，智者心行。口诵心行，则心口相应。何期自性，本自具足！”'}</p>
+                <p class="text-[8px] text-gray-700 leading-tight font-sans">${isEn ? (zen && zen.platform && zen.platform.mindsetAnalysisEn ? zen.platform.mindsetAnalysisEn : 'Excessive mental compute traps execution in circular rumination. Master Huineng decrees: wise minds act rather than simulate.') : (zen && zen.platform && zen.platform.mindsetAnalysisZh ? zen.platform.mindsetAnalysisZh : '大脑算力过剩极易陷入“空想泥潭与分析瘫痪”，反复推演千百遍却不敢踏出第一步。六祖棒喝：本来无一物！停止脑内空转，以行动粉碎心魔。')}</p>
+                <div class="p-1 rounded bg-purple-50/90 border border-purple-900/15 text-[8px] text-purple-950 leading-tight font-sans">
+                  <b>🎯 ${isEn ? 'Practical Protocol (10-Min Kinetic Shipping): ' : '现实痛点破局【10分钟粗糙交付法】：'}</b>${isEn ? (zen && zen.platform && zen.platform.practicalPracticeEn ? zen.platform.practicalPracticeEn : 'When paralyzed by perfectionism, set a hard 10-minute timer and ship an imperfect MVP. Physical momentum breaks mental friction.') : (zen && zen.platform && zen.platform.practicalPracticeZh ? zen.platform.practicalPracticeZh : '当想启动新事却因害怕失败迟迟不动时，倒计时10分钟，无论初稿多粗糙，立刻发出测试；外部风雨无法沾染本自具足的自性，以动作交付击碎虚妄心魔。')}
+                </div>
+              </div>
 
-          <!-- Module 5: Natal Astrological Rationale & Commercial Preconditions -->
-          <div class="p-1.5 rounded bg-amber-50/80 border border-amber-900/20 text-[8.5px] leading-tight font-sans text-amber-950">
-            ${interpersonalSupport.rationale}
+              <!-- Zhuangzi -->
+              <div class="imperial-card p-1.5 space-y-0.5 text-gray-800 border-l-3 border-teal-700">
+                <div class="flex items-center justify-between pb-0.5 border-b border-teal-900/15">
+                  <span class="font-bold text-teal-950 text-[9.5px] flex items-center gap-1">
+                    <span>🌊</span>
+                    <span>${isEn ? 'Zhuangzi: Mastering Circumstances & Free Roaming' : '《庄子》：物物而不物于物 · 乘物以游心与庖丁解牛'}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-teal-100 text-teal-950 font-bold font-mono">${isEn ? 'Somatic Calm' : '精神松弛'}</span>
+                </div>
+                <p class="font-bold text-teal-900 text-[8px] leading-tight">${isEn ? '“Master circumstances without being mastered by them: how then can you ever be burdened? Inserting that which has no thickness into spacious crevices; the mirror mind reflects all without injury.”' : '“物物而不物于物，则胡可得而累邪！乘天地之正，而御六气之辩，以游无穷者！以无厚入有间，恢恢乎其于游刃必有余地矣。至人之用心若镜，不将不迎。”'}</p>
+                <p class="text-[8px] text-gray-700 leading-tight font-sans">${isEn ? (zen && zen.zhuangzi && zen.zhuangzi.mindsetAnalysisEn ? zen.zhuangzi.mindsetAnalysisEn : 'Colliding blunt will against rigid institutional walls drains spirit. Flow along structural seams and treat worldly games with cosmic humor.') : (zen && zen.zhuangzi && zen.zhuangzi.mindsetAnalysisZh ? zen.zhuangzi.mindsetAnalysisZh : '死磕硬撞现实高墙、把KPI与名利当成生死枷锁乃内耗根源。庄子以“庖丁解牛”示以顺天理避骨结，以“物物不物”示以役使工具而不为工具所役。')}</p>
+                <div class="p-1 rounded bg-teal-50/90 border border-teal-900/15 text-[8px] text-teal-950 leading-tight font-sans">
+                  <b>🎯 ${isEn ? 'Practical Protocol (Seam Navigation & Role Detachment): ' : '现实痛点破局【避实就虚与角色出戏法】：'}</b>${isEn ? (zen && zen.zhuangzi && zen.zhuangzi.practicalPracticeEn ? zen.zhuangzi.practicalPracticeEn : 'Never attack systemic knots with blunt force. Identify structural crevices in human dynamics. Treat jobs as stage props; step off-stage when the curtain drops.') : (zen && zen.zhuangzi && zen.zhuangzi.practicalPracticeZh ? zen.zhuangzi.practicalPracticeZh : '遇职场官僚与复杂死结，退后一步寻找体制与人性的天然缝隙（大郤大窾），以巧劲四两拨千斤；工作与名利皆是戏台道具，下班即出戏，用心若镜不耗元神。')}
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Prime Minister Feng Dao's Rong Ku Jian Survival Codex -->
+            <div class="space-y-1 flex flex-col justify-between">
+              <!-- Top Card: Survival Protocol Overview -->
+              <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 border-l-3 border-amber-800 bg-amber-50/90">
+                <div class="flex items-center justify-between border-b border-amber-900/20 pb-0.5">
+                  <div class="flex items-center space-x-1 font-bold text-amber-950 text-[10px]">
+                    <span>📜</span>
+                    <span>${isEn ? "Feng Dao's Rong Ku Jian Survival Codex" : "五代权相冯道《荣枯鉴》传世十卷 · 处世保全大典"}</span>
+                  </div>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-amber-200 text-amber-950 font-bold font-mono">
+                    ${isEn ? ("Primary: " + (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameEn.split('(')[0].trim() : "Tact")) : ("本命首修：" + (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameZh.split('·')[0].trim() : "圆通卷"))}
+                  </span>
+                </div>
+                <p class="text-[8px] text-gray-800 leading-tight font-sans">
+                  <b>${isEn ? "Sovereign Protocol: " : "本命职场博弈生存法门："}</b>
+                  ${isEn ? (rkManual ? rkManual.diagnosisEn : "Integrity as bone, manners as garment; deploy armor while remaining upright, shielding wealth and avoiding uncalibrated heroics.") : (rkManual ? rkManual.diagnosisZh : "直为骨媚为仪，穿上铠甲拿着刀做好人，善恶咸用，谤而不辩，藏富如藏刃。")}
+                </p>
+              </div>
+
+              <!-- Middle Card: Primary Scroll Deep Dive with 3 Rules & Historical Case -->
+              <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+                  <span class="font-bold text-amber-950 text-[9.5px] flex items-center gap-1">
+                    <span>⚖️</span>
+                    <span>${isEn ? (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameEn : 'Primary Scroll: Strategic Acumen') : (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameZh : '本命首修卷深解')}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-amber-100 text-amber-950 font-mono">${isEn ? 'CORE SCROLL' : '首修要诀'}</span>
+                </div>
+                <p class="font-bold text-amber-900 text-[8px] leading-tight">${isEn ? (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.coreQuoteEn : 'Wield armor and weapons before attempting benevolence.') : (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.coreQuoteZh : '“外君子而内小人者，真小人也；外小人而内君子者，真君子也。德与刀，是做好人的成本。有刀而不砍出去，才叫真正的善良。”')}</p>
+                <div class="space-y-0.5 text-[8px] font-sans leading-tight pt-0.5">
+                  <div class="font-bold text-amber-950">${isEn ? 'Three Actionable Workplace Survival Rules:' : '职场三大刚性实战防身法则：'}</div>
+                  ${(rkManual && rkManual.primaryScroll && rkManual.primaryScroll[isEn ? 'workplaceRulesEn' : 'workplaceRulesZh']
+                    ? rkManual.primaryScroll[isEn ? 'workplaceRulesEn' : 'workplaceRulesZh']
+                    : (isEn ? ['[Pre-contract terms upfront before execution]', '[Never make oneself indispensable to a single patron without cash buffers]', '[Shield wealth and share accolades generously]'] : ['【先小人后君子，丑话前置】：涉及利益分成与权责边界白纸黑字前置谈透。', '【手中有刀佩戴铠甲，方可行善】：保留不可替代壁垒，不赌他人道德自觉。', '【善恶咸用示人以愚，丰年屯粮】：不露锋芒，多点头少争辩，守死冗余现金流。'])
+                  ).map((rStr, rIdx) => `<div class="p-0.5 rounded bg-white/70 border border-amber-900/10 text-gray-800"><b>${rIdx + 1}.</b> ${rStr}</div>`).join('')}
+                </div>
+                <div class="p-1 rounded bg-amber-50/80 border border-amber-900/15 text-[8px] text-gray-800 leading-tight font-sans">
+                  <b>🏛️ ${isEn ? 'Historical Case Paradigm: ' : '真实历史实战镜鉴案例：'}</b>${isEn ? (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.historicalCasesEn : 'General Qi Jiguang built institutional reserves and military playbooks to outlast patron falls, while uncompromising dogmatists suffered clan ruin.') : (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.historicalCasesZh : '戚继光虽与张居正紧密绑定，但早年“丰年屯粮、严整练兵实录”，张相病殁后虽被弹劾夺职仍寿终正寝；反观方孝孺意气刚烈硬刚诛十族，乃“义不抵命、优己方能安命”之明证。')}
+                </div>
+              </div>
+
+              <!-- Bottom Card: Secondary Blindspot Scroll & Safeguards -->
+              <div class="imperial-card imperial-card-rose p-1.5 space-y-0.5 text-gray-800">
+                <div class="flex items-center justify-between border-b border-rose-900/15 pb-0.5">
+                  <span class="font-bold text-rose-950 text-[9.5px] flex items-center gap-1">
+                    <span>🛡️</span>
+                    <span>${isEn ? (rkManual && rkManual.blindspotScroll ? ('Blindspot Shield: ' + rkManual.blindspotScroll.nameEn) : 'Blindspot Circuit-Breaker') : (rkManual && rkManual.blindspotScroll ? ('本命防身卷：' + rkManual.blindspotScroll.nameZh) : '本命盲区避险防波堤')}</span>
+                  </span>
+                  <span class="text-[7.5px] px-1 py-0.1 rounded bg-rose-100 text-rose-950 font-mono">${isEn ? 'CIRCUIT-BREAKER' : '避险熔断'}</span>
+                </div>
+                <p class="text-[8px] text-rose-950 leading-tight font-sans">
+                  <b>${isEn ? 'Key Invariant: ' : '核心戒律：'}</b>${isEn ? (rkManual && rkManual.blindspotScroll ? rkManual.blindspotScroll.coreQuoteEn : 'Refuse self-justification traps; let slander clarify with time while holding cash cushions.') : (rkManual && rkManual.blindspotScroll ? rkManual.blindspotScroll.coreQuoteZh : '“谤而不辩，去浊澄清。人毁我者，乃彼之心魔投射；我持自重，其谤自解。”')}
+                </p>
+                <div class="p-1 rounded bg-white/75 border border-rose-900/15 text-[8px] text-gray-800 leading-tight font-sans">
+                  <b>🛑 ${isEn ? 'Sovereign Circuit-Breakers: ' : '刚性避坑准则：'}</b>${isEn ? 'Never enter informal debt arrangements; refuse joint liability without escrow; decline low-dimensional oral debates.' : '绝不陷入任何自证清白的辩解陷阱；面对无端非议微笑点头、立刻聚焦业务交付；合作必须以硬性合同锁定违约责任，坚决不为人情背书。'}
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 3' : '大明/大清钦天监 · 卷三'}</span>
-            <span>Page 6 / 9</span>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 3: Mindset & Survival' : '大明/大清钦天监 · 卷三 禅道心智与处世保全'}</span>
+            <span>Page 6 / 7</span>
           </div>
         </div>
       </div>
 
-      <!-- Page 7: Volume IV - Zen & Dao Trinity Mindset & Mental Friction De-Biasing -->
+      <!-- Page 7: Volume IV - Workplace Archetypes & Lifelong Auspicious Matrix -->
       <div id="imperialPage7" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
@@ -27603,325 +27755,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         </div>
         <div class="imperial-watermark">${watermarkText}</div>
 
-        <div class="imperial-frame flex flex-col justify-between p-4 sm:p-5 space-y-1.5">
-          <div class="border-b-2 border-amber-900/60 pb-1.5 flex items-center justify-between">
-            <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume IV: Zen & Dao Trinity Mindset & Rong Ku Jian Codex' : '卷四 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典 (三经解脱 · 冯道十卷)'}</h2>
-            <span class="imperial-seal-stamp">${isEn ? 'MIND & SURVIVAL' : '心智保全'}</span>
-          </div>
-
-          <div class="space-y-1.5 text-xs leading-relaxed font-serif-sc text-gray-800">
-            ${zen && zen.diagnostic ? `
-              <div class="p-2 bg-amber-100/90 rounded border border-amber-900/40 text-[9px] space-y-0.5">
-                <div class="flex items-center justify-between font-bold text-amber-950">
-                  <span>${isEn ? 'Psychological Diagnostic: ' + (zen.diagnostic.archetypeEn || zen.diagnostic.archetype) : '本命精神心理深度诊断：' + (zen.diagnostic.archetypeZh || zen.diagnostic.archetype)}</span>
-                  <span class="text-red-900 font-bold">${isEn ? 'Primary Antidote: ' + (zen.diagnostic.primaryCanonTitleEn || zen.diagnostic.primaryCanonTitle) : '第一救应主药：' + (zen.diagnostic.primaryCanonTitleZh || zen.diagnostic.primaryCanonTitle)}</span>
-                </div>
-                <p class="text-gray-800 leading-snug font-sans">${isEn ? (zen.diagnostic.stateAnalysisEn || zen.diagnostic.stateAnalysis) : (zen.diagnostic.stateAnalysisZh || zen.diagnostic.stateAnalysis)}</p>
-                <div class="pt-0.5 text-gray-900 font-bold border-t border-amber-900/20 flex items-center justify-between font-sans">
-                  <span><span class="text-amber-900">${isEn ? 'Decree: ' : '钦天监心智令：'}</span>${isEn ? (zen.diagnostic.decreeEn || zen.diagnostic.decree) : (zen.diagnostic.decreeZh || zen.diagnostic.decree)}</span>
-                </div>
-              </div>
-            ` : ''}
-
-            <!-- Diamond Sutra -->
-            <div class="imperial-card imperial-card-accent p-2 space-y-1">
-              <div class="flex items-center justify-between pb-0.5 border-b border-amber-900/20">
-                <h3 class="font-bold text-amber-950 text-xs">${isEn ? 'The Diamond Sutra: De-Biasing & Non-Attachment' : '《金刚经》：破“相”之执 · 应无所住而生其心'}</h3>
-                <span class="text-[8px] px-1.5 py-0.2 rounded bg-amber-200 text-amber-950 font-bold font-mono">${isEn ? 'Anti-Anxiety Shield' : '焦虑脱敏盾'}</span>
-              </div>
-              <p class="font-bold text-red-900 text-[9.5px]">${isEn ? '“All conditioned forms are illusory. Seeing all forms as non-forms, one perceives the True Self. Arouse the mind without resting on any clinging.”' : '“凡所有相，皆是虚妄。若见诸相非相，则见如来。应无所住而生其心。”'}</p>
-              <p class="text-[9px] text-gray-800 leading-relaxed font-sans">${zen.diamond.isPrimary 
-                ? (isEn ? '【Primary Antidote · Shattering Illusory Forms】: Mental friction stems from clinging to forms—perfectionist ego, fear of judgment, and catastrophe fantasy. Recognize these as mental illusions generated by the nervous system.' : '【对症破除虚妄心相】：内耗的核心病根在于“执相”。潜意识里执着于“完美我相”（我必须事事做到完美无瑕）、“被审判人相”（外界每个人都在苛责挑剔我）。这些全是交感神经在脑海自编自导的虚妄电影。随时以诸相非相照破。')
-                : (isEn ? '【Auxiliary Shield · Formless Illumination】: Whenever self-judgment arises, illuminate delusions with "All conditioned dharmas are like dreams, bubbles, and shadows," denying ground for mental fixation.' : '【协同护持 · 破相照空】：当自我审判或紧绷出现时，随时以“一切有为法如梦幻泡影”照破虚妄，不给妄念立足之根基。')}</p>
-            </div>
-
-            <!-- Platform Sutra -->
-            <div class="imperial-card p-2 space-y-1 border-l-4 border-purple-700">
-              <div class="flex items-center justify-between pb-0.5 border-b border-purple-900/20">
-                <h3 class="font-bold text-purple-950 text-xs">${isEn ? 'The Platform Sutra: Direct Action & Intrinsic Completeness' : '《六祖坛经》：直断妄念 · 本来无一物与顿悟自性'}</h3>
-                <span class="text-[8px] px-1.5 py-0.2 rounded bg-purple-100 text-purple-950 font-bold font-mono">${isEn ? 'Rumination Circuit-Breaker' : '内耗熔断'}</span>
-              </div>
-              <p class="font-bold text-purple-900 text-[9.5px]">${isEn ? '“Deluded minds speak with mouth; wise minds execute with heart. Reciting without action is like illusion; acting in alignment unites speech and heart. Self-nature is inherently complete!”' : '“迷人口说，智者心行。口诵心不行，如幻如化；口诵心行，则心口相应。何期自性，本自具足！”'}</p>
-              <p class="text-[9px] text-gray-800 leading-relaxed font-sans">${zen.platform.isPrimary
-                ? (isEn ? '【Primary Antidote · Shattering Analysis Paralysis】: Excessive mental compute traps the mind in circular rumination. Master Huineng decrees: "Deluded minds speak; wise minds act!" Terminate mental loops through immediate messy kinetic shipping.' : '【对症击穿分析瘫痪】：思维算力过剩容易陷入空想泥潭。六祖一语当头棒喝：“迷人口说，智者心行！”停止在脑海里打转推演，唯有心行合一，以粗糙的行动交付才能彻底粉碎虚妄心魔。')
-                : (isEn ? '【Auxiliary Shield · Direct Enlightenment】: Remind yourself that self-nature is fundamentally complete; external weather cannot stain the heart.' : '【协同护持 · 顿悟见性】：时刻提醒自性本自具足，外界风雨不染自心，绝不向外乞求虚假认同。')}</p>
-            </div>
-
-            <!-- Zhuangzi -->
-            <div class="imperial-card p-2 space-y-1 border-l-4 border-teal-700">
-              <div class="flex items-center justify-between pb-0.5 border-b border-teal-900/20">
-                <h3 class="font-bold text-teal-950 text-xs">${isEn ? 'Zhuangzi: Free Roaming & Mastering Seams' : '《庄子》：物物而不物于物 · 乘物以游心与庖丁解牛'}</h3>
-                <span class="text-[8px] px-1.5 py-0.2 rounded bg-teal-100 text-teal-950 font-bold font-mono">${isEn ? 'Somatic Calm' : '精神松弛'}</span>
-              </div>
-              <p class="font-bold text-teal-900 text-[9.5px]">${isEn ? '“Subjugate things rather than being subjugated by things: how then can one be burdened? Riding the cosmic order to wander in the boundless.”' : '“物物而不物于物，则胡可得而累邪！乘天地之正，而御六气之辩，以游无穷者，彼且恶乎待哉！”'}</p>
-              <p class="text-[9px] text-gray-800 leading-relaxed font-sans">${zen.zhuangzi.isPrimary
-                ? (isEn ? '【Primary Antidote · Soothing Overheated Overdrive】: Heavy self-inflicted pressure collides with immovable realities. Accept what is natural, master circumstances without becoming enslaved, and reclaim strategic leeway.' : '【对症化解死磕硬碰】：自我施压过甚，常在不可控的现实障碍前碰壁。庄子以“物物而不物于物”大智提醒，放下强行改造外物之执念，顺应节理，换取精神彻底松弛与从容。')
-                : (isEn ? '【Auxiliary Shield · Free Roaming】: Inject expansive Daoist transcendence, treating worldly vicissitudes as a grand game, preserving sovereign vitality with effortless ease.' : '【协同护持 · 乘物游心】：注入大开大合的道家超然气象，将世俗逆境视作旷达游戏，保全元神游刃有余。')}</p>
-            </div>
-
-            <!-- Feng Dao Rong Ku Jian -->
-            <div class="imperial-card imperial-card-gold p-2 space-y-1 border-l-4 border-amber-800 bg-amber-50/90">
-              <div class="flex items-center justify-between border-b border-amber-900/30 pb-0.5">
-                <div class="flex items-center space-x-1 font-bold text-amber-950 text-[10.5px]">
-                  <span>📜</span>
-                  <span>${isEn ? "Prime Minister Feng Dao's Rong Ku Jian Survival Codex" : "五代权相冯道《荣枯鉴》传世十卷 · 处世保全大典"}</span>
-                </div>
-                <span class="text-[8px] px-1.5 py-0.2 rounded bg-amber-200 text-amber-950 font-bold font-mono">
-                  ${isEn ? ("Primary: " + (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameEn.split('(')[0].trim() : "Tact")) : ("本命首修：" + (rkManual && rkManual.primaryScroll ? rkManual.primaryScroll.nameZh.split('·')[0].trim() : "圆通卷"))}
-                </span>
-              </div>
-              <p class="text-[9px] text-gray-800 leading-snug font-sans">
-                <b>${isEn ? "Survival Protocol: " : "本命职场博弈生存法门："}</b>
-                ${isEn ? (rkManual ? rkManual.diagnosisEn : "Integrity as bone, manners as garment; deploy armor while remaining upright.") : (rkManual ? rkManual.diagnosisZh : "直为骨媚为仪，穿上铠甲拿着刀做好人，善恶咸用，谤而不辩，藏富如藏刃。")}
-              </p>
-            </div>
-          </div>
-
-          <!-- Footer -->
-          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
-            <span>Page 7 / 9</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Page 8: Volume V - Decennial Trajectory, 14-Character Energy Synthesis & Residence City Geographic Qi -->
-      <div id="imperialPage8" class="imperial-page relative">
-        <div class="imperial-corner-wrap-top"></div>
-        <div class="imperial-corner-wrap-bottom"></div>
-        <div class="imperial-thread-spine">
-          <div class="thread-eyelet eyelet-1"></div>
-          <div class="thread-eyelet eyelet-2"></div>
-          <div class="thread-eyelet eyelet-3"></div>
-          <div class="thread-eyelet eyelet-4"></div>
-        </div>
-        <div class="imperial-watermark">${watermarkText}</div>
-
-        <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
-          <!-- Page Header -->
-          <div class="border-b-2 border-amber-900/60 pb-1 flex items-center justify-between">
-            <h2 class="text-sm sm:text-base font-bold font-serif-sc text-amber-950">${isEn ? 'Volume V: Decennial Trajectory & 14-Character Synthesis & Geographic Qi' : '卷五 · 大运年景大势与十四字全景气机集成 (时运交感与时空场能)'}</h2>
-            <span class="imperial-seal-stamp">${isEn ? 'DYNAMIC RESONANCE' : '时运合一'}</span>
-          </div>
-
-          <!-- Transit Luck Coordinate -->
-          <div class="imperial-card imperial-card-gold grid grid-cols-2 gap-2 text-xs p-1.5 font-serif-sc">
-            <div>
-              <span class="text-gray-500 text-[9px]">${isEn ? 'Active Decade (10-Yr Pillar):' : '当运大运 (十年提纲):'}</span>
-              <div class="font-bold text-amber-900 font-mono text-[10.5px] mt-0.5">${decadePillarStr}</div>
-              <div class="text-[8.5px] text-gray-600 font-mono">${isEn ? 'Na-Yin:' : '纳音五行:'} ${decadeNaYinStr}</div>
-            </div>
-            <div>
-              <span class="text-gray-500 text-[9px]">${isEn ? 'Annual Mandate (Tai Sui):' : '当值流年 (太岁统辖):'}</span>
-              <div class="font-bold text-amber-900 font-mono text-[10.5px] mt-0.5">${annualPillarStr}</div>
-              <div class="text-[8.5px] text-gray-600 font-mono">${isEn ? 'Na-Yin:' : '纳音五行:'} ${annualNaYinStr}</div>
-            </div>
-          </div>
-
-          <!-- 14-Character Multi-Dimensional Matrix Table -->
-          <div class="space-y-0.5">
-            <div class="flex items-center justify-between">
-              <h3 class="text-[10px] font-bold text-amber-950 tracking-wider">${isEn ? '14-CHARACTER HOLOGRAPHIC MATRIX (NATAL 8 + TRANSIT 6)' : '十四字全相矩阵 (原局八字 + 岁运六字)'}</h3>
-              <span class="imperial-seal-stamp text-[8.5px] py-0.1 px-1.5">${isEn ? dmState.badgeEn : dmState.badgeZh}</span>
-            </div>
-            <table class="imperial-table text-xs text-center">
-              <thead>
-                <tr>
-                  <th>${isEn ? 'Natal Yr' : '原局年柱'}</th>
-                  <th>${isEn ? 'Natal Mo' : '原局月令'}</th>
-                  <th>${isEn ? 'Natal Day' : '本命日元'}</th>
-                  <th>${isEn ? 'Natal Hr' : '原局时柱'}</th>
-                  <th class="bg-amber-100 text-amber-950">${isEn ? 'Transit Dec' : '当行大运'}</th>
-                  <th class="bg-amber-100 text-amber-950">${isEn ? 'Transit Ann' : '流年太岁'}</th>
-                  <th class="bg-amber-100 text-amber-950">${isEn ? 'Transit Mo' : '流月建星'}</th>
-                </tr>
-              </thead>
-              <tbody class="font-serif-sc">
-                <!-- Stems -->
-                <tr>
-                  ${[0, 2, 4, 6, 8, 10, 12].map(idx => {
-                    const c = charsList[idx] || {};
-                    const cChar = isEn ? (c.charEn || c.char || '--') : (c.char || '--');
-                    const cGod = isEn ? (c.tenGodEn || c.tenGod || '--') : (c.tenGod || '--');
-                    const cEl = isEn ? (c.elementEn || c.el || '--') : (c.el || '--');
-                    const isDM = (idx === 4);
-                    return `
-                      <td class="p-0.5 ${isDM ? 'bg-amber-100/90 font-bold' : ''}">
-                        <div class="text-[8px] text-gray-500 font-mono">${cGod}</div>
-                        <div class="text-sm font-bold ${isDM ? 'text-red-900' : 'text-amber-900'}">${cChar}</div>
-                        <div class="text-[7.5px] text-gray-600 font-mono">${cEl}</div>
-                      </td>
-                    `;
-                  }).join('')}
-                </tr>
-                <!-- Branches -->
-                <tr>
-                  ${[1, 3, 5, 7, 9, 11, 13].map(idx => {
-                    const c = charsList[idx] || {};
-                    const cChar = isEn ? (c.charEn || c.char || '--') : (c.char || '--');
-                    const cGod = isEn ? (c.tenGodEn || c.tenGod || '--') : (c.tenGod || '--');
-                    const cEl = isEn ? (c.elementEn || c.el || '--') : (c.el || '--');
-                    return `
-                      <td class="p-0.5">
-                        <div class="text-[8px] text-gray-500 font-mono">${cGod}</div>
-                        <div class="text-sm font-bold text-amber-900">${cChar}</div>
-                        <div class="text-[7.5px] text-gray-600 font-mono">${cEl}</div>
-                      </td>
-                    `;
-                  }).join('')}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Dynamic 5-Element Share & Dominant Force -->
-          <div class="imperial-card p-1.5 text-xs space-y-0.5 font-serif-sc">
-            <div class="flex items-center justify-between font-bold text-amber-950 text-[9.5px]">
-              <span>${isEn ? 'Dynamic 5-Element Distribution (14 Characters):' : '十四字全场五行能量权重与气机统帅:'}</span>
-              <span class="font-mono text-[9px]">${elDistSummaryStr}</span>
-            </div>
-            <div class="flex items-center justify-between text-[9px] text-gray-800 font-sans">
-              <span><b>${isEn ? 'Dominant Force:' : '统帅五行:'}</b> ${isEn ? domEl.elementEn : domEl.element} (${domEl.percentage}%) · ${isEn ? domEl.roleEn : domEl.roleZh}</span>
-              <span class="font-mono"><b>${isEn ? 'Support vs Drain:' : '扶抑比率:'}</b> ${dmState.supportCount} : ${dmState.drainCount} (${Math.round(dmState.dynamicRatio * 100)}%)</span>
-            </div>
-            <p class="text-[9px] text-gray-700 leading-tight font-sans">${isEn ? dmState.statusEn : dmState.statusZh}</p>
-          </div>
-
-          <!-- Tactical Strategic Focus -->
-          <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 text-xs text-gray-800 font-serif-sc font-sans">
-            <div class="flex items-center justify-between font-bold text-amber-950 text-[9.5px] font-serif-sc">
-              <span>${isEn ? interp.titleEn : interp.titleZh}</span>
-              <span class="text-[9px] text-amber-900 font-mono">${isEn ? dmState.natalStrengthEn : dmState.natalStrength}</span>
-            </div>
-            <p class="text-[9px]"><b>${isEn ? 'Core Strategic Focus:' : '核心战略攻守定调:'}</b> ${isEn ? interp.strategicFocusEn : interp.strategicFocusZh}</p>
-            <div class="space-y-0 text-[8.5px]">
-              <b>${isEn ? 'Tactical Action Directives:' : '立命行事三策:'}</b>
-              ${(isEn ? interp.actionDirectivesEn : interp.actionDirectivesZh).slice(0, 3).map((act, idx) => `
-                <div class="flex gap-1 ml-1 leading-tight">
-                  <span class="font-bold text-amber-900 font-mono">${idx + 1}.</span>
-                  <span>${act}</span>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-
-          <!-- Part II: Current Residence City Geographic Qi -->
-          <div class="imperial-card imperial-card-emerald p-2 text-xs space-y-1 font-serif-sc">
-            <div class="flex items-center justify-between border-b border-amber-900/20 pb-0.5">
-              <div class="flex items-center gap-1">
-                <span class="text-sm">🗺️</span>
-                <span class="font-bold text-amber-950 text-[10.5px]">
-                  ${isEn ? 'Current Residence City Geographic Qi Evaluation' : '当前居住城市地缘五行气数评估'}
-                </span>
-              </div>
-              <div class="flex items-center gap-1.5">
-                <div class="no-print flex items-center gap-1 text-[8.5px]">
-                  <span class="text-gray-500 font-mono">${isEn ? 'Switch City:' : '切换测试城市:'}</span>
-                  <select id="dossierCityCountrySelect" class="bg-amber-100 border border-amber-800/40 rounded px-1 py-0.1 text-[8.5px] text-amber-950 focus:outline-none cursor-pointer">
-                    ${dossierCountryOpts}
-                  </select>
-                  <select id="dossierCitySelect" class="bg-amber-100 border border-amber-800/40 rounded px-1 py-0.1 text-[8.5px] text-amber-950 focus:outline-none cursor-pointer">
-                    ${dossierCityOpts}
-                  </select>
-                </div>
-                <span class="text-[8.5px] px-1.5 py-0.1 rounded font-bold font-mono border ${cityBadgeClass}">
-                  ${cityGradeDisplay}
-                </span>
-              </div>
-            </div>
-
-            <!-- 6 Geographic Attributes Grid -->
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-1 text-center text-[8px] font-sans">
-              <div class="p-0.5 bg-white/70 rounded border border-amber-900/15">
-                <div class="text-gray-500 text-[7px]">${isEn ? 'Country' : '所在国度'}</div>
-                <div class="font-bold text-gray-900 truncate">${cityCountryDisplay}</div>
-              </div>
-              <div class="p-0.5 bg-white/70 rounded border border-amber-900/15">
-                <div class="text-gray-500 text-[7px]">${isEn ? 'Current City' : '当前城市'}</div>
-                <div class="font-bold text-amber-900 truncate" title="${cityCityDisplay}">${cityCityDisplay}</div>
-              </div>
-              <div class="p-0.5 bg-white/70 rounded border border-amber-900/15">
-                <div class="text-gray-500 text-[7px]">${isEn ? 'Sector' : '地缘方位'}</div>
-                <div class="font-bold text-gray-900 truncate">${cityDirectionDisplay}</div>
-              </div>
-              <div class="p-0.5 bg-white/70 rounded border border-amber-900/15">
-                <div class="text-gray-500 text-[7px]">${isEn ? 'Terrestrial Qi' : '五行气机'}</div>
-                <div class="font-bold text-amber-900 truncate" title="${cityElementDisplay}">${cityElementDisplay}</div>
-              </div>
-              <div class="p-0.5 bg-white/70 rounded border border-amber-900/15">
-                <div class="text-gray-500 text-[7px]">${isEn ? 'Day Master Dynamic' : '本命生克'}</div>
-                <div class="font-bold text-gray-900 truncate">${cityDmDisplay} · ${cityElementShort}</div>
-              </div>
-              <div class="p-0.5 rounded border ${cityBadgeClass}">
-                <div class="text-[7px] opacity-80">${isEn ? 'Resonance' : '地缘吉凶'}</div>
-                <div class="font-black truncate">${cityGradeDisplay}</div>
-              </div>
-            </div>
-
-            <!-- Narrative -->
-            <div class="p-1 bg-white/70 rounded border border-amber-900/15 text-[8.5px] text-gray-800 space-y-0.5 leading-snug font-sans">
-              <div class="flex items-center gap-1 font-bold text-amber-950 font-serif-sc">
-                <span>⚖️</span>
-                <span>${cityRelationDisplay}</span>
-              </div>
-              <p class="text-gray-700">${cityAnalysisDisplay}</p>
-            </div>
-
-            <!-- 3 Bespoke Spatial Remedies -->
-            <div class="space-y-0.5">
-              <div class="flex items-center gap-1 text-[8.5px] font-bold text-amber-950">
-                <span>🛡️</span>
-                <span>${isEn ? 'Bespoke Spatial Remedies (Harmonizing Qi)' : '专属空间风水调理策 (化克为生 · 调和气场)'}</span>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 text-[8px] font-sans">
-                <div class="p-1 bg-white/70 rounded border border-amber-900/15 flex flex-col justify-between">
-                  <div class="font-bold text-amber-900 flex items-center gap-1 font-serif-sc">
-                    <span>🏺</span>
-                    <span>${isEn ? cityRemedies[0].titleEn : cityRemedies[0].titleZh}</span>
-                  </div>
-                  <p class="text-gray-700 leading-tight mt-0.5">${isEn ? cityRemedies[0].descEn : cityRemedies[0].descZh}</p>
-                </div>
-                <div class="p-1 bg-white/70 rounded border border-amber-900/15 flex flex-col justify-between">
-                  <div class="font-bold text-amber-900 flex items-center gap-1 font-serif-sc">
-                    <span>🌿</span>
-                    <span>${isEn ? cityRemedies[1].titleEn : cityRemedies[1].titleZh}</span>
-                  </div>
-                  <p class="text-gray-700 leading-tight mt-0.5">${isEn ? cityRemedies[1].descEn : cityRemedies[1].descZh}</p>
-                </div>
-                <div class="p-1 bg-white/70 rounded border border-amber-900/15 flex flex-col justify-between">
-                  <div class="font-bold text-amber-900 flex items-center gap-1 font-serif-sc">
-                    <span>🧭</span>
-                    <span>${isEn ? cityRemedies[2].titleEn : cityRemedies[2].titleZh}</span>
-                  </div>
-                  <p class="text-gray-700 leading-tight mt-0.5">${isEn ? cityRemedies[2].descEn : cityRemedies[2].descZh}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Footer -->
-          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 5' : '大明/大清钦天监 · 卷五'}</span>
-            <span>Page 8 / 9</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Page 9: Volume VI - Workplace Archetypes & Lifelong Auspicious Matrix -->
-      <div id="imperialPage9" class="imperial-page relative">
-        <div class="imperial-corner-wrap-top"></div>
-        <div class="imperial-corner-wrap-bottom"></div>
-        <div class="imperial-thread-spine">
-          <div class="thread-eyelet eyelet-1"></div>
-          <div class="thread-eyelet eyelet-2"></div>
-          <div class="thread-eyelet eyelet-3"></div>
-          <div class="thread-eyelet eyelet-4"></div>
-        </div>
-        <div class="imperial-watermark">${watermarkText}</div>
-
         <div class="imperial-frame flex flex-col justify-between p-4 space-y-1.5">
           <div class="border-b-2 border-amber-900/60 pb-1 flex items-center justify-between">
-            <h2 class="text-sm font-bold font-serif-sc text-amber-950">${isEn ? 'Volume VI: Workplace Archetypes & Execution Playbook' : '卷六 · 职场实战原型、财富防火墙与终身宝印 (向上管理 · 同僚防波堤 · 天命生态位)'}</h2>
+            <h2 class="text-sm font-bold font-serif-sc text-amber-950">${isEn ? 'Volume IV: Workplace Archetypes & Execution Playbook' : '卷四 · 职场实战原型、财富防火墙与终身宝印 (向上管理 · 同僚防波堤 · 天命生态位)'}</h2>
             <span class="imperial-seal-stamp text-[9px] py-0.1 px-1.5">${isEn ? 'CAREER & WEALTH' : '天命经纶'}</span>
           </div>
 
@@ -28040,53 +27876,11 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
 
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-0.5 text-[9px] text-gray-500 font-mono">
-            <span>${isEn ? 'Imperial Astrometry Bureau · Section 6' : '大明/大清钦天监 · 卷六'}</span>
-            <span>Page 9 / 9 · Complete Dossier</span>
-          </div>
+            <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
+            <span>Page 7 / 7 · Complete Dossier</span>
         </div>
       </div>
     `;
-
-    // Bind dynamic city switcher on Imperial Dossier Page 8
-    const dossierCountryEl = document.getElementById('dossierCityCountrySelect');
-    const dossierCityEl = document.getElementById('dossierCitySelect');
-    if (dossierCountryEl && typeof dossierCountryEl.addEventListener === 'function' && !dossierCountryEl._dossierBound) {
-      dossierCountryEl._dossierBound = true;
-      dossierCountryEl.addEventListener('change', (e) => {
-        currentResidenceCountry = e.target.value;
-        const db = (typeof SpatialFengShuiEngine !== 'undefined') ? SpatialFengShuiEngine.GEO_CITIES_DATABASE : null;
-        const countryData = db ? db[currentResidenceCountry] : null;
-        const firstReg = countryData ? Object.values(countryData.regions)[0] : null;
-        currentResidenceCity = (firstReg && firstReg.cities[0]) ? firstReg.cities[0].id : 'custom';
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('current_residence_country', currentResidenceCountry);
-          localStorage.setItem('current_residence_city', currentResidenceCity);
-        }
-        if (typeof currentCountrySelect !== 'undefined' && currentCountrySelect) {
-          currentCountrySelect.value = currentResidenceCountry;
-        }
-        if (typeof currentCitySelect !== 'undefined' && currentCitySelect) {
-          currentCitySelect.value = currentResidenceCity;
-        }
-        if (typeof populateCurrentCityOptions === 'function') {
-          populateCurrentCityOptions(currentResidenceCountry, currentResidenceCity);
-        }
-        renderImperialDossierPages(lang);
-      });
-    }
-    if (dossierCityEl && typeof dossierCityEl.addEventListener === 'function' && !dossierCityEl._dossierBound) {
-      dossierCityEl._dossierBound = true;
-      dossierCityEl.addEventListener('change', (e) => {
-        currentResidenceCity = e.target.value;
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('current_residence_city', currentResidenceCity);
-        }
-        if (typeof currentCitySelect !== 'undefined' && currentCitySelect) {
-          currentCitySelect.value = currentResidenceCity;
-        }
-        renderImperialDossierPages(lang);
-      });
-    }
 
     return container ? container.innerHTML : '';
   }
@@ -28126,7 +27920,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
     // Section 2: Time-Space Progression System (岁运流转 · 大运流年流月流日全阶推演系统)
     renderMasterProfileChrono(activeRes, isEn);
 
-    // Section 3: Imperial 9-Page Dossier Compendium (钦天监 · 皇家九卷精装战报全卷精萃)
+    // Section 3: Imperial 7-Page Dossier Compendium (钦天监 · 皇家七卷精装战报全卷精萃)
     renderMasterProfileImperial(activeRes, isEn);
 
     // Also update Advisor Home View
@@ -28905,52 +28699,32 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
       {
         pageId: 'imperialPage5',
         num: 5,
-        titleZh: '卷五 · 二八战略大局 (终身二八胜负手与破局战役)',
-        titleEn: 'Volume V: 80/20 Grand Picture Pareto Strategy',
-        descZh: '严格贯彻二八极简法则：绝不在80%破事上虚耗心力，100%重兵聚焦20%具有非线性杠杆回报的终身胜负手。',
-        descEn: `The 80/20 Pareto principle grounded in nonlinear dynamical phase space: filter out high-entropy friction (80% dissipative noise), and concentrate full energetic amplitude into the 20% high-gain resonant harmonics that drive asymmetric returns.`,
-        tagsZh: ['二八胜负手', '破局战役', '护城河防御'],
-        tagsEn: ['Resonant Harmonic Gain', 'Nonlinear Bifurcation', 'Defensible Moat']
+        titleZh: '卷五 · 二八战略大局与职场协作合伙刚性法则 (破局战役 · 80/20攻防 · 协作权责)',
+        titleEn: 'Volume V: 80/20 Pareto Strategy & Strategic Interpersonal Synergy',
+        descZh: '贯彻二八极简法则，聚焦20%高杠杆胜负手；建立职场防波堤与合伙协作刚性权责分配法则，规避人际内耗。',
+        descEn: `The 80/20 Pareto principle meets Robert Hand's Composite Vector Synthesis (atan2 summation): isolates high-gain resonant harmonics from dissipative interpersonal noise, establishing rigid boundary allocation protocols and defensible collaborative moats.`,
+        tagsZh: ['二八胜负手', '破局战役', '合伙权责'],
+        tagsEn: ['80/20 Pareto Vector', 'Composite Vector Field', 'Boundary Allocation']
       },
       {
         pageId: 'imperialPage6',
         num: 6,
-        titleZh: '卷六 · 六亲全息深度侧写 (配偶婚恋 · 子女后嗣 · 父母祖荫)',
-        titleEn: 'Volume VI: 4D Kinship Holographic Depth Profiles',
-        descZh: '深度解构夫妻宫生克引力、父母福泽根基与子女星旺衰；厘清家族代际因果与亲密关系保全法门。',
-        descEn: `Relational field dynamics rooted in Robert Hand's Composite Vector Synthesis (atan2 summation): deconstructs partner dynamic attraction, ancestral gravitational baselines, offspring vitality, and intergenerational boundary defense.`,
-        tagsZh: ['配偶情缘', '父母祖德', '子嗣福分'],
-        tagsEn: ['Composite Vector Field', 'Midpoint Relational Axis', 'Intergenerational Boundaries']
+        titleZh: '卷六 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典',
+        titleEn: 'Volume VI: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex',
+        descZh: '《心经》《金刚经》《坛经》《庄子》四大心智锚点，破相照空、粗糙交付、避实就虚；融合冯道《荣枯鉴》九卷处世绝学，直为骨媚为仪。',
+        descEn: `Strategic organizational game theory rooted in Ebertin's Cosmobiology and multi-agent power matrices: internal cognitive equilibrium balances structural friction, transforming external political pressure into defensible strategic leverage and survival armor.`,
+        tagsZh: ['禅道心智', '破相照空', '冯道荣枯鉴'],
+        tagsEn: ['Zen Cognitive Shield', 'Multi-Agent Game Theory', 'Strategic Armor']
       },
       {
         pageId: 'imperialPage7',
         num: 7,
-        titleZh: '卷七 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典',
-        titleEn: 'Volume VII: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex',
-        descZh: '《心经》《金刚经》《道德经》三大心智锚点，融合五代权相冯道《荣枯鉴》处世绝学：直为骨媚为仪，安身立命。',
-        descEn: `Strategic organizational game theory rooted in Ebertin's Cosmobiology and multi-agent power matrices: internal cognitive equilibrium balances structural friction, transforming external political pressure into defensible strategic leverage and survival armor.`,
-        tagsZh: ['三经心智', '冯道荣枯鉴', '处世保全'],
-        tagsEn: ['Cosmobiological Matrix', 'Multi-Agent Game Theory', 'Strategic Armor']
-      },
-      {
-        pageId: 'imperialPage8',
-        num: 8,
-        titleZh: '卷八 · 十年流年流月与天星地理 (14字干支全息气机合成与现居地校准)',
-        titleEn: 'Volume VIII: Decennial Trajectory, 14-Character Energy Synthesis & City Qi',
-        descZh: '十四字时空大合参，整合地磁偏角校准与现居地经纬气运，推导最佳空间风水朝向与天星时空窗口。',
-        descEn: `Spatial field dynamics grounded in Erlewine's Local Space azimuth vectors (tan A = sin H / ...) and Lewis' AstroCartoGraphy: integrates topocentric horizon coordinates with geomagnetic declination to compute optimal geographic relocation and workspace orientation.`,
-        tagsZh: ['14字能量合成', '地磁校准', '现居地风水'],
-        tagsEn: ['Local Space Azimuth', 'AstroCartoGraphy Lines', 'Geomagnetic Alignment']
-      },
-      {
-        pageId: 'imperialPage9',
-        num: 9,
-        titleZh: '卷九 · 职场打工人破局与事业财运全相 (向上管理 · 同僚防波堤 · 天命生态位)',
-        titleEn: 'Volume IX: Career Breakthrough & Wealth Trajectory',
-        descZh: '正财主业与偏财副业双轨推演；穿透职场政治丛林，筑牢同僚防波堤与向上管理通道，锁死天命事业生态位。',
-        descEn: `Career and wealth dynamics grounded in Valens' Lot of Spirit (vocation) and Lot of Fortune (capital flow): models dual income streams, navigates organizational hierarchies with upward alignment vectors, and optimizes an uncontested professional niche.`,
+        titleZh: '卷七 · 职场实战原型、财富防火墙与终身宝印 (向上管理 · 同僚防波堤 · 天命生态位)',
+        titleEn: 'Volume VII: Career Breakthrough Archetypes, Wealth Firewall & Sovereign Seal',
+        descZh: '正财主业与偏财副业双轨推演；穿透职场政治丛林，筑牢同僚防波堤与向上管理通道，结合现居地时空向量锁死天命事业生态位。',
+        descEn: `Career and wealth dynamics grounded in Valens' Lot of Spirit (vocation) and Lot of Fortune (capital flow), integrated with Erlewine's Local Space azimuth vectors (tan A = sin H / ...): navigates organizational hierarchies with upward alignment vectors, establishes wealth firewalls, and optimizes an uncontested professional niche.`,
         tagsZh: ['正财偏财', '向上管理', '事业生态位'],
-        tagsEn: ['Lot of Spirit Vocation', 'Lot of Fortune Capital', 'Career Niche Optimization']
+        tagsEn: ['Lot of Spirit Vocation', 'Lot of Fortune Capital', 'Local Space Azimuth Vectors']
       }
     ];
 
@@ -28961,11 +28735,11 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <span class="text-2xl">📜</span>
           <div>
             <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
-              <span>${isEn ? 'Imperial Dossier Compendium · 9-Volume Executive Blueprint' : '钦天监 · 皇家九卷精装战报全卷精萃'}</span>
+              <span>${isEn ? 'Imperial Dossier Compendium · 7-Volume Executive Blueprint' : '钦天监 · 皇家七卷精装战报全卷精萃'}</span>
               <span class="chinese-seal text-[10px] py-0 text-amber-400 border-amber-500">${isEn ? 'A4 Master Archive' : 'A4 珍藏册'}</span>
             </h3>
             <p class="text-xs text-gray-400 mt-0.5">
-              ${isEn ? 'Executive compendium across all 9 volumes · One-click page inspection and full A4 PDF export' : '全本九卷绝密战报核心纲要 · 支持一键定位对应卷册、单页导出与九卷全本导出'}
+              ${isEn ? 'Executive compendium across all 7 volumes · One-click page inspection and full A4 PDF export' : '全本七卷绝密战报核心纲要 · 支持一键定位对应卷册、单页导出与七卷全本导出'}
             </p>
           </div>
         </div>
@@ -28974,7 +28748,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <button id="masterProfileBtnInspectAll" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold transition flex items-center gap-1.5 cursor-pointer shadow active:scale-95">
             <span>📖</span>
-            <span>${isEn ? 'Inspect Full 9-Page Dossier' : '检视九卷排盘战报全景'}</span>
+            <span>${isEn ? 'Inspect Full 7-Page Dossier' : '检视七卷排盘战报全景'}</span>
           </button>
           <button id="masterProfileBtnExportSingle" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-amber-200 border border-gray-700 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>📄</span>
@@ -28982,7 +28756,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           </button>
           <button id="masterProfileBtnExportFull" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-purple-200 border border-purple-800/40 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>📑</span>
-            <span>${isEn ? 'Download 9-Page PDF' : '下载完整 9 页珍藏册 PDF'}</span>
+            <span>${isEn ? 'Download 7-Page PDF' : '下载完整 7 页珍藏册 PDF'}</span>
           </button>
           <button id="masterProfileBtnPrint" type="button" class="px-3 py-1.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 border border-gray-800 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>🖨️</span>
@@ -28991,14 +28765,14 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         </div>
       </div>
 
-      <!-- 9-Volume Executive Cards Grid -->
+      <!-- 7-Volume Executive Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         ${chapters.map(c => `
           <div class="p-4 rounded-xl bg-black/40 border border-amber-900/30 hover:border-amber-500/50 transition flex flex-col justify-between space-y-3 shadow-lg group">
             <div class="space-y-2">
               <div class="flex items-center justify-between pb-1.5 border-b border-gray-800">
                 <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 font-mono font-bold">
-                  ${isEn ? `Vol ${c.num} / Page ${c.num}` : `卷${['一','二','三','四','五','六','七','八','九'][c.num - 1]} · 第 ${c.num} 页`}
+                  ${isEn ? `Vol ${c.num} / Page ${c.num}` : `卷${['一','二','三','四','五','六','七'][c.num - 1]} · 第 ${c.num} 页`}
                 </span>
                 <span class="text-xs text-amber-400 group-hover:scale-110 transition-transform">📜</span>
               </div>
