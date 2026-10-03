@@ -3501,21 +3501,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 return `
-                  <div class="p-3 bg-black/40 rounded-xl border border-sky-600/40 space-y-2 mt-2 shadow-inner">
-                    <div class="flex items-center space-x-1.5 pb-1 border-b border-gray-800">
-                      <span class="chinese-seal text-[9px] py-0 border-sky-500 text-sky-300">${isEn ? 'Combination Synthesis' : '合局通融'}</span>
-                      <span class="text-sky-300 font-bold text-xs font-serif-sc">
-                        🌀 7. ${isEn ? 'Combination Bureaus & Energy Precedence Exegesis (San He / San Hui)' : '合局全套解析与能量优先论 (三合生旺库 / 三会方局 / 贪合忘冲)'}
-                      </span>
-                    </div>
-                    <p class="text-gray-300 text-[11.5px] leading-relaxed">${isEn ? comboSummaryEn : comboSummaryZh}</p>
-                    ${resolvedClashes.length > 0 ? `
-                      <div class="p-2 rounded bg-amber-950/30 border border-amber-600/30 text-[11px] text-amber-200">
-                        <b>${isEn ? '⚡ Clashes Resolved by Combination Bureau: ' : '⚡ 合局化解刑冲实况：'}</b>
-                        ${resolvedClashes.map(c => isEn ? `[${(c.branchesEn || c.branches.map(b => (typeof I18N !== 'undefined' ? I18N.getBranch(b, 'en') : b))).join('-')}: ${c.resolutionNoteEn}]` : `【地支${c.branches.join('与')}冲：${c.resolutionNoteZh}】`).join('；')}
+                  <details class="group mt-2 rounded-xl border border-sky-600/40 bg-black/40 shadow-inner overflow-hidden transition-all duration-200">
+                    <summary class="flex items-center justify-between p-2.5 sm:p-3 cursor-pointer select-none hover:bg-sky-950/20 transition-colors">
+                      <div class="flex items-center space-x-1.5">
+                        <span class="chinese-seal text-[9px] py-0 border-sky-500 text-sky-300">${isEn ? 'Combination Synthesis' : '合局通融'}</span>
+                        <span class="text-sky-300 font-bold text-xs font-serif-sc">
+                          🌀 7. ${isEn ? 'Combination Bureaus & Energy Precedence Exegesis (San He / San Hui)' : '合局全套解析与能量优先论 (三合生旺库 / 三会方局 / 贪合忘冲)'}
+                        </span>
                       </div>
-                    ` : ''}
-                  </div>
+                      <div class="flex items-center space-x-1.5 text-sky-400/80 text-xs">
+                        <span class="text-[10.5px] text-stone-400 font-sans group-open:hidden">${isEn ? 'Click to expand' : '点击展开阅读'}</span>
+                        <span class="text-[10.5px] text-stone-400 font-sans hidden group-open:inline">${isEn ? 'Click to collapse' : '点击收起折叠'}</span>
+                        <span class="transform transition-transform duration-200 group-open:rotate-180 text-[10px]">▼</span>
+                      </div>
+                    </summary>
+                    <div class="p-3 pt-2 space-y-2 border-t border-sky-800/30">
+                      <p class="text-gray-300 text-[11.5px] leading-relaxed">${isEn ? comboSummaryEn : comboSummaryZh}</p>
+                      ${resolvedClashes.length > 0 ? `
+                        <div class="p-2 rounded bg-amber-950/30 border border-amber-600/30 text-[11px] text-amber-200">
+                          <b>${isEn ? '⚡ Clashes Resolved by Combination Bureau: ' : '⚡ 合局化解刑冲实况：'}</b>
+                          ${resolvedClashes.map(c => isEn ? `[${(c.branchesEn || c.branches.map(b => (typeof I18N !== 'undefined' ? I18N.getBranch(b, 'en') : b))).join('-')}: ${c.resolutionNoteEn}]` : `【地支${c.branches.join('与')}冲：${c.resolutionNoteZh}】`).join('；')}
+                        </div>
+                      ` : ''}
+                    </div>
+                  </details>
                 `;
               })()}
             </div>
@@ -6378,7 +6387,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render Fortune & Luck Cycles (大运、流年、流月、流日 四阶全息推演与五柱同参)
   function renderLuckCycles(res) {
-    if (typeof LuckEngine === 'undefined' || !currentLuckResult) return;
+    const activeBazi = res || currentBaziResult;
+    if (typeof LuckEngine === 'undefined' || !currentLuckResult || !activeBazi) return;
     const isEn = (currentLang === 'en');
 
     // 1. Meta Badges: Progression Direction & Start Age
@@ -6389,7 +6399,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const dirText = m.direction === 1
         ? (isEn ? 'Forward (+10y)' : '顺行 (+10年/步)')
         : (isEn ? 'Backward (-10y)' : '逆行 (-10年/步)');
-      const rawG = (res.input && res.input.gender) || res.gender || '乾造';
+      const rawG = (activeBazi.input && activeBazi.input.gender) || activeBazi.gender || '乾造';
       const isM = (rawG === '乾造' || rawG === 'male' || rawG === 'Yang Male');
       const genderText = isM
         ? (isEn ? 'Yang Male' : '阳男')
@@ -6711,8 +6721,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }">
               ${isEn ? `[${termTitle}]` : `【${termTitle}】`}
             </span>
-            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full text-[9px] font-bold font-serif-sc border ${mBadgeStyle}">
-              <span class="text-[7.5px]">${mBadgeIcon}</span>
+            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full text-[9px] font-bold font-serif-sc border ${badgeStyle}">
+              <span class="text-[7.5px]">${badgeIcon}</span>
               <span>${badgeLabel}</span>
             </span>
           </div>
@@ -6748,8 +6758,8 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
           selectedMonthBranch = m.branch;
           selectedFortuneCycle = 'monthly';
-          currentLuckResult = LuckEngine.calculateLuck(currentBaziResult, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-          renderLuckCycles(currentBaziResult);
+          currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+          renderLuckCycles(activeBazi);
         });
 
         monthlyContainer.appendChild(card);
@@ -6767,8 +6777,8 @@ document.addEventListener('DOMContentLoaded', () => {
           selectedFortuneCycle = 'daily';
           const parts = selectedDailyDate.split('-').map(Number);
           if (parts[0]) selectedAnnualYear = parts[0];
-          currentLuckResult = LuckEngine.calculateLuck(currentBaziResult, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-          renderLuckCycles(currentBaziResult);
+          currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+          renderLuckCycles(activeBazi);
         }
       };
     }
@@ -6779,8 +6789,8 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedDailyDate = now.toISOString().split('T')[0];
         selectedAnnualYear = now.getFullYear();
         selectedFortuneCycle = 'daily';
-        currentLuckResult = LuckEngine.calculateLuck(currentBaziResult, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-        renderLuckCycles(currentBaziResult);
+        currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+        renderLuckCycles(activeBazi);
       };
     }
 
@@ -6794,10 +6804,10 @@ document.addEventListener('DOMContentLoaded', () => {
         '酉': ['辛'], '戌': ['戊', '辛', '丁'], '亥': ['壬', '甲']
       };
 
-      const pYear = res.pillars.year;
-      const pMonth = res.pillars.month;
-      const pDay = res.pillars.day;
-      const pHour = res.pillars.hour;
+      const pYear = activeBazi.pillars.year;
+      const pMonth = activeBazi.pillars.month;
+      const pDay = activeBazi.pillars.day;
+      const pHour = activeBazi.pillars.hour;
       const pDecade = currentLuckResult.activeDecade || { stem: '--', branch: '--', stemGod: '--', naYin: '--' };
       const pAnnual = currentLuckResult.activeAnnual || { stem: '--', branch: '--', stemGod: '--', naYin: '--' };
       const pMonthly = currentLuckResult.activeMonth || { stem: '--', branch: '--', stemGod: '--', naYin: '--' };
@@ -6835,7 +6845,7 @@ document.addEventListener('DOMContentLoaded', () => {
           god: isEn ? 'Self (Day Master)' : '日主 (元神)',
           hidden: getHiddenStemsStr(pDay),
           nayin: pDay.naYin,
-          cellCls: 'bg-amber-950/20 text-amber-300 font-bold'
+          cellCls: 'bg-amber-950/30 text-amber-300 font-bold border-l border-r border-amber-500/40 shadow-inner'
         },
         {
           label: isEn ? 'Natal Hour' : '本命时柱',
@@ -6888,55 +6898,72 @@ document.addEventListener('DOMContentLoaded', () => {
       const rows = [
         {
           dimName: isEn ? 'Heavenly Stem' : '天干',
-          cells: allCols.map(c => `
-            <td class="py-2.5 px-3 font-serif-sc text-base font-bold ${c.cellCls}">
-              ${c.stem}
-              ${isEn && c.stem !== '--' ? `<span class="block text-[10px] font-sans font-normal text-gray-400">(${I18N.getStem(c.stem, 'en')})</span>` : ''}
-            </td>
-          `).join('')
+          cells: allCols.map(c => {
+            const elColor = (c.stem && ELEMENT_AESTHETICS[c.stem]) ? ELEMENT_AESTHETICS[c.stem].color : 'text-stone-100';
+            return `
+              <td class="py-3 px-3 font-serif-sc text-lg sm:text-xl font-bold ${c.cellCls}">
+                <span class="${elColor} drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">${c.stem}</span>
+                ${isEn && c.stem !== '--' ? `<span class="block text-[10px] font-sans font-normal text-stone-400">(${I18N.getStem(c.stem, 'en')})</span>` : ''}
+              </td>
+            `;
+          }).join('')
         },
         {
           dimName: isEn ? 'Earthly Branch' : '地支',
-          cells: allCols.map(c => `
-            <td class="py-2.5 px-3 font-serif-sc text-base font-bold ${c.cellCls}">
-              ${c.branch}
-              ${isEn && c.branch !== '--' ? `<span class="block text-[10px] font-sans font-normal text-gray-400">(${I18N.getBranch(c.branch, 'en')})</span>` : ''}
-            </td>
-          `).join('')
+          cells: allCols.map(c => {
+            const elColor = (c.branch && ELEMENT_AESTHETICS[c.branch]) ? ELEMENT_AESTHETICS[c.branch].color : 'text-stone-100';
+            return `
+              <td class="py-3 px-3 font-serif-sc text-lg sm:text-xl font-bold ${c.cellCls}">
+                <span class="${elColor} drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">${c.branch}</span>
+                ${isEn && c.branch !== '--' ? `<span class="block text-[10px] font-sans font-normal text-stone-400">(${I18N.getBranch(c.branch, 'en')})</span>` : ''}
+              </td>
+            `;
+          }).join('')
         },
         {
           dimName: isEn ? 'Ten God' : '十神 (相对日主)',
           cells: allCols.map(c => `
-            <td class="py-2 px-3 text-xs font-semibold ${c.cellCls}">
-              ${I18N.getGod(c.god, currentLang)}
+            <td class="py-2.5 px-3 text-xs font-semibold ${c.cellCls}">
+              <span class="inline-block px-2 py-0.5 rounded-full text-[10.5px] font-serif-sc font-medium bg-gradient-to-r from-purple-950/80 via-[#221535] to-purple-950/80 text-purple-200 border border-purple-500/30 shadow-sm">${I18N.getGod(c.god, currentLang)}</span>
             </td>
           `).join('')
         },
         {
           dimName: isEn ? 'Hidden Stems' : '支中藏干',
-          cells: allCols.map(c => `
-            <td class="py-1.5 px-3 text-xs text-gray-300 ${c.cellCls}">
-              ${c.hidden || '--'}
-            </td>
-          `).join('')
+          cells: allCols.map(c => {
+            const hiddenStemsList = (c.hidden && c.hidden !== '--') ? c.hidden.split(' ') : [];
+            const styledHidden = hiddenStemsList.map(h => {
+              const hColor = (ELEMENT_AESTHETICS[h] ? ELEMENT_AESTHETICS[h].color : 'text-stone-300');
+              return `<span class="${hColor} font-serif-sc font-bold">${h}</span>`;
+            }).join(' ');
+            return `
+              <td class="py-2 px-3 text-xs text-stone-300 ${c.cellCls}">
+                ${styledHidden || '--'}
+              </td>
+            `;
+          }).join('')
         },
         {
           dimName: isEn ? 'Melodic (Na Yin)' : '纳音五行',
           cells: allCols.map(c => `
-            <td class="py-2 px-3 text-[11px] text-gray-400 ${c.cellCls}">
-              ${I18N.getNaYin(c.nayin, currentLang)}
+            <td class="py-2.5 px-3 text-[11px] text-stone-400 ${c.cellCls}">
+              <span class="inline-flex items-center gap-1 font-serif-sc text-stone-300">
+                <span class="text-amber-400 text-[9.5px]">${isEn ? '♪' : '律'}</span>
+                <span>${I18N.getNaYin(c.nayin, currentLang)}</span>
+              </span>
             </td>
           `).join('')
         }
       ];
 
       matrixBody.innerHTML = rows.map(r => `
-        <tr>
-          <td class="py-2 px-3 text-left font-bold text-gray-400 bg-[#171922] whitespace-nowrap">${r.dimName}</td>
+        <tr class="hover:bg-white/[0.02] transition-colors">
+          <td class="py-2.5 px-3.5 text-left font-serif-sc font-bold text-amber-200/90 bg-[#151824]/90 border-r border-stone-800/80 whitespace-nowrap">${r.dimName}</td>
           ${r.cells}
         </tr>
       `).join('');
     }
+
 
     // 6. Astrological Clashes, Combinations & Tactical Guidance
     const interactContainer = document.getElementById('luckInteractionsContainer');
@@ -6971,24 +6998,87 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 7. Render In-Depth Transit Fortune Detail Card
-    renderTransitFortuneDetail(res, currentLuckResult);
+    renderTransitFortuneDetail(activeBazi, currentLuckResult);
 
     // 8. Render Lifelong Chrono-Navigator (百岁运势时空罗盘)
     if (currentLuckResult && currentLuckResult.timeline && typeof renderChronoNavigator === 'function') {
-      renderChronoNavigator(currentLuckResult.timeline, res);
+      renderChronoNavigator(currentLuckResult.timeline, activeBazi);
     }
 
     // 9. Render Current Year & Season Operational Playbook (当季/本年现实破局罗盘)
-    renderOperationalPlaybook(res, currentLuckResult, isEn);
+    renderOperationalPlaybook(activeBazi, currentLuckResult, isEn);
 
     // 10. Render Geographic & Ecological Resonance (地理方位与组织生态匹配仪)
-    renderEcologicalResonance(res, currentLuckResult, isEn);
+    renderEcologicalResonance(activeBazi, currentLuckResult, isEn);
 
     // 11. Render Time Dynamics & Macro-Energy 5-Tier Master Report (时间动力学与宏观能量五阶递进战报)
-    renderTimeDynamicsReport(res, currentLuckResult, isEn);
+    renderTimeDynamicsReport(activeBazi, currentLuckResult, isEn);
 
     // 12. Render 14-Character Dynamic Energy Synthesis (十四字时空全息能量统揽)
-    render14CharEnergySynthesis(res, currentLuckResult, isEn);
+    render14CharEnergySynthesis(activeBazi, currentLuckResult, isEn);
+  }
+
+  // Helper to format structured checklist items from raw text
+  function formatActionableBulletList(rawText, isEn, type) {
+    if (!rawText) return '';
+    let cleaned = rawText
+      .replace(/^🛑【[^】]+】：\s*/, '')
+      .replace(/^⚠️【[^】]+】：\s*/, '')
+      .replace(/^🎯【[^】]+】：\s*/, '')
+      .replace(/^🛑【[^\]]+\]:\s*/, '')
+      .replace(/^⚠️【[^\]]+\]:\s*/, '')
+      .replace(/^🎯【[^\]]+\]:\s*/, '')
+      .trim();
+
+    let items = cleaned.split(/[；;]/).map(s => s.trim()).filter(s => s.length > 0);
+    if (items.length <= 1) {
+      items = cleaned.split(/(?<=[。！？!?])\s+/).map(s => s.trim()).filter(s => s.length > 2);
+    }
+
+    const isTaboo = (type === 'taboo');
+    const isPitfall = (type === 'pitfall');
+
+    if (items.length <= 1) {
+      const borderCls = isTaboo
+        ? 'border-rose-500/40 bg-gradient-to-r from-rose-950/30 to-black/60 text-rose-100'
+        : isPitfall
+          ? 'border-amber-500/40 bg-gradient-to-r from-amber-950/30 to-black/60 text-amber-100'
+          : 'border-emerald-500/40 bg-gradient-to-r from-emerald-950/30 to-black/60 text-emerald-100';
+      const icon = isTaboo ? '⛔' : isPitfall ? '⚠️' : '🎯';
+      return `
+        <div class="p-3.5 sm:p-4 rounded-2xl border ${borderCls} flex items-start gap-3 text-xs sm:text-[13px] leading-relaxed font-sans shadow-sm">
+          <span class="text-base shrink-0 mt-0.5">${icon}</span>
+          <span class="font-medium">${cleaned}</span>
+        </div>
+      `;
+    }
+
+    const itemBorder = isTaboo
+      ? 'border-rose-900/60 bg-gradient-to-br from-[#1c0a10]/95 via-[#12060a]/90 to-black/90 hover:border-rose-500/60'
+      : isPitfall
+        ? 'border-amber-900/60 bg-gradient-to-br from-[#1c1408]/95 via-[#120d05]/90 to-black/90 hover:border-amber-500/60'
+        : 'border-emerald-900/60 bg-gradient-to-br from-[#081a11]/95 via-[#05110b]/90 to-black/90 hover:border-emerald-500/60';
+    const numBadge = isTaboo
+      ? 'bg-rose-500/20 text-rose-300 border-rose-500/40 shadow-[0_0_8px_rgba(244,63,94,0.25)]'
+      : isPitfall
+        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-[0_0_8px_rgba(245,158,11,0.25)]'
+        : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-[0_0_8px_rgba(16,185,129,0.25)]';
+    const textColor = isTaboo ? 'text-rose-100/95' : isPitfall ? 'text-amber-100/95' : 'text-emerald-100/95';
+
+    return `
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+        ${items.map((item, idx) => `
+          <div class="p-3.5 rounded-2xl border ${itemBorder} shadow-sm transition-all duration-300 hover:shadow-md flex items-start gap-3">
+            <div class="w-6 h-6 rounded-lg ${numBadge} border flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold font-mono">
+              ${idx + 1}
+            </div>
+            <div class="space-y-0.5 min-w-0 flex-1">
+              <p class="text-xs sm:text-[13px] ${textColor} leading-relaxed font-sans font-medium">${item}</p>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
   }
 
   // Render In-Depth Fortune Evaluation, Meaning, Pitfalls (if Good), Taboos (if Bad), and Strategy
@@ -6997,15 +7087,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const badgeEl = document.getElementById('fortuneActiveBadge');
     if (!detailBody || !luckRes) return;
     const isEn = (currentLang === 'en');
+    const activeBazi = res || currentBaziResult;
 
     // Update active sub-tab styling
     const tabBtns = document.querySelectorAll('.fortune-tab-btn');
     tabBtns.forEach(btn => {
       const target = btn.getAttribute('data-target');
       if (target === selectedFortuneCycle) {
-        btn.className = 'fortune-tab-btn active px-3 py-1.5 rounded-lg font-bold font-serif-sc transition bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-sm cursor-pointer';
+        btn.className = 'fortune-tab-btn active px-3.5 py-1.5 rounded-xl font-bold font-serif-sc transition bg-gradient-to-r from-amber-500/25 to-yellow-500/20 text-amber-200 border border-amber-400/60 shadow-[0_0_12px_rgba(245,158,11,0.25)] cursor-pointer';
       } else {
-        btn.className = 'fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 border border-transparent transition cursor-pointer';
+        btn.className = 'fortune-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-400 hover:text-stone-200 border border-transparent transition cursor-pointer';
       }
     });
 
@@ -7033,28 +7124,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!targetPillar) return;
 
-    const fortune = targetPillar.fortune || LuckEngine.evaluateTransitFortune(res, targetPillar, selectedFortuneCycle);
+    const fortune = targetPillar.fortune || LuckEngine.evaluateTransitFortune(activeBazi, targetPillar, selectedFortuneCycle);
     const isGood = (fortune.rating === 'good');
 
     // Adapt outer container frame
     const cardContainer = document.getElementById('transitFortuneDetailCard');
     if (cardContainer) {
-      cardContainer.className = `p-5 sm:p-6 rounded-2xl border-2 transition-all duration-500 space-y-4 shadow-2xl backdrop-blur-md ${
+      cardContainer.className = `p-5 sm:p-7 rounded-3xl border-2 transition-all duration-500 space-y-5 shadow-2xl backdrop-blur-md relative overflow-hidden ${
         isGood
-          ? 'bg-gradient-to-br from-emerald-950/25 via-[#0e1613]/95 to-black/95 border-emerald-500/40 shadow-[0_10px_35px_rgba(16,185,129,0.12)]'
-          : 'bg-gradient-to-br from-rose-950/30 via-[#180e12]/95 to-black/95 border-rose-500/40 shadow-[0_10px_35px_rgba(244,63,94,0.12)]'
+          ? 'bg-gradient-to-br from-[#0c1f16]/95 via-[#0c151a]/95 to-black/98 border-emerald-500/50 shadow-[0_15px_50px_rgba(16,185,129,0.18)] ring-1 ring-emerald-500/20'
+          : 'bg-gradient-to-br from-[#240a12]/95 via-[#160b14]/95 to-black/98 border-rose-500/50 shadow-[0_15px_50px_rgba(244,63,94,0.18)] ring-1 ring-rose-500/20'
       }`;
     }
 
     // Update active badge in header
     if (badgeEl) {
-      badgeEl.className = `text-xs px-3 py-1 rounded-full font-mono font-bold border flex items-center gap-1.5 shadow-sm ${
-        isGood
-          ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.25)]'
-          : 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_10px_rgba(244,63,94,0.25)]'
-      }`;
-      const statusText = isEn ? fortune.statusEn : fortune.statusZh;
-      badgeEl.innerHTML = `<span class="inline-block w-2 h-2 rounded-full ${isGood ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]' : 'bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.8)]'} animate-pulse"></span><span>${statusText}</span>`;
+      const rawStatus = isEn ? (fortune.statusEn || 'Evaluation') : (fortune.statusZh || '运势评估');
+      let statusTone = isGood ? (isEn ? 'Auspicious Transit' : '顺遂吉运') : (isEn ? 'Challenging Transit' : '考验磨砺');
+      let statusArchetype = isEn ? 'Planetary Vector' : '时空气象';
+      if (rawStatus.includes(' · ')) {
+        const parts = rawStatus.split(' · ');
+        statusTone = parts[0].replace(/^[🔴🟢▲✦\s]+/, '').trim();
+        statusArchetype = parts[1].trim();
+      } else {
+        statusArchetype = rawStatus.replace(/^[🔴🟢▲✦\s]+/, '').trim();
+      }
+
+      badgeEl.innerHTML = `
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full ${
+          isGood
+            ? 'bg-gradient-to-r from-emerald-950/90 via-[#0e271a] to-emerald-950/90 border-emerald-400/50 text-emerald-200 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
+            : 'bg-gradient-to-r from-rose-950/90 via-[#2a0e16] to-rose-950/90 border-rose-400/50 text-rose-200 shadow-[0_0_12px_rgba(244,63,94,0.3)]'
+        } border text-xs font-serif-sc font-bold">
+          <span class="inline-block w-2.5 h-2.5 rounded-full ${isGood ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]' : 'bg-rose-400 shadow-[0_0_8px_rgba(251,113,133,0.9)]'} animate-pulse"></span>
+          <span class="tracking-wide">${statusTone}</span>
+          <span class="text-white/20 font-mono">|</span>
+          <span class="${isGood ? 'text-emerald-300' : 'text-rose-300'}">${statusArchetype}</span>
+        </div>
+      `;
     }
 
     const stemGodTranslated = I18N.getGod(targetPillar.stemGod, currentLang);
@@ -7064,6 +7171,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const stemEn = typeof I18N !== 'undefined' ? I18N.getStem(targetPillar.stem, 'en') : targetPillar.stem;
     const branchEn = typeof I18N !== 'undefined' ? I18N.getBranch(targetPillar.branch, 'en') : targetPillar.branch;
 
+    const stemElemColor = (targetPillar.stem && ELEMENT_AESTHETICS[targetPillar.stem]) ? ELEMENT_AESTHETICS[targetPillar.stem].color : (isGood ? 'text-emerald-200' : 'text-rose-200');
+    const branchElemColor = (targetPillar.branch && ELEMENT_AESTHETICS[targetPillar.branch]) ? ELEMENT_AESTHETICS[targetPillar.branch].color : (isGood ? 'text-emerald-200' : 'text-rose-200');
+
     const tacticalPosture = isGood
       ? (isEn ? '⚔️ Seize Momentum · Offensive Expansion' : '⚔️ 顺势进取 · 乘胜追击')
       : (isEn ? '🛡️ Deep Squat · Capital & Contract Preservation' : '🛡️ 深蹲蓄势 · 严防破耗');
@@ -7072,92 +7182,122 @@ document.addEventListener('DOMContentLoaded', () => {
       : (isEn ? 'High Tension / Friction · Potential Drag' : '逆气对峙 · 磨砺修心');
 
     detailBody.innerHTML = `
-      <!-- Transit Overview Header Bar -->
-      <div class="p-4 sm:p-5 rounded-2xl bg-black/50 border ${isGood ? 'border-emerald-900/50' : 'border-rose-900/50'} shadow-inner flex flex-col md:flex-row items-stretch justify-between gap-4">
-        <div class="flex items-center space-x-3.5">
-          <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-br ${isGood ? 'from-emerald-500/25 via-amber-900/40 to-black' : 'from-rose-500/25 via-amber-900/40 to-black'} border-2 ${isGood ? 'border-emerald-500/60' : 'border-rose-500/60'} shadow-lg flex flex-col items-center justify-center text-center p-1">
-            <span class="text-xl sm:text-2xl font-serif-sc font-bold ${isGood ? 'text-emerald-200' : 'text-rose-200'} tracking-wider">${targetPillar.stem}${targetPillar.branch}</span>
-            <span class="text-[9.5px] ${isGood ? 'text-emerald-400' : 'text-rose-400'} font-mono font-bold tracking-tight">${isEn ? `${stemEn} ${branchEn}` : `${stemElTrans}${branchElTrans}`}</span>
+      <!-- Transit Overview Hero Banner -->
+      <div class="p-4 sm:p-5 rounded-3xl bg-black/60 border ${isGood ? 'border-emerald-900/60 shadow-[inset_0_1px_1px_rgba(16,185,129,0.15)]' : 'border-rose-900/60 shadow-[inset_0_1px_1px_rgba(244,63,94,0.15)]'} flex flex-col lg:flex-row items-stretch justify-between gap-5">
+        <div class="flex items-center space-x-4">
+          <!-- Squircle Celestial Medallion -->
+          <div class="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl bg-gradient-to-b from-[#181a24] via-[#10121a] to-black border-2 ${isGood ? 'border-emerald-400/60 shadow-[0_0_25px_rgba(16,185,129,0.25)]' : 'border-rose-400/60 shadow-[0_0_25px_rgba(244,63,94,0.25)]'} flex flex-col items-center justify-center p-1.5 shrink-0">
+            <div class="flex items-center space-x-1 text-2xl sm:text-3xl font-serif-sc font-extrabold tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+              <span class="${stemElemColor}">${targetPillar.stem}</span>
+              <span class="${branchElemColor}">${targetPillar.branch}</span>
+            </div>
+            <div class="text-[9.5px] font-mono text-stone-300 tracking-wider mt-0.5">${isEn ? `${stemEn} · ${branchEn}` : `${stemElTrans} · ${branchElTrans}`}</div>
+            <div class="text-[8.5px] font-mono text-stone-400">${isEn ? 'Transit Pillar' : '时空交感干支'}</div>
           </div>
-          <div class="space-y-1">
-            <div class="flex flex-wrap items-center gap-1.5">
+
+          <!-- Metadata Context -->
+          <div class="space-y-1.5">
+            <div class="flex flex-wrap items-center gap-2">
               <span class="chinese-seal text-[10px] py-0 px-2 font-bold ${isGood ? 'border-emerald-500 text-emerald-300' : 'border-rose-500 text-rose-300'}">${cycleTitle}</span>
-              <span class="px-2 py-0.5 rounded text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/35">【${stemGodTranslated}】</span>
-              <span class="text-gray-400 text-xs font-mono">(${naYinTranslated})</span>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-serif-sc font-medium bg-gradient-to-r from-purple-950/90 via-[#26173d] to-purple-950/90 text-purple-200 border border-purple-500/40 shadow-sm">
+                ${isEn ? `[${stemGodTranslated}] Governs` : `【${stemGodTranslated}】司权`}
+              </span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-black/50 border border-white/10 text-[10px] font-serif-sc text-stone-300 shadow-sm">
+                <span class="text-amber-400 text-[9.5px]">${isEn ? '♪' : '律'}</span>
+                <span>${naYinTranslated}</span>
+              </span>
             </div>
             <div class="text-xs text-amber-200/90 font-mono font-medium">${cycleDesc}</div>
-            <div class="text-[11px] text-gray-400 font-sans">${isGood ? (isEn ? 'Favorable elemental circulation; advance strategic partnerships and core initiatives.' : '天道气数生合流通，主攻坚扩局与声望提升') : (isEn ? 'Clashing planetary vectors; prioritize balance sheet health and compliance defense.' : '天道气数多克耗冲刑，主修养底盘与防务合规')}</div>
+            <div class="p-2 sm:p-2.5 rounded-xl bg-black/40 border border-white/5 text-[11.5px] ${isGood ? 'text-emerald-100/90' : 'text-rose-100/90'} font-sans leading-relaxed">
+              ${isGood ? (isEn ? '✦ Auspicious celestial resonance: Energy circulation flows unobstructed, ideal for bold initiatives and structural breakthroughs.' : '✦ 天道气数生合流通：阴阳承应顺遂，利于乘胜攻坚、拓展疆界与晋升声望。') : (isEn ? '▲ Planetary friction active: Heightened tension and clashes demand disciplined balance sheet protection and systemic safeguards.' : '▲ 天象气数多见战伐克耗：阴阳逆气相持，宜深潜养晦、加固底盘、严控契约与资金安全。')}
+            </div>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-2 min-w-[240px] md:border-l md:border-gray-800/80 md:pl-4">
-          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 space-y-0.5">
-            <span class="text-[10px] text-gray-400 font-mono block">${isEn ? 'TACTICAL POSTURE' : '战略攻防姿态'}</span>
-            <span class="text-xs font-bold ${isGood ? 'text-emerald-300' : 'text-rose-300'} font-serif-sc">${tacticalPosture}</span>
+        <!-- Tactical Posture & Energy Tension Meter -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 min-w-[280px] lg:border-l lg:border-stone-800/80 lg:pl-5">
+          <div class="p-3 rounded-2xl bg-gradient-to-b from-[#151824] to-black/80 border ${isGood ? 'border-emerald-500/30' : 'border-rose-500/30'} space-y-1.5 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] text-stone-400 font-mono tracking-wider">${isEn ? 'TACTICAL POSTURE' : '战略攻守态势'}</span>
+              <span class="text-[9.5px] px-2 py-0.2 rounded font-mono font-bold ${isGood ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">${isGood ? (isEn ? 'OFFENSIVE' : '攻势') : (isEn ? 'DEFENSIVE' : '守势')}</span>
+            </div>
+            <div class="text-xs sm:text-sm font-bold font-serif-sc ${isGood ? 'text-emerald-300' : 'text-rose-300'} flex items-center gap-1.5">
+              <span>${tacticalPosture}</span>
+            </div>
           </div>
-          <div class="p-2.5 rounded-xl bg-black/40 border border-gray-800 space-y-0.5">
-            <span class="text-[10px] text-gray-400 font-mono block">${isEn ? 'ENERGY TENSION' : '气象张力共振'}</span>
-            <span class="text-xs font-bold text-amber-300 font-serif-sc">${energyAura}</span>
+          <div class="p-3 rounded-2xl bg-gradient-to-b from-[#151824] to-black/80 border border-stone-800 space-y-1.5 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] text-stone-400 font-mono tracking-wider">${isEn ? 'ENERGY TENSION' : '气机张力共振'}</span>
+              <span class="text-[10px] font-mono font-bold ${isGood ? 'text-emerald-400' : 'text-amber-400'}">${isGood ? (isEn ? '88% Resonant' : '88% 畅达') : (isEn ? '35% Friction' : '35% 阻滞')}</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-stone-800 overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-700 ${isGood ? 'w-[88%] bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_8px_rgba(16,185,129,0.8)]' : 'w-[35%] bg-gradient-to-r from-rose-500 via-amber-500 to-rose-600 shadow-[0_0_8px_rgba(244,63,94,0.8)]'}"></div>
+            </div>
+            <div class="text-[11px] font-bold font-serif-sc text-amber-200/90 truncate">${energyAura}</div>
           </div>
         </div>
       </div>
 
-      <!-- Deep Meaning & Core Lesson -->
-      <div class="p-4 rounded-2xl border border-sky-500/40 bg-gradient-to-br from-sky-950/25 via-[#0d1522]/90 to-black/80 space-y-2 shadow-lg">
-        <div class="flex items-center justify-between pb-1.5 border-b border-sky-500/20">
-          <div class="flex items-center space-x-2 text-sky-300 text-xs sm:text-sm font-bold font-serif-sc">
-            <span class="text-base">📖</span>
-            <span>${isEn ? 'Essence Meaning & Core Lessons (Metaphysical Thesis)' : '气象本义与深层课题 (天象宗义)'}</span>
+      <!-- Section 1: Deep Meaning & Core Lesson -->
+      <div class="p-4 sm:p-5 rounded-2xl border border-sky-500/40 bg-gradient-to-br from-[#0c1830]/90 via-[#0a1224]/95 to-black/95 space-y-3 shadow-xl">
+        <div class="flex items-center justify-between pb-2 border-b border-sky-500/25">
+          <div class="flex items-center space-x-2 text-sky-200 text-xs sm:text-sm font-bold font-serif-sc">
+            <span class="text-base">🌌</span>
+            <span>${isEn ? 'Essence Meaning & Core Lessons (Metaphysical Thesis)' : '天象宗义 · 气机生克深解 (原局交感课题)'}</span>
           </div>
-          <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 font-mono font-bold">
+          <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/35 font-mono font-bold">
             ${isEn ? 'Metaphysical Thesis' : '干支气机 · 演化原旨'}
           </span>
         </div>
-        <p class="text-xs sm:text-sm text-gray-200 leading-relaxed font-sans font-medium pl-1">
-          ${isEn ? fortune.meaningEn : fortune.meaningZh}
-        </p>
+        <div class="p-3.5 rounded-xl bg-black/40 border border-sky-500/20 text-xs sm:text-[13px] text-stone-200 leading-relaxed font-sans relative overflow-hidden">
+          <div class="absolute -left-1 top-0 bottom-0 w-1 bg-gradient-to-b from-sky-400 to-indigo-500 rounded-l"></div>
+          <p class="pl-2.5 sm:pl-3">${isEn ? fortune.meaningEn : fortune.meaningZh}</p>
+        </div>
       </div>
 
-      <!-- Conditional Block: Pitfalls (if Good) vs Taboos (if Bad) -->
+      <!-- Section 2: Conditional Block: Pitfalls (if Good) vs Taboos (if Bad) -->
       ${
         isGood
           ? `
-          <div class="p-4 rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-amber-950/30 via-[#18130c]/90 to-black/80 space-y-2 shadow-lg">
-            <div class="flex items-center justify-between pb-1.5 border-b border-amber-500/25">
+          <div class="p-4 sm:p-5 rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-[#2a1c06]/90 via-[#1a1204]/95 to-[#0a0702]/98 space-y-3 shadow-xl">
+            <div class="flex items-center justify-between pb-2 border-b border-amber-500/25">
               <div class="flex items-center space-x-2 text-amber-300 text-xs sm:text-sm font-bold font-serif-sc">
                 <span class="text-base">⚠️</span>
-                <span>${isEn ? 'Aspects That Could Go Wrong (Pitfalls in Good Fortune)' : '吉中防患 · 居安思危 (吉运需防隐忧)'}</span>
+                <span>${isEn ? 'Aspects That Could Go Wrong (Crucial Caution in Good Fortune)' : '吉中防患 · 居安思危防骄矜 (吉运需防隐忧)'}</span>
               </div>
               <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono font-bold border border-amber-500/40">
                 ${isEn ? 'Crucial Caution' : '吉运必读 · 守正防骄'}
               </span>
             </div>
-            <p class="text-xs sm:text-sm text-amber-100/95 leading-relaxed font-sans font-medium pl-1">
-              ${isEn ? fortune.pitfallsEn : fortune.pitfallsZh}
-            </p>
+            <div class="text-[11.5px] text-amber-200/80 font-sans italic pl-0.5">
+              ${isEn ? '🛡️ Even under favorable astrological winds, hidden shoals persist. Guard against hubris and overextension to preserve enduring gains.' : '🛡️ 运势虽乘风而起，亦有暗礁伏波。防骄戒逸，方能将一时之顺境沉淀为百岁之根基。'}
+            </div>
+            ${formatActionableBulletList(isEn ? fortune.pitfallsEn : fortune.pitfallsZh, isEn, 'pitfall')}
           </div>
           `
           : `
-          <div class="p-4 rounded-2xl border-2 border-rose-500/60 bg-gradient-to-br from-rose-950/35 via-[#1a0c10]/95 to-black/85 space-y-2 shadow-lg">
-            <div class="flex items-center justify-between pb-1.5 border-b border-rose-500/30">
+          <div class="p-4 sm:p-5 rounded-2xl border-2 border-rose-500/60 bg-gradient-to-br from-[#2b0b14]/90 via-[#1c080d]/95 to-[#0b0305]/98 space-y-3 shadow-2xl">
+            <div class="flex items-center justify-between pb-2 border-b border-rose-500/30">
               <div class="flex items-center space-x-2 text-rose-300 text-xs sm:text-sm font-bold font-serif-sc">
                 <span class="text-base">🛑</span>
-                <span>${isEn ? 'Strict Taboos (What NOT to Do in Challenging Transits)' : '避坑戒律 · 绝对切勿作为 (凶阻运重戒 · 触碰必损)'}</span>
+                <span>${isEn ? 'Strict Taboos (What NOT to Do in Challenging Transits)' : '避坑戒律 · 绝对切勿作为 (触碰必损 · 零容忍铁律)'}</span>
               </div>
-              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-rose-500/25 text-rose-200 font-mono font-bold border border-rose-500/50">
-                ${isEn ? 'Strict Taboos' : '铁律戒条 · 严禁踩雷'}
+              <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-rose-500/25 text-rose-200 font-mono font-bold border border-rose-500/50 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-400 animate-pulse"></span>
+                <span>${isEn ? 'Zero-Tolerance Taboos' : '铁律戒条 · 严禁踩雷'}</span>
               </span>
             </div>
-            <p class="text-xs sm:text-sm text-rose-100/95 leading-relaxed font-sans font-medium pl-1">
-              ${isEn ? fortune.taboosEn : fortune.taboosZh}
-            </p>
+            <div class="text-[11.5px] text-rose-200/80 font-sans italic pl-0.5">
+              ${isEn ? '⚠️ High frictional vector: Impulsive actions trigger compounding traps. Strictly adhere to these defensive red lines.' : '⚠️ 岁运克伐激荡之时，稍有不慎即陷泥潭。以下铁律必须恪守，严禁踏足任何红线！'}
+            </div>
+            ${formatActionableBulletList(isEn ? fortune.taboosEn : fortune.taboosZh, isEn, 'taboo')}
           </div>
           `
       }
 
-      <!-- Action Strategy & Practical Alignment Guidance -->
-      <div class="p-4 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-emerald-950/25 via-[#0d1912]/90 to-black/80 space-y-2 shadow-lg">
-        <div class="flex items-center justify-between pb-1.5 border-b border-emerald-500/20">
+      <!-- Section 3: Action Strategy & Practical Alignment Guidance -->
+      <div class="p-4 sm:p-5 rounded-2xl border-2 border-emerald-500/50 bg-gradient-to-br from-[#062417]/90 via-[#041910]/95 to-black/95 space-y-3 shadow-xl">
+        <div class="flex items-center justify-between pb-2 border-b border-emerald-500/25">
           <div class="flex items-center space-x-2 text-emerald-300 text-xs sm:text-sm font-bold font-serif-sc">
             <span class="text-base">🎯</span>
             <span>${isEn ? 'Tactical Action & Operational Realignment' : '实战攻略与行运法门 (破局行动指南)'}</span>
@@ -7166,42 +7306,51 @@ document.addEventListener('DOMContentLoaded', () => {
             ${isEn ? 'Tactical Protocol' : '知行合一 · 落地解法'}
           </span>
         </div>
-        <p class="text-xs sm:text-sm text-emerald-100/95 leading-relaxed font-sans font-medium pl-1">
-          ${isEn ? fortune.guidanceEn : fortune.guidanceZh}
-        </p>
+        <div class="text-[11.5px] text-emerald-200/80 font-sans italic pl-0.5">
+          ${isEn ? '🔑 Align operational tactics with cosmic vector momentum to convert transit tension into systemic breakthrough leverage.' : '🔑 顺天应时，借力打力。将时空能量转化为破局现实战役的终极杠杆。'}
+        </div>
+        ${formatActionableBulletList(isEn ? fortune.guidanceEn : fortune.guidanceZh, isEn, 'strategy')}
       </div>
 
-      <!-- Adversity Breakdown & Classical Origin Annotations -->
+      <!-- Section 4: Adversity Breakdown & Classical Origin Annotations -->
       ${fortune.adversityBreakdown && fortune.adversityBreakdown.sources && fortune.adversityBreakdown.sources.length > 0 ? `
-        <div class="p-4 rounded-2xl border border-rose-500/40 bg-gradient-to-br from-rose-950/25 via-[#140b0e] to-black/80 space-y-3 shadow-xl">
+        <div class="p-4 sm:p-5 rounded-2xl border border-rose-500/40 bg-gradient-to-br from-[#200910]/90 via-[#140b0e] to-black/90 space-y-3.5 shadow-xl">
           <div class="flex items-center justify-between border-b border-rose-500/25 pb-2">
             <div class="flex items-center space-x-2 text-rose-300 text-xs sm:text-sm font-bold font-serif-sc">
               <span class="text-base">🛡️</span>
               <span>${isEn ? (fortune.adversityBreakdown.titleEn || 'Classical Origin & Defense Protocol for Life Adversities') : (fortune.adversityBreakdown.titleZh || '六大不利与灾祸术语深度注解与防御指南')}</span>
             </div>
             <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-200 border border-rose-500/30 font-mono font-bold">
-              ${isEn ? 'Origin & Remediation' : '考据注译 · 防御法门'}
+              ${isEn ? 'Origin & Remediation' : '考据注译 · 精准防御'}
             </span>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
             ${fortune.adversityBreakdown.sources.map(item => `
-              <div class="p-3.5 bg-black/60 rounded-xl border border-rose-900/50 text-xs space-y-2 hover:border-rose-700/60 transition shadow-inner">
-                <div class="flex items-center justify-between border-b border-rose-900/40 pb-1">
+              <div class="p-4 bg-black/60 rounded-2xl border border-rose-900/50 text-xs space-y-2.5 hover:border-rose-600/60 transition shadow-inner">
+                <div class="flex items-center justify-between border-b border-rose-900/40 pb-1.5">
                   <span class="font-bold text-rose-300 font-serif-sc text-xs sm:text-sm">${item.icon || '⚠️'} ${isEn ? (item.termEn || item.type) : (item.termZh || item.type)}</span>
                   <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30 font-mono">${isEn ? (item.typeEn || item.type) : (item.typeZh || item.type)}</span>
                 </div>
-                <div class="text-[11.5px] text-amber-200/90 font-serif-sc leading-relaxed">
+                <div class="text-[11.5px] text-amber-200/90 font-serif-sc leading-relaxed p-2 rounded-lg bg-amber-950/20 border border-amber-800/30">
                   <span class="text-amber-400 font-bold">${isEn ? 'Classical Source: ' : '典籍原旨：'}</span>${isEn ? (item.originEn || item.originZh || item.origin) : (item.originZh || item.origin)}
                 </div>
-                <div class="text-[11.5px] text-rose-100/90 leading-relaxed font-sans">
+                <div class="text-[11.5px] text-rose-100/90 leading-relaxed font-sans p-2 rounded-lg bg-rose-950/20 border border-rose-900/30">
                   <span class="text-rose-400 font-bold">${isEn ? 'Manifestation: ' : '应象表征：'}</span>${isEn ? (item.manifestationEn || item.manifestationZh || item.manifestation) : (item.manifestationZh || item.manifestation)}
                 </div>
-                <div class="text-[11.5px] text-emerald-200 leading-relaxed pt-1.5 border-t border-gray-800/80 font-sans">
+                <div class="text-[11.5px] text-emerald-200 leading-relaxed font-sans p-2 rounded-lg bg-emerald-950/20 border border-emerald-800/30">
                   <span class="text-emerald-400 font-bold">${isEn ? 'Defense Strategy: ' : '实战化解：'}</span>${isEn ? (item.defenseEn || item.defenseZh || item.defense) : (item.defenseZh || item.defense)}
                 </div>
               </div>
             `).join('')}
           </div>
+        </div>
+      ` : ''}
+
+      <!-- Section 5: Chrono Age Considerations if available -->
+      ${fortune.ageConsiderationZh ? `
+        <div class="p-3.5 rounded-xl border border-stone-800 bg-black/40 text-xs flex items-center justify-between text-stone-300">
+          <span class="font-serif-sc text-amber-300 font-bold">${isEn ? '⏳ Chronological Age Consideration: ' : '⏳ 虚岁流年时空关窍：'}</span>
+          <span class="font-sans">${isEn ? fortune.ageConsiderationEn : fortune.ageConsiderationZh}</span>
         </div>
       ` : ''}
     `;
@@ -12652,6 +12801,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // If switching to luck view, refresh Chrono-Navigator canvas, Phase Portrait, Tianji Feed, & Four Pillars Hexagrams / Cycle Progression
     if (targetViewId === 'view-luck') {
+      if (typeof renderLuckCycles === 'function' && currentBaziResult) {
+        renderLuckCycles(currentBaziResult);
+      }
       if (typeof ensureTianjiCalendarPlacement === 'function') {
         ensureTianjiCalendarPlacement('view-luck');
       }

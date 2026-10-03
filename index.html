@@ -2128,74 +2128,78 @@
       </div>
 
       <!-- Transit Fortune In-Depth Evaluation (岁运吉凶深解与趋避指南) -->
-      <div id="transitFortuneDetailCard" class="p-5 sm:p-6 rounded-2xl border-2 border-amber-500/40 bg-gradient-to-br from-amber-950/20 via-[#10121a]/95 to-black/95 space-y-4 shadow-2xl backdrop-blur-md transition-all duration-500">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800/80 pb-3">
-          <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-[#1a1710] to-black border border-amber-500/40 flex items-center justify-center text-lg shadow-sm">
+      <div id="transitFortuneDetailCard" class="p-5 sm:p-7 rounded-3xl border-2 border-amber-500/40 bg-gradient-to-br from-[#1a1410]/80 via-[#10121a]/95 to-black/95 space-y-5 shadow-2xl backdrop-blur-md transition-all duration-500 relative overflow-hidden">
+        <div class="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent"></div>
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-stone-800/80 pb-4">
+          <div class="flex items-center space-x-3.5">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-500/20 via-[#1f1912] to-black border border-amber-500/40 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(245,158,11,0.2)]">
               ⚖️
             </div>
             <div>
-              <div class="flex flex-wrap items-center gap-2">
-                <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc" data-i18n="lbl_fortune_evaluation">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <h4 class="text-base sm:text-lg font-bold text-amber-300 font-serif-sc tracking-wide" data-i18n="lbl_fortune_evaluation">
                   岁运吉凶深层解构与趋避指南
                 </h4>
-                <span id="fortuneActiveBadge" class="text-xs px-2.5 py-0.5 rounded-full font-mono font-bold">--</span>
+                <div id="fortuneActiveBadge">
+                  <span class="text-xs px-2.5 py-0.5 rounded-full font-mono font-bold text-stone-400">--</span>
+                </div>
               </div>
-              <p class="text-[11px] text-gray-400 mt-0.5" data-i18n="lbl_fortune_detail_hint">（点击上方任意大运、流年、流月卡片，即可深度查看气象本义、吉中防患与避坑戒律）</p>
+              <p class="text-[11.5px] text-stone-400 mt-0.5" data-i18n="lbl_fortune_detail_hint">（点击上方任意大运、流年、流月卡片，即可深度查看气象本义、吉中防患与避坑戒律）</p>
             </div>
           </div>
           <!-- Sub tabs: Decade / Annual / Monthly / Daily -->
-          <div class="flex items-center gap-1.5 bg-[#0e1017] p-1.5 rounded-xl border border-gray-800/80 text-xs shadow-inner" id="fortuneCycleTabs">
-            <button type="button" class="fortune-tab-btn active px-3 py-1.5 rounded-lg font-bold font-serif-sc transition cursor-pointer" data-target="decade" data-i18n="fortune_tab_decade">十年大运吉凶</button>
-            <button type="button" class="fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 transition cursor-pointer" data-target="annual" data-i18n="fortune_tab_annual">流年太岁吉凶</button>
-            <button type="button" class="fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 transition cursor-pointer" data-target="monthly" data-i18n="fortune_tab_monthly">节令流月吉凶</button>
-            <button type="button" class="fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 transition cursor-pointer" data-target="daily" data-i18n="fortune_tab_daily">流日精微吉凶</button>
+          <div class="flex items-center gap-1.5 bg-[#0b0d14]/90 p-1.5 rounded-2xl border border-stone-800 text-xs shadow-inner" id="fortuneCycleTabs">
+            <button type="button" class="fortune-tab-btn active px-3.5 py-1.5 rounded-xl font-bold font-serif-sc transition cursor-pointer" data-target="decade" data-i18n="fortune_tab_decade">十年大运吉凶</button>
+            <button type="button" class="fortune-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-400 hover:text-stone-200 transition cursor-pointer" data-target="annual" data-i18n="fortune_tab_annual">流年太岁吉凶</button>
+            <button type="button" class="fortune-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-400 hover:text-stone-200 transition cursor-pointer" data-target="monthly" data-i18n="fortune_tab_monthly">节令流月吉凶</button>
+            <button type="button" class="fortune-tab-btn px-3.5 py-1.5 rounded-xl font-medium text-stone-400 hover:text-stone-200 transition cursor-pointer" data-target="daily" data-i18n="fortune_tab_daily">流日精微吉凶</button>
           </div>
         </div>
 
         <!-- Dynamic Content Injected via JavaScript -->
-        <div id="fortuneDetailBody" class="space-y-4">
+        <div id="fortuneDetailBody" class="space-y-4 sm:space-y-5">
           <!-- Populated by renderTransitFortuneDetail -->
         </div>
       </div>
 
       <!-- Level 4: Daily Luck & 5-Pillar Synergy Matrix -->
-      <div class="space-y-3 pt-2 border-t border-gray-800/80">
+      <div class="space-y-3 pt-4 border-t border-gray-800/80">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center space-x-2">
             <span class="text-rose-300 font-bold text-xs" data-i18n="tab_daily_title">4. 流日测算与五柱同参 (Daily Alignment & 5-Pillar Synergy)</span>
+            <span class="text-[10px] text-gray-500 hidden sm:inline" data-i18n="tab_daily_hint">(原局四柱 + 大运 + 流年 + 流月 + 流日 · 八柱交感全息共振)</span>
           </div>
           <div class="flex items-center space-x-2">
             <span class="text-xs text-gray-400" data-i18n="lbl_select_date">选择测算流日:</span>
-            <input type="date" id="luckDailyDatePicker" class="bg-[#1a1d26] border border-gray-700 text-gray-200 text-xs rounded px-2.5 py-1 focus:outline-none focus:border-amber-500">
-            <button id="luckTodayBtn" class="px-2.5 py-1 rounded bg-amber-600/80 hover:bg-amber-600 text-white text-xs font-semibold transition" data-i18n="btn_today">⏱ 此时今日</button>
+            <input type="date" id="luckDailyDatePicker" class="bg-[#161824] border border-stone-700 text-stone-200 text-xs rounded-lg px-2.5 py-1 focus:outline-none focus:border-amber-400 shadow-inner">
+            <button id="luckTodayBtn" class="px-3 py-1 rounded-lg bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 text-stone-950 font-bold text-xs transition shadow-md cursor-pointer" data-i18n="btn_today">⏱ 此时今日</button>
           </div>
         </div>
 
         <!-- 5-Pillar Holistic Alignment Table -->
-        <div class="overflow-x-auto rounded-xl border border-gray-800 bg-black/30">
+        <div class="overflow-x-auto rounded-2xl border border-stone-800/80 bg-gradient-to-b from-[#141622]/90 via-[#0e1017]/95 to-black/95 shadow-xl backdrop-blur-md">
           <table class="w-full text-center text-xs">
             <thead>
-              <tr class="border-b border-gray-800 bg-[#171922] text-gray-400 font-medium">
-                <th class="py-2 px-3 text-left" data-i18n="th_dimension">维度 / 柱别</th>
-                <th class="py-2 px-3 text-amber-300/90" data-i18n="th_natal_year">本命年柱</th>
-                <th class="py-2 px-3 text-amber-300/90" data-i18n="th_natal_month">本命月柱</th>
-                <th class="py-2 px-3 text-amber-300" data-i18n="th_natal_day">本命日柱 (元神)</th>
-                <th class="py-2 px-3 text-amber-300/90" data-i18n="th_natal_hour">本命时柱</th>
-                <th class="py-2 px-3 text-purple-300 bg-purple-950/20 border-l border-r border-purple-800/30" data-i18n="pillar_decade">大运柱</th>
-                <th class="py-2 px-3 text-indigo-300 bg-indigo-950/20 border-r border-indigo-800/30" data-i18n="pillar_annual">流年柱</th>
-                <th class="py-2 px-3 text-emerald-300 bg-emerald-950/20 border-r border-emerald-800/30" data-i18n="pillar_monthly">流月柱</th>
-                <th class="py-2 px-3 text-rose-300 bg-rose-950/20" data-i18n="pillar_daily">流日柱</th>
+              <tr class="border-b border-stone-800 bg-[#151824]/90 text-stone-300 font-serif-sc text-xs tracking-wider">
+                <th class="py-2.5 px-3 text-left font-bold text-amber-300/90" data-i18n="th_dimension">维度 / 柱别</th>
+                <th class="py-2.5 px-3 text-amber-200/90" data-i18n="th_natal_year">本命年柱</th>
+                <th class="py-2.5 px-3 text-amber-200/90" data-i18n="th_natal_month">本命月柱</th>
+                <th class="py-2.5 px-3 text-amber-300 font-bold bg-amber-500/10 border-l border-r border-amber-500/30" data-i18n="th_natal_day">本命日柱 (元神)</th>
+                <th class="py-2.5 px-3 text-amber-200/90" data-i18n="th_natal_hour">本命时柱</th>
+                <th class="py-2.5 px-3 text-purple-300 bg-purple-950/25 border-l border-r border-purple-800/40" data-i18n="pillar_decade">大运柱</th>
+                <th class="py-2.5 px-3 text-indigo-300 bg-indigo-950/25 border-r border-indigo-800/40" data-i18n="pillar_annual">流年柱</th>
+                <th class="py-2.5 px-3 text-emerald-300 bg-emerald-950/25 border-r border-emerald-800/40" data-i18n="pillar_monthly">流月柱</th>
+                <th class="py-2.5 px-3 text-rose-300 bg-rose-950/25" data-i18n="pillar_daily">流日柱</th>
               </tr>
             </thead>
-            <tbody id="fivePillarsMatrixBody" class="divide-y divide-gray-800/60 font-mono">
+            <tbody id="fivePillarsMatrixBody" class="divide-y divide-stone-800/60 font-mono">
               <!-- Injected dynamically via JavaScript -->
             </tbody>
           </table>
         </div>
 
         <!-- Interactions & Tactical Clashes / Combinations Guidance -->
-        <div id="luckInteractionsContainer" class="p-3.5 rounded-xl border border-purple-800/50 bg-gradient-to-br from-purple-950/20 via-black/40 to-black/50 space-y-2">
+        <div id="luckInteractionsContainer" class="p-4 rounded-2xl border border-purple-800/40 bg-gradient-to-br from-purple-950/25 via-[#120f1c]/90 to-black/90 space-y-2.5 shadow-lg">
           <!-- Injected dynamically via JavaScript -->
         </div>
       </div>
