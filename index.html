@@ -2128,29 +2128,33 @@
       </div>
 
       <!-- Transit Fortune In-Depth Evaluation (岁运吉凶深解与趋避指南) -->
-      <div id="transitFortuneDetailCard" class="p-4 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-950/10 via-black/40 to-black/60 space-y-3.5 shadow-xl">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-gray-800/80 pb-2.5">
-          <div class="flex items-center space-x-2">
-            <span class="text-base">⚖️</span>
+      <div id="transitFortuneDetailCard" class="p-5 sm:p-6 rounded-2xl border-2 border-amber-500/40 bg-gradient-to-br from-amber-950/20 via-[#10121a]/95 to-black/95 space-y-4 shadow-2xl backdrop-blur-md transition-all duration-500">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800/80 pb-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-[#1a1710] to-black border border-amber-500/40 flex items-center justify-center text-lg shadow-sm">
+              ⚖️
+            </div>
             <div>
-              <h4 class="text-xs font-bold text-amber-300 flex items-center gap-2">
-                <span data-i18n="lbl_fortune_evaluation">岁运吉凶深层解构与趋避指南</span>
-                <span id="fortuneActiveBadge" class="text-[10px] px-2 py-0.5 rounded-full font-mono font-normal">--</span>
-              </h4>
-              <p class="text-[10px] text-gray-400 mt-0.5" data-i18n="lbl_fortune_detail_hint">（点击上方任意大运、流年、流月卡片，即可深度查看气象本义、吉中防患与避坑戒律）</p>
+              <div class="flex flex-wrap items-center gap-2">
+                <h4 class="text-sm sm:text-base font-bold text-amber-300 font-serif-sc" data-i18n="lbl_fortune_evaluation">
+                  岁运吉凶深层解构与趋避指南
+                </h4>
+                <span id="fortuneActiveBadge" class="text-xs px-2.5 py-0.5 rounded-full font-mono font-bold">--</span>
+              </div>
+              <p class="text-[11px] text-gray-400 mt-0.5" data-i18n="lbl_fortune_detail_hint">（点击上方任意大运、流年、流月卡片，即可深度查看气象本义、吉中防患与避坑戒律）</p>
             </div>
           </div>
           <!-- Sub tabs: Decade / Annual / Monthly / Daily -->
-          <div class="flex items-center gap-1.5 bg-[#12141c] p-1 rounded-lg border border-gray-800 text-[11px]" id="fortuneCycleTabs">
-            <button type="button" class="fortune-tab-btn active px-2.5 py-1 rounded font-medium transition" data-target="decade" data-i18n="fortune_tab_decade">十年大运吉凶</button>
-            <button type="button" class="fortune-tab-btn px-2.5 py-1 rounded font-medium text-gray-400 hover:text-gray-200 transition" data-target="annual" data-i18n="fortune_tab_annual">流年太岁吉凶</button>
-            <button type="button" class="fortune-tab-btn px-2.5 py-1 rounded font-medium text-gray-400 hover:text-gray-200 transition" data-target="monthly" data-i18n="fortune_tab_monthly">节令流月吉凶</button>
-            <button type="button" class="fortune-tab-btn px-2.5 py-1 rounded font-medium text-gray-400 hover:text-gray-200 transition" data-target="daily" data-i18n="fortune_tab_daily">流日精微吉凶</button>
+          <div class="flex items-center gap-1.5 bg-[#0e1017] p-1.5 rounded-xl border border-gray-800/80 text-xs shadow-inner" id="fortuneCycleTabs">
+            <button type="button" class="fortune-tab-btn active px-3 py-1.5 rounded-lg font-bold font-serif-sc transition cursor-pointer" data-target="decade" data-i18n="fortune_tab_decade">十年大运吉凶</button>
+            <button type="button" class="fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 transition cursor-pointer" data-target="annual" data-i18n="fortune_tab_annual">流年太岁吉凶</button>
+            <button type="button" class="fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 transition cursor-pointer" data-target="monthly" data-i18n="fortune_tab_monthly">节令流月吉凶</button>
+            <button type="button" class="fortune-tab-btn px-3 py-1.5 rounded-lg font-medium text-gray-400 hover:text-gray-200 transition cursor-pointer" data-target="daily" data-i18n="fortune_tab_daily">流日精微吉凶</button>
           </div>
         </div>
 
         <!-- Dynamic Content Injected via JavaScript -->
-        <div id="fortuneDetailBody" class="space-y-3">
+        <div id="fortuneDetailBody" class="space-y-4">
           <!-- Populated by renderTransitFortuneDetail -->
         </div>
       </div>
