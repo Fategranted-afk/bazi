@@ -3366,148 +3366,160 @@ document.addEventListener('DOMContentLoaded', () => {
 
           ${verseHtml}
 
-          <!-- Strict 4-Part Structure + Dimension 5 Percentage Analysis + Dimension 6 Qing-Zhuo Classical Exegesis -->
-          <div class="space-y-2 text-xs leading-relaxed">
-            <!-- 1. Pattern Meaning -->
-            <div class="p-2.5 bg-black/30 rounded-lg border border-amber-900/30">
-              <span class="text-amber-300 font-bold block mb-1">💡 1. ${isEn ? 'Pattern Meaning (Essence & Archetype)' : '格局含义 (是什么意思)'}</span>
-              <p class="text-gray-300">${pat.meaning}</p>
-            </div>
-
-            <!-- 2. Canonical Source -->
-            <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800">
-              <span class="text-gray-400 font-bold block mb-1">📖 2. ${isEn ? 'Canonical Source (Classical Literature)' : '典籍出处 (出自书里哪里)'}</span>
-              <p class="text-gray-400 font-medium">${pat.source}</p>
-            </div>
-
-            <!-- 3. Formation Rules & Natal Verification -->
-            <div class="p-2.5 bg-black/30 rounded-lg border border-emerald-900/30">
-              <span class="text-emerald-400 font-bold block mb-1">⚖️ 3. ${isEn ? 'Formation Rules & Natal Verification' : '成格条件与本命验证 (怎样成的格局)'}</span>
-              <p class="text-gray-300">${pat.formation}</p>
-            </div>
-
-            <!-- 4. Practical Application, Taboos & Mastery -->
-            <div class="p-2.5 bg-black/30 rounded-lg border border-rose-900/30">
-              <span class="text-rose-400 font-bold block mb-1">🎯 4. ${isEn ? 'Practical Application, Taboos & Mastery' : '实战用法与喜忌 (怎样使用)'}</span>
-              <div class="text-gray-300 whitespace-pre-line leading-relaxed">${pat.usage}</div>
-            </div>
-
-            <!-- 5. Natal Energy Share & Impact Assessment -->
-            <div class="p-2.5 bg-black/30 rounded-lg border border-indigo-900/30">
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-indigo-300 font-bold">📊 5. ${isEn ? 'Natal Energy Share & Impact Assessment' : '本命能量占比与影响力评估'}</span>
-                <span class="font-mono text-amber-300 font-bold">${pat.weightPct}% · 【${pat.tierName}】</span>
-              </div>
-              <p class="text-gray-300">${pat.tierDesc}</p>
-              <p class="text-gray-400 text-[11px] mt-0.5"><b>${isEn ? 'Empowerment Rationale: ' : '成格赋能依据：'}</b>${pat.weightReason}</p>
-            </div>
-
-            ${pat.gradeEvaluation ? `
-            <!-- 6. Pattern Grade & Qing-Zhuo Classical Exegesis -->
-            <div class="p-3 bg-black/40 rounded-xl border border-amber-500/40 space-y-2 mt-2 shadow-inner">
-              <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
-                <div class="flex items-center space-x-1.5">
-                  <span class="chinese-seal text-[9px] py-0">${isEn ? 'Classical Purity' : '四经辨析'}</span>
-                  <span class="text-amber-300 font-bold text-xs font-serif-sc">
-                    🏛️ 6. ${isEn ? 'Pattern Grade & Qing-Zhuo Classical Exegesis' : '格局评级与四典清浊深度论述 (《滴天髓》《真诠》《兰台》《神峰》)'}
-                  </span>
-                </div>
-                <span class="text-[11px] px-2.5 py-0.5 rounded-full font-bold font-mono ${
-                  pat.gradeEvaluation.tier.includes('特等') || pat.gradeEvaluation.tier.includes('Exceptional') ? 'bg-gradient-to-r from-amber-500/30 to-rose-500/30 text-amber-300 border border-amber-500/50' :
-                  pat.gradeEvaluation.tier.includes('上等') || pat.gradeEvaluation.tier.includes('Superior') ? 'bg-purple-500/30 text-purple-300 border border-purple-500/40' :
-                  pat.gradeEvaluation.tier.includes('中上') || pat.gradeEvaluation.tier.includes('High-Mid') ? 'bg-blue-500/30 text-blue-300 border border-blue-500/40' :
-                  'bg-emerald-500/30 text-emerald-300 border border-emerald-500/40'
-                }">
-                  ${pat.gradeEvaluation.tier}
+          <!-- Collapsible 7-Dimension Pattern Exegesis Details -->
+          <details class="group mt-2.5 border border-amber-900/40 rounded-xl bg-black/40 overflow-hidden transition-all shadow-inner">
+            <summary class="p-3 cursor-pointer flex items-center justify-between text-xs font-semibold text-amber-300 hover:text-amber-200 hover:bg-amber-950/25 transition select-none">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm">📖</span>
+                <span class="font-serif-sc font-bold">
+                  ${isEn ? 'Pattern In-Depth Exegesis · 7-Dimension Canonical Analysis (Click to Expand)' : '【格局深度透视 · 七维典籍实战全解 · 点击展开扩展阅读】'}
                 </span>
               </div>
+              <span class="text-xs text-amber-400/80 group-open:rotate-180 transition-transform duration-200 font-mono">▼</span>
+            </summary>
 
-              <div class="space-y-2 text-[11.5px] leading-relaxed">
-                <!-- Strengths & Vulnerabilities -->
-                <div class="p-2 rounded bg-black/40 border border-gray-800/80">
-                  <b class="text-amber-300">${isEn ? '⚖️ Strengths & Vulnerabilities (Good vs Bad): ' : '⚖️ 格局优劣辨析 (好与不好)：'}</b>
-                  <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.strengthsAndFlawsEn || pat.gradeEvaluation.strengthsAndFlaws || '') : (pat.gradeEvaluation.strengthsAndFlawsZh || pat.gradeEvaluation.strengthsAndFlaws || '')}</span>
-                </div>
-
-                <!-- Classical Criteria -->
-                <div class="p-2 rounded bg-black/40 border border-gray-800/80">
-                  <b class="text-blue-300">${isEn ? '📖 Classical Criteria (Why this Grade): ' : '📖 典籍评判依据 (为什么如此评判)：'}</b>
-                  <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.whyThisGradeEn || pat.gradeEvaluation.whyThisGrade || '') : (pat.gradeEvaluation.whyThisGradeZh || pat.gradeEvaluation.whyThisGrade || '')}</span>
-                </div>
-
-                <!-- Ceilings & Bottlenecks -->
-                <div class="p-2 rounded bg-rose-950/20 border border-rose-900/40">
-                  <b class="text-rose-400">${isEn ? '🚧 Ceilings & Bottlenecks (Why it cannot ascend): ' : '🚧 晋阶卡点与天花板 (为什么上不去)：'}</b>
-                  <span class="text-rose-200">${isEn ? (pat.gradeEvaluation.bottleneckEn || pat.gradeEvaluation.bottleneck || '') : (pat.gradeEvaluation.bottleneckZh || pat.gradeEvaluation.bottleneck || '')}</span>
-                </div>
-
-                <!-- Moat & Defensible Floor -->
-                <div class="p-2 rounded bg-emerald-950/20 border border-emerald-900/40">
-                  <b class="text-emerald-400">${isEn ? '🛡️ Moat & Defensible Floor (Baseline Protection): ' : '🛡️ 守正护城河与保底 (保底是什么)：'}</b>
-                  <span class="text-emerald-200">${isEn ? (pat.gradeEvaluation.floorBaselineEn || pat.gradeEvaluation.floorBaseline || '') : (pat.gradeEvaluation.floorBaselineZh || pat.gradeEvaluation.floorBaseline || '')}</span>
-                </div>
-
-                <!-- Ascension Path -->
-                <div class="p-2 rounded bg-amber-950/20 border border-amber-900/40">
-                  <b class="text-amber-400">${isEn ? '🚀 Practical Elevation & Ascension Path (How to improve): ' : '🚀 破局晋升与改运路径 (如何改善与提升)：'}</b>
-                  <span class="text-amber-200">${isEn ? (pat.gradeEvaluation.elevationPathEn || pat.gradeEvaluation.elevationPath || '') : (pat.gradeEvaluation.elevationPathZh || pat.gradeEvaluation.elevationPath || '')}</span>
-                </div>
+            <div class="p-3 pt-0 space-y-2 text-xs leading-relaxed border-t border-amber-900/30 mt-1">
+              <!-- 1. Pattern Meaning -->
+              <div class="p-2.5 bg-black/30 rounded-lg border border-amber-900/30 mt-2">
+                <span class="text-amber-300 font-bold block mb-1">💡 1. ${isEn ? 'Pattern Meaning (Essence & Archetype)' : '格局含义 (是什么意思)'}</span>
+                <p class="text-gray-300">${pat.meaning}</p>
               </div>
-            </div>` : ''}
 
-            <!-- 7. Combination Bureaus & Energy Precedence Exegesis -->
-            ${(() => {
-              const interactions = (currentBaziResult && currentBaziResult.interactions) || {};
-              const sanHui = interactions.sanHuiCombos || [];
-              const sanHe = interactions.sanHeCombos || [];
-              const banHe = interactions.banHeCombos || [];
-              const clashes = interactions.branchClashes || [];
-              const resolvedClashes = clashes.filter(c => c.resolvedByCombo);
+              <!-- 2. Canonical Source -->
+              <div class="p-2.5 bg-black/30 rounded-lg border border-gray-800">
+                <span class="text-gray-400 font-bold block mb-1">📖 2. ${isEn ? 'Canonical Source (Classical Literature)' : '典籍出处 (出自书里哪里)'}</span>
+                <p class="text-gray-400 font-medium">${pat.source}</p>
+              </div>
 
-              let comboSummaryZh = '';
-              let comboSummaryEn = '';
+              <!-- 3. Formation Rules & Natal Verification -->
+              <div class="p-2.5 bg-black/30 rounded-lg border border-emerald-900/30">
+                <span class="text-emerald-400 font-bold block mb-1">⚖️ 3. ${isEn ? 'Formation Rules & Natal Verification' : '成格条件与本命验证 (怎样成的格局)'}</span>
+                <p class="text-gray-300">${pat.formation}</p>
+              </div>
 
-              if (sanHui.length > 0 || sanHe.length > 0 || banHe.length > 0) {
-                const partsZh = [];
-                const partsEn = [];
-                if (sanHui.length > 0) {
-                  partsZh.push(`三会方局【${sanHui.map(c => c.nameZh).join('、')}】`);
-                  partsEn.push(`Directional Meeting [${sanHui.map(c => c.nameEn).join('; ')}]`);
-                }
-                if (sanHe.length > 0) {
-                  partsZh.push(`三合局【${sanHe.map(c => c.nameZh).join('、')}】`);
-                  partsEn.push(`Three Harmonies [${sanHe.map(c => c.nameEn).join('; ')}]`);
-                }
-                if (banHe.length > 0) {
-                  partsZh.push(`半合/拱合【${banHe.map(c => c.nameZh).join('、')}】`);
-                  partsEn.push(`Half Harmonies [${banHe.map(c => c.nameEn).join('; ')}]`);
-                }
-                comboSummaryZh = `原局聚合${partsZh.join('，')}。古法宗义：‘方局合局，气专势隆，以合化能量为第一优先；若与地支刑冲并见，贪合忘冲、贪合忘刑，合局优先涵摄化解’。此合局能量直接赋能并主导本命格局之清纯厚重度。`;
-                comboSummaryEn = `Natal chart forms ${partsEn.join('; ')}. Metaphysical principle: 'Directional meetings and harmony bureaus consolidate dominant elemental momentum, taking absolute precedence over standard clashes and punishments (Greedy for Harmony, Oblivious to Clash)'. This combination energy directly governs pattern purity.`;
-              } else {
-                comboSummaryZh = '原局干支各守本位，无大势三合三会方局，以各柱正统干支生克承应为主，五行平和流转，综合分析全局流通气象。';
-                comboSummaryEn = 'Natal pillars preserve individual spatial positions without major bureaus; standard ten gods circulation and pillar proximity govern pattern dynamics.';
-              }
+              <!-- 4. Practical Application, Taboos & Mastery -->
+              <div class="p-2.5 bg-black/30 rounded-lg border border-rose-900/30">
+                <span class="text-rose-400 font-bold block mb-1">🎯 4. ${isEn ? 'Practical Application, Taboos & Mastery' : '实战用法与喜忌 (怎样使用)'}</span>
+                <div class="text-gray-300 whitespace-pre-line leading-relaxed">${pat.usage}</div>
+              </div>
 
-              return `
-                <div class="p-3 bg-black/40 rounded-xl border border-sky-600/40 space-y-2 mt-2 shadow-inner">
-                  <div class="flex items-center space-x-1.5 pb-1 border-b border-gray-800">
-                    <span class="chinese-seal text-[9px] py-0 border-sky-500 text-sky-300">${isEn ? 'Combination Synthesis' : '合局通融'}</span>
-                    <span class="text-sky-300 font-bold text-xs font-serif-sc">
-                      🌀 7. ${isEn ? 'Combination Bureaus & Energy Precedence Exegesis (San He / San Hui)' : '合局全套解析与能量优先论 (三合生旺库 / 三会方局 / 贪合忘冲)'}
+              <!-- 5. Natal Energy Share & Impact Assessment -->
+              <div class="p-2.5 bg-black/30 rounded-lg border border-indigo-900/30">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-indigo-300 font-bold">📊 5. ${isEn ? 'Natal Energy Share & Impact Assessment' : '本命能量占比与影响力评估'}</span>
+                  <span class="font-mono text-amber-300 font-bold">${pat.weightPct}% · 【${pat.tierName}】</span>
+                </div>
+                <p class="text-gray-300">${pat.tierDesc}</p>
+                <p class="text-gray-400 text-[11px] mt-0.5"><b>${isEn ? 'Empowerment Rationale: ' : '成格赋能依据：'}</b>${pat.weightReason}</p>
+              </div>
+
+              ${pat.gradeEvaluation ? `
+              <!-- 6. Pattern Grade & Qing-Zhuo Classical Exegesis -->
+              <div class="p-3 bg-black/40 rounded-xl border border-amber-500/40 space-y-2 mt-2 shadow-inner">
+                <div class="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-gray-800">
+                  <div class="flex items-center space-x-1.5">
+                    <span class="chinese-seal text-[9px] py-0">${isEn ? 'Classical Purity' : '四经辨析'}</span>
+                    <span class="text-amber-300 font-bold text-xs font-serif-sc">
+                      🏛️ 6. ${isEn ? 'Pattern Grade & Qing-Zhuo Classical Exegesis' : '格局评级与四典清浊深度论述 (《滴天髓》《真诠》《兰台》《神峰》)'}
                     </span>
                   </div>
-                  <p class="text-gray-300 text-[11.5px] leading-relaxed">${isEn ? comboSummaryEn : comboSummaryZh}</p>
-                  ${resolvedClashes.length > 0 ? `
-                    <div class="p-2 rounded bg-amber-950/30 border border-amber-600/30 text-[11px] text-amber-200">
-                      <b>${isEn ? '⚡ Clashes Resolved by Combination Bureau: ' : '⚡ 合局化解刑冲实况：'}</b>
-                      ${resolvedClashes.map(c => isEn ? `[${(c.branchesEn || c.branches.map(b => (typeof I18N !== 'undefined' ? I18N.getBranch(b, 'en') : b))).join('-')}: ${c.resolutionNoteEn}]` : `【地支${c.branches.join('与')}冲：${c.resolutionNoteZh}】`).join('；')}
-                    </div>
-                  ` : ''}
+                  <span class="text-[11px] px-2.5 py-0.5 rounded-full font-bold font-mono ${
+                    pat.gradeEvaluation.tier.includes('特等') || pat.gradeEvaluation.tier.includes('Exceptional') ? 'bg-gradient-to-r from-amber-500/30 to-rose-500/30 text-amber-300 border border-amber-500/50' :
+                    pat.gradeEvaluation.tier.includes('上等') || pat.gradeEvaluation.tier.includes('Superior') ? 'bg-purple-500/30 text-purple-300 border border-purple-500/40' :
+                    pat.gradeEvaluation.tier.includes('中上') || pat.gradeEvaluation.tier.includes('High-Mid') ? 'bg-blue-500/30 text-blue-300 border border-blue-500/40' :
+                    'bg-emerald-500/30 text-emerald-300 border border-emerald-500/40'
+                  }">
+                    ${pat.gradeEvaluation.tier}
+                  </span>
                 </div>
-              `;
-            })()}
-          </div>
+
+                <div class="space-y-2 text-[11.5px] leading-relaxed">
+                  <!-- Strengths & Vulnerabilities -->
+                  <div class="p-2 rounded bg-black/40 border border-gray-800/80">
+                    <b class="text-amber-300">${isEn ? '⚖️ Strengths & Vulnerabilities (Good vs Bad): ' : '⚖️ 格局优劣辨析 (好与不好)：'}</b>
+                    <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.strengthsAndFlawsEn || pat.gradeEvaluation.strengthsAndFlaws || '') : (pat.gradeEvaluation.strengthsAndFlawsZh || pat.gradeEvaluation.strengthsAndFlaws || '')}</span>
+                  </div>
+
+                  <!-- Classical Criteria -->
+                  <div class="p-2 rounded bg-black/40 border border-gray-800/80">
+                    <b class="text-blue-300">${isEn ? '📖 Classical Criteria (Why this Grade): ' : '📖 典籍评判依据 (为什么如此评判)：'}</b>
+                    <span class="text-gray-300">${isEn ? (pat.gradeEvaluation.whyThisGradeEn || pat.gradeEvaluation.whyThisGrade || '') : (pat.gradeEvaluation.whyThisGradeZh || pat.gradeEvaluation.whyThisGrade || '')}</span>
+                  </div>
+
+                  <!-- Ceilings & Bottlenecks -->
+                  <div class="p-2 rounded bg-rose-950/20 border border-rose-900/40">
+                    <b class="text-rose-400">${isEn ? '🚧 Ceilings & Bottlenecks (Why it cannot ascend): ' : '🚧 晋阶卡点与天花板 (为什么上不去)：'}</b>
+                    <span class="text-rose-200">${isEn ? (pat.gradeEvaluation.bottleneckEn || pat.gradeEvaluation.bottleneck || '') : (pat.gradeEvaluation.bottleneckZh || pat.gradeEvaluation.bottleneck || '')}</span>
+                  </div>
+
+                  <!-- Moat & Defensible Floor -->
+                  <div class="p-2 rounded bg-emerald-950/20 border border-emerald-900/40">
+                    <b class="text-emerald-400">${isEn ? '🛡️ Moat & Defensible Floor (Baseline Protection): ' : '🛡️ 守正护城河与保底 (保底是什么)：'}</b>
+                    <span class="text-emerald-200">${isEn ? (pat.gradeEvaluation.floorBaselineEn || pat.gradeEvaluation.floorBaseline || '') : (pat.gradeEvaluation.floorBaselineZh || pat.gradeEvaluation.floorBaseline || '')}</span>
+                  </div>
+
+                  <!-- Ascension Path -->
+                  <div class="p-2 rounded bg-amber-950/20 border border-amber-900/40">
+                    <b class="text-amber-400">${isEn ? '🚀 Practical Elevation & Ascension Path (How to improve): ' : '🚀 破局晋升与改运路径 (如何改善与提升)：'}</b>
+                    <span class="text-amber-200">${isEn ? (pat.gradeEvaluation.elevationPathEn || pat.gradeEvaluation.elevationPath || '') : (pat.gradeEvaluation.elevationPathZh || pat.gradeEvaluation.elevationPath || '')}</span>
+                  </div>
+                </div>
+              </div>` : ''}
+
+              <!-- 7. Combination Bureaus & Energy Precedence Exegesis -->
+              ${(() => {
+                const interactions = (currentBaziResult && currentBaziResult.interactions) || {};
+                const sanHui = interactions.sanHuiCombos || [];
+                const sanHe = interactions.sanHeCombos || [];
+                const banHe = interactions.banHeCombos || [];
+                const clashes = interactions.branchClashes || [];
+                const resolvedClashes = clashes.filter(c => c.resolvedByCombo);
+
+                let comboSummaryZh = '';
+                let comboSummaryEn = '';
+
+                if (sanHui.length > 0 || sanHe.length > 0 || banHe.length > 0) {
+                  const partsZh = [];
+                  const partsEn = [];
+                  if (sanHui.length > 0) {
+                    partsZh.push(`三会方局【${sanHui.map(c => c.nameZh).join('、')}】`);
+                    partsEn.push(`Directional Meeting [${sanHui.map(c => c.nameEn).join('; ')}]`);
+                  }
+                  if (sanHe.length > 0) {
+                    partsZh.push(`三合局【${sanHe.map(c => c.nameZh).join('、')}】`);
+                    partsEn.push(`Three Harmonies [${sanHe.map(c => c.nameEn).join('; ')}]`);
+                  }
+                  if (banHe.length > 0) {
+                    partsZh.push(`半合/拱合【${banHe.map(c => c.nameZh).join('、')}】`);
+                    partsEn.push(`Half Harmonies [${banHe.map(c => c.nameEn).join('; ')}]`);
+                  }
+                  comboSummaryZh = `原局聚合${partsZh.join('，')}。古法宗义：‘方局合局，气专势隆，以合化能量为第一优先；若与地支刑冲并见，贪合忘冲、贪合忘刑，合局优先涵摄化解’。此合局能量直接赋能并主导本命格局之清纯厚重度。`;
+                  comboSummaryEn = `Natal chart forms ${partsEn.join('; ')}. Metaphysical principle: 'Directional meetings and harmony bureaus consolidate dominant elemental momentum, taking absolute precedence over standard clashes and punishments (Greedy for Harmony, Oblivious to Clash)'. This combination energy directly governs pattern purity.`;
+                } else {
+                  comboSummaryZh = '原局干支各守本位，无大势三合三会方局，以各柱正统干支生克承应为主，五行平和流转，综合分析全局流通气象。';
+                  comboSummaryEn = 'Natal pillars preserve individual spatial positions without major bureaus; standard ten gods circulation and pillar proximity govern pattern dynamics.';
+                }
+
+                return `
+                  <div class="p-3 bg-black/40 rounded-xl border border-sky-600/40 space-y-2 mt-2 shadow-inner">
+                    <div class="flex items-center space-x-1.5 pb-1 border-b border-gray-800">
+                      <span class="chinese-seal text-[9px] py-0 border-sky-500 text-sky-300">${isEn ? 'Combination Synthesis' : '合局通融'}</span>
+                      <span class="text-sky-300 font-bold text-xs font-serif-sc">
+                        🌀 7. ${isEn ? 'Combination Bureaus & Energy Precedence Exegesis (San He / San Hui)' : '合局全套解析与能量优先论 (三合生旺库 / 三会方局 / 贪合忘冲)'}
+                      </span>
+                    </div>
+                    <p class="text-gray-300 text-[11.5px] leading-relaxed">${isEn ? comboSummaryEn : comboSummaryZh}</p>
+                    ${resolvedClashes.length > 0 ? `
+                      <div class="p-2 rounded bg-amber-950/30 border border-amber-600/30 text-[11px] text-amber-200">
+                        <b>${isEn ? '⚡ Clashes Resolved by Combination Bureau: ' : '⚡ 合局化解刑冲实况：'}</b>
+                        ${resolvedClashes.map(c => isEn ? `[${(c.branchesEn || c.branches.map(b => (typeof I18N !== 'undefined' ? I18N.getBranch(b, 'en') : b))).join('-')}: ${c.resolutionNoteEn}]` : `【地支${c.branches.join('与')}冲：${c.resolutionNoteZh}】`).join('；')}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              })()}
+            </div>
+          </details>
         `;
         patternsContainer.appendChild(card);
       });
