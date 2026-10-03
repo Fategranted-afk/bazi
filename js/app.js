@@ -248,10 +248,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // State
   let currentBaziResult = null;
   let currentLuckResult = null;
+  const _initDate = new Date();
   let selectedDecadeIdx = 0;
-  let selectedAnnualYear = new Date().getFullYear();
-  let selectedMonthBranch = '寅';
-  let selectedDailyDate = new Date().toISOString().split('T')[0];
+  let selectedAnnualYear = _initDate.getFullYear();
+  let selectedMonthBranch = (typeof SolarTermEngine !== 'undefined' && typeof SolarTermEngine.getSolarYearAndMonth === 'function')
+    ? SolarTermEngine.getSolarYearAndMonth(_initDate).monthBranch
+    : '寅';
+  let selectedDailyDate = `${_initDate.getFullYear()}-${String(_initDate.getMonth() + 1).padStart(2, '0')}-${String(_initDate.getDate()).padStart(2, '0')}`;
   let selectedFortuneCycle = 'decade';
   let selectedPlaybookTab = 'mainline'; // 'mainline' | 'seasons' | 'safeguards'
   let selectedResonanceTab = 'directions'; // 'directions' | 'ecosystems'
@@ -6414,7 +6417,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Render Fortune & Luck Cycles (大运、流年、流月、流日 四阶全息推演与五柱同参)
   function renderLuckCycles(res) {
     const activeBazi = res || currentBaziResult;
-    if (typeof LuckEngine === 'undefined' || !currentLuckResult || !activeBazi) return;
+    if (typeof LuckEngine === 'undefined' || !activeBazi) return;
+    if (!currentLuckResult && typeof LuckEngine.calculateLuck === 'function') {
+      currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+    }
+    if (!currentLuckResult) return;
     const isEn = (currentLang === 'en');
 
     // 1. Meta Badges: Progression Direction & Start Age
@@ -6545,8 +6552,13 @@ document.addEventListener('DOMContentLoaded', () => {
           selectedDecadeIdx = idx;
           selectedAnnualYear = d.yearStart;
           selectedFortuneCycle = 'decade';
-          currentLuckResult = LuckEngine.calculateLuck(currentBaziResult, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-          renderLuckCycles(currentBaziResult);
+          const parts = selectedDailyDate.split('-');
+          const mm = parts[1] || '01';
+          const dd = parts[2] || '15';
+          selectedDailyDate = `${d.yearStart}-${mm}-${dd}`;
+          const baziToCalc = currentBaziResult || activeBazi;
+          currentLuckResult = LuckEngine.calculateLuck(baziToCalc, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+          renderLuckCycles(baziToCalc);
         });
 
         decadesContainer.appendChild(card);
@@ -6662,8 +6674,13 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
           selectedAnnualYear = a.year;
           selectedFortuneCycle = 'annual';
-          currentLuckResult = LuckEngine.calculateLuck(currentBaziResult, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-          renderLuckCycles(currentBaziResult);
+          const parts = selectedDailyDate.split('-');
+          const mm = parts[1] || '01';
+          const dd = parts[2] || '15';
+          selectedDailyDate = `${a.year}-${mm}-${dd}`;
+          const baziToCalc = currentBaziResult || activeBazi;
+          currentLuckResult = LuckEngine.calculateLuck(baziToCalc, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+          renderLuckCycles(baziToCalc);
         });
 
         annualContainer.appendChild(card);
@@ -6759,8 +6776,12 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
           selectedMonthBranch = m.branch;
           selectedFortuneCycle = 'monthly';
-          currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-          renderLuckCycles(activeBazi);
+          const gregMonth = m.index <= 11 ? (m.index + 1) : 1;
+          const targetYear = (m.index === 12) ? (selectedAnnualYear + 1) : selectedAnnualYear;
+          selectedDailyDate = `${targetYear}-${String(gregMonth).padStart(2, '0')}-15`;
+          const baziToCalc = activeBazi || currentBaziResult;
+          currentLuckResult = LuckEngine.calculateLuck(baziToCalc, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+          renderLuckCycles(baziToCalc);
         });
 
         monthlyContainer.appendChild(card);
@@ -6772,20 +6793,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const dailyInput = document.getElementById('luckDailyDatePicker');
     if (dailyInput) {
       dailyInput.value = selectedDailyDate;
-      dailyInput.onchange = function() {
-        if (this.value) {
-          selectedDailyDate = this.value;
-          selectedFortuneCycle = 'daily';
-          const parts = selectedDailyDate.split('-').map(Number);
-          if (parts[0]) selectedAnnualYear = parts[0];
-          currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-          renderLuckCycles(activeBazi);
+      dailyInput.setAttribute('min', '1900-01-01');
+      dailyInput.setAttribute('max', '2100-12-31');
+      const handleDailyChange = function() {
+        if (dailyInput.value) {
+          const parts = dailyInput.value.split('-').map(Number);
+          if (parts.length === 3 && !isNaN(parts[0]) && !isNaN(parts[1]) && !isNaN(parts[2])) {
+            selectedDailyDate = dailyInput.value;
+            selectedFortuneCycle = 'daily';
+            selectedAnnualYear = parts[0];
+            if (typeof SolarTermEngine !== 'undefined' && typeof SolarTermEngine.getSolarYearAndMonth === 'function') {
+              try {
+                const targetDt = new Date(parts[0], parts[1] - 1, parts[2]);
+                const st = SolarTermEngine.getSolarYearAndMonth(targetDt);
+                if (st && st.monthBranch) selectedMonthBranch = st.monthBranch;
+              } catch (e) {}
+            }
+            const baziToCalc = activeBazi || currentBaziResult;
+            currentLuckResult = LuckEngine.calculateLuck(baziToCalc, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+            if (currentLuckResult && currentLuckResult.decades && currentLuckResult.decades.length > 0) {
+              const matchedDecadeIdx = currentLuckResult.decades.findIndex(d => 
+                selectedAnnualYear >= d.yearStart && selectedAnnualYear <= d.yearEnd
+              );
+              if (matchedDecadeIdx >= 0) selectedDecadeIdx = matchedDecadeIdx;
+            }
+            renderLuckCycles(baziToCalc);
+          }
         }
       };
+      dailyInput.onchange = handleDailyChange;
+      dailyInput.addEventListener('change', handleDailyChange);
     }
     const todayBtn = document.getElementById('luckTodayBtn');
     if (todayBtn) {
-      todayBtn.onclick = function() {
+      const handleTodayClick = function() {
         const now = new Date();
         const y = now.getFullYear();
         const m = String(now.getMonth() + 1).padStart(2, '0');
@@ -6793,9 +6834,24 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedDailyDate = `${y}-${m}-${d}`;
         selectedAnnualYear = y;
         selectedFortuneCycle = 'daily';
-        currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
-        renderLuckCycles(activeBazi);
+        if (typeof SolarTermEngine !== 'undefined' && typeof SolarTermEngine.getSolarYearAndMonth === 'function') {
+          try {
+            const st = SolarTermEngine.getSolarYearAndMonth(now);
+            if (st && st.monthBranch) selectedMonthBranch = st.monthBranch;
+          } catch (e) {}
+        }
+        const baziToCalc = activeBazi || currentBaziResult;
+        currentLuckResult = LuckEngine.calculateLuck(baziToCalc, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
+        if (currentLuckResult && currentLuckResult.decades && currentLuckResult.decades.length > 0) {
+          const matchedDecadeIdx = currentLuckResult.decades.findIndex(dec => 
+            selectedAnnualYear >= dec.yearStart && selectedAnnualYear <= dec.yearEnd
+          );
+          if (matchedDecadeIdx >= 0) selectedDecadeIdx = matchedDecadeIdx;
+        }
+        renderLuckCycles(baziToCalc);
       };
+      todayBtn.onclick = handleTodayClick;
+      todayBtn.addEventListener('click', handleTodayClick);
     }
 
     // 5-Pillar Alignment Matrix Table
@@ -7034,9 +7090,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/^(🛑|⚠️|🎯|💡|🔑|🛡️|⛔)\s*/, '')
       .trim();
 
-    let items = cleaned.split(/[；;]\s*/).map(s => s.trim()).filter(s => s.length > 0);
+    let items = cleaned.split(/[；;]\s*/).map(s => s.trim().replace(/^(\d+[\.、\)]|[-*•]\s*)/, '')).filter(s => s.length > 0);
     if (items.length <= 1) {
-      items = cleaned.split(/(?<=[。！？!?])\s+/).map(s => s.trim()).filter(s => s.length > 2);
+      items = cleaned.split(/(?<=[。！？!?])\s+/).map(s => s.trim().replace(/^(\d+[\.、\)]|[-*•]\s*)/, '')).filter(s => s.length > 2);
     }
 
     const isTaboo = (type === 'taboo');
@@ -7086,7 +7142,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Render In-Depth Fortune Evaluation, Meaning, Pitfalls (if Good), Taboos (if Bad), and Strategy
-  function renderTransitFortuneDetail(res, luckRes) {
+  function renderTransitFortuneDetail(res, luckRes, targetCycle) {
+    if (targetCycle) {
+      selectedFortuneCycle = targetCycle;
+    }
     const detailBody = document.getElementById('fortuneDetailBody');
     const badgeEl = document.getElementById('fortuneActiveBadge');
     if (!detailBody || !luckRes) return;
@@ -14311,7 +14370,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target) {
           selectedFortuneCycle = target;
           if (currentBaziResult && currentLuckResult) {
-            renderTransitFortuneDetail(currentBaziResult, currentLuckResult);
+            renderTransitFortuneDetail(currentBaziResult, currentLuckResult, target);
           }
         }
       });
@@ -29316,6 +29375,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
   window.switchPrimaryView = switchPrimaryView;
   window.renderLuckCycles = renderLuckCycles;
   window.renderTransitFortuneDetail = renderTransitFortuneDetail;
+  window.setSelectedFortuneCycle = function(cycle) {
+    selectedFortuneCycle = cycle;
+  };
   window.showDynamicCalculationProgress = showDynamicCalculationProgress;
   window.renderOperationalPlaybook = renderOperationalPlaybook;
   window.renderEcologicalResonance = renderEcologicalResonance;

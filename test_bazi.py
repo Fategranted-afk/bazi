@@ -916,6 +916,9 @@ var document = {
           this._h[e].push(h);
         },
         click: function() {
+          if (typeof this.onclick === 'function') {
+            this.onclick.call(this, { preventDefault: function(){} });
+          }
           if (this._h && this._h['click']) {
             var self = this;
             this._h['click'].forEach(function(h) { h.call(self, { preventDefault: function(){} }); });
@@ -1474,12 +1477,60 @@ if (typeof window.initDualPhaseManifold === 'function') {
     if (!lInteract || lInteract.innerHTML.length < 100) {
       throw new Error('luckInteractionsContainer failed to render properly');
     }
+
+    // 12.1 Test Today button click
     var tBtn = document.getElementById('luckTodayBtn');
     if (tBtn && typeof tBtn.click === 'function') {
       tBtn.click();
       if (!mBody.innerHTML || mBody.innerHTML.length < 500) {
         throw new Error('fivePillarsMatrixBody emptied after Today button click');
       }
+    }
+
+    // 12.2 Test Daily Date Picker onchange
+    var dPicker = document.getElementById('luckDailyDatePicker');
+    if (dPicker && typeof dPicker.onchange === 'function') {
+      dPicker.value = '2027-06-18';
+      dPicker.onchange();
+      if (!mBody.innerHTML || mBody.innerHTML.length < 500) {
+        throw new Error('fivePillarsMatrixBody emptied after Date Picker change');
+      }
+    }
+
+    // 12.3 Test all 4 fortune sub-tabs (Decade, Annual, Monthly, Daily)
+    var tabsToCheck = [
+      { tab: 'decade', expectedZh: '十年大运', expectedEn: '10-Year Major Decade' },
+      { tab: 'annual', expectedZh: '流年太岁', expectedEn: 'Annual Transit' },
+      { tab: 'monthly', expectedZh: '节令流月', expectedEn: 'Solar Month' },
+      { tab: 'daily', expectedZh: '流日精微', expectedEn: 'Transit Day' }
+    ];
+    tabsToCheck.forEach(function(item) {
+      if (typeof window.renderTransitFortuneDetail === 'function') {
+        window.renderTransitFortuneDetail(currentBaziResult, currentLuckResult, item.tab);
+        if (!fDetail.innerHTML.includes(item.expectedZh)) {
+          throw new Error('Sub-tab ' + item.tab + ' failed to render seal: ' + item.expectedZh);
+        }
+      }
+    });
+
+    // 12.4 Test English Mode Switch & Bilingual Parity
+    if (typeof window.setLanguage === 'function') {
+      window.setLanguage('en');
+      window.switchPrimaryView('view-luck');
+      if (!mBody.innerHTML.includes('Heavenly Stem') || !mBody.innerHTML.includes('Self (Day Master)')) {
+        throw new Error('fivePillarsMatrixBody missing English dimensions or Self (Day Master)');
+      }
+      tabsToCheck.forEach(function(item) {
+        if (typeof window.renderTransitFortuneDetail === 'function') {
+          window.renderTransitFortuneDetail(currentBaziResult, currentLuckResult, item.tab);
+          if (!fDetail.innerHTML.includes(item.expectedEn)) {
+            throw new Error('Sub-tab ' + item.tab + ' failed to render English seal: ' + item.expectedEn);
+          }
+        }
+      });
+      // Revert to Chinese
+      window.setLanguage('zh');
+      window.switchPrimaryView('view-luck');
     }
   }
 }

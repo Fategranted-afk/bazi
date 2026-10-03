@@ -1051,7 +1051,7 @@ const LuckEngine = (function() {
   function getDailyLuck(bazi, year, month, day) {
     const dm = bazi.dayMaster;
     const jdn = gregorianToJDN(year, month, day);
-    const dayCycleIdx = (jdn + 49) % 60;
+    const dayCycleIdx = ((jdn + 49) % 60 + 60) % 60;
     const sIdx = dayCycleIdx % 10;
     const bIdx = dayCycleIdx % 12;
     const stem = STEMS[sIdx];
@@ -3384,7 +3384,7 @@ const LuckEngine = (function() {
       const daysInMonth = new Date(curCalYear, m, 0).getDate();
       for (let d = 1; d <= daysInMonth; d++) {
         const jdn = gregorianToJDN(curCalYear, m, d);
-        const dayCycleIdx = (jdn + 49) % 60;
+        const dayCycleIdx = ((jdn + 49) % 60 + 60) % 60;
         const sIdx = dayCycleIdx % 10;
         const bIdx = dayCycleIdx % 12;
         const dayStem = STEMS[sIdx];
