@@ -219,6 +219,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Five Element & Celestial Stem/Branch Aesthetic Themes
+  const ELEMENT_AESTHETICS = {
+    '甲': { elem: '木', en: 'Wood', color: 'text-emerald-400' },
+    '乙': { elem: '木', en: 'Wood', color: 'text-emerald-300' },
+    '丙': { elem: '火', en: 'Fire', color: 'text-rose-400' },
+    '丁': { elem: '火', en: 'Fire', color: 'text-rose-300' },
+    '戊': { elem: '土', en: 'Earth', color: 'text-amber-300' },
+    '己': { elem: '土', en: 'Earth', color: 'text-amber-200' },
+    '庚': { elem: '金', en: 'Metal', color: 'text-yellow-100' },
+    '辛': { elem: '金', en: 'Metal', color: 'text-slate-100' },
+    '壬': { elem: '水', en: 'Water', color: 'text-cyan-400' },
+    '癸': { elem: '水', en: 'Water', color: 'text-sky-300' },
+    '寅': { elem: '木', en: 'Wood', color: 'text-emerald-400' },
+    '卯': { elem: '木', en: 'Wood', color: 'text-emerald-300' },
+    '巳': { elem: '火', en: 'Fire', color: 'text-rose-400' },
+    '午': { elem: '火', en: 'Fire', color: 'text-rose-300' },
+    '辰': { elem: '土', en: 'Earth', color: 'text-amber-300' },
+    '戌': { elem: '土', en: 'Earth', color: 'text-amber-200' },
+    '丑': { elem: '土', en: 'Earth', color: 'text-amber-300' },
+    '未': { elem: '土', en: 'Earth', color: 'text-amber-200' },
+    '申': { elem: '金', en: 'Metal', color: 'text-yellow-100' },
+    '酉': { elem: '金', en: 'Metal', color: 'text-slate-100' },
+    '亥': { elem: '水', en: 'Water', color: 'text-cyan-400' },
+    '子': { elem: '水', en: 'Water', color: 'text-sky-300' }
+  };
+
   // State
   let currentBaziResult = null;
   let currentLuckResult = null;
@@ -6423,31 +6449,6 @@ document.addEventListener('DOMContentLoaded', () => {
         : `已选大运：第${activeDecade.index}步 · 【${activeDecade.text}】(${godTranslated}) · ${activeDecade.ageSpanZh} (${activeDecade.yearSpanZh})`;
     }
 
-    const ELEMENT_AESTHETICS = {
-      '甲': { elem: '木', en: 'Wood', color: 'text-emerald-400' },
-      '乙': { elem: '木', en: 'Wood', color: 'text-emerald-300' },
-      '丙': { elem: '火', en: 'Fire', color: 'text-rose-400' },
-      '丁': { elem: '火', en: 'Fire', color: 'text-rose-300' },
-      '戊': { elem: '土', en: 'Earth', color: 'text-amber-300' },
-      '己': { elem: '土', en: 'Earth', color: 'text-amber-200' },
-      '庚': { elem: '金', en: 'Metal', color: 'text-yellow-100' },
-      '辛': { elem: '金', en: 'Metal', color: 'text-slate-100' },
-      '壬': { elem: '水', en: 'Water', color: 'text-cyan-400' },
-      '癸': { elem: '水', en: 'Water', color: 'text-sky-300' },
-      '寅': { elem: '木', en: 'Wood', color: 'text-emerald-400' },
-      '卯': { elem: '木', en: 'Wood', color: 'text-emerald-300' },
-      '巳': { elem: '火', en: 'Fire', color: 'text-rose-400' },
-      '午': { elem: '火', en: 'Fire', color: 'text-rose-300' },
-      '辰': { elem: '土', en: 'Earth', color: 'text-amber-300' },
-      '戌': { elem: '土', en: 'Earth', color: 'text-amber-200' },
-      '丑': { elem: '土', en: 'Earth', color: 'text-amber-300' },
-      '未': { elem: '土', en: 'Earth', color: 'text-amber-200' },
-      '申': { elem: '金', en: 'Metal', color: 'text-yellow-100' },
-      '酉': { elem: '金', en: 'Metal', color: 'text-slate-100' },
-      '亥': { elem: '水', en: 'Water', color: 'text-cyan-400' },
-      '子': { elem: '水', en: 'Water', color: 'text-sky-300' }
-    };
-
     const decadesContainer = document.getElementById('decadesContainer');
     if (decadesContainer && currentLuckResult.decades) {
       decadesContainer.innerHTML = '';
@@ -6786,8 +6787,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (todayBtn) {
       todayBtn.onclick = function() {
         const now = new Date();
-        selectedDailyDate = now.toISOString().split('T')[0];
-        selectedAnnualYear = now.getFullYear();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const d = String(now.getDate()).padStart(2, '0');
+        selectedDailyDate = `${y}-${m}-${d}`;
+        selectedAnnualYear = y;
         selectedFortuneCycle = 'daily';
         currentLuckResult = LuckEngine.calculateLuck(activeBazi, selectedAnnualYear, selectedMonthBranch, selectedDailyDate);
         renderLuckCycles(activeBazi);
@@ -6975,7 +6979,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="text-[10px] text-gray-400 font-mono">${currentLuckResult.interactions.length} ${isEn ? 'Interactions Evaluated' : '项流转交感'}</span>
         </div>
         <div class="space-y-2 pt-1">
-          ${currentLuckResult.interactions.map(it => {
+          ${currentLuckResult.interactions.length > 0 ? currentLuckResult.interactions.map(it => {
             const isDanger = it.severity === 'critical' || it.severity === 'high';
             const isHarmony = it.severity === 'positive';
             const borderCls = isDanger ? 'border-rose-600/50 bg-rose-950/20' : isHarmony ? 'border-emerald-600/50 bg-emerald-950/20' : 'border-gray-800 bg-black/40';
@@ -6992,7 +6996,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p class="text-gray-300 text-[11px] leading-relaxed">${desc}</p>
               </div>
             `;
-          }).join('')}
+          }).join('') : `
+            <div class="p-3 rounded-lg border border-stone-800/80 bg-black/30 text-xs text-stone-400 text-center font-sans">
+              ${isEn ? '✦ The cosmic vectors currently maintain neutral equilibrium with no severe clashes or intense combinations detected.' : '✦ 当前岁运干支气机平和纯正，原局五柱无剧烈刑冲克害，亦无过激合化，气象安详稳健。'}
+            </div>
+          `}
         </div>
       `;
     }
@@ -7022,15 +7030,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function formatActionableBulletList(rawText, isEn, type) {
     if (!rawText) return '';
     let cleaned = rawText
-      .replace(/^🛑【[^】]+】：\s*/, '')
-      .replace(/^⚠️【[^】]+】：\s*/, '')
-      .replace(/^🎯【[^】]+】：\s*/, '')
-      .replace(/^🛑【[^\]]+\]:\s*/, '')
-      .replace(/^⚠️【[^\]]+\]:\s*/, '')
-      .replace(/^🎯【[^\]]+\]:\s*/, '')
+      .replace(/^([🛑⚠️🎯💡🔑🛡️⛔]\s*)?([【\[][^】\]]+[】\]][:：]?|\([^)]+\)[:：]?)\s*/, '')
+      .replace(/^(🛑|⚠️|🎯|💡|🔑|🛡️|⛔)\s*/, '')
       .trim();
 
-    let items = cleaned.split(/[；;]/).map(s => s.trim()).filter(s => s.length > 0);
+    let items = cleaned.split(/[；;]\s*/).map(s => s.trim()).filter(s => s.length > 0);
     if (items.length <= 1) {
       items = cleaned.split(/(?<=[。！？!?])\s+/).map(s => s.trim()).filter(s => s.length > 2);
     }
@@ -7171,8 +7175,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const stemEn = typeof I18N !== 'undefined' ? I18N.getStem(targetPillar.stem, 'en') : targetPillar.stem;
     const branchEn = typeof I18N !== 'undefined' ? I18N.getBranch(targetPillar.branch, 'en') : targetPillar.branch;
 
-    const stemElemColor = (targetPillar.stem && ELEMENT_AESTHETICS[targetPillar.stem]) ? ELEMENT_AESTHETICS[targetPillar.stem].color : (isGood ? 'text-emerald-200' : 'text-rose-200');
-    const branchElemColor = (targetPillar.branch && ELEMENT_AESTHETICS[targetPillar.branch]) ? ELEMENT_AESTHETICS[targetPillar.branch].color : (isGood ? 'text-emerald-200' : 'text-rose-200');
+    const stemElemColor = (targetPillar.stem && typeof ELEMENT_AESTHETICS !== 'undefined' && ELEMENT_AESTHETICS[targetPillar.stem]) ? ELEMENT_AESTHETICS[targetPillar.stem].color : (isGood ? 'text-emerald-200' : 'text-rose-200');
+    const branchElemColor = (targetPillar.branch && typeof ELEMENT_AESTHETICS !== 'undefined' && ELEMENT_AESTHETICS[targetPillar.branch]) ? ELEMENT_AESTHETICS[targetPillar.branch].color : (isGood ? 'text-emerald-200' : 'text-rose-200');
 
     const tacticalPosture = isGood
       ? (isEn ? '⚔️ Seize Momentum · Offensive Expansion' : '⚔️ 顺势进取 · 乘胜追击')
@@ -29309,6 +29313,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
 
   // Expose key modular renderers on window for direct headless verification
   window.setLanguage = setLanguage;
+  window.switchPrimaryView = switchPrimaryView;
+  window.renderLuckCycles = renderLuckCycles;
+  window.renderTransitFortuneDetail = renderTransitFortuneDetail;
   window.showDynamicCalculationProgress = showDynamicCalculationProgress;
   window.renderOperationalPlaybook = renderOperationalPlaybook;
   window.renderEcologicalResonance = renderEcologicalResonance;

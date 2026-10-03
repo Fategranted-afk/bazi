@@ -1458,6 +1458,30 @@ if (typeof window.initDualPhaseManifold === 'function') {
       throw new Error('1-click load into Chart B failed to populate synastryDateB: ' + dtB);
     }
   }
+
+  // 12. Verify view-luck, 5-Pillar Matrix, Fortune Detail & Interactive Synergy
+  if (typeof window.switchPrimaryView === 'function') {
+    window.switchPrimaryView('view-luck');
+    var mBody = document.getElementById('fivePillarsMatrixBody');
+    if (!mBody || mBody.innerHTML.length < 500) {
+      throw new Error('fivePillarsMatrixBody failed to render properly');
+    }
+    var fDetail = document.getElementById('fortuneDetailBody');
+    if (!fDetail || fDetail.innerHTML.length < 500) {
+      throw new Error('fortuneDetailBody failed to render properly');
+    }
+    var lInteract = document.getElementById('luckInteractionsContainer');
+    if (!lInteract || lInteract.innerHTML.length < 100) {
+      throw new Error('luckInteractionsContainer failed to render properly');
+    }
+    var tBtn = document.getElementById('luckTodayBtn');
+    if (tBtn && typeof tBtn.click === 'function') {
+      tBtn.click();
+      if (!mBody.innerHTML || mBody.innerHTML.length < 500) {
+        throw new Error('fivePillarsMatrixBody emptied after Today button click');
+      }
+    }
+  }
 }
 """
 run_jsc(s6_jsc, "Suite 6 JSC Lifecycle & DOM")
@@ -1509,6 +1533,31 @@ tianji_pos = index_html_src.find('id="tianjiCalendarFeedSection"')
 chrono_pos = index_html_src.find('id="masterProfileChronoSection"')
 if tianji_pos == -1 or chrono_pos == -1 or tianji_pos >= chrono_pos:
   raise AssertionError(f"Expected #tianjiCalendarFeedSection ({tianji_pos}) to precede #masterProfileChronoSection ({chrono_pos}) in index.html")
+
+# Check prominent layout and presence of Section 4 and Transit Fortune in index.html
+if 'id="fivePillarsMatrixBody"' not in index_html_src:
+  raise AssertionError("Missing #fivePillarsMatrixBody in index.html")
+if 'id="luckDailyDatePicker"' not in index_html_src:
+  raise AssertionError("Missing #luckDailyDatePicker in index.html")
+if 'id="luckTodayBtn"' not in index_html_src:
+  raise AssertionError("Missing #luckTodayBtn in index.html")
+if 'id="transitFortuneDetailCard"' not in index_html_src:
+  raise AssertionError("Missing #transitFortuneDetailCard in index.html")
+if 'id="fortuneDetailBody"' not in index_html_src:
+  raise AssertionError("Missing #fortuneDetailBody in index.html")
+if 'id="luckInteractionsContainer"' not in index_html_src:
+  raise AssertionError("Missing #luckInteractionsContainer in index.html")
+
+decades_pos = index_html_src.find('id="decadesContainer"')
+transit_fortune_pos = index_html_src.find('id="transitFortuneDetailCard"')
+five_pillars_pos = index_html_src.find('id="fivePillarsMatrixBody"')
+chrono_nav_pos = index_html_src.find('id="chronoNavigatorSection"')
+
+if decades_pos == -1 or transit_fortune_pos == -1 or five_pillars_pos == -1 or chrono_nav_pos == -1:
+  raise AssertionError("Missing transit components in index.html")
+if not (decades_pos < transit_fortune_pos < five_pillars_pos < chrono_nav_pos):
+  raise AssertionError(f"Expected 4-tier transit levels (decades={decades_pos}, fortune={transit_fortune_pos}, 5pillars={five_pillars_pos}) to precede #chronoNavigatorSection ({chrono_nav_pos}) in index.html")
+
 
 
 check_pass("Unified High-Speed JavaScriptCore DOM Lifecycle", "Complete App Initialization & Page 1 to Page 2 Transition Without TDZ")
