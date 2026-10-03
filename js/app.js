@@ -11003,35 +11003,173 @@ document.addEventListener('DOMContentLoaded', () => {
     if (elCountWisdom) elCountWisdom.textContent = wisdomCount;
     if (elCountWealth) elCountWealth.textContent = wealthCount;
 
-    // 4. Render Event Cards based on Active Filter
+    // 4. Type badge configuration helper
+    const typeBadge = (type, cat) => {
+      switch(type) {
+        case 'crisis_defense':
+          return { text: isEn ? 'Double Clash' : '天克地冲', cls: 'bg-rose-950/80 text-rose-300 border-rose-500/50' };
+        case 'harmony_union':
+          return { text: isEn ? 'Double Harmony' : '天地德合', cls: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50' };
+        case 'blade_clash':
+          return { text: isEn ? 'Blade Clash' : '羊刃逢冲', cls: 'bg-red-950/80 text-red-300 border-red-500/50' };
+        case 'noble_mentor':
+          return { text: isEn ? 'Noble Mentor' : '天乙贵人', cls: 'bg-indigo-950/80 text-indigo-300 border-indigo-500/50' };
+        case 'wenchang_focus':
+          return { text: isEn ? 'Wen Chang' : '文昌贵人', cls: 'bg-purple-950/80 text-purple-300 border-purple-500/50' };
+        case 'wealth_triad':
+        case 'wealth_pivot':
+          return { text: isEn ? 'Wealth Triad' : '三合财局', cls: 'bg-amber-950/80 text-amber-300 border-amber-500/50' };
+        case 'yima_surge':
+          return { text: isEn ? 'Post Horse' : '驿马星动', cls: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/50' };
+        case 'solar_shift':
+          return { text: isEn ? 'Solar Pivot' : '节气交节', cls: 'bg-blue-950/80 text-blue-300 border-blue-500/50' };
+        default:
+          return { text: isEn ? 'Strategic Pivot' : '战略拐点', cls: 'bg-gray-800 text-gray-300 border-gray-600' };
+      }
+    };
+
+    // 5. Extract Top 3 Offensive Breakthroughs & Top 3 Defensive Fortresses (置于最前)
+    const offensiveEvents = events.filter(e => e.category === 'offensive');
+    offensiveEvents.sort((a, b) => {
+      const wDiff = (b.weight || 0) - (a.weight || 0);
+      if (wDiff !== 0) return wDiff;
+      return (a.month * 100 + a.day) - (b.month * 100 + b.day);
+    });
+    const top3Offensive = offensiveEvents.slice(0, 3);
+
+    const defensiveEvents = events.filter(e => e.category === 'defensive');
+    defensiveEvents.sort((a, b) => {
+      const wDiff = (b.weight || 0) - (a.weight || 0);
+      if (wDiff !== 0) return wDiff;
+      return (a.month * 100 + a.day) - (b.month * 100 + b.day);
+    });
+    const top3Defensive = defensiveEvents.slice(0, 3);
+
+    const renderSpotlightCard = (e, idx, isDefensive) => {
+      const badge = typeBadge(e.type, e.category);
+      const title = isEn ? (e.titleEn || e.title) : (e.titleZh || e.title);
+      const summary = isEn ? (e.summaryEn || e.summary) : (e.summaryZh || e.summary);
+      const action = isEn ? (e.actionEn || e.actionRule) : (e.actionZh || e.actionRule);
+      const pillar = isEn ? (e.pillarEn || e.dayPillar) : (e.pillarZh || e.dayPillar);
+      const gUrl = e.googleCalendarUrl || CalendarFeedEngine.getGoogleCalendarUrl(e, currentLang);
+      const borderCls = isDefensive
+        ? 'border-rose-500/50 hover:border-rose-400 bg-rose-950/20'
+        : 'border-emerald-500/50 hover:border-emerald-400 bg-emerald-950/20';
+      const rankLabel = isDefensive
+        ? (isEn ? `#${idx + 1} Defense Fortress` : `★ 第${idx + 1}防线 · 避险关口`)
+        : (isEn ? `#${idx + 1} Breakthrough` : `★ 第${idx + 1}先机 · 进取要津`);
+      const rankCls = isDefensive
+        ? 'bg-rose-950 text-rose-300 border-rose-500/40'
+        : 'bg-emerald-950 text-emerald-300 border-emerald-500/40';
+
+      return `
+        <div class="p-3.5 rounded-xl border ${borderCls} transition space-y-2 text-xs shadow-lg bg-black/60 flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-1.5">
+                <span class="font-mono text-indigo-300 font-bold tracking-tight text-xs">${e.isoDate || e.dateStr}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded font-mono bg-gray-800 text-gray-300 border border-gray-700/60">${pillar}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="text-[9.5px] px-1.5 py-0.5 rounded font-mono border ${rankCls}">${rankLabel}</span>
+                <span class="text-[9.5px] px-1.5 py-0.5 rounded border font-mono ${badge.cls}">${badge.text}</span>
+              </div>
+            </div>
+            <h5 class="font-bold text-gray-100 font-serif-sc text-xs sm:text-sm leading-snug">${title}</h5>
+            <p class="text-[11px] text-gray-400 leading-relaxed">${summary}</p>
+          </div>
+
+          <div class="pt-2 border-t border-gray-800/60 space-y-2">
+            <div class="text-[11px] ${isDefensive ? 'text-rose-300 bg-rose-950/30 border-rose-900/40' : 'text-emerald-300 bg-emerald-950/30 border-emerald-900/40'} leading-tight p-2 rounded-lg border">
+              <strong>${isEn ? 'Tactical Directive: ' : (isDefensive ? '避险行持：' : '战术行持：')}</strong>${action}
+            </div>
+            <div class="flex items-center justify-between pt-1 gap-1.5">
+              <a href="${gUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-1 px-2 rounded-lg bg-gray-800/90 hover:bg-gray-700 text-indigo-300 border border-indigo-500/30 text-[10px] font-semibold transition active:scale-95 flex items-center justify-center gap-1">
+                <span>📅</span>
+                <span>${isEn ? 'Google Cal' : 'Google 日历'}</span>
+              </a>
+              <button type="button" data-event-id="${e.id}" class="btn-single-ics flex-1 text-center py-1 px-2 rounded-lg bg-indigo-950/70 hover:bg-indigo-900 text-indigo-200 border border-indigo-500/40 text-[10px] font-semibold transition cursor-pointer active:scale-95 flex items-center justify-center gap-1">
+                <span>📥</span>
+                <span>${isEn ? 'Add to Cal (.ics)' : '导入日历 (.ics)'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const offContainer = document.getElementById('tianjiTopOffensiveCards');
+    const defContainer = document.getElementById('tianjiTopDefensiveCards');
+    if (offContainer) {
+      offContainer.innerHTML = top3Offensive.map((e, i) => renderSpotlightCard(e, i, false)).join('');
+    }
+    if (defContainer) {
+      defContainer.innerHTML = top3Defensive.map((e, i) => renderSpotlightCard(e, i, true)).join('');
+    }
+
+    // Dynamic Spotlight Headings Localization
+    const elSpotlightTitle = document.getElementById('tianjiSpotlightTitle');
+    const elSpotlightSub = document.getElementById('tianjiSpotlightSub');
+    const elTopOffHeading = document.getElementById('tianjiTopOffensiveHeading');
+    const elTopDefHeading = document.getElementById('tianjiTopDefensiveHeading');
+    const elFullCalSummary = document.getElementById('tianjiFullCalendarSummary');
+
+    if (elSpotlightTitle) elSpotlightTitle.textContent = isEn
+      ? '[Annual Decisive Turning Points: Top 3 Breakthroughs & Top 3 Defenses]'
+      : '【全年决胜核心要津 · 3 大顺势进取窗口 ✕ 3 大防御避险关口】';
+
+    if (elSpotlightSub) elSpotlightSub.textContent = isEn
+      ? 'Algorithmically synthesized top 6 strategic inflection points from the 24-point panorama. Prioritize syncing to calendar.'
+      : '从全景 24 拐点中算法提炼的最关键 6 个决胜节点，建议优先导入日历并预设闹钟提醒';
+
+    if (elTopOffHeading) elTopOffHeading.textContent = isEn
+      ? 'Top 3 Breakthrough Windows'
+      : '3 大顺势进取窗口 (Top 3 Breakthroughs)';
+
+    if (elTopDefHeading) elTopDefHeading.textContent = isEn
+      ? 'Top 3 Defensive Fortresses'
+      : '3 大防御避险关口 (Top 3 Defense Fortresses)';
+
+    if (elFullCalSummary) {
+      elFullCalSummary.innerHTML = isEn
+        ? `<div class="flex items-center gap-2">
+             <span class="text-purple-400">📖</span>
+             <span class="font-bold text-gray-200 font-serif-sc">[Annual 24-Event Battle Rhythm Panorama &middot; Click to Expand Details]</span>
+             <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-900/50 text-indigo-300 font-mono">24 Inflection Points</span>
+           </div>
+           <span class="text-xs text-gray-400 group-open:rotate-180 transition-transform duration-200">&#9660;</span>`
+        : `<div class="flex items-center gap-2">
+             <span class="text-purple-400">📖</span>
+             <span class="font-bold text-gray-200 font-serif-sc">【全年 24 节律全景明细 · 点击展开查看全部拐点日历】</span>
+             <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-900/50 text-indigo-300 font-mono">文昌贵人 · 财运流转 · 月度全景 (24 拐点)</span>
+           </div>
+           <span class="text-xs text-gray-400 group-open:rotate-180 transition-transform duration-200">&#9660;</span>`;
+    }
+
+    // Helper: Bind single-event .ics download buttons
+    const bindSingleIcsButtons = (root) => {
+      if (!root) return;
+      root.querySelectorAll('.btn-single-ics').forEach(btn => {
+        if (btn.hasAttribute('data-bound-ics')) return;
+        btn.setAttribute('data-bound-ics', 'true');
+        btn.addEventListener('click', () => {
+          const evId = btn.getAttribute('data-event-id');
+          const targetEvent = events.find(e => e.id === evId);
+          if (targetEvent) {
+            feedEngine.downloadSingleEventICS(targetEvent, `tianji_${targetEvent.isoDate || targetEvent.dateStr}.ics`, currentLang);
+          }
+        });
+      });
+    };
+
+    // Bind spotlight cards ICS buttons
+    bindSingleIcsButtons(document.getElementById('tianjiTopSpotlight'));
+
+    // 6. Render Full Event Cards inside Folded Details based on Active Filter
     const renderFilteredCards = () => {
       const filtered = (activeTianjiFilter === 'all')
         ? events
         : events.filter(e => e.category === activeTianjiFilter);
-
-      const typeBadge = (type, cat) => {
-        switch(type) {
-          case 'crisis_defense':
-            return { text: isEn ? 'Double Clash' : '天克地冲', cls: 'bg-rose-950/80 text-rose-300 border-rose-500/50' };
-          case 'harmony_union':
-            return { text: isEn ? 'Double Harmony' : '天地德合', cls: 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50' };
-          case 'blade_clash':
-            return { text: isEn ? 'Blade Clash' : '羊刃逢冲', cls: 'bg-red-950/80 text-red-300 border-red-500/50' };
-          case 'noble_mentor':
-            return { text: isEn ? 'Noble Mentor' : '天乙贵人', cls: 'bg-indigo-950/80 text-indigo-300 border-indigo-500/50' };
-          case 'wenchang_focus':
-            return { text: isEn ? 'Wen Chang' : '文昌贵人', cls: 'bg-purple-950/80 text-purple-300 border-purple-500/50' };
-          case 'wealth_triad':
-          case 'wealth_pivot':
-            return { text: isEn ? 'Wealth Triad' : '三合财局', cls: 'bg-amber-950/80 text-amber-300 border-amber-500/50' };
-          case 'yima_surge':
-            return { text: isEn ? 'Post Horse' : '驿马星动', cls: 'bg-cyan-950/80 text-cyan-300 border-cyan-500/50' };
-          case 'solar_shift':
-            return { text: isEn ? 'Solar Pivot' : '节气交节', cls: 'bg-blue-950/80 text-blue-300 border-blue-500/50' };
-          default:
-            return { text: isEn ? 'Strategic Pivot' : '战略拐点', cls: 'bg-gray-800 text-gray-300 border-gray-600' };
-        }
-      };
 
       if (filtered.length === 0) {
         container.innerHTML = `
@@ -11091,16 +11229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
       }).join('');
 
-      // Bind single-event .ics download buttons
-      container.querySelectorAll('.btn-single-ics').forEach(btn => {
-        btn.addEventListener('click', (ev) => {
-          const evId = btn.getAttribute('data-event-id');
-          const targetEvent = events.find(e => e.id === evId);
-          if (targetEvent) {
-            feedEngine.downloadSingleEventICS(targetEvent, `tianji_${targetEvent.isoDate || targetEvent.dateStr}.ics`, currentLang);
-          }
-        });
-      });
+      bindSingleIcsButtons(container);
     };
 
     // 5. Initial render of cards
