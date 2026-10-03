@@ -1906,8 +1906,8 @@ class PhasePortraitEngine {
 
       const isAscA = ptA.v >= 0;
       const textA = isEn
-        ? `👤 ${nameA} ${ptA.age}y · ${isAscA ? 'Ascent 🔺' : 'Grounding 🔻'} (x=${ptA.x}, v=${ptA.v})`
-        : `👤 ${nameA} ${ptA.age}岁 · ${isAscA ? '跃迁期 🔺' : '蓄能期 🔻'} (x=${ptA.x}, v=${ptA.v})`;
+        ? `👤 ${nameA} ${ptA.age}y · ${isAscA ? 'Ascent 🔺' : 'Grounding 🔻'}`
+        : `👤 ${nameA} ${ptA.age}岁 · ${isAscA ? '跃迁期 🔺' : '蓄能期 🔻'}`;
 
       ctx.font = 'bold 10px sans-serif';
       const twA = ctx.measureText(textA).width;
@@ -1959,8 +1959,8 @@ class PhasePortraitEngine {
 
       const isAscB = ptB.v >= 0;
       const textB = isEn
-        ? `👥 ${nameB} ${ptB.age}y · ${isAscB ? 'Ascent 🔺' : 'Grounding 🔻'} (x=${ptB.x}, v=${ptB.v})`
-        : `👥 ${nameB} ${ptB.age}岁 · ${isAscB ? '跃迁期 🔺' : '蓄能期 🔻'} (x=${ptB.x}, v=${ptB.v})`;
+        ? `👥 ${nameB} ${ptB.age}y · ${isAscB ? 'Ascent 🔺' : 'Grounding 🔻'}`
+        : `👥 ${nameB} ${ptB.age}岁 · ${isAscB ? '跃迁期 🔺' : '蓄能期 🔻'}`;
 
       ctx.font = 'bold 10px sans-serif';
       const twB = ctx.measureText(textB).width;

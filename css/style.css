@@ -2587,6 +2587,27 @@ body {
   background: linear-gradient(180deg, rgba(255, 251, 240, 0.9) 0%, rgba(254, 244, 222, 0.82) 100%);
 }
 
+/* Imperial High-Contrast Text Bolding Styles (描重与层级升阶) */
+.imperial-page b,
+.imperial-page strong {
+  font-weight: 700;
+  color: #1a1612;
+}
+.imperial-card-rose b,
+.imperial-card-rose strong {
+  color: #881337;
+}
+.imperial-card-emerald b,
+.imperial-card-emerald strong {
+  color: #064e3b;
+}
+.imperial-card-accent b,
+.imperial-card-accent strong,
+.imperial-card-gold b,
+.imperial-card-gold strong {
+  color: #451a03;
+}
+
 /* Classical Cloud & Fish-Tail Divider (仿古版刻象鼻鱼尾分隔线) */
 .imperial-divider {
   display: flex;
