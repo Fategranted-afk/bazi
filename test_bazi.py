@@ -1112,6 +1112,11 @@ if (/[\u4e00-\u9fa5]/.test(dossierHtmlEn)) {
 
 window.renderImperialDossierPages('en');
 var imperialPagesHtmlEn = document.getElementById('imperialDossierContainer').innerHTML;
+for (var pi = 1; pi <= 8; pi++) {
+  if (!imperialPagesHtmlEn.includes('id="imperialPage' + pi + '"')) {
+    throw new Error("Missing imperialPage" + pi + " in English Imperial Dossier!");
+  }
+}
 var sample = [];
 for (var ci = 0; ci < imperialPagesHtmlEn.length; ci++) {
   var code = imperialPagesHtmlEn.charCodeAt(ci);
@@ -1128,8 +1133,13 @@ if (sample.length > 0) {
 
 window.renderImperialDossierPages('zh');
 var imperialPagesHtmlZh = document.getElementById('imperialDossierContainer').innerHTML;
+for (var pi = 1; pi <= 8; pi++) {
+  if (!imperialPagesHtmlZh.includes('id="imperialPage' + pi + '"')) {
+    throw new Error("Missing imperialPage" + pi + " in Chinese Imperial Dossier!");
+  }
+}
 if (!imperialPagesHtmlZh.includes("职场与合伙协作刚性权责分配法则") || !imperialPagesHtmlZh.includes("四季度行动推进节律")) {
-  throw new Error("Missing required modules in Chinese 9-Page Imperial Dossier!");
+  throw new Error("Missing required modules in Chinese 8-Page Imperial Dossier!");
 }
 
 // 6. Verify Advisor Agent Modal, Chat Stream, Tool Card & Action Ledger Drawer DOM
@@ -1606,8 +1616,8 @@ chrono_nav_pos = index_html_src.find('id="chronoNavigatorSection"')
 
 if decades_pos == -1 or transit_fortune_pos == -1 or five_pillars_pos == -1 or chrono_nav_pos == -1:
   raise AssertionError("Missing transit components in index.html")
-if not (decades_pos < transit_fortune_pos < five_pillars_pos < chrono_nav_pos):
-  raise AssertionError(f"Expected 4-tier transit levels (decades={decades_pos}, fortune={transit_fortune_pos}, 5pillars={five_pillars_pos}) to precede #chronoNavigatorSection ({chrono_nav_pos}) in index.html")
+if not (chrono_nav_pos < decades_pos < transit_fortune_pos < five_pillars_pos):
+  raise AssertionError(f"Expected #chronoNavigatorSection ({chrono_nav_pos}) to precede transit levels (decades={decades_pos}, fortune={transit_fortune_pos}, 5pillars={five_pillars_pos}) in index.html")
 
 
 

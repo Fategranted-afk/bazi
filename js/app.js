@@ -11370,9 +11370,9 @@ document.addEventListener('DOMContentLoaded', () => {
         chronoSec.parentNode.insertBefore(calendarEl, chronoSec);
       }
     } else if (targetViewId === 'view-luck') {
-      const luckSec = document.getElementById('luckCyclesSection');
-      if (luckSec && luckSec.parentNode && calendarEl.nextSibling !== luckSec) {
-        luckSec.parentNode.insertBefore(calendarEl, luckSec);
+      const anchor = document.getElementById('luckTianjiCalendarAnchor');
+      if (anchor && anchor.parentNode && calendarEl.previousSibling !== anchor) {
+        anchor.parentNode.insertBefore(calendarEl, anchor.nextSibling);
       }
     }
   }
@@ -13082,6 +13082,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, 80);
     });
+  }
+
+  // Strategic & Navigation Jump Buttons from View Luck
+  const btnJumpToSynastryFromLuck = document.getElementById('btnJumpToSynastryFromLuck');
+  if (btnJumpToSynastryFromLuck && !btnJumpToSynastryFromLuck._hasClickListener) {
+    btnJumpToSynastryFromLuck._hasClickListener = true;
+    btnJumpToSynastryFromLuck.addEventListener('click', () => switchPrimaryView('view-synastry'));
+  }
+  const btnJumpToCareerFromLuck = document.getElementById('btnJumpToCareerFromLuck');
+  if (btnJumpToCareerFromLuck && !btnJumpToCareerFromLuck._hasClickListener) {
+    btnJumpToCareerFromLuck._hasClickListener = true;
+    btnJumpToCareerFromLuck.addEventListener('click', () => switchPrimaryView('view-career'));
+  }
+  const btnJumpToHistoryFromLuck = document.getElementById('btnJumpToHistoryFromLuck');
+  if (btnJumpToHistoryFromLuck && !btnJumpToHistoryFromLuck._hasClickListener) {
+    btnJumpToHistoryFromLuck._hasClickListener = true;
+    btnJumpToHistoryFromLuck.addEventListener('click', () => switchPrimaryView('view-history'));
   }
 
   // Geographic & Workplace Resonance Jump Buttons
@@ -25128,7 +25145,7 @@ document.addEventListener('DOMContentLoaded', () => {
       printBtnEl.textContent = isEn ? 'System Print / Save as PDF' : '系统打印 / 另存为 PDF';
     }
     if (downloadBtnEl) {
-      downloadBtnEl.textContent = isEn ? 'Direct Download 7-Page PDF' : '直接下载 7 页 PDF 文件';
+      downloadBtnEl.textContent = isEn ? 'Direct Download 8-Page PDF' : '直接下载 8 页 PDF 文件';
     }
     if (downloadSingleBtnEl) {
       downloadSingleBtnEl.textContent = isEn ? 'Export Page 1 PDF' : '导出卷首单页 PDF';
@@ -25215,7 +25232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const filename = isEn ? `Imperial_BaZi_Dossier_${dateStr}` : `钦天监御制命盘密卷_${yrStem}_${dateStr}`;
 
     showDossierStatus(
-      isEn ? '⏳ Compiling 7-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 7 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
+      isEn ? '⏳ Compiling 8-Page Qin Tian Jian Imperial Celestial Blueprint A4 PDF...' : '⏳ 正在编译 8 页钦天监 · 御制天机 A4 珍藏册 PDF，请稍候...',
       'info'
     );
 
@@ -26683,6 +26700,512 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
       }
     }
 
+    // Chrono timeline item for active year
+    let tl = (luck && luck.timeline) ? luck.timeline : [];
+    if ((!tl || tl.length === 0) && typeof LuckEngine !== 'undefined' && typeof LuckEngine.calculateLifelongTimeline === 'function') {
+      tl = LuckEngine.calculateLifelongTimeline(bazi, luck);
+    }
+    if (!tl || tl.length === 0) {
+      tl = [];
+      for (let a = 1; a <= 100; a++) {
+        const y = birthYr + a - 1;
+        const eScore = Math.max(25, Math.min(95, Math.round(58 + Math.sin(a / 7.5) * 16 + ((a >= 28 && a <= 55) ? 12 : -4))));
+        const wScore = Math.max(20, Math.min(95, Math.round(52 + Math.cos(a / 6.8) * 18 + ((a >= 32 && a <= 58) ? 14 : -5))));
+        tl.push({
+          age: a,
+          nominalAge: a,
+          realAge: Math.max(0, a - 1),
+          year: y,
+          energyScore: eScore,
+          wealthScore: wScore,
+          ganZhi: '丙午',
+          ganZhiEn: 'Bing-Wu',
+          decade: '童限',
+          decadeSpanZh: '1 ~ 5 岁',
+          decadeSpanEn: 'Ages 1 - 5',
+          tenGod: '偏印',
+          tenGodEn: 'Indirect Resource',
+          naYin: '天河水',
+          naYinEn: 'Heaven River Water',
+          focusZh: '稳健深耕 · 蓄势待发',
+          focusEn: 'Consolidation & Strategic Preparation',
+          directiveZh: `${currentAge}岁（${targetCalYear} 丙午年）气数平稳中和，逢【偏印】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`,
+          directiveEn: `Age ${currentAge} (${targetCalYear} Bing-Wu): Energy is balanced and disciplined under Indirect Resource. Sharpen core skills, build reputation, and optimize assets to solidify foundations for upcoming prime cycles.`,
+          alerts: ['岁运祥和'],
+          alertsEn: ['Harmonious Transit']
+        });
+      }
+    }
+
+    // Lifelong 100-Year Energy & Life/Wealth Curves Vector SVG Generator
+    function generateImperialLifelongCurveSvg(timeline, activeAge, curYear, isEnMode) {
+      if (!timeline || timeline.length === 0) return '';
+      const totalPts = timeline.length;
+      const w = 730;
+      const h = 106;
+      const padL = 36;
+      const padR = 16;
+      const padT = 14;
+      const padB = 20;
+      const chartW = w - padL - padR;
+      const chartH = h - padT - padB;
+
+      const getX = (idx) => padL + (idx / (totalPts - 1)) * chartW;
+      const getY = (score) => padT + chartH - (Math.max(0, Math.min(100, score)) / 100) * chartH;
+
+      // Golden Prime Window: Age 28 to 55
+      const primeStartIdx = Math.max(0, Math.min(totalPts - 1, 27));
+      const primeEndIdx = Math.max(0, Math.min(totalPts - 1, 54));
+      const primeX1 = getX(primeStartIdx);
+      const primeX2 = getX(primeEndIdx);
+      const primeW = primeX2 - primeX1;
+
+      let energyPts = [];
+      let wealthPts = [];
+      let alertNodes = [];
+
+      for (let i = 0; i < totalPts; i++) {
+        const it = timeline[i];
+        const x = getX(i);
+        const eVal = (it.energyScore !== undefined) ? it.energyScore : 60;
+        const wVal = (it.wealthScore !== undefined) ? it.wealthScore : 50;
+        const yE = getY(eVal);
+        const yW = getY(wVal);
+        energyPts.push({ x, y: yE });
+        wealthPts.push({ x, y: yW });
+
+        if (it.alerts && it.alerts.length > 0) {
+          const hasClash = it.alerts.some(a => a.includes('冲') || a.includes('并') || a.includes('提纲') || a.includes('慎'));
+          const hasAusp = it.alerts.some(a => a.includes('吉') || a.includes('合') || a.includes('祥和') || a.includes('高光') || a.includes('巅峰'));
+          if (hasClash || hasAusp) {
+            alertNodes.push({
+              x: x.toFixed(1),
+              y: (Math.min(yE, yW) - 3.5).toFixed(1),
+              color: hasClash ? '#dc2626' : '#059669',
+              label: hasClash ? (isEnMode ? 'Clash' : '刑冲') : (isEnMode ? 'Auspicious' : '天吉')
+            });
+          }
+        }
+      }
+
+      const eLinePath = energyPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+      const eAreaPath = `${eLinePath} L ${energyPts[totalPts - 1].x.toFixed(1)} ${(padT + chartH).toFixed(1)} L ${energyPts[0].x.toFixed(1)} ${(padT + chartH).toFixed(1)} Z`;
+
+      const wLinePath = wealthPts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
+      const wAreaPath = `${wLinePath} L ${wealthPts[totalPts - 1].x.toFixed(1)} ${(padT + chartH).toFixed(1)} L ${wealthPts[0].x.toFixed(1)} ${(padT + chartH).toFixed(1)} Z`;
+
+      // Active Age Indicator line
+      const activeIdx = Math.max(0, Math.min(totalPts - 1, activeAge - 1));
+      const curItem = timeline[activeIdx] || timeline[0];
+      const curX = getX(activeIdx);
+      const curEy = getY((curItem.energyScore !== undefined) ? curItem.energyScore : 60);
+      const curWy = getY((curItem.wealthScore !== undefined) ? curItem.wealthScore : 50);
+      const curAgeVal = (curItem.realAge !== undefined) ? curItem.realAge : (curItem.age - 1);
+      const curTagText = isEnMode
+        ? (curAgeVal === 0 ? `Age 0 (${curItem.year})` : `Age ${curAgeVal} (${curItem.year})`)
+        : (curAgeVal === 0 ? `0岁 (${curItem.year}年)` : `${curAgeVal}岁 (${curItem.year}年)`);
+
+      const scoreLevels = [25, 50, 75, 100];
+      const gridLinesHtml = scoreLevels.map(sc => {
+        const y = getY(sc).toFixed(1);
+        return `
+          <line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="rgba(180, 130, 60, 0.2)" stroke-dasharray="2 3" stroke-width="0.8"/>
+          <text x="${padL - 4}" y="${(parseFloat(y) + 3).toFixed(1)}" text-anchor="end" fill="#92400e" font-size="8px" font-family="monospace" font-weight="bold">${sc}</text>
+        `;
+      }).join('');
+
+      const ageTicks = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      const ageTicksHtml = ageTicks.map(ag => {
+        const x = getX(ag - 1).toFixed(1);
+        const yLine = (padT + chartH).toFixed(1);
+        const yText = (padT + chartH + 13).toFixed(1);
+        const label = isEnMode ? (ag === 1 ? '1y' : (ag === 100 ? '100y' : `${ag}`)) : (ag === 1 ? '1岁' : (ag === 100 ? '100岁' : `${ag}`));
+        return `
+          <line x1="${x}" y1="${yLine}" x2="${x}" y2="${(parseFloat(yLine) + 3).toFixed(1)}" stroke="#b45309" stroke-width="1"/>
+          <text x="${x}" y="${yText}" text-anchor="middle" fill="#78350f" font-size="8px" font-family="monospace">${label}</text>
+        `;
+      }).join('');
+
+      const energyLabel = isEnMode ? 'Vitality & Life Energy Curve' : '生命能量与活力曲线';
+      const wealthLabel = isEnMode ? 'Wealth & Life Fortune Tide' : '财富走势与机遇潮汐';
+      const primeLabel = isEnMode ? 'Prime Window (Ages 28-55)' : '黄金破局期 (28~55岁)';
+      const currentLabel = isEnMode ? 'Current: ' : '当前定位: ';
+      const primeBandText = isEnMode ? 'Prime Productivity Peak Window' : '黄金壮年破局高光带 (28~55岁)';
+
+      return `
+        <div class="bg-amber-50/40 rounded-lg p-1.5 border border-amber-900/20 space-y-1">
+          <!-- Legend Bar -->
+          <div class="flex flex-wrap items-center justify-between text-[9px] text-amber-950 px-1 border-b border-amber-900/10 pb-0.5 font-serif-sc">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block border border-amber-700"></span>
+                <span class="font-bold text-amber-900">${energyLabel}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block border border-emerald-700"></span>
+                <span class="font-bold text-emerald-900">${wealthLabel}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2.5 h-1.5 rounded bg-amber-300/60 inline-block border border-amber-500/50"></span>
+                <span class="text-amber-900/90">${primeLabel}</span>
+              </span>
+            </div>
+            <div class="flex items-center gap-1 text-[8.5px] font-mono text-amber-900">
+              <span>📍</span>
+              <span>${currentLabel}${curTagText}</span>
+            </div>
+          </div>
+
+          <!-- SVG Chart -->
+          <div class="relative w-full overflow-hidden">
+            <svg viewBox="0 0 ${w} ${h}" class="w-full h-24 sm:h-28 block select-none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="imperialEnergyGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.38"/>
+                  <stop offset="100%" stop-color="#d97706" stop-opacity="0.03"/>
+                </linearGradient>
+                <linearGradient id="imperialWealthGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10b981" stop-opacity="0.32"/>
+                  <stop offset="100%" stop-color="#059669" stop-opacity="0.03"/>
+                </linearGradient>
+                <linearGradient id="imperialGoldenZone" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.06"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Chart Background & Axes -->
+              <rect x="${padL}" y="${padT}" width="${chartW}" height="${chartH}" fill="rgba(255, 255, 255, 0.45)" rx="2"/>
+
+              <!-- Golden Prime Window Band (Age 28-55) -->
+              <rect x="${primeX1.toFixed(1)}" y="${padT}" width="${primeW.toFixed(1)}" height="${chartH}" fill="url(#imperialGoldenZone)" stroke="rgba(217, 119, 6, 0.25)" stroke-width="0.8" rx="2"/>
+              <text x="${(primeX1 + 4).toFixed(1)}" y="${(padT + 9).toFixed(1)}" fill="#92400e" font-size="7.5px" font-family="sans-serif" font-weight="bold">${primeBandText}</text>
+
+              <!-- Horizontal Grid Lines & Score Labels -->
+              ${gridLinesHtml}
+
+              <!-- Axis Baseline -->
+              <line x1="${padL}" y1="${(padT + chartH).toFixed(1)}" x2="${w - padR}" y2="${(padT + chartH).toFixed(1)}" stroke="#78350f" stroke-width="1"/>
+
+              <!-- Area Fills -->
+              <path d="${wAreaPath}" fill="url(#imperialWealthGrad)" />
+              <path d="${eAreaPath}" fill="url(#imperialEnergyGrad)" />
+
+              <!-- Polyline Curves -->
+              <path d="${wLinePath}" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="${eLinePath}" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Alert Nodes -->
+              ${alertNodes.map(c => `
+                <circle cx="${c.x}" cy="${c.y}" r="2" fill="${c.color}" stroke="#ffffff" stroke-width="0.8"/>
+              `).join('')}
+
+              <!-- Age X-Axis Ticks -->
+              ${ageTicksHtml}
+
+              <!-- Active Age Indicator Line -->
+              <line x1="${curX.toFixed(1)}" y1="${padT}" x2="${curX.toFixed(1)}" y2="${(padT + chartH).toFixed(1)}" stroke="#b45309" stroke-width="1.6" stroke-dasharray="3 2" />
+              
+              <!-- Active Points on Curves -->
+              <circle cx="${curX.toFixed(1)}" cy="${curEy.toFixed(1)}" r="3.5" fill="#d97706" stroke="#ffffff" stroke-width="1.2"/>
+              <circle cx="${curX.toFixed(1)}" cy="${curWy.toFixed(1)}" r="3.5" fill="#059669" stroke="#ffffff" stroke-width="1.2"/>
+
+              <!-- Active Age Floating Tag -->
+              <rect x="${Math.max(padL, Math.min(w - padR - 76, curX - 38)).toFixed(1)}" y="${(padT - 13).toFixed(1)}" width="76" height="12" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="0.8"/>
+              <text x="${Math.max(padL + 38, Math.min(w - padR - 38, curX)).toFixed(1)}" y="${(padT - 4).toFixed(1)}" text-anchor="middle" fill="#78350f" font-size="8px" font-family="monospace" font-weight="bold">${curTagText}</text>
+            </svg>
+          </div>
+        </div>
+      `;
+    }
+
+    // Lifelong 100-Year Hexagram Qi Fluctuations & Transit Trajectory Vector SVG Generator
+    function generateImperialHexagramTrajectorySvg(points, activeAge, curYear, isEnMode) {
+      if (!points || points.length === 0) return '';
+      const totalPts = points.length;
+      const w = 730;
+      const h = 88;
+      const padL = 36;
+      const padR = 16;
+      const padT = 18;
+      const padB = 16;
+      const chartW = w - padL - padR;
+      const chartH = h - padT - padB;
+
+      const getX = (idx) => padL + (idx / (totalPts - 1)) * chartW;
+      const getY = (sc) => padT + chartH - ((Math.max(20, Math.min(100, sc)) - 20) / 80) * chartH;
+
+      // Find Xian Tian boundary
+      const xtCutoff = points.findIndex(p => !p.isXianTian);
+      const xtCount = (xtCutoff > 0) ? xtCutoff : 48;
+      const xtWidth = (xtCount / (totalPts - 1)) * chartW;
+
+      // Build coordinates and nodes
+      let coords = [];
+      let mutatedNodes = [];
+      let preservedNodes = [];
+
+      for (let i = 0; i < totalPts; i++) {
+        const pt = points[i];
+        const x = getX(i);
+        const sc = (pt.score !== undefined) ? pt.score : 65;
+        const y = getY(sc);
+        coords.push({ x, y, pt });
+
+        if (pt.isMutated) {
+          mutatedNodes.push({ x: x.toFixed(1), y: y.toFixed(1) });
+        } else {
+          preservedNodes.push({ x: x.toFixed(1), y: y.toFixed(1) });
+        }
+      }
+
+      // Polyline path
+      const linePath = coords.map((c, i) => `${i === 0 ? 'M' : 'L'} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(' ');
+      const areaPath = `${linePath} L ${coords[totalPts - 1].x.toFixed(1)} ${(padT + chartH).toFixed(1)} L ${coords[0].x.toFixed(1)} ${(padT + chartH).toFixed(1)} Z`;
+
+      // Active Age Cursor
+      const activeIdx = Math.max(0, Math.min(totalPts - 1, activeAge - 1));
+      const curPt = points[activeIdx] || points[0];
+      const curX = getX(activeIdx);
+      const curY = getY((curPt.score !== undefined) ? curPt.score : 65);
+      const curAgeVal = (curPt.age !== undefined) ? curPt.age : activeAge;
+      const curTagText = isEnMode
+        ? `Age ${curAgeVal} (${curPt.year || curYear}) · Current Needle`
+        : `${curAgeVal}岁 (${curPt.year || curYear}年) · 当前岁次游标`;
+
+      // Score Grid lines
+      const scoreLevels = [40, 60, 80, 100];
+      const gridLinesHtml = scoreLevels.map(sc => {
+        const y = getY(sc).toFixed(1);
+        return `
+          <line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="rgba(180, 130, 60, 0.18)" stroke-dasharray="2 3" stroke-width="0.8"/>
+          <text x="${padL - 4}" y="${(parseFloat(y) + 2.5).toFixed(1)}" text-anchor="end" fill="#92400e" font-size="7px" font-family="monospace">${sc}%</text>
+        `;
+      }).join('');
+
+      // Age ticks
+      const ageTicks = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+      const ageTicksHtml = ageTicks.map(ag => {
+        const x = getX(ag - 1).toFixed(1);
+        const yLine = (padT + chartH).toFixed(1);
+        const yText = (padT + chartH + 10).toFixed(1);
+        return `
+          <line x1="${x}" y1="${yLine}" x2="${x}" y2="${(parseFloat(yLine) + 2.5).toFixed(1)}" stroke="#b45309" stroke-width="0.8"/>
+          <text x="${x}" y="${yText}" text-anchor="middle" fill="#78350f" font-size="7px" font-family="monospace">${ag}</text>
+        `;
+      }).join('');
+
+      const chartTitle = isEnMode ? 'Lifelong 64 Hexagrams Dynamic Qi Trajectory' : '百岁岁运六十四卦易数气机波动轨迹';
+      const legendMutated = isEnMode ? 'Mutated (Breakthrough)' : '同性相斥 · 变卦激荡';
+      const legendPreserved = isEnMode ? 'Preserved (Harmony)' : '异性相吸 · 守本稳健';
+      const legendCursor = isEnMode ? 'Current Needle' : '当前岁次游标';
+      const axisStart = isEnMode ? 'Age 1 (Early Inception)' : '1岁 (初爻潜龙发端)';
+      const axisEnd = isEnMode ? 'Age 100 (Centenarian)' : '100岁 (期颐圆满归道)';
+      const epochXian = isEnMode ? `Early Heaven (1-${xtCount}y)` : `前半生 · 先天命基 (1~${xtCount}岁)`;
+      const epochHou = isEnMode ? `Later Heaven (${xtCount + 1}-100y)` : `后半生 · 后天跃升 (${xtCount + 1}~100岁)`;
+
+      return `
+        <div class="bg-amber-50/40 rounded-lg p-1 border border-amber-900/20 space-y-0.5">
+          <!-- Legend Bar -->
+          <div class="flex flex-wrap items-center justify-between text-[8px] text-amber-950 px-0.5 border-b border-amber-900/10 pb-0.5 font-serif-sc">
+            <div class="flex items-center gap-1.5 font-bold text-amber-900">
+              <span>📈</span>
+              <span>${chartTitle}</span>
+            </div>
+            <div class="flex items-center gap-2 text-[7.5px] font-mono text-gray-700">
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-500 inline-block border border-amber-700"></span>
+                <span>${legendMutated}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block border border-emerald-700"></span>
+                <span>${legendPreserved}</span>
+              </span>
+              <span class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded bg-rose-600 inline-block"></span>
+                <span>${legendCursor}</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- SVG Chart -->
+          <div class="relative w-full overflow-hidden">
+            <svg viewBox="0 0 ${w} ${h}" class="w-full h-18 sm:h-20 block select-none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="imperialHexGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.30"/>
+                  <stop offset="50%" stop-color="#10b981" stop-opacity="0.16"/>
+                  <stop offset="100%" stop-color="#6366f1" stop-opacity="0.02"/>
+                </linearGradient>
+                <linearGradient id="imperialHexStrokeGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#f59e0b"/>
+                  <stop offset="50%" stop-color="#10b981"/>
+                  <stop offset="100%" stop-color="#8b5cf6"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Chart Background & Axes -->
+              <rect x="${padL}" y="${padT}" width="${chartW}" height="${chartH}" fill="rgba(255, 255, 255, 0.45)" rx="2"/>
+
+              <!-- Xian Tian & Hou Tian Top Epoch Ribbon -->
+              <rect x="${padL}" y="${padT - 6.5}" width="${xtWidth.toFixed(1)}" height="5.5" fill="rgba(217, 119, 6, 0.4)" rx="1"/>
+              <text x="${(padL + 3).toFixed(1)}" y="${padT - 2}" fill="#92400e" font-size="6px" font-family="sans-serif" font-weight="bold">${epochXian}</text>
+
+              <rect x="${(padL + xtWidth).toFixed(1)}" y="${padT - 6.5}" width="${(chartW - xtWidth).toFixed(1)}" height="5.5" fill="rgba(109, 40, 217, 0.35)" rx="1"/>
+              <text x="${(padL + xtWidth + 3).toFixed(1)}" y="${padT - 2}" fill="#4c1d95" font-size="6px" font-family="sans-serif" font-weight="bold">${epochHou}</text>
+
+              <!-- Horizontal Grid Lines & Score Labels -->
+              ${gridLinesHtml}
+
+              <!-- Axis Baseline -->
+              <line x1="${padL}" y1="${(padT + chartH).toFixed(1)}" x2="${w - padR}" y2="${(padT + chartH).toFixed(1)}" stroke="#78350f" stroke-width="0.8"/>
+
+              <!-- Area Fill -->
+              <path d="${areaPath}" fill="url(#imperialHexGrad)" />
+
+              <!-- Trajectory Curve -->
+              <path d="${linePath}" fill="none" stroke="url(#imperialHexStrokeGrad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Nodes: Mutated vs Preserved -->
+              ${mutatedNodes.map(m => `<circle cx="${m.x}" cy="${m.y}" r="1.5" fill="#f59e0b" stroke="#ffffff" stroke-width="0.5"/>`).join('')}
+              ${preservedNodes.map(m => `<circle cx="${m.x}" cy="${m.y}" r="1.5" fill="#10b981" stroke="#ffffff" stroke-width="0.5"/>`).join('')}
+
+              <!-- Age X-Axis Ticks -->
+              ${ageTicksHtml}
+
+              <!-- Active Age Indicator Line & Tag -->
+              <line x1="${curX.toFixed(1)}" y1="${padT}" x2="${curX.toFixed(1)}" y2="${(padT + chartH).toFixed(1)}" stroke="#e11d48" stroke-width="1.5" stroke-dasharray="3 2" />
+              <circle cx="${curX.toFixed(1)}" cy="${curY.toFixed(1)}" r="3" fill="#e11d48" stroke="#ffffff" stroke-width="1"/>
+
+              <!-- Floating Tag -->
+              <rect x="${Math.max(padL, Math.min(w - padR - 92, curX - 46)).toFixed(1)}" y="${(padT - 15).toFixed(1)}" width="92" height="10" rx="2" fill="#ffe4e6" stroke="#e11d48" stroke-width="0.8"/>
+              <text x="${Math.max(padL + 46, Math.min(w - padR - 46, curX)).toFixed(1)}" y="${(padT - 7.5).toFixed(1)}" text-anchor="middle" fill="#9f1239" font-size="6.8px" font-family="monospace" font-weight="bold">${curTagText}</text>
+            </svg>
+          </div>
+
+          <!-- Bottom Axis Inception / Centenarian Labels -->
+          <div class="flex justify-between items-center text-[7px] text-amber-900/80 font-mono px-0.5">
+            <span>${axisStart}</span>
+            <span>${axisEnd}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    const luckGenderStr = isEn ? (isMale ? 'Yang Male' : 'Yin Female') : (isMale ? '阳男' : '阴女');
+    const luckDirStr = isEn ? ((luck && luck.direction === '顺') ? 'Forward Direction' : 'Backward Direction') : ((luck && luck.direction === '顺') ? '顺行运' : '逆行运');
+    const luckStartAgeStr = isEn ? `Starts at Age ${luck && luck.startAge ? luck.startAge : 3}` : `${luck && luck.startAge ? luck.startAge : 3}岁起运`;
+
+    const activeTlItem = (tl && tl.length > 0)
+      ? (tl.find(t => t.year === targetCalYear) || tl.find(t => t.age === currentAge) || tl[0])
+      : {
+        year: targetCalYear,
+        ganZhi: '丙午',
+        ganZhiEn: 'Bing-Wu',
+        decade: '童限',
+        decadeSpanZh: '1 ~ 5 岁',
+        decadeSpanEn: 'Ages 1 - 5',
+        tenGod: '偏印',
+        tenGodEn: 'Indirect Resource',
+        naYin: '天河水',
+        naYinEn: 'Heaven River Water',
+        energyScore: 62,
+        wealthScore: 55,
+        focusZh: '稳健深耕 · 蓄势待发',
+        focusEn: 'Consolidation & Strategic Preparation',
+        directiveZh: `${currentAge}岁（${targetCalYear} 丙午年）气数平稳中和，逢【偏印】值守。适宜打磨核心技能、沉淀客户口碑与优化资产配置，积小胜为大胜，为下一轮高光大运夯实地基。`,
+        directiveEn: `Age ${currentAge} (${targetCalYear} Bing-Wu): Energy is balanced and disciplined under Indirect Resource. Sharpen core skills, build reputation, and optimize assets to solidify foundations for upcoming prime cycles.`,
+        alerts: ['岁运祥和'],
+        alertsEn: ['Harmonious Transit']
+      };
+
+    const activeYearAgeHeading = isEn
+      ? (currentAge === 1 ? `Age 0 (Nominal 1) · ${targetCalYear} ${activeTlItem.ganZhiEn || 'Bing-Wu'}` : `Age ${currentAge - 1} (Nominal ${currentAge}) · ${targetCalYear} ${activeTlItem.ganZhiEn || 'Bing-Wu'}`)
+      : (currentAge === 1 ? `0岁初生 (虚岁1) · ${targetCalYear}年 ${activeTlItem.ganZhi || '丙午'}` : `${currentAge - 1}岁 (虚岁${currentAge}) · ${targetCalYear}年 ${activeTlItem.ganZhi || '丙午'}`);
+
+    let activeDecadeLabelZh = '童限大运 (1 ~ 5 岁)';
+    let activeDecadeLabelEn = 'Early Childhood (Ages 1 - 5)';
+    if (activeTlItem.decade) {
+      if (activeTlItem.decade === '童限') {
+        activeDecadeLabelZh = `童限大运 (${activeTlItem.decadeSpanZh || '1 ~ 5 岁'})`;
+        activeDecadeLabelEn = `Early Childhood (${(activeTlItem.decadeSpanEn || 'Ages 1 - 5').replace(/[\u4e00-\u9fa5]/g, '').trim()})`;
+      } else if (activeTlItem.decade === '晚境') {
+        activeDecadeLabelZh = `晚境大运 (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `Later Golden Years (${(activeTlItem.decadeSpanEn || '').replace(/[\u4e00-\u9fa5]/g, '').trim()})`;
+      } else if (activeTlItem.decadeEn) {
+        activeDecadeLabelZh = `${activeTlItem.decade} (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `${activeTlItem.decadeEn.replace(/[\u4e00-\u9fa5]/g, '').trim()} (${(activeTlItem.decadeSpanEn || '').replace(/[\u4e00-\u9fa5]/g, '').trim()})`;
+      } else if (activeTlItem.decade.length >= 2) {
+        const dStem = activeTlItem.decade[0];
+        const dBranch = activeTlItem.decade[1];
+        const sEn = (typeof I18N !== 'undefined') ? I18N.getStem(dStem, 'en').split(' ')[0] : dStem;
+        const bEn = (typeof I18N !== 'undefined') ? I18N.getBranch(dBranch, 'en').split(' ')[0] : dBranch;
+        activeDecadeLabelZh = `${activeTlItem.decade} (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `${sEn}-${bEn} (${(activeTlItem.decadeSpanEn || '').replace(/[\u4e00-\u9fa5]/g, '').trim()})`;
+      } else {
+        activeDecadeLabelZh = `${activeTlItem.decade} (${activeTlItem.decadeSpanZh || ''})`;
+        activeDecadeLabelEn = `Decade Cycle (${(activeTlItem.decadeSpanEn || '').replace(/[\u4e00-\u9fa5]/g, '').trim()})`;
+      }
+    }
+
+    // Filter next 10 years starting from target calendar year (e.g. 2026 -> 2026-2035)
+    let next10HexCards = hexTrajectoryList.filter(p => p.year >= targetCalYear && p.year <= targetCalYear + 9);
+    if (next10HexCards.length === 0) {
+      next10HexCards = hexTrajectoryList.slice(0, 10);
+    }
+
+    const render10YearHexCardsHtml = `
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-1 text-left font-serif-sc">
+        ${next10HexCards.map(pt => {
+          const ptHex = pt.annualHex || { number: 1, nameZh: '乾为天', nameEn: 'The Creative' };
+          const ptOpt = pt.optimalAction || {};
+          const isRisk = pt.score < 50 || (ptOpt.shortBadgeZh && ptOpt.shortBadgeZh.includes('防')) || (ptOpt.shortBadgeEn && ptOpt.shortBadgeEn.includes('Risk'));
+          const isCurrent = (pt.year === targetCalYear);
+          const cleanHexNameEn = (ptHex.nameEn || ('Hexagram ' + ptHex.number)).replace(/[\u4e00-\u9fa5]/g, '').trim();
+          const cleanBadgeEn = ((ptOpt.shortBadgeEn || '[Focus]').replace(/[\u4e00-\u9fa5]/g, '').trim()) || '[Focus]';
+          const cleanActionEn = ((ptOpt.actionEn || 'Consolidate skills and build enduring value.').replace(/[\u4e00-\u9fa5]/g, '').trim()) || 'Consolidate skills and build enduring value.';
+          return `
+            <div class="p-1 rounded border ${isCurrent ? 'border-amber-600 bg-amber-100/60 shadow-xs' : 'border-amber-900/20 bg-white/70'} space-y-0.5">
+              <div class="flex items-center justify-between text-[8.5px] font-mono border-b border-amber-900/15 pb-0.5">
+                <span class="font-bold ${isCurrent ? 'text-amber-950 font-black' : 'text-gray-800'}">${pt.age}${isEn ? 'y' : '岁'} · ${pt.year}</span>
+                <span class="text-[7.5px] px-1 py-0.1 rounded font-mono font-bold ${pt.isMutated ? 'bg-amber-200 text-amber-950 border border-amber-500/40' : 'bg-emerald-100 text-emerald-950 border border-emerald-500/40'}">${pt.isMutated ? (isEn ? 'Mut' : '变') : (isEn ? 'Base' : '本')}</span>
+              </div>
+              <div class="font-bold text-[9px] truncate text-amber-950 pt-0.5">
+                ${isEn ? `Hex ${ptHex.number} · ${cleanHexNameEn}` : `第${ptHex.number}卦 · ${ptHex.nameZh}`}
+              </div>
+              ${(pt.auspiciousDeities && pt.auspiciousDeities.length > 0) ? `
+                <div class="flex flex-wrap gap-0.5 pt-0.5">
+                  ${pt.auspiciousDeities.map(d => `<span class="px-1 py-0.1 rounded text-[7px] font-mono font-bold bg-amber-100 text-amber-950 border border-amber-400/50">${isEn ? (d.tagEn ? d.tagEn.replace(/[\u4e00-\u9fa5]/g, '').trim() : 'Star') : d.tagZh}</span>`).join('')}
+                </div>
+              ` : ''}
+              ${(pt.maleficDeities && pt.maleficDeities.length > 0) ? `
+                <div class="flex flex-wrap gap-0.5 pt-0.5">
+                  ${pt.maleficDeities.map(d => `<span class="px-1 py-0.1 rounded text-[7px] font-mono font-bold bg-rose-100 text-rose-950 border border-rose-400/50">${isEn ? (d.tagEn ? d.tagEn.replace(/[\u4e00-\u9fa5]/g, '').trim() : 'Obstacle') : d.tagZh}</span>`).join('')}
+                </div>
+              ` : ''}
+              <div>
+                <span class="inline-block px-1 py-0.2 rounded text-[8px] font-bold font-mono ${isRisk ? 'bg-rose-100 text-rose-950 border border-rose-300' : 'bg-amber-100 text-amber-950 border border-amber-300'}">
+                  ${isEn ? cleanBadgeEn : (ptOpt.shortBadgeZh || '【当年最宜】')}
+                </span>
+              </div>
+              <p class="text-[8px] text-gray-700 leading-tight line-clamp-2 pt-0.5 font-sans">
+                ${isEn ? cleanActionEn : (ptOpt.actionZh || '知行合一，深耕核心技能，稳步开拓。')}
+              </p>
+              <div class="pt-0.5 border-t border-amber-900/10 text-[7.5px] font-mono flex items-center gap-1 ${isRisk ? 'text-rose-800' : 'text-emerald-800'} truncate">
+                <span class="w-1.5 h-1.5 rounded-full flex-shrink-0 ${isRisk ? 'bg-rose-600' : 'bg-emerald-600'}"></span>
+                <span class="truncate">${isEn ? (isRisk ? 'Risk: Prudent Defense' : 'Shield: Steady Cultivation') : (isRisk ? '防险：守正固本，杜绝盲进' : '护身：蓄势深耕，守中得正')}</span>
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    const cleanActiveHexNameEn = (activeHexItem && activeHexItem.annualHex && activeHexItem.annualHex.nameEn ? activeHexItem.annualHex.nameEn : 'Mountain').replace(/[\u4e00-\u9fa5]/g, '').trim();
+    const cleanRuleEn = (activeHexItem && activeHexItem.ruleInteractionEn ? activeHexItem.ruleInteractionEn : 'Opposite polarities harmonize -> Keep base hexagram').replace(/[\u4e00-\u9fa5]/g, '').trim();
+    const cleanRiddleEn = (activeHexItem && activeHexItem.annualTJ && activeHexItem.annualTJ.riddleEn ? activeHexItem.annualTJ.riddleEn : 'Treasures emerge through integrity and calculated persistence; fortune and honor sustain through modesty and generosity.').replace(/[\u4e00-\u9fa5]/g, '').trim();
+    const cleanDynEn = (activeHexItem && activeHexItem.dynamicInterpretationEn ? activeHexItem.dynamicInterpretationEn : 'Dissolve stagnation through open channels and flexibility: balance inward perseverance with outward diplomacy.').replace(/[\u4e00-\u9fa5]/g, '').trim();
+
     const reflectionPreservationNote = isEn
       ? 'Epistemic Note: This blueprint is a reflective compass for strategic self-awareness; decisions remain in your conscious sovereignty.'
       : '研读导引：本卷是一套助您看清盲区、洞悉时机的反思坐标系；人生的真正航向，永远掌握在您主动的抉择之中。';
@@ -26708,7 +27231,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
               <span class="text-[10px] text-amber-950 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · REFLECTION GUIDE' : '天机御览 · 卷首总目与自省导引'}</span>
             </div>
             <h1 class="text-lg sm:text-xl font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Qin Tian Jian · Imperial Celestial Blueprint' : '钦天监 · 御制天机 · 卷首总目'}</h1>
-            <p class="text-[10px] text-amber-900 font-serif-sc">${isEn ? 'Master Thematic Directory & Epistemic Reflection Guide Across 7 Imperial Volumes' : '天机御览总目 · 命盘反思导引与钦天七卷直达导航'}</p>
+            <p class="text-[10px] text-amber-900 font-serif-sc">${isEn ? 'Master Thematic Directory & Epistemic Reflection Guide Across 8 Imperial Volumes' : '天机御览总目 · 命盘反思导引与钦天八卷直达导航'}</p>
           </div>
 
           <!-- Subject Quick Metadata Banner -->
@@ -26746,105 +27269,121 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
             </div>
           </div>
 
-          <!-- Quick Navigation Bar (6 Pages P2-P7) -->
+          <!-- Quick Navigation Bar (7 Pages P2-P8) -->
           <div class="imperial-toc-nav bg-gradient-to-r from-amber-950/10 via-amber-900/5 to-amber-950/10 border border-amber-900/30 rounded px-2 py-0.5 text-[9px] font-serif-sc shadow-xs">
-            <div class="grid grid-cols-6 gap-1 text-[8.5px] text-center">
+            <div class="grid grid-cols-7 gap-1 text-[8.5px] text-center">
               <a href="#imperialPage2" onclick="jumpToImperialPage('imperialPage2'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P2</span>${isEn ? 'Decision Blueprint' : '卷首·核心决策'}
+                <span class="font-bold text-amber-900 mr-0.5">P2</span>${isEn ? 'Transits & Hex' : '卷一·罗盘易数'}
               </a>
               <a href="#imperialPage3" onclick="jumpToImperialPage('imperialPage3'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P3</span>${isEn ? 'Soul Mirror' : '特别·先贤照胆'}
+                <span class="font-bold text-amber-900 mr-0.5">P3</span>${isEn ? 'Decision Blueprint' : '卷首·核心决策'}
               </a>
               <a href="#imperialPage4" onclick="jumpToImperialPage('imperialPage4'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? '1-2y Roadmap' : '卷一·未来两年'}
+                <span class="font-bold text-amber-900 mr-0.5">P4</span>${isEn ? 'Soul Mirror' : '特别·先贤照胆'}
               </a>
               <a href="#imperialPage5" onclick="jumpToImperialPage('imperialPage5'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? 'Pareto & Network' : '卷二·兵法协作'}
+                <span class="font-bold text-amber-900 mr-0.5">P5</span>${isEn ? '1-2y Roadmap' : '卷二·未来两年'}
               </a>
               <a href="#imperialPage6" onclick="jumpToImperialPage('imperialPage6'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Zen Mindset' : '卷三·禅道心智'}
+                <span class="font-bold text-amber-900 mr-0.5">P6</span>${isEn ? 'Pareto & Network' : '卷三·兵法协作'}
               </a>
               <a href="#imperialPage7" onclick="jumpToImperialPage('imperialPage7'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
-                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Workplace Archetypes' : '卷四·职场实操'}
+                <span class="font-bold text-amber-900 mr-0.5">P7</span>${isEn ? 'Zen Mindset' : '卷四·禅道心智'}
+              </a>
+              <a href="#imperialPage8" onclick="jumpToImperialPage('imperialPage8'); return false;" class="px-1 py-0.5 rounded bg-amber-100/80 hover:bg-amber-200 text-amber-950 border border-amber-900/25 transition cursor-pointer font-medium truncate no-underline block">
+                <span class="font-bold text-amber-900 mr-0.5">P8</span>${isEn ? 'Workplace & Seal' : '卷五·职场实操'}
               </a>
             </div>
           </div>
 
-          <!-- Structured 6-Scroll Thematic Directory Cards Grid -->
+          <!-- Structured 7-Scroll Thematic Directory Cards Grid -->
           <div class="grid grid-cols-2 gap-1.5 font-serif-sc">
             <!-- Scroll 1 / Page 2 -->
-            <div onclick="jumpToImperialPage('imperialPage2'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
+            <div onclick="jumpToImperialPage('imperialPage2'); return false;" class="imperial-card imperial-card-gold p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
-                  <span>🎯</span>
-                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll I · Decision Blueprint' : '卷首 · 核心决策导向'}</span>
+                  <span>⏳</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll I · Transits & Hexagrams' : '卷一 · 岁运流转与六十四卦'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-400">P2</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P2</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Strategic Stance: ' : '攻守定向：'}</b><b>${decisionStance.badge}</b></p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Pilot Trial: ' : '先测后决：'}</b>${isEn ? 'Actionable 30-90 day low-cost verification experiment' : '<b>30~90天低成本验证动作</b>，力求先测后决、稳健推进'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Lifelong Curve: ' : '百岁罗盘：'}</b>${isEn ? '1~100y vitality curves & wealth tides' : '<b>1~100岁连续活力曲线</b>与财富潮汐'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? '64 Hexagrams: ' : '易数全相：'}</b>${isEn ? 'Annual hexagram trajectory & 10y action roster' : '当年<b>值年卦经纶</b>与未来十年<b>行持总谱</b>'}</p>
             </div>
 
             <!-- Scroll 2 / Page 3 -->
-            <div onclick="jumpToImperialPage('imperialPage3'); return false;" class="imperial-card imperial-card-gold p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
+            <div onclick="jumpToImperialPage('imperialPage3'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
-                  <span>👑</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll II · Historical Soul Mirror' : '特别 · 乱世先贤照胆'}</span>
+                  <span>🎯</span>
+                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll II · Decision Blueprint' : '卷首 · 核心决策导向'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P3</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-400">P3</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Resonant Figure: ' : '先贤镜像：'}</b><b>${isEn ? topMatch.nameEn : topMatch.nameZh}</b> (${isEn ? topMatch.dynastyEn : topMatch.dynastyZh}) · #1</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Playbook & Pitfalls: ' : '胜败兵法：'}</b>${isEn ? 'Breakthrough tactics and historical circuit breakers' : '<b>破局胜手战法</b>与<b>避险熔断防线</b>'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Strategic Stance: ' : '攻守定向：'}</b><b>${decisionStance.badge}</b></p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Pilot Trial: ' : '先测后决：'}</b>${isEn ? 'Actionable 30-90 day low-cost verification experiment' : '<b>30~90天低成本验证动作</b>，力求先测后决、稳健推进'}</p>
             </div>
 
             <!-- Scroll 3 / Page 4 -->
             <div onclick="jumpToImperialPage('imperialPage4'); return false;" class="imperial-card imperial-card-gold p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
-                  <span>⏳</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll III · 1-2y Action Roadmap' : '卷一 · 未来1-2年时机节律'}</span>
+                  <span>👑</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll III · Historical Soul Mirror' : '特别 · 乱世先贤照胆'}</span>
                 </span>
                 <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P4</span>
               </div>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? '24-Month Roadmap: ' : '近两年节律：'}</b>${isEn ? `<b>${realCurrentYear}~${realCurrentYear + 1}</b> action preparation checklist` : `<b>${realCurrentYear}~${realCurrentYear + 1}年</b>时机节律与<b>提前筹备清单</b>`}</p>
-              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Annual Hexagram: ' : '易数决策：'}</b>${isEn ? 'I-Ching annual hexagram decision guidance' : '当年<b>值年卦经纶</b>与<b>行动取舍指引</b>'}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Resonant Figure: ' : '先贤镜像：'}</b><b>${isEn ? topMatch.nameEn : topMatch.nameZh}</b> (${isEn ? topMatch.dynastyEn : topMatch.dynastyZh}) · #1</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Playbook & Pitfalls: ' : '胜败兵法：'}</b>${isEn ? 'Breakthrough tactics and historical circuit breakers' : '<b>破局胜手战法</b>与<b>避险熔断防线</b>'}</p>
             </div>
 
-            <!-- Scroll 4 / Page 5 (Merged Pareto Strategy & Interpersonal Support) -->
-            <div onclick="jumpToImperialPage('imperialPage5'); return false;" class="imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
+            <!-- Scroll 4 / Page 5 -->
+            <div onclick="jumpToImperialPage('imperialPage5'); return false;" class="imperial-card imperial-card-gold p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
+              <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
+                <span class="flex items-center gap-1 text-[10.5px]">
+                  <span>⏳</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll IV · 1-2y Action Roadmap' : '卷二 · 未来1-2年时机节律'}</span>
+                </span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P5</span>
+              </div>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? '24-Month Roadmap: ' : '近两年节律：'}</b>${isEn ? `<b>${realCurrentYear}~${realCurrentYear + 1}</b> action preparation checklist` : `<b>${realCurrentYear}~${realCurrentYear + 1}年</b>时机节律与<b>提前筹备清单</b>`}</p>
+              <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Decision Inflection: ' : '决策要津：'}</b>${isEn ? 'Actionable inflection gates and risk boundaries' : '季度行动节律与<b>攻防决策窗口</b>'}</p>
+            </div>
+
+            <!-- Scroll 5 / Page 6 (Merged Pareto Strategy & Interpersonal Support) -->
+            <div onclick="jumpToImperialPage('imperialPage6'); return false;" class="imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
                   <span>⚔️</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll IV · Pareto & Network' : '卷二 · 兵法战略与人际协作'}</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll V · Pareto & Network' : '卷三 · 兵法战略与人际协作'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P5</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P6</span>
               </div>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Pareto Pivot: ' : '战略胜负手：'}</b><b>${domPat}</b> (${domTier}) · ${isEn ? 'Xu Lewu Middleware' : '子平具象取用'}</p>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Interpersonal Network: ' : '人际防波堤：'}</b>${isEn ? 'Emotional ballast, partner firewalls & adult boundaries' : '<b>情感压舱石</b>、<b>刚性合伙权责</b>与<b>成人边界</b>'}</p>
             </div>
 
-            <!-- Scroll 5 / Page 6 (Zen Mindset & Rong Ku Jian) -->
-            <div onclick="jumpToImperialPage('imperialPage6'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
+            <!-- Scroll 6 / Page 7 (Zen Mindset & Rong Ku Jian) -->
+            <div onclick="jumpToImperialPage('imperialPage7'); return false;" class="imperial-card imperial-card-emerald p-1.5 text-xs space-y-0.5 hover:border-emerald-600 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
                   <span>🧘</span>
-                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll V · Zen Mindset & Codex' : '卷三 · 禅道心智与处世保全'}</span>
+                  <span class="group-hover:text-emerald-900 transition">${isEn ? 'Scroll VI · Zen Mindset & Codex' : '卷四 · 禅道心智与处世保全'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-400">P6</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-400">P7</span>
               </div>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Trinity Mindset: ' : '三经破执：'}</b>${isEn ? 'Diamond Sutra, Platform Sutra & Zhuangzi practical protocols' : '<b>金刚经破相</b>、<b>坛经断妄断念</b>、<b>庄子避实就虚</b>'}</p>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Survival Codex: ' : '处世保全：'}</b>${isEn ? "Prime Minister Feng Dao's Rong Ku Jian 10 Scrolls" : '五代权相冯道《荣枯鉴》<b>三大刚性职场防身法则</b>'}</p>
             </div>
 
-            <!-- Scroll 6 / Page 7 (Workplace Archetypes & Auspicious Seal) -->
-            <div onclick="jumpToImperialPage('imperialPage7'); return false;" class="imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
+            <!-- Scroll 7 / Page 8 (Workplace Archetypes & Auspicious Seal) -->
+            <div onclick="jumpToImperialPage('imperialPage8'); return false;" class="col-span-2 imperial-card imperial-card-accent p-1.5 text-xs space-y-0.5 hover:border-amber-700 transition cursor-pointer group">
               <div class="flex items-center justify-between font-bold text-amber-950 border-b border-amber-900/15 pb-0.5">
                 <span class="flex items-center gap-1 text-[10.5px]">
                   <span>💼</span>
-                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VI · Workplace & Seal' : '卷四 · 职场实操与终身宝印'}</span>
+                  <span class="group-hover:text-amber-900 transition">${isEn ? 'Scroll VII · Workplace & Seal' : '卷五 · 职场实操与终身宝印'}</span>
                 </span>
-                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P7</span>
+                <span class="text-[8.5px] font-mono px-1 py-0.2 rounded bg-amber-100 text-amber-950 border border-amber-400">P8</span>
               </div>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Career Archetypes: ' : '实操择位：'}</b>${isEn ? 'Upward alignment, peer firewalls & execution pilots' : '<b>向上管理心智</b>、<b>同僚护城河</b>与<b>低成本验证</b>'}</p>
               <p class="text-[9px] text-gray-800 leading-tight"><b>${isEn ? 'Lifelong Matrix: ' : '百岁宏图：'}</b>${isEn ? 'Five grand phases, four deities & imperial seal' : '<b>百岁五阶段</b>、<b>四大吉神照命</b>与钦天监宝印'}</p>
@@ -26859,9 +27398,9 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
             </div>
             <div class="relative pt-0.5 min-h-[40px]">
               <div class="space-y-0.5 text-[9.5px] text-amber-950 leading-tight" style="padding-right: 30mm;">
-                <p>${isEn ? '1. Ground in Decision Stance: Begin with Page 2 to clarify whether to hold steady, switch jobs, study, or venture into new opportunities.' : '一、<b>以现实抉择立基：</b>先阅卷首三要（第2页）明确<b>攻守定向与低成本试水动作</b>。'}</p>
-                <p>${isEn ? '2. Anchor to Near-Term Timing: Focus on the 1-2 year action roadmap on Page 4 to prepare before temporal inflection windows arrive.' : '二、<b>以近两年时机为纲：</b>精研卷一未来1~2年<b>时序节律与筹备清单</b>（第4页），兵马未动粮草先行。'}</p>
-                <p>${isEn ? '3. Fortify Strategy & Mind: Anchor to Pareto strategy & networks on Page 5 and Zen de-biasing & Rong Ku Jian on Page 6.' : '三、<b>以兵法禅道固本：</b>依卷二<b>二八战略与人际防线</b>（第5页）、卷三<b>禅道心智与处世保全</b>（第6页）知行合一。'}</p>
+                <p>${isEn ? '1. Ground in Lifelong Rhythm: Begin with Page 2 to grasp lifelong vitality, wealth tides, and annual hexagram trajectory.' : '一、<b>以百岁罗盘与易数定鼎：</b>先阅卷一（第2页）总揽<b>百年活力曲线、财富潮汐与值年卦行持全景</b>。'}</p>
+                <p>${isEn ? '2. Anchor to Decision Stance: Review Page 3 to clarify whether to hold steady, switch jobs, study, or venture into new opportunities.' : '二、<b>以现实抉择立基：</b>再阅卷首核心决策（第3页）明确<b>攻守定向与低成本试水动作</b>。'}</p>
+                <p>${isEn ? '3. Fortify Strategy & Mind: Anchor to near-term timing (Page 5), Pareto & networks (Page 6), and Zen de-biasing & Rong Ku Jian (Page 7).' : '三、<b>以兵法禅道固本：</b>依卷二<b>时序节律</b>（第5页）、卷三<b>二八战略与人际防线</b>（第6页）、卷四<b>禅道心智与处世保全</b>（第7页）知行合一。'}</p>
               </div>
               <div class="imperial-seal-square ${isEn ? 'is-en' : ''}" title="${isEn ? 'Imperial Rescript' : '钦天御批'}">
                 ${isEn ? 'IMPERIAL<br>RESCRIPT' : '钦天<br>御批'}
@@ -26872,13 +27411,150 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Master Table of Contents' : '大明/大清钦天监 · 卷首 目录总目与自省导引'}</span>
-            <span>Page 1 / 7</span>
+            <span>Page 1 / 8</span>
           </div>
         </div>
       </div>
 
       <!-- Page 2: Executive Decision & Direction Blueprint -->
+            <!-- Page 2: Volume I - Lifelong Transits & 64 Hexagrams Progression System -->
       <div id="imperialPage2" class="imperial-page relative">
+        <div class="imperial-corner-wrap-top"></div>
+        <div class="imperial-corner-wrap-bottom"></div>
+        <div class="imperial-thread-spine">
+          <div class="thread-eyelet eyelet-1"></div>
+          <div class="thread-eyelet eyelet-2"></div>
+          <div class="thread-eyelet eyelet-3"></div>
+          <div class="thread-eyelet eyelet-4"></div>
+        </div>
+        <div class="imperial-watermark">${watermarkText}</div>
+
+        <div class="imperial-frame flex flex-col justify-between p-3 space-y-1">
+          <!-- Header -->
+          <div class="text-center space-y-0.5 border-b-2 border-amber-900/60 pb-1">
+            <div class="flex items-center justify-between">
+              <span class="imperial-seal-stamp">${isEn ? 'IMPERIAL SEAL' : '钦天监正堂之宝'}</span>
+              <span class="text-[9.5px] text-amber-950/70 font-mono tracking-wider">${isEn ? 'CLASSIFIED ARCHIVE · VOLUME I' : '天机御览 · 卷一岁运'}</span>
+            </div>
+            <h1 class="text-base sm:text-lg font-black font-serif-sc text-amber-950 tracking-wider">${isEn ? 'Volume I · Lifelong Transits & 64 Hexagrams System' : '岁运流转 · 大运流年流月流日全阶推演系统'}</h1>
+            <p class="text-[9px] sm:text-[9.5px] text-amber-900/85 font-serif-sc">${isEn ? '5-Pillar Synergy · Decennial Luck, Tai Sui, Solar Terms & Daily Harmonics' : '五柱同参 · 洞察十年大运、当前太岁流年、十二节气流月与流日交感吉凶'}</p>
+            <div class="text-[8.5px] font-mono text-amber-950/80 bg-amber-100/50 py-0.2 px-2 rounded border border-amber-900/20 inline-block">
+              ${luckGenderStr} · ${luckDirStr} · ${luckStartAgeStr}
+            </div>
+          </div>
+
+          <!-- Module 1: Lifelong Chrono-Navigator -->
+          <div class="imperial-card imperial-card-gold p-1.5 space-y-0.5 font-serif-sc">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <div class="flex items-center gap-1.5">
+                <span>⏳</span>
+                <span class="font-bold text-xs text-amber-950">${isEn ? 'Lifelong Chrono-Navigator (1~100 Years)' : '百岁运势时空罗盘 (Lifelong Chrono-Navigator)'}</span>
+              </div>
+              <span class="text-[8px] font-mono text-amber-900 bg-amber-200/60 px-1 py-0.2 rounded border border-amber-500/30">${isEn ? '1~100y Panorama' : '1~100 岁全景'}</span>
+            </div>
+
+            <!-- Dynamic Energy Curve & Life Fortune Tide Vector SVG -->
+            ${generateImperialLifelongCurveSvg(tl, currentAge, targetCalYear, isEn)}
+
+            <!-- Spotlight Card of Active Year -->
+            <div class="bg-white/80 rounded p-1 border border-amber-900/15 space-y-0.5 text-[8px]">
+              <div class="flex items-center justify-between text-[9.5px] font-bold">
+                <span class="text-amber-950 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                  <span>${activeYearAgeHeading}</span>
+                </span>
+                <span class="text-[8px] font-mono px-1 py-0.2 rounded bg-emerald-100 text-emerald-900 border border-emerald-400/40">${isEn ? ((activeTlItem.alertsEn && activeTlItem.alertsEn[0]) || 'Harmonious Transit') : ((activeTlItem.alerts && activeTlItem.alerts[0]) || '岁运祥和')}</span>
+              </div>
+
+              <div class="grid grid-cols-4 gap-1 text-[8px] text-gray-700 bg-amber-50/60 p-1 rounded">
+                <div><span class="text-gray-500">${isEn ? 'Decade Cycle:' : '所属十年大运:'}</span> <b class="text-gray-900 font-mono block">${isEn ? activeDecadeLabelEn : activeDecadeLabelZh}</b></div>
+                <div><span class="text-gray-500">${isEn ? 'Ten God Ruler:' : '岁君十神司权:'}</span> <b class="text-amber-900 font-mono block">${isEn ? (activeTlItem.tenGodEn || I18N.getGod(activeTlItem.tenGod, 'en')).replace(/[\u4e00-\u9fa5]/g, '').trim() : activeTlItem.tenGod}</b></div>
+                <div><span class="text-gray-500">${isEn ? 'Na-Yin Element:' : '年柱纳音律动:'}</span> <b class="text-gray-900 font-mono block">${isEn ? (activeTlItem.naYinEn || I18N.getNaYin(activeTlItem.naYin, 'en')).replace(/[\u4e00-\u9fa5]/g, '').trim() : activeTlItem.naYin}</b></div>
+                <div><span class="text-gray-500">${isEn ? 'Strategic Focus:' : '战略定调:'}</span> <b class="text-amber-950 block truncate">${isEn ? (activeTlItem.focusEn || 'Consolidation').replace(/[\u4e00-\u9fa5]/g, '').trim() : (activeTlItem.focusZh || '稳健深耕 · 蓄势待发')}</b></div>
+              </div>
+
+              <!-- Energy and Wealth metrics -->
+              <div class="grid grid-cols-2 gap-2 text-[8px] font-mono pt-0.5">
+                <div class="flex items-center justify-between px-1 py-0.2 rounded bg-amber-100/70 border border-amber-900/10">
+                  <span class="text-gray-600">${isEn ? 'Vitality & Energy Index:' : '生命能量与活力指数:'}</span>
+                  <span class="font-bold text-amber-950">${activeTlItem.energyScore || 62} / 100</span>
+                </div>
+                <div class="flex items-center justify-between px-1 py-0.2 rounded bg-amber-100/70 border border-amber-900/10">
+                  <span class="text-gray-600">${isEn ? 'Wealth & Opportunity Tide:' : '财富运势与机遇潮汐:'}</span>
+                  <span class="font-bold text-amber-950">${activeTlItem.wealthScore || 55} / 100</span>
+                </div>
+              </div>
+
+              <!-- Transit directive -->
+              <div class="pt-0.5 border-t border-amber-900/10 text-[8px] leading-relaxed text-gray-800">
+                <span class="font-bold text-amber-950">🎯 ${isEn ? 'Strategic Transit Directive: ' : '流年战略锦囊与行持准则：'}</span>
+                <span>${isEn ? (activeTlItem.directiveEn || 'Consolidate core competencies, maintain prudence, avoid impulsive speculative ventures, and accumulate compounding advantage.').replace(/[\u4e00-\u9fa5]/g, '').trim() : (activeTlItem.directiveZh || '气机平稳，此岁最宜深耕根本、储备能量，忌盲目扩张与冒进投机；修身立德，积厚流光。')}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 2: I-Ching 64 Hexagrams Lifelong Progression -->
+          <div class="imperial-card imperial-card-accent p-1.5 space-y-0.5 font-serif-sc">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <div class="flex items-center gap-1.5">
+                <span>☯️</span>
+                <span class="font-bold text-xs text-amber-950">${isEn ? 'I-Ching 64 Hexagrams Cycle · Lifelong Progression' : '周易六十四卦周期推演图 · 百岁岁运演化与六爻时序全景'}</span>
+              </div>
+              <span class="text-[8px] font-mono text-amber-900">${isEn ? 'Ni Haisha Tian Ji Hologram' : '倪海厦天纪易数推演 · 六十四卦全息图谱'}</span>
+            </div>
+
+            <!-- Dynamic Lifelong 100-Year Hexagram Trajectory Vector SVG -->
+            ${generateImperialHexagramTrajectorySvg(hexTrajectoryList, currentAge, targetCalYear, isEn)}
+
+            <!-- Active Year Hexagram Details -->
+            <div class="bg-white/80 rounded p-1.5 border border-amber-900/15 space-y-1 text-xs">
+              <div class="flex items-center justify-between text-[10px] font-bold text-amber-950 border-b border-amber-900/10 pb-0.5">
+                <span class="flex items-center gap-1">
+                  <span>${targetCalYear}${isEn ? ' ' : '年 · '}${isEn ? (activeHexItem && activeHexItem.annualGanzhiEn ? activeHexItem.annualGanzhiEn.replace(/[\u4e00-\u9fa5]/g, '').trim() : 'Bing-Wu') : (activeHexItem && activeHexItem.annualGanzhiZh ? activeHexItem.annualGanzhiZh : '丙午')}</span>
+                  <span class="text-[9px] text-amber-800 font-normal">(${isEn ? 'Annual Hexagram' : '当年值年卦'})</span>
+                </span>
+                <span class="font-mono text-amber-900">${isEn ? `Hex ${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.number : 52} · ${cleanActiveHexNameEn}` : `第${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.number : 52}卦 · ${activeHexItem && activeHexItem.annualHex ? activeHexItem.annualHex.nameZh : '艮为山'}`}</span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[8.5px] leading-tight">
+                <div class="p-1 rounded bg-amber-50/70 border border-amber-900/10 space-y-0.5">
+                  <span class="font-bold text-amber-950 block">${isEn ? 'Hexagram Nature & Yin-Yang Law:' : '卦象特征与阴阳律：'}</span>
+                  <p class="text-gray-700">${isEn ? cleanRuleEn : (activeHexItem && activeHexItem.ruleInteractionZh ? activeHexItem.ruleInteractionZh : '艮卦 · 重山叠嶂 · 止其所止 · 阴阳相合守本卦')}</p>
+                </div>
+                <div class="p-1 rounded bg-amber-50/70 border border-amber-900/10 space-y-0.5">
+                  <span class="font-bold text-amber-950 block">${isEn ? 'Tian Ji Secret Exposition:' : '天纪秘解与玉上有光：'}</span>
+                  <p class="text-gray-700">${isEn ? cleanRiddleEn : (activeHexItem && activeHexItem.annualTJ && activeHexItem.annualTJ.riddleZh ? activeHexItem.annualTJ.riddleZh : '动静得时，行止有道；止其所止，知所当止。行其庭，不见其人，安其身也。外实内虚，蓄势深藏，方成大器。')}</p>
+                </div>
+                <div class="p-1 rounded bg-amber-50/70 border border-amber-900/10 space-y-0.5">
+                  <span class="font-bold text-amber-950 block">${isEn ? 'Five Elements Dynamic Flow:' : '五行气机交感流变：'}</span>
+                  <p class="text-gray-700">${isEn ? cleanDynEn : (activeHexItem && activeHexItem.dynamicInterpretationZh ? activeHexItem.dynamicInterpretationZh : '重山叠嶂滞涩 (比劫争厚 · 宜通关活气) · 土多则滞，过于执拗固执易失良机；宜以金泄之、以木疏之，打破惯性思维。')}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: 10-Year Lifelong Action Roster (Current Year + 9 Years Horizon) -->
+          <div class="imperial-card p-1.5 space-y-1">
+            <div class="flex items-center justify-between border-b border-amber-900/15 pb-0.5">
+              <div class="flex items-center gap-1 font-bold text-[10.5px] text-amber-950">
+                <span>📜</span>
+                <span>${isEn ? 'Lifelong 64 Hexagrams Action Roster (10-Year Horizon)' : '百岁岁运六十四卦行持全景总谱'}</span>
+              </div>
+              <span class="text-[8px] font-mono text-amber-900">${targetCalYear} ~ ${targetCalYear + 9}${isEn ? ' Ten-Year Hexagram Matrix' : ' 年当年及未来十年岁运卦象与行持锦囊'}</span>
+            </div>
+            ${render10YearHexCardsHtml}
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[10px] text-gray-500 font-mono">
+            <span>${isEn ? 'Imperial Astrometry Bureau · Volume I: Transits & Hexagrams' : '大明/大清钦天监 · 卷一 岁运六十四卦'}</span>
+            <span>Page 2 / 8</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3: Executive Decision & Direction Blueprint -->
+      <div id="imperialPage3" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -27019,13 +27695,13 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Master Executive Summary' : '大明/大清钦天监 · 卷首 核心决策导向与生命蓝图'}</span>
-            <span>Page 2 / 7</span>
+            <span>Page 3 / 8</span>
           </div>
         </div>
       </div>
 
       <!-- Page 3: Special Prologue: Supreme Historical Soul Mirror -->
-      <div id="imperialPage3" class="imperial-page relative">
+      <div id="imperialPage4" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -27209,13 +27885,13 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Historical Soul Mirror Prologue' : '大明/大清钦天监 · 卷首附卷 历史照命'}</span>
-            <span>Page 3 / 7</span>
+            <span>Page 4 / 8</span>
           </div>
         </div>
       </div>
 
       <!-- Page 4: Volume I - Near-Term Tactical Timing & 1-2 Year Action Roadmap -->
-      <div id="imperialPage4" class="imperial-page relative">
+      <div id="imperialPage5" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -27398,13 +28074,13 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Volume I: Transits & Action Roadmap' : '大明/大清钦天监 · 卷一 未来1-2年时机节律与行动筹备表'}</span>
-            <span>Page 4 / 7</span>
+            <span>Page 5 / 8</span>
           </div>
         </div>
       </div>
 
       <!-- Page 5: Volume II - 80/20 Grand Picture Pareto Strategy & Interpersonal Collaboration Safeguards -->
-      <div id="imperialPage5" class="imperial-page relative">
+      <div id="imperialPage6" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -27603,13 +28279,13 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 2: Strategy & Support' : '大明/大清钦天监 · 卷二 关键枢纽战略与人际协作防护体系'}</span>
-            <span>Page 5 / 7</span>
+            <span>Page 6 / 8</span>
           </div>
         </div>
       </div>
 
       <!-- Page 6: Volume III - Zen & Dao Trinity Mindset & Rong Ku Jian Survival Codex (Expanded with Real Examples & Core Essence) -->
-      <div id="imperialPage6" class="imperial-page relative">
+      <div id="imperialPage7" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -27766,13 +28442,13 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-1 text-[9.5px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 3: Mindset & Survival' : '大明/大清钦天监 · 卷三 禅道心智与处世保全'}</span>
-            <span>Page 6 / 7</span>
+            <span>Page 7 / 8</span>
           </div>
         </div>
       </div>
 
       <!-- Page 7: Volume IV - Workplace Archetypes & Lifelong Auspicious Matrix -->
-      <div id="imperialPage7" class="imperial-page relative">
+      <div id="imperialPage8" class="imperial-page relative">
         <div class="imperial-corner-wrap-top"></div>
         <div class="imperial-corner-wrap-bottom"></div>
         <div class="imperial-thread-spine">
@@ -27905,7 +28581,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <!-- Footer -->
           <div class="flex items-center justify-between border-t border-amber-900/40 pt-0.5 text-[9px] text-gray-500 font-mono">
             <span>${isEn ? 'Imperial Astrometry Bureau · Section 4' : '大明/大清钦天监 · 卷四'}</span>
-            <span>Page 7 / 7 · Complete Dossier</span>
+            <span>Page 8 / 8 · Complete Dossier</span>
         </div>
       </div>
     `;
@@ -27948,7 +28624,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
     // Section 2: Time-Space Progression System (岁运流转 · 大运流年流月流日全阶推演系统)
     renderMasterProfileChrono(activeRes, isEn);
 
-    // Section 3: Imperial 7-Page Dossier Compendium (钦天监 · 皇家七卷精装战报全卷精萃)
+    // Section 3: Imperial 7-Page Dossier Compendium (钦天监 · 皇家八卷精装战报全卷精萃)
     renderMasterProfileImperial(activeRes, isEn);
 
     // Also update Advisor Home View
@@ -28697,58 +29373,68 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
       {
         pageId: 'imperialPage2',
         num: 2,
-        titleZh: '卷二 · 命局总览与主导格局 (成格考订与二八攻防)',
-        titleEn: 'Volume II: Executive Blueprint & Primary Dominant Pattern',
+        titleZh: '卷二 · 百岁运势时空罗盘与周易六十四卦全相',
+        titleEn: 'Volume II: Lifelong Chrono-Navigator & 64 Hexagrams Trajectory',
+        descZh: '1~100岁连续平滑推演 · 能量活力、财富走势与岁运刑冲全局图谱；倪海厦天纪易数推演与未来十年值年卦行持总谱。',
+        descEn: 'Lifelong dynamic vitality and fortune tides mapped across 100 continuous solar years, integrated with the 64 Hexagrams systemic trajectory and decennial strategic action vectors.',
+        tagsZh: ['时空罗盘', '六十四卦', '百岁推演'],
+        tagsEn: ['Lifelong Chrono-Navigator', '64 Hexagrams Trajectory', 'Decennial Horizons']
+      },
+      {
+        pageId: 'imperialPage3',
+        num: 3,
+        titleZh: '卷三 · 核心决策导向与主导格局 (成格考订与二八攻防)',
+        titleEn: 'Volume III: Executive Blueprint & Primary Dominant Pattern',
         descZh: `以【${cleanPatName}】统领全相大局。精准界定20%破局高杠杆胜手与80%损耗暗礁，调候喜用神扶抑得宜。`,
         descEn: `Governed by the [${cleanPatName}] primary stress pattern. Rooted in Ebertin's 90° dial midpoint dynamics ((A+B)/2 = C): isolates the pivotal 20% high-leverage vector from the 80% systemic friction, stabilized by dynamic regulatory vectors to maintain equilibrium under pressure.`,
         tagsZh: ['统帅主格', '20%胜负手', '调候真神'],
         tagsEn: ['Ebertin 90° Stress Axis', '20% High-Leverage Vector', 'Equilibrium Regulators']
       },
       {
-        pageId: 'imperialPage3',
-        num: 3,
-        titleZh: '卷三 · 史鉴镜鉴 (南北乱世300年同构镜像与历史灵魂宿命)',
-        titleEn: 'Volume III: Supreme Historical Soul Mirror & Mirror Resonance',
+        pageId: 'imperialPage4',
+        num: 4,
+        titleZh: '卷四 · 史鉴镜鉴 (南北乱世300年同构镜像与历史灵魂宿命)',
+        titleEn: 'Volume IV: Supreme Historical Soul Mirror & Mirror Resonance',
         descZh: '以魏晋南北朝及隋唐历史名宿为魂灵镜像，复刻乱世博弈中的抉择胜负手，以史为鉴照见前行天命。',
         descEn: `Mirrored through Rudhyar's archetypal phase dynamics and historical statecraft precedents across transitional cycles: models critical decision tipping points under macro upheaval, mapping your strategic trajectory against timeless leadership archetypes.`,
         tagsZh: ['同构名宿', '历史镜鉴', '乱世抉择'],
         tagsEn: ['Cyclic Phase Resonance', 'Archetypal Mirror', 'Strategic Inflection Nodes']
       },
       {
-        pageId: 'imperialPage4',
-        num: 4,
-        titleZh: '卷四 · 岁运流转与六十四卦易数 (大运流年流月流日全阶推演)',
-        titleEn: 'Volume IV: Lifelong Transits & 64 Hexagrams Progression',
-        descZh: '五柱同参，贯穿十年大运、太岁流年、十二节气流月与流日交感；百岁六十四卦变卦与守本时序全局图谱。',
-        descEn: `Comprehensive multi-tier progression rooted in Hellenistic Time-Lords (Valens L1-L4 releasing periods) and Tyl's Solar Arc directions: traces decennial shifts, annual transits, and critical phase transitions (Losing of the Bond) across a 100-year timeline.`,
-        tagsZh: ['五柱同参', '六爻时序', '时空罗盘'],
-        tagsEn: ['Time-Lord Progression', 'Zodiacal Releasing L1-L4', 'Solar Arc Directions']
-      },
-      {
         pageId: 'imperialPage5',
         num: 5,
-        titleZh: '卷五 · 二八战略大局与职场协作合伙刚性法则 (破局战役 · 80/20攻防 · 协作权责)',
-        titleEn: 'Volume V: 80/20 Pareto Strategy & Strategic Interpersonal Synergy',
+        titleZh: '卷五 · 未来1-2年时机节律与决策框架',
+        titleEn: 'Volume V: Near-Term 1-2 Year Roadmap & Decision Framework',
+        descZh: '深度解构近两年太岁吉凶与攻防拐点，季度行动节律与提前一年布局避险对策。',
+        descEn: `Comprehensive multi-tier progression rooted in Hellenistic Time-Lords (Valens L1-L4 releasing periods) and Tyl's Solar Arc directions: traces decennial shifts, annual transits, and critical phase transitions across near-term decision horizons.`,
+        tagsZh: ['时序节律', '季度推进', '筹备清单'],
+        tagsEn: ['Time-Lord Progression', 'Quarterly Rhythms', 'Decision Corridors']
+      },
+      {
+        pageId: 'imperialPage6',
+        num: 6,
+        titleZh: '卷六 · 二八战略大局与职场协作合伙刚性法则 (破局战役 · 80/20攻防 · 协作权责)',
+        titleEn: 'Volume VI: 80/20 Pareto Strategy & Strategic Interpersonal Synergy',
         descZh: '贯彻二八极简法则，聚焦20%高杠杆胜负手；建立职场防波堤与合伙协作刚性权责分配法则，规避人际内耗。',
         descEn: `The 80/20 Pareto principle meets Robert Hand's Composite Vector Synthesis (atan2 summation): isolates high-gain resonant harmonics from dissipative interpersonal noise, establishing rigid boundary allocation protocols and defensible collaborative moats.`,
         tagsZh: ['二八胜负手', '破局战役', '合伙权责'],
         tagsEn: ['80/20 Pareto Vector', 'Composite Vector Field', 'Boundary Allocation']
       },
       {
-        pageId: 'imperialPage6',
-        num: 6,
-        titleZh: '卷六 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典',
-        titleEn: 'Volume VI: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex',
+        pageId: 'imperialPage7',
+        num: 7,
+        titleZh: '卷七 · 禅道心智与五代·冯道《荣枯鉴》处世保全宝典',
+        titleEn: 'Volume VII: Zen & Dao Trinity Wisdom & Rong Ku Jian Workplace Codex',
         descZh: '《心经》《金刚经》《坛经》《庄子》四大心智锚点，破相照空、粗糙交付、避实就虚；融合冯道《荣枯鉴》九卷处世绝学，直为骨媚为仪。',
         descEn: `Strategic organizational game theory rooted in Ebertin's Cosmobiology and multi-agent power matrices: internal cognitive equilibrium balances structural friction, transforming external political pressure into defensible strategic leverage and survival armor.`,
         tagsZh: ['禅道心智', '破相照空', '冯道荣枯鉴'],
         tagsEn: ['Zen Cognitive Shield', 'Multi-Agent Game Theory', 'Strategic Armor']
       },
       {
-        pageId: 'imperialPage7',
-        num: 7,
-        titleZh: '卷七 · 职场实战原型、财富防火墙与终身宝印 (向上管理 · 同僚防波堤 · 天命生态位)',
-        titleEn: 'Volume VII: Career Breakthrough Archetypes, Wealth Firewall & Sovereign Seal',
+        pageId: 'imperialPage8',
+        num: 8,
+        titleZh: '卷八 · 职场实战原型、财富防火墙与终身宝印 (向上管理 · 同僚防波堤 · 天命生态位)',
+        titleEn: 'Volume VIII: Career Breakthrough Archetypes, Wealth Firewall & Sovereign Seal',
         descZh: '正财主业与偏财副业双轨推演；穿透职场政治丛林，筑牢同僚防波堤与向上管理通道，结合现居地时空向量锁死天命事业生态位。',
         descEn: `Career and wealth dynamics grounded in Valens' Lot of Spirit (vocation) and Lot of Fortune (capital flow), integrated with Erlewine's Local Space azimuth vectors (tan A = sin H / ...): navigates organizational hierarchies with upward alignment vectors, establishes wealth firewalls, and optimizes an uncontested professional niche.`,
         tagsZh: ['正财偏财', '向上管理', '事业生态位'],
@@ -28763,11 +29449,11 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           <span class="text-2xl">📜</span>
           <div>
             <h3 class="text-base font-bold font-serif-sc text-amber-300 flex items-center gap-2">
-              <span>${isEn ? 'Imperial Dossier Compendium · 7-Volume Executive Blueprint' : '钦天监 · 皇家七卷精装战报全卷精萃'}</span>
+              <span>${isEn ? 'Imperial Dossier Compendium · 8-Volume Executive Blueprint' : '钦天监 · 皇家八卷精装战报全卷精萃'}</span>
               <span class="chinese-seal text-[10px] py-0 text-amber-400 border-amber-500">${isEn ? 'A4 Master Archive' : 'A4 珍藏册'}</span>
             </h3>
             <p class="text-xs text-gray-400 mt-0.5">
-              ${isEn ? 'Executive compendium across all 7 volumes · One-click page inspection and full A4 PDF export' : '全本七卷绝密战报核心纲要 · 支持一键定位对应卷册、单页导出与七卷全本导出'}
+              ${isEn ? 'Executive compendium across all 7 volumes · One-click page inspection and full A4 PDF export' : '全本八卷绝密战报核心纲要 · 支持一键定位对应卷册、单页导出与七卷全本导出'}
             </p>
           </div>
         </div>
@@ -28776,7 +29462,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
         <div class="flex flex-wrap items-center gap-2 text-xs">
           <button id="masterProfileBtnInspectAll" type="button" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold transition flex items-center gap-1.5 cursor-pointer shadow active:scale-95">
             <span>📖</span>
-            <span>${isEn ? 'Inspect Full 7-Page Dossier' : '检视七卷排盘战报全景'}</span>
+            <span>${isEn ? 'Inspect Full 8-Page Dossier' : '检视八卷排盘战报全景'}</span>
           </button>
           <button id="masterProfileBtnExportSingle" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-amber-200 border border-gray-700 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>📄</span>
@@ -28784,7 +29470,7 @@ function renderImperialDossierPages(arg1, arg2, arg3) {
           </button>
           <button id="masterProfileBtnExportFull" type="button" class="px-3 py-1.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-purple-200 border border-purple-800/40 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>📑</span>
-            <span>${isEn ? 'Download 7-Page PDF' : '下载完整 7 页珍藏册 PDF'}</span>
+            <span>${isEn ? 'Download 8-Page PDF' : '下载完整 8 页珍藏册 PDF'}</span>
           </button>
           <button id="masterProfileBtnPrint" type="button" class="px-3 py-1.5 rounded-xl bg-gray-900 hover:bg-gray-800 text-gray-300 border border-gray-800 transition flex items-center gap-1.5 cursor-pointer active:scale-95">
             <span>🖨️</span>
