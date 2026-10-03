@@ -3822,28 +3822,12 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         ` : ''}
 
-        <!-- 5. Kinship Ballast -->
-        <div class="p-4 rounded-xl bg-black/45 border border-emerald-900/40 space-y-2">
-          <div class="flex items-center justify-between">
-            <h4 class="text-xs sm:text-sm font-bold text-emerald-300 flex items-center gap-2 font-serif-sc">
-              <span>🛡️</span>
-              <span>${isEn ? '5. Domestic Sanctuary & Kinship Ballast' : '五、六亲后方与家庭压舱石'}</span>
-            </h4>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono">
-              ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
-            </span>
-          </div>
-          <p class="text-xs sm:text-sm text-gray-200 leading-relaxed">
-            ${isEn ? (gp.kinshipEn || gp.kinship) : (gp.kinshipZh || gp.kinship)}
-          </p>
-        </div>
-
-        <!-- 6. Era Supercycle Resonance -->
+        <!-- 5. Era Supercycle Resonance -->
         <div class="p-4 rounded-xl bg-black/45 border border-teal-900/40 space-y-2">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-teal-300 flex items-center gap-2 font-serif-sc">
               <span>🚀</span>
-              <span>${isEn ? '6. Macro Era Supercycle & Spatial Trajectory' : '六、时代跃迁与宏观时空场能共振'}</span>
+              <span>${isEn ? '5. Macro Era Supercycle & Spatial Trajectory' : '五、时代跃迁与宏观时空场能共振'}</span>
             </h4>
             <span class="text-[10px] px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 font-mono">
               ${isEn ? 'Period 9 AI Era & Geographic Leverage' : '离九运AI浪潮 · 地理借势'}
@@ -3854,12 +3838,12 @@ document.addEventListener('DOMContentLoaded', () => {
           </p>
         </div>
 
-        <!-- 7. Lifetime Golden Directives -->
+        <!-- 6. Lifetime Golden Directives -->
         <div class="p-4 sm:p-5 rounded-xl bg-amber-950/25 border border-amber-500/40 space-y-3">
           <div class="flex items-center justify-between">
             <h4 class="text-xs sm:text-sm font-bold text-amber-300 flex items-center gap-2 font-serif-sc">
               <span>🎯</span>
-              <span>${isEn ? '7. Sovereign Grand Directives (Lifetime Golden Rules)' : '七、终身立身不败之黄金三则'}</span>
+              <span>${isEn ? '6. Sovereign Grand Directives (Lifetime Golden Rules)' : '六、终身立身不败之黄金三则'}</span>
             </h4>
             <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono border border-amber-500/30 font-bold">
               ${isEn ? 'Supreme Life Guidelines' : '守正不败总纲'}
@@ -3876,6 +3860,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. 👥 六亲深度侧写全息图谱 (4D Kinship Profiles: Spouse, Children, Parents)
     const kinshipSection = document.createElement('div');
     kinshipSection.className = 'space-y-4 pt-1';
+    const kinshipOverviewText = pc.grandPicture
+      ? (isEn ? (pc.grandPicture.kinshipEn || pc.grandPicture.kinship) : (pc.grandPicture.kinshipZh || pc.grandPicture.kinship))
+      : (isEn ? (pc.kinshipEn || pc.kinship) : (pc.kinshipZh || pc.kinship));
+
     kinshipSection.innerHTML = `
       <div class="flex items-center justify-between pb-2 border-b border-gray-800">
         <div class="flex items-center space-x-2">
@@ -3886,6 +3874,26 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <span class="chinese-seal text-[10px] py-0">${isEn ? 'Yu Zhao Ding Zhen' : '玉照定真'}</span>
       </div>
+
+      ${kinshipOverviewText ? `
+      <!-- 六亲后方与家庭压舱石 · 统摄总相 (Kinship Ballast & Sanctuary Synthesis) -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-950/25 via-[#101915] to-black/80 border border-emerald-600/40 shadow-xl space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-emerald-500/25">
+          <div class="flex items-center space-x-2">
+            <span class="text-base sm:text-lg">🛡️</span>
+            <h4 class="text-xs sm:text-sm font-bold text-emerald-300 font-serif-sc">
+              ${isEn ? 'Domestic Sanctuary & Kinship Ballast Synthesis' : '六亲后方与家庭压舱石 · 宏观统摄总纲'}
+            </h4>
+          </div>
+          <span class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-mono font-bold">
+            ${isEn ? 'Spousal Breakwater & Offspring Legacy' : '配偶防波堤 · 后嗣引秀'}
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-sans font-medium">
+          ${kinshipOverviewText}
+        </p>
+      </div>
+      ` : ''}
     `;
     const kg = document.createElement('div');
     kg.className = 'grid grid-cols-1 gap-5 kinship-cards-grid';
