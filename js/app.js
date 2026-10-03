@@ -6413,47 +6413,120 @@ document.addEventListener('DOMContentLoaded', () => {
         : `已选大运：第${activeDecade.index}步 · 【${activeDecade.text}】(${godTranslated}) · ${activeDecade.ageSpanZh} (${activeDecade.yearSpanZh})`;
     }
 
+    const ELEMENT_AESTHETICS = {
+      '甲': { elem: '木', en: 'Wood', color: 'text-emerald-400' },
+      '乙': { elem: '木', en: 'Wood', color: 'text-emerald-300' },
+      '丙': { elem: '火', en: 'Fire', color: 'text-rose-400' },
+      '丁': { elem: '火', en: 'Fire', color: 'text-rose-300' },
+      '戊': { elem: '土', en: 'Earth', color: 'text-amber-300' },
+      '己': { elem: '土', en: 'Earth', color: 'text-amber-200' },
+      '庚': { elem: '金', en: 'Metal', color: 'text-yellow-100' },
+      '辛': { elem: '金', en: 'Metal', color: 'text-slate-100' },
+      '壬': { elem: '水', en: 'Water', color: 'text-cyan-400' },
+      '癸': { elem: '水', en: 'Water', color: 'text-sky-300' },
+      '寅': { elem: '木', en: 'Wood', color: 'text-emerald-400' },
+      '卯': { elem: '木', en: 'Wood', color: 'text-emerald-300' },
+      '巳': { elem: '火', en: 'Fire', color: 'text-rose-400' },
+      '午': { elem: '火', en: 'Fire', color: 'text-rose-300' },
+      '辰': { elem: '土', en: 'Earth', color: 'text-amber-300' },
+      '戌': { elem: '土', en: 'Earth', color: 'text-amber-200' },
+      '丑': { elem: '土', en: 'Earth', color: 'text-amber-300' },
+      '未': { elem: '土', en: 'Earth', color: 'text-amber-200' },
+      '申': { elem: '金', en: 'Metal', color: 'text-yellow-100' },
+      '酉': { elem: '金', en: 'Metal', color: 'text-slate-100' },
+      '亥': { elem: '水', en: 'Water', color: 'text-cyan-400' },
+      '子': { elem: '水', en: 'Water', color: 'text-sky-300' }
+    };
+
     const decadesContainer = document.getElementById('decadesContainer');
     if (decadesContainer && currentLuckResult.decades) {
       decadesContainer.innerHTML = '';
       currentLuckResult.decades.forEach((d, idx) => {
         const isSelected = (idx === selectedDecadeIdx);
         const card = document.createElement('div');
-        card.className = `group relative p-2.5 rounded-2xl border cursor-pointer transition-all duration-300 text-center flex flex-col justify-between space-y-1.5 backdrop-blur-md ${
+        card.className = `group relative p-2.5 sm:p-3 rounded-2xl border cursor-pointer transition-all duration-300 text-center flex flex-col justify-between overflow-hidden backdrop-blur-md ${
           isSelected
-            ? 'bg-gradient-to-b from-amber-950/60 via-[#1c1610] to-black border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.25)] ring-2 ring-amber-400/60 scale-[1.04] z-10'
+            ? 'bg-gradient-to-b from-[#2d1e11] via-[#1c1510] to-[#0c0a08] border-amber-400 ring-2 ring-amber-400/50 shadow-[0_0_25px_rgba(245,158,11,0.35),inset_0_1px_1px_rgba(255,255,255,0.15)] scale-[1.03] z-10'
             : d.isActive
-              ? 'bg-gradient-to-b from-indigo-950/40 via-[#131522] to-black/90 border-indigo-500/60 hover:border-indigo-400 hover:shadow-md'
-              : 'bg-gradient-to-b from-[#141620]/90 via-[#0e1017]/95 to-black/90 border-gray-800/80 hover:border-amber-500/40 hover:bg-[#181b28]'
+              ? 'bg-gradient-to-b from-[#1d1b33] via-[#121324] to-[#0a0b14] border-indigo-500/70 hover:border-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.2)]'
+              : 'bg-gradient-to-b from-[#181a26]/90 via-[#11131d]/95 to-[#0b0c14]/98 border-stone-800/80 hover:border-amber-500/50 hover:bg-[#1a1e2e] hover:shadow-[0_8px_25px_rgba(0,0,0,0.5)] hover:-translate-y-0.5'
         }`;
 
         const stemGod = I18N.getGod(d.stemGod, currentLang);
         const nayin = I18N.getNaYin(d.naYin, currentLang);
         const f = d.fortune || LuckEngine.evaluateTransitFortune(res, d, 'decade');
         const isGood = (f.rating === 'good');
-        const badgeLabel = isEn ? (isGood ? '🟢 Good' : '🔴 Caution') : (isGood ? '🟢 吉' : '🔴 慎');
-        const badgeColor = isGood
-          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-[0_0_6px_rgba(16,185,129,0.2)]'
-          : 'bg-rose-500/15 text-rose-300 border-rose-500/40 shadow-[0_0_6px_rgba(244,63,94,0.2)]';
+        const badgeLabel = isEn ? (isGood ? 'Good' : 'Caution') : (isGood ? '吉运' : '慎守');
+        const badgeIcon = isGood ? '✦' : '▲';
+        const badgeStyle = isGood
+          ? 'bg-emerald-950/70 text-emerald-300 border-emerald-500/50 shadow-[0_0_8px_rgba(16,185,129,0.25)]'
+          : 'bg-rose-950/70 text-rose-300 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.25)]';
+
+        const stemElem = ELEMENT_AESTHETICS[d.stem] || { color: 'text-amber-100' };
+        const branchElem = ELEMENT_AESTHETICS[d.branch] || { color: 'text-amber-100' };
 
         card.innerHTML = `
-          <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/70 pb-1">
-            <span class="font-mono ${isSelected ? 'text-amber-300 font-bold' : 'text-gray-400'}">${isEn ? 'Decade ' : '第'}${d.index}${isEn ? '' : '步'}</span>
+          ${isSelected ? '<div class="absolute inset-x-0 -top-px h-[2px] bg-gradient-to-r from-transparent via-amber-300 to-transparent"></div>' : ''}
+          ${d.isActive && !isSelected ? '<div class="absolute inset-x-0 -top-px h-[2px] bg-gradient-to-r from-transparent via-indigo-400 to-transparent"></div>' : ''}
+          ${!isSelected && !d.isActive ? '<div class="absolute inset-x-0 -top-px h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>' : ''}
+
+          <!-- Header -->
+          <div class="relative z-10 flex items-center justify-between text-[10px] border-b border-white/5 pb-1.5">
+            <span class="px-2 py-0.5 rounded font-mono text-[10px] font-bold tracking-wider ${
+              isSelected
+                ? 'bg-amber-500/25 text-amber-200 border border-amber-400/60'
+                : 'bg-black/50 text-stone-400 border border-white/5'
+            }">
+              ${isEn ? 'Decade ' : '第'}${d.index}${isEn ? '' : '步'}
+            </span>
             <div class="flex items-center gap-1">
-              ${d.isActive ? `<span class="px-1.5 py-0.2 rounded-full bg-indigo-500/25 text-indigo-300 text-[9px] font-bold border border-indigo-400/50 animate-pulse">${isEn ? 'Active' : '当运'}</span>` : ''}
-              <span class="px-1.5 py-0.2 rounded-full border text-[9px] font-bold font-mono ${badgeColor}">${badgeLabel}</span>
+              ${d.isActive ? `
+                <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-bold font-serif-sc bg-gradient-to-r from-amber-500/25 to-yellow-500/25 text-amber-200 border border-amber-400/60 shadow-[0_0_8px_rgba(245,158,11,0.3)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+                  ${isEn ? 'Active' : '当运'}
+                </span>
+              ` : ''}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9.5px] font-bold font-serif-sc border ${badgeStyle}">
+                <span class="text-[8px]">${badgeIcon}</span>
+                <span>${badgeLabel}</span>
+              </span>
             </div>
           </div>
-          <div class="py-1">
-            <div class="text-base sm:text-lg font-serif-sc font-bold tracking-wider transition-colors ${isSelected ? 'text-amber-300 drop-shadow-[0_2px_4px_rgba(245,158,11,0.3)]' : 'text-amber-100/90 group-hover:text-amber-300'}">
-              ${d.stem}${d.branch}
+
+          <!-- Hero Glyph & Ten God -->
+          <div class="relative py-2 my-0.5 flex flex-col items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div class="w-14 h-14 rounded-full ${isSelected ? 'bg-amber-500/15' : 'bg-white/5'} blur-md"></div>
             </div>
-            <div class="mt-0.5"><span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-purple-500/15 text-purple-300 border border-purple-500/25">${stemGod}</span></div>
+            
+            <div class="relative flex items-center justify-center space-x-1.5 text-2xl sm:text-3xl font-serif-sc font-bold tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+              <span class="${stemElem.color} ${isSelected ? 'drop-shadow-[0_0_12px_rgba(245,158,11,0.6)] brightness-125' : ''}">${d.stem}</span>
+              <span class="${branchElem.color} ${isSelected ? 'drop-shadow-[0_0_12px_rgba(245,158,11,0.6)] brightness-125' : ''}">${d.branch}</span>
+            </div>
+
+            <div class="relative mt-1.5">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10.5px] font-serif-sc font-medium tracking-wide bg-gradient-to-r from-purple-950/90 via-[#26173d] to-purple-950/90 text-purple-200 border border-purple-500/40 shadow-sm">
+                ${stemGod}
+              </span>
+            </div>
           </div>
-          <div class="pt-1 border-t border-gray-800/60 text-[10px] space-y-0.5 font-mono">
-            <div class="text-emerald-400 font-bold">${isEn ? `Age ${d.ageStart}-${d.ageEnd}` : `${d.ageStart}~${d.ageEnd}岁`}</div>
-            <div class="text-gray-400 text-[9.5px]">${d.yearStart}~${d.yearEnd}</div>
-            <div class="text-gray-500 text-[9px] truncate" title="${nayin}">♪ ${nayin}</div>
+
+          <!-- Footer Timeline & Na Yin -->
+          <div class="relative z-10 pt-1.5 border-t border-white/5 space-y-1">
+            <div class="flex items-center justify-between text-[11px] font-mono">
+              <span class="font-bold ${isSelected ? 'text-amber-300' : 'text-stone-200'}">
+                ${isEn ? `Age ${d.ageStart}-${d.ageEnd}` : `${d.ageStart} ~ ${d.ageEnd} 岁`}
+              </span>
+              <span class="text-[10px] text-stone-400 font-mono">
+                ${d.yearStart}~${d.yearEnd}
+              </span>
+            </div>
+            <div class="flex items-center justify-center pt-0.5">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-black/40 border border-white/5 text-[9.5px] font-serif-sc text-stone-400 group-hover:text-stone-200 transition-colors truncate max-w-full" title="${nayin}">
+                <span class="text-amber-400/80 text-[10px]">${isEn ? '♪' : '律'}</span>
+                <span class="truncate">${nayin}</span>
+              </span>
+            </div>
           </div>
         `;
 
@@ -6506,40 +6579,72 @@ document.addEventListener('DOMContentLoaded', () => {
       currentLuckResult.annuals.forEach(a => {
         const isSelected = (a.year === selectedAnnualYear);
         const card = document.createElement('div');
-        card.className = `group relative p-2 rounded-2xl border cursor-pointer transition-all duration-300 text-center flex flex-col justify-between space-y-1 backdrop-blur-md ${
+        card.className = `group relative p-2 sm:p-2.5 rounded-2xl border cursor-pointer transition-all duration-300 text-center flex flex-col justify-between overflow-hidden backdrop-blur-md ${
           isSelected
-            ? 'bg-gradient-to-b from-indigo-950/60 via-[#151726] to-black border-indigo-400/90 shadow-[0_0_20px_rgba(99,102,241,0.25)] ring-2 ring-indigo-400/60 scale-[1.04] z-10'
+            ? 'bg-gradient-to-b from-[#1e1c3a] via-[#141528] to-[#090a16] border-indigo-400 ring-2 ring-indigo-400/50 shadow-[0_0_25px_rgba(99,102,241,0.35),inset_0_1px_1px_rgba(255,255,255,0.15)] scale-[1.03] z-10'
             : a.isSelected
               ? 'bg-gradient-to-b from-blue-950/40 via-[#111624] to-black/90 border-blue-600/50 hover:border-blue-400'
-              : 'bg-gradient-to-b from-[#141620]/90 via-[#0e1017]/95 to-black/90 border-gray-800/80 hover:border-indigo-500/40 hover:bg-[#181b28]'
+              : 'bg-gradient-to-b from-[#181a26]/90 via-[#11131d]/95 to-[#0b0c14]/98 border-stone-800/80 hover:border-indigo-500/50 hover:bg-[#1a1e2e] hover:shadow-[0_8px_25px_rgba(0,0,0,0.5)] hover:-translate-y-0.5'
         }`;
 
         const stemGod = I18N.getGod(a.stemGod, currentLang);
         const nayin = I18N.getNaYin(a.naYin, currentLang);
         const f = a.fortune || LuckEngine.evaluateTransitFortune(res, a, 'annual');
         const isGood = (f.rating === 'good');
-        const badgeLabel = isEn ? (isGood ? '🟢 Good' : '🔴 Caution') : (isGood ? '🟢 吉' : '🔴 慎');
-        const badgeColor = isGood
-          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-[0_0_6px_rgba(16,185,129,0.2)]'
-          : 'bg-rose-500/15 text-rose-300 border-rose-500/40 shadow-[0_0_6px_rgba(244,63,94,0.2)]';
+        const badgeLabel = isEn ? (isGood ? 'Good' : 'Caution') : (isGood ? '吉运' : '慎守');
+        const badgeIcon = isGood ? '✦' : '▲';
+        const badgeStyle = isGood
+          ? 'bg-emerald-950/70 text-emerald-300 border-emerald-500/50 shadow-[0_0_8px_rgba(16,185,129,0.25)]'
+          : 'bg-rose-950/70 text-rose-300 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.25)]';
         const aAge = (typeof a.age === 'number' && !isNaN(a.age)) ? a.age : Math.max(0, a.year - userBirthYear);
 
+        const stemElem = ELEMENT_AESTHETICS[a.stem] || { color: 'text-indigo-200' };
+        const branchElem = ELEMENT_AESTHETICS[a.branch] || { color: 'text-indigo-200' };
+
         card.innerHTML = `
-          <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/70 pb-0.5">
-            <span class="font-mono font-bold ${isSelected ? 'text-indigo-300' : 'text-gray-300'}">${a.year}</span>
+          ${isSelected ? '<div class="absolute inset-x-0 -top-px h-[2px] bg-gradient-to-r from-transparent via-indigo-300 to-transparent"></div>' : ''}
+          ${!isSelected ? '<div class="absolute inset-x-0 -top-px h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>' : ''}
+
+          <!-- Header -->
+          <div class="relative z-10 flex items-center justify-between text-[10px] border-b border-white/5 pb-1">
+            <span class="px-1.5 py-0.5 rounded font-mono text-[10.5px] font-bold tracking-wider ${
+              isSelected
+                ? 'bg-indigo-500/25 text-indigo-200 border border-indigo-400/60'
+                : 'bg-black/50 text-stone-300 border border-white/5'
+            }">
+              ${a.year}
+            </span>
             <div class="flex items-center gap-1">
-              <span class="px-1.5 py-0.2 rounded-full border text-[9px] font-bold font-mono ${badgeColor}">${badgeLabel}</span>
-              <span class="text-gray-400 font-mono text-[9.5px]">${aAge}${isEn ? 'yo' : '岁'}</span>
+              <span class="text-stone-400 font-mono text-[10px]">${aAge}${isEn ? 'yo' : '岁'}</span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full text-[9px] font-bold font-serif-sc border ${badgeStyle}">
+                <span class="text-[7.5px]">${badgeIcon}</span>
+                <span>${badgeLabel}</span>
+              </span>
             </div>
           </div>
-          <div class="py-1">
-            <div class="text-base font-serif-sc font-bold tracking-wider transition-colors ${isSelected ? 'text-indigo-200 drop-shadow-[0_2px_4px_rgba(99,102,241,0.3)]' : 'text-amber-100/90 group-hover:text-indigo-300'}">
-              ${a.stem}${a.branch}
+
+          <!-- Hero Glyph & Ten God -->
+          <div class="relative py-1.5 my-0.5 flex flex-col items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div class="w-12 h-12 rounded-full ${isSelected ? 'bg-indigo-500/15' : 'bg-white/5'} blur-md"></div>
             </div>
-            <div class="mt-0.5"><span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-purple-500/15 text-purple-300 border border-purple-500/25">${stemGod}</span></div>
+            <div class="relative flex items-center justify-center space-x-1 text-xl sm:text-2xl font-serif-sc font-bold tracking-widest drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
+              <span class="${stemElem.color} ${isSelected ? 'drop-shadow-[0_0_12px_rgba(99,102,241,0.6)] brightness-125' : ''}">${a.stem}</span>
+              <span class="${branchElem.color} ${isSelected ? 'drop-shadow-[0_0_12px_rgba(99,102,241,0.6)] brightness-125' : ''}">${a.branch}</span>
+            </div>
+            <div class="relative mt-1">
+              <span class="inline-flex items-center px-2 py-0.2 rounded-full text-[10px] font-serif-sc font-medium tracking-wide bg-gradient-to-r from-purple-950/90 via-[#26173d] to-purple-950/90 text-purple-200 border border-purple-500/35 shadow-sm">
+                ${stemGod}
+              </span>
+            </div>
           </div>
-          <div class="pt-0.5 border-t border-gray-800/60 text-[9px] text-gray-500 truncate font-mono" title="${nayin}">
-            ♪ ${nayin}
+
+          <!-- Footer Na Yin -->
+          <div class="relative z-10 pt-1 border-t border-white/5 flex items-center justify-center">
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/40 border border-white/5 text-[9px] font-serif-sc text-stone-400 group-hover:text-stone-200 transition-colors truncate max-w-full" title="${nayin}">
+              <span class="text-indigo-400/80 text-[9.5px]">${isEn ? '♪' : '律'}</span>
+              <span class="truncate">${nayin}</span>
+            </span>
           </div>
         `;
 
@@ -6571,12 +6676,12 @@ document.addEventListener('DOMContentLoaded', () => {
       currentLuckResult.months.forEach(m => {
         const isSelected = (m.branch === selectedMonthBranch);
         const card = document.createElement('div');
-        card.className = `group relative p-2 rounded-2xl border cursor-pointer transition-all duration-300 text-center flex flex-col justify-between space-y-1 backdrop-blur-md ${
+        card.className = `group relative p-2 sm:p-2.5 rounded-2xl border cursor-pointer transition-all duration-300 text-center flex flex-col justify-between overflow-hidden backdrop-blur-md ${
           isSelected
-            ? 'bg-gradient-to-b from-emerald-950/60 via-[#0e1914] to-black border-emerald-400/90 shadow-[0_0_20px_rgba(16,185,129,0.25)] ring-2 ring-emerald-400/60 scale-[1.04] z-10'
+            ? 'bg-gradient-to-b from-[#10291e] via-[#0d1d16] to-[#070e0b] border-emerald-400 ring-2 ring-emerald-400/50 shadow-[0_0_25px_rgba(16,185,129,0.35),inset_0_1px_1px_rgba(255,255,255,0.15)] scale-[1.03] z-10'
             : m.isSelected
               ? 'bg-gradient-to-b from-teal-950/40 via-[#0d1716] to-black/90 border-teal-600/50 hover:border-teal-400'
-              : 'bg-gradient-to-b from-[#141620]/90 via-[#0e1017]/95 to-black/90 border-gray-800/80 hover:border-emerald-500/40 hover:bg-[#181b28]'
+              : 'bg-gradient-to-b from-[#181a26]/90 via-[#11131d]/95 to-[#0b0c14]/98 border-stone-800/80 hover:border-emerald-500/50 hover:bg-[#1a1e2e] hover:shadow-[0_8px_25px_rgba(0,0,0,0.5)] hover:-translate-y-0.5'
         }`;
 
         const termTitle = isEn ? m.solarTermEn : m.solarTermZh;
@@ -6584,27 +6689,59 @@ document.addEventListener('DOMContentLoaded', () => {
         const nayin = I18N.getNaYin(m.naYin, currentLang);
         const f = m.fortune || LuckEngine.evaluateTransitFortune(res, m, 'monthly');
         const isGood = (f.rating === 'good');
-        const badgeLabel = isEn ? (isGood ? '🟢 Good' : '🔴 Caution') : (isGood ? '🟢 吉' : '🔴 慎');
-        const badgeColor = isGood
-          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-[0_0_6px_rgba(16,185,129,0.2)]'
-          : 'bg-rose-500/15 text-rose-300 border-rose-500/40 shadow-[0_0_6px_rgba(244,63,94,0.2)]';
+        const badgeLabel = isEn ? (isGood ? 'Good' : 'Caution') : (isGood ? '吉运' : '慎守');
+        const badgeIcon = isGood ? '✦' : '▲';
+        const badgeStyle = isGood
+          ? 'bg-emerald-950/70 text-emerald-300 border-emerald-500/50 shadow-[0_0_8px_rgba(16,185,129,0.25)]'
+          : 'bg-rose-950/70 text-rose-300 border-rose-500/50 shadow-[0_0_8px_rgba(244,63,94,0.25)]';
+
+        const stemElem = ELEMENT_AESTHETICS[m.stem] || { color: 'text-emerald-200' };
+        const branchElem = ELEMENT_AESTHETICS[m.branch] || { color: 'text-emerald-200' };
 
         card.innerHTML = `
-          <div class="flex items-center justify-between text-[10px] text-gray-400 border-b border-gray-800/70 pb-0.5">
-            <span class="font-bold font-serif-sc truncate ${isSelected ? 'text-emerald-300' : 'text-gray-300'}">${termTitle}</span>
-            <div class="flex items-center gap-1">
-              <span class="px-1.5 py-0.2 rounded-full border text-[9px] font-bold font-mono ${badgeColor}">${badgeLabel}</span>
-              <span class="font-mono text-gray-400 text-[9px]">${m.dateRangeZh}</span>
+          ${isSelected ? '<div class="absolute inset-x-0 -top-px h-[2px] bg-gradient-to-r from-transparent via-emerald-300 to-transparent"></div>' : ''}
+          ${!isSelected ? '<div class="absolute inset-x-0 -top-px h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>' : ''}
+
+          <!-- Header -->
+          <div class="relative z-10 flex items-center justify-between text-[10px] border-b border-white/5 pb-1">
+            <span class="px-1.5 py-0.5 rounded font-serif-sc text-[10.5px] font-bold tracking-wide ${
+              isSelected
+                ? 'bg-emerald-500/25 text-emerald-200 border border-emerald-400/60'
+                : 'bg-black/50 text-stone-300 border border-white/5'
+            }">
+              ${isEn ? `[${termTitle}]` : `【${termTitle}】`}
+            </span>
+            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full text-[9px] font-bold font-serif-sc border ${mBadgeStyle}">
+              <span class="text-[7.5px]">${mBadgeIcon}</span>
+              <span>${badgeLabel}</span>
+            </span>
+          </div>
+
+          <!-- Hero Glyph & Ten God -->
+          <div class="relative py-1.5 my-0.5 flex flex-col items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div class="w-12 h-12 rounded-full ${isSelected ? 'bg-emerald-500/15' : 'bg-white/5'} blur-md"></div>
+            </div>
+            <div class="relative flex items-center justify-center space-x-1 text-xl sm:text-2xl font-serif-sc font-bold tracking-widest drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
+              <span class="${stemElem.color} ${isSelected ? 'drop-shadow-[0_0_12px_rgba(16,185,129,0.6)] brightness-125' : ''}">${m.stem}</span>
+              <span class="${branchElem.color} ${isSelected ? 'drop-shadow-[0_0_12px_rgba(16,185,129,0.6)] brightness-125' : ''}">${m.branch}</span>
+            </div>
+            <div class="relative mt-1">
+              <span class="inline-flex items-center px-2 py-0.2 rounded-full text-[10px] font-serif-sc font-medium tracking-wide bg-gradient-to-r from-purple-950/90 via-[#26173d] to-purple-950/90 text-purple-200 border border-purple-500/35 shadow-sm">
+                ${stemGod}
+              </span>
             </div>
           </div>
-          <div class="py-1">
-            <div class="text-base font-serif-sc font-bold tracking-wider transition-colors ${isSelected ? 'text-emerald-200 drop-shadow-[0_2px_4px_rgba(16,185,129,0.3)]' : 'text-amber-100/90 group-hover:text-emerald-300'}">
-              ${m.stem}${m.branch}
+
+          <!-- Footer Date Range & Na Yin -->
+          <div class="relative z-10 pt-1 border-t border-white/5 space-y-0.5">
+            <div class="text-[10px] font-mono text-stone-400/90 text-center">${m.dateRangeZh}</div>
+            <div class="flex items-center justify-center">
+              <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/40 border border-white/5 text-[9px] font-serif-sc text-stone-400 group-hover:text-stone-200 transition-colors truncate max-w-full" title="${nayin}">
+                <span class="text-emerald-400/80 text-[9.5px]">${isEn ? '♪' : '律'}</span>
+                <span class="truncate">${nayin}</span>
+              </span>
             </div>
-            <div class="mt-0.5"><span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-purple-500/15 text-purple-300 border border-purple-500/25">${stemGod}</span></div>
-          </div>
-          <div class="pt-0.5 border-t border-gray-800/60 text-[9px] text-gray-500 truncate font-mono" title="${nayin}">
-            ♪ ${nayin}
           </div>
         `;
 
@@ -6618,6 +6755,7 @@ document.addEventListener('DOMContentLoaded', () => {
         monthlyContainer.appendChild(card);
       });
     }
+
 
     // 5. Level 4: Daily Luck & 5-Pillar Synergy Matrix
     const dailyInput = document.getElementById('luckDailyDatePicker');
